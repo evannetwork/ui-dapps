@@ -1,0 +1,176 @@
+/*
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+mailbox {
+  position: relative;
+
+  display: block;
+  overflow: hidden;
+
+  height: calc(100vh - 56px);
+
+  .mail-date {
+    font-size: 12px;
+  }
+
+  router-outlet {
+    display: none;
+  }
+
+  & > .left-panel, & > mail-detail, & > evan-empty-dapp {
+    position: absolute;
+    top: 0;
+
+    overflow-y: auto;
+
+    height: 100%;
+
+    @media(max-width: 1100px) {
+      width: 100%;
+    }
+  }
+
+  & > .left-panel {
+    position: relative;
+
+    & > evan-loading {
+      width: 100% !important;
+    }
+
+    &, & > evan-loading {
+      @media (min-width: 1101px) {
+        width: 40%;
+      }
+
+      @media (min-width: 1501px) {
+        width: 30%;
+      }
+
+      @media (min-width: 1801px) {
+        width: 30%;
+      }
+    }
+
+    .mail-group.evan-content {
+      margin-bottom: 25px;
+
+      & > div, & > span {
+        border-bottom: 1px solid $light-gray;
+      }
+
+      & > button {
+        &:first-child {
+          border-top: 1px solid #dedede;
+        }
+
+        &.unread {
+          h2, h3 {
+            font-weight: 1000 !important;
+          }
+        }
+
+        @media (min-width: 1101px) {
+          border-right: 7px solid transparent;
+
+          &.active {
+            border-right: 7px solid $medium-blue;
+          }
+        }
+
+        ion-avatar {
+          margin: 0;
+        }
+      }
+    }
+
+    .evan-content {
+      width: unset;
+
+      &.evan-tabs {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 1100px) {
+        width: 100%;
+        margin-top: 8px;
+        margin-left: 0;
+
+        &.evan-tabs {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .search-box {
+      margin: 8px 0;
+    }
+
+    @media (min-width: 1101px) {
+      .evan-content {
+        margin: 0;
+      }
+
+      .evan-tabs {
+        margin: 8px;
+        margin-bottom: 0;
+      }
+
+      .mail-container {
+        padding: 0 8px;
+      }
+    }
+  }
+
+  & > mail-detail, & > evan-empty-dapp {
+    @media (min-width: 1101px) {
+      left: 40%;
+
+      width: 60%;
+    }
+
+    @media (min-width: 1501px) {
+      left: 30%;
+
+      width: 70%;
+    }
+
+    @media (min-width: 1801px) {
+      left: 30%;
+
+      width: 70%;
+    }
+  }
+
+  .display-flex {
+    & > button {
+      margin-top: 11px;
+      margin-right: 8px;
+    }
+  }
+}

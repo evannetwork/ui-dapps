@@ -1,0 +1,152 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<div class="evan-content evan-relative" *ngIf="!loading">
+  <table class="top-right-info" *ngIf="lastBlock && heighestBlock">
+    <tr>
+      <td>{{ '_explorer.history.blocks' | translate }}</td>
+      <td>:</td>
+      <td text-right>
+        {{ heighestBlock.number - lastBlock.number }}
+        <span *ngIf="blocksToLoad"> > {{ blocksToLoad }} </span>
+        / {{ heighestBlock.number }}
+      </td>
+    </tr>
+    <tr>
+      <td>{{ '_explorer.history.transactions' | translate }}</td>
+      <td>:</td>
+      <td text-right>
+        {{ transactions.length }}
+        <span *ngIf="transactionsToLoad"> > {{ transactionsToLoad }} </span>
+      </td>
+    </tr>
+  </table>
+  <ion-row>
+    <ion-col col-12 col-md-6>
+      <ion-item>
+        <ion-label stacked>{{ '_explorer.history.block-batch-count' | translate }}</ion-label>
+        <ion-select [(ngModel)]="loadBlockCount" (ionChange)="ref.detectChanges()">
+          <ion-option
+            *ngFor="let loadCount of [ 10, 100, 200, 500, 1000, 2000, 5000, 10000, 'all' ]"
+            [value]="loadCount">
+            {{ loadCount }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <span class="input-hint">{{ '_explorer.history.block-batch-count-desc' | translate }}</span>
+      <div text-right>
+        <button ion-button outline round
+          [disabled]="loadMore"
+          (click)="loadMoreBlocks()">
+          <ion-spinner color="light" *ngIf="loadMore"></ion-spinner>
+          {{ '_explorer.history.load-more' | translate }}
+        </button>
+      </div>
+    </ion-col>
+    <ion-col col-12 col-md-6>
+      <ion-item>
+        <ion-label stacked>{{ '_explorer.history.transaction-load-count' | translate }}</ion-label>
+        <ion-select [(ngModel)]="loadTransactionCount" (ionChange)="ref.detectChanges()">
+          <ion-option
+            *ngFor="let loadCount of [ 5, 10, 15, 20, 30, 40, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 'all' ]"
+            [value]="loadCount">
+            {{ loadCount }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <span class="input-hint">{{ '_explorer.history.transaction-load-count-desc' | translate }}</span>
+      <div text-right>
+        <button ion-button outline round
+          [disabled]="loadMore"
+          (click)="loadMoreTransactions()">
+          <ion-spinner color="light" *ngIf="loadMore"></ion-spinner>
+          {{ '_explorer.history.load-more' | translate }}
+        </button>
+      </div>
+    </ion-col>
+  </ion-row>
+  <div text-right>
+    <button ion-button outline round
+      *ngIf="loadMore"
+      (click)="stopLoading = true">
+      {{ '_explorer.history.stop-loading' | translate }}
+    </button>
+  </div>
+  <div class="table-responsive" margin-top>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ '_explorer.history.block' | translate }}</th>
+          <th>{{ '_explorer.history.address' | translate }}</th>
+          <th>{{ '_explorer.history.from' | translate }}</th>
+          <th>{{ '_explorer.history.gas' | translate }} ({{ getFullUsedEve() }} EVE)</th>
+          <th>{{ '_explorer.history.amount' | translate }}</th>
+          <th>{{ '_explorer.history.function' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>
+            <a target="_blank" href="https://testexplorer.evan.network/block/{{ transaction.blockNumber }}">
+              {{ transaction.blockNumber }}
+            </a>
+          </td>
+          <td class="transactionhash">
+             <a routerLink="./{{ transaction.hash }}">{{ transaction.hash }}</a>
+          </td>
+          <td>
+            <a target="_blank" href="https://testexplorer.evan.network/account/{{ transaction.from }}">
+              <ng-container *ngIf="!contacts[transaction.from]?.alias && !contacts[transaction.from]?.email">
+                {{ transaction.from }}
+              </ng-container>
+              <ng-container *ngIf="contacts[transaction.from]?.alias || contacts[transaction.from]?.email">
+                {{ contacts[member]?.alias || contacts[member]?.email }} ({{ transaction.from }})
+              </ng-container>
+            </a>
+          </td>
+          <td>
+            {{ transaction.gas }} GWEI ({{ transaction.gas2EVE }} EVE)
+          </td>   
+          <td>
+            {{ transaction.value }}
+          </td>
+          <td>
+            <span *ngIf="!transaction.abiFunc">{{ transaction.funcSig }}</span>
+            <span *ngIf="transaction.abiFunc">
+              {{ transaction.abiFunc.name }}({{transaction.abiFuncInputs}}) ({{ transaction.funcSig}})
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div text-center *ngIf="loadMore" margin-top>
+    <ion-spinner color="light"></ion-spinner>
+  </div>
+</div>

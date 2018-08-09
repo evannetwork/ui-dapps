@@ -1,0 +1,236 @@
+/*
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+mnemonic-display {
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: 25px;
+
+  ion-item.item {
+    width: calc(50% - 12px);
+    height: 40px;
+    margin: 6px;
+    padding: 0 25px;
+
+    border-radius: 10px;
+    background-color: rgba(0, 13, 26, 0.6) !important;
+
+    .item-inner {
+      border-bottom: 0 !important;
+      box-shadow: none !important;
+
+      h3 {
+        &, span {
+          font-size: 15px;
+          font-weight: bold;
+
+          color: $light;
+        }
+
+        span {
+          margin: 13px 8px 13px 0;
+        }
+      }
+
+      input {
+        color: $light;
+      }
+    }
+
+    &.riddle-item {
+      animation: pulse 2s infinite;
+
+      background-color: rgba(255, 69, 69, 0.82) !important;
+    }
+
+    &.pulsate {
+      animation: pulse 2s infinite;
+    }
+
+    &.correct {
+      background-color: rgba(0, 255, 0, 0.3) !important;
+    }
+  }
+
+  ion-item.item.toggle-input {
+    right: 0;
+    left: 0;
+
+    order: 100;
+
+    width: auto;
+    margin: auto;
+    padding-right: 0;
+    padding-left: 0;
+
+    background-color: transparent !important;
+
+    ion-label {
+      color: $light !important;
+    }
+
+    .item-inner {
+      padding-right: 0;
+    }
+  }
+
+  .direct-input {
+    position: relative;
+
+    width: 100%;
+
+    ion-item.item {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0 0 8px 25px;
+
+      border-radius: 0;
+
+      ion-label {
+        color: $light !important;
+      }
+
+      textarea {
+        margin-top: 25px;
+
+        color: $light;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.17);
+      }
+    }
+
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .mnemonic-help {
+    z-index: 10;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    width: 100%;
+    height: 52px;
+    margin: 0 4px;
+    padding-top: 2px;
+
+    white-space: nowrap;
+    word-wrap: inherit;
+
+    border-radius: 10px;
+    background-color: $background-color-2;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    &::-webkit-scrollbar-thumb, *::-webkit-scrollbar-thumb:active, *::-webkit-scrollbar-thumb:hover {
+      border: 0 solid #b5b5b5;
+    }
+
+    ion-item.item {
+      display: inline-block;
+
+      width: auto;
+      margin: 2px 4px;
+      padding-right: 0;
+
+      text-align: center;
+
+      background-color: $medium-blue !important;
+
+      &.active {
+        background-color: $primary !important;
+
+        h3 {
+          color: $light;
+        }
+      }
+
+      h3 {
+        color: $dark-gray;
+      }
+
+      &.first {
+        h3 {
+          margin-top: 7px;
+
+          color: $dark-gray;
+        }
+      }
+    }
+
+    h6 {
+      color: $light;
+    }
+  }
+
+  .error {
+    order: 40;
+
+    width: 100%;
+    margin-top: 25px;
+
+    color: $light;
+    background-color: $red;
+  }
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0);
+         box-shadow: 0 0 0 3px rgba(255, 255, 255, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+         box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}

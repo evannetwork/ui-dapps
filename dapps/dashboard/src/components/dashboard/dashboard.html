@@ -1,0 +1,54 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<evan-split-pane #splitPane *ngIf="!loading" (smallToolbarToggled)="ref.detectChanges()">
+  <div evan-menu-content>
+    <ion-list>
+      <button ion-item menuClose 
+        color="light" 
+        *ngFor="let dapp of dapps"
+        routerLink="./{{ dapp.ensAddress }}"
+        routerLinkActive="active">
+        <ion-avatar item-start *ngIf="dapp.imgSquare">
+          <img item-start large *oneTime [src]="_DomSanitizer.bypassSecurityTrustUrl(dapp.imgSquare)" />
+        </ion-avatar>
+        <h2 *ngIf="!splitPane.isSmallToolbar()">{{ dapp.translated.name }}</h2>
+        <h3 *ngIf="!splitPane.isSmallToolbar()">{{ dapp.translated.description }}</h3>
+
+        <div class="left-panel-notification"
+          *ngIf="dapp.name === 'mailbox' && mailboxService.newMailCount > 0">
+          {{ mailboxService.newMailCount > 9 ? 9 + '+' : mailboxService.newMailCount }}
+        </div>
+      </button>
+    </ion-list>
+  </div>
+  <div evan-content
+    [@routerTransition]="o?.activatedRouteData?.state">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
+</evan-split-pane>

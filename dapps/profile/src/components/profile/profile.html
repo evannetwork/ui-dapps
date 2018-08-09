@@ -1,0 +1,144 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<ng-container *ngIf="!loading">
+  <div class="evan-tabs evan-content evan-small-content">
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 0" 
+      (click)="activateTab(0);">
+      <ion-icon name="person"></ion-icon>
+      {{ '_dappprofile.account-detail' | translate }}
+    </button>
+    
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 1" 
+      (click)="activateTab(1);">
+      <ion-icon name="settings"></ion-icon>
+      {{ '_dappprofile.settings' | translate }}
+    </button>
+  </div>
+  
+  <div class="evan-tabs-container" [@tabSlideTransition]="activeTab">
+    <div class="evan-relative evan-content evan-small-content m-t-0"
+      *ngIf="activeTab === 0">
+      <div text-center>
+        <button class="top-right" ion-button icon-left round icon-only
+          routerLink="../addressbook.{{ getDomainName() }}/{{ activeAccount }}">
+          <ion-icon name="create" color="light"></ion-icon>
+        </button>
+        <div padding text-center>
+          <blockie-component
+            [address]="activeAccount" 
+            [size]="8" 
+            [scale]="18">
+          </blockie-component>
+          <div padding class="no-padding-bottom">
+            <h2>{{ myProfile?.alias || '_dappprofile.no_alias' | translate  }}</h2>
+            <p (click)="core.copyString(activeAccount)">
+              {{ activeAccount }}
+              <button ion-button icon-only round clear>
+                <ion-icon name="copy" color="light"></ion-icon>
+              </button>
+            </p>
+          </div>
+        </div>
+        <ion-list>
+          <ion-item class="clickable item-hover" (click)="loadBalance()">
+            <ion-avatar item-start>
+              <ion-icon name="cash" color="light" margin-horizontal></ion-icon>
+            </ion-avatar>
+            <h2>{{ '_dappprofile.balance' | translate }}</h2>
+            <h3>{{ balance }} EVE</h3>
+            <button ion-button icon-only item-end round clear>
+              <ion-icon name="refresh" color="light"></ion-icon>
+            </button>
+          </ion-item>
+          <ion-item class="clickable item-hover" (click)="copyPrivateKey()">
+            <ion-avatar item-start>
+              <ion-icon name="key" color="light" margin-horizontal></ion-icon>
+            </ion-avatar>
+            <h2>{{ '_dappprofile.private-key' | translate }}</h2>
+            <h3>********</h3>
+            <button ion-button icon-only item-end round clear>
+              <ion-icon name="copy" color="light"></ion-icon>
+            </button>
+          </ion-item>
+          <ion-item class="clickable item-hover" (click)="copyEncryptionKey()">
+            <ion-avatar item-start>
+              <ion-icon name="contact" color="light" margin-horizontal></ion-icon>
+            </ion-avatar>
+            <h2>{{ '_dappprofile.profile-encryption-key' | translate }}</h2>
+            <h3>********</h3>
+            <button ion-button icon-only item-end round clear>
+              <ion-icon name="copy" color="light"></ion-icon>
+            </button>
+          </ion-item>
+        </ion-list>
+
+        <div text-center padding>
+          <button ion-button icon-left round color="alert" (click)="logout()">
+            <ion-icon name="log-out" color="light"></ion-icon>
+            <span color="light">{{ '_dappprofile.logout' | translate }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 1">
+      <div class="evan-relative evan-content evan-small-content content-padding m-t-0" padding>
+        <ion-item class="no-border">
+          <ion-label>{{ '_dappprofile.developer-mode' | translate }}</ion-label>
+          <ion-toggle 
+            [(ngModel)]="developerMode"
+            (ionChange)="setDeveloperMode()"
+          ></ion-toggle>
+        </ion-item>
+        <div class="input-hint">{{ '_dappprofile.developer-mode-desc' | translate }}</div>
+        <!--
+          TODO:
+          replace the following lines to enable it only on mobile devices
+
+            <ng-container>
+            with
+            <ng-container *ngIf="core.utils.isNativeMobile()">
+        -->
+        <ng-container>
+          <div class="evan-small-seperator" margin-vertical></div>
+          <ion-item class="no-border">
+            <ion-label>{{ '_dappprofile.notifications' | translate }}</ion-label>
+            <ion-toggle 
+              [(ngModel)]="notificationsEnabled"
+              (ionChange)="setNotifications()"
+            ></ion-toggle>
+          </ion-item>
+          <div class="input-hint">{{ '_dappprofile.notifictions-desc' | translate }}</div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>

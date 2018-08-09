@@ -1,0 +1,165 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<ng-container *ngIf="!isCreate && !isMyAccount">
+  <dashboard-top-buttons class="on-small-move-down">
+    <button ion-button item-end icon-left color="danger" (click)="deleteProfile()">
+      <ion-icon name="trash" color="light"></ion-icon>
+      <span>{{ '_dappcontacts.account-delete' | translate }}</span>
+    </button>
+  </dashboard-top-buttons>
+</ng-container>
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<div *ngIf="!loading">
+  <div class="evan-tabs evan-content evan-small-content no-margin-bottom" *ngIf="!isCreate && !isMyAccount">
+    <button ion-button icon-left clear
+      [class.active]="!showStatus" 
+      (click)="showStatus = false; ref.detectChanges()">
+      <ion-icon name="card"></ion-icon>
+      {{ '_dappcontacts.account-detail' | translate }}
+    </button>
+
+    <button ion-button icon-left clear
+      [class.active]="showStatus" 
+      (click)="showStatus = true; ref.detectChanges()">
+      <ion-icon name="key"></ion-icon>
+      {{ '_dappcontacts.account-status' | translate }}
+    </button>
+  </div>
+  
+  <div class="evan-tabs-container" [@tabSlideTransition]="!showStatus ? 0 : 1">
+    <div *ngIf="!showStatus">
+      <form class="no-padding-top" [formGroup]="accountForm" (ngSubmit)="saveProfile(accountForm.value)">
+        <div class="evan-content evan-small-content" margin-top padding-bottom>
+          <h2 class="content-header m-b-0 m-t-0">{{ '_dappcontacts.account-detail' | translate }}</h2>
+          
+          <div class="evan-table-greate">
+            <blockie-component class="big-blockie" *ngIf="!isCreate" text-center padding
+              [address]="accountForm.value.accountId || accountId" 
+              [size]="8" 
+              [scale]="15">
+            </blockie-component>
+            <ion-item>
+              <ion-label stacked>{{ '_dappcontacts.alias' | translate }} *</ion-label>
+              <ion-input type="text" required formControlName="alias" (ngModelChange)="setTranslation()"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="showAccountId">
+              <ion-label stacked>{{ '_dappcontacts.account-id' | translate }} *</ion-label>
+              <ion-input type="text" required formControlName="accountId"></ion-input>
+            </ion-item>
+            <div class="input-error" *ngIf="accountForm.controls.accountId?.dirty && accountForm.controls.accountId.touched && accountForm.controls.accountId.errors">
+              <ng-container *ngIf="accountForm.controls.accountId.errors.invalidAddress">
+                {{ '_dappcontacts.invalid-address' | translate }}
+              </ng-container>
+              <ng-container *ngIf="accountForm.controls.accountId.errors.isMyAccount">
+                {{ '_dappcontacts.invalid-is-my-account' | translate }}
+              </ng-container>
+              <ng-container *ngIf="accountForm.controls.accountId.errors.alreadAdded">
+                {{ '_dappcontacts.invalid-already-added' | translate }}
+              </ng-container>
+            </div>
+            <ion-item *ngIf="showMail">
+              <ion-label stacked>{{ '_dappcontacts.email' | translate }} *</ion-label>
+              <ion-input type="text" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="showMail && isCreate">
+              <ion-label stacked>{{ '_dappcontacts.eves-to-send' | translate }} *</ion-label>
+              <ion-input type="number" formControlName="eves" min="0"></ion-input>
+            </ion-item>              
+            <div class="input-error" *ngIf="accountForm.controls.email?.dirty && accountForm.controls.email.touched && accountForm.controls.email.errors">
+              <ng-container *ngIf="accountForm.controls.email.errors.alreadAdded">
+                {{ '_dappcontacts.email-already-added' | translate }}
+              </ng-container>
+            </div>
+
+            <div class="transparent" text-center margin-top>
+              <button ion-button icon-left type="submit" [disabled]="!accountForm.valid">
+                <ion-icon name="send" color="light"></ion-icon>
+                <span *ngIf="isCreate">{{ '_dappcontacts.send-invitation' | translate }}</span>
+                <span *ngIf="!isCreate">{{ '_dappcontacts.save' | translate }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="evan-content evan-small-content" *ngIf="showStatus" margin-top padding-bottom>
+      <h2 class="content-header m-t-0">{{ '_dappcontacts.account-status' | translate }}</h2>
+
+      <div class="profile-status continuous-text">
+        <div [class.active]="!isMyAccount && account.isCreate">
+          <p>1</p>
+          <ion-icon name="mail" color="light"></ion-icon>
+          <p>{{ '_dappcontacts.status.invitation' | translate }}</p>
+        </div>
+        <div [class.active]="!isMyAccount && !account.isCreate && (!account.keys || !account.keys.commKey)">
+          <p>2</p>
+          <ion-icon name="mail-open" color="light"></ion-icon>
+          <p>{{ '_dappcontacts.status.invitation-answer' | translate }}</p>
+        </div>
+        <div [class.active]="!isMyAccount && account.keys?.commKey">
+          <p>3</p>
+          <ion-icon name="key" color="light"></ion-icon>
+          <p>{{ '_dappcontacts.status.invitation-handshake' | translate }}</p>
+        </div>
+        <div class="status-connector"></div>
+      </div>
+
+      <h2 class="content-header">{{ '_dappcontacts.status.account-status-desc' | translate }}</h2>
+    
+      <div class="continuous-text">
+        <span *ngIf="!isMyAccount && account">
+          <span text-justify
+            *ngIf="account.isCreate"
+            [innerHTML]="'_dappcontacts.status-desc.outstanding' | translate">
+          </span>
+          <div text-justify *ngIf="!account.isCreate && (!account.keys || !account.keys.commKey)">
+            <span [innerHTML]="'_dappcontacts.status-desc.pending' | translate">
+            </span>
+            <div class="no-margin-bottom" text-center margin>
+              <button ion-button icon-left type="submit" (click)="routing.goToMails()">
+                <ion-icon name="mail" color="light"></ion-icon>
+                <span>{{ '_dappcontacts.go-to-mails' | translate }}</span>
+              </button>
+            </div>
+          </div>
+          <span text-justify
+          *ngIf="account.keys?.commKey"
+            [innerHTML]="'_dappcontacts.status-desc.accepted' | translate">
+          </span>
+        </span>
+        <span text-justify
+          *ngIf="isMyAccount"
+          [innerHTML]="'_dappcontacts.status-desc.my-account' | translate">
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

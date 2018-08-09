@@ -1,0 +1,158 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<ng-container *ngIf="!loading">
+  <div class="evan-content" *ngIf="explorerService.rawMode">
+    <ace-editor margin-top mode="json"
+      [(text)]="stringifiedTransaction"
+      [options]="explorerService.aceOptions"
+      [durationBeforeCallback]="300"
+      [style.min-height]="explorerService.getInitialAceHeight(stringifiedTransaction)">
+    </ace-editor>
+  </div>
+  <div class="evan-content" *ngIf="!explorerService.rawMode">
+    <ion-row>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">
+          {{ '_explorer.history.hash' | translate }}
+        </ion-label>
+        <a target="_blank" href="https://testexplorer.evan.network/tx/{{ transaction.hash }}">
+          {{ transaction.hash }}
+        </a>
+      </ion-col>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">
+          {{ '_explorer.history.from' | translate }}
+        </ion-label>
+        <a target="_blank" href="https://testexplorer.evan.network/account/{{ transaction.from }}">
+          <ng-container *ngIf="!contacts[transaction.from]?.alias && !contacts[transaction.from]?.email">
+            {{ transaction.from }}
+          </ng-container>
+          <ng-container *ngIf="contacts[transaction.from]?.alias || contacts[transaction.from]?.email">
+            {{ contacts[transaction.from]?.alias || contacts[transaction.from]?.email }} ({{ transaction.from }})
+          </ng-container>
+        </a>
+      </ion-col>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">
+          {{ '_explorer.history.to' | translate }}
+        </ion-label>
+        <a target="_blank" href="https://testexplorer.evan.network/account/{{ transaction.to }}">
+          <ng-container *ngIf="!contacts[transaction.to]?.alias && !contacts[transaction.to]?.email">
+            {{ transaction.to }}
+          </ng-container>
+          <ng-container *ngIf="contacts[transaction.to]?.alias || contacts[transaction.to]?.email">
+            {{ contacts[transaction.to]?.alias || contacts[transaction.to]?.email }} ({{ transaction.to }})
+          </ng-container>
+        </a>
+      </ion-col>
+    </ion-row>
+    <div class="evan-small-seperator" margin-top></div>
+    <ion-row>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">
+          {{ '_explorer.history.blockNumber' | translate }}
+        </ion-label>
+        <a target="_blank" href="https://testexplorer.evan.network/block/{{ transaction.blockNumber }}">
+          {{ transaction.blockNumber }}
+        </a>
+      </ion-col>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">
+          {{ '_explorer.history.blockHash' | translate }}
+        </ion-label>
+        <a target="_blank" href="https://testexplorer.evan.network/block/{{ transaction.blockHash }}">
+          {{ transaction.blockHash }}
+        </a>
+      </ion-col>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">
+          {{ '_explorer.history.nonce' | translate }}
+        </ion-label>
+        <span>{{ transaction.nonce }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">{{ '_explorer.history.gas' | translate }}</ion-label>
+        <span>{{ transaction.gas }} GWEI</span>
+      </ion-col>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">{{ '_explorer.history.gasPrice' | translate }}</ion-label>
+        <span>{{ transaction.gasPrice || '---' }}</span>
+      </ion-col>
+      <ion-col col-12 col-md-4>
+        <ion-label class="standalone">{{ '_explorer.history.eve-price' | translate }}</ion-label>
+        <span>{{ gas2EVE + 'EVE' || '---' }}</span>
+      </ion-col>
+    </ion-row>
+    <ion-label class="standalone">{{ '_explorer.history.value' | translate }}</ion-label>
+    <span>{{ transaction.value || '---' }} EVE</span>
+    <div class="evan-small-seperator" margin-top></div>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-label class="standalone">
+          {{ '_explorer.history.function' | translate }}
+        </ion-label>
+        <span>{{ abiFunc.name }} ({{abiFuncInputs}})</span>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-label class="standalone">
+          {{ '_explorer.history.signature' | translate }}
+        </ion-label>
+        <span>{{ funcSig }}</span>
+      </ion-col>
+    </ion-row>
+    <div class="evan-small-seperator" margin-top></div>
+    <ion-row>
+      <ion-col col-12 col-md-6>
+        <ion-label class="standalone">
+          {{ '_explorer.history.raw' | translate }}
+        </ion-label>
+        <ace-editor margin-top mode="json"
+          [(text)]="transaction.raw"
+          [style.min-height]="explorerService.getInitialAceHeight(transaction.raw)"
+          [options]="explorerService.aceOptions"
+          [durationBeforeCallback]="300">
+        </ace-editor>
+      </ion-col>
+      <ion-col col-12 col-md-6>
+        <ion-label class="standalone">
+          {{ '_explorer.history.input' | translate }}
+        </ion-label>
+        <ace-editor margin-top mode="json"
+          [(text)]="transaction.input"
+          [style.min-height]="explorerService.getInitialAceHeight(transaction.input)"
+          [options]="explorerService.aceOptions"
+          [durationBeforeCallback]="300">
+        </ace-editor>
+      </ion-col>
+    </ion-row>
+  </div>
+</ng-container>

@@ -1,0 +1,111 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<div class="report-container">
+  <div class="evan-content">
+    <h2 class="content-header m-t-0">{{ '_logging.report-filters' | translate }}</h2>
+    <p>{{ '_logging.report-filters-desc' | translate }}</p>
+    <ion-list>
+      <button ion-item (click)="logging.copy()">
+        <ion-icon name="copy" item-end></ion-icon>
+        {{ '_logging.copy-logs' | translate }}
+      </button>
+      <button ion-item (click)="logging.sendLogs()">
+        <ion-icon name="mail" item-end></ion-icon>
+        {{ '_logging.send-loggly' | translate }}
+      </button>
+    </ion-list>
+  </div>
+
+  <div class="evan-content error-report" *ngIf="logging.getReportLogs([ 'error' ]).length > 0">
+    <h2 class="content-header m-t-0">{{ '_logging.report-errors' | translate }}</h2>
+    <p>{{ '_logging.report-errors-desc' | translate }}</p>
+    <ion-list>
+      <button ion-item (click)="logging.copy([ 'error' ])">
+        <ion-icon name="copy" item-end></ion-icon>
+        {{ '_logging.copy-logs' | translate }}
+      </button>
+      <button ion-item (click)="logging.sendLogs([ 'error' ])">
+        <ion-icon name="mail" item-end></ion-icon>
+        {{ '_logging.send-loggly' | translate }}
+      </button>
+    </ion-list>
+  </div>
+</div>
+
+<div class="evan-content" *ngIf="showFilters">
+  <h2 class="content-header m-t-0">{{ '_logging.filter' | translate }}</h2>
+
+  <ion-item *ngFor="let level of levelKeys">
+    <ion-label>{{ level }}</ion-label>
+    <ion-toggle
+      [(ngModel)]="activeLevels[level]"
+      (ionChange)="filter($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <div text-center margin-top>
+    <button ion-button icon-left color="medium-gray" round (click)="toggleFilters()">
+      <ion-icon name="close" color="light"></ion-icon>
+      <span color="light">{{ '_logging.close-filters' | translate }}</span>
+    </button>
+  </div>
+</div>
+
+<div class="evan-content evan-relative">
+  <h2 class="content-header m-t-0 display-inline-block">{{ 'logging' | translate }}</h2>
+  <ion-icon class="clickable" margin-left name="funnel" (click)="toggleFilters()"></ion-icon>
+
+  <button class="top-right" ion-button icon-left color="danger" round (click)="clearLogs()">
+    <ion-icon name="trash" color="light"></ion-icon>
+    <span color="light">{{ '_logging.clear-logs' | translate }}</span>
+  </button>
+  
+  <div margin-bottom>{{ '_logging.click-to-log' | translate }}</div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{{ '_logging.timestamp' | translate }}</th>
+          <th>{{ '_logging.level' | translate }}</th>
+          <th>{{ '_logging.message' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of logs"
+          [ngClass]="'level-' + log.level"
+          (click)="logSingleLog(log)">
+          <td>{{ log.timestamp | date:'long':'':translateService.translate.currentLang }}</td>
+          <td>{{ log.level }}</td>
+          <td>{{ log.message }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

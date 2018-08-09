@@ -1,0 +1,19 @@
+{
+  "author": "Evan",
+  "devDependencies": {
+    "signature_pad": "^2.3.2"
+  },
+  "main": "dist/index.js",
+  "name": "@evan.network/task",
+  "typings": "dist/index.d.ts",
+  "version": "1.0.2",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "Angular 5",
+    "Ionic",
+    "DApp",
+    "SASS"
+  ]
+}

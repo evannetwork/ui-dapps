@@ -1,0 +1,389 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<ng-template #updateDBCPTpl>
+  <div text-right margin-top>
+    <button ion-button outline round
+      *ngIf="showUpdateDBCP"
+      [disabled]="updating"
+      (click)="updateDBCP()">
+      <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+      {{ '_explorer.dbcp.update-dbcp' | translate }}
+    </button>
+
+    <span *ngIf="!showUpdateDBCP" class="dbcp-not-allowed">
+      {{ '_explorer.dbcp.update-dbcp-not-allowed' | translate }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="!loading">
+  <div class="evan-content" *ngIf="explorerService.rawMode">
+    <h2 class="content-header m-b-0">{{ '_explorer.section.dbcp' | translate }}</h2>
+    <ace-editor margin-top mode="json"
+      [style.min-height]="explorerService.getInitialAceHeight(dbcpString)"
+      [(text)]="dbcpString"
+      [options]="explorerService.aceOptions"
+      [durationBeforeCallback]="300">
+    </ace-editor>
+    <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
+  </div>
+
+  <ng-container *ngIf="!explorerService.rawMode">
+    <div class="explorer-tabs evan-tabs evan-content">
+      <button ion-button icon-left clear [class.active]="activeTab === 0" (click)="activateTab(0)">
+        {{ '_explorer.dbcp.general' | translate }}
+      </button>
+    
+      <button ion-button icon-left clear [class.active]="activeTab === 1" (click)="activateTab(1)">
+        {{ '_explorer.dbcp.version' | translate }}
+      </button>
+      
+      <button ion-button icon-left clear [class.active]="activeTab === 2" (click)="activateTab(2)">
+        {{ '_explorer.dbcp.dapp' | translate }}
+      </button>
+
+      <button ion-button icon-left clear [class.active]="activeTab === 3" (click)="activateTab(3)">
+        {{ '_explorer.abi' | translate }}
+      </button>
+
+      <button ion-button icon-left clear [class.active]="activeTab === 4" (click)="activateTab(4)">
+        {{ '_explorer.dbcp.i18n' | translate }}
+      </button>
+    </div>
+    <div class="explorer-tabs evan-tabs-container" [@tabSlideTransition]="activeTab">
+      <div class="evan-content evan-relative" *ngIf="activeTab === 0">
+        <ion-row>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.dbcp-for-address' | translate }}</h3>
+              </ion-label>
+              <ion-input readonly
+                [(ngModel)]="contractAddress || id"
+                (ionChange)="ref.detectChanges()">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.dbcp-version' | translate }}</h3>
+              </ion-label>
+              <ion-input
+                type="number"
+                [(ngModel)]="dbcp.dbcpVersion"
+                (ionChange)="ref.detectChanges()">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.name' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.name" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.author' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.author" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.description' | translate }}</h3>
+              </ion-label>
+              <ion-textarea [(ngModel)]="dbcp.description" rows="6" (ionChange)="ref.detectChanges()"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-label class="standalone">
+          {{ '_explorer.dbcp.tags' | translate }}
+        </ion-label>
+        <ion-tags-input [(ngModel)]="dbcp.tags" (onChange)="ref.detectChanges()"></ion-tags-input>
+        <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
+      </div>
+
+      <div class="evan-content" *ngIf="activeTab === 1">
+        <ion-row>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.active-version' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.version" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.ipfs-origin' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.dapp.origin" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <div class="table-responsive" margin-top>
+          <table>
+            <thead>
+              <tr>
+                <th>{{ '_explorer.dbcp.version' | translate }}</th>
+                <th>{{ '_explorer.dbcp.ipfs-origin' | translate }}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let version of dbcp.versions | objectKeys">
+                <td>{{ version }}</td>
+                <td>
+                  <ion-item>
+                    <ion-input
+                      [(ngModel)]="dbcp.versions[version]"
+                      (ionChange)="ref.detectChanges()">
+                    </ion-input>
+                  </ion-item>
+                </td>
+                <td width="50">
+                  <button ion-button icon-only clear (click)="deleteKey(dbcp.versions, version)">
+                    <ion-icon name="trash" color="danger"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div text-right>
+            <button ion-button outline round (click)="addVersion()">
+              {{ '_explorer.dbcp.add-version' | translate }}
+            </button>
+          </div>
+        </div>
+        <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
+      </div>
+
+      <div class="evan-content evan-relative" *ngIf="activeTab === 2">
+        <ion-item>
+          <ion-label stacked>
+            {{ '_explorer.dbcp.dapp-type' | translate }}
+          </ion-label>
+          <ion-input [(ngModel)]="dbcp.dapp.type" (ionChange)="ref.detectChanges()"></ion-input>
+        </ion-item>
+
+        <ion-row>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.entrypoint' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.dapp.entrypoint" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+            <ion-label class="standalone">{{ '_explorer.dbcp.standalone' | translate }}</ion-label>
+            <ion-item>
+              <ion-label *ngIf="dbcp.dapp.standalone">
+                {{ '_explorer.dbcp.value-standalone' | translate }}
+              </ion-label>
+              <ion-label *ngIf="!dbcp.dapp.standalone">
+                {{ '_explorer.dbcp.value-integrated' | translate }}
+              </ion-label>
+              <ion-checkbox
+                [(ngModel)]="dbcp.dapp.standalone"
+                (ionChange)="ref.detectChanges()">
+              </ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-col col-12 col-md-6>
+            <ion-label class="standalone dbcp-files-label">
+              {{ '_explorer.dbcp.files' | translate }}
+
+              <ion-icon class="clickable" name="add-circle" item-end
+                (click)="dbcp.dapp.files.push(''); ref.detectChanges()">
+              </ion-icon>
+            </ion-label>
+            <ion-item *ngFor="let file of dbcp.dapp.files; let i = index">
+              <ion-input [(ngModel)]="dbcp.dapp.files[i]">
+              </ion-input>
+              <ion-icon class="clickable" name="trash" color="danger" item-end
+                (click)="dbcp.dapp.files.splice(i, 1); ref.detectChanges()">
+              </ion-icon>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.primary-color' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.dapp.primaryColor" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+            <div class="color-preview" [style.background-color]="dbcp.dapp.primaryColor"></div>
+          </ion-col>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.secondary-color' | translate }}</h3>
+              </ion-label>
+              <ion-input [(ngModel)]="dbcp.dapp.secondaryColor" (ionChange)="ref.detectChanges()"></ion-input>
+            </ion-item>
+            <div class="color-preview" [style.background-color]="dbcp.dapp.secondaryColor"></div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.img-square' | translate }}</h3>
+              </ion-label>
+              <ion-textarea [(ngModel)]="dbcp.imgSquare" row="1"></ion-textarea>
+            </ion-item>
+            <ng-container *ngIf="dbcp.imgSquare">
+              <img class="dbcp-img" *oneTime padding [src]="_DomSanitizer.bypassSecurityTrustUrl(dbcp.imgSquare)">
+            </ng-container>
+          </ion-col>
+
+          <ion-col col-12 col-md-6>
+            <ion-item>
+              <ion-label stacked>
+                <h3>{{ '_explorer.dbcp.img-wide' | translate }}</h3>
+              </ion-label>
+              <ion-textarea [(ngModel)]="dbcp.imgWide" row="1"></ion-textarea>
+            </ion-item>
+            <ng-container *ngIf="dbcp.imgWide">
+              <img class="dbcp-img" *oneTime padding [src]="_DomSanitizer.bypassSecurityTrustUrl(dbcp.imgWide)">
+            </ng-container>
+          </ion-col>
+        </ion-row>
+        <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
+      </div>
+
+      <div class="evan-content" *ngIf="activeTab === 3">
+        <ace-editor margin-top mode="json"
+          [(text)]="abi"
+          (textChanged)="ref.detectChanges()"
+          [durationBeforeCallback]="200"
+          [options]="explorerService.aceOptions"
+          [style.min-height]="explorerService.getInitialAceHeight(abi)">
+        </ace-editor>
+        <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
+      </div>
+
+      <div class="evan-content" *ngIf="activeTab === 4">
+        <ng-container>
+          <ion-label class="standalone">
+            {{ '_explorer.dbcp.i18n-name' | translate }}
+          </ion-label>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ '_explorer.dbcp.lang-key' | translate }}</th>
+                  <th>{{ '_explorer.dbcp.translation' | translate }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let langKey of dbcp.i18n.name | objectKeys">
+                  <td width="100">{{ langKey }}</td>
+                  <td>
+                    <ion-item>
+                      <ion-input
+                        [(ngModel)]="dbcp.i18n.name[langKey]"
+                        (ionChange)="ref.detectChanges()">
+                      </ion-input>
+                    </ion-item>
+                  </td>
+                  <td width="50">
+                    <button ion-button icon-only clear (click)="deleteKey(dbcp.i18n.name, langKey)">
+                      <ion-icon name="trash" color="danger"></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div text-right>
+              <button ion-button outline round (click)="addLangKey(dbcp.i18n.name)">
+                {{ '_explorer.dbcp.add-lang-key' | translate }}
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container>
+          <ion-label class="standalone">
+            {{ '_explorer.dbcp.i18n-description' | translate }}
+          </ion-label>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ '_explorer.dbcp.lang-key' | translate }}</th>
+                  <th>{{ '_explorer.dbcp.translation' | translate }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let langKey of dbcp.i18n.description | objectKeys">
+                  <td width="100">{{ langKey }}</td>
+                  <td>
+                    <ion-item>
+                      <ion-input
+                        [(ngModel)]="dbcp.i18n.description[langKey]"
+                        (ionChange)="ref.detectChanges()">
+                      </ion-input>
+                    </ion-item>
+                  </td>
+                  <td width="50">
+                    <button ion-button icon-only clear (click)="deleteKey(dbcp.i18n.description, langKey)">
+                      <ion-icon name="trash" color="danger"></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div text-right>
+              <button ion-button outline round (click)="addLangKey(dbcp.i18n.description)">
+                {{ '_explorer.dbcp.add-lang-key' | translate }}
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,106 @@
+/*
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+profile-create-evan {
+  height: 100%;
+
+  ion-content {
+    max-height: calc(100% - 70px);
+    margin-top: 50px;
+  }
+
+  form {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 25px;
+
+    background-color: rgba(0, 13, 26, 0.6) !important;
+    background-color: transparent;
+  }
+
+  ion-item.item {
+    background-color: transparent !important;
+
+    ion-label, input {
+      color: #ffffff !important;
+    }
+  }
+
+  .input-error {
+    overflow: hidden;
+
+    margin: 0 0 0 16px;
+    padding: 4px;
+
+    color: $light;
+    background-color: $red !important;
+  }
+
+  ion-spinner {
+    width: 100px;
+    height: 100px;
+    margin-top: 30px;
+  }
+
+  .evan-no-elements {
+    font-size: 25px;
+    line-height: 1.4em;
+
+    padding-top: 50px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .content-container {
+    .content-container {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+
+  .vertical-center-container {
+    display: block !important;
+
+    margin-top: 0 !important;
+    padding: 0 0 25px 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    .content-container {
+      width: 100%;
+    }
+
+    .copy-container {
+      button {
+        top: -13px;
+        right: -25px;
+        bottom: unset;
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<dashboard-top-buttons class="on-small-move-down">
+  <ion-searchbar 
+    *ngIf="showSearch"
+    placeholder="{{ '_dappcontacts.filter_items' | translate }}" 
+    [(ngModel)]="filterString"
+    (ionInput)="filter($event)">
+  </ion-searchbar>
+
+  <button ion-button icon-only round
+    *ngIf="utils.isLG"
+    (click)="showSearch = !showSearch; ref.detectChanges()">
+    <ion-icon name="search"></ion-icon>
+  </button>
+
+  <button ion-button icon-only round routerLink="./contact-add">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</dashboard-top-buttons>
+
+<ion-list class="evan-list">
+  <ion-searchbar 
+    placeholder="{{ '_dappcontacts.filter_items' | translate }}" 
+    [(ngModel)]="filterString"
+    (ionInput)="filter($event)">
+  </ion-searchbar>
+
+  <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+  <evan-empty-dapp
+    *ngIf="!loading && availableLetters.length === 0"
+    [text]="filterString ? ('_dappcontacts.nothing-found' | translate:{ filter: filterString }) : '_dappcontacts.empty-address-book'"
+    ensAddress="addressbook">
+  </evan-empty-dapp>
+
+  <ng-container *ngIf="!loading && availableLetters.length > 0">
+    <div class="evan-content" text-left
+      *ngFor="let letter of availableLetters">
+      <h2 class="content-header content-heading m-b-0 m-t-0">{{ letter }}</h2>
+      <ion-item-sliding *ngFor="let account of groupedAccounts[letter]" #sliding>
+        <ion-item class="clickable item-hover" color="light" routerLink="{{ account }}">
+          <ion-avatar item-start margin-right>
+            <blockie-component class="small-blockie"
+              [address]="account || accounts[account].email"
+              [size]="8"
+              [scale]="15">
+            </blockie-component>
+          </ion-avatar>
+
+          <h2 *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</h2>
+          <h2 *ngIf="accounts[account].alias">{{ accounts[account].alias }}</h2>
+          <h3>{{ account || accounts[account].email }}</h3>
+          <button ion-button clear item-end>
+            <ion-icon name="arrow-forward" color="light"></ion-icon>
+          </button>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="danger" (click)="removeContact(account)">
+            <ion-icon name="trash"></ion-icon>
+            {{ '_dappcontacts.delete' | translate }}
+          </button>
+        </ion-item-options>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="removeContact(account)">
+            <ion-icon name="trash"></ion-icon>
+            {{ '_dappcontacts.delete' | translate }}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </div>
+  </ng-container>
+</ion-list>

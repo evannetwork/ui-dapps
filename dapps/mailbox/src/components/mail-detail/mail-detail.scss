@@ -1,0 +1,150 @@
+/*
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+mail-detail {
+  evan-loading {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 20px;
+
+    margin: 0;
+  }
+
+  .mail-date {
+    display: block;
+
+    color: $light;
+  }
+
+  @media (min-width: 993px) {
+    .evan-content {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+    .mail-date {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  @media (max-width: 992px) {
+    & > div, & > div > .evan-content.evan-big-content {
+      height: 100%;
+    }
+  }
+
+  .from-to-container {
+    @media (max-width: 992px) {
+      padding: 0;
+    }
+
+    @media (min-width: 993px) {
+      padding: 0 8px 8px 0;
+    }
+
+    .from, .to {
+      padding: 0 8px;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      blockie-component {
+        margin: 0 10px;
+
+        canvas {
+          width: 40px;
+        }
+      }
+
+      & > * {
+        display: inline-block;
+
+        vertical-align: middle;
+      }
+
+      & > div {
+        padding-left: 0;
+        width: calc(100% - 92px);
+        h2, h3, span {
+          margin: 0;
+        }
+      }
+
+      & > h2 {
+        line-height: 50px;
+
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 17px;
+
+        vertical-align: super;
+      }
+
+      h3, span {
+        font-size: 12px;
+      }
+
+      span {
+        color: $medium-gray;
+      }
+    }
+  }
+
+  .body {
+    @media (min-width: 993px) {
+      padding: 32px;
+    }
+
+    @media (max-width: 992px) {
+      padding: 32px 25px;
+    }
+  }
+
+  .attachments {
+    padding: 25px 8px;
+
+    text-align: right;
+
+    @media (max-width: 992px) {
+      text-align: center;
+
+      button {
+        width: 100%;
+
+        border-radius: 5px;
+      }
+    }
+  }
+}

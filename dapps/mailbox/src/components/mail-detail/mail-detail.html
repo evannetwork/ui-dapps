@@ -1,0 +1,168 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading"></evan-loading>
+
+<div *ngIf="!loading">
+  <div class="evan-content evan-tabs">
+    <button ion-button icon-left clear
+      [class.active]="!showAnswers" 
+      (click)="showAnswers = false; ref.detectChanges()">
+      <ion-icon name="mail"></ion-icon>
+      {{ 'mail-detail' | translate }}
+    </button>
+
+    <button ion-button icon-left clear
+      [class.active]="showAnswers" 
+      (click)="showAnswers = true; ref.detectChanges()">
+      <ion-icon name="paper-plane"></ion-icon>
+      {{ '_dappmailbox.answers' | translate }}
+    </button>
+  </div>
+
+  <div class="evan-tabs-container" [@tabSlideTransition]="!showAnswers ? 0 : 1">
+    <ng-container *ngIf="!showAnswers" [@opacityTransition]>
+      <div>
+        <div class="evan-content">
+          <div class="evan-relative">
+            <h1 class="content-header" margin-bottom>{{ mail.content.title }}</h1>
+            <span class="mail-date">
+              {{ mail.content.sent | date:'medium':'':translate.translate.currentLang }}
+            </span>
+            <div class="evan-small-seperator"></div>
+            <div class="from-to-container">
+              <div class="from" *ngIf="mail.content.from !== myAccountId">
+                <h2>{{ '_dappmailbox.from' | translate }}</h2>
+                <blockie-component
+                  [address]="mail.content.from" 
+                  [size]="8" 
+                  [scale]="5">
+                </blockie-component>
+                <div>
+                  <h2 text-wrap> {{ (profiles[mail.content.from]?.alias || mail.content.fromAlias || '_dappmailbox.no_alias') | translate }} </h2>
+                  <h3 text-wrap> {{ mail.content.from }} </h3>
+                </div>
+              </div>
+              <div class="to" *ngIf="mail.content.from === myAccountId">
+                <h2>{{ '_dappmailbox.to' | translate }}</h2>
+                <blockie-component
+                  [address]="mail.content.to" 
+                  [size]="8" 
+                  [scale]="5">
+                </blockie-component>
+                <div>
+                  <h2> {{ (profiles[mail.content.to]?.alias || '_dappmailbox.no_alias') | translate }} </h2>
+                  <h3> {{ mail.content.to }} </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="evan-small-seperator"></div>
+          </div>
+
+          <div class="body continuous-text">
+            <p [innerHTML]="getHTMLMailBody(mail.content.body)"></p>
+          </div>
+
+          <ng-container *ngIf="mail.content.attachments">
+            <div class="evan-small-seperator"></div>
+            <div class="attachments">
+              <ng-container 
+                *ngFor="let attachment of mail.content.attachments"
+                [ngSwitch]="attachment.type">
+                <attachment-comm-key 
+                  *ngSwitchCase="'commKey'"
+                  [mail]="mail"
+                  [attachment]="attachment">
+                </attachment-comm-key>
+                <attachment-contract 
+                  *ngSwitchCase="'contract'"
+                  [mail]="mail"
+                  [attachment]="attachment">
+                </attachment-contract>            
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="showAnswers" [@opacityTransition]>
+      <div>
+        <div class="evan-relative evan-content" *ngIf="answers.length > 0" text-left>
+          <span>{{ '_dappmailbox.answers' | translate }}</span>
+          <ion-list class="no-padding-top" padding-vertical>
+            <ion-item *ngFor="let answer of answers" [color]="light">
+              <ion-avatar item-start>
+                <blockie-component class="small-blockie" [address]="answer.content.from" [size]="8" [scale]="6">
+                </blockie-component>
+              </ion-avatar>
+      
+              <h2>{{ profiles[answer.content.from]?.alias || answer.content.from | translate }}</h2>
+              <h3>{{ answer.content.body }}</h3>
+              <span class="mail-date">{{ answer.content.sent | date:'medium':'':translate.translate.currentLang }}</span>
+            </ion-item>
+          </ion-list>
+      
+          <ion-col col-12 *ngIf="allAnswersCount - answers.length > 0">
+            <button (click)="loadMoreAnswers()" ion-button full>
+              <span *ngIf="loadAnswers">
+                <ion-spinner color="light"></ion-spinner>
+                <span>{{ '_dappmailbox.loading_answers' | translate }}</span>
+              </span> 
+              <span *ngIf="!loadAnswers">
+                <span>{{allAnswersCount - answers.length}} {{ '_dappmailbox.more_items' | translate }}</span>
+              </span>
+            </button>
+          </ion-col>
+        </div>
+      
+        <div class="evan-relative evan-content" text-left>
+          <span>
+            <ion-icon name="paper-plane"></ion-icon> 
+            {{'_dappmailbox.send-answer' | translate }}
+          </span>
+      
+          <div>
+            <ion-item padding-horizontal>
+              <ion-textarea 
+                [(ngModel)]="answer" 
+                placeholder="{{'_dappmailbox.enter_answer' | translate }}">
+              </ion-textarea>
+            </ion-item>
+      
+            <div text-right>
+              <button ion-button item-end margin (click)="sendAnswer()">
+                <span>{{ '_dappmailbox.send_answer' | translate }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

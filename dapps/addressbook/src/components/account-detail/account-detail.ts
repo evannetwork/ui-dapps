@@ -1,0 +1,362 @@
+/*
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+*/
+
+import {
+  Component, OnInit,      // @angular/core
+  TranslateService,       // @ngx-translate/core
+  NavController,          // ionic-angular
+  Validators, FormBuilder, FormGroup,  // @angular/forms
+  ActivatedRoute,
+  Input, FormControl, OnDestroy,
+  ChangeDetectionStrategy, ChangeDetectorRef
+} from 'angular-libs';
+
+import {
+  AnimationDefinition,
+  createRouterTransition,
+  EvanTranslationService,
+  EvanRoutingService,
+  EvanAddressBookService,
+  createOpacityTransition,
+  EvanAlertService,
+  EvanMailboxService,
+  createTabSlideTransition,
+  EvanCoreService,
+  EvanQueue,
+  EvanBCCService,
+  EvanModalService,
+  AsyncComponent
+} from 'angular-core';
+
+/**************************************************************************************************/
+
+@Component({
+  selector: 'account-detail',
+  templateUrl: 'account-detail.html',
+  animations: [
+    createOpacityTransition(),
+    createTabSlideTransition()
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+
+export class AccountDetailComponent extends AsyncComponent {
+  private accountId: string;
+  private account: any;
+  private loading: boolean;
+  private loadingSave: boolean;
+  private loadingDelete: boolean;
+  private accountForm: FormGroup;
+  private isCreate: boolean;
+  private isMyAccount: boolean;
+  private addressBook: any;
+  private showStatus: boolean;
+  private showMail: boolean;
+  private showAccountId: boolean;
+  private saving: boolean;
+  private clearQueue: Function;
+
+  constructor(
+    private translate: EvanTranslationService,
+    private routing: EvanRoutingService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private addressBookService: EvanAddressBookService,
+    private alertService: EvanAlertService,
+    private mailboxService: EvanMailboxService,
+    private core: EvanCoreService,
+    private queueService: EvanQueue,
+    private bcc: EvanBCCService,
+    private modalService: EvanModalService,
+    private ref: ChangeDetectorRef
+  ) {
+    super(ref);
+  }
+
+  async _ngOnInit() {
+    const myAccountId = this.core.activeAccount();
+
+    this.accountId = this.routing.getHashParam('id');
+    this.isCreate = !this.accountId;
+    this.isMyAccount = this.accountId === myAccountId;
+    this.addressBook = { };
+
+    this.clearQueue = await this.queueService
+      .onQueueFinish(this.addressBookService.queueId, async () => {
+        await this.loadAddressBook();
+      });
+
+    if ((window.location.hash.indexOf('add-via-mail') !== -1 && !this.isMyAccount) ||
+        (this.account.profile && this.account.profile.email)) {
+      this.showMail = true;
+    }
+
+    if (window.location.hash.indexOf('add-via-accountid') !== -1 ||
+       (this.account.accountId && this.account.profile.email !== this.accountId)) {
+      this.showAccountId = true;
+    }
+
+    let formGroupDef = {
+      alias: [
+        this.account.alias,
+        Validators.required
+      ]
+    };
+
+    if (this.showAccountId) {
+      formGroupDef['accountId'] = [
+        {
+          value: this.account.accountId,
+          disabled: !this.isCreate
+        },
+        (formControl: FormControl) => {
+          if (!this.bcc.web3.utils.isAddress(formControl.value)) {
+            // valid Ethereum addrss
+            return { invalidAddress: true };
+
+          } else if (this.isCreate && (formControl.value === myAccountId)) {
+            // is not my account id
+            return { isMyAccount: true };
+
+          } else if (this.addressBook.hasOwnProperty(formControl.value)) {
+            // account already added
+            return { alreadAdded: true };
+
+          } else {
+            return null;
+          }
+        }
+      ];
+    }
+
+    if (this.showMail) {
+      formGroupDef['email'] = [
+        {
+          value : this.account.profile.email,
+          disabled: !this.isCreate
+        },
+        (formControl: FormControl) => {
+          if (!formControl.value) {
+            if (this.isCreate) {
+              return Validators.required(formControl);
+            } else {
+              return null;
+            }
+          } else {
+            const addressBookKeys = Object.keys(this.addressBook);
+
+            for (let i = 0; i < addressBookKeys.length; i++) {
+              const contact = this.addressBook[addressBookKeys[i]];
+
+              if (contact.profile && contact.profile.email === formControl.value) {
+                return { alreadAdded: true };
+              }
+            }
+
+            return Validators.email(formControl);
+          }
+        }
+      ];
+
+      formGroupDef['eves'] = [
+        1,
+        Validators.required
+      ];
+    }
+
+    this.accountForm = this.formBuilder.group(formGroupDef);
+
+    this.accountForm.valueChanges.subscribe(() => this.ref.detectChanges());
+
+    this.setTranslation();
+  }
+
+  async _ngOnDestroy() {
+    this.clearQueue();
+  }
+
+  async setTranslation() {
+    await this.core.utils.timeout(0);
+
+    if (!this.isCreate) {
+      const activeRouteName = this.routing.getDAppNameFromCurrRoutePath();
+      let alias = '';
+      let email = '';
+
+      if (this.accountForm.controls.alias) {
+        alias = this.accountForm.controls.alias.value;
+      }
+
+      if (this.accountForm.controls.email) {
+        email = this.accountForm.controls.email.value;
+      }
+
+      this.translate.addSingleTranslation(
+        activeRouteName,
+        alias ||
+        email ||
+        activeRouteName
+      );
+    }
+  }
+
+  /**
+   * Load current displayed account and all accounts that are added to the current address book.
+   */
+  async loadAddressBook() {
+    this.loading = true;
+    this.addressBook = Object.assign({}, await this.addressBookService.loadAccounts() || {});
+    this.account = this.addressBook[this.accountId];
+
+    if (!this.account) {
+      this.account = {};
+    }
+
+    if (!this.account.profile) {
+      this.account.profile = {};
+    }
+
+    this.account.accountId = this.accountId;
+
+    // set translation for account id in dashboard header
+    if (this.isMyAccount && !this.account.alias) {
+      this.translate.addSingleTranslation(
+        this.accountId,
+        this.translate.instant('_dappcontacts.me')
+      );
+    } else {
+      this.translate.addSingleTranslation(
+        this.accountId,
+        this.account.alias ? this.account.alias : this.accountId
+      );
+    }
+
+    this.loading = false;
+  }
+
+  /**
+   * Adds the current formdata to the address book queue.
+   *
+   * @param formData   Current data from this.accountForm.value
+   */
+  async saveProfile(formData) {
+    if (!this.saving) {
+      this.saving = true;
+
+      try {
+        let mail: any;
+
+        if (this.isCreate) {
+          // check for enough eve to invite user
+          const balance = await this.core.getBalance();
+          if (balance < (parseFloat(formData.eves) + 0.5)) {
+            try {
+              this
+                .alertService.showSubmitAlert(
+                  '_dappcontacts.alert.eve-missing',
+                  '_dappcontacts.alert.eve-missing-description',
+                  'submit'
+                );
+            } catch (ex) { }
+
+            this.saving = false;
+            return;
+          }
+
+          // check if profile for the account exists
+          if (formData.accountId) {
+            const profile = this.bcc.getProfileForAccount(formData.accountId);
+            const exists = await profile.exists();
+
+            if (!exists) {
+              try {
+                this
+                  .alertService.showSubmitAlert(
+                    '_dappcontacts.alert.profile-missing',
+                    '_dappcontacts.alert.profile-missing-description',
+                    'submit'
+                  );
+              } catch (ex) { }
+
+              this.saving = false;
+              return;
+            }
+          }
+
+          mail = await this.mailboxService
+            .showMailModal(
+              this.modalService,
+              '_dappcontacts.invitation-message',
+              '_dappcontacts.invitation-message-long',
+              '_dappcontacts.invitation-text.title',
+              '_dappcontacts.invitation-text.body',
+            );
+        }
+
+        formData.accountId = formData.accountId || this.accountId || formData.email;
+
+        this.addressBookService.addContactToQueue(formData.accountId, {
+          isCreate: this.isCreate,
+          profile: formData,
+          mail: mail
+        });
+
+        if (this.isMyAccount) {
+          this.core.utils.sendEvent('evan-username-updated');
+        }
+
+        if (this.isCreate) {
+          this.routing.goBack();
+        }
+        
+        this.routing.goBack();
+      } catch (ex) { }
+
+      this.saving = false;
+    }
+  }
+
+  /**
+   * Adds an contact remove queue data entry to the queue.
+   *
+   */
+  async deleteProfile() {
+    return this
+      .alertService.showSubmitAlert(
+        '_dappcontacts.alert.remove-title',
+        '_dappcontacts.alert.remove-description',
+        'cancel',
+        'submit'
+      )
+      .then(() => {
+        this.addressBookService.addRemoveContactToQueue(this.accountId, this.account.profile);
+
+        this.routing.goBack();
+      })
+      .catch(() => { });
+  }
+}

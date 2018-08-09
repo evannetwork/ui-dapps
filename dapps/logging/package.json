@@ -1,0 +1,16 @@
+{
+  "author": "Evan",
+  "main": "dist/index.js",
+  "name": "@evan.network/queue",
+  "typings": "dist/index.d.ts",
+  "version": "1.0.2",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "Angular 5",
+    "Ionic",
+    "DApp",
+    "SASS"
+  ]
+}

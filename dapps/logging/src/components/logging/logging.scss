@@ -1,0 +1,136 @@
+/*
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+$log_notice: #808253;
+$log_warning: #bd8f22;
+$log_debug: #64858d;
+$log_error: #d43a3a;
+
+logging {
+  .report-container {
+    .evan-content {
+      @media (min-width: 768px) {
+        width: calc(50% - 52px);
+        display: inline-block;
+      }
+
+      button {
+        &:hover, &:hover * {
+          background-color: darken($dark-blue, 3) !important;
+        }
+
+        .item-inner {
+          margin-left: 0px !important; 
+          padding-left: 10px;
+        }
+      }
+
+      &.error-report {
+        &, * {
+          background-color: #d45252;
+        }
+
+        * {
+          color: $light !important;
+        }
+
+        button {
+          &:hover, &:hover * {
+            background-color: darken(#d45252, 3) !important;
+          }
+        }
+      }
+    }
+  }
+
+  .evan-content {
+    button.top-right {
+      top: 25px;
+      right: 25px;
+    }
+  }
+
+  button[icon-only] {
+    ion-icon {
+      margin: 9px 8px 9px 8px !important;
+    }
+  }
+
+  tr:hover {
+    cursor: pointer;
+  }
+
+  tr.level-info, tr.level-notice {
+    &:hover {
+      td {
+        background-color: darken($log_notice, 10);
+      }
+    }
+
+    td {
+      background-color: $log_notice;
+    }
+  }
+
+  tr.level-warning {
+    &:hover {
+      td {
+        background-color: darken($log_warning, 10);
+      }
+    }
+
+    td {
+      background-color: $log_warning;
+    }
+  }
+
+  tr.level-debug {
+    &:hover {
+      td {
+        background-color: darken($log_debug, 10);
+      }
+    }
+
+    td {
+      background-color: $log_debug;
+    }
+  }
+
+  tr.level-error {
+    &:hover {
+      td {
+        background-color: darken($log_error, 10);
+      }
+    }
+
+    td {
+      background-color: $log_error;
+    }
+  }
+}

@@ -1,0 +1,322 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<ng-container *ngIf="!loading">
+  <div class="explorer-tabs evan-tabs evan-content">
+    <button ion-button icon-left clear [class.active]="activeTab === 0" (click)="activateTab(0)">
+      {{ '_explorer.basecontract.contract-state' | translate }}
+    </button>
+  
+    <button ion-button icon-left clear [class.active]="activeTab === 1" (click)="activateTab(1)">
+      {{ '_explorer.basecontract.roles' | translate }}
+    </button>
+    
+    <button ion-button icon-left clear [class.active]="activeTab === 2" (click)="activateTab(2)">
+      {{ '_explorer.basecontract.members' | translate }}
+    </button>
+
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 3"
+      *ngIf="explorerService.abi && explorerService.abi.length > 0" (click)="activateTab(3)">
+      {{ '_explorer.basecontract.roles-abi-members' | translate }}
+    </button>
+  </div>
+  <div class="explorer-tabs evan-tabs-container" [@tabSlideTransition]="activeTab">
+    <div class="evan-content" *ngIf="activeTab === 0">
+      <ion-row>
+        <ion-col col-12 col-md-6>
+          <ion-item>
+            <ion-label stacked>{{ '_explorer.basecontract.contract-state' | translate }}</ion-label>
+            <ion-select [(ngModel)]="contractState" [disabled]="!isAdminOrOwner" (ionChange)="ref.detectChanges()">
+              <ion-option *ngFor="let state of [ 0, 1, 2, 3, 4, 5, 6, 7 ]" [value]="state">
+                {{ '_explorer.basecontract.contract-states.' + state | translate }}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+          <span class="input-hint" *ngIf="!isAdminOrOwner">{{ '_explorer.basecontract.no-permission' | translate }}</span>
+          <div text-right *ngIf="isAdminOrOwner">
+            <button ion-button outline round margin-top
+              [disabled]="updating"
+              (click)="setContractState(contractState)">
+              <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+              {{ '_explorer.basecontract.set-contract-state' | translate }}
+            </button>
+          </div>
+        </ion-col>
+        <ion-col col-12 col-md-6>
+          <ion-item>
+            <ion-label stacked>{{ '_explorer.basecontract.my-state' | translate }}</ion-label>
+            <ion-select [(ngModel)]="myState" (ionChange)="ref.detectChanges()">
+              <ion-option *ngFor="let state of [ 0, 1, 2, 3, 4, 5 ]" [value]="state">
+                {{ '_explorer.basecontract.my-states.' + state | translate }}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+          <div text-right>
+            <button ion-button outline round margin-top
+              [disabled]="updating"
+              (click)="setConsumerState(core.activeAccount(), myState)">
+              <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+              {{ '_explorer.basecontract.set-my-contract-state' | translate }}
+            </button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngIf="owner === activeAccount">
+        <ion-item>
+          <ion-label stacked>{{ '_explorer.basecontract.transfer-ownership' | translate }}</ion-label>
+          <ion-input
+            [(ngModel)]="newOwnerShip"
+            (ionChange)="ref.detectChanges()">
+          </ion-input>
+        </ion-item>
+        <div text-right>
+          <button ion-button outline round margin-top
+            [disabled]="updating || !newOwnerShip"
+            (click)="transferOwnerShip(newOwnerShip)">
+            <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+            {{ '_explorer.basecontract.transfer' | translate }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <div class="evan-content" *ngIf="activeTab === 1">
+      <div class="table-responsive" margin-top>
+        <table>
+          <thead>
+            <tr>
+              <th>{{ '_explorer.basecontract.role' | translate }}</th>
+              <th>{{ '_explorer.basecontract.permissions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let role of availableRoles">
+              <td>
+                <ng-container *ngIf="role === '0'">{{ '_explorer.owner' | translate }}</ng-container>
+                <ng-container *ngIf="role === '1'">{{ '_explorer.basecontract.member' | translate }}</ng-container>
+                <ng-container *ngIf="role !== '0' && role !== '1'">{{ role }}</ng-container>
+              </td>
+              <td>
+                <button ion-button outline round 
+                  [disabled]="updating"
+                  (click)="checkFunctionForRoles([ role ])">
+                  <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+                  {{ '_explorer.basecontract.check-role-func' | translate }}
+                </button>
+                <button ion-button outline round
+                  *ngIf="isAdminOrOwner"
+                  [disabled]="updating"
+                  (click)="setFunctionPermission(role)">
+                  <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+                  {{ '_explorer.basecontract.set-role-func' | translate }}
+                </button>
+                <button ion-button outline round
+                  *ngIf="isAdminOrOwner"
+                  [disabled]="updating"
+                  (click)="setOperationPermission(role)">
+                  <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+                  {{ '_explorer.basecontract.set-operation-func' | translate }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div text-right>
+          <button ion-button outline round
+            *ngIf="isAdminOrOwner"
+            [disabled]="updating"
+            (click)="addRole()">
+            <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+            {{ '_explorer.basecontract.add-role' | translate }}
+          </button>
+          <span *ngIf="!isAdminOrOwner" color="light">
+            {{ '_explorer.basecontract.no-permission' | translate }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="evan-content" *ngIf="activeTab === 2">
+      <ng-container *ngIf="isAdminOrOwner && !reloadAddMembers">
+        <contract-members
+          [(members)]="membersToAdd"
+          [origin]="this.members | objectKeys"
+          [contractMemberStates]="membersWithStates"
+          (onChange)="ref.detectChanges()">
+        </contract-members>
+        <div text-right *ngIf="membersToAdd.length > 0">
+          <button ion-button outline round margin-top
+            *ngIf="isAdminOrOwner"
+            [disabled]="updating"
+            (click)="inviteMembers()">
+            <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+            {{ '_explorer.basecontract.invite-member' | translate }}
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="table-responsive" margin-top>
+        <table>
+          <thead>
+            <tr>
+              <th>{{ '_explorer.basecontract.member' | translate }}</th>
+              <th>{{ '_explorer.alias' | translate }}</th>
+              <th>{{ '_explorer.basecontract.consumer-state' | translate }}</th>
+              <th>{{ '_explorer.basecontract.roles' | translate }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of members | objectKeys">
+              <td>
+                {{ member }}
+              </td>
+              <td>
+                <span>
+                  {{ contacts[member]?.alias || contacts[member]?.email || '---' }}
+                </span>
+                <span *ngIf="member === activeAccount">
+                  ({{ '_angularcore.contract-members.i' | translate }})
+                </span>
+              </td>
+              <td>
+                {{ '_explorer.basecontract.my-states.' + members[member].state | translate }} ({{ members[member].state }})
+              </td>
+              <td>
+                <div class="evan-tag-container">
+                  <div class="evan-tag"
+                    [class.disable-delete]="!isAdminOrOwner || updating"
+                    *ngFor="let role of members[member].roles">
+                    <span *ngIf="role === '0'">{{ '_explorer.owner' | translate }}</span>
+                    <span *ngIf="role === '1'">{{ '_explorer.basecontract.member' | translate }}</span>
+                    <span *ngIf="role !== '0' && role !== '1'">{{ role }}</span>
+                    <ion-icon name="close"
+                      *ngIf="isAdminOrOwner && !updating"
+                      (click)="removeRoleFromMember(member, role)">
+                    </ion-icon>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button ion-button outline round 
+                  [disabled]="updating"
+                  (click)="checkFunctionForRoles(members[member].roles)">
+                  <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+                  {{ '_explorer.basecontract.check-role-func' | translate }}
+                </button>
+                <button ion-button outline round *ngIf="isAdminOrOwner && members[member].roleAddable"
+                  [disabled]="updating"
+                  (click)="addRoleToMember(member)">
+                  <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+                  {{ '_explorer.basecontract.add-role' | translate }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 3">
+      <div class="evan-content evan-full-content m-t-0">
+        <h2 class="content-header">{{ '_explorer.basecontract.public-property' | translate }}</h2>
+        <div class="table-responsive" margin-top>
+          <table>
+            <thead>
+              <tr>
+                <th>{{ '_explorer.basecontract.func' | translate }}</th>
+                <th>{{ '_explorer.basecontract.signature' | translate }}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let abiFunc of publicAbiPermissions">
+                <td>
+                  {{ abiFunc.name }}({{ abiFunc.inputTypes }})
+                </td>
+                <td>
+                  {{ abiFunc.signature }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="evan-content evan-full-content">
+        <h2 class="content-header">{{ '_explorer.basecontract.permitted-properties' | translate }}</h2>
+        <div class="table-responsive" margin-top>
+          <table>
+            <thead>
+              <tr>
+                <th>{{ '_explorer.basecontract.func' | translate }}</th>
+                <th>{{ '_explorer.basecontract.signature' | translate }}</th>
+                <th>{{ '_explorer.basecontract.roles' | translate }}</th>
+                <th>{{ '_explorer.basecontract.members' | translate }}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let abiFunc of abiPermissions">
+                <td>
+                  {{ abiFunc.name }}({{ abiFunc.inputTypes }})
+                </td>
+                <td>
+                  {{ abiFunc.signature }}
+                </td>
+                <td>
+                  <div class="evan-tag-container">
+                    <div class="evan-tag disable-delete"
+                      [class.updating]="updating"
+                      *ngFor="let role of abiFunc.roles">
+                      <span *ngIf="role === '0'">{{ '_explorer.owner' | translate }}</span>
+                      <span *ngIf="role === '1'">{{ '_explorer.basecontract.member' | translate }}</span>
+                      <span *ngIf="role !== '0' && role !== '1'">{{ role }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="evan-tag-container">
+                    <div class="evan-tag disable-delete"
+                      [class.updating]="updating"
+                      [class.owner]="member === owner"
+                      *ngFor="let member of abiFunc.members">
+                      <span>
+                        <ion-icon class="normal-icon" name="medal" color="light"
+                          *ngIf="member === owner">
+                        </ion-icon>
+                        {{ contacts[member]?.alias || contacts[member]?.email || member }}
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,83 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title [innerHTML]="'_dapponboarding.onboarding' | translate"></ion-title>
+  </ion-navbar>
+</ion-header>
+<evan-loading *ngIf="loading"></evan-loading>
+<ion-content ion-fixed [style.display]="loading ? 'none':'block'">
+  <div class="vertical-center-container">
+    <div class="content-container" text-left *ngIf="!loading">
+      <h3>{{ '_dapponboarding.onboarded' | translate }}</h3>
+
+      <p class="continuous-text no-margin-top"
+        [innerHTML]="'_dapponboarding.onboarded-desc' | translate">
+      </p>
+
+      <div class="content-container" text-left>
+        <p>
+          <b>{{ '_dapponboarding.user-alias' | translate }}:</b>
+          <span>{{ alias }}</span>
+        </p>
+        <p>
+          {{ '_dapponboarding.profile-provider' | translate }}
+        </p>
+        <p class="copy-container"
+          (click)="core.copyString(activeAccount)">
+          <b>{{ '_dapponboarding.account-id' | translate }}:</b>
+          <span>{{ activeAccount }}</span>
+          <button ion-button icon-only round clear title="copy">
+            <ion-icon name="copy" color="light"></ion-icon>
+          </button>
+        </p>
+        <p>
+          <b>{{ '_dapponboarding.balance' | translate }}:</b>
+          <span>{{ balance }} EVE</span>
+        </p>
+        <p
+          [innerHTML] = "'_dapponboarding.onboarded-balance' | translate" > 
+        </p>
+      </div>
+    </div>
+    <div class="no-margin-bottom" margin padding text-center *ngIf="utils.isMD">
+      <button ion-button icon-left round color="primary"
+              (click)="next()">
+        <ion-icon name="cloud-done"></ion-icon>
+        {{ '_dapponboarding.ok' | translate }}
+      </button>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="active" text-center *ngIf="!utils.isMD">
+  <button ion-button icon-left round color="primary"
+    (click)="next()">
+    <ion-icon name="cloud-done"></ion-icon>
+    {{ '_dapponboarding.ok' | translate }}
+  </button>
+</ion-footer>

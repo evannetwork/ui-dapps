@@ -1,0 +1,170 @@
+<!--
+  Copyright (C) 2018-present evan GmbH. 
+  
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3, 
+  as published by the Free Software Foundation. 
+  
+  This program is distributed in the hope that it will be useful, 
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details. 
+  
+  You should have received a copy of the GNU Affero General Public License along with this program.
+  If not, see http://www.gnu.org/licenses/ or write to the
+  
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA, 02110-1301 USA,
+  
+  or download the license from the following URL: https://evan.network/license/ 
+  
+  You can be released from the requirements of the GNU Affero General Public License
+  by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts of it
+  on other blockchains than evan.network. 
+  
+  For more information, please contact evan GmbH at this address: https://evan.network/license/ 
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<ng-container *ngIf="!loading">
+  <div class="evan-content evan-small-content" *ngIf="queue.entries.length === 0">
+    <h2 class="content-header m-b-0 m-t-0">{{ '_angularcorequeue.empty-queue' | translate }}</h2>
+    
+    <div class="continuous-text" padding>
+      <span>
+        {{ '_angularcorequeue.empty-queue-description' | translate }}
+      </span>
+    </div>
+    
+    <div text-center padding>
+      <button ion-button icon-left color="primary" (click)="routing.goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+        <span>{{ '_angularcorequeue.go-back' | translate }}</span>
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="queue.entries.length > 0">
+    <div class="evan-relative evan-content evan-small-content queue-small-view">
+      <h2 class="content-header m-b-0 m-t-0">{{ 'queue' | translate }}</h2>
+
+      <ion-list class="evan-list">
+        <ion-item-sliding *ngFor="let queueEntry of queue.entries" #sliding>
+          <ion-item color="light">
+            <ion-avatar item-start>
+              <div class="evan-avatar-wrapper">
+                <circle-progress
+                  *ngIf="!queueEntry.loading"
+                  [percent]="queueService.calculatePercentage(queueEntry)"
+                  [maxPercent]="100"
+                  [radius]="30"
+                  [space]="-4"
+                  [outerStrokeWidth]="4"
+                  [innerStrokeWidth]="4"
+                  [outerStrokeColor]="'#004f7d'"
+                  [innerStrokeColor]="'#96daff'"
+                  [animation]="true"
+                  [animationDuration]="100"
+                  [units]="'%'"
+                  [titleFontSize]="14"
+                  [unitsFontSize]="14"
+                  [titleColor]="'#fff'"
+                  [subtitleColor]="'#fff'"
+                  [showSubtitle]="false">
+                </circle-progress>
+                <ion-spinner *ngIf="queueEntry.loading" color="dark"></ion-spinner>
+              </div>
+            </ion-avatar>
+            <h2>{{ queueEntry.queueId.dispatcher | translate }}</h2>
+            <h3 *ngIf="queueEntry.dispatcher">
+              {{ queueEntry.dispatcher?.sequence[queueEntry.status]?.description | translate }}
+            </h3>
+            <span *ngIf="queueEntry.ex">
+              {{ '_angularcorequeue.error-occured' | translate }}
+            </span>
+
+            <button *ngIf="utils.isMD" ion-button round item-end icon-only color="danger"
+              (click)="removeQueueEntry(queueEntry, fab)">
+              <ion-icon name="trash" color="light"></ion-icon>
+            </button>
+
+            <button ion-button round item-end icon-only
+              class="start-button"
+              *ngIf="queueEntry.dispatcher?.sequence[queueEntry.status]"
+              [disabled]="queueEntry.working"
+              [class.error]="queueEntry.ex"
+              [attr.clear]="!utils.isMD"
+              (click)="queueService.startSync(queueEntry)">
+              <ion-icon name="send" color="light"
+                *ngIf="!queueEntry.working && !queueEntry.working && !queueEntry.ex">
+              </ion-icon>
+              <ion-icon name="refresh" color="light"
+                *ngIf="queueEntry.ex">
+              </ion-icon>
+              <ion-spinner color="light" *ngIf="queueEntry.working || queueEntry.loading">
+              </ion-spinner>
+            </button>
+          </ion-item>
+
+          <ion-item-options side="left">
+            <button ion-button color="danger" (click)="removeQueueEntry(queueEntry, fab)">
+              <ion-icon name="trash"></ion-icon>
+              {{ '_angularcorequeue.remove' | translate }}
+            </button>
+          </ion-item-options>
+          <ion-item-options side="right">
+            <button ion-button color="danger" [disabled]="queueEntry.working || queueEntry.loading" (click)="removeQueueEntry(queueEntry, fab)">
+              <ion-icon name="trash"></ion-icon>
+              {{ '_angularcorequeue.remove' | translate }}
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+  </ng-container>
+
+  <div class="evan-relative evan-content evan-small-content" *ngIf="queue.entries.length > 0">
+    <h2 class="content-header m-b-0 m-t-0">
+      {{ '_angularcorequeue.sync-all' | translate }}
+    </h2>
+
+    <div text-center padding>
+      <button ion-button icon-left round outline
+        [color]="primary"
+        [disabled]="!queueService.allSyncing"
+        (click)="queueService.startSyncAll()">
+        <ion-icon name="send" color="primary"
+          *ngIf="queueService.allSyncing">
+        </ion-icon>
+        <ion-spinner color="primary"
+          *ngIf="!queueService.allSyncing">
+        </ion-spinner>
+        <span *ngIf="!queueService.allSyncing">{{ '_angularcorequeue.synchronising' | translate }}</span>
+        <span *ngIf="queueService.allSyncing">{{ '_angularcorequeue.startsync' | translate }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="evan-relative evan-content evan-small-content" *ngIf="queueService.exception">
+    <h2 class="content-header m-b-0 m-t-0">
+      {{ '_angularcorequeue.error' | translate }}
+    </h2>
+
+    <div text-center padding>
+      <span class="continuous-text">
+        {{ '_angularcorequeue.error-occured' | translate }}
+        <div>
+          {{ '_angularcorequeue.retry-description' | translate }}
+        </div>
+      </span>
+    </div>
+    <div text-center padding-bottom>
+      <button ion-button icon-left round outline color="danger"
+        (click)="loggingService.logQuestionAlert()">
+        <ion-icon name="alert" color="danger"></ion-icon>
+        <span>{{ '_angularcorequeue.report-error' | translate }}</span>
+      </button>
+    </div>
+  </div>
+</ng-container>
