@@ -281,7 +281,7 @@ export class OnboardingService {
       const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);  
       console.dir(profileIndexDomain)  
       const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);  
-      const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndex', address);  
+      const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
       await this.sendCommKey(account);
 
       // finished profile creation successfully

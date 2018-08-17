@@ -1,9 +1,9 @@
 {
-  "author": "Evan",
+  "author": "evan GmbH",
   "main": "dist/index.js",
   "name": "@evan.network/addressbook",
   "typings": "dist/index.d.ts",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "keywords": [
     "javascript",
     "typescript",

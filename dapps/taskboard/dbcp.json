@@ -1,17 +1,17 @@
 {
   "public": {
-    "author": "evan",
+    "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.0.1",
-        "angular-libs": "^1.0.1"
+        "angular-core": "^1.1.0",
+        "angular-libs": "^1.1.0"
       },
       "entrypoint": "taskboard.js",
       "files": [
         "taskboard.js",
         "taskboard.css"
       ],
-      "origin": "QmSXtjdeCM9J8i4Gce3Wj316n4MN9upU8FW1H19P9XJdQu",
+      "origin": "QmUMARAi3deNhoHU6jecWAhU3z7GawEkEy8E8JAz9gaKNw",
       "primaryColor": "#e87e23",
       "secondaryColor": "#fffaf5",
       "standalone": true,
@@ -34,13 +34,14 @@
       "dapp",
       "evan"
     ],
-    "version": "1.0.2",
+    "version": "1.1.0",
     "versions": {
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
       "0.1.0": "QmV5iJacr3hS5otHGn3gCfL1ZNtETi15qF1QvwT2BrFjQX",
       "1.0.0": "QmTF3iTN1gax1ajRQxpK7Ms7DCHPMCRj6GeqSP4aRCtBVD",
       "1.0.1": "QmR4h7XGbS2GbqdtakPMeMwKNDDrmv4eEQFpkQkuZfiy4E",
-      "1.0.2": "QmSwSBHHEiPW6dsZjTGuFANJQS6eYXtfXaaKKcBDWKeyGp"
+      "1.0.2": "QmSwSBHHEiPW6dsZjTGuFANJQS6eYXtfXaaKKcBDWKeyGp",
+      "1.1.0": "QmYS1QjbZ8FKbvoMdqM9V2QrzbA6hzzMkC87C6Tjsx6jcS"
     },
     "dbcpVersion": 1
   }

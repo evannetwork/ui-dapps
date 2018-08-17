@@ -1,17 +1,17 @@
 {
   "public": {
-    "author": "evan",
+    "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.0.1",
-        "angular-libs": "^1.0.1"
+        "angular-core": "^1.1.0",
+        "angular-libs": "^1.1.0"
       },
       "entrypoint": "favorites.js",
       "files": [
         "favorites.js",
         "favorites.css"
       ],
-      "origin": "QmapoxgEfaHs4TYkoyrrTHdTswuEysg55GHd19Hqw4y1v8",
+      "origin": "QmfBj4GQcpjFEvJ56YcDvJZ6C82by51XoHwJntdQGWMTLr",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
@@ -34,13 +34,14 @@
       "evan",
       "library"
     ],
-    "version": "1.0.2",
+    "version": "1.1.0",
     "versions": {
       "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
       "1.0.0": "QmT3Vk4tJAcNoF1YaS3jT6WhUWojmoUSYZgt1MHAbAwJ7Q",
       "1.0.1": "QmYAZBrB5dqEdvMTRBf3DWCCLtfzVfYdj5su5bKEuMdu3c",
-      "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS"
+      "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS",
+      "1.1.0": "QmRJ9zez2PPtnADhswwt1RCU2A9LqRPHxQkqjE3BXoUgHV"
     }
   }
 }

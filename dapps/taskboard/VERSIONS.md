@@ -5,6 +5,10 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.1.0
+### Features
+- Initial Version
+
 ## Version 1.0.2
 ### Features
 ### Fixes
