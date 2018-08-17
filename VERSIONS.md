@@ -5,6 +5,10 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.1.0
+### Fixes
+- Remove deployment description and move it to the evan.network wik
+
 ## Version 1.0.2
 ### Features
 - enable / disable notifications

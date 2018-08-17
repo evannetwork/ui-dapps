@@ -1,17 +1,17 @@
 {
   "public": {
-    "author": "evan",
+    "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.0.1",
-        "angular-libs": "^1.0.1"
+        "angular-core": "^1.1.0",
+        "angular-libs": "^1.1.0"
       },
       "entrypoint": "profile.js",
       "files": [
         "profile.js",
         "profile.css"
       ],
-      "origin": "QmYTiEp9g6R281zcVD4Ut1avnv3b7Qr5BPRGpar23B9H7T",
+      "origin": "QmV3eTGpN4u74JjGa5mgXQ3BzXCXH8znJJdNqkXUmb9MMr",
       "primaryColor": "#ac7517",
       "secondaryColor": "#fff2dc",
       "type": "dapp"
@@ -33,13 +33,14 @@
       "dapp",
       "evan"
     ],
-    "version": "1.0.2",
+    "version": "1.1.0",
     "versions": {
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
       "0.1.0": "QmPMvAHoL7MuG5pebHj1E1jn1RzZAuv6sWAkdxXxCpQ671",
       "1.0.0": "QmczWqAG9L587oYEERpRNUP49QjRgvNcvwnPVo7BjaHDY2",
       "1.0.1": "QmUD1PA4R85duv2BLQjmnST51y59K7UXSiWU9EynkDgfyd",
-      "1.0.2": "Qme7Z2EJwJFpKiZ8uJN8F12gGYyKoBjoNeWfDacJ74MCpH"
+      "1.0.2": "QmTQx6itp4DCbx1S3snNcyetyg4iLfh2HvqcXZPNPkkkev",
+      "1.1.0": "QmQBGkMQfkKwwipo8JFhdjApNEM95bZYTju1UseNRyeNfS"
     },
     "dbcpVersion": 1
   }
