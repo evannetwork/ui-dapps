@@ -2,13 +2,12 @@
 
 ## Next Version
 ### Features
-- Remove deployment description and move it to the evan.network wiki
-- add subdomain support
+### Fixes
+### Deprecations
 
+## Version 1.1.0
 ### Fixes
 - Remove deployment description and move it to the evan.network wik
-
-### Deprecations
 
 ## Version 1.0.2
 ### Features
