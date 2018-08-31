@@ -135,7 +135,7 @@ export class DAppAddComponent extends AsyncComponent {
       .getBookmarkDefinition(ensAddress.toLowerCase())
       .then(definition => {
         dapp = definition;
-        dapp.trimmedName = definition.name.replace(/\s/g, '');
+        dapp.trimmedName = definition.name.replace(/\s|\./g, '');
 
         this.alertService.addDAppAlertStyle(dapp);
 

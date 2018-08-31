@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- fix preview img for addDAppAlertStyle (trimmed name must not contain a dot)
+
 ### Deprecations
 
 ## Version 1.1.0
