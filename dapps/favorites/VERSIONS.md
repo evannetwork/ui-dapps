@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 - fix preview img for addDAppAlertStyle (trimmed name must not contain a dot)
+- preview img is not displayed for dapp add, when the name includes a dot
 
 ### Deprecations
 

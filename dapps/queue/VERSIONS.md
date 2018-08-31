@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- add try catch to loadDispatcherForQueue to catch erros when the dispatcher could not be loaded
+
 ### Deprecations
 
 ## Version 1.1.0
