@@ -50,6 +50,9 @@
           "comment": {
             "type": "string"
           },
+          "files": {
+            "type": "object"
+          },
           "id": {
             "type": "string"
           },
