@@ -99,16 +99,15 @@
               </button>
             </button>
           </div>
-
-          <div col-12 *ngIf="mailService.totalMailCount - mailService.mails.length > 0" text-center>
+          <div col-12 *ngIf="showLoadMore()" text-center>
             <p>
               {{ '_dappmailbox.showing' | translate }}
-              {{ mailService.mails.length }}
+              {{ !showSent ? mailService.receivedMails.length : mailService.sentMails.length }} 
               {{ '_dappmailbox.of' | translate }} 
-              {{ mailService.totalMailCount }} 
+              {{ !showSent ? mailService.totalReceivedMailCount : mailService.totalSentMailCount }}
               {{ 'mails' | translate }} 
             </p>
-            <button (click)="loadMoreAnswers()" [disabled]="loadMore" ion-button icon-left>
+            <button (click)="loadMoreMails()" [disabled]="loadMore" ion-button icon-left outline round>
               <ion-icon *ngIf="!loadMore" name="refresh" color="light"></ion-icon>
               <ion-spinner *ngIf="loadMore"></ion-spinner>
               <span>{{ '_dappmailbox.loading_more_mail' | translate }}</span>
