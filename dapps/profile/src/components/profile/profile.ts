@@ -277,4 +277,25 @@ export class ProfileComponent extends AsyncComponent {
     this.ref.detectChanges();
     this.core.utils.sendEvent('evan-notifications-toggled');
   }
+
+  /**
+   * Overwrite the browser language and use the localStorage.
+   */
+  async setLanguageMode() {
+    window.localStorage['evan-language'] = this.translateService.translate.currentLang;
+
+    this.ref.detectChanges();
+
+    // ask the user to reload the application
+    try {
+      await this.alertService.showSubmitAlert(
+        '_dappprofile.language-changed',
+        '_dappprofile.language-changed-desc',
+        '_dappprofile.cancel',
+        '_dappprofile.language-changed-ok',
+      );
+
+      window.location.reload();
+    } catch (ex) { }
+  }
 }

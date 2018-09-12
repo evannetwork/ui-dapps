@@ -248,6 +248,9 @@ export class ExplorerService implements OnDestroy {
 
       // check if loaded dbcp is valid
       if (dbcp && dbcp.status !== 'invalid') {
+        if (sections.indexOf('dbcp') === -1) {
+          sections.push('dbcp');
+        }
 
         // set abi definition, if it wasnt overwritten manually
         if (!abi && dbcp.abis && dbcp.abis.own) {

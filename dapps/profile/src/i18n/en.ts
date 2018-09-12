@@ -45,6 +45,15 @@ export const en = {
     "export-privatekey": "Export Private Key",
     "export-privatekey-desc": "The private key of your account secures access to your blockchain identity. Exporting and possibly unsafe storage of this information can lead to serious security risks. Do you really want to export the private key?",
     "export-privatekey-ok": "I understand the risk",
+    "language": "Language",
+    "language-changed": "Language changed",
+    "language-changed-desc": "After the language has been changed, not all areas of the application are translated immediately. For these changes to take effect, the application must be restarted. Do you want to restart the application now?",
+    "language-changed-ok": "restart",
+    "language-desc": "Use a specific language for the evan.network applications.",
+    "languages": {
+      "de": "german",
+      "en": "english"
+    },
     "logout": "Logout",
     "logout-desc": "Do you really want to log out?",
     "my-profile": "My Profile",
