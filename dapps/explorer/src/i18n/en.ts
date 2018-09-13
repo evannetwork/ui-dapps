@@ -143,7 +143,7 @@ export const en = {
       "add-list-entry": "Add List entry",
       "add-list-entry-question": "Do you want to save the current data?",
       "data": "Data",
-      "data-analysis": "Data analyse",
+      "data-analysis": "Data analysis",
       "data-schema": "Data schema",
       "encrypt-hashes": "Decrypt / Encrypt",
       "encrypt-hashes-desc": "Automatically encrypts and decrypts all entries and hashes.",
