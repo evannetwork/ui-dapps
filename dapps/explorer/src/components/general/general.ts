@@ -108,7 +108,7 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
   }
 
   /**
-   * Load the basic informations about the current contract
+   * Load the basic information about the current contract
    */
   async _ngOnInit() {
     this.id = this.routingService.getHashParam('id');
@@ -134,7 +134,7 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
         this.created = await this.bcc.executor.executeContractCall(baseContract, 'created') * 1000;
         this.contractType = await this.bcc.executor.executeContractCall(baseContract, 'contractType');
       } catch (ex) {
-        this.core.utils.log(`Could not load BaseContract informations: ${ ex.message }`, 'warning');
+        this.core.utils.log(`Could not load BaseContract information: ${ ex.message }`, 'warning');
       }
 
       try {
@@ -145,7 +145,7 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
         );
         this.owner = await this.bcc.executor.executeContractCall(authContract, 'owner');
       } catch (ex) {
-        this.core.utils.log(`Could not load DSAuth informations: ${ ex.message }`, 'warning');
+        this.core.utils.log(`Could not load DSAuth information: ${ ex.message }`, 'warning');
       }
 
       this.balance = await this.bcc.web3.eth.getBalance(this.contractAddress);
@@ -154,7 +154,7 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
     try {
       this.dbcp = await this.bcc.description.getDescription(this.id, this.core.activeAccount());
     } catch (ex) {
-      this.core.utils.log(`Could not load DBCP informations: ${ ex.message }`, 'warning');
+      this.core.utils.log(`Could not load DBCP information: ${ ex.message }`, 'warning');
     }
   }
 

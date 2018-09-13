@@ -278,7 +278,7 @@ export class ExplorerService implements OnDestroy {
         try {
           created = this.bcc.executor.executeContractCall(contract, 'created');
         } catch (ex) {
-          this.core.utils.log(`Could not load BaseContract informations: ${ ex.message }`, 'warning');
+          this.core.utils.log(`Could not load BaseContract information: ${ ex.message }`, 'warning');
         }
 
         if (isBaseContractInterface && created) {

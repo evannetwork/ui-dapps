@@ -11,7 +11,7 @@
         "explorer.js",
         "explorer.css"
       ],
-      "origin": "QmSwiQHozQsYtrb7GYABB9fyLAzDQ4VA3i3qDW88rGTAGy",
+      "origin": "QmV8xfrKxkWX7oVgQYdZ8XiN4TmYjNQXfQ5yytrWKxhDLh",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
       "type": "dapp",
@@ -38,7 +38,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmXNENxwGrKBGqkHYSviTfENktRmGAwsEkJ2xSHczrZRWW",
-      "1.1.0": "QmZgiYNF6Ce9CZAiaZRLpQoFoPYU8XfaYhKR83khNu3QkA"
+      "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt"
     },
     "dbcpVersion": 1
   }

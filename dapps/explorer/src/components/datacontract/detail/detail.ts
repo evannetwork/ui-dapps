@@ -173,15 +173,15 @@ export class ExplorerDataContractDetailComponent extends AsyncComponent {
       this.contractAddress
     );
 
-    await this.loadEntryInformations();
+    await this.loadEntryInformation();
   }
 
   /**
-   * Load all nessecary informations about the current entry.
+   * Load all nessecary information about the current entry.
    *
    * @return     {Promise<void>}  resolved when done
    */
-  async loadEntryInformations() {
+  async loadEntryInformation() {
     try {
       // reset last error
       delete this.error;
@@ -239,7 +239,7 @@ export class ExplorerDataContractDetailComponent extends AsyncComponent {
 
   /**
    * Function that is called when load list entries of the contract list entries component or the
-   * this.loadEntryInformations function fails.
+   * this.loadEntryInformation function fails.
    *
    * @param      {Error}   ex      incoming error object
    */
@@ -339,7 +339,7 @@ export class ExplorerDataContractDetailComponent extends AsyncComponent {
     this.loading = true;
     this.ref.detectChanges();
 
-    await this.loadEntryInformations();
+    await this.loadEntryInformation();
 
     this.loading = false;
     this.ref.detectChanges();

@@ -62,7 +62,7 @@ import {
 })
 
 /**
- * Shows the current profile informations and provides the possibility to set some configurations
+ * Shows the current profile information and provides the possibility to set some configurations
  * for the ui
  */
 export class ProfileComponent extends AsyncComponent {
@@ -124,7 +124,7 @@ export class ProfileComponent extends AsyncComponent {
   }
 
   /**
-   * Set initial values and load the profile informations
+   * Set initial values and load the profile information
    *
    * @return     {Promise<void>}  resolved when done
    */

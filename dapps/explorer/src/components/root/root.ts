@@ -167,11 +167,11 @@ export class RootComponent extends AsyncComponent {
 
     this.routerChange = this.routingService.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
-        this.loadIDInformations();
+        this.loadIDInformation();
       }
     });
 
-    await this.loadIDInformations();
+    await this.loadIDInformation();
     this.core.finishDAppLoading();
   }
 
@@ -183,11 +183,11 @@ export class RootComponent extends AsyncComponent {
   }
 
   /**
-   * Load the informations about the current route to automatically toggle the top bar
+   * Load the information about the current route to automatically toggle the top bar
    *
    * @return     {Promise<void>}  Resolved when done
    */
-  async loadIDInformations() {
+  async loadIDInformation() {
     this.id = this.routingService.getHashParam('id');
 
     // check active dapp
@@ -210,7 +210,7 @@ export class RootComponent extends AsyncComponent {
       await this.explorerService.openID(this.id, this.alertService, this.explorerService.abi,
         this.explorerService.dataSchema);
 
-      // set id translation to genereal informations
+      // set id translation to genereal information
       this.translateService.addSingleTranslation(
         this.id,
         this.translateService.instant('_explorer.general-infos')

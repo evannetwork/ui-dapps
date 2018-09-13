@@ -339,7 +339,7 @@ export class ExplorerTransactionHistoryComponent extends AsyncComponent {
    * checks every block transaction if the target is a contract we 
    * currently watching and executes the filter and event function
    *
-   * @param      {any}  block   block informations including transactions details
+   * @param      {any}  block   block information including transactions details
    */
   checkAndCallContractUpdates(block) {
     if (block.transactions.length > 0) {
