@@ -27,7 +27,7 @@
 
 export const en = {
   'mailbox': 'Mailbox',
-  'mail-detail': 'Mail Detail',
+  'maildetail': 'Mail Detail',
   '_dappmailbox': {
     'remove': 'Delete',
     'received': 'Received',
@@ -112,5 +112,5 @@ With kind regards,
   },
   'SendMailDispatcher': 'Mail sending',
   'KeyExchangeDispatcher': 'Secure Data exchange',
-  'mailbox-list': 'Mailbox'
+  'mailboxlist': 'Mailbox'
 };

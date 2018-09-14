@@ -3,6 +3,10 @@
 ## Next Version
 ### Features
 ### Fixes
+- fix dapp-wrapper title i18n within all dapps
+- explorer: load ens addresses without an underlaying contract and only with dbcp
+- mailbox: fix mailbox paging
+
 ### Deprecations
 
 ## Version 1.1.0

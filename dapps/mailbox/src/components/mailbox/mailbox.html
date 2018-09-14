@@ -107,7 +107,9 @@
               {{ !showSent ? mailService.totalReceivedMailCount : mailService.totalSentMailCount }}
               {{ 'mails' | translate }} 
             </p>
-            <button (click)="loadMoreMails()" [disabled]="loadMore" ion-button icon-left outline round>
+            <button ion-button icon-left round color="transparency"
+              (click)="loadMoreMails()"
+              [disabled]="loadMore">
               <ion-icon *ngIf="!loadMore" name="refresh" color="light"></ion-icon>
               <ion-spinner *ngIf="loadMore"></ion-spinner>
               <span>{{ '_dappmailbox.loading_more_mail' | translate }}</span>

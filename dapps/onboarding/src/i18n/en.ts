@@ -27,7 +27,7 @@
 
 export const en = {
   'onboarding': 'Onboarding',
-  'onboarding-list': 'Onboarding',
+  'onboardinglist': 'Onboarding',
   '_dapponboarding': {
     'onboarding': 'Welcome to the <b>evan.network</b>',
     'welcome': 'Welcome to the <b>evan.network</b>',

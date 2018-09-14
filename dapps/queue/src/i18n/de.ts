@@ -27,5 +27,5 @@
 
 export const de = {
   'queue': 'Datensynchronisation',
-  'queue-list': 'Datensynchronisation',
+  'queuelist': 'Datensynchronisation',
 };

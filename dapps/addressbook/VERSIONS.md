@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- fix dapp-wrapper title i18n
+
 ### Deprecations
 
 ## Version 1.1.0

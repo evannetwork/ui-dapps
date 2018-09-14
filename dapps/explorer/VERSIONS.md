@@ -3,8 +3,10 @@
 ## Next Version
 ### Features
 ### Fixes
-### Deprecations
+- load ens addresses without an underlaying contract and only with dbcp
+- fix dapp-wrapper title i18n
 
+### Deprecations
 ## Version 1.1.0
 ### Features
 - Initial Version

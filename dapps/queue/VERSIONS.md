@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 - add try catch to loadDispatcherForQueue to catch erros when the dispatcher could not be loaded
+- fix dapp-wrapper title i18n
 
 ### Deprecations
 

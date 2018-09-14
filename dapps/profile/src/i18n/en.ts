@@ -66,6 +66,6 @@ export const en = {
     "settings": "Settings"
   },
   "profile": "My Profile",
-  "profile-detail": "My Profile",
-  "profile-root": "My Profile"
+  "profiledetail": "My Profile",
+  "profileroot": "My Profile"
 };

@@ -27,5 +27,5 @@
 
 export const en = {
   'queue': 'Synchronization',
-  'queue-list': 'Synchronization',
+  'queuelist': 'Synchronization',
 };
