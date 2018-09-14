@@ -11,7 +11,7 @@
         "queue.js",
         "queue.css"
       ],
-      "origin": "QmXrJ86Twjh5xD4CvSDvMznjWfH8sbqRt5mxkT7PPmXgfV",
+      "origin": "QmeWYv1VN1un5eMyAbibLY4ezahCekqBFKtKnNutYyvCwW",
       "primaryColor": "#1e9bc0",
       "secondaryColor": "#f5f5f5",
       "type": "dapp"
@@ -33,14 +33,15 @@
       "dapp",
       "evan"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "versions": {
       "0.9.0": "QmWJ3TC4ACfVRfxruJEkL6cYmDMcGqj69ty3juSujBB8Gj",
       "0.1.0": "QmeGzKeHUARg9VKzKG4c7bC3qaTmpuwa1LyVihBD2GpqPQ",
       "1.0.0": "QmXvY62GGq3RiiXK2GKGdkJw3LmGFMdL5USYLrYvmjd93z",
       "1.0.1": "QmSipBvuMgJ2KaUwy2GWdcjywvfR5iNqcrrSmqcuxQnsrY",
       "1.0.2": "Qmd5eqmKQMUnpdw262KTvTjDSehqJtsWMoWvLjHaPwitSw",
-      "1.1.0": "QmfUxeYar2fVfXbQczHKtv3o8Fkv8kdeiaCe6km7pi64EE"
+      "1.1.0": "QmfUxeYar2fVfXbQczHKtv3o8Fkv8kdeiaCe6km7pi64EE",
+      "1.2.0": "QmaGTpMz8uUDExK8pydbftgJcCkYDjo4QWGx7XrCp5okBo"
     }
   }
 }
