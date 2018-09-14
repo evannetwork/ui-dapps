@@ -11,7 +11,7 @@
         "explorer.js",
         "explorer.css"
       ],
-      "origin": "QmV8xfrKxkWX7oVgQYdZ8XiN4TmYjNQXfQ5yytrWKxhDLh",
+      "origin": "QmVJ4D8Twu71Lti8idFKZGH4R6gHfdEmUVa4GWDm5Ectc3",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
       "type": "dapp",
@@ -35,10 +35,11 @@
       "evan",
       "library"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "versions": {
       "1.0.0": "QmXNENxwGrKBGqkHYSviTfENktRmGAwsEkJ2xSHczrZRWW",
-      "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt"
+      "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt",
+      "1.2.0": "Qmc9eBFnfoizByJcBhf7ap5N9AjgP9rYsaqVtMfLXS9S4W"
     },
     "dbcpVersion": 1
   }
