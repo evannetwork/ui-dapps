@@ -29,10 +29,10 @@ export const de = {
   'addressbook': 'Meine Kontakte',
   'contacts-list': 'Meine Kontakte',
   'contacts': 'Meine Kontakte',
-  'contact-add': 'Kontakt hinzufügen',
-  'add-via-mail': 'Einladung über E-Mail',
-  'add-via-accountid': 'Einladung mit einer Account ID',
-  'add-via-qrcode': 'Hinzufügen mit Kontaktkarten',
+  'contactadd': 'Kontakt hinzufügen',
+  'addviamail': 'Einladung über E-Mail',
+  'addviaaccountid': 'Einladung mit einer Account ID',
+  'addviaqrcode': 'Hinzufügen mit Kontaktkarten',
   'ContactsDispatcher': 'Konkaktmanagement',
 
   '_dappcontacts': {

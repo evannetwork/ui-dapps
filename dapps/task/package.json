@@ -5,8 +5,9 @@
   },
   "main": "dist/index.js",
   "name": "@evan.network/task",
+  "homepage": "https://evannetwork.github.io/",
   "typings": "dist/index.d.ts",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "javascript",
     "typescript",
@@ -15,5 +16,10 @@
     "Ionic",
     "DApp",
     "SASS"
-  ]
+  ],
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:evannetwork/ui-core-dapps.git"
+  }
 }

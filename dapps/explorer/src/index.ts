@@ -87,7 +87,7 @@ function getRoutes(): Routes {
         data: {
           state: 'detail'
         },
-        children: getDashboardRoutes([
+        children: [
           {
             path: '',
             redirectTo: `general`,
@@ -153,7 +153,7 @@ function getRoutes(): Routes {
               navigateBack: true
             }
           },
-        ], true)
+        ]
       }
     ]
   );

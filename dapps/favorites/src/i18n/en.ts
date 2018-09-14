@@ -27,8 +27,8 @@
 
 export const en = {
   'favorites': 'Bookmarks',
-  'dapp-list': 'Bookmarks',
-  'dapp-add': 'Add Bookmark',
+  'dapplist': 'Bookmarks',
+  'dappadd': 'Add Bookmark',
 
   'BookmarkDispatcher': 'Bookmark Synchronization',
 

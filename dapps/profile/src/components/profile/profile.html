@@ -120,6 +120,19 @@
         </ion-item>
         <div class="input-hint">{{ '_dappprofile.developer-mode-desc' | translate }}</div>
 
+        <div class="evan-small-seperator" margin-vertical></div>
+        
+        <ion-item class="no-border">
+          <ion-label>{{ '_dappprofile.language' | translate }}</ion-label>
+          <ion-select 
+            [(ngModel)]="translateService.translate.currentLang"
+            (ionChange)="setLanguageMode()">
+            <ion-option value="en">{{ '_dappprofile.languages.en' | translate }}</ion-option>    
+            <ion-option value="de">{{ '_dappprofile.languages.de' | translate }}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div class="input-hint">{{ '_dappprofile.language-desc' | translate }}</div>
+
         <ng-container *ngIf="core.utils.isNativeMobile()">
           <div class="evan-small-seperator" margin-vertical></div>
           <ion-item class="no-border">

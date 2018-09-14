@@ -5,6 +5,12 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.2.0
+### Fixes
+- fix dapp-wrapper title i18n within all dapps
+- explorer: load ens addresses without an underlaying contract and only with dbcp
+- mailbox: fix mailbox paging
+
 ## Version 1.1.0
 ### Fixes
 - Remove deployment description and move it to the evan.network wik

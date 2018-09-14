@@ -91,7 +91,11 @@ export class QueueComponent extends AsyncComponent {
     this.enableAutoSync = true;
     this.enableDetailView = false;
 
-    await this.queueService.loadDispatcherForQueue();
+    try {
+      await this.queueService.loadDispatcherForQueue();
+    } catch (ex) {
+      this.utils.log(ex, 'error');
+    }
   }
 
   async _ngAfterViewInit() {

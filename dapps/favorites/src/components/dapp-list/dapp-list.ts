@@ -143,7 +143,7 @@ export class DAppListComponent extends AsyncComponent {
     }
 
     const dapp = this.dapps[dappKey];
-    dapp.trimmedName = dapp.name.replace(/\s/g, '');
+    dapp.trimmedName = dapp.name.replace(/\s|\./g, '');
 
     this.alertService.addDAppAlertStyle(this.dapps[dappKey]);
 

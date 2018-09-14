@@ -27,7 +27,7 @@
 
 export const de = {
   'taskboard': 'Task Board',
-  'task-create': 'Neue Aufgabe',
+  'taskcreate': 'Neue Aufgabe',
   'queue': 'Datensynchronisation',
   'task': 'Neue Aufgabe hinzufügen',
   '_dapptaskboard': {

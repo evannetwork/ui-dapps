@@ -62,7 +62,7 @@ import {
 })
 
 /**
- * Shows the current profile informations and provides the possibility to set some configurations
+ * Shows the current profile information and provides the possibility to set some configurations
  * for the ui
  */
 export class ProfileComponent extends AsyncComponent {
@@ -124,7 +124,7 @@ export class ProfileComponent extends AsyncComponent {
   }
 
   /**
-   * Set initial values and load the profile informations
+   * Set initial values and load the profile information
    *
    * @return     {Promise<void>}  resolved when done
    */
@@ -276,5 +276,26 @@ export class ProfileComponent extends AsyncComponent {
 
     this.ref.detectChanges();
     this.core.utils.sendEvent('evan-notifications-toggled');
+  }
+
+  /**
+   * Overwrite the browser language and use the localStorage.
+   */
+  async setLanguageMode() {
+    window.localStorage['evan-language'] = this.translateService.translate.currentLang;
+
+    this.ref.detectChanges();
+
+    // ask the user to reload the application
+    try {
+      await this.alertService.showSubmitAlert(
+        '_dappprofile.language-changed',
+        '_dappprofile.language-changed-desc',
+        '_dappprofile.cancel',
+        '_dappprofile.language-changed-ok',
+      );
+
+      window.location.reload();
+    } catch (ex) { }
   }
 }

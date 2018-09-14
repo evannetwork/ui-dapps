@@ -5,6 +5,12 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.2.0
+### Fixes
+- fix preview img for addDAppAlertStyle (trimmed name must not contain a dot)
+- preview img is not displayed for dapp add, when the name includes a dot
+- fix dapp-wrapper title i18n
+
 ## Version 1.1.0
 ### Features
 - Initial Version

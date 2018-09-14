@@ -27,7 +27,7 @@
 
 export const en = {
   'taskboard': 'Task Board',
-  'task-create': 'New Task',
+  'taskcreate': 'New Task',
   'queue': 'Synchronization',
   'task': 'New Task',
   '_dapptaskboard': {
