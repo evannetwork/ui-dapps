@@ -50,7 +50,7 @@ export const de = {
     'task-reload': 'Auftrag wird aktualisiert...',
     'yes': 'Ja',
     'no': 'Nein',
-    'todo-finish-not-allowed': 'Sie sind nicht berechtigt Aufgaben abzuschließen.',
+    'todo-finish-not-allowed': 'Sie sind nicht berechtigt, Aufgaben abzuschließen.',
     'rlyFinishMember': 'Auftrag abschließen',
     'rlyFinishMemberMessage': `
       Wenn Sie die Arbeit an diesem Auftrag fertig melden, wird Ihr Auftraggeber über den Fortschritt benachrichtigt und
