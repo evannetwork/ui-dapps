@@ -118,7 +118,7 @@ export const en = {
     'contract-invitation': {
       'text-title': 'Task invitation',
       'text-body': `
-You are invited to the Task {{ taskName }}.
+You are invited to the Task "{{ taskName }}".
 Use the attachment action to accept the invitation.
 `
     },

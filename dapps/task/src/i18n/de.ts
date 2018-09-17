@@ -115,7 +115,7 @@ export const de = {
     'contract-invitation': {
       'text-title': 'Vertragseinladung',
       'text-body': `
-Sie wurden zu folgendem Task eingeladen {{ taskName }}.
+Sie wurden zu folgendem Task eingeladen "{{ taskName }}".
 Aktivieren Sie den Anhang dieser Mail, um die Einladung anzunehmen.
 `
     },
