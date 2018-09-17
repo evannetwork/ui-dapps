@@ -107,7 +107,7 @@ With kind regards,
     },
     'addContract': {
       'title': 'Accept contract',
-      'message': 'Would you add this contract to your profile ?'
+      'message': 'Would you add this contract to your profile?'
     }
   },
   'SendMailDispatcher': 'Mail sending',

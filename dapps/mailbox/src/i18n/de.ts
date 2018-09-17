@@ -114,7 +114,7 @@ Mit freundlichen Grüßen,
     },
     'addContract': {
       'title': 'Vertrag zum Profil hinzufügen',
-      'message': 'Wollen Sie diesen Vertrag zu Ihrem Profil hinzufügen ?'
+      'message': 'Wollen Sie diesen Vertrag zu Ihrem Profil hinzufügen?'
     }
   },
   'SendMailDispatcher': 'Mail Sendungen',
