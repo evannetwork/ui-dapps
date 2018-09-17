@@ -27,10 +27,10 @@
 
 export const de = {
   'taskboard': 'Task Board',
-  'task-create': 'Neuer Auftrag',
+  'taskcreate': 'Neuer Auftrag',
   'queue': 'Datensynchronisation',
   'task': 'Neuen Auftrag hinzufügen',
-  'open-dapp': 'DApp öffnen',
+  'opendapp': 'DApp öffnen',
   '_dapptaskboard': {
     'no-task-created': 'Keine Aufträge verfügbar',
     'nothing-found-filter': 'Es wurden keine Aufträge mit dem Inhalt <b>{{ filter }}</b> gefunden...',

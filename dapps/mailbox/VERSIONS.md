@@ -5,6 +5,11 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.2.0
+### Fixes
+- fix mailbox paging
+- fix dapp-wrapper title i18n
+
 ## Version 1.1.0
 ### Features
 - Initial Version

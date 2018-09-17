@@ -27,12 +27,12 @@
 
 export const en = {
   'addressbook': 'My Contacts',
-  'contacts-list': 'My Contacts',
+  'contactslist': 'My Contacts',
   'contacts': 'My Contacts',
-  'contact-add': 'Add Contact',
-  'add-via-mail': 'Invitation via Mail',
-  'add-via-accountid': 'Invitation via Account ID',
-  'add-via-qrcode': 'Invitation using Contact Cards',
+  'contactadd': 'Add Contact',
+  'addviamail': 'Invitation via Mail',
+  'addviaaccountid': 'Invitation via Account ID',
+  'addviaqrcode': 'Invitation using Contact Cards',
   'ContactsDispatcher': 'Contact Management',
 
   '_dappcontacts': {

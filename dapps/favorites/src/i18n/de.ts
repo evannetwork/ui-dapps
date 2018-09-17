@@ -27,8 +27,7 @@
 
 export const de = {
   'favorites': 'Verknüpfungen',
-  'dapp-list': 'Verknüpfungen',
-  'dapp-add': 'Verknüpfung hinzufügen',
+  'dapplist': 'Verknüpfungen',
   'dappadd': 'Verknüpfung hinzufügen',
 
   'BookmarkDispatcher': 'Verknüpfungs-Synchronisation',

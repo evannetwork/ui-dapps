@@ -3,9 +3,12 @@
 ## Next Version
 ### Features
 ### Fixes
-- add try catch to loadDispatcherForQueue to catch erros when the dispatcher could not be loaded
-
 ### Deprecations
+
+## Version 1.2.0
+### Fixes
+- add try catch to loadDispatcherForQueue to catch erros when the dispatcher could not be loaded
+- fix dapp-wrapper title i18n
 
 ## Version 1.1.0
 ### Features

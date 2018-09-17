@@ -11,7 +11,7 @@
         "dashboard.js",
         "dashboard.css"
       ],
-      "origin": "QmTVvpA6NpS6gdtHnTxLMvWSkmWcML2mBXdzuJE6dtXeAZ",
+      "origin": "QmUKvLFRJftVRJJiiCPNQAEKG97vjisQyyAahrTX9o5Udc",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -36,14 +36,15 @@
       "evan",
       "library"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "versions": {
       "0.9.0": "Qmbghjv6wRMMybvTcEcsPKKsRvQxWQjJEcLcB6oeBc1Rwo",
       "0.1.0": "QmRb9kLp9h2iuwuCRrJSndMAsXBnTi1ZtffBdNG9Ue8aiU",
       "1.0.0": "QmeYwDawNsTEhFWZ92zP7T4X4htYoHyEzBekchzHGyYBNn",
       "1.0.1": "QmT7dwL7BodYKdat3QwCQBpjqs3xzYVJeqBDaZnqBL4xeS",
       "1.0.2": "QmezBtAdT6ybhkC3VUa2Y8QLooUjGvANgav6HpBsBbwdVQ",
-      "1.1.0": "QmTL17BzqctDHv4bPUgjY4AAEVANUFcgeRw25cx1B1QWm2"
+      "1.1.0": "QmTL17BzqctDHv4bPUgjY4AAEVANUFcgeRw25cx1B1QWm2",
+      "1.2.0": "QmWVbTxHuS3EeL8PVMZTJL4NwJxiP8R8wiSRVYiUckrpzU"
     },
     "dbcpVersion": 1
   }

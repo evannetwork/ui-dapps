@@ -261,7 +261,7 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
         'contractState'
       );
     } catch (ex) {
-      this.core.utils.log(`Could not load BaseContract informations: ${ ex.message }`, 'warning');
+      this.core.utils.log(`Could not load BaseContract information: ${ ex.message }`, 'warning');
     }
   }
 

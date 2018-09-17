@@ -11,7 +11,7 @@
         "favorites.js",
         "favorites.css"
       ],
-      "origin": "QmfBj4GQcpjFEvJ56YcDvJZ6C82by51XoHwJntdQGWMTLr",
+      "origin": "QmdF12777xKQgJhhigVs7s789appxhmpTjusSwkKspCNqt",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
@@ -34,14 +34,15 @@
       "evan",
       "library"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "versions": {
       "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
       "1.0.0": "QmT3Vk4tJAcNoF1YaS3jT6WhUWojmoUSYZgt1MHAbAwJ7Q",
       "1.0.1": "QmYAZBrB5dqEdvMTRBf3DWCCLtfzVfYdj5su5bKEuMdu3c",
       "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS",
-      "1.1.0": "QmRJ9zez2PPtnADhswwt1RCU2A9LqRPHxQkqjE3BXoUgHV"
+      "1.1.0": "QmURmMvKMwnsqVkaAwZnWRZ6JNrUA2HjDbQrzh8ccGXT2t",
+      "1.2.0": "QmXFB6cyFfMxoHRD9vk1zh1os3fy7uo634ab89Vs36cCR9"
     }
   }
 }

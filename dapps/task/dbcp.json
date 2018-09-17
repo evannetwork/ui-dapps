@@ -11,7 +11,7 @@
         "task.js",
         "task.css"
       ],
-      "origin": "QmYx8kaKrqiCtY4unoVHKFQKdyFUpLdyk7cyY3iLe34Wzy",
+      "origin": "QmYhrzydLzjEAKo6cmAVyt58EGYs8DqYWUotpsXEiVVEgw",
       "primaryColor": "#e87e23",
       "secondaryColor": "#fffaf5",
       "standalone": true,
@@ -106,11 +106,21 @@
           },
           "labels": {
             "properties": {
-              "choice": "string",
-              "comment": "string",
-              "files": "string",
-              "pictures": "string",
-              "signature": "string"
+              "choice": {
+                "type": "string"
+              },
+              "comment": {
+                "type": "string"
+              },
+              "files": {
+                "type": "string"
+              },
+              "pictures": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "string"
+              }
             },
             "type": "object"
           },
@@ -119,11 +129,21 @@
           },
           "required": {
             "properties": {
-              "choice": "boolean",
-              "comment": "boolean",
-              "files": "number",
-              "pictures": "number",
-              "signature": "boolean"
+              "choice": {
+                "type": "boolean"
+              },
+              "comment": {
+                "type": "boolean"
+              },
+              "files": {
+                "type": "number"
+              },
+              "pictures": {
+                "type": "number"
+              },
+              "signature": {
+                "type": "boolean"
+              }
             },
             "type": "object"
           }
@@ -157,14 +177,15 @@
       "dapp",
       "evan"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "versions": {
       "0.1.0": "QmWKCUi4we4TBKtYHPiStMyCcXgH7SE5yfzHvja5EThhDU",
       "0.9.0": "QmdFTLweurTPpGC9riiSStnDt4Fn1aQCj4vE9hwnCps6Pe",
       "1.0.0": "QmdKbrn73gFyLxmAoeAB4twaT49HXKwpebKQ4AT5YF4jZe",
       "1.0.1": "QmVLvdH2zwfgjP1fv1ULgjhpinmTdBftq7V2XY4ZJjF6pK",
       "1.0.2": "QmXkfLKoq1oeNrQREvGuuc3BKnNeLbGQULTPei81tuDpy8",
-      "1.1.0": "QmbGdExs6ef1zzsMeXH25i2pHhZNoeziajRJVChaHkh1zX"
+      "1.1.0": "QmR8ZDkEKSqiqJL8udLQ8MCr15uRGDq47CymnNddVgJqxB",
+      "1.2.0": "QmRKAVjF1YxuumpMcqh76Xd72SaX9BbsVzorJsbD3QGMsP"
     }
   }
 }

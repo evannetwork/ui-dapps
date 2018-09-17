@@ -141,7 +141,9 @@ export class MailboxComponent extends AsyncComponent {
       this.ref.detectChanges();
 
       this.addressBook = await this.addressBookService.loadAccounts();
-      await this.mailService.getMails();
+      // upadte last read count and load the next bunch of mails
+      await this.mailService.checkNewMails();
+      await this.mailService.resetMails();
 
       this.filter();
 
@@ -267,15 +269,29 @@ export class MailboxComponent extends AsyncComponent {
     this.ref.detectChanges();
   }
 
-  async loadMoreAnswers() {
+  async loadMoreMails(tabIndex: number) {
     this.loadMore = true;
+    this.ref.detectChanges();
 
+    // load more mails!
     this.mailService.raiseMailLoadCount(10, this.showSent ? 'sent' : 'received');
+    // upadte last read count and load the next bunch of mails
+    await this.mailService.checkNewMails();
     await this.mailService.getMails();
-
     this.filter();
 
     this.loadMore = false;
     this.ref.detectChanges();
+  }
+
+  /**
+   * Indicates if we can load more mails for the current tab.
+   */
+  showLoadMore(tabIndex: number) {
+    if (!this.showSent) {
+      return this.mailService.totalReceivedMailCount - this.mailService.receivedMails.length > 0;
+    } else {
+      return this.mailService.totalSentMailCount - this.mailService.sentMails.length > 0;
+    }
   }
 }

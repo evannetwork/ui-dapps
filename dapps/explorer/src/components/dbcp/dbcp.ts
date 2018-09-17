@@ -157,7 +157,7 @@ export class ExplorerDBCPComponent extends AsyncComponent {
       this.contractAddress = this.id;
     }
 
-    // load dbcp informations, if it wasnt loaded before by the getDescriptionFromContract call
+    // load dbcp information, if it wasnt loaded before by the getDescriptionFromContract call
     if (!this.fullDBCP) {
       try {
         this.fullDBCP = await this.bcc.description.getDescription(this.id, this.core.activeAccount());
