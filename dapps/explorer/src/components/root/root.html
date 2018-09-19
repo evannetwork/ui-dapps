@@ -56,7 +56,7 @@
     <ion-list *ngIf="id">
       <button ion-item menuClose
         color="light"
-        routerLink="./{{id}}/general"
+        routerLink="./detail/{{id}}/general"
         (click)="utils.sendEvent('toggle-split-pane')"
         routerLinkActive="active">
         <h2>{{ '_explorer.general-infos' | translate }}</h2>
@@ -65,7 +65,7 @@
       <button ion-item menuClose
         color="light"
         *ngFor="let section of sections"
-        routerLink="./{{id}}/{{ section }}"
+        routerLink="./detail/{{id}}/{{ section }}"
         (click)="utils.sendEvent('toggle-split-pane')"
         routerLinkActive="active">
         <h2>{{ '_explorer.section.' + section | translate }}</h2>

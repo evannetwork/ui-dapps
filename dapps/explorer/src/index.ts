@@ -83,7 +83,7 @@ function getRoutes(): Routes {
         }
      },
      {
-        path: ':id',
+        path: 'detail/:id',
         data: {
           state: 'detail'
         },

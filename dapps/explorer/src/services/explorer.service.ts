@@ -190,7 +190,7 @@ export class ExplorerService implements OnDestroy {
       }
 
       if (window.location.href.indexOf(filteredID) === -1) {
-        this.routingService.navigate(`/explorer.${ getDomainName() }/${ filteredID }`);
+        this.routingService.navigate(`/explorer.${ getDomainName() }/detail/${ filteredID }`);
       }
     }
   }

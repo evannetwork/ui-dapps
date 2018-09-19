@@ -1,7 +1,9 @@
-# evan-dapps: favorites
+# evan-dapps: explorer
 
 ## Next Version
 ### Features
+- be able to analyse root DApps (favorites.evan)
+
 ### Fixes
 ### Deprecations
 

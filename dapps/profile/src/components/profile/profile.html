@@ -42,6 +42,13 @@
       <ion-icon name="settings"></ion-icon>
       {{ '_dappprofile.settings' | translate }}
     </button>
+
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 2" 
+      (click)="activateTab(2);">
+      <ion-icon name="bug"></ion-icon>
+      {{ '_dappprofile.developers' | translate }}
+    </button>
   </div>
   
   <div class="evan-tabs-container" [@tabSlideTransition]="activeTab">
@@ -109,19 +116,8 @@
         </div>
       </div>
     </div>
-    <div *ngIf="activeTab === 1">
+    <div *ngIf="activeTab === 1">        
       <div class="evan-relative evan-content evan-small-content content-padding m-t-0" padding>
-        <ion-item class="no-border">
-          <ion-label>{{ '_dappprofile.developer-mode' | translate }}</ion-label>
-          <ion-toggle 
-            [(ngModel)]="developerMode"
-            (ionChange)="setDeveloperMode()"
-          ></ion-toggle>
-        </ion-item>
-        <div class="input-hint">{{ '_dappprofile.developer-mode-desc' | translate }}</div>
-
-        <div class="evan-small-seperator" margin-vertical></div>
-        
         <ion-item class="no-border">
           <ion-label>{{ '_dappprofile.language' | translate }}</ion-label>
           <ion-select 
@@ -143,6 +139,39 @@
             ></ion-toggle>
           </ion-item>
           <div class="input-hint">{{ '_dappprofile.notifictions-desc' | translate }}</div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 2">
+      <div class="evan-relative evan-content evan-small-content content-padding m-t-0" padding>
+        <ion-item class="no-border">
+          <ion-label>{{ '_dappprofile.developer-mode' | translate }}</ion-label>
+          <ion-toggle 
+            [(ngModel)]="developerMode"
+            (ionChange)="setDeveloperMode()"
+          ></ion-toggle>
+        </ion-item>
+        <div class="input-hint">{{ '_dappprofile.developer-mode-desc' | translate }}</div>
+
+        <ng-container *ngIf="developerMode">
+          <div class="evan-small-seperator" margin-top></div>
+          <ion-item class="no-border">
+            <ion-label stacked>
+              <h3>{{ '_dappprofile.dev-domain-loading' | translate }}</h3>
+            </ion-label>
+            <ion-input 
+              [disabled]="!devDomainLoading"
+              [(ngModel)]="devDomain"
+              [placeholder]="'_dappprofile.dev-domain-desc' | translate"
+              (ionChange)="setDevDomain()"
+            ></ion-input>
+            <ion-toggle 
+              [(ngModel)]="devDomainLoading"
+              (ionChange)="devDomainToggled()"
+            ></ion-toggle>
+          </ion-item>
+          <div class="input-hint">{{ '_dappprofile.dev-domain-desc' | translate }}</div>
         </ng-container>
       </div>
     </div>
