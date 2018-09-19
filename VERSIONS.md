@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- explorer: be able to analyse root DApps (favorites.evan)
+- profile: add `evan-dev-dapps-domain` configuration
+
 ### Fixes
 ### Deprecations
 
