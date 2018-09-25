@@ -72,7 +72,7 @@ export const en = {
           </div>
         </div>
       `,
-      'deleteDAppTitle': 'Do you realy want to remove this Bookmark?'
+      'deleteDAppTitle': 'Do you really want to remove this Bookmark?'
     },
     'dapps': 'Bookmarks',
     'dispatcher': {
