@@ -29,7 +29,7 @@
     "dapp-sass": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapp.js sass --dapp",
     "dapps-build": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapps.js dapps-build",
     "dapps-serve": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapps.js dapps-build --serve",
-    "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulpfile.js deploy --config",
+    "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config",
     "serve": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve"
   },
   "version": "1.2.0"
