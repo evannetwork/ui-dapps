@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- fix goBack history stacking for mailbox contract opening
+
 ### Deprecations
 
 ## Version 1.2.0

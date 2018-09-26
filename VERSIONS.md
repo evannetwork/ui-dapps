@@ -6,6 +6,8 @@
 - profile: add `evan-dev-dapps-domain` configuration
 
 ### Fixes
+- fix goBack history stacking for mailbox contract opening and explorer `openRootDApp`
+
 ### Deprecations
 
 ## Version 1.2.0

@@ -38,12 +38,13 @@ import {
 
 import {
   EvanAlertService,
-  EvanUtilService,
-  QueueId,
-  EvanQueue,
+  EvanBCCService,
   EvanCoreService,
   EvanDescriptionService,
-  EvanBCCService
+  EvanQueue,
+  EvanRoutingService,
+  EvanUtilService,
+  QueueId,
 } from 'angular-core';
 
 @Component({
@@ -63,13 +64,14 @@ export class ContractComponent implements OnInit {
 
   constructor(
     private alertService: EvanAlertService,
-    private utils: EvanUtilService,
-    private queue: EvanQueue,
+    private bcc: EvanBCCService,
     private core: EvanCoreService,
     private descriptionService: EvanDescriptionService,
-    private bcc: EvanBCCService,
+    private queue: EvanQueue,
+    private ref: ChangeDetectorRef,
     private router: Router,
-    private ref: ChangeDetectorRef
+    private routing: EvanRoutingService,
+    private utils: EvanUtilService,
   ) { }
 
   ngOnInit() {
@@ -142,7 +144,7 @@ export class ContractComponent implements OnInit {
 
   async addContract(): Promise<any> {
     if (this.alreadyAdded) {
-      window.location.hash = `#/${ this.attachment.bc }/${ this.attachment.address }`;
+      this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`);
     } else {
       try {
         await this.showAddContract(this.mail.content);
@@ -182,7 +184,7 @@ export class ContractComponent implements OnInit {
           type: 'storeContracts'
         });
         
-        window.location.hash = `#/${ this.attachment.bc }/${ this.attachment.address }`;
+        this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`);
         this.alreadyAdded = true;
       } catch (ex) {
         return this

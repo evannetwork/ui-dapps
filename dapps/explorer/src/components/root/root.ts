@@ -283,7 +283,7 @@ export class RootComponent extends AsyncComponent {
    */
   rootDAppOpen(dapp) {
     if (dapp.dapp.standalone) {
-      window.location.hash = `#/${ dapp.ensAddress }`;
+      this.routingService.navigate(`/${ dapp.ensAddress }`);
     } else {
       this.routingService.navigate(`./${ this.id }/${ dapp.ensAddress }`, true);
     }
