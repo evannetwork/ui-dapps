@@ -3,8 +3,8 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.1.0",
-        "angular-libs": "^1.1.0"
+        "angular-core": "^1.2.1",
+        "angular-libs": "^1.2.1"
       },
       "entrypoint": "logging.js",
       "files": [
