@@ -3,15 +3,15 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.1.0",
-        "angular-libs": "^1.1.0"
+        "angular-core": "^1.2.1",
+        "angular-libs": "^1.2.1"
       },
       "entrypoint": "addressbook.js",
       "files": [
         "addressbook.js",
         "addressbook.css"
       ],
-      "origin": "QmXrEfCYsbomtj6ZV5itPBvYGkPwY2aTy6588vZnDJhxPr",
+      "origin": "QmQB8jVZFyu6nLrgLfyNPZX8QRwg2DAeGcXU3EQVqrXzdd",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"

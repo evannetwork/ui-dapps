@@ -50,7 +50,7 @@ export const de = {
     'task-reload': 'Auftrag wird aktualisiert...',
     'yes': 'Ja',
     'no': 'Nein',
-    'todo-finish-not-allowed': 'Sie sind nicht berechtigt Aufgaben abzuschließen.',
+    'todo-finish-not-allowed': 'Sie sind nicht berechtigt, Aufgaben abzuschließen.',
     'rlyFinishMember': 'Auftrag abschließen',
     'rlyFinishMemberMessage': `
       Wenn Sie die Arbeit an diesem Auftrag fertig melden, wird Ihr Auftraggeber über den Fortschritt benachrichtigt und
@@ -115,7 +115,7 @@ export const de = {
     'contract-invitation': {
       'text-title': 'Vertragseinladung',
       'text-body': `
-Sie wurden zu folgendem Task eingeladen {{ taskName }}.
+Sie wurden zu folgendem Task eingeladen "{{ taskName }}".
 Aktivieren Sie den Anhang dieser Mail, um die Einladung anzunehmen.
 `
     },

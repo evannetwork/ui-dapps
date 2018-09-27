@@ -27,7 +27,8 @@
 
 import {
   getDomainName,
-  lightwallet
+  lightwallet,
+  System
 } from 'dapp-browser';
 
 import {
@@ -111,6 +112,21 @@ export class ProfileComponent extends AsyncComponent {
    */
   private balanceWasLoaded: boolean;
 
+  /**
+   * ist the dev domain enabled?
+   */
+  private devDomainLoading: boolean;
+
+  /**
+   * the current dev domain
+   */
+  private devDomain: string;
+
+  /**
+   * { item_description }
+   */
+  private devDomainPopupTimeout: any;
+
   constructor(
     private addressBookService: EvanAddressBookService,
     private _DomSanitizer: DomSanitizer,
@@ -149,6 +165,12 @@ export class ProfileComponent extends AsyncComponent {
     this.myProfile = await this.addressBookService.loadAccount(this.activeAccount);
     this.developerMode = this.core.utils.isDeveloperMode();
     this.notificationsEnabled = this.core.utils.notificationsEnabled();
+    this.devDomain = this.core.utils.getDevDomain();
+    this.devDomainLoading = !!this.devDomain;
+
+    if (!this.devDomain) {
+      this.devDomain = `test.${ getDomainName() }`;
+    }
 
     await this.loadBalance();
 
@@ -297,5 +319,55 @@ export class ProfileComponent extends AsyncComponent {
 
       window.location.reload();
     } catch (ex) { }
+  }
+
+  /**
+   * If the dev domain value was toggled, prefill it with test.evan.
+   */
+  devDomainToggled() {
+    if (this.devDomainLoading) {
+      window.localStorage['evan-dev-dapps-domain'] = window.localStorage['evan-dev-dapps-domain'] ||
+        `test.${ getDomainName() }`;
+    } else {
+      delete window.localStorage['evan-dev-dapps-domain'];
+    }
+
+    this.devModePopup(0);
+    this.ref.detectChanges();
+  }
+
+  /**
+   * Updates the dev domain the current selected one.
+   */
+  setDevDomain() {
+    window.localStorage['evan-dev-dapps-domain'] = this.devDomain;
+
+    this.devModePopup(1000);
+  }
+
+  /**
+   * Ask the user if the page should be reloaded, to use the latest configured evan-dapps-domain
+   *
+   * @param      {number}         timeout  timeout until the popup should be displayed
+   * @return     {Promise<void>}  resolved when done
+   */
+  async devModePopup(timeout: number) {
+    if (this.devDomainPopupTimeout) {
+      window.clearTimeout(this.devDomainPopupTimeout);
+    }
+
+    this.devDomainPopupTimeout = setTimeout(async () => {
+      // ask the user to reload the application
+      try {
+        await this.alertService.showSubmitAlert(
+          '_dappprofile.evan-dev-dapps-domain-changed',
+          '_dappprofile.evan-dev-dapps-domain-changed-desc',
+          '_dappprofile.cancel',
+          '_dappprofile.evan-dev-dapps-domain-changed-ok',
+        );
+
+        window.location.reload();
+      } catch (ex) { }
+    }, timeout);
   }
 }

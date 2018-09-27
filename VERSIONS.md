@@ -5,6 +5,16 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.2.1
+### Features
+- explorer: be able to analyse root DApps (favorites.evan)
+- profile: add `evan-dev-dapps-domain` configuration
+
+### Fixes
+- fix goBack history stacking for mailbox contract opening and explorer `openRootDApp`
+
+### Deprecations
+
 ## Version 1.2.0
 ### Fixes
 - fix dapp-wrapper title i18n within all dapps

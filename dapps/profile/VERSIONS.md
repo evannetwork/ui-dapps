@@ -2,10 +2,15 @@
 
 ## Next Version
 ### Features
+- add `evan-dev-dapps-domain` configuration
+
 ### Fixes
 ### Deprecations
 
 ## Version 1.2.0
+### Features
+- add language selection
+
 ### Fixes
 - fix dapp-wrapper title i18n
 

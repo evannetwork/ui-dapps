@@ -1,8 +1,12 @@
-# evan-dapps: favorites
+# evan-dapps: explorer
 
 ## Next Version
 ### Features
+- be able to analyse root DApps (favorites.evan)
+
 ### Fixes
+- fix `openRootDApp` history stack pushing
+
 ### Deprecations
 
 ## Version 1.2.0

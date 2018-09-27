@@ -3,15 +3,15 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.1.0",
-        "angular-libs": "^1.1.0"
+        "angular-core": "^1.2.1",
+        "angular-libs": "^1.2.1"
       },
       "entrypoint": "favorites.js",
       "files": [
         "favorites.js",
         "favorites.css"
       ],
-      "origin": "QmdF12777xKQgJhhigVs7s789appxhmpTjusSwkKspCNqt",
+      "origin": "QmVetsX8egeZwj3QJNKpyixhJD8nB9pnTrSjoVTARbFaU5",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
@@ -42,7 +42,8 @@
       "1.0.1": "QmYAZBrB5dqEdvMTRBf3DWCCLtfzVfYdj5su5bKEuMdu3c",
       "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS",
       "1.1.0": "QmURmMvKMwnsqVkaAwZnWRZ6JNrUA2HjDbQrzh8ccGXT2t",
-      "1.2.0": "QmXFB6cyFfMxoHRD9vk1zh1os3fy7uo634ab89Vs36cCR9"
-    }
+      "1.2.0": "QmWTp8yQKzmX1aUWgL62ArDFURZqwpRn32wti2AbJELDK5"
+    },
+    "dbcpVersion": 1
   }
 }
