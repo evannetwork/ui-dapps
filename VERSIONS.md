@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- mailbox: add fullPath property to mailbox contract attachments to overwrite bc + contract url path opening
+
 ### Fixes
 ### Deprecations
 

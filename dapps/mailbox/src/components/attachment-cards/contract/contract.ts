@@ -144,7 +144,11 @@ export class ContractComponent implements OnInit {
 
   async addContract(): Promise<any> {
     if (this.alreadyAdded) {
-      this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`);
+      if (this.attachment.fullPath) {
+        this.routing.navigate(this.attachment.fullPath);
+      } else {
+        this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`); 
+      }
     } else {
       try {
         await this.showAddContract(this.mail.content);
@@ -184,7 +188,12 @@ export class ContractComponent implements OnInit {
           type: 'storeContracts'
         });
         
-        this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`);
+        if (this.attachment.fullPath) {
+          this.routing.navigate(this.attachment.fullPath);
+        } else {
+          this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`); 
+        }
+
         this.alreadyAdded = true;
       } catch (ex) {
         return this
