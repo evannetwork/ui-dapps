@@ -29,6 +29,7 @@ export const en = {
   'mailbox': 'Mailbox',
   'maildetail': 'Mail Detail',
   '_dappmailbox': {
+    'accept-contract-invitation-loading': 'Contract will be saved in profile',
     'remove': 'Delete',
     'received': 'Received',
     'sent': 'Sent',

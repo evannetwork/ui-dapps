@@ -57,6 +57,9 @@ export class ContractComponent implements OnInit {
   @Input() mail: any;
 
   alreadyAdded: boolean;
+  /**
+   * disabled button so the user can determine, that the contract is adding...
+   */
   loading: boolean;
   sharedKeyExchangeQueue: QueueId;
   myAccountId: string;
@@ -101,7 +104,10 @@ export class ContractComponent implements OnInit {
     );
 
     this.bcc.profile
-      .getBcContract(this.attachment.bc, this.attachment.address)
+      .getBcContract(
+        this.attachment.bc,
+        this.attachment.storeKey || this.attachment.address
+      )
       .then(contract => {
         if (contract) {
           this.alreadyAdded = true;
@@ -147,7 +153,8 @@ export class ContractComponent implements OnInit {
       if (this.attachment.fullPath) {
         this.routing.navigate(this.attachment.fullPath);
       } else {
-        this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`); 
+        const storeKey = this.attachment.storeKey || this.attachment.address;
+        this.routing.navigate(`/${ this.attachment.bc }/${ storeKey }`); 
       }
     } else {
       try {
@@ -160,12 +167,18 @@ export class ContractComponent implements OnInit {
         this.loading = true;
         this.ref.detectChanges();
 
-        const contractDefinition = await this.bcc.description.getDescriptionFromContract(
-          this.attachment.address,
-          this.core.activeAccount()
-        );
-        const bcContract = contractDefinition.public;
-        await this.bcc.profile.addBcContract(this.attachment.bc, this.attachment.address, bcContract);
+        // check if a specific store value was specified, if not, use the latest dbcp description
+        let storeKey = this.attachment.storeKey || this.attachment.address;
+        let storeValue = this.attachment.storeValue;
+        if (!storeValue) {
+          const contractDefinition = await this.bcc.description.getDescriptionFromContract(
+            this.attachment.address,
+            this.core.activeAccount()
+          );
+          storeValue = contractDefinition.public;
+        }
+
+        await this.bcc.profile.addBcContract(this.attachment.bc, storeKey, storeValue);
 
         if (this.commKeyAttachment) {
           const privateKey = await this.bcc.profile.getContactKey(
@@ -184,14 +197,15 @@ export class ContractComponent implements OnInit {
           await this.bcc.profile.addContactKey(this.mail.content.from, 'commKey', commKey.toString('utf-8'));
           await this.bcc.profile.addProfileKey(this.mail.content.from, 'alias', this.mail.content.fromAlias);
         }
-        this.queue.addQueueData(this.sharedKeyExchangeQueue, {
-          type: 'storeContracts'
-        });
+        await Promise.all([
+          this.bcc.profile.storeForAccount(this.bcc.profile.treeLabels.addressBook),
+          this.bcc.profile.storeForAccount(this.bcc.profile.treeLabels.contracts)
+        ]);
         
         if (this.attachment.fullPath) {
           this.routing.navigate(this.attachment.fullPath);
         } else {
-          this.routing.navigate(`/${ this.attachment.bc }/${ this.attachment.address }`); 
+          this.routing.navigate(`/${ this.attachment.bc }/${ storeKey }`); 
         }
 
         this.alreadyAdded = true;

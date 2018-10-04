@@ -29,6 +29,7 @@ export const de = {
   'mailbox': 'Mailbox-Nachrichten',
   'maildetail': 'Nachricht Details',
   '_dappmailbox': {
+    'accept-contract-invitation-loading': 'Vertrag wird im Profil gespeichert',
     'remove': 'Löschen',
     'received': 'Empfangen',
     'sent': 'Gesendet',

@@ -66,10 +66,14 @@ export const KeyExchangeDispatcher = new QueueDispatcher(
       async (service: KeyExchangeDispatcherService, data: any) => {
         const queueData = data.data;        
         for (let queueDataEntry of queueData) {
-          await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.addressBook);
-          if (queueDataEntry.type === 'storeContracts') {
-            await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
-          }
+          await Promise.all([
+            service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.addressBook),
+            (() => {
+              if (queueDataEntry.type === 'storeContracts') {
+                return service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
+              }
+            })()
+          ]);
         }
       }
     ),

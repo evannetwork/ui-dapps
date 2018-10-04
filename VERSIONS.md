@@ -3,6 +3,7 @@
 ## Next Version
 ### Features
 - mailbox: add fullPath property to mailbox contract attachments to overwrite bc + contract url path opening
+- mailbox: add storeKey / storeValue for contract mail attachments
 
 ### Fixes
 ### Deprecations
