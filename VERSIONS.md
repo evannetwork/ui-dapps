@@ -5,6 +5,8 @@
 - mailbox: add fullPath property to mailbox contract attachments to overwrite bc + contract url path opening
 - mailbox: add storeKey / storeValue for contract mail attachments
 - mailbox: be able to pass contract attachment without business center
+- Add new build job so each can dapp decide for its own, which build job should be used
+- add demo-management DApp
 
 ### Fixes
 ### Deprecations
