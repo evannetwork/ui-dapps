@@ -10,9 +10,9 @@
     "SASS"
   ],
   "main": "dist/index.js",
-  "name": "@evan.network/taskboard",
+  "name": "@evan.network/demo-management",
   "scripts": {
-    "build": "cd ../.. && npm run angular-build dapps/taskboard"
+    "build": "cd ../.. && npm run angular-build dapps/demo-management"
   },
   "typings": "dist/index.d.ts",
   "version": "1.2.0"
