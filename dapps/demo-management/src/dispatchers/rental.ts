@@ -70,16 +70,25 @@ export const rentalDispatcher = new QueueDispatcher(
             nextSteps: ['init'],
             accountId: supplierAccountId,
           };
+          let output: any = { nextSteps: [] };
 
           // parties take turns with executing their parts of the preset setup
           // even turns are executed by the 'server', odd turns are executed by the 'client'
           let turn = 0;
           while (input && input.nextSteps && input.nextSteps.length) {
-            input = await preset.applyPreset(runtimes[turn++ % 2], presetLindigDefaultConfig, input)
+            input = await preset.applyPreset(runtimes[turn++ % 2], presetLindigDefaultConfig, input, output)
             input.accountId = supplierAccountId
           }
 
-          console.dir(input);
+          // clear the data for saving and set the contract address
+          copy.users = copy.users.map(user => service.getClearUser(user));
+          copy.contractAddress = output.contracts[0];
+
+          // update the demo data
+          await service.bcc.profile.loadForAccount(service.bcc.profile.treeLabels.contracts);
+          await service.bcc.profile.addBcContract(service.demoStorage, copy.address, copy);
+          await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
+          await service.bcc.profile.loadForAccount(service.bcc.profile.treeLabels.contracts);
         }
       }
     )

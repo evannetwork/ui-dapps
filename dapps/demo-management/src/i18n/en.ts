@@ -81,7 +81,8 @@ export const en = {
         "text": "Role"
       }
     },
-    "users": "Users"
+    "users": "Users",
+    "contract-address": "Contract address"
   },
   "demomanagement": "Demo Management"
 };

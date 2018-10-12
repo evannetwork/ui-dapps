@@ -34,6 +34,7 @@ import * as bcc from 'bcc';
 import * as SmartContracts from 'smart-contracts';
 
 import {
+  AccountStore,
   bccHelper,
   core,
   getDomainName,
@@ -321,13 +322,12 @@ export class DemoManagementService implements OnDestroy {
       CoreBundle: bcc,
       coreOptions: coreOptions,
       keyProvider: new KeyProvider({ }, user.accountId),
-      signer: bccHelper.getSigner(bcc, provider),
+      signer: bccHelper.getSigner(bcc, provider, new AccountStore(user.vault)),
       SmartContracts: SmartContracts
     };
 
     // initialize bcc for an profile
     const bccProfile = bcc.create(bccProfileOptions);
-    await bccProfile.keyProvider.setKeys();
     await bccProfile.keyProvider.setKeysForAccount(user.accountId, user.vault.encryptionKey);
 
     // set exchangeKeys

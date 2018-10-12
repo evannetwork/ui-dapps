@@ -86,6 +86,7 @@ export const handlingDispatcher = new QueueDispatcher(
 
           // update the profile data
           await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
+          await service.bcc.profile.loadForAccount(service.bcc.profile.treeLabels.contracts);
         }
       }
     )

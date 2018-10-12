@@ -81,7 +81,8 @@ export const de = {
         "text": "Rolle"
       }
     },
-    "users": "Nutzer"
+    "users": "Nutzer",
+    "contract-address": "Vertragsaddresse"
   },
   "demomanagement": "Demo Management"
 };

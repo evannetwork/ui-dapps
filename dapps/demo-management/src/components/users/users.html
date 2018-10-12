@@ -126,7 +126,7 @@
     <button ion-button icon-left round outline color="green" margin-top
       [disabled]="saving || !captchaToken || isUserError() || isUserChecking()"
       (click)="createProfiles()">
-      <ion-spinner *ngIf="saving"></ion-spinner>
+      <ion-spinner color="light" *ngIf="saving"></ion-spinner>
       <ion-icon name="person-add" *ngIf="!saving"></ion-icon>
       <span>{{ '_dm.create-profiles' | translate }}</span>
     </button>

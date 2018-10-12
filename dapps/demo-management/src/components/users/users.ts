@@ -209,7 +209,8 @@ export class UsersComponent extends AsyncComponent {
       window.removeEventListener('message', onCaptchaResponse);
     }
 
-    this.detectTimeout();
+    this.core.utils.hideLoading(this);
+    this.onChange.emit();
   }
 
   _ngOnDestroy() {

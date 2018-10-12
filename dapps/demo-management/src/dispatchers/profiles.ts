@@ -71,6 +71,7 @@ export const profilesDispatcher = new QueueDispatcher(
           await service.bcc.profile.loadForAccount(service.bcc.profile.treeLabels.contracts);
           await service.bcc.profile.addBcContract(service.demoStorage, copy.address, copy);
           await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
+          await service.bcc.profile.loadForAccount(service.bcc.profile.treeLabels.contracts);
 
           await prottle(10, copy.users.map(user => async () => {
             // load current data for the user

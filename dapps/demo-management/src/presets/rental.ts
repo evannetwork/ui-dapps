@@ -311,7 +311,7 @@ export class PresetLindig {
     const step = input.nextSteps.pop()
     runtime.executor.log(`running Lindig preset, step ${step}`)
     switch(step) {
-      case 'initial':
+      case 'init':
       case 'serverKeyExchange': {
         // key ex
         await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
