@@ -40,9 +40,14 @@ import {
   DemoManagementService
 } from '../services/service';
 
+import {
+  PresetLindig,
+  presetLindigDefaultConfig,
+} from '../presets/rental';
+
 /**************************************************************************************************/
 
-export const handlingDispatcher = new QueueDispatcher(
+export const rentalDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
       '_dm.handling-dispatcher.title',
@@ -54,38 +59,27 @@ export const handlingDispatcher = new QueueDispatcher(
         // get businessCenter instance
         for (let entry of queueEntry.data) {
           const copy = service.core.utils.deepCopy(entry);
-          const action = copy.action;
+          const preset = new PresetLindig();
+          const runtimes = await Promise.all([
+            service.getBCCProfileForUser(entry.users[0]),
+            service.getBCCProfileForUser(entry.users[1])
+          ]);
+          const supplierAccountId = entry.users[1].accountId;
 
-          // add a created flag so we can determine during loading, if the entry was already saved
-          // and can be opened
-          copy.created = Date.now();
+          let input = {
+            nextSteps: ['init'],
+            accountId: supplierAccountId,
+          };
 
-          // remove the type so it will not be saved
-          delete copy.action;
-
-          // load the profile data
-          await service.bcc.profile.loadForAccount(service.bcc.profile.treeLabels.contracts);
-
-          // add or remove the demo
-          switch (action) {
-            case 'save': {
-              if (copy.users) {
-                copy.users = copy.users.map(user => service.getClearUser(user));
-              }
-
-              await service.bcc.profile.addBcContract(service.demoStorage, copy.address, copy);
-
-              break;
-            }
-            case 'delete': {
-              await service.bcc.profile.removeBcContract(service.demoStorage, copy.address);
-
-              break;
-            }
+          // parties take turns with executing their parts of the preset setup
+          // even turns are executed by the 'server', odd turns are executed by the 'client'
+          let turn = 0;
+          while (input && input.nextSteps && input.nextSteps.length) {
+            input = await preset.applyPreset(runtimes[turn++ % 2], presetLindigDefaultConfig, input)
+            input.accountId = supplierAccountId
           }
 
-          // update the profile data
-          await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
+          console.dir(input);
         }
       }
     )
@@ -93,3 +87,4 @@ export const handlingDispatcher = new QueueDispatcher(
   translations,
   'DemoManagementService'
 );
+

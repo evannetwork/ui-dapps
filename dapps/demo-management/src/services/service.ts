@@ -30,14 +30,25 @@ import {
   prottle,
 } from 'bcc';
 
+import * as bcc from 'bcc';
+import * as SmartContracts from 'smart-contracts';
+
 import {
-  getDomainName
+  bccHelper,
+  core,
+  getDomainName,
+  KeyProvider,
+  lightwallet,
+  user,
 } from 'dapp-browser';
 
 import {
-  Injectable, OnDestroy,    // '@angular/core';
-  Platform,                 // ionic-angular
-  Observable, Subscription
+  Http,
+  Injectable,
+  Observable,
+  OnDestroy,
+  Platform, 
+  Subscription,
 } from 'angular-libs';
 
 import {
@@ -74,12 +85,13 @@ export class DemoManagementService implements OnDestroy {
   };
 
   constructor(
-    public core: EvanCoreService,
     public bcc: EvanBCCService,
+    public core: EvanCoreService,
     public descriptionService: EvanDescriptionService,
+    public http: Http,
+    public queue: EvanQueue,
     public routingService: EvanRoutingService,
     public singleton: SingletonService,
-    public queue: EvanQueue
   ) {
     return singleton.create(DemoManagementService, this, () => {
 
@@ -87,14 +99,58 @@ export class DemoManagementService implements OnDestroy {
   }
 
   /**
-   * Return the queue id for the handling dispatcher to add or remove demos.
+   * Return the queue id to watch for any action for a demo.
    *
+   * @param      {any}      demo    demo to use
    * @return     {QueueId}  The handling queue identifier.
    */
-  public getHandlingQueueId(): QueueId {
+  public getWatchQueueId(demo?: any): QueueId {
+    return new QueueId(
+      `demomanagement.${ getDomainName() }`,
+      '*',
+      demo && demo.address ? demo.address : undefined
+    );
+  }
+
+  /**
+   * Return the queue id for the handling dispatcher to add or remove demos.
+   *
+   * @param      {any}      demo    demo to use
+   * @return     {QueueId}  The handling queue identifier.
+   */
+  public getHandlingQueueId(demo: any): QueueId {
     return new QueueId(
       `demomanagement.${ getDomainName() }`,
       'handlingDispatcher',
+      demo.address
+    );
+  }
+
+  /**
+   * Return the queue id for the profile dispatcher to create profiles that corresponds to a demo.
+   *
+   * @param      {any}      demo    demo to use
+   * @return     {QueueId}  The handling queue identifier.
+   */
+  public getProfilesQueueId(demo?: any): QueueId {
+    return new QueueId(
+      `demomanagement.${ getDomainName() }`,
+      'profilesDispatcher',
+      demo.address
+    );
+  }
+
+  /**
+   * Return the queue id for the contract structure creation dispatcher.
+   *
+   * @param      {any}   demo    demo to use
+   * @return     {QueueId}  The handling queue identifier.
+   */
+  public getContractStructureQueueId(demo?: any): QueueId {
+    return new QueueId(
+      `demomanagement.${ getDomainName() }`,
+      `${ demo.type }Dispatcher`,
+      demo.address
     );
   }
 
@@ -117,7 +173,7 @@ export class DemoManagementService implements OnDestroy {
 
     // load queue entries
     this.core.utils.deepCopy(
-      this.queue.getQueueEntry(this.getHandlingQueueId(), true).data
+      this.queue.getQueueEntry(this.getWatchQueueId(), true).data
     ).forEach(entry => {
       if (entry.type === 'delete') {
         delete demos[entry.address];
@@ -142,7 +198,7 @@ export class DemoManagementService implements OnDestroy {
     
     // load queue entries
     this.core.utils.deepCopy(
-      this.queue.getQueueEntry(this.getHandlingQueueId(), true).data
+      this.queue.getQueueEntry(this.getWatchQueueId({ address }), true).data
     ).forEach(entry => {
       if (entry.address === address) {
         demo = entry;
@@ -151,5 +207,149 @@ export class DemoManagementService implements OnDestroy {
     });
 
     return demo;
+  }
+
+  /**
+   * Remove all not needed data from a user.
+   *
+   * @param      {any}  user    a user object
+   * @return     {any}  cleaned user object.
+   */
+  getClearUser(user: any) {
+    [
+      'checkTimeout', 
+      'error', 
+      'isOnboared', 
+      'isValidPassword',
+      'loading', 
+      'vault',
+    ].forEach(key => {
+      delete user[key];
+    });
+
+    return user;
+  }
+
+  /**
+   * Checks if a user is valid.
+   *
+   * @param      {any}      user            the user object that should be checked
+   * @param      {boolean}  disableTimeout  use timeout or not?
+   * @return     {boolean}  true if touched and invalid, else false
+   */
+  async checkUserStatus(context: any, user: any, disableTimeout?: boolean) {
+    // only run the check all 1 seconds after the user changed something to reduce heavy data checks
+    if (!disableTimeout) {
+      if (user.checkTimeout) {
+        window.clearTimeout(user.checkTimeout);
+      }
+
+      await new Promise((resolve) => {
+        user.checkTimeout = setTimeout(() => resolve(), 1000)
+      });
+    }
+
+    // finish the check, set an error, remove the laoding and 
+    const finishCheck = (error: string) => {
+      user.error = error;
+      user.loading = false;
+      context && context.ref.detectChanges();
+
+      return user;
+    };
+
+    const activeElement: any = document.activeElement;
+    user.loading = true;
+    context && context.ref.detectChanges();
+
+    const properties = [ 'alias', 'role', 'mnemonic', 'password' ];
+
+    // check if anything is empty?
+    for (let property of properties) {
+      if (!user[property]) {
+        return finishCheck(`_dm.user-data.${ property }.error`);
+      }
+    }
+
+    // check if a valid mnemonic was entered
+    if (!lightwallet.isValidMnemonic(user.mnemonic)) {
+      return finishCheck(`_dm.user-data.mnemonic.error`);
+    }
+
+    // check minimum length of password
+    if (user.password.length < 8) {
+      return finishCheck(`_dm.user-data.password.error`);
+    }
+
+    // check if profile exists
+    user.vault = await lightwallet.getNewVault(user.mnemonic, user.password);
+    user.accountId = lightwallet.getAccounts(user.vault, 1)[0];
+    user.isOnboared = await bcc.isAccountOnboarded(user.accountId);
+
+    // if the user is onboarded, check if the password is correct
+    if (user.isOnboared) {
+      // is the password valid?
+      user.isValidPassword = await bccHelper.isAccountPasswordValid(bcc, user.accountId,
+        user.password);
+
+      if (!user.isValidPassword) {
+        return finishCheck(`_dm.user-data.password-wrong.error`);
+      }
+    }
+
+    return finishCheck('');
+  }
+
+  /**
+   * Load a new bcc profile instance for a given user.
+   *
+   * @param      {<type>}  user    The user
+   * @return     {<type>}  The bcc profile for user.
+   */
+  public async getBCCProfileForUser(user: any) {
+    // load user status informations
+    await this.checkUserStatus(null, user);
+
+    // load core options
+    const provider: string = 'internal';
+    const coreOptions = await bccHelper.getCoreOptions(bcc, SmartContracts, provider);
+    const coreRuntime = await bcc.createCore(coreOptions);
+
+    // specify the bcc profile options
+    const bccProfileOptions: any = {
+      accountId: user.accountId,
+      CoreBundle: bcc,
+      coreOptions: coreOptions,
+      keyProvider: new KeyProvider({ }, user.accountId),
+      signer: bccHelper.getSigner(bcc, provider),
+      SmartContracts: SmartContracts
+    };
+
+    // initialize bcc for an profile
+    const bccProfile = bcc.create(bccProfileOptions);
+    await bccProfile.keyProvider.setKeys();
+    await bccProfile.keyProvider.setKeysForAccount(user.accountId, user.vault.encryptionKey);
+
+    // set exchangeKeys
+    try {
+      const targetPubKey = await bccProfile.profile.getPublicKey();
+      const targetPrivateKey = await bccProfile.profile.getContactKey(
+        user.accountId,
+        'dataKey'
+      );
+
+      if (!!targetPrivateKey) {
+        bccProfile.keyExchange.setPublicKey(targetPubKey, targetPrivateKey);
+      }
+    } catch (ex) { }
+
+    // fill missing root property
+    bccProfile.executor = bccProfile.dataContract.options.executor;
+    bccProfile.contractLoader = bccProfile.dataContract.options.loader;
+    bccProfile.nameResolver = bccProfile.dataContract.options.nameResolver;
+    bccProfile.description = bccProfile.dataContract.options.description;
+    bccProfile.activeAccount = user.accountId;
+
+    return bccProfile;
   }
 }

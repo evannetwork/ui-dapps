@@ -101,7 +101,7 @@ export class OverviewComponent extends AsyncComponent {
 
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(
-      this.demoManagement.getHandlingQueueId(),
+      this.demoManagement.getWatchQueueId(),
       (reload, results) => reload && this.reloadDemos()
     );
   }
@@ -166,14 +166,13 @@ export class OverviewComponent extends AsyncComponent {
    * @return     {Promise<void>}  resolved when done
    */
   createDemo() {
+    const enriched = Object.assign(this.formData, {
+      address: this.core.utils.generateID(),
+      action: 'save',
+    });
+
     // submit new data to the queue
-    this.queue.addQueueData(
-      this.demoManagement.getHandlingQueueId(),
-      Object.assign(this.formData, {
-        address: this.core.utils.generateID(),
-        action: 'save',
-      })
-    );
+    this.queue.addQueueData(this.demoManagement.getHandlingQueueId(enriched), enriched);
 
     this.showCreateDemo = false;
     this.reloadDemos();
@@ -204,7 +203,7 @@ export class OverviewComponent extends AsyncComponent {
 
     // submit new data to the queue
     this.queue.addQueueData(
-      this.demoManagement.getHandlingQueueId(),
+      this.demoManagement.getHandlingQueueId(demo),
       Object.assign(demo, {
         action: 'delete',
       })

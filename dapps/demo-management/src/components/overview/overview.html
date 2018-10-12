@@ -30,7 +30,7 @@
   <dashboard-top-buttons class="on-small-move-down">
     <button ion-button icon-left round outline color="green"
       (click)="showCreateDemo = true; detectTimeout()">
-      <ion-icon name="add" color="light"></ion-icon>
+      <ion-icon name="add"></ion-icon>
       <span>{{ '_dm.create-demo' | translate }}</span>
     </button>
   </dashboard-top-buttons>
@@ -151,7 +151,7 @@
           <button ion-button icon-left round outline color="green" margin-top
             (click)="createDemo(formData)"
             [disabled]="createForm.invalid">
-            <ion-icon name="add" color="light"></ion-icon>
+            <ion-icon name="add"></ion-icon>
             <span>{{ '_dm.create-demo' | translate }}</span>
           </button>
         </div>

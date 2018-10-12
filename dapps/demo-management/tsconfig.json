@@ -28,6 +28,9 @@
       ],
       "angular-core": [
         "../../../node_modules/@evan.network/ui-angular-core/dist/angularcore.js"
+      ],
+      "smart-contracts": [
+        "../../../node_modules/@evan.network/smart-contracts-core/index.js"
       ]
     }
   },

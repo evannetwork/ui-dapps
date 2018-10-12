@@ -4,7 +4,8 @@
     "dapp": {
       "dependencies": {
         "angular-core": "^1.2.2",
-        "angular-libs": "^1.2.1"
+        "angular-libs": "^1.2.1",
+        "smart-contracts": "^1.0.3"
       },
       "entrypoint": "demomanagement.js",
       "files": [

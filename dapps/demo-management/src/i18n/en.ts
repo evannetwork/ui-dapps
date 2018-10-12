@@ -28,7 +28,11 @@
 export const en = {
   "_dm": {
     "cancel": "cancel",
+    "create-contract": "Create Contract Structure",
+    "create-contract-to-continue": "The user setup has been completed.<br><br>Create the necessary contract structure to complete the process.",
     "create-demo": "Create demo",
+    "create-profiles": "Create profiles",
+    "create-users-to-continue": "The specified users do not have a corresponding profile.<br><br>Please create the profiles to continue.",
     "empty-demos": "No demos available",
     "general": "General Information",
     "handling-dispatcher": {
@@ -47,6 +51,7 @@ export const en = {
       "title": "Delete Demo"
     },
     "show-plain-passwords": "Show passwords",
+    "start-demo": "Start Demo",
     "type": {
       "desc": "Type of the demo",
       "error": "Please select a demo type",
@@ -66,8 +71,14 @@ export const en = {
       },
       "password": {
         "desc": "Password of the user",
-        "error": "Please enter the correct password",
+        "error": "Please enter the correct password! (min. 8 Zeichen)",
         "text": "Password"
+      },
+      "password-wrong": "A profile for this user already exists. Please enter the correct password!",
+      "role": {
+        "desc": "Role of the user",
+        "error": "Please enter a role!",
+        "text": "Role"
       }
     },
     "users": "Users"

@@ -47,15 +47,20 @@ import {
 
 import { RootComponent } from './components/root/root';
 import { OverviewComponent } from './components/overview/overview';
+import { UsersComponent } from './components/users/users';
 import { RentalComponent } from './components/types/rental/rental';
 import { Translations } from './i18n/registry';
 
 import { DemoManagementService } from './services/service';
 import { handlingDispatcher } from './dispatchers/handling';
+import { profilesDispatcher } from './dispatchers/profiles';
+import { rentalDispatcher } from './dispatchers/rental';
 
 export {
   DemoManagementService,
   handlingDispatcher,
+  profilesDispatcher,
+  rentalDispatcher,
 }
 
 /**************************************************************************************************/
@@ -121,9 +126,10 @@ function getConfig(isDispatcher?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
-      RootComponent,
       OverviewComponent,
       RentalComponent,
+      RootComponent,
+      UsersComponent,
     ];
   }
 

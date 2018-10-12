@@ -26,10 +26,13 @@
 */
 
 import {
-  Component, OnInit, OnDestroy, // @angular/core
-  TranslateService,             // @ngx-translate/core
-  NavController,                // ionic-angular
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Component,
+  NavController,               
+  OnDestroy,
+  OnInit,
+  TranslateService,            
+  ViewChild,
 } from 'angular-libs';
 
 import {
@@ -82,9 +85,14 @@ export class RentalComponent extends AsyncComponent {
   private formData: any = { };
 
   /**
-   * Is the element currently loading?
+   * the demo gets currently upated or profiles gets created 
    */
-  private loading: boolean;
+  private saving: boolean;
+
+  /**
+   * current formular
+   */
+  @ViewChild('userManagement') userManagement: any;
 
   constructor(
     private bcc: EvanBCCService,
@@ -109,15 +117,11 @@ export class RentalComponent extends AsyncComponent {
 
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(
-      this.demoManagement.getHandlingQueueId(),
+      this.demoManagement.getWatchQueueId(),
       async (reload, results) => {
-        reload && this.loadDetail();
+        reload && setTimeout(() => this.loadDetail());
       }
     );
-
-    // is currently anything loading?
-    this.loading = this.queue.getQueueEntry(this.demoManagement.getHandlingQueueId(), true).data
-      .length > 0;
 
     this.detectTimeout();
   }
@@ -141,13 +145,21 @@ export class RentalComponent extends AsyncComponent {
    * @return     {Promise<void>}  resolved when done
    */
   private async loadDetail() {
+    this.core.utils.showLoading(this);
+
     this.demo = await this.demoManagement.getDemo(this.address);
 
     // add header translation
     this.translate.addSingleTranslation(
-      this.address,
+      this.address.replace(/\-/g, ''),
       this.demo.name
     );
+
+    // is currently anything saving?
+    this.saving = this.queue.getQueueEntry(this.demoManagement.getWatchQueueId(this.demo.address), true)
+      .data.length > 0;
+
+    this.core.utils.hideLoading(this);
   }
 
   /**
@@ -161,14 +173,16 @@ export class RentalComponent extends AsyncComponent {
 
       this.formData.users.push({
         mnemonic: lightwallet.generateMnemonic(),
-        password: Math.random().toString(36).substr(2, 5),
-        alias: `${ this.demo.name } Disponent`
+        password: Math.random().toString(36).substr(2, 8),
+        alias: `${ this.demo.name } Disponent`,
+        role: 'owner'
       });
 
       this.formData.users.push({
         mnemonic: lightwallet.generateMnemonic(),
-        password: Math.random().toString(36).substr(2, 5),
-        alias: `${ this.demo.name } Disponent`
+        password: Math.random().toString(36).substr(2, 8),
+        alias: `${ this.demo.name } Consumer`,
+        role: 'member'
       });
     }
   }
@@ -185,5 +199,19 @@ export class RentalComponent extends AsyncComponent {
       return form.controls[paramName].invalid &&
         form.controls[paramName].touched;
     }
+  }
+
+  /**
+   * Use the current users and create a new demo contract instance for them.
+   */
+  createContractStructure() {
+    // submit new data to the queue
+    this.queue.addQueueData(
+      this.demoManagement.getContractStructureQueueId(this.demo),
+      this.demo
+    );
+
+    this.saving = true;
+    this.ref.detectChanges();
   }
 }
