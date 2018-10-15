@@ -47,6 +47,7 @@ import {
 import {
   EvanAlertService,
   EvanBCCService,
+  EvanBookmarkService,
   EvanCoreService,
   EvanDescriptionService,
   EvanQueue,
@@ -79,6 +80,7 @@ export class DemoManagementService implements OnDestroy {
 
   constructor(
     public bcc: EvanBCCService,
+    public bookmarkService: EvanBookmarkService,
     public core: EvanCoreService,
     public descriptionService: EvanDescriptionService,
     public http: Http,

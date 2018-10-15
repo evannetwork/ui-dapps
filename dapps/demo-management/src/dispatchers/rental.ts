@@ -60,12 +60,12 @@ export const rentalDispatcher = new QueueDispatcher(
         for (let entry of queueEntry.data) {
           const copy = service.core.utils.deepCopy(entry);
           const runtimes = await Promise.all([
-            service.getRuntimeForUser(entry.users[0]),
-            service.getRuntimeForUser(entry.users[1])
+            service.getRuntimeForUser(copy.users[0]),
+            service.getRuntimeForUser(copy.users[1])
           ]);
 
           // create a new preset and run everything!
-          const preset = new RentalPreset(entry.users, runtimes);
+          const preset = new RentalPreset(copy.users, runtimes, service);
 
           // make users known to each other, run the contract creation, invite and share everything,
           // add bookmarks.
