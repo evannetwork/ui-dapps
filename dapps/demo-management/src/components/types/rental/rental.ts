@@ -119,7 +119,7 @@ export class RentalComponent extends AsyncComponent {
     this.queueWatcher = await this.queue.onQueueFinish(
       this.demoManagement.getWatchQueueId(),
       async (reload, results) => {
-        reload && setTimeout(() => this.loadDetail());
+        reload && setTimeout(() => this.loadDetail(), 500);
       }
     );
 

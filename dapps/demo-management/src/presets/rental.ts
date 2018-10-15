@@ -1,5 +1,7 @@
-export const presetLindigDefaultConfig = {
-  initialSteps: ['serverKeyExchange'],
+/**
+ * configuration that should be used
+ */
+const config = {
   bookmarks: {
     'lindig.evan': {
       "author": "evan GmbH",
@@ -54,14 +56,6 @@ export const presetLindigDefaultConfig = {
       "currentLang": "en"
     },
   },
-  businessCenterDomain: 'lindig.evan',
-  contracts: [
-    // filled uring deployment
-    // {
-    //   contractId: '0x3771233e052284889E0E6D93569c4BfA02966d9D',
-    //   sharings: ['*'],
-    // }
-  ],
   description: {
     "public": {
       "name": "Digital Twin",
@@ -254,229 +248,276 @@ export const presetLindigDefaultConfig = {
             "uvvProtocol": {
               "description": "last uvv protocol of the twin (ipfs hash with file)",
               "type": "string"
-            },
-          },
+            }
+          }
         },
         "tasks": {
-        },
-      },
-    },
+        }
+      }
+    }
   },
   twin: {
-    "machineId": "DEV",
-    "constructionYear": 2018,
+    "basketExtensible": false,
+    "basketLoad": 454,
+    "climbingAbility": "30",
     "condition": 1,
-    "emptyWeight": 2447,
-    "manufacturer": "Linde",
-    "modelDescription": "H50/1100",
-    "specialFeatures": "",
-    "internalDesignation": "SB 100 E",
-    "type": "Diesel- und Treibgas-stapler",
-    "offRoadCapable": false,
-    "markingFreeTyres": true,
+    "constructionYear": 2018,
+    "driveLicense": "EMPTY",
     "driveType": 2,
     "driveVoltage": 24,
-    "driveLicense": "EMPTY",
-    "workingHeight": "9800",
+    "emptyWeight": 2447,
+    "groundClearance": 95,
     "heightLimitation": false,
-    "basketLoad": 454,
+    "internalDesignation": "SB 100 E",
+    "location": "Eisenach",
+    "machineId": "DEV",
+    "maintenanceStatus": "EMPTY",
+    "manufacturer": "Linde",
+    "markingFreeTyres": true,
+    "modelDescription": "H50/1100",
+    "offRoadCapable": false,
     "personCount": "2",
-    "rotateableBasket": false,
     "pivotedBasketArm": false,
-    "basketExtensible": false,
-    "platformHeight": 1160,
-    "platformWidth": 910,
-    "platformLength": 2260,
     "platformAvailable": true,
     "platformExtendable": true,
-    "groundClearance": 95,
-    "climbingAbility": "30",
+    "platformHeight": 1160,
+    "platformLength": 2260,
+    "platformWidth": 910,
+    "rotateableBasket": false,
+    "specialFeatures": "",
+    "transportHeight": 2260,
     "transportLength": 2410,
     "transportWidth": 1170,
-    "transportHeight": 2260,
-    "location": "Eisenach",
-    "maintenanceStatus": "EMPTY",
-    "uvvProtocol": "EMPTY"
-    }
-,
-};
-export class PresetLindig {
-  constructor() {
+    "type": "Diesel- und Treibgas-stapler",
+    "uvvProtocol": "EMPTY",
+    "workingHeight": "9800"
   }
-  async applyPreset(runtime, config, input: any = {}, output: any = { nextSteps: [] }) {
-    // make steps unique, use default steps, if no steps given
-    input.nextSteps = input.nextSteps ?
-      input.nextSteps.filter((elem, pos, arr) => arr.indexOf(elem) == pos) :
-      config.initialSteps.slice(0)
-    const step = input.nextSteps.pop()
-    runtime.executor.log(`running Lindig preset, step ${step}`)
-    switch(step) {
-      case 'init':
-      case 'serverKeyExchange': {
-        // key ex
-        await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
-        if (!(await runtime.profile.getContactKey(input.accountId, 'commKey'))) {
-          // no key for target account, start key exchange
-          // generate commKey
-          output.commKey = await runtime.keyExchange.generateCommKey();
-          // store for current account
-          await runtime.profile.addContactKey(input.accountId, 'commKey', output.commKey);
-          await runtime.profile.addProfileKey(input.accountId, 'alias', config.accountAlias);
-          await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
-          // other party has to accept
-          output.agentAlias = 'Smart Agent Presets'
-          output.agentAccount = runtime.activeAccount
-          output.nextSteps.push('clientKeyExchange')
+};
+export class RentalPreset {
+  /**
+   * Array of users that should be included into the construct
+   */
+  private users: Array<any>;
+
+  /**
+   * the business center domain that should be used
+   */
+  private businessCenterDomain: string = 'lindig.evan';
+
+  constructor(users, runtimes) {
+    this.users = users.map(user => {
+      return Object.assign((user: any, index: number) => { runtime: runtimes[index] })
+    });
+  }
+
+  /**
+   * make users known to each other, run the contract creation, invite and share everything, add
+   * bookmarks.
+   *
+   * @return     {Promise<string>}  the contract address
+   */
+  async run() {
+    // make users known to each other
+    for (let i = 0; i < this.users.length; i++) {
+      // run key exchange for all other users
+      for (let x = 0; x < this.users.length; x++) {
+        if (x !== i) {
+          await this.keyExchange(this.users[i], this.users[x]);
         }
-        // check bc, even if no key exchange has been done (stack tasks)
-        input.nextSteps.push('serverBusinessCenterCheck')
-        break
       }
 
-      case 'serverBusinessCenterCheck': {
-        const businessCenter = runtime.contractLoader.loadContract(
-          'BusinessCenter',
-          await runtime.nameResolver.getAddress(config.businessCenterDomain),
-        )
-        // decide to continue or request client to join
-        if (!await runtime.executor.executeContractCall(businessCenter, 'isMember', input.accountId)) {
-          output.nextSteps.push('clientBusinessCenterJoin')
-        } else if (!output.nextSteps.length) {
-          // if no key ex and not bc join is pending, continue
-          input.nextSteps.push('serverContractCreate')
-        }
-        break
-      }
+      // check business center status
+      await this.businessCenterJoin(this.users[i]);
+    }
 
-      case 'serverContractCreate': {
-        // set latest dapp deployment to definition
-        const digitalTwinDbcp = await runtime.description.getDescriptionFromEns('lindigdigitaltwin.evan')
-        config.description.public.dapp = digitalTwinDbcp.public.dapp
-        config.description.public.abis = digitalTwinDbcp.public.abis
+    // create new contract
+    const creationResult = await this.createContract(this.users[0]);
 
-        // use random id for twin
-        config.twin.machineId = `demo${(Math.floor(Math.random() * 100000))}`
+    // invite all users
+    await this.inviteToContract(this.users[0], this.users, creationResult.contract);
 
-        // create contract
-        const contract = await runtime.dataContract.create('digitaltwin.factory.evan', runtime.activeAccount, null, config.description);
-        await runtime.dataContract.setEntry(contract, 'technicalData', config.twin, runtime.activeAccount);
-        config.contracts.push({
-          id: config.twin.machineId,
-          contractId: contract.options.address,
-          sharings: ['*'],
-        })
+    // set all users to active
+    await this.setConsumerState(this.users, creationResult.contract, 4);
 
-        input.contractAddress = contract.options.address;
-        // input.nextSteps.push('serverContractRegisterEns')
-        input.nextSteps.push('serverContractInvite')
-        break
-      }
+    // set the bookmakrs for all users
+    this.setBookmarks(this.users);
 
-      case 'serverContractRegisterEns': {
-        // claim dt subdomain
-        for (let contract of config.contracts) {
-          const twinEnsLabel = contract.id
-          if (twinEnsLabel) {
-            contract.ensAddress = `${twinEnsLabel}.dt.lindig.evan`
-            await runtime.nameResolver.setAddress(contract.ensAddress, contract.contractId, runtime.activeAccount, runtime.activeAccount);
-          }
-        }
-        break
-      }
+    return creationResult.address;
+  }
+  
+  /**
+   * Run the server key exchange with another account id.
+   *
+   * @param      {any}            runtime    the runtime of the user that interacts
+   * @param      {any}            userToAdd  the user that should be added object including alias,
+   *                                         mnemonic, ...
+   * @return     {Promise<void>}  resolved when done
+   */
+  async keyExchange (inviter: any, invitee: any) {
+    await inviter.runtime.profile.loadForAccount(inviter.runtime.profile.treeLabels.addressBook);
 
-      case 'serverContractInvite' : {
-        let invited;
-        // invite to contract
-        for (let contract of config.contracts) {
-          const contractInstance = runtime.contractLoader.loadContract(
-            'BaseContractInterface', contract.contractId)
-          if (await runtime.executor.executeContractCall(
-              contractInstance, 'isConsumer', input.accountId)) {
-            continue;
-          }
-          await runtime.dataContract.inviteToContract(
-            contract.businessCenterDomain || null,
+    if (!(await inviter.runtime.profile.getContactKey(invitee.accountId, 'commKey'))) {
+      // no key for target account, start key exchange
+      // generate commKey
+      const commKey = await inviter.runtime.keyExchange.generateCommKey();
+
+      // store for current account
+      await inviter.runtime.profile.addContactKey(invitee.accountId, 'commKey', commKey);
+      await inviter.runtime.profile.addProfileKey(invitee.accountId, 'alias', invitee.alias);
+      await inviter.runtime.profile.storeForAccount(inviter.runtime.profile.treeLabels.addressBook);
+
+      // other party has to accept
+      await invitee.runtime.profile.loadForAccount(invitee.runtime.profile.treeLabels.addressBook);
+      await invitee.runtime.profile.addContactKey(inviter.acountId, 'commKey', commKey);
+      await invitee.runtime.profile.addProfileKey(inviter.agentAccount, 'alias', inviter.alias);
+      await invitee.runtime.profile.storeForAccount(invitee.profile.treeLabels.addressBook);
+    }
+  }
+
+  /**
+   * Join a user into the business center
+   *
+   * @param      {any}            user    the user object that should be checked, if already joined,
+   *                                      if not, join
+   * @return     {Promise<void>}  resolved when done
+   */
+  async businessCenterJoin(user: any) {
+    const businessCenter = user.runtime.contractLoader.loadContract(
+      'BusinessCenter',
+      await user.runtime.nameResolver.getAddress(this.businessCenterDomain),
+    );
+
+    const isMember = await user.runtime.executor.executeContractCall(businessCenter, 'isMember',
+      user.accountId);
+
+    // decide to continue or request client to join
+    if (!isMember) {
+      const address = await user.runtime.nameResolver.getAddress(this.businessCenterDomain);
+      await user.runtime.executor.executeContractTransaction(
+        businessCenter, 'join', { from: user.runtime.activeAccount, })
+    }
+  }
+
+  /**
+   * User that should create the contract.
+   *
+   * @param      {any}     user    the user that should be added object including alias, mnemonic,
+   *                               ...
+   * @return     {any}  the contract instance
+   */
+  async createContract(user: any) {
+    // set latest dapp deployment to definition
+    const digitalTwinDbcp = await user.runtime.description.getDescriptionFromEns('lindigdigitaltwin.evan');
+    
+    // build the dbcp description object
+    const dbcpDescription = JSON.parse(JSON.stringify(digitalTwinDbcp));
+    dbcpDescription.public.dapp = digitalTwinDbcp.public.dapp;
+    dbcpDescription.public.abis = digitalTwinDbcp.public.abis;
+
+    // use random id for twin
+    config.twin.machineId = `demo${(Math.floor(Math.random() * 100000))}`
+
+    // create contract
+    const contract = await user.runtime.dataContract.create('digitaltwin.factory.evan',
+      user.accountId, null, config.description);
+    await user.runtime.dataContract.setEntry(contract, 'technicalData', config.twin, user.accountId);
+
+    // register the ens addres
+    contract.ensAddress = `${config.twin.machineId}.dt.lindig.evan`
+    await user.runtime.nameResolver.setAddress(contract.ensAddress, contract.contractId,
+      user.accountId, user.accountId);
+    
+    // return all necessary data
+    return {
+      address: contract.options.address,
+      contract: contract,
+      ensAddress: config.twin.machineId,
+    };
+  }
+
+  /**
+   * Invite a list of members into the contract.
+   *
+   * @param      {any}            inviter   the user object that should invite the users
+   * @param      {Array<any>}     users     list of users that should be invited
+   * @param      {any}            contract  the contract where the users should be invited
+   * @return     {Promise<void>}  resolved when done
+   */
+  async inviteToContract(inviter: any, users: Array<any>, contract: any) {
+    const runtime = inviter.runtime;
+
+    for (let user of users) {
+      // is the user already invited?
+      const isConsumer = await runtime.executor.executeContractCall(
+        contract, 'isConsumer', user.accountId);
+
+      if (!isConsumer) {
+        // invite to contracts
+        await runtime.dataContract.inviteToContract(
+          contract.businessCenterDomain || null,
+          contract.contractId,
+          inviter.accountId,
+          user.accountId,
+        );
+    
+        // extend sharings
+        for (let sharing of contract.sharings) {
+          const contentKey = await runtime.sharing.getKey(contract.contractId,
+            runtime.activeAccount, sharing);
+          await runtime.sharing.addSharing(
             contract.contractId,
-            runtime.activeAccount,
-            input.accountId,
+            inviter.accountId,
+            user.accountId,
+            sharing,
+            0,
+            contentKey,
           );
-          if (!output.contracts) {
-            output.contracts = []
-          }
-          output.contracts.push(contract.contractId)
-          invited = true;
-          for (let sharing of contract.sharings) {
-            const contentKey = await runtime.sharing.getKey(
-              contract.contractId, runtime.activeAccount, sharing);
-            await runtime.sharing.addSharing(
-              contract.contractId,
-              runtime.activeAccount,
-              input.accountId,
-              sharing,
-              0,
-              contentKey,
-            );
-          }
         }
-        output.nextSteps.push('clientBookmarksAdd')
-        if (invited) {
-          output.nextSteps.push('clientContractAccept')
-        }
-        break;
-      }
-
-      case 'clientKeyExchange': {
-        // accept keys, no checks, as keys may have been updated
-        await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
-        await runtime.profile.addContactKey(input.agentAccount, 'commKey', input.commKey);
-        await runtime.profile.addProfileKey(input.agentAccount, 'alias', input.agentAlias);
-        await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
-        output.nextSteps.push('serverContractCreate')
-        break;
-      }
-
-      case 'clientBusinessCenterJoin': {
-        const address = await runtime.nameResolver.getAddress(config.businessCenterDomain)
-        const businessCenter = runtime.contractLoader.loadContract('BusinessCenter', address)
-        await runtime.executor.executeContractTransaction(
-          businessCenter, 'join', { from: runtime.activeAccount, })
-        output.nextSteps.push('serverContractCreate')
-        break;
-      }
-
-      case 'clientContractAccept': {
-        for (let contractId of input.contracts) {
-          const contractInstance = runtime.contractLoader.loadContract(
-            'BaseContractInterface', contractId)
-          await runtime.executor.executeContractTransaction(
-            contractInstance,
-            'changeConsumerState',
-            { from: runtime.activeAccount },
-            runtime.activeAccount,
-            4
-          )
-        }
-        break;
-      }
-
-      case 'clientBookmarksAdd': {
-        for (let bookmark of Object.keys(config.bookmarks)) {
-          const existingBookmark = await runtime.profile.getDappBookmark(bookmark)
-          const bookmarkDefinition = config.bookmarks[bookmark]
-          if (!existingBookmark) {
-            await runtime.profile.loadForAccount(runtime.profile.treeLabels.bookmarkedDapps);
-            await runtime.profile.addDappBookmark(bookmark, bookmarkDefinition);
-            await runtime.profile.storeForAccount(runtime.profile.treeLabels.bookmarkedDapps);
-          }
-        }
-        break;
       }
     }
-    if (input.nextSteps.length) {
-      return this.applyPreset(runtime, config, input, output)
-    } else {
-      return output
+  }
+
+  /**
+   * Save the predefined bookmarks into it's profile.
+   *
+   * @param      {Array<any>}  users   the users where the bookmarks should be added
+   * @return     {Promise<void>}  resolved when done
+   */
+  async setBookmarks(users: Array<any>) {
+    for (let i = 0; i < users.length; i++) {
+      const runtime = users[i].runtime;
+
+      // check all bookmarks if they exists
+      for (let bookmark of Object.keys(config.bookmarks)) {
+        const existingBookmark = await runtime.profile.getDappBookmark(bookmark);
+        const bookmarkDefinition = config.bookmarks[bookmark];
+
+        if (!existingBookmark) {
+          await runtime.profile.loadForAccount(runtime.profile.treeLabels.bookmarkedDapps);
+          await runtime.profile.addDappBookmark(bookmark, bookmarkDefinition);
+          await runtime.profile.storeForAccount(runtime.profile.treeLabels.bookmarkedDapps);
+        }
+      }
+    }
+  }
+
+  /**
+   * Sets the cusomer state.
+   *
+   * @param      {<type>}  users     The users
+   * @param      {<type>}  contract  The contract
+   * @return     {<type>}  { description_of_the_return_value }
+   */
+  async setConsumerState(users: Array<any>, contract: any, consumerState: number) {
+    // set the consumer state to active
+    for (let i = 0; i < users.length; i++) {
+      await this.users[i].runtime.executor.executeContractTransaction(
+        contract,
+        'changeConsumerState',
+        { from: this.users[i].accountId },
+        this.users[i].accountId,
+        consumerState
+      );
     }
   }
 }
-

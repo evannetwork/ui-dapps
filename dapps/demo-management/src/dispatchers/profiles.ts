@@ -83,14 +83,8 @@ export const profilesDispatcher = new QueueDispatcher(
                 `[Demo-Management]: onboarding user ${ user.alias }, ${ user.accountId }`, 'debug');
 
               // get a singleton profile instance
-              const profileRuntime = await service.getBCCProfileForUser(user);
+              const profileRuntime = await service.getRuntimeForUser(user);
               const profile = profileRuntime.profile;
-
-              // set encryption password
-              profileRuntime.keyProvider.setKeysForAccount(
-                user.accountId,
-                lightwallet.getEncryptionKeyFromPassword(user.password)
-              );
 
               service.core.utils.log(`[Demo-Management] ${ user.accountId }: load new diffiehellman
                 keys and set profile and contact specific data`, 'debug');
@@ -104,7 +98,7 @@ export const profilesDispatcher = new QueueDispatcher(
               service.core.utils.log(`[Demo-Management] ${ user.accountId }: load sharings and
                 crypto info`, 'debug');
               const sharing = await profileRuntime.dataContract.createSharing(user.accountId);
-              const cryptor = profileRuntime.ipldInstance.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
+              const cryptor = profileRuntime.ipld.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
 
               // set ipld
               service.core.utils.log(`[Demo-Management] ${ user.accountId }: set ipld`, 'debug');

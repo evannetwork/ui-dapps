@@ -25,22 +25,14 @@
   https://evan.network/license/
 */
 
-import {
-  Ipld,
-  prottle,
-} from 'bcc';
-
 import * as bcc from 'bcc';
 import * as SmartContracts from 'smart-contracts';
 
 import {
-  AccountStore,
   bccHelper,
   core,
   getDomainName,
-  KeyProvider,
   lightwallet,
-  user,
 } from 'dapp-browser';
 
 import {
@@ -165,12 +157,15 @@ export class DemoManagementService implements OnDestroy {
     let demos = (await this.bcc.profile.getBcContracts(this.demoStorage)) || { };
 
     // remove crypto stuff
-    Ipld.purgeCryptoInfo(demos);
+    bcc.Ipld.purgeCryptoInfo(demos);
 
     // load details
-    await prottle(10, Object.keys(demos).map(demoKey => async () => {
-      demos[demoKey] = await this.bcc.profile.getBcContract(this.demoStorage, demoKey)
-    }));
+    const demoKeys = Object.keys(demos);
+    if (demoKeys.length > 0) {
+      await bcc.prottle(10, demoKeys.map(demoKey => async () => {
+        demos[demoKey] = await this.bcc.profile.getBcContract(this.demoStorage, demoKey)
+      }));
+    }
 
     // load queue entries
     this.core.utils.deepCopy(
@@ -301,55 +296,22 @@ export class DemoManagementService implements OnDestroy {
     return finishCheck('');
   }
 
-  /**
+ /**
    * Load a new bcc profile instance for a given user.
    *
    * @param      {<type>}  user    The user
    * @return     {<type>}  The bcc profile for user.
    */
-  public async getBCCProfileForUser(user: any) {
+  public async getRuntimeForUser(user: any) {
     // load user status informations
     await this.checkUserStatus(null, user);
 
-    // load core options
-    const provider: string = 'internal';
-    const coreOptions = await bccHelper.getCoreOptions(bcc, SmartContracts, provider);
-    const coreRuntime = await bcc.createCore(coreOptions);
-
-    // specify the bcc profile options
-    const bccProfileOptions: any = {
-      accountId: user.accountId,
-      CoreBundle: bcc,
-      coreOptions: coreOptions,
-      keyProvider: new KeyProvider({ }, user.accountId),
-      signer: bccHelper.getSigner(bcc, provider, new AccountStore(user.vault)),
-      SmartContracts: SmartContracts
-    };
-
-    // initialize bcc for an profile
-    const bccProfile = bcc.create(bccProfileOptions);
-    await bccProfile.keyProvider.setKeysForAccount(user.accountId, user.vault.encryptionKey);
-
-    // set exchangeKeys
-    try {
-      const targetPubKey = await bccProfile.profile.getPublicKey();
-      const targetPrivateKey = await bccProfile.profile.getContactKey(
-        user.accountId,
-        'dataKey'
-      );
-
-      if (!!targetPrivateKey) {
-        bccProfile.keyExchange.setPublicKey(targetPubKey, targetPrivateKey);
-      }
-    } catch (ex) { }
-
-    // fill missing root property
-    bccProfile.executor = bccProfile.dataContract.options.executor;
-    bccProfile.contractLoader = bccProfile.dataContract.options.loader;
-    bccProfile.nameResolver = bccProfile.dataContract.options.nameResolver;
-    bccProfile.description = bccProfile.dataContract.options.description;
-    bccProfile.activeAccount = user.accountId;
-
-    return bccProfile;
+    // create a new runtime
+    return await bccHelper.createDefaultRuntime(
+      bcc,
+      user.accountId,
+      user.vault.encryptionKey,
+      lightwallet.getPrivateKey(user.vault, user.accountId),
+    );
   }
 }
