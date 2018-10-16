@@ -214,15 +214,12 @@ export class DemoManagementService implements OnDestroy {
    * @return     {any}  cleaned user object.
    */
   getClearUser(user: any) {
-    [
-      'checkTimeout', 
-      'error', 
-      'isOnboared', 
-      'isValidPassword',
-      'loading', 
-      'vault',
-    ].forEach(key => {
-      delete user[key];
+    const allowedProperties = [ 'mnemonic', 'password', 'alias', 'role', 'accountId' ];
+
+    Object.keys(user).forEach(key => {
+      if (allowedProperties.indexOf(key) === -1) {
+        delete user[key];
+      }
     });
 
     return user;

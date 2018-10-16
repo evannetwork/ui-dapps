@@ -303,9 +303,12 @@ export class RentalPreset {
     await this.setConsumerState(this.users, creationResult.contract, 4);
 
     // set the bookmakrs for all users
-    this.setBookmarks(this.users);
+    await this.setBookmarks(this.users);
 
-    return creationResult.address;
+    return {
+      address: creationResult.address,
+      ensAddress: creationResult.ensAddress,
+    };
   }
   
   /**
@@ -331,12 +334,14 @@ export class RentalPreset {
       await inviter.runtime.profile.addContactKey(invitee.accountId, 'commKey', commKey);
       await inviter.runtime.profile.addProfileKey(invitee.accountId, 'alias', invitee.alias);
       await inviter.runtime.profile.storeForAccount(inviter.runtime.profile.treeLabels.addressBook);
+      await inviter.runtime.profile.loadForAccount(inviter.runtime.profile.treeLabels.addressBook);
 
       // other party has to accept
       await invitee.runtime.profile.loadForAccount(invitee.runtime.profile.treeLabels.addressBook);
-      await invitee.runtime.profile.addContactKey(inviter.acountId, 'commKey', commKey);
-      await invitee.runtime.profile.addProfileKey(inviter.agentAccount, 'alias', inviter.alias);
-      await invitee.runtime.profile.storeForAccount(invitee.profile.treeLabels.addressBook);
+      await invitee.runtime.profile.addContactKey(inviter.accountId, 'commKey', commKey);
+      await invitee.runtime.profile.addProfileKey(inviter.accountId, 'alias', inviter.alias);
+      await invitee.runtime.profile.storeForAccount(invitee.runtime.profile.treeLabels.addressBook);
+      await invitee.runtime.profile.loadForAccount(invitee.runtime.profile.treeLabels.addressBook);
     }
   }
 
@@ -389,7 +394,7 @@ export class RentalPreset {
 
     // create contract
     const contract = await user.runtime.dataContract.create('dt.factory.rentaldemo.evan',
-      user.accountId, null, config.description);
+      user.accountId, this.businessCenterDomain, config.description);
     await user.runtime.dataContract.setEntry(contract, 'technicalData', config.twin, user.accountId);
 
     // register the ens addres
@@ -419,7 +424,7 @@ export class RentalPreset {
     for (let user of users) {
       if (user !== inviter) {
         this.log(`[Demo-Management]: invite to contract ${ inviter.alias } (${ inviter.accountId }),
-          ${ user.accountId } (${ user.accountId })`, 'debug');
+          ${ user.alias } (${ user.accountId })`, 'debug');
         // is the user already invited?
         const isConsumer = await runtime.executor.executeContractCall(
           contract, 'isConsumer', user.accountId);
@@ -432,20 +437,22 @@ export class RentalPreset {
             inviter.accountId,
             user.accountId,
           );
-      
-          // extend sharings
-          for (let sharing of contract.sharings) {
-            const contentKey = await runtime.sharing.getKey(contract,
-              runtime.activeAccount, sharing);
-            await runtime.sharing.addSharing(
-              contract,
-              inviter.accountId,
-              user.accountId,
-              sharing,
-              0,
-              contentKey,
-            );
-          }
+
+          // load blocknumber and sharing keys / data
+          const blockNumber = await runtime.web3.eth.getBlockNumber();
+          const [hashKeyToShare, contentKeyToShare, sharings] = await Promise.all([
+            runtime.sharing.getHashKey(contract.options.address, inviter.accountId),
+            runtime.sharing.getKey(contract.options.address, inviter.accountId, '*', blockNumber),
+            runtime.sharing.getSharingsFromContract(contract),
+          ]);
+
+          // extend the sharing for the invited user
+          await runtime.sharing.extendSharings(sharings, inviter.accountId, user.accountId, '*',
+            0, contentKeyToShare, null);
+          await runtime.sharing.extendSharings(sharings, inviter.accountId, user.accountId, '*',
+            'hashKey', hashKeyToShare, null);
+          await runtime.sharing.saveSharingsToContract(contract.options.address, sharings,
+            inviter.accountId);
         }
       }
     }
@@ -459,8 +466,8 @@ export class RentalPreset {
    */
   async setBookmarks(users: Array<any>) {
     const bookmark = 'rentaldemo.evan';
-    const bookmarkDescription = this.angularService.bookmarkService
-      .getBookmarkDefinitions('rentaldemo.evan');
+    const bookmarkDescription = await this.angularService.bookmarkService
+      .getBookmarkDefinition('rentaldemo.evan');
 
     for (let i = 0; i < users.length; i++) {
       this.log(`[Demo-Management]: set bookmark ${ users[i].alias } (${ users[i].accountId })`,

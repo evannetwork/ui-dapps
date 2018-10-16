@@ -82,7 +82,9 @@ export const de = {
       }
     },
     "users": "Nutzer",
-    "contract-address": "Vertragsaddresse"
+    "contract-address": "Vertragsaddresse",
+    "ens-address": "ENS-Addresse",
+    "create-new-contract": "Neuen Vertrag erstellen"
   },
   "demomanagement": "Demo Management"
 };

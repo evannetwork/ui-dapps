@@ -285,7 +285,12 @@ export class UsersComponent extends AsyncComponent {
           `mnemonic=${ user.mnemonic }`,
           `password=${ user.password }`
         ].join('&'),
-        `#/lindig.${ getDomainName() }/${ this.demo.contractAddress }`,
+        [
+          '#',
+          `rentaldemo.${ getDomainName() }`,
+          `digitaltwin.rentaldemo.${ getDomainName() }`,
+          this.demo.contractAddress,
+        ].join('/'),
       ].join(''),
       '_blank'
     );

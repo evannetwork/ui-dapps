@@ -69,7 +69,9 @@ export const rentalDispatcher = new QueueDispatcher(
 
           // make users known to each other, run the contract creation, invite and share everything,
           // add bookmarks.
-          copy.contractAddress = await preset.run();
+          const result = await preset.run();
+          copy.contractAddress = result.address;
+          copy.ensAddress = result.ensAddress;
 
           // clear the data for saving and set the contract address
           copy.users = copy.users.map(user => service.getClearUser(user));

@@ -73,7 +73,7 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="formData.contractAddress">
-        <ion-col col-12 col-md-6>
+        <ion-col col-12 col-md-5>
           <ion-item>
             <ion-label stacked>{{ '_dm.contract-address' | translate }}</ion-label>
             <ion-input name="contractAddress" readonly
@@ -81,6 +81,24 @@
               (ionChange)="ref.detectChanges()">
             </ion-input>
           </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-5>
+          <ion-item>
+            <ion-label stacked>{{ '_dm.ens-address' | translate }}</ion-label>
+            <ion-input name="ensAddress" readonly
+              [(ngModel)]="formData.ensAddress"
+              (ionChange)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 col-md-2 class="create-new-contract">
+          <button ion-button icon-left round outline color="green" margin-top
+            [disabled]="saving"
+            (click)="createContractStructure()">
+            <ion-spinner  color="light" *ngIf="saving"></ion-spinner>
+            <ion-icon name="code-working" *ngIf="!saving"></ion-icon>
+            <span>{{ '_dm.create-new-contract' | translate }}</span>
+          </button>
         </ion-col>
       </ion-row>
     </div>
