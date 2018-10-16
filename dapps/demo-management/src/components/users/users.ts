@@ -289,7 +289,7 @@ export class UsersComponent extends AsyncComponent {
           '#',
           `rentaldemo.${ getDomainName() }`,
           `digitaltwin.rentaldemo.${ getDomainName() }`,
-          this.demo.contractAddress,
+          this.demo.ensAddress ? this.demo.ensAddress : this.demo.contractAddress,
         ].join('/'),
       ].join(''),
       '_blank'

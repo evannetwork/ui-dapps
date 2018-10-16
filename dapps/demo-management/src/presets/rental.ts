@@ -398,10 +398,14 @@ export class RentalPreset {
     await user.runtime.dataContract.setEntry(contract, 'technicalData', config.twin, user.accountId);
 
     // register the ens addres
-    /*contract.ensAddress = `${config.twin.machineId}.dt.rentaldemo.evan`
-    await user.runtime.nameResolver.setAddress(contract.ensAddress, contract,
-      user.accountId, user.accountId);*/
-    
+    const ensAddress = `${config.twin.machineId}.dt.rentaldemo.evan`
+    await user.runtime.nameResolver.claimAddress(ensAddress, user.accountId);
+    await user.runtime.nameResolver.setAddress(
+      ensAddress,
+      contract.options.address,
+      user.accountId
+    );
+
     // return all necessary data
     return {
       address: contract.options.address,

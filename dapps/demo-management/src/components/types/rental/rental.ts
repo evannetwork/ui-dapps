@@ -49,6 +49,7 @@ import {
   EvanQueue,
   EvanRoutingService,
   EvanTranslationService,
+  EvanAlertService,
 } from 'angular-core';
 
 import { DemoManagementService } from '../../../services/service';
@@ -95,13 +96,14 @@ export class RentalComponent extends AsyncComponent {
   @ViewChild('userManagement') userManagement: any;
 
   constructor(
+    private alertService: EvanAlertService,
     private bcc: EvanBCCService,
     private core: EvanCoreService,
     private demoManagement: DemoManagementService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
-    private translate: EvanTranslationService
+    private translate: EvanTranslationService,
   ) {
     super(ref, core);
   }
@@ -207,7 +209,21 @@ export class RentalComponent extends AsyncComponent {
   /**
    * Use the current users and create a new demo contract instance for them.
    */
-  createContractStructure() {
+  async createContractStructure() {
+    if (this.demo.contractAddress) {
+      try {
+        await this
+          .alertService.showSubmitAlert(
+            '_dm.recreate-contract.alert-title',
+            '_dm.recreate-contract.alert-desc',
+            'cancel',
+            '_dm.recreate-contract.accept',
+          );
+      } catch (ex) {
+        return;
+      }
+    }
+
     // submit new data to the queue
     this.queue.addQueueData(
       this.demoManagement.getContractStructureQueueId(this.demo),

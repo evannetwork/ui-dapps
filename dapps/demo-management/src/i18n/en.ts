@@ -28,12 +28,15 @@
 export const en = {
   "_dm": {
     "cancel": "cancel",
+    "contract-address": "Contract address",
     "create-contract": "Create Contract Structure",
     "create-contract-to-continue": "The user setup has been completed.<br><br>Create the necessary contract structure to complete the process.",
     "create-demo": "Create demo",
+    "create-new-contract": "Create new contract",
     "create-profiles": "Create profiles",
     "create-users-to-continue": "The specified users do not have a corresponding profile.<br><br>Please create the profiles to continue.",
     "empty-demos": "No demos available",
+    "ens-address": "ENS-Address",
     "general": "General Information",
     "handling-dispatcher": {
       "description": "Manage demo environments",
@@ -44,6 +47,11 @@ export const en = {
       "desc": "Identification of the demo",
       "error": "Please enter a name",
       "text": "Name"
+    },
+    "recreate-contract": {
+      "accept": "create new contract",
+      "alert-desc": "Do you want to replace the previous contract? The reference will be overwritten with a newly created contract.",
+      "alert-title": "Create a new contract"
     },
     "remove-demo": {
       "message": "Do you really want to delete the demo {{ name }}?",
@@ -81,10 +89,7 @@ export const en = {
         "text": "Role"
       }
     },
-    "users": "Users",
-    "contract-address": "Contract address",
-    "ens-address": "ENS-Address",
-    "create-new-contract": "Create new contract"
+    "users": "Users"
   },
   "demomanagement": "Demo Management"
 };
