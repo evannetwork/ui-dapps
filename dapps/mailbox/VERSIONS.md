@@ -4,6 +4,10 @@
 ### Features
 ### Fixes
 - fix goBack history stacking for mailbox contract opening
+- add storeKey / storeValue for contract mail attachments
+- be able to pass contract attachment without business center
+- new design
+- create new mails using UI
 
 ### Deprecations
 
