@@ -48,7 +48,8 @@ import {
 } from '../services/service';
 
 /**************************************************************************************************/
-export const SendMailDispatcher = new QueueDispatcher(
+
+export const AnswerMailDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
       '_dappmailbox.dispatcher.send-mail',
@@ -56,7 +57,7 @@ export const SendMailDispatcher = new QueueDispatcher(
       async (service: MailDispatcherService, data: any) => {
         for (let mail of data.data) {
           const mailCpy = Object.assign({}, mail);
-          await service.bcc.mailbox.sendMail(mailCpy.mail, mailCpy.from, mailCpy.to);
+          await service.bcc.mailbox.sendAnswer(mailCpy.mail, mailCpy.from, mailCpy.to);
         }
       }
     )

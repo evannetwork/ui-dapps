@@ -25,42 +25,13 @@
   https://evan.network/license/
 */
 
-import {
-  Injectable,
-  Component, OnInit, Input,            // @angular/core
-  Validators, FormBuilder, FormGroup,  // @angular/forms
-  DomSanitizer
-} from 'angular-libs';
+@import '@evan.network/ui-angular-sass/src/variables/colors';
 
-import {
-  QueueSequence,
-  QueueDispatcher,
-  EvanBCCService,
-  SingletonService
-} from 'angular-core';
-
-import {
-  translations
-} from '../i18n/registry';
-
-import {
-  MailDispatcherService
-} from '../services/service';
-
-/**************************************************************************************************/
-export const SendMailDispatcher = new QueueDispatcher(
-  [
-    new QueueSequence(
-      '_dappmailbox.dispatcher.send-mail',
-      '_dappmailbox.dispatcher.send-mail-description',
-      async (service: MailDispatcherService, data: any) => {
-        for (let mail of data.data) {
-          const mailCpy = Object.assign({}, mail);
-          await service.bcc.mailbox.sendMail(mailCpy.mail, mailCpy.from, mailCpy.to);
-        }
-      }
-    )
-  ],
-  translations,
-  'MailDispatcherService'
-);
+mail-send {
+  @media(min-width: 769px) {
+    .evan-content {
+      width: calc(100% - 20px);
+      margin: 0 10px;
+    }
+  }
+}

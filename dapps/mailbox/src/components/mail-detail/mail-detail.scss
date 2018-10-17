@@ -28,123 +28,63 @@
 @import '@evan.network/ui-angular-sass/src/variables/colors';
 
 mail-detail {
-  evan-loading {
-    width: 100%;
+  span.top-right {
+    position: absolute;
+    top: 25px;
+    right: 25px;
   }
 
-  h1 {
-    font-size: 20px;
+  .sender-header {
+    margin: 25px 0;
 
-    margin: 0;
+    span {
+      color: #c9d6d8;
+    }
   }
 
-  .mail-date {
-    display: block;
+  .evan-small-seperator {
+    width: calc(100% + 50px);
+    margin-left: -25px;
 
-    color: $light;
+    background-color: rgba(112, 122, 128, 0.5);
   }
 
-  @media (min-width: 993px) {
+  @media(min-width: 769px) {
     .evan-content {
-      margin-top: 8px;
-      margin-bottom: 8px;
+      width: calc(100% - 20px);
+      margin: 0 10px;
+    }
+  }
+
+  .answer {
+    position: relative;
+
+    width: calc(100% - 50px);
+    margin-top: 10px;
+    padding: 10px 25px;
+
+    border-radius: 10px;
+
+    &.left {
+      background-color: #0f4c56;
     }
 
-    .mail-date {
+    &.right {
+      margin-left: 50px;
+
+      background-color: #3b9395;
+    }
+
+    .answer-header {
+      font-weight: 600;
+    }
+
+    .answer-date {
       position: absolute;
-      top: 0;
-      right: 0;
-    }
-  }
+      right: 15px;
+      bottom: -5px;
 
-  @media (max-width: 992px) {
-    & > div, & > div > .evan-content.evan-big-content {
-      height: 100%;
-    }
-  }
-
-  .from-to-container {
-    @media (max-width: 992px) {
-      padding: 0;
-    }
-
-    @media (min-width: 993px) {
-      padding: 0 8px 8px 0;
-    }
-
-    .from, .to {
-      padding: 0 8px;
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-
-      blockie-component {
-        margin: 0 10px;
-
-        canvas {
-          width: 40px;
-        }
-      }
-
-      & > * {
-        display: inline-block;
-
-        vertical-align: middle;
-      }
-
-      & > div {
-        padding-left: 0;
-        width: calc(100% - 92px);
-        h2, h3, span {
-          margin: 0;
-        }
-      }
-
-      & > h2 {
-        line-height: 50px;
-
-        margin: 0;
-      }
-
-      h2 {
-        font-size: 17px;
-
-        vertical-align: super;
-      }
-
-      h3, span {
-        font-size: 12px;
-      }
-
-      span {
-        color: $medium-gray;
-      }
-    }
-  }
-
-  .body {
-    @media (min-width: 993px) {
-      padding: 32px;
-    }
-
-    @media (max-width: 992px) {
-      padding: 32px 25px;
-    }
-  }
-
-  .attachments {
-    padding: 25px 8px;
-
-    text-align: right;
-
-    @media (max-width: 992px) {
-      text-align: center;
-
-      button {
-        width: 100%;
-
-        border-radius: 5px;
-      }
+      color: #d2d2d2;
     }
   }
 }

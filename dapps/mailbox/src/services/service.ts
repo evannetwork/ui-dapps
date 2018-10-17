@@ -26,41 +26,32 @@
 */
 
 import {
-  Injectable,
-  Component, OnInit, Input,            // @angular/core
-  Validators, FormBuilder, FormGroup,  // @angular/forms
-  DomSanitizer
+  getDomainName
+} from 'dapp-browser';
+
+import {
+  Injectable, OnDestroy,    // '@angular/core';
+  Platform,                 // ionic-angular
+  Observable, Subscription
 } from 'angular-libs';
 
 import {
-  QueueSequence,
-  QueueDispatcher,
+  EvanCoreService,
   EvanBCCService,
-  SingletonService
+  EvanDescriptionService,
+  EvanRoutingService,
+  SingletonService,
+  EvanAlertService
 } from 'angular-core';
 
-import {
-  translations
-} from '../i18n/registry';
-
-import {
-  MailDispatcherService
-} from '../services/service';
-
 /**************************************************************************************************/
-export const SendMailDispatcher = new QueueDispatcher(
-  [
-    new QueueSequence(
-      '_dappmailbox.dispatcher.send-mail',
-      '_dappmailbox.dispatcher.send-mail-description',
-      async (service: MailDispatcherService, data: any) => {
-        for (let mail of data.data) {
-          const mailCpy = Object.assign({}, mail);
-          await service.bcc.mailbox.sendMail(mailCpy.mail, mailCpy.from, mailCpy.to);
-        }
-      }
-    )
-  ],
-  translations,
-  'MailDispatcherService'
-);
+
+@Injectable()
+export class MailDispatcherService {
+  constructor(
+    public bcc: EvanBCCService,
+    public singleton: SingletonService
+  ) {
+    return singleton.create(MailDispatcherService, this);
+  }
+}

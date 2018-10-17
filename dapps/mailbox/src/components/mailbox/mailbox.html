@@ -25,58 +25,43 @@
   https://evan.network/license/
 -->
 
-<div class="left-panel" *ngIf="screenSize > 1100 || !getActiveMailId()">
+<div class="left-panel" *ngIf="screenSize > 1100 || !getActiveMailId()"
+  [class.no-detail-opened]="!getActiveMailId()">
   <evan-loading *ngIf="loading"></evan-loading>
 
   <ion-list *ngIf="!loading">
-    <div class="evan-tabs evan-content">
+    <div class="evan-tabs">
       <button ion-button icon-left clear
         [class.active]="!showSent" 
         (click)="showSent = false; filter()">
         <ion-icon name="mail"></ion-icon>
-        {{ '_dappmailbox.received' | translate }}
+        <span>{{ '_dappmailbox.received' | translate }}</span>
       </button>
       <button ion-button icon-left clear
         [class.active]="showSent" 
         (click)="showSent = true; filter()">
         <ion-icon name="paper-plane"></ion-icon>
-        {{ '_dappmailbox.sent' | translate }}
+        <span>{{ '_dappmailbox.sent' | translate }}</span>
       </button>
     </div>
     <div class="evan-tabs-container" [@tabSlideTransition]="!showSent ? 0 : 1">
       <ng-container *ngFor="let index of [ 0, 1 ]">
-        <div class="mail-container" *ngIf="index === 0 && !showSent || index === 1 && showSent">
-          <ion-item margin-vertical class="semi-transparent search-box">
-            <ion-icon item-start name="search" padding-left></ion-icon>
-            <ion-input
-              type="text"
-              [placeholder]="'_dappmailbox.filter_items' | translate"
-              [(ngModel)]="filterString"
-              (ionChange)="filter($event)">
-            </ion-input>
-          </ion-item>
-
+        <div *ngIf="index === 0 && !showSent || index === 1 && showSent">
           <evan-empty-dapp *ngIf="groupedMails.length === 0"
             [text]="filterString ? ('_dappmailbox.nothing-found' | translate:{ filter: filterString }) : (mailService.mails.length > 0 ? '_dappmailbox.empty-mails-filter' : '_dappmailbox.empty-mails')"
             ensAddress="mailbox">
           </evan-empty-dapp>
 
-          <div class="mail-group evan-content" *ngFor="let group of groupedMails">
-            <h2 class="content-header" text-left>
+          <div class="mail-group" *ngFor="let group of groupedMails">
+            <b class="content-header" text-left>
               {{ group.sent | date:'longDate':'':translate.translate.currentLang }}
-            </h2>
+            </b>
 
             <button ion-item class="clickable"
               [class.active]="mail.id === getActiveMailId()"
               [class.unread]="accountId !== mail.content.from && mailService.readMails.indexOf(mail.id) === -1"
               *ngFor="let mail of group.mails"
-              (click)="activateMail(mail)">
-              <ion-avatar item-start>
-                <div class="evan-avatar-wrapper">
-                  <blockie-component class="small-blockie" [address]="mail.content.from" [size]="8" [scale]="6">
-                  </blockie-component>
-                </div>
-              </ion-avatar>
+              (click)="navigateTo(mail.parentId || mail.id)">
               <h2>
                 <ng-container *ngIf="accountId === mail.content.from">
                   {{ addressBook[mail.content.to]?.alias || mail.content.to }}
@@ -85,18 +70,21 @@
                   {{ addressBook[mail.content.from]?.alias || mail.content.fromAlias || mail.content.from }}
                 </ng-container>
               </h2>
-              <h3>
-                <ng-container *ngIf="mail.parentId">
-                  {{ '_dappmailbox.answer' | translate }}: 
-                </ng-container>
-                {{ mail.content.title }}
+              <h3 class="title-text"  *ngIf="mail.content.title || mail.content.sent">
+                <span>
+                  <ng-container *ngIf="mail.parentId">
+                    {{ '_dappmailbox.answer' | translate }}: 
+                  </ng-container>
+                  {{ mail.content.title }}
+                </span>
+
+                <span>
+                  {{ mail.content.sent | date:'shortTime':'':translate.translate.currentLang }}
+                </span>
               </h3>
-              <span class="mail-date">
-                {{ mail.content.sent | date:'shortTime':'':translate.translate.currentLang }}
-              </span>
-              <button ion-button clear item-end>
-                <ion-icon name="arrow-forward" color="light"></ion-icon>
-              </button>
+              <h3 class="body-text" *ngIf="mail.content.body">
+                {{ mail.content.body }}
+              </h3>
             </button>
           </div>
           <div class="mail-container" col-12 *ngIf="showLoadMore()" text-center>
@@ -107,7 +95,7 @@
               {{ !showSent ? mailService.totalReceivedMailCount : mailService.totalSentMailCount }}
               {{ 'mails' | translate }} 
             </p>
-            <button ion-button icon-left round color="transparency"
+            <button ion-button icon-left round color="transparency" margin-bottom
               (click)="loadMoreMails()"
               [disabled]="loadMore">
               <ion-icon *ngIf="!loadMore" name="refresh" color="light"></ion-icon>
@@ -121,11 +109,13 @@
   </ion-list>
 </div>
 
-<evan-empty-dapp *ngIf="screenSize > 1100 && !getActiveMailId()"
-  text="_dappmailbox.no-detail-selected"
-  ensAddress="mailbox">
-</evan-empty-dapp>
-
+<dashboard-top-buttons class="on-small-move-down">
+  <button ion-button outline round icon-left
+    (click)="navigateTo('send-mail')">
+    <ion-icon name="paper-plane" *ngIf="!sending"></ion-icon>
+    {{ '_dappmailbox.send-new-mail' | translate }}
+  </button>
+</dashboard-top-buttons>
 <router-outlet
   *ngIf="!reloadOutlet" 
   [@opacityTransition]>
