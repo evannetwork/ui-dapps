@@ -2,7 +2,13 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.3.0
+### Features
 - add `evan-dev-dapps-domain` configuration
+- fix naming issues
 
 ### Fixes
 ### Deprecations

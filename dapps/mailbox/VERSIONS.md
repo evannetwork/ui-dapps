@@ -3,13 +3,17 @@
 ## Next Version
 ### Features
 ### Fixes
-- fix goBack history stacking for mailbox contract opening
-- add storeKey / storeValue for contract mail attachments
-- be able to pass contract attachment without business center
+### Deprecations
+
+## Version 1.3.0
+### Features
 - new design
 - create new mails using UI
+- add storeKey / storeValue for contract mail attachments
+- be able to pass contract attachment without business center
 
-### Deprecations
+### Fixes
+- fix goBack history stacking for mailbox contract opening
 
 ## Version 1.2.0
 ### Fixes

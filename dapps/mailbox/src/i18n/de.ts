@@ -77,13 +77,13 @@ export const de = {
     "loading_more_mail": "Mehr Nachrichten nachladen...",
     "message-body": {
       "desc": "Geben Sie den Inhalt der Nachricht ein.",
-      "error": "Sie müssen einen Textinhalt angeben um die Nachricht zu senden!",
+      "error": "Sie müssen einen Textinhalt angeben, um die Nachricht zu senden!",
       "title": "Textinhalt"
     },
     "message-title": {
-      "desc": "Geben Sie den Title der Nachricht ein.",
-      "error": "Sie müssen einen Title angeben um die Nachricht zu senden!",
-      "title": "Title"
+      "desc": "Geben Sie den Titel der Nachricht ein.",
+      "error": "Sie müssen einen Titel angeben, um die Nachricht zu senden!",
+      "title": "Titel"
     },
     "more_items": "weitere Antwort(en)",
     "no-detail-selected": "Wählen sie eine Nachricht aus, um sie zu lesen...",
@@ -93,7 +93,7 @@ export const de = {
     "received": "Empfangen",
     "recipient": {
       "desc": "Empfänger der neuen Mail",
-      "error": "Sie müssen einen Empfänger angeben um die Mail zu senden!",
+      "error": "Sie müssen einen Empfänger angeben, um die Mail zu senden!",
       "title": "Empfänger"
     },
     "remove": "Löschen",
