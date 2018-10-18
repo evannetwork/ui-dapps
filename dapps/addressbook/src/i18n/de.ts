@@ -40,15 +40,15 @@ export const de = {
     'eves-to-send': 'Zu sendende EVEs',
     'alert': {
       'remove-title': 'Konktakt entfernen',
-      'remove-description': 'Wollen sie diesen Kontakt wirklich entfernen?',
+      'remove-description': 'Wollen Sie diesen Kontakt wirklich entfernen?',
       'eve-missing': 'Nicht genug EVE',
       'eve-missing-description': `
-        Sie wollen mehr Geld versenden als Sie besitzen.
+        Sie wollen mehr Geld versenden, als Sie besitzen.
         Bitte laden Sie Ihr Konto auf, um diese Menge EVE zu versenden.
       `,
       'profile-missing': 'Kein Profil',
       'profile-missing-description': `
-        Für die account ID des Nutzers der eingeladen werden soll, ist kein Profil hinterlegt.
+        Für die account ID des Nutzers, der eingeladen werden soll, ist kein Profil hinterlegt.
         Bitte überprüfen Sie die eingegebene account ID oder laden Sie den Nutzer per E-Mail ein.
       `
     },
