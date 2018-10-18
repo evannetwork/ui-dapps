@@ -26,9 +26,14 @@
 -->
 
 <button ion-button icon-start round  outline
-  (click)="addContract()">
-  <ion-icon name="person-add"></ion-icon>
-  <ng-container>
+  (click)="addContract()"
+  [disabled]="loading">
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-icon name="person-add" *ngIf="!loading"></ion-icon>
+  <ng-container *ngIf="!loading">
     {{ '_dappmailbox.accept-contract-invitation' | translate }}
+  </ng-container>
+  <ng-container *ngIf="loading">
+    {{ '_dappmailbox.accept-contract-invitation-loading' | translate }}
   </ng-container>
 </button>

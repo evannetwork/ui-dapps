@@ -35,15 +35,11 @@ mailbox {
 
   height: calc(100vh - 56px);
 
-  .mail-date {
-    font-size: 12px;
-  }
-
   router-outlet {
     display: none;
   }
 
-  & > .left-panel, & > mail-detail, & > evan-empty-dapp {
+  & > .left-panel, & > mail-detail, & > evan-empty-dapp, & > mail-send {
     position: absolute;
     top: 0;
 
@@ -56,8 +52,37 @@ mailbox {
     }
   }
 
+
+  & > mail-detail, & > evan-empty-dapp, & > mail-send {
+    @media (min-width: 1101px) {
+      left: 40%;
+
+      width: 60%;
+    }
+
+    @media (min-width: 1501px) {
+      left: 30%;
+
+      width: 70%;
+    }
+
+    @media (min-width: 1801px) {
+      left: 30%;
+
+      width: 70%;
+    }
+  }
+
   & > .left-panel {
     position: relative;
+
+    transition: 0.3s width ease-out;
+
+    &.no-detail-opened {
+      &, & > evan-loading {
+        width: 100% !important;
+      }
+    }
 
     & > evan-loading {
       width: 100% !important;
@@ -77,93 +102,95 @@ mailbox {
       }
     }
 
-    .mail-group.evan-content {
-      margin-bottom: 25px;
 
-      & > div, & > span {
-        border-bottom: 1px solid $light-gray;
-      }
+    .evan-tabs {
+      @media (min-width: 769px) {
+        position: fixed;
+        z-index: 100;
+        top: 56px;
 
-      & > button {
-        &:first-child {
-          border-top: 1px solid #dedede;
-        }
+        display: block;
 
-        &.unread {
-          h2, h3 {
-            font-weight: 1000 !important;
-          }
-        }
+        margin-bottom: 0;
 
-        @media (min-width: 1101px) {
-          border-right: 7px solid transparent;
+        button {
+          display: block;
+
+          width: 50px;
+          height: 50px;
+
+          background-color: #164f5a !important;
 
           &.active {
-            border-right: 7px solid $medium-blue;
+            background-color: $primary !important;
+          }
+
+          .button-inner {
+            span {
+              display: none;
+            }
+
+            ion-icon {
+              line-height: 36px;
+
+              margin-right: 0;
+              padding-right: 0;
+            }
           }
         }
-
-        ion-avatar {
-          margin: 0;
-        }
-      }
-    }
-
-    .evan-content {
-      width: unset;
-
-      &.evan-tabs {
-        margin-bottom: 0;
       }
 
-      @media (max-width: 1100px) {
+      @media (max-width: 768px) {
         width: 100%;
-        margin-top: 8px;
-        margin-left: 0;
+      }
+    }
+    .evan-tabs-container {
+      & > div {
+        background-color: rgba(2,56,69,0.5);
+      }
 
-        &.evan-tabs {
-          margin-top: 0;
+      @media (min-width: 769px) {
+        margin-left: 50px;
+      }
+    }
+
+    .mail-group {
+      display: block;
+
+      padding: 25px 0;
+
+      border-bottom: 1px solid #1d3e42;
+
+      & > b {
+        display: block;
+
+        margin: 0 25px 15px 25px;
+
+        color: $primary;
+      }
+
+      & > button.item {
+        &.unread {
+          border-left: 5px solid #e0e0e0;
+        }
+
+        .item-inner {
+          margin-right: 20px !important;
+          margin-left: 25px !important;
+          padding-right: 0 !important;
+
+          ion-label {
+            h3.title-text {
+              display: flex;
+              justify-content: space-between;
+            }
+
+            h3.body-text {
+              color: #c9d6d8 !important;
+            }
+          }
         }
       }
-    }
-
-    .search-box {
-      margin: 8px 0;
-    }
-
-    @media (min-width: 1101px) {
-      .evan-content {
-        margin: 0;
-      }
-
-      .evan-tabs {
-        margin: 8px;
-        margin-bottom: 0;
-      }
-
-      .mail-container {
-        padding: 0 8px;
-      }
-    }
-  }
-
-  & > mail-detail, & > evan-empty-dapp {
-    @media (min-width: 1101px) {
-      left: 40%;
-
-      width: 60%;
-    }
-
-    @media (min-width: 1501px) {
-      left: 30%;
-
-      width: 70%;
-    }
-
-    @media (min-width: 1801px) {
-      left: 30%;
-
-      width: 70%;
     }
   }
 

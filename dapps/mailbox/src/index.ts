@@ -45,16 +45,24 @@ import {
   startAngularApplication, createIonicAppElement
 } from 'angular-core';
 
-export { KeyExchangeDispatcher, KeyExchangeDispatcherService } from './dispatcher/keyExchange';
-export { SendMailDispatcher, SendMailDispatcherService } from './dispatcher/sendMail';
+import { AnswerMailDispatcher } from './dispatcher/answerMail';
 import { CommKeyComponent } from './components/attachment-cards/comm-key/comm-key';
 import { ContractComponent } from './components/attachment-cards/contract/contract';
-import { KeyExchangeDispatcherService } from './dispatcher/keyExchange';
+import { KeyExchangeDispatcher, } from './dispatcher/keyExchange';
 import { MailboxComponent } from './components/mailbox/mailbox';
 import { MailboxRootComponent } from './components/root/root';
 import { MailboxTranslations } from './i18n/registry';
 import { MailDetailComponent } from './components/mail-detail/mail-detail';
-import { SendMailDispatcherService } from './dispatcher/sendMail';
+import { MailDispatcherService } from './services/service';
+import { MailSendComponent } from './components/mail-send/mail-send';
+import { SendMailDispatcher, } from './dispatcher/sendMail';
+
+export {
+  AnswerMailDispatcher,
+  KeyExchangeDispatcher,
+  MailDispatcherService,
+  SendMailDispatcher,
+}
 
 /**************************************************************************************************/
 
@@ -71,6 +79,15 @@ function getRoutes(): Routes {
           reload: true
         },
         children: [
+          {
+            path: 'send-mail',
+            component: MailSendComponent,
+            data: {
+              state: 'mail-send',
+              navigateBack : '..',
+              reload: true
+            },
+          },
           {
             path: ':id',
             component: MailDetailComponent,
@@ -101,8 +118,7 @@ function getConfig(isDispatcher?: boolean) {
     ],
     providers: [
       MailboxTranslations,
-      SendMailDispatcherService,
-      KeyExchangeDispatcherService,
+      MailDispatcherService,
     ],
     entryComponents: [ IonicApp ]
   };
@@ -120,11 +136,12 @@ function getConfig(isDispatcher?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
-      MailboxRootComponent,
-      MailboxComponent,
-      MailDetailComponent,
       CommKeyComponent,
-      ContractComponent
+      ContractComponent,
+      MailboxComponent,
+      MailboxRootComponent,
+      MailDetailComponent,
+      MailSendComponent,
     ];
   }
 

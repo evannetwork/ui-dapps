@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.2.1",
+        "angular-core": "^1.3.0",
         "angular-libs": "^1.2.1"
       },
       "entrypoint": "dashboard.js",

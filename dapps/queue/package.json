@@ -1,9 +1,5 @@
 {
   "author": "evan GmbH",
-  "main": "dist/index.js",
-  "name": "@evan.network/queue",
-  "typings": "dist/index.d.ts",
-  "version": "1.2.0",
   "keywords": [
     "javascript",
     "typescript",
@@ -12,5 +8,12 @@
     "Ionic",
     "DApp",
     "SASS"
-  ]
+  ],
+  "main": "dist/index.js",
+  "name": "@evan.network/queue",
+  "scripts": {
+    "build": "cd ../.. && npm run angular-build dapps/queue"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.2.0"
 }

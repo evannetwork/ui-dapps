@@ -3,11 +3,7 @@
   "devDependencies": {
     "signature_pad": "^2.3.2"
   },
-  "main": "dist/index.js",
-  "name": "@evan.network/task",
   "homepage": "https://evannetwork.github.io/",
-  "typings": "dist/index.d.ts",
-  "version": "1.2.0",
   "keywords": [
     "javascript",
     "typescript",
@@ -18,8 +14,15 @@
     "SASS"
   ],
   "license": "AGPL-3.0-only",
+  "main": "dist/index.js",
+  "name": "@evan.network/task",
   "repository": {
     "type": "git",
     "url": "git@github.com:evannetwork/ui-core-dapps.git"
-  }
+  },
+  "scripts": {
+    "build": "cd ../.. && npm run angular-build dapps/task"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.2.0"
 }

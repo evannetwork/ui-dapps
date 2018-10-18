@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.2.1",
+        "angular-core": "^1.3.0",
         "angular-libs": "^1.2.1"
       },
       "entrypoint": "task.js",
@@ -11,7 +11,7 @@
         "task.js",
         "task.css"
       ],
-      "origin": "QmW9RTup5GmAfwws4GGNCA6gz2SLU72pZoF8YHBJgs54dZ",
+      "origin": "QmU6qprihPDr5UBTjEG33PWddzJEtHNVqhLduEJFcmLA8f",
       "primaryColor": "#e87e23",
       "secondaryColor": "#fffaf5",
       "standalone": true,
@@ -185,7 +185,7 @@
       "1.0.1": "QmVLvdH2zwfgjP1fv1ULgjhpinmTdBftq7V2XY4ZJjF6pK",
       "1.0.2": "QmXkfLKoq1oeNrQREvGuuc3BKnNeLbGQULTPei81tuDpy8",
       "1.1.0": "QmR8ZDkEKSqiqJL8udLQ8MCr15uRGDq47CymnNddVgJqxB",
-      "1.2.0": "QmRKAVjF1YxuumpMcqh76Xd72SaX9BbsVzorJsbD3QGMsP"
+      "1.2.0": "QmPPPHCX3znZ3ZyKwjgLYwnXYsc5jCuvXU8YRY8PhPjUU1"
     }
   }
 }

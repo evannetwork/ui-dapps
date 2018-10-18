@@ -124,7 +124,7 @@ export class TermsOfUseComponent extends AsyncComponent {
             this.onboarding.captchaToken = data.result;
             break;
           }
-          case 'captcha-result': {
+          case 'captcha-reset': {
             delete this.onboarding.captchaToken;
             break;
           }

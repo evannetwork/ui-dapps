@@ -36,17 +36,22 @@ import {
 
 import {
   AnimationDefinition,
+  AsyncComponent,
   createOpacityTransition,
-  EvanRoutingService,
-  EvanMailboxService,
   createTabSlideTransition,
-  EvanCoreService,
-  EvanUtilService,
-  EvanQueue,
   EvanAddressBookService,
+  EvanCoreService,
+  EvanMailboxService,
+  EvanQueue,
+  EvanRoutingService,
   EvanTranslationService,
-  AsyncComponent
+  EvanUtilService,
+  QueueId,
 } from 'angular-core';
+
+import {
+  getDomainName
+} from 'dapp-browser';
 
 /**************************************************************************************************/
 
@@ -111,7 +116,7 @@ export class MailboxComponent extends AsyncComponent {
     });
 
     this.clearSendMailQueue = await this.queueService
-      .onQueueFinish(this.mailService.sendMailQueueId, async (reload) => {
+      .onQueueFinish(new QueueId(`mailbox.${ getDomainName() }`, '*', '*'), async (reload) => {
         await this.initialLoad(reload);
       });
 
@@ -154,7 +159,18 @@ export class MailboxComponent extends AsyncComponent {
     }
   }
 
+  /**
+   * Return the current active mail id or the string 'send-mail', if the user is currently on the
+   * send-mail page.
+   *
+   * @return     {string}  The active mail identifier.
+   */
   getActiveMailId(): string {
+    // bypass new mail creation 
+    if (window.location.hash.indexOf('send-mail') !== -1) {
+      return 'send-mail';
+    }
+
     if (this.route.children.length > 0) {
       return this.route.children[0].snapshot.params['id'];
     } else {
@@ -245,29 +261,24 @@ export class MailboxComponent extends AsyncComponent {
     this.ref.detectChanges();
   }
 
-  async activateMail(mail) {
+  /**
+   * Navigates to a specific mailbox url.
+   *
+   * @param      {string}  url     the url that should be opened (e.g. mail.id or 'send-mail')
+   * @return     {Promise<void>}  resolved when done
+   */
+  async navigateTo(url: string) {
     this.reloadOutlet = true;
     this.ref.detectChanges();
 
-    const mailBefore = this.routingService.getHashParam('id');
-
-    if (this.accountId !== mail.content.from) {
-      this.mailService.addReadMails(mail.id);
-    }
-
-    if (mailBefore) {
-      this.routingService.navigate(`../`);
-
-      await this.utils.timeout(0);
-    }
-
-    this.routingService.navigate(`./${ mail.id }`);
+    this.routingService.navigate(`./${ url }`, true);
 
     await this.utils.timeout(0);
     
     this.reloadOutlet = false;
     this.ref.detectChanges();
   }
+
 
   async loadMoreMails(tabIndex: number) {
     this.loadMore = true;
@@ -289,9 +300,11 @@ export class MailboxComponent extends AsyncComponent {
    */
   showLoadMore(tabIndex: number) {
     if (!this.showSent) {
-      return this.mailService.totalReceivedMailCount - this.mailService.receivedMails.length > 0;
+      return (this.mailService.totalReceivedMailCount - this.mailService.invalidReceivedMailCount -
+        this.mailService.receivedMails.length) > 0;
     } else {
-      return this.mailService.totalSentMailCount - this.mailService.sentMails.length > 0;
+      return (this.mailService.totalSentMailCount - this.mailService.invalidSentMailCount -
+        this.mailService.sentMails.length) > 0;
     }
   }
 }

@@ -27,7 +27,7 @@
 
 export const de = {
   "_dappprofile": {
-    "account-detail": "Active Account",
+    "account-detail": "Aktiver Account",
     "accountid": "Account-ID",
     "accounts": "Accounts",
     "alias": "Alias",
@@ -48,14 +48,14 @@ export const de = {
     "evan-dev-dapps-domain-changed-desc": "Alle DApps, die bis zu diesem Zeitpunkt geladen worden, sind bereits zwischengespeichert werden nicht erneut mit der neue Konfiguration geladen. Möchten Sie die Anwendung neustarten?",
     "evan-dev-dapps-domain-changed-ok": "neu starten",
     "export-encryptionkey": "Profil Verschlüsselungsschlüssel exportieren",
-    "export-encryptionkey-desc": "Dieser Schlüssel verschlüsselt sämtliche Daten Ihres Profils, inklusiver Ihrer Kontakte, B-Mails, Verträge, usw.... Durch das Exportieren und eventuell unsichere Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen den Private Key wirklich exportieren?",
+    "export-encryptionkey-desc": "Dieser Schlüssel verschlüsselt sämtliche Daten Ihres Profils, inklusiver Ihrer Kontakte, B-Mails, Verträge, usw.... Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Profil Verschlüsselungsschlüssel wirklich exportieren?",
     "export-encryptionkey-ok": "Ich Verstehe das Risiko",
     "export-privatekey": "Private Key exportieren",
-    "export-privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität. Durch das Exportieren und eventuell unsichere Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen den Private Key wirklich exportieren?",
+    "export-privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität. Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Private Key wirklich exportieren?",
     "export-privatekey-ok": "Ich Verstehe das Risiko",
     "language": "Sprache",
     "language-changed": "Sprache geändert",
-    "language-changed-desc": "Nach dem die Sprache geändert wurde, werden nicht alle Bereiche der Anwendung sofort übersetzt. Damit diese Änderungen in Kraft trifft, muss die Anwendung neugestartet werden. Möchten Sie die Anwendung jetzt neustarten?",
+    "language-changed-desc": "Nach dem die Sprache geändert wurde, werden nicht alle Bereiche der Anwendung sofort übersetzt. Damit diese Änderungen wirksam werden, muss die Anwendung neugestartet werden. Möchten Sie die Anwendung jetzt neustarten?",
     "language-changed-ok": "neu starten",
     "language-desc": "Nutzen Sie eine spezifische Sprache für die evan.network Anwendungen.",
     "languages": {
@@ -63,7 +63,7 @@ export const de = {
       "en": "Englisch"
     },
     "logout": "Abmelden",
-    "logout-desc": "Wollen sie sich wirklich abmelden?",
+    "logout-desc": "Wollen Sie sich wirklich abmelden?",
     "my-profile": "Mein Profil",
     "no_alias": "Kein Alias",
     "notifications": "Benachrichtigungen",
