@@ -1,17 +1,18 @@
 {
   "dependencies": {
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
     "ng2-ace-editor": "^0.3.8",
     "typescript": "^2.4.2"
   },
   "devDependencies": {
-    "@evan.network/angular-gulp": "1.2.0",
-    "@evan.network/api-blockchain-core": "^1.2.2",
-    "@evan.network/smart-contracts-core": "1.1.1",
-    "@evan.network/ui-angular-core": "^1.2.2",
+    "@evan.network/angular-gulp": "^1.2.1",
+    "@evan.network/api-blockchain-core": "^1.3.0",
+    "@evan.network/smart-contracts-core": "^1.1.2",
+    "@evan.network/ui-angular-core": "^1.3.0",
     "@evan.network/ui-angular-libs": "^1.2.1",
-    "@evan.network/ui-angular-sass": "1.2.0",
-    "@evan.network/ui-dapp-browser": "^1.3.1"
+    "@evan.network/ui-angular-sass": "^1.3.0",
+    "@evan.network/ui-dapp-browser": "^1.4.0"
   },
   "keywords": [
     "javascript",
@@ -25,12 +26,11 @@
   "license": "AGPL-3.0-only",
   "name": "@evan.network/ui-core-dapps",
   "scripts": {
-    "dapp-build": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapp.js build --dapp",
-    "dapp-sass": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapp.js sass --dapp",
-    "dapps-build": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapps.js dapps-build",
-    "dapps-serve": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapps.js dapps-build --serve",
-    "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config",
+    "angular-build": "gulp --cwd . --gulpfile node_modules/@evan.network/angular-gulp/dapp.js build --dapp",
+    "dapps-build": "gulp --gulpfile gulp/dapps.js dapps-build",
+    "dapps-serve": "gulp --gulpfile gulp/dapps.js dapps-serve",
+    "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config <%= deploymentConfigLocation %>",
     "serve": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve"
   },
-  "version": "1.2.1"
+  "version": "1.3.0"
 }

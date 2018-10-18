@@ -43,27 +43,18 @@ import {
   translations
 } from '../i18n/registry';
 
-/**************************************************************************************************/
-@Injectable()
-export class KeyExchangeDispatcherService {
-  static providers = [
-    EvanBCCService,
-    SingletonService
-  ];
+import {
+  MailDispatcherService
+} from '../services/service';
 
-  constructor(
-    public bcc: EvanBCCService,
-    public singleton: SingletonService
-  ) {
-    return singleton.create(KeyExchangeDispatcherService, this);
-  }
-}
+/**************************************************************************************************/
+
 export const KeyExchangeDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
       '_dappmailbox.dispatcher.add-key',
       '_dappmailbox.dispatcher.add-key-description',
-      async (service: KeyExchangeDispatcherService, data: any) => {
+      async (service: MailDispatcherService, data: any) => {
         const queueData = data.data;        
         for (let queueDataEntry of queueData) {
           await Promise.all([
@@ -80,7 +71,7 @@ export const KeyExchangeDispatcher = new QueueDispatcher(
     new QueueSequence(
       '_dappmailbox.dispatcher.send-commkey',
       '_dappmailbox.dispatcher.send-commkey-description',
-      async (service: KeyExchangeDispatcherService, data: any) => {
+      async (service: MailDispatcherService, data: any) => {
         const queueData = data.data;
         for (let queueDataEntry of queueData) {
           if (queueDataEntry.type === 'send') {
@@ -95,5 +86,6 @@ export const KeyExchangeDispatcher = new QueueDispatcher(
       }
     )
   ],
-  translations
+  translations,
+  'MailDispatcherService'
 );

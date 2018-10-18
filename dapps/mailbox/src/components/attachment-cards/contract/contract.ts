@@ -154,7 +154,16 @@ export class ContractComponent implements OnInit {
         this.routing.navigate(this.attachment.fullPath);
       } else {
         const storeKey = this.attachment.storeKey || this.attachment.address;
-        this.routing.navigate(`/${ this.attachment.bc }/${ storeKey }`); 
+
+        // use storeKey as default value that should be opened
+        let toOpen = `/${ storeKey }`;
+
+        // when a bc was addes, open it including the bc
+        if (this.attachment.bc) {
+          toOpen = `/${ this.attachment.bc }${ toOpen }`;
+        }
+
+        this.routing.navigate(toOpen); 
       }
     } else {
       try {
@@ -178,7 +187,7 @@ export class ContractComponent implements OnInit {
           storeValue = contractDefinition.public;
         }
 
-        await this.bcc.profile.addBcContract(this.attachment.bc, storeKey, storeValue);
+        await this.bcc.profile.addBcContract(this.attachment.bc || 'contracts', storeKey, storeValue);
 
         if (this.commKeyAttachment) {
           const privateKey = await this.bcc.profile.getContactKey(
@@ -205,7 +214,15 @@ export class ContractComponent implements OnInit {
         if (this.attachment.fullPath) {
           this.routing.navigate(this.attachment.fullPath);
         } else {
-          this.routing.navigate(`/${ this.attachment.bc }/${ storeKey }`); 
+          // use storeKey as default value that should be opened
+          let toOpen = `/${ storeKey }`;
+
+          // when a bc was addes, open it including the bc
+          if (this.attachment.bc) {
+            toOpen = `/${ this.attachment.bc }${ toOpen }`;
+          }
+
+          this.routing.navigate(toOpen); 
         }
 
         this.alreadyAdded = true;

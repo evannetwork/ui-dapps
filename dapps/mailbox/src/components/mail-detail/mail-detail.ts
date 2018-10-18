@@ -26,25 +26,30 @@
 */
 
 import {
-  Component, OnInit,      // @angular/core
-  TranslateService,       // @ngx-translate/core
-  NavController,          // ionic-angular
   ActivatedRoute,
-  Input, ChangeDetectorRef
+  ChangeDetectorRef,
+  Component,
+  Input,
+  NavController,
+  OnInit,
+  TranslateService,
+  ViewChild,
 } from 'angular-libs';
 
 import {
   AnimationDefinition,
-  createRouterTransition,
+  AsyncComponent,
   createOpacityTransition,
-  EvanTranslationService,
-  EvanAddressBookService,
-  EvanMailboxService,
+  createRouterTransition,
   createTabSlideTransition,
-  EvanCoreService,
+  EvanAddressBookService,
   EvanBCCService,
+  EvanCoreService,
+  EvanMailboxService,
   EvanRoutingService,
-  AsyncComponent
+  EvanTranslationService,
+  QueueId,
+  EvanQueue,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -59,34 +64,77 @@ import {
 })
 
 export class MailDetailComponent extends AsyncComponent {
-  public answers: any = [];
-  public loading: boolean;
-  public sending: boolean;
-  public showAnswers: boolean;
-  public profiles;
-  public answer: any;
-  public allAnswersCount: any;
-  public loadAnswers: any;
-  private myAccountId: string;
+  private answers: any = [];
+  private sending: boolean;
+  private showAnswers: boolean;
+  private addressbook;
 
+  /**
+   * amount of total answers
+   */
+  private totalAnswerCount: number;
+
+  /**
+   * amount of answers that could not be loaded
+   */
+  private invalidAnswerCount: number;
+
+  /**
+   * current active account
+   */
+  private activeAccount: string;
+
+  /**
+   * The current answer.
+   */
+  private answer: any;
+  
+  /**
+   * { item_description }
+   */
+  private loadingAnswers: any;
+
+  /**
+   * watch for queue updates
+   */
+  private queueWatch: QueueId;
+
+  /**
+   * Function to unsubscribe from queue results.
+   */
+  private queueWatcher: Function;
+
+  /**
+   * given mailId
+   */
   @Input() mailId?: string;
+
+  /**
+   * already loaded mail detail
+   */
   @Input() mail?: any;
 
+  /**
+   * current formular
+   */
+  @ViewChild('answerForm') answerForm: any;
+
   constructor(
-    private core: EvanCoreService,
-    public translate: EvanTranslationService,
-    private mailService: EvanMailboxService,
-    private route: ActivatedRoute,
-    public addressbookService: EvanAddressBookService,
+    private addressbookService: EvanAddressBookService,
     private bcc: EvanBCCService,
+    private core: EvanCoreService,
+    private mailService: EvanMailboxService,
+    private queueService: EvanQueue,
+    private ref: ChangeDetectorRef,
+    private route: ActivatedRoute,
     private routingService: EvanRoutingService,
-    private ref: ChangeDetectorRef
+    private translate: EvanTranslationService,
   ) {
     super(ref);
   }
 
   async _ngOnInit() {
-    this.myAccountId = this.core.activeAccount();
+    this.activeAccount = this.core.activeAccount();
     this.mailId = this.mailId || this.routingService.getHashParam('id');
     this.answers = [ ];
 
@@ -94,51 +142,69 @@ export class MailDetailComponent extends AsyncComponent {
       this.mailId = this.mail.id;
     }
 
+    this.queueWatcher = await this.queueService.onQueueFinish(
+      this.mailService.answerMailQueueId,
+      async (reload) => {
+        // if the function was called by finishing the queue, everything is fine.
+        if (reload) {
+          // reset loading
+          this.sending = false;
+
+          await this.getMail();
+        }
+      }
+    );
+
+    // load the mail details
     await this.getMail();
 
-    if (this.myAccountId !== this.mail.content.from) {
+    // add the mail to the read mail storage
+    if (this.activeAccount !== this.mail.content.from) {
       this.mailService.addReadMails(this.mailId);
     }
-
     this.mailService.syncLastReadCount();
   }
 
-  async getMail() {
-    this.loading = true;
+  /**
+   * Clear the queue
+   */
+  async _ngOnDestroy() {
+    this.queueWatcher();
+  }
 
-    if (!this.mail) {
-      this.mail = await this.mailService.getMail(this.mailId);
-    }
+  /**
+   * Load the current mail details
+   *
+   * @return     {<type>}  The mail.
+   */
+  async getMail() {
+    this.core.utils.showLoading(this);
+
+    // load the mail detail
+    this.mail = await this.mailService.getMail(this.mailId);
 
     // set translation for id
-    const i18n = {};
-    i18n[this.mailId] = this.mail.content.title;
-    this.translate.setTranslationToCurrentLanguage(i18n);
+    this.translate.addSingleTranslation(this.mailId, this.mail.content.title);
 
-    this.profiles = await this.addressbookService.loadAccounts();
+    // load current address to access aliases
+    this.addressbook = await this.addressbookService.loadAccounts();
 
-    await this.getInitialAnswers();
+    // reset answers and load them
+    this.answers = [ ];
+    this.invalidAnswerCount = 0;
+    this.totalAnswerCount = 0;
+    await this.loadAnswers();
 
-    this.loading = false;
+    this.core.utils.hideLoading(this);
   }
 
-  async getInitialAnswers() {
-    const answers = await this.getAnswers(0)
-    this.answers = answers.sort((a, b) => {
-      if (!a.content.sent || !b.content.sent) {
-        return -1;
-      }
-      if (a.content.sent > b.content.sent) {
-        return -1;
-      }
-      if (a.content.sent < b.content.sent) {
-        return 1;
-      }
-    });
-  }
-
-  async loadMoreAnswers() {
-    this.loadAnswers = true;
+  /**
+   * Load answers for the current mail and sort them.
+   *
+   * @return     {Promise<void>}  resolved when done
+   */
+  async loadAnswers() {
+    this.loadingAnswers = true;
     this.ref.detectChanges();
     const newAnswers = await this.getAnswers(this.answers.length);
 
@@ -154,13 +220,19 @@ export class MailDetailComponent extends AsyncComponent {
       }
     });
 
-    this.loadAnswers = false;
+    this.loadingAnswers = false;
     this.ref.detectChanges();
   }
 
+  /**
+   * Load answers from a specific offset.
+   *
+   * @param      {number}  offset  offset to start answers.
+   * @return     {Array<any>}  loaded answers
+   */
   async getAnswers(offset: number) {
-    const answersObject = await this.bcc.mailbox.getAnswersForMail(this.mailId, 5, this.answers.length);
-    this.allAnswersCount = answersObject.totalResultCount;
+    const answersObject = await this.bcc.mailbox.getAnswersForMail(this.mailId, 10, this.answers.length);
+    this.totalAnswerCount = answersObject.totalResultCount - this.invalidAnswerCount;
 
     return Object.keys(answersObject.mails)
       .map((key) => {
@@ -171,6 +243,9 @@ export class MailDetailComponent extends AsyncComponent {
           }
         };
         if (answersObject.mails[key] == null) {
+          this.invalidAnswerCount++;
+          this.totalAnswerCount--;
+
           return null;
         }
         Object.assign(ret, answersObject.mails[key]);
@@ -179,43 +254,70 @@ export class MailDetailComponent extends AsyncComponent {
       .filter((value) => value != null);
   }
 
+  /**
+   * Send a new answer.
+   *
+   * @return     {Promise<void>}  resolved when done
+   */
   async sendAnswer() {
-    this.sending = true;
-    this.ref.detectChanges();
-
-    let toAddress = this.mail.content.from;
-
     // if I send an answer to my own sent mail, switch to address to the other mail partner
-    if (toAddress === this.myAccountId) {
-      toAddress = this.mail.content.to;
-    }
+    let toAddress = this.mail.content.from === this.activeAccount ? this.mail.content.to : 
+      this.mail.content.from;
 
-    await this.mailService.sendAnswer({
+    this.mailService.sendAnswer(
+      {
         parentId: this.mailId,
         content: {
-          sent: new Date().getTime(),
-          from: this.myAccountId,
-          to: this.mail.content.from,
-          title: this.mail.content.title,
           body: this.answer,
+          from: this.activeAccount,
+          fromAlias: await this.bcc.profile.getProfileKey('alias', this.activeAccount),
+          sent: new Date().getTime(),
+          title: this.mail.content.title,
+          to: toAddress,
         }
       },
-      this.myAccountId,
-      this.mail.content.from
-    )
-    
-    await this.getInitialAnswers();
-    this.sending = false;
+      this.activeAccount,
+      toAddress
+    );
+
     this.answer = '';
-    
+    this.sending = true;
     this.ref.detectChanges();
   }
 
+  /**
+   * Parse the correct mail body.
+   *
+   * @param      {string}  text    parse the body text to use correct line breaks
+   * @return     {string}  correct html
+   */
   getHTMLMailBody(text: string) {
     if (text && text.replace) {
       return text.replace(/\n/g, '<br>');
     } else {
       return '';
     }
+  }
+
+  /**
+   * Checks if a form property is touched and invalid.
+   *
+   * @param      {string}   paramName  name of the form property that should be checked
+   * @return     {boolean}  true if touched and invalid, else false
+   */
+  showAnswerError(paramName: string) {
+    if (this.answerForm && this.answerForm.controls[paramName]) {
+      return this.answerForm.controls[paramName].invalid &&
+        this.answerForm.controls[paramName].touched;
+    }
+  }
+
+  /**
+   * Run detectChanges directly and after and timeout again, to update select fields.
+   */
+  detectTimeout() {
+    this.ref.detectChanges();
+
+    setTimeout(() => this.ref.detectChanges());
   }
 }

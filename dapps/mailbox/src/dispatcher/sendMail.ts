@@ -43,34 +43,24 @@ import {
   translations
 } from '../i18n/registry';
 
+import {
+  MailDispatcherService
+} from '../services/service';
+
 /**************************************************************************************************/
-@Injectable()
-export class SendMailDispatcherService {
-  static providers = [
-    EvanBCCService,
-    SingletonService
-  ];
-
-  constructor(
-    public bcc: EvanBCCService,
-    public singleton: SingletonService
-  ) {
-    return singleton.create(SendMailDispatcherService, this);
-  }
-}
-
 export const SendMailDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
       '_dappmailbox.dispatcher.send-mail',
       '_dappmailbox.dispatcher.send-mail-description',
-      async (service: SendMailDispatcherService, data: any) => {
+      async (service: MailDispatcherService, data: any) => {
         for (let mail of data.data) {
           const mailCpy = Object.assign({}, mail);
-          await service.bcc.mailbox.sendAnswer(mailCpy.mail, mailCpy.from, mailCpy.to);
+          await service.bcc.mailbox.sendMail(mailCpy.mail, mailCpy.from, mailCpy.to);
         }
       }
     )
   ],
-  translations
+  translations,
+  'MailDispatcherService'
 );
