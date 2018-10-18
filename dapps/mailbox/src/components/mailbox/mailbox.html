@@ -92,7 +92,12 @@
               {{ '_dappmailbox.showing' | translate }}
               {{ !showSent ? mailService.receivedMails.length : mailService.sentMails.length }} 
               {{ '_dappmailbox.of' | translate }} 
-              {{ !showSent ? mailService.totalReceivedMailCount : mailService.totalSentMailCount }}
+              <ng-container *ngIf="!showSent">
+                {{ mailService.totalReceivedMailCount - mailService.invalidReceivedMailCount }}
+              </ng-container>
+              <ng-container *ngIf="showSent">
+                {{ mailService.totalSentMailCount - mailService.invalidSentMailCount }}
+              </ng-container>
               {{ 'mails' | translate }} 
             </p>
             <button ion-button icon-left round color="transparency" margin-bottom

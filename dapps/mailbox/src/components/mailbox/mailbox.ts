@@ -300,9 +300,11 @@ export class MailboxComponent extends AsyncComponent {
    */
   showLoadMore(tabIndex: number) {
     if (!this.showSent) {
-      return this.mailService.totalReceivedMailCount - this.mailService.receivedMails.length > 0;
+      return (this.mailService.totalReceivedMailCount - this.mailService.invalidReceivedMailCount -
+        this.mailService.receivedMails.length) > 0;
     } else {
-      return this.mailService.totalSentMailCount - this.mailService.sentMails.length > 0;
+      return (this.mailService.totalSentMailCount - this.mailService.invalidSentMailCount -
+        this.mailService.sentMails.length) > 0;
     }
   }
 }

@@ -4,5 +4,6 @@
 ### Features
 - initial version including rental demo
 
-### Fixes
-### Deprecations
+## Version 1.0.0
+### Features
+- initial version including rental demo

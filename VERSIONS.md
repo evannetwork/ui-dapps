@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.3.0
+### Features
 - mailbox: add fullPath property to mailbox contract attachments to overwrite bc + contract url path opening
   - add storeKey / storeValue for contract mail attachments
   - be able to pass contract attachment without business center
@@ -9,9 +14,6 @@
   - create new mails using UI
 - Add new build job so each can dapp decide for its own, which build job should be used
 - add demo-management DApp
-
-### Fixes
-### Deprecations
 
 ## Version 1.2.1
 ### Features

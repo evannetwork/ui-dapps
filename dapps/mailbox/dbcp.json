@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.2.2",
+        "angular-core": "^1.3.0",
         "angular-libs": "^1.2.1"
       },
       "entrypoint": "mailbox.js",
@@ -11,7 +11,7 @@
         "mailbox.js",
         "mailbox.css"
       ],
-      "origin": "QmU2NmKBt6kEYvdCbGBrKwmbX2ir7n6Z7ZtvfP2vLyhFNd",
+      "origin": "QmaJvMGTXkGReDkGqgazhvjHXyiuhB83JCtiyzyLSCyMwb",
       "primaryColor": "#1862ac",
       "secondaryColor": "#f9f9ff",
       "type": "dapp"
@@ -33,7 +33,7 @@
       "dapp",
       "evan"
     ],
-    "version": "1.2.0",
+    "version": "1.3.0",
     "versions": {
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
       "0.1.0": "QmbDdbPM52f9Xbap7qHLE3BoYUsNSKq1mR3RVRJTc92gBK",
@@ -41,7 +41,8 @@
       "1.0.1": "QmXyHyyyFGCmKnJ1Ef94NEGkH143NQsgAQF71zvbYnjMFQ",
       "1.0.2": "QmRv3JKBsXm3Rus7rhnCd3yNEYgsUbhj9ac5TZTJZkbTYw",
       "1.1.0": "QmXdyKivZJ4y4ba6pigL72qHt43695pJmaBY5c8a16qAs1",
-      "1.2.0": "QmaiwwjCufjpqpZoKK74yFPtZYBYH6gvBX4exnVYdDynpZ"
+      "1.2.0": "QmaiwwjCufjpqpZoKK74yFPtZYBYH6gvBX4exnVYdDynpZ",
+      "1.3.0": "QmP7PMV4WybNws1RRZff2JwK3xa3uiG9wXE5GParyYkjFC"
     }
   }
 }

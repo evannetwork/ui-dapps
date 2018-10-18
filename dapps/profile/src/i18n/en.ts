@@ -59,8 +59,8 @@ export const en = {
     "language-changed-ok": "restart",
     "language-desc": "Use a specific language for the evan.network applications.",
     "languages": {
-      "de": "german",
-      "en": "english"
+      "de": "German",
+      "en": "English"
     },
     "logout": "Logout",
     "logout-desc": "Do you really want to log out?",
