@@ -82,8 +82,8 @@
                   {{ mail.content.sent | date:'shortTime':'':translate.translate.currentLang }}
                 </span>
               </h3>
-              <h3 class="body-text" *ngIf="mail.content.body">
-                {{ mail.content.body }}
+              <h3 class="body-text" *ngIf="mail.content.body"
+                [innerHTML]="mail.content.body">
               </h3>
             </button>
           </div>

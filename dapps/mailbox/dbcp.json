@@ -11,7 +11,7 @@
         "mailbox.js",
         "mailbox.css"
       ],
-      "origin": "QmaJvMGTXkGReDkGqgazhvjHXyiuhB83JCtiyzyLSCyMwb",
+      "origin": "QmbHXJpSxkDuuNJk3FQ9wJMCNKUGtci6RuiV52VwCL2NS7",
       "primaryColor": "#1862ac",
       "secondaryColor": "#f9f9ff",
       "type": "dapp"
@@ -42,7 +42,8 @@
       "1.0.2": "QmRv3JKBsXm3Rus7rhnCd3yNEYgsUbhj9ac5TZTJZkbTYw",
       "1.1.0": "QmXdyKivZJ4y4ba6pigL72qHt43695pJmaBY5c8a16qAs1",
       "1.2.0": "QmaiwwjCufjpqpZoKK74yFPtZYBYH6gvBX4exnVYdDynpZ",
-      "1.3.0": "QmP7PMV4WybNws1RRZff2JwK3xa3uiG9wXE5GParyYkjFC"
-    }
+      "1.3.0": "QmTXTFXFKKjyAc4isCUK1AKj4m96sPZKFbwEa8vBC6Bte9"
+    },
+    "dbcpVersion": 1
   }
 }

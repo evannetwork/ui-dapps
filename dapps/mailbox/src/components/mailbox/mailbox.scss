@@ -186,6 +186,11 @@ mailbox {
             }
 
             h3.body-text {
+              overflow: hidden;
+
+              white-space: nowrap;
+              text-overflow: ellipsis;
+
               color: #c9d6d8 !important;
             }
           }
