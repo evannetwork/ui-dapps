@@ -410,7 +410,7 @@ export class RentalPreset {
     return {
       address: contract.options.address,
       contract: contract,
-      ensAddress: config.twin.machineId,
+      ensAddress: ensAddress,
     };
   }
 
@@ -470,8 +470,9 @@ export class RentalPreset {
    */
   async setBookmarks(users: Array<any>) {
     const bookmark = 'rentaldemo.evan';
-    const bookmarkDescription = await this.angularService.bookmarkService
+    const description = await this.angularService.bookmarkService
       .getBookmarkDefinition('rentaldemo.evan');
+    const bookmarkDescription = this.angularService.bookmarkService.getBookmarkFromDefinition(description);
 
     for (let i = 0; i < users.length; i++) {
       this.log(`[Demo-Management]: set bookmark ${ users[i].alias } (${ users[i].accountId })`,

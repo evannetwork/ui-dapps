@@ -155,9 +155,11 @@ export class UsersComponent extends AsyncComponent {
       async (reload, results) => { }
     );
 
-    // initially check status values of the 
-    for (let user of this.users) {
-      await this.checkUserStatus(user, true);
+    // initially check status values of the
+    if (this.users.length > 0) {
+      await bcc.prottle(10, this.users.map(user => async () => 
+        await this.checkUserStatus(user, true)
+      ));
     }
 
     // Check if anything for this demo is saving

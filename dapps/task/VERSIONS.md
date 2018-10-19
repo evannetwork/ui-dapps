@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- use correct button style for create task
+
 ### Deprecations
 
 ## Version 1.2.0

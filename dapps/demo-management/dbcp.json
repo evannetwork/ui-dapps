@@ -12,7 +12,7 @@
         "demomanagement.js",
         "demomanagement.css"
       ],
-      "origin": "QmPTFsjh3LbUnGDEv24xKUqcibmDt4nN887dBLNbRCRRbG",
+      "origin": "QmTjTJdBzrYYgJwCe99F63RrLpMh2ydNjJETvAdwxPpku2",
       "primaryColor": "#51afac",
       "secondaryColor": "#edeada",
       "standalone": true,
@@ -38,6 +38,8 @@
       "library"
     ],
     "version": "1.0.0",
-    "versions": {}
+    "versions": {
+      "1.0.0": "QmUJx9Phe2kbxKKsmNDmnD9MGyim6qUfTpfjfvmFpFNjrG"
+    }
   }
 }

@@ -3,7 +3,13 @@
 ## Next Version
 ### Features
 ### Fixes
-- favorites: trim spaces at start and end by adding new favorites
+- favorites
+  - trim spaces at start and end by adding new favorites, don't use toLowerCase on ens addresses
+- task
+  - use correct button style for create task
+- demo-management
+  - use correct ens addresses after rental demo was created
+  - use correct bookmark definition for favorites
 
 ### Deprecations
 
