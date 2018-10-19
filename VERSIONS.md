@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- favorites: trim spaces at start and end by adding new favorites
+
 ### Deprecations
 
 ## Version 1.3.0
