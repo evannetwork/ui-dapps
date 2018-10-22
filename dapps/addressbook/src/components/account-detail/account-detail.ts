@@ -26,30 +26,37 @@
 */
 
 import {
-  Component, OnInit,      // @angular/core
-  TranslateService,       // @ngx-translate/core
-  NavController,          // ionic-angular
-  Validators, FormBuilder, FormGroup,  // @angular/forms
   ActivatedRoute,
-  Input, FormControl, OnDestroy,
-  ChangeDetectionStrategy, ChangeDetectorRef
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Input,
+  NavController,
+  OnDestroy,
+  OnInit,
+  TranslateService,
+  Validators,
+  ViewChild,
 } from 'angular-libs';
 
 import {
   AnimationDefinition,
-  createRouterTransition,
-  EvanTranslationService,
-  EvanRoutingService,
-  EvanAddressBookService,
+  AsyncComponent,
   createOpacityTransition,
-  EvanAlertService,
-  EvanMailboxService,
+  createRouterTransition,
   createTabSlideTransition,
-  EvanCoreService,
-  EvanQueue,
+  EvanAddressBookService,
+  EvanAlertService,
   EvanBCCService,
+  EvanCoreService,
+  EvanMailboxService,
   EvanModalService,
-  AsyncComponent
+  EvanQueue,
+  EvanRoutingService,
+  EvanTranslationService,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -70,7 +77,6 @@ export class AccountDetailComponent extends AsyncComponent {
   private loading: boolean;
   private loadingSave: boolean;
   private loadingDelete: boolean;
-  private accountForm: FormGroup;
   private isCreate: boolean;
   private isMyAccount: boolean;
   private addressBook: any;
@@ -79,6 +85,12 @@ export class AccountDetailComponent extends AsyncComponent {
   private showAccountId: boolean;
   private saving: boolean;
   private clearQueue: Function;
+  private emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  /**
+   * current account form instance
+   */
+  @ViewChild('accountForm') accountForm: any;
 
   constructor(
     private translate: EvanTranslationService,
@@ -120,79 +132,15 @@ export class AccountDetailComponent extends AsyncComponent {
       this.showAccountId = true;
     }
 
-    let formGroupDef = {
-      alias: [
-        this.account.alias,
-        Validators.required
-      ]
-    };
-
-    if (this.showAccountId) {
-      formGroupDef['accountId'] = [
-        {
-          value: this.account.accountId,
-          disabled: !this.isCreate
-        },
-        (formControl: FormControl) => {
-          if (!this.bcc.web3.utils.isAddress(formControl.value)) {
-            // valid Ethereum addrss
-            return { invalidAddress: true };
-
-          } else if (this.isCreate && (formControl.value === myAccountId)) {
-            // is not my account id
-            return { isMyAccount: true };
-
-          } else if (this.addressBook.hasOwnProperty(formControl.value)) {
-            // account already added
-            return { alreadAdded: true };
-
-          } else {
-            return null;
-          }
-        }
-      ];
-    }
-
     if (this.showMail) {
-      formGroupDef['email'] = [
-        {
-          value : this.account.profile.email,
-          disabled: !this.isCreate
-        },
-        (formControl: FormControl) => {
-          if (!formControl.value) {
-            if (this.isCreate) {
-              return Validators.required(formControl);
-            } else {
-              return null;
-            }
-          } else {
-            const addressBookKeys = Object.keys(this.addressBook);
-
-            for (let i = 0; i < addressBookKeys.length; i++) {
-              const contact = this.addressBook[addressBookKeys[i]];
-
-              if (contact.profile && contact.profile.email === formControl.value) {
-                return { alreadAdded: true };
-              }
-            }
-
-            return Validators.email(formControl);
-          }
-        }
-      ];
-
-      formGroupDef['eves'] = [
-        1,
-        Validators.required
-      ];
+      this.account.eves = 1;
     }
 
-    this.accountForm = this.formBuilder.group(formGroupDef);
-
-    this.accountForm.valueChanges.subscribe(() => this.ref.detectChanges());
+    // fill empty group
+    this.account.groupType = this.account.groupType || 'business';
 
     this.setTranslation();
+    this.detectTimeout();
   }
 
   async _ngOnDestroy() {
@@ -207,12 +155,12 @@ export class AccountDetailComponent extends AsyncComponent {
       let alias = '';
       let email = '';
 
-      if (this.accountForm.controls.alias) {
-        alias = this.accountForm.controls.alias.value;
+      if (this.account.alias) {
+        alias = this.account.alias;
       }
 
-      if (this.accountForm.controls.email) {
-        email = this.accountForm.controls.email.value;
+      if (this.account.email) {
+        email = this.account.value;
       }
 
       this.translate.addSingleTranslation(
@@ -358,5 +306,40 @@ export class AccountDetailComponent extends AsyncComponent {
         this.routing.goBack();
       })
       .catch(() => { });
+  }
+
+  /**
+   * Run detectChanges directly and after and timeout again, to update select fields.
+   */
+  detectTimeout() {
+    this.ref.detectChanges();
+
+    setTimeout(() => this.ref.detectChanges());
+  }
+
+  /**
+   * Checks if a form property is touched and invalid.
+   *
+   * @param      {string}   paramName  name of the form property that should be checked
+   * @return     {boolean}  true if touched and invalid, else false
+   */
+  showError(paramName: string) {
+    if (this.accountForm && this.accountForm.controls[paramName]) {
+      return this.accountForm.controls[paramName].invalid &&
+        this.accountForm.controls[paramName].touched;
+    }
+  }
+
+  /**
+   * Check if a correct account id was inserted.
+   *
+   * @param      {string}   accountId  the account id to check
+   * @return     {boolean}  True if account identifier valid, False otherwise.
+   */
+  isAccountIdValid(accountId: string) {
+    return !this.isCreate || (accountId &&
+      this.bcc.web3.utils.isAddress(accountId) &&
+      accountId === this.core.activeAccount() &&
+      this.isCreate && this.addressBook.hasOwnProperty(accountId));
   }
 }

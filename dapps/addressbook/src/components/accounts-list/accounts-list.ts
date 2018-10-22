@@ -34,14 +34,20 @@ import {
 
 import {
   AnimationDefinition,
+  AsyncComponent,
+  createOpacityTransition,
   createRouterTransition,
   EvanAddressBookService,
-  createOpacityTransition,
   EvanAlertService,
+  EvanBCCService,
   EvanCoreService,
-  EvanUtilService,
+  EvanMailboxService,
+  EvanModalService,
   EvanQueue,
-  AsyncComponent
+  EvanRoutingService,
+  EvanTranslationService,
+  EvanUtilService,
+  TrustDialogComponent,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -58,17 +64,26 @@ export class AccountListComponent extends AsyncComponent {
   private loading: boolean;
   private accounts: any;
   private groupedAccounts: any;
-  private availableLetters: Array<string>;
+  private availableGroups: Array<string>;
   private myAccount: string;
   private clearQueue : Function;
 
+  /**
+   * uncollapsed groups
+   */
+  private hiddenGroups: any = { };
+
   constructor(
-    public addressBookService: EvanAddressBookService,
+    private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
+    private bcc: EvanBCCService,
     private core: EvanCoreService,
+    private modalService: EvanModalService,
     private queueService: EvanQueue,
+    private ref: ChangeDetectorRef,
+    private routing: EvanRoutingService,
+    private translate: EvanTranslationService,
     private utils: EvanUtilService,
-    private ref: ChangeDetectorRef
   ) {
     super(ref);
   }
@@ -76,7 +91,7 @@ export class AccountListComponent extends AsyncComponent {
   async _ngOnInit() {
     this.myAccount = this.core.activeAccount();
     this.groupedAccounts = { };
-    this.availableLetters = [ ];
+    this.availableGroups = [ ];
 
     this.clearQueue = await this.queueService
       .onQueueFinish(this.addressBookService.queueId, (reload) => {
@@ -142,21 +157,30 @@ export class AccountListComponent extends AsyncComponent {
 
     for (let i = 0; i < accountKeys.length; i++) {
       const contact = this.accounts[accountKeys[i]];
-      
-      let firstLetter = '*';
+      let group = 'business';
 
-      if (contact.alias) {
-        firstLetter = contact.alias[0].toUpperCase();
+      if (contact.group || contact.groupType) {
+        group = (contact.group || this.translate.instant(`_dappcontacts.contact-groups.${ contact.groupType }`)).toLowerCase();
       }
 
-      this.groupedAccounts[firstLetter] = this.groupedAccounts[firstLetter] || [ ];
-
-      this.groupedAccounts[firstLetter].push(accountKeys[i]);
+      this.groupedAccounts[group] = this.groupedAccounts[group] || [ ];
+      this.groupedAccounts[group].push(accountKeys[i]);
     }
 
-    this.availableLetters = Object
+    this.availableGroups = Object
       .keys(this.groupedAccounts)
-      .sort();
+      .map(group => {
+        this.groupedAccounts[group] = this.groupedAccounts[group].sort((a, b) => {
+          if (this.accounts[a].alias > this.accounts[b].alias) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+
+        return group;
+      })
+      .sort((a: any, b: any) => a < b ? -1 : 1);
 
     this.ref.detectChanges();
   }
@@ -175,5 +199,76 @@ export class AccountListComponent extends AsyncComponent {
         this.loadAccounts();
       })
       .catch(() => { });
+  }
+
+  /**
+   * Navigates to the specific create contact page
+   *
+   * @param      {string}  selected  the selected option
+   */
+  openCreate(selected: string) {
+    if (selected === 'send-invitation-mail') {
+      this.showOnboardingAgentDialog();
+    } else {
+      this.routing.navigate('./add-via-accountid');
+    }
+  }
+
+  async showOnboardingAgentDialog() {
+    const smartAgentAccountId = '0x063fB42cCe4CA5448D69b4418cb89E663E71A139';
+    const smartAgentCommKey = await this.bcc.profile.getContactKey(
+      smartAgentAccountId,
+      'commKey',
+    );
+    if (smartAgentCommKey) {
+      this.routing.navigate('./add-via-mail');
+    } else {
+      try {
+        await this.modalService.createModal(TrustDialogComponent, {
+          smartAgentName: 'Onboarding Smart Agent',
+          smartAgentRights: [
+            'key-exchange',
+            'mailbox-send'
+          ],
+          smartAgentDetails: {
+            description: `
+              The onboarding Smart Agent gives you the ability, to invite persons via Email and send
+              them EVE\'s as seed money. They receive a custom Email with an invite link.
+              You get a mailbox message with the onboarded user id and the new alias of the account
+            `,
+            verifiedBy: 'evan.network',
+            verifiedAt: '28.02.2018',
+            createdBy: 'evan.network',
+            createdAt: '28.02.2018',
+          },
+          smartAgentAccountId: '0x063fB42cCe4CA5448D69b4418cb89E663E71A139',
+          smartAgentTrustFn: async() => {
+            const myAccountId = this.core.activeAccount();
+            let profile = this.bcc.getProfileForAccount(smartAgentAccountId);
+  
+            const targetPubKey = await profile.getPublicKey();
+            const commKey = await this.bcc.keyExchange.generateCommKey();
+            await this.bcc.keyExchange.sendInvite(smartAgentAccountId, targetPubKey, commKey, {});
+  
+            // add key to profile
+            await this.bcc.profile.addContactKey(
+              smartAgentAccountId,
+              'commKey',
+              commKey
+            );
+            await this.bcc.profile.addProfileKey(
+              smartAgentAccountId, 'alias', 'Email Smart Agent'
+            );
+            await this.bcc.profile.addProfileKey(
+              smartAgentAccountId, 'groupType', 'smart-agent'
+            );
+  
+            await this.bcc.profile.storeForAccount(this.bcc.profile.treeLabels.addressBook);
+          }
+        }, true);
+
+        this.routing.navigate('./add-via-mail');
+      } catch (ex) { }
+    }
   }
 }

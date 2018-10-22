@@ -72,4 +72,43 @@ accounts-list {
       }
     }
   }
+
+  .evan-content {
+    button.top-right {
+      top: 10px;
+      right: 15px;
+    }
+  }
+}
+
+ion-app#addressbook {
+  ion-select.evan-callout {
+    button {
+      display: none;
+    }
+  }
+
+  ion-popover.evan-callout {
+    .popover-content {
+      @media (min-width: 769px) {
+        top: 47px !important;
+        right: -24px !important;
+        left: unset !important;
+      }
+
+      @media (max-width: 768px) {
+        top: unset !important;
+        right: 0 !important;
+        bottom: 0;
+        left: 0 !important;
+
+        width: 100%;
+        margin: auto;
+
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
 }

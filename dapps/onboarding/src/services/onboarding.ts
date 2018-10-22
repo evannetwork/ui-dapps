@@ -42,12 +42,13 @@ import {
 } from 'angular-libs';
 
 import {
-  EvanRoutingService,
+  EvanAddressBookService,
+  EvanAlertService,
+  EvanBCCService,
   EvanCoreService,
   EvanOnboardingService,
+  EvanRoutingService,
   SingletonService,
-  EvanBCCService,
-  EvanAlertService,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -66,13 +67,14 @@ export class OnboardingService {
   public alias: string;
 
   constructor(
-    private singleton: SingletonService,
-    private routingService: EvanRoutingService,
-    private core: EvanCoreService,
-    private onboardingService: EvanOnboardingService,
-    private http: Http,
-    private bcc: EvanBCCService,
+    private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
+    private bcc: EvanBCCService,
+    private core: EvanCoreService,
+    private http: Http,
+    private onboardingService: EvanOnboardingService,
+    private routingService: EvanRoutingService,
+    private singleton: SingletonService,
   ) {
     return singleton.create(OnboardingService, this, () => {
 
@@ -86,6 +88,7 @@ export class OnboardingService {
 
   async sendCommKey(accountId: string) {
     const queryParams = this.routingService.getQueryparams();
+
     if (queryParams.onboardingID) {
       await this.bcc.profile.loadForAccount(accountId, this.bcc.profile.treeLabels.addressBook);
       let profile = this.bcc.getProfileForAccount(queryParams.inviteeAddress);
@@ -108,13 +111,14 @@ export class OnboardingService {
 
       await this.bcc.profile.storeForAccount(this.bcc.profile.treeLabels.addressBook);
 
+      const alias = await this.addressBookService.activeUserName();
       const mail = {
         title: this.core.translate.instant('_dapponboarding.mail-invitation-accepted.title'),
         body: this.core.translate.instant('_dapponboarding.mail-invitation-accepted.body', {
           userEmail: queryParams.email,
-          userAlias: await this.bcc.profile.getProfileKey(this.activeAccount, 'alias')
+          userAlias: alias
         }),
-        fromAlias: await this.bcc.profile.getProfileKey(this.activeAccount, 'alias'),
+        fromAlias: alias,
         fromMail: queryParams.email
       }
       await this.bcc.keyExchange.sendInvite(queryParams.inviteeAddress, targetPubKey, commKey, mail);
@@ -160,9 +164,10 @@ export class OnboardingService {
       await lightwallet.createVaultAndSetActive(mnemonic, password);
 
       // send communication key back to the onboarding account
+      this.core.setCurrentProvider('internal');
+      await this.bcc.updateBCC(accountId, 'internal');
       await this.sendCommKey(accountId);
 
-      this.core.setCurrentProvider('internal');
       this.onboardingService.finishOnboarding();
     } else {
       this.setActiveVault(dummyVault, accountId);

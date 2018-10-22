@@ -2,6 +2,10 @@
 
 ## Next Version
 ### Features
+- addressbook
+  - add new styling
+  - add manual contact grouping
+
 ### Fixes
 - favorites
   - trim spaces at start and end by adding new favorites, don't use toLowerCase on ens addresses
@@ -10,6 +14,8 @@
 - demo-management
   - use correct ens addresses after rental demo was created
   - use correct bookmark definition for favorites
+- onboarding
+  - fix onboarding mail invitation by user import
 
 ### Deprecations
 

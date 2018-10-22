@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- add new styling
+- add manual contact grouping
+
 ### Fixes
 ### Deprecations
 
