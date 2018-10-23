@@ -5,6 +5,9 @@
 - addressbook
   - add new styling
   - add manual contact grouping
+- profile
+  - theme selection
+- support light theme
 
 ### Fixes
 - favorites

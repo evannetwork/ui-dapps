@@ -114,11 +114,10 @@
   </ion-list>
 </div>
 
-<dashboard-top-buttons class="on-small-move-down">
-  <button ion-button outline round icon-left
+<dashboard-top-buttons class="on-small-move-down" *ngIf="screenSize > 1100 || !getActiveMailId()">
+  <button ion-button outline round icon-only
     (click)="navigateTo('send-mail')">
     <ion-icon name="paper-plane" *ngIf="!sending"></ion-icon>
-    {{ '_dappmailbox.send-new-mail' | translate }}
   </button>
 </dashboard-top-buttons>
 <router-outlet

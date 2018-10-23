@@ -123,9 +123,14 @@ export class ProfileComponent extends AsyncComponent {
   private devDomain: string;
 
   /**
-   * { item_description }
+   * use to prevent double popups by clicking the toggle dev domain button
    */
   private devDomainPopupTimeout: any;
+
+  /**
+   * current color theme
+   */
+  private colorTheme: string;
 
   constructor(
     private addressBookService: EvanAddressBookService,
@@ -164,6 +169,7 @@ export class ProfileComponent extends AsyncComponent {
 
     this.myProfile = await this.addressBookService.loadAccount(this.activeAccount);
     this.developerMode = this.core.utils.isDeveloperMode();
+    this.colorTheme = this.core.utils.getColorTheme();
     this.notificationsEnabled = this.core.utils.notificationsEnabled();
     this.devDomain = this.core.utils.getDevDomain();
     this.devDomainLoading = !!this.devDomain;
@@ -369,5 +375,16 @@ export class ProfileComponent extends AsyncComponent {
         window.location.reload();
       } catch (ex) { }
     }, timeout);
+  }
+
+  /**
+   * Update the color theme, if it's changed.
+   */
+  setColorTheme() {
+    window.localStorage['evan-color-theme'] = this.colorTheme;
+
+    this.core.utils.activateColorTheme(this.colorTheme);
+    this.ref.detectChanges();
+    setTimeout(() => this.ref.detectChanges());
   }
 }

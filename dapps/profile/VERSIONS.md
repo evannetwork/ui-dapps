@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- support light theme
+- implement theme switch selector
+
 ### Fixes
 ### Deprecations
 

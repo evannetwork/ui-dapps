@@ -24,9 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
-@import '@evan.network/ui-angular-sass/src/variables/colors';
-
 explorer-root {
   evan-split-pane {
     &.disable-side-panel {
@@ -52,10 +49,6 @@ explorer-root {
 
       ion-menu ion-header {
         cursor: default;
-
-        &:hover {
-          background-color: $background-color;
-        }
 
         .dapp-name {
           display: flex;
@@ -96,8 +89,6 @@ explorer-root {
 
         &.visible {
           z-index: 50;
-
-          background-color: rgba(0, 0, 0, 0.4);
         }
       }
 
@@ -155,8 +146,6 @@ explorer-root {
           left: 0;
 
           margin: auto;
-
-          background-color: $primary;
         }
       }
 
@@ -169,9 +158,6 @@ explorer-root {
         left: 0;
 
         margin: auto;
-
-        background-color: $primary;
-        box-shadow: 0 0 8px 0 $background-color;
       }
 
       .explorer-tabs.evan-tabs {
@@ -200,37 +186,91 @@ explorer-root {
       }
     }
 
-    ion-item.item-md.item-block .item-inner {
-      border-bottom-color: $background-color-2 !important;
-    }
-
     .top-right-info {
       position: absolute;
       z-index: 1;
       top: 25px;
       right: 25px;
-
-      color: $light-gray;
     }
 
     .ace_editor {
       overflow: auto;
 
       width: 100%;
+    }
+  }
+}
 
-      &, .ace_gutter {
-        background-color: $background-color;
-      }
 
-      .ace_marker-layer {
-        .ace_active-line {
-          background-color: $background-color-2;
+@mixin colorTheme($colors, $theme) {
+  explorer-root {
+    evan-split-pane {
+      ion-split-pane {
+        ion-menu ion-header {
+          &:hover {
+            background-color: map-get($theme, background-color);
+          }
         }
 
-        .ace_selection {
-          background-color: #4e9894;
+        /* show when configuration-box is their for a backdrop effect*/
+        .configuration-backdrop {
+          &.visible {
+            background-color: rgba(0, 0, 0, 0.4);
+          }
+        }
+
+        /* configueation box*/
+        .configuration-box {
+          /* close configuration dialog */
+          button.configuration-close {
+            background-color: map-get($theme, primary);
+          }
+        }
+
+        /* top positioned button to enable configuration dialog */
+        button.configuration-open {
+          background-color: map-get($colors, primary);
+          box-shadow: 0 0 8px 0 map-get($theme, background-color);
+        }
+      }
+
+      ion-item.item-md.item-block .item-inner {
+        border-bottom-color: map-get($theme, background-color-2 !important);
+      }
+
+      .top-right-info {
+        color: map-get($colors, light-gray);
+      }
+
+      .ace_editor {
+        &, .ace_gutter {
+          background-color: map-get($theme, background-color);
+        }
+
+        .ace_marker-layer {
+          .ace_active-line {
+            background-color: map-get($theme, background-color-2);
+          }
+
+          .ace_selection {
+            background-color: #4e9894;
+          }
+        }
+
+        .ace_active-line, .ace_line {
+          color: map-get($theme, text-color);
         }
       }
     }
   }
+}
+
+/* color theme dark */
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+@include colorTheme($colors, $evan-styles);
+
+/* color theme light */
+.evan-light {
+  @import '@evan.network/ui-angular-sass/src/variables/colors-light';
+  @include colorTheme($colors, $evan-styles);
 }

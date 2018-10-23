@@ -36,12 +36,36 @@ dashboard-component {
             height: 80px;
             max-height: 80px;
             padding: 8px 0 3px 8px;
+
+            &.img-light {
+              display: none;
+            }
           }
         }
 
         ion-content {
           ion-list.list-md {
             margin-top: 32px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.evan-light {
+  dashboard-component {
+    evan-split-pane {
+      ion-split-pane {
+        ion-menu {
+          ion-header {
+            img.img-large {
+              display: none;
+
+              &.img-light {
+                display: block;
+              }
+            }
           }
         }
       }

@@ -128,6 +128,16 @@
           </ion-select>
         </ion-item>
         <div class="input-hint">{{ '_dappprofile.language-desc' | translate }}</div>
+        <ion-item class="no-border">
+          <ion-label>{{ '_dappprofile.color-theme' | translate }}</ion-label>
+          <ion-select 
+            [(ngModel)]="colorTheme"
+            (ionChange)="setColorTheme()">
+            <ion-option value="">{{ '_dappprofile.color-themes.dark' | translate }}</ion-option>    
+            <ion-option value="light">{{ '_dappprofile.color-themes.light' | translate }}</ion-option>
+          </ion-select>
+        </ion-item>
+        <div class="input-hint">{{ '_dappprofile.color-theme-desc' | translate }}</div>
 
         <ng-container *ngIf="core.utils.isNativeMobile()">
           <div class="evan-small-seperator" margin-vertical></div>

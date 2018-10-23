@@ -34,6 +34,12 @@ export const en = {
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
     "cancel": "Cancel",
+    "color-theme": "Color Theme",
+    "color-theme-desc": "Set the color of the user interface.",
+    "color-themes": {
+      "dark": "evan.network Design",
+      "light": "light Design"
+    },
     "configuration": "Konfiguration",
     "dev-domain": "Test Domain",
     "dev-domain-desc": "The root domain \"evan\" for loading DApps is replaced by the specified one.",

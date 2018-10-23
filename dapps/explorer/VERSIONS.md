@@ -3,6 +3,7 @@
 ## Next Version
 ### Features
 - be able to analyse root DApps (favorites.evan)
+- support light theme
 
 ### Fixes
 - fix `openRootDApp` history stack pushing
