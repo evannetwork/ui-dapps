@@ -67,6 +67,7 @@ import {
 
 export class ContactsRootComponent extends AsyncComponent {
   private watchRouteChange: Function;
+  private loading: boolean;
 
   constructor(
     private core: EvanCoreService,
@@ -81,6 +82,19 @@ export class ContactsRootComponent extends AsyncComponent {
     await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
     this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
     this.core.finishDAppLoading();
+  }
+
+  /**
+   * Hide and show the current router-outlet.
+   */
+  async refresh() {
+    this.loading = true;
+    this.ref.detectChanges();
+
+    setTimeout(() => {
+      this.loading = false
+      this.ref.detectChanges();
+    });
   }
 
   async _ngOnDestroy() {

@@ -77,8 +77,8 @@
 
       <button class="top-right" ion-button icon-only clear
         (click)="hiddenGroups[group] = !hiddenGroups[group]; ref.detectChanges()">
-        <ion-icon *ngIf="!hiddenGroups[group]" name="arrow-down"></ion-icon>
-        <ion-icon *ngIf="hiddenGroups[group]" name="arrow-up"></ion-icon>
+        <ion-icon *ngIf="hiddenGroups[group]" name="arrow-down"></ion-icon>
+        <ion-icon *ngIf="!hiddenGroups[group]" name="arrow-up"></ion-icon>
       </button>
 
       <ng-container *ngIf="!hiddenGroups[group]">

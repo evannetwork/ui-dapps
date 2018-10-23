@@ -26,8 +26,8 @@
 -->
 
 <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
-<dapp-wrapper *ngIf="!loading" #dappWrapper (refreshing)="ref.detectChanges()">
+<dapp-wrapper *ngIf="!loading" #dappWrapper (refreshing)="refresh()">
   <div evan-content [@routerTransition]="o?.activatedRouteData?.state">
-    <router-outlet #o="outlet" *ngIf="!dappWrapper.refreshContent"></router-outlet>
+    <router-outlet #o="outlet"></router-outlet>
   </div>
 </dapp-wrapper>
