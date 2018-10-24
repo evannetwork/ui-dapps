@@ -63,7 +63,7 @@
           <h3>{{ '_dm.type.text' | translate }}: {{ '_dm.type.' + demo.type | translate }}</h3>
         </ion-label>
         <div item-content>
-          <button ion-button clear round item-end
+          <button ion-button clear round icon-only
             (click)="openDemoDetail(demo)">
             <ion-spinner color="light" *ngIf="demo.loading"></ion-spinner>
             <ion-icon name="arrow-forward" color="light"

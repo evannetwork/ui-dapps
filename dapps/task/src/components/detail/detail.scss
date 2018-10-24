@@ -406,14 +406,18 @@ taskboard-task-detail {
   }
 }
 
-.evan-light {
-  @import '@evan.network/ui-angular-sass/src/variables/colors-light';
-
-  taskboard-task-detail {
-    .todo-container {
-      &.is-active, &:hover {
-        .todo-header-container {
-          background-color: map-get($evan-styles, hover) !important;
+// apply custom styles for all themes
+@import '@evan.network/ui-angular-sass/src/theme';
+@each $theme, $definition in $evanThemes {
+  @if $theme != 'evan' {
+    .evan-#{$theme} {
+      taskboard-task-detail {
+        .todo-container {
+          &.is-active, &:hover {
+            .todo-header-container {
+              background-color: map-get($evanStyles, hover) !important;
+            }
+          }
         }
       }
     }

@@ -185,7 +185,7 @@ mailbox {
   }
 }
 
-@mixin colorTheme($colors, $theme) {
+@mixin customTheme($colors, $theme) {
   mailbox {
     & > .left-panel {
       .evan-tabs {
@@ -239,12 +239,14 @@ mailbox {
   }
 }
 
-/* color theme dark */
-@import '@evan.network/ui-angular-sass/src/variables/colors';
-@include colorTheme($colors, $evan-styles);
-
-/* color theme light */
-.evan-light {
-  @import '@evan.network/ui-angular-sass/src/variables/colors-light';
-  @include colorTheme($colors, $evan-styles);
+// apply custom styles for all themes
+@import '@evan.network/ui-angular-sass/src/theme';
+@each $theme, $definition in $evanThemes {
+  @if $theme == 'evan' {
+    @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));
+  } @else {
+    .evan-#{$theme} {
+      @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));
+    }
+  }
 }
