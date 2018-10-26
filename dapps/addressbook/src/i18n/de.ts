@@ -44,7 +44,6 @@ export const de = {
       "remove-title": "Konktakt entfernen"
     },
     "alias": "Name",
-    "invalid-alias": "Bitte geben Sie einen Namen an!",
     "alias-desc": "Alias des Kontakts",
     "contact-card-invite": "Mit Visitenkarte",
     "contact-card-invite-description": "Vernetzen Sie sich mit einem Nutzer direkt über seine evan.network Visitenkarte. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen.",
@@ -55,7 +54,6 @@ export const de = {
       "customer": "Kunde",
       "smart-agent": "Smart Agent"
     },
-    "invalid-group": "Bitte geben Sie eine Gruppe an.",
     "copy-account-id": "Copy Account ID",
     "create-contact": "Kontakt hinzufügen",
     "delete": "Entfernen",
@@ -65,7 +63,6 @@ export const de = {
       "key-exchange-description": "Sende Einladungen an neue Kontakte.",
       "undefined": ""
     },
-    "group-desc": "Art des Kontakts",
     "edit-profile": "Profil editieren",
     "email": "E-Mail",
     "email-already-added": "Ein Kontakt mit der selben E-Mail Adresse existiert bereits in Ihren Kontakten..",
@@ -76,8 +73,13 @@ export const de = {
     "filter_items": "Kontakte filtern",
     "go-to-mails": "Zur Mailbox",
     "group": "Gruppe",
+    "group-contacts-header": "Kontakte der Gruppe \"{{ group }}\"",
+    "group-desc": "Art des Kontakts",
+    "groups": "Gruppen",
     "invalid-address": "Ungültige Addresse (e.g.: \"0x006b0b55b83694983Ece446985BF1FcC625b2eE6\")",
+    "invalid-alias": "Bitte geben Sie einen Namen an!",
     "invalid-already-added": "Ein Kontakt mit der selben Addresse existiert bereits in Ihren Kontakten.",
+    "invalid-group": "Bitte geben Sie eine Gruppe an.",
     "invalid-is-my-account": "Sie können sich nicht selbst als Kontakt hinzufügen.",
     "invitation": "Einladung",
     "invitation-message": "Einladungsnachricht",
@@ -111,7 +113,8 @@ export const de = {
       "accepted": "Sie haben erfolgreich diesen Kontakt in Ihr Addressbuch hinzugefügt.<br><br>Nun können Sie:<ul><li>sichere Nachrichten austauschen</li><li>diesen Kontakt in Ihre Verträge einladen</li><li>von diesem Kontakt in Ihre Verträge eingeladen werden</li></ul>",
       "outstanding": "Sie haben den Kontakt hinzugefügt. Ihre Einladung wird gerade gesendet.",
       "pending": "Sie haben eine Einladung an einen neuen Kontakt gesendet.<br><br>Bitte überprüfen Sie Ihre eingehenden Mails auf eine Antwort und speichern Sie die aktualisierten Kontaktdaten Ihres Partners."
-    }
+    },
+    "users-in-group": "{{ amount }} Nutzer"
   },
   "addressbook": "Meine Kontakte",
   "addviaaccountid": "Einladung mit einer Account ID",

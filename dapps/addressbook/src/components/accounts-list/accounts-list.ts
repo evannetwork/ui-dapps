@@ -78,6 +78,11 @@ export class AccountListComponent extends AsyncComponent {
    */
   private hiddenGroups: any = { };
 
+  /**
+   * current active group for displaying contacs of
+   */
+  private activeGroup: string;
+
   constructor(
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
@@ -187,7 +192,12 @@ export class AccountListComponent extends AsyncComponent {
       })
       .sort((a: any, b: any) => a < b ? -1 : 1);
 
-    this.ref.detectChanges();
+    if (this.availableGroups.length > 0 && 
+        (!this.activeGroup || this.availableGroups.indexOf(this.activeGroup) === -1)) {
+      this.activeGroup = this.availableGroups[0];
+    }
+
+    this.detectTimeout();
   }
 
   removeContact(accountId: string) {
@@ -282,5 +292,14 @@ export class AccountListComponent extends AsyncComponent {
         this.routing.navigate('./add-via-mail');
       } catch (ex) { }
     }
+  }
+
+  /**
+   * Run detectChanges directly and after and timeout again, to update select fields.
+   */
+  detectTimeout() {
+    this.ref.detectChanges();
+
+    setTimeout(() => this.ref.detectChanges());
   }
 }

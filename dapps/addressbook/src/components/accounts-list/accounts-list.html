@@ -56,14 +56,31 @@
   </ion-option>
 </ion-select>
 
-<ion-list class="evan-list">
-  <ion-searchbar 
-    placeholder="{{ '_dappcontacts.filter_items' | translate }}" 
-    [(ngModel)]="filterString"
-    (ionInput)="filter($event)">
-  </ion-searchbar>
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
 
-  <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<ng-container *ngIf="!loading">
+  <div class="small-search" *ngIf="!core.utils.isMD">
+    <ion-searchbar 
+      *ngIf="!core.utils.isMD"
+      placeholder="{{ '_dappcontacts.filter_items' | translate }}" 
+      [(ngModel)]="filterString"
+      (ionInput)="filter($event)">
+    </ion-searchbar>
+    <button ion-button icon-only round clear (click)="groupSelect.open($event)">
+      <ion-icon name="people"></ion-icon>
+    </button>
+    <ion-select interface="popover" #groupSelect
+      [(ngModel)]="activeGroup"
+      (ionChange)="detectTimeout()"
+      (focusout)="detectTimeout()">
+      <ion-option
+        *ngFor="let group of availableGroups"
+        [value]="group">
+        {{ group }}
+        ({{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[activeGroup].length } }})
+      </ion-option>      
+    </ion-select>
+  </div>
 
   <evan-empty-dapp
     *ngIf="!loading && availableGroups.length === 0"
@@ -71,18 +88,31 @@
     ensAddress="addressbook">
   </evan-empty-dapp>
 
-  <div class="table-responsive">
-    <div class="evan-content evan-relative" text-left *ngFor="let group of availableGroups">
-      <h2 class="content-header content-heading m-b-0 m-t-0">{{ group }}</h2>
+  <ng-container *ngIf="availableGroups.length > 0">
+    <div class="evan-content left-panel" *ngIf="core.utils.isMD">
+      <h3 class="content-header m-t-0">
+        {{ '_dappcontacts.groups' | translate }}
+      </h3>
 
-      <button class="top-right" ion-button icon-only clear
-        (click)="hiddenGroups[group] = !hiddenGroups[group]; ref.detectChanges()">
-        <ion-icon *ngIf="hiddenGroups[group]" name="arrow-down"></ion-icon>
-        <ion-icon *ngIf="!hiddenGroups[group]" name="arrow-up"></ion-icon>
-      </button>
+      <ion-list>
+        <button ion-item menuClose 
+          color="light"
+          [class.active]="activeGroup === group"
+          *ngFor="let group of availableGroups"
+          (click)="activeGroup = group; ref.detectChanges()">
+          <h2>{{ group }}</h2>
+          <h3>{{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[activeGroup].length } }}</h3>
+        </button>
+      </ion-list>
+    </div>
 
-      <ng-container *ngIf="!hiddenGroups[group]">
-        <table class="table table-hover" *ngIf="core.utils.isMD">
+    <div class="right-panel evan-content evan-relative" text-left>
+      <h3 class="content-header m-t-0"
+        [innerHTML]="'_dappcontacts.group-contacts-header' | translate:{ group: activeGroup }">
+      </h3>
+
+      <div class="table-responsive" *ngIf="core.utils.isMD">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th>{{ '_dappcontacts.alias' | translate }}</th>
@@ -92,7 +122,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr tappable *ngFor="let account of groupedAccounts[group]" routerLink="{{ account }}">
+            <tr tappable *ngFor="let account of groupedAccounts[activeGroup]" routerLink="{{ account }}">
               <td width="390">
                 <span *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</span>
                 <span *ngIf="accounts[account].alias">{{ accounts[account].alias }}</span>
@@ -107,31 +137,31 @@
             </tr>
           </tbody>
         </table>
-        <ng-container *ngIf="!core.utils.isMD">
-          <ion-item-sliding *ngFor="let account of groupedAccounts[group]" #sliding>
-            <ion-item class="clickable item-hover" color="light" routerLink="{{ account }}">
-              <h2 *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</h2>
-              <h2 *ngIf="accounts[account].alias">{{ accounts[account].alias }}</h2>
-              <h3>{{ account || accounts[account].email }}</h3>
-              <button ion-button clear item-end>
-                <ion-icon name="arrow-forward" color="light"></ion-icon>
-              </button>
-            </ion-item>
-            <ion-item-options side="left">
-              <button ion-button color="danger" (click)="removeContact(account)">
-                <ion-icon name="trash"></ion-icon>
-                {{ '_dappcontacts.delete' | translate }}
-              </button>
-            </ion-item-options>
-            <ion-item-options side="right">
-              <button ion-button color="danger" (click)="removeContact(account)">
-                <ion-icon name="trash"></ion-icon>
-                {{ '_dappcontacts.delete' | translate }}
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ng-container>
-      </ng-container>
+      </div>
+      <ion-list class="evan-list" *ngIf="!core.utils.isMD">
+        <ion-item-sliding *ngFor="let account of groupedAccounts[activeGroup]" #sliding>
+          <ion-item class="clickable item-hover" color="light" routerLink="{{ account }}">
+            <h2 *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</h2>
+            <h2 *ngIf="accounts[account].alias">{{ accounts[account].alias }}</h2>
+            <h3>{{ account || accounts[account].email }}</h3>
+            <button ion-button clear item-end>
+              <ion-icon name="arrow-forward" color="light"></ion-icon>
+            </button>
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button color="danger" (click)="removeContact(account)">
+              <ion-icon name="trash"></ion-icon>
+              {{ '_dappcontacts.delete' | translate }}
+            </button>
+          </ion-item-options>
+          <ion-item-options side="right">
+            <button ion-button color="danger" (click)="removeContact(account)">
+              <ion-icon name="trash"></ion-icon>
+              {{ '_dappcontacts.delete' | translate }}
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
     </div>
-  </div>
-</ion-list>
+  </ng-container>
+</ng-container>

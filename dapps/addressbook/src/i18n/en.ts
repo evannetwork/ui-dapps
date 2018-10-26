@@ -43,12 +43,10 @@ export const en = {
       "remove-title": "Remove Contact"
     },
     "alias": "Name",
-    "invalid-alias": "Please insert a name!",
     "alias-desc": "Alias of the contact",
     "contact-card-invite": "Using Contact Cards",
     "contact-card-invite-description": "Network with a user directly via his or her evan.network business card. The user receives the request directly in his mailbox and can confirm it.",
     "contact-cards": "Contact cards",
-    "group-desc": "Kind of contact",
     "contact-groups": {
       "blockchain-buddy": "Blockchain Buddy",
       "business": "Business",
@@ -65,7 +63,6 @@ export const en = {
       "key-exchange-description": "Send invitation requests to new contacts.",
       "undefined": ""
     },
-    "invalid-group": "Please insert a group.",
     "edit-profile": "Edit profile",
     "email": "E-Mail",
     "email-already-added": "A contact with this mail address is already added to your contacts.",
@@ -76,8 +73,13 @@ export const en = {
     "filter_items": "Filter contacts",
     "go-to-mails": "Go to mailbox",
     "group": "Group",
+    "group-contacts-header": "Contacts of group \"{{ group }}\"",
+    "group-desc": "Kind of contact",
+    "groups": "Contactgroups",
     "invalid-address": "Invalid Ethereum address (e.g.: \"0x006b0b55b83694983Ece446985BF1FcC625b2eE6\")",
+    "invalid-alias": "Please insert a name!",
     "invalid-already-added": "A contact with this address is already added to your contacts.",
+    "invalid-group": "Please insert a group.",
     "invalid-is-my-account": "You can\"t add your own account as contact.",
     "invitation": "Invitation",
     "invitation-message": "Invitation Message",
@@ -111,7 +113,8 @@ export const en = {
       "accepted": "You successfully added this contact to your address book. <br><br> Now you: <ul><li>can send secured messages to</li><li>can invite this contact to contracts</li><li>can be invited to contracts from this contact</li></ul>",
       "outstanding": "You've added this contact. <br><br> The invitiation is sending now.",
       "pending": "You sent / received contact information for a new contact.<br><br>Please check your incoming mails for invitation answers and save the updated contact information."
-    }
+    },
+    "users-in-group": "{{ amount }} users"
   },
   "addressbook": "My Contacts",
   "addviaaccountid": "Invitation via Account ID",
