@@ -167,7 +167,7 @@ export class AccountListComponent extends AsyncComponent {
 
     for (let i = 0; i < accountKeys.length; i++) {
       const contact = this.accounts[accountKeys[i]];
-      let group = 'business';
+      let group = this.translate.instant(`_dappcontacts.contact-groups.business`).toLowerCase();
 
       if (contact.group || contact.groupType) {
         group = (contact.group || this.translate.instant(`_dappcontacts.contact-groups.${ contact.groupType }`)).toLowerCase();

@@ -73,11 +73,11 @@
       [(ngModel)]="activeGroup"
       (ionChange)="detectTimeout()"
       (focusout)="detectTimeout()">
-      <ion-option
+      <ion-option text-uppercase
         *ngFor="let group of availableGroups"
         [value]="group">
         {{ group }}
-        ({{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[activeGroup].length } }})
+        ({{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].length } }})
       </ion-option>      
     </ion-select>
   </div>
@@ -100,8 +100,8 @@
           [class.active]="activeGroup === group"
           *ngFor="let group of availableGroups"
           (click)="activeGroup = group; ref.detectChanges()">
-          <h2>{{ group }}</h2>
-          <h3>{{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[activeGroup].length } }}</h3>
+          <h2 text-uppercase>{{ group }}</h2>
+          <h3>{{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].length } }}</h3>
         </button>
       </ion-list>
     </div>
