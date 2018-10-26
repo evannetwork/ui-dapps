@@ -69,6 +69,11 @@ export class AccountListComponent extends AsyncComponent {
   private clearQueue : Function;
 
   /**
+   * current selected selection value for creating new contacts
+   */
+  private createSelectValue: string;
+
+  /**
    * uncollapsed groups
    */
   private hiddenGroups: any = { };
@@ -207,10 +212,17 @@ export class AccountListComponent extends AsyncComponent {
    * @param      {string}  selected  the selected option
    */
   openCreate(selected: string) {
-    if (selected === 'send-invitation-mail') {
-      this.showOnboardingAgentDialog();
-    } else {
-      this.routing.navigate('./add-via-accountid');
+    if (this.createSelectValue) {
+      if (this.createSelectValue === 'send-invitation-mail') {
+        this.showOnboardingAgentDialog();
+      } else {
+        this.routing.navigate('./add-via-accountid');
+      }
+
+      setTimeout(() => {
+        this.createSelectValue = '';
+        this.ref.detectChanges();
+      });
     }
   }
 
