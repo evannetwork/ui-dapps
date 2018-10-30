@@ -76,8 +76,8 @@
       <ion-option text-uppercase
         *ngFor="let group of availableGroups"
         [value]="group">
-        {{ group }}
-        ({{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].length } }})
+        {{ groupedAccounts[group].groupName }}
+        ({{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].contacts.length } }})
       </ion-option>      
     </ion-select>
   </div>
@@ -90,9 +90,9 @@
 
   <ng-container *ngIf="availableGroups.length > 0">
     <div class="evan-content left-panel" *ngIf="core.utils.isMD">
-      <h3 class="content-header m-t-0">
+      <b class="content-header m-t-0">
         {{ '_dappcontacts.groups' | translate }}
-      </h3>
+      </b>
 
       <ion-list>
         <button ion-item menuClose 
@@ -100,15 +100,15 @@
           [class.active]="activeGroup === group"
           *ngFor="let group of availableGroups"
           (click)="activeGroup = group; ref.detectChanges()">
-          <h2 text-uppercase>{{ group }}</h2>
-          <h3>{{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].length } }}</h3>
+          <h2>{{ groupedAccounts[group].groupName }}</h2>
+          <h3>{{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].contacts.length } }}</h3>
         </button>
       </ion-list>
     </div>
 
     <div class="right-panel evan-content evan-relative" text-left>
       <h3 class="content-header m-t-0"
-        [innerHTML]="'_dappcontacts.group-contacts-header' | translate:{ group: activeGroup }">
+        [innerHTML]="'_dappcontacts.group-contacts-header' | translate:{ group: groupedAccounts[activeGroup].groupName }">
       </h3>
 
       <div class="table-responsive" *ngIf="core.utils.isMD">
@@ -122,7 +122,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr tappable *ngFor="let account of groupedAccounts[activeGroup]" routerLink="{{ account }}">
+            <tr tappable *ngFor="let account of groupedAccounts[activeGroup].contacts" routerLink="{{ account }}">
               <td width="390">
                 <span *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</span>
                 <span *ngIf="accounts[account].alias">{{ accounts[account].alias }}</span>
@@ -139,7 +139,7 @@
         </table>
       </div>
       <ion-list class="evan-list" *ngIf="!core.utils.isMD">
-        <ion-item-sliding *ngFor="let account of groupedAccounts[activeGroup]" #sliding>
+        <ion-item-sliding *ngFor="let account of groupedAccounts[activeGroup].contacts" #sliding>
           <ion-item class="clickable item-hover" color="light" routerLink="{{ account }}">
             <h2 *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</h2>
             <h2 *ngIf="accounts[account].alias">{{ accounts[account].alias }}</h2>
