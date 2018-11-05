@@ -77,7 +77,7 @@
         *ngFor="let group of availableGroups"
         [value]="group">
         {{ groupedAccounts[group].groupName }}
-        ({{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].contacts.length } }})
+        ({{ '_dappcontacts.users-in-tag' | translate:{ amount: groupedAccounts[group].contacts.length } }})
       </ion-option>      
     </ion-select>
   </div>
@@ -91,7 +91,7 @@
   <ng-container *ngIf="availableGroups.length > 0">
     <div class="evan-content left-panel" *ngIf="core.utils.isMD">
       <b class="content-header m-t-0">
-        {{ '_dappcontacts.groups' | translate }}
+        {{ '_dappcontacts.tags' | translate }}
       </b>
 
       <ion-list>
@@ -101,14 +101,14 @@
           *ngFor="let group of availableGroups"
           (click)="activeGroup = group; ref.detectChanges()">
           <h2>{{ groupedAccounts[group].groupName }}</h2>
-          <h3>{{ '_dappcontacts.users-in-group' | translate:{ amount: groupedAccounts[group].contacts.length } }}</h3>
+          <h3>{{ '_dappcontacts.users-in-tag' | translate:{ amount: groupedAccounts[group].contacts.length } }}</h3>
         </button>
       </ion-list>
     </div>
 
     <div class="right-panel evan-content evan-relative" text-left>
       <h3 class="content-header m-t-0"
-        [innerHTML]="'_dappcontacts.group-contacts-header' | translate:{ group: groupedAccounts[activeGroup].groupName }">
+        [innerHTML]="'_dappcontacts.tag-contacts-header' | translate:{ tag: groupedAccounts[activeGroup].groupName }">
       </h3>
 
       <div class="table-responsive" *ngIf="core.utils.isMD">

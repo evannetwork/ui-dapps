@@ -47,13 +47,6 @@ export const en = {
     "contact-card-invite": "Using Contact Cards",
     "contact-card-invite-description": "Network with a user directly via his or her evan.network business card. The user receives the request directly in his mailbox and can confirm it.",
     "contact-cards": "Contact cards",
-    "contact-groups": {
-      "blockchain-buddy": "Blockchain Buddy",
-      "business": "Business",
-      "custom": "Custom",
-      "customer": "Customer",
-      "smart-agent": "Smart Agent"
-    },
     "copy-account-id": "Account ID kopieren",
     "create-contact": "Contact creation",
     "delete": "Remove",
@@ -72,14 +65,9 @@ export const en = {
     "eves-to-send": "Onboarding Eves to send",
     "filter_items": "Filter contacts",
     "go-to-mails": "Go to mailbox",
-    "group": "Group",
-    "group-contacts-header": "Contacts of group \"{{ group }}\"",
-    "group-desc": "Kind of contact",
-    "groups": "Contactgroups",
     "invalid-address": "Invalid Ethereum address (e.g.: \"0x006b0b55b83694983Ece446985BF1FcC625b2eE6\")",
     "invalid-alias": "Please insert a name!",
     "invalid-already-added": "A contact with this address is already added to your contacts.",
-    "invalid-group": "Please insert a group.",
     "invalid-is-my-account": "You can\"t add your own account as contact.",
     "invitation": "Invitation",
     "invitation-message": "Invitation Message",
@@ -114,7 +102,12 @@ export const en = {
       "outstanding": "You've added this contact. <br><br> The invitiation is sending now.",
       "pending": "You sent / received contact information for a new contact.<br><br>Please check your incoming mails for invitation answers and save the updated contact information."
     },
-    "users-in-group": "{{ amount }} users"
+    "tag": "Tag",
+    "tag-contacts-header": "Contacts of tag \"{{ tag }}\"",
+    "tag-desc": "Kind of contact",
+    "tags": "Tags",
+    "users-in-tag": "{{ amount }} users",
+    "all": "All"
   },
   "addressbook": "My Contacts",
   "addviaaccountid": "Invitation via Account ID",

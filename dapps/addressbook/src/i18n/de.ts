@@ -47,13 +47,6 @@ export const de = {
     "alias-desc": "Alias des Kontakts",
     "contact-card-invite": "Mit Visitenkarte",
     "contact-card-invite-description": "Vernetzen Sie sich mit einem Nutzer direkt über seine evan.network Visitenkarte. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen.",
-    "contact-groups": {
-      "blockchain-buddy": "Blockchain Buddy",
-      "business": "Geschäftlich",
-      "custom": "Benutzerdefiniert",
-      "customer": "Kunde",
-      "smart-agent": "Smart Agent"
-    },
     "copy-account-id": "Copy Account ID",
     "create-contact": "Kontakt hinzufügen",
     "delete": "Entfernen",
@@ -72,14 +65,9 @@ export const de = {
     "eves-to-send": "Zu sendende EVEs",
     "filter_items": "Kontakte filtern",
     "go-to-mails": "Zur Mailbox",
-    "group": "Gruppe",
-    "group-contacts-header": "Kontakte der Gruppe \"{{ group }}\"",
-    "group-desc": "Art des Kontakts",
-    "groups": "Gruppen",
     "invalid-address": "Ungültige Addresse (e.g.: \"0x006b0b55b83694983Ece446985BF1FcC625b2eE6\")",
     "invalid-alias": "Bitte geben Sie einen Namen an!",
     "invalid-already-added": "Ein Kontakt mit der selben Addresse existiert bereits in Ihren Kontakten.",
-    "invalid-group": "Bitte geben Sie eine Gruppe an.",
     "invalid-is-my-account": "Sie können sich nicht selbst als Kontakt hinzufügen.",
     "invitation": "Einladung",
     "invitation-message": "Einladungsnachricht",
@@ -114,7 +102,11 @@ export const de = {
       "outstanding": "Sie haben den Kontakt hinzugefügt. Ihre Einladung wird gerade gesendet.",
       "pending": "Sie haben eine Einladung an einen neuen Kontakt gesendet.<br><br>Bitte überprüfen Sie Ihre eingehenden Mails auf eine Antwort und speichern Sie die aktualisierten Kontaktdaten Ihres Partners."
     },
-    "users-in-group": "{{ amount }} Nutzer"
+    "tags": "Tags",
+    "tags-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
+    "tags-desc": "Tags des Kontakts",
+    "users-in-tag": "{{ amount }} Nutzer",
+    "all": "Alle"
   },
   "addressbook": "Meine Kontakte",
   "addviaaccountid": "Einladung mit einer Account ID",

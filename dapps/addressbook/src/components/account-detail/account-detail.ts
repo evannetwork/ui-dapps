@@ -136,8 +136,8 @@ export class AccountDetailComponent extends AsyncComponent {
       this.account.eves = 1;
     }
 
-    // fill empty group
-    this.account.groupType = this.account.groupType || 'business';
+    // fill empty tags
+    this.account.tags = this.account.tags || [ ];
 
     this.setTranslation();
     this.detectTimeout();
@@ -211,7 +211,13 @@ export class AccountDetailComponent extends AsyncComponent {
    *
    * @param formData   Current data from this.accountForm.value
    */
-  async saveProfile(formData) {
+  async saveProfile(formData, $event) {
+    // don't save when pressing enter to submit
+    if ($event.x === 0 && $event.y === 0) {
+      return;
+    }
+
+
     if (!this.saving) {
       this.saving = true;
 

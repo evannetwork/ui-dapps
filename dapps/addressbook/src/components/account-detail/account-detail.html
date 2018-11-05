@@ -61,33 +61,11 @@
               </ion-chip>
             </ion-col>
             <ion-col col-12 col-md-6>
-              <ion-item>
-                <ion-label stacked>{{ '_dappcontacts.group' | translate }}*</ion-label>
-                <ion-select required name="groupType" #groupType
-                  [(ngModel)]="account.groupType"
-                  (ionChange)="detectTimeout()"
-                  (focusout)="detectTimeout()">
-                  <ion-option value="business">{{ '_dappcontacts.contact-groups.business' | translate }}</ion-option>
-                  <ion-option value="smart-agent">{{ '_dappcontacts.contact-groups.smart-agent' | translate }}</ion-option>
-                  <ion-option value="customer">{{ '_dappcontacts.contact-groups.customer' | translate }}</ion-option>
-                  <ion-option value="blockchain-buddy">{{ '_dappcontacts.contact-groups.blockchain-buddy' | translate }}</ion-option>
-                  <ion-option value="custom">{{ '_dappcontacts.contact-groups.custom' | translate }}</ion-option>
-                </ion-select>
-              </ion-item>
-              <ion-item *ngIf="account.groupType === 'custom'">
-                <ion-label stacked>{{ '_dappcontacts.group' | translate }} *</ion-label>
-                <ion-input type="text" required name="group"
-                  [(ngModel)]="account.group"
-                  [placeholder]="'_dappcontacts.group-desc' | translate"
-                  (ionChange)="detectTimeout()"
-                  (focusout)="detectTimeout()">
-                </ion-input>
-              </ion-item>
-              <ion-chip class="error-hint" *ngIf="showError('groupType') || showError('group')">
-                <ion-label>
-                  {{ '_dappcontacts.invalid-group' | translate }}
-                </ion-label>
-              </ion-chip>
+              <ion-label class="standalone">{{ '_dappcontacts.tags' | translate }}</ion-label>
+              <ion-tags-input name="tags"
+                [(ngModel)]="account.tags"
+                (onChange)="detectTimeout()">
+              </ion-tags-input>
             </ion-col>
           </ion-row>
 
@@ -147,8 +125,8 @@
           </ion-row>
 
           <div class="transparent" text-right margin-top>
-            <button ion-button icon-left round outline color="green" type="submit"
-              (click)="saveProfile(account)"
+            <button ion-button icon-left round outline color="green"
+              (click)="saveProfile(account, $event)"
               [disabled]="!accountForm.valid || !isAccountIdValid(account.accountId)">
               <ion-icon name="send" color="light"></ion-icon>
               <span *ngIf="isCreate">{{ '_dappcontacts.send-invitation' | translate }}</span>

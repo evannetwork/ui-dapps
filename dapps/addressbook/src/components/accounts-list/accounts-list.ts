@@ -167,20 +167,24 @@ export class AccountListComponent extends AsyncComponent {
 
     for (let i = 0; i < accountKeys.length; i++) {
       const contact = this.accounts[accountKeys[i]];
-      let group = this.translate.instant(`_dappcontacts.contact-groups.business`);
+      let tags = [ this.translate.instant('_dappcontacts.all') ];
 
       // if defined, use the given ones
-      if (contact.group || contact.groupType) {
-        group = (contact.group || this.translate.instant(`_dappcontacts.contact-groups.${ contact.groupType }`));
+      if (contact.tags) {
+        tags = tags.concat(contact.tags);
       }
 
       // lowercase everything, so we can use correct grouping
-      let groupId = group.toLowerCase();
-      this.groupedAccounts[groupId] = this.groupedAccounts[groupId] || {
-        groupName: group,
-        contacts: [ ]
-      };
-      this.groupedAccounts[groupId].contacts.push(accountKeys[i]);
+      tags.forEach(tag => {
+        let id = tag.toLowerCase();
+
+        this.groupedAccounts[id] = this.groupedAccounts[id] || {
+          groupName: tag,
+          contacts: [ ]
+        };
+
+        this.groupedAccounts[id].contacts.push(accountKeys[i]);
+      });
     }
 
     this.availableGroups = Object
