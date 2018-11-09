@@ -5,6 +5,11 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.4.0
+### Features
+- support light theme
+- implement theme switch selector
+
 ## Version 1.3.0
 ### Features
 - add `evan-dev-dapps-domain` configuration

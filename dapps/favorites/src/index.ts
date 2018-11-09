@@ -66,15 +66,17 @@ function getRoutes(): Routes {
         path: '',
         component: DAppListComponent,
         data: {
-          state: 'dapplist'
+          reload: true,
+          state: 'dapplist',
         }
       },
       {
         path: 'dapp-add',
         component: DAppAddComponent,
         data: {
+          navigateBack : '..',
+          reload: true,
           state: 'dappadd',
-          navigateBack : '..'
         }
       },
     ]

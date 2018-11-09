@@ -46,7 +46,6 @@ import {
 } from 'angular-core';
 
 export { ContactsDispatcher, ContactsDispatcherService } from './dispatcher/contacts';
-import { AccountCreateComponent } from './components/account-create/account-create';
 import { AccountDetailComponent } from './components/account-detail/account-detail';
 import { AccountListComponent } from './components/accounts-list/accounts-list';
 import { ContactsDispatcherService } from './dispatcher/contacts';
@@ -64,15 +63,8 @@ function getRoutes(): Routes {
         path: '',
         component: AccountListComponent,
         data: {
+          reload: true,
           state: 'account-list',
-        }
-      },
-      {
-        path: 'contact-add',
-        component: AccountCreateComponent,
-        data: {
-          state: 'account-add',
-          navigateBack : true
         }
       },
       {
@@ -80,7 +72,8 @@ function getRoutes(): Routes {
         component: AccountDetailComponent,
         data: {
           state: 'add-via-mail',
-          navigateBack : true
+          navigateBack : true,
+          reload: true,
         }
       },
       {
@@ -88,7 +81,8 @@ function getRoutes(): Routes {
         component: AccountDetailComponent,
         data: {
           state: 'add-via-accountid',
-          navigateBack : true
+          navigateBack : true,
+          reload: true,
         }
       },
       {
@@ -96,7 +90,8 @@ function getRoutes(): Routes {
         component: AccountDetailComponent,
         data: {
           state: 'add-via-qrcode',
-          navigateBack : true
+          navigateBack : true,
+          reload: true,
         }
       },
       {
@@ -104,7 +99,8 @@ function getRoutes(): Routes {
         component: AccountDetailComponent,
         data: {
           state: 'account-detail',
-          navigateBack : true
+          navigateBack : true,
+          reload: true,
         }
       },
     ]
@@ -144,11 +140,10 @@ function getConfig(isDispatcher?: boolean) {
     ];
 
     config.declarations = [
+      AccountDetailComponent,
+      AccountListComponent,
       BootstrapComponent,
       ContactsRootComponent,
-      AccountListComponent,
-      AccountDetailComponent,
-      AccountCreateComponent
     ];
   }
 

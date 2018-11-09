@@ -39,60 +39,129 @@
     <ion-icon name="search"></ion-icon>
   </button>
 
-  <button ion-button icon-only round routerLink="./contact-add">
+  <button ion-button icon-only round (click)="addSelect.open($event)">
     <ion-icon name="add"></ion-icon>
   </button>
 </dashboard-top-buttons>
 
-<ion-list class="evan-list">
-  <ion-searchbar 
-    placeholder="{{ '_dappcontacts.filter_items' | translate }}" 
-    [(ngModel)]="filterString"
-    (ionInput)="filter($event)">
-  </ion-searchbar>
+<ion-select class="evan-callout" interface="popover" #addSelect
+  [(ngModel)]="createSelectValue"
+  [selectOptions]="{ cssClass: 'evan-callout top' }"
+  (ionChange)="openCreate(createSelectValue)">
+  <ion-option value="send-invitation-mail">
+    {{ '_dappcontacts.send-invitation-mail' | translate }}
+  </ion-option>
+  <ion-option value="add-via-accountid">
+    {{ '_dappcontacts.send-invitation-address' | translate }}
+  </ion-option>
+</ion-select>
 
-  <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<ng-container *ngIf="!loading">
+  <div class="small-search" *ngIf="!core.utils.isMD">
+    <ion-searchbar 
+      *ngIf="!core.utils.isMD"
+      placeholder="{{ '_dappcontacts.filter_items' | translate }}" 
+      [(ngModel)]="filterString"
+      (ionInput)="filter($event)">
+    </ion-searchbar>
+    <button ion-button icon-only round clear (click)="groupSelect.open($event)">
+      <ion-icon name="people"></ion-icon>
+    </button>
+    <ion-select interface="popover" #groupSelect
+      [(ngModel)]="activeGroup"
+      (ionChange)="detectTimeout()"
+      (focusout)="detectTimeout()">
+      <ion-option text-uppercase
+        *ngFor="let group of availableGroups"
+        [value]="group">
+        {{ groupedAccounts[group].groupName }}
+        ({{ '_dappcontacts.users-in-tag' | translate:{ amount: groupedAccounts[group].contacts.length } }})
+      </ion-option>      
+    </ion-select>
+  </div>
 
   <evan-empty-dapp
-    *ngIf="!loading && availableLetters.length === 0"
+    *ngIf="!loading && availableGroups.length === 0"
     [text]="filterString ? ('_dappcontacts.nothing-found' | translate:{ filter: filterString }) : '_dappcontacts.empty-address-book'"
     ensAddress="addressbook">
   </evan-empty-dapp>
 
-  <ng-container *ngIf="!loading && availableLetters.length > 0">
-    <div class="evan-content" text-left
-      *ngFor="let letter of availableLetters">
-      <h2 class="content-header content-heading m-b-0 m-t-0">{{ letter }}</h2>
-      <ion-item-sliding *ngFor="let account of groupedAccounts[letter]" #sliding>
-        <ion-item class="clickable item-hover" color="light" routerLink="{{ account }}">
-          <ion-avatar item-start margin-right>
-            <blockie-component class="small-blockie"
-              [address]="account || accounts[account].email"
-              [size]="8"
-              [scale]="15">
-            </blockie-component>
-          </ion-avatar>
+  <ng-container *ngIf="availableGroups.length > 0">
+    <div class="evan-content left-panel" *ngIf="core.utils.isMD">
+      <b class="content-header m-t-0">
+        {{ '_dappcontacts.tags' | translate }}
+      </b>
 
-          <h2 *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</h2>
-          <h2 *ngIf="accounts[account].alias">{{ accounts[account].alias }}</h2>
-          <h3>{{ account || accounts[account].email }}</h3>
-          <button ion-button clear item-end>
-            <ion-icon name="arrow-forward" color="light"></ion-icon>
-          </button>
-        </ion-item>
-        <ion-item-options side="left">
-          <button ion-button color="danger" (click)="removeContact(account)">
-            <ion-icon name="trash"></ion-icon>
-            {{ '_dappcontacts.delete' | translate }}
-          </button>
-        </ion-item-options>
-        <ion-item-options side="right">
-          <button ion-button color="danger" (click)="removeContact(account)">
-            <ion-icon name="trash"></ion-icon>
-            {{ '_dappcontacts.delete' | translate }}
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
+      <ion-list>
+        <button ion-item menuClose 
+          color="light"
+          [class.active]="activeGroup === group"
+          *ngFor="let group of availableGroups"
+          (click)="activeGroup = group; ref.detectChanges()">
+          <h2>{{ groupedAccounts[group].groupName }}</h2>
+          <h3>{{ '_dappcontacts.users-in-tag' | translate:{ amount: groupedAccounts[group].contacts.length } }}</h3>
+        </button>
+      </ion-list>
+    </div>
+
+    <div class="right-panel evan-content evan-relative" text-left>
+      <h3 class="content-header m-t-0"
+        [innerHTML]="'_dappcontacts.tag-contacts-header' | translate:{ tag: groupedAccounts[activeGroup].groupName }">
+      </h3>
+
+      <div class="table-responsive" *ngIf="core.utils.isMD">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>{{ '_dappcontacts.alias' | translate }}</th>
+              <th>{{ '_dappcontacts.account-id' | translate }}</th>
+              <th>{{ '_dappcontacts.email' | translate }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr tappable *ngFor="let account of groupedAccounts[activeGroup].contacts" routerLink="{{ account }}">
+              <td width="390">
+                <span *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</span>
+                <span *ngIf="accounts[account].alias">{{ accounts[account].alias }}</span>
+              </td>
+              <td>{{ account }}</td>
+              <td>{{ accounts[account].email }}</td>
+              <td text-right>
+                <button ion-button clear item-end>
+                  <ion-icon name="arrow-forward" color="light"></ion-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ion-list class="evan-list" *ngIf="!core.utils.isMD">
+        <ion-item-sliding *ngFor="let account of groupedAccounts[activeGroup].contacts" #sliding>
+          <ion-item class="clickable item-hover" color="light" routerLink="{{ account }}">
+            <h2 *ngIf="!accounts[account].alias">{{ '_dappcontacts.no_alias' | translate }}</h2>
+            <h2 *ngIf="accounts[account].alias">{{ accounts[account].alias }}</h2>
+            <h3>{{ account || accounts[account].email }}</h3>
+            <button ion-button clear item-end>
+              <ion-icon name="arrow-forward" color="light"></ion-icon>
+            </button>
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button color="danger" (click)="removeContact(account)">
+              <ion-icon name="trash"></ion-icon>
+              {{ '_dappcontacts.delete' | translate }}
+            </button>
+          </ion-item-options>
+          <ion-item-options side="right">
+            <button ion-button color="danger" (click)="removeContact(account)">
+              <ion-icon name="trash"></ion-icon>
+              {{ '_dappcontacts.delete' | translate }}
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
     </div>
   </ng-container>
-</ion-list>
+</ng-container>

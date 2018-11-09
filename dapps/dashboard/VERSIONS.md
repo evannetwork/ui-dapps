@@ -5,6 +5,10 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.2.1
+### Features
+- support light theme
+
 ## Version 1.2.0
 ### Fixes
 - fix dapp-wrapper title i18n

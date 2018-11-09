@@ -41,7 +41,7 @@
         <h4 text-wrap class="m-b-0">
           {{ (addressbook[mail.content.from]?.alias || mail.content.fromAlias || '_dappmailbox.no_alias') | translate }}
         </h4>
-        <span text-wrap>
+        <span class="input-hint" text-wrap>
           {{ mail.content.from }}
         </span>
       </ng-container>

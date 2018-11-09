@@ -25,8 +25,6 @@
   https://evan.network/license/
 */
 
-@import '@evan.network/ui-angular-sass/src/variables/colors';
-
 mailbox {
   position: relative;
 
@@ -119,12 +117,6 @@ mailbox {
           width: 50px;
           height: 50px;
 
-          background-color: #164f5a !important;
-
-          &.active {
-            background-color: $primary !important;
-          }
-
           .button-inner {
             span {
               display: none;
@@ -145,10 +137,6 @@ mailbox {
       }
     }
     .evan-tabs-container {
-      & > div {
-        background-color: rgba(2,56,69,0.5);
-      }
-
       @media (min-width: 769px) {
         margin-left: 50px;
       }
@@ -159,21 +147,13 @@ mailbox {
 
       padding: 25px 0;
 
-      border-bottom: 1px solid #1d3e42;
-
       & > b {
         display: block;
 
         margin: 0 25px 15px 25px;
-
-        color: $primary;
       }
 
       & > button.item {
-        &.unread {
-          border-left: 5px solid #e0e0e0;
-        }
-
         .item-inner {
           margin-right: 20px !important;
           margin-left: 25px !important;
@@ -186,7 +166,10 @@ mailbox {
             }
 
             h3.body-text {
-              color: #c9d6d8 !important;
+              overflow: hidden;
+
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
           }
         }
@@ -198,6 +181,72 @@ mailbox {
     & > button {
       margin-top: 11px;
       margin-right: 8px;
+    }
+  }
+}
+
+@mixin customTheme($colors, $theme) {
+  mailbox {
+    & > .left-panel {
+      .evan-tabs {
+        @media (min-width: 769px) {
+          button {
+            background-color: map-get($theme, background-color) !important;
+
+            &.active {
+              background-color: map-get($colors, primary) !important;
+            }
+          }
+        }
+      }
+      .evan-tabs-container {
+        & > div {
+          background: rgba(map-get($theme, background-color), map-get($theme, background-opacity));
+        }
+      }
+
+      .mail-group {
+        border-bottom: 1px solid map-get($theme, border-color);
+
+        & > b {
+          color: $primary;
+        }
+
+        & > button.item {
+          &.unread {
+            border-left: 5px solid map-get($theme, border-color);
+          }
+
+          &.active, &:hover {
+            background-color: map-get($theme, hover) !important;
+          }
+
+          .item-inner {
+            ion-label {
+              h3.body-text {
+                overflow: hidden;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                color: map-get($theme, text-color) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// apply custom styles for all themes
+@import '@evan.network/ui-angular-sass/src/theme';
+@each $theme, $definition in $evanThemes {
+  @if $theme == 'evan' {
+    @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));
+  } @else {
+    .evan-#{$theme} {
+      @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));
     }
   }
 }

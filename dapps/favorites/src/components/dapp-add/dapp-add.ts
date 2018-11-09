@@ -128,11 +128,14 @@ export class DAppAddComponent extends AsyncComponent {
    * Handle DApp loading.
    */
   submit(ensAddress) {
+    // lowercase and replace starting and ending spaces
+    ensAddress = ensAddress.replace(/(^\s+|\s+$)/mg, '');
+
     let dapp;
 
     this.loading = true;
     this.bookmarkService
-      .getBookmarkDefinition(ensAddress.toLowerCase())
+      .getBookmarkDefinition(ensAddress)
       .then(definition => {
         dapp = definition;
         dapp.trimmedName = definition.name.replace(/\s|\./g, '');
@@ -145,7 +148,7 @@ export class DAppAddComponent extends AsyncComponent {
           case 'valid': {
             return this
               .showValid(dapp)
-              .then(() => this.bookmarkService.queueAddBookmark(ensAddress.toLowerCase(), dapp))
+              .then(() => this.bookmarkService.queueAddBookmark(ensAddress, dapp))
               .then(() => this.routing.goBack())
               .catch(() => { });
           }

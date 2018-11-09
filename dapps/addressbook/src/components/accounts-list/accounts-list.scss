@@ -38,6 +38,60 @@ accounts-list {
     }
   }
 
+  @media(min-width: 769px) {
+    .left-panel, .right-panel {
+      position: absolute;
+      top: 0;
+
+      margin: 0 10px;
+    }
+
+    .left-panel {
+      height: calc(100% - 10px);
+      padding: 25px 0;
+
+      @media (min-width: 1101px) {
+        width: 30%;
+      }
+
+      @media (min-width: 1501px) {
+        width: 20%;
+      }
+
+      .content-header {
+        display: block;
+
+        padding: 0 20px;
+      }
+
+      ion-list {
+        button {
+          .item-inner {
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+
+    .right-panel {
+      overflow-y: auto;
+
+      max-height: calc(100% - 10px);
+
+      @media (min-width: 1101px) {
+        left: calc(30% + 10px);
+
+        width: calc(60% - 30px);
+      }
+
+      @media (min-width: 1501px) {
+        left: calc(20% + 10px);
+
+        width: calc(80% - 30px);
+      }
+    }
+  }
+
   table {
     tr {
       td.td-blockie {
@@ -55,12 +109,6 @@ accounts-list {
     }
   }
 
-  @media (max-width: 768px) {
-    ion-searchbar {
-      padding-bottom: 0 !important;
-    }
-  }
-
   ion-item-sliding {
     .remove-contact {
       display: none;
@@ -69,6 +117,54 @@ accounts-list {
     &:hover {
       .remove-contact {
         display: block;
+      }
+    }
+  }
+
+  .evan-content {
+    button.top-right {
+      top: 10px;
+      right: 15px;
+    }
+  }
+
+  .small-search {
+    display: flex;
+    align-items: center;
+
+    ion-select {
+      display: none;
+    }
+  }
+}
+
+ion-app#addressbook {
+  ion-select.evan-callout {
+    button {
+      display: none;
+    }
+  }
+
+  ion-popover.evan-callout {
+    .popover-content {
+      @media (min-width: 769px) {
+        top: 47px !important;
+        right: -24px !important;
+        left: unset !important;
+      }
+
+      @media (max-width: 768px) {
+        top: unset !important;
+        right: 0 !important;
+        bottom: 0;
+        left: 0 !important;
+
+        width: 100%;
+        margin: auto;
+
+        &:before {
+          display: none;
+        }
       }
     }
   }

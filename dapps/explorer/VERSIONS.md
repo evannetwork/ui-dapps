@@ -2,12 +2,17 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.2.1
+### Features
 - be able to analyse root DApps (favorites.evan)
+- support light theme
 
 ### Fixes
 - fix `openRootDApp` history stack pushing
-
-### Deprecations
+- fix namings
 
 ## Version 1.2.0
 ### Fixes

@@ -5,6 +5,10 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.3.1
+### Features
+- support light theme
+
 ## Version 1.3.0
 ### Features
 - new design

@@ -26,19 +26,28 @@
 */
 
 import {
-  Component, OnInit,     // @angular/core
-  DomSanitizer, ChangeDetectorRef, OnDestroy
+  getDomainName
+} from 'dapp-browser';
+
+import {
+  ChangeDetectorRef,
+  Component,
+  DomSanitizer,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from 'angular-libs';
 
 import {
+  AsyncComponent,
+  createOpacityTransition,
+  createRouterTransition,
+  EvanBCCService,
   EvanCoreService,
   EvanDescriptionService,
-  EvanRoutingService,
-  createOpacityTransition,
   EvanMailboxService,
-  EvanBCCService,
-  createRouterTransition,
-  AsyncComponent
+  EvanRoutingService,
+  EvanUtilService,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -60,20 +69,39 @@ export class DashboardComponent extends AsyncComponent {
   watchRouteChange: Function;
   mailUpdate: Function;
 
+  /**
+   * dashboard.evan dbcp description
+   */
+  private dashboardDbcp: any;
+
+  /**
+   * copy from original split-pane to display colors for dark and light them
+   */
+  private smallToolbar: boolean;
+
+  /**
+   * splitpane component
+   */
+  @ViewChild('splitPane') splitPane: any;
+
   constructor(
-    private core: EvanCoreService,
+    private _DomSanitizer: DomSanitizer,
     private bcc: EvanBCCService,
+    private core: EvanCoreService,
     private descriptionService: EvanDescriptionService,
     private mailboxService: EvanMailboxService,
-    private _DomSanitizer: DomSanitizer,
     private ref: ChangeDetectorRef,
-    private routingService: EvanRoutingService
+    private routingService: EvanRoutingService,
+    private utils: EvanUtilService,
   ) {
     super(ref);
   }
 
   async _ngOnInit() {
     await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
+
+    // load dashboard dbcp to overwrite original split-pane icons for dark and light mode
+    this.dashboardDbcp = await this.descriptionService.getDescription(`dashboard.${ getDomainName() }`);
 
     // load predefine dapps that should be available as suggestion
     this.dapps = await this.descriptionService.getMultipleDescriptions([
@@ -84,6 +112,7 @@ export class DashboardComponent extends AsyncComponent {
     ]);
     this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
     this.mailUpdate = this.core.utils.onEvent('check-new-mail-update', () => this.ref.detectChanges());
+    this.smallToolbar = window.localStorage['evan-small-toolbar'] === 'true';
 
     this.checkDevelopmentMode();
     this.core.finishDAppLoading();
@@ -119,5 +148,19 @@ export class DashboardComponent extends AsyncComponent {
     }
     
     this.ref.detectChanges();
+  }
+
+  /**
+   * toggle toolbar small / big
+   */
+  toggleSmallToolbar() {
+    this.smallToolbar = !this.smallToolbar;
+
+    window.localStorage['evan-small-toolbar'] = this.smallToolbar;
+
+    this.splitPane.smallToolbar = this.smallToolbar;
+
+    this.ref.detectChanges();
+    this.splitPane.ref.detectChanges();
   }
 }

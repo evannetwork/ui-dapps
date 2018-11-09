@@ -53,13 +53,10 @@ import {
       new AnimationDefinition('*', '=>', 'account-detail', 'right'),
       new AnimationDefinition('account-detail', '=>', '*', 'left'),
       new AnimationDefinition('account-list', '=>', 'profile-root', 'left'),
-      new AnimationDefinition('account-list', '=>', 'account-add', 'right'),
 
-      new AnimationDefinition('account-add', '=>', 'add-via-mail', 'right'),
-      new AnimationDefinition('account-add', '=>', 'add-via-accountid', 'right'),
-      new AnimationDefinition('account-add', '=>', 'add-via-qrcode', 'right'),
-
-      new AnimationDefinition('account-add', '=>', 'account-list', 'left'),
+      new AnimationDefinition('account-list', '=>', 'add-via-mail', 'right'),
+      new AnimationDefinition('account-list', '=>', 'add-via-accountid', 'right'),
+      new AnimationDefinition('account-list', '=>', 'add-via-qrcode', 'right'),
 
       new AnimationDefinition('add-via-mail', '=>', '*', 'left'),
       new AnimationDefinition('add-via-accountid', '=>', '*', 'left'),
@@ -70,6 +67,7 @@ import {
 
 export class ContactsRootComponent extends AsyncComponent {
   private watchRouteChange: Function;
+  private loading: boolean;
 
   constructor(
     private core: EvanCoreService,
@@ -84,6 +82,19 @@ export class ContactsRootComponent extends AsyncComponent {
     await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
     this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
     this.core.finishDAppLoading();
+  }
+
+  /**
+   * Hide and show the current router-outlet.
+   */
+  async refresh() {
+    this.loading = true;
+    this.ref.detectChanges();
+
+    setTimeout(() => {
+      this.loading = false
+      this.ref.detectChanges();
+    });
   }
 
   async _ngOnDestroy() {

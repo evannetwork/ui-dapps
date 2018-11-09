@@ -63,7 +63,7 @@
           <h3>{{ '_dm.type.text' | translate }}: {{ '_dm.type.' + demo.type | translate }}</h3>
         </ion-label>
         <div item-content>
-          <button ion-button clear round item-end
+          <button ion-button clear round icon-only
             (click)="openDemoDetail(demo)">
             <ion-spinner color="light" *ngIf="demo.loading"></ion-spinner>
             <ion-icon name="arrow-forward" color="light"
@@ -110,7 +110,7 @@
 
     <div class="evan-content evan-small-content">
       <h3 class="content-header m-b-0 m-t-0">
-        {{ '_dm.remove-demo.title' | translate }}
+        {{ '_dm.create-demo' | translate }}
       </h3>
       <form #createForm="ngForm">
         <ion-item>

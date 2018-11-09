@@ -82,8 +82,8 @@
                   {{ mail.content.sent | date:'shortTime':'':translate.translate.currentLang }}
                 </span>
               </h3>
-              <h3 class="body-text" *ngIf="mail.content.body">
-                {{ mail.content.body }}
+              <h3 class="body-text" *ngIf="mail.content.body"
+                [innerHTML]="mail.content.body">
               </h3>
             </button>
           </div>
@@ -114,11 +114,10 @@
   </ion-list>
 </div>
 
-<dashboard-top-buttons class="on-small-move-down">
-  <button ion-button outline round icon-left
+<dashboard-top-buttons class="on-small-move-down" *ngIf="screenSize > 1100 || !getActiveMailId()">
+  <button ion-button outline round icon-only
     (click)="navigateTo('send-mail')">
     <ion-icon name="paper-plane" *ngIf="!sending"></ion-icon>
-    {{ '_dappmailbox.send-new-mail' | translate }}
   </button>
 </dashboard-top-buttons>
 <router-outlet

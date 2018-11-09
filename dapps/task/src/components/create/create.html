@@ -80,8 +80,9 @@
     </div>
   </div>
 
-  <div class="evan-content evan-mini-content" text-center padding-bottom>
+  <div text-center padding-bottom>
     <button ion-button round icon-left outline (click)="saveTask()"
+      color="transparency"
       [disabled]="name.length === 0 || (membersRequired ? membersRequired > members.length : false) || todos.length === 0 || taskCreating || !isDetailValid()">
       <ion-icon name="add" *ngIf="!taskCreating"></ion-icon>
       <ion-spinner color="light" *ngIf="taskCreating"></ion-spinner>

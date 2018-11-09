@@ -36,10 +36,6 @@ mail-detail {
 
   .sender-header {
     margin: 25px 0;
-
-    span {
-      color: #c9d6d8;
-    }
   }
 
   .evan-small-seperator {
@@ -85,6 +81,24 @@ mail-detail {
       bottom: -5px;
 
       color: #d2d2d2;
+    }
+  }
+}
+
+.evan-light {
+  mail-detail {
+    .answer {
+      &.right {
+        background-color: #d4d4d4;
+      }
+
+      &.left {
+        background-color: $light;
+      }
+
+      p, p.answer-date {
+        color: #4a4a4a;
+      }
     }
   }
 }

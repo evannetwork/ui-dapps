@@ -86,14 +86,14 @@ export const ContactsDispatcher = new QueueDispatcher(
           // if a new account was added, send the com key to the account id
           if (addressBook[accountId].isCreate) {
             const mail = addressBook[accountId].mail;
-            if (addressBook[accountId].profile.email) {
+            if (addressBook[accountId].email) {
               await service.onboardingService.onboarding.sendInvitation({
                 to: `${accountId}`,
                 subject: mail.title,
                 body: mail.body,
                 fromAlias: mail.fromAlias,
                 lang: service.translationService.getCurrentLang()
-              }, service.bcc.web3.utils.toWei(addressBook[accountId].profile.eves.toString()));
+              }, service.bcc.web3.utils.toWei(addressBook[accountId].eves.toString()));
             } else {
               let profile = service.bcc.getProfileForAccount(accountId);
               const targetPubKey = await profile.getPublicKey();

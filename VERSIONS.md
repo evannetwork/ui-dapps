@@ -5,6 +5,26 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.4.0
+### Features
+- addressbook
+  - add new styling
+  - add manual contact grouping
+- profile
+  - theme selection
+- support light theme
+
+### Fixes
+- favorites
+  - trim spaces at start and end by adding new favorites, don't use toLowerCase on ens addresses
+- task
+  - use correct button style for create task
+- demo-management
+  - use correct ens addresses after rental demo was created
+  - use correct bookmark definition for favorites
+- onboarding
+  - fix onboarding mail invitation by user import
+
 ## Version 1.3.0
 ### Features
 - mailbox: add fullPath property to mailbox contract attachments to overwrite bc + contract url path opening

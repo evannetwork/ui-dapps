@@ -95,21 +95,25 @@ export class WelcomeComponent extends AsyncComponent {
   async setCurrentProvider(provider: string) {
     if (provider !== 'metamask') {
       this.routing.navigate(`./${provider}`, true, this.routing.getQueryparams());
+
       this.ref.detectChanges();
-      return;
+    } else {
+      const activeAccount = this.core.getExternalAccount();
+      if (!activeAccount) {
+        return;
+      }
+
+      if (!await this.onboardingService.isOnboarded(activeAccount)) {
+        return this.routing.navigate('./terms-of-use/metamask', true, this.routing.getQueryparams());
+      }
+
+      this.core.setCurrentProvider('metamask');
+
+      // send communication key back to the onboarding account
+      await this.onboarding.sendCommKey(activeAccount);
+      await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
+      this.onboardingService.finishOnboarding();
     }
-
-    const activeAccount = this.core.getExternalAccount();
-    if (!activeAccount) return;
-    if (!await this.onboardingService.isOnboarded(activeAccount))
-      return this.routing.navigate('./terms-of-use/metamask', true, this.routing.getQueryparams());
-
-    this.core.setCurrentProvider('metamask');
-
-    // send communication key back to the onboarding account
-    await this.onboarding.sendCommKey(activeAccount);
-    await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
-    this.onboardingService.finishOnboarding();
   }
 
   //return this.routing.navigate(`./terms-of-use/${ provider }`, true, this.routing.getQueryparams());
