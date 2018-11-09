@@ -3,9 +3,11 @@
 ## Next Version
 ### Features
 ### Fixes
-- trim spaces at start and end by adding new favorites
-
 ### Deprecations
+
+## Version 1.2.1
+### Fixes
+- trim spaces at start and end by adding new favorites
 
 ## Version 1.2.0
 ### Fixes

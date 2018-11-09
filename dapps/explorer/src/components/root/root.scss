@@ -265,7 +265,7 @@ explorer-root {
 }
 
 // apply custom styles for all themes
-@import 'ui-angular-sass/src/theme';
+@import '@evan.network/ui-angular-sass/src/theme';
 @each $theme, $definition in $evanThemes {
   @if $theme == 'evan' {
     @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));

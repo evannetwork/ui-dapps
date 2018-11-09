@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.3.0",
+        "angular-core": "^1.4.0",
         "angular-libs": "^1.2.1"
       },
       "entrypoint": "dashboard.js",
@@ -11,7 +11,7 @@
         "dashboard.js",
         "dashboard.css"
       ],
-      "origin": "QmUKvLFRJftVRJJiiCPNQAEKG97vjisQyyAahrTX9o5Udc",
+      "origin": "Qmev2J5Pc74Wc8vVosCRQZw1L8ZdTzeBnapFf3XH7EQpZy",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -44,7 +44,7 @@
       "1.0.1": "QmT7dwL7BodYKdat3QwCQBpjqs3xzYVJeqBDaZnqBL4xeS",
       "1.0.2": "QmezBtAdT6ybhkC3VUa2Y8QLooUjGvANgav6HpBsBbwdVQ",
       "1.1.0": "QmTL17BzqctDHv4bPUgjY4AAEVANUFcgeRw25cx1B1QWm2",
-      "1.2.0": "QmWVbTxHuS3EeL8PVMZTJL4NwJxiP8R8wiSRVYiUckrpzU"
+      "1.2.0": "QmUdXLoYBbBXGmietAcdYuvUKUviwrQ9iiswDg9YojrU7L"
     },
     "dbcpVersion": 1
   }

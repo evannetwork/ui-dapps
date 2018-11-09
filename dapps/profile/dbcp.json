@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.3.0",
+        "angular-core": "^1.4.0",
         "angular-libs": "^1.2.1"
       },
       "entrypoint": "profile.js",
@@ -11,7 +11,7 @@
         "profile.js",
         "profile.css"
       ],
-      "origin": "QmP3v9CjpxzsYzCPG5akFHy3Xx4Yhh6Z6uJz73TYCnuG1j",
+      "origin": "QmS8APNZAKUxFnAfXC2RGqSRxKZPoRBZPHAgfw82LZSZ6q",
       "primaryColor": "#ac7517",
       "secondaryColor": "#fff2dc",
       "type": "dapp"
@@ -42,7 +42,7 @@
       "1.0.2": "QmTQx6itp4DCbx1S3snNcyetyg4iLfh2HvqcXZPNPkkkev",
       "1.1.0": "Qme1i8DQ1h6uyNPpad9GsMwderTo9ZL6NiT6MRBZG6ZFwL",
       "1.2.0": "QmeTfGisWm2HBS7DdFworX7ZZL8ekNGsSqRbcdGN6SG6uh",
-      "1.3.0": "Qmb3quJyXmjc6wjdNFCwvLxRUGBMtNXwHZ4WY5hhqBh5su"
+      "1.3.0": "QmbKHzNoUGQF896GneAdXFJCSfeyzmbsEir7xPDoXA4av1"
     },
     "dbcpVersion": 1
   }

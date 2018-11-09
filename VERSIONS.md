@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.4.0
+### Features
 - addressbook
   - add new styling
   - add manual contact grouping
@@ -19,8 +24,6 @@
   - use correct bookmark definition for favorites
 - onboarding
   - fix onboarding mail invitation by user import
-
-### Deprecations
 
 ## Version 1.3.0
 ### Features
