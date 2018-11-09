@@ -3,9 +3,12 @@
 ## Next Version
 ### Features
 ### Fixes
-  - fix onboarding mail invitation by user import
-  
 ### Deprecations
+
+## Version 1.2.1
+### Fixes
+- fix onboarding mail invitation by user import
+- support light theme
 
 ## Version 1.2.0
 ### Fixes

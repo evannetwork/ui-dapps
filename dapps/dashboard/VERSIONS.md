@@ -2,10 +2,12 @@
 
 ## Next Version
 ### Features
-- support light theme
-
 ### Fixes
 ### Deprecations
+
+## Version 1.2.1
+### Features
+- support light theme
 
 ## Version 1.2.0
 ### Fixes

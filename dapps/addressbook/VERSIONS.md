@@ -2,11 +2,13 @@
 
 ## Next Version
 ### Features
-- add new styling
-- add manual contact grouping
-
 ### Fixes
 ### Deprecations
+
+## Version 1.3.0
+### Features
+- add new styling
+- add manual contact grouping
 
 ## Version 1.2.0
 ### Fixes

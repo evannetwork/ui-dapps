@@ -2,12 +2,15 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.2.1
+### Features
 - support light theme
 
 ### Fixes
 - use correct button style for create task
-
-### Deprecations
 
 ## Version 1.2.0
 ### Fixes
