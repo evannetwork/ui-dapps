@@ -1,0 +1,151 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<ng-template #claimDisplay let-topics="topics">
+  <evan-claim
+    *ngFor="let topic of topics"
+    [topic]="topic"
+    [address]="useAddressInput ? subject : subjectSelect[0]"
+    [mode]="'minimal'">
+  </evan-claim>
+</ng-template>
+
+<evan-loading *ngIf="loading"></evan-loading>
+<ng-container *ngIf="!loading">
+  <evan-identity-missing *ngIf="!identityExists"></evan-identity-missing>
+  <ng-container *ngIf="identityExists">
+    <ng-container *ngIf="showAddressSelect || showTopicSelect">
+      <div class="evan-content">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_claims.claim-analyse' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0" *ngIf="!showAddressSelect">
+          {{ (addressbook[subject]?.alias || addressbook[subject]?.email) ? (addressbook[subject]?.alias || addressbook[subject]?.email) + ' (' + subject + ')' : subject }}
+        </p>
+        <form #selectForm="ngForm">
+          <ion-row>
+            <ion-col col-12 *ngIf="showTopicSelect">
+              <ion-item>
+                <ion-label stacked>
+                  {{ '_claims.topic.title' | translate }}
+                </ion-label>
+                <ion-input name="topic" required
+                  [(ngModel)]="topic"
+                  [placeholder]="'_claims.topic.desc' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="showError('topic')" color="danger">
+                <ion-label>{{ '_claims.topic.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="showAddressSelect">
+            <ion-col col-12 col-md-6>
+              <div class="checkbox-input">
+                <ion-checkbox name="useAddressInput" margin-right
+                  [(ngModel)]="useAddressInput"
+                  (click)="useAddressBook = false; useAddressInput = true; detectTimeout()"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-checkbox>
+                <ion-item>
+                  <ion-label stacked>
+                    {{ '_claims.subject.title' | translate }}
+                  </ion-label>
+                  <ion-input name="subject" required
+                    [(ngModel)]="subjectInput"
+                    [disabled]="useAddressBook"
+                    [placeholder]="'_claims.subject.desc' | translate"
+                    (ionChange)="ref.detectChanges()"
+                    (focusout)="ref.detectChanges()">
+                  </ion-input>
+                </ion-item>
+              </div>
+              <ion-chip class="error-hint" color="danger"
+                *ngIf="">
+                <ion-label>{{ '_claims.subject.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col col-12 col-md-6 class="checkbox-input">
+              <div class="checkbox-input">
+                <ion-checkbox name="useAddressBook" margin-right
+                  [(ngModel)]="useAddressBook"
+                  (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-checkbox>
+                <contract-members name="subject" #subjectSelectComp
+                  [(members)]="subjectSelect"
+                  [disabled]="useAddressInput"
+                  (onChange)="ref.detectChanges()">
+                  <h3 label>{{ '_claims.subject.title' | translate }}*</h3>
+                </contract-members>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <div text-center>
+            <ion-chip class="error-hint" color="danger"
+              *ngIf="(useAddressInput && selectForm?.controls?.subject?.touched && !isValidAddress(subjectInput)) || (useAddressBook && subjectSelectComp?.touched && subjectSelect.length === 0)">
+              <ion-label>{{ '_claims.subject.error' | translate }}</ion-label>
+            </ion-chip>
+          </div>
+        </form>
+
+        <div text-right>
+          <button ion-button outline round margin-top icon-left
+            [disabled]="!isValidForm()"
+            (click)="useCurrentValues()">
+            {{ '_claims.use-topic' | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="evan-content" *ngIf="showClaims">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_claims.claims' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0">
+          {{ (addressbook[subject]?.alias || addressbook[subject]?.email) ? (addressbook[subject]?.alias || addressbook[subject]?.email) + ' (' + subject + ')' : subject }}
+        </p>
+
+        <div margin-top>
+          <ng-container
+            *ngTemplateOutlet="claimDisplay;context:{ topics: topics }">
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="!showAddressSelect && !showTopicSelect">
+      <ng-container
+        *ngTemplateOutlet="claimDisplay;context:{ topics: topics }">
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
