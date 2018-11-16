@@ -33,12 +33,14 @@ export const en = {
     },
     "claim-analyse": "Claim analysis",
     "claims": "Claim overview",
+    "computed": "computed view",
     "create-identity": "Set up claim management",
     "creating-identity": "Certificate management is beeing created...",
     "delete-dispatcher": {
       "description": "Reject claim",
       "title": "Reject claim"
     },
+    "expand": "expanded view",
     "identity-dispatcher": {
       "description": "Claim management is beeing created...",
       "title": "Claim management is beeing created"
@@ -51,6 +53,13 @@ export const en = {
     },
     "missing-identity": "Certificate management invalid",
     "missing-identity-desc": "There is no claim management available for your account yet. Unlock your claim management to check claims.",
+    "mode": {
+      "description": "choose between different display options to get to know the facets of the certificate display",
+      "detail": "detailed",
+      "icon": "icon only",
+      "normal": "normal",
+      "title": "Display mode"
+    },
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",

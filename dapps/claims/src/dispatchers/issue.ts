@@ -52,9 +52,13 @@ export const issueDispatcher = new QueueDispatcher(
         const results = [ ];
         const activeAccount = service.core.activeAccount();
 
-        // get businessCenter instance
+        // issue a new claim with the current user with a given address and a given topic
         for (let entry of queueEntry.data) {
-
+          await service.bcc.claims.setClaim(
+            service.core.activeAccount(),
+            entry.address,
+            entry.topic
+          );
         }
       }
     )

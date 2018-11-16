@@ -33,12 +33,14 @@ export const de = {
     },
     "claim-analyse": "Zertifikat Analyse",
     "claims": "Zertifikat Übersicht",
+    "computed": "berechnete Darstellung",
     "create-identity": "Zertifikatsverwaltung einrichten",
     "creating-identity": "Zertifikatsverwaltung wird eingerichtet...",
     "delete-dispatcher": {
       "description": "Zertifikat ablehnen",
       "title": "Zertifikat ablehnen"
     },
+    "expand": "Erweiterte Darstellung",
     "identity-dispatcher": {
       "description": "Zertifikatsverwaltung eingerichtet...",
       "title": "Zertifikatsverwaltung wird eingerichtet"
@@ -51,6 +53,13 @@ export const de = {
     },
     "missing-identity": "Zertifikatsverwaltung ungütlig",
     "missing-identity-desc": "Für Ihren Account ist noch keine Zertifikatsverwaltung verfügbar. Schalten Sie Ihre Zertifikatsverwaltung frei, um Zertifikate zu prüfen.",
+    "mode": {
+      "description": "wählen Sie zwischen verschiedenen Darstellungsmöglichkeiten um die Facetten der Zertifikatsdarstellung kennen zu lernen.",
+      "detail": "detailiert",
+      "icon": "nur Icon",
+      "normal": "normal",
+      "title": "Darstellung"
+    },
     "subject": {
       "desc": "Geben Sie die Account Addresse ein, die geprüft werden soll.",
       "error": "Geben Sie eine valide Accountaddresse ein, um die Überprüfung zu starten!",

@@ -76,18 +76,4 @@ export class ClaimService implements OnDestroy {
 
     });
   }
-
-  /**
-   * Return the queue id to watch for any action for a demo.
-   *
-   * @param      {string}   dispatcher  optional name of the dispatcher (default is * = watch
-   *                                    everythign)
-   * @return     {QueueId}  The handling queue identifier.
-   */
-  public getQeueuId(dispatcher?: string): QueueId {
-    return new QueueId(
-      `claims.${ getDomainName() }`,
-      dispatcher || '*'
-    );
-  }
 }

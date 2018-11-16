@@ -30,7 +30,9 @@
     *ngFor="let topic of topics"
     [topic]="topic"
     [address]="useAddressInput ? subject : subjectSelect[0]"
-    [mode]="'minimal'">
+    [mode]="displayMode"
+    [compute]="computedClaims"
+    [expand]="expandClaims">
   </evan-claim>
 </ng-template>
 
@@ -51,12 +53,13 @@
             <ion-col col-12 *ngIf="showTopicSelect">
               <ion-item>
                 <ion-label stacked>
-                  {{ '_claims.topic.title' | translate }}
+                  {{ '_claims.topic.title' | translate }}*
                 </ion-label>
                 <ion-input name="topic" required
                   [(ngModel)]="topic"
                   [placeholder]="'_claims.topic.desc' | translate"
                   (ionChange)="ref.detectChanges()"
+                  (keydown)="submitOnEnter($event)"
                   (focusout)="ref.detectChanges()">
                 </ion-input>
               </ion-item>
@@ -76,12 +79,13 @@
                 </ion-checkbox>
                 <ion-item>
                   <ion-label stacked>
-                    {{ '_claims.subject.title' | translate }}
+                    {{ '_claims.subject.title' | translate }}*
                   </ion-label>
                   <ion-input name="subject" required
                     [(ngModel)]="subjectInput"
                     [disabled]="useAddressBook"
                     [placeholder]="'_claims.subject.desc' | translate"
+                    (keydown)="submitOnEnter($event)"
                     (ionChange)="ref.detectChanges()"
                     (focusout)="ref.detectChanges()">
                   </ion-input>
@@ -107,6 +111,43 @@
                   <h3 label>{{ '_claims.subject.title' | translate }}*</h3>
                 </contract-members>
               </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="showClaimDisplayConfiguration">
+            <ion-col col-12 col-md-4>
+              <ion-item>
+                <ion-label stacked>{{ '_claims.mode.title' | translate }}*</ion-label>
+
+                <ion-select name="displayMode" interface="popover"
+                  [(ngModel)]="displayMode"
+                  [placeholder]="'_claims.mode.description' | translate"
+                  (ionChange)="detectTimeout()"
+                  (focusout)="detectTimeout()">
+                  <ion-option value="icon">{{ '_claims.mode.icon' | translate }}</ion-option>
+                  <ion-option value="normal">{{ '_claims.mode.normal' | translate }}</ion-option>
+                  <ion-option value="detail">{{ '_claims.mode.detail' | translate }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col col-12 col-md-4>
+              <ion-item>
+                <ion-label>{{ '_claims.computed' | translate }}</ion-label>
+                <ion-toggle name="computedClaims"
+                  [(ngModel)]="computedClaims"
+                  (ionChange)="ref.detectChanges()">
+                </ion-toggle>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-12 col-md-4>
+              <ion-item>
+                <ion-label>{{ '_claims.expand' | translate }}</ion-label>
+                <ion-toggle name="expandClaims"
+                  [(ngModel)]="expandClaims"
+                  (ionChange)="ref.detectChanges()">
+                </ion-toggle>
+              </ion-item>
             </ion-col>
           </ion-row>
 

@@ -103,7 +103,7 @@ export class EvanIdentityMissingComponent extends AsyncComponent {
    * Load claims for the current addres, contract address or the active account.
    */
   async _ngOnInit() {
-    this.queueId = this.internalClaimService.getQeueuId('identityDispatcher');
+    this.queueId = this.claimService.getQueueId('identityDispatcher');
 
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(

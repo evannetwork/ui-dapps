@@ -85,6 +85,21 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
    */
   @Input() showAddressSelect?: boolean = false;
 
+  /**
+   * overwrite the default display mode of the claims
+   */
+  @Input() displayMode: string = 'normal';
+
+  /**
+   * Show only one combined claim card for each topic
+   */
+  @Input() computedClaims: boolean = true;
+
+  /**
+   * Show only one combined claim card for each topic
+   */
+  @Input() expandClaims: boolean = false;
+
   /*****************    variables    *****************/
   /**
    * Function to unsubscribe from queue results.
@@ -137,6 +152,11 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   private addressbook: any;
 
   /**
+   * should the configuration view for claim displaymode, expanded and computed be displayed?
+   */
+  private showClaimDisplayConfiguration: boolean;
+
+  /**
    * current formular
    */
   @ViewChild('selectForm') selectForm: any;
@@ -187,7 +207,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(
-      this.internalClaimService.getQeueuId(),
+      this.claimService.getQueueId(),
       async (reload, results) => {
         // check if the current user has an identity
         this.identityExists = await this.bcc.claims.identityAvailable(this.core.activeAccount());
@@ -196,6 +216,8 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
       }
     );
 
+    // should the claim configuration be displayed?
+    this.showClaimDisplayConfiguration = this.core.utils.isDeveloperMode();
 
     this.detectTimeout();
   }
@@ -295,5 +317,19 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
    */
   isValidAddress(address: string) {
     return this.bcc.web3.utils.isAddress(address);
+  }
+
+  /**
+   * Check if the user submits the input using the enter key.
+   *
+   * @param      {event}   event   input keyup event
+   */
+  submitOnEnter(event: any) {
+    if (event.keyCode === 13 && this.isValidForm()) {
+      this.useCurrentValues();
+
+      event.stopPropagation();
+      return false;
+    }
   }
 }

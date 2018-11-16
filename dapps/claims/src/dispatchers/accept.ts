@@ -50,16 +50,19 @@ export const acceptDispatcher = new QueueDispatcher(
       '_claims.accept-dispatcher.description',
       async (service: ClaimService, queueEntry: any) => {
         const results = [ ];
-        const activeAccount = service.core.activeAccount();
 
         // get businessCenter instance
         for (let entry of queueEntry.data) {
-
+          await service.bcc.claims.confirmClaim(
+            entry.address,
+            entry.topic,
+            entry.issuer,
+          );
         }
       }
     )
   ],
   translations,
-  'DemoManagementService'
+  'ClaimService'
 );
 
