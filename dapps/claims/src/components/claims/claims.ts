@@ -68,7 +68,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   /**
    * overwrite the address for loading claims
    */
-  @Input() subject?: string = '0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F';
+  @Input() subject?: string;
 
   /**
    * predefined set of topics to show, this will disable input field
@@ -88,17 +88,12 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   /**
    * overwrite the default display mode of the claims
    */
-  @Input() displayMode: string = 'normal';
+  @Input() displayMode: string = 'detail';
 
   /**
    * Show only one combined claim card for each topic
    */
   @Input() computedClaims: boolean = true;
-
-  /**
-   * Show only one combined claim card for each topic
-   */
-  @Input() expandClaims: boolean = false;
 
   /*****************    variables    *****************/
   /**

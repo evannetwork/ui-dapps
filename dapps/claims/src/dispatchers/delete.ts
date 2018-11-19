@@ -54,7 +54,7 @@ export const deleteDispatcher = new QueueDispatcher(
 
         // get businessCenter instance
         for (let entry of queueEntry.data) {
-          await service.bcc.claims.confirmClaim(
+          await service.bcc.claims.deleteClaim(
             entry.address,
             entry.topic,
             entry.issuer,
