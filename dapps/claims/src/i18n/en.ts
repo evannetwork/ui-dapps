@@ -60,6 +60,8 @@ export const en = {
       "normal": "normal",
       "title": "Display mode"
     },
+    "recreate-identity": "Override claim management",
+    "recreate-identity-description": "Do you really want to overwrite your claim management? All claims created for you will be deleted!",
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",

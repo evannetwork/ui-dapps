@@ -54,10 +54,18 @@ export const issueDispatcher = new QueueDispatcher(
 
         // issue a new claim with the current user with a given address and a given topic
         for (let entry of queueEntry.data) {
+          let expirationDate: any = new Date(entry.expirationDate);
+
+          // if expiration date is applied, parse it into an unix timestamp and apply it to the service
+          if (expirationDate) {
+            expirationDate = Math.floor(new Date(expirationDate).getTime() / 1000);
+          }
+
           await service.bcc.claims.setClaim(
             service.core.activeAccount(),
             entry.address,
-            entry.topic
+            entry.topic,
+            expirationDate
           );
         }
       }

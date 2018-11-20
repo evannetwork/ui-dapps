@@ -54,7 +54,7 @@ export const identityDispatcher = new QueueDispatcher(
 
         // get businessCenter instance
         for (let entry of queueEntry.data) {
-          if (!(await service.bcc.claims.identityAvailable(activeAccount))) {
+          if (!(await service.bcc.claims.identityAvailable(activeAccount)) || entry.force) {
             await service.bcc.claims.createIdentity(activeAccount);
           }
         }

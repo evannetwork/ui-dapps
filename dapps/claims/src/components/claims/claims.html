@@ -40,7 +40,7 @@
   <evan-identity-missing *ngIf="!identityExists"></evan-identity-missing>
   <ng-container *ngIf="identityExists">
     <ng-container *ngIf="showAddressSelect || showTopicSelect">
-      <div class="evan-content">
+      <div class="evan-content evan-relative">
         <h3 class="content-header m-b-0 m-t-0">
           {{ '_claims.claim-analyse' | translate }}
         </h3>
@@ -115,32 +115,34 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="showClaimDisplayConfiguration">
-            <ion-col col-12 col-md-6>
-              <ion-item>
-                <ion-label stacked>{{ '_claims.mode.title' | translate }}*</ion-label>
+          <ng-container *ngIf="showClaimDisplayConfiguration">
+            <ion-row>
+              <ion-col col-12 col-md-6>
+                <ion-item>
+                  <ion-label stacked>{{ '_claims.mode.title' | translate }}*</ion-label>
 
-                <ion-select name="displayMode" interface="popover"
-                  [(ngModel)]="displayMode"
-                  [placeholder]="'_claims.mode.description' | translate"
-                  (ionChange)="detectTimeout()"
-                  (focusout)="detectTimeout()">
-                  <ion-option value="icon">{{ '_claims.mode.icon' | translate }}</ion-option>
-                  <ion-option value="normal">{{ '_claims.mode.normal' | translate }}</ion-option>
-                  <ion-option value="detail">{{ '_claims.mode.detail' | translate }}</ion-option>
-                </ion-select>
-              </ion-item>
-            </ion-col>
-            <ion-col col-12 col-md-6>
-              <ion-item>
-                <ion-label>{{ '_claims.computed' | translate }}</ion-label>
-                <ion-toggle name="computedClaims"
-                  [(ngModel)]="computedClaims"
-                  (ionChange)="ref.detectChanges()">
-                </ion-toggle>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+                  <ion-select name="displayMode" interface="popover"
+                    [(ngModel)]="displayMode"
+                    [placeholder]="'_claims.mode.description' | translate"
+                    (ionChange)="detectTimeout()"
+                    (focusout)="detectTimeout()">
+                    <ion-option value="icon">{{ '_claims.mode.icon' | translate }}</ion-option>
+                    <ion-option value="normal">{{ '_claims.mode.normal' | translate }}</ion-option>
+                    <ion-option value="detail">{{ '_claims.mode.detail' | translate }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col col-12 col-md-6>
+                <ion-item>
+                  <ion-label>{{ '_claims.computed' | translate }}</ion-label>
+                  <ion-toggle name="computedClaims"
+                    [(ngModel)]="computedClaims"
+                    (ionChange)="ref.detectChanges()">
+                  </ion-toggle>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ng-container>
 
           <div text-center>
             <ion-chip class="error-hint" color="danger"
@@ -171,6 +173,18 @@
             *ngTemplateOutlet="claimDisplay;context:{ topics: topics }">
           </ng-container>
         </div>
+      </div>
+      <div class="evan-content" *ngIf="showClaimDisplayConfiguration">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_claims.recreate-identity' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0">
+          {{ '_claims.recreate-identity-description' | translate }}
+        </p>
+        <button ion-button outline round margin-top icon-left
+          (click)="createIdentity()">
+          {{ '_claims.recreate-identity' | translate }}
+        </button>
       </div>
     </ng-container>
     

@@ -327,4 +327,26 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
       return false;
     }
   }
+
+  /**
+   * Triggers the queue for creating an identity.
+   *
+   * @return     {Promise<void>}  resolved when done
+   */
+  async createIdentity() {
+    try {
+      await this
+        .alertService.showSubmitAlert(
+          '_claims.recreate-identity',
+          '_claims.recreate-identity-description',
+          'cancel',
+          '_claims.recreate-identity'
+        );
+
+      this.queue.addQueueData(this.claimService.getQueueId('identityDispatcher'), { force: true });
+      this.identityExists = false;
+
+      this.ref.detectChanges();
+    } catch (ex) { }
+  }
 }

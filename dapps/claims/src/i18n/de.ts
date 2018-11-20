@@ -60,6 +60,8 @@ export const de = {
       "normal": "normal",
       "title": "Darstellung"
     },
+    "recreate-identity": "Zertifikatsverwaltung überschreiben",
+    "recreate-identity-description": "Wollen Sie Ihre Zertifikatsverwaltung wirklich überschreiben? Alle für Sie erstellten Zertifikate werden gelöscht!",
     "subject": {
       "desc": "Geben Sie die Account Addresse ein, die geprüft werden soll.",
       "error": "Geben Sie eine valide Accountaddresse ein, um die Überprüfung zu starten!",

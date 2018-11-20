@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- Claims overview DApp (topic inspect, user inspect) including identity creation
+
 ### Fixes
 - mailbox: allow only one line preview of mail bodies in overview
 
