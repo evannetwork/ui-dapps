@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- create identity for new profile
+
 ### Fixes
 ### Deprecations
 
