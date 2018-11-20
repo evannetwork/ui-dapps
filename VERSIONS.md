@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- mailbox: allow only one line preview of mail bodies in overview
+
 ### Deprecations
 
 ## Version 1.4.0
