@@ -104,7 +104,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   /**
    * current topic input
    */
-  private topic: string = '/company';
+  private topic: string;
 
   /**
    * Should the claim container be displayed? (not used while running without standalone)
