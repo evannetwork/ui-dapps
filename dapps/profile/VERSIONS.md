@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- new design
+- activated claims management and display
+  
 ### Fixes
 ### Deprecations
 

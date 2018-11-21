@@ -75,6 +75,19 @@ export class ProfileRootComponent extends AsyncComponent {
     this.core.finishDAppLoading();
   }
 
+  /**
+   * Hide and show the current router-outlet.
+   */
+  async refresh() {
+    this.loading = true;
+    this.ref.detectChanges();
+
+    setTimeout(() => {
+      this.loading = false
+      this.ref.detectChanges();
+    });
+  }
+
   async _ngOnDestroy() {
     this.watchRouteChange();
   }

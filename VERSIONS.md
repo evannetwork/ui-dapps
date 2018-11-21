@@ -2,8 +2,17 @@
 
 ## Next Version
 ### Features
-- Claims overview DApp (topic inspect, user inspect) including identity creation
-- onboarding: create identity for new profile
+- Claims
+  - overview DApp (topic inspect, user inspect) including identity creation
+- onboarding
+  - create identity for new profile
+- addressbook
+  - add profile activated claims display
+- profile
+  - new design
+  - activated claims management and display
+- mailbox
+  - add profile activated claims display
 
 ### Fixes
 - mailbox: allow only one line preview of mail bodies in overview

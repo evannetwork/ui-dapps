@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- add profile activated claims display
+
 ### Fixes
 ### Deprecations
 

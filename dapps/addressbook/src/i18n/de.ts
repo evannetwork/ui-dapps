@@ -28,7 +28,6 @@
 export const de = {
   "ContactsDispatcher": "Konkaktmanagement",
   "_dappcontacts": {
-    "": "",
     "accepted": "Anfrage akzeptiert",
     "account-delete": "Kontakt entfernen",
     "account-detail": "Kontaktdetails",
@@ -45,6 +44,8 @@ export const de = {
     },
     "alias": "Name",
     "alias-desc": "Alias des Kontakts",
+    "all": "Alle",
+    "claims": "Zertifikate",
     "contact-card-invite": "Mit Visitenkarte",
     "contact-card-invite-description": "Vernetzen Sie sich mit einem Nutzer direkt über seine evan.network Visitenkarte. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen.",
     "copy-account-id": "Copy Account ID",
@@ -105,8 +106,7 @@ export const de = {
     "tags": "Tags",
     "tags-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
     "tags-desc": "Tags des Kontakts",
-    "users-in-tag": "{{ amount }} Nutzer",
-    "all": "Alle"
+    "users-in-tag": "{{ amount }} Nutzer"
   },
   "addressbook": "Meine Kontakte",
   "addviaaccountid": "Einladung mit einer Account ID",

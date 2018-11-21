@@ -49,6 +49,14 @@ import { ProfileTranslations } from './i18n/registry';
 import { ProfileRootComponent } from './components/root/root';
 import { ProfileComponent } from './components/profile/profile';
 
+import { ProfileService } from './services/service';
+import { profileClaimsDispatcher } from './dispatchers/claims';
+
+export {
+  profileClaimsDispatcher,
+  ProfileService,
+}
+
 /**************************************************************************************************/
 
 function getRoutes(): Routes {
@@ -60,7 +68,8 @@ function getRoutes(): Routes {
         path: '',
         component: ProfileComponent,
         data: {
-          state: 'profile-root'
+          reload: true,
+          state: 'profile-root',
         }
       },
       {
@@ -87,6 +96,7 @@ function getConfig(isDispatcher?: boolean) {
       AngularCore,
     ],
     providers: [
+      ProfileService,
       ProfileTranslations,
     ],
     entryComponents: [ IonicApp ]

@@ -28,12 +28,22 @@
 export const de = {
   "_dappprofile": {
     "account-detail": "Aktiver Account",
+    "account-detail-desc": "Profildetails & Interaktionen",
     "accountid": "Account-ID",
     "accounts": "Accounts",
+    "add-claim-topic": "Zertifikatsprüfung hinzufügen",
     "alias": "Alias",
     "balance": "Meine EVEs",
     "balance-updated": "EVEs wurden aktualisiert...",
     "cancel": "abbrechen",
+    "claim-topic": {
+      "desc": "Zertifikatspfad der geprüft werden soll (z.B.: /company)",
+      "error": "Bitte geben Sie einen Zertifikatspfad ein",
+      "title": "Zertifikatspfad"
+    },
+    "claims": "Zertifikate",
+    "claims-desc": "Zertifikatsauswahl für UI Komponenten",
+    "claims-desc-long": "Verwalten Sie Zertifikate die in verschiedenen Applikationen standartmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
     "color-theme": "Farbschema",
     "color-theme-desc": "Stellen Sie die Farbdarstellung der Benutzeroberfläche ein.",
     "color-themes": {
@@ -76,8 +86,15 @@ export const de = {
     "notifictions-desc": "Aktiviert Push-Benachrichtigungen für ihr Mobiles Gerät.",
     "private-key": "Private Key",
     "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
+    "profile-claims-dispatcher": {
+      "description": "Zertifikatsprüfungen speichern",
+      "title": "Zertifikatsprüfungen speichern"
+    },
     "profile-encryption-key": "Profil Verschlüsselungsschlüssel",
-    "settings": "Einstellungen"
+    "runtime-config": "Laufzeiteinstellungen",
+    "save-claim-topics": "Zertifikatsprüfungen speichern",
+    "settings": "Einstellungen",
+    "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung"
   },
   "profile": "Mein Profil",
   "profiledetail": "Mein Profil",

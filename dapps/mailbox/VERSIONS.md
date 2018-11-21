@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- add profile activated claims display
+  
 ### Fixes
 - allow only one line preview of mail bodies in overview
 

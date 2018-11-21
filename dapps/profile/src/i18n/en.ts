@@ -28,12 +28,22 @@
 export const en = {
   "_dappprofile": {
     "account-detail": "Active Account",
+    "account-detail-desc": "Profile details & interactions",
     "accountid": "Account-ID",
     "accounts": "Accounts",
+    "add-claim-topic": "Add claim check",
     "alias": "Alias",
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
     "cancel": "Cancel",
+    "claim-topic": {
+      "desc": "Claim path to be checked (e.g.: /company)",
+      "error": "Please enter a claim path",
+      "title": "Claim path"
+    },
+    "claims": "claims",
+    "claims-desc": "Claims selection for UI components",
+    "claims-desc-long": "Manage claims that are displayed and verified by default in different applications. (Address book, contact selection, ...)",
     "color-theme": "Color Theme",
     "color-theme-desc": "Set the color of the user interface.",
     "color-themes": {
@@ -76,8 +86,15 @@ export const en = {
     "notifictions-desc": "Enables push notifications for your mobile device.",
     "private-key": "Private Key",
     "privatekey-exported": "Your private key successfully exported to your clipboard",
+    "profile-claims-dispatcher": {
+      "description": "Save claim selection",
+      "title": "Save claim selection"
+    },
     "profile-encryption-key": "Profile Encryption Key",
-    "settings": "Settings"
+    "runtime-config": "Runtime settings",
+    "save-claim-topics": "save claim selection",
+    "settings": "Settings",
+    "settings-desc": "runtime environment, developer, presentation"
   },
   "profile": "My Profile",
   "profiledetail": "My Profile",

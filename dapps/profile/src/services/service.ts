@@ -25,65 +25,52 @@
   https://evan.network/license/
 */
 
-@import '@evan.network/ui-angular-sass/src/variables/colors';
+import {
+  bccHelper,
+  core,
+  getDomainName,
+  lightwallet,
+} from 'dapp-browser';
 
-profile {
-  .evan-tabs {
-    z-index: 1;
+import {
+  Http,
+  Injectable,
+  Observable,
+  OnDestroy,
+  Platform, 
+  Subscription,
+} from 'angular-libs';
 
-    @media (min-width: 769px) {
-      margin-top: 25px;
-    }
-  }
+import {
+  EvanAlertService,
+  EvanBCCService,
+  EvanBookmarkService,
+  EvanCoreService,
+  EvanDescriptionService,
+  EvanQueue,
+  EvanRoutingService,
+  QueueId,
+  SingletonService,
+} from 'angular-core';
 
-  .content-padding {
-    padding: 32px 0 25px 0;
-  }
+/**************************************************************************************************/
+/**
+ * Utility service for the claim view DApp.
+ */
+@Injectable()
+export class ProfileService implements OnDestroy {
+  constructor(
+    public bcc: EvanBCCService,
+    public bookmarkService: EvanBookmarkService,
+    public core: EvanCoreService,
+    public descriptionService: EvanDescriptionService,
+    public http: Http,
+    public queue: EvanQueue,
+    public routingService: EvanRoutingService,
+    public singleton: SingletonService,
+  ) {
+    return singleton.create(ProfileService, this, () => {
 
-  .evan-small-seperator {
-    margin-bottom: 7px;
-  }
-
-  .evan-right-panel.evan-tabs-container {
-    position: absolute;
-  }
-
-  form.claims-form {
-    & > .display-flex-justify > div{
-      width: 100%;
-    }
-
-    ion-item.item-md.item-block {
-      &.item-input, &.item-select {
-        ion-input {
-          margin-bottom: 0 !important;
-
-          border-bottom: 0 !important;
-        }
-      }
-    }
-  }
-}
-
-.evan-light profile, profile {
-  ion-item.item-md.item-block {
-    &.item-input, &.item-select {
-      padding: 0 !important;
-
-      background-color: transparent !important;
-
-      ion-label {
-        font-size: 16px;
-        font-weight: 400 !important;
-
-        margin-top: 25px;
-      }
-
-      ion-input {
-        margin-bottom: 10px;
-
-        border-bottom: 1px solid $primary;
-      }
-    }
+    });
   }
 }

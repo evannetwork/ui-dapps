@@ -26,6 +26,10 @@
 */
 
 import {
+  getDomainName
+} from 'dapp-browser';
+
+import {
   Component, OnInit, OnDestroy,      // @angular/core
   NavController,                     // ionic-angular
   TranslateService,                  // @ngx-translate/core
@@ -40,6 +44,7 @@ import {
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
+  EvanClaimService,
   EvanCoreService,
   EvanMailboxService,
   EvanModalService,
@@ -47,6 +52,7 @@ import {
   EvanRoutingService,
   EvanTranslationService,
   EvanUtilService,
+  QueueId,
   TrustDialogComponent,
 } from 'angular-core';
 
@@ -83,10 +89,21 @@ export class AccountListComponent extends AsyncComponent {
    */
   private activeGroup: string;
 
+  /**
+   * Function to unsubscribe from profile claims watcher queue results.
+   */
+  private profileClaimsWatcher: Function;
+
+  /**
+   * for the current profile activated claims
+   */
+  private claims: Array<string> = [ ];
+
   constructor(
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
+    private claimsService: EvanClaimService,
     private core: EvanCoreService,
     private modalService: EvanModalService,
     private queueService: EvanQueue,
@@ -107,10 +124,21 @@ export class AccountListComponent extends AsyncComponent {
       .onQueueFinish(this.addressBookService.queueId, (reload) => {
         this.loadAccounts();
       });
+
+    // load profile active claims
+    this.profileClaimsWatcher = await this.queueService.onQueueFinish(
+      new QueueId(`profile.${ getDomainName() }`, '*'),
+      async (reload, results) => {
+        reload && await this.core.utils.timeout(0);
+        this.claims = await this.claimsService.getProfileActiveClaims();
+        this.ref.detectChanges();
+      }
+    );
   }
 
   async _ngOnDestroy() {
     this.clearQueue();
+    this.profileClaimsWatcher();
   }
 
   /**
