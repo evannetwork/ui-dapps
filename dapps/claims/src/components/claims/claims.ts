@@ -104,7 +104,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   /**
    * current topic input
    */
-  private topic: string;
+  private topic: string = '';
 
   /**
    * Should the claim container be displayed? (not used while running without standalone)
@@ -189,7 +189,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     this.showAddressSelect = this.showAddressSelect || !this.subject;
     
     // show the topic select only if no topics were applied
-    this.showTopicSelect = this.showTopicSelect || !Array.isArray(this.topics) || this.topic.length === 0;
+    this.showTopicSelect = this.showTopicSelect || !Array.isArray(this.topics);
 
     // fill empty topics
     this.topics = this.topics || [ ];
