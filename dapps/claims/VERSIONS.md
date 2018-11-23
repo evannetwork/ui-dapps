@@ -2,7 +2,11 @@
 
 ## Next Version
 ### Features
-- Claims overview DApp (topic inspect, user inspect) including identity creation
-
 ### Fixes
 ### Deprecations
+
+## Version 1.0.0
+### Features
+- Initial Version
+- Claims overview DApp (topic inspect, user inspect)
+- identity creation component

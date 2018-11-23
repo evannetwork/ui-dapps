@@ -2,11 +2,13 @@
 
 ## Next Version
 ### Features
-- new design
-- activated claims management and display
-  
 ### Fixes
 ### Deprecations
+
+## Version 1.5.0
+### Features
+- new design
+- activated claims management and display
 
 ## Version 1.4.0
 ### Features

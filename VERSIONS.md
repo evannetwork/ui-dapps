@@ -2,22 +2,28 @@
 
 ## Next Version
 ### Features
-- Claims
-  - overview DApp (topic inspect, user inspect) including identity creation
-- onboarding
-  - create identity for new profile
-- addressbook
+### Fixes
+### Deprecations
+
+## Version 1.5.0
+### Features
+- addressbook (Version 1.3.1)
   - add profile activated claims display
-- profile
+- Claims (Version 1.0.0)
+  - overview DApp (topic inspect, user inspect) including identity creation
+- explorer (Version 1.3.0)
+  - add detailed claims view for the opened address
+- mailbox (Version 1.3.2)
+  - add profile activated claims display
+- onboarding (Version 1.3.0)
+  - create identity for new profile
+- profile (Version 1.5.0)
   - new design
   - activated claims management and display
-- mailbox
-  - add profile activated claims display
 
 ### Fixes
-- mailbox: allow only one line preview of mail bodies in overview
-
-### Deprecations
+- mailbox
+  - allow only one line preview of mail bodies in overview
 
 ## Version 1.4.0
 ### Features
