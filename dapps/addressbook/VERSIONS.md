@@ -2,10 +2,12 @@
 
 ## Next Version
 ### Features
-- add profile activated claims display
-
 ### Fixes
 ### Deprecations
+
+## Version 1.3.1
+### Features
+- add profile activated claims display
 
 ## Version 1.3.0
 ### Features

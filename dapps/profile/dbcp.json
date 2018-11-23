@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.4.0",
+        "angular-core": "^1.5.0",
         "angular-libs": "^1.2.1"
       },
       "entrypoint": "profile.js",
