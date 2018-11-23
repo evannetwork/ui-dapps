@@ -283,11 +283,13 @@ export class OnboardingService {
       fileHashes[profile.treeLabels.addressBook] = `0x${fileHashes[profile.treeLabels.addressBook].toString('hex')}`;
       const generationResult = await this.onboarding.sendProfileCreationCall(account, fileHashes, provider);
       // temporary execution of setMyProfile
-      const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);  
-      console.dir(profileIndexDomain)  
+      const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);
       const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);  
       const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
       await this.sendCommKey(account);
+
+      // create identity for account
+      await this.bcc.claims.createIdentity(account);
 
       // finished profile creation successfully
       delete window.localStorage['evan-profile-creation'];

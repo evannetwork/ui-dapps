@@ -53,6 +53,10 @@
           {{ mail.content.to }}
         </span>
       </ng-container>
+      <evan-profile-claims
+        [address]="mail.content.from"
+        [mode]="'icon'">
+      </evan-profile-claims>
     </div>
     <div class="evan-small-seperator" margin-top></div>
 

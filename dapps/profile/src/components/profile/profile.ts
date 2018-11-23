@@ -32,10 +32,13 @@ import {
 } from 'dapp-browser';
 
 import {
-  Component, OnInit,      // @angular/core
-  TranslateService,       // @ngx-translate/core
-  NavController,          // ionic-angular
-  DomSanitizer, ChangeDetectorRef
+  ChangeDetectorRef,
+  Component,
+  DomSanitizer,
+  NavController,
+  OnInit,
+  TranslateService,
+  ViewChild,
 } from 'angular-libs';
 
 import {
@@ -46,9 +49,13 @@ import {
   createTabSlideTransition,
   EvanAddressBookService,
   EvanAlertService,
+  EvanBCCService,
+  EvanClaimService,
   EvanCoreService,
+  EvanQueue,
   EvanToastService,
-  EvanTranslationService
+  EvanTranslationService,
+  QueueId,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -132,14 +139,42 @@ export class ProfileComponent extends AsyncComponent {
    */
   private colorTheme: string;
 
+  /**
+   * claims that should be displayed within the ui components
+   */
+  private claims: Array<any>;
+
+  /**
+   * Function to unsubscribe from queue results.
+   */
+  private queueWatcher: Function;
+
+  /**
+   * is the current queue saving the profile?
+   */
+  private savingClaims: boolean;
+
+  /**
+   * profile queue Id
+   */
+  private queueId: QueueId;
+
+  /**
+   * current formular
+   */
+  @ViewChild('claimsForm') claimsForm: any;
+
   constructor(
-    private addressBookService: EvanAddressBookService,
     private _DomSanitizer: DomSanitizer,
+    private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
+    private bcc: EvanBCCService,
+    private claimsService: EvanClaimService,
     private core: EvanCoreService,
-    private toastService: EvanToastService,
+    private queue: EvanQueue,
     private ref: ChangeDetectorRef,
-    private translateService: EvanTranslationService
+    private toastService: EvanToastService,
+    private translateService: EvanTranslationService,
   ) {
     super(ref);
   }
@@ -153,9 +188,31 @@ export class ProfileComponent extends AsyncComponent {
     this.activeTab = 0;
     this.getDomainName = getDomainName;
 
+    // watch for updates
+    this.queueWatcher = await this.queue.onQueueFinish(
+      new QueueId(`profile.${ getDomainName() }`, '*'),
+      async (reload, results) => {
+        await this.core.utils.timeout(0);
+
+        const profileActiveClaims = (await this.claimsService.getProfileActiveClaims(true));
+        this.claims = profileActiveClaims.claims.map(claim => {
+          return { origin: claim, value: claim };
+        });
+
+        this.savingClaims = profileActiveClaims.saving;
+        this.ref.detectChanges();
+      }
+    );
+
     await this.refreshAccount();
   }
 
+  /**
+   * Remove watchers
+   */
+  _ngOnDestroy() {
+    this.queueWatcher();
+  }
   /**
    * Load the current profile and check the current configurations
    *
@@ -385,6 +442,44 @@ export class ProfileComponent extends AsyncComponent {
 
     this.core.utils.activateColorTheme(this.colorTheme);
     this.ref.detectChanges();
+    setTimeout(() => this.ref.detectChanges());
+  }
+
+  /**
+   * Checks if a form property is touched and invalid.
+   *
+   * @param      {any}      form       The form that should be analyzed
+   * @param      {string}   paramName  name of the form property that should be checked
+   * @return     {boolean}  true if touched and invalid, else false
+   */
+  showError(form: any, paramName: string) {
+    if (form && form.controls[paramName]) {
+      return form.controls[paramName].invalid &&
+        form.controls[paramName].touched;
+    }
+  }
+
+  /**
+   * Save the current set of claims
+   */
+  saveClaimTopics() {
+    this.queue.addQueueData(
+      new QueueId(`profile.${ getDomainName() }`, 'profileClaimsDispatcher'),
+      {
+        claims: this.claims.map(claim => claim.value)
+      }
+    );
+
+    this.savingClaims = true;
+    this.ref.detectChanges();
+  }
+
+  /**
+   * Run detectChanges directly and after and timeout again, to update select fields.
+   */
+  detectTimeout() {
+    this.ref.detectChanges();
+
     setTimeout(() => this.ref.detectChanges());
   }
 }

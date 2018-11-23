@@ -231,8 +231,9 @@ export class ExplorerService implements OnDestroy {
       // check if valid contract address could be loaded
       if (contractId && contractId !== '0x0000000000000000000000000000000000000000') {
         sections = sections.concat([
+          'claims',
+          'dbcp',
           'transactionhistory',
-          'dbcp'
         ]);
       } else {
         // clear if its not available

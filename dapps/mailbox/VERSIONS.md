@@ -5,6 +5,13 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.3.2
+### Features
+- add profile activated claims display
+  
+### Fixes
+- allow only one line preview of mail bodies in overview
+
 ## Version 1.3.1
 ### Features
 - support light theme

@@ -89,7 +89,7 @@
   </evan-empty-dapp>
 
   <ng-container *ngIf="availableGroups.length > 0">
-    <div class="evan-content left-panel" *ngIf="core.utils.isMD">
+    <div class="evan-content evan-left-panel" *ngIf="core.utils.isMD">
       <b class="content-header m-t-0">
         {{ '_dappcontacts.tags' | translate }}
       </b>
@@ -106,7 +106,7 @@
       </ion-list>
     </div>
 
-    <div class="right-panel evan-content evan-relative" text-left>
+    <div class="evan-content evan-right-panel evan-relative" text-left>
       <h3 class="content-header m-t-0"
         [innerHTML]="'_dappcontacts.tag-contacts-header' | translate:{ tag: groupedAccounts[activeGroup].groupName }">
       </h3>
@@ -118,6 +118,7 @@
               <th>{{ '_dappcontacts.alias' | translate }}</th>
               <th>{{ '_dappcontacts.account-id' | translate }}</th>
               <th>{{ '_dappcontacts.email' | translate }}</th>
+              <th *ngIf="claims.length > 0">{{ '_dappcontacts.claims' | translate }}</th>
               <th></th>
             </tr>
           </thead>
@@ -129,6 +130,15 @@
               </td>
               <td>{{ account }}</td>
               <td>{{ accounts[account].email }}</td>
+              <td *ngIf="claims.length > 0">
+                <evan-claim
+                  *ngFor="let claim of claims"
+                  [topic]="claim"
+                  [address]="account"
+                  [mode]="'icon'"
+                  [compute]="true">
+                </evan-claim>
+              </td>
               <td text-right>
                 <button ion-button clear item-end>
                   <ion-icon name="arrow-forward" color="light"></ion-icon>

@@ -5,6 +5,10 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.3.0
+### Features
+- create identity for new profile
+
 ## Version 1.2.1
 ### Fixes
 - fix onboarding mail invitation by user import

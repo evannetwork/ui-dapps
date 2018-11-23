@@ -35,6 +35,8 @@ mail-detail {
   }
 
   .sender-header {
+    position: relative;
+
     margin: 25px 0;
   }
 
@@ -82,6 +84,12 @@ mail-detail {
 
       color: #d2d2d2;
     }
+  }
+
+  evan-profile-claims {
+    position: absolute;
+    top: 0;
+    right: -10px;
   }
 }
 

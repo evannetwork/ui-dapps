@@ -43,14 +43,14 @@ accounts-list {
       position: absolute;
       top: 0;
 
-      margin: 0 10px;
+      height: calc(100% - 20px);
+      margin: 10px 10px 0 10px;
     }
 
     .left-panel {
-      height: calc(100% - 10px);
       padding: 25px 0;
 
-      @media (min-width: 1101px) {
+      @media (min-width: 769px) {
         width: 30%;
       }
 
@@ -78,10 +78,10 @@ accounts-list {
 
       max-height: calc(100% - 10px);
 
-      @media (min-width: 1101px) {
+      @media (min-width: 769px) {
         left: calc(30% + 10px);
 
-        width: calc(60% - 30px);
+        width: calc(70% - 30px);
       }
 
       @media (min-width: 1501px) {

@@ -26,6 +26,10 @@
 */
 
 import {
+  getDomainName
+} from 'dapp-browser';
+
+import {
   ActivatedRoute,
   ChangeDetectorRef,
   Component,
@@ -44,12 +48,13 @@ import {
   createTabSlideTransition,
   EvanAddressBookService,
   EvanBCCService,
+  EvanClaimService,
   EvanCoreService,
   EvanMailboxService,
+  EvanQueue,
   EvanRoutingService,
   EvanTranslationService,
   QueueId,
-  EvanQueue,
 } from 'angular-core';
 
 /**************************************************************************************************/
@@ -105,6 +110,16 @@ export class MailDetailComponent extends AsyncComponent {
   private queueWatcher: Function;
 
   /**
+   * for the current profile activated claims
+   */
+  private claims: Array<string> = [ ];
+
+  /**
+   * Function to unsubscribe from profile claims watcher queue results.
+   */
+  private profileClaimsWatcher: Function;
+
+  /**
    * given mailId
    */
   @Input() mailId?: string;
@@ -122,6 +137,7 @@ export class MailDetailComponent extends AsyncComponent {
   constructor(
     private addressbookService: EvanAddressBookService,
     private bcc: EvanBCCService,
+    private claimsService: EvanClaimService,
     private core: EvanCoreService,
     private mailService: EvanMailboxService,
     private queueService: EvanQueue,
@@ -152,6 +168,16 @@ export class MailDetailComponent extends AsyncComponent {
 
           await this.getMail();
         }
+      }
+    );
+
+    // load profile active claims
+    this.profileClaimsWatcher = await this.queueService.onQueueFinish(
+      new QueueId(`profile.${ getDomainName() }`, '*'),
+      async (reload, results) => {
+        reload && await this.core.utils.timeout(0);
+        this.claims = await this.claimsService.getProfileActiveClaims();
+        this.ref.detectChanges();
       }
     );
 

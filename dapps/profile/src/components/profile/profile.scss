@@ -36,22 +36,42 @@ profile {
     }
   }
 
-  ion-list {
-    ion-item {
-      ion-avatar {
-        font-size: 40px;
-
-        color: $dark-blue;
-      }
-    }
-  }
-
   .content-padding {
     padding: 32px 0 25px 0;
   }
 
   .evan-small-seperator {
     margin-bottom: 7px;
+  }
+
+  .evan-right-panel.evan-tabs-container {
+    position: absolute;
+  }
+
+  form.claims-form {
+    & > .display-flex-justify > div {
+      width: 100%;
+    }
+
+    ion-item.item-md.item-block {
+      &.item-input, &.item-select {
+        ion-input {
+          margin-bottom: 0 !important;
+
+          border-bottom: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.evan-light {
+  profile {
+    ion-item.item-md.item-block {
+      &.item-toggle {
+        background-color: transparent !important;
+      }
+    }
   }
 }
 
