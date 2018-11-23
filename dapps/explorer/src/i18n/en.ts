@@ -214,6 +214,7 @@ export const en = {
       "lang-key-exists": "Invalid language key",
       "lang-key-exists-desc": "Language key already exists.",
       "name": "Name",
+      "params-missing": "Params missing: ",
       "primary-color": "Primary color",
       "secondary-color": "Secondary color",
       "standalone": "Standalone",
@@ -230,8 +231,7 @@ export const en = {
       "version": "Version",
       "version-already-exists": "Invalid Version",
       "version-already-exists-desc": "The specified version is already assigned",
-      "version-key": "Version-Key",
-      "params-missing": "Params missing: "
+      "version-key": "Version-Key"
     },
     "details": "Sections",
     "enable-time-travel": "Enable \"Time Travel\"",
@@ -302,6 +302,8 @@ export const en = {
     "section": {
       "basecontract": "evan.network BaseContract",
       "basecontract-desc": "contract states, members and more",
+      "claims": "Claims",
+      "claims-desc": "Check certificates for the selected address.",
       "contractinteraction": "Contract Interaction",
       "contractinteraction-desc": "run abi functions directly",
       "datacontract": "evan.network DataContract",

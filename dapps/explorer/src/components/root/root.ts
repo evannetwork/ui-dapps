@@ -138,6 +138,7 @@ export class RootComponent extends AsyncComponent {
     'general',
     'dbcp',
     'transactionhistory',
+    'claims',
     'basecontract',
     'datacontract',
     'datacontract-detail',

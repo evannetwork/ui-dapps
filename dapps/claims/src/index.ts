@@ -48,7 +48,7 @@ import {
 import { RootComponent } from './components/root/root';
 import { EvanClaimsOverviewComponent } from './components/claims/claims';
 import { EvanIdentityMissingComponent } from './components/identity-missing/identity-missing';
-import { Translations } from './i18n/registry';
+import { ClaimsTranslations } from './i18n/registry';
 
 import { ClaimService } from './services/service';
 import { acceptDispatcher } from './dispatchers/accept';
@@ -59,6 +59,7 @@ import { issueDispatcher } from './dispatchers/issue';
 export {
   acceptDispatcher,
   ClaimService,
+  ClaimsTranslations,
   deleteDispatcher,
   identityDispatcher,
   issueDispatcher,
@@ -99,14 +100,14 @@ function getRoutes(): Routes {
  *
  * @param isDispatcher  boolean value if the config is used for the dispatcher module
  */
-function getConfig(isDispatcher?: boolean) {
+function getConfig(isDispatcher?: boolean, isLibrary?: boolean) {
   let config: any = {
     imports: [
       CommonModule,
       AngularCore,
     ],
     providers: [
-      Translations,
+      ClaimsTranslations,
       ClaimService,
     ],
   };
@@ -130,6 +131,16 @@ function getConfig(isDispatcher?: boolean) {
       EvanIdentityMissingComponent,
       RootComponent,
     ];
+  } if (isLibrary) {
+    config.declarations = [
+      EvanClaimsOverviewComponent,
+      EvanIdentityMissingComponent,
+    ];
+
+    config.exports = [
+      EvanClaimsOverviewComponent,
+      EvanIdentityMissingComponent,
+    ];
   }
 
   return config;
@@ -140,14 +151,14 @@ export class DispatcherModule {
   constructor() { }
 }
 
-@NgModule(getConfig(true))
+@NgModule(getConfig(true, true))
 export class ClaimLibraryModule {
   constructor() { }
 }
 
 @NgModule(getConfig(false))
 class ClaimsModule {
-  constructor(private translations: Translations) { }
+  constructor(private translations: ClaimsTranslations) { }
 }
 
 export async function startDApp(container, dbcpName) {

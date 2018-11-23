@@ -48,6 +48,11 @@ import {
   getDashboardRoutes
 } from 'angular-core';
 
+import {
+  ClaimLibraryModule,
+  ClaimsTranslations,
+} from 'claims';
+
 import { DAppsTranslations } from './i18n/registry';
 import { ExplorerBaseContractComponent } from './components/basecontract/basecontract';
 import { ExplorerContractGeneralComponent } from './components/general/general';
@@ -60,6 +65,7 @@ import { ExplorerSelectComponent } from './components/select/select';
 import { ExplorerService } from './services/explorer.service';
 import { ExplorerTransactionDetailComponent } from './components/transactionhistory/detail/detail';
 import { ExplorerTransactionHistoryComponent } from './components/transactionhistory/transactionhistory';
+import { ExplorerClaimsComponent } from './components/claims/claims';
 import { RootComponent } from './components/root/root';
 
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -112,6 +118,13 @@ function getRoutes(): Routes {
             component: ExplorerContractInteractionComponent,
             data: {
               state: 'contractinteraction',
+            }
+          },
+          {
+            path: 'claims',
+            component: ExplorerClaimsComponent,
+            data: {
+              state: 'claims',
             }
           },
           {
@@ -169,9 +182,10 @@ function getRoutes(): Routes {
 function getConfig(isDispatcher?: boolean) {
   let config: any = {
     imports: [
-      CommonModule,
-      AngularCore,
       AceEditorModule,
+      AngularCore,
+      ClaimLibraryModule,
+      CommonModule,
     ],
     providers: [
       DAppsTranslations,
@@ -195,6 +209,7 @@ function getConfig(isDispatcher?: boolean) {
     config.declarations = [
       BootstrapComponent,
       ExplorerBaseContractComponent,
+      ExplorerClaimsComponent,
       ExplorerContractGeneralComponent,
       ExplorerContractInteractionComponent,
       ExplorerDataContractComponent,
@@ -218,7 +233,10 @@ export class DispatcherModule {
 
 @NgModule(getConfig(false))
 class ExplorerModule {
-  constructor(private translations: DAppsTranslations) { }
+  constructor(
+    private translations: DAppsTranslations,
+    private claimsTranslations: ClaimsTranslations
+  ) { }
 }
 
 export async function startDApp(container, dbcpName) {

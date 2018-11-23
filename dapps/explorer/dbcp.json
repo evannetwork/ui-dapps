@@ -4,7 +4,8 @@
     "dapp": {
       "dependencies": {
         "angular-core": "^1.4.0",
-        "angular-libs": "^1.2.1"
+        "angular-libs": "^1.2.1",
+        "claims": "^1.0.0"
       },
       "entrypoint": "explorer.js",
       "files": [
@@ -14,9 +15,10 @@
       "origin": "QmVs1hw5sN4oMHhJ267zu1T3jHWMZGx7ecFsFFX7sFFKsv",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
-      "type": "dapp",
-      "standalone": true
+      "standalone": true,
+      "type": "dapp"
     },
+    "dbcpVersion": 1,
     "description": "Deep view into Contracts, DBCP and Profiles.",
     "i18n": {
       "description": {
@@ -40,7 +42,6 @@
       "1.0.0": "QmXNENxwGrKBGqkHYSviTfENktRmGAwsEkJ2xSHczrZRWW",
       "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt",
       "1.2.0": "QmdFfS6bxwNxJM1hjzhwAcW3JRbo3xBVgRmPc11p9V7brq"
-    },
-    "dbcpVersion": 1
+    }
   }
 }

@@ -1,48 +1,51 @@
 {
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "flatModuleId": "favorites",
+    "flatModuleOutFile": "favorites.js",
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
+  },
   "compilerOptions": {
-    "declaration": true,
-    "module": "es2015",
-    "target": "es5",
     "baseUrl": "./src",
-    "stripInternal": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "outDir": "../build",
-    "rootDir": "./src",
     "lib": [
       "es2015",
       "dom"
     ],
-    "skipLibCheck": true,
-    "types": [],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "outDir": "../build",
     "paths": {
-      "bcc": [
-        "../../../node_modules/@evan.network/api-blockchain-core/bundles/bcc/bcc"
-      ],
-      "dapp-browser": [
-        "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"
+      "angular-core": [
+        "../../../node_modules/@evan.network/ui-angular-core/dist/angularcore.js"
       ],
       "angular-libs": [
         "../../../node_modules/@evan.network/ui-angular-libs/dist/angularlibs.js"
       ],
-      "angular-core": [
-        "../../../node_modules/@evan.network/ui-angular-core/dist/angularcore.js"
-      ],
-      "ng2-ace-editor": [
-        "../../../node_modules/ng2-ace-editor/index.js"
+      "bcc": [
+        "../../../node_modules/@evan.network/api-blockchain-core/bundles/bcc/bcc"
       ],
       "brace": [
         "libs/brace.js"
+      ],
+      "claims": [
+        "../../claims/dist/claims.js"
+      ],
+      "dapp-browser": [
+        "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"
+      ],
+      "ng2-ace-editor": [
+        "../../../node_modules/ng2-ace-editor/index.js"
       ]
-    }
-  },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true,
-    "skipTemplateCodegen": true,
-    "flatModuleOutFile": "favorites.js",
-    "flatModuleId": "favorites"
+    },
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "target": "es5",
+    "types": []
   },
   "files": [
     "./index.ts"

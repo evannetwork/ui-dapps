@@ -185,6 +185,9 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
       this.subject = '';
     }
 
+    // fill initial input
+    this.subjectInput = this.subject;
+
     // show the address input only, if no address was applied
     this.showAddressSelect = this.showAddressSelect || !this.subject;
     

@@ -214,6 +214,7 @@ export const de = {
       "lang-key-exists": "Ungültiger Sprachkürzel",
       "lang-key-exists-desc": "Sprachkürzel existiert bereits.",
       "name": "Name",
+      "params-missing": "Werte für Felder fehlen: ",
       "primary-color": "Primärfarbe",
       "secondary-color": "Sekundärfarbe",
       "standalone": "Fullscreen / Integriert",
@@ -230,8 +231,7 @@ export const de = {
       "version": "Version",
       "version-already-exists": "Ungültige Version",
       "version-already-exists-desc": "Die angegebene Version ist bereits vergeben.",
-      "version-key": "Versions-Key",
-      "params-missing": "Werte für Felder fehlen: "
+      "version-key": "Versions-Key"
     },
     "details": "Rubriken",
     "enable-time-travel": "spezifischen Block benutzen",
@@ -302,6 +302,8 @@ export const de = {
     "section": {
       "basecontract": "evan.network BaseContract",
       "basecontract-desc": "Vertragsstatus, -mitglieder und mehr",
+      "claims": "Zertifikate",
+      "claims-desc": "Prüfen Sie Zertifikate für die ausgewählte Addresse.",
       "contractinteraction": "Vertragsinteraktion",
       "contractinteraction-desc": "ABI Funktionen direkt ausführen",
       "datacontract": "evan.network DataContract",

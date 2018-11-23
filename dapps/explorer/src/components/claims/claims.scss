@@ -24,25 +24,3 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
-import {
-  Injectable,      // @angular/core
-} from 'angular-libs';
-
-import {
-  EvanTranslationService
-} from 'angular-core';
-
-import { en } from './en';
-import { de } from './de';
-
-export const translations = {
-  en, de
-};
-
-@Injectable()
-export class ClaimsTranslations {
-  constructor(translate: EvanTranslationService) {
-    translate.setMultipleLanguageTranslations(translations);
-  }
-}
