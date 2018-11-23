@@ -15,7 +15,8 @@
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "standalone": true,
-      "type": "dapp"
+      "type": "dapp",
+      "origin": "QmXeZA6ZuTfNn6vRRgTt8tLFrYo28G9vKCr3Pj8JH7Qpue"
     },
     "dbcpVersion": 1,
     "description": "View, accept, decline your claims.",
