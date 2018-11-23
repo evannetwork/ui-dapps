@@ -55,6 +55,10 @@ import { ClaimService } from '../../services/service';
 
 /**************************************************************************************************/
 
+/**
+ * Used to check if the identity for the current logged in user exists, if not, it will enable a
+ * functionality, to create a new identity.
+ */
 @Component({
   selector: 'evan-identity-missing',
   templateUrl: 'identity-missing.html',
