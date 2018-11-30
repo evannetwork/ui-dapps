@@ -64,7 +64,7 @@ export const en = {
     "email-desc": "E-Mail address of the contact",
     "email-invalid": "Please enter a valid email address.",
     "empty-address-book": "No contacts added...",
-    "eves-to-send": "Onboarding Eves to send",
+    "eves-to-send": "Onboarding EVEs to send",
     "filter_items": "Filter contacts",
     "go-to-mails": "Go to mailbox",
     "invalid-address": "Invalid Ethereum address (e.g.: \"0x006b0b55b83694983Ece446985BF1FcC625b2eE6\")",
