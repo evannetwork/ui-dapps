@@ -114,7 +114,7 @@ export const en = {
     'error': 'Error occurred',
     'error-message': 'An error occuredd. Please try again.',
     'error-claim': 'Error occurred',
-    'error-claim-message': 'An error occurred while transferring your invitation Eves, please try again',
+    'error-claim-message': 'An error occurred while transferring your invitation EVEs, please try again',
     'retry': 'Retry',
     'report-error': 'Report Error',
     'wait-for-profile': 'Please wait while your profile is beeing created.',
