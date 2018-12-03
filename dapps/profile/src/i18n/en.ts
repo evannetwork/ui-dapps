@@ -41,7 +41,7 @@ export const en = {
       "error": "Please enter a claim path",
       "title": "Claim path"
     },
-    "claims": "claims",
+    "claims": "Claims",
     "claims-desc": "Claims selection for UI components",
     "claims-desc-long": "Manage claims that are displayed and verified by default in different applications. (Address book, contact selection, ...)",
     "color-theme": "Color Theme",

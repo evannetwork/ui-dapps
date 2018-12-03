@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- fix contact creation using email address
+
 ### Deprecations
 
 ## Version 1.3.1

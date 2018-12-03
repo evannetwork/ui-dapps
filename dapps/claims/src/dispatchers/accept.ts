@@ -57,6 +57,7 @@ export const acceptDispatcher = new QueueDispatcher(
             entry.address,
             entry.topic,
             entry.issuer,
+            entry.id,
           );
         }
       }

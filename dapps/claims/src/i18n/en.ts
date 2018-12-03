@@ -65,7 +65,8 @@ export const en = {
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",
-      "title": "Account"
+      "title-addressbook": "Account from contacts",
+      "title-string": "Direct address input"
     },
     "topic": {
       "desc": "Enter the claim path that should be checked.",

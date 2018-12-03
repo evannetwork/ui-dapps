@@ -54,7 +54,7 @@
                 <ion-label stacked>
                   {{ '_claims.topic.title' | translate }}*
                 </ion-label>
-                <ion-input name="topic" required
+                <ion-input name="topic" required autofocus
                   [(ngModel)]="topic"
                   [placeholder]="'_claims.topic.desc' | translate"
                   (ionChange)="ref.detectChanges()"
@@ -68,6 +68,24 @@
             </ion-col>
           </ion-row>
           <ion-row *ngIf="showAddressSelect">
+            <ion-col col-12 col-md-6 class="checkbox-input">
+              <div class="checkbox-input">
+                <ion-checkbox name="useAddressBook" margin-right
+                  [(ngModel)]="useAddressBook"
+                  (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-checkbox>
+                <contract-members name="subject" #subjectSelectComp
+                  [(members)]="subjectSelect"
+                  [disabled]="useAddressInput"
+                  includeActiveAccount="true"
+                  maxMembers="1"
+                  (onChange)="ref.detectChanges()">
+                  <h3 label>{{ '_claims.subject.title-addressbook' | translate }}*</h3>
+                </contract-members>
+              </div>
+            </ion-col>
             <ion-col col-12 col-md-6>
               <div class="checkbox-input">
                 <ion-checkbox name="useAddressInput" margin-right
@@ -78,7 +96,7 @@
                 </ion-checkbox>
                 <ion-item>
                   <ion-label stacked>
-                    {{ '_claims.subject.title' | translate }}*
+                    {{ '_claims.subject.title-string' | translate }}*
                   </ion-label>
                   <ion-input name="subject" required
                     [(ngModel)]="subjectInput"
@@ -94,24 +112,6 @@
                 *ngIf="">
                 <ion-label>{{ '_claims.subject.error' | translate }}</ion-label>
               </ion-chip>
-            </ion-col>
-            <ion-col col-12 col-md-6 class="checkbox-input">
-              <div class="checkbox-input">
-                <ion-checkbox name="useAddressBook" margin-right
-                  [(ngModel)]="useAddressBook"
-                  (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
-                  (ionChange)="ref.detectChanges()"
-                  (focusout)="ref.detectChanges()">
-                </ion-checkbox>
-                <contract-members name="subject" #subjectSelectComp
-                  [(members)]="subjectSelect"
-                  [disabled]="useAddressInput"
-                  includeActiveAccount="true"
-                  maxMembers="1"
-                  (onChange)="ref.detectChanges()">
-                  <h3 label>{{ '_claims.subject.title' | translate }}*</h3>
-                </contract-members>
-              </div>
             </ion-col>
           </ion-row>
 

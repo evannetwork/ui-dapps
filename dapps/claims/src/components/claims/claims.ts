@@ -119,12 +119,12 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   /**
    * use address input or addressbook select
    */
-  private useAddressInput: boolean = true;
+  private useAddressInput: boolean = false;
 
   /**
    * use address input or addressbook select
    */
-  private useAddressBook: boolean = false;
+  private useAddressBook: boolean = true;
 
   /**
    * use array of members so the user can also select users from his address book directly
@@ -188,6 +188,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     // if no valid subject was supplied, reset it
     if (!this.isValidAddress(this.subject)) {
       this.subject = '';
+      this.subjectSelect = [ this.core.activeAccount() ];
     }
 
     // fill initial input
@@ -201,6 +202,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
     // fill empty topics
     this.topics = this.topics || [ ];
+    this.topic = window.localStorage['evan-claims-dapp-topic'] || '';
 
     // show claims directly, when topics are available
     this.showClaims = !this.showTopicSelect && this.isValidAddress(this.subject);
@@ -274,6 +276,7 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     // only overwrite topics if the input is shown
     if (this.showTopicSelect) {
       this.topics = [ this.topic ];
+      window.localStorage['evan-claims-dapp-topic'] = this.topic;
     }
 
     await this.core.utils.timeout(0);
