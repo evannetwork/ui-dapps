@@ -38,4 +38,57 @@ evan-claims-inspect {
   .input-wrapper {
     height: 84px;
   }
+
+  .evan-callout {
+    & > button {
+      right: 0;
+      left: unset;
+
+      width: 45px;
+    }
+  }
+
+  .claim-topic-open {
+    margin-bottom: -40px;
+  }
+
+  .img-selector {
+    svg, img {
+      max-width: 100%;
+      max-height: 150px;
+    }
+
+    .img-file-select {
+      display: none;
+    }
+  }
+}
+
+.evan-callout.evan-topic-prefill {
+  .popover-content {
+    margin-top: 40px;
+    margin-left: -264px;
+  }
+}
+
+@mixin customTheme($colors, $theme) {
+  evan-claims-inspect {
+    .img-selector {
+      svg g {
+        fill: rgba(map-get($theme, text-color), 0.5);
+      }
+    }
+  }
+}
+
+// apply custom styles for all themes
+@import '@evan.network/ui-angular-sass/src/theme';
+@each $theme, $definition in $evanThemes {
+  @if $theme == 'evan' {
+    @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));
+  } @else {
+    .evan-#{$theme} {
+      @include customTheme(map-get($definition, colors), map-get($definition, evanStyles));
+    }
+  }
 }

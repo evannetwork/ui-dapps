@@ -32,6 +32,7 @@ export const en = {
       "title": "Accept claim"
     },
     "claim-analyse": "Claim analysis",
+    "claim-description": "Claim description",
     "claims": "Claim overview",
     "computed": "computed view",
     "create-identity": "Set up claim management",
@@ -40,7 +41,17 @@ export const en = {
       "description": "Reject claim",
       "title": "Reject claim"
     },
+    "descName": {
+      "desc": "Please enter a claim name.",
+      "error": "You have to enter a name to save the description!",
+      "title": "Claim name"
+    },
+    "description-dispatcher": {
+      "description": "Save claim description",
+      "title": "Save claim description"
+    },
     "expand": "expanded view",
+    "hide-description": "hide description",
     "identity-dispatcher": {
       "description": "Claim management is beeing created...",
       "title": "Claim management is beeing created"
@@ -62,6 +73,12 @@ export const en = {
     },
     "recreate-identity": "Override claim management",
     "recreate-identity-description": "Do you really want to overwrite your claim management? All claims created for you will be deleted!",
+    "select-desc-img": {
+      "select": "Select image",
+      "title": "Claim image"
+    },
+    "set-description": "Save claim description",
+    "show-description": "show description",
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",
@@ -73,6 +90,7 @@ export const en = {
       "error": "Enter a path to start the scan!",
       "title": "Claim path"
     },
+    "topic-title": "Claim path",
     "use-topic": "analyse"
   },
   "claims": "Claim management"

@@ -47,6 +47,9 @@ import {
   EvanBCCService,
   EvanClaimService,
   EvanCoreService,
+  EvanDescriptionService,
+  EvanFileService,
+  EvanPictureService,
   EvanQueue,
   EvanRoutingService,
 } from 'angular-core';
@@ -101,6 +104,11 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   @Input() computedClaims: boolean = true;
 
   /*****************    variables    *****************/
+  /**
+   * the current logged in active acount id
+   */
+  private activeAccount: string;
+
   /**
    * Function to unsubscribe from queue results.
    */
@@ -157,21 +165,48 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   private showClaimDisplayConfiguration: boolean;
 
   /**
+   * Allow the user to select one of the last X claims
+   */
+  private prefilledClaims: Array<string>;
+
+  /**
+   * list of objects including the account ids of the ens owners of the mapped topics and the
+   * description
+   * 
+   *   e.g.: topic    = /notary/company/issuer
+   *         owner of = notary.claims.evan
+   */
+  private topicDetails: Array<any>;
+
+  /**
+   * is currently a topic detail saving?
+   */
+  private savingTopicDetail: boolean;
+
+  /**
    * current formular
    */
   @ViewChild('selectForm') selectForm: any;
 
+  /**
+   * Prefilled topic selectors
+   */
+  @ViewChild('claimTopicSelect') claimTopicSelect: any;
+
   constructor(
     private _DomSanitizer: DomSanitizer,
+    private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
     private claimService: EvanClaimService,
     private core: EvanCoreService,
+    private descriptionService: EvanDescriptionService,
+    private fileService: EvanFileService,
     private internalClaimService: ClaimService,
+    private pictureService: EvanPictureService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
-    private addressBookService: EvanAddressBookService
   ) {
     super(ref, core);
   }
@@ -180,15 +215,17 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
    * Load claims for the current addres, contract address or the active account.
    */
   async _ngOnInit() {
+    this.activeAccount = this.core.activeAccount();
+
     // prefill subject
     this.subject = this.subject ||
       this.routingService.getContractAddress() ||
-      this.core.activeAccount();
+      this.activeAccount;
 
     // if no valid subject was supplied, reset it
     if (!this.isValidAddress(this.subject)) {
       this.subject = '';
-      this.subjectSelect = [ this.core.activeAccount() ];
+      this.subjectSelect = [ this.activeAccount ];
     }
 
     // fill initial input
@@ -202,7 +239,21 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
     // fill empty topics
     this.topics = this.topics || [ ];
-    this.topic = window.localStorage['evan-claims-dapp-topic'] || '';
+
+    // try to load the list of of the last selected claim topics
+    this.prefilledClaims = window.localStorage['evan-claims-dapp-topic'] || [
+      '/contacts/valid',
+      '/onboarding/agbaccepted',
+    ];
+    if (!Array.isArray(this.prefilledClaims)) {
+      try {
+        this.prefilledClaims = JSON.parse(this.prefilledClaims);
+      } catch (ex) {
+        this.prefilledClaims = [ ];
+      }
+    }
+
+    this.topic = this.prefilledClaims.length > 0 ? this.prefilledClaims[0] : ''; 
 
     // show claims directly, when topics are available
     this.showClaims = !this.showTopicSelect && this.isValidAddress(this.subject);
@@ -215,7 +266,9 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
       this.claimService.getQueueId(),
       async (reload, results) => {
         // check if the current user has an identity
-        this.identityExists = await this.bcc.claims.identityAvailable(this.core.activeAccount());
+        this.identityExists = await this.bcc.claims.identityAvailable(this.activeAccount);
+        this.savingTopicDetail = this.queue.getQueueEntry(
+          this.claimService.getQueueId('descriptionDispatcher'), true).data.length > 0;
 
         reload && this.reloadClaims();
       }
@@ -275,9 +328,49 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
     // only overwrite topics if the input is shown
     if (this.showTopicSelect) {
+      // add the new topic to the prefilled claims, make the list unique and save only the first 10
+      // values
+      this.prefilledClaims.unshift(this.topic);
+      this.prefilledClaims = this.core.utils.uniqueArray(this.prefilledClaims);
+      this.prefilledClaims = this.prefilledClaims.splice(0, 10);
+
       this.topics = [ this.topic ];
-      window.localStorage['evan-claims-dapp-topic'] = this.topic;
+      window.localStorage['evan-claims-dapp-topic'] = JSON.stringify(this.prefilledClaims);
     }
+
+    // resolve all claim ens owners for the topics 
+    this.topicDetails = [ ];
+    await Promise.all(this.topics.map(async (topic, index) => {
+      // map the topic to the claim ens name
+      const ensDomain = this.claimService.getClaimEnsAddress(topic);
+
+      // transform the ens domain into a namehash and load the ens topic owner
+      const namehash = this.bcc.nameResolver.namehash(ensDomain);
+      const [ owner, loadedDesc ] = await Promise.all([
+        this.bcc.executor.executeContractCall(
+          this.bcc.nameResolver.ensContract, 'owner', namehash),
+        this.bcc.description.getDescription(ensDomain, this.activeAccount)
+      ]);
+
+      this.topicDetails[index] = {
+        ensDomain: ensDomain,
+        owner: owner,
+        description: loadedDesc ? loadedDesc.public : {
+          author: this.activeAccount,
+          dbcpVersion: 1,
+          description: topic,
+          name: topic,
+          version: '1.0.0',
+        },
+        image: [ ],
+      };
+
+      // fill empty i18n object
+      const description = this.topicDetails[index].description;
+      description.i18n = description.i18n || { };
+      description.i18n.name = description.i18n.name || { };
+      description.i18n.name.en = description.i18n.name.en || topic.split('/').pop();
+    }));
 
     await this.core.utils.timeout(0);
 
@@ -291,10 +384,10 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
    * @param      {string}   paramName  name of the form property that should be checked
    * @return     {boolean}  true if touched and invalid, else false
    */
-  showError(paramName: string) {
-    if (this.selectForm && this.selectForm.controls[paramName]) {
-      return this.selectForm.controls[paramName].invalid &&
-        this.selectForm.controls[paramName].touched;
+  showError(form: any, paramName: string) {
+    if (form && form.controls[paramName]) {
+      return form.controls[paramName].invalid &&
+        form.controls[paramName].touched;
     }
   }
 
@@ -313,6 +406,15 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     }
 
     return false;
+  }
+
+  /**
+   * Determines if valid description.
+   *
+   * @return     {boolean}  True if valid description, False otherwise.
+   */
+  isValidDescription(form: any) {
+
   }
 
   /**
@@ -359,5 +461,56 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
       this.ref.detectChanges();
     } catch (ex) { }
+  }
+
+  /**
+   * Transform the file input result for the description img into an single value.
+   *
+   * @param      {any}  topicDetail  the topic detail for that the img was changed
+   */
+  async descriptionImgChanged(topicDetail: any) {
+    if (topicDetail.image.length > 0) {
+      const urlCreator = (<any>window).URL || (<any>window).webkitURL;
+      const blobURI = urlCreator.createObjectURL(topicDetail.image[0]);
+      // transform to array buffer so we can save it within the queue
+      const arrayBuffer = await this.fileService.readFilesAsArrayBuffer(
+        [ topicDetail.image[0] ]);
+
+      // transform file object
+      topicDetail.image[0] = {
+        blobURI: this._DomSanitizer.bypassSecurityTrustUrl(blobURI),
+        file: arrayBuffer[0].file,
+        fileType: arrayBuffer[0].type,
+        name: arrayBuffer[0].name,
+        base64: await this.pictureService.blobToDataURI(topicDetail.image[0]),
+      };
+
+      topicDetail.description.imgSquare = topicDetail.image[0].base64;
+    }
+
+    this.ref.detectChanges();
+  }
+
+  /**
+   * Save the description for a specific topic.
+   *
+   * @param      {any}            topicDetail  the topic detail
+   * @return     {Promise<void>}  resolved when done
+   */
+  async setDescription(topicDetail: any) {
+    this.savingTopicDetail = true;
+
+    // start the setting
+    this.queue.addQueueData(
+      this.claimService.getQueueId('descriptionDispatcher'),
+      topicDetail
+    );
+
+    // close all description edits
+    this.topicDetails.forEach((topicDetail: any) => {
+      topicDetail.showDescription = false;
+    });
+
+    this.ref.detectChanges();
   }
 }
