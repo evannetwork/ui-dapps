@@ -62,7 +62,7 @@
             </ion-col>
             <ion-col col-12 col-md-6>
               <ion-label class="standalone">{{ '_dappcontacts.tags' | translate }}</ion-label>
-              <ion-tags-input name="tags"
+              <ion-tags-input #ionTagInput name="tags"
                 [(ngModel)]="account.tags"
                 (onChange)="detectTimeout()">
               </ion-tags-input>
@@ -127,8 +127,9 @@
           <div class="transparent" text-right margin-top>
             <button ion-button icon-left round outline color="green"
               (click)="saveProfile(account, $event)"
-              [disabled]="!accountForm.valid || !isAccountIdValid(account.accountId)">
-              <ion-icon name="send" color="light"></ion-icon>
+              [disabled]="!accountForm.valid || (showAccountId && !isAccountIdValid(account.accountId)) || savingProfile">
+              <ion-icon name="send" color="light" *ngIf="!savingProfile"></ion-icon>
+              <ion-spinner *ngIf="savingProfile"></ion-spinner>
               <span *ngIf="isCreate">{{ '_dappcontacts.send-invitation' | translate }}</span>
               <span *ngIf="!isCreate">{{ '_dappcontacts.save' | translate }}</span>
             </button>

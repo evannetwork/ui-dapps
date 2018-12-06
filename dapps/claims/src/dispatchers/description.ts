@@ -43,22 +43,23 @@ import {
 
 /**************************************************************************************************/
 
-export const deleteDispatcher = new QueueDispatcher(
+export const descriptionDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.delete-dispatcher.title',
-      '_claims.delete-dispatcher.description',
+      '_claims.description-dispatcher.title',
+      '_claims.description-dispatcher.description',
       async (service: ClaimService, queueEntry: any) => {
         const results = [ ];
 
         // get businessCenter instance
         for (let entry of queueEntry.data) {
-          await service.bcc.claims.deleteClaim(
-            entry.address,
-            entry.topic,
-            entry.issuer,
-            entry.id,
+          await service.bcc.description.setDescription(
+            entry.ensDomain,
+            { public: entry.description, },
+            service.core.activeAccount()
           );
+
+          delete service.descriptionService.descriptions[entry.ensDomain];
         }
       }
     )

@@ -2,7 +2,13 @@
 
 ## Next Version
 ### Features
+- claims
+  - add claimId to accept / delete claim
+
 ### Fixes
+- addressbook
+  - fix contact creation using email address
+
 ### Deprecations
 
 ## Version 1.5.0

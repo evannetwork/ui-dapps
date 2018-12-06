@@ -32,6 +32,7 @@ export const de = {
       "title": "Zertifikat akzeptieren"
     },
     "claim-analyse": "Zertifikat Analyse",
+    "claim-description": "Zertifikatsbeschreibung",
     "claims": "Zertifikat Übersicht",
     "computed": "berechnete Darstellung",
     "create-identity": "Zertifikatsverwaltung einrichten",
@@ -40,7 +41,17 @@ export const de = {
       "description": "Zertifikat ablehnen",
       "title": "Zertifikat ablehnen"
     },
+    "descName": {
+      "desc": "Bitte geben Sie einen Zertifikatsnamen ein.",
+      "error": "Sie müssen einen Namen angeben, um die Beschreibung zu speichern!",
+      "title": "Zertifikatsname"
+    },
+    "description-dispatcher": {
+      "description": "Zertifikatsbeschreibung speichern",
+      "title": "Zertifikatsbeschreibung speichern"
+    },
     "expand": "Erweiterte Darstellung",
+    "hide-description": "Beschreibung ausblenden",
     "identity-dispatcher": {
       "description": "Zertifikatsverwaltung eingerichtet...",
       "title": "Zertifikatsverwaltung wird eingerichtet"
@@ -62,16 +73,24 @@ export const de = {
     },
     "recreate-identity": "Zertifikatsverwaltung überschreiben",
     "recreate-identity-description": "Wollen Sie Ihre Zertifikatsverwaltung wirklich überschreiben? Alle für Sie erstellten Zertifikate werden gelöscht!",
+    "select-desc-img": {
+      "select": "Bild auswählen",
+      "title": "Zertifikatsbild"
+    },
+    "set-description": "Beschreibung speichern",
+    "show-description": "Beschreibung anzeigen",
     "subject": {
       "desc": "Geben Sie die Account Addresse ein, die geprüft werden soll.",
       "error": "Geben Sie eine valide Accountaddresse ein, um die Überprüfung zu starten!",
-      "title": "Account"
+      "title-addressbook": "Addressbuchauswahl",
+      "title-string": "Direkte Account Eingabe"
     },
     "topic": {
       "desc": "Geben Sie den Zertifikatspfad ein, der geprüft werden soll.",
       "error": "Geben Sie einen Pfad ein, um die Überprüfung zu starten!",
       "title": "Pfad"
     },
+    "topic-title": "Pfad",
     "use-topic": "überprüfen"
   },
   "claims": "Zertifikatsverwaltung"

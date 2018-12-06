@@ -50,9 +50,10 @@ import { EvanClaimsOverviewComponent } from './components/claims/claims';
 import { EvanIdentityMissingComponent } from './components/identity-missing/identity-missing';
 import { ClaimsTranslations } from './i18n/registry';
 
-import { ClaimService } from './services/service';
 import { acceptDispatcher } from './dispatchers/accept';
+import { ClaimService } from './services/service';
 import { deleteDispatcher } from './dispatchers/delete';
+import { descriptionDispatcher } from './dispatchers/description';
 import { identityDispatcher } from './dispatchers/identity';
 import { issueDispatcher } from './dispatchers/issue';
 
@@ -61,6 +62,7 @@ export {
   ClaimService,
   ClaimsTranslations,
   deleteDispatcher,
+  descriptionDispatcher,
   identityDispatcher,
   issueDispatcher,
 }

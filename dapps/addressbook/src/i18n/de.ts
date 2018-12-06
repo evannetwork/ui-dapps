@@ -104,7 +104,7 @@ export const de = {
       "pending": "Sie haben eine Einladung an einen neuen Kontakt gesendet.<br><br>Bitte überprüfen Sie Ihre eingehenden Mails auf eine Antwort und speichern Sie die aktualisierten Kontaktdaten Ihres Partners."
     },
     "tags": "Tags",
-    "tags-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
+    "tag-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
     "tags-desc": "Tags des Kontakts",
     "users-in-tag": "{{ amount }} Nutzer"
   },
