@@ -36,7 +36,7 @@ export const de = {
     'add': 'Verknüpfung hinzufügen',
     'adding': 'Verknüpfung wird hinzugefügt',
     'alert': {
-      'validTitle': 'Wollen sie diese Anwendung wirklich hinzufügen?',
+      'validTitle': 'Wollen Sie diese Anwendung wirklich hinzufügen?',
       'validMessage': `
         <div class="advanced-alert">
           <div class="alert-img-container">
@@ -57,7 +57,7 @@ export const de = {
             <h3>{{ name }}</h3>
             <br>
             <span>
-              gefunden werden. Bitte geben sie eine gültige Vertragsadresse ein.
+              gefunden werden. Bitte geben Sie eine gültige Vertragsadresse ein.
             </span>
           </div>
         </div>
@@ -78,14 +78,14 @@ export const de = {
     'dapps': 'Verknüpfungen',
     'dispatcher': {
       'add': 'Verknüpfung wurde hinzugefügt',
-      'remove': 'Verknüpfung wurde entfern',
+      'remove': 'Verknüpfung wurde entfernt',
       'save-bookmarks': 'Verknüpfungen synchronisieren',
       'save-bookmarks-description': 'Aktuelle Änderungen an den Verknüpfungen in die Blockchain sichern...',
     },
     'edit': 'Editieren',
     'empty-bookmarks': 'Keine Verknüpfungen erstellt...',
     'ensaddress': 'App- / Vertragsadresse',
-    'ensaddress-desc': 'Geben Sie eine ENS- oder Vertragsaddresse ein um Sie zu öffnen',
+    'ensaddress-desc': 'Geben Sie eine ENS- oder Vertragsaddresse ein, um sie zu öffnen',
     'featured_dapps': 'Vorgeschlagene Anwendungen',
     'mailbox': 'Mailbox',
     'nothing-found': 'Es wurden keine Verknüpfung für den Filter <b>{{ filter }}</b> gefunden...',
