@@ -341,11 +341,13 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     // resolve all claim ens owners for the topics 
     this.topicDetails = [ ];
     await Promise.all(this.topics.map(async (topic, index) => {
-      // map the topic to the claim ens name
+      // map the topic to the claim ens name and extract the top level claims domain to check, if
+      // the user can set the claim tree
       const ensDomain = this.claimService.getClaimEnsAddress(topic);
+      const topLevelDomain = ensDomain.split('.').splice(-3, 3).join('.');
 
-      // transform the ens domain into a namehash and load the ens topic owner
-      const namehash = this.bcc.nameResolver.namehash(ensDomain);
+      // transform the ens domain into a namehash and load the ens top level topic owner
+      const namehash = this.bcc.nameResolver.namehash(topLevelDomain);
       const [ owner, loadedDesc ] = await Promise.all([
         this.bcc.executor.executeContractCall(
           this.bcc.nameResolver.ensContract, 'owner', namehash),

@@ -34,6 +34,7 @@
 
       <button ion-button outline round icon-left
         [class.top-right]="core.utils.isMD"
+        [disabled]="savingTopicDetail"
         *ngIf="topicDetails[i].owner === activeAccount"
         (click)="topicDetails[i].showDescription = !topicDetails[i].showDescription; ref.detectChanges()">
         <ion-icon name="create" *ngIf="!savingTopicDetail"></ion-icon>

@@ -16,7 +16,7 @@
       "secondaryColor": "#dfeaff",
       "standalone": true,
       "type": "dapp",
-      "origin": "QmTWVj8AVDsLWkHZgwMqhE5iTyzPf814ahHGFUGGTdeGTZ"
+      "origin": "QmS4bEKUsP6SKNJ869xYnxVzBfRjzwtmJSpEbgdjKibK9H"
     },
     "dbcpVersion": 1,
     "description": "View, accept, decline your claims.",
@@ -39,7 +39,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmNsHsvYzAnnagiS3k7veQ4r4W2FXhYWJsruer7jDycwJv"
+      "1.0.0": "QmZEowZEwQKidgNrCS5PoVeBFhCEbG6A3CW7mZWxGb6Byb"
     }
   }
 }
