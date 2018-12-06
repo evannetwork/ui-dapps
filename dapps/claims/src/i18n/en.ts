@@ -31,6 +31,7 @@ export const en = {
       "description": "Accept claim",
       "title": "Accept claim"
     },
+    "adjust-description": "Adjust description",
     "claim-analyse": "Claim analysis",
     "claim-description": "Claim description",
     "claims": "Claim overview",

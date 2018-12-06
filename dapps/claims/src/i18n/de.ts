@@ -31,6 +31,7 @@ export const de = {
       "description": "Zertifikat akzeptieren",
       "title": "Zertifikat akzeptieren"
     },
+    "adjust-description": "Beschreibung anpassen",
     "claim-analyse": "Zertifikat Analyse",
     "claim-description": "Zertifikatsbeschreibung",
     "claims": "Zertifikat Übersicht",

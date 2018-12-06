@@ -30,18 +30,21 @@
     <div >
       <h3 class="content-header m-b-0 m-t-0">
         {{ '_claims.topic-title' | translate }}: {{ topic }}
-
-        <span class="clickable"
-          *ngIf="topicDetails[i].owner === activeAccount"
-          (click)="topicDetails[i].showDescription = !topicDetails[i].showDescription; ref.detectChanges()">
-          <ion-icon name="create" margin-left *ngIf="!savingTopicDetail"></ion-icon>
-          <ion-spinner *ngIf="savingTopicDetail"></ion-spinner>
-        </span>
       </h3>
+
+      <button ion-button outline round icon-left
+        [class.top-right]="core.utils.isMD"
+        *ngIf="topicDetails[i].owner === activeAccount"
+        (click)="topicDetails[i].showDescription = !topicDetails[i].showDescription; ref.detectChanges()">
+        <ion-icon name="create" *ngIf="!savingTopicDetail"></ion-icon>
+        <ion-spinner *ngIf="savingTopicDetail"></ion-spinner>
+        {{ '_claims.adjust-description' | translate }}
+      </button>
     </div>
 
-    <form class="evan-content description-container" no-margin #descForm="ngForm"
-      *ngIf="topicDetails[i].owner === activeAccount && topicDetails[i].showDescription">
+    <form class="evan-content description-container" margin-top #descForm="ngForm"
+      *ngIf="topicDetails[i].owner === activeAccount && topicDetails[i].showDescription"
+      [@opacityTransition]>
       <h3 class="content-header m-b-0 m-t-0">
         {{ '_claims.claim-description' | translate }}: {{ topic }}
       </h3>
@@ -284,7 +287,7 @@
           {{ (addressbook[subject]?.alias || addressbook[subject]?.email) ? (addressbook[subject]?.alias || addressbook[subject]?.email) + ' (' + subject + ')' : subject }}
         </p>
 
-        <div margin-top>
+        <div class="evan-relative" margin-top>
           <ng-container
             *ngTemplateOutlet="claimDisplay;context:{ topics: topics }">
           </ng-container>

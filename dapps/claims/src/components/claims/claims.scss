@@ -62,6 +62,12 @@ evan-claims-inspect {
       display: none;
     }
   }
+
+  .evan-content {
+    button.top-right {
+      top: -7px;
+    }
+  }
 }
 
 .evan-callout.evan-topic-prefill {
