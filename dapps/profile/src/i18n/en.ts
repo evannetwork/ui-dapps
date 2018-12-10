@@ -35,7 +35,8 @@ export const en = {
     "alias": "Alias",
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
-    "cancel": "Cancel",
+    "cancel": "cancel",
+    "ok": "ok",
     "claim-topic": {
       "desc": "Claim path to be checked (e.g.: /company)",
       "error": "Please enter a claim path",

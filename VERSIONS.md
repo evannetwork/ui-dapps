@@ -4,6 +4,8 @@
 ### Features
 - claims
   - add claimId to accept / delete claim
+- ens-selling
+  -  add the ens selling DApp
 
 ### Fixes
 - addressbook

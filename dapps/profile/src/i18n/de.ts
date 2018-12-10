@@ -84,6 +84,7 @@ export const de = {
     "no_alias": "Kein Alias",
     "notifications": "Benachrichtigungen",
     "notifictions-desc": "Aktiviert Push-Benachrichtigungen für ihr Mobiles Gerät.",
+    "ok": "Ok",
     "private-key": "Private Key",
     "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
     "profile-claims-dispatcher": {
