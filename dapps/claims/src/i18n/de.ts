@@ -63,6 +63,10 @@ export const de = {
       "description": "Verifizierung erstellen...",
       "title": "Verifizierung erstellen"
     },
+    "reject-dispatcher": {
+      "description": "Verifizierung verwerfen...",
+      "title": "Verifizierung verwerfen"
+    },
     "missing-identity": "Verifizierungsverwaltung ungütlig",
     "missing-identity-desc": "Für Ihren Account ist noch keine Verifizierungsverwaltung verfügbar. Schalten Sie Ihre Verifizierungsverwaltung frei, um Verifizierunge zu prüfen.",
     "mode": {
@@ -92,7 +96,8 @@ export const de = {
       "title": "Pfad"
     },
     "topic-title": "Pfad",
-    "use-topic": "überprüfen"
+    "use-topic": "überprüfen",
+
   },
   "claims": "Verifizierungsverwaltung"
 };

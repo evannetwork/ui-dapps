@@ -179,13 +179,15 @@ export class ExplorerService implements OnDestroy {
       if (!this.abi || !this.dataSchema) {
         const dbcp = await this.descriptionService.getDescription(filteredID);
 
-        // set abi definition
-        if (!this.abi && dbcp.abis && dbcp.abis.own) {
-          this.abi = dbcp.abis.own;
-        }
+        if (dbcp) {
+          // set abi definition
+          if (!this.abi && dbcp.abis && dbcp.abis.own) {
+            this.abi = dbcp.abis.own;
+          }
 
-        if (!this.dataSchema && dbcp.dataSchema) {
-          this.dataSchema = dbcp.dataSchema;
+          if (!this.dataSchema && dbcp.dataSchema) {
+            this.dataSchema = dbcp.dataSchema;
+          }
         }
       }
 

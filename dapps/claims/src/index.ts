@@ -56,6 +56,7 @@ import { deleteDispatcher } from './dispatchers/delete';
 import { descriptionDispatcher } from './dispatchers/description';
 import { identityDispatcher } from './dispatchers/identity';
 import { issueDispatcher } from './dispatchers/issue';
+import { rejectDispatcher } from './dispatchers/reject';
 
 export {
   acceptDispatcher,
@@ -65,6 +66,7 @@ export {
   descriptionDispatcher,
   identityDispatcher,
   issueDispatcher,
+  rejectDispatcher,
 }
 
 /**************************************************************************************************/
