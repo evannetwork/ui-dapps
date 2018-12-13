@@ -170,15 +170,6 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   private prefilledClaims: Array<string>;
 
   /**
-   * list of objects including the account ids of the ens owners of the mapped topics and the
-   * description
-   * 
-   *   e.g.: topic    = /notary/company/issuer
-   *         owner of = notary.claims.evan
-   */
-  private topicDetails: Array<any>;
-
-  /**
    * is currently a topic detail saving?
    */
   private savingTopicDetail: boolean;
@@ -338,42 +329,6 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
       window.localStorage['evan-claims-dapp-topic'] = JSON.stringify(this.prefilledClaims);
     }
 
-    // resolve all claim ens owners for the topics 
-    this.topicDetails = [ ];
-    await Promise.all(this.topics.map(async (topic, index) => {
-      // map the topic to the claim ens name and extract the top level claims domain to check, if
-      // the user can set the claim tree
-      const ensDomain = this.claimService.getClaimEnsAddress(topic);
-      const topLevelDomain = ensDomain.split('.').splice(-3, 3).join('.');
-
-      // transform the ens domain into a namehash and load the ens top level topic owner
-      const namehash = this.bcc.nameResolver.namehash(topLevelDomain);
-      const [ owner, loadedDesc ] = await Promise.all([
-        this.bcc.executor.executeContractCall(
-          this.bcc.nameResolver.ensContract, 'owner', namehash),
-        this.bcc.description.getDescription(ensDomain, this.activeAccount)
-      ]);
-
-      this.topicDetails[index] = {
-        ensDomain: ensDomain,
-        owner: owner,
-        description: loadedDesc ? loadedDesc.public : {
-          author: this.activeAccount,
-          dbcpVersion: 1,
-          description: topic,
-          name: topic,
-          version: '1.0.0',
-        },
-        image: [ ],
-      };
-
-      // fill empty i18n object
-      const description = this.topicDetails[index].description;
-      description.i18n = description.i18n || { };
-      description.i18n.name = description.i18n.name || { };
-      description.i18n.name.en = description.i18n.name.en || topic.split('/').pop();
-    }));
-
     await this.core.utils.timeout(0);
 
     this.showClaims = true;
@@ -463,56 +418,5 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
       this.ref.detectChanges();
     } catch (ex) { }
-  }
-
-  /**
-   * Transform the file input result for the description img into an single value.
-   *
-   * @param      {any}  topicDetail  the topic detail for that the img was changed
-   */
-  async descriptionImgChanged(topicDetail: any) {
-    if (topicDetail.image.length > 0) {
-      const urlCreator = (<any>window).URL || (<any>window).webkitURL;
-      const blobURI = urlCreator.createObjectURL(topicDetail.image[0]);
-      // transform to array buffer so we can save it within the queue
-      const arrayBuffer = await this.fileService.readFilesAsArrayBuffer(
-        [ topicDetail.image[0] ]);
-
-      // transform file object
-      topicDetail.image[0] = {
-        blobURI: this._DomSanitizer.bypassSecurityTrustUrl(blobURI),
-        file: arrayBuffer[0].file,
-        fileType: arrayBuffer[0].type,
-        name: arrayBuffer[0].name,
-        base64: await this.pictureService.blobToDataURI(topicDetail.image[0]),
-      };
-
-      topicDetail.description.imgSquare = topicDetail.image[0].base64;
-    }
-
-    this.ref.detectChanges();
-  }
-
-  /**
-   * Save the description for a specific topic.
-   *
-   * @param      {any}            topicDetail  the topic detail
-   * @return     {Promise<void>}  resolved when done
-   */
-  async setDescription(topicDetail: any) {
-    this.savingTopicDetail = true;
-
-    // start the setting
-    this.queue.addQueueData(
-      this.claimService.getQueueId('descriptionDispatcher'),
-      topicDetail
-    );
-
-    // close all description edits
-    this.topicDetails.forEach((topicDetail: any) => {
-      topicDetail.showDescription = false;
-    });
-
-    this.ref.detectChanges();
   }
 }

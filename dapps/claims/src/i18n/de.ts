@@ -33,7 +33,6 @@ export const de = {
     },
     "adjust-description": "Beschreibung anpassen",
     "claim-analyse": "Verifizierung Analyse",
-    "claim-description": "Verifizierungsbeschreibung",
     "claims": "Verifizierung Übersicht",
     "computed": "berechnete Darstellung",
     "create-identity": "Verifizierungsverwaltung einrichten",
@@ -41,11 +40,6 @@ export const de = {
     "delete-dispatcher": {
       "description": "Verifizierung ablehnen",
       "title": "Verifizierung ablehnen"
-    },
-    "descName": {
-      "desc": "Bitte geben Sie einen Verifizierungsnamen ein.",
-      "error": "Sie müssen einen Namen angeben, um die Beschreibung zu speichern!",
-      "title": "Verifizierungsname"
     },
     "description-dispatcher": {
       "description": "Verifizierungsbeschreibung speichern",
@@ -63,10 +57,6 @@ export const de = {
       "description": "Verifizierung erstellen...",
       "title": "Verifizierung erstellen"
     },
-    "reject-dispatcher": {
-      "description": "Verifizierung verwerfen...",
-      "title": "Verifizierung verwerfen"
-    },
     "missing-identity": "Verifizierungsverwaltung ungütlig",
     "missing-identity-desc": "Für Ihren Account ist noch keine Verifizierungsverwaltung verfügbar. Schalten Sie Ihre Verifizierungsverwaltung frei, um Verifizierunge zu prüfen.",
     "mode": {
@@ -78,12 +68,10 @@ export const de = {
     },
     "recreate-identity": "Verifizierungsverwaltung überschreiben",
     "recreate-identity-description": "Wollen Sie Ihre Verifizierungsverwaltung wirklich überschreiben? Alle für Sie erstellten Verifizierunge werden gelöscht!",
-    "select-desc-img": {
-      "select": "Bild auswählen",
-      "title": "Verifizierungsbild"
+    "reject-dispatcher": {
+      "description": "Verifizierung verwerfen...",
+      "title": "Verifizierung verwerfen"
     },
-    "set-description": "Beschreibung speichern",
-    "show-description": "Beschreibung anzeigen",
     "subject": {
       "desc": "Geben Sie die Account Addresse ein, die geprüft werden soll.",
       "error": "Geben Sie eine valide Accountaddresse ein, um die Überprüfung zu starten!",
@@ -96,8 +84,7 @@ export const de = {
       "title": "Pfad"
     },
     "topic-title": "Pfad",
-    "use-topic": "überprüfen",
-
+    "use-topic": "überprüfen"
   },
   "claims": "Verifizierungsverwaltung"
 };

@@ -54,12 +54,12 @@ export const descriptionDispatcher = new QueueDispatcher(
         // get businessCenter instance
         for (let entry of queueEntry.data) {
           await service.bcc.description.setDescription(
-            entry.ensDomain,
+            entry.ensAddress,
             { public: entry.description, },
             service.core.activeAccount()
           );
 
-          delete service.descriptionService.descriptions[entry.ensDomain];
+          delete service.descriptionService.descriptions[entry.ensAddress];
         }
       }
     )

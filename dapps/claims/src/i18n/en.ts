@@ -33,7 +33,6 @@ export const en = {
     },
     "adjust-description": "Adjust description",
     "claim-analyse": "Verification analysis",
-    "claim-description": "Verification description",
     "claims": "Verification overview",
     "computed": "computed view",
     "create-identity": "Set up verification management",
@@ -41,11 +40,6 @@ export const en = {
     "delete-dispatcher": {
       "description": "Reject verification",
       "title": "Reject verification"
-    },
-    "descName": {
-      "desc": "Please enter a verification name.",
-      "error": "You have to enter a name to save the description!",
-      "title": "Verification name"
     },
     "description-dispatcher": {
       "description": "Save verification description",
@@ -74,12 +68,6 @@ export const en = {
     },
     "recreate-identity": "Override verification management",
     "recreate-identity-description": "Do you really want to overwrite your verification management? All verifications created for you will be deleted!",
-    "select-desc-img": {
-      "select": "Select image",
-      "title": "Verification image"
-    },
-    "set-description": "Save verification description",
-    "show-description": "show description",
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",
