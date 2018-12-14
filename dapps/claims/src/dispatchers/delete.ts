@@ -50,7 +50,6 @@ export const deleteDispatcher = new QueueDispatcher(
       '_claims.delete-dispatcher.description',
       async (service: ClaimService, queueEntry: any) => {
         const results = [ ];
-        const activeAccount = service.core.activeAccount();
 
         // get businessCenter instance
         for (let entry of queueEntry.data) {
@@ -58,6 +57,7 @@ export const deleteDispatcher = new QueueDispatcher(
             entry.address,
             entry.topic,
             entry.issuer,
+            entry.id,
           );
         }
       }

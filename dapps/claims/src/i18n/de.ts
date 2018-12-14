@@ -28,51 +28,63 @@
 export const de = {
   "_claims": {
     "accept-dispatcher": {
-      "description": "Zertifikat akzeptieren",
-      "title": "Zertifikat akzeptieren"
+      "description": "Verifizierung akzeptieren",
+      "title": "Verifizierung akzeptieren"
     },
-    "claim-analyse": "Zertifikat Analyse",
-    "claims": "Zertifikat Übersicht",
+    "adjust-description": "Beschreibung anpassen",
+    "claim-analyse": "Verifizierung Analyse",
+    "claims": "Verifizierung Übersicht",
     "computed": "berechnete Darstellung",
-    "create-identity": "Zertifikatsverwaltung einrichten",
-    "creating-identity": "Zertifikatsverwaltung wird eingerichtet...",
+    "create-identity": "Verifizierungsverwaltung einrichten",
+    "creating-identity": "Verifizierungsverwaltung wird eingerichtet...",
     "delete-dispatcher": {
-      "description": "Zertifikat ablehnen",
-      "title": "Zertifikat ablehnen"
+      "description": "Verifizierung ablehnen",
+      "title": "Verifizierung ablehnen"
+    },
+    "description-dispatcher": {
+      "description": "Verifizierungsbeschreibung speichern",
+      "title": "Verifizierungsbeschreibung speichern"
     },
     "expand": "Erweiterte Darstellung",
+    "hide-description": "Beschreibung ausblenden",
     "identity-dispatcher": {
-      "description": "Zertifikatsverwaltung eingerichtet...",
-      "title": "Zertifikatsverwaltung wird eingerichtet"
+      "description": "Verifizierungsverwaltung eingerichtet...",
+      "title": "Verifizierungsverwaltung wird eingerichtet"
     },
-    "identity-exists": "Zertifikatsverwaltung verfügbar",
-    "identity-exists-desc": "Ihre Zertifikatsverwaltung ist verfügbar, somit können Sie Zertifikate prüfen, ausstellen und verifizieren.",
+    "identity-exists": "Verifizierungsverwaltung verfügbar",
+    "identity-exists-desc": "Ihre Verifizierungsverwaltung ist verfügbar, somit können Sie Verifizierunge prüfen, ausstellen und verifizieren.",
     "issue-dispatcher": {
-      "description": "Zertifikat erstellen...",
-      "title": "Zertifikat erstellen"
+      "description": "Verifizierung erstellen...",
+      "title": "Verifizierung erstellen"
     },
-    "missing-identity": "Zertifikatsverwaltung ungütlig",
-    "missing-identity-desc": "Für Ihren Account ist noch keine Zertifikatsverwaltung verfügbar. Schalten Sie Ihre Zertifikatsverwaltung frei, um Zertifikate zu prüfen.",
+    "missing-identity": "Verifizierungsverwaltung ungütlig",
+    "missing-identity-desc": "Für Ihren Account ist noch keine Verifizierungsverwaltung verfügbar. Schalten Sie Ihre Verifizierungsverwaltung frei, um Verifizierunge zu prüfen.",
     "mode": {
-      "description": "wählen Sie zwischen verschiedenen Darstellungsmöglichkeiten um die Facetten der Zertifikatsdarstellung kennen zu lernen.",
+      "description": "wählen Sie zwischen verschiedenen Darstellungsmöglichkeiten um die Facetten der Verifizierungsdarstellung kennen zu lernen.",
       "detail": "detailiert",
       "icon": "nur Icon",
       "normal": "normal",
       "title": "Darstellung"
     },
-    "recreate-identity": "Zertifikatsverwaltung überschreiben",
-    "recreate-identity-description": "Wollen Sie Ihre Zertifikatsverwaltung wirklich überschreiben? Alle für Sie erstellten Zertifikate werden gelöscht!",
+    "recreate-identity": "Verifizierungsverwaltung überschreiben",
+    "recreate-identity-description": "Wollen Sie Ihre Verifizierungsverwaltung wirklich überschreiben? Alle für Sie erstellten Verifizierunge werden gelöscht!",
+    "reject-dispatcher": {
+      "description": "Verifizierung verwerfen...",
+      "title": "Verifizierung verwerfen"
+    },
     "subject": {
       "desc": "Geben Sie die Account Addresse ein, die geprüft werden soll.",
       "error": "Geben Sie eine valide Accountaddresse ein, um die Überprüfung zu starten!",
-      "title": "Account"
+      "title-addressbook": "Addressbuchauswahl",
+      "title-string": "Direkte Account Eingabe"
     },
     "topic": {
-      "desc": "Geben Sie den Zertifikatspfad ein, der geprüft werden soll.",
+      "desc": "Geben Sie den Verifizierungspfad ein, der geprüft werden soll.",
       "error": "Geben Sie einen Pfad ein, um die Überprüfung zu starten!",
       "title": "Pfad"
     },
+    "topic-title": "Pfad",
     "use-topic": "überprüfen"
   },
-  "claims": "Zertifikatsverwaltung"
+  "claims": "Verifizierungsverwaltung"
 };

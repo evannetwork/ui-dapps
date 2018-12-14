@@ -26,13 +26,19 @@
 -->
 
 <ng-template #claimDisplay let-topics="topics">
-  <evan-claim
-    *ngFor="let topic of topics"
-    [topic]="topic"
-    [address]="useAddressInput ? subject : subjectSelect[0]"
-    [mode]="displayMode"
-    [compute]="computedClaims">
-  </evan-claim>
+  <ng-container *ngFor="let topic of topics; let i = index">
+    <h3 class="content-header m-t-0" margin-bottom
+      *ngIf="topics.length > 1">
+      {{ '_claims.topic-title' | translate }}: {{ topic }}
+    </h3>
+
+    <evan-claim margin-top
+      [topic]="topic"
+      [address]="useAddressInput ? subject : subjectSelect[0]"
+      [mode]="displayMode"
+      [compute]="computedClaims">
+    </evan-claim>
+  </ng-container>
 </ng-template>
 
 <evan-loading *ngIf="loading"></evan-loading>
@@ -49,70 +55,94 @@
         </p>
         <form #selectForm="ngForm">
           <ion-row>
-            <ion-col col-12 *ngIf="showTopicSelect">
-              <ion-item>
-                <ion-label stacked>
-                  {{ '_claims.topic.title' | translate }}*
-                </ion-label>
-                <ion-input name="topic" required
-                  [(ngModel)]="topic"
-                  [placeholder]="'_claims.topic.desc' | translate"
-                  (ionChange)="ref.detectChanges()"
-                  (keydown)="submitOnEnter($event)"
-                  (focusout)="ref.detectChanges()">
-                </ion-input>
-              </ion-item>
-              <ion-chip class="error-hint" *ngIf="showError('topic')" color="danger">
-                <ion-label>{{ '_claims.topic.error' | translate }}</ion-label>
-              </ion-chip>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="showAddressSelect">
-            <ion-col col-12 col-md-6>
-              <div class="checkbox-input">
-                <ion-checkbox name="useAddressInput" margin-right
-                  [(ngModel)]="useAddressInput"
-                  (click)="useAddressBook = false; useAddressInput = true; detectTimeout()"
-                  (ionChange)="ref.detectChanges()"
-                  (focusout)="ref.detectChanges()">
-                </ion-checkbox>
+            <ion-col col-12 [attr.col-md-4]="showAddressSelect ? '' : null"
+              *ngIf="showTopicSelect">
+              <div class="display-flex-justify">
                 <ion-item>
                   <ion-label stacked>
-                    {{ '_claims.subject.title' | translate }}*
+                    {{ '_claims.topic.title' | translate }}*
                   </ion-label>
-                  <ion-input name="subject" required
-                    [(ngModel)]="subjectInput"
-                    [disabled]="useAddressBook"
-                    [placeholder]="'_claims.subject.desc' | translate"
-                    (keydown)="submitOnEnter($event)"
+                  <ion-input name="topic" required autofocus
+                    [(ngModel)]="topic"
+                    [placeholder]="'_claims.topic.desc' | translate"
                     (ionChange)="ref.detectChanges()"
+                    (keydown)="submitOnEnter($event)"
                     (focusout)="ref.detectChanges()">
                   </ion-input>
                 </ion-item>
+                <button ion-button icon-only round clear class="claim-topic-open"
+                  (click)="claimTopicSelect.open($event)">
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+                </button>
+                <ion-select name="claimTopicSelect" class="evan-callout" interface="popover"
+                  #claimTopicSelect
+                  [(ngModel)]="topic"
+                  [selectOptions]="{ cssClass: 'evan-callout evan-topic-prefill top' }"
+                  (ionChange)="ref.detectChanges()">
+                  <ion-option
+                    *ngFor="let prefilledClaim of prefilledClaims"
+                    [value]="prefilledClaim">
+                    {{ prefilledClaim }}
+                  </ion-option>
+                </ion-select>
               </div>
-              <ion-chip class="error-hint" color="danger"
-                *ngIf="">
-                <ion-label>{{ '_claims.subject.error' | translate }}</ion-label>
+              <ion-chip class="error-hint" *ngIf="showError(selectForm, 'topic')" color="danger">
+                <ion-label>{{ '_claims.topic.error' | translate }}</ion-label>
               </ion-chip>
             </ion-col>
-            <ion-col col-12 col-md-6 class="checkbox-input">
-              <div class="checkbox-input">
-                <ion-checkbox name="useAddressBook" margin-right
-                  [(ngModel)]="useAddressBook"
-                  (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
-                  (ionChange)="ref.detectChanges()"
-                  (focusout)="ref.detectChanges()">
-                </ion-checkbox>
-                <contract-members name="subject" #subjectSelectComp
-                  [(members)]="subjectSelect"
-                  [disabled]="useAddressInput"
-                  includeActiveAccount="true"
-                  maxMembers="1"
-                  (onChange)="ref.detectChanges()">
-                  <h3 label>{{ '_claims.subject.title' | translate }}*</h3>
-                </contract-members>
-              </div>
-            </ion-col>
+
+            <ng-container
+              *ngIf="showAddressSelect">
+              <ion-col col-12 class="checkbox-input"
+                [attr.col-md-4]="showTopicSelect ? '' : null"
+                [attr.col-md-6]="!showTopicSelect ? '' : null">
+                <div class="checkbox-input">
+                  <ion-checkbox name="useAddressBook" margin-right
+                    [(ngModel)]="useAddressBook"
+                    (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
+                    (ionChange)="ref.detectChanges()"
+                    (focusout)="ref.detectChanges()">
+                  </ion-checkbox>
+                  <contract-members name="subject" #subjectSelectComp
+                    [(members)]="subjectSelect"
+                    [disabled]="useAddressInput"
+                    includeActiveAccount="true"
+                    maxMembers="1"
+                    (onChange)="ref.detectChanges()">
+                    <h3 label>{{ '_claims.subject.title-addressbook' | translate }}*</h3>
+                  </contract-members>
+                </div>
+              </ion-col>
+              <ion-col col-12 col-md-4
+                [attr.col-md-4]="showTopicSelect ? '' : null"
+                [attr.col-md-6]="!showTopicSelect ? '' : null">
+                <div class="checkbox-input">
+                  <ion-checkbox name="useAddressInput" margin-right
+                    [(ngModel)]="useAddressInput"
+                    (click)="useAddressBook = false; useAddressInput = true; detectTimeout()"
+                    (ionChange)="ref.detectChanges()"
+                    (focusout)="ref.detectChanges()">
+                  </ion-checkbox>
+                  <ion-item>
+                    <ion-label stacked>
+                      {{ '_claims.subject.title-string' | translate }}*
+                    </ion-label>
+                    <ion-input name="subject" required
+                      [(ngModel)]="subjectInput"
+                      [disabled]="useAddressBook"
+                      [placeholder]="'_claims.subject.desc' | translate"
+                      (keydown)="submitOnEnter($event)"
+                      (ionChange)="ref.detectChanges()"
+                      (focusout)="ref.detectChanges()">
+                    </ion-input>
+                  </ion-item>
+                </div>
+                <ion-chip class="error-hint" color="danger"
+                  *ngIf="">
+                  <ion-label>{{ '_claims.subject.error' | translate }}</ion-label>
+                </ion-chip>
+              </ion-col>
+            </ng-container>
           </ion-row>
 
           <ng-container *ngIf="showClaimDisplayConfiguration">
@@ -152,28 +182,21 @@
           </div>
         </form>
 
-        <div text-right>
+        <div text-right margin-bottom>
           <button ion-button outline round margin-top icon-left
             [disabled]="!isValidForm()"
             (click)="useCurrentValues()">
             {{ '_claims.use-topic' | translate }}
           </button>
         </div>
-      </div>
-      <div class="evan-content" *ngIf="showClaims">
-        <h3 class="content-header m-b-0 m-t-0">
-          {{ '_claims.claims' | translate }}
-        </h3>
-        <p ion-text class="m-b-0 m-t-0">
-          {{ (addressbook[subject]?.alias || addressbook[subject]?.email) ? (addressbook[subject]?.alias || addressbook[subject]?.email) + ' (' + subject + ')' : subject }}
-        </p>
 
-        <div margin-top>
+        <ng-container *ngIf="showClaims">
           <ng-container
             *ngTemplateOutlet="claimDisplay;context:{ topics: topics }">
           </ng-container>
-        </div>
+        </ng-container>
       </div>
+
       <div class="evan-content" *ngIf="showClaimDisplayConfiguration">
         <h3 class="content-header m-b-0 m-t-0">
           {{ '_claims.recreate-identity' | translate }}

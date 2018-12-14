@@ -113,7 +113,7 @@ export const en = {
     },
     "showing": "Showing",
     "to": "To",
-    "write-answer": "answer this mail"
+    "write-answer": "reply"
   },
   "mailbox": "Mailbox",
   "mailboxlist": "Mailbox",

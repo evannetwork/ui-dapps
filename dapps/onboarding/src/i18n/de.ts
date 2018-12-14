@@ -79,7 +79,7 @@ export const de = {
     /* tslint:enable */
     'identity-create': 'Neue Identität anlegen',
     'identity-import': 'Bestehende Identität importieren',
-    'mnemonic-description': `Sie wollen eine Identität anlegen. Diese folgenden 12 Wörter stellen den SUPER-PIN für Ihre neue evan.network-Identität dar. Ausschließlich damit sind Ihre Daten auf anderen Geräten importier- und wiederherrstellbar. Dies ist notwendig, falls Sie beispielsweise Ihr aktuelles Gerät verloren oder zurück gesetzt haben.
+    'mnemonic-description': `Sie wollen eine Identität anlegen. Diese folgenden 12 Wörter stellen den SUPER-PIN für Ihre neue evan.network-Identität dar. Ausschließlich damit sind Ihre Daten auf anderen Geräten importier- und wiederherstellbar. Dies ist notwendig, falls Sie beispielsweise Ihr aktuelles Gerät verloren oder zurück gesetzt haben.
     `,
     'mnemonic-import-description': `
     Bitte geben Sie Ihre <b>evan.network</b> Identitätswiederherstellungsphrase ein.
@@ -89,7 +89,7 @@ export const de = {
       `,
     'have-writte-down': 'Weiter',
     'cancel-have-writte-down': 'Alle anzeigen',
-    'mnemonic-riddle': 'Bitte füllen Sie die fehlenden Wörter um sicher zu gehen, dass Sie alles korrekt notiert haben.',
+    'mnemonic-riddle': 'Bitte füllen Sie die fehlenden Wörter, um sicher zu gehen, dass Sie alles korrekt notiert haben.',
     'ask-writte-down': {
       'title': 'Haben Sie wirklich alle Wörter niedergeschrieben?',
       'message': `Wenn Sie diese 12 Wörter verlieren, verlieren Sie für den Zugang zu Ihren Geschäftspartnern,
@@ -104,8 +104,8 @@ export const de = {
       Bitte geben Sie Ihren Nutzernamen ein und klicken sie auf "Profil erstellen" um fortzufahren.
       <ul>
        <li>Ihr Nutzername wird als lesbare Ergänzung zur Accountnummer angezeigt.</li>
-       <li>Das Passwort sichert ihren Privatschlüssel lokal ab.<br/>
-           So sind Ihre Daten auch noch geschützt, wenn entweder eines Ihrer Geräte kompromiert wird,
+       <li>Das Passwort sichert Ihren Privatschlüssel lokal ab.<br/>
+           So sind Ihre Daten auch noch geschützt, wenn entweder eines Ihrer Geräte kompromittiert wird,
            oder sogar das evan.network selbst: Man braucht immer Schlüssel und Passwort.
        </li>
       </ul>
@@ -115,7 +115,7 @@ export const de = {
     'error': 'Fehler aufgetreten',
     'error-message': 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut',
     'error-claim': 'Fehler aufgetreten',
-    'error-claim-message': 'Es ist ein Fehler beim überweisen Ihrer Einladungs Eves aufgetreten, bitte versuchen Sie es erneut',
+    'error-claim-message': 'Es ist ein Fehler beim Überweisen Ihrer Einladungs-EVEs aufgetreten, bitte versuchen Sie es erneut',
     'retry': 'Erneut versuchen',
     'report-error': 'Fehler melden',
     'account-id': 'Aktive Profil-ID',
@@ -131,16 +131,16 @@ export const de = {
       'faucet': 'Ab jetzt bitte <a href="https://gitter.im/evannetwork/faucet" target="_blank">https://gitter.im/evannetwork/faucet</a> nutzen.',
       'fail': `
       Leider ist ein Fehler aufgetreten.
-        Versuchen sie es später erneut oder nutzen sie < a href="https://gitter.im/evannetwork/faucet" target="_blank" > https://gitter.im/evannetwork/faucet</a>.`
+        Versuchen Sie es später erneut oder nutzen Sie < a href="https://gitter.im/evannetwork/faucet" target="_blank" > https://gitter.im/evannetwork/faucet</a>.`
     },
     'no-balance': 'Kontostand zu gering',
     'no-balance-desc': `
-    Ihr EVE Kontostand ist zu gering um ihr Profil anzulegen.
+    Ihr EVE Kontostand ist zu gering um Ihr Profil anzulegen.
       Bitte überweisen Sie etwas EVE auf Ihr Konto.
       `,
     'mail-invitation-accepted': {
       'title': 'Einladung angenommen',
-      'subject': 'Nutzer hat ihre Anfrage angenommen',
+      'subject': 'Nutzer hat Ihre Anfrage angenommen',
       'body':
         `Hallo,
 

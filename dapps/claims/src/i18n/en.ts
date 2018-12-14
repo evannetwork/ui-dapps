@@ -28,31 +28,37 @@
 export const en = {
   "_claims": {
     "accept-dispatcher": {
-      "description": "Accept claim",
-      "title": "Accept claim"
+      "description": "Accept verification",
+      "title": "Accept verification"
     },
-    "claim-analyse": "Claim analysis",
-    "claims": "Claim overview",
+    "adjust-description": "Adjust description",
+    "claim-analyse": "Verification analysis",
+    "claims": "Verification overview",
     "computed": "computed view",
-    "create-identity": "Set up claim management",
+    "create-identity": "Set up verification management",
     "creating-identity": "Certificate management is beeing created...",
     "delete-dispatcher": {
-      "description": "Reject claim",
-      "title": "Reject claim"
+      "description": "Reject verification",
+      "title": "Reject verification"
+    },
+    "description-dispatcher": {
+      "description": "Save verification description",
+      "title": "Save verification description"
     },
     "expand": "expanded view",
+    "hide-description": "hide description",
     "identity-dispatcher": {
-      "description": "Claim management is beeing created...",
-      "title": "Claim management is beeing created"
+      "description": "Verification management is beeing created...",
+      "title": "Verification management is beeing created"
     },
     "identity-exists": "Certificate management available",
-    "identity-exists-desc": "Your claim management is available, so you can check, issue and verify claims",
+    "identity-exists-desc": "Your verification management is available, so you can check, issue and verify verifications",
     "issue-dispatcher": {
-      "description": "Create claim...",
-      "title": "Create claim"
+      "description": "Create verification...",
+      "title": "Create verification"
     },
     "missing-identity": "Certificate management invalid",
-    "missing-identity-desc": "There is no claim management available for your account yet. Unlock your claim management to check claims.",
+    "missing-identity-desc": "There is no verification management available for your account yet. Unlock your verification management to check verifications.",
     "mode": {
       "description": "choose between different display options to get to know the facets of the certificate display",
       "detail": "detailed",
@@ -60,19 +66,21 @@ export const en = {
       "normal": "normal",
       "title": "Display mode"
     },
-    "recreate-identity": "Override claim management",
-    "recreate-identity-description": "Do you really want to overwrite your claim management? All claims created for you will be deleted!",
+    "recreate-identity": "Override verification management",
+    "recreate-identity-description": "Do you really want to overwrite your verification management? All verifications created for you will be deleted!",
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",
-      "title": "Account"
+      "title-addressbook": "Account from contacts",
+      "title-string": "Direct address input"
     },
     "topic": {
-      "desc": "Enter the claim path that should be checked.",
+      "desc": "Enter the verification path that should be checked.",
       "error": "Enter a path to start the scan!",
-      "title": "Claim path"
+      "title": "Verification path"
     },
+    "topic-title": "Verification path",
     "use-topic": "analyse"
   },
-  "claims": "Claim management"
+  "claims": "Verification center"
 };

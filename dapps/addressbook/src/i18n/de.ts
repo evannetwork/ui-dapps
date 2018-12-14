@@ -36,7 +36,7 @@ export const de = {
     "account-status": "Kontaktstatus",
     "alert": {
       "eve-missing": "Nicht genug EVE",
-      "eve-missing-description": "Sie wollen mehr Geld versenden, als Sie besitzen.Bitte laden Sie Ihr Konto auf, um diese Menge EVE zu versenden.",
+      "eve-missing-description": "Sie wollen mehr Geld versenden, als Sie besitzen. Bitte laden Sie Ihr Konto auf, um diese Menge EVE zu versenden.",
       "profile-missing": "Kein Profil",
       "profile-missing-description": "Für die account ID des Nutzers, der eingeladen werden soll, ist kein Profil hinterlegt. Bitte überprüfen Sie die eingegebene account ID oder laden Sie den Nutzer per E-Mail ein.",
       "remove-description": "Wollen Sie diesen Kontakt wirklich entfernen?",
@@ -90,7 +90,7 @@ export const de = {
     "send-invitation-address": "Mit Nutzer ID",
     "send-invitation-address-description": "Vernetzen Sie sich mit einem bereits vorhandenem Nutzer. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen",
     "send-invitation-mail": "Mit Email Adresse",
-    "send-invitation-mail-description": "Vernetzen Sie sich mit einem Nutzer mit Hilfe einer Email Adresse.Der Nutzer erhält eine Einladungsmail mit einem Link, um sich mit Ihnen zu verbinden.",
+    "send-invitation-mail-description": "Vernetzen Sie sich mit einem Nutzer mit Hilfe einer Email Adresse. Der Nutzer erhält eine Einladungsmail mit einem Link, um sich mit Ihnen zu verbinden.",
     "show": "Anzeigen",
     "status": {
       "account-status-desc": "Beschreibung",
@@ -104,7 +104,7 @@ export const de = {
       "pending": "Sie haben eine Einladung an einen neuen Kontakt gesendet.<br><br>Bitte überprüfen Sie Ihre eingehenden Mails auf eine Antwort und speichern Sie die aktualisierten Kontaktdaten Ihres Partners."
     },
     "tags": "Tags",
-    "tags-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
+    "tag-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
     "tags-desc": "Tags des Kontakts",
     "users-in-tag": "{{ amount }} Nutzer"
   },

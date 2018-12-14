@@ -40,7 +40,7 @@
       [class.active]="activeTab === 1" 
       (click)="activateTab(1);">
       <ion-icon name="ribbon"></ion-icon>
-      {{ '_dappprofile.settings' | translate }}
+      {{ '_dappprofile.claims' | translate }}
     </button>
 
     <button ion-button icon-left clear
@@ -222,7 +222,9 @@
 
         <ion-item class="no-border">
           <ion-label>{{ '_dappprofile.language' | translate }}</ion-label>
-          <ion-select 
+          <ion-select
+            [okText]="'_dappprofile.ok' | translate"
+            [cancelText]="'_dappprofile.cancel' | translate"
             [(ngModel)]="translateService.translate.currentLang"
             (ionChange)="setLanguageMode()">
             <ion-option value="en">{{ '_dappprofile.languages.en' | translate }}</ion-option>    
@@ -232,7 +234,9 @@
         <div class="input-hint">{{ '_dappprofile.language-desc' | translate }}</div>
         <ion-item class="no-border">
           <ion-label>{{ '_dappprofile.color-theme' | translate }}</ion-label>
-          <ion-select 
+          <ion-select
+            [okText]="'_dappprofile.ok' | translate"
+            [cancelText]="'_dappprofile.cancel' | translate"
             [(ngModel)]="colorTheme"
             (ionChange)="setColorTheme()">
             <ion-option value="">{{ '_dappprofile.color-themes.dark' | translate }}</ion-option>    

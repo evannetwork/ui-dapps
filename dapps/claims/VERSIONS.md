@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 ### Fixes
+- add claimId to accept / delete claim
+
 ### Deprecations
 
 ## Version 1.0.0

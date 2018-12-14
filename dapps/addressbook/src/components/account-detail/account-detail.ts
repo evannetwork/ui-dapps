@@ -88,9 +88,19 @@ export class AccountDetailComponent extends AsyncComponent {
   private emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   /**
+   * is currently something saving?
+   */
+  private savingProfile: boolean;
+
+  /**
    * current account form instance
    */
   @ViewChild('accountForm') accountForm: any;
+
+  /**
+   * current ion tag input component
+   */
+  @ViewChild('ionTagInput') ionTagInput: any;
 
   constructor(
     private translate: EvanTranslationService,
@@ -118,8 +128,14 @@ export class AccountDetailComponent extends AsyncComponent {
     this.addressBook = { };
 
     this.clearQueue = await this.queueService
-      .onQueueFinish(this.addressBookService.queueId, async () => {
+      .onQueueFinish(this.addressBookService.queueId, async (reload) => {
         await this.loadAddressBook();
+
+        // check if currently something is saving
+        this.savingProfile = this.queueService
+          .getQueueEntry(this.addressBookService.queueId, true).data.length > 0;
+        // update the ui, if the queue has finished saving
+        reload && this.detectTimeout();
       });
 
     if ((window.location.hash.indexOf('add-via-mail') !== -1 && !this.isMyAccount) ||
@@ -273,6 +289,12 @@ export class AccountDetailComponent extends AsyncComponent {
 
         formData.accountId = formData.accountId || this.accountId || formData.email;
 
+        // if the input of the ion tags are not empty, the user does not recognize to use the enter
+        // button => we are such user friendly, so keep it!
+        if (this.ionTagInput && this.ionTagInput._editTag.length > 0) {
+          formData.tags.push(this.ionTagInput._editTag);
+        }
+
         this.addressBookService.addContactToQueue(formData.accountId, {
           isCreate: this.isCreate,
           profile: formData,
@@ -343,9 +365,9 @@ export class AccountDetailComponent extends AsyncComponent {
    * @return     {boolean}  True if account identifier valid, False otherwise.
    */
   isAccountIdValid(accountId: string) {
-    return !this.isCreate || (accountId &&
-      this.bcc.web3.utils.isAddress(accountId) &&
-      accountId === this.core.activeAccount() &&
-      this.isCreate && this.addressBook.hasOwnProperty(accountId));
+    return !this.isCreate || (this.isCreate && 
+      accountId && this.bcc.web3.utils.isAddress(accountId) &&
+      accountId !== this.core.activeAccount() &&
+      !this.addressBook.hasOwnProperty(accountId));
   }
 }

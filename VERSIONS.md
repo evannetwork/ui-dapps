@@ -5,6 +5,21 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.6.0
+### Features
+- claims
+  - add claimId to accept / delete claim
+- ens-selling
+  -  add the ens selling DApp
+
+### Fixes
+- addressbook
+  - fix contact creation using email address
+- explorer
+  - fix cannot opening address without dbcp
+
+### Deprecations
+
 ## Version 1.5.0
 ### Features
 - addressbook (Version 1.3.1)
