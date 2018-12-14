@@ -26,7 +26,7 @@
 */
 
 export const de = {
-  "_ensselling": {
+  "_ensmanagement": {
     "addFavorite-dispatcher": {
       "description": "ENS Favorit hinzufügen",
       "title": "ENS Favorit hinzufügen"
@@ -52,5 +52,5 @@ export const de = {
       "title": "ENS Favorit löschen"
     }
   },
-  "ensselling": "ENS Verwaltung"
+  "ensmanagement": "ENS Verwaltung"
 };

@@ -106,7 +106,7 @@ export class DAppAddComponent extends AsyncComponent {
         'taskboard',
         'uav',
         'explorer',
-        'ensselling'
+        'ensmanagement'
       ])
       .then(definitions => {
         this.featuredDapps = definitions;

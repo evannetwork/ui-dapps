@@ -38,21 +38,21 @@ import {
 } from '../i18n/registry';
 
 import {
-  ENSSellingService
+  ENSManagementService
 } from '../services/service';
 
 /**************************************************************************************************/
 
-export const addFavoriteDispatcher = new QueueDispatcher(
+export const removeFavoriteDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.addFavorite-dispatcher.title',
-      '_claims.addFavorite-dispatcher.description',
-      async (service: ENSSellingService, queueEntry: any) => {
+      '_claims.removeFavorite-dispatcher.title',
+      '_claims.removeFavorite-dispatcher.description',
+      async (service: ENSManagementService, queueEntry: any) => {
         const results = [ ];
 
         for (let entry of queueEntry.data) {
-          await service.bcc.profile.addBcContract('evan-ens-selling', entry.ensAddress, { });
+          await service.bcc.profile.removeBcContract('evan-ens-management', entry.ensAddress);
         }
 
         await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
@@ -60,6 +60,6 @@ export const addFavoriteDispatcher = new QueueDispatcher(
     )
   ],
   translations,
-  'ENSSellingService'
+  'ENSManagementService'
 );
 

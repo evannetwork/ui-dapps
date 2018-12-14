@@ -26,7 +26,7 @@
 */
 
 export const en = {
-  "_ensselling": {
+  "_ensmanagement": {
     "addFavorite-dispatcher": {
       "description": "Add ENS domain favorite",
       "title": "Add ENS domain favorite"
@@ -52,6 +52,6 @@ export const en = {
     "remove-favorite": "Remove favorite",
     "remove-favorite-desc": "Do you want to remove the address <b>{{ domain }}</b> as a favorite from your ENS management? <br><br>Note: You remain the owner of this address",
   },
-  "ensselling": "ENS Management"
+  "ensmanagement": "ENS Management"
 };
 

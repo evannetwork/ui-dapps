@@ -51,7 +51,7 @@ import {
   QueueId,
 } from 'angular-core';
 
-import { ENSSellingService } from '../../services/service';
+import { ENSManagementService } from '../../services/service';
 
 /**************************************************************************************************/
 
@@ -60,14 +60,14 @@ import { ENSSellingService } from '../../services/service';
  * functionality, to create a new identity.
  */
 @Component({
-  selector: 'ens-selling-detail',
+  selector: 'ens-management-detail',
   templateUrl: 'detail.html',
   animations: [
     createOpacityTransition()
   ]
 })
 
-export class ENSSellingDetailComponent extends AsyncComponent {
+export class ENSManagementDetailComponent extends AsyncComponent {
   /*****************    variables    *****************/
   /**
    * Function to unsubscribe from queue results.
@@ -80,7 +80,7 @@ export class ENSSellingDetailComponent extends AsyncComponent {
     private bcc: EvanBCCService,
     private claimService: EvanClaimService,
     private core: EvanCoreService,
-    private ensSellingService: ENSSellingService,
+    private ensManagementService: ENSManagementService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
@@ -94,7 +94,7 @@ export class ENSSellingDetailComponent extends AsyncComponent {
   async _ngOnInit() {
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(
-      this.ensSellingService.getQueueId(),
+      this.ensManagementService.getQueueId(),
       async (reload, results) => {
 
         this.ref.detectChanges();

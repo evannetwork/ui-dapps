@@ -58,7 +58,7 @@ import {
   EvanRoutingService,
 } from 'angular-core';
 
-import { ENSSellingService } from '../../services/service';
+import { ENSManagementService } from '../../services/service';
 
 /**************************************************************************************************/
 
@@ -68,14 +68,14 @@ import { ENSSellingService } from '../../services/service';
  * adjusted for testing purposes.
  */
 @Component({
-  selector: 'evan-ens-selling',
+  selector: 'evan-ens-management',
   templateUrl: 'overview.html',
   animations: [
     createOpacityTransition()
   ]
 })
 
-export class ENSSellingOverviewComponent extends AsyncComponent {
+export class ENSManagementOverviewComponent extends AsyncComponent {
   /***************** inputs & outpus *****************/
 
   /*****************    variables    *****************/
@@ -142,7 +142,7 @@ export class ENSSellingOverviewComponent extends AsyncComponent {
     private core: EvanCoreService,
     private descriptionService: EvanDescriptionService,
     private fileService: EvanFileService,
-    private ensSellingService: ENSSellingService,
+    private ensManagementService: ENSManagementService,
     private pictureService: EvanPictureService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
@@ -157,13 +157,13 @@ export class ENSSellingOverviewComponent extends AsyncComponent {
   async _ngOnInit() {
     this.activeAccount = this.core.activeAccount();
     this.domainName = getDomainName();
-    this.queueId = this.ensSellingService.getQueueId();
+    this.queueId = this.ensManagementService.getQueueId();
 
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(
       this.queueId,
       async (reload, results) => {
-        this.pinned = await this.ensSellingService.getPinnedEnsAddresses();
+        this.pinned = await this.ensManagementService.getPinnedEnsAddresses();
 
         reload && setTimeout(() => {
           this.showLoading = this.queue.getQueueEntry(this.queueId, true).data.length > 0;
@@ -258,21 +258,21 @@ export class ENSSellingOverviewComponent extends AsyncComponent {
   async purchaseEnsAddress(ensAddress: string) {
     try {
       await this.alertService.showSubmitAlert(
-        '_ensselling.purchasing',
+        '_ensmanagement.purchasing',
         {
-          key: '_ensselling.purchasing-desc',
+          key: '_ensmanagement.purchasing-desc',
           translateOptions: {
             amount: this.ensCosts,
             domain: ensAddress,
           }
         },
-        '_ensselling.cancel',
-        '_ensselling.buy',
+        '_ensmanagement.cancel',
+        '_ensmanagement.buy',
       );
 
       // trigger the purchase queue
       this.queue.addQueueData(
-        this.ensSellingService.getQueueId('buyDispatcher'),
+        this.ensManagementService.getQueueId('buyDispatcher'),
         {
           ensAddress: ensAddress
         }
@@ -297,20 +297,20 @@ export class ENSSellingOverviewComponent extends AsyncComponent {
 
     try {
       await this.alertService.showSubmitAlert(
-        '_ensselling.remove-favorite',
+        '_ensmanagement.remove-favorite',
         {
-          key: '_ensselling.remove-favorite-desc',
+          key: '_ensmanagement.remove-favorite-desc',
           translateOptions: {
             domain: ensAddress,
           }
         },
-        '_ensselling.cancel',
-        '_ensselling.remove-favorite',
+        '_ensmanagement.cancel',
+        '_ensmanagement.remove-favorite',
       );
 
       // trigger the purchase queue
       this.queue.addQueueData(
-        this.ensSellingService.getQueueId('removeFavoriteDispatcher'),
+        this.ensManagementService.getQueueId('removeFavoriteDispatcher'),
         {
           ensAddress: ensAddress
         }

@@ -46,20 +46,20 @@ import {
   startAngularApplication,
 } from 'angular-core';
 
-import { ENSSellingDetailComponent } from './components/detail/detail';
-import { ENSSellingOverviewComponent } from './components/overview/overview';
+import { ENSManagementDetailComponent } from './components/detail/detail';
+import { ENSManagementOverviewComponent } from './components/overview/overview';
 import { RootComponent } from './components/root/root';
 import { Translations } from './i18n/registry';
 
 import { addFavoriteDispatcher } from './dispatchers/addFavorite';
 import { buyDispatcher } from './dispatchers/buy';
-import { ENSSellingService } from './services/service';
+import { ENSManagementService } from './services/service';
 import { removeFavoriteDispatcher } from './dispatchers/removeFavorite';
 
 export {
   addFavoriteDispatcher,
   buyDispatcher,
-  ENSSellingService,
+  ENSManagementService,
   removeFavoriteDispatcher,
   Translations,
 }
@@ -68,12 +68,12 @@ export {
 
 function getRoutes(): Routes {
   return buildModuleRoutes(
-    `ensselling.${ getDomainName() }`,
+    `ensmanagement.${ getDomainName() }`,
     RootComponent,
     [
       {
         path: '',
-        component: ENSSellingOverviewComponent,
+        component: ENSManagementOverviewComponent,
         data: {
           state: 'overview',
           reload: true,
@@ -82,7 +82,7 @@ function getRoutes(): Routes {
       },
       {
         path: ':address',
-        component: ENSSellingDetailComponent,
+        component: ENSManagementDetailComponent,
         data: {
           navigateBack: true,
           state: 'overview',
@@ -108,7 +108,7 @@ function getConfig(isDispatcher?: boolean, isLibrary?: boolean) {
     ],
     providers: [
       Translations,
-      ENSSellingService,
+      ENSManagementService,
     ],
   };
 
@@ -127,8 +127,8 @@ function getConfig(isDispatcher?: boolean, isLibrary?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
-      ENSSellingDetailComponent,
-      ENSSellingOverviewComponent,
+      ENSManagementDetailComponent,
+      ENSManagementOverviewComponent,
       RootComponent,
     ];
   }
@@ -142,14 +142,14 @@ export class DispatcherModule {
 }
 
 @NgModule(getConfig(false))
-class ENSSellingModule {
+class ENSManagementModule {
   constructor(private translations: Translations) { }
 }
 
 export async function startDApp(container, dbcpName) {
   const ionicAppEl = createIonicAppElement(container, dbcpName);
   
-  await startAngularApplication(ENSSellingModule, getRoutes());
+  await startAngularApplication(ENSManagementModule, getRoutes());
 
   container.appendChild(ionicAppEl);
 }

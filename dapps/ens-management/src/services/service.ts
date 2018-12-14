@@ -61,7 +61,7 @@ import {
  * Utility service for the claim view DApp.
  */
 @Injectable()
-export class ENSSellingService implements OnDestroy {
+export class ENSManagementService implements OnDestroy {
   constructor(
     public bcc: EvanBCCService,
     public bookmarkService: EvanBookmarkService,
@@ -72,7 +72,7 @@ export class ENSSellingService implements OnDestroy {
     public routingService: EvanRoutingService,
     public singleton: SingletonService,
   ) {
-    return singleton.create(ENSSellingService, this, () => {
+    return singleton.create(ENSManagementService, this, () => {
 
     });
   }
@@ -86,7 +86,7 @@ export class ENSSellingService implements OnDestroy {
    * @return     {QueueId}  The handling queue identifier.
    */
   public getQueueId(dispatcher: string = '*', id: string = '*'): QueueId {
-    return new QueueId(`ensselling.${ getDomainName() }`, dispatcher, id);
+    return new QueueId(`ensmanagement.${ getDomainName() }`, dispatcher, id);
   }
 
   /**
@@ -96,7 +96,7 @@ export class ENSSellingService implements OnDestroy {
    * @return     {Array<any>}  object including ens address
    */
   public async getPinnedEnsAddresses() {
-    const ensAddressObject = (await this.bcc.profile.getBcContracts('evan-ens-selling') || { });
+    const ensAddressObject = (await this.bcc.profile.getBcContracts('evan-ens-management') || { });
 
     // purge crypto info
     bcc.Ipld.purgeCryptoInfo(ensAddressObject)

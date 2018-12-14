@@ -25,6 +25,42 @@
   https://evan.network/license/
 */
 
-evan-ens-selling {
-  
+evan-ens-management {
+  .evan-mini-content {
+    &.centered {
+      margin-top: 140px;
+    }
+
+    ion-item.semi-transparent {
+      .item-inner {
+        padding: 10px;
+
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .evan-modal > .evan-content {
+    & > * {
+      display: block;
+    }
+
+    & > h2.content-header {
+      font-size: 24px;
+    }
+
+    & > ion-icon[name='checkmark'] {
+      font-size: 100px;
+
+      margin: 25px 0;
+    }
+
+    & > b {
+      font-size: 24px;
+
+      display: block;
+
+      margin-top: 25px;
+    }
+  }
 }

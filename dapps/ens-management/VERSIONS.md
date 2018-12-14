@@ -1,4 +1,4 @@
-# ens-selling
+# ens-management
 
 ## Next Version
 ### Features

@@ -29,12 +29,12 @@
 <div class="evan-relative evan-content evan-mini-content transparent" text-center
   [class.centered]="pinned.length === 0"
   *ngIf="!loading">
-  <h1 [innerHTML]="'_ensselling.open-text' | translate"></h1>
+  <h1 [innerHTML]="'_ensmanagement.open-text' | translate"></h1>
   <div class="evan-relative">
     <ion-item margin-vertical class="semi-transparent">
       <ion-input
         type="text"
-        [placeholder]="'_ensselling.open-placeholder' | translate"
+        [placeholder]="'_ensmanagement.open-placeholder' | translate"
         [(ngModel)]="ensAddress"
         (keydown)="submitOnEnter($event)"
         (ionChange)="ref.detectChanges();">
@@ -47,7 +47,7 @@
       (click)="checkEnsAddress()"
       [disabled]="!ensAddress || showLoading">
       <ion-spinner *ngIf="showLoading"></ion-spinner>
-      {{ '_ensselling.open-details' | translate }}
+      {{ '_ensmanagement.open-details' | translate }}
     </button>
   </div>
 
@@ -99,7 +99,7 @@
               <ion-list class="popover-content" [@opacityTransition]>
                 <ion-item class="clickable" (click)="removeFavorite(favorite.ensAddress); showItemPopover = false; ref.detectChanges()">
                   <ion-icon name="trash" item-end></ion-icon>
-                  {{ '_ensselling.remove-favorite' | translate }}
+                  {{ '_ensmanagement.remove-favorite' | translate }}
                 </ion-item>
               </ion-list>
             </ng-container>
@@ -109,13 +109,13 @@
       <ion-item-options side="left">
         <button ion-button color="danger" (click)="removeFavorite(favorite.ensAddress, sliding)">
           <ion-icon name="trash"></ion-icon>
-          {{ '_ensselling.remove-favorite' | translate }}
+          {{ '_ensmanagement.remove-favorite' | translate }}
         </button>
       </ion-item-options>
       <ion-item-options side="right">
         <button ion-button color="danger" (click)="removeFavorite(favorite.ensAddress, sliding)">
           <ion-icon name="trash"></ion-icon>
-          {{ '_ensselling.remove-favorite' | translate }}
+          {{ '_ensmanagement.remove-favorite' | translate }}
         </button>
       </ion-item-options>
     </ion-item-sliding>
@@ -131,12 +131,12 @@
       <h2 class="content-header">{{ purchaseEns }}</h2>
 
       <ion-icon name="checkmark" color="success"></ion-icon>
-      <span [innerHTML]="'_ensselling.available-text' | translate: { domain: purchaseEns }">
+      <span [innerHTML]="'_ensmanagement.available-text' | translate: { domain: purchaseEns }">
       </span>
-      <b>{{ '_ensselling.eve-amount' | translate: { domain: purchaseEns, amount: ensCosts } }}</b>
+      <b>{{ '_ensmanagement.eve-amount' | translate: { domain: purchaseEns, amount: ensCosts } }}</b>
 
       <span *ngIf="balance < ensCosts">
-        {{ '_ensselling.missing-eve' | translate: { domain: purchaseEns } }
+        {{ '_ensmanagement.missing-eve' | translate: { domain: purchaseEns } }
       </span>
 
       <div text-center margin-top>
@@ -144,7 +144,7 @@
           (click)="purchaseEnsAddress(purchaseEns)"
           [disabled]="showLoading || balance < ensCosts">
           <ion-spinner *ngIf="showLoading"></ion-spinner>
-          {{ '_ensselling.buy' | translate }}
+          {{ '_ensmanagement.buy' | translate }}
         </button>
       </div>
     </div>

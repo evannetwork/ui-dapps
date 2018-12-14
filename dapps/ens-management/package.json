@@ -10,9 +10,9 @@
     "SASS"
   ],
   "main": "dist/index.js",
-  "name": "@evan.network/ens-selling",
+  "name": "@evan.network/ens-management",
   "scripts": {
-    "build": "cd ../.. && npm run angular-build dapps/ens-selling"
+    "build": "cd ../.. && npm run angular-build dapps/ens-management"
   },
   "typings": "dist/index.d.ts",
   "version": "1.0.0"
