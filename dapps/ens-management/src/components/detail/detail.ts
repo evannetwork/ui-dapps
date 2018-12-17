@@ -42,6 +42,7 @@ import {
   AsyncComponent,
   createOpacityTransition,
   createRouterTransition,
+  createTabSlideTransition,
   EvanAlertService,
   EvanBCCService,
   EvanClaimService,
@@ -63,16 +64,32 @@ import { ENSManagementService } from '../../services/service';
   selector: 'ens-management-detail',
   templateUrl: 'detail.html',
   animations: [
-    createOpacityTransition()
+    createOpacityTransition(),
+    createTabSlideTransition(),
   ]
 })
 
 export class ENSManagementDetailComponent extends AsyncComponent {
   /*****************    variables    *****************/
   /**
+   * current active shown tabs
+   */
+  private activeTab: number = 0;
+
+  /**
    * Function to unsubscribe from queue results.
    */
   private queueWatcher: Function;
+
+  /**
+   * currently opened ens address
+   */
+  private ensAddress: string;
+
+  /**
+   * ens address specific data
+   */
+  private ensData: any = { }
 
   constructor(
     private _DomSanitizer: DomSanitizer,
@@ -96,6 +113,19 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     this.queueWatcher = await this.queue.onQueueFinish(
       this.ensManagementService.getQueueId(),
       async (reload, results) => {
+        this.ensAddress = this.routingService.getHashParam('address');
+  
+        // load the ens details        
+        const nameResolver = this.ensManagementService.nameResolver;
+        const [ owner, address, registrar, contentAddress ] = await Promise.all([
+          this.ensManagementService.getOwner(this.ensAddress),
+          nameResolver.getAddress(this.ensAddress),
+          this.bcc.executor.executeContractCall(nameResolver.ensContract, 'resolver',
+            this.ensAddress),
+          nameResolver.getContent(this.ensAddress),
+        ]);
+
+        this.ensData = { owner, address, registrar, contentAddress, };
 
         this.ref.detectChanges();
       }
@@ -107,5 +137,17 @@ export class ENSManagementDetailComponent extends AsyncComponent {
    */
   _ngOnDestroy() {
     this.queueWatcher();
+  }
+
+  /**
+   * Actives the new chosen tab.
+   *
+   * @param      {number}  index   index of the tab that should be displayed.
+   */
+  activateTab(index: number) {
+    this.activeTab = index;
+
+    this.ref.detectChanges();
+    setTimeout(() => this.ref.detectChanges(), 500);
   }
 }

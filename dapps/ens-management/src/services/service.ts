@@ -144,4 +144,25 @@ export class ENSManagementService implements OnDestroy {
       return { description, ensAddress, };
     }));
   }
+
+  /**
+   * Gets the owner for a specific ens address
+   *
+   * @param      {string}  ensAddress  the ens address that should be checked
+   * @return     {string}  owner or nullAddress
+   */
+  public async getOwner(ensAddress: string) {
+    let owner = this.nullAddress;
+
+    try {
+      // load the current owner of the ens address
+      const namehash = this.nameResolver.namehash(ensAddress);
+      owner = await this.bcc.executor.executeContractCall(
+        this.nameResolver.ensContract, 'owner', namehash);
+    } catch (ex) {
+      this.core.utils.log(ex, 'error');
+    }
+
+    return owner;
+  }
 }

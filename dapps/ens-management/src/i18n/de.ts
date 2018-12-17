@@ -31,20 +31,44 @@ export const de = {
       "description": "ENS Favorit hinzufügen",
       "title": "ENS Favorit hinzufügen"
     },
+    "address": {
+      "desc": "Zugehörige Vertragsaddresse",
+      "error": "Bitte geben Sie eine valide Vertragsadresse ein!",
+      "title": "Vertragsaddresse"
+    },
     "available-text": "Die ENS Adresse <b>{{ ensAddress }}</b> ist verfügbar. Kaufen Sie sie für",
     "buy": "kaufen",
-    "purchase-dispatcher": {
-      "description": "ENS Adressen kaufen",
-      "title": "ENS Adressen kaufen"
-    },
     "cancel": "abbrechen",
+    "content": "Daten",
+    "content-desc": "DBCP Informationen",
+    "contentAddress": {
+      "desc": "DBCP - IPFS Addresse zu gespeicherten Daten",
+      "error": "Bitte geben Sie eine valide IPFS Adresse ein!",
+      "title": "Datenadresse"
+    },
     "eve-amount": "{{ amount }} EVE",
     "missing-eve": "Sie besitzen nicht genügend EVE, um diese Adresse zu kaufen.",
     "open-details": "überprüfen",
     "open-placeholder": "Geben Sie eine ENS Adresse ein, die geprüft werden soll.",
     "open-text": "ENS Adressen",
+    "overview": "Übersicht",
+    "overview-desc": "Besitzer, Registrar, Sub Domains, ...",
+    "owner": {
+      "desc": "Besitzer diesr ENS Adresse",
+      "error": "Bitte geben Sie eine valide Account ID ein!",
+      "title": "Besitzer"
+    },
+    "purchase-dispatcher": {
+      "description": "ENS Adressen kaufen",
+      "title": "ENS Adressen kaufen"
+    },
     "purchasing": "ENS Adresse kaufen",
     "purchasing-desc": "Sie sind dabei die Adresse <b>{{ ensAddress }}</b> für {{ amount }} EVE zu kaufen. Wollen Sie wirklich forfahren?",
+    "registrar": {
+      "desc": "Bestimmt das Management von Sub ENS Adressen.",
+      "error": "Bitte geben Sie eine valide Vertragsadresse ein",
+      "title": "ENS Management Registrar"
+    },
     "remove-favorite": "Favorit entfernen",
     "remove-favorite-desc": "Wollen Sie die Adresse <b>{{ ensAddress }}</b> als Favorit aus ihre ENS Verwaltung löschen? <br><br>Hinweis: Sie bleiben weiterhin der Besitzer dieser Adresse.",
     "removeFavorite-dispatcher": {
