@@ -101,18 +101,6 @@ export class OnboardingRootComponent extends AsyncComponent {
   async _ngOnInit() {
     await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
 
-    if (this.core.getAccountId()) {
-      let isOnboarded = false;
-
-      try {
-        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
-      } catch (ex) { }
-
-      if (isOnboarded) {
-        this.routing.navigate(`/${ routing.defaultDAppENS }`);
-      }
-    }
-
     this.activeDApp = this.routing.activeRouteName().pipe();
     this.canNavigateBack = this.routing.canNavigateBack().pipe();
 

@@ -78,55 +78,55 @@ export const ContactsDispatcher = new QueueDispatcher(
     new QueueSequence(
       '_dappcontacts.dispatcher.key-exchange',
       '_dappcontacts.dispatcher.key-exchange-description',
-      async (service: ContactsDispatcherService, data: any) => {
+      async (service: ContactsDispatcherService, queueEntry: any) => {
         const addressBook = await service.addressBookService.loadAccounts();
         const accountKeys = Object.keys(addressBook);
 
-        for (let accountId of accountKeys) {
-          // if a new account was added, send the com key to the account id
-          if (addressBook[accountId].isCreate) {
-            const mail = addressBook[accountId].mail;
-            if (addressBook[accountId].email) {
-              await service.onboardingService.onboarding.sendInvitation({
-                to: `${accountId}`,
-                subject: mail.title,
-                body: mail.body,
-                fromAlias: mail.fromAlias,
-                lang: service.translationService.getCurrentLang()
-              }, service.bcc.web3.utils.toWei(addressBook[accountId].eves.toString()));
-            } else {
-              let profile = service.bcc.getProfileForAccount(accountId);
-              const targetPubKey = await profile.getPublicKey();
-              const commKey = await service.bcc.keyExchange.generateCommKey();
-              await service.bcc.keyExchange.sendInvite(accountId, targetPubKey, commKey, mail);
+        for (let entry of queueEntry.data) {
+          const accountId = entry.accountId;
 
-              // add key to profile
-              await service.bcc.profile.addContactKey(
-                accountId,
-                'commKey',
-                commKey
+          if (entry.type === 'remove') {
+            await service.bcc.profile.removeContact(accountId);
+          } else {
+            // if a new account was added, send the com key to the account id
+            if (entry.isCreate) {
+              const mail = entry.mail;
+
+              if (entry.sendMailInvitation) {
+                let eves = (entry.profile.eves || 0).toString();
+
+                await service.onboardingService.onboarding.sendInvitation(
+                  {
+                    to: `${accountId}`,
+                    subject: mail.title,
+                    body: mail.body,
+                    fromAlias: mail.fromAlias,
+                    lang: service.translationService.getCurrentLang()
+                  },
+                  service.bcc.web3.utils.toWei(eves)
+                );
+              } else {
+                let profile = service.bcc.getProfileForAccount(accountId);
+                const targetPubKey = await profile.getPublicKey();
+                const commKey = await service.bcc.keyExchange.generateCommKey();
+                await service.bcc.keyExchange.sendInvite(accountId, targetPubKey, commKey, mail);
+
+                // add key to profile
+                await service.bcc.profile.addContactKey(
+                  accountId,
+                  'commKey',
+                  commKey
+                );
+              }
+
+              await service.bcc.profile.addProfileKey(
+                accountId, 'alias', entry.alias
               );
             }
 
-            await service.bcc.profile.addProfileKey(
-              accountId, 'alias', addressBook[accountId].alias
-            );
-          }
-        }
-
-        await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.addressBook);
-      }
-    ),
-    new QueueSequence(
-      'addressbook',
-      '_dappcontacts.dispatcher.address-book-description',
-      async (service: ContactsDispatcherService, data: any) => {
-        for (let account of data.data) {
-          if (account.type === 'remove') {
-            await service.bcc.profile.removeContact(account.accountId);
-          } else {
-            for (let profileKey of Object.keys(account.profile)) {
-              await service.bcc.profile.addProfileKey(account.accountId, profileKey, account.profile[profileKey]);
+            for (let profileKey of Object.keys(entry.profile)) {
+              await service.bcc.profile.addProfileKey(accountId, profileKey,
+                entry.profile[profileKey]);
             }
           }
         }

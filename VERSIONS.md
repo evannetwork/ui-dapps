@@ -2,7 +2,16 @@
 
 ## Next Version
 ### Features
+- onboarding
+  - move sendCommKey to onboarded page
+  
 ### Fixes
+- addressbook
+  - fix add account using accountId, when e-mail address is added
+- onboarding
+  - navigate to onboarded page, even if the user is currently logged in
+  - fix toggle light theme design
+
 ### Deprecations
 
 ## Version 1.6.0

@@ -27,7 +27,8 @@
 
 import {
   lightwallet,
-  utils
+  routing,
+  utils,
 } from 'dapp-browser';
 
 import {
@@ -159,6 +160,7 @@ export class OnboardingService {
     const isOnboarded = await this.onboardingService.isOnboarded(accountId);
 
     if (isOnboarded) {
+      const queryParams = this.routingService.getQueryparams();
       const password = await lightwallet.getPassword(accountId);
 
       await lightwallet.createVaultAndSetActive(mnemonic, password);
@@ -166,9 +168,13 @@ export class OnboardingService {
       // send communication key back to the onboarding account
       this.core.setCurrentProvider('internal');
       await this.bcc.updateBCC(accountId, 'internal');
-      await this.sendCommKey(accountId);
 
-      this.onboardingService.finishOnboarding();
+      if (queryParams && queryParams.onboardingID) {
+        return this.routingService.navigate(`./onboarded`, true,
+          this.onboardingService.getOnboardingQueryParams());
+      } else {
+        this.onboardingService.finishOnboarding();
+      }
     } else {
       this.setActiveVault(dummyVault, accountId);
 
@@ -286,7 +292,6 @@ export class OnboardingService {
       const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);
       const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);  
       const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
-      await this.sendCommKey(account);
 
       // create identity for account
       await this.bcc.claims.createIdentity(account);

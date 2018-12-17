@@ -31,9 +31,9 @@ export const de = {
       "description": "ENS Favorit hinzufügen",
       "title": "ENS Favorit hinzufügen"
     },
-    "available-text": "Die ENS Adresse <b>{{ domain }}</b> ist verfügbar. Kaufen Sie sie für",
+    "available-text": "Die ENS Adresse <b>{{ ensAddress }}</b> ist verfügbar. Kaufen Sie sie für",
     "buy": "kaufen",
-    "buy-dispatcher": {
+    "purchase-dispatcher": {
       "description": "ENS Adressen kaufen",
       "title": "ENS Adressen kaufen"
     },
@@ -44,9 +44,9 @@ export const de = {
     "open-placeholder": "Geben Sie eine ENS Adresse ein, die geprüft werden soll.",
     "open-text": "ENS Adressen",
     "purchasing": "ENS Adresse kaufen",
-    "purchasing-desc": "Sie sind dabei die Adresse <b>{{ domain }}</b> für {{ amount }} EVE zu kaufen. Wollen Sie wirklich forfahren?",
+    "purchasing-desc": "Sie sind dabei die Adresse <b>{{ ensAddress }}</b> für {{ amount }} EVE zu kaufen. Wollen Sie wirklich forfahren?",
     "remove-favorite": "Favorit entfernen",
-    "remove-favorite-desc": "Wollen Sie die Adresse <b>{{ domain }}</b> als Favorit aus ihre ENS Verwaltung löschen? <br><br>Hinweis: Sie bleiben weiterhin der Besitzer dieser Adresse.",
+    "remove-favorite-desc": "Wollen Sie die Adresse <b>{{ ensAddress }}</b> als Favorit aus ihre ENS Verwaltung löschen? <br><br>Hinweis: Sie bleiben weiterhin der Besitzer dieser Adresse.",
     "removeFavorite-dispatcher": {
       "description": "ENS Favorit löschen",
       "title": "ENS Favorit löschen"

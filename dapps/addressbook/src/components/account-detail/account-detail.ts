@@ -297,16 +297,13 @@ export class AccountDetailComponent extends AsyncComponent {
 
         this.addressBookService.addContactToQueue(formData.accountId, {
           isCreate: this.isCreate,
+          mail: mail,
           profile: formData,
-          mail: mail
+          sendMailInvitation: window.location.hash.indexOf('add-via-mail') !== -1,
         });
 
         if (this.isMyAccount) {
           this.core.utils.sendEvent('evan-username-updated');
-        }
-
-        if (this.isCreate) {
-          this.routing.goBack();
         }
         
         this.routing.goBack();

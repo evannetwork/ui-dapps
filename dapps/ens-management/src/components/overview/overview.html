@@ -39,7 +39,7 @@
         (keydown)="submitOnEnter($event)"
         (ionChange)="ref.detectChanges();">
       </ion-input>
-      <div item-end>.{{ domainName }}</div>
+      <div item-end>.{{ ensManagementService.domainName }}</div>
     </ion-item>
   </div>
   <div text-center margin-bottom>
@@ -66,13 +66,7 @@
         </ion-avatar>
         <ion-label class="clickable" (click)="checkEnsAddress(favorite.ensAddress)">
           <h2>
-            <ng-container *ngIf="favorite?.description?.translated?.name">
-              {{ favorite.description.translated.name }}
-              ({{ favorite.ensAddress }})
-            </ng-container>
-            <ng-container *ngIf="!favorite?.description?.translated?.name">
-              {{ favorite.ensAddress }}
-            </ng-container>
+            {{ favorite.ensAddress }}
           </h2>
           <h3 *ngIf="favorite?.description?.translated?.description">
             {{ favorite?.description?.translated.description }}
@@ -131,18 +125,18 @@
       <h2 class="content-header">{{ purchaseEns }}</h2>
 
       <ion-icon name="checkmark" color="success"></ion-icon>
-      <span [innerHTML]="'_ensmanagement.available-text' | translate: { domain: purchaseEns }">
+      <span [innerHTML]="'_ensmanagement.available-text' | translate: { ensAddress: purchaseEns }">
       </span>
-      <b>{{ '_ensmanagement.eve-amount' | translate: { domain: purchaseEns, amount: ensCosts } }}</b>
+      <b>{{ '_ensmanagement.eve-amount' | translate: { ensAddress: purchaseEns, amount: ensPrice } }}</b>
 
-      <span *ngIf="balance < ensCosts">
-        {{ '_ensmanagement.missing-eve' | translate: { domain: purchaseEns } }
+      <span *ngIf="balance < ensPrice">
+        {{ '_ensmanagement.missing-eve' | translate: { ensAddress: purchaseEns } }
       </span>
 
       <div text-center margin-top>
         <button ion-button round outline icon-left
           (click)="purchaseEnsAddress(purchaseEns)"
-          [disabled]="showLoading || balance < ensCosts">
+          [disabled]="showLoading || balance < ensPrice">
           <ion-spinner *ngIf="showLoading"></ion-spinner>
           {{ '_ensmanagement.buy' | translate }}
         </button>

@@ -82,7 +82,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
   /**
    * amount of eves that must be payed, when the user purchases a ens address
    */
-  private ensCosts: number = 5;
+  private ensPrice: number;
 
   /**
    * the current logged in active acount id
@@ -98,11 +98,6 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
    * all ens addresses that were pinned by me
    */
   private pinned: Array<any>;
-
-  /**
-   * current domain name
-   */
-  private domainName: string;
 
   /**
    * current value of the ens address input
@@ -125,7 +120,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
   private showLoading: boolean;
 
   /**
-   * queue id for the buy dispatcher
+   * queue id for the purchaseDispatcher
    */
   private queueId: any;
 
@@ -141,8 +136,8 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
     private bcc: EvanBCCService,
     private core: EvanCoreService,
     private descriptionService: EvanDescriptionService,
-    private fileService: EvanFileService,
     private ensManagementService: ENSManagementService,
+    private fileService: EvanFileService,
     private pictureService: EvanPictureService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
@@ -156,7 +151,6 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
    */
   async _ngOnInit() {
     this.activeAccount = this.core.activeAccount();
-    this.domainName = getDomainName();
     this.queueId = this.ensManagementService.getQueueId();
 
     // watch for updates
@@ -211,24 +205,37 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
    * @param      {string}  ensAddress  ens address that should be checked
    */
   async checkEnsAddress(ensAddress: string = this.ensAddress) {
+    const domainName = this.ensManagementService.domainName;
+
     this.showLoading = true;
     this.ref.detectChanges();
 
+    // replace duplicated dots
+    ensAddress = ensAddress.replace(/\.\./g, '.');
+
     // if the ens address does not ends with the default domainName, append it!
-    if (ensAddress.indexOf(this.domainName, ensAddress.length - this.domainName.length) !== -1) {
-      ensAddress = `${ ensAddress }.${ this.domainName }`;
+    if (ensAddress.indexOf(domainName, ensAddress.length - domainName.length) === -1) {
+      ensAddress = `${ ensAddress }.${ domainName }`;
     }
 
-    // load the current owner of the ens address
-    const namehash = this.bcc.nameResolver.namehash(ensAddress);
-    const owner = await this.bcc.executor.executeContractCall(
-      this.bcc.nameResolver.ensContract, 'owner', namehash);
+    let owner = this.ensManagementService.nullAddress;
+    try {
+      // load the current owner of the ens address
+      const namehash = this.ensManagementService.nameResolver.namehash(ensAddress);
+      owner = await this.bcc.executor.executeContractCall(
+        this.ensManagementService.nameResolver.ensContract, 'owner', namehash);
+    } catch (ex) {
+      this.core.utils.log(ex, 'error');
+    }
 
     // load the currents users balance
     this.balance = await this.core.getBalance(this.activeAccount);
 
     // if no owner exists, show the purchase dialog, else navigate to the detail
-    if (owner === '0x0000000000000000000000000000000000000000') {
+    if (owner === this.ensManagementService.nullAddress) {
+      this.ensPrice = this.bcc.web3.utils.fromWei(
+        await this.ensManagementService.nameResolver.getPrice(ensAddress));
+
       this.purchaseEns = ensAddress;
       this.showLoading = false;
 
@@ -262,8 +269,8 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
         {
           key: '_ensmanagement.purchasing-desc',
           translateOptions: {
-            amount: this.ensCosts,
-            domain: ensAddress,
+            amount: this.ensPrice,
+            ensAddress: ensAddress,
           }
         },
         '_ensmanagement.cancel',
@@ -272,7 +279,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
 
       // trigger the purchase queue
       this.queue.addQueueData(
-        this.ensManagementService.getQueueId('buyDispatcher'),
+        this.ensManagementService.getQueueId('purchaseDispatcher'),
         {
           ensAddress: ensAddress
         }
@@ -301,7 +308,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
         {
           key: '_ensmanagement.remove-favorite-desc',
           translateOptions: {
-            domain: ensAddress,
+            ensAddress: ensAddress,
           }
         },
         '_ensmanagement.cancel',

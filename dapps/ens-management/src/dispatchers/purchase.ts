@@ -43,18 +43,29 @@ import {
 
 /**************************************************************************************************/
 
-export const buyDispatcher = new QueueDispatcher(
+export const purchaseDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.accept-dispatcher.title',
-      '_claims.accept-dispatcher.description',
+      '_claims.purchase-dispatcher.title',
+      '_claims.purchase-dispatcher.description',
       async (service: ENSManagementService, queueEntry: any) => {
         const results = [ ];
+        const activeAccount = service.core.activeAccount();
 
         for (let entry of queueEntry.data) {
+          // purchaser the ens address
+          await service.nameResolver.claimAddress(
+            entry.ensAddress,
+            activeAccount,
+            activeAccount,
+            await service.nameResolver.getPrice(entry.ensAddress)
+          );
+
+          // add the ens address to your favorites list
           await service.bcc.profile.addBcContract('evan-ens-management', entry.ensAddress, { });
         }
 
+        // store profile contracts
         await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
       }
     )

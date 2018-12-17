@@ -31,7 +31,7 @@ export const en = {
       "description": "Add ENS domain favorite",
       "title": "Add ENS domain favorite"
     },
-    "available-text": "The ENS domain <b>{{ domain }}</b> is available. Purchase it for",
+    "available-text": "The ENS domain <b>{{ ensAddress }}</b> is available. Purchase it for",
     "buy": "purchase",
     "buy-dispatcher": {
       "description": "Buy ENS domain",
@@ -44,13 +44,13 @@ export const en = {
     "open-placeholder": "Please insert a ENS domain that should be checked.",
     "open-text": "ENS Domains",
     "purchasing": "Purchase ENS domain",
-    "purchasing-desc": "You are about to buy the domain <b>{{ domain }}</b> for {{ amount }} EVE . Do you really want to continue?",
+    "purchasing-desc": "You are about to buy the domain <b>{{ ensAddress }}</b> for {{ amount }} EVE . Do you really want to continue?",
     "removeFavorite-dispatcher": {
       "description": "Delete ENS domain favorite",
       "title": "Delete ENS domain favorite"
     },
     "remove-favorite": "Remove favorite",
-    "remove-favorite-desc": "Do you want to remove the address <b>{{ domain }}</b> as a favorite from your ENS management? <br><br>Note: You remain the owner of this address",
+    "remove-favorite-desc": "Do you want to remove the address <b>{{ ensAddress }}</b> as a favorite from your ENS management? <br><br>Note: You remain the owner of this address",
   },
   "ensmanagement": "ENS Management"
 };

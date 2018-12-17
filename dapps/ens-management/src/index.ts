@@ -52,13 +52,13 @@ import { RootComponent } from './components/root/root';
 import { Translations } from './i18n/registry';
 
 import { addFavoriteDispatcher } from './dispatchers/addFavorite';
-import { buyDispatcher } from './dispatchers/buy';
+import { purchaseDispatcher } from './dispatchers/purchase';
 import { ENSManagementService } from './services/service';
 import { removeFavoriteDispatcher } from './dispatchers/removeFavorite';
 
 export {
   addFavoriteDispatcher,
-  buyDispatcher,
+  purchaseDispatcher,
   ENSManagementService,
   removeFavoriteDispatcher,
   Translations,

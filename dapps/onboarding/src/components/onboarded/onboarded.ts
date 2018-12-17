@@ -26,20 +26,27 @@
 */
 
 import {
+  getDomainName,
+  routing,
+} from 'dapp-browser';
+
+import {
   Component, OnInit, OnDestroy, // @angular/core
   NavController,                // ionic-angular
   DomSanitizer, ChangeDetectorRef, ChangeDetectionStrategy,
 } from 'angular-libs';
 
 import {
-  createOpacityTransition,
-  EvanTranslationService,
-  EvanRoutingService,
+  AsyncComponent,
   createGrowTransition,
-  EvanOnboardingService,
+  createOpacityTransition,
+  EvanAddressBookService,
+  EvanAlertService,
   EvanCoreService,
+  EvanOnboardingService,
+  EvanRoutingService,
+  EvanTranslationService,
   EvanUtilService,
-  AsyncComponent
 } from 'angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
@@ -47,53 +54,122 @@ import { OnboardingService } from '../../services/onboarding';
 /**************************************************************************************************/
 
 @Component({
-  selector: 'profile-create-evan',
+  selector: 'onboarded-evan',
   templateUrl: 'onboarded.html',
   animations: [
     createOpacityTransition(),
     createGrowTransition()
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 
 export class OnboardedComponent extends AsyncComponent {
-  public screenSize: number;
+  /**
+   * current logged in user
+   */
   private activeAccount: string;
-  private alias: string;
-  private loading: boolean;
-  private provider: string;
-  private balance: number;
 
+  /**
+   * currents users alias
+   */
+  private alias: string;
+
+  /**
+   * currents users balance
+   */
+  private balance: string;
+
+  /**
+   * current attached query params for checking mail inivitation
+   */
+  private queryParams: any;
+
+  /**
+   * accept the onboarding invitation
+   */
+  private accepting: boolean;
 
   constructor(
-    public _DomSanitizer: DomSanitizer,
-    private translate: EvanTranslationService,
-    public routing: EvanRoutingService,
+    private addressBookService: EvanAddressBookService,
+    private alertService: EvanAlertService,
+    private core: EvanCoreService,
     private onboarding: OnboardingService,
     private onboardingService: EvanOnboardingService,
-    private core: EvanCoreService,
+    private ref: ChangeDetectorRef,
+    private translate: EvanTranslationService,
     private utils: EvanUtilService,
-    private ref: ChangeDetectorRef
+    public _DomSanitizer: DomSanitizer,
+    public routing: EvanRoutingService,
   ) {
     super(ref);
   }
 
   async _ngOnInit() {
-    if (this.onboarding.activeAccount) {
-      this.activeAccount = this.onboarding.activeAccount;
-      this.provider = 'internal';
-    }
-    else {
-      this.activeAccount = this.core.getExternalAccount();
-      this.provider = 'metamask';
-    }
+    this.activeAccount = this.core.getAccountId();
 
-    this.alias = this.onboarding.alias;
+    if (this.activeAccount) {
+      this.balance = await this.core.getBalance(this.activeAccount);
+      this.alias = await this.addressBookService.activeUserName();
 
-    this.balance = await this.core.getBalance(this.activeAccount);
+      this.queryParams = this.routing.getQueryparams();
+
+      this.core.finishDAppLoading();
+    } else {
+      this.routing.navigate('./', true, this.routing.getQueryparams());      
+    }
   }
 
-  next() {
-    this.onboardingService.finishOnboarding();
+  /**
+   * Navigates to the default / last opened DApp.
+   *
+   * @return     {<type>}  { description_of_the_return_value }
+   */
+  async openDefaultDapp() {
+    this.routing.navigate(`/${ this.queryParams.origin || routing.defaultDAppENS }`);
+  }
+
+  /**
+   * Ask the user, if he wants to logout. If yes, run log out, if not, stay logged in
+   *
+   * @return     {<type>}  { description_of_the_return_value }
+   */
+  async logout() {
+    try {
+      await this.alertService.showSubmitAlert(
+        '_angularcore.logout',
+        '_angularcore.logout-desc',
+        '_angularcore.cancel',
+        '_angularcore.logout',
+      );
+
+      this.core.logout();
+    } catch (ex) { }
+  }
+
+  /**
+   * Accept the contact invitation.
+   */
+  async acceptContact() {
+    this.accepting = true;
+    this.ref.detectChanges();
+    
+    try {
+      await this.onboarding.sendCommKey(this.activeAccount);
+
+      this.routing.navigate([
+        '',
+        `dashboard.${ getDomainName() }`,
+        `addressbook.${ getDomainName() }`,
+        this.queryParams.inviteeAddress,
+      ].join('/'));
+    } catch (ex) {
+      this.utils.log(ex, 'error');
+      this.alertService.showSubmitAlert(
+        '_dapponboarding.error',
+        '_dapponboarding.error-message'
+      );
+    }
+
+    this.accepting = false;
+    this.ref.detectChanges();
   }
 }

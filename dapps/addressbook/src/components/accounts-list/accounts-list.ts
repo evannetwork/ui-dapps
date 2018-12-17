@@ -320,7 +320,7 @@ export class AccountListComponent extends AsyncComponent {
               smartAgentAccountId, 'alias', 'Email Smart Agent'
             );
             await this.bcc.profile.addProfileKey(
-              smartAgentAccountId, 'groupType', 'smart-agent'
+              smartAgentAccountId, 'tags', 'Smart Agent'
             );
   
             await this.bcc.profile.storeForAccount(this.bcc.profile.treeLabels.addressBook);

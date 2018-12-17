@@ -29,6 +29,13 @@ export const en = {
   'onboarding': 'Onboarding',
   'onboardinglist': 'Onboarding',
   '_dapponboarding': {
+    'accept-contact': 'add contact',
+    'invited-info': 'You were invited by <b>{{ inviteeAlias }}</b> to the evan.network.',
+    'invited-desc': 'If you add this contact to your address book, you will receive <b>{{ eveAmount }} EVE</b> as an invitation gift.',
+    'open-last-dapp': 'go to evan.network',
+    'logout': "logout",
+    'already-joined': 'evan.network Onboarding',
+    'already-joined-desc': 'You are registered and logged in to the evan.network',
     'onboarding': 'Welcome to the <b>evan.network</b>',
     'welcome': 'Welcome to the <b>evan.network</b>',
     'what-is-evan': 'What is the <b>evan.network</b>?',
@@ -40,10 +47,10 @@ export const en = {
     medium-sized companies without the need for a central intermediary, <b>cost-efficient</b>, <b>binding</b> and <b>audit-proof</b>.
       With the <b>evan.network</b> you can lead your processes into the <b>"Industry 4.0"</b> era.
     `,
-    'start-using-evan': 'To start in evan.network, choose one of',
-    'new-mnemonic-account': 'a new Identity',
-    'mnemonic-account': 'an existing Identity',
-    'metamask-account': 'Metamask',
+    'start-using-evan': 'To start in evan.network, choose one of the following options',
+    'new-mnemonic-account': 'Create a new identity.',
+    'mnemonic-account': 'Use an existing identity',
+    'metamask-account': 'Use Metamask',
     'metamask': 'Metamask',
     'metamask-locked': `Metamask is locked`,
     'metamask-locked-desc': `

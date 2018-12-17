@@ -25,7 +25,11 @@
   https://evan.network/license/
 */
 
-import * as bcc from 'bcc';
+import {
+  Ipld,
+  NameResolver,
+} from 'bcc';
+
 import * as SmartContracts from 'smart-contracts';
 
 import {
@@ -62,6 +66,21 @@ import {
  */
 @Injectable()
 export class ENSManagementService implements OnDestroy {
+  /**
+   * ens address, when nothing is set
+   */
+  public nullAddress: string = '0x0000000000000000000000000000000000000000';
+
+  /**
+   * ens domain that should be used for resolving the ens addresses
+   */
+  public domainName: string = 'payable'; // getDomainName();
+
+  /**
+   * nameResolver instance initialized with the latest ens contract address to handle correct payment
+   */
+  public nameResolver: any;
+
   constructor(
     public bcc: EvanBCCService,
     public bookmarkService: EvanBookmarkService,
@@ -73,7 +92,20 @@ export class ENSManagementService implements OnDestroy {
     public singleton: SingletonService,
   ) {
     return singleton.create(ENSManagementService, this, () => {
+      const customNameResolver = this.core.utils.deepCopy(this.bcc.config.nameResolver);
 
+      // set the custom ens contract address
+      customNameResolver.ensAddress = '0xE6ed5Ed9CF1a62f88866ef9cE2dF94e996685456';
+      customNameResolver.ensResolver = '0xC629135777FDC078dbbBa5b2d244a71835f4a091';
+
+      this.nameResolver = new NameResolver({
+        config: customNameResolver,
+        contractLoader: this.bcc.contractLoader,
+        executor: this.bcc.executor,
+        logLog: this.bcc.logLog,
+        logLogLevel: this.bcc.logLogLevel,
+        web3: this.bcc.web3,
+      });
     });
   }
 
@@ -97,15 +129,19 @@ export class ENSManagementService implements OnDestroy {
    */
   public async getPinnedEnsAddresses() {
     const ensAddressObject = (await this.bcc.profile.getBcContracts('evan-ens-management') || { });
+    const defaultDescription = await this.descriptionService
+      .getDescription(`dashboard.${ getDomainName() }`);
 
     // purge crypto info
-    bcc.Ipld.purgeCryptoInfo(ensAddressObject)
+    Ipld.purgeCryptoInfo(ensAddressObject)
 
-    return await Promise.all(Object.keys(ensAddressObject).map((ensAddress) => {
-      return {
-        description: this.descriptionService.getDescription(ensAddress),
-        ensAddress: ensAddress,
-      };
+    return await Promise.all(Object.keys(ensAddressObject).map(async (ensAddress) => {
+      const description = await this.descriptionService.getDescription(ensAddress);
+
+      // prefill empty suqare img
+      description.imgSquare = description.imgSquare || defaultDescription.imgSquare;
+
+      return { description, ensAddress, };
     }));
   }
 }

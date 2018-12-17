@@ -34,7 +34,7 @@
   <div class="vertical-center-container">
     <ion-slides #slider>
       <ion-slide>
-        <div class="invite-container" *ngIf="params.onboardingID" text-left padding>
+        <div class="invite-container" *ngIf="params?.onboardingID" text-left padding>
           <span [innerHTML]="'_dapponboarding.onboarding-info' | translate:params"></span><br><br>
           <span [innerHTML]="'_dapponboarding.onboarding-desc' | translate:params"></span>
         </div>
