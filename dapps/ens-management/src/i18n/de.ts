@@ -74,7 +74,8 @@ export const de = {
     "removeFavorite-dispatcher": {
       "description": "ENS Favorit löschen",
       "title": "ENS Favorit löschen"
-    }
+    },
+    "sub-ens-addresses": "Sub-Adressen"
   },
   "ensmanagement": "ENS Verwaltung"
 };

@@ -27,11 +27,6 @@
 
 export const en = {
   "_ensmanagement": {
-    "Owner": {
-      "desc": "Owner of this ENS address",
-      "error": "Please enter a valid Account ID!",
-      "title": "Owner"
-    },
     "addFavorite-dispatcher": {
       "description": "Add ENS domain favorite",
       "title": "Add ENS domain favorite"
@@ -62,6 +57,11 @@ export const en = {
     "open-text": "ENS Domains",
     "overview": "Overview",
     "overview-desc": "Owner, Registrar, Sub Domains, ...",
+    "owner": {
+      "desc": "Owner of this ENS address",
+      "error": "Please enter a valid Account ID!",
+      "title": "Owner"
+    },
     "purchasing": "Purchase ENS domain",
     "purchasing-desc": "You are about to buy the domain <b>{{ ensAddress }}</b> for {{ amount }} EVE . Do you really want to continue?",
     "registrar": {
@@ -74,7 +74,8 @@ export const en = {
     "removeFavorite-dispatcher": {
       "description": "Delete ENS domain favorite",
       "title": "Delete ENS domain favorite"
-    }
+    },
+    "sub-ens-addresses": "Sub Addresses"
   },
   "ensmanagement": "ENS Management"
 };

@@ -73,19 +73,19 @@
         {{ ensAddress }}
       </h3>
 
-      <form class="no-padding-top" #accountForm="ngForm">
+      <form class="no-padding-top" #ensDetailForm="ngForm">
         <ion-row>
           <ion-col col-12 col-md-6>
             <ion-item>
               <ion-label stacked>{{ '_ensmanagement.owner.title' | translate }} *</ion-label>
               <ion-input type="text" name="owner" required
-                [(ngModel)]="detail.owner"
+                [(ngModel)]="ensData.owner"
                 [placeholder]="'_ensmanagement.owner.desc' | translate"
                 (ionChange)="setTranslation()"
                 (focusout)="detectTimeout()">
               </ion-input>
             </ion-item>
-            <ion-chip class="error-hint" *ngIf="showError('owner')">
+            <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'owner')">
               <ion-label>
                 {{ '_ensmanagement.owner.error' | translate }}
               </ion-label>
@@ -95,31 +95,31 @@
             <ion-item>
               <ion-label stacked>{{ '_ensmanagement.address.title' | translate }} *</ion-label>
               <ion-input type="text" name="address" required
-                [(ngModel)]="detail.address"
+                [(ngModel)]="ensData.address"
                 [placeholder]="'_ensmanagement.address.desc' | translate"
                 (ionChange)="setTranslation()"
                 (focusout)="detectTimeout()">
               </ion-input>
             </ion-item>
-            <ion-chip class="error-hint" *ngIf="showError('address')">
+            <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'address')">
               <ion-label>
                 {{ '_ensmanagement.address.error' | translate }}
               </ion-label>
             </ion-chip>
           </ion-col>
         </ion-row>
-                <ion-row>
+        <ion-row>
           <ion-col col-12 col-md-6>
             <ion-item>
               <ion-label stacked>{{ '_ensmanagement.registrar.title' | translate }} *</ion-label>
               <ion-input type="text" name="registrar" required
-                [(ngModel)]="detail.registrar"
+                [(ngModel)]="ensData.registrar"
                 [placeholder]="'_ensmanagement.registrar.desc' | translate"
                 (ionChange)="setTranslation()"
                 (focusout)="detectTimeout()">
               </ion-input>
             </ion-item>
-            <ion-chip class="error-hint" *ngIf="showError('registrar')">
+            <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'registrar')">
               <ion-label>
                 {{ '_ensmanagement.registrar.error' | translate }}
               </ion-label>
@@ -129,13 +129,13 @@
             <ion-item>
               <ion-label stacked>{{ '_ensmanagement.contentAddress.title' | translate }} *</ion-label>
               <ion-input type="text" name="contentAddress" required
-                [(ngModel)]="detail.contentAddress"
+                [(ngModel)]="ensData.contentAddress"
                 [placeholder]="'_ensmanagement.contentAddress.desc' | translate"
                 (ionChange)="setTranslation()"
                 (focusout)="detectTimeout()">
               </ion-input>
             </ion-item>
-            <ion-chip class="error-hint" *ngIf="showError('contentAddress')">
+            <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'contentAddress')">
               <ion-label>
                 {{ '_ensmanagement.contentAddress.error' | translate }}
               </ion-label>
@@ -146,7 +146,30 @@
     </div>
     <div class="evan-relative evan-content m-t-0"
       *ngIf="activeTab === 1">
-      content
+      <h3 class="content-header m-t-0">
+        {{ '_ensmanagement.sub-ens-addresses' | translate }}
+      </h3>
+
+      <div class="evan-relative">
+        <ion-item margin-vertical class="semi-transparent">
+          <ion-input
+            type="text"
+            [placeholder]="'_ensmanagement.open-placeholder' | translate"
+            [(ngModel)]="ensAddress"
+            (keydown)="submitOnEnter($event)"
+            (ionChange)="ref.detectChanges();">
+          </ion-input>
+          <div item-end>.{{ ensManagementService.domainName }}</div>
+        </ion-item>
+      </div>
+      <div text-center margin-bottom>
+        <button ion-button round outline icon-left
+          (click)="checkEnsAddress()"
+          [disabled]="!ensAddress || showLoading">
+          <ion-spinner *ngIf="showLoading"></ion-spinner>
+          {{ '_ensmanagement.open-details' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </ng-container>

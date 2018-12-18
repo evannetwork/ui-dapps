@@ -46,6 +46,7 @@ import {
   startAngularApplication,
 } from 'angular-core';
 
+import { ENSCheckComponent } from './components/ens-check/ens-check';
 import { ENSManagementDetailComponent } from './components/detail/detail';
 import { ENSManagementOverviewComponent } from './components/overview/overview';
 import { RootComponent } from './components/root/root';
@@ -127,6 +128,7 @@ function getConfig(isDispatcher?: boolean, isLibrary?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
+      ENSCheckComponent,
       ENSManagementDetailComponent,
       ENSManagementOverviewComponent,
       RootComponent,

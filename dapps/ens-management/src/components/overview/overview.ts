@@ -90,16 +90,6 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
   private activeAccount: string;
 
   /**
-   * Function to unsubscribe from queue results.
-   */
-  private queueWatcher: Function;
-
-  /**
-   * all ens addresses that were pinned by me
-   */
-  private pinned: Array<any>;
-
-  /**
    * current value of the ens address input
    */
   private ensAddress: string;
@@ -115,19 +105,14 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
   private balance: number;
 
   /**
-   * show loading symbol, if the current input gets checked
+   * all ens addresses that were pinned by me
    */
-  private showLoading: boolean;
+  private pinned: Array<any>;
 
   /**
-   * queue id for the purchaseDispatcher
+   * current detail container for auto scroll
    */
-  private queueId: any;
-
-  /**
-   * show the popover for the favorite card
-   */
-  private showItemPopover: string;
+  @ViewChild('ensCheckComp') ensCheckComp: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
@@ -151,201 +136,15 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
    */
   async _ngOnInit() {
     this.activeAccount = this.core.activeAccount();
-    this.queueId = this.ensManagementService.getQueueId();
 
-    // watch for updates
-    this.queueWatcher = await this.queue.onQueueFinish(
-      this.queueId,
-      async (reload, results) => {
-        this.pinned = await this.ensManagementService.getPinnedEnsAddresses();
-
-        reload && setTimeout(() => {
-          this.showLoading = this.queue.getQueueEntry(this.queueId, true).data.length > 0;
-          this.ref.detectChanges();
-        });
-      }
-    );
-
-    this.detectTimeout();
+    this.core.utils.detectTimeout(this.ref);
   }
 
   /**
-   * Remove watchers
+   * Updates the current pinned ens addresses list, filtered by top level domains.
    */
-  _ngOnDestroy() {
-    this.queueWatcher();
-  }
-
-  /**
-   * Run detectChanges directly and after and timeout again, to update select fields.
-   */
-  detectTimeout() {
-    this.ref.detectChanges();
-
-    setTimeout(() => this.ref.detectChanges());
-  }
-
-  /**
-   * Checks if a form property is touched and invalid.
-   *
-   * @param      {string}   paramName  name of the form property that should be checked
-   * @return     {boolean}  true if touched and invalid, else false
-   */
-  showError(form: any, paramName: string) {
-    if (form && form.controls[paramName]) {
-      return form.controls[paramName].invalid &&
-        form.controls[paramName].touched;
-    }
-  }
-
-  /**
-   * Check the current input address, if an owner is set, navigate to the detail page, else provide
-   * the purchase popup.
-   *
-   * @param      {string}  ensAddress  ens address that should be checked
-   */
-  async checkEnsAddress(ensAddress: string = this.ensAddress) {
-    const domainName = this.ensManagementService.domainName;
-
-    this.showLoading = true;
-    this.ref.detectChanges();
-
-    // replace duplicated dots
-    ensAddress = ensAddress.replace(/\.\./g, '.');
-
-    // if the ens address does not ends with the default domainName, append it!
-    if (ensAddress.indexOf(domainName, ensAddress.length - domainName.length) === -1) {
-      ensAddress = `${ ensAddress }.${ domainName }`;
-    }
-
-    let owner = this.ensManagementService.nullAddress;
-    try {
-      // load the current owner of the ens address
-      const namehash = this.ensManagementService.nameResolver.namehash(ensAddress);
-      owner = await this.bcc.executor.executeContractCall(
-        this.ensManagementService.nameResolver.ensContract, 'owner', namehash);
-    } catch (ex) {
-      this.core.utils.log(ex, 'error');
-    }
-
-    // load the currents users balance
-    this.balance = await this.core.getBalance(this.activeAccount);
-
-    // if no owner exists, show the purchase dialog, else navigate to the detail
-    if (owner === this.ensManagementService.nullAddress) {
-      this.ensPrice = this.bcc.web3.utils.fromWei(
-        await this.ensManagementService.nameResolver.getPrice(ensAddress));
-
-      this.purchaseEns = ensAddress;
-      this.showLoading = false;
-
-      this.ref.detectChanges();
-    } else {
-      this.routingService.navigate(ensAddress);
-    }
-  }
-
-  /**
-   * Check if the user submits the input using the enter key.
-   *
-   * @param      {event}   event   input keyup event
-   */
-  submitOnEnter(event: any) {
-    if (event.keyCode === 13 && !this.showLoading) {
-      this.checkEnsAddress();
-
-      event.stopPropagation();
-      return false;
-    }
-  }
-
-  /**
-   * Trigger the purchase process.
-   */
-  async purchaseEnsAddress(ensAddress: string) {
-    try {
-      await this.alertService.showSubmitAlert(
-        '_ensmanagement.purchasing',
-        {
-          key: '_ensmanagement.purchasing-desc',
-          translateOptions: {
-            amount: this.ensPrice,
-            ensAddress: ensAddress,
-          }
-        },
-        '_ensmanagement.cancel',
-        '_ensmanagement.buy',
-      );
-
-      // trigger the purchase queue
-      this.queue.addQueueData(
-        this.ensManagementService.getQueueId('purchaseDispatcher'),
-        {
-          ensAddress: ensAddress
-        }
-      );
-
-      // update the ui
-      this.showLoading = true;
-      this.purchaseEns = false;
-      this.ref.detectChanges();
-    } catch (ex) { }
-  }
-
-    /**
-     * Trigger the removeFavorite process.
-     *
-     * @param      {string}  ensAddress  the ens address that should be removed
-     */
-  async removeFavorite(ensAddress: string, uiControl: any) {
-    if (uiControl) {
-      uiControl.close();
-    }
-
-    try {
-      await this.alertService.showSubmitAlert(
-        '_ensmanagement.remove-favorite',
-        {
-          key: '_ensmanagement.remove-favorite-desc',
-          translateOptions: {
-            ensAddress: ensAddress,
-          }
-        },
-        '_ensmanagement.cancel',
-        '_ensmanagement.remove-favorite',
-      );
-
-      // trigger the purchase queue
-      this.queue.addQueueData(
-        this.ensManagementService.getQueueId('removeFavoriteDispatcher'),
-        {
-          ensAddress: ensAddress
-        }
-      );
-
-      // update the ui
-      this.showLoading = true;
-      this.purchaseEns = false;
-      this.ref.detectChanges();
-    } catch (ex) { }
-  }
-
-  /**
-   * show the popover for the current favorite.
-   *
-   * @param      {string}  ensAddress  ens address of the favorite, where the popover should be
-   *                                   shown
-   */
-  togglePopover(ensAddress: string) {
-    if (this.showItemPopover) {
-      if (this.showItemPopover !== ensAddress) {
-        this.showItemPopover = ensAddress;
-      } else {
-        delete this.showItemPopover;
-      }
-    } else {
-      this.showItemPopover = ensAddress;
-    }
+  ensCheckUpdated() {
+    this.pinned = this.ensCheckComp.pinned;
 
     this.ref.detectChanges();
   }

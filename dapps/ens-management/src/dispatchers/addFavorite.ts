@@ -52,9 +52,11 @@ export const addFavoriteDispatcher = new QueueDispatcher(
         const results = [ ];
 
         for (let entry of queueEntry.data) {
+          // save the address
           await service.bcc.profile.addBcContract('evan-ens-management', entry.ensAddress, { });
         }
 
+        // save the account store
         await service.bcc.profile.storeForAccount(service.bcc.profile.treeLabels.contracts);
       }
     )

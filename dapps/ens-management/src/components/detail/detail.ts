@@ -89,7 +89,12 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   /**
    * ens address specific data
    */
-  private ensData: any = { }
+  private ensData: any = { };
+
+  /**
+   * all ens addresses that were pinned by me, filter by sub addresses of the opened ens address
+   */
+  private pinned: Array<any>;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
@@ -114,6 +119,11 @@ export class ENSManagementDetailComponent extends AsyncComponent {
       this.ensManagementService.getQueueId(),
       async (reload, results) => {
         this.ensAddress = this.routingService.getHashParam('address');
+
+        // load all pinned sub ens addresses
+        this.pinned = (await this.ensManagementService.getPinnedEnsAddresses())
+          .filter(pinned => pinned.ensAddress
+            .indexOf(this.ensAddress, pinned.ensAddress.length - this.ensAddress.length) !== -1);
   
         // load the ens details        
         const nameResolver = this.ensManagementService.nameResolver;
@@ -121,10 +131,9 @@ export class ENSManagementDetailComponent extends AsyncComponent {
           this.ensManagementService.getOwner(this.ensAddress),
           nameResolver.getAddress(this.ensAddress),
           this.bcc.executor.executeContractCall(nameResolver.ensContract, 'resolver',
-            this.ensAddress),
+            nameResolver.namehash(this.ensAddress)),
           nameResolver.getContent(this.ensAddress),
         ]);
-
         this.ensData = { owner, address, registrar, contentAddress, };
 
         this.ref.detectChanges();
