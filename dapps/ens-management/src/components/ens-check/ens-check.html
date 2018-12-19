@@ -45,7 +45,7 @@
 
     <div text-center margin-top>
       <button ion-button round outline icon-left
-        (click)="ensAddressAddress(ensAddress)"
+        (click)="purchaseEnsAddress(ensAddress)"
         [disabled]="showLoading || balance < ensPrice">
         <ion-spinner *ngIf="showLoading"></ion-spinner>
         {{ '_ensmanagement.buy' | translate }}

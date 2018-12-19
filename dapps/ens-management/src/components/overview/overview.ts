@@ -144,7 +144,8 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
    * Updates the current pinned ens addresses list, filtered by top level domains.
    */
   ensCheckUpdated() {
-    this.pinned = this.ensCheckComp.pinned;
+    this.pinned = this.ensCheckComp.pinned
+      .filter(pinned => pinned.filter(char => char === '.').length < 2);
 
     this.ref.detectChanges();
   }

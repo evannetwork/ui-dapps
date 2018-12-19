@@ -48,8 +48,8 @@
     <div text-center margin-bottom>
       <button ion-button round outline icon-left
         (click)="ensCheckComp.checkEnsAddress()"
-        [disabled]="!ensCheckComp.ensAddress || showLoading">
-        <ion-spinner *ngIf="showLoading"></ion-spinner>
+        [disabled]="!ensCheckComp.ensAddress || ensCheckComp.showLoading">
+        <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
         {{ '_ensmanagement.open-details' | translate }}
       </button>
     </div>
@@ -83,13 +83,13 @@
 
             <div *ngIf="core.utils.isMD" class="evan-popover top-right">
               <button ion-button clear
-                [disabled]="showLoading"
+                [disabled]="ensCheckComp.showLoading"
                 (click)="ensCheckComp.togglePopover(favorite.ensAddress)">
-                <ng-container *ngIf="!showLoading">
+                <ng-container *ngIf="!ensCheckComp.showLoading">
                   <ion-icon name="more" color="light" *ngIf="ensCheckComp.showItemPopover !== favorite.ensAddress"></ion-icon>
                   <ion-icon name="close" color="light" *ngIf="ensCheckComp.showItemPopover === favorite.ensAddress"></ion-icon>
                 </ng-container>
-                <ion-spinner *ngIf="showLoading"></ion-spinner>
+                <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
               </button>
               <ng-container *ngIf="ensCheckComp.showItemPopover === favorite.ensAddress">
                 <div class="backdrop" (click)="ensCheckComp.showItemPopover = false; ref.detectChanges()"></div>
