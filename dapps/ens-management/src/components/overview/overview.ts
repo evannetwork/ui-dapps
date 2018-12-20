@@ -145,7 +145,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
    */
   ensCheckUpdated() {
     this.pinned = this.ensCheckComp.pinned
-      .filter(pinned => pinned.filter(char => char === '.').length < 2);
+      .filter(pinned => pinned.ensAddress.split('.').length < 3);
 
     this.ref.detectChanges();
   }

@@ -3,7 +3,6 @@
   "block-indent": "  ",
   "color-case": "lower",
   "color-shorthand": false,
-  "element-case": "lower",
   "eof-newline": true,
   "leading-zero": true,
   "quotes": "single",
