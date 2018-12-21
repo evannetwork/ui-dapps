@@ -87,14 +87,49 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   private ensAddress: string;
 
   /**
-   * ens address specific data
+   * ens address specific data for editing
    */
   private ensData: any = { };
+
+  /**
+   * ens address specific data
+   */
+  private originalData: any = { };
 
   /**
    * all ens addresses that were pinned by me, filter by sub addresses of the opened ens address
    */
   private pinned: Array<any>;
+
+  /**
+   * sub ens address input value
+   */
+  private subEnsAddress: string;
+
+  /**
+   * show the evan-loading
+   */
+  private loading: boolean;
+
+  /**
+   * clear current route watcher
+   */
+  private watchRouteChange: Function;
+
+  /**
+   * is the current user allowed to edit this data?
+   */
+  private canEdit: boolean;
+
+  /**
+   * is the current ens domain pinned?
+   */
+  private isPinned: boolean;
+
+  /**
+   * current detail container for auto scroll
+   */
+  @ViewChild('ensCheckComp') ensCheckComp: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
@@ -117,28 +152,9 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     // watch for updates
     this.queueWatcher = await this.queue.onQueueFinish(
       this.ensManagementService.getQueueId(),
-      async (reload, results) => {
-        this.ensAddress = this.routingService.getHashParam('address');
-
-        // load all pinned sub ens addresses
-        this.pinned = (await this.ensManagementService.getPinnedEnsAddresses())
-          .filter(pinned => pinned.ensAddress
-            .indexOf(this.ensAddress, pinned.ensAddress.length - this.ensAddress.length) !== -1);
-  
-        // load the ens details        
-        const nameResolver = this.ensManagementService.nameResolver;
-        const [ owner, address, registrar, contentAddress ] = await Promise.all([
-          this.ensManagementService.getOwner(this.ensAddress),
-          nameResolver.getAddress(this.ensAddress),
-          this.bcc.executor.executeContractCall(nameResolver.ensContract, 'resolver',
-            nameResolver.namehash(this.ensAddress)),
-          nameResolver.getContent(this.ensAddress),
-        ]);
-        this.ensData = { owner, address, registrar, contentAddress, };
-
-        this.ref.detectChanges();
-      }
+      async (reload, results) => this.loadEnsData(reload)
     );
+    this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.loadEnsData(true));
   }
 
   /**
@@ -146,6 +162,57 @@ export class ENSManagementDetailComponent extends AsyncComponent {
    */
   _ngOnDestroy() {
     this.queueWatcher();
+    this.watchRouteChange();
+  }
+
+  /**
+   * Analyse the current ens hash param and load ens specific data (owner, registrar).
+   *
+   * @param      {boolean}  reloadPinned  reload the pinned domains by the checkbox component.
+   */
+  async loadEnsData(reloadPinned: boolean) {
+    this.loading = true;
+    this.ref.detectChanges();
+
+    this.ensAddress = this.routingService.getHashParam('address');
+
+    // reload pins and check for actual ens address sub addresses
+    if (reloadPinned) {
+      this.subEnsAddress = ''; 
+      await this.ensCheckComp.loadPinned();
+      this.ensCheckUpdated();
+    }
+
+    // load the ens details        
+    const nameResolver = this.ensManagementService.nameResolver;
+    const [ owner, address, registrar, contentAddress, validUntil ] = await Promise.all([
+      this.ensManagementService.getOwner(this.ensAddress),
+      nameResolver.getAddress(this.ensAddress),
+      this.bcc.executor.executeContractCall(nameResolver.ensContract, 'resolver',
+        nameResolver.namehash(this.ensAddress)),
+      nameResolver.getContent(this.ensAddress),
+      (async () => {
+        try {
+          return await nameResolver.getValidUntil(this.ensAddress);
+        } catch(ex) { }
+      })(),
+    ]);
+
+    // save the data to the scope
+    this.ensData = { owner, address, registrar, contentAddress, validUntil, };
+    this.originalData = { owner, address, registrar, contentAddress, validUntil, };
+
+    // split the ens address, to check each parent, if we can set the current data
+    let splitted = this.ensAddress.split('.');
+    while (!this.canEdit && splitted.length > 1) {
+      this.canEdit = (await this.ensManagementService.getOwner(splitted.join('.'))) ===
+        this.core.activeAccount();
+
+      splitted.splice(0, 1);
+    }
+
+    this.loading = false;
+    this.ref.detectChanges();
   }
 
   /**
@@ -158,5 +225,54 @@ export class ENSManagementDetailComponent extends AsyncComponent {
 
     this.ref.detectChanges();
     setTimeout(() => this.ref.detectChanges(), 500);
+  }
+
+  /**
+   * Updates the current pinned ens addresses list, filtered by top level domains.
+   */
+  ensCheckUpdated() {
+    this.pinned = this.ensCheckComp.pinned.filter(pinned =>
+      pinned.ensAddress !== this.ensAddress && pinned.ensAddress.indexOf(this.ensAddress,
+      pinned.ensAddress.length - this.ensAddress.length) !== -1
+    );
+    this.isPinned = this.ensCheckComp.pinned.filter(pinned =>
+      pinned.ensAddress === this.ensAddress
+    ).length > 0;
+
+    this.ref.detectChanges();
+  }
+
+  /**
+   * Trigger the data update dispatcher.
+   */
+  async updateData() {
+    try {
+      await this.alertService.showSubmitAlert(
+        '_ensmanagement.save-data',
+        {
+          key: '_ensmanagement.save-data-desc',
+          translateOptions: {
+            ensAddress: this.ensAddress,
+            ensData: this.ensData,
+            originData: this.originalData,
+          }
+        },
+        '_ensmanagement.cancel',
+        '_ensmanagement.save-data',
+      );
+
+      // trigger the purchase queue
+      this.queue.addQueueData(
+        this.ensManagementService.getQueueId('dataDispatcher'),
+        {
+          ensData: this.ensData,
+          originData: this.originalData,
+        }
+      );
+
+      // update the ui
+      this.ensCheckComp.showLoading = true;
+      this.ref.detectChanges();
+    } catch (ex) { }
   }
 }

@@ -53,14 +53,16 @@ import { RootComponent } from './components/root/root';
 import { Translations } from './i18n/registry';
 
 import { addFavoriteDispatcher } from './dispatchers/addFavorite';
-import { purchaseDispatcher } from './dispatchers/purchase';
+import { dataDispatcher } from './dispatchers/data';
 import { ENSManagementService } from './services/service';
+import { purchaseDispatcher } from './dispatchers/purchase';
 import { removeFavoriteDispatcher } from './dispatchers/removeFavorite';
 
 export {
   addFavoriteDispatcher,
-  purchaseDispatcher,
+  dataDispatcher,
   ENSManagementService,
+  purchaseDispatcher,
   removeFavoriteDispatcher,
   Translations,
 }

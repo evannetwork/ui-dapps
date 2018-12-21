@@ -39,7 +39,7 @@
           type="text"
           [placeholder]="'_ensmanagement.open-placeholder' | translate"
           [(ngModel)]="ensAddress"
-          (keydown)="submitOnEnter($event)"
+          (keydown)="ensCheckComp.submitOnEnter($event)"
           (ionChange)="ref.detectChanges();">
         </ion-input>
         <div item-end>.{{ ensManagementService.domainName }}</div>
@@ -47,8 +47,8 @@
     </div>
     <div text-center margin-bottom>
       <button ion-button round outline icon-left
-        (click)="ensCheckComp.checkEnsAddress()"
-        [disabled]="!ensCheckComp.ensAddress || ensCheckComp.showLoading">
+        (click)="ensCheckComp.checkEnsAddress(ensAddress + '.' + ensManagementService.domainName)"
+        [disabled]="!ensAddress || ensCheckComp.showLoading">
         <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
         {{ '_ensmanagement.open-details' | translate }}
       </button>

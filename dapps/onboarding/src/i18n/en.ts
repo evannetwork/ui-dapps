@@ -50,7 +50,7 @@ export const en = {
     'start-using-evan': 'To start in evan.network, choose one of the following options',
     'new-mnemonic-account': 'Create a new identity.',
     'mnemonic-account': 'Use an existing identity',
-    'metamask-account': 'Use Metamask',
+    'metamask-account': 'Use MetaMask',
     'metamask': 'Metamask',
     'metamask-locked': `Metamask is locked`,
     'metamask-locked-desc': `

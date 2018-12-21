@@ -165,10 +165,10 @@ export class ENSCheckComponent extends AsyncComponent {
     this.queueWatcher = await this.queue.onQueueFinish(
       this.queueId,
       async (reload, results) => {
-        this.pinned = await this.ensManagementService.getPinnedEnsAddresses();
+        !reload && await this.loadPinned();
 
-        reload && setTimeout(() => {
-          this.showLoading = this.queue.getQueueEntry(this.queueId, true).data.length > 0;
+        reload && setTimeout(async () => {
+          await this.loadPinned();
           this.updateRef();
         });
       }
@@ -195,15 +195,24 @@ export class ENSCheckComponent extends AsyncComponent {
   }
 
   /**
+   * Load the pinned domains for this topic and check if the loading component is set.
+   */
+  async loadPinned() {
+    this.showLoading = this.queue.getQueueEntry(this.queueId, true).data.length > 0;
+    this.pinned = await this.ensManagementService.getPinnedEnsAddresses();
+  }
+
+  /**
    * Check if the user submits the input using the enter key.
    *
    * @param      {event}    event    input keyup event
    * @param      {boolean}  loading  currently something loading?
    * @return     {boolean}   return false to stop event propagation
    */
-  submitOnEnter(event: any, loading?: boolean) {
-    if (event.keyCode === 13 && !loading) {
-      this.checkEnsAddress(event.target.value);
+  submitOnEnter(event: any, func: any, value: string = event.target.value) {
+    if (event.keyCode === 13 && !this.showLoading) {
+      // run optional function
+      func ? func(value) : this.checkEnsAddress(value);
 
       event.stopPropagation();
       return false;
@@ -219,41 +228,44 @@ export class ENSCheckComponent extends AsyncComponent {
   async checkEnsAddress(ensAddress: string) {
     const domainName = this.ensManagementService.domainName;
 
-    this.showLoading = true;
-    this.updateRef();
-
     // replace duplicated dots
     ensAddress = ensAddress.replace(/\.\./g, '.');
 
-    // if the ens address does not ends with the default domainName, append it!
     if (ensAddress.indexOf(domainName, ensAddress.length - domainName.length) === -1) {
       ensAddress = `${ ensAddress }.${ domainName }`;
     }
 
-    let owner = this.ensManagementService.nullAddress;
-    try {
-      // load the current owner of the ens address
-      const namehash = this.ensManagementService.nameResolver.namehash(ensAddress);
-      owner = await this.bcc.executor.executeContractCall(
-        this.ensManagementService.nameResolver.ensContract, 'owner', namehash);
-    } catch (ex) {
-      this.core.utils.log(ex, 'error');
-    }
+    if (ensAddress.split('.').length > 2) {
+      await this.addFavorite(ensAddress);
+    } else {
+      this.showLoading = true;
+      this.updateRef();
 
-    // load the currents users balance
-    this.balance = await this.core.getBalance(this.activeAccount);
+      let owner = this.ensManagementService.nullAddress;
+      try {
+        // load the current owner of the ens address
+        const namehash = this.ensManagementService.nameResolver.namehash(ensAddress);
+        owner = await this.bcc.executor.executeContractCall(
+          this.ensManagementService.nameResolver.ensContract, 'owner', namehash);
+      } catch (ex) {
+        this.core.utils.log(ex, 'error');
+      }
 
-    // if no owner exists, show the purchase dialog, else navigate to the detail
-    if (owner === this.ensManagementService.nullAddress) {
-      this.ensPrice = this.bcc.web3.utils.fromWei(
-        await this.ensManagementService.nameResolver.getPrice(ensAddress));
+      // load the currents users balance
+      this.balance = await this.core.getBalance(this.activeAccount);
+
+      // if no owner exists, show the purchase dialog, else navigate to the detail
+      if (owner === this.ensManagementService.nullAddress) {
+        this.ensPrice = this.bcc.web3.utils.fromWei(
+          await this.ensManagementService.nameResolver.getPrice(ensAddress));
+      } else {
+        this.routingService.navigate(ensAddress);
+      }
 
       this.ensAddress = ensAddress;
       this.showLoading = false;
 
       this.updateRef();
-    } else {
-      this.routingService.navigate(ensAddress);
     }
   }
 
@@ -287,6 +299,48 @@ export class ENSCheckComponent extends AsyncComponent {
       this.showLoading = true;
       delete this.ensAddress;
       this.updateRef();
+    } catch (ex) { }
+  }
+
+  /**
+   * Check if the ens address is already a favorite, if not, save it as favorite.
+   *
+   * @param      {string}  ensAddress  the ens address that should be checked
+   */
+  async addFavorite(ensAddress: string) {
+    try {
+      if (this.pinned.indexOf(ensAddress) === -1) {
+          await this.alertService.showSubmitAlert(
+            '_ensmanagement.add-favorite',
+            {
+              key: '_ensmanagement.add-favorite-desc',
+              translateOptions: {
+                ensAddress: ensAddress,
+              }
+            },
+            '_ensmanagement.cancel',
+            '_ensmanagement.add-favorite',
+          );
+
+          // trigger the purchase queue
+          this.queue.addQueueData(
+            this.ensManagementService.getQueueId('addFavoriteDispatcher'),
+            {
+              ensAddress: ensAddress
+            }
+          );
+
+          // update the ui
+          this.showLoading = true;
+          delete this.ensAddress;
+          this.updateRef();
+      } else {
+        await this.alertService.showSubmitAlert(
+          '_ensmanagement.add-favorite',
+          '_ensmanagement.favorite-already-added',
+          '_ensmanagement.ok'
+        );
+      }
     } catch (ex) { }
   }
 

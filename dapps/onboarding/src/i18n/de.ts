@@ -48,9 +48,9 @@ export const de = {
       Mit dem evan.network führen Sie Ihre Prozesse ins <b>„Industrie 4.0“</b>-Zeitalter.
     `,
     'start-using-evan': 'Um im evan.network starten zu können, wählen Sie eine der folgende Optionen',
-    'new-mnemonic-account': 'Erstellen sie eine neuen Identität',
+    'new-mnemonic-account': 'Erstellen Sie eine neue Identität',
     'mnemonic-account': 'Importieren Sie eine bestehende Identität',
-    'metamask-account': 'Nutzen Sie Metamask',
+    'metamask-account': 'Nutzen Sie MetaMask',
     'metamask': 'Metamask',
     'metamask-locked': `Metamask ist gesperrt`,
     'metamask-locked-desc': `

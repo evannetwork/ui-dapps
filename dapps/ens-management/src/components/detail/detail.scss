@@ -26,5 +26,9 @@
 */
 
 ens-management-detail {
-
+  .favorite-header {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
 }

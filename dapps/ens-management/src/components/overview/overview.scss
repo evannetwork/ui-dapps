@@ -40,30 +40,6 @@ evan-ens-management {
     }
   }
 
-  .evan-modal > .evan-content {
-    & > * {
-      display: block;
-    }
-
-    & > h2.content-header {
-      font-size: 24px;
-    }
-
-    & > ion-icon[name='checkmark'] {
-      font-size: 100px;
-
-      margin: 25px 0;
-    }
-
-    & > b {
-      font-size: 24px;
-
-      display: block;
-
-      margin-top: 25px;
-    }
-  }
-
   ion-list.evan-grid ion-item-sliding ion-avatar .evan-avatar-wrapper img {
     border-radius: 50%;
   }

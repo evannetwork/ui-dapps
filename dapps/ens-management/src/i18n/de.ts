@@ -27,10 +27,18 @@
 
 export const de = {
   "_ensmanagement": {
+    "add-favorite": "Favorit hinzufügen",
+    "add-favorite-desc": "Wollen Sie die ENS Adresse <b>{{ ensAddress }}</b> als Favoriten hinzufügen?",
     "addFavorite-dispatcher": {
       "description": "ENS Favorit hinzufügen",
       "title": "ENS Favorit hinzufügen"
     },
+    "data-dispatcher": {
+      "description": "Daten für ENS Adresse speichern",
+      "title": "Daten für ENS Adresse speichern"
+    },
+    "save-data": "Daten speichern",
+    "save-data-desc": "Wollen Sie die aktuell eingetragenen Daten speichern? Wenn sie den Besitzer auf einen anderen Besitzer ändern, können Sie keine Anpassungen mehr durchführen.",
     "address": {
       "desc": "Zugehörige Vertragsaddresse",
       "error": "Bitte geben Sie eine valide Vertragsadresse ein!",
@@ -47,7 +55,9 @@ export const de = {
       "title": "Datenadresse"
     },
     "eve-amount": "{{ amount }} EVE",
+    "favorite-already-added": "Die ENS Adresse <b>{{ ensAddress }}</b> wurde bereits hinzufügt.",
     "missing-eve": "Sie besitzen nicht genügend EVE, um diese Adresse zu kaufen.",
+    "ok": "ok",
     "open-details": "überprüfen",
     "open-placeholder": "Geben Sie eine ENS Adresse ein, die geprüft werden soll.",
     "open-text": "ENS Adressen",
@@ -75,6 +85,7 @@ export const de = {
       "description": "ENS Favorit löschen",
       "title": "ENS Favorit löschen"
     },
+    "ens-address": "ENS Adressen",
     "sub-ens-addresses": "Sub-Adressen"
   },
   "ensmanagement": "ENS Verwaltung"

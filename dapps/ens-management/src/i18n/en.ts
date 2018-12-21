@@ -27,10 +27,18 @@
 
 export const en = {
   "_ensmanagement": {
+    "add-favorite": "Add Favorite",
+    "add-favorite-desc": "Do you want to add the ENS address <b>{{ ensAddress }}</b> as a favorite?",
     "addFavorite-dispatcher": {
       "description": "Add ENS domain favorite",
       "title": "Add ENS domain favorite"
     },
+    "data-dispatcher": {
+      "description": "Save data for ENS address",
+      "title": "Save data for ENS address"
+    },
+    "save-data": "Save data",
+    "save-data-desc": "Do you want to save the currently entered data? If you change the owner to another owner, you will not be able to make any adjustments.",
     "address": {
       "desc": "Associated contract address",
       "error": "Please enter a valid contract address!",
@@ -51,7 +59,9 @@ export const en = {
       "title": "Data address"
     },
     "eve-amount": "{{ amount }} EVE",
+    "favorite-already-added": "The ENS address <b>{{ ensAddress }}</b> has already been added.",
     "missing-eve": "You don't have enough EVE to buy this domain.",
+    "ok": "ok",
     "open-details": "lookup",
     "open-placeholder": "Please insert a ENS domain that should be checked.",
     "open-text": "ENS Domains",
@@ -75,6 +85,7 @@ export const en = {
       "description": "Delete ENS domain favorite",
       "title": "Delete ENS domain favorite"
     },
+    "ens-address": "ENS addresse",
     "sub-ens-addresses": "Sub Addresses"
   },
   "ensmanagement": "ENS Management"

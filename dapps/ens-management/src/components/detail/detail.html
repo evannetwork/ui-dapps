@@ -25,8 +25,11 @@
   https://evan.network/license/
 -->
 
-<evan-loading *ngIf="loading"></evan-loading>
-<ng-container *ngIf="!loading">
+<evan-loading *ngIf="ensCheckComp.loading || loading"></evan-loading>
+<evan-ens-check #ensCheckComp
+  (updated)="ensCheckUpdated()">
+</evan-ens-check>
+<ng-container *ngIf="!ensCheckComp.loading && !loading">
   <div class="evan-tabs evan-content evan-small-content" *ngIf="!core.utils.isMD">
     <button ion-button icon-left clear
       [class.active]="activeTab === 0" 
@@ -69,9 +72,24 @@
   <div class="evan-right-panel evan-tabs-container" [@tabSlideTransition]="activeTab">
     <div class="evan-relative" *ngIf="activeTab === 0">
       <div class="evan-relative evan-content m-t-0">
-        <h3 class="content-header m-t-0">
+        <h3 class="content-header m-t-0 favorite-header">
           {{ ensAddress }}
+
+          <button icon-only ion-button margin-left round clear
+            *ngIf="isPinned"
+            (click)="ensCheckComp.removeFavorite(ensAddress)">
+            <ion-icon name="star" color="warning"></ion-icon>
+          </button>
+          <button icon-only ion-button margin-left round clear
+            *ngIf="!isPinned"
+            (click)="ensCheckComp.addFavorite(ensAddress)">
+            <ion-icon name="star-outline"></ion-icon>
+          </button>
         </h3>
+
+        <div class="top-right" *ngIf="ensData.validUntil">
+          {{ validUntil | date:'medium':'':translateService.translate.currentLang }}
+        </div>
 
         <form class="no-padding-top" #ensDetailForm="ngForm">
           <ion-row>
@@ -81,8 +99,8 @@
                 <ion-input type="text" name="owner" required
                   [(ngModel)]="ensData.owner"
                   [placeholder]="'_ensmanagement.owner.desc' | translate"
-                  (ionChange)="setTranslation()"
-                  (focusout)="detectTimeout()">
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="utils.detectTimeout(ref)">
                 </ion-input>
               </ion-item>
               <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'owner')">
@@ -97,8 +115,8 @@
                 <ion-input type="text" name="address" required
                   [(ngModel)]="ensData.address"
                   [placeholder]="'_ensmanagement.address.desc' | translate"
-                  (ionChange)="setTranslation()"
-                  (focusout)="detectTimeout()">
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="utils.detectTimeout(ref)">
                 </ion-input>
               </ion-item>
               <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'address')">
@@ -115,8 +133,8 @@
                 <ion-input type="text" name="registrar" required
                   [(ngModel)]="ensData.registrar"
                   [placeholder]="'_ensmanagement.registrar.desc' | translate"
-                  (ionChange)="setTranslation()"
-                  (focusout)="detectTimeout()">
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="utils.detectTimeout(ref)">
                 </ion-input>
               </ion-item>
               <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'registrar')">
@@ -131,8 +149,8 @@
                 <ion-input type="text" name="contentAddress" required
                   [(ngModel)]="ensData.contentAddress"
                   [placeholder]="'_ensmanagement.contentAddress.desc' | translate"
-                  (ionChange)="setTranslation()"
-                  (focusout)="detectTimeout()">
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="utils.detectTimeout(ref)">
                 </ion-input>
               </ion-item>
               <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'contentAddress')">
@@ -143,31 +161,73 @@
             </ion-col>
           </ion-row>
         </form>
+
+        <div text-center margin-top>
+          <button ion-button round outline icon-left
+            *ngIf="ensData.owner === ensManagementService.nullAddress"
+            (click)="ensCheckComp.checkEnsAddress(ensAddress)"
+            [disabled]="ensCheckComp.showLoading">
+            <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
+            {{ '_ensmanagement.purchasing' | translate }}
+          </button>
+
+          <button ion-button round outline icon-left
+            *ngIf="canEdit"
+            (click)="updateData()"
+            [disabled]="ensCheckComp.showLoading">
+            <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
+            {{ '_ensmanagement.save-data' | translate }}
+          </button>
+        </div>
       </div>
       <div class="evan-relative evan-content m-t-0">
         <h3 class="content-header m-t-0">
           {{ '_ensmanagement.sub-ens-addresses' | translate }}
         </h3>
 
-        <div class="evan-relative">
+        <div class="evan-relative display-flex-justify">
           <ion-item margin-vertical class="semi-transparent">
             <ion-input
               type="text"
               [placeholder]="'_ensmanagement.open-placeholder' | translate"
-              [(ngModel)]="ensAddress"
-              (keydown)="submitOnEnter($event)"
+              [(ngModel)]="subEnsAddress"
+              (keydown)="ensCheckComp.submitOnEnter($event, ensCheckComp.checkEnsAddress.bind(ensCheckComp), subEnsAddress + '.' + ensAddress)"
               (ionChange)="ref.detectChanges();">
             </ion-input>
-            <div item-end>.{{ ensManagementService.domainName }}</div>
+            <div item-end>.{{ ensAddress }}</div>
           </ion-item>
-        </div>
-        <div text-center margin-bottom>
-          <button ion-button round outline icon-left
-            (click)="checkEnsAddress()"
-            [disabled]="!ensAddress || showLoading">
+          <button ion-button round outline icon-left margin-left
+            (click)="ensCheckComp.checkEnsAddress(subEnsAddress + '.' + ensAddress)"
+            [disabled]="showLoading">
             <ion-spinner *ngIf="showLoading"></ion-spinner>
             {{ '_ensmanagement.open-details' | translate }}
           </button>
+        </div>
+
+        <div class="table-responsive" *ngIf="core.utils.isMD">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>{{ '_ensmanagement.ens-address' | translate }}</th>
+                <th>{{ '_ensmanagement.owner.title' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tappable *ngFor="let ensDetail of pinned" [routerLink]="'../' + ensDetail.ensAddress">
+                <td width="390">
+                  {{ ensDetail.ensAddress }}
+                </td>
+                <td>
+                  {{ owner }}
+                </td>
+                <td text-right>
+                  <button ion-button clear item-end>
+                    <ion-icon name="arrow-forward" color="light"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
