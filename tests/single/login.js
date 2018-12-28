@@ -2,7 +2,7 @@ module.exports = {
   'evan.network login' : function (browser) {
     browser
       .url('https://dashboard.evan.network')
-      .waitForElementVisible('onboarding-welcome', 10000)
+      .waitForElementVisible('onboarding-welcome', 30000)
       .assert.elementPresent('.slide-zoom > h3')
       .click('.start-buttons > button:nth-child(2)')
       .waitForElementVisible('mnemonic-display', 10000)
