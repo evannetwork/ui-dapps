@@ -1,29 +1,18 @@
 {
-  "author": "evan GmbH",
-  "dependencies": {
-    "nightwatch": "^0.9.21"
-  },
-  "homepage": "https://evannetwork.github.io/",
-  "keywords": [
-    "blockchain",
-    "ethereum",
-    "smart-contracts",
-    "javascript",
-    "typescript",
-    "API",
-    "Angular 5",
-    "Ionic",
-    "DApp",
-    "SASS"
-  ],
   "license": "AGPL-3.0-only",
-  "main": "dist/index.js",
   "name": "@evan.network/ui-tests",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:evannetwork/ui-tests.git"
+  "version": "0.1.0",
+  "description": "evan.network nightwatch ui-tests",
+  "scripts": {
+    "test": "npm run single && npm run local && npm run parallel",
+    "single": "./node_modules/.bin/nightwatch -c conf/single.conf.js",
+    "local": "node scripts/local.runner.js -c conf/local.conf.js",
+    "parallel": "./node_modules/.bin/nightwatch -c conf/parallel.conf.js -e chrome,firefox,safari,ie",
+    "parallel_local": "node scripts/local.runner.js -c conf/parallel_local.conf.js -e chrome,firefox,safari",
+    "suite": "./node_modules/.bin/nightwatch -c conf/suite.conf.js"
   },
-  "scripts": {},
-  "typings": "dist/index.d.ts",
-  "version": "1.5.0"
+  "dependencies": {
+    "browserstack-local": "latest",
+    "nightwatch": "latest"
+  }
 }
