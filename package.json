@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "browserstack-local": "latest",
-    "nightwatch": "latest"
+    "nightwatch": "latest",
+    "nightwatch-browserstack": "latest"
   }
 }
