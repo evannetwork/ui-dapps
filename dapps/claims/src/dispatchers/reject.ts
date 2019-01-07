@@ -57,12 +57,14 @@ export const rejectDispatcher = new QueueDispatcher(
           entry.rejectReason.rejector = service.core.activeAccount();
 
           await service.bcc.claims.rejectClaim(
+            service.core.activeAccount(),
             entry.address,
-            entry.topic,
-            entry.issuer,
             entry.id,
             entry.rejectReason
           );
+
+          // clear cache for this claim
+          service.claims.deleteFromClaimCache(entry.address, entry.topic);
         }
       }
     )

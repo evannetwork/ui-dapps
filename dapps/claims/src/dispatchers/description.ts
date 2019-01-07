@@ -50,16 +50,57 @@ export const descriptionDispatcher = new QueueDispatcher(
       '_claims.description-dispatcher.description',
       async (service: ClaimService, queueEntry: any) => {
         const results = [ ];
+        const activeAccount = service.core.activeAccount();
+        const nameResolver = service.bcc.nameResolver;
 
         // get businessCenter instance
         for (let entry of queueEntry.data) {
+          // split the current address, and remove the first entry to get the parent element
+          const splitParentAddress = entry.ensAddress.split('.');
+          splitParentAddress.splice(0, 1);
+
+          // load all owners
+          const owners = await Promise.all(splitParentAddress.map((address, index) => 
+            service.bcc.executor.executeContractCall(
+              nameResolver.ensContract,
+              'owner',
+              // get the corresponding concadinated address
+              nameResolver.namehash(splitParentAddress.slice(index, splitParentAddress.length)
+                .join('.'))
+            )
+          ));
+
+          // check the full path, if every parent level has set a owner, else, try to set it
+          for (let i = splitParentAddress.length - 2; i > -1; i--) {
+            // if the parent is owned by me and the current one is not owned by me, set the address
+            if (activeAccount === owners[i + 1] && activeAccount !== owners[i]) {
+              const ensAddress = splitParentAddress.slice(i, splitParentAddress.length)
+                .join('.');
+
+              // reset the current address by setting the current user as owner
+              await nameResolver.setAddress(
+                ensAddress,
+                await nameResolver.getAddress(ensAddress),
+                activeAccount
+              );
+
+              // override owners array to check the correct new value
+              owners[i] = activeAccount;
+            }
+          }
+
+          // set the description
           await service.bcc.description.setDescription(
             entry.ensAddress,
             { public: entry.description, },
             service.core.activeAccount()
           );
 
+          // clear the cache
           delete service.descriptionService.descriptions[entry.ensAddress];
+
+          // clear cache for claims using this description ens address
+          service.claims.deleteFromClaimCache('*', entry.topic);
         }
       }
     )

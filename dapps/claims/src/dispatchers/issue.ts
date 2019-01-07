@@ -60,13 +60,16 @@ export const issueDispatcher = new QueueDispatcher(
           if (expirationDate) {
             expirationDate = Math.floor(new Date(expirationDate).getTime() / 1000);
           }
-
+          
           await service.bcc.claims.setClaim(
             service.core.activeAccount(),
             entry.address,
             entry.topic,
             expirationDate
           );
+
+          // clear cache for this claim
+          service.claims.deleteFromClaimCache(entry.address, entry.topic);
         }
       }
     )
