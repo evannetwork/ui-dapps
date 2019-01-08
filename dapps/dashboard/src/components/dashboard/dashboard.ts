@@ -120,7 +120,8 @@ export class DashboardComponent extends AsyncComponent {
       'mailbox',
       'profile'
     ]);
-        
+
+    this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
     this.mailUpdate = this.core.utils.onEvent('check-new-mail-update', () => this.ref.detectChanges());
     this.smallToolbar = window.localStorage['evan-small-toolbar'] === 'true';
 

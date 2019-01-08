@@ -58,6 +58,7 @@
       </button>
       
       <button ion-item
+        *ngIf="originalData.owner !== ensManagementService.nullAddress"
         [class.active]="activeTab === 1" 
         (click)="activateTab(1);">
         <ion-avatar item-start>
@@ -237,7 +238,7 @@
     </div>
     <div class="evan-relative"
       *ngIf="activeTab === 1">
-      <div class="evan-relative evan-content m-t-0 evan-explorer">
+      <div class="evan-explorer">
         <explorer-dbcp></explorer-dbcp>
       </div>
     </div>

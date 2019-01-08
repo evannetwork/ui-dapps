@@ -95,7 +95,7 @@ function getRoutes(): Routes {
     `explorer.${ getDomainName() }`,
     RootComponent,
     [
-     {
+      {
         path: '',
         component: ExplorerSelectComponent,
         data: {
@@ -104,8 +104,8 @@ function getRoutes(): Routes {
           },
           state: 'select',
         }
-     },
-     {
+      },
+      {
         path: 'detail/:id',
         data: {
           state: 'detail'

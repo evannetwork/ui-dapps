@@ -53,6 +53,7 @@ import {
 } from 'angular-core';
 
 import { ENSManagementService } from '../../services/service';
+import { ExplorerService } from 'explorer';
 
 /**************************************************************************************************/
 
@@ -127,6 +128,11 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   private isPinned: boolean;
 
   /**
+   * backup the latest explorer name resolver, to backup it after destroying this component
+   */
+  private originExplorerNameResolver: any;
+
+  /**
    * current detail container for auto scroll
    */
   @ViewChild('ensCheckComp') ensCheckComp: any;
@@ -138,6 +144,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     private claimService: EvanClaimService,
     private core: EvanCoreService,
     private ensManagementService: ENSManagementService,
+    private explorerService: ExplorerService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
@@ -154,7 +161,13 @@ export class ENSManagementDetailComponent extends AsyncComponent {
       this.ensManagementService.getQueueId(),
       async (reload, results) => this.loadEnsData(reload)
     );
+
+    // watch for route changes, so we do not need to reload the full component
     this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.loadEnsData(true));
+    
+    // switch explorer nameResolver to eventually used custom nameResolver
+    this.originExplorerNameResolver = this.explorerService.nameResolver;
+    this.explorerService.nameResolver = this.ensManagementService.nameResolver;
   }
 
   /**
@@ -163,6 +176,9 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   _ngOnDestroy() {
     this.queueWatcher();
     this.watchRouteChange();
+
+    // restore origin ens explorer name resolver
+    this.explorerService.nameResolver = this.originExplorerNameResolver;
   }
 
   /**

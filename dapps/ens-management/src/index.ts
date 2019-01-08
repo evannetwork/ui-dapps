@@ -158,7 +158,10 @@ export class DispatcherModule {
 
 @NgModule(getConfig(false))
 class ENSManagementModule {
-  constructor(private translations: Translations) { }
+  constructor(
+    private explorerTranslations: ExplorerTranslations,
+    private translations: Translations,
+  ) { }
 }
 
 export async function startDApp(container, dbcpName) {

@@ -136,7 +136,7 @@ export class ExplorerDBCPComponent extends AsyncComponent {
 
     if (this.id.indexOf('0x') !== 0) {
       // load the contract address for the current id
-      const contractAddress = await this.bcc.nameResolver.getAddress(this.id);
+      const contractAddress = await this.explorerService.nameResolver.getAddress(this.id);
 
       try {
         // check if a description can be loaded for the contract address
@@ -162,6 +162,11 @@ export class ExplorerDBCPComponent extends AsyncComponent {
       try {
         this.fullDBCP = await this.bcc.description.getDescription(this.id, this.core.activeAccount());
       } catch (ex) {
+        this.fullDBCP = null
+      }
+
+      // fill empty dbcp
+      if (this.fullDBCP === null) {
         this.fullDBCP = {
           public: { },
           private: { },
@@ -221,11 +226,11 @@ export class ExplorerDBCPComponent extends AsyncComponent {
       canUpdate = await this.explorerService.isUserOwnerOrAdmin(this.contractAddress);
     } else {
       // check if user is able to update the current id as a ENS address
-      const ensHash = this.bcc.nameResolver.namehash(this.id);
+      const ensHash = this.explorerService.nameResolver.namehash(this.id);
       // load contract with the AbstractENS interface for the current ens address 
       const ensContract = await this.bcc.contractLoader.loadContract(
         'AbstractENS',
-        this.bcc.config.nameResolver.ensAddress
+        this.explorerService.nameResolver.config.ensAddress
       );
 
       // get the owner of the ens contract

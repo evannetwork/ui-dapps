@@ -24,7 +24,7 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-explorer-root {
+.evan-explorer {
   evan-split-pane {
     &.disable-side-panel {
       ion-split-pane.split-pane {
@@ -148,62 +148,62 @@ explorer-root {
           margin: auto;
         }
       }
+    }
+  }
 
-      /* top positioned button to enable configuration dialog */
-      button.configuration-open {
-        position: absolute;
-        z-index: 10;
-        top: -10px;
-        right: 0;
-        left: 0;
+  /* top positioned button to enable configuration dialog */
+  button.configuration-open {
+    position: absolute;
+    z-index: 10;
+    top: -10px;
+    right: 0;
+    left: 0;
 
-        margin: auto;
-      }
+    margin: auto;
+  }
 
-      .explorer-tabs.evan-tabs {
-        margin-top: 40px;
-        margin-bottom: 3px;
+  .explorer-tabs.evan-tabs {
+    margin-top: 40px;
+    margin-bottom: 3px;
 
-        @media (max-width: 768px) {
-          margin-bottom: 0;
-        }
-
-        button .button-inner {
-          line-height: 50px;
-        }
-      }
-
-      .explorer-tabs.evan-tabs-container {
-        & > div {
-          margin-top: 0;
-          padding-top: 0;
-
-          @media (min-width: 769px) {
-            width: calc(100% - 50px);
-            margin-left: 25px;
-          }
-        }
-      }
+    @media (max-width: 768px) {
+      margin-bottom: 0;
     }
 
-    .top-right-info {
-      position: absolute;
-      z-index: 1;
-      top: 25px;
-      right: 25px;
+    button .button-inner {
+      line-height: 50px;
     }
+  }
 
-    .ace_editor {
-      overflow: auto;
+  .explorer-tabs.evan-tabs-container {
+    & > div {
+      margin-top: 0;
+      padding-top: 0;
 
-      width: 100%;
+      @media (min-width: 769px) {
+        width: calc(100% - 50px);
+        margin-left: 25px;
+      }
     }
+  }
+
+  .top-right-info {
+    position: absolute;
+    z-index: 1;
+    top: 25px;
+    right: 25px;
+  }
+
+  .ace_editor {
+    overflow: auto;
+
+    width: 100%;
   }
 }
 
 @mixin customTheme($colors, $theme) {
-  explorer-root {
-    evan-split-pane {
+  .evan-explorer {
+    &, evan-split-pane {
       ion-split-pane {
         ion-menu ion-header {
           &:hover {
@@ -241,9 +241,7 @@ explorer-root {
     .top-right-info {
       color: map-get($colors, light-gray);
     }
-  }
 
-  .evan-explorer {
     .ace_editor {
       &, .ace_gutter {
         background-color: map-get($theme, background-color);
