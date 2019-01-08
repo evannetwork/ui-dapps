@@ -26,7 +26,7 @@
 -->
 
 <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
-<evan-split-pane #splitPane
+<evan-split-pane #splitPane class="evan-explorer"
   *ngIf="!loading"
   [class.disable-side-panel]="!id"
   [customHeader]="true"

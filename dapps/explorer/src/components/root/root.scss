@@ -210,55 +210,57 @@ explorer-root {
             background-color: map-get($theme, background-color);
           }
         }
+      }
+    }
 
-        /* show when configuration-box is their for a backdrop effect*/
-        .configuration-backdrop {
-          &.visible {
-            background-color: rgba(0, 0, 0, 0.4);
-          }
+    /* show when configuration-box is their for a backdrop effect*/
+    .configuration-backdrop {
+      &.visible {
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    /* configueation box*/
+    .configuration-box {
+      /* close configuration dialog */
+      button.configuration-close {
+        background-color: map-get($theme, primary);
+      }
+    }
+
+    /* top positioned button to enable configuration dialog */
+    button.configuration-open {
+      background-color: map-get($colors, primary);
+      box-shadow: 0 0 8px 0 map-get($theme, background-color);
+    }
+
+    ion-item.item-md.item-block .item-inner {
+      border-bottom-color: map-get($theme, background-color-2 !important);
+    }
+
+    .top-right-info {
+      color: map-get($colors, light-gray);
+    }
+  }
+
+  .evan-explorer {
+    .ace_editor {
+      &, .ace_gutter {
+        background-color: map-get($theme, background-color);
+      }
+
+      .ace_marker-layer {
+        .ace_active-line {
+          background-color: map-get($theme, background-color-2);
         }
 
-        /* configueation box*/
-        .configuration-box {
-          /* close configuration dialog */
-          button.configuration-close {
-            background-color: map-get($theme, primary);
-          }
-        }
-
-        /* top positioned button to enable configuration dialog */
-        button.configuration-open {
-          background-color: map-get($colors, primary);
-          box-shadow: 0 0 8px 0 map-get($theme, background-color);
+        .ace_selection {
+          background-color: #4e9894;
         }
       }
 
-      ion-item.item-md.item-block .item-inner {
-        border-bottom-color: map-get($theme, background-color-2 !important);
-      }
-
-      .top-right-info {
-        color: map-get($colors, light-gray);
-      }
-
-      .ace_editor {
-        &, .ace_gutter {
-          background-color: map-get($theme, background-color);
-        }
-
-        .ace_marker-layer {
-          .ace_active-line {
-            background-color: map-get($theme, background-color-2);
-          }
-
-          .ace_selection {
-            background-color: #4e9894;
-          }
-        }
-
-        .ace_active-line, .ace_line {
-          color: map-get($theme, text-color);
-        }
+      .ace_active-line, .ace_line {
+        color: map-get($theme, text-color);
       }
     }
   }

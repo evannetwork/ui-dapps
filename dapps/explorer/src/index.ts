@@ -53,7 +53,7 @@ import {
   ClaimsTranslations,
 } from 'claims';
 
-import { DAppsTranslations } from './i18n/registry';
+import { ExplorerTranslations } from './i18n/registry';
 import { ExplorerBaseContractComponent } from './components/basecontract/basecontract';
 import { ExplorerContractGeneralComponent } from './components/general/general';
 import { ExplorerContractInteractionComponent } from './components/contractinteraction/contractinteraction';
@@ -70,6 +70,23 @@ import { RootComponent } from './components/root/root';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 import 'brace/mode/json';
+
+export {
+  AceEditorModule,
+  ExplorerTranslations,
+  ExplorerBaseContractComponent,
+  ExplorerClaimsComponent,
+  ExplorerContractGeneralComponent,
+  ExplorerContractInteractionComponent,
+  ExplorerDataContractComponent,
+  ExplorerDataContractDetailComponent,
+  ExplorerDataContractListEntryComponent,
+  ExplorerDBCPComponent,
+  ExplorerSelectComponent,
+  ExplorerService,
+  ExplorerTransactionDetailComponent,
+  ExplorerTransactionHistoryComponent,
+}
 
 /**************************************************************************************************/
 
@@ -188,7 +205,7 @@ function getConfig(isDispatcher?: boolean) {
       CommonModule,
     ],
     providers: [
-      DAppsTranslations,
+      ExplorerTranslations,
       ExplorerService,
     ],
   };
@@ -234,7 +251,7 @@ export class DispatcherModule {
 @NgModule(getConfig(false))
 class ExplorerModule {
   constructor(
-    private translations: DAppsTranslations,
+    private translations: ExplorerTranslations,
     private claimsTranslations: ClaimsTranslations
   ) { }
 }

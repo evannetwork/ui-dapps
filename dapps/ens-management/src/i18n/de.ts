@@ -62,7 +62,7 @@ export const de = {
     "open-placeholder": "Geben Sie eine ENS Adresse ein, die geprüft werden soll.",
     "open-text": "ENS Adressen",
     "overview": "Übersicht",
-    "overview-desc": "Besitzer, Registrar, Sub Domains, ...",
+    "overview-desc": "Besitzer, Resolver, Sub Domains, ...",
     "owner": {
       "desc": "Besitzer diesr ENS Adresse",
       "error": "Bitte geben Sie eine valide Account ID ein!",
@@ -74,10 +74,10 @@ export const de = {
     },
     "purchasing": "ENS Adresse kaufen",
     "purchasing-desc": "Sie sind dabei die Adresse <b>{{ ensAddress }}</b> für {{ amount }} EVE zu kaufen. Wollen Sie wirklich forfahren?",
-    "registrar": {
-      "desc": "Bestimmt das Management von Sub ENS Adressen.",
+    "resolver": {
+      "desc": "Bestimmt das auflösen von ENS Adressen.",
       "error": "Bitte geben Sie eine valide Vertragsadresse ein",
-      "title": "ENS Management Registrar"
+      "title": "ENS Management Resolver"
     },
     "remove-favorite": "Favorit entfernen",
     "remove-favorite-desc": "Wollen Sie die Adresse <b>{{ ensAddress }}</b> als Favorit aus ihre ENS Verwaltung löschen? <br><br>Hinweis: Sie bleiben weiterhin der Besitzer dieser Adresse.",

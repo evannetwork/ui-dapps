@@ -166,7 +166,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   }
 
   /**
-   * Analyse the current ens hash param and load ens specific data (owner, registrar).
+   * Analyse the current ens hash param and load ens specific data (owner, resolver).
    *
    * @param      {boolean}  reloadPinned  reload the pinned domains by the checkbox component.
    */
@@ -174,7 +174,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     this.loading = true;
     this.ref.detectChanges();
 
-    this.ensAddress = this.routingService.getHashParam('address');
+    this.ensAddress = this.routingService.getHashParam('id');
 
     // reload pins and check for actual ens address sub addresses
     if (reloadPinned) {
@@ -185,7 +185,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
 
     // load the ens details        
     const nameResolver = this.ensManagementService.nameResolver;
-    const [ owner, address, registrar, contentAddress, validUntil ] = await Promise.all([
+    const [ owner, address, resolver, contentAddress, validUntil ] = await Promise.all([
       this.ensManagementService.getOwner(this.ensAddress),
       nameResolver.getAddress(this.ensAddress),
       this.bcc.executor.executeContractCall(nameResolver.ensContract, 'resolver',
@@ -199,11 +199,12 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     ]);
 
     // save the data to the scope
-    this.ensData = { owner, address, registrar, contentAddress, validUntil, };
-    this.originalData = { owner, address, registrar, contentAddress, validUntil, };
+    this.ensData = { owner, address, resolver, contentAddress, validUntil, };
+    this.originalData = { owner, address, resolver, contentAddress, validUntil, };
 
     // split the ens address, to check each parent, if we can set the current data
     let splitted = this.ensAddress.split('.');
+    this.canEdit = false;
     while (!this.canEdit && splitted.length > 1) {
       this.canEdit = (await this.ensManagementService.getOwner(splitted.join('.'))) ===
         this.core.activeAccount();
@@ -265,6 +266,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
       this.queue.addQueueData(
         this.ensManagementService.getQueueId('dataDispatcher'),
         {
+          ensAddress: this.ensAddress,
           ensData: this.ensData,
           originData: this.originalData,
         }

@@ -46,6 +46,13 @@ import {
   startAngularApplication,
 } from 'angular-core';
 
+import {
+  AceEditorModule,
+  ExplorerDBCPComponent,
+  ExplorerService,
+  ExplorerTranslations,
+} from 'explorer';
+
 import { ENSCheckComponent } from './components/ens-check/ens-check';
 import { ENSManagementDetailComponent } from './components/detail/detail';
 import { ENSManagementOverviewComponent } from './components/overview/overview';
@@ -84,7 +91,7 @@ function getRoutes(): Routes {
         }
       },
       {
-        path: ':address',
+        path: ':id',
         component: ENSManagementDetailComponent,
         data: {
           navigateBack: true,
@@ -106,12 +113,15 @@ function getRoutes(): Routes {
 function getConfig(isDispatcher?: boolean, isLibrary?: boolean) {
   let config: any = {
     imports: [
-      CommonModule,
+      AceEditorModule,
       AngularCore,
+      CommonModule,
     ],
     providers: [
-      Translations,
       ENSManagementService,
+      ExplorerService,
+      Translations,
+      ExplorerTranslations,
     ],
   };
 
@@ -133,6 +143,7 @@ function getConfig(isDispatcher?: boolean, isLibrary?: boolean) {
       ENSCheckComponent,
       ENSManagementDetailComponent,
       ENSManagementOverviewComponent,
+      ExplorerDBCPComponent,
       RootComponent,
     ];
   }
