@@ -12,7 +12,7 @@
         "claims.js",
         "claims.css"
       ],
-      "origin": "QmWkRAMg6pHozGdxVzLYEQvRvVh6zLoPL1Qv1LB3YdbsmC",
+      "origin": "QmPVywEiVEKkWkptXQFAtSCrk3UnidMsJAifV6wTxHquz7",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "standalone": true,
@@ -39,7 +39,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmX9EcCNkzWh8jvb2cmvnCTFokkpRMXgBrthRb4922nYdz"
+      "1.0.0": "QmNmqyBEG5Je79Y8nqgWQg3NXNdyxpbPAX9dSPGEXXAvk7"
     }
   }
 }

@@ -239,7 +239,14 @@
     <div class="evan-relative"
       *ngIf="activeTab === 1">
       <div class="evan-explorer">
-        <explorer-dbcp></explorer-dbcp>
+        <ion-item class="no-border">
+          <ion-label>{{ '_ensmanagement.rawMode' | translate }}</ion-label>
+          <ion-toggle 
+            [(ngModel)]="explorerService.rawMode"
+            (ionChange)="reloadDbcp()"
+          ></ion-toggle>
+        </ion-item>
+        <explorer-dbcp *ngIf="!hideDbcpComp"></explorer-dbcp>
       </div>
     </div>
   </div>

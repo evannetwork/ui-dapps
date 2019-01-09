@@ -33,12 +33,6 @@ export const de = {
       "description": "ENS Favorit hinzufügen",
       "title": "ENS Favorit hinzufügen"
     },
-    "data-dispatcher": {
-      "description": "Daten für ENS Adresse speichern",
-      "title": "Daten für ENS Adresse speichern"
-    },
-    "save-data": "Daten speichern",
-    "save-data-desc": "Wollen Sie die aktuell eingetragenen Daten speichern? Wenn sie den Besitzer auf einen anderen Besitzer ändern, können Sie keine Anpassungen mehr durchführen.",
     "address": {
       "desc": "Zugehörige Vertragsaddresse",
       "error": "Bitte geben Sie eine valide Vertragsadresse ein!",
@@ -54,6 +48,11 @@ export const de = {
       "error": "Bitte geben Sie eine valide IPFS Adresse ein!",
       "title": "Datenadresse"
     },
+    "data-dispatcher": {
+      "description": "Daten für ENS Adresse speichern",
+      "title": "Daten für ENS Adresse speichern"
+    },
+    "ens-address": "ENS Adressen",
     "eve-amount": "{{ amount }} EVE",
     "favorite-already-added": "Die ENS Adresse <b>{{ ensAddress }}</b> wurde bereits hinzufügt.",
     "missing-eve": "Sie besitzen nicht genügend EVE, um diese Adresse zu kaufen.",
@@ -74,18 +73,20 @@ export const de = {
     },
     "purchasing": "ENS Adresse kaufen",
     "purchasing-desc": "Sie sind dabei die Adresse <b>{{ ensAddress }}</b> für {{ amount }} EVE zu kaufen. Wollen Sie wirklich forfahren?",
-    "resolver": {
-      "desc": "Bestimmt das auflösen von ENS Adressen.",
-      "error": "Bitte geben Sie eine valide Vertragsadresse ein",
-      "title": "ENS Management Resolver"
-    },
+    "rawMode": "Raw-Mode",
     "remove-favorite": "Favorit entfernen",
     "remove-favorite-desc": "Wollen Sie die Adresse <b>{{ ensAddress }}</b> als Favorit aus ihre ENS Verwaltung löschen? <br><br>Hinweis: Sie bleiben weiterhin der Besitzer dieser Adresse.",
     "removeFavorite-dispatcher": {
       "description": "ENS Favorit löschen",
       "title": "ENS Favorit löschen"
     },
-    "ens-address": "ENS Adressen",
+    "resolver": {
+      "desc": "Bestimmt das auflösen von ENS Adressen.",
+      "error": "Bitte geben Sie eine valide Vertragsadresse ein",
+      "title": "ENS Management Resolver"
+    },
+    "save-data": "Daten speichern",
+    "save-data-desc": "Wollen Sie die aktuell eingetragenen Daten speichern? Wenn sie den Besitzer auf einen anderen Besitzer ändern, können Sie keine Anpassungen mehr durchführen.",
     "sub-ens-addresses": "Sub-Adressen"
   },
   "ensmanagement": "ENS Verwaltung"

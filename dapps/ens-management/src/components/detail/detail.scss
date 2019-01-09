@@ -33,8 +33,19 @@ ens-management-detail {
   }
 
   .evan-explorer {
+    & > ion-item {
+      width: calc(100% - 10px);
+      margin-left: 10px;
+    }
+
     .explorer-tabs.evan-tabs {
       margin-top: 0;
+    }
+
+    @media (min-width: 769px) {
+      .evan-content {
+        margin: 0 10px;
+      }
     }
   }
 }

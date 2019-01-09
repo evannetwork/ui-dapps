@@ -74,6 +74,7 @@ export const en = {
     },
     "purchasing": "Purchase ENS domain",
     "purchasing-desc": "You are about to buy the domain <b>{{ ensAddress }}</b> for {{ amount }} EVE . Do you really want to continue?",
+    "rawMode": "Raw-Mode",
     "resolver": {
       "desc": "Determines the resolving of Sub ENS addresses.",
       "error": "Please enter a valid contract address.",

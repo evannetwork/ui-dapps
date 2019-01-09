@@ -130,7 +130,12 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   /**
    * backup the latest explorer name resolver, to backup it after destroying this component
    */
-  private originExplorerNameResolver: any;
+  private explorerBackup: any;
+
+  /**
+   * hide the dbcp component to reload, when the rawMode was changed
+   */
+  private hideDbcpComp: boolean;
 
   /**
    * current detail container for auto scroll
@@ -166,8 +171,14 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.loadEnsData(true));
     
     // switch explorer nameResolver to eventually used custom nameResolver
-    this.originExplorerNameResolver = this.explorerService.nameResolver;
+    this.explorerBackup = {
+      nameResolver: this.explorerService.nameResolver,
+      rawMode: this.explorerService.rawMode,
+    };
+
+    // overwrite previous values
     this.explorerService.nameResolver = this.ensManagementService.nameResolver;
+    this.explorerService.rawMode = false;
   }
 
   /**
@@ -178,7 +189,8 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     this.watchRouteChange();
 
     // restore origin ens explorer name resolver
-    this.explorerService.nameResolver = this.originExplorerNameResolver;
+    this.explorerService.nameResolver = this.explorerBackup.nameResolver;
+    this.explorerService.rawMode = this.explorerBackup.rawMode;
   }
 
   /**
@@ -292,5 +304,18 @@ export class ENSManagementDetailComponent extends AsyncComponent {
       this.ensCheckComp.showLoading = true;
       this.ref.detectChanges();
     } catch (ex) { }
+  }
+
+  /**
+   * Reload the dbcp component.
+   */
+  reloadDbcp() {
+    this.hideDbcpComp = true;
+    this.ref.detectChanges();
+
+    setTimeout(() => {
+      this.hideDbcpComp = false;
+      this.ref.detectChanges();
+    });
   }
 }
