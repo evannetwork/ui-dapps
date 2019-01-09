@@ -9,8 +9,8 @@
       },
       "entrypoint": "explorer.js",
       "files": [
-        "explorer.js",
-        "explorer.css"
+        "explorer.css",
+        "explorer.js"
       ],
       "origin": "Qmdjsshv8qWMC9mcH7UiowPXLTdTWpvjGi8icVPY1khVBD",
       "primaryColor": "#4b9175",
@@ -18,7 +18,7 @@
       "standalone": true,
       "type": "dapp"
     },
-    "dbcpVersion": 1,
+    "dbcpVersion": 2,
     "description": "Deep view into Contracts, DBCP and Profiles.",
     "i18n": {
       "description": {

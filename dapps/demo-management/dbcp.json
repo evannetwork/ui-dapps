@@ -9,8 +9,8 @@
       },
       "entrypoint": "demomanagement.js",
       "files": [
-        "demomanagement.js",
-        "demomanagement.css"
+        "demomanagement.css",
+        "demomanagement.js"
       ],
       "origin": "QmP64dgYzSYHzS8ZS8V4tFMtD9dHCCBXL8sxv5hRHc6zPj",
       "primaryColor": "#51afac",
@@ -18,7 +18,7 @@
       "standalone": true,
       "type": "dapp"
     },
-    "dbcpVersion": 1,
+    "dbcpVersion": 2,
     "description": "Manage and show demo environments.",
     "i18n": {
       "description": {

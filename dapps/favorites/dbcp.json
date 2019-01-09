@@ -8,14 +8,15 @@
       },
       "entrypoint": "favorites.js",
       "files": [
-        "favorites.js",
-        "favorites.css"
+        "favorites.css",
+        "favorites.js"
       ],
       "origin": "QmSHKJAtU1YWXdZnoSkqi5MA1U8ajqkirEZibcHHSVKfDA",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
     },
+    "dbcpVersion": 2,
     "description": "Handle your favourites.",
     "i18n": {
       "description": {
@@ -36,14 +37,13 @@
     ],
     "version": "1.2.0",
     "versions": {
-      "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
+      "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
       "1.0.0": "QmT3Vk4tJAcNoF1YaS3jT6WhUWojmoUSYZgt1MHAbAwJ7Q",
       "1.0.1": "QmYAZBrB5dqEdvMTRBf3DWCCLtfzVfYdj5su5bKEuMdu3c",
       "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS",
       "1.1.0": "QmURmMvKMwnsqVkaAwZnWRZ6JNrUA2HjDbQrzh8ccGXT2t",
       "1.2.0": "QmW7mPNYxZfGeSPZp3BM4eRGt1pATN9uT9352N82X4jEoR"
-    },
-    "dbcpVersion": 1
+    }
   }
 }

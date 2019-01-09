@@ -9,8 +9,8 @@
       },
       "entrypoint": "claims.js",
       "files": [
-        "claims.js",
-        "claims.css"
+        "claims.css",
+        "claims.js"
       ],
       "origin": "QmPVywEiVEKkWkptXQFAtSCrk3UnidMsJAifV6wTxHquz7",
       "primaryColor": "#5170af",
@@ -18,7 +18,7 @@
       "standalone": true,
       "type": "dapp"
     },
-    "dbcpVersion": 1,
+    "dbcpVersion": 2,
     "description": "View, accept, decline your claims.",
     "i18n": {
       "description": {

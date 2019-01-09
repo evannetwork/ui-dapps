@@ -5,16 +5,17 @@
       "dependencies": {},
       "entrypoint": "index.html",
       "files": [
-        "index.html",
-        "FullScreenMario.min.js",
         "Fonts/**",
-        "Sounds/**"
+        "FullScreenMario.min.js",
+        "Sounds/**",
+        "index.html"
       ],
       "origin": "QmaRBRV6xcbXpvdKtjYsWBwr7FRxJpsbQSXwYPH7DRLqrc",
       "primaryColor": "#c30f1b",
       "secondaryColor": "#ffffff",
       "type": "dapp"
     },
+    "dbcpVersion": 2,
     "description": "It's a mee",
     "i18n": {
       "description": {
@@ -36,7 +37,6 @@
       "1.0.2": "QmaHMkc4u4n385FsqBEMLQpms9V44fubRdnmDT7C83rfTu",
       "1.1.0": "QmQhEC7xEZRuWk89JVu5sJ4L74L8J97L5zjEGKgJpVQRyD",
       "1.2.0": "QmQCoyR54dZJerCFzU14dg2y5usjezR7MHSASd5zY2qv4E"
-    },
-    "dbcpVersion": 1
+    }
   }
 }

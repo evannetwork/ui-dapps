@@ -10,8 +10,8 @@
       },
       "entrypoint": "ensmanagement.js",
       "files": [
-        "ensmanagement.js",
-        "ensmanagement.css"
+        "ensmanagement.css",
+        "ensmanagement.js"
       ],
       "origin": "QmcAJjitSNP7pCqoUbhkpjMx2ZvNc38rkGG9rZ9Tpn1yux",
       "primaryColor": "#999d2a",
@@ -19,7 +19,7 @@
       "standalone": true,
       "type": "dapp"
     },
-    "dbcpVersion": 1,
+    "dbcpVersion": 2,
     "description": "View, Manage, buy ens addresses.",
     "i18n": {
       "description": {
