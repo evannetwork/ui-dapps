@@ -256,7 +256,7 @@ export class OnboardingService {
 
       this.bcc.keyProvider.setKeysForAccount(
         account,
-        lightwallet.getEncryptionKeyFromPassword(password)
+        lightwallet.getEncryptionKeyFromPassword(account, password)
       );
 
       // set flag to check for profile creation interruption
