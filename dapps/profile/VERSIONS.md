@@ -2,11 +2,13 @@
 
 ## Next Version
 ### Features
-- add missing dbcpVersion to dbcp files
-- add licenses to dbcp files
-
 ### Fixes
 ### Deprecations
+
+## Version 1.6.0
+### Features
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
 
 ## Version 1.5.0
 ### Features

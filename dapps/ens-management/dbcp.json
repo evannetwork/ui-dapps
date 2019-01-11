@@ -3,17 +3,17 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.6.1",
-        "angular-libs": "^1.3.1",
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0",
         "explorer": "^1.2.0",
-        "smart-contracts": "^1.4.0"
+        "smart-contracts": "^1.5.0"
       },
       "entrypoint": "ensmanagement.js",
       "files": [
         "ensmanagement.css",
         "ensmanagement.js"
       ],
-      "origin": "QmcAJjitSNP7pCqoUbhkpjMx2ZvNc38rkGG9rZ9Tpn1yux",
+      "origin": "QmRBT23JQgFBFX17tVhxgnnjGQJvu4zurTSE8KBCYrk3GB",
       "primaryColor": "#999d2a",
       "secondaryColor": "#f1f1d6",
       "standalone": true,
@@ -38,9 +38,10 @@
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "versions": {
-      "1.0.0": "QmZuVAEwqM6nPmV6HVqP7fWkmrqGbe1a95ijQBH7i6skWe"
+      "1.0.0": "QmTGP96Snnob9nSXCzGkWakTrzZ1UsAQ1VY7bCBEwLyivn",
+      "1.1.0": "QmdLwyzF9srBwrJbkLGQY5BeJ3dfgYRzyS6LAwJ7SzPy9M"
     }
   }
 }

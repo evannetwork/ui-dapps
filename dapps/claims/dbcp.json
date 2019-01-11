@@ -3,16 +3,16 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.6.1",
-        "angular-libs": "^1.3.1",
-        "smart-contracts": "^1.2.0"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0",
+        "smart-contracts": "^1.5.0"
       },
       "entrypoint": "claims.js",
       "files": [
         "claims.css",
         "claims.js"
       ],
-      "origin": "QmPVywEiVEKkWkptXQFAtSCrk3UnidMsJAifV6wTxHquz7",
+      "origin": "QmQhuQwMiHi6ZYjzyYW466vZf7JqCfEPA19iVwL3Xdaw6Q",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "standalone": true,
@@ -37,9 +37,10 @@
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "versions": {
-      "1.0.0": "QmNmqyBEG5Je79Y8nqgWQg3NXNdyxpbPAX9dSPGEXXAvk7"
+      "1.0.0": "QmTfPSFqtbxBAYSd1MPwyRpB4kNajwVUhsouFwXEtUHp2k",
+      "1.1.0": "QmU358GZtPT3P1g1djghgNoH23uEfY22bDA1rJ6n5wz9GQ"
     }
   }
 }
