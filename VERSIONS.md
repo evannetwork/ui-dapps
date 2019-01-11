@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.7.0
+### Features
 - onboarding
   - move sendCommKey to onboarded page
 - onboarding
@@ -18,8 +23,6 @@
 - onboarding
   - navigate to onboarded page, even if the user is currently logged in
   - fix toggle light theme design
-
-### Deprecations
 
 ## Version 1.6.0
 ### Features

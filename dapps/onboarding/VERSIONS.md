@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.4.0
+### Features
 - add salting for encryptionKeys accountId + password
 - add missing dbcpVersion to dbcp files
 - add licenses to dbcp files
