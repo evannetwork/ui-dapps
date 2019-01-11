@@ -125,6 +125,11 @@ export class ExplorerService implements OnDestroy {
    */
   public aceOptions: any;
 
+  /**
+   * local copy for quick access
+   */
+  public nameResolver: any;
+
   constructor(
     private core: EvanCoreService,
     private bcc: EvanBCCService,
@@ -144,6 +149,9 @@ export class ExplorerService implements OnDestroy {
         printMargin: false,
         tabSize: 2
       };
+
+      // map nameResolver for quick access
+      this.nameResolver = this.bcc.nameResolver;
     });
   }
 
@@ -225,7 +233,7 @@ export class ExplorerService implements OnDestroy {
     try {
       // load contract address if we are not using an contractId
       if (id.indexOf('0x') !== 0) {
-        contractId = await this.bcc.nameResolver.getAddress(id);
+        contractId = await this.nameResolver.getAddress(id);
       } else {
         contractId = id;
       }
@@ -395,7 +403,7 @@ export class ExplorerService implements OnDestroy {
    * @param      {string}  content  content to check
    * @return     {number}  Calculated Ace height.
    */
-  getInitialAceHeight(content: string) {
+  getInitialAceHeight(content: string, defaultHeight?: string) {
     if (content) {
       content = content.toString();
       const height = (content.split('\n').length * 14) + 10;
@@ -403,7 +411,7 @@ export class ExplorerService implements OnDestroy {
 
       return (height > maxHeight ? maxHeight : height) + 'px';
     } else {
-      return '14px';
+      return typeof defaultHeight === 'undefined' ? '14px' : defaultHeight;
     }
   }
 

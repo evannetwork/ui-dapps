@@ -26,7 +26,9 @@
 */
 
 import {
-  lightwallet
+  evanGlobals,
+  lightwallet,
+  routing,
 } from 'dapp-browser';
 
 import {
@@ -85,6 +87,18 @@ export class WelcomeComponent extends AsyncComponent {
   }
 
   async _ngOnInit() {
+    if (this.core.getAccountId()) {
+      let isOnboarded = false;
+
+      try {
+        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
+      } catch (ex) { }
+
+      if (isOnboarded) {
+        return this.routing.navigate(`./onboarded`, true, this.routing.getQueryparams());
+      }
+    }
+
     lightwallet.deleteActiveVault();
 
     this.core.setAccountId('');

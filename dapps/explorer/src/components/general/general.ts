@@ -114,7 +114,7 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
     this.id = this.routingService.getHashParam('id');
 
     if (this.id.indexOf('0x') !== 0) {
-      this.contractAddress = await this.bcc.nameResolver.getAddress(this.id);
+      this.contractAddress = await this.explorerService.nameResolver.getAddress(this.id);
     } else {
       this.contractAddress = this.id;
     }

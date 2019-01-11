@@ -25,42 +25,27 @@
   https://evan.network/license/
 */
 
-evan-ens-selling {
-  .evan-mini-content {
-    &.centered {
-      margin-top: 140px;
-    }
-
-    ion-item.semi-transparent {
-      .item-inner {
-        padding: 10px;
-
-        border-bottom: 0;
-      }
-    }
+ens-management-detail {
+  .favorite-header {
+    display: flex;
+    align-items: center;
+    justify-content: left;
   }
 
-  .evan-modal > .evan-content {
-    & > * {
-      display: block;
+  .evan-explorer {
+    & > ion-item {
+      width: calc(100% - 10px);
+      margin-left: 10px;
     }
 
-    & > h2.content-header {
-      font-size: 24px;
+    .explorer-tabs.evan-tabs {
+      margin-top: 0;
     }
 
-    & > ion-icon[name='checkmark'] {
-      font-size: 100px;
-
-      margin: 25px 0;
-    }
-
-    & > b {
-      font-size: 24px;
-
-      display: block;
-
-      margin-top: 25px;
+    @media (min-width: 769px) {
+      .evan-content {
+        margin: 0 10px;
+      }
     }
   }
 }

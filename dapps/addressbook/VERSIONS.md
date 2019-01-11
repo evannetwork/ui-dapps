@@ -3,9 +3,15 @@
 ## Next Version
 ### Features
 ### Fixes
-- fix contact creation using email address
-
 ### Deprecations
+
+## Version 1.4.0
+### Features
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
+
+### Fixes
+- fix contact creation using email address
 
 ## Version 1.3.1
 ### Features

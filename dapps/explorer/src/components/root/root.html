@@ -26,145 +26,147 @@
 -->
 
 <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
-<evan-split-pane #splitPane
-  *ngIf="!loading"
-  [class.disable-side-panel]="!id"
-  [customHeader]="true"
-  [allowSmall]="false"
-  [id]="id"
-  [rootDAppOpen]="rootDAppOpen.bind(this)"
-  (smallToolbarToggled)="ref.detectChanges()"
-  (rootDAppLoaded)="ref.detectChanges()">
-  <ion-header evan-header *ngIf="splitPane.rootDApp && id" (click)="goToRoot()">
-    <div class="dapp-logo" item-start *ngIf="splitPane.smallToolbar && utils.isMD">
-      <ng-container>
-        <img class="img-small" *oneTime
-          [src]="_DomSanitizer.bypassSecurityTrustUrl(splitPane.rootDApp.imgSquare)"/>
-      </ng-container>
+<div class="evan-explorer">
+  <evan-split-pane #splitPane
+    *ngIf="!loading"
+    [class.disable-side-panel]="!id"
+    [customHeader]="true"
+    [allowSmall]="false"
+    [id]="id"
+    [rootDAppOpen]="rootDAppOpen.bind(this)"
+    (smallToolbarToggled)="ref.detectChanges()"
+    (rootDAppLoaded)="ref.detectChanges()">
+    <ion-header evan-header *ngIf="splitPane.rootDApp && id" (click)="goToRoot()">
+      <div class="dapp-logo" item-start *ngIf="splitPane.smallToolbar && utils.isMD">
+        <ng-container>
+          <img class="img-small" *oneTime
+            [src]="_DomSanitizer.bypassSecurityTrustUrl(splitPane.rootDApp.imgSquare)"/>
+        </ng-container>
+      </div>
+      <div class="dapp-name" *ngIf="!(splitPane.smallToolbar && utils.isMD)">
+        <button ion-button icon-only clear (click)="goToRoot()">
+          <ion-icon name="create"></ion-icon>
+        </button>
+        <h4>{{ '_explorer.change-id' | translate }}</h4>
+      </div>
+    </ion-header>
+    <div evan-menu-content>
+      <div *ngIf="!id">
+        please select id
+      </div>
+      <ion-list *ngIf="id">
+        <button ion-item menuClose
+          color="light"
+          routerLink="./detail/{{id}}/general"
+          (click)="utils.sendEvent('toggle-split-pane')"
+          routerLinkActive="active">
+          <h2>{{ '_explorer.general-infos' | translate }}</h2>
+          <h3>{{ '_explorer.general-infos-desc' | translate }}</h3>
+        </button>
+        <button ion-item menuClose
+          color="light"
+          *ngFor="let section of sections"
+          routerLink="./detail/{{id}}/{{ section }}"
+          (click)="utils.sendEvent('toggle-split-pane')"
+          routerLinkActive="active">
+          <h2>{{ '_explorer.section.' + section | translate }}</h2>
+          <h3>{{ '_explorer.section.' + section + '-desc' | translate }}</h3>
+        </button>
+      </ion-list>
     </div>
-    <div class="dapp-name" *ngIf="!(splitPane.smallToolbar && utils.isMD)">
-      <button ion-button icon-only clear (click)="goToRoot()">
-        <ion-icon name="create"></ion-icon>
-      </button>
-      <h4>{{ '_explorer.change-id' | translate }}</h4>
-    </div>
-  </ion-header>
-  <div evan-menu-content>
-    <div *ngIf="!id">
-      please select id
-    </div>
-    <ion-list *ngIf="id">
-      <button ion-item menuClose
-        color="light"
-        routerLink="./detail/{{id}}/general"
-        (click)="utils.sendEvent('toggle-split-pane')"
-        routerLinkActive="active">
-        <h2>{{ '_explorer.general-infos' | translate }}</h2>
-        <h3>{{ '_explorer.general-infos-desc' | translate }}</h3>
-      </button>
-      <button ion-item menuClose
-        color="light"
-        *ngFor="let section of sections"
-        routerLink="./detail/{{id}}/{{ section }}"
-        (click)="utils.sendEvent('toggle-split-pane')"
-        routerLinkActive="active">
-        <h2>{{ '_explorer.section.' + section | translate }}</h2>
-        <h3>{{ '_explorer.section.' + section + '-desc' | translate }}</h3>
-      </button>
-    </ion-list>
-  </div>
-  <div evan-content
-    [@routerTransition]="o?.activatedRouteData?.state">
-    <!-- if an internal component was opened show a dapp-wrapper and the config box -->
-    <dapp-wrapper *ngIf="id && sectionOrder.indexOf(activeDApp) !== -1">
-      <ng-container evan-content>
-        <!-- backdrop for configuration box-->
-        <div class="configuration-backdrop"
-          [class.visible]="showConfiguration"
-          (click)="configurationBackdrop()">
-        </div>
-        <!-- detail-box that is used to configure the whole sections -->
-        <div class="evan-content evan-small-content evan-relative configuration-box"
-          [class.visible]="showConfiguration">
-          <h2 class="content-header m-b-0">{{ '_explorer.configuration' | translate }}</h2>
-          <ion-row>
-            <ion-col col-12 col-md-6>
-              <ion-item margin-top>
-                <ion-label class="checkbox-label" stacked>
-                  <h3>{{ '_explorer.raw-mode' | translate }}</h3>
-                </ion-label>
-                <ion-checkbox [(ngModel)]="rawMode" (ionChange)="ref.detectChanges()"></ion-checkbox>
-              </ion-item>
-              <span class="input-hint">{{ '_explorer.raw-mode-desc' | translate }}</span>
-            </ion-col>
-            <ion-col col-12 col-md-6 class="evan-relative">
-              <ion-item margin-top>
-                <ion-label class="checkbox-label" stacked>
-                  <h3>{{ '_explorer.enable-time-travel' | translate }}</h3>
-                </ion-label>
-                <ion-checkbox [(ngModel)]="timeTravel" (ionChange)="ref.detectChanges()" disabled></ion-checkbox>
-              </ion-item>
-              <span class="input-hint">{{ '_explorer.time-travel-desc' | translate }}</span>
-              <ion-item *ngIf="timeTravel">
-                <ion-label stacked class="m-t-0">
-                  <h3>{{ '_explorer.time-travel' | translate }}</h3>
-                </ion-label>
-                <ion-input [(ngModel)]="blockNumber"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-label class="standalone">
-            {{ '_explorer.abi' | translate }}
+    <div evan-content
+      [@routerTransition]="o?.activatedRouteData?.state">
+      <!-- if an internal component was opened show a dapp-wrapper and the config box -->
+      <dapp-wrapper *ngIf="id && sectionOrder.indexOf(activeDApp) !== -1">
+        <ng-container evan-content>
+          <!-- backdrop for configuration box-->
+          <div class="configuration-backdrop"
+            [class.visible]="showConfiguration"
+            (click)="configurationBackdrop()">
+          </div>
+          <!-- detail-box that is used to configure the whole sections -->
+          <div class="evan-content evan-small-content evan-relative configuration-box"
+            [class.visible]="showConfiguration">
+            <h2 class="content-header m-b-0">{{ '_explorer.configuration' | translate }}</h2>
+            <ion-row>
+              <ion-col col-12 col-md-6>
+                <ion-item margin-top>
+                  <ion-label class="checkbox-label" stacked>
+                    <h3>{{ '_explorer.raw-mode' | translate }}</h3>
+                  </ion-label>
+                  <ion-checkbox [(ngModel)]="rawMode" (ionChange)="ref.detectChanges()"></ion-checkbox>
+                </ion-item>
+                <span class="input-hint">{{ '_explorer.raw-mode-desc' | translate }}</span>
+              </ion-col>
+              <ion-col col-12 col-md-6 class="evan-relative">
+                <ion-item margin-top>
+                  <ion-label class="checkbox-label" stacked>
+                    <h3>{{ '_explorer.enable-time-travel' | translate }}</h3>
+                  </ion-label>
+                  <ion-checkbox [(ngModel)]="timeTravel" (ionChange)="ref.detectChanges()" disabled></ion-checkbox>
+                </ion-item>
+                <span class="input-hint">{{ '_explorer.time-travel-desc' | translate }}</span>
+                <ion-item *ngIf="timeTravel">
+                  <ion-label stacked class="m-t-0">
+                    <h3>{{ '_explorer.time-travel' | translate }}</h3>
+                  </ion-label>
+                  <ion-input [(ngModel)]="blockNumber"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-label class="standalone">
+              {{ '_explorer.abi' | translate }}
 
-            <ion-icon margin-left class="clickable" name="settings"
-              (click)="chooseABIFromContracts()">
-            </ion-icon>
-          </ion-label>
-          <ace-editor mode="json"
-            [(text)]="abi" 
-            [options]="explorerService.aceOptions"
-            style="min-height: 100px;">
-           </ace-editor>
-          <span class="input-hint">{{ '_explorer.basecontract.abi-desc' | translate }}</span>
+              <ion-icon margin-left class="clickable" name="settings"
+                (click)="chooseABIFromContracts()">
+              </ion-icon>
+            </ion-label>
+            <ace-editor mode="json"
+              [(text)]="abi" 
+              [options]="explorerService.aceOptions"
+              style="min-height: 100px;">
+             </ace-editor>
+            <span class="input-hint">{{ '_explorer.basecontract.abi-desc' | translate }}</span>
 
-          <ion-label class="standalone">
-            {{ '_explorer.data-schema' | translate }}
-          </ion-label>
-          <ace-editor mode="json"
-            [(text)]="dataSchema" 
-            [options]="explorerService.aceOptions"
-            style="min-height: 100px;">
-           </ace-editor>
-          <span class="input-hint">{{ '_explorer.data-schema-desc' | translate }}</span>
+            <ion-label class="standalone">
+              {{ '_explorer.data-schema' | translate }}
+            </ion-label>
+            <ace-editor mode="json"
+              [(text)]="dataSchema" 
+              [options]="explorerService.aceOptions"
+              style="min-height: 100px;">
+             </ace-editor>
+            <span class="input-hint">{{ '_explorer.data-schema-desc' | translate }}</span>
 
-          <div text-right margin-top>
-            <button ion-button outline round (click)="useConfiguration()">
-              {{ '_explorer.use-configuration' | translate }}
+            <div text-right margin-top>
+              <button ion-button outline round (click)="useConfiguration()">
+                {{ '_explorer.use-configuration' | translate }}
+              </button>
+            </div>
+
+            <button class="configuration-close" ion-button icon-only round
+              (click)="showConfiguration = !showConfiguration; ref.detectChanges()">
+              <ion-icon name="arrow-up" color="light"></ion-icon>
             </button>
           </div>
 
-          <button class="configuration-close" ion-button icon-only round
+          <!-- open configuration button -->
+          <button class="configuration-open" ion-button icon-only round
+            *ngIf="!showConfiguration"
             (click)="showConfiguration = !showConfiguration; ref.detectChanges()">
-            <ion-icon name="arrow-up" color="light"></ion-icon>
+            <ion-icon name="settings" color="light"></ion-icon>
           </button>
-        </div>
 
-        <!-- open configuration button -->
-        <button class="configuration-open" ion-button icon-only round
-          *ngIf="!showConfiguration"
-          (click)="showConfiguration = !showConfiguration; ref.detectChanges()">
-          <ion-icon name="settings" color="light"></ion-icon>
-        </button>
-
-        <!-- router for internal components -->
-        <div *ngIf="!reloadRouter" [@opacityTransition]>
-          <router-outlet #o="outlet"></router-outlet>
-        </div>
-      </ng-container>
-    </dapp-wrapper>
-    <!-- if select or a dashboard dapp was opened -->
-    <div *ngIf="!reloadRouter && (!id || sectionOrder.indexOf(activeDApp) === -1)" [@opacityTransition]>
-      <router-outlet #o="outlet"></router-outlet>
+          <!-- router for internal components -->
+          <div *ngIf="!reloadRouter" [@opacityTransition]>
+            <router-outlet #o="outlet"></router-outlet>
+          </div>
+        </ng-container>
+      </dapp-wrapper>
+      <!-- if select or a dashboard dapp was opened -->
+      <div *ngIf="!reloadRouter && (!id || sectionOrder.indexOf(activeDApp) === -1)" [@opacityTransition]>
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
     </div>
-  </div>
-</evan-split-pane>
+  </evan-split-pane>
+</div>

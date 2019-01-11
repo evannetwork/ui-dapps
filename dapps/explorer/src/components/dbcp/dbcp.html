@@ -295,7 +295,7 @@
           (textChanged)="ref.detectChanges()"
           [durationBeforeCallback]="200"
           [options]="explorerService.aceOptions"
-          [style.min-height]="explorerService.getInitialAceHeight(abi)">
+          [style.min-height]="explorerService.getInitialAceHeight(abi, '300px')">
         </ace-editor>
         <ng-container *ngTemplateOutlet="updateDBCPTpl"></ng-container>
       </div>

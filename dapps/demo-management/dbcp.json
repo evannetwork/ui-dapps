@@ -3,22 +3,22 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.6.0",
-        "angular-libs": "^1.3.0",
-        "smart-contracts": "^1.4.0"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0",
+        "smart-contracts": "^1.5.0"
       },
       "entrypoint": "demomanagement.js",
       "files": [
-        "demomanagement.js",
-        "demomanagement.css"
+        "demomanagement.css",
+        "demomanagement.js"
       ],
-      "origin": "QmP64dgYzSYHzS8ZS8V4tFMtD9dHCCBXL8sxv5hRHc6zPj",
+      "origin": "QmeQKXg5B8cFinbsBnR9kgaoF78k7ECtu5Sbt4vHqj4VLd",
       "primaryColor": "#51afac",
       "secondaryColor": "#edeada",
       "standalone": true,
       "type": "dapp"
     },
-    "dbcpVersion": 1,
+    "dbcpVersion": 2,
     "description": "Manage and show demo environments.",
     "i18n": {
       "description": {
@@ -37,9 +37,10 @@
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "versions": {
-      "1.0.0": "QmQWs971Lt6XuxEPML6mLuV4UVqfN8deYxdsv2mWaTP2Dw"
+      "1.0.0": "QmVpETB7n1mFuu5Dcj7yBeHXGCb5SdyTyeVN56NFCAk7QG",
+      "1.1.0": "QmZp5nHWy9VChzvMv7GAfbzkJebdaxHm1tEmAMkd88j8ic"
     }
   }
 }

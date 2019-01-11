@@ -3,19 +3,20 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.6.0",
-        "angular-libs": "^1.3.0"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0"
       },
       "entrypoint": "favorites.js",
       "files": [
-        "favorites.js",
-        "favorites.css"
+        "favorites.css",
+        "favorites.js"
       ],
-      "origin": "QmfVgs2znV5Ht7i4nDdEyqHDZE2Mf77whfVTuRnytGaaEj",
+      "origin": "QmXH9Wqc1DsCFy3bxH6da7scdym6Lb4XnPcvW4MLjrQx8Z",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
     },
+    "dbcpVersion": 2,
     "description": "Handle your favourites.",
     "i18n": {
       "description": {
@@ -34,16 +35,16 @@
       "evan",
       "library"
     ],
-    "version": "1.2.0",
+    "version": "1.3.0",
     "versions": {
-      "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
+      "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
       "1.0.0": "QmT3Vk4tJAcNoF1YaS3jT6WhUWojmoUSYZgt1MHAbAwJ7Q",
       "1.0.1": "QmYAZBrB5dqEdvMTRBf3DWCCLtfzVfYdj5su5bKEuMdu3c",
       "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS",
       "1.1.0": "QmURmMvKMwnsqVkaAwZnWRZ6JNrUA2HjDbQrzh8ccGXT2t",
-      "1.2.0": "QmeeZUNrhXSPWP5rxgW4mn1JhQk34w5CoqrBw5XF9TZikP"
-    },
-    "dbcpVersion": 1
+      "1.2.0": "QmaRFqW48Jq8VnyBPZj5C4Uat3Qvg3uJnpmDK7RCNQm5wQ",
+      "1.3.0": "QmRmXcHwJgUWvCGcmCm3TmfqCr2QGeu4v67R5pwGL1t5NL"
+    }
   }
 }

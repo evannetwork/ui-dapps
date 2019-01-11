@@ -45,7 +45,7 @@ export const de = {
     "alias": "Name",
     "alias-desc": "Alias des Kontakts",
     "all": "Alle",
-    "claims": "Zertifikate",
+    "claims": "Verifizierungen",
     "contact-card-invite": "Mit Visitenkarte",
     "contact-card-invite-description": "Vernetzen Sie sich mit einem Nutzer direkt über seine evan.network Visitenkarte. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen.",
     "copy-account-id": "Copy Account ID",

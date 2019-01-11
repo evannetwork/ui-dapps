@@ -41,7 +41,7 @@ export const translations = {
 };
 
 @Injectable()
-export class DAppsTranslations {
+export class ExplorerTranslations {
   constructor(translate: EvanTranslationService) {
     translate.setMultipleLanguageTranslations(translations);
   }

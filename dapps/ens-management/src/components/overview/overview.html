@@ -1,0 +1,121 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<evan-ens-check #ensCheckComp
+  (updated)="ensCheckUpdated()">
+</evan-ens-check>
+<evan-loading *ngIf="ensCheckComp.loading"></evan-loading>
+<ng-container *ngIf="!ensCheckComp.loading">
+  <div class="evan-relative evan-content evan-mini-content transparent" text-center
+    [class.centered]="pinned.length === 0">
+    <h1 [innerHTML]="'_ensmanagement.open-text' | translate"></h1>
+    <div class="evan-relative">
+      <ion-item margin-vertical class="semi-transparent">
+        <ion-input
+          type="text"
+          [placeholder]="'_ensmanagement.open-placeholder' | translate"
+          [(ngModel)]="ensAddress"
+          (keydown)="ensCheckComp.submitOnEnter($event)"
+          (ionChange)="ref.detectChanges();">
+        </ion-input>
+        <div item-end>.{{ ensManagementService.domainName }}</div>
+      </ion-item>
+    </div>
+    <div text-center margin-bottom>
+      <button ion-button round outline icon-left
+        (click)="ensCheckComp.checkEnsAddress(ensAddress + '.' + ensManagementService.domainName)"
+        [disabled]="!ensAddress || ensCheckComp.showLoading">
+        <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
+        {{ '_ensmanagement.open-details' | translate }}
+      </button>
+    </div>
+
+    <ion-list class="evan-grid" text-center margin-top *ngIf="pinned.length > 0">
+      <ion-item-sliding *ngFor="let favorite of pinned" #sliding>
+        <ion-item color="light">
+          <ion-avatar class="clickable" item-start 
+            [style.background-color]="favorite.description.primaryColor"
+            (click)="ensCheckComp.checkEnsAddress(favorite.ensAddress)">
+            <div class="evan-avatar-wrapper"
+              [style.background-color]="favorite.description.secondaryColor">
+              <ng-container *ngIf="favorite.description.imgSquare">
+                <img *oneTime [src]="_DomSanitizer.bypassSecurityTrustUrl(favorite.description.imgSquare)" />
+              </ng-container>
+            </div>
+          </ion-avatar>
+          <ion-label class="clickable" (click)="ensCheckComp.checkEnsAddress(favorite.ensAddress)">
+            <h2>
+              {{ favorite.ensAddress }}
+            </h2>
+            <h3 *ngIf="favorite?.description?.translated?.description">
+              {{ favorite?.description?.translated.description }}
+            </h3>
+          </ion-label>
+          <div item-content>
+            <button ion-button clear round icon-only
+              (click)="ensCheckComp.checkEnsAddress(favorite.ensAddress)">
+              <ion-icon name="arrow-forward" color="light"></ion-icon>
+            </button>
+
+            <div *ngIf="core.utils.isMD" class="evan-popover top-right">
+              <button ion-button clear
+                [disabled]="ensCheckComp.showLoading"
+                (click)="ensCheckComp.togglePopover(favorite.ensAddress)">
+                <ng-container *ngIf="!ensCheckComp.showLoading">
+                  <ion-icon name="more" color="light" *ngIf="ensCheckComp.showItemPopover !== favorite.ensAddress"></ion-icon>
+                  <ion-icon name="close" color="light" *ngIf="ensCheckComp.showItemPopover === favorite.ensAddress"></ion-icon>
+                </ng-container>
+                <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
+              </button>
+              <ng-container *ngIf="ensCheckComp.showItemPopover === favorite.ensAddress">
+                <div class="backdrop" (click)="ensCheckComp.showItemPopover = false; ref.detectChanges()"></div>
+                <ion-list class="popover-content" [@opacityTransition]>
+                  <ion-item class="clickable" (click)="ensCheckComp.removeFavorite(favorite.ensAddress); ensCheckComp.showItemPopover = false; ref.detectChanges()">
+                    <ion-icon name="trash" item-end></ion-icon>
+                    {{ '_ensmanagement.remove-favorite' | translate }}
+                  </ion-item>
+                </ion-list>
+              </ng-container>
+            </div>
+          </div>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="danger" (click)="ensCheckComp.removeFavorite(favorite.ensAddress, sliding)">
+            <ion-icon name="trash"></ion-icon>
+            {{ '_ensmanagement.remove-favorite' | translate }}
+          </button>
+        </ion-item-options>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="ensCheckComp.removeFavorite(favorite.ensAddress, sliding)">
+            <ion-icon name="trash"></ion-icon>
+            {{ '_ensmanagement.remove-favorite' | translate }}
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ng-container>

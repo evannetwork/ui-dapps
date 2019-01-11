@@ -3,19 +3,20 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.6.0",
-        "angular-libs": "^1.3.0"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0"
       },
       "entrypoint": "mailbox.js",
       "files": [
-        "mailbox.js",
-        "mailbox.css"
+        "mailbox.css",
+        "mailbox.js"
       ],
-      "origin": "Qmdkg8qPwgwGPxdKK7hwGsemuAqN1o4gi3xDyD8MFzQbVv",
+      "origin": "QmSiBAxKPaStAnPpj9gDtKyttW7xq2GA2iseCGg3E6oMVP",
       "primaryColor": "#1862ac",
       "secondaryColor": "#f9f9ff",
       "type": "dapp"
     },
+    "dbcpVersion": 2,
     "description": "Show new information Mails, Contact requests and latest notifications.",
     "i18n": {
       "description": {
@@ -33,17 +34,17 @@
       "dapp",
       "evan"
     ],
-    "version": "1.3.0",
+    "version": "1.4.0",
     "versions": {
-      "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
       "0.1.0": "QmbDdbPM52f9Xbap7qHLE3BoYUsNSKq1mR3RVRJTc92gBK",
+      "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
       "1.0.0": "QmcHYc6xbfAUkYeq9gFH5Dq2jewh7yzQHvEPuY11VMndRF",
       "1.0.1": "QmXyHyyyFGCmKnJ1Ef94NEGkH143NQsgAQF71zvbYnjMFQ",
       "1.0.2": "QmRv3JKBsXm3Rus7rhnCd3yNEYgsUbhj9ac5TZTJZkbTYw",
       "1.1.0": "QmXdyKivZJ4y4ba6pigL72qHt43695pJmaBY5c8a16qAs1",
       "1.2.0": "QmaiwwjCufjpqpZoKK74yFPtZYBYH6gvBX4exnVYdDynpZ",
-      "1.3.0": "QmVCiPsAqNxjqUPBraujwy2Kanaed9J1sd861Wv6VhsC6g"
-    },
-    "dbcpVersion": 1
+      "1.3.0": "QmVBuvYRqMpjvtzepGTUpbSN2KNfSguv3PtsBGKgMD5LoK",
+      "1.4.0": "Qmf4GJp9r2JyJGs1xBkojpSiqeN1MY6ZMaEDBg39ZAXR7G"
+    }
   }
 }

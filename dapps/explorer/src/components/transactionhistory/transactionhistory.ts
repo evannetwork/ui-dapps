@@ -156,7 +156,7 @@ export class ExplorerTransactionHistoryComponent extends AsyncComponent {
    */
   async _ngOnInit() {
     this.id = this.routingService.getHashParam('id');
-    this.contractAddress = await this.bcc.nameResolver.getAddress(this.id) || this.id;
+    this.contractAddress = await this.explorerService.nameResolver.getAddress(this.id) || this.id;
     this.web3 = this.bcc.getWeb3();
     this.transactions = [ ];
 

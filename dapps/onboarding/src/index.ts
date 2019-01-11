@@ -152,15 +152,15 @@ function getConfig(isDispatcher?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
-      OnboardingRootComponent,
-      TermsOfUseComponent,
-      WelcomeComponent,
-      MetamaskComponent,
-      IdentityImportComponent,
       IdentityCreateComponent,
-      ProfileCreateComponent,
+      IdentityImportComponent,
+      MetamaskComponent,
       MnemonicComponent,
       OnboardedComponent,
+      OnboardingRootComponent,
+      ProfileCreateComponent,
+      TermsOfUseComponent,
+      WelcomeComponent,
     ];
   }
 

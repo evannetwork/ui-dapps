@@ -54,6 +54,8 @@ import {
   createBC
 } from 'bcc';
 
+import { ExplorerService } from '../../services/explorer.service';
+
 /**************************************************************************************************/
 
 @Component({
@@ -63,7 +65,6 @@ import {
     createTabSlideTransition()
   ]
 })
-
 /**
  * Detail wrapper for the whole application when an id was opened
  */
@@ -84,17 +85,18 @@ export class ExplorerClaimsComponent extends AsyncComponent {
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
     private core: EvanCoreService,
+    private explorerService: ExplorerService,
     private qrCodeService: EvanQrCodeService,
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
     private toastService: EvanToastService,
-    private translateService: EvanTranslationService
+    private translateService: EvanTranslationService,
   ) {
     super(ref);
   }
  
   async _ngOnInit() {
     this.id = this.routingService.getHashParam('id');
-    this.contractAddress = await this.bcc.nameResolver.getAddress(this.id) || this.id;
+    this.contractAddress = await this.explorerService.nameResolver.getAddress(this.id) || this.id;
   }
 }

@@ -65,7 +65,6 @@ export class DashboardComponent extends AsyncComponent {
   dapps: Array<any>;
   developerModeSwitch: Function;
   loading: boolean;
-  loggingDApp: any;
   watchRouteChange: Function;
   mailUpdate: Function;
 
@@ -78,6 +77,16 @@ export class DashboardComponent extends AsyncComponent {
    * copy from original split-pane to display colors for dark and light them
    */
   private smallToolbar: boolean;
+
+  /**
+   * list of all dapps that should be displayed always
+   */
+  private defaultDApps: Array<any>;
+
+  /**
+   * all dapps, that should be displayed, when dev mode is enabled
+   */
+  private devDApps: Array<any>;
 
   /**
    * splitpane component
@@ -104,13 +113,14 @@ export class DashboardComponent extends AsyncComponent {
     this.dashboardDbcp = await this.descriptionService.getDescription(`dashboard.${ getDomainName() }`);
 
     // load predefine dapps that should be available as suggestion
-    this.dapps = await this.descriptionService.getMultipleDescriptions([
+    this.defaultDApps = await this.descriptionService.getMultipleDescriptions([
       'favorites',
       'addressbook',
       'claims',
       'mailbox',
       'profile'
     ]);
+
     this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
     this.mailUpdate = this.core.utils.onEvent('check-new-mail-update', () => this.ref.detectChanges());
     this.smallToolbar = window.localStorage['evan-small-toolbar'] === 'true';
@@ -130,17 +140,18 @@ export class DashboardComponent extends AsyncComponent {
    */
   async checkDevelopmentMode(): Promise<any> {
     if (this.core.utils.isDeveloperMode()) {
-      if (!this.loggingDApp) {
-        this.loggingDApp = await this.descriptionService.getDescription(
-          this.descriptionService.getEvanENSAddress('logging')
-        );
+      if (!this.devDApps) {
+        this.devDApps = await this.descriptionService.getMultipleDescriptions([
+          'logging',
+          'explorer',
+          'bccdocs',
+          'uidocs',
+        ]);
       }
 
-      if (this.dapps[this.dapps.length - 1].name !== 'logging') {
-        this.dapps.push(this.loggingDApp);
-      }
-    } else if (this.loggingDApp) {
-      this.dapps.pop();
+      this.dapps = [ ].concat(this.defaultDApps, this.devDApps);
+    } else {
+      this.dapps = this.defaultDApps;
     }
 
     if (!this.developerModeSwitch) {

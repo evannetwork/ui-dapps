@@ -1,0 +1,253 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<evan-loading *ngIf="ensCheckComp.loading || loading"></evan-loading>
+<evan-ens-check #ensCheckComp
+  (updated)="ensCheckUpdated()">
+</evan-ens-check>
+<ng-container *ngIf="!ensCheckComp.loading && !loading">
+  <div class="evan-tabs evan-content evan-small-content" *ngIf="!core.utils.isMD">
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 0" 
+      (click)="activateTab(0);">
+      <ion-icon name="list-box"></ion-icon>
+      {{ '_ensmanagement.overview' | translate }}
+    </button>
+    
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 1" 
+      (click)="activateTab(1);">
+      <ion-icon name="create"></ion-icon>
+      {{ '_ensmanagement.content' | translate }}
+    </button>
+  </div>
+  <div class="evan-left-panel evan-content" *ngIf="core.utils.isMD">
+    <ion-list margin-top>
+      <button ion-item
+        [class.active]="activeTab === 0" 
+        (click)="activateTab(0);">
+        <ion-avatar item-start>
+          <ion-icon name="list-box"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_ensmanagement.overview' | translate }}</h2>
+        <h3>{{ '_ensmanagement.overview-desc' | translate }}</h3>
+      </button>
+      
+      <button ion-item
+        *ngIf="originalData.owner !== ensManagementService.nullAddress"
+        [class.active]="activeTab === 1" 
+        (click)="activateTab(1);">
+        <ion-avatar item-start>
+          <ion-icon name="create"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_ensmanagement.content' | translate }}</h2>
+        <h3>{{ '_ensmanagement.content-desc' | translate }}</h3>
+      </button>
+    </ion-list>
+  </div>
+
+  <div class="evan-right-panel evan-tabs-container" [@tabSlideTransition]="activeTab">
+    <div class="evan-relative" *ngIf="activeTab === 0">
+      <div class="evan-relative evan-content m-t-0">
+        <h3 class="content-header m-t-0 favorite-header">
+          {{ ensAddress }}
+
+          <button icon-only ion-button margin-left round clear
+            *ngIf="isPinned"
+            (click)="ensCheckComp.removeFavorite(ensAddress)">
+            <ion-icon name="star" color="warning"></ion-icon>
+          </button>
+          <button icon-only ion-button margin-left round clear
+            *ngIf="!isPinned"
+            (click)="ensCheckComp.addFavorite(ensAddress)">
+            <ion-icon name="star-outline"></ion-icon>
+          </button>
+        </h3>
+
+        <div class="top-right" *ngIf="ensData.validUntil">
+          {{ validUntil | date:'medium':'':translateService.translate.currentLang }}
+        </div>
+
+        <form class="no-padding-top" #ensDetailForm="ngForm">
+          <ion-row>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>{{ '_ensmanagement.owner.title' | translate }} *</ion-label>
+                <ion-input type="text" name="owner" required
+                  [disabled]="!canEdit"
+                  [(ngModel)]="ensData.owner"
+                  [placeholder]="'_ensmanagement.owner.desc' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="core.utils.detectTimeout(ref)">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'owner')">
+                <ion-label>
+                  {{ '_ensmanagement.owner.error' | translate }}
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>{{ '_ensmanagement.address.title' | translate }} *</ion-label>
+                <ion-input type="text" name="address" required
+                  [disabled]="!canEdit"
+                  [(ngModel)]="ensData.address"
+                  [placeholder]="'_ensmanagement.address.desc' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="core.utils.detectTimeout(ref)">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'address')">
+                <ion-label>
+                  {{ '_ensmanagement.address.error' | translate }}
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>{{ '_ensmanagement.resolver.title' | translate }} *</ion-label>
+                <ion-input type="text" name="resolver" required
+                  [disabled]="!canEdit"
+                  [(ngModel)]="ensData.resolver"
+                  [placeholder]="'_ensmanagement.resolver.desc' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="core.utils.detectTimeout(ref)">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'resolver')">
+                <ion-label>
+                  {{ '_ensmanagement.resolver.error' | translate }}
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col col-12 col-md-6>
+              <ion-item>
+                <ion-label stacked>{{ '_ensmanagement.contentAddress.title' | translate }} *</ion-label>
+                <ion-input type="text" name="contentAddress" required
+                  [disabled]="!canEdit"
+                  [(ngModel)]="ensData.contentAddress"
+                  [placeholder]="'_ensmanagement.contentAddress.desc' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="core.utils.detectTimeout(ref)">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="core.utils.showError(ensDetailForm, 'contentAddress')">
+                <ion-label>
+                  {{ '_ensmanagement.contentAddress.error' | translate }}
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <div text-center margin-top>
+          <button ion-button round outline icon-left
+            *ngIf="ensData.owner === ensManagementService.nullAddress"
+            (click)="ensCheckComp.checkEnsAddress(ensAddress)"
+            [disabled]="ensCheckComp.showLoading">
+            <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
+            {{ '_ensmanagement.purchasing' | translate }}
+          </button>
+
+          <button ion-button round outline icon-left
+            *ngIf="canEdit"
+            (click)="updateData()"
+            [disabled]="ensCheckComp.showLoading">
+            <ion-spinner *ngIf="ensCheckComp.showLoading"></ion-spinner>
+            {{ '_ensmanagement.save-data' | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="evan-relative evan-content m-t-0">
+        <h3 class="content-header m-t-0">
+          {{ '_ensmanagement.sub-ens-addresses' | translate }}
+        </h3>
+
+        <div class="evan-relative display-flex-justify">
+          <ion-item margin-vertical class="semi-transparent">
+            <ion-input
+              type="text"
+              [placeholder]="'_ensmanagement.open-placeholder' | translate"
+              [(ngModel)]="subEnsAddress"
+              (keydown)="ensCheckComp.submitOnEnter($event, ensCheckComp.checkEnsAddress.bind(ensCheckComp), subEnsAddress + '.' + ensAddress)"
+              (ionChange)="ref.detectChanges();">
+            </ion-input>
+            <div item-end>.{{ ensAddress }}</div>
+          </ion-item>
+          <button ion-button round outline icon-left margin-left
+            (click)="ensCheckComp.checkEnsAddress(subEnsAddress + '.' + ensAddress)"
+            [disabled]="showLoading">
+            <ion-spinner *ngIf="showLoading"></ion-spinner>
+            {{ '_ensmanagement.open-details' | translate }}
+          </button>
+        </div>
+
+        <div class="table-responsive" *ngIf="core.utils.isMD">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>{{ '_ensmanagement.ens-address' | translate }}</th>
+                <th>{{ '_ensmanagement.owner.title' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tappable *ngFor="let ensDetail of pinned" [routerLink]="'../' + ensDetail.ensAddress">
+                <td width="390">
+                  {{ ensDetail.ensAddress }}
+                </td>
+                <td>
+                  {{ owner }}
+                </td>
+                <td text-right>
+                  <button ion-button clear item-end>
+                    <ion-icon name="arrow-forward" color="light"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="evan-relative"
+      *ngIf="activeTab === 1">
+      <div class="evan-explorer">
+        <ion-item class="no-border">
+          <ion-label>{{ '_ensmanagement.rawMode' | translate }}</ion-label>
+          <ion-toggle 
+            [(ngModel)]="explorerService.rawMode"
+            (ionChange)="reloadDbcp()"
+          ></ion-toggle>
+        </ion-item>
+        <explorer-dbcp *ngIf="!hideDbcpComp"></explorer-dbcp>
+      </div>
+    </div>
+  </div>
+</ng-container>

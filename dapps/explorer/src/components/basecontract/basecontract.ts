@@ -198,7 +198,7 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
   async _ngOnInit() {
     this.activeTab = 0;
     this.id = this.routingService.getHashParam('id');
-    this.contractAddress = await this.bcc.nameResolver.getAddress(this.id) || this.id;
+    this.contractAddress = await this.explorerService.nameResolver.getAddress(this.id) || this.id;
     this.activeAccount = this.core.activeAccount();
 
     // initialize empty array for member handle component 
@@ -213,14 +213,14 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
       executor: this.bcc.executor,
       loader: this.bcc.contractLoader,
       log: this.core.utils.log,
-      nameResolver: this.bcc.nameResolver,
+      nameResolver: this.explorerService.nameResolver,
     });
 
     // get the bcc roles object to handle roles within the UI
     this.bccRoles = new RightsAndRoles({
       contractLoader: this.bcc.contractLoader,
       executor: this.bcc.executor,
-      nameResolver: this.bcc.nameResolver,
+      nameResolver: this.explorerService.nameResolver,
       web3: this.bcc.getWeb3()
     });
 

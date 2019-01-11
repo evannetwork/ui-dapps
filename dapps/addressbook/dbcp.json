@@ -3,19 +3,20 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.5.0",
-        "angular-libs": "^1.2.1"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0"
       },
       "entrypoint": "addressbook.js",
       "files": [
-        "addressbook.js",
-        "addressbook.css"
+        "addressbook.css",
+        "addressbook.js"
       ],
-      "origin": "QmdedeREmKLHFjGWHq6UWMPwY1Sj3SdKgaTRVZKBndscLg",
+      "origin": "QmewqYXwJjXdaVru4jeoc4bBZgenxqwpgwbELbxDPDbbEq",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"
     },
+    "dbcpVersion": 2,
     "description": "Secure communication connections.",
     "i18n": {
       "description": {
@@ -33,15 +34,16 @@
       "dapp",
       "evan"
     ],
-    "version": "1.2.0",
+    "version": "1.3.0",
     "versions": {
-      "0.9.0": "QmVtwoB8qs2bDB6Z4VHBsTwdMcuHND9j1U6Nag4VRcMhDK",
       "0.1.0": "QmdyLJbk7s8zbV7YipG72Ts2RHmkSyTENJCzfvVXMKQcpd",
+      "0.9.0": "QmVtwoB8qs2bDB6Z4VHBsTwdMcuHND9j1U6Nag4VRcMhDK",
       "1.0.0": "QmWXPQ35Bo45dsVKPwhFcw6YrPLbWmNmsbnmAJ1kMst5Ff",
       "1.0.1": "QmR4xT1PiZ3aVkAkGAWACnmcD6Te9vEJfQ3mCqzGWAcfZs",
       "1.0.2": "QmRf8z6qwMWvpsDB7eF49bNwymrzg6iSUQonzLkV14PZXr",
       "1.1.0": "QmdLQH3r3HVNiEvF8n2gMk3XvcqoebRUD3Zed9Ch3s36wo",
-      "1.2.0": "QmT31huYFpTL9s8wEGbXn5RKBuC6tBe7fc753XYeoyRMYS"
+      "1.2.0": "QmRC7SGXN2mVGx2co7aHLGcAjqKWabpJyQ6L5fdruWNyXK",
+      "1.3.0": "QmNWNkyYQvvk9XGXanyDzVDmUCyM4vTVxFdd45ww4La63S"
     }
   }
 }

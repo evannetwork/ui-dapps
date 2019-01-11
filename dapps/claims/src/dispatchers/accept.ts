@@ -54,11 +54,13 @@ export const acceptDispatcher = new QueueDispatcher(
         // get businessCenter instance
         for (let entry of queueEntry.data) {
           await service.bcc.claims.confirmClaim(
+            service.core.activeAccount(),
             entry.address,
-            entry.topic,
-            entry.issuer,
             entry.id,
           );
+
+          // clear cache for this claim
+          service.claims.deleteFromClaimCache(entry.address, entry.topic);
         }
       }
     )

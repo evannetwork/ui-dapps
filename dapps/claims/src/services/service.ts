@@ -48,6 +48,7 @@ import {
   EvanAlertService,
   EvanBCCService,
   EvanBookmarkService,
+  EvanClaimService,
   EvanCoreService,
   EvanDescriptionService,
   EvanQueue,
@@ -65,6 +66,7 @@ export class ClaimService implements OnDestroy {
   constructor(
     public bcc: EvanBCCService,
     public bookmarkService: EvanBookmarkService,
+    public claims: EvanClaimService,
     public core: EvanCoreService,
     public descriptionService: EvanDescriptionService,
     public http: Http,

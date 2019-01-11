@@ -26,6 +26,10 @@
 */
 
 import {
+  getDomainName,
+} from 'dapp-browser';
+
+import {
   ChangeDetectorRef,
   Component,
   DomSanitizer,
@@ -42,45 +46,84 @@ import {
   AsyncComponent,
   createOpacityTransition,
   createRouterTransition,
+  EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
   EvanClaimService,
   EvanCoreService,
+  EvanDescriptionService,
+  EvanFileService,
+  EvanPictureService,
   EvanQueue,
   EvanRoutingService,
-  QueueId,
 } from 'angular-core';
 
-import { ENSSellingService } from '../../services/service';
+import { ENSManagementService } from '../../services/service';
 
 /**************************************************************************************************/
 
 /**
- * Used to check if the identity for the current logged in user exists, if not, it will enable a
- * functionality, to create a new identity.
+ * Explorer claims using an topic, subject input. If needed, all interactions can be disabled and
+ * only the given parameters are used. When the dev mode is enabled, also the display mode can be
+ * adjusted for testing purposes.
  */
 @Component({
-  selector: 'ens-selling-detail',
-  templateUrl: 'detail.html',
+  selector: 'evan-ens-management',
+  templateUrl: 'overview.html',
   animations: [
     createOpacityTransition()
   ]
 })
 
-export class ENSSellingDetailComponent extends AsyncComponent {
+export class ENSManagementOverviewComponent extends AsyncComponent {
+  /***************** inputs & outpus *****************/
+
   /*****************    variables    *****************/
   /**
-   * Function to unsubscribe from queue results.
+   * amount of eves that must be payed, when the user purchases a ens address
    */
-  private queueWatcher: Function;
+  private ensPrice: number;
+
+  /**
+   * the current logged in active acount id
+   */
+  private activeAccount: string;
+
+  /**
+   * current value of the ens address input
+   */
+  private ensAddress: string;
+
+  /**
+   * if the inserted ens address is available, show the purchase popup 
+   */
+  private purchaseEns: any;
+
+  /**
+   * current balance of the user
+   */
+  private balance: number;
+
+  /**
+   * all ens addresses that were pinned by me
+   */
+  private pinned: Array<any>;
+
+  /**
+   * current detail container for auto scroll
+   */
+  @ViewChild('ensCheckComp') ensCheckComp: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
+    private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private claimService: EvanClaimService,
     private core: EvanCoreService,
-    private ensSellingService: ENSSellingService,
+    private descriptionService: EvanDescriptionService,
+    private ensManagementService: ENSManagementService,
+    private fileService: EvanFileService,
+    private pictureService: EvanPictureService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
@@ -89,23 +132,21 @@ export class ENSSellingDetailComponent extends AsyncComponent {
   }
 
   /**
-   * Load claims for the current addres, contract address or the active account.
+   * Load my ens addresses and set initial values.
    */
   async _ngOnInit() {
-    // watch for updates
-    this.queueWatcher = await this.queue.onQueueFinish(
-      this.ensSellingService.getQueueId(),
-      async (reload, results) => {
+    this.activeAccount = this.core.activeAccount();
 
-        this.ref.detectChanges();
-      }
-    );
+    this.core.utils.detectTimeout(this.ref);
   }
 
   /**
-   * Remove watchers
+   * Updates the current pinned ens addresses list, filtered by top level domains.
    */
-  _ngOnDestroy() {
-    this.queueWatcher();
+  ensCheckUpdated() {
+    this.pinned = this.ensCheckComp.pinned
+      .filter(pinned => pinned.ensAddress.split('.').length < 3);
+
+    this.ref.detectChanges();
   }
 }

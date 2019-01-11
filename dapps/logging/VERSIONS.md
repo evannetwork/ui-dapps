@@ -5,6 +5,11 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.3.0
+### Features
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
+
 ## Version 1.2.0
 ### Fixes
 - fix dapp-wrapper title i18n

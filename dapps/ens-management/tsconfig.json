@@ -31,6 +31,9 @@
       "dapp-browser": [
         "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"
       ],
+      "explorer": [
+        "../../explorer/dist/explorer.js"
+      ],
       "smart-contracts": [
         "../../../node_modules/@evan.network/smart-contracts-core/index.js"
       ]

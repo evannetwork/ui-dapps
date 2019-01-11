@@ -31,19 +31,19 @@ export const de = {
     "account-detail-desc": "Profildetails & Interaktionen",
     "accountid": "Account-ID",
     "accounts": "Accounts",
-    "add-claim-topic": "Zertifikatsprüfung hinzufügen",
+    "add-claim-topic": "Verifizierungsprüfung hinzufügen",
     "alias": "Alias",
     "balance": "Meine EVEs",
     "balance-updated": "EVEs wurden aktualisiert...",
     "cancel": "abbrechen",
     "claim-topic": {
-      "desc": "Zertifikatspfad der geprüft werden soll (z.B.: /company)",
-      "error": "Bitte geben Sie einen Zertifikatspfad ein",
-      "title": "Zertifikatspfad"
+      "desc": "Verifizierungspfad der geprüft werden soll (z.B.: /company)",
+      "error": "Bitte geben Sie einen Verifizierungspfad ein",
+      "title": "Verifizierungspfad"
     },
-    "claims": "Zertifikate",
-    "claims-desc": "Zertifikatsauswahl für UI Komponenten",
-    "claims-desc-long": "Verwalten Sie Zertifikate die in verschiedenen Applikationen standartmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
+    "claims": "Verifizierunge",
+    "claims-desc": "Verifizierungsauswahl für UI Komponenten",
+    "claims-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standartmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
     "color-theme": "Farbschema",
     "color-theme-desc": "Stellen Sie die Farbdarstellung der Benutzeroberfläche ein.",
     "color-themes": {
@@ -88,12 +88,12 @@ export const de = {
     "private-key": "Private Key",
     "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
     "profile-claims-dispatcher": {
-      "description": "Zertifikatsprüfungen speichern",
-      "title": "Zertifikatsprüfungen speichern"
+      "description": "Verifizierungsprüfungen speichern",
+      "title": "Verifizierungsprüfungen speichern"
     },
     "profile-encryption-key": "Profil Verschlüsselungsschlüssel",
     "runtime-config": "Laufzeiteinstellungen",
-    "save-claim-topics": "Zertifikatsprüfungen speichern",
+    "save-claim-topics": "Verifizierungsprüfungen speichern",
     "settings": "Einstellungen",
     "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung"
   },

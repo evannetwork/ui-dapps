@@ -3,19 +3,20 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.5.0",
-        "angular-libs": "^1.2.1"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0"
       },
       "entrypoint": "queue.js",
       "files": [
-        "queue.js",
-        "queue.css"
+        "queue.css",
+        "queue.js"
       ],
-      "origin": "QmapzbeuSd2yf8i8DKxAHMT7iqA3TMd8YPnyJxUyiXiEao",
+      "origin": "QmPNXXfMZAVrmJLv9TuHcAXaB4zMefDz6vXY1Rpizhtd5j",
       "primaryColor": "#1e9bc0",
       "secondaryColor": "#f5f5f5",
       "type": "dapp"
     },
+    "dbcpVersion": 2,
     "description": "Manage pending locally saved pending transactions.",
     "i18n": {
       "description": {
@@ -33,15 +34,16 @@
       "dapp",
       "evan"
     ],
-    "version": "1.2.0",
+    "version": "1.3.0",
     "versions": {
-      "0.9.0": "QmWJ3TC4ACfVRfxruJEkL6cYmDMcGqj69ty3juSujBB8Gj",
       "0.1.0": "QmeGzKeHUARg9VKzKG4c7bC3qaTmpuwa1LyVihBD2GpqPQ",
+      "0.9.0": "QmWJ3TC4ACfVRfxruJEkL6cYmDMcGqj69ty3juSujBB8Gj",
       "1.0.0": "QmXvY62GGq3RiiXK2GKGdkJw3LmGFMdL5USYLrYvmjd93z",
       "1.0.1": "QmSipBvuMgJ2KaUwy2GWdcjywvfR5iNqcrrSmqcuxQnsrY",
       "1.0.2": "Qmd5eqmKQMUnpdw262KTvTjDSehqJtsWMoWvLjHaPwitSw",
       "1.1.0": "QmfUxeYar2fVfXbQczHKtv3o8Fkv8kdeiaCe6km7pi64EE",
-      "1.2.0": "QmfZBdbdjZyjNf2ejvSVuBMe71TkmBuFE2fiRJhewqoZT3"
+      "1.2.0": "QmRFZhzLwgbCwmWGC3Br3e6n8meTLbobwh8Bvmn8ECQC5b",
+      "1.3.0": "QmRBki1PsFD4AnCySnr4PVTthd752BudJMXk616EmyFnp9"
     }
   }
 }

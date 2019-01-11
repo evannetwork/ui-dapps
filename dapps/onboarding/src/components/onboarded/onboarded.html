@@ -25,59 +25,85 @@
   https://evan.network/license/
 -->
 
-<ion-header>
-  <ion-navbar>
-    <ion-title [innerHTML]="'_dapponboarding.onboarding' | translate"></ion-title>
-  </ion-navbar>
-</ion-header>
 <evan-loading *ngIf="loading"></evan-loading>
-<ion-content ion-fixed [style.display]="loading ? 'none':'block'">
-  <div class="vertical-center-container">
-    <div class="content-container" text-left *ngIf="!loading">
-      <h3>{{ '_dapponboarding.onboarded' | translate }}</h3>
+<ng-container *ngIf="!loading">
+  <ion-header>
+    <ion-navbar>
+      <ion-title [innerHTML]="'_dapponboarding.onboarding' | translate"></ion-title>
+    </ion-navbar>
+  </ion-header>
+  <evan-loading *ngIf="loading"></evan-loading>
+  <ion-content ion-fixed [style.display]="loading ? 'none':'block'">
+    <div class="vertical-center-container">
+      <div class="content-container" text-left *ngIf="!loading">
+        <h3>{{ '_dapponboarding.already-joined' | translate }}</h3>
 
-      <p class="continuous-text no-margin-top"
-        [innerHTML]="'_dapponboarding.onboarded-desc' | translate">
-      </p>
+        <p class="continuous-text p-t-0 m-t-0"
+          [innerHTML]="'_dapponboarding.already-joined-desc' | translate">
+        </p>
 
-      <div class="content-container" text-left>
-        <p>
+        <p margin-top>
           <b>{{ '_dapponboarding.user-alias' | translate }}:</b>
           <span>{{ alias }}</span>
         </p>
-        <p>
-          {{ '_dapponboarding.profile-provider' | translate }}
-        </p>
-        <p class="copy-container"
-          (click)="core.copyString(activeAccount)">
+        <p (click)="core.copyString(activeAccount)">
           <b>{{ '_dapponboarding.account-id' | translate }}:</b>
           <span>{{ activeAccount }}</span>
-          <button ion-button icon-only round clear title="copy">
-            <ion-icon name="copy" color="light"></ion-icon>
-          </button>
         </p>
         <p>
           <b>{{ '_dapponboarding.balance' | translate }}:</b>
           <span>{{ balance }} EVE</span>
         </p>
-        <p
-          [innerHTML] = "'_dapponboarding.onboarded-balance' | translate" > 
-        </p>
+
+        <div class="invite-container" text-left
+          *ngIf="queryParams?.onboardingID">
+          <span [innerHTML]="'_dapponboarding.invited-info' | translate:queryParams"></span><br><br>
+          <span [innerHTML]="'_dapponboarding.invited-desc' | translate:queryParams"></span>
+
+          <div text-center margin-top>
+            <button ion-button icon-left round color="primary"
+              [disabled]="accepting"
+              (click)="acceptContact()">
+              <ion-spinner *ngIf="accepting"></ion-spinner>
+              <ion-icon name="person-add" *ngIf="!accepting"></ion-icon>
+              {{ '_dapponboarding.accept-contact' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-margin-bottom" margin padding text-center *ngIf="utils.isMD">
+        <button ion-button icon-left round color="alert"
+          [disabled]="accepting"
+          (click)="logout()">
+          <ion-spinner *ngIf="accepting"></ion-spinner>
+          <ion-icon name="log-out" *ngIf="!accepting"></ion-icon>
+          <span color="light">{{ '_dapponboarding.logout' | translate }}</span>
+        </button>
+        <button ion-button icon-left round color="primary"
+          [disabled]="accepting"
+          (click)="openDefaultDapp()">
+          <ion-spinner *ngIf="accepting"></ion-spinner>
+          <ion-icon name="arrow-forward" *ngIf="!accepting"></ion-icon>
+          {{ '_dapponboarding.open-last-dapp' | translate }}
+        </button>
       </div>
     </div>
-    <div class="no-margin-bottom" margin padding text-center *ngIf="utils.isMD">
-      <button ion-button icon-left round color="primary"
-              (click)="next()">
-        <ion-icon name="cloud-done"></ion-icon>
-        {{ '_dapponboarding.ok' | translate }}
-      </button>
-    </div>
-  </div>
-</ion-content>
-<ion-footer class="active" text-center *ngIf="!utils.isMD">
-  <button ion-button icon-left round color="primary"
-    (click)="next()">
-    <ion-icon name="cloud-done"></ion-icon>
-    {{ '_dapponboarding.ok' | translate }}
-  </button>
-</ion-footer>
+  </ion-content>
+  <ion-footer class="active" text-center *ngIf="!utils.isMD">
+    <button ion-button icon-left round color="alert"
+      [disabled]="accepting"
+      (click)="logout()">
+      <ion-spinner *ngIf="accepting"></ion-spinner>
+      <ion-icon name="log-out" *ngIf="!accepting"></ion-icon>
+      <span color="light">{{ '_dapponboarding.logout' | translate }}</span>
+    </button>
+    <button ion-button icon-right round color="primary"
+      [disabled]="accepting"
+      (click)="openDefaultDapp()">
+      {{ '_dapponboarding.open-last-dapp' | translate }}
+      <ion-spinner *ngIf="accepting"></ion-spinner>
+      <ion-icon name="arrow-forward" *ngIf="!accepting"></ion-icon>
+    </button>
+  </ion-footer>
+</ng-container>

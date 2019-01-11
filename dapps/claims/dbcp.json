@@ -3,22 +3,22 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.5.0",
-        "angular-libs": "^1.2.1",
-        "smart-contracts": "^1.2.0"
+        "angular-core": "^1.7.0",
+        "angular-libs": "^1.4.0",
+        "smart-contracts": "^1.5.0"
       },
       "entrypoint": "claims.js",
       "files": [
-        "claims.js",
-        "claims.css"
+        "claims.css",
+        "claims.js"
       ],
-      "origin": "QmWkRAMg6pHozGdxVzLYEQvRvVh6zLoPL1Qv1LB3YdbsmC",
+      "origin": "QmQhuQwMiHi6ZYjzyYW466vZf7JqCfEPA19iVwL3Xdaw6Q",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "standalone": true,
       "type": "dapp"
     },
-    "dbcpVersion": 1,
+    "dbcpVersion": 2,
     "description": "View, accept, decline your claims.",
     "i18n": {
       "description": {
@@ -37,9 +37,10 @@
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "versions": {
-      "1.0.0": "QmX9EcCNkzWh8jvb2cmvnCTFokkpRMXgBrthRb4922nYdz"
+      "1.0.0": "QmTfPSFqtbxBAYSd1MPwyRpB4kNajwVUhsouFwXEtUHp2k",
+      "1.1.0": "QmU358GZtPT3P1g1djghgNoH23uEfY22bDA1rJ6n5wz9GQ"
     }
   }
 }
