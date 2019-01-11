@@ -4,6 +4,13 @@
 ### Features
 - onboarding
   - move sendCommKey to onboarded page
+- onboarding
+  - add salting for encryptionKeys accountId + password
+- ens management DApp
+- explorer
+  - is now includable as a library
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
   
 ### Fixes
 - addressbook

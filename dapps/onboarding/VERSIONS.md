@@ -2,6 +2,10 @@
 
 ## Next Version
 ### Features
+- add salting for encryptionKeys accountId + password
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
+  
 ### Fixes
 ### Deprecations
 

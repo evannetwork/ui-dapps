@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
+
 ### Fixes
 - add claimId to accept / delete claim
 

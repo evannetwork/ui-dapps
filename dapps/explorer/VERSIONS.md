@@ -2,6 +2,10 @@
 
 ## Next Version
 ### Features
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
+- explorer module is now exportable as library
+
 ### Fixes
 ### Deprecations
 

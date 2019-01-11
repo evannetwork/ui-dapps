@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- add missing dbcpVersion to dbcp files
+- add licenses to dbcp files
+
 ### Fixes
 - fix contact creation using email address
 
