@@ -76,7 +76,7 @@ export const en = {
     'terms-of-use': 'Terms of use',
     /* tslint:disable */
     'terms-of-use-text': `
-    This ist the <b>evan.network testcore</b>.<br><br>
+    This is the <b>evan.network testcore</b>.<br><br>
       This network is for development and showcase purposes only and <b>not for production use.</b>
       In the testcore we give no guarantee for any data loss and availability.<br><br>
 
