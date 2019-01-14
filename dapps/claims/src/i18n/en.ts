@@ -36,7 +36,7 @@ export const en = {
     "claims": "Verification overview",
     "computed": "computed view",
     "create-identity": "Set up verification management",
-    "creating-identity": "Certificate management is beeing created...",
+    "creating-identity": "Certificate management is being created...",
     "delete-dispatcher": {
       "description": "Reject verification",
       "title": "Reject verification"
@@ -48,8 +48,8 @@ export const en = {
     "expand": "expanded view",
     "hide-description": "hide description",
     "identity-dispatcher": {
-      "description": "Verification management is beeing created...",
-      "title": "Verification management is beeing created"
+      "description": "Verification management is being created...",
+      "title": "Verification management is being created"
     },
     "identity-exists": "Certificate management available",
     "identity-exists-desc": "Your verification management is available, so you can check, issue and verify verifications",
