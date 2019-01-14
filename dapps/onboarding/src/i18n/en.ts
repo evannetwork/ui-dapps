@@ -124,7 +124,7 @@ export const en = {
     'error-claim-message': 'An error occurred while transferring your invitation EVEs, please try again',
     'retry': 'Retry',
     'report-error': 'Report Error',
-    'wait-for-profile': 'Please wait while your profile is beeing created.',
+    'wait-for-profile': 'Please wait while your profile is being created.',
     'account-id': 'Active Profile-ID',
     'balance': 'Profile Balance',
     'refresh': 'Refresh',
