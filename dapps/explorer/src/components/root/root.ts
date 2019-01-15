@@ -166,6 +166,9 @@ export class RootComponent extends AsyncComponent {
   async _ngOnInit() {
     await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
 
+    // map nameResolver for quick access
+    this.explorerService.nameResolver = this.bcc.nameResolver;
+
     this.routerChange = this.routingService.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
         this.loadIDInformation();

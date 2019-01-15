@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "2.0.0",
+        "angular-core": "^1.6.1",
         "angular-libs": "^1.4.0"
       },
       "entrypoint": "addressbook.js",

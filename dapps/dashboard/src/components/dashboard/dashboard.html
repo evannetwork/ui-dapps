@@ -46,7 +46,7 @@
       <button ion-item menuClose 
         color="light" 
         *ngFor="let dapp of dapps"
-        routerLink="./{{ dapp.ensAddress }}"
+        [routerLink]="(dapp.dapp.standalone ? '/' : './') + dapp.ensAddress"
         routerLinkActive="active">
         <ion-avatar item-start *ngIf="dapp.imgSquare">
           <img item-start large *oneTime [src]="_DomSanitizer.bypassSecurityTrustUrl(dapp.imgSquare)" />

@@ -3,6 +3,9 @@
 ## Next Version
 ### Features
 ### Fixes
+- dashboard
+  - fix opening of standalone dapps from sidepanel
+
 ### Deprecations
 
 ## Version 1.7.0
