@@ -43,7 +43,7 @@ export const de = {
     },
     "claims": "Verifizierunge",
     "claims-desc": "Verifizierungsauswahl für UI Komponenten",
-    "claims-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standartmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
+    "claims-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
     "color-theme": "Farbschema",
     "color-theme-desc": "Stellen Sie die Farbdarstellung der Benutzeroberfläche ein.",
     "color-themes": {
