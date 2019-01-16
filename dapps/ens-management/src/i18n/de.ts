@@ -34,9 +34,9 @@ export const de = {
       "title": "ENS Favorit hinzufügen"
     },
     "address": {
-      "desc": "Zugehörige Vertragsaddresse",
+      "desc": "Zugehörige Vertragsadresse",
       "error": "Bitte geben Sie eine valide Vertragsadresse ein!",
-      "title": "Vertragsaddresse"
+      "title": "Vertragsadresse"
     },
     "available-text": "Die ENS Adresse <b>{{ ensAddress }}</b> ist verfügbar. Kaufen Sie sie für",
     "buy": "kaufen",
@@ -44,7 +44,7 @@ export const de = {
     "content": "Daten",
     "content-desc": "DBCP Informationen",
     "contentAddress": {
-      "desc": "DBCP - IPFS Addresse zu gespeicherten Daten",
+      "desc": "DBCP - IPFS Adresse zu gespeicherten Daten",
       "error": "Bitte geben Sie eine valide IPFS Adresse ein!",
       "title": "Datenadresse"
     },

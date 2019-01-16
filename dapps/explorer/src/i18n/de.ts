@@ -128,7 +128,7 @@ export const de = {
       "transfer-ownership-question": "Wollen Sie wirklich die Besitzerrechte an einen anderen Nutzer abtreten?"
     },
     "cancel": "Abbrechen",
-    "change-id": "Addresse ändern",
+    "change-id": "Adresse ändern",
     "choose-abi-contracts": "ABI auswählen",
     "choose-abi-contracts-desc": "Versuchen Sie eine ABI Definition von bestehenden evan.network Verträgen zu laden und den Vertrag über dieses Interface anzuschauen.",
     "configuration": "Konfiguration",
@@ -303,7 +303,7 @@ export const de = {
       "basecontract": "evan.network BaseContract",
       "basecontract-desc": "Vertragsstatus, -mitglieder und mehr",
       "claims": "Zertifikate",
-      "claims-desc": "Prüfen Sie Zertifikate für die ausgewählte Addresse.",
+      "claims-desc": "Prüfen Sie Zertifikate für die ausgewählte Adresse.",
       "contractinteraction": "Vertragsinteraktion",
       "contractinteraction-desc": "ABI Funktionen direkt ausführen",
       "datacontract": "evan.network DataContract",

@@ -85,7 +85,7 @@ export const de = {
     'edit': 'Editieren',
     'empty-bookmarks': 'Keine Verknüpfungen erstellt...',
     'ensaddress': 'App- / Vertragsadresse',
-    'ensaddress-desc': 'Geben Sie eine ENS- oder Vertragsaddresse ein, um sie zu öffnen',
+    'ensaddress-desc': 'Geben Sie eine ENS- oder Vertragsadresse ein, um sie zu öffnen',
     'featured_dapps': 'Vorgeschlagene Anwendungen',
     'mailbox': 'Mailbox',
     'nothing-found': 'Es wurden keine Verknüpfung für den Filter <b>{{ filter }}</b> gefunden...',

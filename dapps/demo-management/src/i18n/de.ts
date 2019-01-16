@@ -28,7 +28,7 @@
 export const de = {
   "_dm": {
     "cancel": "abbrechen",
-    "contract-address": "Vertragsaddresse",
+    "contract-address": "Vertragsadresse",
     "create-contract": "Vertragsstruktur erstellen",
     "create-contract-to-continue": "Die Einrichtung der Nutzer wurde abgeschlossen.<br><br>Erstellen Sie die nötige Vertragsstruktur um den Prozess abzuschließen.",
     "create-demo": "Demo erstellen",
@@ -36,7 +36,7 @@ export const de = {
     "create-profiles": "Profile erstellen",
     "create-users-to-continue": "Die angebenen Nutzer besitzen noch kein zugehöriges Profil.<br><br>Bitte erstellen Sie die Profile um fortzufahren.",
     "empty-demos": "Keine Demos verfügbar",
-    "ens-address": "ENS-Addresse",
+    "ens-address": "ENS-Adresse",
     "general": "Generelle Informationen",
     "handling-dispatcher": {
       "description": "Verwalten von Demo Umgebungen",

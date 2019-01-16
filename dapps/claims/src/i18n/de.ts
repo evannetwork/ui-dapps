@@ -73,9 +73,9 @@ export const de = {
       "title": "Verifizierung verwerfen"
     },
     "subject": {
-      "desc": "Geben Sie die Account Addresse ein, die geprüft werden soll.",
-      "error": "Geben Sie eine valide Accountaddresse ein, um die Überprüfung zu starten!",
-      "title-addressbook": "Addressbuchauswahl",
+      "desc": "Geben Sie die Account Adresse ein, die geprüft werden soll.",
+      "error": "Geben Sie eine valide Accountadresse ein, um die Überprüfung zu starten!",
+      "title-addressbook": "Adressbuchauswahl",
       "title-string": "Direkte Account Eingabe"
     },
     "topic": {

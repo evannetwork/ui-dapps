@@ -86,7 +86,7 @@ export const en = {
       "description": "Delete ENS domain favorite",
       "title": "Delete ENS domain favorite"
     },
-    "ens-address": "ENS addresse",
+    "ens-address": "ENS address",
     "sub-ens-addresses": "Sub Addresses"
   },
   "ensmanagement": "ENS Management"
