@@ -56,6 +56,9 @@ export const identityDispatcher = new QueueDispatcher(
         for (let entry of queueEntry.data) {
           if (!(await service.bcc.claims.identityAvailable(activeAccount)) || entry.force) {
             await service.bcc.claims.createIdentity(activeAccount);
+
+            // clear cache for this claim
+            service.claims.deleteFromClaimCache(entry.address, '/');
           }
         }
       }
