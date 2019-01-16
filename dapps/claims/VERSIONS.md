@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- remeber latest selected claim topics and account ids
+
 ### Fixes
 ### Deprecations
 

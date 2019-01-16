@@ -5,6 +5,8 @@
 ### Fixes
 - dashboard
   - fix opening of standalone dapps from sidepanel
+- claims
+  - remeber latest selected claim topics and account ids
 
 ### Deprecations
 

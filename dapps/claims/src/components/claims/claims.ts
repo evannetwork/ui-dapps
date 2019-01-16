@@ -127,12 +127,12 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   /**
    * use address input or addressbook select
    */
-  private useAddressInput: boolean = false;
+  private useAddressInput: boolean;
 
   /**
    * use address input or addressbook select
    */
-  private useAddressBook: boolean = true;
+  private useAddressBook: boolean;
 
   /**
    * use array of members so the user can also select users from his address book directly
@@ -208,19 +208,33 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
   async _ngOnInit() {
     this.activeAccount = this.core.activeAccount();
 
+    // enable latest used mode
+    const useAddressBook = window.localStorage['evan-claims-dapp-use-addressbook'];
+    this.useAddressBook = !useAddressBook || useAddressBook === 'true' ?
+      true : false;
+    this.useAddressInput = !this.useAddressBook;
+
     // prefill subject
-    this.subject = this.subject ||
-      this.routingService.getContractAddress() ||
-      this.activeAccount;
+    this.subject = this.subject || this.routingService.getContractAddress();
 
     // if no valid subject was supplied, reset it
     if (!this.isValidAddress(this.subject)) {
-      this.subject = '';
-      this.subjectSelect = [ this.activeAccount ];
+      delete this.subject;
     }
 
-    // fill initial input
-    this.subjectInput = this.subject;
+    // try to resolve the latest used values
+    this.subjectInput = this.subject || window.localStorage['evan-claims-dapp-address-input'];
+    this.subjectSelect = [ this.subject || window.localStorage['evan-claims-dapp-address-select'] ];
+
+    // if no valid subject was supplied, reset it
+    if (!this.isValidAddress(this.subjectInput)) {
+      delete this.subjectInput;
+    }
+
+    // if no valid subject was supplied, reset it
+    if (!this.isValidAddress(this.subjectSelect[0])) {
+      this.subjectSelect = [ this.activeAccount ];
+    }
 
     // show the address input only, if no address was applied
     this.showAddressSelect = this.showAddressSelect || !this.subject;
@@ -233,7 +247,6 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
     // try to load the list of of the last selected claim topics
     this.prefilledClaims = window.localStorage['evan-claims-dapp-topic'] || [
-      '/contacts/valid',
       '/onboarding/agbaccepted',
     ];
     if (!Array.isArray(this.prefilledClaims)) {
@@ -247,7 +260,9 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     this.topic = this.prefilledClaims.length > 0 ? this.prefilledClaims[0] : ''; 
 
     // show claims directly, when topics are available
-    this.showClaims = !this.showTopicSelect && this.isValidAddress(this.subject);
+    this.showClaims = (!this.showTopicSelect && this.isValidAddress(this.subject)) ||
+      (this.useAddressBook && this.isValidAddress(this.subjectSelect[0])) ||
+      (!this.useAddressBook && this.isValidAddress(this.subjectInput));
 
     // load currents users contacts
     this.addressbook = await this.addressBookService.loadAccounts();
@@ -268,7 +283,12 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
     // should the claim configuration be displayed?
     this.showClaimDisplayConfiguration = this.core.utils.isDeveloperMode();
 
-    this.detectTimeout();
+    // if no subject is provided, but the claims can directly be loaded, use the current values
+    if (!this.subject && this.showClaims) {
+      await this.useCurrentValues();
+    } else {
+      this.detectTimeout();
+    }
   }
 
   /**
@@ -327,6 +347,9 @@ export class EvanClaimsOverviewComponent extends AsyncComponent {
 
       this.topics = [ this.topic ];
       window.localStorage['evan-claims-dapp-topic'] = JSON.stringify(this.prefilledClaims);
+      window.localStorage['evan-claims-dapp-use-addressbook'] = this.useAddressBook;
+      window.localStorage['evan-claims-dapp-address-input'] = this.subjectInput;
+      window.localStorage['evan-claims-dapp-address-select'] = this.subjectSelect[0];
     }
 
     await this.core.utils.timeout(0);
