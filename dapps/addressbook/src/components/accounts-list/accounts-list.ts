@@ -44,7 +44,7 @@ import {
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanMailboxService,
   EvanModalService,
@@ -90,20 +90,20 @@ export class AccountListComponent extends AsyncComponent {
   private activeGroup: string;
 
   /**
-   * Function to unsubscribe from profile claims watcher queue results.
+   * Function to unsubscribe from profile verifications watcher queue results.
    */
-  private profileClaimsWatcher: Function;
+  private profileVerificationsWatcher: Function;
 
   /**
-   * for the current profile activated claims
+   * for the current profile activated verifications
    */
-  private claims: Array<string> = [ ];
+  private verifications: Array<string> = [ ];
 
   constructor(
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private claimsService: EvanClaimService,
+    private verificationsService: EvanVerificationService,
     private core: EvanCoreService,
     private modalService: EvanModalService,
     private queueService: EvanQueue,
@@ -125,12 +125,12 @@ export class AccountListComponent extends AsyncComponent {
         this.loadAccounts();
       });
 
-    // load profile active claims
-    this.profileClaimsWatcher = await this.queueService.onQueueFinish(
+    // load profile active verifications
+    this.profileVerificationsWatcher = await this.queueService.onQueueFinish(
       new QueueId(`profile.${ getDomainName() }`, '*'),
       async (reload, results) => {
         reload && await this.core.utils.timeout(0);
-        this.claims = await this.claimsService.getProfileActiveClaims();
+        this.verifications = await this.verificationsService.getProfileActiveVerifications();
         this.ref.detectChanges();
       }
     );
@@ -138,7 +138,7 @@ export class AccountListComponent extends AsyncComponent {
 
   async _ngOnDestroy() {
     this.clearQueue();
-    this.profileClaimsWatcher();
+    this.profileVerificationsWatcher();
   }
 
   /**

@@ -46,15 +46,15 @@ import {
 export const purchaseDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.purchase-dispatcher.title',
-      '_claims.purchase-dispatcher.description',
+      '_verifications.purchase-dispatcher.title',
+      '_verifications.purchase-dispatcher.description',
       async (service: ENSManagementService, queueEntry: any) => {
         const results = [ ];
         const activeAccount = service.core.activeAccount();
 
         for (let entry of queueEntry.data) {
           // purchaser the ens address
-          await service.nameResolver.claimAddress(
+          await service.nameResolver.verificationAddress(
             entry.ensAddress,
             activeAccount,
             activeAccount,

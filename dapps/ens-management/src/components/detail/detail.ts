@@ -45,7 +45,7 @@ import {
   createTabSlideTransition,
   EvanAlertService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanQueue,
   EvanRoutingService,
@@ -146,7 +146,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     private _DomSanitizer: DomSanitizer,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private claimService: EvanClaimService,
+    private verificationService: EvanVerificationService,
     private core: EvanCoreService,
     private ensManagementService: ENSManagementService,
     private explorerService: ExplorerService,
@@ -158,7 +158,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   }
 
   /**
-   * Load claims for the current addres, contract address or the active account.
+   * Load verifications for the current addres, contract address or the active account.
    */
   async _ngOnInit() {
     // watch for updates

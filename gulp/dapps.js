@@ -93,9 +93,9 @@ const logServing = () => {
 
     // load the status of the dapp
     if (serves[dappName].rebuild) {
-      console.log(`  ${ logDAppName }: rebuilding`);
+      console.log(`  ${ logDAppName }:     rebuilding`);
     } else if (serves[dappName].loading) {
-      console.log(`  ${ logDAppName }: building`);
+      console.log(`  ${ logDAppName }:   building`);
     } else {
       console.log(`  ${ logDAppName }: watching`);
     }

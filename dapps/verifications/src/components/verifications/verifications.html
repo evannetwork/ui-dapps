@@ -1,0 +1,220 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<ng-template #verificationDisplay let-topics="topics">
+  <ng-container *ngFor="let topic of topics; let i = index">
+    <h3 class="content-header m-t-0" margin-bottom
+      *ngIf="topics.length > 1">
+      {{ '_verifications.topic-title' | translate }}: {{ topic }}
+    </h3>
+
+    <evan-verification margin-top
+      [topic]="topic"
+      [address]="useAddressInput ? subject : subjectSelect[0]"
+      [mode]="displayMode"
+      [compute]="computedVerifications">
+    </evan-verification>
+  </ng-container>
+</ng-template>
+
+<evan-loading *ngIf="loading"></evan-loading>
+<ng-container *ngIf="!loading">
+  <evan-identity-missing *ngIf="!identityExists"></evan-identity-missing>
+  <ng-container *ngIf="identityExists">
+    <ng-container *ngIf="showAddressSelect || showTopicSelect">
+      <div class="evan-content evan-relative">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_verifications.verification-analyse' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0" *ngIf="!showAddressSelect">
+          {{ (addressbook[subject]?.alias || addressbook[subject]?.email) ? (addressbook[subject]?.alias || addressbook[subject]?.email) + ' (' + subject + ')' : subject }}
+        </p>
+        <form #selectForm="ngForm">
+          <ion-row>
+            <ion-col col-12 [attr.col-md-4]="showAddressSelect ? '' : null"
+              *ngIf="showTopicSelect">
+              <div class="display-flex-justify">
+                <ion-item>
+                  <ion-label stacked>
+                    {{ '_verifications.topic.title' | translate }}*
+                  </ion-label>
+                  <ion-input name="topic" required autofocus
+                    [(ngModel)]="topic"
+                    [placeholder]="'_verifications.topic.desc' | translate"
+                    (ionChange)="ref.detectChanges()"
+                    (keydown)="submitOnEnter($event)"
+                    (focusout)="ref.detectChanges()">
+                  </ion-input>
+                </ion-item>
+                <button ion-button icon-only round clear class="verification-topic-open"
+                  (click)="verificationTopicSelect.open($event)">
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+                </button>
+                <ion-select name="verificationTopicSelect" class="evan-callout" interface="popover"
+                  #verificationTopicSelect
+                  [(ngModel)]="topic"
+                  [selectOptions]="{ cssClass: 'evan-callout evan-topic-prefill top' }"
+                  (ionChange)="ref.detectChanges()">
+                  <ion-option
+                    *ngFor="let prefilledVerification of prefilledVerifications"
+                    [value]="prefilledVerification">
+                    {{ prefilledVerification }}
+                  </ion-option>
+                </ion-select>
+              </div>
+              <ion-chip class="error-hint" *ngIf="showError(selectForm, 'topic')" color="danger">
+                <ion-label>{{ '_verifications.topic.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
+
+            <ng-container
+              *ngIf="showAddressSelect">
+              <ion-col col-12 class="checkbox-input"
+                [attr.col-md-4]="showTopicSelect ? '' : null"
+                [attr.col-md-6]="!showTopicSelect ? '' : null">
+                <div class="checkbox-input">
+                  <ion-checkbox name="useAddressBook" margin-right
+                    [(ngModel)]="useAddressBook"
+                    (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
+                    (ionChange)="ref.detectChanges()"
+                    (focusout)="ref.detectChanges()">
+                  </ion-checkbox>
+                  <contract-members name="subject" #subjectSelectComp
+                    [(members)]="subjectSelect"
+                    [disabled]="useAddressInput"
+                    includeActiveAccount="true"
+                    maxMembers="1"
+                    (onChange)="ref.detectChanges()">
+                    <h3 label>{{ '_verifications.subject.title-addressbook' | translate }}*</h3>
+                  </contract-members>
+                </div>
+              </ion-col>
+              <ion-col col-12 col-md-4
+                [attr.col-md-4]="showTopicSelect ? '' : null"
+                [attr.col-md-6]="!showTopicSelect ? '' : null">
+                <div class="checkbox-input">
+                  <ion-checkbox name="useAddressInput" margin-right
+                    [(ngModel)]="useAddressInput"
+                    (click)="useAddressBook = false; useAddressInput = true; detectTimeout()"
+                    (ionChange)="ref.detectChanges()"
+                    (focusout)="ref.detectChanges()">
+                  </ion-checkbox>
+                  <ion-item>
+                    <ion-label stacked>
+                      {{ '_verifications.subject.title-string' | translate }}*
+                    </ion-label>
+                    <ion-input name="subject" required
+                      [(ngModel)]="subjectInput"
+                      [disabled]="useAddressBook"
+                      [placeholder]="'_verifications.subject.desc' | translate"
+                      (keydown)="submitOnEnter($event)"
+                      (ionChange)="ref.detectChanges()"
+                      (focusout)="ref.detectChanges()">
+                    </ion-input>
+                  </ion-item>
+                </div>
+                <ion-chip class="error-hint" color="danger"
+                  *ngIf="">
+                  <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
+                </ion-chip>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+
+          <ng-container *ngIf="showVerificationDisplayConfiguration">
+            <ion-row>
+              <ion-col col-12 col-md-6>
+                <ion-item>
+                  <ion-label stacked>{{ '_verifications.mode.title' | translate }}*</ion-label>
+
+                  <ion-select name="displayMode" interface="popover"
+                    [(ngModel)]="displayMode"
+                    [placeholder]="'_verifications.mode.description' | translate"
+                    (ionChange)="detectTimeout()"
+                    (focusout)="detectTimeout()">
+                    <ion-option value="icon">{{ '_verifications.mode.icon' | translate }}</ion-option>
+                    <ion-option value="normal">{{ '_verifications.mode.normal' | translate }}</ion-option>
+                    <ion-option value="detail">{{ '_verifications.mode.detail' | translate }}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col col-12 col-md-6>
+                <ion-item>
+                  <ion-label>{{ '_verifications.computed' | translate }}</ion-label>
+                  <ion-toggle name="computedVerifications"
+                    [(ngModel)]="computedVerifications"
+                    (ionChange)="ref.detectChanges()">
+                  </ion-toggle>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ng-container>
+
+          <div text-center>
+            <ion-chip class="error-hint" color="danger"
+              *ngIf="(useAddressInput && selectForm?.controls?.subject?.touched && !isValidAddress(subjectInput)) || (useAddressBook && subjectSelectComp?.touched && subjectSelect.length === 0)">
+              <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
+            </ion-chip>
+          </div>
+        </form>
+
+        <div text-right margin-bottom>
+          <button ion-button outline round margin-top icon-left
+            [disabled]="!isValidForm()"
+            (click)="useCurrentValues()">
+            {{ '_verifications.use-topic' | translate }}
+          </button>
+        </div>
+
+        <ng-container *ngIf="showVerifications">
+          <ng-container
+            *ngTemplateOutlet="verificationDisplay;context:{ topics: topics }">
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="evan-content" *ngIf="showVerificationDisplayConfiguration">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_verifications.recreate-identity' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0">
+          {{ '_verifications.recreate-identity-description' | translate }}
+        </p>
+        <button ion-button outline round margin-top icon-left
+          (click)="createIdentity()">
+          {{ '_verifications.recreate-identity' | translate }}
+        </button>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="!showAddressSelect && !showTopicSelect">
+      <ng-container
+        *ngTemplateOutlet="verificationDisplay;context:{ topics: topics }">
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

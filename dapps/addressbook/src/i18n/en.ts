@@ -45,7 +45,7 @@ export const en = {
     "alias": "Name",
     "alias-desc": "Alias of the contact",
     "all": "All",
-    "claims": "Verifications",
+    "verifications": "Verifications",
     "contact-card-invite": "Using Contact Cards",
     "contact-card-invite-description": "Network with a user directly via his or her evan.network business card. The user receives the request directly in his mailbox and can confirm it.",
     "contact-cards": "Contact cards",

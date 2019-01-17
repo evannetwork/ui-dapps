@@ -12,7 +12,7 @@
 
 ## Version 1.3.2
 ### Features
-- add profile activated claims display
+- add profile activated verifications display
   
 ### Fixes
 - allow only one line preview of mail bodies in overview

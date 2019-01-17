@@ -50,7 +50,7 @@ import {
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanQueue,
   EvanToastService,
@@ -140,9 +140,9 @@ export class ProfileComponent extends AsyncComponent {
   private colorTheme: string;
 
   /**
-   * claims that should be displayed within the ui components
+   * verifications that should be displayed within the ui components
    */
-  private claims: Array<any>;
+  private verifications: Array<any>;
 
   /**
    * Function to unsubscribe from queue results.
@@ -152,7 +152,7 @@ export class ProfileComponent extends AsyncComponent {
   /**
    * is the current queue saving the profile?
    */
-  private savingClaims: boolean;
+  private savingVerifications: boolean;
 
   /**
    * profile queue Id
@@ -162,14 +162,14 @@ export class ProfileComponent extends AsyncComponent {
   /**
    * current formular
    */
-  @ViewChild('claimsForm') claimsForm: any;
+  @ViewChild('verificationsForm') verificationsForm: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private claimsService: EvanClaimService,
+    private verificationsService: EvanVerificationService,
     private core: EvanCoreService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
@@ -194,12 +194,12 @@ export class ProfileComponent extends AsyncComponent {
       async (reload, results) => {
         await this.core.utils.timeout(0);
 
-        const profileActiveClaims = (await this.claimsService.getProfileActiveClaims(true));
-        this.claims = profileActiveClaims.claims.map(claim => {
-          return { origin: claim, value: claim };
+        const profileActiveVerifications = (await this.verificationsService.getProfileActiveVerifications(true));
+        this.verifications = profileActiveVerifications.verifications.map(verification => {
+          return { origin: verification, value: verification };
         });
 
-        this.savingClaims = profileActiveClaims.saving;
+        this.savingVerifications = profileActiveVerifications.saving;
         this.ref.detectChanges();
       }
     );
@@ -460,17 +460,17 @@ export class ProfileComponent extends AsyncComponent {
   }
 
   /**
-   * Save the current set of claims
+   * Save the current set of verifications
    */
-  saveClaimTopics() {
+  saveVerificationTopics() {
     this.queue.addQueueData(
-      new QueueId(`profile.${ getDomainName() }`, 'profileClaimsDispatcher'),
+      new QueueId(`profile.${ getDomainName() }`, 'profileVerificationsDispatcher'),
       {
-        claims: this.claims.map(claim => claim.value)
+        verifications: this.verifications.map(verification => verification.value)
       }
     );
 
-    this.savingClaims = true;
+    this.savingVerifications = true;
     this.ref.detectChanges();
   }
 

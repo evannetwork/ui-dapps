@@ -31,20 +31,20 @@ export const en = {
     "account-detail-desc": "Profile details & interactions",
     "accountid": "Account-ID",
     "accounts": "Accounts",
-    "add-claim-topic": "Add verification check",
+    "add-verification-topic": "Add verification check",
     "alias": "Alias",
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
     "cancel": "cancel",
     "ok": "ok",
-    "claim-topic": {
+    "verification-topic": {
       "desc": "Verification path to be checked (e.g.: /company)",
       "error": "Please enter a verification path",
       "title": "Verification path"
     },
-    "claims": "Verifications",
-    "claims-desc": "Verifications selection for UI components",
-    "claims-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)",
+    "verifications": "Verifications",
+    "verifications-desc": "Verifications selection for UI components",
+    "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)",
     "color-theme": "Color Theme",
     "color-theme-desc": "Set the color of the user interface.",
     "color-themes": {
@@ -87,13 +87,13 @@ export const en = {
     "notifictions-desc": "Enables push notifications for your mobile device.",
     "private-key": "Private Key",
     "privatekey-exported": "Your private key successfully exported to your clipboard",
-    "profile-claims-dispatcher": {
+    "profile-verifications-dispatcher": {
       "description": "Save verification selection",
       "title": "Save verification selection"
     },
     "profile-encryption-key": "Profile Encryption Key",
     "runtime-config": "Runtime settings",
-    "save-claim-topics": "save verification selection",
+    "save-verification-topics": "save verification selection",
     "settings": "Settings",
     "settings-desc": "runtime environment, developer, presentation"
   },

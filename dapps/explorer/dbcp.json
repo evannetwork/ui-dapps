@@ -5,7 +5,7 @@
       "dependencies": {
         "angular-core": "^1.7.0",
         "angular-libs": "^1.4.0",
-        "claims": "^1.0.0"
+        "verifications": "^1.0.0"
       },
       "entrypoint": "explorer.js",
       "files": [

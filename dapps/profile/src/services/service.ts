@@ -55,7 +55,7 @@ import {
 
 /**************************************************************************************************/
 /**
- * Utility service for the claim view DApp.
+ * Utility service for the verification view DApp.
  */
 @Injectable()
 export class ProfileService implements OnDestroy {

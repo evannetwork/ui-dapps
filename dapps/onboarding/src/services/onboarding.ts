@@ -294,14 +294,14 @@ export class OnboardingService {
       const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
 
       // create identity for account
-      await this.bcc.claims.createIdentity(account);
+      await this.bcc.verifications.createIdentity(account);
 
       // finished profile creation successfully
       delete window.localStorage['evan-profile-creation'];
     },
 
     /**
-     * accepts a bmail invitation, creates an account and the profile, and claims the bmail funds
+     * accepts a bmail invitation, creates an account and the profile, and verifications the bmail funds
      * 
      * @param account      account ID / externally owned account, string starting with 0x
      * @param invitation   invitation token from invitation URL in bmail

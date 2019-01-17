@@ -49,9 +49,9 @@ import {
 } from 'angular-core';
 
 import {
-  ClaimLibraryModule,
-  ClaimsTranslations,
-} from 'claims';
+  VerificationLibraryModule,
+  VerificationsTranslations,
+} from 'verifications';
 
 import { ExplorerTranslations } from './i18n/registry';
 import { ExplorerBaseContractComponent } from './components/basecontract/basecontract';
@@ -65,7 +65,7 @@ import { ExplorerSelectComponent } from './components/select/select';
 import { ExplorerService } from './services/explorer.service';
 import { ExplorerTransactionDetailComponent } from './components/transactionhistory/detail/detail';
 import { ExplorerTransactionHistoryComponent } from './components/transactionhistory/transactionhistory';
-import { ExplorerClaimsComponent } from './components/claims/claims';
+import { ExplorerVerificationsComponent } from './components/verifications/verifications';
 import { RootComponent } from './components/root/root';
 
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -75,7 +75,7 @@ export {
   AceEditorModule,
   ExplorerTranslations,
   ExplorerBaseContractComponent,
-  ExplorerClaimsComponent,
+  ExplorerVerificationsComponent,
   ExplorerContractGeneralComponent,
   ExplorerContractInteractionComponent,
   ExplorerDataContractComponent,
@@ -138,10 +138,10 @@ function getRoutes(): Routes {
             }
           },
           {
-            path: 'claims',
-            component: ExplorerClaimsComponent,
+            path: 'verifications',
+            component: ExplorerVerificationsComponent,
             data: {
-              state: 'claims',
+              state: 'verifications',
             }
           },
           {
@@ -201,7 +201,7 @@ function getConfig(isDispatcher?: boolean) {
     imports: [
       AceEditorModule,
       AngularCore,
-      ClaimLibraryModule,
+      VerificationLibraryModule,
       CommonModule,
     ],
     providers: [
@@ -226,7 +226,7 @@ function getConfig(isDispatcher?: boolean) {
     config.declarations = [
       BootstrapComponent,
       ExplorerBaseContractComponent,
-      ExplorerClaimsComponent,
+      ExplorerVerificationsComponent,
       ExplorerContractGeneralComponent,
       ExplorerContractInteractionComponent,
       ExplorerDataContractComponent,
@@ -252,7 +252,7 @@ export class DispatcherModule {
 class ExplorerModule {
   constructor(
     private translations: ExplorerTranslations,
-    private claimsTranslations: ClaimsTranslations
+    private verificationsTranslations: VerificationsTranslations
   ) { }
 }
 

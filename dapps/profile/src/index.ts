@@ -50,10 +50,10 @@ import { ProfileRootComponent } from './components/root/root';
 import { ProfileComponent } from './components/profile/profile';
 
 import { ProfileService } from './services/service';
-import { profileClaimsDispatcher } from './dispatchers/claims';
+import { profileVerificationsDispatcher } from './dispatchers/verifications';
 
 export {
-  profileClaimsDispatcher,
+  profileVerificationsDispatcher,
   ProfileService,
 }
 

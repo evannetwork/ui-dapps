@@ -116,7 +116,7 @@ export class DashboardComponent extends AsyncComponent {
     this.defaultDApps = await this.descriptionService.getMultipleDescriptions([
       'favorites',
       'addressbook',
-      'claims',
+      'verifications',
       'mailbox',
       'profile'
     ]);

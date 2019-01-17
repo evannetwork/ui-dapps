@@ -15,7 +15,7 @@
 
 ## Version 1.3.1
 ### Features
-- add profile activated claims display
+- add profile activated verifications display
 
 ## Version 1.3.0
 ### Features

@@ -46,8 +46,8 @@ import {
 export const removeFavoriteDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.removeFavorite-dispatcher.title',
-      '_claims.removeFavorite-dispatcher.description',
+      '_verifications.removeFavorite-dispatcher.title',
+      '_verifications.removeFavorite-dispatcher.description',
       async (service: ENSManagementService, queueEntry: any) => {
         const results = [ ];
 

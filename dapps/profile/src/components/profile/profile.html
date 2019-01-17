@@ -40,7 +40,7 @@
       [class.active]="activeTab === 1" 
       (click)="activateTab(1);">
       <ion-icon name="ribbon"></ion-icon>
-      {{ '_dappprofile.claims' | translate }}
+      {{ '_dappprofile.verifications' | translate }}
     </button>
 
     <button ion-button icon-left clear
@@ -73,8 +73,8 @@
         <ion-avatar item-start>
           <ion-icon name="ribbon"></ion-icon>
         </ion-avatar>
-        <h2>{{ '_dappprofile.claims' | translate }}</h2>
-        <h3>{{ '_dappprofile.claims-desc' | translate }}</h3>
+        <h2>{{ '_dappprofile.verifications' | translate }}</h2>
+        <h3>{{ '_dappprofile.verifications-desc' | translate }}</h3>
       </button>
 
       <button ion-item
@@ -111,13 +111,13 @@
                 <ion-icon name="copy" color="light"></ion-icon>
               </button>
             </p>
-            <evan-claim
-              *ngFor="let claim of claims"
-              [topic]="claim.origin"
+            <evan-verification
+              *ngFor="let verification of verifications"
+              [topic]="verification.origin"
               [address]="core.activeAccount()"
               [mode]="'normal'"
               [compute]="true">
-            </evan-claim>
+            </evan-verification>
           </div>
         </div>
         <ion-list>
@@ -163,34 +163,34 @@
     </div>
     <div class="evan-content m-b-0 m-t-0" *ngIf="activeTab === 1">
       <h3 class="content-header m-b-0 m-t-0">
-        {{ '_dappprofile.claims' | translate }}
+        {{ '_dappprofile.verifications' | translate }}
       </h3>
       <p ion-text class="m-b-0 m-t-0">
-        {{ '_dappprofile.claims-desc-long' | translate }}
+        {{ '_dappprofile.verifications-desc-long' | translate }}
       </p>
 
-      <form class="claims-form" #claimsForm="ngForm">
-        <div class="display-flex-justify" *ngFor="let claim of claims; let i = index">
+      <form class="verifications-form" #verificationsForm="ngForm">
+        <div class="display-flex-justify" *ngFor="let verification of verifications; let i = index">
           <div>
             <ion-item>
               <ion-label stacked>
-                {{ i + 1 }}. {{ '_dappprofile.claim-topic.title' | translate }}*
+                {{ i + 1 }}. {{ '_dappprofile.verification-topic.title' | translate }}*
               </ion-label>
-              <ion-input [name]="'claim' + i" required
-                [(ngModel)]="claim.value"
-                [disabled]="savingClaims"
-                [placeholder]="'_dappprofile.claim-topic.desc' | translate"
+              <ion-input [name]="'verification' + i" required
+                [(ngModel)]="verification.value"
+                [disabled]="savingVerifications"
+                [placeholder]="'_dappprofile.verification-topic.desc' | translate"
                 (ionChange)="ref.detectChanges()"
                 (focusout)="ref.detectChanges()">
               </ion-input>
             </ion-item>
-            <ion-chip class="error-hint" *ngIf="showError(claimsForm, 'claim' + i)" color="danger">
-              <ion-label>{{ '_dappprofile.claim-topic.error' | translate }}</ion-label>
+            <ion-chip class="error-hint" *ngIf="showError(verificationsForm, 'verification' + i)" color="danger">
+              <ion-label>{{ '_dappprofile.verification-topic.error' | translate }}</ion-label>
             </ion-chip>
           </div>
           <button ion-button icon-only round clear
-            [disabled]="savingClaims"
-            (click)="claims.splice(i, 1); detectTimeout()">
+            [disabled]="savingVerifications"
+            (click)="verifications.splice(i, 1); detectTimeout()">
             <ion-icon name="trash" color="danger"></ion-icon>
           </button>
         </div>
@@ -198,19 +198,19 @@
 
       <div text-center margin-top>
         <button ion-button outline round margin-top icon-left
-          [disabled]="savingClaims"
-          (click)="claims.push({ value: '' }); detectTimeout()">
-          <ion-spinner *ngIf="savingClaims"></ion-spinner>
-          {{ '_dappprofile.add-claim-topic' | translate }}
+          [disabled]="savingVerifications"
+          (click)="verifications.push({ value: '' }); detectTimeout()">
+          <ion-spinner *ngIf="savingVerifications"></ion-spinner>
+          {{ '_dappprofile.add-verification-topic' | translate }}
         </button>
       </div>
       <div class="evan-seperator"></div>
       <div text-center>
         <button ion-button outline round margin-top icon-left
-          [disabled]="claimsForm.invalid || savingClaims"
-          (click)="saveClaimTopics(); ref.detectChanges()">
-          <ion-spinner *ngIf="savingClaims"></ion-spinner>
-          {{ '_dappprofile.save-claim-topics' | translate }}
+          [disabled]="verificationsForm.invalid || savingVerifications"
+          (click)="saveVerificationTopics(); ref.detectChanges()">
+          <ion-spinner *ngIf="savingVerifications"></ion-spinner>
+          {{ '_dappprofile.save-verification-topics' | translate }}
         </button>
       </div>
     </div>

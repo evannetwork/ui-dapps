@@ -31,8 +31,8 @@
       "brace": [
         "libs/brace.js"
       ],
-      "claims": [
-        "../../claims/dist/claims.js"
+      "verifications": [
+        "../../verifications/dist/verifications.js"
       ],
       "dapp-browser": [
         "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"

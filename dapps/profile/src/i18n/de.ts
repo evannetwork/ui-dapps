@@ -31,19 +31,19 @@ export const de = {
     "account-detail-desc": "Profildetails & Interaktionen",
     "accountid": "Account-ID",
     "accounts": "Accounts",
-    "add-claim-topic": "Verifizierungsprüfung hinzufügen",
+    "add-verification-topic": "Verifizierungsprüfung hinzufügen",
     "alias": "Alias",
     "balance": "Meine EVEs",
     "balance-updated": "EVEs wurden aktualisiert...",
     "cancel": "abbrechen",
-    "claim-topic": {
+    "verification-topic": {
       "desc": "Verifizierungspfad der geprüft werden soll (z.B.: /company)",
       "error": "Bitte geben Sie einen Verifizierungspfad ein",
       "title": "Verifizierungspfad"
     },
-    "claims": "Verifizierunge",
-    "claims-desc": "Verifizierungsauswahl für UI Komponenten",
-    "claims-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
+    "verifications": "Verifizierunge",
+    "verifications-desc": "Verifizierungsauswahl für UI Komponenten",
+    "verifications-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)",
     "color-theme": "Farbschema",
     "color-theme-desc": "Stellen Sie die Farbdarstellung der Benutzeroberfläche ein.",
     "color-themes": {
@@ -87,13 +87,13 @@ export const de = {
     "ok": "Ok",
     "private-key": "Private Key",
     "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
-    "profile-claims-dispatcher": {
+    "profile-verifications-dispatcher": {
       "description": "Verifizierungsprüfungen speichern",
       "title": "Verifizierungsprüfungen speichern"
     },
     "profile-encryption-key": "Profil Verschlüsselungsschlüssel",
     "runtime-config": "Laufzeiteinstellungen",
-    "save-claim-topics": "Verifizierungsprüfungen speichern",
+    "save-verification-topics": "Verifizierungsprüfungen speichern",
     "settings": "Einstellungen",
     "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung"
   },

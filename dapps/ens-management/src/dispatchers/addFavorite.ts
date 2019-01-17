@@ -46,8 +46,8 @@ import {
 export const addFavoriteDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.addFavorite-dispatcher.title',
-      '_claims.addFavorite-dispatcher.description',
+      '_verifications.addFavorite-dispatcher.title',
+      '_verifications.addFavorite-dispatcher.description',
       async (service: ENSManagementService, queueEntry: any) => {
         const results = [ ];
 
