@@ -6,6 +6,7 @@
 
 ### Fixes
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.1.0
 ### Features

@@ -145,35 +145,6 @@
             </ng-container>
           </ion-row>
 
-          <ng-container *ngIf="showVerificationDisplayConfiguration">
-            <ion-row>
-              <ion-col col-12 col-md-6>
-                <ion-item>
-                  <ion-label stacked>{{ '_verifications.mode.title' | translate }}*</ion-label>
-
-                  <ion-select name="displayMode" interface="popover"
-                    [(ngModel)]="displayMode"
-                    [placeholder]="'_verifications.mode.description' | translate"
-                    (ionChange)="detectTimeout()"
-                    (focusout)="detectTimeout()">
-                    <ion-option value="icon">{{ '_verifications.mode.icon' | translate }}</ion-option>
-                    <ion-option value="normal">{{ '_verifications.mode.normal' | translate }}</ion-option>
-                    <ion-option value="detail">{{ '_verifications.mode.detail' | translate }}</ion-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-              <ion-col col-12 col-md-6>
-                <ion-item>
-                  <ion-label>{{ '_verifications.computed' | translate }}</ion-label>
-                  <ion-toggle name="computedVerifications"
-                    [(ngModel)]="computedVerifications"
-                    (ionChange)="ref.detectChanges()">
-                  </ion-toggle>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ng-container>
-
           <div text-center>
             <ion-chip class="error-hint" color="danger"
               *ngIf="(useAddressInput && selectForm?.controls?.subject?.touched && !isValidAddress(subjectInput)) || (useAddressBook && subjectSelectComp?.touched && subjectSelect.length === 0)">

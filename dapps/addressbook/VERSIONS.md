@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.4.0
 ### Features
