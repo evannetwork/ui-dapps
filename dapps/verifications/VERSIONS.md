@@ -3,11 +3,12 @@
 ## Next Version
 ### Features
 - remeber latest selected verification topics and account ids
+- support verifications for contracts
 
 ### Fixes
 ### Deprecations
 - rename claims to verifications
-
+  
 ## Version 1.1.0
 ### Features
 - add missing dbcpVersion to dbcp files

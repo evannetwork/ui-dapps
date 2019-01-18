@@ -5,11 +5,12 @@
 ### Fixes
 - dashboard
   - fix opening of standalone dapps from sidepanel
-- claims
+- verifications
   - remeber latest selected claim topics and account ids
+  - support verifications for contracts
 
 ### Deprecations
-- rename claims to verifications
+- rename verifications to verifications
 
 ## Version 1.7.0
 ### Features
@@ -32,7 +33,7 @@
 
 ## Version 1.6.0
 ### Features
-- claims
+- verifications
   - add claimId to accept / delete claim
 - ens-selling
   -  add the ens selling DApp
@@ -48,18 +49,18 @@
 ## Version 1.5.0
 ### Features
 - addressbook (Version 1.3.1)
-  - add profile activated claims display
-- Claims (Version 1.0.0)
+  - add profile activated verifications display
+- verifications (Version 1.0.0)
   - overview DApp (topic inspect, user inspect) including identity creation
 - explorer (Version 1.3.0)
-  - add detailed claims view for the opened address
+  - add detailed verifications view for the opened address
 - mailbox (Version 1.3.2)
-  - add profile activated claims display
+  - add profile activated verifications display
 - onboarding (Version 1.3.0)
   - create identity for new profile
 - profile (Version 1.5.0)
   - new design
-  - activated claims management and display
+  - activated verifications management and display
 
 ### Fixes
 - mailbox

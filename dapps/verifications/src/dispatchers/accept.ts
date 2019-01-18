@@ -58,9 +58,6 @@ export const acceptDispatcher = new QueueDispatcher(
             entry.address,
             entry.id,
           );
-
-          // clear cache for this verification
-          service.verifications.deleteFromVerificationCache(entry.address, entry.topic);
         }
       }
     )

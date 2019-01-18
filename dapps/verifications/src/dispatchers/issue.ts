@@ -60,6 +60,19 @@ export const issueDispatcher = new QueueDispatcher(
           if (expirationDate) {
             expirationDate = Math.floor(new Date(expirationDate).getTime() / 1000);
           }
+
+          // force reloading the identity and check, if the current subject is an contract and if no
+          // identity exists, create it!
+          try {
+            const verifications = await service.verifications.getVerifications(entry.address,
+              entry.topic);
+            if (verifications.length === 1 &&
+                !service.bcc.verifications.cachedIdentities[entry.address] &&
+                verifications[0].subjectType === 'contract' &&
+                verifications[0].subjectOwner === service.core.activeAccount()) {
+              await service.bcc.verifications.createIdentity(activeAccount, entry.address);
+            }
+          } catch (ex) { }
           
           await service.bcc.verifications.setVerification(
             service.core.activeAccount(),
@@ -67,9 +80,6 @@ export const issueDispatcher = new QueueDispatcher(
             entry.topic,
             expirationDate
           );
-
-          // clear cache for this verification
-          service.verifications.deleteFromVerificationCache(entry.address, entry.topic);
         }
       }
     )
