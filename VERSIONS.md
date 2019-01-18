@@ -9,6 +9,7 @@
   - remeber latest selected claim topics and account ids
 
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.7.0
 ### Features

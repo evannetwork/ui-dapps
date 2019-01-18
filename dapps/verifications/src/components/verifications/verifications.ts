@@ -309,7 +309,6 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
     // reload the data
     this.core.utils.showLoading(this);
-
     this.core.utils.hideLoading(this);
   }
 
@@ -354,6 +353,9 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
       window.localStorage['evan-verifications-dapp-address-input'] = this.subjectInput;
       window.localStorage['evan-verifications-dapp-address-select'] = this.subjectSelect[0];
     }
+    
+    // clear the cache directly for this view
+    this.bcc.verifications.verificationCache = { };
 
     await this.core.utils.timeout(0);
 
