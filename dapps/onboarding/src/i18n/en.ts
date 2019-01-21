@@ -84,7 +84,7 @@ export const en = {
     `,
     /* tslint:enable */
     'identity-create': 'Create New Identity',
-    'identity-import': 'Import Existing Identity',
+    'identity-import': 'Use Existing Identity',
     'mnemonic-description': `
       You want to create a new identity. These 12 words represent the recovery phrase, or the Master PIN for your new evan.network identity. They are the only way import your data to other devices or recover your data. This might be necessary when you lose or reset your current device.
     `,

@@ -85,7 +85,7 @@ export const de = {
     `,
     /* tslint:enable */
     'identity-create': 'Neue Identität anlegen',
-    'identity-import': 'Bestehende Identität importieren',
+    'identity-import': 'Bestehende Identität nutzen',
     'mnemonic-description': `Sie wollen eine Identität anlegen. Diese folgenden 12 Wörter stellen den SUPER-PIN für Ihre neue evan.network-Identität dar. Ausschließlich damit sind Ihre Daten auf anderen Geräten importier- und wiederherstellbar. Dies ist notwendig, falls Sie beispielsweise Ihr aktuelles Gerät verloren oder zurück gesetzt haben.
     `,
     'mnemonic-import-description': `
