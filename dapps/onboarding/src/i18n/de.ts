@@ -49,7 +49,7 @@ export const de = {
     `,
     'start-using-evan': 'Um im evan.network starten zu können, wählen Sie eine der folgende Optionen',
     'new-mnemonic-account': 'Erstellen Sie eine neue Identität',
-    'mnemonic-account': 'Importieren Sie eine bestehende Identität',
+    'mnemonic-account': 'Nutzen Sie ihre bestehende Identität',
     'metamask-account': 'Nutzen Sie MetaMask',
     'metamask': 'Metamask',
     'metamask-locked': `Metamask ist gesperrt`,
