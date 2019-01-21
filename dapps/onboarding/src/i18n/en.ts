@@ -48,7 +48,7 @@ export const en = {
       With the <b>evan.network</b> you can lead your processes into the <b>"Industry 4.0"</b> era.
     `,
     'start-using-evan': 'To start in evan.network, choose one of the following options',
-    'new-mnemonic-account': 'Create a new identity.',
+    'new-mnemonic-account': 'Create a new identity',
     'mnemonic-account': 'Use an existing identity',
     'metamask-account': 'Use MetaMask',
     'metamask': 'Metamask',
