@@ -75,8 +75,7 @@ export const de = {
     "subject": {
       "desc": "Geben Sie die Account Adresse ein, die geprüft werden soll.",
       "error": "Geben Sie eine valide Accountadresse ein, um die Überprüfung zu starten!",
-      "title-addressbook": "Adressbuchauswahl",
-      "title-string": "Direkte Account Eingabe"
+      "title": "Kontakt oder Vertrags- / Accountadresse"
     },
     "topic": {
       "desc": "Geben Sie den Verifizierungspfad ein, der geprüft werden soll.",

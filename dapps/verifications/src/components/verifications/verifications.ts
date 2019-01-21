@@ -127,22 +127,12 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
   /**
    * use address input or addressbook select
    */
-  private useAddressInput: boolean;
-
-  /**
-   * use address input or addressbook select
-   */
   private useAddressBook: boolean;
 
   /**
    * use array of members so the user can also select users from his address book directly
    */
   private subjectInput: string;
-
-  /**
-   * use array of members so the user can also select users from his address book directly
-   */
-  private subjectSelect: Array<string> = [ ];
 
   /**
    * has the current user already a identity?
@@ -208,12 +198,6 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
   async _ngOnInit() {
     this.activeAccount = this.core.activeAccount();
 
-    // enable latest used mode
-    const useAddressBook = window.localStorage['evan-verifications-dapp-use-addressbook'];
-    this.useAddressBook = !useAddressBook || useAddressBook === 'true' ?
-      true : false;
-    this.useAddressInput = !this.useAddressBook;
-
     // prefill subject
     this.subject = this.subject || this.routingService.getContractAddress();
 
@@ -223,17 +207,11 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     }
 
     // try to resolve the latest used values
-    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address-input'];
-    this.subjectSelect = [ this.subject || window.localStorage['evan-verifications-dapp-address-select'] ];
+    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'];
 
     // if no valid subject was supplied, reset it
     if (!this.isValidAddress(this.subjectInput)) {
       delete this.subjectInput;
-    }
-
-    // if no valid subject was supplied, reset it
-    if (!this.isValidAddress(this.subjectSelect[0])) {
-      this.subjectSelect = [ this.activeAccount ];
     }
 
     // show the address input only, if no address was applied
@@ -261,8 +239,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
     // show verifications directly, when topics are available
     this.showVerifications = (!this.showTopicSelect && this.isValidAddress(this.subject)) ||
-      (this.useAddressBook && this.isValidAddress(this.subjectSelect[0])) ||
-      (!this.useAddressBook && this.isValidAddress(this.subjectInput));
+      this.isValidAddress(this.subjectInput);
 
     // load currents users contacts
     this.addressbook = await this.addressBookService.loadAccounts();
@@ -331,13 +308,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     this.ref.detectChanges();
 
     // only use the subject input / select if they was shown
-    if (this.showAddressSelect) {
-      if (this.useAddressInput) {
-        this.subject = this.subjectInput;
-      } else {
-        this.subject = this.subjectSelect[0];
-      }
-    }
+    this.subject = this.subjectInput;
 
     // only overwrite topics if the input is shown
     if (this.showTopicSelect) {
@@ -349,9 +320,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
       this.topics = [ this.topic ];
       window.localStorage['evan-verifications-dapp-topic'] = JSON.stringify(this.prefilledVerifications);
-      window.localStorage['evan-verifications-dapp-use-addressbook'] = this.useAddressBook;
-      window.localStorage['evan-verifications-dapp-address-input'] = this.subjectInput;
-      window.localStorage['evan-verifications-dapp-address-select'] = this.subjectSelect[0];
+      window.localStorage['evan-verifications-dapp-address'] = this.subjectInput;
     }
     
     // clear the cache directly for this view
@@ -382,15 +351,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
    * @return     {boolean}  True if valid form, False otherwise
    */
   isValidForm() {
-    if (
-      this.topic && (!this.showAddressSelect ||
-        (this.useAddressInput && this.isValidAddress(this.subjectInput)) || 
-        (this.useAddressBook && this.subjectSelect.length > 0)
-      )) {
-      return true;
-    }
-
-    return false;
+    return !!this.topic && this.bcc.web3.utils.isAddress(this.subjectInput);
   }
 
   /**

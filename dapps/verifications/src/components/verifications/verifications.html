@@ -34,7 +34,7 @@
 
     <evan-verification margin-top
       [topic]="topic"
-      [address]="useAddressInput ? subject : subjectSelect[0]"
+      [address]="subject"
       [mode]="displayMode"
       [compute]="computedVerifications">
     </evan-verification>
@@ -91,66 +91,18 @@
               </ion-chip>
             </ion-col>
 
-            <ng-container
-              *ngIf="showAddressSelect">
-              <ion-col col-12 class="checkbox-input"
-                [attr.col-md-4]="showTopicSelect ? '' : null"
-                [attr.col-md-6]="!showTopicSelect ? '' : null">
-                <div class="checkbox-input">
-                  <ion-checkbox name="useAddressBook" margin-right
-                    [(ngModel)]="useAddressBook"
-                    (click)="useAddressInput = false; useAddressBook = true; detectTimeout()"
-                    (ionChange)="ref.detectChanges()"
-                    (focusout)="ref.detectChanges()">
-                  </ion-checkbox>
-                  <contract-members name="subject" #subjectSelectComp
-                    [(members)]="subjectSelect"
-                    [disabled]="useAddressInput"
-                    includeActiveAccount="true"
-                    maxMembers="1"
-                    (onChange)="ref.detectChanges()">
-                    <h3 label>{{ '_verifications.subject.title-addressbook' | translate }}*</h3>
-                  </contract-members>
-                </div>
-              </ion-col>
-              <ion-col col-12 col-md-4
-                [attr.col-md-4]="showTopicSelect ? '' : null"
-                [attr.col-md-6]="!showTopicSelect ? '' : null">
-                <div class="checkbox-input">
-                  <ion-checkbox name="useAddressInput" margin-right
-                    [(ngModel)]="useAddressInput"
-                    (click)="useAddressBook = false; useAddressInput = true; detectTimeout()"
-                    (ionChange)="ref.detectChanges()"
-                    (focusout)="ref.detectChanges()">
-                  </ion-checkbox>
-                  <ion-item>
-                    <ion-label stacked>
-                      {{ '_verifications.subject.title-string' | translate }}*
-                    </ion-label>
-                    <ion-input name="subject" required
-                      [(ngModel)]="subjectInput"
-                      [disabled]="useAddressBook"
-                      [placeholder]="'_verifications.subject.desc' | translate"
-                      (keydown)="submitOnEnter($event)"
-                      (ionChange)="ref.detectChanges()"
-                      (focusout)="ref.detectChanges()">
-                    </ion-input>
-                  </ion-item>
-                </div>
-                <ion-chip class="error-hint" color="danger"
-                  *ngIf="">
-                  <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
-                </ion-chip>
-              </ion-col>
-            </ng-container>
+            <ion-col col-12 col-md-8>
+              <evan-address-input name="subject" #subjectSelectComp
+                [(ngModel)]="subjectInput"
+                [label]="('_verifications.subject.title' | translate) + '*'"
+                [placeholder]="'_verifications.subject.desc' | translate"
+                (onChange)="ref.detectChanges()">
+              </evan-address-input>
+              <ion-chip class="error-hint" *ngIf="subjectSelectComp.touched && !isValidAddress(subjectInput)" color="danger">
+                <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
           </ion-row>
-
-          <div text-center>
-            <ion-chip class="error-hint" color="danger"
-              *ngIf="(useAddressInput && selectForm?.controls?.subject?.touched && !isValidAddress(subjectInput)) || (useAddressBook && subjectSelectComp?.touched && subjectSelect.length === 0)">
-              <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
-            </ion-chip>
-          </div>
         </form>
 
         <div text-right margin-bottom>

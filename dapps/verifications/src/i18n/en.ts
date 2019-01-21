@@ -71,7 +71,7 @@ export const en = {
     "subject": {
       "desc": "Enter the account address to be verified",
       "error": "Enter a valid account address to start the verification!",
-      "title-addressbook": "Account from contacts",
+      "title": "Contact or contract- / account address",
       "title-string": "Direct address input"
     },
     "topic": {
