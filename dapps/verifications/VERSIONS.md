@@ -4,6 +4,7 @@
 ### Features
 - remeber latest selected verification topics and account ids
 - support verifications for contracts
+- use EvanAddressInput component for verifications dappp
 
 ### Fixes
 ### Deprecations

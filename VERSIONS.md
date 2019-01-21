@@ -8,6 +8,7 @@
 - verifications
   - remeber latest selected claim topics and account ids
   - support verifications for contracts
+  - use EvanAddressInput component for verifications dappp
 
 ### Deprecations
 - rename verifications to verifications
