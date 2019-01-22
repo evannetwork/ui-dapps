@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 ### Deprecations
+- moved `createIdentity` to smart-agent profile creation logic
 
 ## Version 1.4.0
 ### Features

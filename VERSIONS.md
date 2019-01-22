@@ -7,6 +7,8 @@
   - fix opening of standalone dapps from sidepanel
 - claims
   - remeber latest selected claim topics and account ids
+- onboarding
+  - moved `createIdentity` to smart-agent profile creation logic
 
 ### Deprecations
 
