@@ -293,9 +293,6 @@ export class OnboardingService {
       const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);  
       const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
 
-      // create identity for account
-      await this.bcc.verifications.createIdentity(account);
-
       // finished profile creation successfully
       delete window.localStorage['evan-profile-creation'];
     },
