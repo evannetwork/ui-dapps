@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+const mainnetTexts = false;
 export const de = {
   'onboarding': 'Onboarding',
   'onboardinglist': 'Onboarding',
@@ -177,3 +178,7 @@ export const de = {
     'scan-qr-code-mnemonic': 'Mnemonic QR-Code einscannen'
   }
 };
+
+if (mainnetTexts) {
+  de._dapponboarding['terms-of-use-text'] = 'Hier werden bald die Mainnet-Nutzungsbedingungen angezeigt ...';
+}

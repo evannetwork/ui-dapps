@@ -2,15 +2,18 @@
 
 ## Next Version
 ### Features
+- onboarding
+  - add mainnet text switches
+  
 ### Fixes
 - dashboard
   - fix opening of standalone dapps from sidepanel
 - claims
   - remeber latest selected claim topics and account ids
-- onboarding
-  - moved `createIdentity` to smart-agent profile creation logic
 
 ### Deprecations
+- onboarding
+  - moved `createIdentity` to smart-agent profile creation logic
 
 ## Version 1.7.0
 ### Features

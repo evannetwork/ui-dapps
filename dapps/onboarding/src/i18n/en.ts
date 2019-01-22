@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+const mainnetTexts = false;
 export const en = {
   'onboarding': 'Onboarding',
   'onboardinglist': 'Onboarding',
@@ -179,3 +180,7 @@ Try again later or use <a href="https://gitter.im/evannetwork/faucet" target="_b
     'scan-qr-code-mnemonic': 'Scan mnemonic QR-Code'
   }
 };
+
+if (mainnetTexts) {
+  en._dapponboarding['terms-of-use-text'] = 'Here will be the mainnet terms of use...';
+}
