@@ -1,0 +1,99 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<ng-container *ngIf="!loading">
+  <div class="evan-tabs evan-content evan-small-content" *ngIf="!core.utils.isMD">
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 0" 
+      (click)="activateTab(0);">
+      <ion-icon name="person"></ion-icon>
+      {{ '_dappprofile.account-detail' | translate }}
+    </button>
+    
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 1" 
+      (click)="activateTab(1);">
+      <ion-icon name="ribbon"></ion-icon>
+      {{ '_dappprofile.claims' | translate }}
+    </button>
+
+    <button ion-button icon-left clear
+      [class.active]="activeTab === 2" 
+      (click)="activateTab(2);">
+      <ion-icon name="settings"></ion-icon>
+      {{ '_dappprofile.settings' | translate }}
+    </button>
+  </div>
+
+  <div class="evan-left-panel evan-content" *ngIf="core.utils.isMD">
+    <ion-list margin-top>
+      <button ion-item
+        [class.active]="activeTab === 0" 
+        (click)="activateTab(0);">
+        <ion-avatar item-start>
+          <ion-icon name="person"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_dappprofile.account-detail' | translate }}</h2>
+        <h3>{{ '_dappprofile.account-detail-desc' | translate }}</h3>
+      </button>
+      
+      <button ion-item
+        [class.active]="activeTab === 1" 
+        (click)="activateTab(1);">
+        <ion-avatar item-start>
+          <ion-icon name="ribbon"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_dappprofile.claims' | translate }}</h2>
+        <h3>{{ '_dappprofile.claims-desc' | translate }}</h3>
+      </button>
+
+      <button ion-item
+        [class.active]="activeTab === 2" 
+        (click)="activateTab(2);">
+        <ion-avatar item-start>
+          <ion-icon name="settings"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_dappprofile.settings' | translate }}</h2>
+        <h3>{{ '_dappprofile.settings-desc' | translate }}</h3>
+      </button>
+    </ion-list>
+  </div>
+  
+  <div class="evan-right-panel evan-tabs-container" [@tabSlideTransition]="activeTab">
+    <div *ngIf="activeTab === 0">
+      <evan-profile-detail></evan-profile-detail>
+    </div>
+    <div class="evan-content m-b-0 m-t-0" *ngIf="activeTab === 1">
+      <evan-profile-verifications></evan-profile-verifications>
+    </div>
+    <div *ngIf="activeTab === 2">
+      <evan-profile-settings></evan-profile-settings>
+    </div>
+  </div>
+</ng-container>

@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- new profile start page
+- send eve from profile
+  
 ### Fixes
 ### Deprecations
 

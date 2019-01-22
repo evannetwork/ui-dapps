@@ -4,6 +4,9 @@
 ### Features
 - onboarding
   - add mainnet text switches
+- profile
+  - new profile start page
+  - send eve from profile
   
 ### Fixes
 - dashboard

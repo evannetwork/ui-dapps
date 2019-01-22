@@ -27,8 +27,8 @@
 
 export const en = {
   "_dappprofile": {
-    "account-detail": "Active Account",
-    "account-detail-desc": "Profile details & interactions",
+    "account-detail": "Profile informations",
+    "account-detail-desc": "Account-Address, Alias, Eve, ...",
     "accountid": "Account-ID",
     "accounts": "Accounts",
     "add-claim-topic": "Add verification check",
@@ -36,7 +36,6 @@ export const en = {
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
     "cancel": "cancel",
-    "ok": "ok",
     "claim-topic": {
       "desc": "Verification path to be checked (e.g.: /company)",
       "error": "Please enter a verification path",
@@ -60,16 +59,20 @@ export const en = {
     "developer-mode-desc": "Logging DApp, test domain DAPP loading, Header link to explorer.",
     "developers": "Developers",
     "edit-profile": "Edit profile",
+    "email": "E-Mail address",
+    "encryptionkey-desc": "This key encrypts all data of your profile, including your contacts, b-mails, contracts, etc...",
     "encryptionkey-exported": "Your Encryption Key has been successfully exported to your clipboard",
     "evan-dev-dapps-domain-changed": "test Domain Changes",
     "evan-dev-dapps-domain-changed-desc": "All DApps loaded up to this point are already cached and will not be reloaded with the new configuration. Do you want to restart the application?",
     "evan-dev-dapps-domain-changed-ok": "restart",
+    "export": "export",
     "export-encryptionkey": "Export Profile Encryption Key",
     "export-encryptionkey-desc": "This key encrypts all data of your profile, including your contacts, b-mails, contracts, etc.... Exporting and possibly unsafe storage of this information can lead to serious security risks. Do you really want to export the private key?",
     "export-encryptionkey-ok": "I understand the risk",
     "export-privatekey": "Export Private Key",
     "export-privatekey-desc": "The private key of your account secures access to your blockchain identity. Exporting and possibly unsafe storage of this information can lead to serious security risks. Do you really want to export the private key?",
     "export-privatekey-ok": "I understand the risk",
+    "export-security-informations": "Export security information",
     "language": "Language",
     "language-changed": "Language changed",
     "language-changed-desc": "After the language has been changed, not all areas of the application are translated immediately. For these changes to take effect, the application must be restarted. Do you want to restart the application now?",
@@ -82,10 +85,14 @@ export const en = {
     "logout": "Logout",
     "logout-desc": "Do you really want to log out?",
     "my-profile": "My Profile",
+    "my-verifications": "My verifications",
+    "no-email": "No e-mail address specified",
     "no_alias": "No Alias",
     "notifications": "Notifications",
     "notifictions-desc": "Enables push notifications for your mobile device.",
+    "ok": "ok",
     "private-key": "Private Key",
+    "privatekey-desc": "The private key of your account secures access to your blockchain identity.",
     "privatekey-exported": "Your private key successfully exported to your clipboard",
     "profile-claims-dispatcher": {
       "description": "Save verification selection",
@@ -94,10 +101,25 @@ export const en = {
     "profile-encryption-key": "Profile Encryption Key",
     "runtime-config": "Runtime settings",
     "save-claim-topics": "save verification selection",
+    "send-eve": {
+      "desc": "Do you really want to send {{ eve }} Eve to the account {{ address }}?",
+      "input": {
+        "description": "Amount of Eves to be sent",
+        "error": "Please specify a amount of Eves between 0.1 and maximum {{{ balance }} Eve to continue.",
+        "title": "Eve"
+      },
+      "ok": "send",
+      "title": "Send Eve"
+    },
     "settings": "Settings",
     "settings-desc": "runtime environment, developer, presentation"
   },
   "profile": "My Profile",
   "profiledetail": "My Profile",
-  "profileroot": "My Profile"
+  "profileroot": "My Profile",
+  "receiver": {
+    "desc": "Account address to which Eve should be sent",
+    "error": "Please enter a valid address!",
+    "title": "Receiver"
+  }
 };

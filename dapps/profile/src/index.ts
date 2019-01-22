@@ -47,7 +47,10 @@ import {
 
 import { ProfileTranslations } from './i18n/registry';
 import { ProfileRootComponent } from './components/root/root';
-import { ProfileComponent } from './components/profile/profile';
+import { EvanProfileDetailComponent } from './components/profile/profile';
+import { EvanProfileSettingsComponent } from './components/settings/settings';
+import { EvanProfileVerificationsComponent } from './components/verifications/verifications';
+import { EvanProfileContainerComponent } from './components/container/container';
 
 import { ProfileService } from './services/service';
 import { profileClaimsDispatcher } from './dispatchers/claims';
@@ -66,7 +69,7 @@ function getRoutes(): Routes {
     [
       {
         path: '',
-        component: ProfileComponent,
+        component: EvanProfileContainerComponent,
         data: {
           reload: true,
           state: 'profile-root',
@@ -115,8 +118,11 @@ function getConfig(isDispatcher?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
+      EvanProfileContainerComponent,
+      EvanProfileSettingsComponent,
+      EvanProfileVerificationsComponent,
+      EvanProfileDetailComponent,
       ProfileRootComponent,
-      ProfileComponent,
     ];
   }
 

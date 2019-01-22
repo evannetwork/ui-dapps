@@ -25,31 +25,36 @@
   https://evan.network/license/
 */
 
-evan-profile-detail {
-  .evan-content {
-    width: 100%;
-    margin: 0;
-  }
+@import '@evan.network/ui-angular-sass/src/variables/colors';
 
-  .evan-tabs {
-    h3 {
-      font-size: 16px;
+.evan-light {
+  evan-profile-settings {
+    ion-item.item-md.item-block {
+      &.item-toggle {
+        background-color: transparent !important;
+      }
     }
   }
+}
 
-  ion-row {
-    ion-col {
-      position: relative;
+.evan-light evan-profile-settings, evan-profile-settings {
+  ion-item.item-md.item-block {
+    &.item-input, &.item-select {
+      padding: 0 !important;
 
-      p {
-        margin: 5px 0 0 0;
+      background-color: transparent !important;
+
+      ion-label {
+        font-size: 16px;
+        font-weight: 400 !important;
+
+        margin-top: 25px;
       }
 
-      button[icon-only] {
-        position: absolute !important;
-        top: 0;
-        right: 0;
-        bottom: 0;
+      ion-input {
+        margin-bottom: 10px;
+
+        border-bottom: 1px solid $primary;
       }
     }
   }
