@@ -72,7 +72,7 @@ export const en = {
     "export-privatekey": "Export Private Key",
     "export-privatekey-desc": "The private key of your account secures access to your blockchain identity. Exporting and possibly unsafe storage of this information can lead to serious security risks. Do you really want to export the private key?",
     "export-privatekey-ok": "I understand the risk",
-    "export-security-informations": "Export security information",
+    "export-security-informations": "Security information",
     "language": "Language",
     "language-changed": "Language changed",
     "language-changed-desc": "After the language has been changed, not all areas of the application are translated immediately. For these changes to take effect, the application must be restarted. Do you want to restart the application now?",
@@ -99,6 +99,11 @@ export const en = {
       "title": "Save verification selection"
     },
     "profile-encryption-key": "Profile Encryption Key",
+    "receiver": {
+      "desc": "Account address to which Eve should be sent",
+      "error": "Please enter a valid address!",
+      "title": "Receiver"
+    },
     "runtime-config": "Runtime settings",
     "save-claim-topics": "save verification selection",
     "send-eve": {
@@ -111,15 +116,14 @@ export const en = {
       "ok": "send",
       "title": "Send Eve"
     },
+    "send-eve-dispatcher": {
+      "description": "Eve will be transferred from the current account to another account.",
+      "title": "Send Eve"
+    },
     "settings": "Settings",
     "settings-desc": "runtime environment, developer, presentation"
   },
   "profile": "My Profile",
   "profiledetail": "My Profile",
-  "profileroot": "My Profile",
-  "receiver": {
-    "desc": "Account address to which Eve should be sent",
-    "error": "Please enter a valid address!",
-    "title": "Receiver"
-  }
+  "profileroot": "My Profile"
 };

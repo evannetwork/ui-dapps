@@ -35,9 +35,12 @@ import {
   ChangeDetectorRef,
   Component,
   DomSanitizer,
+  FormBuilder,
+  FormControl,
   NavController,
   OnInit,
   TranslateService,
+  Validators,
   ViewChild,
 } from 'angular-libs';
 
@@ -119,6 +122,36 @@ export class EvanProfileDetailComponent extends AsyncComponent {
    */
   private eve: number = 0;
 
+  /**
+   * formular for eve send inputs
+   */
+  private sendEveForm: any;
+
+  /**
+   * Function to unsubscribe from queue results.
+   */
+  private queueWatcher: Function;
+
+  /**
+   * queue id for the send eve queue
+   */
+  private queueId: any;
+
+  /**
+   * is currently the sending eve queue running?
+   */
+  private sendingEve: boolean;
+
+  /**
+   * trigger rerendering of the eve form
+   */
+  private showSendEveForm: boolean = true;
+
+  /**
+   * search input reference for autofocus
+   */
+  @ViewChild('receiverSelectComp') receiverSelectComp: any;
+
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
@@ -126,6 +159,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     private bcc: EvanBCCService,
     private claimsService: EvanClaimService,
     private core: EvanCoreService,
+    private formBuilder: FormBuilder,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
@@ -143,15 +177,71 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     this.loading = true;
     this.ref.detectChanges();
 
+    // setup form validation
+    this.sendEveForm = this.formBuilder.group({
+      receiver: ['', (input: FormControl) => 
+        this.isValidAddress(input.value) ? null : { invalidAddress: true }],
+      eve: ['', (input: FormControl) => {
+        const value = parseFloat(input.value);
+
+        if (isNaN(value)) {
+          return { invalidNumber: true }
+        }
+
+        if (value < 0.1) {
+          return { minValue: true }
+        }
+
+        if (value > this.balance - 0.1) {
+          return { maxValue: true }
+        }
+
+        return null;
+      }]
+    });
+
+    // load profile informations
     this.activeAccount = this.core.activeAccount();
     this.activeTab = 0;
     this.getDomainName = getDomainName;
     this.myProfile = await this.addressBookService.loadAccount(this.activeAccount);
 
-    await this.loadBalance();
+    // watch for updates
+    this.queueId = new QueueId(`profile.${ getDomainName() }`, 'sendEveDispatcher');
+    this.queueWatcher = await this.queue.onQueueFinish(
+      this.queueId,
+      async (reload, results) => {
+        // reset the send eve form
+        if (reload) {
+          await this.core.utils.timeout(0);
+
+          this.eve = 0;
+          this.receiverInput = '';
+          this.showSendEveForm = false;
+          this.ref.detectChanges();
+        }
+
+        // reload balance
+        this.sendingEve = this.queue.getQueueEntry(this.queueId, true).data.length > 0;
+        await this.loadBalance(reload);
+
+        // rerender form
+        if (reload) {
+          this.showSendEveForm = true;
+          this.ref.detectChanges();
+        }
+      }
+    );
 
     this.loading = false;
     this.ref.detectChanges();
+  }
+
+  /**
+   * Remove watchers
+   */
+  _ngOnDestroy() {
+    this.queueWatcher();
   }
 
   /**
@@ -169,13 +259,14 @@ export class EvanProfileDetailComponent extends AsyncComponent {
   /**
    * Load the balance for the current activeAccount and show an toast message.
    *
+   * @param      {boolean}        disabledToast  should the toast be disabled?
    * @return     {Promise<void>}  resolved when done
    */
-  async loadBalance() {
+  async loadBalance(disabledToast?:  boolean) {
     this.balance = await this.core.getBalance(this.activeAccount);
 
     // only show the toast, when the user clicks explicit on the reload button
-    if (this.balanceWasLoaded) {
+    if (this.balanceWasLoaded && !disabledToast) {
       this.toastService.showToast({
         message: '_dappprofile.balance-updated',
         duration: 2000
@@ -316,10 +407,12 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       return;
     }
 
-    await this.bcc.executor.executeSend({
-      from: this.activeAccount,
-      to: this.receiverInput,
-      value: this.bcc.web3.utils.toWei(this.eve.toString(), 'ether')
-    });
+    // trigger the send eve dispatcher
+    this.sendingEve = true;
+    this.queue.addQueueData(
+      new QueueId(`profile.${ getDomainName() }`, 'sendEveDispatcher'),
+      { eve: this.eve, receiver: this.receiverInput }
+    );
+    this.ref.detectChanges();
   }
 }

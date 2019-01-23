@@ -54,10 +54,12 @@ import { EvanProfileContainerComponent } from './components/container/container'
 
 import { ProfileService } from './services/service';
 import { profileClaimsDispatcher } from './dispatchers/claims';
+import { sendEveDispatcher } from './dispatchers/sendEve';
 
 export {
   profileClaimsDispatcher,
   ProfileService,
+  sendEveDispatcher,
 }
 
 /**************************************************************************************************/

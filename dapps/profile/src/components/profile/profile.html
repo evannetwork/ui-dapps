@@ -37,8 +37,9 @@
     <h3 class="content-header m-b-0 m-t-0">
       {{ '_dappprofile.account-detail' | translate }}
     </h3>
-    <ion-row margin-top>
-      <ion-col col-md-6 col-12 class="clickable" (click)="core.copyString(activeAccount)">
+    <ion-row>
+      <ion-col col-md-6 col-12 margin-top class="clickable"
+        (click)="core.copyString(activeAccount)">
         <b>
           {{ '_dappprofile.accountid' | translate }}
         </b>
@@ -50,7 +51,8 @@
         </button>
       </ion-col>
 
-      <ion-col col-md-6 col-12 class="clickable" (click)="loadBalance()">
+      <ion-col col-md-6 col-12 margin-top class="clickable"
+        (click)="loadBalance()">
         <b>
           {{ '_dappprofile.balance' | translate }}
         </b>
@@ -63,8 +65,8 @@
       </ion-col>
     </ion-row>
 
-    <ion-row margin-top>
-      <ion-col col-md-6 col-12>
+    <ion-row>
+      <ion-col col-md-6 col-12 margin-top>
         <b>
           {{ '_dappprofile.alias' | translate }}
         </b>
@@ -72,7 +74,7 @@
           {{ myProfile?.alias || '_dappprofile.no_alias' | translate }}
         </p>
       </ion-col>
-      <ion-col col-md-6 col-12>
+      <ion-col col-md-6 col-12 margin-top>
         <b>
           {{ '_dappprofile.email' | translate }}
         </b>
@@ -121,10 +123,13 @@
 
   <div class="evan-tabs-container" [@tabSlideTransition]="activeTab">
     <div class="evan-relative evan-content m-t-0" *ngIf="activeTab === 0">
-      <form #eveSendForm="ngForm">
+      <form
+        *ngIf="showSendEveForm"
+        [formGroup]="sendEveForm"
+        (ngSubmit)="sendEve()">
         <ion-row>
           <ion-col col-12 col-md-8>
-            <evan-address-input name="receiver" #receiverSelectComp
+            <evan-address-input formControlName="receiver" #receiverSelectComp
               [(ngModel)]="receiverInput"
               [label]="('_dappprofile.receiver.title' | translate) + '*'"
               [placeholder]="'_dappprofile.receiver.desc' | translate"
@@ -141,27 +146,28 @@
                   {{ '_dappprofile.send-eve.input.title' | translate }}*
                 </h3>
               </ion-label>
-              <ion-input name="eve" required validateNumber type="number"
+              <ion-input formControlName="eve" required validateNumber type="number"
                 [min]="0.1"
                 [max]="balance"
                 [(ngModel)]="eve"
                 [placeholder]="'_dappprofile.send-eve.input.description' | translate"
                 (ionChange)="ref.detectChanges()"
-                (keydown)="sendEveOnEnter($event, eveSendForm)"
+                (keydown)="sendEveOnEnter($event, sendEveForm)"
                 (focusout)="ref.detectChanges()">
               </ion-input>
-              <ion-chip class="error-hint" *ngIf="showError(eveSendForm, 'eve')" color="danger">
-                <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
-              </ion-chip>
             </ion-item>
+            <ion-chip class="error-hint" *ngIf="showError(sendEveForm, 'eve')" color="danger">
+              <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            </ion-chip>
           </ion-col>
         </ion-row>
       </form>
 
       <div text-right>
         <button ion-button round outline margin-top
-          [disabled]="eveSendForm.invalid || !isValidAddress(receiverInput)"
+          [disabled]="sendEveForm.invalid || sendingEve"
           (click)="sendEve()">
+          <ion-spinner *ngIf="sendingEve"></ion-spinner>
           {{ '_dappprofile.send-eve.title' | translate }}
         </button>
       </div>

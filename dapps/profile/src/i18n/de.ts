@@ -72,7 +72,7 @@ export const de = {
     "export-privatekey": "Private Key exportieren",
     "export-privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität. Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Private Key wirklich exportieren?",
     "export-privatekey-ok": "Ich Verstehe das Risiko",
-    "export-security-informations": "Sicherheitsinformationen exportieren",
+    "export-security-informations": "Sicherheitsinformationen",
     "language": "Sprache",
     "language-changed": "Sprache geändert",
     "language-changed-desc": "Nach dem die Sprache geändert wurde, werden nicht alle Bereiche der Anwendung sofort übersetzt. Damit diese Änderungen wirksam werden, muss die Anwendung neugestartet werden. Möchten Sie die Anwendung jetzt neustarten?",
@@ -114,6 +114,10 @@ export const de = {
         "title": "Menge an Eve"
       },
       "ok": "senden",
+      "title": "Eve senden"
+    },
+    "send-eve-dispatcher": {
+      "description": "Eve wird vom aktuellen, zu einem anderen Account transferiert.",
       "title": "Eve senden"
     },
     "settings": "Einstellungen",
