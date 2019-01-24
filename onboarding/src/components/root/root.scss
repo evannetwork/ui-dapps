@@ -27,6 +27,15 @@
 
 @import '@evan.network/ui-angular-sass/src/variables/colors';
 
+onboarding-root {
+  #evan-particles {
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .evan-dapp {
   onboarding-root {
     ion-header {

@@ -25,162 +25,51 @@
   https://evan.network/license/
 */
 
-import {
-  getDomainName
-} from 'dapp-browser';
-
-import {
-  NgModule,                    // @angular/core
-  CommonModule,                // @angular/common
-  RouterModule, Routes,        // @angular/router
-  IonicModule, IonicApp,       // ionic-angular
-  BrowserAnimationsModule,     // @angular/platform-browser/animations
-  HttpModule                   // @angular/http
-} from 'angular-libs';
-
-import {
-  AngularCore,
-  DAppLoaderComponent,
-  buildModuleRoutes,
-  BootstrapComponent,
-  startAngularApplication, createIonicAppElement
-} from 'angular-core';
-
-import { IdentityCreateComponent } from './components/identity-create/identity-create';
-import { IdentityImportComponent } from './components/identity-import/identity-import';
-import { MetamaskComponent } from './components/metamask/metamask';
-import { MnemonicComponent } from './components/mnemonic/mnemonic';
-import { OnboardedComponent } from './components/onboarded/onboarded';
-import { OnboardingRootComponent } from './components/root/root';
-import { OnboardingService } from './services/onboarding';
-import { OnboardingTranslations } from './i18n/registry';
-import { ProfileCreateComponent } from './components/profile-create/profile-create';
-import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use';
-import { WelcomeComponent } from './components/welcome/welcome';
-
-/**************************************************************************************************/
-
-function getRoutes(): Routes {
-  return buildModuleRoutes(
-    `onboarding.${getDomainName()}`,
-    OnboardingRootComponent,
-    [
-      {
-        path: '',
-        component: WelcomeComponent,
-        data: {
-          state: 'welcome'
-        },
-      },
-      {
-        path: 'terms-of-use/:provider',
-        component: TermsOfUseComponent,
-        data: {
-          state: 'terms-of-use',
-        },
-      },
-      {
-        path: 'metamask',
-        component: MetamaskComponent,
-        data: {
-          state: 'metamask',
-        },
-      },
-      {
-        path: 'identity-create',
-        component: IdentityCreateComponent,
-        data: {
-          state: 'identity-create',
-        },
-      },
-      {
-        path: 'identity-import',
-        component: IdentityImportComponent,
-        data: {
-          state: 'identity-import',
-        },
-      },
-      {
-        path: 'profile-create/:provider',
-        component: ProfileCreateComponent,
-        data: {
-          state: 'profile-create'
-        },
-      },
-      {
-        path: 'onboarded',
-        component: OnboardedComponent,
-        data: {
-          state: 'onboarded'
-        },
-      },
-    ]
-  );
-}
+import  './libs/particles.min.js';
+import Main from './components/main.vue';
+import Vue from 'vue';
+import Vuex from 'vuex';
+import vuexI18n from 'vuex-i18n';
+import { getDomainName, lightwallet, utils } from 'dapp-browser';
+import { initializeRouting, router } from './routing';
+import { registerComponents } from './components';
+import { VueCoreEvan, } from '@evan.network/vue-core';
+import { useI18N } from './i18n/translate';
 
 /**
- * Returns the module configuration for the normal or dispatcher module.
- * In case of the dispatcher module, Router configurations and BrowserModule imports are excluded
- * to load the module during runtime by the dispatcher service.
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
  *
- * @param isDispatcher  boolean value if the config is used for the dispatcher module
+ * @param      {any}     container  container element
+ * @param      {string}  dbcpName   dbcp name of the dapp
  */
-function getConfig(isDispatcher?: boolean) {
-  let config: any = {
-    imports: [
-      CommonModule,
-      AngularCore,
-      HttpModule,
-    ],
-    providers: [
-      OnboardingTranslations,
-      OnboardingService
-    ],
-    entryComponents: [IonicApp]
-  };
-
-  if (!isDispatcher) {
-    config.imports.unshift(BrowserAnimationsModule);
-    config.imports.unshift(RouterModule.forRoot(getRoutes(), { enableTracing: false, }));
-    config.imports.push(IonicModule.forRoot(BootstrapComponent, {
-      mode: 'md'
-    }));
-
-    config.bootstrap = [
-      IonicApp
-    ];
-
-    config.declarations = [
-      BootstrapComponent,
-      IdentityCreateComponent,
-      IdentityImportComponent,
-      MetamaskComponent,
-      MnemonicComponent,
-      OnboardedComponent,
-      OnboardingRootComponent,
-      ProfileCreateComponent,
-      TermsOfUseComponent,
-      WelcomeComponent,
-    ];
+export function startDApp(container: any, dbcpName: any) {
+  if (container === document.body) {
+    container = document.createElement('div');
+    document.body.appendChild(container);
   }
 
-  return config;
-}
+  // start routing
+  initializeRouting(dbcpName);
 
-@NgModule(getConfig(true))
-export class DispatcherModule {
-  constructor() { }
-}
+  // use evan-core components
+  Vue.use(Vuex);
+  Vue.use(VueCoreEvan);
 
-@NgModule(getConfig(false))
-class OnboardingModule {
-  constructor(private translations: OnboardingTranslations) { }
-}
+  // initialize vuex & i18n
+  const store = new Vuex.Store({ });
+  useI18N(Vue, store);
 
-export async function startDApp(container, dbcpName) {
-  const ionicAppEl = createIonicAppElement(container, dbcpName);
+  // initialize vue
+  const vue = new Vue({
+    el: container,
+    render: h => h(Main),
+    router,
+    store,
+  });
 
-  await startAngularApplication(OnboardingModule, getRoutes());
-
-  container.appendChild(ionicAppEl);
+  // add top level evan styling class
+  vue.$el.className += ' evan-theme-evan';
+  // configure material evan style
+  (<any>vue).$material.theming.theme = 'evan';
 }

@@ -1,4 +1,4 @@
-/*
+<!--
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it
@@ -23,8 +23,10 @@
 
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
-*/
+-->
 
-export default {
-  'hello': 'Hello World'
-}
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<div *ngIf="!loading" [@routerTransition]="o?.activatedRouteData?.state">
+  <div id="evan-particles"></div>
+  <router-outlet #o="outlet"></router-outlet>
+</div>

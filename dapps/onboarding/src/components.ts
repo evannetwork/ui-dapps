@@ -25,6 +25,23 @@
   https://evan.network/license/
 */
 
-export default {
-  'hello': 'Hello World'
+import WelcomeComponent from './components/welcome.vue';
+
+// list all components
+export const components = [
+  WelcomeComponent
+];
+
+/**
+ * Registers the components within Vue. If a name is specified, register it also as component, not
+ * only for routing.
+ *
+ * @param      {any}     Vue     vue instance
+ */
+export function registerComponents(Vue) {
+  // include all components
+  components.forEach((comp) => {
+    // register the component
+    Vue.component(comp.name, comp);
+  });
 }
