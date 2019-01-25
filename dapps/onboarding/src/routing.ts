@@ -28,6 +28,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { getDomainName } from 'dapp-browser';
 
+import SignInComponent from './components/signin.vue';
+import SignUpComponent from './components/signup.vue';
 import WelcomeComponent from './components/welcome.vue';
 
 /**
@@ -35,6 +37,14 @@ import WelcomeComponent from './components/welcome.vue';
  */
 export let router: any;
 export let basePath: any;
+
+function getRoutes() {
+  return [
+    { path: `${ basePath }`, name: 'welcome', component: WelcomeComponent },
+    { path: `${ basePath }/signup`, name: 'signup', component: SignUpComponent },
+    { path: `${ basePath }/signin`, name: 'signin', component: SignInComponent },
+  ];
+}
 
 /**
  * Start the routing for the current application.
@@ -46,16 +56,13 @@ export function initializeRouting(dbcpName: string) {
 
   // get the correct base paths
   const baseDAppName = `${ dbcpName }.${ getDomainName() }`;
-  const beforePath = window.location.hash.split(baseDAppName)[0];
+  const split = window.location.hash.split(baseDAppName);
+  const beforePath = split[0];
   basePath = (beforePath + baseDAppName).replace('#', '');
-  
-  let routes = [
-    { path: `${ basePath }`, name: 'welcome', component: WelcomeComponent },
-  ];
 
   // initialize vue router using the provided routes
-  router = new VueRouter({ base: basePath, routes: routes });
+  router = new VueRouter({ base: basePath, routes: getRoutes() });
 
   // start up the router!
-  router.push({ path: `${ basePath }` });
+  router.push({ path: `${ basePath }${ split[1] || '' }` });
 }

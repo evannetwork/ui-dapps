@@ -25,6 +25,24 @@
   https://evan.network/license/
 */
 
-export default {
-  'hello': 'Hallo Welt'
+/* tslint:disable */
+export default{
+  "_onboarding": {
+    "continue": "fortfahren",
+    "sign-in": "Einloggen",
+    "sign-in-desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
+    "sign-in-desc-long": "Nutzen Sie Ihren Wiederherstellungs-Schlüssel um Ihre bestehende Identität wiederherzustellen. Alle Daten, Kontakte und Verträge werden Sie dort vorfinden, wo Sie sie zurück gelassen haben.",
+    "sign-up": "Registrieren",
+    "sign-up-desc": "Erstellen Sie Ihre evan.network Identität",
+    "sign-up-desc-long": "Generieren Sie ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungs-Schlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
+    "signin": {
+      "get-mnemonic": "Wiederherstellungs-Schlüssel",
+      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.",
+      "get-password": "Profil entschlüsseln",
+      "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
+      "welcome": "Willkommen",
+      "welcome-desc": "Sie haben Sie erfolgreich angemeldet."
+    }
+  }
 }
+/* tslint:enable */

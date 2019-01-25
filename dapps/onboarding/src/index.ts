@@ -25,39 +25,53 @@
   https://evan.network/license/
 */
 
-import  './libs/particles.min.js';
+import './libs/particles.min.js';
 import Main from './components/main.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import vuexI18n from 'vuex-i18n';
-import { getDomainName, lightwallet, utils } from 'dapp-browser';
-import { initializeRouting, router } from './routing';
-import { registerComponents } from './components';
-import { VueCoreEvan, } from '@evan.network/vue-core';
+import { getDomainName, lightwallet, utils, System, dapp } from 'dapp-browser';
+import { initializeRouting, router, basePath } from './routing';
+import { registerComponents } from './registration';
+import { VueCoreEvan } from '@evan.network/vue-core';
 import { useI18N } from './i18n/translate';
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
  * dbcp. So startup, it's evan time!
  *
- * @param      {any}     container  container element
- * @param      {string}  dbcpName   dbcp name of the dapp
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {string}  dappEns      original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
  */
-export function startDApp(container: any, dbcpName: any) {
+export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
   if (container === document.body) {
     container = document.createElement('div');
     document.body.appendChild(container);
   }
 
   // start routing
+  registerComponents(Vue);
   initializeRouting(dbcpName);
 
   // use evan-core components
   Vue.use(Vuex);
   Vue.use(VueCoreEvan);
 
+  // load the vue evan core to get its origin and access the images
+  const vueCoreDbcp = await System.import('@evan.network/vue-core!ens');
+  const evanCoreBaseUrl = dapp.getDAppBaseUrl(vueCoreDbcp,
+    `${ vueCoreDbcp.name }.${ getDomainName() }`);
+
   // initialize vuex & i18n
-  const store = new Vuex.Store({ });
+  const store = new Vuex.Store({
+    state: {
+      dappBaseUrl,
+      evanCoreBaseUrl,
+      urlBasePath: basePath,
+    },
+  });
   useI18N(Vue, store);
 
   // initialize vue
@@ -68,8 +82,6 @@ export function startDApp(container: any, dbcpName: any) {
     store,
   });
 
-  // add top level evan styling class
-  vue.$el.className += ' evan-theme-evan';
   // configure material evan style
-  (<any>vue).$material.theming.theme = 'evan';
+  (<any>vue).$material.theming.theme = 'evan'; // tslint:disable-line
 }

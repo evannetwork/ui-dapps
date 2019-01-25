@@ -26,9 +26,14 @@
 */
 
 <template>
-  <div>
+  <div class="evan-vue-onboarding evan-theme-evan">
     <div id="evan-particles"></div>
-    <router-view></router-view>
+    <div class="md-layout md-alignment-center-center">
+      <img class="logo-header" :src="$store.state.evanCoreBaseUrl + '/assets/evan-logo.svg'">
+    </div>
+    <!-- <transition :name="transitionName" mode="out-in"> -->
+      <router-view class="child-view"></router-view>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -43,12 +48,18 @@
   export default Vue.extend({
     data () {
       return {
-        message: 'Hello Vue.js!'
+        transitionName: ''
       }
     },
     async created() {
       loading.finishDAppLoading();
     },
+    // beforeRouteUpdate (to, from, next) {
+    //   const toDepth = to.path.split('/').length;
+    //   const fromDepth = from.path.split('/').length;
+    //   this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+    //   next();
+    // },
     mounted: function () {
       this.$nextTick(() => {
         (<any>window).particlesJS("evan-particles", {
@@ -171,7 +182,19 @@
     height: 100%;
     position: fixed;
     width: 100%;
-    z-index: 1;
+    z-index: 0;
+  }
+
+  .logo-header {
+    width: 600px;
+    max-width: 90%;
+    margin: 50px;
+  }
+
+  @media(max-width: 768px) {
+    .logo-header {
+      margin: 25px 0 0 0;
+    }
   }
 </style>
 

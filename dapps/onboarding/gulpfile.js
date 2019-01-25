@@ -61,7 +61,14 @@ gulp.task('build', async function () {
           `${ dappDir }/src/**/*.css`,
         ])
         .pipe(gulp.dest(`${ dappDir }/dist`))
-        .pipe(gulp.dest(runtimeFolder))
+        .on('end', () => resolve());
+    });
+
+    // copy the build files into the runtimeFolder
+    await new Promise((resolve, reject) => {
+      gulp
+        .src(`${ dappDir }/src/img/*`)
+        .pipe(gulp.dest(`${ dappDir }/dist/assets`))
         .on('end', () => resolve());
     });
 

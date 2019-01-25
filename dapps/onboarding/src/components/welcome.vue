@@ -26,154 +26,111 @@
 */
 
 <template>
-  <div>
-    <div class="evan-logo"></div>
-
-    <evan-hello></evan-hello>
-
-    <div class="card-container">
-      <md-card class="sign-up">
-        <md-card-media>
-          <img src="/assets/examples/card-image-1.jpg" alt="People">
-        </md-card-media>
-
+  <div class="md-layout md-gutter md-alignment-center-center">
+    <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
+      <md-card>
         <md-card-header>
-          <div class="md-title">Sign up</div>
-          <div class="md-subhead">Subtitle here</div>
+          <md-card-header-text>
+            <div class="md-title">{{ '_onboarding.sign-up' | translate }}</div>
+            <div class="md-subhead">{{ '_onboarding.sign-up-desc' | translate }}</div>
+          </md-card-header-text>
+
+          <md-card-media md-big>
+            <img :src="$store.state.dappBaseUrl + '/assets/verified-identities.png'">
+          </md-card-media>
         </md-card-header>
 
         <md-card-expand>
           <md-card-actions md-alignment="space-between">
-            <div>
-              <md-button>Register</md-button>
-              <md-button>Action</md-button>
-            </div>
-
             <md-card-expand-trigger>
               <md-button class="md-icon-button">
                 <md-icon>keyboard_arrow_down</md-icon>
               </md-button>
-            </md-card-expand-trigger>
-          </md-card-actions>
+              </md-card-expand-trigger>
+              <div>
+                <md-button
+                  v-on:click="$router.push($store.state.urlBasePath + '/signup')">
+                  {{ '_onboarding.continue' | translate }}
+                </md-button>
+              </div>
+            </md-card-actions>
 
-          <md-card-expand-content>
-            <md-card-content>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non, voluptas eius illo quas, saepe voluptate pariatur in deleniti minus sint. Excepturi.
-            </md-card-content>
-          </md-card-expand-content>
-        </md-card-expand>
-      </md-card>
-      <md-card class="sign-in">
-        <md-card-media>
-          <img src="/assets/examples/card-image-1.jpg" alt="People">
-        </md-card-media>
+            <md-card-expand-content>
+              <md-card-content>
+                {{ '_onboarding.sign-up-desc-long' | translate }}
+              </md-card-content>
+            </md-card-expand-content>
+          </md-card-expand>
+        </md-card>
+      </div>
+      <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
+        <md-card>
+          <md-card-header>
+            <md-card-header-text>
+              <div class="md-title">{{ '_onboarding.sign-in' | translate }}</div>
+              <div class="md-subhead">{{ '_onboarding.sign-in-desc' | translate }}</div>
+            </md-card-header-text>
 
-        <md-card-header>
-          <div class="md-title">Sign up</div>
-          <div class="md-subhead">Subtitle here</div>
-        </md-card-header>
+            <md-card-media md-big>
+              <img :src="$store.state.dappBaseUrl + '/assets/verified-identities.png'" alt="People">
+            </md-card-media>
+          </md-card-header>
 
-        <md-card-expand>
-          <md-card-actions md-alignment="space-between">
-            <div>
-              <md-button>Register</md-button>
-              <md-button>Action</md-button>
-            </div>
+          <md-card-expand>
+            <md-card-actions md-alignment="space-between">
+              <md-card-expand-trigger>
+                <md-button class="md-icon-button">
+                  <md-icon>keyboard_arrow_down</md-icon>
+                </md-button>
+              </md-card-expand-trigger>
+              <div>
+                <md-button
+                  v-on:click="$router.push($store.state.urlBasePath + '/signin')">
+                  {{ '_onboarding.continue' | translate }}
+                </md-button>
+              </div>
+            </md-card-actions>
 
-            <md-card-expand-trigger>
-              <md-button class="md-icon-button">
-                <md-icon>keyboard_arrow_down</md-icon>
-              </md-button>
-            </md-card-expand-trigger>
-          </md-card-actions>
-
-          <md-card-expand-content>
-            <md-card-content>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non, voluptas eius illo quas, saepe voluptate pariatur in deleniti minus sint. Excepturi.
-            </md-card-content>
-          </md-card-expand-content>
-        </md-card-expand>
-      </md-card>
+            <md-card-expand-content>
+              <md-card-content>
+                {{ '_onboarding.sign-in-desc-long' | translate }}
+              </md-card-content>
+            </md-card-expand-content>
+          </md-card-expand>
+        </md-card>
+      </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
   import * as bcc from 'bcc';
-  import { System, core, } from 'dapp-browser';
+  import { System, core, dapp, getDomainName } from 'dapp-browser';
 
   export default Vue.extend({
-    name: 'evan-onboarding-welcome',
-    data: function () {
-      return { }
-    },
-    methods: {
-
-    }
+    name: 'evan-onboarding-welcome'
   });
 </script>
 
 <style lang="scss" scoped>
-  .evan-logo {
-    width: 600px;
-    height: 250px;
-    max-width: 90%;
-    margin-top: 5%;
-    left: 0;
-    right: 0;
-    margin: 5% auto 0 auto;
-    position: relative;
+  .md-card {
+    border-radius: 20px;
+    opacity: 0.7;
+    transition: 0.5s ease-out opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    .md-card-actions {
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
   }
 
-  .card-container {
-    display: flex;
-
+  @media(max-width: 768px) {
     .md-card {
-      max-width: 100%;
-      height: 300px;
-      border-radius: 20px;
-      opacity: 0.7;
-      transition: 0.5s ease-out opacity;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-
-    @media (min-width: 769px) {
-      padding: 0 5%;
-
-      .md-card {
-        width: 45%;
-
-        &.sign-up {
-          margin-right: 5%;
-        }
-
-        &.sign-in {
-          margin-left: 5%;
-        }
-      }
-    }
-
-    @media (min-width: 993px) {
-      padding: 0 10%;
-    }
-
-    @media (min-width: 1201px) {
-      padding: 0 15%;
-    }
-
-    @media (min-width: 1501px) {
-      padding: 0 20%;
-    }
-
-    @media (max-width: 768px) {
-      .md-card {
-        width: 30%;
-        margin: 10% 0;
-      }
+      margin: 25px 0;
     }
   }
 </style>

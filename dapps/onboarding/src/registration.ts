@@ -25,11 +25,17 @@
   https://evan.network/license/
 */
 
+import MnemonicComponent from './components/mnemonic.vue';
+import SignInComponent from './components/signin.vue';
+import SignUpComponent from './components/signup.vue';
 import WelcomeComponent from './components/welcome.vue';
 
 // list all components
 export const components = [
-  WelcomeComponent
+  MnemonicComponent,
+  SignInComponent,
+  SignUpComponent,
+  WelcomeComponent,
 ];
 
 /**

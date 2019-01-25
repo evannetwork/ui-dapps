@@ -25,24 +25,29 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_onboarding": {
-    "continue": "continue",
-    "sign-in": "Log in",
-    "sign-in-desc": "Restore an existing evan.network identity on this device",
-    "sign-in-desc-long": "Use your recovery key to restore your existing identity. You will find all your data, contacts and contracts where you left them",
-    "sign-up": "Register",
-    "sign-up-desc": "Create your evan.network identity",
-    "sign-up-desc-long": "Generate your secure and independent identity on the evan.network. With the help of this identity, you can interact with business partners, contracts and companies. You can restore your identity on another device at any time using your generated recovery key and continue working.",
-    "signin": {
-      "get-mnemonic": "Recovery Key",
-      "get-mnemonic-desc": "Please enter the 12 words you received for registration",
-      "get-password": "Decrypt profile",
-      "get-password-desc": "Enter your password to access the data of your identity",
-      "welcome": "Welcome",
-      "welcome-desc": "You have successfully registered."
+<template>
+  <div>
+    mnemonic
+  </div>
+</template>
+
+<script lang="ts">
+  import Vue from 'vue';
+  import * as bcc from 'bcc';
+  import { System, core, dapp, getDomainName } from 'dapp-browser';
+
+  export default Vue.extend({
+    name: 'evan-onboarding-mnemonic',
+    data: function () {
+      return {
+      }
     }
+  });
+</script>
+
+<style lang="scss" scoped>
+  .test {
+    
   }
-}
-/* tslint:enable */
+</style>
+
