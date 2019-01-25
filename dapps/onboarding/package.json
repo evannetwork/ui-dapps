@@ -1,19 +1,19 @@
 {
   "author": "evan GmbH",
-  "main": "dist/index.js",
-  "name": "onboarding",
-  "description": "",
-  "typings": "dist/index.d.ts",
-  "version": "1.0.0",
   "keywords": [
     "javascript",
     "typescript",
     "API",
-    "VueJS",
+    "Angular 5",
+    "Ionic",
     "DApp",
-    "CSS"
+    "SASS"
   ],
+  "main": "dist/index.js",
+  "name": "@evan.network/onboarding",
   "scripts": {
-    "build": "gulp"
-  }
+    "build": "cd ../.. && npm run angular-build dapps/onboarding"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.3.0"
 }

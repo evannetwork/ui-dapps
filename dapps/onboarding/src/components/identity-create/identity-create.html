@@ -1,0 +1,87 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title [innerHTML]="'_dapponboarding.identity-create' | translate"></ion-title>
+  </ion-navbar>
+</ion-header>
+<evan-loading *ngIf="loading"></evan-loading>
+<ion-content ion-fixed [style.display]="loading ? 'none':'block'">
+  <div class="vertical-center-container">
+    <div>
+      <span class="continuous-text">{{ '_dapponboarding.mnemonic-description' | translate }}</span>
+      <mnemonic-display #mnemonicDisplay
+        [(mnemonic)]="mnemonic"
+        (onChange)="ref.detectChanges()">
+      </mnemonic-display>
+      <p class="write-down-text continuous-text" text-center
+        [innerHTML]="'_dapponboarding.mnemonic-write-down' | translate"
+        *ngIf="!questionMnemonic">
+      </p>
+      <p class="write-down-text continuous-text" text-center
+        [innerHTML]="'_dapponboarding.mnemonic-riddle' | translate"
+        *ngIf="questionMnemonic">
+      </p>
+      <div text-center padding-top *ngIf="utils.isMD">
+        <button ion-button icon-left round color="primary"
+          (click)="cancel()"
+          *ngIf="questionMnemonic">
+          <ion-icon name="arrow-back"></ion-icon>
+          {{ '_dapponboarding.cancel-have-writte-down' | translate }}
+        </button>
+        <button ion-button icon-end round color="primary"
+          [disabled]="!mnemonicDisplay.isValid() || loading"
+          (click)="submit()">
+          {{ '_dapponboarding.have-writte-down' | translate }}
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="active" text-center *ngIf="!utils.isMD">
+  <button ion-button icon-left round  color="primary"
+    (click)="cancel()"
+    *ngIf="questionMnemonic">
+    <ion-icon name="arrow-back"></ion-icon>
+    {{ '_dapponboarding.cancel-have-writte-down' | translate }}
+  </button>
+  <button ion-button icon-end round color="primary"
+    [disabled]="!mnemonicDisplay.isValid() || loading"
+    (click)="submit()">
+    {{ '_dapponboarding.have-writte-down' | translate }}
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
+</ion-footer>

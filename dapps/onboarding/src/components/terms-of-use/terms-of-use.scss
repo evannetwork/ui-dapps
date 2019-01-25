@@ -25,40 +25,49 @@
   https://evan.network/license/
 */
 
-import de from './de';
-import en from './en';
-import Vuex from 'vuex';
-import vuexI18n from 'vuex-i18n';
-import { registerEvanI18N } from '@evan.network/vue-core';
+terms-of-use {
+  height: 100%;
 
-// map all langugage
-const translations = { de, en };
+  .vertical-center-container {
+    overflow-y: auto;
 
-/**
- * Register the current translations within vueJS.
- *
- * @param      {any}     Vue     vue prototype
- * @param      {any}     store   the vuex store
- */
-const registerI18N = (Vue: any, store: any) => {
-  registerEvanI18N(Vue, store);
-  Object.keys(translations).forEach(key => Vue.i18n.add(key, translations[key]));
-};
+    margin-top: 10px;
 
-/**
- * Setup vuexi18n plugin and register all i18n.
- *
- * @param      {any}     Vue     vue prototype
- * @param      {any}     store   the vuex store
- */
-const useI18N = (Vue: any, store: any) => {
-  Vue.use(vuexI18n.plugin, store);
+    text-align: justify;
 
-  // add all i18n definitions
-  registerI18N(Vue, store);
+    background-color: rgba(0, 13, 26, 0.6);
 
-  // use defined or browser language
-  Vue.i18n.set(window.localStorage['evan-language'] || navigator.language.split('-')[0]);
-};
+    @media (max-width: 768px) {
+      height: calc(100% - 20px);
+    }
 
-export { translations, registerI18N, useI18N };
+    @media (min-width: 769px) {
+      height: 70%;
+      margin-top: 10%;
+      padding: 30px 30px;
+    }
+
+    & > div {
+      display: block;
+
+      height: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  ion-footer {
+    display: flex;
+
+    button {
+      width: 50%;
+    }
+  }
+
+  iframe {
+    border: 0;
+    width: 100%;
+    height: 85px;
+    visibility: hidden;
+  }
+}

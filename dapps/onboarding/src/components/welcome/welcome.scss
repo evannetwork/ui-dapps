@@ -25,23 +25,66 @@
   https://evan.network/license/
 */
 
-import MnemonicComponent from './components/mnemonic.vue';
+@import '@evan.network/ui-angular-sass/src/variables/colors';
 
-// list all components
-export const components = [
-  { name: 'evan-onboarding-mnemonic', comp: MnemonicComponent },
-];
+onboarding-welcome {
+  display: block;
 
-/**
- * Registers the components within Vue. If a name is specified, register it also as component, not
- * only for routing.
- *
- * @param      {any}     Vue     vue prototype
- */
-export function registerComponents(Vue) {
-  // include all components
-  components.forEach((comp) => {
-    // register the component
-    Vue.component(comp.name, comp.comp);
-  });
+  height: 100%;
+
+  .evan-logo-text, .evan-logo-icon {
+    right: 0;
+    left: 0;
+
+    margin: auto;
+
+    text-align: center;
+
+    background-repeat: no-repeat;
+  }
+
+  .evan-logo-icon {
+    width: 100px;
+    height: 100px;
+
+    background-position: 15px;
+  }
+
+  .evan-logo-text {
+    width: 80%;
+    height: 100px;
+  }
+
+  .invite-container {
+    margin-bottom: 32px;
+
+    color: $light;
+    background-color: rgba(0, 13, 26, 0.6);
+  }
+
+  ion-footer {
+    overflow-y: auto;
+
+    max-height: 100%;
+
+    transition: 0.5s ease height;
+    transition: 0.5s ease background-color;
+
+    &:before {
+      display: none;
+    }
+
+    button {
+      position: relative;
+
+      height: 40px !important;
+      margin-bottom: 0 !important;
+
+      span, ion-icon {
+        transition: 0.3s ease color;
+
+        color: $light;
+      }
+    }
+  }
 }

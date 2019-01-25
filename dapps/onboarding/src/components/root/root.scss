@@ -1,0 +1,282 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+.evan-dapp {
+  onboarding-root {
+    ion-header {
+      z-index: 1000;
+
+      ion-navbar {
+        text-align: center;
+
+        color: $light;
+
+        .toolbar-background {
+          background-color: transparent;
+        }
+
+        ion-title {
+          font-size: 27px;
+
+          display: block;
+          overflow: hidden;
+
+          max-width: 100%;
+
+          text-align: center;
+          text-overflow: ellipsis;
+        }
+
+        ion-buttons[start] {
+          order: 1;
+        }
+      }
+
+      &:after {
+        display: none;
+      }
+    }
+
+    ion-footer {
+      z-index: 1000;
+    }
+
+    ion-content, ion-header, ion-footer {
+      background-color: transparent !important;
+      @media (min-width: 993px) {
+        width: 60%;
+        margin-left: 20%;
+      }
+      @media (min-width: 1201px) {
+        width: 50%;
+        margin-left: 25%;
+      }
+      @media (min-width: 1501px) {
+        width: 40%;
+        margin-left: 30%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .evan-beauty-screen {
+        .logo {
+          padding-top: 10px;
+        }
+      }
+    }
+
+    ion-slides {
+      height: auto;
+
+      .swiper-container {
+        height: auto;
+
+        ion-slide {
+          display: block;
+
+          height: auto;
+        }
+      }
+
+      .swiper-pagination {
+        display: none !important;
+      }
+    }
+
+    .continuous-text {
+      font-size: 15px;
+      line-height: 1.3em;
+
+      padding-top: 25px;
+
+      text-align: justify;
+
+      color: $light;
+    }
+
+    .vertical-center-container {
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+
+      height: 80%;
+      padding: 30px 0;
+
+      text-align: center;
+
+      h1, h2, h3 {
+        color: $light;
+      }
+
+      ion-slide > div, &.content-container, .content-container {
+        padding: 25px 25px;
+
+        color: gray;
+        background-color: rgba(0, 13, 26, 0.6);
+
+        & > h1, & > h2, & > h3, & > span, & > p {
+          color: $light;
+        }
+      }
+
+      ion-slide {
+        h3 {
+          display: flex;
+          align-items: center;
+        }
+
+        .start-buttons {
+          button {
+            width: 100%;
+            margin: 8px 0;
+
+            ion-icon {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+            }
+
+            .button-inner {
+              line-height: 36px;
+
+              display: block;
+            }
+
+            span, ion-icon {
+              font-weight: bold;
+
+              color: $light;
+            }
+          }
+        }
+      }
+
+      @media (min-width: 769px) {
+        margin-top: 50px;
+      }
+    }
+
+    .long-text {
+      font-size: 14px;
+      line-height: 23px;
+
+      text-align: justify;
+
+      color: $light;
+    }
+
+    ion-header {
+      @media (min-width: 993px) {
+        top: 30px;
+
+        height: 50px;
+      }
+    }
+
+    ion-footer {
+      &:before {
+        display: none;
+      }
+
+      @media (min-width: 993px) {
+        bottom: 30px;
+      }
+
+      @media (max-width: 992px) {
+        &.active {
+          background-color: #1a6596;
+        }
+      }
+
+      button {
+        margin-bottom: 4px !important;
+      }
+    }
+
+    evan-loading {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .content-container {
+        padding-bottom: 60px !important;
+
+        .content-container {
+          padding-bottom: 25px !important;
+        }
+      }
+    }
+
+    ion-item {
+      padding-right: 16px !important;
+      padding-left: 16px !important;
+    }
+  }
+}
+
+.evan-light {
+  onboarding-root {
+    h1, h2, h3, h4, h5, span, p, ion-label {
+      color: $text-color !important;
+    }
+
+    button[icon-only] {
+      ion-icon.icon {
+        color: $text-color !important;
+      }
+    }
+
+    ion-item.item-md.item-block {
+      &.item-input, &.item-select {
+        margin-top: 6px;
+        padding: 0 16px !important;
+
+        background-color: rgba(0,13,26,0.6) !important;
+
+        ion-label {
+          margin-top: 13px !important;
+
+          &[stacked] {
+            margin-top: 25px !important;
+          }
+        }
+      }
+
+      &.item-toggle {
+        padding: 0 !important;
+
+        background-color: transparent !important;
+      }
+
+      &.item-textarea {
+        padding: 0 0 15px 15px !important;
+      }
+    }
+  }
+}
