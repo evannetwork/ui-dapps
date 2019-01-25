@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="md-layout md-gutter md-alignment-center-center">
+  <div class="evan-onboarding-login md-layout md-gutter md-alignment-center-center">
     <div class="md-layout-item md-size-60 md-medium-size-80 md-small-size-100">
       <md-toolbar class="md-accent" md-elevation="0">
         <md-button class="md-icon-button" 
@@ -41,9 +41,9 @@
           :md-editable="true"
           :md-label="'_onboarding.signin.get-mnemonic' | translate"
           :md-description="'_onboarding.signin.get-mnemonic-desc' | translate">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+          <evan-onboarding-mnemonic
+            v-model="mnemonic">
+          </evan-onboarding-mnemonic>
           <md-button class="md-raised md-primary" @click="setDone('first', 'second')">Continue</md-button>
         </md-step>
 
@@ -53,10 +53,6 @@
           :md-error="secondStepError"
           :md-label="'_onboarding.signin.get-mnemonic' | translate"
           :md-description="'_onboarding.signin.get-mnemonic-desc' | translate">
-          
-          <evan-onboarding-mnemonic>
-            
-          </evan-onboarding-mnemonic>
 
           <md-button class="md-raised md-primary" @click="setDone('second', 'third')">Continue</md-button>
           <md-button class="md-raised md-primary" @click="setError()">Set error!</md-button>
@@ -80,9 +76,9 @@
   import Vue from 'vue';
   import * as bcc from 'bcc';
   import { System, core, dapp, getDomainName } from 'dapp-browser';
+  import MnemonicComponent from './mnemonic.vue';
 
   export default Vue.extend({
-    name: 'evan-onboarding-signin',
     data: function () {
       return {
         mnemonic: '',
@@ -92,7 +88,7 @@
         third: false,
         secondStepError: ''
       }
-    },  
+    },
     created () {
 
     },
@@ -114,8 +110,8 @@
 </script>
 
 <style lang="scss" scoped>
-  .test {
-
+  .evan-onboarding-login {
+    height: 100%;
   }
 </style>
 

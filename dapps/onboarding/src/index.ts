@@ -25,15 +25,16 @@
   https://evan.network/license/
 */
 
-import './libs/particles.min.js';
-import Main from './components/main.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import vuexI18n from 'vuex-i18n';
 import { getDomainName, lightwallet, utils, System, dapp } from 'dapp-browser';
 import { initializeRouting, router, basePath } from './routing';
-import { registerComponents } from './registration';
 import { VueCoreEvan } from '@evan.network/vue-core';
+
+import './libs/particles.min.js';
+import Main from './components/main.vue';
+import { registerComponents } from './registration';
 import { useI18N } from './i18n/translate';
 
 /**

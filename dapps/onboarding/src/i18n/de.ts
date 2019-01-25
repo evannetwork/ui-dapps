@@ -42,7 +42,8 @@ export default{
       "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
       "welcome": "Willkommen",
       "welcome-desc": "Sie haben Sie erfolgreich angemeldet."
-    }
+    },
+    "mnemonic-word": "{index}. Word"
   }
 }
 /* tslint:enable */

@@ -26,28 +26,22 @@
 */
 
 import MnemonicComponent from './components/mnemonic.vue';
-import SignInComponent from './components/signin.vue';
-import SignUpComponent from './components/signup.vue';
-import WelcomeComponent from './components/welcome.vue';
 
 // list all components
 export const components = [
-  MnemonicComponent,
-  SignInComponent,
-  SignUpComponent,
-  WelcomeComponent,
+  { name: 'evan-onboarding-mnemonic', comp: MnemonicComponent },
 ];
 
 /**
  * Registers the components within Vue. If a name is specified, register it also as component, not
  * only for routing.
  *
- * @param      {any}     Vue     vue instance
+ * @param      {any}     Vue     vue prototype
  */
 export function registerComponents(Vue) {
   // include all components
   components.forEach((comp) => {
     // register the component
-    Vue.component(comp.name, comp);
+    Vue.component(comp.name, comp.comp);
   });
 }

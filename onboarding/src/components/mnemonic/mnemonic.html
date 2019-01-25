@@ -43,6 +43,7 @@
       <ion-item class="riddle-item"
         [class.correct]="words[i] === originalWords[i]"
         [style.order]="i * 2"
+        md-theme="evandanger"
         *ngIf="riddleWords.indexOf(i) !== -1">
         <ion-label color="light">{{ i + 1 }}.</ion-label>
         <ion-input placeholder="???"

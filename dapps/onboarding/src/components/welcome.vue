@@ -26,26 +26,30 @@
 */
 
 <template>
-  <div class="md-layout md-gutter md-alignment-center-center">
-    <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
-      <md-card>
-        <md-card-header>
-          <md-card-header-text>
-            <div class="md-title">{{ '_onboarding.sign-up' | translate }}</div>
-            <div class="md-subhead">{{ '_onboarding.sign-up-desc' | translate }}</div>
-          </md-card-header-text>
+  <div>
+    <div class="md-layout md-alignment-center-center">
+      <img class="logo-header" :src="$store.state.evanCoreBaseUrl + '/assets/evan-logo.svg'">
+    </div>
+    <div class="md-layout md-gutter md-alignment-center-center">
+      <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
+        <md-card>
+          <md-card-header>
+            <md-card-header-text>
+              <div class="md-title">{{ '_onboarding.sign-up' | translate }}</div>
+              <div class="md-subhead">{{ '_onboarding.sign-up-desc' | translate }}</div>
+            </md-card-header-text>
 
-          <md-card-media md-big>
-            <img :src="$store.state.dappBaseUrl + '/assets/verified-identities.png'">
-          </md-card-media>
-        </md-card-header>
+            <md-card-media md-big>
+              <img :src="$store.state.dappBaseUrl + '/assets/verified-identities.png'">
+            </md-card-media>
+          </md-card-header>
 
-        <md-card-expand>
-          <md-card-actions md-alignment="space-between">
-            <md-card-expand-trigger>
-              <md-button class="md-icon-button">
-                <md-icon>keyboard_arrow_down</md-icon>
-              </md-button>
+          <md-card-expand>
+            <md-card-actions md-alignment="space-between">
+              <md-card-expand-trigger>
+                <md-button class="md-icon-button">
+                  <md-icon>keyboard_arrow_down</md-icon>
+                </md-button>
               </md-card-expand-trigger>
               <div>
                 <md-button
@@ -100,6 +104,7 @@
         </md-card>
       </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -107,12 +112,16 @@
   import * as bcc from 'bcc';
   import { System, core, dapp, getDomainName } from 'dapp-browser';
 
-  export default Vue.extend({
-    name: 'evan-onboarding-welcome'
-  });
+  export default Vue.extend({ });
 </script>
 
 <style lang="scss" scoped>
+  .logo-header {
+    width: 600px;
+    max-width: 90%;
+    margin: 50px;
+  }
+
   .md-card {
     border-radius: 20px;
     opacity: 0.7;
@@ -129,6 +138,10 @@
   }
 
   @media(max-width: 768px) {
+    .logo-header {
+      margin: 25px 0 0 0;
+    }
+
     .md-card {
       margin: 25px 0;
     }

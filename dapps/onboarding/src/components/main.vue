@@ -28,9 +28,6 @@
 <template>
   <div class="evan-vue-onboarding evan-theme-evan">
     <div id="evan-particles"></div>
-    <div class="md-layout md-alignment-center-center">
-      <img class="logo-header" :src="$store.state.evanCoreBaseUrl + '/assets/evan-logo.svg'">
-    </div>
     <!-- <transition :name="transitionName" mode="out-in"> -->
       <router-view class="child-view"></router-view>
     <!-- </transition> -->
@@ -183,18 +180,6 @@
     position: fixed;
     width: 100%;
     z-index: 0;
-  }
-
-  .logo-header {
-    width: 600px;
-    max-width: 90%;
-    margin: 50px;
-  }
-
-  @media(max-width: 768px) {
-    .logo-header {
-      margin: 25px 0 0 0;
-    }
   }
 </style>
 
