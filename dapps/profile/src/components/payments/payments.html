@@ -1,0 +1,140 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+
+<div *ngIf="!loading">
+  <div class="evan-relative evan-content">
+    <h3 class="content-header m-b-0 m-t-0">
+      {{ '_dappprofile.payments-detail' | translate }}
+    </h3>
+
+    <ng-container *ngIf="paymentChannels.channels && paymentChannels.channels.length == 0">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_dappprofile.setup-payment-channel' | translate }}
+        </h3>
+
+        <p>
+          {{ '_dappprofile.setup-payment-channel-desc' | translate }}
+        </p>
+
+        <ion-item col-md-6 col-12 margin-top>
+          <ion-label>{{ '_dappprofile.initial-eve-amount' | translate }}</ion-label>
+          <ion-input [name]="'balance'" required
+            type="number"
+            [(ngModel)]="paymentChannelForm.value"
+            [disabled]="creatingChannel"
+            [placeholder]="'_dappprofile.topup-payment-channel-desc' | translate"
+            (ionChange)="ref.detectChanges()"
+            (focusout)="ref.detectChanges()">
+          </ion-input>
+          <button ion-button outline round item-end (click)="createPaymentChannel()">
+            {{ '_claims.create-payment-channel' | translate }}
+          </button>
+        </ion-item>
+    </ng-container>
+    <ng-container *ngIf="paymentChannels.channels && paymentChannels.channels.length > 0">
+      <ion-row>
+        <ion-col col-md-6 col-12 margin-top>
+          <b>
+            {{ '_dappprofile.funds-available' | translate }}
+          </b>
+          <p>
+            {{ toEve(paymentDetails.fundsAvailable) }} EVE
+          </p>
+        </ion-col>
+
+        <ion-col col-md-6 col-12 margin-top>
+          <b>
+            {{ '_dappprofile.pinned-hashes' | translate }}
+          </b>
+          <p>
+            {{ paymentDetails.pinnedHashes }} ({{ paymentDetails.overallSize }} kB)
+          </p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-md-6 col-12 margin-top>
+          <b>
+            {{ '_dappprofile.monthly-cost' | translate }}
+          </b>
+          <p>
+            {{ toEve(paymentDetails.monthlyPayments) }} EVE
+          </p>
+        </ion-col>
+        <ion-col col-md-6 col-12 margin-top>
+          <b>
+            {{ '_dappprofile.estimated-funds' | translate }}
+          </b>
+          <p>
+            ~ {{ paymentDetails.estimatedFunds }} Months
+          </p>
+        </ion-col>
+      </ion-row>
+
+    </ng-container>
+  </div>
+  <div *ngIf="paymentChannels.channels && paymentChannels.channels.length > 0" class="evan-relative evan-content">
+    <h3 class="content-header m-b-0 m-t-0">
+      {{ '_dappprofile.channel-actions' | translate }}
+    </h3>
+    <ng-container *ngFor="let channel of paymentChannels.channels">
+      <ion-row *ngIf="channel.deposit">
+        <ion-col col-12 margin-top>
+          <ion-item col-12 margin-top>
+            <ion-label>{{ '_dappprofile.topup-payment-channel' | translate }}</ion-label>
+            <ion-input [name]="'balance'" required
+              type="number"
+              [(ngModel)]="paymentChannelForm.topUp"
+              [disabled]="toppingUp"
+              [placeholder]="'_dappprofile.topup-payment-channel-desc' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+            <button ion-button outline round item-end (click)="topupPaymentChannel(channel)">
+              {{ '_dappprofile.topup' | translate }}
+            </button>
+          </ion-item>
+          <ion-item col-12 margin-top>
+            <ion-label>{{ '_dappprofile.delete-hash' | translate }}</ion-label>
+            <ion-input [name]="'hash'" required
+              type="text"
+              [(ngModel)]="paymentChannelForm.hash"
+              [disabled]="deleting"
+              [placeholder]="'_dappprofile.delete-hash-desc' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+            <button ion-button outline round item-end (click)="removeHash()">
+              {{ '_dappprofile.delete' | translate }}
+            </button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </div>
+</div>

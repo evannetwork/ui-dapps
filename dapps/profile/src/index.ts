@@ -51,6 +51,7 @@ import { EvanProfileDetailComponent } from './components/profile/profile';
 import { EvanProfileSettingsComponent } from './components/settings/settings';
 import { EvanProfileVerificationsComponent } from './components/verifications/verifications';
 import { EvanProfileContainerComponent } from './components/container/container';
+import { EvanProfilePaymentsComponent } from './components/payments/payments';
 
 import { ProfileService } from './services/service';
 import { profileClaimsDispatcher } from './dispatchers/claims';
@@ -124,6 +125,7 @@ function getConfig(isDispatcher?: boolean) {
       EvanProfileSettingsComponent,
       EvanProfileVerificationsComponent,
       EvanProfileDetailComponent,
+      EvanProfilePaymentsComponent,
       ProfileRootComponent,
     ];
   }
