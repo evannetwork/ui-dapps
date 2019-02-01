@@ -62,17 +62,22 @@ export class ProfileService implements OnDestroy {
   /**
    * account address of the payment agent.
    */
-  public agentAddress: string = '0xAF176885bD81D5f6C76eeD23fadb1eb0e5Fe1b1F';
+  public agentAccountId: string = '0xAF176885bD81D5f6C76eeD23fadb1eb0e5Fe1b1F';
 
   /**
    * Manager of the payment channel.
    */
-  public channelManagerAddress: string = '0x0A0D9dddEba35Ca0D235A4086086AC704bbc8C2b'
+  public channelManagerAccountId: string = '0x0A0D9dddEba35Ca0D235A4086086AC704bbc8C2b'
 
   /**
    * Url to the payment agent server.
    */
-  public ipfsPaymentBase: string = `https://payments.evan.network/api/ipfs-payments`
+  public paymentAgentUrl: string = `https://payments.evan.network`
+
+  /**
+   * base endpoint of the payment
+   */
+  public paymentEndPoint: string = 'api/ipfs-payments';
 
   constructor(
     public bcc: EvanBCCService,
@@ -103,11 +108,15 @@ export class ProfileService implements OnDestroy {
     const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
     const signature = await this.signMessage(toSignedMessage, activeAccount);
     const headers = {
-      authorization: `EvanAuth ${ activeAccount },EvanMessage ${ hexMessage },EvanSignedMessage ${ signature }`
+      authorization: [
+        `EvanAuth ${ activeAccount }`,
+        `EvanMessage ${ hexMessage }`,
+        `EvanSignedMessage ${ signature }`
+      ].join(',')
     };
 
     return (await this.http
-      .get(`${ this.ipfsPaymentBase }/${ endPoint }`, {headers})
+      .get(`${ this.paymentAgentUrl }/${ this.paymentEndPoint }/${ endPoint }`, { headers })
       .toPromise()
     ).json();
   }

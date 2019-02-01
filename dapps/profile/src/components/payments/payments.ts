@@ -85,17 +85,19 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
   /**
    * holds the payment channel details for the current account
    */
-  private paymentDetails: any;
-
-  /**
-   * Current input values.
-   */
-  private paymentChannelForm: any;
+  private paymentDetails: any = {};
 
   /**
    * opened payment channels.
    */
-  private paymentChannels: any;
+  private paymentChannels: any = {
+    channels: [ ],
+  };
+
+  /**
+   * Current input values.
+   */
+  private paymentChannelForm: any = { topUp: 0 };
 
   /**
    * this.bcc.web3.utils.fromWei
@@ -121,6 +123,16 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    * is currently an error occured by loading data?
    */
   private error: any;
+
+  /**
+   * current active visbile action tab
+   */
+  private actionTab: number = 0;
+
+  /**
+   * currently selectec channel for actions
+   */
+  private activeChannel: any;
 
   /**
    * Balancer input reference
@@ -150,13 +162,10 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    * @return     {Promise<void>}  resolved when done
    */
   async _ngOnInit() {
-    this.paymentDetails = {};
-    this.paymentChannels = {};
-    this.paymentChannelForm = { topUp: 0 };
     this.toEve = this.bcc.web3.utils.fromWei;
 
     // setup channel manager§
-    this.bcc.payments.setChannelManager(this.profileService.channelManagerAddress);
+    this.bcc.payments.setChannelManager(this.profileService.channelManagerAccountId);
 
     // watch for updates and reload the ui data
     this.paymentQueueId = new QueueId(`profile.${ getDomainName() }`, 'paymentDispatcher'),
@@ -179,10 +188,6 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
         this.loading = false;
         this.ref.detectChanges();
       }
-
-      (<any>this).log = console.log;
-
-      setTimeout(() => console.log(this.balanceInput));
     });
   }
 
@@ -197,7 +202,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
       status.monthlyPayments = Math.floor(status.monthlyPayments).toString();
       status.fundsAvailable = Math.floor(status.fundsAvailable).toString();
       status.estimatedFunds = Math.floor(status.fundsAvailable / status.monthlyPayments);
-      status.overallSize = Number(status.monthlyPayments).toFixed(2);
+      status.overallSize = Number(status.monthlyPayments / 100) * 1000;
 
       // save status to components scope
       this.paymentDetails = status;
@@ -213,6 +218,13 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
   async loadPaymentChannels() {
     try {
       this.paymentChannels = await this.profileService.requestPaymentAgent('getChannels');
+
+      // find active channels
+      const activeChannels = this.paymentChannels.channels
+        .filter(channel => channel.state && channel.state === 'OPEN');
+
+      // preselect first active channel for actions
+      this.activeChannel = activeChannels.length > 0 ? activeChannels[0] : null;
     } catch (ex) {
       this.error = ex.message;
       this.core.utils.log(ex.message, 'error');
@@ -223,21 +235,61 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    * Trigger the payment queue to create open a new payment channel, if no was registered before.
    */
   async createPaymentChannel() {
+    try {
+      await this
+        .alertService.showSubmitAlert(
+          '_dappprofile.payment.topup-alert.title',
+          {
+            key: '_dappprofile.payment.topup-alert.description',
+            translateOptions: {
+              eve: this.paymentChannelForm.value
+            }
+          },
+          '_dappprofile.payment.topup-alert.cancel',
+          '_dappprofile.payment.topup-alert.submit',
+        );
+    } catch (ex) {
+      return;
+    }
+
     this.runPaymentQueue({
       type: 'openChannel',
       eve: this.paymentChannelForm.value,
     });
+
+    // reset input
+    this.paymentChannelForm.value = 0;
   }
 
   /**
    * Add eve to a payment channel.
    */
   async topupPaymentChannel(channel) {
+    try {
+     await this
+      .alertService.showSubmitAlert(
+        '_dappprofile.payment.topup-alert.title',
+        {
+          key: '_dappprofile.payment.topup-alert.description',
+          translateOptions: {
+            eve: this.paymentChannelForm.topUp
+          }
+        },
+        '_dappprofile.payment.topup-alert.cancel',
+        '_dappprofile.payment.topup-alert.submit',
+      );
+    } catch (ex) {
+      return;
+    }
+
     this.runPaymentQueue({
       type: 'topUp',
-      eve: this.paymentChannelForm.value,
-      channel: channel
+      eve: this.paymentChannelForm.topUp,
+      channel: this.activeChannel,
     });
+
+    // reset input
+    this.paymentChannelForm.topUp = 0;
   }
 
   /**
@@ -262,5 +314,44 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
     // disable buttons and show loading
     this.dispatcherRunning = true;
     this.ref.detectChanges();
+  }
+
+
+  /**
+   * Actives the new chosen tab.
+   *
+   * @param      {number}  index   index of the tab that should be displayed.
+   */
+  activateActionTab(index: number) {
+    this.actionTab = index;
+
+    this.ref.detectChanges();
+    setTimeout(() => this.ref.detectChanges(), 500);
+  }
+
+  /**
+   * Transform incoming bytes to a displayable version.
+   *
+   * @param      {number}  bytes     bytes that should be parsed
+   * @param      {number}  decimals  amount of decimals, that should be displayed
+   * @return     {string}  parsed displayable size
+   */
+  formatBytes(bytes: number, decimals: number) {
+    if(bytes == 0) return '0 Bytes';
+    var k = 1024,
+      dm = decimals <= 0 ? 0 : decimals || 2,
+      sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  /**
+   * Check if a ipfs hash is valid.
+   *
+   * @param      {string}  hash    the hash that should be checked.
+   * @return     {boolean}  true / false
+   */
+  validIpfsHash(hash: string = '') {
+    return hash.length === 46 && hash.indexOf('Qm') === 0;
   }
 }

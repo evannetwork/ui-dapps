@@ -36,7 +36,6 @@ export const en = {
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
     "cancel": "cancel",
-    "channel-actions": "Actions",
     "claim-topic": {
       "desc": "Verification path to be checked (e.g.: /company)",
       "error": "Please enter a verification path",
@@ -86,7 +85,6 @@ export const en = {
     },
     "logout": "Logout",
     "logout-desc": "Do you really want to log out?",
-    "monthly-cost": "Monthly storage costs",
     "my-profile": "My Profile",
     "my-verifications": "My verifications",
     "no-email": "No e-mail address specified",
@@ -95,6 +93,7 @@ export const en = {
     "notifictions-desc": "Enables push notifications for your mobile device.",
     "ok": "ok",
     "payment": {
+      "channel-actions": "Actions",
       "create-payment-channel": "Setup storage fund",
       "delete": "Delete",
       "delete-hash": "Delete file via hash",
@@ -102,13 +101,21 @@ export const en = {
       "estimated-funds": "Estimated months until assets are deleted",
       "funds-available": "Availabe EVE for storage",
       "initial-eve-amount": "Initial amout of eve to lock",
+      "monthly-cost": "Monthly storage costs",
       "payments": "Storage payments",
       "payments-desc": "Manage your storage payments",
       "payments-detail": "Storage payment details",
+      "delete-hash-error": "Please enter a valid IPFS hash!",
       "pinned-hashes": "Stored Assets",
       "setup-payment-channel": "Setup storage funds",
       "setup-payment-channel-desc": "When storing data on evan.network you will be charged monthly for every kB. You must lock EVE for the payment of the data.",
       "topup": "Topup",
+      "topup-alert": {
+        "description": "Do you really want to top up your storage storage funds with {{ eve }} EVE?",
+        "submit": "proceed",
+        "title": "Topup storage funds",
+        "cancel": "cancel"
+      },
       "topup-payment-channel": "Topup storage funds with EVE",
       "topup-payment-channel-desc": "EVE amount",
       "topup-payment-channel-error": "Please specify an amount of EVE higher than 0."

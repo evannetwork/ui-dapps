@@ -59,7 +59,7 @@ export const paymentDispatcher = new QueueDispatcher(
             case 'openChannel': {
               // transform eve to gwei
               const eveToSend = service.bcc.web3.utils.toWei(entry.eve, 'milliether');
-              await service.bcc.payments.openChannel(activeAccount, service.ipfsPaymentBase,
+              await service.bcc.payments.openChannel(activeAccount, service.agentAccountId,
                 eveToSend);
 
               break;

@@ -36,7 +36,6 @@ export const de = {
     "balance": "Meine EVEs",
     "balance-updated": "EVEs wurden aktualisiert...",
     "cancel": "abbrechen",
-    "channel-actions": "Aktionen",
     "claim-topic": {
       "desc": "Verifizierungspfad der geprüft werden soll (z.B.: /company)",
       "error": "Bitte geben Sie einen Verifizierungspfad ein",
@@ -55,6 +54,7 @@ export const de = {
     "delete": "Löschen",
     "delete-hash": "Datei mit Referenz löschen",
     "delete-hash-desc": "Dateireferenz (QmXXXX)",
+    "delete-hash-error": "Bitte geben Sie einen validen IPFS Hash an!",
     "dev-domain": "Test Domain",
     "dev-domain-desc": "Die Root-Domain \"evan\" zum laden von DApps wird durch die angegebene ausgetauscht.",
     "dev-domain-loading": "DApps von Test-Domain",
@@ -89,7 +89,6 @@ export const de = {
     },
     "logout": "Abmelden",
     "logout-desc": "Wollen Sie sich wirklich abmelden?",
-    "monthly-cost": "Monatliche Speichergebühren",
     "my-profile": "Mein Profil",
     "my-verifications": "Meine Verifizierungen",
     "no-email": "Keine E-Mail Adresse spezifiert",
@@ -98,10 +97,12 @@ export const de = {
     "notifictions-desc": "Aktiviert Push-Benachrichtigungen für ihr Mobiles Gerät.",
     "ok": "Ok",
     "payment": {
+      "channel-actions": "Aktionen",
       "create-payment-channel": "Speicherguthaben einrichten",
       "estimated-funds": "Verbleibende Monate bis Daten gelöscht werden",
       "funds-available": "Guthaben für Speichergebühren",
       "initial-eve-amount": "Initial amout of eve to lock",
+      "monthly-cost": "Monatliche Speichergebühren",
       "payments": "Speichergebühren",
       "payments-desc": "Übersicht und Verwaltung von Speichergegühren",
       "payments-detail": "Speichergebühren Details",
@@ -109,6 +110,12 @@ export const de = {
       "setup-payment-channel": "Speicherguthaben einrichten",
       "setup-payment-channel-desc": "Um Daten auf dem evan.network zu speichern muss ein Speicherguthaben eingerichtet werden. Jedes kB was auf dem evan.network gespeichert wird, wird monatlich von diesem Guthaben abgezogen.",
       "topup": "Aufstocken",
+      "topup-alert": {
+        "description": "Wollen Sie wirklich Ihr Speicherguthaben um {{ eve }} EVE aufladen?",
+        "submit": "aufstocken",
+        "title": "Guthaben aufstocken",
+        "cancel": "abbrechen"
+      },
       "topup-payment-channel": "Speicherguthaben mit EVE aufstocken",
       "topup-payment-channel-desc": "EVE Anzahl",
       "topup-payment-channel-error": "Bitte geben Sie eine Menge an EVE an, die höher als 0 ist."
