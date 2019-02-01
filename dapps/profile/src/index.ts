@@ -53,11 +53,13 @@ import { EvanProfileVerificationsComponent } from './components/verifications/ve
 import { EvanProfileContainerComponent } from './components/container/container';
 import { EvanProfilePaymentsComponent } from './components/payments/payments';
 
-import { ProfileService } from './services/service';
+import { paymentDispatcher } from './dispatchers/payment';
 import { profileClaimsDispatcher } from './dispatchers/claims';
+import { ProfileService } from './services/service';
 import { sendEveDispatcher } from './dispatchers/sendEve';
 
 export {
+  paymentDispatcher,
   profileClaimsDispatcher,
   ProfileService,
   sendEveDispatcher,

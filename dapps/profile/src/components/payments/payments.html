@@ -29,39 +29,53 @@
 
 <div *ngIf="!loading">
   <div class="evan-relative evan-content">
-    <h3 class="content-header m-b-0 m-t-0">
-      {{ '_dappprofile.payments-detail' | translate }}
-    </h3>
-
     <ng-container *ngIf="paymentChannels.channels && paymentChannels.channels.length == 0">
-        <h3 class="content-header m-b-0 m-t-0">
-          {{ '_dappprofile.setup-payment-channel' | translate }}
-        </h3>
+      <h3 class="content-header m-b-0 m-t-0">
+        {{ '_dappprofile.payment.setup-payment-channel' | translate }}
+      </h3>
 
-        <p>
-          {{ '_dappprofile.setup-payment-channel-desc' | translate }}
-        </p>
+      <p>
+        {{ '_dappprofile.payment.setup-payment-channel-desc' | translate }}
+      </p>
 
-        <ion-item col-md-6 col-12 margin-top>
-          <ion-label>{{ '_dappprofile.initial-eve-amount' | translate }}</ion-label>
-          <ion-input [name]="'balance'" required
-            type="number"
-            [(ngModel)]="paymentChannelForm.value"
-            [disabled]="creatingChannel"
-            [placeholder]="'_dappprofile.topup-payment-channel-desc' | translate"
-            (ionChange)="ref.detectChanges()"
-            (focusout)="ref.detectChanges()">
-          </ion-input>
-          <button ion-button outline round item-end (click)="createPaymentChannel()">
-            {{ '_claims.create-payment-channel' | translate }}
-          </button>
-        </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          {{ '_dappprofile.payment.initial-eve-amount' | translate }}
+        </ion-label>
+        <ion-input name="balance" required #balanceInput
+          type="number"
+          min="0.1"
+          [(ngModel)]="paymentChannelForm.value"
+          [disabled]="creatingChannel"
+          [placeholder]="'_dappprofile.payment.topup-payment-channel-desc' | translate"
+          (ionChange)="ref.detectChanges()"
+          (keyup.enter)="paymentChannelForm.value > 0 && !dispatcherRunning && createPaymentChannel()"
+          (focusout)="ref.detectChanges()">
+        </ion-input>
+      </ion-item>
+      <ion-chip class="error-hint" color="danger"
+         *ngIf="balanceInput.ngControl.dirty && (!paymentChannelForm.value || paymentChannelForm.value <= 0)">
+        <ion-label>{{ '_dappprofile.payment.topup-payment-channel-error' | translate }}</ion-label>
+      </ion-chip>
+
+      <div text-right margin-top>
+        <button ion-button outline round icon-start
+          [disabled]="!paymentChannelForm.value || paymentChannelForm.value < 0 || dispatcherRunning"
+          (click)="createPaymentChannel()">
+          <ion-spinner *ngIf="dispatcherRunning"></ion-spinner>
+          {{ '_dappprofile.payment.create-payment-channel' | translate }}
+        </button>
+      </div>
     </ng-container>
     <ng-container *ngIf="paymentChannels.channels && paymentChannels.channels.length > 0">
+      <h3 class="content-header m-b-0 m-t-0">
+        {{ '_dappprofile.payment.payments-detail' | translate }}
+      </h3>
+
       <ion-row>
         <ion-col col-md-6 col-12 margin-top>
           <b>
-            {{ '_dappprofile.funds-available' | translate }}
+            {{ '_dappprofile.payment.funds-available' | translate }}
           </b>
           <p>
             {{ toEve(paymentDetails.fundsAvailable) }} EVE
@@ -70,7 +84,7 @@
 
         <ion-col col-md-6 col-12 margin-top>
           <b>
-            {{ '_dappprofile.pinned-hashes' | translate }}
+            {{ '_dappprofile.payment.pinned-hashes' | translate }}
           </b>
           <p>
             {{ paymentDetails.pinnedHashes }} ({{ paymentDetails.overallSize }} kB)
@@ -80,7 +94,7 @@
       <ion-row>
         <ion-col col-md-6 col-12 margin-top>
           <b>
-            {{ '_dappprofile.monthly-cost' | translate }}
+            {{ '_dappprofile.payment.monthly-cost' | translate }}
           </b>
           <p>
             {{ toEve(paymentDetails.monthlyPayments) }} EVE
@@ -88,7 +102,7 @@
         </ion-col>
         <ion-col col-md-6 col-12 margin-top>
           <b>
-            {{ '_dappprofile.estimated-funds' | translate }}
+            {{ '_dappprofile.payment.estimated-funds' | translate }}
           </b>
           <p>
             ~ {{ paymentDetails.estimatedFunds }} Months
@@ -100,37 +114,40 @@
   </div>
   <div *ngIf="paymentChannels.channels && paymentChannels.channels.length > 0" class="evan-relative evan-content">
     <h3 class="content-header m-b-0 m-t-0">
-      {{ '_dappprofile.channel-actions' | translate }}
+      {{ '_dappprofile.payment.channel-actions' | translate }}
     </h3>
     <ng-container *ngFor="let channel of paymentChannels.channels">
       <ion-row *ngIf="channel.deposit">
         <ion-col col-12 margin-top>
           <ion-item col-12 margin-top>
-            <ion-label>{{ '_dappprofile.topup-payment-channel' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.payment.topup-payment-channel' | translate }}</ion-label>
             <ion-input [name]="'balance'" required
               type="number"
               [(ngModel)]="paymentChannelForm.topUp"
               [disabled]="toppingUp"
-              [placeholder]="'_dappprofile.topup-payment-channel-desc' | translate"
+              [placeholder]="'_dappprofile.payment.topup-payment-channel-desc' | translate"
               (ionChange)="ref.detectChanges()"
               (focusout)="ref.detectChanges()">
             </ion-input>
             <button ion-button outline round item-end (click)="topupPaymentChannel(channel)">
-              {{ '_dappprofile.topup' | translate }}
+              {{ '_dappprofile.payment.topup' | translate }}
             </button>
           </ion-item>
           <ion-item col-12 margin-top>
-            <ion-label>{{ '_dappprofile.delete-hash' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.payment.delete-hash' | translate }}</ion-label>
             <ion-input [name]="'hash'" required
               type="text"
               [(ngModel)]="paymentChannelForm.hash"
               [disabled]="deleting"
-              [placeholder]="'_dappprofile.delete-hash-desc' | translate"
+              [placeholder]="'_dappprofile.payment.delete-hash-desc' | translate"
               (ionChange)="ref.detectChanges()"
               (focusout)="ref.detectChanges()">
             </ion-input>
-            <button ion-button outline round item-end (click)="removeHash()">
-              {{ '_dappprofile.delete' | translate }}
+            <button ion-button outline round item-end
+              [disabled]="dispatcherRunning"
+              (click)="removeHash()">
+              <ion-spinner *ngIf="dispatcherRunning"></ion-spinner>
+              {{ '_dappprofile.payment.delete' | translate }}
             </button>
           </ion-item>
         </ion-col>

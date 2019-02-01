@@ -39,7 +39,8 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-  Http, Response, RequestOptions, Headers       // @angular/http
+  Http, Response, RequestOptions, Headers,       // @angular/http
+  Input,
 } from 'angular-libs';
 
 import {
@@ -59,6 +60,8 @@ import {
   QueueId,
 } from 'angular-core';
 
+import { ProfileService } from '../../services/service';
+
 /**************************************************************************************************/
 
 @Component({
@@ -74,23 +77,55 @@ import {
  * Shows the current pyment channel informations for the ipfs payments
  */
 export class EvanProfilePaymentsComponent extends AsyncComponent {
-
+  /**
+   * show the base loading symbol.
+   */
+  private loading: boolean;
+ 
   /**
    * holds the payment channel details for the current account
    */
   private paymentDetails: any;
 
-
-  private agentEndpoint: string;
-
+  /**
+   * Current input values.
+   */
   private paymentChannelForm: any;
+
+  /**
+   * opened payment channels.
+   */
   private paymentChannels: any;
 
-  private toppingUp: boolean;
+  /**
+   * this.bcc.web3.utils.fromWei
+   */
+  public toEve: Function;
 
-  private deleting: boolean;
+  /**
+   * Function to unsubscribe from queue results.
+   */
+  private queueWatcher: Function;
 
-  public toEve: any;
+  /**
+   * QueueId for quick accessing queue add & watch.
+   */
+  private paymentQueueId: QueueId;
+
+  /**
+   * is currently the payment dispatcher running?
+   */
+  private dispatcherRunning: boolean;
+
+  /**
+   * is currently an error occured by loading data?
+   */
+  private error: any;
+
+  /**
+   * Balancer input reference
+   */
+  @ViewChild('balanceInput') balanceInput: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
@@ -99,11 +134,12 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
     private bcc: EvanBCCService,
     private claimsService: EvanClaimService,
     private core: EvanCoreService,
+    private http: Http,
+    private profileService: ProfileService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
     private translateService: EvanTranslationService,
-    private http: Http
   ) {
     super(ref);
   }
@@ -116,106 +152,115 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
   async _ngOnInit() {
     this.paymentDetails = {};
     this.paymentChannels = {};
-    this.paymentChannelForm = {
-      topUp: 0
-    };
-    this.agentEndpoint = `https://payments.evan.network/api/ipfs-payments`;
+    this.paymentChannelForm = { topUp: 0 };
     this.toEve = this.bcc.web3.utils.fromWei;
 
-    const channelManagerAddress = '0x0A0D9dddEba35Ca0D235A4086086AC704bbc8C2b';
-    this.bcc.payments.setChannelManager(channelManagerAddress);
-    await this.loadPaymentDetails();
-    await this.loadPaymentChannels();
+    // setup channel manager§
+    this.bcc.payments.setChannelManager(this.profileService.channelManagerAddress);
+
+    // watch for updates and reload the ui data
+    this.paymentQueueId = new QueueId(`profile.${ getDomainName() }`, 'paymentDispatcher'),
+    this.queueWatcher = await this.queue.onQueueFinish(this.paymentQueueId, async (reload) => {
+      // show loading
+      if (reload) {
+        this.loading = true;
+        this.ref.detectChanges();
+      }
+
+      // load the data
+      await this.loadPaymentDetails();
+      await this.loadPaymentChannels();
+
+      // check if something is loading
+      this.dispatcherRunning = this.queue.getQueueEntry(this.paymentQueueId, true).data.length > 0;
+
+      // remove loading
+      if (reload) {
+        this.loading = false;
+        this.ref.detectChanges();
+      }
+
+      (<any>this).log = console.log;
+
+      setTimeout(() => console.log(this.balanceInput));
+    });
   }
 
   /**
-   * Actives the new chosen tab.
-   *
-   * @param      {number}  index   index of the tab that should be displayed.
+   * Load the payment details for the current account
    */
-  activateTab(index: number) {
-    this.ref.detectChanges();
-    setTimeout(() => this.ref.detectChanges(), 500);
-  }
-
   async loadPaymentDetails() {
-    const activeAccount = this.core.activeAccount();
-    const toSignedMessage = this.bcc.web3.utils.soliditySha3(new Date().getTime() + activeAccount).replace('0x', '');
-    const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
-    const signature = await this.signMessage(toSignedMessage, activeAccount);
-    const headers = {
-      authorization: `EvanAuth ${activeAccount},EvanMessage ${hexMessage},EvanSignedMessage ${signature}`
-    };
     try {
-      const result = await this.http.get(`${this.agentEndpoint}/getStatus`, {headers}).toPromise();
-      const jsonResult = result.json();
-      jsonResult.monthlyPayments = Math.floor(jsonResult.monthlyPayments).toString();
+      const status = await this.profileService.requestPaymentAgent('getStatus');
 
+      // parse correct value for estimated values
+      status.monthlyPayments = Math.floor(status.monthlyPayments).toString();
+      status.fundsAvailable = Math.floor(status.fundsAvailable).toString();
+      status.estimatedFunds = Math.floor(status.fundsAvailable / status.monthlyPayments);
+      status.overallSize = Number(status.monthlyPayments).toFixed(2);
 
-      this.paymentDetails = jsonResult;
-      this.paymentDetails.fundsAvailable = Math.floor(this.paymentDetails.fundsAvailable).toString()
-      this.paymentDetails.estimatedFunds = Math.floor(this.paymentDetails.fundsAvailable / this.paymentDetails.monthlyPayments)
-      this.paymentDetails.overallSize = Number(this.paymentDetails.monthlyPayments).toFixed(2);
-
-    }
-    catch (ex) {
-      console.dir(ex);
+      // save status to components scope
+      this.paymentDetails = status;
+    } catch (ex) {
+      this.error = ex.message;
+      this.core.utils.log(ex.message, 'error');
     }
   }
 
+  /**
+   * Load available payment channels for the current user.
+   */
   async loadPaymentChannels() {
-     const activeAccount = this.core.activeAccount();
-    const toSignedMessage = this.bcc.web3.utils.soliditySha3(new Date().getTime() + activeAccount).replace('0x', '');
-    const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
-    const signature = await this.signMessage(toSignedMessage, activeAccount);
-    const headers = {
-      authorization: `EvanAuth ${activeAccount},EvanMessage ${hexMessage},EvanSignedMessage ${signature}`
-    };
     try {
-      const result = await this.http.get(`${this.agentEndpoint}/getChannels`, {headers}).toPromise();
-      this.paymentChannels = result.json();
-    }
-    catch (ex) {
-      console.dir(ex);
+      this.paymentChannels = await this.profileService.requestPaymentAgent('getChannels');
+    } catch (ex) {
+      this.error = ex.message;
+      this.core.utils.log(ex.message, 'error');
     }
   }
 
+  /**
+   * Trigger the payment queue to create open a new payment channel, if no was registered before.
+   */
   async createPaymentChannel() {
-    const agentAddress = '0xAF176885bD81D5f6C76eeD23fadb1eb0e5Fe1b1F';
-    await this.bcc.payments.openChannel(
-      this.core.activeAccount(),
-      agentAddress,
-      this.bcc.web3.utils.toWei(this.paymentChannelForm.value, 'milliether')
-    );
-    console.dir(this.bcc)
+    this.runPaymentQueue({
+      type: 'openChannel',
+      eve: this.paymentChannelForm.value,
+    });
   }
 
+  /**
+   * Add eve to a payment channel.
+   */
   async topupPaymentChannel(channel) {
-    this.toppingUp = true;
-    channel.account = this.core.activeAccount();
-    channel.proof = {};
-    channel.block = channel.openBlockNumber;
-    this.bcc.payments.setChannel(channel);
-    await this.bcc.payments.topUpChannel(
-      this.bcc.web3.utils.toWei(this.paymentChannelForm.topUp, 'milliether')
-    );
-    this.toppingUp = false;
-    await this.loadPaymentDetails();
-    await this.loadPaymentChannels();
+    this.runPaymentQueue({
+      type: 'topUp',
+      eve: this.paymentChannelForm.value,
+      channel: channel
+    });
   }
 
+  /**
+   * Trigger ipfs hash removal.
+   */
   async removeHash() {
-    this.deleting = true;
-    const response = await this.bcc.dfs.remoteNode.pin.rm(this.paymentChannelForm.hash);
-    console.dir(response);
-    this.deleting = false;
-    await this.loadPaymentDetails();
-    await this.loadPaymentChannels();
+    this.runPaymentQueue({
+      type: 'removeHash',
+      hash: this.paymentChannelForm.hash,
+    });
   }
 
-  async signMessage(msg: string, account: string) {
-    const signer = account.toLowerCase();
-    const pk = await this.bcc.executor.signer.accountStore.getPrivateKey(account);
-    return this.bcc.web3.eth.accounts.sign(msg, '0x' + pk).signature;
+  /**
+   * Run the payment queue and show loading symbols / disable buttons.
+   *
+   * @param      {any}     data    queue entry data that should be pushed to the queue
+   */
+  runPaymentQueue(data: any) {
+    // trigger dispatcher
+    this.queue.addQueueData(this.paymentQueueId, data);
+
+    // disable buttons and show loading
+    this.dispatcherRunning = true;
+    this.ref.detectChanges();
   }
 }
