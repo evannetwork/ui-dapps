@@ -78,7 +78,10 @@ export const issueDispatcher = new QueueDispatcher(
             service.core.activeAccount(),
             entry.address,
             entry.topic,
-            expirationDate
+            expirationDate,
+            null,
+            null,
+            entry.disableSubVerifications || false,
           );
         }
       }

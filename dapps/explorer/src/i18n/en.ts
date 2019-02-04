@@ -303,7 +303,7 @@ export const en = {
       "basecontract": "evan.network BaseContract",
       "basecontract-desc": "contract states, members and more",
       "verifications": "Verifications",
-      "verifications-desc": "Check certificates for the selected address.",
+      "verifications-desc": "Check verifications for the selected address.",
       "contractinteraction": "Contract Interaction",
       "contractinteraction-desc": "run abi functions directly",
       "datacontract": "evan.network DataContract",

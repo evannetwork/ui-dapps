@@ -60,7 +60,7 @@ export const en = {
     "missing-identity": "Certificate management invalid",
     "missing-identity-desc": "There is no verification management available for your account yet. Unlock your verification management to check verifications.",
     "mode": {
-      "description": "choose between different display options to get to know the facets of the certificate display",
+      "description": "choose between different display options to get to know the facets of the verification display",
       "detail": "detailed",
       "icon": "icon only",
       "normal": "normal",
