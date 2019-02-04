@@ -53,6 +53,7 @@ import {
   EvanClaimService,
   EvanCoreService,
   EvanQueue,
+  EvanRoutingService,
   EvanToastService,
   EvanTranslationService,
   QueueId,
@@ -65,7 +66,16 @@ import {
   templateUrl: 'container.html',
   animations: [
     createOpacityTransition(),
-    createTabSlideTransition()
+    createTabSlideTransition(),
+    createRouterTransition([
+      new AnimationDefinition('detail', '=>', '*', 'right'),
+      new AnimationDefinition('verifications', '=>', 'detail', 'left'),
+      new AnimationDefinition('verifications', '=>', '*', 'right'),
+      new AnimationDefinition('settings', '=>', 'detail', 'left'),
+      new AnimationDefinition('settings', '=>', 'verifications', 'left'),
+      new AnimationDefinition('settings', '=>', 'payments', 'right'),
+      new AnimationDefinition('payments', '=>', '*', 'left'),
+    ])
   ]
 })
 
@@ -79,6 +89,16 @@ export class EvanProfileContainerComponent extends AsyncComponent {
    */
   private activeTab: number;
 
+  /**
+   * watch for route change to be stateful
+   */
+  private watchRouteChange: Function;
+
+  /**
+   * tab order to map them to an url.
+   */
+  private tabLabels = [ 'account', 'claims', 'settings', 'payment' ];
+
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
@@ -90,6 +110,7 @@ export class EvanProfileContainerComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
     private translateService: EvanTranslationService,
+    private routingService: EvanRoutingService,
   ) {
     super(ref);
   }
@@ -101,17 +122,23 @@ export class EvanProfileContainerComponent extends AsyncComponent {
    */
   async _ngOnInit() {
     this.activeTab = 0;
+    this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
+  }
+
+  /**
+   * Remove route watcher.
+   */
+  async _ngOnDestroy() {
+    this.watchRouteChange();
   }
 
   /**
    * Actives the new chosen tab.
    *
-   * @param      {number}  index   index of the tab that should be displayed.
+   * @param      {string}   route   route name to check
+   * @return     {boolean}  True if active, False otherwise
    */
-  activateTab(index: number) {
-    this.activeTab = index;
-
-    this.ref.detectChanges();
-    setTimeout(() => this.ref.detectChanges(), 500);
+  isActive(route: string) {
+    return window.location.hash.indexOf(route) !== -1;
   }
 }

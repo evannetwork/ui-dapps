@@ -111,10 +111,10 @@ export const de = {
       "setup-payment-channel-desc": "Um Daten auf dem evan.network zu speichern muss ein Speicherguthaben eingerichtet werden. Jedes kB was auf dem evan.network gespeichert wird, wird monatlich von diesem Guthaben abgezogen.",
       "topup": "Aufstocken",
       "topup-alert": {
+        "cancel": "abbrechen",
         "description": "Wollen Sie wirklich Ihr Speicherguthaben um {{ eve }} EVE aufladen?",
         "submit": "aufstocken",
-        "title": "Guthaben aufstocken",
-        "cancel": "abbrechen"
+        "title": "Guthaben aufstocken"
       },
       "topup-payment-channel": "Speicherguthaben mit EVE aufstocken",
       "topup-payment-channel-desc": "EVE Anzahl",
@@ -152,7 +152,11 @@ export const de = {
     "settings": "Einstellungen",
     "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung"
   },
+  "detail": "Profilinformationen",
+  "payments": "Speichergebühren",
   "profile": "Mein Profil",
   "profiledetail": "Mein Profil",
-  "profileroot": "Mein Profil"
+  "profileroot": "Mein Profil",
+  "settings": "Einstellungen",
+  "verifications": "Verifizierungen"
 };

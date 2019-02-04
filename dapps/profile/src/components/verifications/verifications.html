@@ -27,7 +27,7 @@
 
 <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
 
-<ng-container *ngIf="!loading">
+<div class="evan-relative evan-content" *ngIf="!loading">
   <h3 class="content-header m-b-0 m-t-0">
     {{ '_dappprofile.claims' | translate }}
   </h3>
@@ -79,4 +79,4 @@
       {{ '_dappprofile.save-claim-topics' | translate }}
     </button>
   </div>
-</ng-container>
+</div>

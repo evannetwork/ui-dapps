@@ -30,29 +30,29 @@
 <ng-container *ngIf="!loading">
   <div class="evan-tabs evan-content evan-small-content" *ngIf="!core.utils.isMD">
     <button ion-button icon-left clear
-      [class.active]="activeTab === 0"
-      (click)="activateTab(0);">
+      [class.active]="isActive('detail')"
+      routerLink="./detail">
       <ion-icon name="person"></ion-icon>
       {{ '_dappprofile.account-detail' | translate }}
     </button>
 
     <button ion-button icon-left clear
-      [class.active]="activeTab === 1"
-      (click)="activateTab(1);">
+      [class.active]="isActive('verifications')"
+      routerLink="./verifications">
       <ion-icon name="ribbon"></ion-icon>
       {{ '_dappprofile.claims' | translate }}
     </button>
 
     <button ion-button icon-left clear
-      [class.active]="activeTab === 2"
-      (click)="activateTab(2);">
+      [class.active]="isActive('settings')"
+      routerLink="./settings">
       <ion-icon name="settings"></ion-icon>
       {{ '_dappprofile.settings' | translate }}
     </button>
 
     <button ion-button icon-left clear
-      [class.active]="activeTab === 3"
-      (click)="activateTab(3);">
+      [class.active]="isActive('payments')"
+      routerLink="./payments">
       <ion-icon name="images"></ion-icon>
       {{ '_dappprofile.payments' | translate }}
     </button>
@@ -61,8 +61,8 @@
   <div class="evan-left-panel evan-content" *ngIf="core.utils.isMD">
     <ion-list margin-top>
       <button ion-item
-        [class.active]="activeTab === 0"
-        (click)="activateTab(0);">
+        [class.active]="isActive('detail')"
+        routerLink="./detail">
         <ion-avatar item-start>
           <ion-icon name="person"></ion-icon>
         </ion-avatar>
@@ -71,8 +71,8 @@
       </button>
 
       <button ion-item
-        [class.active]="activeTab === 1"
-        (click)="activateTab(1);">
+        [class.active]="isActive('verifications')"
+        routerLink="./verifications">
         <ion-avatar item-start>
           <ion-icon name="ribbon"></ion-icon>
         </ion-avatar>
@@ -81,8 +81,8 @@
       </button>
 
       <button ion-item
-        [class.active]="activeTab === 2"
-        (click)="activateTab(2);">
+        [class.active]="isActive('settings')"
+        routerLink="./settings">
         <ion-avatar item-start>
           <ion-icon name="settings"></ion-icon>
         </ion-avatar>
@@ -90,9 +90,9 @@
         <h3>{{ '_dappprofile.settings-desc' | translate }}</h3>
       </button>
 
-      <button ion-item
-        [class.active]="activeTab === 3"
-        (click)="activateTab(3);">
+      <button ion-item 
+        [class.active]="isActive('payments')"
+        routerLink="./payments">
         <ion-avatar item-start>
           <ion-icon name="images"></ion-icon>
         </ion-avatar>
@@ -102,18 +102,9 @@
     </ion-list>
   </div>
 
-  <div class="evan-right-panel evan-tabs-container" [@tabSlideTransition]="activeTab">
-    <div *ngIf="activeTab === 0">
-      <evan-profile-detail></evan-profile-detail>
-    </div>
-    <div class="evan-content m-b-0 m-t-0" *ngIf="activeTab === 1">
-      <evan-profile-verifications></evan-profile-verifications>
-    </div>
-    <div *ngIf="activeTab === 2">
-      <evan-profile-settings></evan-profile-settings>
-    </div>
-    <div *ngIf="activeTab === 3">
-      <evan-payments-detail></evan-payments-detail>
+  <div class="evan-right-panel evan-tabs-container">
+    <div evan-content [@routerTransition]="o?.activatedRouteData?.state">
+      <router-outlet #o="outlet"></router-outlet>
     </div>
   </div>
 </ng-container>

@@ -98,6 +98,7 @@ export const en = {
       "delete": "Delete",
       "delete-hash": "Delete file via hash",
       "delete-hash-desc": "Filehash (QmXXXX)",
+      "delete-hash-error": "Please enter a valid IPFS hash!",
       "estimated-funds": "Estimated months until assets are deleted",
       "funds-available": "Availabe EVE for storage",
       "initial-eve-amount": "Initial amout of eve to lock",
@@ -105,16 +106,15 @@ export const en = {
       "payments": "Storage payments",
       "payments-desc": "Manage your storage payments",
       "payments-detail": "Storage payment details",
-      "delete-hash-error": "Please enter a valid IPFS hash!",
       "pinned-hashes": "Stored Assets",
       "setup-payment-channel": "Setup storage funds",
       "setup-payment-channel-desc": "When storing data on evan.network you will be charged monthly for every kB. You must lock EVE for the payment of the data.",
       "topup": "Topup",
       "topup-alert": {
+        "cancel": "cancel",
         "description": "Do you really want to top up your storage storage funds with {{ eve }} EVE?",
         "submit": "proceed",
-        "title": "Topup storage funds",
-        "cancel": "cancel"
+        "title": "Topup storage funds"
       },
       "topup-payment-channel": "Topup storage funds with EVE",
       "topup-payment-channel-desc": "EVE amount",
@@ -152,7 +152,11 @@ export const en = {
     "settings": "Settings",
     "settings-desc": "runtime environment, developer, presentation"
   },
+  "detail": "Profile informations",
+  "payments": "Storage payments",
   "profile": "My Profile",
   "profiledetail": "My Profile",
-  "profileroot": "My Profile"
+  "profileroot": "My Profile",
+  "settings": "Settings",
+  "verifications": "Verifications"
 };

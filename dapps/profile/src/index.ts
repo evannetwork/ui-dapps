@@ -78,7 +78,34 @@ function getRoutes(): Routes {
         data: {
           reload: true,
           state: 'profile-root',
-        }
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: `detail`,
+            pathMatch: 'full'
+          },
+          {
+            path: 'detail',
+            component: EvanProfileDetailComponent,
+            data: { reload: true, state: 'detail', }
+          },
+          {
+            path: 'verifications',
+            component: EvanProfileVerificationsComponent,
+            data: { reload: true, state: 'verifications', }
+          },
+          {
+            path: 'settings',
+            component: EvanProfileSettingsComponent,
+            data: { reload: true, state: 'settings', }
+          },
+          {
+            path: 'payments',
+            component: EvanProfilePaymentsComponent,
+            data: { reload: true, state: 'payments', }
+          }
+        ]
       },
       {
         path: `addressbook.${getDomainName()}`,

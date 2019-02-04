@@ -47,6 +47,7 @@ import {
   EvanBookmarkService,
   EvanCoreService,
   EvanDescriptionService,
+  EvanPaymentService,
   EvanQueue,
   EvanRoutingService,
   QueueId,
@@ -59,32 +60,13 @@ import {
  */
 @Injectable()
 export class ProfileService implements OnDestroy {
-  /**
-   * account address of the payment agent.
-   */
-  public agentAccountId: string = '0xAF176885bD81D5f6C76eeD23fadb1eb0e5Fe1b1F';
-
-  /**
-   * Manager of the payment channel.
-   */
-  public channelManagerAccountId: string = '0x0A0D9dddEba35Ca0D235A4086086AC704bbc8C2b'
-
-  /**
-   * Url to the payment agent server.
-   */
-  public paymentAgentUrl: string = `https://payments.evan.network`
-
-  /**
-   * base endpoint of the payment
-   */
-  public paymentEndPoint: string = 'api/ipfs-payments';
-
   constructor(
     public bcc: EvanBCCService,
     public bookmarkService: EvanBookmarkService,
     public core: EvanCoreService,
     public descriptionService: EvanDescriptionService,
     public http: Http,
+    public paymentService: EvanPaymentService,
     public queue: EvanQueue,
     public routingService: EvanRoutingService,
     public singleton: SingletonService,
@@ -92,46 +74,5 @@ export class ProfileService implements OnDestroy {
     return singleton.create(ProfileService, this, () => {
 
     });
-  }
-
-  /**
-   * Send an rest get request to the payment agent using the corresponding new build headers.
-   *
-   * @param      {string}        endPoint  endpoint that should be called using this.agentEndpoint
-   * @return     {Promise<any>}  json result of the request
-   */
-  public async requestPaymentAgent(endPoint: string): Promise<any> {
-    const activeAccount = this.core.activeAccount();
-    const toSignedMessage = this.bcc.web3.utils
-      .soliditySha3(new Date().getTime() + activeAccount)
-      .replace('0x', '');
-    const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
-    const signature = await this.signMessage(toSignedMessage, activeAccount);
-    const headers = {
-      authorization: [
-        `EvanAuth ${ activeAccount }`,
-        `EvanMessage ${ hexMessage }`,
-        `EvanSignedMessage ${ signature }`
-      ].join(',')
-    };
-
-    return (await this.http
-      .get(`${ this.paymentAgentUrl }/${ this.paymentEndPoint }/${ endPoint }`, { headers })
-      .toPromise()
-    ).json();
-  }
-
-  /**
-   * Sign a message for a specific account
-   *
-   * @param      {string}  msg      message that should be signed
-   * @param      {string}  account  account id to sign the message with (default = activeAccount)
-   * @return     {string}  signed message signature
-   */
-  public async signMessage(msg: string, account: string = this.core.activeAccount()): Promise<string> {
-    const signer = account.toLowerCase();
-    const pk = await this.bcc.executor.signer.accountStore.getPrivateKey(account);
-
-    return this.bcc.web3.eth.accounts.sign(msg, '0x' + pk).signature;
   }
 }

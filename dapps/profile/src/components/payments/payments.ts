@@ -54,13 +54,12 @@ import {
   EvanBCCService,
   EvanClaimService,
   EvanCoreService,
+  EvanPaymentService,
   EvanQueue,
   EvanToastService,
   EvanTranslationService,
   QueueId,
 } from 'angular-core';
-
-import { ProfileService } from '../../services/service';
 
 /**************************************************************************************************/
 
@@ -147,7 +146,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
     private claimsService: EvanClaimService,
     private core: EvanCoreService,
     private http: Http,
-    private profileService: ProfileService,
+    private paymentService: EvanPaymentService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
@@ -164,8 +163,8 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
   async _ngOnInit() {
     this.toEve = this.bcc.web3.utils.fromWei;
 
-    // setup channel manager§
-    this.bcc.payments.setChannelManager(this.profileService.channelManagerAccountId);
+    // setup channel manager
+    this.bcc.payments.setChannelManager(this.paymentService.channelManagerAccountId);
 
     // watch for updates and reload the ui data
     this.paymentQueueId = new QueueId(`profile.${ getDomainName() }`, 'paymentDispatcher'),
@@ -196,7 +195,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    */
   async loadPaymentDetails() {
     try {
-      const status = await this.profileService.requestPaymentAgent('getStatus');
+      const status = await this.paymentService.requestPaymentAgent('getStatus');
 
       // parse correct value for estimated values
       status.monthlyPayments = Math.floor(status.monthlyPayments).toString();
@@ -217,11 +216,11 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    */
   async loadPaymentChannels() {
     try {
-      this.paymentChannels = await this.profileService.requestPaymentAgent('getChannels');
+      this.paymentChannels = await this.paymentService.requestPaymentAgent('getChannels');
 
       // find active channels
       const activeChannels = this.paymentChannels.channels
-        .filter(channel => channel.state && channel.state === 'OPEN');
+        .filter(channel => channel.state === 'OPEN');
 
       // preselect first active channel for actions
       this.activeChannel = activeChannels.length > 0 ? activeChannels[0] : null;
