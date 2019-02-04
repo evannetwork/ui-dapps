@@ -50,7 +50,7 @@ import {
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanQueue,
   EvanRoutingService,
@@ -97,14 +97,14 @@ export class EvanProfileContainerComponent extends AsyncComponent {
   /**
    * tab order to map them to an url.
    */
-  private tabLabels = [ 'account', 'claims', 'settings', 'payment' ];
+  private tabLabels = [ 'account', 'verifications', 'settings', 'payment' ];
 
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private claimsService: EvanClaimService,
+    private verificationService: EvanVerificationService,
     private core: EvanCoreService,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,

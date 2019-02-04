@@ -36,15 +36,6 @@ export const en = {
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
     "cancel": "cancel",
-    "ok": "ok",
-    "verification-topic": {
-      "desc": "Verification path to be checked (e.g.: /company)",
-      "error": "Please enter a verification path",
-      "title": "Verification path"
-    },
-    "verifications": "Verifications",
-    "verifications-desc": "Verifications selection for UI components",
-    "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)",
     "color-theme": "Color Theme",
     "color-theme-desc": "Set the color of the user interface.",
     "color-themes": {
@@ -124,11 +115,11 @@ export const en = {
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",
     "privatekey-exported": "Your private key successfully exported to your clipboard",
+    "profile-encryption-key": "Profile Encryption Key",
     "profile-verifications-dispatcher": {
       "description": "Save verification selection",
       "title": "Save verification selection"
     },
-    "profile-encryption-key": "Profile Encryption Key",
     "receiver": {
       "desc": "Account address to which Eve should be sent",
       "error": "Please enter a valid address!",
@@ -151,7 +142,15 @@ export const en = {
       "title": "Send Eve"
     },
     "settings": "Settings",
-    "settings-desc": "runtime environment, developer, presentation"
+    "settings-desc": "runtime environment, developer, presentation",
+    "verification-topic": {
+      "desc": "Verification path to be checked (e.g.: /company)",
+      "error": "Please enter a verification path",
+      "title": "Verification path"
+    },
+    "verifications": "Verifications",
+    "verifications-desc": "Verifications selection for UI components",
+    "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)"
   },
   "detail": "Profile informations",
   "payments": "Storage payments",

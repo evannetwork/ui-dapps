@@ -157,7 +157,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private verificationsService: EvanVerificationService,
+    private verificationService: EvanVerificationService,
     private core: EvanCoreService,
     private formBuilder: FormBuilder,
     private queue: EvanQueue,
