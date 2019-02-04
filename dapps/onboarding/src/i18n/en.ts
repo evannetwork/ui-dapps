@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+const mainnetTexts = false;
 export const en = {
   'onboarding': 'Onboarding',
   'onboardinglist': 'Onboarding',
@@ -48,7 +49,7 @@ export const en = {
       With the <b>evan.network</b> you can lead your processes into the <b>"Industry 4.0"</b> era.
     `,
     'start-using-evan': 'To start in evan.network, choose one of the following options',
-    'new-mnemonic-account': 'Create a new identity.',
+    'new-mnemonic-account': 'Create a new identity',
     'mnemonic-account': 'Use an existing identity',
     'metamask-account': 'Use MetaMask',
     'metamask': 'Metamask',
@@ -84,7 +85,7 @@ export const en = {
     `,
     /* tslint:enable */
     'identity-create': 'Create New Identity',
-    'identity-import': 'Import Existing Identity',
+    'identity-import': 'Use Existing Identity',
     'mnemonic-description': `
       You want to create a new identity. These 12 words represent the recovery phrase, or the Master PIN for your new evan.network identity. They are the only way import your data to other devices or recover your data. This might be necessary when you lose or reset your current device.
     `,
@@ -179,3 +180,7 @@ Try again later or use <a href="https://gitter.im/evannetwork/faucet" target="_b
     'scan-qr-code-mnemonic': 'Scan mnemonic QR-Code'
   }
 };
+
+if (mainnetTexts) {
+  en._dapponboarding['terms-of-use-text'] = 'Here will be the mainnet terms of use...';
+}

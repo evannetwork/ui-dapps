@@ -47,14 +47,22 @@ import {
 
 import { ProfileTranslations } from './i18n/registry';
 import { ProfileRootComponent } from './components/root/root';
-import { ProfileComponent } from './components/profile/profile';
+import { EvanProfileDetailComponent } from './components/profile/profile';
+import { EvanProfileSettingsComponent } from './components/settings/settings';
+import { EvanProfileVerificationsComponent } from './components/verifications/verifications';
+import { EvanProfileContainerComponent } from './components/container/container';
+import { EvanProfilePaymentsComponent } from './components/payments/payments';
 
+import { paymentDispatcher } from './dispatchers/payment';
 import { ProfileService } from './services/service';
 import { profileVerificationsDispatcher } from './dispatchers/verifications';
+import { sendEveDispatcher } from './dispatchers/sendEve';
 
 export {
-  profileVerificationsDispatcher,
+  paymentDispatcher,
   ProfileService,
+  profileVerificationsDispatcher,
+  sendEveDispatcher,
 }
 
 /**************************************************************************************************/
@@ -66,11 +74,38 @@ function getRoutes(): Routes {
     [
       {
         path: '',
-        component: ProfileComponent,
+        component: EvanProfileContainerComponent,
         data: {
           reload: true,
           state: 'profile-root',
-        }
+        },
+        children: [
+          {
+            path: '',
+            redirectTo: `detail`,
+            pathMatch: 'full'
+          },
+          {
+            path: 'detail',
+            component: EvanProfileDetailComponent,
+            data: { reload: true, state: 'detail', }
+          },
+          {
+            path: 'verifications',
+            component: EvanProfileVerificationsComponent,
+            data: { reload: true, state: 'verifications', }
+          },
+          {
+            path: 'settings',
+            component: EvanProfileSettingsComponent,
+            data: { reload: true, state: 'settings', }
+          },
+          {
+            path: 'payments',
+            component: EvanProfilePaymentsComponent,
+            data: { reload: true, state: 'payments', }
+          }
+        ]
       },
       {
         path: `addressbook.${getDomainName()}`,
@@ -115,8 +150,12 @@ function getConfig(isDispatcher?: boolean) {
 
     config.declarations = [
       BootstrapComponent,
+      EvanProfileContainerComponent,
+      EvanProfileSettingsComponent,
+      EvanProfileVerificationsComponent,
+      EvanProfileDetailComponent,
+      EvanProfilePaymentsComponent,
       ProfileRootComponent,
-      ProfileComponent,
     ];
   }
 

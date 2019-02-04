@@ -27,8 +27,8 @@
 
 export const de = {
   "_dappprofile": {
-    "account-detail": "Aktiver Account",
-    "account-detail-desc": "Profildetails & Interaktionen",
+    "account-detail": "Profilinformationen",
+    "account-detail-desc": "Accountaddresse, Alias, Eve",
     "accountid": "Account-ID",
     "accounts": "Accounts",
     "add-verification-topic": "Verifizierungsprüfung hinzufügen",
@@ -51,6 +51,10 @@ export const de = {
       "light": "helles Design"
     },
     "configuration": "Konfiguration",
+    "delete": "Löschen",
+    "delete-hash": "Datei mit Referenz löschen",
+    "delete-hash-desc": "Dateireferenz (QmXXXX)",
+    "delete-hash-error": "Bitte geben Sie einen validen IPFS Hash an!",
     "dev-domain": "Test Domain",
     "dev-domain-desc": "Die Root-Domain \"evan\" zum laden von DApps wird durch die angegebene ausgetauscht.",
     "dev-domain-loading": "DApps von Test-Domain",
@@ -59,16 +63,21 @@ export const de = {
     "developer-mode-desc": "Logging DApp, DAPP's von Test domains laden, Header link zum Contract-Explorer.",
     "developers": "Entwickler",
     "edit-profile": "Profile editieren",
+    "email": "E-Mail Adresse",
+    "encryptionkey-desc": "Dieser Schlüssel verschlüsselt sämtliche Daten Ihres Profils, inklusiver Ihrer Kontakte, B-Mails, Verträge, usw....",
     "encryptionkey-exported": "Ihr Profil Verschlüsselungsschlüssel wurde erfolgreich in Ihre Zwischenablage exportiert",
     "evan-dev-dapps-domain-changed": "Test Domain Änderungen",
     "evan-dev-dapps-domain-changed-desc": "Alle DApps, die bis zu diesem Zeitpunkt geladen worden, sind bereits zwischengespeichert werden nicht erneut mit der neue Konfiguration geladen. Möchten Sie die Anwendung neustarten?",
     "evan-dev-dapps-domain-changed-ok": "neu starten",
+    "eve-amount": "EVE Anzahl",
+    "export": "exportieren",
     "export-encryptionkey": "Profil Verschlüsselungsschlüssel exportieren",
     "export-encryptionkey-desc": "Dieser Schlüssel verschlüsselt sämtliche Daten Ihres Profils, inklusiver Ihrer Kontakte, B-Mails, Verträge, usw.... Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Profil Verschlüsselungsschlüssel wirklich exportieren?",
     "export-encryptionkey-ok": "Ich Verstehe das Risiko",
     "export-privatekey": "Private Key exportieren",
     "export-privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität. Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Private Key wirklich exportieren?",
     "export-privatekey-ok": "Ich Verstehe das Risiko",
+    "export-security-informations": "Sicherheitsinformationen",
     "language": "Sprache",
     "language-changed": "Sprache geändert",
     "language-changed-desc": "Nach dem die Sprache geändert wurde, werden nicht alle Bereiche der Anwendung sofort übersetzt. Damit diese Änderungen wirksam werden, muss die Anwendung neugestartet werden. Möchten Sie die Anwendung jetzt neustarten?",
@@ -81,23 +90,74 @@ export const de = {
     "logout": "Abmelden",
     "logout-desc": "Wollen Sie sich wirklich abmelden?",
     "my-profile": "Mein Profil",
+    "my-verifications": "Meine Verifizierungen",
+    "no-email": "Keine E-Mail Adresse spezifiert",
     "no_alias": "Kein Alias",
     "notifications": "Benachrichtigungen",
     "notifictions-desc": "Aktiviert Push-Benachrichtigungen für ihr Mobiles Gerät.",
     "ok": "Ok",
+    "payment": {
+      "channel-actions": "Aktionen",
+      "create-payment-channel": "Speicherguthaben einrichten",
+      "estimated-funds": "Verbleibende Monate bis Daten gelöscht werden",
+      "funds-available": "Guthaben für Speichergebühren",
+      "initial-eve-amount": "Initial amout of eve to lock",
+      "monthly-cost": "Monatliche Speichergebühren",
+      "payments": "Speichergebühren",
+      "payments-desc": "Übersicht und Verwaltung von Speichergegühren",
+      "payments-detail": "Speichergebühren Details",
+      "pinned-hashes": "Gespeicherte Datenelemente",
+      "setup-payment-channel": "Speicherguthaben einrichten",
+      "setup-payment-channel-desc": "Um Daten auf dem evan.network zu speichern muss ein Speicherguthaben eingerichtet werden. Jedes kB was auf dem evan.network gespeichert wird, wird monatlich von diesem Guthaben abgezogen.",
+      "topup": "Aufstocken",
+      "topup-alert": {
+        "cancel": "abbrechen",
+        "description": "Wollen Sie wirklich Ihr Speicherguthaben um {{ eve }} EVE aufladen?",
+        "submit": "aufstocken",
+        "title": "Guthaben aufstocken"
+      },
+      "topup-payment-channel": "Speicherguthaben mit EVE aufstocken",
+      "topup-payment-channel-desc": "EVE Anzahl",
+      "topup-payment-channel-error": "Bitte geben Sie eine Menge an EVE an, die höher als 0 ist."
+    },
     "private-key": "Private Key",
+    "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",
     "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
     "profile-verifications-dispatcher": {
       "description": "Verifizierungsprüfungen speichern",
       "title": "Verifizierungsprüfungen speichern"
     },
     "profile-encryption-key": "Profil Verschlüsselungsschlüssel",
+    "receiver": {
+      "desc": "Account-Adresse an den Eve gesendet werden sollen",
+      "error": "Bitte geben Sie eine valide Adresse ein!",
+      "title": "Empfänger"
+    },
     "runtime-config": "Laufzeiteinstellungen",
     "save-verification-topics": "Verifizierungsprüfungen speichern",
+    "save-claim-topics": "Verifizierungsprüfungen speichern",
+    "send-eve": {
+      "desc": "Wollen Sie wirklich {{ eve }} Eve an den Account {{ address }} senden?",
+      "input": {
+        "description": "Menge an zu sendenen Eves",
+        "error": "Bitte geben Sie eine Menge Eves zwischen 0.1 und maximal {{ balance }} Eve an, um fortzufahren.",
+        "title": "Menge an Eve"
+      },
+      "ok": "senden",
+      "title": "Eve senden"
+    },
+    "send-eve-dispatcher": {
+      "description": "Eve wird vom aktuellen, zu einem anderen Account transferiert.",
+      "title": "Eve senden"
+    },
     "settings": "Einstellungen",
     "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung"
   },
+  "detail": "Profilinformationen",
+  "payments": "Speichergebühren",
   "profile": "Mein Profil",
   "profiledetail": "Mein Profil",
-  "profileroot": "Mein Profil"
+  "profileroot": "Mein Profil",
+  "settings": "Einstellungen",
+  "verifications": "Verifizierungen"
 };

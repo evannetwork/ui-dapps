@@ -27,271 +27,182 @@
 
 <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
 
-<ng-container *ngIf="!loading">
-  <div class="evan-tabs evan-content evan-small-content" *ngIf="!core.utils.isMD">
+<div *ngIf="!loading">
+  <div class="evan-relative evan-content">
+    <button class="top-right" ion-button icon-left round icon-only
+      routerLink="../addressbook.{{ getDomainName() }}/{{ activeAccount }}">
+      <ion-icon name="create" color="light"></ion-icon>
+    </button>
+
+    <h3 class="content-header m-b-0 m-t-0">
+      {{ '_dappprofile.account-detail' | translate }}
+    </h3>
+    <ion-row>
+      <ion-col col-md-6 col-12 margin-top class="clickable"
+        (click)="core.copyString(activeAccount)">
+        <b>
+          {{ '_dappprofile.accountid' | translate }}
+        </b>
+        <p>
+          {{ activeAccount }}
+        </p>
+        <button ion-button icon-only round clear>
+          <ion-icon name="copy" color="light"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-md-6 col-12 margin-top class="clickable"
+        (click)="loadBalance()">
+        <b>
+          {{ '_dappprofile.balance' | translate }}
+        </b>
+        <p>
+          {{ balance }} EVE
+        </p>
+        <button ion-button icon-only item-end round clear>
+          <ion-icon name="refresh" color="light"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-md-6 col-12 margin-top>
+        <b>
+          {{ '_dappprofile.alias' | translate }}
+        </b>
+        <p>
+          {{ myProfile?.alias || '_dappprofile.no_alias' | translate }}
+        </p>
+      </ion-col>
+      <ion-col col-md-6 col-12 margin-top>
+        <b>
+          {{ '_dappprofile.email' | translate }}
+        </b>
+        <p>
+          {{ myProfile?.email || '_dappprofile.no-email' | translate }}
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row margin-top>
+      <ion-col col-12>
+        <b>
+          {{ '_dappprofile.my-verifications' | translate }}
+        </b>
+
+        <p>
+          <evan-profile-claims
+            [address]="core.activeAccount()"
+            [mode]="'icon'">
+          </evan-profile-claims>
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <div text-center padding-top>
+      <button ion-button icon-left round outline color="alert" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+        <span color="light">{{ '_dappprofile.logout' | translate }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div margin-top class="evan-tabs evan-content">
     <button ion-button icon-left clear
       [class.active]="activeTab === 0" 
       (click)="activateTab(0);">
-      <ion-icon name="person"></ion-icon>
-      {{ '_dappprofile.account-detail' | translate }}
+      <h3>{{ '_dappprofile.send-eve.title' | translate }}</h3>
     </button>
     
     <button ion-button icon-left clear
       [class.active]="activeTab === 1" 
       (click)="activateTab(1);">
-      <ion-icon name="ribbon"></ion-icon>
-      {{ '_dappprofile.verifications' | translate }}
-    </button>
-
-    <button ion-button icon-left clear
-      [class.active]="activeTab === 2" 
-      (click)="activateTab(2);">
-      <ion-icon name="settings"></ion-icon>
-      {{ '_dappprofile.settings' | translate }}
+      <h3>{{ '_dappprofile.export-security-informations' | translate }}</h3>
     </button>
   </div>
 
-  <div class="evan-left-panel evan-content" *ngIf="core.utils.isMD">
-    <b class="content-header m-t-0">
-      {{ 'profile' | translate }}
-    </b>
-
-    <ion-list margin-top>
-      <button ion-item
-        [class.active]="activeTab === 0" 
-        (click)="activateTab(0);">
-        <ion-avatar item-start>
-          <ion-icon name="person"></ion-icon>
-        </ion-avatar>
-        <h2>{{ '_dappprofile.account-detail' | translate }}</h2>
-        <h3>{{ '_dappprofile.account-detail-desc' | translate }}</h3>
-      </button>
-      
-      <button ion-item
-        [class.active]="activeTab === 1" 
-        (click)="activateTab(1);">
-        <ion-avatar item-start>
-          <ion-icon name="ribbon"></ion-icon>
-        </ion-avatar>
-        <h2>{{ '_dappprofile.verifications' | translate }}</h2>
-        <h3>{{ '_dappprofile.verifications-desc' | translate }}</h3>
-      </button>
-
-      <button ion-item
-        [class.active]="activeTab === 2" 
-        (click)="activateTab(2);">
-        <ion-avatar item-start>
-          <ion-icon name="settings"></ion-icon>
-        </ion-avatar>
-        <h2>{{ '_dappprofile.settings' | translate }}</h2>
-        <h3>{{ '_dappprofile.settings-desc' | translate }}</h3>
-      </button>
-    </ion-list>
-  </div>
-  
-  <div class="evan-right-panel evan-tabs-container" [@tabSlideTransition]="activeTab">
-    <div class="evan-relative evan-content m-t-0"
-      *ngIf="activeTab === 0">
-      <div text-center>
-        <button class="top-right" ion-button icon-left round icon-only
-          routerLink="../addressbook.{{ getDomainName() }}/{{ activeAccount }}">
-          <ion-icon name="create" color="light"></ion-icon>
-        </button>
-        <div padding text-center>
-          <blockie-component
-            [address]="activeAccount" 
-            [size]="8" 
-            [scale]="18">
-          </blockie-component>
-          <div padding class="no-padding-bottom">
-            <h2>{{ myProfile?.alias || '_dappprofile.no_alias' | translate  }}</h2>
-            <p (click)="core.copyString(activeAccount)">
-              {{ activeAccount }}
-              <button ion-button icon-only round clear>
-                <ion-icon name="copy" color="light"></ion-icon>
-              </button>
-            </p>
-            <evan-verification
-              *ngFor="let verification of verifications"
-              [topic]="verification.origin"
-              [address]="core.activeAccount()"
-              [mode]="'normal'"
-              [compute]="true">
-            </evan-verification>
-          </div>
-        </div>
-        <ion-list>
-          <ion-item class="clickable item-hover" (click)="loadBalance()">
-            <ion-avatar item-start>
-              <ion-icon name="cash" color="light" margin-horizontal></ion-icon>
-            </ion-avatar>
-            <h2>{{ '_dappprofile.balance' | translate }}</h2>
-            <h3>{{ balance }} EVE</h3>
-            <button ion-button icon-only item-end round clear>
-              <ion-icon name="refresh" color="light"></ion-icon>
-            </button>
-          </ion-item>
-          <ion-item class="clickable item-hover" (click)="copyPrivateKey()">
-            <ion-avatar item-start>
-              <ion-icon name="key" color="light" margin-horizontal></ion-icon>
-            </ion-avatar>
-            <h2>{{ '_dappprofile.private-key' | translate }}</h2>
-            <h3>********</h3>
-            <button ion-button icon-only item-end round clear>
-              <ion-icon name="copy" color="light"></ion-icon>
-            </button>
-          </ion-item>
-          <ion-item class="clickable item-hover" (click)="copyEncryptionKey()">
-            <ion-avatar item-start>
-              <ion-icon name="contact" color="light" margin-horizontal></ion-icon>
-            </ion-avatar>
-            <h2>{{ '_dappprofile.profile-encryption-key' | translate }}</h2>
-            <h3>********</h3>
-            <button ion-button icon-only item-end round clear>
-              <ion-icon name="copy" color="light"></ion-icon>
-            </button>
-          </ion-item>
-        </ion-list>
-
-        <div text-center padding>
-          <button ion-button icon-left round outline color="alert" (click)="logout()">
-            <ion-icon name="log-out"></ion-icon>
-            <span color="light">{{ '_dappprofile.logout' | translate }}</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="evan-content m-b-0 m-t-0" *ngIf="activeTab === 1">
-      <h3 class="content-header m-b-0 m-t-0">
-        {{ '_dappprofile.verifications' | translate }}
-      </h3>
-      <p ion-text class="m-b-0 m-t-0">
-        {{ '_dappprofile.verifications-desc-long' | translate }}
-      </p>
-
-      <form class="verifications-form" #verificationsForm="ngForm">
-        <div class="display-flex-justify" *ngFor="let verification of verifications; let i = index">
-          <div>
+  <div class="evan-tabs-container" [@tabSlideTransition]="activeTab">
+    <div class="evan-relative evan-content m-t-0" *ngIf="activeTab === 0">
+      <form
+        *ngIf="showSendEveForm"
+        [formGroup]="sendEveForm"
+        (ngSubmit)="sendEve()">
+        <ion-row>
+          <ion-col col-12 col-md-8>
+            <evan-address-input formControlName="receiver" #receiverSelectComp
+              [(ngModel)]="receiverInput"
+              [label]="('_dappprofile.receiver.title' | translate) + '*'"
+              [placeholder]="'_dappprofile.receiver.desc' | translate"
+              (onChange)="ref.detectChanges()">
+            </evan-address-input>
+            <ion-chip class="error-hint" *ngIf="receiverSelectComp.touched && !isValidAddress(receiverInput)" color="danger">
+              <ion-label>{{ '_dappprofile.receiver.error' | translate }}</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col col-12 col-md-4>
             <ion-item>
               <ion-label stacked>
-                {{ i + 1 }}. {{ '_dappprofile.verification-topic.title' | translate }}*
+                <h3>
+                  {{ '_dappprofile.send-eve.input.title' | translate }}*
+                </h3>
               </ion-label>
-              <ion-input [name]="'verification' + i" required
-                [(ngModel)]="verification.value"
-                [disabled]="savingVerifications"
-                [placeholder]="'_dappprofile.verification-topic.desc' | translate"
+              <ion-input formControlName="eve" required validateNumber type="number"
+                [min]="0.1"
+                [max]="balance"
+                [(ngModel)]="eve"
+                [placeholder]="'_dappprofile.send-eve.input.description' | translate"
                 (ionChange)="ref.detectChanges()"
+                (keydown)="sendEveOnEnter($event, sendEveForm)"
                 (focusout)="ref.detectChanges()">
               </ion-input>
             </ion-item>
-            <ion-chip class="error-hint" *ngIf="showError(verificationsForm, 'verification' + i)" color="danger">
-              <ion-label>{{ '_dappprofile.verification-topic.error' | translate }}</ion-label>
+            <ion-chip class="error-hint" *ngIf="showError(sendEveForm, 'eve')" color="danger">
+              <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
             </ion-chip>
-          </div>
-          <button ion-button icon-only round clear
-            [disabled]="savingVerifications"
-            (click)="verifications.splice(i, 1); detectTimeout()">
-            <ion-icon name="trash" color="danger"></ion-icon>
-          </button>
-        </div>
+          </ion-col>
+        </ion-row>
       </form>
 
-      <div text-center margin-top>
-        <button ion-button outline round margin-top icon-left
-          [disabled]="savingVerifications"
-          (click)="verifications.push({ value: '' }); detectTimeout()">
-          <ion-spinner *ngIf="savingVerifications"></ion-spinner>
-          {{ '_dappprofile.add-verification-topic' | translate }}
-        </button>
-      </div>
-      <div class="evan-seperator"></div>
-      <div text-center>
-        <button ion-button outline round margin-top icon-left
-          [disabled]="verificationsForm.invalid || savingVerifications"
-          (click)="saveVerificationTopics(); ref.detectChanges()">
-          <ion-spinner *ngIf="savingVerifications"></ion-spinner>
-          {{ '_dappprofile.save-verification-topics' | translate }}
+      <div text-right>
+        <button ion-button round outline margin-top
+          [disabled]="sendEveForm.invalid || sendingEve"
+          (click)="sendEve()">
+          <ion-spinner *ngIf="sendingEve"></ion-spinner>
+          {{ '_dappprofile.send-eve.title' | translate }}
         </button>
       </div>
     </div>
-    <div *ngIf="activeTab === 2">
-      <div class="evan-relative evan-content content-padding m-t-0" padding>
-        <h3 class="content-header m-b-0 m-t-0">
-          {{ '_dappprofile.runtime-config' | translate }}
-        </h3>
+    <div class="evan-content m-t-0" *ngIf="activeTab === 1">
+      <ion-row>
+        <ion-col col-md-6 col-12>
+          <b>
+            {{ '_dappprofile.private-key' | translate }}
+          </b>
+          <p>
+            {{ '_dappprofile.privatekey-desc' | translate }}
+          </p>
 
-        <ion-item class="no-border">
-          <ion-label>{{ '_dappprofile.language' | translate }}</ion-label>
-          <ion-select
-            [okText]="'_dappprofile.ok' | translate"
-            [cancelText]="'_dappprofile.cancel' | translate"
-            [(ngModel)]="translateService.translate.currentLang"
-            (ionChange)="setLanguageMode()">
-            <ion-option value="en">{{ '_dappprofile.languages.en' | translate }}</ion-option>    
-            <ion-option value="de">{{ '_dappprofile.languages.de' | translate }}</ion-option>
-          </ion-select>
-        </ion-item>
-        <div class="input-hint">{{ '_dappprofile.language-desc' | translate }}</div>
-        <ion-item class="no-border">
-          <ion-label>{{ '_dappprofile.color-theme' | translate }}</ion-label>
-          <ion-select
-            [okText]="'_dappprofile.ok' | translate"
-            [cancelText]="'_dappprofile.cancel' | translate"
-            [(ngModel)]="colorTheme"
-            (ionChange)="setColorTheme()">
-            <ion-option value="">{{ '_dappprofile.color-themes.dark' | translate }}</ion-option>    
-            <ion-option value="light">{{ '_dappprofile.color-themes.light' | translate }}</ion-option>
-          </ion-select>
-        </ion-item>
-        <div class="input-hint">{{ '_dappprofile.color-theme-desc' | translate }}</div>
+          <div text-right>
+            <button ion-button round outline margin-top (click)="copyPrivateKey()">
+              {{ '_dappprofile.export' | translate }}
+            </button>
+          </div>
+        </ion-col>
+        <ion-col col-md-6 col-12>
+          <b>
+            {{ '_dappprofile.profile-encryption-key' | translate }}
+          </b>
+          <p>
+            {{ '_dappprofile.encryptionkey-desc' | translate }}
+          </p>
 
-        <ng-container *ngIf="core.utils.isNativeMobile()">
-          <div class="evan-small-seperator" margin-vertical></div>
-          <ion-item class="no-border">
-            <ion-label>{{ '_dappprofile.notifications' | translate }}</ion-label>
-            <ion-toggle 
-              [(ngModel)]="notificationsEnabled"
-              (ionChange)="setNotifications()"
-            ></ion-toggle>
-          </ion-item>
-          <div class="input-hint">{{ '_dappprofile.notifictions-desc' | translate }}</div>
-        </ng-container>
-      </div>
-
-      <div class="evan-relative evan-content content-padding m-t-0" padding>
-        <h3 class="content-header m-b-0 m-t-0">
-          {{ '_dappprofile.developers' | translate }}
-        </h3>
-
-        <ion-item class="no-border">
-          <ion-label>{{ '_dappprofile.developer-mode' | translate }}</ion-label>
-          <ion-toggle 
-            [(ngModel)]="developerMode"
-            (ionChange)="setDeveloperMode()"
-          ></ion-toggle>
-        </ion-item>
-        <div class="input-hint">{{ '_dappprofile.developer-mode-desc' | translate }}</div>
-
-        <ng-container *ngIf="developerMode">
-          <div class="evan-small-seperator" margin-top></div>
-          <ion-item class="no-border">
-            <ion-label stacked>
-              <h3>{{ '_dappprofile.dev-domain-loading' | translate }}</h3>
-            </ion-label>
-            <ion-input 
-              [disabled]="!devDomainLoading"
-              [(ngModel)]="devDomain"
-              [placeholder]="'_dappprofile.dev-domain-desc' | translate"
-              (ionChange)="setDevDomain()"
-            ></ion-input>
-            <ion-toggle 
-              [(ngModel)]="devDomainLoading"
-              (ionChange)="devDomainToggled()"
-            ></ion-toggle>
-          </ion-item>
-          <div class="input-hint">{{ '_dappprofile.dev-domain-desc' | translate }}</div>
-        </ng-container>
-      </div>
+          <div text-right>
+            <button ion-button round outline margin-top (click)="copyEncryptionKey()">
+              {{ '_dappprofile.export' | translate }}
+            </button>
+          </div>
+        </ion-col>
+      </ion-row>
     </div>
   </div>
-</ng-container>
+</div>

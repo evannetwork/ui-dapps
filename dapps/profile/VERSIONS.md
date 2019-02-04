@@ -2,6 +2,10 @@
 
 ## Next Version
 ### Features
+- new profile start page
+- send eve from profile
+- add stateful profile pages handling
+  
 ### Fixes
 ### Deprecations
 - rename claims to verifications

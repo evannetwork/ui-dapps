@@ -2,6 +2,12 @@
 
 ## Next Version
 ### Features
+- onboarding
+  - add mainnet text switches
+- profile
+  - new profile start page
+  - send eve from profile
+  
 ### Fixes
 - dashboard
   - fix opening of standalone dapps from sidepanel
@@ -12,6 +18,8 @@
 
 ### Deprecations
 - rename verifications to verifications
+- onboarding
+  - moved `createIdentity` to smart-agent profile creation logic
 
 ## Version 1.7.0
 ### Features
