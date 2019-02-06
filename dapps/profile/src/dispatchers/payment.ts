@@ -58,7 +58,7 @@ export const paymentDispatcher = new QueueDispatcher(
             // open a new payment channel for the active account
             case 'openChannel': {
               // transform eve to gwei
-              const eveToSend = service.bcc.web3.utils.toWei(entry.eve, 'milliether');
+              const eveToSend = service.bcc.web3.utils.toWei(entry.eve, 'ether');
               await service.bcc.payments.openChannel(activeAccount, service.paymentService
                 .agentAccountId, eveToSend);
 
@@ -74,7 +74,7 @@ export const paymentDispatcher = new QueueDispatcher(
               service.bcc.payments.setChannel(channel);
 
               // transform eve value to gwei
-              const eveToSend = service.bcc.web3.utils.toWei(entry.eve, 'milliether');
+              const eveToSend = service.bcc.web3.utils.toWei(entry.eve, 'ether');
               await service.bcc.payments.topUpChannel(eveToSend);
 
               break;

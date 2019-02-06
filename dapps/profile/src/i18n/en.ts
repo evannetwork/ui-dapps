@@ -131,7 +131,7 @@ export const en = {
       "desc": "Do you really want to send {{ eve }} Eve to the account {{ address }}?",
       "input": {
         "description": "Amount of Eves to be sent",
-        "error": "Please specify a amount of Eves between 0.1 and maximum {{{ balance }} Eve to continue.",
+        "error": "Please specify a amount of Eves between 0.1 and maximum {{ balance }} Eve to continue.",
         "title": "Eve"
       },
       "ok": "send",
