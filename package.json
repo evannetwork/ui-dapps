@@ -1,18 +1,21 @@
 {
-  "license": "AGPL-3.0-only",
-  "name": "@evan.network/ui-tests",
-  "version": "0.1.0",
-  "description": "evan.network nightwatch ui-tests",
-  "scripts": {
-    "test": "npm run single && npm run local && npm run parallel",
-    "single": "./node_modules/.bin/nightwatch -c conf/single.conf.js",
-    "local": "node scripts/local.runner.js -c conf/local.conf.js",
-    "parallel": "./node_modules/.bin/nightwatch -c conf/parallel.conf.js -e chrome,firefox,safari,ie",
-    "parallel_local": "node scripts/local.runner.js -c conf/parallel_local.conf.js -e chrome,firefox,safari",
-    "suite": "./node_modules/.bin/nightwatch -c conf/suite.conf.js"
-  },
   "dependencies": {
     "browserstack-local": "latest",
+    "minimist": "^1.2.0",
     "nightwatch": "latest"
-  }
+  },
+  "description": "evan.network nightwatch ui-tests",
+  "license": "AGPL-3.0-only",
+  "name": "@evan.network/ui-tests",
+  "scripts": {
+    "localhost": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome",
+    "localhost-all": "node scripts/local.runner.js -c conf/single.conf.js -t localhost -e chrome,firefox,safari",
+    "localhost-workers": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome -w 5",
+    "localhost-workers-all": "node scripts/local.runner.js -c conf/single.conf.js -t localhost -e chrome,firefox,safari -w 5",
+    "testnet": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome",
+    "testnet-all": "./node_modules/.bin/nightwatch -c conf/single.conf.js -t testnet -e chrome",
+    "testnet-workers": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome -w 5",
+    "testnet-workers-all": "./node_modules/.bin/nightwatch -c conf/single.conf.js -t testnet -e chrome -w 5"
+  },
+  "version": "0.1.0"
 }
