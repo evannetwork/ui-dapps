@@ -9,13 +9,13 @@
   "name": "@evan.network/ui-tests",
   "scripts": {
     "localhost": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome",
-    "localhost-all": "node scripts/local.runner.js -c conf/single.conf.js -t localhost -e chrome,firefox,safari",
+    "localhost-all": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome,firefox,safari",
     "localhost-workers": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome -w 5",
-    "localhost-workers-all": "node scripts/local.runner.js -c conf/single.conf.js -t localhost -e chrome,firefox,safari -w 5",
+    "localhost-workers-all": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome,firefox,safari -w 5",
     "testnet": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome",
-    "testnet-all": "./node_modules/.bin/nightwatch -c conf/single.conf.js -t testnet -e chrome",
+    "testnet-all": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome",
     "testnet-workers": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome -w 5",
-    "testnet-workers-all": "./node_modules/.bin/nightwatch -c conf/single.conf.js -t testnet -e chrome -w 5"
+    "testnet-workers-all": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome -w 5"
   },
   "version": "0.1.0"
 }
