@@ -34,8 +34,8 @@ const getDirectories = source =>
 async function runExec(command) {
   return new Promise((resolve, reject) => {
     exec(command, { }, async (err, stdout, stderr) => {
-      if (err) {
-        reject(stdout);
+      if (err || stderr) {
+        reject({ stdout, stderr });
       } else {
         resolve({ stdout, stderr });
       }
@@ -100,11 +100,6 @@ const logServing = () => {
       console.log(`  ${ logDAppName }: watching`);
     }
 
-    if (serves[dappName].stderr) {
-      console.log();
-      console.log(serves[dappName].stderr);
-    }
-
     if (serves[dappName].error) {
       console.log();
       console.log(serves[dappName].error);
@@ -125,17 +120,17 @@ const buildDApp = async (dappDir) => {
   const dappName = dappDir.split('/').pop();
   if (!serves[dappName].loading) {
     serves[dappName].loading = true;
-    serves[dappName].stderr = '';
+    serves[dappName].error = '';
     logServing();
 
     try {
       // navigate to the dapp dir and run the build command
       process.chdir(dappDir);
-      serves[dappName].stderr = (await runExec('npm run build')).stderr;
+      await runExec('npm run build');
 
       delete serves[dappName].error;
     } catch (ex) {
-      serves[dappName].error = ex.message;
+      serves[dappName].error = ex.stderr;
     }
 
     // reset loading, rebuild if nessecary
