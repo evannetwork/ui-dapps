@@ -80,7 +80,7 @@ export const en = {
       "title": "Verification path"
     },
     "topic-title": "Verification path",
-    "use-topic": "analyse"
+    "use-topic": "analyze"
   },
   "verifications": "Verification center"
 };

@@ -31,14 +31,14 @@
       "brace": [
         "libs/brace.js"
       ],
-      "verifications": [
-        "../../verifications/dist/verifications.js"
-      ],
       "dapp-browser": [
         "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"
       ],
       "ng2-ace-editor": [
         "../../../node_modules/ng2-ace-editor/index.js"
+      ],
+      "verifications": [
+        "../../verifications/dist/verifications.js"
       ]
     },
     "rootDir": "./src",
@@ -47,6 +47,9 @@
     "target": "es5",
     "types": []
   },
+  "exclude": [
+    "verifications"
+  ],
   "files": [
     "./index.ts"
   ]

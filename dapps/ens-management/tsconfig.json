@@ -44,6 +44,9 @@
     "target": "es5",
     "types": []
   },
+  "exclude": [
+    "explorer"
+  ],
   "files": [
     "./index.ts"
   ]

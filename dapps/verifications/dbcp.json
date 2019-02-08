@@ -3,16 +3,16 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.7.0",
-        "angular-libs": "^1.4.0",
-        "smart-contracts": "^1.5.2"
+        "angular-core": "^2.0.0",
+        "angular-libs": "^2.0.0",
+        "smart-contracts": "^2.0.0"
       },
       "entrypoint": "verifications.js",
       "files": [
         "verifications.css",
         "verifications.js"
       ],
-      "origin": "QmQhuQwMiHi6ZYjzyYW466vZf7JqCfEPA19iVwL3Xdaw6Q",
+      "origin": "QmQEQARazuEei3AEr5nKeFh7QyFDAZ2ZTYAnUCMRYzaz2x",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "type": "dapp"
@@ -39,7 +39,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmTfPSFqtbxBAYSd1MPwyRpB4kNajwVUhsouFwXEtUHp2k",
-      "1.1.0": "QmU358GZtPT3P1g1djghgNoH23uEfY22bDA1rJ6n5wz9GQ"
+      "1.1.0": "QmfSti3rjmufkRFYi56cTPq8KVbi3sDmL7n1c4YjAQiCH3"
     }
   }
 }
