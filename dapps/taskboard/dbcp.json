@@ -11,7 +11,7 @@
         "taskboard.css",
         "taskboard.js"
       ],
-      "origin": "QmcErLNFJEF9QGXX48Kg6yc3NaEtFBoKJaCPyZwkuJqN9o",
+      "origin": "Qmcm3Ni572JsWV3RgzDNSP6kppicpoeZycUMsAQmxrMdFp",
       "primaryColor": "#e87e23",
       "secondaryColor": "#fffaf5",
       "standalone": true,
@@ -35,7 +35,7 @@
       "dapp",
       "evan"
     ],
-    "version": "1.3.0",
+    "version": "2.0.0",
     "versions": {
       "0.1.0": "QmV5iJacr3hS5otHGn3gCfL1ZNtETi15qF1QvwT2BrFjQX",
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
@@ -44,7 +44,8 @@
       "1.0.2": "QmSwSBHHEiPW6dsZjTGuFANJQS6eYXtfXaaKKcBDWKeyGp",
       "1.1.0": "QmYS1QjbZ8FKbvoMdqM9V2QrzbA6hzzMkC87C6Tjsx6jcS",
       "1.2.0": "Qma3GCPaiAyizDuYtzvf3RNmYZmaapdBA63Vv4aVWLei91",
-      "1.3.0": "QmZH17LB8Wm2dgSJUCoTw91RgxPEbhDfQRKKMGvXrQP4W7"
+      "1.3.0": "QmbX5APBmyCdur3zmvKd9o5V23LLyWYPnrNHjsr7RoBiS2",
+      "2.0.0": "QmPMhz9Lh3tCPbTEH2S9wcp9wp3Db1tNffYgtcxrynpEYe"
     }
   }
 }
