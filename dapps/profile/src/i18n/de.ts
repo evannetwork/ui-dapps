@@ -144,13 +144,13 @@ export const de = {
     "settings": "Einstellungen",
     "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung",
     "verification-topic": {
-      "desc": "Verifizierungspfad der geprüft werden soll (z.B.: /company)",
+      "desc": "Verifizierungspfad, der geprüft werden soll (z.B.: /company)",
       "error": "Bitte geben Sie einen Verifizierungspfad ein",
       "title": "Verifizierungspfad"
     },
-    "verifications": "Verifizierunge",
+    "verifications": "Verifizierungen",
     "verifications-desc": "Verifizierungsauswahl für UI Komponenten",
-    "verifications-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)"
+    "verifications-desc-long": "Verwalten Sie Verifizierungen, die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)"
   },
   "detail": "Profilinformationen",
   "payments": "Speichergebühren",
