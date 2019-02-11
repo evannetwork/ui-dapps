@@ -28,7 +28,7 @@
 export const de = {
   "_dappprofile": {
     "account-detail": "Profilinformationen",
-    "account-detail-desc": "Accountaddresse, Alias, Eve",
+    "account-detail-desc": "Accountaddresse, Alias, EVE",
     "accountid": "Account-ID",
     "accounts": "Accounts",
     "add-verification-topic": "Verifizierungsprüfung hinzufügen",
@@ -130,8 +130,8 @@ export const de = {
     "send-eve": {
       "desc": "Wollen Sie wirklich {{ eve }} EVE an den Account {{ address }} senden?",
       "input": {
-        "description": "Menge an zu sendenen Eves",
-        "error": "Bitte geben Sie eine Menge Eves zwischen 0.1 und maximal {{ balance }} EVE an, um fortzufahren.",
+        "description": "Menge an zu sendenen EVEs",
+        "error": "Bitte geben Sie eine Menge EVEs zwischen 0.1 und maximal {{ balance }} EVE an, um fortzufahren.",
         "title": "Menge an EVE"
       },
       "ok": "senden",
