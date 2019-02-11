@@ -86,7 +86,7 @@ export const en = {
     "ok": "ok",
     "payment": {
       "channel-actions": "Actions",
-      "create-payment-channel": "Setup storage fund",
+      "create-payment-channel": "Setup storage funds",
       "delete": "Delete",
       "delete-hash": "Delete file via hash",
       "delete-hash-desc": "Filehash (QmXXXX)",
