@@ -200,7 +200,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       }]
     });
 
-    // load profile informations
+    // load profile information
     this.activeAccount = this.core.activeAccount();
     this.activeTab = 0;
     this.getDomainName = getDomainName;

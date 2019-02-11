@@ -34,7 +34,7 @@ export const de = {
     "create-demo": "Demo erstellen",
     "create-new-contract": "Neuen Vertrag erstellen",
     "create-profiles": "Profile erstellen",
-    "create-users-to-continue": "Die angebenen Nutzer besitzen noch kein zugehöriges Profil.<br><br>Bitte erstellen Sie die Profile um fortzufahren.",
+    "create-users-to-continue": "Die angegebenen Nutzer besitzen noch kein zugehöriges Profil.<br><br>Bitte erstellen Sie die Profile um fortzufahren.",
     "empty-demos": "Keine Demos verfügbar",
     "ens-address": "ENS-Adresse",
     "general": "Generelle Informationen",

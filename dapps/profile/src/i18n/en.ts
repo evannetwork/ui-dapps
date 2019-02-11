@@ -27,7 +27,7 @@
 
 export const en = {
   "_dappprofile": {
-    "account-detail": "Profile informations",
+    "account-detail": "Profile information",
     "account-detail-desc": "Account-Address, Alias, Eve, ...",
     "accountid": "Account-ID",
     "accounts": "Accounts",
@@ -152,7 +152,7 @@ export const en = {
     "verifications-desc": "Verifications selection for UI components",
     "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)"
   },
-  "detail": "Profile informations",
+  "detail": "Profile information",
   "payments": "Storage payments",
   "profile": "My Profile",
   "profiledetail": "My Profile",
