@@ -61,8 +61,8 @@
       <ion-label>{{ '_dappprofile.notifications' | translate }}</ion-label>
       <ion-toggle 
         [(ngModel)]="notificationsEnabled"
-        (ionChange)="setNotifications()"
-      ></ion-toggle>
+        (ionChange)="setNotifications()">
+      </ion-toggle>
     </ion-item>
     <div class="input-hint">{{ '_dappprofile.notifictions-desc' | translate }}</div>
   </ng-container>

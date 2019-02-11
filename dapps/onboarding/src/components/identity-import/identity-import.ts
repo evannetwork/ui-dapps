@@ -72,7 +72,9 @@ export class IdentityImportComponent implements OnInit {
     private ref: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.onboarding.checkLoggedInAndOnboarded();
+    
     this.ref.detectChanges();
   }
 

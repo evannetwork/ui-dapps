@@ -87,23 +87,13 @@ export class WelcomeComponent extends AsyncComponent {
   }
 
   async _ngOnInit() {
-    if (this.core.getAccountId()) {
-      let isOnboarded = false;
+    if (!(await this.onboarding.checkLoggedInAndOnboarded())) {
+      lightwallet.deleteActiveVault();
 
-      try {
-        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
-      } catch (ex) { }
-
-      if (isOnboarded) {
-        return this.routing.navigate(`./onboarded`, true, this.routing.getQueryparams());
-      }
+      this.core.setAccountId('');
+      this.core.setCurrentProvider('');
+      this.params = this.routing.getQueryparams();
     }
-
-    lightwallet.deleteActiveVault();
-
-    this.core.setAccountId('');
-    this.core.setCurrentProvider('');
-    this.params = this.routing.getQueryparams();
   }
 
   async setCurrentProvider(provider: string) {

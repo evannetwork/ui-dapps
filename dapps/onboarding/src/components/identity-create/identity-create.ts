@@ -73,8 +73,8 @@ export class IdentityCreateComponent implements OnInit {
     private ref: ChangeDetectorRef
   ) { }
 
-  ngOnInit() {
-    this.ref.detectChanges();
+  async ngOnInit() {
+    await this.onboarding.checkLoggedInAndOnboarded();
   }
 
   askWrittenDown() {

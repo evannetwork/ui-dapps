@@ -29,6 +29,8 @@ import {
   lightwallet,
   routing,
   utils,
+  evanGlobals,
+  getDomainName,
 } from 'dapp-browser';
 
 import {
@@ -76,6 +78,7 @@ export class OnboardingService {
     private onboardingService: EvanOnboardingService,
     private routingService: EvanRoutingService,
     private singleton: SingletonService,
+    private routing: EvanRoutingService,
   ) {
     return singleton.create(OnboardingService, this, () => {
 
@@ -85,6 +88,28 @@ export class OnboardingService {
   setActiveVault(vault, accountId) {
     this.activeVault = vault;
     this.activeAccount = accountId;
+  }
+
+  /**
+   * Check if currently a user is signed in and redirect him to the onboarded page.
+   *
+   * @return     {boolean}  true when already logged in
+   */
+  async checkLoggedInAndOnboarded() {
+    let isOnboarded = false;
+
+    if (this.core.getAccountId()) {
+      try {
+        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
+      } catch (ex) { }
+
+      if (isOnboarded) {
+        this.routing.navigate(`/onboarding.${ getDomainName() }/onboarded`, true,
+          this.routing.getQueryparams());
+      }
+    }
+
+    return isOnboarded;
   }
 
   async sendCommKey(accountId: string) {
