@@ -28,7 +28,7 @@
 export const de = {
   "_dappprofile": {
     "account-detail": "Profilinformationen",
-    "account-detail-desc": "Accountaddresse, Alias, Eve",
+    "account-detail-desc": "Accountaddresse, Alias, EVE",
     "accountid": "Account-ID",
     "accounts": "Accounts",
     "add-verification-topic": "Verifizierungsprüfung hinzufügen",
@@ -59,16 +59,16 @@ export const de = {
     "encryptionkey-desc": "Dieser Schlüssel verschlüsselt sämtliche Daten Ihres Profils, inklusiver Ihrer Kontakte, B-Mails, Verträge, usw....",
     "encryptionkey-exported": "Ihr Profil Verschlüsselungsschlüssel wurde erfolgreich in Ihre Zwischenablage exportiert",
     "evan-dev-dapps-domain-changed": "Test Domain Änderungen",
-    "evan-dev-dapps-domain-changed-desc": "Alle DApps, die bis zu diesem Zeitpunkt geladen worden, sind bereits zwischengespeichert werden nicht erneut mit der neue Konfiguration geladen. Möchten Sie die Anwendung neustarten?",
+    "evan-dev-dapps-domain-changed-desc": "Alle DApps, die bis zu diesem Zeitpunkt geladen wurden, sind bereits zwischengespeichert und werden nicht erneut mit der neuen Konfiguration geladen. Möchten Sie die Anwendung neustarten?",
     "evan-dev-dapps-domain-changed-ok": "neu starten",
     "eve-amount": "EVE Anzahl",
     "export": "exportieren",
     "export-encryptionkey": "Profil Verschlüsselungsschlüssel exportieren",
     "export-encryptionkey-desc": "Dieser Schlüssel verschlüsselt sämtliche Daten Ihres Profils, inklusiver Ihrer Kontakte, B-Mails, Verträge, usw.... Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Profil Verschlüsselungsschlüssel wirklich exportieren?",
-    "export-encryptionkey-ok": "Ich Verstehe das Risiko",
+    "export-encryptionkey-ok": "Ich verstehe das Risiko",
     "export-privatekey": "Private Key exportieren",
     "export-privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität. Durch das Exportieren und eventuell unsicheres Lagern dieser Informationen, können schwere Sicherheitsrisiken auftreten. Wollen Sie den Private Key wirklich exportieren?",
-    "export-privatekey-ok": "Ich Verstehe das Risiko",
+    "export-privatekey-ok": "Ich verstehe das Risiko",
     "export-security-informations": "Sicherheitsinformationen",
     "language": "Sprache",
     "language-changed": "Sprache geändert",
@@ -93,14 +93,14 @@ export const de = {
       "create-payment-channel": "Speicherguthaben einrichten",
       "estimated-funds": "Verbleibende Monate bis Daten gelöscht werden",
       "funds-available": "Guthaben für Speichergebühren",
-      "initial-eve-amount": "Initial amout of eve to lock",
+      "initial-eve-amount": "Startguthaben",
       "monthly-cost": "Monatliche Speichergebühren",
       "payments": "Speichergebühren",
       "payments-desc": "Übersicht und Verwaltung von Speichergegühren",
       "payments-detail": "Speichergebühren Details",
       "pinned-hashes": "Gespeicherte Datenelemente",
       "setup-payment-channel": "Speicherguthaben einrichten",
-      "setup-payment-channel-desc": "Um Daten auf dem evan.network zu speichern muss ein Speicherguthaben eingerichtet werden. Jedes kB was auf dem evan.network gespeichert wird, wird monatlich von diesem Guthaben abgezogen.",
+      "setup-payment-channel-desc": "Um Daten auf dem evan.network zu speichern, muss ein Speicherguthaben eingerichtet werden. Jedes kB was auf dem evan.network gespeichert wird, wird monatlich von diesem Guthaben abgezogen.",
       "topup": "Aufstocken",
       "topup-alert": {
         "cancel": "abbrechen",
@@ -121,36 +121,36 @@ export const de = {
       "title": "Verifizierungsprüfungen speichern"
     },
     "receiver": {
-      "desc": "Account-Adresse an den Eve gesendet werden sollen",
+      "desc": "Account-Adresse, an den EVE gesendet werden sollen",
       "error": "Bitte geben Sie eine valide Adresse ein!",
       "title": "Empfänger"
     },
     "runtime-config": "Laufzeiteinstellungen",
     "save-verification-topics": "Verifizierungsprüfungen speichern",
     "send-eve": {
-      "desc": "Wollen Sie wirklich {{ eve }} Eve an den Account {{ address }} senden?",
+      "desc": "Wollen Sie wirklich {{ eve }} EVE an den Account {{ address }} senden?",
       "input": {
-        "description": "Menge an zu sendenen Eves",
-        "error": "Bitte geben Sie eine Menge Eves zwischen 0.1 und maximal {{ balance }} Eve an, um fortzufahren.",
-        "title": "Menge an Eve"
+        "description": "Menge an zu sendenen EVEs",
+        "error": "Bitte geben Sie eine Menge EVEs zwischen 0.1 und maximal {{ balance }} EVE an, um fortzufahren.",
+        "title": "Menge an EVE"
       },
       "ok": "senden",
-      "title": "Eve senden"
+      "title": "EVE senden"
     },
     "send-eve-dispatcher": {
-      "description": "Eve wird vom aktuellen, zu einem anderen Account transferiert.",
-      "title": "Eve senden"
+      "description": "EVE wird vom aktuellen, zu einem anderen Account transferiert.",
+      "title": "EVE senden"
     },
     "settings": "Einstellungen",
     "settings-desc": "Laufzeitumgebung, Entwickler, Darstellung",
     "verification-topic": {
-      "desc": "Verifizierungspfad der geprüft werden soll (z.B.: /company)",
+      "desc": "Verifizierungspfad, der geprüft werden soll (z.B.: /company)",
       "error": "Bitte geben Sie einen Verifizierungspfad ein",
       "title": "Verifizierungspfad"
     },
-    "verifications": "Verifizierunge",
+    "verifications": "Verifizierungen",
     "verifications-desc": "Verifizierungsauswahl für UI Komponenten",
-    "verifications-desc-long": "Verwalten Sie Verifizierunge die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)"
+    "verifications-desc-long": "Verwalten Sie Verifizierungen, die in verschiedenen Applikationen standardmäßig angezeigt und geprüft werden. (Addressbuch, Kontaktauswahl, ...)"
   },
   "detail": "Profilinformationen",
   "payments": "Speichergebühren",
