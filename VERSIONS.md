@@ -1,6 +1,12 @@
-# evan-dapps
+# evan.network ui-core-dapps
 
 ## Next Version
+### Features
+### Fixes
+### Deprecations
+
+
+## Version 2.0.0
 ### Features
 - onboarding
   - add mainnet text switches
@@ -21,6 +27,7 @@
 - onboarding
   - moved `createIdentity` to smart-agent profile creation logic
 
+
 ## Version 1.7.0
 ### Features
 - onboarding
@@ -40,6 +47,7 @@
   - navigate to onboarded page, even if the user is currently logged in
   - fix toggle light theme design
 
+
 ## Version 1.6.0
 ### Features
 - verifications
@@ -53,7 +61,6 @@
 - explorer
   - fix cannot opening address without dbcp
 
-### Deprecations
 
 ## Version 1.5.0
 ### Features
@@ -75,6 +82,7 @@
 - mailbox
   - allow only one line preview of mail bodies in overview
 
+
 ## Version 1.4.0
 ### Features
 - addressbook
@@ -95,6 +103,7 @@
 - onboarding
   - fix onboarding mail invitation by user import
 
+
 ## Version 1.3.0
 ### Features
 - mailbox: add fullPath property to mailbox contract attachments to overwrite bc + contract url path opening
@@ -105,6 +114,7 @@
 - Add new build job so each can dapp decide for its own, which build job should be used
 - add demo-management DApp
 
+
 ## Version 1.2.1
 ### Features
 - explorer: be able to analyse root DApps (favorites.evan)
@@ -113,7 +123,6 @@
 ### Fixes
 - fix goBack history stacking for mailbox contract opening and explorer `openRootDApp`
 
-### Deprecations
 
 ## Version 1.2.0
 ### Fixes
@@ -121,9 +130,11 @@
 - explorer: load ens addresses without an underlaying contract and only with dbcp
 - mailbox: fix mailbox paging
 
+
 ## Version 1.1.0
 ### Fixes
 - Remove deployment description and move it to the evan.network wik
+
 
 ## Version 1.0.2
 ### Features
@@ -136,7 +147,6 @@
 - add explorer to featured dapps 
 - rename ui-core-dapps
 
-### Deprecations
 
 ## Version 1.0.1
 ### Features
@@ -151,6 +161,7 @@
 - add code documentation
 - remove angular-bc
 - add logging dapp
+
 
 ## Version 0.9.0
 - initial version
