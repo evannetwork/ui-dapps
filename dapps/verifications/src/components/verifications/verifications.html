@@ -1,0 +1,143 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+-->
+
+<ng-template #verificationDisplay let-topics="topics">
+  <ng-container *ngFor="let topic of topics; let i = index">
+    <h3 class="content-header m-t-0" margin-bottom
+      *ngIf="topics.length > 1">
+      {{ '_verifications.topic-title' | translate }}: {{ topic }}
+    </h3>
+
+    <evan-verification margin-top
+      [topic]="topic"
+      [address]="subject"
+      [mode]="displayMode"
+      [compute]="computedVerifications">
+    </evan-verification>
+  </ng-container>
+</ng-template>
+
+<evan-loading *ngIf="loading"></evan-loading>
+<ng-container *ngIf="!loading">
+  <evan-identity-missing *ngIf="!identityExists"></evan-identity-missing>
+  <ng-container *ngIf="identityExists">
+    <ng-container *ngIf="showAddressSelect || showTopicSelect">
+      <div class="evan-content evan-relative">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_verifications.verification-analyse' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0" *ngIf="!showAddressSelect">
+          {{ (addressbook[subject]?.alias || addressbook[subject]?.email) ? (addressbook[subject]?.alias || addressbook[subject]?.email) + ' (' + subject + ')' : subject }}
+        </p>
+        <form #selectForm="ngForm">
+          <ion-row>
+            <ion-col col-12 [attr.col-md-4]="showAddressSelect ? '' : null"
+              *ngIf="showTopicSelect">
+              <div class="display-flex-justify">
+                <ion-item>
+                  <ion-label stacked>
+                    {{ '_verifications.topic.title' | translate }}*
+                  </ion-label>
+                  <ion-input name="topic" required autofocus
+                    [(ngModel)]="topic"
+                    [placeholder]="'_verifications.topic.desc' | translate"
+                    (ionChange)="ref.detectChanges()"
+                    (keydown)="submitOnEnter($event)"
+                    (focusout)="ref.detectChanges()">
+                  </ion-input>
+                </ion-item>
+                <button ion-button icon-only round clear class="verification-topic-open"
+                  (click)="verificationTopicSelect.open($event)">
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+                </button>
+                <ion-select name="verificationTopicSelect" class="evan-callout" interface="popover"
+                  #verificationTopicSelect
+                  [(ngModel)]="topic"
+                  [selectOptions]="{ cssClass: 'evan-callout evan-topic-prefill top' }"
+                  (ionChange)="ref.detectChanges()">
+                  <ion-option
+                    *ngFor="let prefilledVerification of prefilledVerifications"
+                    [value]="prefilledVerification">
+                    {{ prefilledVerification }}
+                  </ion-option>
+                </ion-select>
+              </div>
+              <ion-chip class="error-hint" *ngIf="showError(selectForm, 'topic')" color="danger">
+                <ion-label>{{ '_verifications.topic.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
+
+            <ion-col col-12 col-md-8>
+              <evan-address-input name="subject" #subjectSelectComp
+                [(ngModel)]="subjectInput"
+                [label]="('_verifications.subject.title' | translate) + '*'"
+                [placeholder]="'_verifications.subject.desc' | translate"
+                (onChange)="ref.detectChanges()">
+              </evan-address-input>
+              <ion-chip class="error-hint" *ngIf="subjectSelectComp.touched && !isValidAddress(subjectInput)" color="danger">
+                <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <div text-right margin-bottom>
+          <button ion-button outline round margin-top icon-left
+            [disabled]="!isValidForm()"
+            (click)="useCurrentValues()">
+            {{ '_verifications.use-topic' | translate }}
+          </button>
+        </div>
+
+        <ng-container *ngIf="showVerifications">
+          <ng-container
+            *ngTemplateOutlet="verificationDisplay;context:{ topics: topics }">
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="evan-content" *ngIf="showVerificationDisplayConfiguration">
+        <h3 class="content-header m-b-0 m-t-0">
+          {{ '_verifications.recreate-identity' | translate }}
+        </h3>
+        <p ion-text class="m-b-0 m-t-0">
+          {{ '_verifications.recreate-identity-description' | translate }}
+        </p>
+        <button ion-button outline round margin-top icon-left
+          (click)="createIdentity()">
+          {{ '_verifications.recreate-identity' | translate }}
+        </button>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="!showAddressSelect && !showTopicSelect">
+      <ng-container
+        *ngTemplateOutlet="verificationDisplay;context:{ topics: topics }">
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

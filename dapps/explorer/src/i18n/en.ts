@@ -302,8 +302,8 @@ export const en = {
     "section": {
       "basecontract": "evan.network BaseContract",
       "basecontract-desc": "contract states, members and more",
-      "claims": "Claims",
-      "claims-desc": "Check certificates for the selected address.",
+      "verifications": "Verifications",
+      "verifications-desc": "Check verifications for the selected address.",
       "contractinteraction": "Contract Interaction",
       "contractinteraction-desc": "run abi functions directly",
       "datacontract": "evan.network DataContract",

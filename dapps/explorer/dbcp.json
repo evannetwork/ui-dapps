@@ -3,16 +3,16 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.7.0",
-        "angular-libs": "^1.4.0",
-        "claims": "^1.0.0"
+        "angular-core": "^2.0.0",
+        "angular-libs": "^2.0.0",
+        "verifications": "^1.0.0"
       },
       "entrypoint": "explorer.js",
       "files": [
         "explorer.css",
         "explorer.js"
       ],
-      "origin": "QmNfYovEnYRrQT84vhYadCBLTjEhLPcqHRtgkvXQ5pUHPA",
+      "origin": "QmaQUgjnnHVtLVbPk8DYxbbu4PV2gSwczwQgUqDoqAoDiF",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
       "standalone": true,
@@ -42,7 +42,7 @@
       "1.0.0": "QmXNENxwGrKBGqkHYSviTfENktRmGAwsEkJ2xSHczrZRWW",
       "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt",
       "1.2.0": "QmXVLKMa6VWgqkeXQAQGq2XpFJ3LAQgDYLuRUiL98BJwRw",
-      "1.3.0": "QmY1bRZtKdEsyAxhaWzgeJBHubNvgwRtTAmXqnuPBnXHVz"
+      "1.3.0": "QmcyN13X3A3adgc5HYPM7etdPkMvX1K52geRpG5DsV7dKc"
     }
   }
 }

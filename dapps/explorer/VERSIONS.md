@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.4.0
 ### Features
@@ -13,7 +14,7 @@
 
 ## Version 1.3.0
 ### Features
-add detailed claims view for the opened address
+add detailed verifications view for the opened address
 
 ## Version 1.2.1
 ### Features

@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.4.0
 ### Features
@@ -12,7 +13,7 @@
 
 ## Version 1.3.2
 ### Features
-- add profile activated claims display
+- add profile activated verifications display
   
 ### Fixes
 - allow only one line preview of mail bodies in overview

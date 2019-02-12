@@ -64,7 +64,7 @@ export const de = {
       Die Aufgaben muss gestartet sein und Sie zu bearbeiten.
     `,
     'todo-finish-hint-2': `
-      Sie müssen die Bearbeitung dieses Auftrags akzeptieren, um Ihn zu bearbeiten. 
+      Sie müssen die Bearbeitung dieses Auftrags akzeptieren, um ihn zu bearbeiten. 
     `,
     'create-form': {
       'task-title': 'Titel *',

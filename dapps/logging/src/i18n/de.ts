@@ -35,7 +35,7 @@ export const de = {
     'close-filters': 'Filter ausblenden',
     'report-errors': 'Auswertungen: Fehler senden',
     'report-filters': 'Auswertungen: Aktuelles Log senden',
-    'click-to-log': 'Klicken Sie die Einträge an, um sie in Ihre Zwischenablage zu kopieren und Sie in der Entwicklerkonsole auszuloggen.',
+    'click-to-log': 'Klicken Sie die Einträge an, um sie in Ihre Zwischenablage zu kopieren und sie in der Entwicklerkonsole auszuloggen.',
     'copy-logs': 'Logs kopieren',
     'send-loggly': 'Logs an Entwickler weiterleiten',
     'report-filters-desc': 'Sende alle, in der Liste unten aufgeführten, Einträge an die Entwickler.',

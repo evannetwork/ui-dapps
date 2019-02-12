@@ -49,7 +49,7 @@ import {
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanDescriptionService,
   EvanFileService,
@@ -63,7 +63,7 @@ import { ENSManagementService } from '../../services/service';
 /**************************************************************************************************/
 
 /**
- * Explorer claims using an topic, subject input. If needed, all interactions can be disabled and
+ * Explorer verifications using an topic, subject input. If needed, all interactions can be disabled and
  * only the given parameters are used. When the dev mode is enabled, also the display mode can be
  * adjusted for testing purposes.
  */

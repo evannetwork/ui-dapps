@@ -302,7 +302,7 @@ export class DemoManagementService implements OnDestroy {
    * @return     {<type>}  The bcc profile for user.
    */
   public async getRuntimeForUser(user: any) {
-    // load user status informations
+    // load user status information
     await this.checkUserStatus(null, user);
 
     // create a new runtime

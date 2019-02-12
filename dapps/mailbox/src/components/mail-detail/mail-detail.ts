@@ -48,7 +48,7 @@ import {
   createTabSlideTransition,
   EvanAddressBookService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanMailboxService,
   EvanQueue,
@@ -110,14 +110,14 @@ export class MailDetailComponent extends AsyncComponent {
   private queueWatcher: Function;
 
   /**
-   * for the current profile activated claims
+   * for the current profile activated verifications
    */
-  private claims: Array<string> = [ ];
+  private verifications: Array<string> = [ ];
 
   /**
-   * Function to unsubscribe from profile claims watcher queue results.
+   * Function to unsubscribe from profile verifications watcher queue results.
    */
-  private profileClaimsWatcher: Function;
+  private profileVerificationsWatcher: Function;
 
   /**
    * given mailId
@@ -137,7 +137,7 @@ export class MailDetailComponent extends AsyncComponent {
   constructor(
     private addressbookService: EvanAddressBookService,
     private bcc: EvanBCCService,
-    private claimsService: EvanClaimService,
+    private verificationsService: EvanVerificationService,
     private core: EvanCoreService,
     private mailService: EvanMailboxService,
     private queueService: EvanQueue,
@@ -171,12 +171,12 @@ export class MailDetailComponent extends AsyncComponent {
       }
     );
 
-    // load profile active claims
-    this.profileClaimsWatcher = await this.queueService.onQueueFinish(
+    // load profile active verifications
+    this.profileVerificationsWatcher = await this.queueService.onQueueFinish(
       new QueueId(`profile.${ getDomainName() }`, '*'),
       async (reload, results) => {
         reload && await this.core.utils.timeout(0);
-        this.claims = await this.claimsService.getProfileActiveClaims();
+        this.verifications = await this.verificationsService.getProfileActiveVerifications();
         this.ref.detectChanges();
       }
     );

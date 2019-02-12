@@ -399,7 +399,7 @@ export class RentalPreset {
 
     // register the ens addres
     const ensAddress = `${config.twin.machineId}.dt.rentaldemo.evan`
-    await user.runtime.nameResolver.claimAddress(ensAddress, user.accountId);
+    await user.runtime.nameResolver.verificationAddress(ensAddress, user.accountId);
     await user.runtime.nameResolver.setAddress(
       ensAddress,
       contract.options.address,

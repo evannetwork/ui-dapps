@@ -4,6 +4,7 @@
 ### Features
 ### Fixes
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.4.0
 ### Features
@@ -15,7 +16,7 @@
 
 ## Version 1.3.1
 ### Features
-- add profile activated claims display
+- add profile activated verifications display
 
 ## Version 1.3.0
 ### Features

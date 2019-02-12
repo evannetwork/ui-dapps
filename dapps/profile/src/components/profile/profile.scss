@@ -25,74 +25,39 @@
   https://evan.network/license/
 */
 
-@import '@evan.network/ui-angular-sass/src/variables/colors';
+evan-profile-detail {
+  .evan-content {
+    width: 100%;
+    margin: 0;
+  }
 
-profile {
+  .evan-tabs-container .evan-content {
+    @media (max-width: 768px) {
+      margin-bottom: 75px;
+    }
+  }
+
   .evan-tabs {
-    z-index: 1;
+    position: relative !important; 
 
-    @media (min-width: 769px) {
-      margin-top: 25px;
+    h3 {
+      font-size: 16px;
     }
   }
 
-  .content-padding {
-    padding: 32px 0 25px 0;
-  }
+  ion-row {
+    ion-col {
+      position: relative;
 
-  .evan-small-seperator {
-    margin-bottom: 7px;
-  }
-
-  .evan-right-panel.evan-tabs-container {
-    position: absolute;
-  }
-
-  form.claims-form {
-    & > .display-flex-justify > div {
-      width: 100%;
-    }
-
-    ion-item.item-md.item-block {
-      &.item-input, &.item-select {
-        ion-input {
-          margin-bottom: 0 !important;
-
-          border-bottom: 0 !important;
-        }
-      }
-    }
-  }
-}
-
-.evan-light {
-  profile {
-    ion-item.item-md.item-block {
-      &.item-toggle {
-        background-color: transparent !important;
-      }
-    }
-  }
-}
-
-.evan-light profile, profile {
-  ion-item.item-md.item-block {
-    &.item-input, &.item-select {
-      padding: 0 !important;
-
-      background-color: transparent !important;
-
-      ion-label {
-        font-size: 16px;
-        font-weight: 400 !important;
-
-        margin-top: 25px;
+      p {
+        margin: 5px 0 0 0;
       }
 
-      ion-input {
-        margin-bottom: 10px;
-
-        border-bottom: 1px solid $primary;
+      button[icon-only] {
+        position: absolute !important;
+        top: 0;
+        right: 0;
+        bottom: 0;
       }
     }
   }

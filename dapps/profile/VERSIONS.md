@@ -2,8 +2,13 @@
 
 ## Next Version
 ### Features
+- new profile start page
+- send eve from profile
+- add stateful profile pages handling
+  
 ### Fixes
 ### Deprecations
+- rename claims to verifications
 
 ## Version 1.6.0
 ### Features
@@ -13,7 +18,7 @@
 ## Version 1.5.0
 ### Features
 - new design
-- activated claims management and display
+- activated verifications management and display
 
 ## Version 1.4.0
 ### Features

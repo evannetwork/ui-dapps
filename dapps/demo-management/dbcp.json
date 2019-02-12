@@ -3,16 +3,16 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^1.7.0",
-        "angular-libs": "^1.4.0",
-        "smart-contracts": "^1.5.0"
+        "angular-core": "^2.0.0",
+        "angular-libs": "^2.0.0",
+        "smart-contracts": "^2.0.0"
       },
       "entrypoint": "demomanagement.js",
       "files": [
         "demomanagement.css",
         "demomanagement.js"
       ],
-      "origin": "QmeQKXg5B8cFinbsBnR9kgaoF78k7ECtu5Sbt4vHqj4VLd",
+      "origin": "Qmc4NKPNHiTK3JxiAA7a2JrGmTYeu27iirneTWEKX1RsNL",
       "primaryColor": "#51afac",
       "secondaryColor": "#edeada",
       "standalone": true,
@@ -40,7 +40,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmVpETB7n1mFuu5Dcj7yBeHXGCb5SdyTyeVN56NFCAk7QG",
-      "1.1.0": "QmZp5nHWy9VChzvMv7GAfbzkJebdaxHm1tEmAMkd88j8ic"
+      "1.1.0": "QmfAgyxjXrNQs8gr9pLU1oUSE5L1TPnNggfEKG6NrFnRWJ"
     }
   }
 }

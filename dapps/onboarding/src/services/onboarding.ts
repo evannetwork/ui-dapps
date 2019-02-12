@@ -29,6 +29,8 @@ import {
   lightwallet,
   routing,
   utils,
+  evanGlobals,
+  getDomainName,
 } from 'dapp-browser';
 
 import {
@@ -76,6 +78,7 @@ export class OnboardingService {
     private onboardingService: EvanOnboardingService,
     private routingService: EvanRoutingService,
     private singleton: SingletonService,
+    private routing: EvanRoutingService,
   ) {
     return singleton.create(OnboardingService, this, () => {
 
@@ -85,6 +88,28 @@ export class OnboardingService {
   setActiveVault(vault, accountId) {
     this.activeVault = vault;
     this.activeAccount = accountId;
+  }
+
+  /**
+   * Check if currently a user is signed in and redirect him to the onboarded page.
+   *
+   * @return     {boolean}  true when already logged in
+   */
+  async checkLoggedInAndOnboarded() {
+    let isOnboarded = false;
+
+    if (this.core.getAccountId()) {
+      try {
+        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
+      } catch (ex) { }
+
+      if (isOnboarded) {
+        this.routing.navigate(`/onboarding.${ getDomainName() }/onboarded`, true,
+          this.routing.getQueryparams());
+      }
+    }
+
+    return isOnboarded;
   }
 
   async sendCommKey(accountId: string) {
@@ -293,15 +318,12 @@ export class OnboardingService {
       const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);  
       const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
 
-      // create identity for account
-      await this.bcc.claims.createIdentity(account);
-
       // finished profile creation successfully
       delete window.localStorage['evan-profile-creation'];
     },
 
     /**
-     * accepts a bmail invitation, creates an account and the profile, and claims the bmail funds
+     * accepts a bmail invitation, creates an account and the profile, and verifications the bmail funds
      * 
      * @param account      account ID / externally owned account, string starting with 0x
      * @param invitation   invitation token from invitation URL in bmail

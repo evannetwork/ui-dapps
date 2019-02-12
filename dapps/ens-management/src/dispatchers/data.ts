@@ -46,8 +46,8 @@ import {
 export const dataDispatcher = new QueueDispatcher(
   [
     new QueueSequence(
-      '_claims.data-dispatcher.title',
-      '_claims.data-dispatcher.description',
+      '_verifications.data-dispatcher.title',
+      '_verifications.data-dispatcher.description',
       async (service: ENSManagementService, queueEntry: any) => {
         const results = [ ];
         const bcc = service.bcc;

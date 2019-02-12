@@ -35,9 +35,12 @@ import {
   ChangeDetectorRef,
   Component,
   DomSanitizer,
+  FormBuilder,
+  FormControl,
   NavController,
   OnInit,
   TranslateService,
+  Validators,
   ViewChild,
 } from 'angular-libs';
 
@@ -50,7 +53,7 @@ import {
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
-  EvanClaimService,
+  EvanVerificationService,
   EvanCoreService,
   EvanQueue,
   EvanToastService,
@@ -61,7 +64,7 @@ import {
 /**************************************************************************************************/
 
 @Component({
-  selector: 'profile',
+  selector: 'evan-profile-detail',
   templateUrl: 'profile.html',
   animations: [
     createOpacityTransition(),
@@ -73,31 +76,11 @@ import {
  * Shows the current profile information and provides the possibility to set some configurations
  * for the ui
  */
-export class ProfileComponent extends AsyncComponent {
-  /**
-   * current active shown tabs
-   */
-  private activeTab: number;
-
+export class EvanProfileDetailComponent extends AsyncComponent {
   /**
    * balance of the current user
    */
   private balance: number;
-
-  /**
-   * is the developer mode active?
-   */
-  private developerMode: boolean;
-
-  /**
-   * bind getDomainName function to use it within the template
-   */
-  private getDomainName: Function;
-
-  /**
-   * show an loading symbol
-   */
-  private loading: boolean;
 
   /**
    * current used active account id
@@ -110,9 +93,9 @@ export class ProfileComponent extends AsyncComponent {
   private myProfile: any;
 
   /**
-   * are notifications enbaled?
+   * show an loading symbol
    */
-  private notificationsEnabled: boolean;
+  private loading: boolean;
 
   /**
    * check if the balance was loaded before, only show toast message on later refreshs
@@ -120,29 +103,29 @@ export class ProfileComponent extends AsyncComponent {
   private balanceWasLoaded: boolean;
 
   /**
-   * ist the dev domain enabled?
+   * balance of the current user
    */
-  private devDomainLoading: boolean;
+  private getDomainName: number;
 
   /**
-   * the current dev domain
+   * current active shown tabs
    */
-  private devDomain: string;
+  private activeTab: number;
+  
+  /**
+   * current receiver address input
+   */
+  private receiverInput: string;
 
   /**
-   * use to prevent double popups by clicking the toggle dev domain button
+   * eve input
    */
-  private devDomainPopupTimeout: any;
+  private eve: number = 0;
 
   /**
-   * current color theme
+   * formular for eve send inputs
    */
-  private colorTheme: string;
-
-  /**
-   * claims that should be displayed within the ui components
-   */
-  private claims: Array<any>;
+  private sendEveForm: any;
 
   /**
    * Function to unsubscribe from queue results.
@@ -150,27 +133,33 @@ export class ProfileComponent extends AsyncComponent {
   private queueWatcher: Function;
 
   /**
-   * is the current queue saving the profile?
+   * queue id for the send eve queue
    */
-  private savingClaims: boolean;
+  private queueId: any;
 
   /**
-   * profile queue Id
+   * is currently the sending eve queue running?
    */
-  private queueId: QueueId;
+  private sendingEve: boolean;
 
   /**
-   * current formular
+   * trigger rerendering of the eve form
    */
-  @ViewChild('claimsForm') claimsForm: any;
+  private showSendEveForm: boolean = true;
+
+  /**
+   * search input reference for autofocus
+   */
+  @ViewChild('receiverSelectComp') receiverSelectComp: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
     private bcc: EvanBCCService,
-    private claimsService: EvanClaimService,
+    private verificationService: EvanVerificationService,
     private core: EvanCoreService,
+    private formBuilder: FormBuilder,
     private queue: EvanQueue,
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
@@ -185,26 +174,67 @@ export class ProfileComponent extends AsyncComponent {
    * @return     {Promise<void>}  resolved when done
    */
   async _ngOnInit() {
+    this.loading = true;
+    this.ref.detectChanges();
+
+    // setup form validation
+    this.sendEveForm = this.formBuilder.group({
+      receiver: ['', (input: FormControl) => 
+        this.isValidAddress(input.value) ? null : { invalidAddress: true }],
+      eve: ['', (input: FormControl) => {
+        const value = parseFloat(input.value);
+
+        if (isNaN(value)) {
+          return { invalidNumber: true }
+        }
+
+        if (value < 0.1) {
+          return { minValue: true }
+        }
+
+        if (value > this.balance - 0.1) {
+          return { maxValue: true }
+        }
+
+        return null;
+      }]
+    });
+
+    // load profile information
+    this.activeAccount = this.core.activeAccount();
     this.activeTab = 0;
     this.getDomainName = getDomainName;
+    this.myProfile = await this.addressBookService.loadAccount(this.activeAccount);
 
     // watch for updates
+    this.queueId = new QueueId(`profile.${ getDomainName() }`, 'sendEveDispatcher');
     this.queueWatcher = await this.queue.onQueueFinish(
-      new QueueId(`profile.${ getDomainName() }`, '*'),
+      this.queueId,
       async (reload, results) => {
-        await this.core.utils.timeout(0);
+        // reset the send eve form
+        if (reload) {
+          await this.core.utils.timeout(0);
 
-        const profileActiveClaims = (await this.claimsService.getProfileActiveClaims(true));
-        this.claims = profileActiveClaims.claims.map(claim => {
-          return { origin: claim, value: claim };
-        });
+          this.eve = 0;
+          this.receiverInput = '';
+          this.showSendEveForm = false;
+          this.ref.detectChanges();
+        }
 
-        this.savingClaims = profileActiveClaims.saving;
-        this.ref.detectChanges();
+        // reload balance
+        this.sendingEve = this.queue.getQueueEntry(this.queueId, true).data.length > 0;
+        await this.loadBalance(reload);
+
+        // rerender form
+        if (reload) {
+          this.showSendEveForm = true;
+          this.ref.detectChanges();
+        }
       }
     );
 
-    await this.refreshAccount();
+    this.loading = false;
+    this.ref.detectChanges();
   }
 
   /**
@@ -213,44 +243,30 @@ export class ProfileComponent extends AsyncComponent {
   _ngOnDestroy() {
     this.queueWatcher();
   }
+
   /**
-   * Load the current profile and check the current configurations
+   * Actives the new chosen tab.
    *
-   * @return     {Promise<void>}  resolved when done
+   * @param      {number}  index   index of the tab that should be displayed.
    */
-  async refreshAccount() {
-    this.loading = true;
+  activateTab(index: number) {
+    this.activeTab = index;
+
     this.ref.detectChanges();
-
-    this.activeAccount = this.core.activeAccount();
-
-    this.myProfile = await this.addressBookService.loadAccount(this.activeAccount);
-    this.developerMode = this.core.utils.isDeveloperMode();
-    this.colorTheme = this.core.utils.getColorTheme();
-    this.notificationsEnabled = this.core.utils.notificationsEnabled();
-    this.devDomain = this.core.utils.getDevDomain();
-    this.devDomainLoading = !!this.devDomain;
-
-    if (!this.devDomain) {
-      this.devDomain = `test.${ getDomainName() }`;
-    }
-
-    await this.loadBalance();
-
-    this.loading = false;
-    this.ref.detectChanges();
+    setTimeout(() => this.ref.detectChanges(), 500);
   }
 
   /**
    * Load the balance for the current activeAccount and show an toast message.
    *
+   * @param      {boolean}        disabledToast  should the toast be disabled?
    * @return     {Promise<void>}  resolved when done
    */
-  async loadBalance() {
+  async loadBalance(disabledToast?:  boolean) {
     this.balance = await this.core.getBalance(this.activeAccount);
 
     // only show the toast, when the user clicks explicit on the reload button
-    if (this.balanceWasLoaded) {
+    if (this.balanceWasLoaded && !disabledToast) {
       this.toastService.showToast({
         message: '_dappprofile.balance-updated',
         duration: 2000
@@ -330,119 +346,13 @@ export class ProfileComponent extends AsyncComponent {
   }
 
   /**
-   * Actives the new chosen tab.
+   * Check if the provided address if a valid 0x0000... address.
    *
-   * @param      {number}  index   index of the tab that should be displayed.
+   * @param      {string}   address  address that should be checked
+   * @return     {boolean}  True if valid address, False otherwise
    */
-  activateTab(index: number) {
-    this.activeTab = index;
-
-    this.ref.detectChanges();
-    setTimeout(() => this.ref.detectChanges(), 500);
-  }
-
-  /**
-   * Enables / Disables the developer mode for ui switches and sends an evan-developer-mode event,
-   * so other applications like the dashboard can action.
-   */
-  setDeveloperMode() {
-    window.localStorage['evan-developer-mode'] = this.developerMode;
-
-    this.ref.detectChanges();
-    this.core.utils.sendEvent('evan-developer-mode');
-  }
-
-  /**
-   * Sets the notifications and triggers an event so other dapps can listen on it, when the
-   * notifications are toggled
-   */
-  setNotifications() {
-    window.localStorage['evan-notifications'] = this.notificationsEnabled;
-
-    this.ref.detectChanges();
-    this.core.utils.sendEvent('evan-notifications-toggled');
-  }
-
-  /**
-   * Overwrite the browser language and use the localStorage.
-   */
-  async setLanguageMode() {
-    window.localStorage['evan-language'] = this.translateService.translate.currentLang;
-
-    this.ref.detectChanges();
-
-    // ask the user to reload the application
-    try {
-      await this.alertService.showSubmitAlert(
-        '_dappprofile.language-changed',
-        '_dappprofile.language-changed-desc',
-        '_dappprofile.cancel',
-        '_dappprofile.language-changed-ok',
-      );
-
-      window.location.reload();
-    } catch (ex) { }
-  }
-
-  /**
-   * If the dev domain value was toggled, prefill it with test.evan.
-   */
-  devDomainToggled() {
-    if (this.devDomainLoading) {
-      window.localStorage['evan-dev-dapps-domain'] = window.localStorage['evan-dev-dapps-domain'] ||
-        `test.${ getDomainName() }`;
-    } else {
-      delete window.localStorage['evan-dev-dapps-domain'];
-    }
-
-    this.devModePopup(0);
-    this.ref.detectChanges();
-  }
-
-  /**
-   * Updates the dev domain the current selected one.
-   */
-  setDevDomain() {
-    window.localStorage['evan-dev-dapps-domain'] = this.devDomain;
-
-    this.devModePopup(1000);
-  }
-
-  /**
-   * Ask the user if the page should be reloaded, to use the latest configured evan-dapps-domain
-   *
-   * @param      {number}         timeout  timeout until the popup should be displayed
-   * @return     {Promise<void>}  resolved when done
-   */
-  async devModePopup(timeout: number) {
-    if (this.devDomainPopupTimeout) {
-      window.clearTimeout(this.devDomainPopupTimeout);
-    }
-
-    this.devDomainPopupTimeout = setTimeout(async () => {
-      // ask the user to reload the application
-      try {
-        await this.alertService.showSubmitAlert(
-          '_dappprofile.evan-dev-dapps-domain-changed',
-          '_dappprofile.evan-dev-dapps-domain-changed-desc',
-          '_dappprofile.cancel',
-          '_dappprofile.evan-dev-dapps-domain-changed-ok',
-        );
-
-        window.location.reload();
-      } catch (ex) { }
-    }, timeout);
-  }
-
-  /**
-   * Update the color theme, if it's changed.
-   */
-  setColorTheme() {
-    window.localStorage['evan-color-theme'] = this.colorTheme;
-
-    this.core.utils.activateColorTheme(this.colorTheme);
-    this.ref.detectChanges();
-    setTimeout(() => this.ref.detectChanges());
+  isValidAddress(address: string) {
+    return this.bcc.web3.utils.isAddress(address);
   }
 
   /**
@@ -460,26 +370,49 @@ export class ProfileComponent extends AsyncComponent {
   }
 
   /**
-   * Save the current set of claims
+   * When enter key is pressed and the form is valid, trigger the sendEve function.
+   *
+   * @param      {any}     $event  the input key up event
+   * @param      {any}     form    the form that should be checked
    */
-  saveClaimTopics() {
-    this.queue.addQueueData(
-      new QueueId(`profile.${ getDomainName() }`, 'profileClaimsDispatcher'),
-      {
-        claims: this.claims.map(claim => claim.value)
-      }
-    );
+  sendEveOnEnter($event: any, form: any) {
+    if ($event.keyCode === 13 && !form.invalid &&
+      this.bcc.web3.utils.isAddress(this.receiverInput)) {
+      this.sendEve();
 
-    this.savingClaims = true;
-    this.ref.detectChanges();
+      event.stopPropagation();
+      return false;
+    }
   }
 
   /**
-   * Run detectChanges directly and after and timeout again, to update select fields.
+   * Ask the user, if he wants to send the current entered eve to the desired address.
    */
-  detectTimeout() {
-    this.ref.detectChanges();
+  async sendEve() {
+    // ask the user to reload the application
+    try {
+      await this.alertService.showSubmitAlert(
+        '_dappprofile.send-eve.title',
+        {
+          key: '_dappprofile.send-eve.desc',
+          translateOptions: {
+            eve: this.eve,
+            address: this.receiverInput
+          }
+        },
+        '_dappprofile.cancel',
+        '_dappprofile.send-eve.ok',
+      );
+    } catch (ex) {
+      return;
+    }
 
-    setTimeout(() => this.ref.detectChanges());
+    // trigger the send eve dispatcher
+    this.sendingEve = true;
+    this.queue.addQueueData(
+      new QueueId(`profile.${ getDomainName() }`, 'sendEveDispatcher'),
+      { eve: this.eve, receiver: this.receiverInput }
+    );
+    this.ref.detectChanges();
   }
 }
