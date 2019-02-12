@@ -74,6 +74,7 @@ export const de = {
           </div>
         </div>
       `,
+      'deleteDAppTitle': 'Wollen Sie diese Verknüpfung wirklich entfernen?',
     },
     'dapps': 'Verknüpfungen',
     'dispatcher': {

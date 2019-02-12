@@ -73,7 +73,7 @@ import {
 })
 
 /**
- * Shows the current pyment channel informations for the ipfs payments
+ * Shows the current payment channel information for the ipfs payments
  */
 export class EvanProfilePaymentsComponent extends AsyncComponent {
   /**

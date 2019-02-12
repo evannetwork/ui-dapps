@@ -52,13 +52,13 @@ export const de = {
       "title": "Verifizierungsverwaltung wird eingerichtet"
     },
     "identity-exists": "Verifizierungsverwaltung verfügbar",
-    "identity-exists-desc": "Ihre Verifizierungsverwaltung ist verfügbar, somit können Sie Verifizierunge prüfen, ausstellen und verifizieren.",
+    "identity-exists-desc": "Ihre Verifizierungsverwaltung ist verfügbar, somit können Sie Verifizierungen prüfen, ausstellen und verifizieren.",
     "issue-dispatcher": {
       "description": "Verifizierung erstellen...",
       "title": "Verifizierung erstellen"
     },
     "missing-identity": "Verifizierungsverwaltung ungütlig",
-    "missing-identity-desc": "Für Ihren Account ist noch keine Verifizierungsverwaltung verfügbar. Schalten Sie Ihre Verifizierungsverwaltung frei, um Verifizierunge zu prüfen.",
+    "missing-identity-desc": "Für Ihren Account ist noch keine Verifizierungsverwaltung verfügbar. Schalten Sie Ihre Verifizierungsverwaltung frei, um Verifizierungen zu prüfen.",
     "mode": {
       "description": "wählen Sie zwischen verschiedenen Darstellungsmöglichkeiten um die Facetten der Verifizierungsdarstellung kennen zu lernen.",
       "detail": "detailiert",
@@ -67,7 +67,7 @@ export const de = {
       "title": "Darstellung"
     },
     "recreate-identity": "Verifizierungsverwaltung überschreiben",
-    "recreate-identity-description": "Wollen Sie Ihre Verifizierungsverwaltung wirklich überschreiben? Alle für Sie erstellten Verifizierunge werden gelöscht!",
+    "recreate-identity-description": "Wollen Sie Ihre Verifizierungsverwaltung wirklich überschreiben? Alle für Sie erstellten Verifizierungen werden gelöscht!",
     "reject-dispatcher": {
       "description": "Verifizierung verwerfen...",
       "title": "Verifizierung verwerfen"

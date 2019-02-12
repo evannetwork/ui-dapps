@@ -27,8 +27,8 @@
 
 export const en = {
   "_dappprofile": {
-    "account-detail": "Profile informations",
-    "account-detail-desc": "Account-Address, Alias, Eve, ...",
+    "account-detail": "Profile information",
+    "account-detail-desc": "Account-Address, Alias, EVE ...",
     "accountid": "Account-ID",
     "accounts": "Accounts",
     "add-verification-topic": "Add verification check",
@@ -86,7 +86,7 @@ export const en = {
     "ok": "ok",
     "payment": {
       "channel-actions": "Actions",
-      "create-payment-channel": "Setup storage fund",
+      "create-payment-channel": "Setup storage funds",
       "delete": "Delete",
       "delete-hash": "Delete file via hash",
       "delete-hash-desc": "Filehash (QmXXXX)",
@@ -121,25 +121,25 @@ export const en = {
       "title": "Save verification selection"
     },
     "receiver": {
-      "desc": "Account address to which Eve should be sent",
+      "desc": "Account address to which EVE should be sent",
       "error": "Please enter a valid address!",
       "title": "Receiver"
     },
     "runtime-config": "Runtime settings",
     "save-verification-topics": "save verification selection",
     "send-eve": {
-      "desc": "Do you really want to send {{ eve }} Eve to the account {{ address }}?",
+      "desc": "Do you really want to send {{ eve }} EVE to the account {{ address }}?",
       "input": {
-        "description": "Amount of Eves to be sent",
-        "error": "Please specify a amount of Eves between 0.1 and maximum {{ balance }} Eve to continue.",
-        "title": "Eve"
+        "description": "Amount of EVEs to be sent",
+        "error": "Please specify an amount of EVEs between 0.1 and maximum {{ balance }} EVE to continue.",
+        "title": "EVE"
       },
       "ok": "send",
-      "title": "Send Eve"
+      "title": "Send EVE"
     },
     "send-eve-dispatcher": {
-      "description": "Eve will be transferred from the current account to another account.",
-      "title": "Send Eve"
+      "description": "EVE will be transferred from the current account to another account.",
+      "title": "Send EVE"
     },
     "settings": "Settings",
     "settings-desc": "runtime environment, developer, presentation",
@@ -152,7 +152,7 @@ export const en = {
     "verifications-desc": "Verifications selection for UI components",
     "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)"
   },
-  "detail": "Profile informations",
+  "detail": "Profile information",
   "payments": "Storage payments",
   "profile": "My Profile",
   "profiledetail": "My Profile",
