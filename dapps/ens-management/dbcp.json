@@ -13,7 +13,7 @@
         "ensmanagement.css",
         "ensmanagement.js"
       ],
-      "origin": "QmXsapfemPTXxQjdi2Frh3Hre5ZPzfAmkPYopr3VHHGdWF",
+      "origin": "QmZ3Q9CM8MPkS3jPR86pyxSWGv4uSWiMwFtq3tHE5dF8oi",
       "primaryColor": "#999d2a",
       "secondaryColor": "#f1f1d6",
       "standalone": true,
@@ -41,7 +41,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmTGP96Snnob9nSXCzGkWakTrzZ1UsAQ1VY7bCBEwLyivn",
-      "1.1.0": "QmUXZNB1sK9DDMuZzufW4incPykyNkzRrHZ5wuANfF9s2d"
+      "1.1.0": "QmQ3VBkAwNui4Tq3zFBGSym3rDQCEYBUWtWfH1PhdtQrFt"
     }
   }
 }
