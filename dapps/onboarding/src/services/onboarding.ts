@@ -295,6 +295,10 @@ export class OnboardingService {
         await lightwallet.createVaultAndSetActive(mnemonic, password);
       }
 
+      // disable pinning while profile files are being created
+      profile.ipld.ipfs.disablePin = true;
+      // clear hash log
+      profile.ipld.hashLog = [];
       const dhKeys = this.bcc.keyExchange.getDiffieHellmanKeys();
       await profile.addContactKey(account, 'dataKey', dhKeys.privateKey.toString('hex'));
       await profile.addProfileKey(account, 'alias', alias);
@@ -311,6 +315,12 @@ export class OnboardingService {
         { key: sharing.hashKey, }
       )
       fileHashes[profile.treeLabels.addressBook] = `0x${fileHashes[profile.treeLabels.addressBook].toString('hex')}`;
+      // keep only unique values as ipfs hashes
+      fileHashes.ipfsHashes = [...new Set([...profile.ipld.hashLog, ...Object.values(fileHashes)])];
+      // clear hash log
+      profile.ipld.hashLog = [];
+      // re-enable pinning
+      profile.ipld.ipfs.disablePin = false;
       const generationResult = await this.onboarding.sendProfileCreationCall(account, fileHashes, provider);
       // temporary execution of setMyProfile
       const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);

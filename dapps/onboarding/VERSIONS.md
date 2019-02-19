@@ -3,6 +3,7 @@
 ## Next Version
 ### Features
 - load terms of use from external `termsofuse.evan` dapp
+- add tracking of new ipfs files during profile creation and send hashes alongside profile info
 
 ### Fixes
 ### Deprecations
