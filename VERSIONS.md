@@ -3,7 +3,8 @@
 ## Next Version
 ### Features
 - load terms of use from external `termsofuse.evan` dapp
-- add `termsofuse` dapp
+- onboarding
+  - add `termsofuse` dapp
 
 ### Fixes
 ### Deprecations
