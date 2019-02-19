@@ -316,7 +316,8 @@ export class OnboardingService {
       )
       fileHashes[profile.treeLabels.addressBook] = `0x${fileHashes[profile.treeLabels.addressBook].toString('hex')}`;
       // keep only unique values as ipfs hashes
-      fileHashes.ipfsHashes = [...new Set([...profile.ipld.hashLog, ...Object.values(fileHashes)])];
+      fileHashes.ipfsHashes = [...profile.ipld.hashLog, ...Object.keys(fileHashes).map(key => fileHashes[key])];
+      fileHashes.ipfsHashes = ((arrArg) => arrArg.filter((elem, pos, arr) => arr.indexOf(elem) == pos))(fileHashes.ipfsHashes);
       // clear hash log
       profile.ipld.hashLog = [];
       // re-enable pinning
