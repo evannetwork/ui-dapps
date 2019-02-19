@@ -2,20 +2,21 @@
 
 ## Next Version
 ### Features
-  - add mainnet text switches
-  
+- load terms of use from external `termsofuse.evan` dapp
+
 ### Fixes
 ### Deprecations
-- moved `createIdentity` to smart-agent profile creation logic
 
 ## Version 1.4.0
 ### Features
 - add salting for encryptionKeys accountId + password
 - add missing dbcpVersion to dbcp files
 - add licenses to dbcp files
+  - add mainnet text switches
   
 ### Fixes
 ### Deprecations
+- moved `createIdentity` to smart-agent profile creation logic
 
 ## Version 1.3.0
 ### Features

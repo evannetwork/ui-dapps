@@ -40,11 +40,11 @@
 <ion-content ion-fixed [style.display]="loading ? 'none':'block'">
   <div class="vertical-center-container" (scroll)="onScroll($event)">
     <div class="continuous-text">
-      <div [innerHTML]="'_dapponboarding.terms-of-use-text' | translate"></div>
+      <div [innerHTML]="termsOfUse"></div>
       <div text-center *ngIf="!showCaptcha">
         <ion-spinner margin-top color="light"></ion-spinner>
       </div>
-      <div>
+      <div *ngIf="ensOrigin">
         <iframe *oneTime #captchaIframe margin-top
           [src]="_DomSanitizer.bypassSecurityTrustResourceUrl(ensOrigin + '/captcha.html?language=' + translate.getCurrentLang())">
         </iframe>

@@ -25,7 +25,6 @@
   https://evan.network/license/
 */
 
-const mainnetTexts = false;
 export const de = {
   'onboarding': 'Onboarding',
   'onboardinglist': 'Onboarding',
@@ -75,16 +74,6 @@ export const de = {
     'disagree': 'Ablehnen',
     'agree': 'Akzeptieren',
     'terms-of-use': 'Nutzungsbedingungen',
-    /* tslint:disable */
-    'terms-of-use-text': `
-    Das ist der <b>evan.network testcore</b>.<br><br>
-
-    Dieses Netzwerk ist nur für Entwicklungs- und Testzwecke und <b>nicht für den Einsatz in der Produktion geeignet.</b>
-      Im testcore geben wir keine Garantie für Datenverlust und -verfügbarkeit.<br><br>
-
-    Sie können Ihre Fragen zum evan.network in unserem Gitterchannel <a href="http://gitter.im/evannetwork">http://gitter.im/evannetwork</a> oder auf <a href="https://evan.network">https://evan.network</a> stellen.
-    `,
-    /* tslint:enable */
     'identity-create': 'Neue Identität anlegen',
     'identity-import': 'Bestehende Identität nutzen',
     'mnemonic-description': `Sie wollen eine Identität anlegen. Diese folgenden 12 Wörter stellen den SUPER-PIN für Ihre neue evan.network-Identität dar. Ausschließlich damit sind Ihre Daten auf anderen Geräten importier- und wiederherstellbar. Dies ist notwendig, falls Sie beispielsweise Ihr aktuelles Gerät verloren oder zurück gesetzt haben.
@@ -178,7 +167,3 @@ export const de = {
     'scan-qr-code-mnemonic': 'Mnemonic QR-Code einscannen'
   }
 };
-
-if (mainnetTexts) {
-  de._dapponboarding['terms-of-use-text'] = 'Hier werden bald die Mainnet-Nutzungsbedingungen angezeigt ...';
-}

@@ -25,7 +25,6 @@
   https://evan.network/license/
 */
 
-const mainnetTexts = false;
 export const en = {
   'onboarding': 'Onboarding',
   'onboardinglist': 'Onboarding',
@@ -75,15 +74,6 @@ export const en = {
     'disagree': 'Disagree',
     'agree': 'Agree',
     'terms-of-use': 'Terms of use',
-    /* tslint:disable */
-    'terms-of-use-text': `
-    This is the <b>evan.network testcore</b>.<br><br>
-      This network is for development and showcase purposes only and <b>not for production use.</b>
-      In the testcore we give no guarantee for any data loss and availability.<br><br>
-
-    You can ask your questions regarding evan.network in our gitter channel <a href="http://gitter.im/evannetwork">http://gitter.im/evannetwork</a> or through <a href="https://evan.network">https://evan.network</a>.
-    `,
-    /* tslint:enable */
     'identity-create': 'Create New Identity',
     'identity-import': 'Use Existing Identity',
     'mnemonic-description': `
@@ -180,7 +170,3 @@ Try again later or use <a href="https://gitter.im/evannetwork/faucet" target="_b
     'scan-qr-code-mnemonic': 'Scan mnemonic QR-Code'
   }
 };
-
-if (mainnetTexts) {
-  en._dapponboarding['terms-of-use-text'] = 'Here will be the mainnet terms of use...';
-}

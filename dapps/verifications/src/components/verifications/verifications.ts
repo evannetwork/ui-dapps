@@ -225,7 +225,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
     // try to load the list of of the last selected verification topics
     this.prefilledVerifications = window.localStorage['evan-verifications-dapp-topic'] || [
-      '/onboarding/agbaccepted',
+      '/evan/onboarding/termsofuse',
     ];
     if (!Array.isArray(this.prefilledVerifications)) {
       try {

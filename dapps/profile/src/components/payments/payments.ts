@@ -39,7 +39,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-  Http, Response, RequestOptions, Headers,       // @angular/http
+  Http, Response, RequestOptions, Headers,
   Input,
 } from 'angular-libs';
 

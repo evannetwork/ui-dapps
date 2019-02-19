@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- load terms of use from external `termsofuse.evan` dapp
+- add `termsofuse` dapp
+
 ### Fixes
 ### Deprecations
 

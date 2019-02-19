@@ -56,11 +56,8 @@ import {
 
 /**************************************************************************************************/
 
-const baseHost = 'https://agents.evan.network';
-//const baseHost = 'http://localhost:8080';
-//const basePath = '/api/ah-etherconsole-plugin/';
-const baseUrlFaucet = baseHost + '/api/smart-agents/faucet/';
-const baseUrlOnboarding = baseHost + '/api/smart-agents/onboarding/';
+let baseUrlFaucet;
+let baseUrlOnboarding;
 
 @Injectable()
 export class OnboardingService {
@@ -81,7 +78,8 @@ export class OnboardingService {
     private routing: EvanRoutingService,
   ) {
     return singleton.create(OnboardingService, this, () => {
-
+      baseUrlFaucet = this.core.agentUrl + '/api/smart-agents/faucet/';
+      baseUrlOnboarding = this.core.agentUrl + '/api/smart-agents/onboarding/';
     });
   }
 
@@ -193,6 +191,7 @@ export class OnboardingService {
       // send communication key back to the onboarding account
       this.core.setCurrentProvider('internal');
       await this.bcc.updateBCC(accountId, 'internal');
+      await this.bcc.updateTermsOfUse(accountId);
 
       if (queryParams && queryParams.onboardingID) {
         return this.routingService.navigate(`./onboarded`, true,
