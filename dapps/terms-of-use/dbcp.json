@@ -7,7 +7,7 @@
       "files": [
         "**"
       ],
-      "origin": "QmRbRLuKQCkFeCcPkWCjsNViZQJ7d8rPrGPuuvNnsVtKCx",
+      "origin": "QmZvF9HVa5L55g9Jpe1ZhMTHfkTqR4kEWDt2FVwycKKHKH",
       "primaryColor": "#c30f1b",
       "secondaryColor": "#ffffff",
       "type": "dapp"
@@ -29,7 +29,7 @@
     "tags": [],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmRbRLuKQCkFeCcPkWCjsNViZQJ7d8rPrGPuuvNnsVtKCx"
+      "1.0.0": "QmUHbrTsqR8EXBrYPF3PPN1G6R57U1ZN7fk8RyutjHD7kX"
     }
   }
 }
