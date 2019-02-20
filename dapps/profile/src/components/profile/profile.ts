@@ -37,6 +37,7 @@ import {
   DomSanitizer,
   FormBuilder,
   FormControl,
+  Http,
   NavController,
   OnInit,
   TranslateService,
@@ -60,6 +61,11 @@ import {
   EvanTranslationService,
   QueueId,
 } from 'angular-core';
+
+import {
+  StripeCheckoutLoader,
+  StripeCheckoutHandler
+} from 'ng-stripe-checkout';
 
 /**************************************************************************************************/
 
@@ -111,7 +117,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
    * current active shown tabs
    */
   private activeTab: number;
-  
+
   /**
    * current receiver address input
    */
@@ -147,6 +153,19 @@ export class EvanProfileDetailComponent extends AsyncComponent {
    */
   private showSendEveForm: boolean = true;
 
+
+  private stripeCheckoutHandler: StripeCheckoutHandler;
+
+  /**
+   * Current input values.
+   */
+  private buyEveForm: any = { amount: 0 };
+
+  /**
+   * User management agent account to check the balance for.
+   */
+  public agentUrl = 'https://payments-core.evan.network/api';
+
   /**
    * search input reference for autofocus
    */
@@ -164,6 +183,8 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
     private translateService: EvanTranslationService,
+    private stripeCheckoutLoader: StripeCheckoutLoader,
+    private http: Http,
   ) {
     super(ref);
   }
@@ -179,7 +200,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
 
     // setup form validation
     this.sendEveForm = this.formBuilder.group({
-      receiver: ['', (input: FormControl) => 
+      receiver: ['', (input: FormControl) =>
         this.isValidAddress(input.value) ? null : { invalidAddress: true }],
       eve: ['', (input: FormControl) => {
         const value = parseFloat(input.value);
@@ -232,6 +253,30 @@ export class EvanProfileDetailComponent extends AsyncComponent {
         }
       }
     );
+
+    this.stripeCheckoutLoader.createHandler({
+      key: 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S',
+      token: async (token) => {
+        // Do something with the token...
+        console.log('Payment successful!', token);
+        const activeAccount = this.core.activeAccount();
+        const toSignedMessage = this.bcc.web3.utils
+          .soliditySha3(new Date().getTime() + activeAccount)
+          .replace('0x', '');
+        const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
+        const signature = await this.signMessage(toSignedMessage, activeAccount);
+        const headers = {
+          authorization: [
+            `EvanAuth ${ activeAccount }`,
+            `EvanMessage ${ hexMessage }`,
+            `EvanSignedMessage ${ signature }`
+          ].join(',')
+        };
+        this.executePayment(token.id, token.email, this.buyEveForm.amount, headers)
+      }
+    }).then((handler: StripeCheckoutHandler) => {
+      this.stripeCheckoutHandler = handler;
+    });
 
     this.loading = false;
     this.ref.detectChanges();
@@ -310,7 +355,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       );
 
       // load the current vault, unlock it and export the privatekey
-      const vault = await lightwallet.loadUnlockedVault();  
+      const vault = await lightwallet.loadUnlockedVault();
       const privateKey = lightwallet.getPrivateKey(vault, this.core.activeAccount());
 
       this.core.copyString(
@@ -335,7 +380,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       );
 
       // load the current vault, unlock it and export the encryptionkey
-      const vault = await lightwallet.loadUnlockedVault();  
+      const vault = await lightwallet.loadUnlockedVault();
       const encryptionKey = await lightwallet.getEncryptionKey();
 
       this.core.copyString(
@@ -414,5 +459,60 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       { eve: this.eve, receiver: this.receiverInput }
     );
     this.ref.detectChanges();
+  }
+
+  public onClickBuy() {
+    this.stripeCheckoutHandler.open({
+      amount: this.buyEveForm.amount * 100,
+      currency: 'EUR',
+      image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAIAAAAiOjnJAAADIElEQVR4nOzcv0q2ZQDHcd8Xkw4hgkoQwSn/TG65SHMHUFODbbbVVE216dhZNLd1ABG2SSJIg3gAUfEY9u7yLP75ej3Pzeez3/C74XtzLRf36sr+4Qo8t9ejBzBNwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIisTp6wBw//fDN1vr7o1csjfOrPz/56rvRK+5bxLDW331n64P3Rq9YGv/OZqMnzOEoJCEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBKLeDX5Kb48/fHs4nL0igfb2dw4OT4aveI5TS2ss4vLX377ffQKHIU0hEVCWCSERUJYJIRFQlgkhEVCWCSERUJYJIRFQlgkhEVCWCSERUJYJIRFQlgkpnbn/efT7+/+vxu94sFev5raFz61sNbemtobLampfSgsCGGREBYJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZEQFomp3bec3f63jFeTn2J2ezt6whxTC+vj46/9530ROApJCIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBITO3O+87mxugJL+2vv//59fyP0Svum1pYJ8dHoye8tLOLy93Pvhi94j5HIQlhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZFYxKvJV9c3b6+tjV6xNK6ub0ZPmOPVyv7h6A1MkKOQhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIvEIv4UhEXw0e6HB3vbj35cWMx3sLf97eefPvpxRyEJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBaJNwEAAP//8Fg7yLHz0e0AAAAASUVORK5CYII=',
+      name: 'evan GmbH',
+      description: this.translateService.instant('_dappprofile.buy-eve.product-desc'),
+      locale: this.translateService.getCurrentLang(),
+      zipCode: true,
+      billingAddress: true,
+    });
+  }
+
+  public onClickCancel() {
+    // If the window has been opened, this is how you can close it:
+    this.stripeCheckoutHandler.close();
+  }
+
+  public async executePayment(id, email, amount, headers = {}) {
+    return new Promise(async (resolve, reject) => {
+
+      const checkStatus = async() => {
+        return (await this.http
+          .get(`${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
+            {
+              headers,
+              params: {
+                stripeEmail: email,
+                stripeToken: id,
+                amount: amount
+              }
+            }
+          )
+          .toPromise()
+        ).json();
+      }
+
+      await checkStatus();
+    })
+  }
+
+  /**
+   * Sign a message for a specific account
+   *
+   * @param      {string}  msg      message that should be signed
+   * @param      {string}  account  account id to sign the message with (default = activeAccount)
+   * @return     {string}  signed message signature
+   */
+  public async signMessage(msg: string, account: string = this.core.activeAccount()): Promise<string> {
+    const signer = account.toLowerCase();
+    const pk = await this.bcc.executor.signer.accountStore.getPrivateKey(account);
+
+    return this.bcc.web3.eth.accounts.sign(msg, '0x' + pk).signature;
   }
 }

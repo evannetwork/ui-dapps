@@ -94,6 +94,32 @@
       </ion-col>
     </ion-row>
 
+    <!-- <ion-row>
+      <ion-col col-12>
+        <ion-item col-12>
+          <ion-label stacked>
+            {{ '_dappprofile.buy-eve.buy-eve' | translate }}
+          </ion-label>
+          <ion-input [name]="'amount'" required #buyEveInput
+            type="number"
+            [(ngModel)]="buyEveForm.amount"
+            [placeholder]="'_dappprofile.buy-eve.buy-eve-desc' | translate"
+            (ionChange)="ref.detectChanges()"
+            (focusout)="ref.detectChanges()">
+          </ion-input>
+        </ion-item>
+
+        <div text-right margin-top>
+          <button ion-button outline round item-end
+            [disabled]="!buyEveInput.value || buyEveInput.value < 0"
+            (click)="onClickBuy()">
+            <ion-spinner *ngIf="dispatcherRunning"></ion-spinner>
+            {{ '_dappprofile.buy-eve.pay' | translate }}
+          </button>
+        </div>
+      </ion-col>
+    </ion-row> -->
+
     <div text-center padding-top>
       <button ion-button icon-left round outline color="alert" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
@@ -104,13 +130,13 @@
 
   <div margin-top class="evan-tabs evan-content">
     <button ion-button icon-left clear
-      [class.active]="activeTab === 0" 
+      [class.active]="activeTab === 0"
       (click)="activateTab(0);">
       <h3>{{ '_dappprofile.send-eve.title' | translate }}</h3>
     </button>
-    
+
     <button ion-button icon-left clear
-      [class.active]="activeTab === 1" 
+      [class.active]="activeTab === 1"
       (click)="activateTab(1);">
       <h3>{{ '_dappprofile.export-security-informations' | translate }}</h3>
     </button>
