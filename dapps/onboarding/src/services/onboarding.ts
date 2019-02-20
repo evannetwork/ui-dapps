@@ -315,9 +315,13 @@ export class OnboardingService {
         { key: sharing.hashKey, }
       )
       fileHashes[profile.treeLabels.addressBook] = `0x${fileHashes[profile.treeLabels.addressBook].toString('hex')}`;
-      // keep only unique values as ipfs hashes
+      // keep only unique values, ignore addressbook (encrypted hash)
+      const addressBookHash = fileHashes[profile.treeLabels.addressBook];
       fileHashes.ipfsHashes = [...profile.ipld.hashLog, ...Object.keys(fileHashes).map(key => fileHashes[key])];
-      fileHashes.ipfsHashes = ((arrArg) => arrArg.filter((elem, pos, arr) => arr.indexOf(elem) == pos))(fileHashes.ipfsHashes);
+      fileHashes.ipfsHashes = (
+        (arrArg) => arrArg.filter(
+          (elem, pos, arr) => arr.indexOf(elem) === pos && elem !== addressBookHash)
+        )(fileHashes.ipfsHashes);
       // clear hash log
       profile.ipld.hashLog = [];
       // re-enable pinning
