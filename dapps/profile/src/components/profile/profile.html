@@ -94,32 +94,177 @@
       </ion-col>
     </ion-row>
 
-    <!-- <ion-row>
-      <ion-col col-12>
-        <ion-item col-12>
-          <ion-label stacked>
-            {{ '_dappprofile.buy-eve.buy-eve' | translate }}
-          </ion-label>
-          <ion-input [name]="'amount'" required #buyEveInput
-            type="number"
-            [(ngModel)]="buyEveForm.amount"
-            [placeholder]="'_dappprofile.buy-eve.buy-eve-desc' | translate"
-            (ionChange)="ref.detectChanges()"
-            (focusout)="ref.detectChanges()">
-          </ion-input>
-        </ion-item>
 
-        <div text-right margin-top>
-          <button ion-button outline round item-end
-            [disabled]="!buyEveInput.value || buyEveInput.value < 0"
-            (click)="onClickBuy()">
-            <ion-spinner *ngIf="dispatcherRunning"></ion-spinner>
-            {{ '_dappprofile.buy-eve.pay' | translate }}
-          </button>
-        </div>
-      </ion-col>
-    </ion-row> -->
-
+    <form novalidate (ngSubmit)="buy()" [formGroup]="stripePayment">
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.name.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="name" required type="text"
+              [(ngModel)]="payEve.name"
+              [placeholder]="'_dappprofile.pay-eve.name.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'name')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.email.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="email" required type="text"
+              [(ngModel)]="payEve.email"
+              [placeholder]="'_dappprofile.pay-eve.email.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'email')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.street.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="street" required type="text"
+              [(ngModel)]="payEve.street"
+              [placeholder]="'_dappprofile.pay-eve.street.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'street')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col col-3>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.city.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="city" required type="text"
+              [(ngModel)]="payEve.city"
+              [placeholder]="'_dappprofile.pay-eve.city.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'city')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col col-3>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.zip.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="zip" required type="text"
+              [(ngModel)]="payEve.zip"
+              [placeholder]="'_dappprofile.pay-eve.zip.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'zip')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.country.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="country" required type="text"
+              [(ngModel)]="payEve.country"
+              [placeholder]="'_dappprofile.pay-eve.country.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'country')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.vat.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="vat" required type="text"
+              [(ngModel)]="payEve.vat"
+              [placeholder]="'_dappprofile.pay-eve.city.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'vat')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.amount.title' | translate }}*
+              </h3>
+            </ion-label>
+            <ion-input formControlName="amount" required type="number"
+              [(ngModel)]="payEve.amount"
+              [placeholder]="'_dappprofile.pay-eve.amount.description' | translate"
+              (ionChange)="ref.detectChanges()"
+              (focusout)="ref.detectChanges()">
+            </ion-input>
+          </ion-item>
+          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'amount')" color="danger">
+            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>
+              <h3>
+                {{ '_dappprofile.pay-eve.card.title' | translate }}*
+              </h3>
+            </ion-label>
+            <div item-content id="card-element" style="width:100%"></div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <button type="submit" ion-button icon-left round outline color="alert">
+        <ion-icon name="cash"></ion-icon>
+        <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
+      </button>
+    </form>
     <div text-center padding-top>
       <button ion-button icon-left round outline color="alert" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>

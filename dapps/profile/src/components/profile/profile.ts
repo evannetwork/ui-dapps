@@ -32,11 +32,13 @@ import {
 } from 'dapp-browser';
 
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   DomSanitizer,
   FormBuilder,
   FormControl,
+  FormGroup,
   Http,
   NavController,
   OnInit,
@@ -63,9 +65,11 @@ import {
 } from 'angular-core';
 
 import {
-  StripeCheckoutLoader,
-  StripeCheckoutHandler
-} from 'ng-stripe-checkout';
+  StripeService,
+  Elements,
+  Element as StripeElement,
+  ElementsOptions
+} from "ngx-stripe";
 
 /**************************************************************************************************/
 
@@ -82,7 +86,7 @@ import {
  * Shows the current profile information and provides the possibility to set some configurations
  * for the ui
  */
-export class EvanProfileDetailComponent extends AsyncComponent {
+export class EvanProfileDetailComponent extends AsyncComponent implements AfterViewInit {
   /**
    * balance of the current user
    */
@@ -153,24 +157,37 @@ export class EvanProfileDetailComponent extends AsyncComponent {
    */
   private showSendEveForm: boolean = true;
 
-
-  private stripeCheckoutHandler: StripeCheckoutHandler;
-
   /**
    * Current input values.
    */
   private buyEveForm: any = { amount: 0 };
+
+  private payEve: any = {};
 
   /**
    * User management agent account to check the balance for.
    */
   public agentUrl = 'https://payments-core.evan.network/api';
 
+
+  elements: Elements;
+
+  card: StripeElement;
+
+  // optional parameters
+  elementsOptions: ElementsOptions = {
+    locale: 'auto'
+  };
+
+  stripePayment: FormGroup;
+
   /**
    * search input reference for autofocus
    */
   @ViewChild('receiverSelectComp') receiverSelectComp: any;
 
+
+  @ViewChild('cardElement') cardElement: any;
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
@@ -183,8 +200,8 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
     private translateService: EvanTranslationService,
-    private stripeCheckoutLoader: StripeCheckoutLoader,
     private http: Http,
+    private stripeService: StripeService
   ) {
     super(ref);
   }
@@ -254,33 +271,45 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       }
     );
 
-    this.stripeCheckoutLoader.createHandler({
-      key: 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S',
-      token: async (token) => {
-        // Do something with the token...
-        console.log('Payment successful!', token);
-        const activeAccount = this.core.activeAccount();
-        const toSignedMessage = this.bcc.web3.utils
-          .soliditySha3(new Date().getTime() + activeAccount)
-          .replace('0x', '');
-        const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
-        const signature = await this.signMessage(toSignedMessage, activeAccount);
-        const headers = {
-          authorization: [
-            `EvanAuth ${ activeAccount }`,
-            `EvanMessage ${ hexMessage }`,
-            `EvanSignedMessage ${ signature }`
-          ].join(',')
-        };
-        this.executePayment(token.id, token.email, this.buyEveForm.amount, headers)
-      }
-    }).then((handler: StripeCheckoutHandler) => {
-      this.stripeCheckoutHandler = handler;
+    this.stripePayment = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      street: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      zip: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      vat: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
     });
+
+    this.stripeService.elements(this.elementsOptions)
+      .subscribe(elements => {
+        this.elements = elements;
+        // Only mount the element the first time
+        if (!this.card) {
+          this.card = this.elements.create('card', {
+            style: {
+              base: {
+                iconColor: '#FFFFFF',
+                color: '#FFFFFF',
+                lineHeight: '40px',
+                fontWeight: 300,
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: '14px',
+                '::placeholder': {
+                  color: '#CFD7E0'
+                }
+              }
+            }
+          });
+          this.card.mount('#card-element');
+        }
+      });
 
     this.loading = false;
     this.ref.detectChanges();
   }
+
 
   /**
    * Remove watchers
@@ -461,37 +490,85 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     this.ref.detectChanges();
   }
 
-  public onClickBuy() {
-    this.stripeCheckoutHandler.open({
-      amount: this.buyEveForm.amount * 100,
-      currency: 'EUR',
-      image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAIAAAAiOjnJAAADIElEQVR4nOzcv0q2ZQDHcd8Xkw4hgkoQwSn/TG65SHMHUFODbbbVVE216dhZNLd1ABG2SSJIg3gAUfEY9u7yLP75ej3Pzeez3/C74XtzLRf36sr+4Qo8t9ejBzBNwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIisTp6wBw//fDN1vr7o1csjfOrPz/56rvRK+5bxLDW331n64P3Rq9YGv/OZqMnzOEoJCEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBLCIiEsEsIiISwSwiIhLBKLeDX5Kb48/fHs4nL0igfb2dw4OT4aveI5TS2ss4vLX377ffQKHIU0hEVCWCSERUJYJIRFQlgkhEVCWCSERUJYJIRFQlgkhEVCWCSERUJYJIRFQlgkpnbn/efT7+/+vxu94sFev5raFz61sNbemtobLampfSgsCGGREBYJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZEQFomp3bec3f63jFeTn2J2ezt6whxTC+vj46/9530ROApJCIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBITO3O+87mxugJL+2vv//59fyP0Svum1pYJ8dHoye8tLOLy93Pvhi94j5HIQlhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZFYxKvJV9c3b6+tjV6xNK6ub0ZPmOPVyv7h6A1MkKOQhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIuEsEgIi4SwSAiLhLBICIvEIv4UhEXw0e6HB3vbj35cWMx3sLf97eefPvpxRyEJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBYJYZEQFglhkRAWCWGREBaJNwEAAP//8Fg7yLHz0e0AAAAASUVORK5CYII=',
-      name: 'evan GmbH',
-      description: this.translateService.instant('_dappprofile.buy-eve.product-desc'),
-      locale: this.translateService.getCurrentLang(),
-      zipCode: true,
-      billingAddress: true,
-    });
+
+  public buy() {
+    const name = this.stripePayment.get('name').value;
+    const email = this.stripePayment.get('email').value;
+    const street = this.stripePayment.get('street').value;
+    const city = this.stripePayment.get('city').value;
+    const zip = this.stripePayment.get('zip').value;
+    const country = this.stripePayment.get('country').value;
+    const vat = this.stripePayment.get('vat').value;
+    const amount = this.stripePayment.get('amount').value;
+
+    this.stripeService
+      .createToken(this.card,
+        {
+          name,
+          address_line1: street,
+          address_city: city,
+          address_zip: zip
+        }
+      )
+      .subscribe(async (result) => {
+        if (result.token) {
+          const token = result.token;
+          const customer = {
+            email,
+            shipping: {
+              name,
+              address: {
+                city,
+                country,
+                line1: street,
+                postal_code: zip,
+              }
+            },
+            tax_info: {
+              tax_id: vat,
+              type: 'vat'
+            }
+          }
+          console.log('Payment successful!', token);
+          const activeAccount = this.core.activeAccount();
+          const toSignedMessage = this.bcc.web3.utils
+            .soliditySha3(new Date().getTime() + activeAccount)
+            .replace('0x', '');
+          const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
+          const signature = await this.signMessage(toSignedMessage, activeAccount);
+          const headers = {
+            authorization: [
+              `EvanAuth ${ activeAccount }`,
+              `EvanMessage ${ hexMessage }`,
+              `EvanSignedMessage ${ signature }`
+            ].join(',')
+          };
+          this.executePayment(token.id, amount, customer, headers)
+
+          // Use the token to create a charge or a customer
+          // https://stripe.com/docs/charges
+          console.log(result.token);
+        } else if (result.error) {
+          // Error creating the token
+          console.log(result.error.message);
+        }
+      });
   }
 
-  public onClickCancel() {
-    // If the window has been opened, this is how you can close it:
-    this.stripeCheckoutHandler.close();
-  }
-
-  public async executePayment(id, email, amount, headers = {}) {
+  public async executePayment(id, amount, customer, headers = {}) {
     return new Promise(async (resolve, reject) => {
 
       const checkStatus = async() => {
         return (await this.http
-          .get(`${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
+          .post(
+            `${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
+            {
+              token: id,
+              amount: amount,
+              customer: customer
+            },
             {
               headers,
-              params: {
-                stripeEmail: email,
-                stripeToken: id,
-                amount: amount
-              }
             }
           )
           .toPromise()

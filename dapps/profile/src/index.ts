@@ -58,7 +58,7 @@ import { ProfileService } from './services/service';
 import { profileVerificationsDispatcher } from './dispatchers/verifications';
 import { sendEveDispatcher } from './dispatchers/sendEve';
 
-import { StripeCheckoutModule } from 'ng-stripe-checkout';
+import { NgxStripeModule } from 'ngx-stripe';
 
 export {
   paymentDispatcher,
@@ -131,7 +131,7 @@ function getConfig(isDispatcher?: boolean) {
       CommonModule,
       IonicModule,
       AngularCore,
-      StripeCheckoutModule,
+      NgxStripeModule.forRoot('pk_test_kpO3T5fXA7aaftg9D0OO0w3S'),
     ],
     providers: [
       ProfileService,
