@@ -6,3 +6,5 @@ install:
 
 script:
   - npm run test-testnet chrome
+  - npm run test-testnet firefox
+  - npm run test-testnet safari

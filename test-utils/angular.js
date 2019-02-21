@@ -49,6 +49,7 @@ const evan = {
       .setValue('.direct-input ion-textarea > textarea', [mnemonic, browser.Keys.ENTER])
       .waitForElementVisible('.password-dialog', 10000)
       .setValue('.password-dialog ion-input > input', [password, browser.Keys.ENTER])
+      .pause(3000);
   },
   /**
    * Login to the browser using an mnemonic and password.
@@ -65,6 +66,7 @@ const evan = {
       .click('evan-profile-detail .evan-content button.button-outline-md-alert')
       .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
       .click(`ion-alert .alert-button-group button:nth-child(2)`)
+      .pause(3000);
   },
   /**
    * Small wrapper around browser visible and set value, to be sure that a element is visbile and we
