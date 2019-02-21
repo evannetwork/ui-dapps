@@ -112,7 +112,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'name')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
         <ion-col col-6>
@@ -130,7 +130,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'email')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
       </ion-row>
@@ -150,7 +150,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'street')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
         <ion-col col-3>
@@ -168,7 +168,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'city')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
         <ion-col col-3>
@@ -186,7 +186,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'zip')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
       </ion-row>
@@ -206,7 +206,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'country')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
         <ion-col col-6>
@@ -224,7 +224,7 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'vat')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
       </ion-row>
@@ -244,26 +244,44 @@
             </ion-input>
           </ion-item>
           <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'amount')" color="danger">
-            <ion-label>{{ '_dappprofile.send-eve.input.error' | translate }}</ion-label>
+            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
           </ion-chip>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <ion-item>
-            <ion-label stacked>
-              <h3>
-                {{ '_dappprofile.pay-eve.card.title' | translate }}*
-              </h3>
-            </ion-label>
-            <div item-content id="card-element" style="width:100%"></div>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <button type="submit" ion-button icon-left round outline color="alert">
+          <div margin-top class="evan-tabs evan-content">
+            <button ion-button icon-left clear
+              [class.active]="activePaymentTab === 0"
+              (click)="activatePaymentTab(0);">
+              <h3>{{ '_dappprofile.pay-eve.card' | translate }}</h3>
+            </button>
+
+            <button ion-button icon-left clear
+              [class.active]="activePaymentTab === 1"
+              (click)="activatePaymentTab(1);">
+              <h3>{{ '_dappprofile.pay-eve.sepa' | translate }}</h3>
+            </button>
+          </div>
+
+          <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
+            <div class="evan-relative evan-content m-t-0" *ngIf="activePaymentTab === 0">
+              <div item-content id="card-element" style="width:100%"></div>
+                    <button type="submit" ion-button icon-left round outline color="alert">
         <ion-icon name="cash"></ion-icon>
         <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
       </button>
+            </div>
+            <div class="evan-content m-t-0" *ngIf="activePaymentTab === 1">
+              <div item-content id="card-element" style="width:100%"></div>
+                    <button type="submit" ion-button icon-left round outline color="alert">
+        <ion-icon name="cash"></ion-icon>
+        <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
+      </button>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
     </form>
     <div text-center padding-top>
       <button ion-button icon-left round outline color="alert" (click)="logout()">

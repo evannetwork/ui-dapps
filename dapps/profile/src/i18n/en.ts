@@ -112,6 +112,46 @@ export const en = {
       "topup-payment-channel-desc": "EVE amount",
       "topup-payment-channel-error": "Please specify an amount of EVE higher than 0."
     },
+    "pay-eve": {
+      "name": {
+        "title": "Name",
+        "description": "John Doe"
+      },
+      "email": {
+        "title": "Email",
+        "description": "John.Doe@example.com"
+      },
+      "street": {
+        "title": "Address",
+        "description": "Address"
+      },
+      "city": {
+        "title": "City",
+        "description": "San Francisco"
+      },
+      "zip": {
+        "title": "ZIP",
+        "description": "94107"
+      },
+      "country": {
+        "title": "Country",
+        "description": "US"
+      },
+      "vat": {
+        "title": "VAT",
+        "description": "DE99999999999"
+      },
+      "amount": {
+        "title": "Amount of EVE Tokens",
+        "description": "0"
+      },
+      "input": {
+        "error": "This field is required!"
+      },
+      "card": {
+        "title": "Card number"
+      }
+    },
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",
     "privatekey-exported": "Your private key successfully exported to your clipboard",

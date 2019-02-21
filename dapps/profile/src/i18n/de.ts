@@ -112,6 +112,46 @@ export const de = {
       "topup-payment-channel-desc": "EVE Anzahl",
       "topup-payment-channel-error": "Bitte geben Sie eine Menge an EVE an, die höher als 0 ist."
     },
+    "pay-eve": {
+      "name": {
+        "title": "Name",
+        "description": "Name des Rechnungsempfängers"
+      },
+      "email": {
+        "title": "Email",
+        "description": "Email des Rechnungsempfängers"
+      },
+      "street": {
+        "title": "Straße",
+        "description": "Straße des Rechnungsempfängers"
+      },
+      "city": {
+        "title": "Ort",
+        "description": "Ort des Rechnungsempfängers"
+      },
+      "zip": {
+        "title": "PLZ",
+        "description": "PLZ des Rechnungsempfängers"
+      },
+      "country": {
+        "title": "Land",
+        "description": "ISO Landesbezeichnung (z.b. DE)"
+      },
+      "vat": {
+        "title": "USt-IdNr.",
+        "description": "DE99999999999"
+      },
+      "amount": {
+        "title": "Anzahl EVE Tokens",
+        "description": "0"
+      },
+      "input": {
+        "error": "Dieses Feld muss ausgefüllt werden!"
+      },
+      "card": {
+        "title": "Kartennummer"
+      }
+    },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",
     "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",

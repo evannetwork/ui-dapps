@@ -122,6 +122,8 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
    */
   private activeTab: number;
 
+  private activePaymentTab: number = 0;
+
   /**
    * current receiver address input
    */
@@ -281,31 +283,7 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
       email: ['', [Validators.required]],
       amount: ['', [Validators.required]],
     });
-
-    this.stripeService.elements(this.elementsOptions)
-      .subscribe(elements => {
-        this.elements = elements;
-        // Only mount the element the first time
-        if (!this.card) {
-          this.card = this.elements.create('card', {
-            style: {
-              base: {
-                iconColor: '#FFFFFF',
-                color: '#FFFFFF',
-                lineHeight: '40px',
-                fontWeight: 300,
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: '14px',
-                '::placeholder': {
-                  color: '#CFD7E0'
-                }
-              }
-            }
-          });
-          this.card.mount('#card-element');
-        }
-      });
-
+    this.activatePaymentTab(0)
     this.loading = false;
     this.ref.detectChanges();
   }
@@ -325,6 +303,38 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
    */
   activateTab(index: number) {
     this.activeTab = index;
+
+    this.ref.detectChanges();
+    setTimeout(() => this.ref.detectChanges(), 500);
+  }
+
+  activatePaymentTab(index: number) {
+    this.activePaymentTab = index;
+
+
+    this.stripeService.elements(this.elementsOptions)
+      .subscribe(elements => {
+        this.elements = elements;
+        // Only mount the element the first time
+        this.card = this.elements.create(<any>(index === 0 ? 'card': 'iban'), {
+          hidePostalCode: true,
+          supportedCountries: ['SEPA'],
+          style: {
+            base: {
+              iconColor: '#FFFFFF',
+              color: '#FFFFFF',
+              lineHeight: '40px',
+              fontWeight: 300,
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: '14px',
+              '::placeholder': {
+                color: '#CFD7E0'
+              }
+            }
+          }
+        });
+        this.card.mount('#card-element');
+      });
 
     this.ref.detectChanges();
     setTimeout(() => this.ref.detectChanges(), 500);
@@ -502,17 +512,14 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
     const amount = this.stripePayment.get('amount').value;
 
     this.stripeService
-      .createToken(this.card,
+      .createSource(this.card,
         {
-          name,
-          address_line1: street,
-          address_city: city,
-          address_zip: zip
+          owner: {}
         }
       )
       .subscribe(async (result) => {
-        if (result.token) {
-          const token = result.token;
+        if (result.source) {
+          const source = result.source;
           const customer = {
             email,
             shipping: {
@@ -529,7 +536,7 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
               type: 'vat'
             }
           }
-          console.log('Payment successful!', token);
+          console.log('Payment successful!', source);
           const activeAccount = this.core.activeAccount();
           const toSignedMessage = this.bcc.web3.utils
             .soliditySha3(new Date().getTime() + activeAccount)
@@ -543,11 +550,11 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
               `EvanSignedMessage ${ signature }`
             ].join(',')
           };
-          this.executePayment(token.id, amount, customer, headers)
+          this.executePayment(source.id, amount, customer, headers)
 
           // Use the token to create a charge or a customer
           // https://stripe.com/docs/charges
-          console.log(result.token);
+          console.log(result.source);
         } else if (result.error) {
           // Error creating the token
           console.log(result.error.message);
