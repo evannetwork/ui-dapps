@@ -25,7 +25,44 @@
   https://evan.network/license/
 */
 
+// parse prams and set defaults
 const argv = require('minimist')(process.argv.slice(2));
+argv.testname = (argv.testname || 'unkown') + ` - ${ argv.type }`;
+argv.type = argv.type || 'testnet';
+argv.ensRoot = argv.ensRoot || 'evan';
+// delete underscore
+delete argv._;
+
+const environments = [
+  'chrome',
+  'firefox',
+  'internet explorer',
+  'safari',
+];
+
+// check for missing params
+if (!argv.env || argv.env === true) {
+  throw new Error(`No env was specified! (${ environments
+    .map(browser => browser.replace(/ /g, ''))})`);
+}
+
+// check for the test type and check which configuration should be used.
+if (!argv.url) {
+  switch(argv.type) {
+    case 'localhost': {
+      var browserstack = require('browserstack-local');
+
+      argv.url = 'http://localhost:3000/dev.html';
+
+      break;
+    }
+    case 'testnet': {
+      argv.url = 'https://dashboard.test.evan.network/';
+
+      break;
+    }
+  }
+}
 
 // selenium configuration
 const seleniumConfig = {
@@ -34,72 +71,55 @@ const seleniumConfig = {
   "port" : 80
 };
 
-// default configuration for 
 const defaultConfig = {
   desiredCapabilities: {
-    'build': 'nightwatch-browserstack',
+    'build': argv.testname,
     'browserstack.user': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
     'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
     'browserstack.debug': true,
+    'chromeOptions' : {
+      'args' : [
+        'use-fake-device-for-media-stream', 
+        'use-fake-ui-for-media-stream'
+      ]
+    },
     ...seleniumConfig // apply selenium config to everything
   },
-  globals: { }
+  globals: { ...argv }
 };
 
-// check for the test type and check which configuration should be used.
-switch(argv.t) {
-  case 'localhost': {
-    var browserstack = require('browserstack-local');
-
-    defaultConfig.globals.url = 'http://localhost:3000/dev.html';
-
-    break;
-  }
-  case 'testnet': {
-    defaultConfig.globals.url = 'https://dashboard.evan.network';
-
-    break;
-  }
-}
-
+// setup nightwatch configuration
 const nightwatchConfig = {
   src_folders : [ 'tests' ],
-  globals_path : "./globals_module.js",
+  globals_path : './globals_module.js',
   selenium : seleniumConfig,
   test_settings: {
-    default: {
-      ...defaultConfig,
-    },
-    chrome: {
-      desiredCapabilities: {
-        browser: "chrome"
-      }
-    },
-    firefox: {
-      desiredCapabilities: {
-        browser: "firefox"
-      }
-    },
-    safari: {
-      desiredCapabilities: {
-        browser: "safari"
-      }
-    },
-    ie: {
-      desiredCapabilities: {
-        browser: "internet explorer"
-      }
-    }
+    // apply default configuration to all test environments
+    default: { ...defaultConfig },
   }
 };
 
-// if suite should be used, start the thread workers
-if (argv.w) {
+// add environments
+environments.forEach(browser =>
+  nightwatchConfig.test_settings[browser.replace(/ /g, '')] = {
+    desiredCapabilities: {
+      browser: browser,
+      ...defaultConfig
+    }
+  }
+);
+
+// if workers are added, start the thread workers
+if (argv.workers) {
   nightwatchConfig.test_workers = {
     "enabled": true,
-    "workers": parseInt(argv.w)
+    "workers": parseInt(argv.workers)
   };
 }
 
+// test informations
+console.log(`\n\nrunning evan.network tests`);
+console.log('==========================');
+console.log(Object.keys(argv).map(key => `  - ${ key } : ${ argv[key] }`).join('\n'));
 
 module.exports = nightwatchConfig;

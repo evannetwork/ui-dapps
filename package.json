@@ -6,16 +6,11 @@
   },
   "description": "evan.network nightwatch ui-tests",
   "license": "AGPL-3.0-only",
+  "main": "test-utils/evan.js",
   "name": "@evan.network/ui-tests",
   "scripts": {
-    "localhost": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome",
-    "localhost-all": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome,firefox,safari",
-    "localhost-workers": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome -w 5",
-    "localhost-workers-all": "node scripts/local.runner.js -c conf/evan.conf.js -t localhost -e chrome,firefox,safari -w 5",
-    "testnet": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome",
-    "testnet-all": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome",
-    "testnet-workers": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome -w 5",
-    "testnet-workers-all": "./node_modules/.bin/nightwatch -c conf/evan.conf.js -t testnet -e chrome -w 5"
+    "test-local": "node scripts/local.runner.js --config conf/evan.conf.js --testname 'evan.network core' --type localhost --env ",
+    "test-testnet": "./node_modules/.bin/nightwatch --config conf/evan.conf.js --testname 'evan.network core' --type testnet --env "
   },
   "version": "0.1.0"
 }
