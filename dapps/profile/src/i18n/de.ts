@@ -150,11 +150,14 @@ export const de = {
       },
       "card": {
         "title": "Kartennummer"
-      }
+      },
+      "sepa": "SEPA Abbuchung",
+      "credit": "Kreditkarte",
+      "pay": "Bezahlen"
     },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",
-    "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
+    "privatekey-exported": "Ihr Private Key wurde erfolgreich in Ihre Zwischenablage exportiert",
     "profile-encryption-key": "Profil Verschlüsselungsschlüssel",
     "profile-verifications-dispatcher": {
       "description": "Verifizierungsprüfungen speichern",

@@ -176,6 +176,10 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
 
   card: StripeElement;
 
+  public cardError: string;
+  public ibanError: string;
+  iban: StripeElement;
+
   // optional parameters
   elementsOptions: ElementsOptions = {
     locale: 'auto'
@@ -190,6 +194,8 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
 
 
   @ViewChild('cardElement') cardElement: any;
+
+  @ViewChild('sepaElement') sepaElement: any;
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
@@ -272,18 +278,6 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
         }
       }
     );
-
-    this.stripePayment = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      street: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      zip: ['', [Validators.required]],
-      country: ['', [Validators.required]],
-      vat: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
-    });
-    this.activatePaymentTab(0)
     this.loading = false;
     this.ref.detectChanges();
   }
@@ -303,38 +297,6 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
    */
   activateTab(index: number) {
     this.activeTab = index;
-
-    this.ref.detectChanges();
-    setTimeout(() => this.ref.detectChanges(), 500);
-  }
-
-  activatePaymentTab(index: number) {
-    this.activePaymentTab = index;
-
-
-    this.stripeService.elements(this.elementsOptions)
-      .subscribe(elements => {
-        this.elements = elements;
-        // Only mount the element the first time
-        this.card = this.elements.create(<any>(index === 0 ? 'card': 'iban'), {
-          hidePostalCode: true,
-          supportedCountries: ['SEPA'],
-          style: {
-            base: {
-              iconColor: '#FFFFFF',
-              color: '#FFFFFF',
-              lineHeight: '40px',
-              fontWeight: 300,
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: '14px',
-              '::placeholder': {
-                color: '#CFD7E0'
-              }
-            }
-          }
-        });
-        this.card.mount('#card-element');
-      });
 
     this.ref.detectChanges();
     setTimeout(() => this.ref.detectChanges(), 500);
@@ -498,92 +460,6 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
       { eve: this.eve, receiver: this.receiverInput }
     );
     this.ref.detectChanges();
-  }
-
-
-  public buy() {
-    const name = this.stripePayment.get('name').value;
-    const email = this.stripePayment.get('email').value;
-    const street = this.stripePayment.get('street').value;
-    const city = this.stripePayment.get('city').value;
-    const zip = this.stripePayment.get('zip').value;
-    const country = this.stripePayment.get('country').value;
-    const vat = this.stripePayment.get('vat').value;
-    const amount = this.stripePayment.get('amount').value;
-
-    this.stripeService
-      .createSource(this.card,
-        {
-          owner: {}
-        }
-      )
-      .subscribe(async (result) => {
-        if (result.source) {
-          const source = result.source;
-          const customer = {
-            email,
-            shipping: {
-              name,
-              address: {
-                city,
-                country,
-                line1: street,
-                postal_code: zip,
-              }
-            },
-            tax_info: {
-              tax_id: vat,
-              type: 'vat'
-            }
-          }
-          console.log('Payment successful!', source);
-          const activeAccount = this.core.activeAccount();
-          const toSignedMessage = this.bcc.web3.utils
-            .soliditySha3(new Date().getTime() + activeAccount)
-            .replace('0x', '');
-          const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
-          const signature = await this.signMessage(toSignedMessage, activeAccount);
-          const headers = {
-            authorization: [
-              `EvanAuth ${ activeAccount }`,
-              `EvanMessage ${ hexMessage }`,
-              `EvanSignedMessage ${ signature }`
-            ].join(',')
-          };
-          this.executePayment(source.id, amount, customer, headers)
-
-          // Use the token to create a charge or a customer
-          // https://stripe.com/docs/charges
-          console.log(result.source);
-        } else if (result.error) {
-          // Error creating the token
-          console.log(result.error.message);
-        }
-      });
-  }
-
-  public async executePayment(id, amount, customer, headers = {}) {
-    return new Promise(async (resolve, reject) => {
-
-      const checkStatus = async() => {
-        return (await this.http
-          .post(
-            `${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
-            {
-              token: id,
-              amount: amount,
-              customer: customer
-            },
-            {
-              headers,
-            }
-          )
-          .toPromise()
-        ).json();
-      }
-
-      await checkStatus();
-    })
   }
 
   /**

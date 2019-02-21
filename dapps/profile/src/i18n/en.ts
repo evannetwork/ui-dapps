@@ -150,7 +150,10 @@ export const en = {
       },
       "card": {
         "title": "Card number"
-      }
+      },
+      "sepa": "SEPA direct debit",
+      "credit": "Credit card",
+      "pay": "Pay"
     },
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",

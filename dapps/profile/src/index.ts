@@ -52,6 +52,7 @@ import { EvanProfileSettingsComponent } from './components/settings/settings';
 import { EvanProfileVerificationsComponent } from './components/verifications/verifications';
 import { EvanProfileContainerComponent } from './components/container/container';
 import { EvanProfilePaymentsComponent } from './components/payments/payments';
+import { EvanBuyEveComponent } from './components/buy-eve/buy-eve';
 
 import { paymentDispatcher } from './dispatchers/payment';
 import { ProfileService } from './services/service';
@@ -106,6 +107,11 @@ function getRoutes(): Routes {
             path: 'payments',
             component: EvanProfilePaymentsComponent,
             data: { reload: true, state: 'payments', }
+          },
+          {
+            path: 'buy-eve',
+            component: EvanBuyEveComponent,
+            data: { reload: true, state: 'buy-eve', }
           }
         ]
       },
@@ -158,6 +164,7 @@ function getConfig(isDispatcher?: boolean) {
       EvanProfileVerificationsComponent,
       EvanProfileDetailComponent,
       EvanProfilePaymentsComponent,
+      EvanBuyEveComponent,
       ProfileRootComponent,
     ];
   }
