@@ -127,7 +127,7 @@ const createTransportOrder = function (browser) {
       // wait until the loading button is gone, and the new list was loaded
       .waitForElementNotPresent(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button.loading-button`, wait.element)
       .click(`.refresh-icon`)
-      .waitForElementPresent(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder }`, wait.loading)
+      .waitForElementPresent(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } td:first-child`, wait.loading)
       .assert.containsText(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } td:first-child`, orderName)
 
     // check if the order can be loaded
