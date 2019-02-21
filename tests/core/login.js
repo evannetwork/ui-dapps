@@ -25,16 +25,23 @@
   https://evan.network/license/
 */
 
-const setupEvan = require('../../test-utils/evan.js').setupEvan;
-const accounts = require('../../test-utils/accounts.js').accounts;
+const setupEvan = require('../../test-utils/angular.js').setupEvan;
+
+/**
+ * Test login / logout process.
+ *
+ * @param      {any}  browser  nightwatch browser instance
+ */
+const login = function (browser) {
+  const user = browser.evan.accounts.default;
+
+  return browser
+    .evan.login(user.mnemonic, user.password)
+};
 
 module.exports = {
-  'evan.network login': function (browser) {
-    // apply the evan functions to the browser context
-    setupEvan(browser);
-
-    browser
-      .evan.login(accounts[0].mnemonic, accounts[0].password)
-      .end();
-  }
+  'before': (browser) => setupEvan(browser),
+  'evan.network login': login,
+  'afterEach': (browser) => browser.evan.logout(),
+  'after': (browser) => browser.end(),
 };

@@ -25,9 +25,25 @@
   https://evan.network/license/
 */
 
-exports.accounts = [
-  {
-    mnemonic: 'clap tower execute indicate fame ugly almost diary mask music vault produce',
-    password: 'Test1234'
-  }
-]
+module.exports = {
+  browserStack: {
+    name: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
+    key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
+  },
+  accounts: {
+    default: {
+      mnemonic: process.env.USER_DEFAULT_MNEMONIC,
+      password: process.env.USER_DEFAULT_PASSWORD
+    },
+    rental: {
+      dispo: {
+        mnemonic: process.env.USER_RENTAL_DISPO_MNEMONIC,
+        password: process.env.USER_RENTAL_DISPO_PASSWORD
+      },
+      driver: {
+        mnemonic: process.env.USER_RENTAL_DRIVER_MNEMONIC,
+        password: process.env.USER_RENTAL_DRIVER_PASSWORD
+      },
+    },
+  },
+};

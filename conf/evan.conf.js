@@ -27,6 +27,7 @@
 
 // parse prams and set defaults
 const argv = require('minimist')(process.argv.slice(2));
+const accounts = require('./accounts.js');
 argv.testname = (argv.testname || 'unkown') + ` - ${ argv.type }`;
 argv.type = argv.type || 'testnet';
 argv.ensRoot = argv.ensRoot || 'evan';
@@ -71,11 +72,12 @@ const seleniumConfig = {
   "port" : 80
 };
 
+// set configuration
 const defaultConfig = {
   desiredCapabilities: {
     'build': argv.testname,
-    'browserstack.user': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
-    'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
+    'browserstack.user': accounts.browserStack.name,
+    'browserstack.key': accounts.browserStack.key,
     'browserstack.debug': true,
     'chromeOptions' : {
       'args' : [
@@ -85,7 +87,7 @@ const defaultConfig = {
     },
     ...seleniumConfig // apply selenium config to everything
   },
-  globals: { ...argv }
+  globals: { ...argv, ...accounts }
 };
 
 // setup nightwatch configuration
