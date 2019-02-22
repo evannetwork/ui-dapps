@@ -164,7 +164,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
     this.toEve = this.bcc.web3.utils.fromWei;
 
     // setup channel manager
-    this.bcc.payments.setChannelManager(this.paymentService.channelManagerAccountId);
+    this.bcc.payments.setChannelManager(this.paymentService.paymentChannelManagerAccountId);
 
     // watch for updates and reload the ui data
     this.paymentQueueId = new QueueId(`profile.${ getDomainName() }`, 'paymentDispatcher'),

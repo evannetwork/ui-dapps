@@ -60,7 +60,7 @@ export const paymentDispatcher = new QueueDispatcher(
               // transform eve to gwei
               const eveToSend = service.bcc.web3.utils.toWei(entry.eve, 'ether');
               await service.bcc.payments.openChannel(activeAccount, service.paymentService
-                .agentAccountId, eveToSend);
+                .paymentAgentAccountId, eveToSend);
 
               break;
             }
