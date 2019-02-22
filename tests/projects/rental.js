@@ -74,7 +74,7 @@ const rentalFuncs = {
       .evan.waitForElementVisible('digital-twin-select', wait.element)
       .setValue('digital-twin-select ion-input[type="text"] input', [twinAddress, browser.Keys.ENTER])
       // check if twin is loading
-      .evan.waitForElementVisible(elements.dt.ordersContainer, wait.element)
+      .evan.waitForElementVisible(elements.dt.ordersContainer, wait.loading)
       .assert.containsText(`${ elements.dt.ordersContainer } .content-heading h3.content-header`, 'Übersicht Aufträge')
   },
 };
@@ -132,7 +132,7 @@ const createTransportOrder = function (browser) {
 
     // check if the order can be loaded
     .click(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`)
-      .evan.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid h2.content-header`, wait.element)
+      .evan.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid h2.content-header`, wait.loading)
       .assert.containsText(`${ elements.order.detail.metadata } ion-grid h2.content-header`, orderName)
       // check if the task are available
       .assert.containsText(`${ elements.order.detail.todo(2) } .todo-header-container h2.content-header`, 'Maschine für Transport anmelden')
