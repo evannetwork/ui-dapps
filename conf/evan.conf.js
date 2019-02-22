@@ -35,16 +35,16 @@ argv.ensRoot = argv.ensRoot || 'evan';
 delete argv._;
 
 const environments = [
-  'chrome',
-  'firefox',
-  'internet explorer',
-  'safari',
+  { name: 'chrome', version: '60' },
+  { name: 'firefox', version: '52' },
+  { name: 'edge', version: '15' },
+  { name: 'safari', version: '11.1' },
 ];
 
 // check for missing params
 if (!argv.env || argv.env === true) {
   throw new Error(`No env was specified! (${ environments
-    .map(browser => browser.replace(/ /g, ''))})`);
+    .map(browser => browser.name.replace(/ /g, ''))})`);
 }
 
 // check for the test type and check which configuration should be used.
@@ -103,9 +103,10 @@ const nightwatchConfig = {
 
 // add environments
 environments.forEach(browser =>
-  nightwatchConfig.test_settings[browser.replace(/ /g, '')] = {
+  nightwatchConfig.test_settings[browser.name.replace(/ /g, '')] = {
     desiredCapabilities: {
-      browser: browser,
+      browser: browser.name,
+      browser_version: browser.version,
       ...defaultConfig
     }
   }
