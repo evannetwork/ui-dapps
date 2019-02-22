@@ -110,15 +110,15 @@ const createTransportOrder = function (browser) {
         .waitForElementVisible('ion-picker-cmp .picker-toolbar div:nth-child(2) button', wait.element)
         .click('ion-picker-cmp .picker-toolbar div:nth-child(2) button')
       // customer
-      .setValue(`${ elements.order.create.form } input[placeholder="Kunde"]`, `Test Kunde`)
-      .setValue(`${ elements.order.create.form } input[placeholder="Telefonnummer"]`, `Test Telefonnummer`)
-      .setValue(`${ elements.order.create.form } input[placeholder="E-Mail Addresse"]`, `test@test.de`)
-      .setValue(`${ elements.order.create.form } input[placeholder="Straße"]`, `Test Straße`)
-      .setValue(`${ elements.order.create.form } input[placeholder="Hausnummer"]`, `Test Hausnummer`)
-      .setValue(`${ elements.order.create.form } input[placeholder="PLZ"]`, `00000`)
-      .setValue(`${ elements.order.create.form } input[placeholder="Stadt"]`, `Test Stadt`)
+      .setValue(`${ elements.order.create.form } input[placeholder="Kunde"]`, `Test Kunde`).pause(500)
+      .setValue(`${ elements.order.create.form } input[placeholder="Telefonnummer"]`, `Test Telefonnummer`).pause(500)
+      .setValue(`${ elements.order.create.form } input[placeholder="E-Mail Addresse"]`, `test@test.de`).pause(500)
+      .setValue(`${ elements.order.create.form } input[placeholder="Straße"]`, `Test Straße`).pause(500)
+      .setValue(`${ elements.order.create.form } input[placeholder="Hausnummer"]`, `Test Hausnummer`).pause(500)
+      .setValue(`${ elements.order.create.form } input[placeholder="PLZ"]`, `00000`).pause(500)
+      .setValue(`${ elements.order.create.form } input[placeholder="Stadt"]`, `Test Stadt`).pause(500)
       // description
-      .setValue(`${ elements.order.create.form } textarea[placeholder="z.B. spezifische Beschreibung der Lage"]`, `Test Beschreibung Test Beschreibung Test Beschreibung Test Beschreibung`)
+      .setValue(`${ elements.order.create.form } textarea[placeholder="z.B. spezifische Beschreibung der Lage"]`, `Test Beschreibung Test Beschreibung Test Beschreibung Test Beschreibung`).pause(500)
       // start creating
       .click(`${ elements.order.create.container } button[color="transparency"]`)
 
