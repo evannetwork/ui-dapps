@@ -36,8 +36,8 @@ delete argv._;
 
 const environments = [
   { name: 'chrome', version: '60' },
-  { name: 'firefox', version: '52' },
   { name: 'edge', version: '15' },
+  { name: 'firefox', version: '52' },
   { name: 'safari', version: '11.1' },
 ];
 
@@ -75,10 +75,11 @@ const seleniumConfig = {
 // set configuration
 const defaultConfig = {
   desiredCapabilities: {
-    'build': argv.testname,
-    'browserstack.user': accounts.browserStack.name,
-    'browserstack.key': accounts.browserStack.key,
     'browserstack.debug': true,
+    'browserstack.key': accounts.browserStack.key,
+    'browserstack.networkLogs': true,
+    'browserstack.user': accounts.browserStack.name,
+    'build': argv.testname,
     'chromeOptions' : {
       'args' : [
         'use-fake-device-for-media-stream', 
