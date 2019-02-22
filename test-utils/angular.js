@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+let loggedIn = false;
 const evan = {
   /**
    * Login to the browser using an mnemonic and password.
@@ -35,6 +36,8 @@ const evan = {
    * @return     {any}     nightwatch browser result chain
    */
   login: function(browser, mnemonic, password) {
+    loggedIn = true;
+
     return browser
       .url(this.url)
       .execute(function() {
@@ -60,13 +63,17 @@ const evan = {
    * @return     {any}     nightwatch browser result chain
    */
   logout: function(browser, mnemonic, password) {
-    return browser
-      .url(`${ this.url }#/profile.evan`)
-      .waitForElementPresent('evan-profile-detail .evan-content button.button-outline-md-alert', 10 * 1000)
-      .click('evan-profile-detail .evan-content button.button-outline-md-alert')
-      .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
-      .click(`ion-alert .alert-button-group button:nth-child(2)`)
-      .pause(3 * 1000);
+    if (loggedIn) {
+      loggedIn = false;
+
+      return browser
+        .url(`${ this.url }#/profile.evan`)
+        .waitForElementPresent('evan-profile-detail .evan-content button.button-outline-md-alert', 10 * 1000)
+        .click('evan-profile-detail .evan-content button.button-outline-md-alert')
+        .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
+        .click(`ion-alert .alert-button-group button:nth-child(2)`)
+        .pause(3 * 1000);
+    }
   },
   /**
    * Small wrapper around browser visible and set value, to be sure that a element is visbile and we

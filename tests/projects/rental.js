@@ -86,7 +86,7 @@ const rentalFuncs = {
  */
 const createTransportOrder = function (browser) {
   // use it for setting into the form and checking up the list entries
-  const orderName = ` Test - ${ (new Date().toString()) }`;
+  const orderName = ` Test - ${ browser.options.desiredCapabilities.browserName } - ${ (new Date().toString()) }`;
   const dispo = browser.evan.accounts.rental.dispo;
 
   browser
@@ -149,7 +149,7 @@ const createTransportOrder = function (browser) {
 const solveTransportOrder = function(browser) {
   const driver = browser.evan.accounts.rental.driver;
 
-  browser
+  const solveChain = browser
     .evan.login(driver.mnemonic, driver.password)
     // navigate to dashboard
     .url(browser.evan.getRentalRoot())
@@ -181,10 +181,12 @@ const solveTransportOrder = function(browser) {
       // submit alert
       .evan.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
       .click(`ion-alert .alert-button-group button:nth-child(2)`)
-      .evan.syncFinished()
+      .evan.syncFinished();
 
+  // do not test picture taking in other browsers than chrome
+  if (browser.options.desiredCapabilities.browserName === 'chrome') {
     // finish 3. task
-    .evan.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-header-container button`, wait.element)
+    solveChain.evan.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-header-container button`, wait.element)
       // open todo
       .click(`${ elements.order.detail.todo(4) } .todo-header-container button`)
       .evan.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-data`, wait.element)
@@ -239,6 +241,7 @@ const solveTransportOrder = function(browser) {
       .evan.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
       .click(`ion-alert .alert-button-group button:nth-child(2)`)
       .evan.syncFinished()
+  }
 }
 
 /**
@@ -247,21 +250,24 @@ const solveTransportOrder = function(browser) {
  * @param      {any}  browser  nightwatch browser instance
  */
 const finishTransportOrder = function(browser) {
-  const dispo = browser.evan.accounts.rental.dispo;
+  // pictures were not tested within other browsers than chrome, break this tests
+  if (browser.options.desiredCapabilities.browserName === 'chrome') {
+    const dispo = browser.evan.accounts.rental.dispo;
 
-  browser
-    .evan.login(dispo.mnemonic, dispo.password)
-    // navigate to dashboard
-    .url(browser.evan.getRentalRoot())
-    // check if the dashboard is loading and the correct dapp is started and open the dev twin
-    .evan.openDigitalTwin(twinAddress)
+    browser
+      .evan.login(dispo.mnemonic, dispo.password)
+      // navigate to dashboard
+      .url(browser.evan.getRentalRoot())
+      // check if the dashboard is loading and the correct dapp is started and open the dev twin
+      .evan.openDigitalTwin(twinAddress)
 
-    // check if the order can be loaded
-    .evan.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder }`, wait.loading)
-    .click(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`)
-      .evan.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`, wait.element)
-      .click(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`)
-      .evan.syncFinished()
+      // check if the order can be loaded
+      .evan.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder }`, wait.loading)
+      .click(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`)
+        .evan.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`, wait.element)
+        .click(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`)
+        .evan.syncFinished()
+    }
 };
 
 module.exports = {

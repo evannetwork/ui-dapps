@@ -124,6 +124,17 @@ if (argv.workers) {
 // test informations
 console.log(`\n\nrunning evan.network tests`);
 console.log('==========================');
-console.log(Object.keys(argv).map(key => `  - ${ key } : ${ argv[key] }`).join('\n'));
+console.log(Object.keys(argv).map(key => {
+  let log = `  - ${ key } : ${ argv[key] }`;
+
+  if (key === 'env') {
+    log = `  - ${ key } : ` + argv.env.split(',').map(browser => {
+      const foundEnv = environments.filter(env => env.name === browser)[0];
+      return foundEnv ? `${ browser } (${ foundEnv.version })` : browser;
+    }).join(', ');
+  }
+
+  return log;
+}).join('\n'));
 
 module.exports = nightwatchConfig;
