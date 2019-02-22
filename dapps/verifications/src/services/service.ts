@@ -40,7 +40,7 @@ import {
   Injectable,
   Observable,
   OnDestroy,
-  Platform, 
+  Platform,
   Subscription,
 } from 'angular-libs';
 
