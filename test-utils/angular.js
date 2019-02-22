@@ -41,15 +41,15 @@ const evan = {
         window.localStorage['bc-dev-logs'] = 'debug';
         window.localStorage['angular-dev-logs'] = 'debug';
       }, [], function(result) {})
-      .waitForElementVisible('onboarding-welcome', 30000)
+      .waitForElementVisible('onboarding-welcome', 30 * 1000)
       .assert.elementPresent('.slide-zoom > h3')
       .click('.start-buttons > button:nth-child(2)')
-      .waitForElementVisible('mnemonic-display', 10000)
+      .waitForElementVisible('mnemonic-display', 10 * 1000)
       .click('mnemonic-display ion-toggle')
       .setValue('.direct-input ion-textarea > textarea', [mnemonic, browser.Keys.ENTER])
-      .waitForElementVisible('.password-dialog', 10000)
+      .waitForElementVisible('.password-dialog', 10 * 1000)
       .setValue('.password-dialog ion-input > input', [password, browser.Keys.ENTER])
-      .pause(3000);
+      .pause(3 * 1000);
   },
   /**
    * Login to the browser using an mnemonic and password.
@@ -66,7 +66,7 @@ const evan = {
       .click('evan-profile-detail .evan-content button.button-outline-md-alert')
       .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
       .click(`ion-alert .alert-button-group button:nth-child(2)`)
-      .pause(3000);
+      .pause(3 * 1000);
   },
   /**
    * Small wrapper around browser visible and set value, to be sure that a element is visbile and we
@@ -80,10 +80,10 @@ const evan = {
   selectContractMember: function(browser, compSelector, menuSelector, contactName) {
     return browser
       .click(`${ compSelector } input`)
-      .waitForElementVisible(`${ menuSelector }`, 10000)
+      .waitForElementVisible(`${ menuSelector }`, 10 * 1000)
       // search for contract members
       .setValue(`${ menuSelector } input[placeholder="Suche Kontakte, um sie hinzuzufügen..."]`, contactName)
-      .waitForElementVisible(`${ menuSelector } ion-list ion-item`, 10000)
+      .waitForElementVisible(`${ menuSelector } ion-list ion-item`, 10 * 1000)
       // select the searched user
       .click(`${ menuSelector } ion-list ion-item`)
       // close the contract members
@@ -100,7 +100,17 @@ const evan = {
     return browser
       .waitForElementVisible('.toast-message', 120 * 1000)
       .assert.containsText('.toast-message', 'Synchronization finished')
-      .waitForElementNotPresent('.toast-message', 10000)
+      .waitForElementNotPresent('.toast-message', 10 * 1000)
+  },
+  /**
+   * Wait for an element to be visible and 
+   *
+   * @param      {<type>}  browser  The browser
+   */
+  waitForElementVisible: function(browser, selector, wait) {
+    return browser
+      .waitForElementVisible(selector, wait)
+      .waitForElementNotPresent('.click-block click-block-enabled click-block-active', 10 * 1000)
   }
 };
 
