@@ -94,6 +94,7 @@ export const en = {
       "estimated-funds": "Estimated months until assets are deleted",
       "funds-available": "Availabe EVE for storage",
       "initial-eve-amount": "Initial amout of eve to lock",
+      "months": "Months",
       "monthly-cost": "Monthly storage costs",
       "payments": "Storage payments",
       "payments-desc": "Manage your storage payments",

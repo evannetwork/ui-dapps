@@ -80,7 +80,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    * show the base loading symbol.
    */
   private loading: boolean;
- 
+
   /**
    * holds the payment channel details for the current account
    */
@@ -201,7 +201,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
       status.monthlyPayments = Math.floor(status.monthlyPayments).toString();
       status.fundsAvailable = Math.floor(status.fundsAvailable).toString();
       status.estimatedFunds = Math.floor(status.fundsAvailable / status.monthlyPayments);
-      status.overallSize = Number(status.monthlyPayments / 100) * 1000;
+      status.overallSize = Number(status.monthlyPayments / 100000000000) * 1000;
 
       // save status to components scope
       this.paymentDetails = status;
