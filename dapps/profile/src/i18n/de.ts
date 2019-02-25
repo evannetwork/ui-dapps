@@ -35,6 +35,10 @@ export const de = {
     "alias": "Alias",
     "balance": "Meine EVEs",
     "balance-updated": "EVEs wurden aktualisiert...",
+    "buy-eve": {
+      "buy-eve": "EVEs kaufen",
+      "buy-eve-desc": "EVEs über Kreditkarte kaufen",
+    },
     "cancel": "abbrechen",
     "color-theme": "Farbschema",
     "color-theme-desc": "Stellen Sie die Farbdarstellung der Benutzeroberfläche ein.",
@@ -153,7 +157,9 @@ export const de = {
       },
       "sepa": "SEPA Abbuchung",
       "credit": "Kreditkarte",
-      "pay": "Bezahlen"
+      "pay": "Bezahlen",
+      "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Ihre Karte wurde NICHT belastet!. Bitte versuchen Sie es später noch einmal. Fehlercode:",
+      "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die Angegebene Email. Der Vorgang ist abgeschlossen sobald Sie die Rechnung erhalten."
     },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",

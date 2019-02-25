@@ -25,40 +25,11 @@
   https://evan.network/license/
 */
 
-evan-profile-detail {
-  .evan-content {
-    width: 100%;
-    margin: 0;
-  }
-
-  .evan-tabs-container .evan-content {
-    @media (max-width: 768px) {
-      margin-bottom: 75px;
-    }
-  }
-
-  .evan-tabs {
-    position: relative !important; 
-
-    h3 {
-      font-size: 16px;
-    }
-  }
-
-  ion-row {
-    ion-col {
-      position: relative;
-
-      p {
-        margin: 5px 0 0 0;
-      }
-
-      button[icon-only] {
-        position: absolute !important;
-        top: 0;
-        right: 0;
-        bottom: 0;
-      }
+evan-buy-eve {
+  ion-chip {
+    &.success-hint {
+      border-radius: 0;
+      background-color: rgba(83, 230, 157, .5);
     }
   }
 }

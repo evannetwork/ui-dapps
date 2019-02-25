@@ -25,7 +25,7 @@
 <div *ngIf="!loading">
   <div class="evan-relative evan-content">
     <h3 class="content-header m-b-0 m-t-0">
-      {{ '_dappprofile.buy-eve' | translate }}
+      {{ '_dappprofile.buy-eve.buy-eve' | translate }}
     </h3>
 
     <form novalidate [formGroup]="stripePayment">
@@ -188,11 +188,11 @@
           <h3>{{ '_dappprofile.pay-eve.credit' | translate }}</h3>
         </button>
 
-        <button ion-button icon-left clear
+        <!-- <button ion-button icon-left clear
           [class.active]="activePaymentTab === 1"
           (click)="activatePaymentTab(1);">
           <h3>{{ '_dappprofile.pay-eve.sepa' | translate }}</h3>
-        </button>
+        </button> -->
       </div>
 
       <div class="evan-tabs-container" style="height:150px" [@tabSlideTransition]="activePaymentTab">
@@ -210,7 +210,17 @@
         </div>
       </div>
       <div text-center padding-top>
-        <button (click)="buy()" ion-button icon-left round outline color="alert">
+        <ion-chip class="error-hint" *ngIf="paymentResponse?.status === 'error'" color="danger">
+          <ion-label>{{ '_dappprofile.pay-eve.error-payment' | translate }} {{ paymentResponse.code }}</ion-label>
+        </ion-chip>
+        <ion-chip class="success-hint" *ngIf="paymentResponse?.status === 'success'" color="success">
+          <ion-label>{{ '_dappprofile.pay-eve.successful-payment' | translate }}</ion-label>
+        </ion-chip>
+      </div>
+      <div text-center padding-top>
+        <button (click)="buy()" ion-button icon-left round outline color="alert"
+          [disabled]="paymentRunning">
+          <ion-spinner *ngIf="paymentRunning"></ion-spinner>
           <ion-icon name="cash"></ion-icon>
           <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
         </button>

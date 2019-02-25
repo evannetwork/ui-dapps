@@ -35,6 +35,10 @@ export const en = {
     "alias": "Alias",
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
+    "buy-eve": {
+      "buy-eve": "Buy EVEs",
+      "buy-eve-desc": "Buy EVEs via credit card",
+    },
     "cancel": "cancel",
     "color-theme": "Color Theme",
     "color-theme-desc": "Set the color of the user interface.",
@@ -153,7 +157,9 @@ export const en = {
       },
       "sepa": "SEPA direct debit",
       "credit": "Credit card",
-      "pay": "Pay"
+      "pay": "Pay",
+      "error-payment": "An error occurred during the payment process. Your card was NOT debited! Please try again later. Error code:",
+      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice."
     },
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",

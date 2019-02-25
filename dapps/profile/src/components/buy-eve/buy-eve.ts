@@ -69,7 +69,7 @@ import {
   Elements,
   Element as StripeElement,
   ElementsOptions
-} from "ngx-stripe";
+} from 'ngx-stripe';
 
 /**************************************************************************************************/
 
@@ -82,9 +82,11 @@ import {
   ]
 })
 
+
 /**
- * Shows the current profile information and provides the possibility to set some configurations
- * for the ui
+ * Buy eves with credit cards component
+ *
+ * @class      EvanBuyEveComponent (name)
  */
 export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit {
   /**
@@ -97,61 +99,84 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    */
   private loading: boolean;
 
-
-  private activePaymentTab: number = 0;
-
   /**
-   * Function to unsubscribe from queue results.
+   * current active payment tab id
    */
-  private queueWatcher: Function;
-
-  /**
-   * queue id for the send eve queue
-   */
-  private queueId: any;
-
-  /**
-   * is currently the sending eve queue running?
-   */
-  private sendingEve: boolean;
-
-  /**
-   * trigger rerendering of the eve form
-   */
-  private showSendEveForm: boolean = true;
+  private activePaymentTab = 0;
 
   /**
    * Current input values.
    */
   private buyEveForm: any = { amount: 0 };
 
+
+  /**
+   * holds form inputs for the payment process
+   */
   private payEve: any = {};
 
   /**
-   * User management agent account to check the balance for.
+   * external agent url to send the payment tokens
    */
-  public agentUrl = 'https://payments-core.evan.network/api';
+  public agentUrl = 'http://172.20.1.59:8080/api';
 
-
+  /**
+   * stripe element holder
+   */
   elements: Elements;
 
+  /**
+   * stripe card element
+   */
   card: StripeElement;
 
-  public cardError: string;
-  public ibanError: string;
+  /**
+   * stripe iban element
+   */
   iban: StripeElement;
 
-  // optional parameters
+  /**
+   * holds error messages for credit card errors from stripe
+   */
+  public cardError: string;
+
+  /**
+   * holds error messages for sepa card errors from stripe
+   */
+  public ibanError: string;
+
+  /**
+   * stripe optiosn for card or iban elements
+   */
   elementsOptions: ElementsOptions = {
     locale: 'auto'
   };
 
+  /**
+   * stripe payment formgroup
+   */
   stripePayment: FormGroup;
 
+  /**
+   * holds the response from the payment agent
+   */
+  paymentResponse: any;
 
+  /**
+   * variable to check if the payment process is currently running
+   */
+  paymentRunning = false;
+
+  /**
+   * element holder for the credit card stripe element
+   */
   @ViewChild('cardElement') cardElement: any;
 
+  /**
+   * element holder for the sepa card stripe element
+   */
   @ViewChild('sepaElement') sepaElement: any;
+
   constructor(
     private _DomSanitizer: DomSanitizer,
     private bcc: EvanBCCService,
@@ -168,17 +193,19 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   }
 
   /**
-   * Set initial values and load the profile information
+   * Set initial values for the payment form
    *
    * @return     {Promise<void>}  resolved when done
    */
   async _ngOnInit() {
+  // set the initial loading cricle
     this.loading = true;
-    this.ref.detectChanges();
 
+    this.ref.detectChanges();
     // load profile information
     this.activeAccount = this.core.activeAccount();
 
+    // buidl the form validators
     this.stripePayment = this.formBuilder.group({
       name: ['', [Validators.required]],
       street: ['', [Validators.required]],
@@ -190,9 +217,17 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
       amount: ['', [Validators.required, Validators.min(1)]],
     });
 
+    // activate the card tab initially
+    this.activatePaymentTab(0);
+
+    this.loading = false;
+    this.ref.detectChanges();
+
+    // get a new stripe element with the defined options
     this.stripeService.elements(this.elementsOptions)
       .subscribe(elements => {
         this.elements = elements;
+        // create a new credit card element
         this.card = this.elements.create('card', {
           hidePostalCode: true,
           supportedCountries: ['SEPA'],
@@ -210,6 +245,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             }
           }
         });
+        // create a new iban element from stripe
         this.iban = this.elements.create('iban', {
           hidePostalCode: true,
           supportedCountries: ['SEPA'],
@@ -227,6 +263,8 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             }
           }
         });
+
+        // listen on changes to the cards and display possible error messages
         this.card.on('change', (ev) => {
           if (ev.error) {
             this.cardError = ev.error.message;
@@ -234,7 +272,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             this.cardError = '';
           }
           this.ref.detectChanges();
-        })
+        });
         this.iban.on('change', (ev) => {
           if (ev.error) {
             this.ibanError = ev.error.message;
@@ -242,24 +280,19 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             this.ibanError = '';
           }
           this.ref.detectChanges();
-        })
+        });
+
+        // mount the card uis to the referenced elements
         this.card.mount(this.cardElement.nativeElement);
         this.iban.mount(this.sepaElement.nativeElement);
       });
-    this.activatePaymentTab(0)
-    this.loading = false;
-    this.ref.detectChanges();
   }
-
 
   /**
-   * Remove watchers
+   * activate a given tab id
+   *
+   * @param      {number}  index   the tab index
    */
-  _ngOnDestroy() {
-    this.queueWatcher();
-  }
-
-
   activatePaymentTab(index: number) {
     this.activePaymentTab = index;
 
@@ -283,8 +316,19 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
     }
   }
 
-
+  /**
+   * buy eves with defined credit card information
+   *
+   * @return     {Promise<any>}  resolved when done
+   */
   public buy() {
+
+    this.paymentResponse = null;
+
+    this.paymentRunning = true;
+
+    this.ref.detectChanges();
+
     const name = this.stripePayment.get('name').value;
     const email = this.stripePayment.get('email').value;
     const street = this.stripePayment.get('street').value;
@@ -344,7 +388,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               `EvanSignedMessage ${ signature }`
             ].join(',')
           };
-          this.executePayment(source.id, amount, customer, headers)
+          this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
+
+          this.paymentRunning = false;
+
+          this.ref.detectChanges();
 
           // Use the token to create a charge or a customer
           // https://stripe.com/docs/charges
@@ -358,7 +406,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
   public async executePayment(id, amount, customer, headers = {}) {
     return new Promise(async (resolve, reject) => {
-
+      let requestId;
       const checkStatus = async() => {
         return (await this.http
           .post(
@@ -366,7 +414,8 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             {
               token: id,
               amount: amount,
-              customer: customer
+              customer: customer,
+              requestId
             },
             {
               headers,
@@ -376,9 +425,32 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
         ).json();
       }
 
-      await checkStatus();
+      const resolver = async() => {
+        const response = await checkStatus();
+        if(response.status === 'new') {
+          requestId = response.result;
+          setTimeout(async () => {
+            await resolver();
+          }, 5000)
+        }
+        if(response.status === 'ongoing') {
+          setTimeout(async () => {
+            await resolver();
+          }, 5000)
+        }
+        if(response.status === 'success' || response.status === 'error') {
+          clearTimeout(timeout);
+          resolve(response);
+        }
+      }
+
+      const timeout = setTimeout(() => {
+        reject(new Error(`timeout for profile creation`))
+      }, 1000 * 60 * 10)
+      await resolver();
     })
   }
+
 
   /**
    * Sign a message for a specific account
