@@ -35,6 +35,10 @@ export const de = {
     "alias": "Alias",
     "balance": "Meine EVEs",
     "balance-updated": "EVEs wurden aktualisiert...",
+    "buy-eve": {
+      "buy-eve": "EVEs kaufen",
+      "buy-eve-desc": "EVEs über Kreditkarte kaufen",
+    },
     "cancel": "abbrechen",
     "color-theme": "Farbschema",
     "color-theme-desc": "Stellen Sie die Farbdarstellung der Benutzeroberfläche ein.",
@@ -117,9 +121,54 @@ export const de = {
       "topup-payment-channel-desc": "EVE Anzahl",
       "topup-payment-channel-error": "Bitte geben Sie eine Menge an EVE an, die höher als 0 ist."
     },
+    "pay-eve": {
+      "name": {
+        "title": "Name",
+        "description": "Name des Rechnungsempfängers"
+      },
+      "email": {
+        "title": "Email",
+        "description": "Email des Rechnungsempfängers"
+      },
+      "street": {
+        "title": "Straße",
+        "description": "Straße des Rechnungsempfängers"
+      },
+      "city": {
+        "title": "Ort",
+        "description": "Ort des Rechnungsempfängers"
+      },
+      "zip": {
+        "title": "PLZ",
+        "description": "PLZ des Rechnungsempfängers"
+      },
+      "country": {
+        "title": "Land",
+        "description": "ISO Landesbezeichnung (z.b. DE)"
+      },
+      "vat": {
+        "title": "USt-IdNr.",
+        "description": "DE99999999999"
+      },
+      "amount": {
+        "title": "Anzahl EVE Tokens",
+        "description": "0"
+      },
+      "input": {
+        "error": "Dieses Feld muss ausgefüllt werden!"
+      },
+      "card": {
+        "title": "Kartennummer"
+      },
+      "sepa": "SEPA Abbuchung",
+      "credit": "Kreditkarte",
+      "pay": "Bezahlen",
+      "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. <b>Ihre Karte wurde NICHT belastet!</b> <br>Bitte versuchen Sie es später noch einmal. Fehlercode: {{ code }}",
+      "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen sobald Sie die Rechnung erhalten."
+    },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",
-    "privatekey-exported": "Ihr Private Key erfolgreich in Ihre Zwischenablage exportiert",
+    "privatekey-exported": "Ihr Private Key wurde erfolgreich in Ihre Zwischenablage exportiert",
     "profile-encryption-key": "Profil Verschlüsselungsschlüssel",
     "profile-verifications-dispatcher": {
       "description": "Verifizierungsprüfungen speichern",

@@ -32,11 +32,14 @@ import {
 } from 'dapp-browser';
 
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   DomSanitizer,
   FormBuilder,
   FormControl,
+  FormGroup,
+  Http,
   NavController,
   OnInit,
   TranslateService,
@@ -61,6 +64,13 @@ import {
   QueueId,
 } from 'angular-core';
 
+import {
+  StripeService,
+  Elements,
+  Element as StripeElement,
+  ElementsOptions
+} from "ngx-stripe";
+
 /**************************************************************************************************/
 
 @Component({
@@ -76,7 +86,7 @@ import {
  * Shows the current profile information and provides the possibility to set some configurations
  * for the ui
  */
-export class EvanProfileDetailComponent extends AsyncComponent {
+export class EvanProfileDetailComponent extends AsyncComponent implements AfterViewInit {
   /**
    * balance of the current user
    */
@@ -111,7 +121,9 @@ export class EvanProfileDetailComponent extends AsyncComponent {
    * current active shown tabs
    */
   private activeTab: number;
-  
+
+  private activePaymentTab: number = 0;
+
   /**
    * current receiver address input
    */
@@ -148,10 +160,42 @@ export class EvanProfileDetailComponent extends AsyncComponent {
   private showSendEveForm: boolean = true;
 
   /**
+   * Current input values.
+   */
+  private buyEveForm: any = { amount: 0 };
+
+  private payEve: any = {};
+
+  /**
+   * User management agent account to check the balance for.
+   */
+  public agentUrl = 'https://payments-core.evan.network/api';
+
+
+  elements: Elements;
+
+  card: StripeElement;
+
+  public cardError: string;
+  public ibanError: string;
+  iban: StripeElement;
+
+  // optional parameters
+  elementsOptions: ElementsOptions = {
+    locale: 'auto'
+  };
+
+  stripePayment: FormGroup;
+
+  /**
    * search input reference for autofocus
    */
   @ViewChild('receiverSelectComp') receiverSelectComp: any;
 
+
+  @ViewChild('cardElement') cardElement: any;
+
+  @ViewChild('sepaElement') sepaElement: any;
   constructor(
     private _DomSanitizer: DomSanitizer,
     private addressBookService: EvanAddressBookService,
@@ -164,6 +208,8 @@ export class EvanProfileDetailComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private toastService: EvanToastService,
     private translateService: EvanTranslationService,
+    private http: Http,
+    private stripeService: StripeService
   ) {
     super(ref);
   }
@@ -179,7 +225,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
 
     // setup form validation
     this.sendEveForm = this.formBuilder.group({
-      receiver: ['', (input: FormControl) => 
+      receiver: ['', (input: FormControl) =>
         this.isValidAddress(input.value) ? null : { invalidAddress: true }],
       eve: ['', (input: FormControl) => {
         const value = parseFloat(input.value);
@@ -232,10 +278,10 @@ export class EvanProfileDetailComponent extends AsyncComponent {
         }
       }
     );
-
     this.loading = false;
     this.ref.detectChanges();
   }
+
 
   /**
    * Remove watchers
@@ -310,7 +356,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       );
 
       // load the current vault, unlock it and export the privatekey
-      const vault = await lightwallet.loadUnlockedVault();  
+      const vault = await lightwallet.loadUnlockedVault();
       const privateKey = lightwallet.getPrivateKey(vault, this.core.activeAccount());
 
       this.core.copyString(
@@ -335,7 +381,7 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       );
 
       // load the current vault, unlock it and export the encryptionkey
-      const vault = await lightwallet.loadUnlockedVault();  
+      const vault = await lightwallet.loadUnlockedVault();
       const encryptionKey = await lightwallet.getEncryptionKey();
 
       this.core.copyString(
@@ -414,5 +460,19 @@ export class EvanProfileDetailComponent extends AsyncComponent {
       { eve: this.eve, receiver: this.receiverInput }
     );
     this.ref.detectChanges();
+  }
+
+  /**
+   * Sign a message for a specific account
+   *
+   * @param      {string}  msg      message that should be signed
+   * @param      {string}  account  account id to sign the message with (default = activeAccount)
+   * @return     {string}  signed message signature
+   */
+  public async signMessage(msg: string, account: string = this.core.activeAccount()): Promise<string> {
+    const signer = account.toLowerCase();
+    const pk = await this.bcc.executor.signer.accountStore.getPrivateKey(account);
+
+    return this.bcc.web3.eth.accounts.sign(msg, '0x' + pk).signature;
   }
 }
