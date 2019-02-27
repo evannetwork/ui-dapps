@@ -158,8 +158,8 @@ export const en = {
       "sepa": "SEPA direct debit",
       "credit": "Credit card",
       "pay": "Pay",
-      "error-payment": "An error occurred during the payment process. Your card was NOT debited! Please try again later. Error code:",
-      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice."
+      "error-payment": "An error occurred during the payment process. <b>Your card was NOT debited!</b> Please try again later. Error code: {{ code }}",
+      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice."
     },
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",

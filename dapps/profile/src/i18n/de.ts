@@ -158,8 +158,8 @@ export const de = {
       "sepa": "SEPA Abbuchung",
       "credit": "Kreditkarte",
       "pay": "Bezahlen",
-      "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Ihre Karte wurde NICHT belastet!. Bitte versuchen Sie es später noch einmal. Fehlercode:",
-      "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die Angegebene Email. Der Vorgang ist abgeschlossen sobald Sie die Rechnung erhalten."
+      "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. <b>Ihre Karte wurde NICHT belastet!</b> <br>Bitte versuchen Sie es später noch einmal. Fehlercode: {{ code }}",
+      "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen sobald Sie die Rechnung erhalten."
     },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",

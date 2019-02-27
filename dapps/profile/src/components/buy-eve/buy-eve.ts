@@ -118,7 +118,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   /**
    * external agent url to send the payment tokens
    */
-  public agentUrl = 'http://172.20.1.59:8080/api';
+  public agentUrl = 'https://agents.test.evan.network/api';
 
   /**
    * stripe element holder
@@ -210,8 +210,8 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
       name: ['', [Validators.required]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      zip: ['', [Validators.required]],
-      country: ['', [Validators.required, Validators.minLength(2),  Validators.maxLength(2)]],
+      zip: ['', [Validators.required, Validators.pattern(`^[0-9]*$`)]],
+      country: ['', [Validators.required, Validators.minLength(2),  Validators.maxLength(2), Validators.pattern(`^[A-Z]*$`)]],
       vat: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       amount: ['', [Validators.required, Validators.min(1)]],
@@ -393,17 +393,28 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
           this.paymentRunning = false;
 
           this.ref.detectChanges();
-
-          // Use the token to create a charge or a customer
-          // https://stripe.com/docs/charges
-          console.log(result.source);
         } else if (result.error) {
           // Error creating the token
-          console.log(result.error.message);
+          this.paymentResponse = {
+            status: 'error',
+            code: result.error.message
+          }
+
+          this.paymentRunning = false;
+          this.ref.detectChanges();
         }
       });
   }
 
+  /**
+   * execute a payment incl. polling of the result
+   *
+   * @param      {string}  id        the token for the payment
+   * @param      {number}  amount    the eve amount to buy
+   * @param      {object}  customer  the customer object
+   * @param      {object}  headers   additional headers to send
+   * @return     {promise}  resolved when done
+   */
   public async executePayment(id, amount, customer, headers = {}) {
     return new Promise(async (resolve, reject) => {
       let requestId;
@@ -427,25 +438,25 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
       const resolver = async() => {
         const response = await checkStatus();
-        if(response.status === 'new') {
+        if (response.status === 'new') {
           requestId = response.result;
           setTimeout(async () => {
             await resolver();
           }, 5000)
         }
-        if(response.status === 'ongoing') {
+        if (response.status === 'ongoing') {
           setTimeout(async () => {
             await resolver();
           }, 5000)
         }
-        if(response.status === 'success' || response.status === 'error') {
+        if (response.status === 'success' || response.status === 'error') {
           clearTimeout(timeout);
           resolve(response);
         }
       }
 
       const timeout = setTimeout(() => {
-        reject(new Error(`timeout for profile creation`))
+        reject(new Error(`timeout for payment`))
       }, 1000 * 60 * 10)
       await resolver();
     })

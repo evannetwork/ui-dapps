@@ -31,5 +31,19 @@ evan-buy-eve {
       border-radius: 0;
       background-color: rgba(83, 230, 157, .5);
     }
+    &.chip-md {
+      height: auto;
+    }
+  }
+
+  .evan-tabs-container {
+    height: 75px;
+  }
+
+  .evan-tabs.evan-content {
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
   }
 }

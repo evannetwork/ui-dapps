@@ -195,7 +195,7 @@
         </button> -->
       </div>
 
-      <div class="evan-tabs-container" style="height:150px" [@tabSlideTransition]="activePaymentTab">
+      <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
         <div class="evan-relative evan-content m-t-0" [hidden]="activePaymentTab === 1">
           <div item-content #cardElement style="width:100%"></div>
           <ion-chip class="error-hint" *ngIf="cardError" color="danger">
@@ -211,10 +211,10 @@
       </div>
       <div text-center padding-top>
         <ion-chip class="error-hint" *ngIf="paymentResponse?.status === 'error'" color="danger">
-          <ion-label>{{ '_dappprofile.pay-eve.error-payment' | translate }} {{ paymentResponse.code }}</ion-label>
+          <ion-label [innerHTML]="'_dappprofile.pay-eve.error-payment' | translate : paymentResponse"></ion-label>
         </ion-chip>
         <ion-chip class="success-hint" *ngIf="paymentResponse?.status === 'success'" color="success">
-          <ion-label>{{ '_dappprofile.pay-eve.successful-payment' | translate }}</ion-label>
+          <ion-label [innerHTML]="'_dappprofile.pay-eve.successful-payment' | translate"></ion-label>
         </ion-chip>
       </div>
       <div text-center padding-top>
