@@ -8,6 +8,7 @@
     "babelify": "^10.0.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "ng-stripe-checkout": "^1.0.4",
     "ng2-ace-editor": "^0.3.8",
     "ngx-stripe": "^7.2.0",
     "typescript": "^2.4.2"
