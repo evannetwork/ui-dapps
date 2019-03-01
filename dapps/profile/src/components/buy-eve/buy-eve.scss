@@ -34,13 +34,24 @@ evan-buy-eve {
     &.chip-md {
       height: auto;
     }
+    ion-icon {
+      font-size: 50px;
+    }
   }
 
   .evan-tabs-container {
     height: 75px;
   }
 
+  .w100 {
+    width: 100%;
+  }
+
   .evan-tabs.evan-content {
+    height: 25px;
+    margin: 0px;
+    width: 100%;
+
     h3 {
       font-size: 1.4rem;
       font-weight: 600;

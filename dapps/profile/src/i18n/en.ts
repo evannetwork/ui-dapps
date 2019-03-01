@@ -118,6 +118,7 @@ export const en = {
       "topup-payment-channel-error": "Please specify an amount of EVE higher than 0."
     },
     "pay-eve": {
+      "desc": "You can use the following form to purchase new EVE tokens for storage credits or transactions.",
       "name": {
         "title": "Name",
         "description": "John Doe"
@@ -155,10 +156,15 @@ export const en = {
       },
       "card": {
         "title": "Card number"
+      },  
+      "payment": {
+        "title": "Payment method"
       },
+      "to-pay": "Total amount",
       "sepa": "SEPA direct debit",
       "credit": "Credit card",
-      "pay": "Pay",
+      "payment-information": "Payment details",
+      "pay": "Order at cost",
       "error-payment": "An error occurred during the payment process. <b>Your card was NOT debited!</b> Please try again later. Error code: {{ code }}",
       "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice."
     },
@@ -203,6 +209,7 @@ export const en = {
     "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)"
   },
   "detail": "Profile information",
+  "buyeve": "Buy EVE",
   "payments": "Storage payments",
   "profile": "My Profile",
   "profiledetail": "My Profile",

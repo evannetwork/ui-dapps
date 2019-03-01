@@ -122,6 +122,7 @@ export const de = {
       "topup-payment-channel-error": "Bitte geben Sie eine Menge an EVE an, die höher als 0 ist."
     },
     "pay-eve": {
+      "desc": "Über das folgende Formular können Sie kostenpflichtig neue EVE Tokens für Speicherguthaben oder Transaktionen erwerben.",
       "name": {
         "title": "Name",
         "description": "Name des Rechnungsempfängers"
@@ -160,9 +161,14 @@ export const de = {
       "card": {
         "title": "Kartennummer"
       },
+      "payment": {
+        "title": "Zahlungsart"
+      },
+      "to-pay": "Gesamtsumme",
       "sepa": "SEPA Abbuchung",
       "credit": "Kreditkarte",
-      "pay": "Bezahlen",
+      "payment-information": "Zahlungsinformationen",
+      "pay": "Kostenpflichtig bestellen",
       "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. <b>Ihre Karte wurde NICHT belastet!</b> <br>Bitte versuchen Sie es später noch einmal. Fehlercode: {{ code }}",
       "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen sobald Sie die Rechnung erhalten."
     },
@@ -208,6 +214,7 @@ export const de = {
   },
   "detail": "Profilinformationen",
   "payments": "Speichergebühren",
+  "buyeve": "EVE kaufen",
   "profile": "Mein Profil",
   "profiledetail": "Mein Profil",
   "profileroot": "Mein Profil",
