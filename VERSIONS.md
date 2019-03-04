@@ -5,6 +5,8 @@
 - load terms of use from external `termsofuse.evan` dapp
 - onboarding
   - add `termsofuse` dapp
+- verifications
+  - support ENS addresses
 
 ### Fixes
 ### Deprecations

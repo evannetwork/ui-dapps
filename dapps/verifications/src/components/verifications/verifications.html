@@ -96,9 +96,9 @@
                 [(ngModel)]="subjectInput"
                 [label]="('_verifications.subject.title' | translate) + '*'"
                 [placeholder]="'_verifications.subject.desc' | translate"
-                (onChange)="ref.detectChanges()">
+                (onChange)="addressInputChanged()">
               </evan-address-input>
-              <ion-chip class="error-hint" *ngIf="subjectSelectComp.touched && !isValidAddress(subjectInput)" color="danger">
+              <ion-chip class="error-hint" *ngIf="subjectSelectComp.touched && !isValidAddress(subjectInput) && !isValidAddress(subjectEnsAddress)" color="danger">
                 <ion-label>{{ '_verifications.subject.error' | translate }}</ion-label>
               </ion-chip>
             </ion-col>
