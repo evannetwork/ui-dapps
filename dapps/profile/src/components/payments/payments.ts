@@ -195,7 +195,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    */
   async loadPaymentDetails() {
     try {
-      const status = await this.paymentService.requestPaymentAgent('getStatus');
+      const status = await this.paymentService.requestPaymentAgent('status/get');
 
       // parse correct value for estimated values
       status.monthlyPayments = Math.floor(status.monthlyPayments).toString();
@@ -216,11 +216,11 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    */
   async loadPaymentChannels() {
     try {
-      this.paymentChannels = await this.paymentService.requestPaymentAgent('getChannels');
+      this.paymentChannels = await this.paymentService.requestPaymentAgent('channel/get');
 
       // find active channels
       const activeChannels = this.paymentChannels.channels
-        .filter(channel => channel.state === 'OPEN');
+        .filter(channel => channel.state === 'OPEN' || channel.state === 'UNCONFIRMED');
 
       // preselect first active channel for actions
       this.activeChannel = activeChannels.length > 0 ? activeChannels[0] : null;
