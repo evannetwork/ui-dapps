@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/index.js",
+  "name": "bcc",
+  "scripts": {
+    "build": "node gulp/buildContracts.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd) --name compiled.js"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "2.5.2"
+}
