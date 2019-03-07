@@ -41,12 +41,12 @@
     "SASS"
   ],
   "license": "Apache-2.0",
-  "name": "ui-vue-core",
+  "name": "ui-core",
   "scripts": {
     "browserify": "gulp --gulpfile gulp/browserify.js browserify --dapp ",
     "dapps-build": "gulp --gulpfile gulp/dapps.js dapps-build",
     "dapps-serve": "gulp --gulpfile gulp/dapps.js dapps-serve",
-    "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config /Users/tschuck/projects/evan.network/ui/ui-vue-core/scripts/config/deployment.js",
+    "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config /Users/tschuck/projects/evan.network/ui/ui-core/scripts/config/deployment.js",
     "serve": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve",
     "tsc": "tsc -p "
   },
