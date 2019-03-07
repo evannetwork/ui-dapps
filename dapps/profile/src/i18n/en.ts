@@ -127,6 +127,10 @@ export const en = {
         "title": "Email",
         "description": "John.Doe@example.com"
       },
+      "company": {
+        "title": "Company",
+        "description": "Company"
+      },
       "street": {
         "title": "Address",
         "description": "Address"
@@ -156,7 +160,7 @@ export const en = {
       },
       "card": {
         "title": "Card number"
-      },  
+      },
       "payment": {
         "title": "Payment method"
       },

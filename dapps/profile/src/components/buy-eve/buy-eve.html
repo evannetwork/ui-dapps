@@ -118,6 +118,26 @@
             </ion-col>
           </ion-row>
           <ion-row>
+            <ion-col col-12>
+              <ion-item>
+                <ion-label stacked>
+                  <h3>
+                    {{ '_dappprofile.pay-eve.company.title' | translate }}*
+                  </h3>
+                </ion-label>
+                <ion-input formControlName="company" required type="text"
+                  [(ngModel)]="payEve.company"
+                  [placeholder]="'_dappprofile.pay-eve.company.description' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'company')" color="danger">
+                <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row>
             <ion-col col-6>
               <ion-item>
                 <ion-label stacked>
@@ -227,7 +247,7 @@
                   </button>
 
                   <button ion-button icon-left clear
-                    disabled="true" 
+                    disabled="true"
                     [class.active]="activePaymentTab === 1"
                     (click)="activatePaymentTab(1);">
                     <h3>{{ '_dappprofile.pay-eve.sepa' | translate }}</h3>
@@ -253,10 +273,10 @@
         </ion-col>
         <ion-col col-4 class="border-left">
           <div text-center padding-top>
-            <h1>{{ '_dappprofile.pay-eve.to-pay' | translate }}</h1> 
+            <h1>{{ '_dappprofile.pay-eve.to-pay' | translate }}</h1>
           </div>
           <div text-center padding-top>
-            <h1>{{ payEve.amount || 0 }}€</h1> 
+            <h1>{{ (payEve.country == 'DE' ? ((payEve.amount || 0)*1.19).toFixed(2) : payEve.amount || 0)}}€</h1>
           </div>
           <div text-center padding-top>
             <button (click)="buy()" ion-button icon-left round outline color="alert"

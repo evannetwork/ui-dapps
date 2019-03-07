@@ -135,6 +135,10 @@ export const de = {
         "title": "Straße",
         "description": "Straße des Rechnungsempfängers"
       },
+      "company": {
+        "title": "Firma",
+        "description": "Firmenname"
+      },
       "city": {
         "title": "Ort",
         "description": "Ort des Rechnungsempfängers"

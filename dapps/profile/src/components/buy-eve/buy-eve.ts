@@ -215,6 +215,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
     // buidl the form validators
     this.stripePayment = this.formBuilder.group({
       name: ['', [Validators.required]],
+      company: ['', [Validators.required]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required]],
       zip: ['', [Validators.required, Validators.pattern(`^[0-9]*$`)]],
@@ -347,6 +348,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
     const name = this.stripePayment.get('name').value;
     const email = this.stripePayment.get('email').value;
+    const company = this.stripePayment.get('company').value;
     const street = this.stripePayment.get('street').value;
     const city = this.stripePayment.get('city').value;
     const zip = this.stripePayment.get('zip').value;
@@ -381,7 +383,8 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               address: {
                 city,
                 country,
-                line1: street,
+                line1: company,
+                line2: street,
                 postal_code: zip,
               }
             },
