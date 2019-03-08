@@ -25,3 +25,12 @@
   https://evan.network/license/
 */
 
+@mixin evanVariables($variables) {
+  @each $param, $value in $variables {
+    --evan-#{$param}: #{$value};
+  }
+}
+
+@function cssVar($name) {
+  @return var(--evan-#{$name});
+}

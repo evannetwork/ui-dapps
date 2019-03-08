@@ -25,22 +25,4 @@
   https://evan.network/license/
 */
 
-/**
- * import themes and start them
- */
-@import './definitions/themeEvan.scss';
 @import './definitions/utils.scss';
-@include themeEvan();
-
-/**
- * import styilings
- */
-@import './buttons.scss';
-@import './content.scss';
-@import './forms.scss';
-@import './list.scss';
-@import './open-sans.scss';
-@import './popup.scss';
-@import './side-panel.scss';
-@import './tabs.scss';
-@import './text.scss';

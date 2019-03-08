@@ -25,22 +25,39 @@
   https://evan.network/license/
 */
 
-/**
- * import themes and start them
- */
-@import './definitions/themeEvan.scss';
-@import './definitions/utils.scss';
-@include themeEvan();
+@import 'utils.scss';
 
-/**
- * import styilings
- */
-@import './buttons.scss';
-@import './content.scss';
-@import './forms.scss';
-@import './list.scss';
-@import './open-sans.scss';
-@import './popup.scss';
-@import './side-panel.scss';
-@import './tabs.scss';
-@import './text.scss';
+$theme: (
+  /**
+   * Background colors
+   */
+  background-color: #ffffff,
+  background-color-accent: #f5f6fa,
+  background-color-negated : #023744,
+
+  /**
+   * general colors
+   */
+  primary: #63c6c1,
+  accent: #e81197,
+
+  /**
+   * text-colors
+   */
+  text-color: #023744,
+  text-color-negated: #444444,
+  text-color-sub: #b6b4b1,
+
+  /**
+   * margins & paddings
+   */
+  active-border: 3px,
+  margin: 10px,
+  padding: 10px
+);
+
+@mixin themeEvan() {
+  .theme-evan {
+    @include evanVariables($theme);
+  }
+}

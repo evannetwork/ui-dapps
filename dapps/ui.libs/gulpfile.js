@@ -59,6 +59,7 @@ gulp.task('build', async function () {
         .src([
           `${ dappDir }/dbcp.json`,
           `${ dappDir }/src/**/*.css`,
+          `${ dappDir }/src/style/style.html`,
         ])
         .pipe(gulp.dest(`${ dappDir }/dist`))
         .pipe(gulp.dest(runtimeFolder))

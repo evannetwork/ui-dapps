@@ -26,10 +26,26 @@
 */
 
 // map the original ui path to ui.libs
-import { System, getDomainName, utils, lightwallet } from '@evan.network/ui-dapp-browser';
-System.map['@evan.network/ui'] = `ui.libs.${ getDomainName() }!dapp-content`;
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
 import './style/core.scss';
-import { Dispatcher } from './Dispatcher';
+export { Dispatcher } from './Dispatcher';
 
-export { Dispatcher };
+/**
+ * if the ui.evan dapp is loaded as an normal dapp, show the style preview.
+ *
+ * @param      {any}  container  html container where the dapp should be rendered to
+ * @param      {any}  dbcpName   dbcp name of the dapp
+ */
+export async function startDApp(container, dbcpName, dappEns, dappBaseUrl) {
+  const iframe = document.createElement('iframe');
+
+  // open the iframe using the dappBaseUrl
+  iframe.setAttribute('src', `${ dappBaseUrl }/style.html`);
+  iframe.className += ' evan-dapp';
+  container.appendChild(iframe);
+
+  // remove the loading screen
+  dappBrowser.loading.finishDAppLoading();
+}
