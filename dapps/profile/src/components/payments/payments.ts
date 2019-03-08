@@ -134,6 +134,11 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
   private activeChannel: any;
 
   /**
+   * all active channels
+   */
+  private activeChannels: any;
+
+  /**
    * Balancer input reference
    */
   @ViewChild('balanceInput') balanceInput: any;
@@ -218,11 +223,11 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
       this.paymentChannels = await this.paymentService.requestPaymentAgent('channel/get');
 
       // find active channels
-      const activeChannels = this.paymentChannels.channels
+      this.activeChannels = this.paymentChannels.channels
         .filter(channel => channel.state === 'OPEN' || channel.state === 'UNCONFIRMED');
 
       // preselect first active channel for actions
-      this.activeChannel = activeChannels.length > 0 ? activeChannels[0] : null;
+      this.activeChannel = this.activeChannels.length > 0 ? this.activeChannels[0] : null;
     } catch (ex) {
       this.error = ex.message;
       this.core.utils.log(ex.message, 'error');
