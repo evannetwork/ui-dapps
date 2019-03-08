@@ -256,17 +256,18 @@
                 <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
                   <div class="evan-relative evan-content m-t-0" [hidden]="activePaymentTab === 1">
                     <div item-content #cardElement style="width:100%"></div>
-                    <ion-chip class="error-hint" *ngIf="cardError" color="danger">
-                      <ion-label>{{ cardError }}</ion-label>
-                    </ion-chip>
+
                   </div>
                   <div class="evan-content m-t-0" [hidden]="activePaymentTab === 0">
                     <div item-content #sepaElement style="width:100%"></div>
-                      <ion-chip class="error-hint" *ngIf="ibanError" color="danger">
-                        <ion-label>{{ ibanError }}</ion-label>
-                      </ion-chip>
                   </div>
                 </div>
+                <ion-chip class="error-hint" *ngIf="cardErrorMessage" color="danger">
+                  <ion-label>{{ cardErrorMessage }}</ion-label>
+                </ion-chip>
+                <ion-chip class="error-hint" *ngIf="ibanErrorMessage" color="danger">
+                  <ion-label>{{ ibanErrorMessage }}</ion-label>
+                </ion-chip>
               </div>
             </ion-item>
           </ion-row>
@@ -279,8 +280,11 @@
             <h1>{{ (payEve.country == 'DE' ? ((payEve.amount || 0)*1.19).toFixed(2) : payEve.amount || 0)}}€</h1>
           </div>
           <div text-center padding-top>
+            <h5>{{ '_dappprofile.pay-eve.incl' | translate }} {{ (payEve.country == 'DE' ? '19' : '0')}} % {{ '_dappprofile.pay-eve.vatPercent' | translate }}</h5>
+          </div>
+          <div text-center padding-top>
             <button (click)="buy()" ion-button icon-left round outline color="alert"
-              [disabled]="stripePayment.invalid || paymentRunning">
+              [disabled]="(activePaymentTab == 1 && ibanError) || (activePaymentTab == 0 && cardError) || stripePayment.invalid || paymentRunning">
               <ion-spinner *ngIf="paymentRunning"></ion-spinner>
               <ion-icon name="cash"></ion-icon>
               <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>

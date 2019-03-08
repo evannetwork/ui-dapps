@@ -164,6 +164,8 @@ export const en = {
       "payment": {
         "title": "Payment method"
       },
+      "incl": "Incl.",
+      "vatPercent": "VAT",
       "to-pay": "Total amount",
       "sepa": "SEPA direct debit",
       "credit": "Credit card",

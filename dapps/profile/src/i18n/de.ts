@@ -168,6 +168,8 @@ export const de = {
       "payment": {
         "title": "Zahlungsart"
       },
+      "incl": "Inkl.",
+      "vatPercent": "MwSt.",
       "to-pay": "Gesamtsumme",
       "sepa": "SEPA Abbuchung",
       "credit": "Kreditkarte",
