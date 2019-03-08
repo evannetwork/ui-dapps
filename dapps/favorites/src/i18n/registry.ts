@@ -27,11 +27,11 @@
 
 import {
   Injectable,      // @angular/core
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanTranslationService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { en } from './en';
 import { de } from './de';

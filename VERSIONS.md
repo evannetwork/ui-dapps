@@ -7,6 +7,7 @@
   - add `termsofuse` dapp
 - verifications
   - support ENS addresses
+- use correct imports for evan.network projects (e.g. replace `import * as bcc from 'bcc'` with `import * as bcc from '@evan.network/api-blockchain-core;` )
 
 ### Fixes
 ### Deprecations

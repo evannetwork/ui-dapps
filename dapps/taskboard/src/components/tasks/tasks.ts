@@ -27,12 +27,12 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, OnDestroy, // @angular/core
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -46,7 +46,7 @@ import {
   EvanQueue,
   EvanTranslationService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { TaskService } from '../../services/task';
 
@@ -72,7 +72,7 @@ import { TaskService } from '../../services/task';
 export class TasksComponent extends AsyncComponent {
   private filteredTasks: Array<any>;
   private filterString: string;
-  private loading: boolean;
+  public loading: boolean;
   private tasks: Array<any>;
   private taskCreatingListenter: Function;
   private translationUpdate: Function;

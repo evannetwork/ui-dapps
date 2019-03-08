@@ -29,30 +29,30 @@ import {
   Component,     // @angular/core
   DomSanitizer,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
   AsyncComponent,
+  createOpacityTransition,
+  createRouterTransition,
+  createTabSlideTransition,
   EvanAddressBookService,
   EvanAlertService,
   EvanBCCService,
+  EvanBcService,
   EvanCoreService,
   EvanQrCodeService,
   EvanRoutingService,
   EvanToastService,
-  createOpacityTransition,
-  createRouterTransition,
   EvanTranslationService,
-  createTabSlideTransition
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   BaseContract,
   RightsAndRoles,
-  prottle,
-  createBC
-} from 'bcc';
+  prottle
+} from '@evan.network/api-blockchain-core';
 
 import { ExplorerService } from '../../services/explorer.service';
 
@@ -81,7 +81,7 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
   private activeTab: number;
 
   /**
-   * id corresponding contract id 
+   * id corresponding contract id
    */
   private contractAddress: string;
 
@@ -186,7 +186,8 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
     private toastService: EvanToastService,
-    private translateService: EvanTranslationService
+    private translateService: EvanTranslationService,
+    private bcService: EvanBcService
   ) {
     super(ref);
   }
@@ -201,10 +202,10 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
     this.contractAddress = await this.explorerService.nameResolver.getAddress(this.id) || this.id;
     this.activeAccount = this.core.activeAccount();
 
-    // initialize empty array for member handle component 
+    // initialize empty array for member handle component
     this.membersToAdd = [ ];
 
-    // check if the current user is admin or owner to enable UI edit elements 
+    // check if the current user is admin or owner to enable UI edit elements
     this.isAdminOrOwner = await this.explorerService.isUserOwnerOrAdmin(this.contractAddress);
     this.owner = await this.explorerService.getOwner(this.contractAddress);
 
@@ -926,7 +927,7 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
     await this.setUpdating(async () => {
       // if the user entered the ens address of an business-center, load the bc address
       if (bcAddress && bcAddress.indexOf('0x') !== 0) {
-        bc = await createBC({
+        bc = await this.bcService.createBC({
           ensDomain: bcAddress,
           ProfileBundle: this.bcc.ProfileBundle
         });

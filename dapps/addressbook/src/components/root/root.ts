@@ -30,7 +30,7 @@ import {
   TranslateService,             // @ngx-translate/core
   NavController,                // ionic-angular
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -40,7 +40,7 @@ import {
   createOpacityTransition,
   EvanRoutingService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -67,7 +67,7 @@ import {
 
 export class ContactsRootComponent extends AsyncComponent {
   private watchRouteChange: Function;
-  private loading: boolean;
+  public loading: boolean;
 
   constructor(
     private core: EvanCoreService,

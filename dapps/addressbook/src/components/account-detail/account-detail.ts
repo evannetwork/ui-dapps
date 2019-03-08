@@ -40,7 +40,7 @@ import {
   TranslateService,
   Validators,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -57,7 +57,7 @@ import {
   EvanQueue,
   EvanRoutingService,
   EvanTranslationService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -74,7 +74,7 @@ import {
 export class AccountDetailComponent extends AsyncComponent {
   private accountId: string;
   private account: any;
-  private loading: boolean;
+  public loading: boolean;
   private loadingSave: boolean;
   private loadingDelete: boolean;
   private isCreate: boolean;

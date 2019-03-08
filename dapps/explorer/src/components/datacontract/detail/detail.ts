@@ -29,7 +29,7 @@ import {
   Component,     // @angular/core
   DomSanitizer,
   ChangeDetectorRef,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -43,11 +43,11 @@ import {
   EvanRoutingService,
   EvanTranslationService,
   EvanToastService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   prottle
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import { ExplorerService } from '../../../services/explorer.service';
 
@@ -111,7 +111,7 @@ export class ExplorerDataContractDetailComponent extends AsyncComponent {
   /**
    * show loading screen
    */
-  private loading: boolean;
+  public loading: boolean;
 
   /**
    * load list entries from dfs

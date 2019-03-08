@@ -31,7 +31,7 @@ import {
   NavController,                // ionic-angular
   ChangeDetectorRef,
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -43,7 +43,7 @@ import {
   EvanCoreService,
   EvanQueue,
   EvanRoutingService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { DemoManagementService } from '../../services/service';
 
@@ -93,7 +93,7 @@ export class OverviewComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   async _ngOnInit() {
@@ -106,7 +106,7 @@ export class OverviewComponent extends AsyncComponent {
     );
   }
 
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 

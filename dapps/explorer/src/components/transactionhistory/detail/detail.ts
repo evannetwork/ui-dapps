@@ -29,7 +29,7 @@ import {
   Component,     // @angular/core
   DomSanitizer,
   ChangeDetectorRef,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -43,11 +43,11 @@ import {
   EvanRoutingService,
   EvanAddressBookService,
   EvanTranslationService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   prottle,
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import { ExplorerService } from '../../../services/explorer.service';
 

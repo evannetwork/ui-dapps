@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   NgModule,                    // @angular/core
@@ -35,7 +35,7 @@ import {
   RouterModule, Routes,        // @angular/router
   IonicModule, IonicApp,       // ionic-angular
   BrowserAnimationsModule,     // @angular/platform-browser/animations
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AngularCore,
@@ -43,7 +43,7 @@ import {
   buildModuleRoutes,
   BootstrapComponent,
   startAngularApplication, createIonicAppElement
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { BookmarkDispatcherService } from './dispatcher/bookmark';
 import { DAppAddComponent } from './components/dapp-add/dapp-add';
@@ -138,7 +138,7 @@ class DappsModule {
 
 export async function startDApp(container, dbcpName) {
   const ionicAppEl = createIonicAppElement(container, dbcpName);
-  
+
   await startAngularApplication(DappsModule, getRoutes());
 
   container.appendChild(ionicAppEl);

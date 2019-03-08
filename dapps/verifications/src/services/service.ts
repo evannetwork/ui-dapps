@@ -25,15 +25,15 @@
   https://evan.network/license/
 */
 
-import * as bcc from 'bcc';
-import * as SmartContracts from 'smart-contracts';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as SmartContracts from '@evan.network/smart-contracts-core';
 
 import {
   bccHelper,
   core,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Http,
@@ -42,7 +42,7 @@ import {
   OnDestroy,
   Platform,
   Subscription,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -55,14 +55,14 @@ import {
   EvanRoutingService,
   QueueId,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 /**
  * Utility service for the verification view DApp.
  */
 @Injectable()
-export class VerificationService implements OnDestroy {
+export class VerificationService {
   constructor(
     public bcc: EvanBCCService,
     public bookmarkService: EvanBookmarkService,

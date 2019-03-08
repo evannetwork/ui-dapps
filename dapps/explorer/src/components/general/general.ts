@@ -29,7 +29,7 @@ import {
   Component,     // @angular/core
   DomSanitizer,
   ChangeDetectorRef,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -42,7 +42,7 @@ import {
   EvanQrCodeService,
   EvanRoutingService,
   EvanTranslationService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ExplorerService } from '../../services/explorer.service';
 

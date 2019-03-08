@@ -33,11 +33,11 @@ import {
   OnInit,
   TranslateService,            
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   lightwallet
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   AnimationDefinition,
@@ -50,7 +50,7 @@ import {
   EvanRoutingService,
   EvanTranslationService,
   EvanAlertService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { DemoManagementService } from '../../../services/service';
 
@@ -105,7 +105,7 @@ export class RentalComponent extends AsyncComponent {
     private routingService: EvanRoutingService,
     private translate: EvanTranslationService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   async _ngOnInit() {
@@ -131,7 +131,7 @@ export class RentalComponent extends AsyncComponent {
     this.detectTimeout();
   }
 
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 

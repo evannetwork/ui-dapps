@@ -25,33 +25,32 @@
   https://evan.network/license/
 */
 
-import {
-  getDomainName
-} from '@evan.network/ui-dapp-browser';
+const exec = require('child_process').exec;
+const path = require('path');
+const { lstatSync, readdirSync } = require('fs');
 
-import {
-  Injectable, OnDestroy,    // '@angular/core';
-  Platform,                 // ionic-angular
-  Observable, Subscription
-} from '@evan.network/ui-angular-libs';
+const scriptsFolder = process.cwd();
+const isDirectory = source => lstatSync(source).isDirectory()
+const getDirectories = source =>
+  readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
 
-import {
-  EvanCoreService,
-  EvanBCCService,
-  EvanDescriptionService,
-  EvanRoutingService,
-  SingletonService,
-  EvanAlertService
-} from '@evan.network/ui-angular-core';
-
-/**************************************************************************************************/
-
-@Injectable()
-export class MailDispatcherService {
-  constructor(
-    public bcc: EvanBCCService,
-    public singleton: SingletonService
-  ) {
-    return singleton.create(MailDispatcherService, this);
-  }
+/**
+ * Executes and console command
+ *
+ * @param      {string}       command        command to execute
+ * @param      {string}       runtimeFolder  path for runtime folder
+ * @return     {Promise<any}  resolved when command is finished
+ */
+async function runExec(command, runtimeFolder) {
+  return new Promise((resolve, reject) => {
+    exec(command, { cwd: runtimeFolder }, async (err, stdout, stderr) => {
+      if (err || stderr) {
+        reject({ stdout, stderr });
+      } else {
+        resolve({ stdout, stderr });
+      }
+    });
+  });
 }
+
+module.exports = { runExec, scriptsFolder, isDirectory, getDirectories }

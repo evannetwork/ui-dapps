@@ -27,14 +27,14 @@
 
 import {
   Profile
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Component, OnInit,      // @angular/core
   TranslateService,       // @ngx-translate/core
   Input, Router,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -45,7 +45,7 @@ import {
   EvanRoutingService,
   EvanUtilService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 @Component({
   selector: 'attachment-contract',

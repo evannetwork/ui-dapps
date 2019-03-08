@@ -29,7 +29,7 @@ import {
   getDomainName,
   lightwallet,
   System
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ChangeDetectorRef,
@@ -41,7 +41,7 @@ import {
   ViewChild,
   Http, Response, RequestOptions, Headers,
   Input,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -59,7 +59,7 @@ import {
   EvanToastService,
   EvanTranslationService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -79,7 +79,7 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
   /**
    * show the base loading symbol.
    */
-  private loading: boolean;
+  public loading: boolean;
 
   /**
    * holds the payment channel details for the current account

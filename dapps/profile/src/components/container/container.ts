@@ -29,7 +29,7 @@ import {
   getDomainName,
   lightwallet,
   System
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ChangeDetectorRef,
@@ -39,7 +39,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -57,7 +57,7 @@ import {
   EvanToastService,
   EvanTranslationService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 

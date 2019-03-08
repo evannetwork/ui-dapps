@@ -30,7 +30,7 @@ import {
   TranslateService,             // @ngx-translate/core
   NavController,                // ionic-angular
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AsyncComponent,
@@ -40,7 +40,7 @@ import {
   EvanBCCService,
   createOpacityTransition,
   EvanRoutingService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -62,7 +62,7 @@ export class RootComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   async _ngOnInit() {
@@ -71,7 +71,7 @@ export class RootComponent extends AsyncComponent {
     this.core.finishDAppLoading();
   }
 
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.watchRouteChange();
   }
 }

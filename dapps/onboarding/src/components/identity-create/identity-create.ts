@@ -27,7 +27,7 @@
 
 import {
   lightwallet
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, // @angular/core
@@ -35,7 +35,7 @@ import {
   DomSanitizer,
   ViewChild, ElementRef,
   ChangeDetectionStrategy, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -43,7 +43,7 @@ import {
   EvanRoutingService,
   EvanOnboardingService,
   EvanUtilService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
 
@@ -62,7 +62,7 @@ export class IdentityCreateComponent implements OnInit {
   @ViewChild('mnemonicDisplay') mnemonicDisplay: any;
 
   private questionMnemonic: boolean;
-  private loading: boolean;
+  public loading: boolean;
 
   constructor(
     public routing: EvanRoutingService,

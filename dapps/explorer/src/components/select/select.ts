@@ -28,7 +28,7 @@
 import {
   Component, OnInit, ViewChild,     // @angular/core
   DomSanitizer, ChangeDetectorRef, ChangeDetectionStrategy
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanCoreService,
@@ -37,7 +37,7 @@ import {
   EvanQrCodeService,
   AsyncComponent,
   EvanRoutingService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ExplorerService } from '../../services/explorer.service';
 

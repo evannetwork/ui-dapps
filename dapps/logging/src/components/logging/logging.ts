@@ -28,7 +28,7 @@
 import {
   logLog,
   LogLevel
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Component, OnInit, OnDestroy, // @angular/core
@@ -36,7 +36,7 @@ import {
   NavController,                // ionic-angular
   ViewChild, Slides,
   AfterViewInit, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -54,7 +54,7 @@ import {
   EvanAddressBookService,
   EvanLoggingService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 

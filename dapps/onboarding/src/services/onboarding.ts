@@ -26,23 +26,24 @@
 */
 
 import {
+  bccHelper,
+  evanGlobals,
+  getDomainName,
   lightwallet,
   routing,
   utils,
-  evanGlobals,
-  getDomainName,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Profile
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Router,             // '@angular/router';
   OnInit, Injectable, // '@angular/core';
   Observable, CanActivate,
   Http, Response, RequestOptions, Headers       // @angular/http
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAddressBookService,
@@ -52,7 +53,7 @@ import {
   EvanOnboardingService,
   EvanRoutingService,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -98,7 +99,7 @@ export class OnboardingService {
 
     if (this.core.getAccountId()) {
       try {
-        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
+        isOnboarded = await bccHelper.isAccountOnboarded(this.core.getAccountId());
       } catch (ex) { }
 
       if (isOnboarded) {
@@ -217,21 +218,24 @@ export class OnboardingService {
     const signer = account.toLowerCase();
 
     const msgHex = window['web3'].fromUtf8(msg);
-    
+   
     return new Promise((resolve, reject) => {
       window['web3'].currentProvider.sendAsync({
         method: 'personal_sign',
         params: [msgHex, signer],
         from: signer
       }, (err, result) => {
-        if (err || result.error) reject();
-        else resolve(result.result)
+        if (err || result.error) {
+          reject();
+        } else {
+          resolve(result.result)
+        }
       });
     });
   }
 
   async signMessage(msg: string, account: string, provider: string) {
-    if (provider == 'metamask') {
+    if (provider === 'metamask') {
       return this.signMessageMetamask(msg, account);
     } else {
       return this.signMessageBCC(msg, account);
@@ -276,17 +280,9 @@ export class OnboardingService {
      * @param provider    'metamask' || 'internal'
      */
     create: async (account: string, alias: string, password: string, provider: string) => {
-      await this.bcc.updateBCC(account, provider, true);
-
-      this.bcc.keyProvider.setKeysForAccount(
-        account,
-        lightwallet.getEncryptionKeyFromPassword(account, password)
-      );
-
       // set flag to check for profile creation interruption
       window.localStorage['evan-profile-creation'] = true;
 
-      const profile = this.bcc.profile;
       if (provider === 'metamask') {
         this.core.setAccountId(account || this.activeAccount);
       } else {
@@ -294,6 +290,10 @@ export class OnboardingService {
         const mnemonic = this.activeVault.getSeed(this.activeVault.pwDerivedKey);
         await lightwallet.createVaultAndSetActive(mnemonic, password);
       }
+
+      await this.bcc.updateBCC(account, provider);
+
+      const profile = this.bcc.profile;
 
       // disable pinning while profile files are being created
       profile.ipld.ipfs.disablePin = true;

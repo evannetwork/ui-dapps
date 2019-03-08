@@ -18,26 +18,26 @@ import {
   bccHelper,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   buffer,
   prottle,
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Injectable,
   Component, OnInit, Input,            // @angular/core
   Validators, FormBuilder, FormGroup,  // @angular/forms
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AngularCore,
   QueueSequence,
   QueueDispatcher,
   SingletonService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   translations

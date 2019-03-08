@@ -35,7 +35,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -50,7 +50,7 @@ import {
   EvanQueue,
   EvanRoutingService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ENSManagementService } from '../../services/service';
 import { ExplorerService } from 'explorer';
@@ -110,7 +110,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   /**
    * show the evan-loading
    */
-  private loading: boolean;
+  public loading: boolean;
 
   /**
    * clear current route watcher
@@ -154,7 +154,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   /**
@@ -184,7 +184,7 @@ export class ENSManagementDetailComponent extends AsyncComponent {
   /**
    * Remove watchers
    */
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
     this.watchRouteChange();
 

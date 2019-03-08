@@ -27,14 +27,14 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, OnDestroy,      // @angular/core
   NavController,                     // ionic-angular
   TranslateService,                  // @ngx-translate/core
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -54,7 +54,7 @@ import {
   EvanUtilService,
   QueueId,
   TrustDialogComponent,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -67,7 +67,7 @@ import {
 })
 
 export class AccountListComponent extends AsyncComponent {
-  private loading: boolean;
+  public loading: boolean;
   private accounts: any;
   private groupedAccounts: any;
   private availableGroups: Array<string>;
