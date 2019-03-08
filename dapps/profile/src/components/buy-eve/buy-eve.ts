@@ -143,14 +143,24 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   iban: StripeElement;
 
   /**
+   * bool value if an error exists
+   */
+  public cardError: boolean;
+
+  /**
    * holds error messages for credit card errors from stripe
    */
-  public cardError: string;
+  public cardErrorMessage: string;
+
+  /**
+   * bool value if an error exists
+   */
+  public ibanError: boolean;
 
   /**
    * holds error messages for sepa card errors from stripe
    */
-  public ibanError: string;
+  public ibanErrorMessage: string;
 
   /**
    * stripe optiosn for card or iban elements
@@ -215,6 +225,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
     // buidl the form validators
     this.stripePayment = this.formBuilder.group({
       name: ['', [Validators.required]],
+      company: ['', [Validators.required]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required]],
       zip: ['', [Validators.required, Validators.pattern(`^[0-9]*$`)]],
@@ -233,6 +244,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
     // get a new stripe element with the defined options
     this.stripeService.elements(this.elementsOptions)
       .subscribe(elements => {
+
+        // initially mark the form as invalid because no card input is made
+        this.ibanError = true;
+        this.cardError = true;
+
         this.elements = elements;
         // create a new credit card element
         this.card = this.elements.create('card', {
@@ -273,18 +289,22 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
         // listen on changes to the cards and display possible error messages
         this.card.on('change', (ev) => {
-          if (ev.error) {
-            this.cardError = ev.error.message;
+          if (ev.error || ev.empty) {
+            this.cardError = true;
+            this.cardErrorMessage  = ev.error.message;
           } else {
-            this.cardError = '';
+            this.cardError = false;
+            this.cardErrorMessage = '';
           }
           this.ref.detectChanges();
         });
         this.iban.on('change', (ev) => {
-          if (ev.error) {
-            this.ibanError = ev.error.message;
+          if (ev.error || ev.empty) {
+            this.ibanError = true;
+            this.ibanErrorMessage  = ev.error.message;
           } else {
-            this.ibanError = '';
+            this.ibanError = false;
+            this.ibanErrorMessage  = '';
           }
           this.ref.detectChanges();
         });
@@ -347,6 +367,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
     const name = this.stripePayment.get('name').value;
     const email = this.stripePayment.get('email').value;
+    const company = this.stripePayment.get('company').value;
     const street = this.stripePayment.get('street').value;
     const city = this.stripePayment.get('city').value;
     const zip = this.stripePayment.get('zip').value;
@@ -381,7 +402,8 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               address: {
                 city,
                 country,
-                line1: street,
+                line1: company,
+                line2: street,
                 postal_code: zip,
               }
             },

@@ -195,13 +195,12 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    */
   async loadPaymentDetails() {
     try {
-      const status = await this.paymentService.requestPaymentAgent('getStatus');
+      const status = await this.paymentService.requestPaymentAgent('status/get');
 
       // parse correct value for estimated values
       status.monthlyPayments = Math.floor(status.monthlyPayments).toString();
       status.fundsAvailable = Math.floor(status.fundsAvailable).toString();
       status.estimatedFunds = Math.floor(status.fundsAvailable / status.monthlyPayments);
-      status.overallSize = Number(status.monthlyPayments / 100000000000) * 1000;
 
       // save status to components scope
       this.paymentDetails = status;
@@ -216,11 +215,11 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    */
   async loadPaymentChannels() {
     try {
-      this.paymentChannels = await this.paymentService.requestPaymentAgent('getChannels');
+      this.paymentChannels = await this.paymentService.requestPaymentAgent('channel/get');
 
       // find active channels
       const activeChannels = this.paymentChannels.channels
-        .filter(channel => channel.state === 'OPEN');
+        .filter(channel => channel.state === 'OPEN' || channel.state === 'UNCONFIRMED');
 
       // preselect first active channel for actions
       this.activeChannel = activeChannels.length > 0 ? activeChannels[0] : null;
@@ -336,8 +335,10 @@ export class EvanProfilePaymentsComponent extends AsyncComponent {
    * @return     {string}  parsed displayable size
    */
   formatBytes(bytes: number, decimals: number) {
-    if(bytes == 0) return '0 Bytes';
-    var k = 1024,
+    if (bytes === 0) {
+      return '0 Bytes';
+    }
+    const k = 1024,
       dm = decimals <= 0 ? 0 : decimals || 2,
       sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
       i = Math.floor(Math.log(bytes) / Math.log(k));

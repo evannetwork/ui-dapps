@@ -135,6 +135,10 @@ export const de = {
         "title": "Straße",
         "description": "Straße des Rechnungsempfängers"
       },
+      "company": {
+        "title": "Firma",
+        "description": "Firmenname"
+      },
       "city": {
         "title": "Ort",
         "description": "Ort des Rechnungsempfängers"
@@ -164,6 +168,8 @@ export const de = {
       "payment": {
         "title": "Zahlungsart"
       },
+      "incl": "Inkl.",
+      "vatPercent": "MwSt.",
       "to-pay": "Gesamtsumme",
       "sepa": "SEPA Abbuchung",
       "credit": "Kreditkarte",
