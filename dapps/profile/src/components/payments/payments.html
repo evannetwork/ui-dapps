@@ -29,7 +29,7 @@
 
 <div *ngIf="!loading">
   <div class="evan-relative evan-content">
-    <ng-container *ngIf="paymentChannels.channels && paymentChannels.channels.length == 0">
+    <ng-container *ngIf="activeChannels && activeChannels.length == 0">
       <h3 class="content-header m-b-0 m-t-0">
         {{ '_dappprofile.payment.setup-payment-channel' | translate }}
       </h3>
