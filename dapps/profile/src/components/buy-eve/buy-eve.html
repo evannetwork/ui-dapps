@@ -53,32 +53,36 @@
     </div>
     <form *ngIf="!paymentResponse" novalidate [formGroup]="stripePayment">
       <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label stacked>
-              <h3>
-                {{ '_dappprofile.pay-eve.amount.title' | translate }}*
-              </h3>
-            </ion-label>
-            <ion-input formControlName="amount" required type="number"
-              [(ngModel)]="payEve.amount"
-              min="10"
-              [placeholder]="'_dappprofile.pay-eve.amount.description' | translate"
-              (ionChange)="ref.detectChanges()"
-              (focusout)="ref.detectChanges()">
-            </ion-input>
-          </ion-item>
-          <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'amount')" color="danger">
-            <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
-          </ion-chip>
-        </ion-col>
-      </ion-row>
-      <div class="evan-seperator"></div>
-      <ion-row>
         <ion-col col-8>
-          <h3 class="content-header m-b-0 m-t-0">
-            {{ '_dappprofile.pay-eve.payment-information' | translate }}
-          </h3>
+          <ion-row>
+            <ion-col col-12>
+              <ion-item>
+                <ion-label stacked>
+                  <h3>
+                    {{ '_dappprofile.pay-eve.amount.title' | translate }}*
+                  </h3>
+                </ion-label>
+                <ion-input formControlName="amount" required type="number"
+                  [(ngModel)]="payEve.amount"
+                  min="10"
+                  [placeholder]="'_dappprofile.pay-eve.amount.description' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'amount')" color="danger">
+                <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
+              </ion-chip>
+              <div class="evan-seperator"></div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <h3 class="content-header m-b-0 m-t-0">
+                {{ '_dappprofile.pay-eve.payment-information' | translate }}
+              </h3>
+            </ion-col>
+          </ion-row>
           <ion-row>
             <ion-col col-6>
               <ion-item>
