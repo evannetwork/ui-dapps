@@ -34,7 +34,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -50,7 +50,7 @@ import {
   EvanTranslationService,
   QueueId,
   EvanQueue,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 

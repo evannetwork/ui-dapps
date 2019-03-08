@@ -30,14 +30,14 @@ import {
   Component, OnInit, Input,            // @angular/core
   Validators, FormBuilder, FormGroup,  // @angular/forms
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   QueueSequence,
   QueueDispatcher,
   EvanBCCService,
   SingletonService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   translations

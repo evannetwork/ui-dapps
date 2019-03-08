@@ -25,15 +25,15 @@
   https://evan.network/license/
 */
 
-import * as bcc from 'bcc';
-import * as SmartContracts from 'smart-contracts';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as SmartContracts from '@evan.network/smart-contracts-core';
 
 import {
   bccHelper,
   core,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Http,
@@ -42,7 +42,7 @@ import {
   OnDestroy,
   Platform, 
   Subscription,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -54,14 +54,14 @@ import {
   EvanRoutingService,
   QueueId,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 /**
  * Utility service for the demo generatior DApp.
  */
 @Injectable()
-export class DemoManagementService implements OnDestroy {
+export class DemoManagementService {
   /**
    * address for storing demo instances
    */
@@ -279,7 +279,7 @@ export class DemoManagementService implements OnDestroy {
     // check if profile exists
     user.vault = await lightwallet.getNewVault(user.mnemonic, user.password);
     user.accountId = lightwallet.getAccounts(user.vault, 1)[0];
-    user.isOnboared = await bcc.isAccountOnboarded(user.accountId);
+    user.isOnboared = await bccHelper.isAccountOnboarded(user.accountId);
 
     // if the user is onboarded, check if the password is correct
     if (user.isOnboared) {

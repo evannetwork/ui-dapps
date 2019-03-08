@@ -31,7 +31,7 @@ import {
   NavController,                // ionic-angular
   ViewChild, Slides,
   AfterViewInit, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -46,7 +46,7 @@ import {
   EvanUtilService,
   EvanLoggingService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -63,7 +63,7 @@ export class QueueComponent extends AsyncComponent {
   private enableAutoSync: boolean;
   private enableDetailView: boolean;
   private screenSize: number;
-  private loading: boolean;
+  public loading: boolean;
   private onQueueUpdate: Function;
 
   @ViewChild('slider') slide: Slides;

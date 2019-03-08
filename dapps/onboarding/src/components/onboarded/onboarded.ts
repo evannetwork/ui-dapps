@@ -28,13 +28,13 @@
 import {
   getDomainName,
   routing,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, OnDestroy, // @angular/core
   NavController,                // ionic-angular
   DomSanitizer, ChangeDetectorRef, ChangeDetectionStrategy,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AsyncComponent,
@@ -47,7 +47,7 @@ import {
   EvanRoutingService,
   EvanTranslationService,
   EvanUtilService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
 
@@ -76,7 +76,7 @@ export class OnboardedComponent extends AsyncComponent {
   /**
    * currents users balance
    */
-  private balance: string;
+  private balance: string|number;
 
   /**
    * current attached query params for checking mail inivitation
@@ -114,7 +114,7 @@ export class OnboardedComponent extends AsyncComponent {
 
       this.core.finishDAppLoading();
     } else {
-      this.routing.navigate('./', true, this.routing.getQueryparams());      
+      this.routing.navigate('./', true, this.routing.getQueryparams());
     }
   }
 

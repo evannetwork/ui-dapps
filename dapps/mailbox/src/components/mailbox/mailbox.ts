@@ -32,7 +32,7 @@ import {
   ActivatedRoute, Router, RouterEvent, NavigationEnd,
   DomSanitizer, OnDestroy,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -47,11 +47,11 @@ import {
   EvanTranslationService,
   EvanUtilService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 /**************************************************************************************************/
 
@@ -65,7 +65,7 @@ import {
 })
 
 export class MailboxComponent extends AsyncComponent {
-  private loading: boolean;
+  public loading: boolean;
   private addressBook: any;
   private groupedMails: Array<any>;
   private reloadOutlet: boolean;

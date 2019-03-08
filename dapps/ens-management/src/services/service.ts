@@ -28,25 +28,27 @@
 import {
   Ipld,
   NameResolver,
-} from 'bcc';
+  logLog,
+  logLogLevel,
+} from '@evan.network/api-blockchain-core';
 
-import * as SmartContracts from 'smart-contracts';
+import * as SmartContracts from '@evan.network/smart-contracts-core';
 
 import {
   bccHelper,
   core,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Http,
   Injectable,
   Observable,
   OnDestroy,
-  Platform, 
+  Platform,
   Subscription,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -58,23 +60,23 @@ import {
   EvanRoutingService,
   QueueId,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 /**
  * Utility service for the verification view DApp.
  */
 @Injectable()
-export class ENSManagementService implements OnDestroy {
+export class ENSManagementService {
   /**
    * ens address, when nothing is set
    */
-  public nullAddress: string = '0x0000000000000000000000000000000000000000';
+  public nullAddress = '0x0000000000000000000000000000000000000000';
 
   /**
    * ens domain that should be used for resolving the ens addresses
    */
-  public domainName: string = 'payable'; // getDomainName();
+  public domainName = 'payable'; // getDomainName();
 
   /**
    * nameResolver instance initialized with the latest ens contract address to handle correct payment
@@ -102,8 +104,8 @@ export class ENSManagementService implements OnDestroy {
         config: customNameResolver,
         contractLoader: this.bcc.contractLoader,
         executor: this.bcc.executor,
-        logLog: this.bcc.logLog,
-        logLogLevel: this.bcc.logLogLevel,
+        logLog: logLog,
+        logLogLevel: logLogLevel,
         web3: this.bcc.web3,
       });
     });

@@ -37,15 +37,15 @@ import {
   Output,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
-import * as bcc from 'bcc';
+import * as bcc from '@evan.network/api-blockchain-core';
 
 import {
   bccHelper,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   AnimationDefinition,
@@ -58,7 +58,7 @@ import {
   EvanRoutingService,
   EvanTranslationService,
   EvanDescriptionService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { DemoManagementService } from '../../services/service';
 
@@ -140,7 +140,7 @@ export class UsersComponent extends AsyncComponent {
     private translate: EvanTranslationService,
     private _DomSanitizer: DomSanitizer
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   async _ngOnInit() {
@@ -215,7 +215,7 @@ export class UsersComponent extends AsyncComponent {
     this.onChange.emit();
   }
 
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
     this.clearCaptchaResponse();
   }

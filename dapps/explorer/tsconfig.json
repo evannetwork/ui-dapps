@@ -26,7 +26,7 @@
         "../../../node_modules/@evan.network/ui-angular-libs/dist/angularlibs.js"
       ],
       "bcc": [
-        "../../../node_modules/@evan.network/api-blockchain-core/bundles/bcc/bcc"
+        "../../../node_modules/@evan.network/api-blockchain-core/dist/index.js"
       ],
       "brace": [
         "libs/brace.js"

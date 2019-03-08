@@ -27,18 +27,18 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   RightsAndRoles
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Router,             // '@angular/router';
   OnInit, Injectable, // '@angular/core';
   Observable, CanActivate,
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAddressBookService,
@@ -53,7 +53,7 @@ import {
   EvanUtilService,
   QueueId,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -189,6 +189,7 @@ export class TaskService {
       contractLoader: this.bccService.contractLoader,
       executor: this.bccService.executor,
       nameResolver: this.bccService.nameResolver,
+      web3: this.bccService.web3,
     });
     let members = [];
 

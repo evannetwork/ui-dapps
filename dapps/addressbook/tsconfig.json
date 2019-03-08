@@ -15,21 +15,7 @@
       "dom"
     ],
     "skipLibCheck": true,
-    "types": [],
-    "paths": {
-      "bcc": [
-        "../../../node_modules/@evan.network/api-blockchain-core/bundles/bcc/bcc"
-      ],
-      "dapp-browser": [
-        "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"
-      ],
-      "angular-libs": [
-        "../../../node_modules/@evan.network/ui-angular-libs/dist/angularlibs.js"
-      ],
-      "angular-core": [
-        "../../../node_modules/@evan.network/ui-angular-core/dist/angularcore.js"
-      ]
-    }
+    "types": []
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

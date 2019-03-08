@@ -31,7 +31,7 @@ import {
   DomSanitizer,
   OnDestroy,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -40,7 +40,7 @@ import {
   EvanCoreService,
   EvanOnboardingService,
   EvanUtilService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
 
@@ -56,7 +56,7 @@ import { OnboardingService } from '../../services/onboarding';
 
 export class MetamaskComponent implements OnInit {
   private checkInterval: any;
-  private loading: boolean;
+  public loading: boolean;
 
   constructor(
     public _DomSanitizer: DomSanitizer,

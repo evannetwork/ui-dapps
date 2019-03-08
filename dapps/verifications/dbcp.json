@@ -12,7 +12,7 @@
         "verifications.css",
         "verifications.js"
       ],
-      "origin": "QmTZeeny14qzwqUPhHQV9m8pif2iwX15LSNBhLNvjQjn1G",
+      "origin": "QmVicAbqwoGf2eQR4RvJiicvPZTtMPK7MYHEtKDmsjuAdt",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "type": "dapp"
@@ -39,7 +39,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmTfPSFqtbxBAYSd1MPwyRpB4kNajwVUhsouFwXEtUHp2k",
-      "1.1.0": "QmdnotURSyurUv4WVKRhd5F5CJotnQqSiaoF53KWCStbC6"
+      "1.1.0": "QmY8zANUtVBCT7qaWSuxkqubD12tHinwJ8fkRx5aSWeqrc"
     }
   }
 }

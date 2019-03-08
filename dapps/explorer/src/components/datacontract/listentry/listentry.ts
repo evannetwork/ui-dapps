@@ -30,7 +30,7 @@ import {
   DomSanitizer,
   ChangeDetectorRef,
   Input
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -43,11 +43,11 @@ import {
   EvanQrCodeService,
   EvanRoutingService,
   EvanModalService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   prottle
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import { ExplorerService } from '../../../services/explorer.service';
 

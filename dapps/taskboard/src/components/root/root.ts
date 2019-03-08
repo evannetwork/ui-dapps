@@ -30,7 +30,7 @@ import {
   TranslateService,       // @ngx-translate/core
   NavController,          // ionic-angular
   OnDestroy, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -40,7 +40,7 @@ import {
   createOpacityTransition,
   EvanRoutingService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -59,7 +59,7 @@ import {
 })
 
 export class TaskBoardRootComponent extends AsyncComponent {
-  private loading: boolean;
+  public loading: boolean;
   private watchRouteChange: Function;
 
   constructor(

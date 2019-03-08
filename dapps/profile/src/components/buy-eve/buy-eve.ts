@@ -29,7 +29,7 @@ import {
   getDomainName,
   lightwallet,
   System
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   AfterViewInit,
@@ -45,7 +45,7 @@ import {
   TranslateService,
   Validators,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -62,7 +62,7 @@ import {
   EvanToastService,
   EvanTranslationService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   StripeService,
@@ -97,7 +97,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   /**
    * show an loading symbol
    */
-  private loading: boolean;
+  public loading: boolean;
 
   /**
    * current active payment tab id
@@ -466,9 +466,9 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               customer: customer,
               requestId
             },
-            {
+            (<any>{
               headers,
-            }
+            })
           )
           .toPromise()
         ).json();

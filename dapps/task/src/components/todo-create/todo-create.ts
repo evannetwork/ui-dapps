@@ -30,7 +30,7 @@ import {
   Validators, FormBuilder, FormGroup, FormControl, // @angular/forms
   ViewChild, ElementRef, Input, Output, EventEmitter,
   ChangeDetectionStrategy, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -40,7 +40,7 @@ import {
   EvanAddressBookService,
   EvanQueue,
   EvanTranslationService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { TaskService } from '../../services/task';
 

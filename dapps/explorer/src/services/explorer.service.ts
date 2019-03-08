@@ -27,13 +27,13 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Injectable, OnDestroy,    // '@angular/core';
   Platform,                 // ionic-angular
   Observable, Subscription
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanCoreService,
@@ -42,14 +42,14 @@ import {
   EvanRoutingService,
   SingletonService,
   EvanAlertService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 /**
  * Utility service for the explorer DApp to resolve ens, contract ids, ...
  */
 @Injectable()
-export class ExplorerService implements OnDestroy {
+export class ExplorerService {
   /**
    * all function members that specifies a base contract
    */

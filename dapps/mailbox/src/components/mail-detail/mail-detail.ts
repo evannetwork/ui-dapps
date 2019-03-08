@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ActivatedRoute,
@@ -38,7 +38,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -55,7 +55,7 @@ import {
   EvanRoutingService,
   EvanTranslationService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 

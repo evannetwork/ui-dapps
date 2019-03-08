@@ -31,7 +31,7 @@ import {
   DomSanitizer, ChangeDetectorRef, ChangeDetectionStrategy,
   Validators, FormBuilder, FormGroup, FormControl, // @angular/forms
   //Http, Response, RequestOptions, Headers,       // @angular/http
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -45,7 +45,7 @@ import {
   EvanBCCService,
   EvanLoggingService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
 
@@ -64,7 +64,7 @@ import { OnboardingService } from '../../services/onboarding';
 export class ProfileCreateComponent extends AsyncComponent {
   public screenSize: number;
   private alias: string;
-  private loading: boolean;
+  public loading: boolean;
   private ex: any;
   private activeAccount: string;
   private onboardingForm: FormGroup;

@@ -28,7 +28,7 @@
 import {
   getDomainName,
   ipfs,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component,
@@ -42,7 +42,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
   Http,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -55,7 +55,7 @@ import {
   EvanUtilService,
   EvanDescriptionService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
 /**************************************************************************************************/
@@ -70,7 +70,7 @@ import { OnboardingService } from '../../services/onboarding';
 
 export class TermsOfUseComponent extends AsyncComponent {
   private hasRead: boolean;
-  private loading: boolean;
+  public loading: boolean;
   private provider: string;
   private clearCaptchaResponse: Function;
   private activeAccount: string;
@@ -193,12 +193,12 @@ export class TermsOfUseComponent extends AsyncComponent {
       `${ termsOfUseOrigin }/storage.evan.network/en.html`,
     ];
 
-    // try to load the terms of use for the current language, if this is not available, load the 
+    // try to load the terms of use for the current language, if this is not available, load the
     // next fallback
     for (let i = 0; i < fallbacks.length; i++) {
       try {
-        return await this.http
-          .get(fallbacks[i])
+        return (<any>await this.http
+          .get(fallbacks[i]))
           .map((res) => res.text())
           .toPromise();
       } catch (ex) { }

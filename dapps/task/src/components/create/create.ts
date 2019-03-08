@@ -31,7 +31,7 @@ import {
   ViewChild, ElementRef, Input, Output,
   EventEmitter, OnDestroy, ChangeDetectorRef,
   ChangeDetectionStrategy
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -41,7 +41,7 @@ import {
   EvanAddressBookService,
   EvanQueue,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { TaskService } from '../../services/task';
 

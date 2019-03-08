@@ -27,7 +27,7 @@
 
 import {
   getDomainName,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ChangeDetectorRef,
@@ -41,7 +41,7 @@ import {
   Output,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -58,7 +58,7 @@ import {
   EvanPictureService,
   EvanQueue,
   EvanRoutingService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ENSManagementService } from '../../services/service';
 
@@ -129,7 +129,7 @@ export class ENSCheckComponent extends AsyncComponent {
   /**
    * show the loading
    */
-  private loading: boolean;
+  public loading: boolean;
 
   /**
    * EventEmitter that is triggered when this ref was updated, so the parent component can update
@@ -151,7 +151,7 @@ export class ENSCheckComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   /**
@@ -182,7 +182,7 @@ export class ENSCheckComponent extends AsyncComponent {
   /**
    * Remove watchers
    */
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 

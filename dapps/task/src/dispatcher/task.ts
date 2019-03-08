@@ -30,7 +30,7 @@ import {
   Component, OnInit, Input,            // @angular/core
   Validators, FormBuilder, FormGroup,  // @angular/forms
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanBCCService,
@@ -39,7 +39,7 @@ import {
   QueueDispatcher,
   QueueSequence,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { TaskService } from '../services/task';
 

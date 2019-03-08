@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ChangeDetectorRef,
@@ -36,7 +36,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AsyncComponent,
@@ -48,7 +48,7 @@ import {
   EvanMailboxService,
   EvanRoutingService,
   EvanUtilService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 

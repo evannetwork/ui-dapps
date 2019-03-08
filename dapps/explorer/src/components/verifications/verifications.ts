@@ -29,7 +29,7 @@ import {
   Component,     // @angular/core
   DomSanitizer,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -45,14 +45,13 @@ import {
   createRouterTransition,
   EvanTranslationService,
   createTabSlideTransition
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   BaseContract,
   RightsAndRoles,
   prottle,
-  createBC
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import { ExplorerService } from '../../services/explorer.service';
 
@@ -75,7 +74,7 @@ export class ExplorerVerificationsComponent extends AsyncComponent {
   private id: string;
 
   /**
-   * id corresponding contract id 
+   * id corresponding contract id
    */
   private contractAddress: string;
 

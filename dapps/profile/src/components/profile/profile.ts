@@ -29,7 +29,7 @@ import {
   getDomainName,
   lightwallet,
   System
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   AfterViewInit,
@@ -45,7 +45,7 @@ import {
   TranslateService,
   Validators,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -62,7 +62,7 @@ import {
   EvanToastService,
   EvanTranslationService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   StripeService,
@@ -105,7 +105,7 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
   /**
    * show an loading symbol
    */
-  private loading: boolean;
+  public loading: boolean;
 
   /**
    * check if the balance was loaded before, only show toast message on later refreshs
@@ -286,7 +286,7 @@ export class EvanProfileDetailComponent extends AsyncComponent implements AfterV
   /**
    * Remove watchers
    */
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 

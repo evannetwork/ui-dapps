@@ -35,7 +35,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -52,7 +52,7 @@ import {
   EvanPictureService,
   EvanQueue,
   EvanRoutingService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { VerificationService } from '../../services/service';
 
@@ -199,7 +199,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   /**
@@ -219,8 +219,14 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     // try to resolve the latest used values
     this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'];
 
+    if (this.subjectInput.indexOf('0x') !== 0) {
+      try {
+        this.subjectEnsAddress = await this.bcc.nameResolver.getAddress(this.subjectInput);
+      } catch (ex) { }
+    }
+
     // if no valid subject was supplied, reset it
-    if (!this.isValidAddress(this.subjectInput)) {
+    if (!this.isValidAddress(this.subjectInput) && !this.isValidAddress(this.subjectEnsAddress)) {
       delete this.subjectInput;
     }
 
@@ -281,7 +287,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
   /**
    * Remove watchers
    */
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 
@@ -426,7 +432,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
    *
    * @return     {Promise<void>}  resolved when done
    */
-  addressInputChanged() {
+  addressInputChanged(submit: boolean) {
     if (!this.subjectEnsAddressTimeout) {
       window.clearTimeout(this.subjectEnsAddressTimeout);
     }
@@ -438,6 +444,10 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
         } catch (ex) { }
       } else {
         this.subjectEnsAddress = '';
+      }
+
+      if (submit && this.isValidForm()) {
+        this.useCurrentValues();
       }
 
       this.ref.detectChanges();

@@ -35,7 +35,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -49,7 +49,7 @@ import {
   EvanQueue,
   EvanRoutingService,
   QueueId,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { VerificationService } from '../../services/service';
 
@@ -100,7 +100,7 @@ export class EvanIdentityMissingComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   /**
@@ -124,7 +124,7 @@ export class EvanIdentityMissingComponent extends AsyncComponent {
   /**
    * Remove watchers
    */
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 
