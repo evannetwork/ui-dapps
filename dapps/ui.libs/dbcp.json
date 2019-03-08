@@ -1,0 +1,37 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "ui.libs.js",
+      "files": [
+        "ui.libs.js",
+        "ui.libs.css"
+      ],
+      "origin": "",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "dapp"
+    },
+    "dbcpVersion": 1,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "ui.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "ui.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "1.0.0",
+    "versions": {}
+  }
+}
