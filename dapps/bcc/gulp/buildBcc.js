@@ -25,32 +25,19 @@
   https://evan.network/license/
 */
 
-const exec = require('child_process').exec;
 const path = require('path');
-const { lstatSync, readdirSync } = require('fs');
+const fs = require('fs');
+const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../../../gulp/lib');
+const bccFolder = path.resolve(`../../node_modules/@evan.network/api-blockchain-core`);
 
-const scriptsFolder = process.cwd();
-const isDirectory = source => lstatSync(source).isDirectory()
-const getDirectories = source =>
-  readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
-
-/**
- * Executes and console command
- *
- * @param      {string}       command        command to execute
- * @param      {string}       runtimeFolder  path for runtime folder
- * @return     {Promise<any}  resolved when command is finished
- */
-async function runExec(command, runtimeFolder) {
-  return new Promise((resolve, reject) => {
-    exec(command, { cwd: runtimeFolder }, async (err, stdout, stderr) => {
-      if (err || stderr) {
-        reject({ stdout, stderr });
-      } else {
-        resolve({ stdout, stderr });
-      }
-    });
-  });
+async function build() {
+  try {
+    if (fs.existsSync(`${ bccFolder }/src/index.ts`)) {
+      await runExec('npm run build', bccFolder);
+    }
+  } catch(err) {
+    console.error(err)
+  }
 }
 
-module.exports = { runExec, scriptsFolder, isDirectory, getDirectories }
+build();

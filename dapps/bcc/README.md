@@ -1,4 +1,14 @@
-# axios.vue.libs
+# bcc
+
+Wrapper for the `@evan.network/api-blockchain-core` to be able to build this project as a browserify bundle.
+This application will be bind to the following ENS path `bcc.evan`. Within your dbcp.json, you will need to include `bcc` as a dependency, if you want to use this paackage within an dapp. Within the ts files of the dapp, the usal import `@evan.network/api-blockchain-core` import can be used.
+
+## Build
+```
+npm run build
+```
+
+## DApp
 
 This is a evan.network DApp. To build and deploy your DApp, please visit the readme.md of your containing evan.network basic project.
 
