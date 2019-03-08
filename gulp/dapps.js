@@ -17,7 +17,6 @@
 const { lstatSync, readdirSync } = require('fs');
 const gulp = require('gulp');
 const path = require('path');
-const del = require('del');
 const exec = require('child_process').exec;
 const { runExec, scriptsFolder, isDirectory, getDirectories } = require('./lib');
 
@@ -111,8 +110,6 @@ const buildDApp = async (dappDir) => {
 
     try {
       // navigate to the dapp dir and run the build command
-      process.chdir(dappDir);
-
       await runExec('npm run build', dappDir);
 
       // clear timer and calculate time

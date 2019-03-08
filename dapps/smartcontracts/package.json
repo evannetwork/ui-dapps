@@ -12,7 +12,7 @@
   "main": "dist/index.js",
   "name": "bcc",
   "scripts": {
-    "build": "node gulp/buildContracts.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd) --name compiled.js"
+    "build": "node gulp/buildContracts.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
   "version": "2.5.2"

@@ -48,6 +48,7 @@
     "dapps-serve": "gulp --gulpfile gulp/dapps.js dapps-serve",
     "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config /Users/tschuck/projects/evan.network/ui/ui-core/scripts/config/deployment.js",
     "serve": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve",
+    "serve-build": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
   "version": "1.0.0"
