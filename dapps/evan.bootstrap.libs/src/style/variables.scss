@@ -1,0 +1,120 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+*/
+
+@import '../../../ui.libs/src/style/definitions/evan.theme';
+
+$black: map-get($themeEvan, black);
+$blue: map-get($themeEvan, blue);
+$cyan: map-get($themeEvan, cyan);
+$gray-100: map-get($themeEvan, gray-100);
+$gray-200: map-get($themeEvan, gray-200);
+$gray-300: map-get($themeEvan, gray-300);
+$gray-400: map-get($themeEvan, gray-400);
+$gray-500: map-get($themeEvan, gray-500);
+$gray-600: map-get($themeEvan, gray-600);
+$gray-700: map-get($themeEvan, gray-700);
+$gray-800: map-get($themeEvan, gray-800);
+$gray-900: map-get($themeEvan, gray-900);
+$green: map-get($themeEvan, green);
+$indigo: map-get($themeEvan, indigo);
+$orange: map-get($themeEvan, orange);
+$pink: map-get($themeEvan, pink);
+$purple: map-get($themeEvan, purple);
+$red: map-get($themeEvan, red);
+$teal: map-get($themeEvan, teal);
+$white: map-get($themeEvan, white);
+$yellow: map-get($themeEvan, yellow);
+
+$grays: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$grays: map-merge(
+  (
+    '100': $gray-100,
+    '200': $gray-200,
+    '300': $gray-300,
+    '400': $gray-400,
+    '500': $gray-500,
+    '600': $gray-600,
+    '700': $gray-700,
+    '800': $gray-800,
+    '900': $gray-900
+  ),
+  $grays
+);
+$colors: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$colors: map-merge(
+  (
+    'blue':       $blue,
+    'indigo':     $indigo,
+    'purple':     $purple,
+    'pink':       $pink,
+    'red':        $red,
+    'orange':     $orange,
+    'yellow':     $yellow,
+    'green':      $green,
+    'teal':       $teal,
+    'cyan':       $cyan,
+    'white':      $white,
+    'gray':       $gray-600,
+    'gray-dark':  $gray-800
+  ),
+  $colors
+);
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-800;
+$theme-colors: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: map-merge(
+  (
+    'primary':    $primary,
+    'secondary':  $secondary,
+    'success':    $success,
+    'info':       $info,
+    'warning':    $warning,
+    'danger':     $danger,
+    'light':      $light,
+    'dark':       $dark
+  ),
+  $theme-colors
+);
+
+// Set a specific jump point for requesting color jumps
+$theme-color-interval: 8%;
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+$yiq-contrasted-threshold: 150;
+
+// Customize the light and dark text colors for use in our YIQ color contrast function.
+$yiq-text-dark: $gray-900;
+$yiq-text-light: $white;

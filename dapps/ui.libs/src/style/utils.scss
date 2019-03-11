@@ -25,19 +25,13 @@
   https://evan.network/license/
 */
 
-@import './definitions/utils.scss';
-
-.evan {
-  min-width: 100px;
-  min-height: 100px;
-  padding: 20px;
-
-  background-color: cssVar('background-color');
-
-  .evan {
-    background-color: cssVar('background-color-accent');
-    .evan {
-      background-color: cssVar('background-color');
-    }
+@mixin evanVariables($variables) {
+  @each $param, $value in $variables {
+    --evan-#{$param}: #{$value};
   }
+}
+
+// for now, bootstrap does not support css browser variables
+@function cssVar($name) {
+  @return var(--evan-#{$name});
 }

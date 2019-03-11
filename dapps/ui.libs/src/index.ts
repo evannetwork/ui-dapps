@@ -29,7 +29,7 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
-import './style/core.scss';
+import './style/index.scss';
 export { Dispatcher } from './Dispatcher';
 
 /**
@@ -39,13 +39,17 @@ export { Dispatcher } from './Dispatcher';
  * @param      {any}  dbcpName   dbcp name of the dapp
  */
 export async function startDApp(container, dbcpName, dappEns, dappBaseUrl) {
-  const iframe = document.createElement('iframe');
+  let xmlhttp = (<any>window).XMLHttpRequest ? new XMLHttpRequest() :
+    new (<any>window).ActiveXObject("Microsoft.XMLHTTP");
 
-  // open the iframe using the dappBaseUrl
-  iframe.setAttribute('src', `${ dappBaseUrl }/style.html`);
-  iframe.className += ' evan-dapp';
-  container.appendChild(iframe);
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      container.innerHTML = xmlhttp.responseText;
+      // remove the loading screen
+      dappBrowser.loading.finishDAppLoading();
+    }
+  }
 
-  // remove the loading screen
-  dappBrowser.loading.finishDAppLoading();
+  xmlhttp.open("GET", `${ dappBaseUrl }/index.html`, false);
+  xmlhttp.send();
 }

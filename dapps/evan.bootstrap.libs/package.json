@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/evan.bootstrap.libs.js",
+  "name": "@evan.network/bootstrap-them-evan",
+  "scripts": {
+    "build": "gulp"
+  },
+  "typings": "dist/evan.bootstrap.libs.d.ts",
+  "version": "4.3.1"
+}

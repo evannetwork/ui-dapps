@@ -2,14 +2,10 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {
-        "evan.bootstrap.libs": "4.3.1",
-        "iconic.libs": "1.1.1"
-      },
-      "entrypoint": "ui.libs.js",
+      "dependencies": {},
+      "entrypoint": "iconic.libs.css",
       "files": [
-        "ui.libs.js",
-        "ui.libs.css"
+        "iconic.libs.css"
       ],
       "origin": "",
       "primaryColor": "",
@@ -24,17 +20,17 @@
         "en": ""
       },
       "name": {
-        "en": "ui.libs"
+        "en": "iconic.libs"
       }
     },
     "imgSquare": "",
-    "name": "ui.libs",
+    "name": "iconic.libs",
     "tags": [
       "dapp",
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.1.1",
     "versions": {}
   }
 }

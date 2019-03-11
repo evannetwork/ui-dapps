@@ -25,12 +25,9 @@
   https://evan.network/license/
 */
 
-@mixin evanVariables($variables) {
-  @each $param, $value in $variables {
-    --evan-#{$param}: #{$value};
-  }
-}
-
-@function cssVar($name) {
-  @return var(--evan-#{$name});
-}
+/**
+ * import font open iconic icons
+ *   https://github.com/iconic/open-iconic
+ *   https://useiconic.com/open#icons
+ */
+@import '~open-iconic/font/css/open-iconic-bootstrap.scss';

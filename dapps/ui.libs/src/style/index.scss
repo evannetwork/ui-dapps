@@ -25,4 +25,8 @@
   https://evan.network/license/
 */
 
-@import './definitions/utils.scss';
+/**
+ * apply default evan theme
+ */
+@import './definitions/evan.theme';
+@include themeEvan();

@@ -26,21 +26,47 @@
 */
 
 /**
- * import themes and start them
+ * import bootstrap essentials
  */
-@import './definitions/themeEvan.scss';
-@import './definitions/utils.scss';
-@include themeEvan();
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import './variables';
 
 /**
- * import styilings
+ * import font open iconic icons
+ *   https://github.com/iconic/open-iconic
+ *   https://useiconic.com/open#icons
  */
-@import './buttons.scss';
-@import './content.scss';
-@import './forms.scss';
-@import './list.scss';
-@import './open-sans.scss';
-@import './popup.scss';
-@import './side-panel.scss';
-@import './tabs.scss';
-@import './text.scss';
+@import '~open-iconic/font/css/open-iconic-bootstrap.scss';
+
+/**
+ * include fonts and bootstrap
+ */
+.evan.theme-evan {
+  @import '~bootstrap/scss/reboot';
+  @import '~bootstrap/scss/buttons';
+  @import '~bootstrap/scss/type';
+  @import '~bootstrap/scss/code';
+  @import '~bootstrap/scss/grid';
+  @import '~bootstrap/scss/tables';
+  @import '~bootstrap/scss/images';
+  @import '~bootstrap/scss/utilities';
+
+  & {
+    font-family: $font-family-base;
+    font-weight: $font-weight-base;
+    line-height: $line-height-base;
+
+    margin: 0;
+
+    text-align: left;
+
+    color: $body-color;
+    background-color: $body-bg;
+
+    @include font-size($font-size-base);
+    -webkit-tap-highlight-color: rgba($black, 0);
+    -webkit-text-size-adjust: 100%;
+  }
+}
