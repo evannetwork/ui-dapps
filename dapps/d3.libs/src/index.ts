@@ -24,52 +24,11 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+// map the original vue path to d3.libs
+import { System, getDomainName } from 'dapp-browser';
+System.map['d3'] = `d3.libs.${ getDomainName() }!dapp-content`;
 
-/**
- * import bootstrap essentials
- */
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import './variables';
+// 3d.js
+import * as d3 from './d3.js';
 
-/**
- * import font open iconic icons
- *   https://github.com/iconic/open-iconic
- *   https://useiconic.com/open#icons
- */
-@import '~open-iconic/font/css/open-iconic-bootstrap.scss';
-
-/**
- * include fonts and bootstrap
- */
-.evan.theme-evan {
-  @import '~bootstrap/scss/alert';
-  @import '~bootstrap/scss/buttons';
-  @import '~bootstrap/scss/card';
-  @import '~bootstrap/scss/code';
-  @import '~bootstrap/scss/dropdown';
-  @import '~bootstrap/scss/grid';
-  @import '~bootstrap/scss/images';
-  @import '~bootstrap/scss/reboot';
-  @import '~bootstrap/scss/tables';
-  @import '~bootstrap/scss/type';
-  @import '~bootstrap/scss/utilities';
-
-  & {
-    font-family: $font-family-base;
-    font-weight: $font-weight-base;
-    line-height: $line-height-base;
-
-    margin: 0;
-
-    text-align: left;
-
-    color: $body-color;
-    background-color: $body-bg;
-
-    @include font-size($font-size-base);
-    -webkit-tap-highlight-color: rgba($black, 0);
-    -webkit-text-size-adjust: 100%;
-  }
-}
+export default d3;
