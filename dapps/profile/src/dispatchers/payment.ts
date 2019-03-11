@@ -109,7 +109,7 @@ export const paymentDispatcher = new QueueDispatcher(
 
               // send proof to agent
               await service.paymentService.requestPaymentAgent(
-                `channel/confirm?proof=${proof.sig}&openBlockNumber=${createdChannel.openBlockNumber}`
+                `channel/confirm?proof=${proof.sig}&openBlockNumber=${createdChannel.block}`
               );
               break;
             }
