@@ -97,7 +97,7 @@ export const en = {
       "delete-hash-error": "Please enter a valid IPFS hash!",
       "estimated-funds": "Estimated months until assets are deleted",
       "funds-available": "Availabe EVE for storage",
-      "initial-eve-amount": "Initial amout of eve to lock",
+      "initial-eve-amount": "Initial amout of EVE to lock",
       "months": "Months",
       "monthly-cost": "Monthly storage costs",
       "payments": "Storage payments",
