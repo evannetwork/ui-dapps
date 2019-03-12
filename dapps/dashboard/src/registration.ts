@@ -25,21 +25,25 @@
   https://evan.network/license/
 */
 
-import {
-  Injectable,      // @angular/core
-} from '@evan.network/ui-angular-libs';
+// import MnemonicComponent from './components/mnemonic.vue';
+// import AcceptContactComponent from './components/accept-contact.vue';
 
-import {
-  EvanTranslationService
-} from '@evan.network/ui-angular-core';
+// list all components
+export const components: Array<any> = [
+  // { name: 'evan-onboarding-mnemonic', comp: MnemonicComponent },
+  // { name: 'evan-onboarding-accept-contact', comp: AcceptContactComponent },
+];
 
-import { en } from './en';
-import { de } from './de';
-
-@Injectable()
-export class DashboardTranslations {
-  constructor(translate: EvanTranslationService) {
-    translate.setTranslation('en', en);
-    translate.setTranslation('de', de);
-  }
+/**
+ * Registers the components within Vue. If a name is specified, register it also as component, not
+ * only for routing.
+ *
+ * @param      {any}     Vue     vue prototype
+ */
+export function registerComponents(Vue) {
+  // include all components
+  components.forEach((comp) => {
+    // register the component
+    Vue.component(comp.name, comp.comp);
+  });
 }

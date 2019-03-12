@@ -25,105 +25,62 @@
   https://evan.network/license/
 */
 
-import {
-  getDomainName
-} from '@evan.network/ui-dapp-browser';
+import Vue from 'vue';
+import Vuex from 'vuex';
+import vuexI18n from 'vuex-i18n';
+import { dapp, getDomainName, lightwallet,  System, utils, } from '@evan.network/ui-dapp-browser';
+import { VueCoreEvan } from '@evan.network/vue-core';
 
-import {
-  NgModule,                    // @angular/core
-  CommonModule,                // @angular/common
-  RouterModule, Routes,        // @angular/router
-  IonicModule, IonicApp,       // ionic-angular
-  BrowserAnimationsModule,     // @angular/platform-browser/animations
-} from '@evan.network/ui-angular-libs';
-
-import {
-  AngularCore,
-  DAppLoaderComponent,
-  buildModuleRoutes,
-  BootstrapComponent,
-  startAngularApplication,
-  createIonicAppElement
-} from '@evan.network/ui-angular-core';
-
-import { DashboardComponent } from './components/dashboard/dashboard';
-import { DashboardTranslations } from './i18n/registry';
-
-/**************************************************************************************************/
-
-function getRoutes(): Routes {
-  return buildModuleRoutes(
-    `dashboard.${ getDomainName() }`,
-    DashboardComponent,
-    [
-      {
-        path: '',
-        redirectTo: `favorites.${getDomainName()}`,
-        pathMatch: 'full'
-      },
-      {
-        path: '**',
-        component: DAppLoaderComponent,
-        data: {
-          state: 'unkown',
-          navigateBack: true
-        }
-      }
-    ]
-  );
-}
+import Main from './components/root.vue';
+import { basePath, initializeRouting, router } from './routing';
+import { registerComponents } from './registration';
+import { useI18N } from './i18n/translate';
 
 /**
- * Returns the module configuration for the normal or dispatcher module.
- * In case of the dispatcher module, Router configurations and BrowserModule imports are excluded
- * to load the module during runtime by the dispatcher service.
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
  *
- * @param isDispatcher  boolean value if the config is used for the dispatcher module
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {string}  dappEns      original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
  */
-function getConfig(isDispatcher?: boolean) {
-  let config: any = {
-    imports: [
-      CommonModule,
-      AngularCore,
-    ],
-    providers: [
-      DashboardTranslations,
-    ],
-  };
-
-  if (!isDispatcher) {
-    config.imports.unshift(BrowserAnimationsModule);
-    config.imports.unshift(RouterModule.forRoot(getRoutes(), { enableTracing: false, }));
-    config.imports.push(IonicModule.forRoot(BootstrapComponent, {
-      mode: 'md'
-    }));
-
-    config.bootstrap = [
-      IonicApp
-    ];
-
-    config.declarations = [
-      BootstrapComponent,
-      DashboardComponent,
-    ];
+export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
+  if (container === document.body) {
+    container = document.createElement('div');
+    document.body.appendChild(container);
   }
 
-  return config;
-}
-@NgModule(getConfig(true))
-export class DispatcherModule {
-  constructor() { }
-}
+  // start routing
+  registerComponents(Vue);
+  initializeRouting(dbcpName);
 
-@NgModule(getConfig(false))
-class DashboardModule {
-  constructor(private translations: DashboardTranslations) { }
-}
+  // use evan-core components
+  Vue.use(Vuex);
+  Vue.use(VueCoreEvan);
 
-export async function startDApp(container, dbcpName) {
-  const ionicAppEl = createIonicAppElement(container, dbcpName);
+  // load the vue evan core to get its origin and access the images
+  const vueCoreDbcp = await System.import('@evan.network/ui!ens');
+  const uiLibBaseUrl = dapp.getDAppBaseUrl(vueCoreDbcp,
+    `${ vueCoreDbcp.name }.${ getDomainName() }`);
 
-  await startAngularApplication(DashboardModule, getRoutes());
+  // initialize vuex & i18n
+  const store = new Vuex.Store({
+    state: {
+      dappBaseUrl,
+      uiLibBaseUrl,
+      urlBasePath: basePath,
+    },
+  });
 
-  container.appendChild(ionicAppEl);
+  // set the i18n values
+  useI18N(Vue, store);
+
+  // initialize vue
+  const vue = new Vue({
+    el: container,
+    render: h => h(Main),
+    router,
+    store,
+  });
 }

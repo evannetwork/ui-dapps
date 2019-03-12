@@ -3,8 +3,12 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^2.0.0",
-        "angular-libs": "^2.0.0"
+        "axios.vue.libs": "^0.18.0",
+        "evan.vue.libs": "^1.0.0",
+        "recaptcha.vue.libs": "^1.1.1",
+        "router.vue.libs": "^2.5.0",
+        "ui.libs": "^1.0.0",
+        "vue.libs": "^2.5.0"
       },
       "entrypoint": "dashboard.js",
       "files": [

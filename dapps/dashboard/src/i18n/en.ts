@@ -25,8 +25,12 @@
   https://evan.network/license/
 */
 
-export const en = {
-  'favorites': 'Bookmarks',
-  'mailbox': 'Mailbox',
-  'profile': 'Profile'
-};
+/* tslint:disable */
+const translations = {
+  "_onboarding": {
+ 
+  }
+}
+/* tslint:enable */
+
+export default translations;

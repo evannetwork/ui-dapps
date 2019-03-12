@@ -25,50 +25,40 @@
   https://evan.network/license/
 */
 
-@import '@evan.network/ui-angular-sass/src/variables/colors';
+import de from './de';
+import en from './en';
+import Vuex from 'vuex';
+import vuexI18n from 'vuex-i18n';
+import { registerEvanI18N } from '@evan.network/vue-core';
 
-dashboard-component {
-  evan-split-pane {
-    ion-split-pane {
-      ion-menu {
-        ion-header {
-          img.img-large {
-            height: 80px;
-            max-height: 80px;
-            padding: 8px 0 3px 8px;
+// map all langugage
+const translations = { de, en };
 
-            &.img-light {
-              display: none;
-            }
-          }
-        }
+/**
+ * Register the current translations within vueJS.
+ *
+ * @param      {any}     Vue     vue prototype
+ * @param      {any}     store   the vuex store
+ */
+const registerI18N = (Vue: any, store: any) => {
+  registerEvanI18N(Vue, store);
+  Object.keys(translations).forEach(key => Vue.i18n.add(key, translations[key]));
+};
 
-        ion-content {
-          ion-list.list-md {
-            margin-top: 32px;
-          }
-        }
-      }
-    }
-  }
-}
+/**
+ * Setup vuexi18n plugin and register all i18n.
+ *
+ * @param      {any}     Vue     vue prototype
+ * @param      {any}     store   the vuex store
+ */
+const useI18N = (Vue: any, store: any) => {
+  Vue.use(vuexI18n.plugin, store);
 
-.evan-light {
-  dashboard-component {
-    evan-split-pane {
-      ion-split-pane {
-        ion-menu {
-          ion-header {
-            img.img-large {
-              display: none;
+  // add all i18n definitions
+  registerI18N(Vue, store);
 
-              &.img-light {
-                display: block;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+  // use defined or browser language
+  Vue.i18n.set(window.localStorage['evan-language'] || navigator.language.split('-')[0]);
+};
+
+export { translations, registerI18N, useI18N };

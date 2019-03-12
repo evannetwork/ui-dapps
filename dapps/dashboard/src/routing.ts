@@ -24,13 +24,39 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
 
-/* tslint:disable */
-const translations = {
-  "_onboarding": {
-     
-  }
+/**
+ * export them, so they can be used everywhere
+ */
+export let router: any;
+export let basePath: any;
+
+function getRoutes() {
+  return [
+    // { path: `**`, name: 'welcome', component: DashboardComponent },
+  ];
 }
-/* tslint:enable */
 
-export default translations;
+/**
+ * Start the routing for the current application.
+ *
+ * @param      {string}  dbcpName  current inserted dbcp name to map relative paths to it
+ */
+export function initializeRouting(dbcpName: string) {
+  Vue.use(VueRouter);
+
+  // get the correct base paths
+  const baseDAppName = `${ dbcpName }.${ getDomainName() }`;
+  const split = window.location.hash.split(baseDAppName);
+  const beforePath = split[0];
+  basePath = (beforePath + baseDAppName).replace('#', '');
+
+  // initialize vue router using the provided routes
+  router = new VueRouter({ base: basePath, routes: getRoutes() });
+
+  // start up the router!
+  router.push({ path: `${ basePath }${ split[1] || '' }` });
+}
