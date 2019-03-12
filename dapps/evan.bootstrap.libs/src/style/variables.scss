@@ -27,9 +27,10 @@
 
 @import '../../../ui.libs/src/style/definitions/evan.theme';
 
+/**
+ * gray scales
+ */
 $black: map-get($themeEvan, black);
-$blue: map-get($themeEvan, blue);
-$cyan: map-get($themeEvan, cyan);
 $gray-100: map-get($themeEvan, gray-100);
 $gray-200: map-get($themeEvan, gray-200);
 $gray-300: map-get($themeEvan, gray-300);
@@ -39,6 +40,13 @@ $gray-600: map-get($themeEvan, gray-600);
 $gray-700: map-get($themeEvan, gray-700);
 $gray-800: map-get($themeEvan, gray-800);
 $gray-900: map-get($themeEvan, gray-900);
+$white: map-get($themeEvan, white);
+
+/**
+ * color definitions
+ */
+$blue: map-get($themeEvan, blue);
+$cyan: map-get($themeEvan, cyan);
 $green: map-get($themeEvan, green);
 $indigo: map-get($themeEvan, indigo);
 $orange: map-get($themeEvan, orange);
@@ -46,10 +54,44 @@ $pink: map-get($themeEvan, pink);
 $purple: map-get($themeEvan, purple);
 $red: map-get($themeEvan, red);
 $teal: map-get($themeEvan, teal);
-$white: map-get($themeEvan, white);
 $yellow: map-get($themeEvan, yellow);
 
+/**
+ * theme colors
+ */
+$primary: map-get($themeEvan, primary);
+$secondary: map-get($themeEvan, secondary);
+$success: map-get($themeEvan, success);
+$info: map-get($themeEvan, info);
+$warning: map-get($themeEvan, warning);
+$danger: map-get($themeEvan, danger);
+$light: map-get($themeEvan, light);
+$dark: map-get($themeEvan, dark);
+
+/**
+ * elements
+ */
+$body-bg: map-get($themeEvan, body-bg);
+$body-color: map-get($themeEvan, body-color);
+$border-color: map-get($themeEvan, border-color);
+
+/**
+ * spaces
+ */
+$input-btn-padding-y: 0.5625rem;
+$input-btn-padding-x: 1.125rem;
+$border-width: 2px;
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+/**
+ * fill empty colors
+ */
+$theme-colors: ();
 $grays: ();
+$colors: ();
+
 // stylelint-disable-next-line scss/dollar-variable-default
 $grays: map-merge(
   (
@@ -65,7 +107,6 @@ $grays: map-merge(
   ),
   $grays
 );
-$colors: ();
 // stylelint-disable-next-line scss/dollar-variable-default
 $colors: map-merge(
   (
@@ -85,15 +126,6 @@ $colors: map-merge(
   ),
   $colors
 );
-$primary: $blue;
-$secondary: $gray-600;
-$success: $green;
-$info: $cyan;
-$warning: $yellow;
-$danger: $red;
-$light: $gray-100;
-$dark: $gray-800;
-$theme-colors: ();
 // stylelint-disable-next-line scss/dollar-variable-default
 $theme-colors: map-merge(
   (
@@ -104,17 +136,9 @@ $theme-colors: map-merge(
     'warning':    $warning,
     'danger':     $danger,
     'light':      $light,
-    'dark':       $dark
+    'dark':       $dark,
   ),
   $theme-colors
 );
 
-// Set a specific jump point for requesting color jumps
-$theme-color-interval: 8%;
 
-// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
-$yiq-contrasted-threshold: 150;
-
-// Customize the light and dark text colors for use in our YIQ color contrast function.
-$yiq-text-dark: $gray-900;
-$yiq-text-light: $white;

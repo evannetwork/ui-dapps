@@ -22,11 +22,13 @@
 
 @import '../utils.scss';
 
+/**
+ * gray scales
+ */
 $themeEvan: (
   black: #000000,
-  blue: #007bff,
-  cyan: #17a2b8,
   gray-100: #f8f9fa,
+  gray-150: #f5f6fa,
   gray-200: #e9ecef,
   gray-300: #dee2e6,
   gray-400: #ced4da,
@@ -34,16 +36,75 @@ $themeEvan: (
   gray-600: #6c757d,
   gray-700: #495057,
   gray-800: #343a40,
-  gray-900: #212529,
-  green: #28a745,
-  indigo: #6610f2,
-  orange: #fd7e14,
-  pink: #e83e8c,
-  purple: #6f42c1,
-  red: #dc3545,
-  teal: #20c997,
-  white: #ffffff,
-  yellow: #ffc107
+  gray-900: #212529
+);
+
+/**
+ * color definitions
+ */
+$themeEvan: map-merge(
+  (
+    blue: #007bff,
+    cyan: #64c6c1,
+    green: #28a745,
+    indigo: #6610f2,
+    orange: #fd7e14,
+    pink: #e71096,
+    purple: #6f42c1,
+    red: #dc3545,
+    teal: #20c997,
+    white: #ffffff,
+    yellow: #ffc107
+  ),
+  $themeEvan
+);
+
+/**
+ * theme colors
+ */
+$themeEvan: map-merge(
+  (
+    primary: map-get($themeEvan, pink),
+    secondary: map-get($themeEvan, cyan),
+    success: map-get($themeEvan, green),
+    info: map-get($themeEvan, cyan),
+    warning: map-get($themeEvan, yellow),
+    danger: map-get($themeEvan, red),
+    light: map-get($themeEvan, gray-100),
+    dark: #023845
+  ),
+  $themeEvan
+);
+
+/**
+ * elements
+ */
+$themeEvan: map-merge(
+  (
+    body-bg: map-get($themeEvan, white),
+    body-color: map-get($themeEvan, dark),
+    border-color: map-get($themeEvan, gray-300),
+    btn-primary-hover: map-get($themeEvan, primary),
+    btn-secondary-hover: #2cabe3,
+  ),
+  $themeEvan
+);
+
+/**
+ * dashboard
+ */
+$themeEvan: map-merge(
+  (
+    // dashoard
+    dashboard-nav-background: cssVar(dark),
+    dashboard-nav-color: cssVar(white),
+    dashboard-sidepanel-2-background: cssVar(gray-150),
+    dashboard-sidepanel-background: cssVar(white),
+    dashboard-sidepanel-icon-color: cssVar(gray-500),
+    dashboard-sidepanel-list-hover: cssVar(gray-200),
+    dashboard-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
+  ),
+  $themeEvan
 );
 
 @mixin themeEvan() {

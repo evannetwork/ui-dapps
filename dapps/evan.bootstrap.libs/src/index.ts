@@ -25,30 +25,5 @@
   https://evan.network/license/
 */
 
-// map the original ui path to ui.libs
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-dappBrowser.System.map['@evan.network/bootstrap-them-evan'] = `evan.bootstrap.libs.${ dappBrowser.getDomainName() }!dapp-content`;
-
 import './style/index.scss';
 
-/**
- * if the ui.evan dapp is loaded as an normal dapp, show the style preview.
- *
- * @param      {any}  container  html container where the dapp should be rendered to
- * @param      {any}  dbcpName   dbcp name of the dapp
- */
-export async function startDApp(container, dbcpName, dappEns, dappBaseUrl) {
-  let xmlhttp = (<any>window).XMLHttpRequest ? new XMLHttpRequest() :
-    new (<any>window).ActiveXObject("Microsoft.XMLHTTP");
-
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-      container.innerHTML = xmlhttp.responseText;
-      // remove the loading screen
-      dappBrowser.loading.finishDAppLoading();
-    }
-  }
-
-  xmlhttp.open("GET", `${ dappBaseUrl }/index.html`, false);
-  xmlhttp.send();
-}
