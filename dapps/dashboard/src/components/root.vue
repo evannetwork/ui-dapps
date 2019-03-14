@@ -27,39 +27,19 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dashboard
+    <evan-dapp-wrapper
       :brand-large="$store.state.uiLibBaseUrl + '/assets/evan-logo-dark-half.svg'"
       :brand-small="$store.state.uiLibBaseUrl + '/assets/evan-logo-small.svg'">
       <template v-slot:sidebar>
-        <ul class="nav font-medium in" id="main-menu">
-          <li>
-            <a href="index.html" class="active">
-              <i class="fas fa-id-card" data-icon="v"></i>
-              <span class="hide-menu">Identitäten</span>
-            </a>
-          </li>
-          <li>
-            <a href="auftrag-mobil.html" class="">
-              <i class="fas fa-bookmark"></i>
-              <span class="hide-menu">Favoriten</span>
-            </a>
-          </li>
-          <li>
-            <a href="detail.html" class="">
-              <i class="fas fa-envelope"></i>
-              <span class="hide-menu">Mailbox</span>
-            </a>
-          </li>
-          <li>
-            <a href="task-mobil.html" class="">
-              <i class="fas fa-address-book"></i>
-              <span class="hide-menu">Kontakte</span>
-            </a>
-          </li>
-          <li>
-            <a href="auftrag-mobil.html" class="">
-              <i class="fas fa-envelope"></i>
-              <span class="hide-user">Profil</span>
+        <evan-loading :v-if="!loadingRoutes"></evan-loading>
+        <ul class="nav font-medium in" id="main-menu"
+          :v-if="!loadingRoutes">
+          <li v-for="(route, index) in routes">
+            <a
+              :href="'#/' + route + '.' + domainName"
+              :class="{ active: $route.path.startsWith($store.state.urlBasePath + '/' + route.name + '.' + domainName) }">
+              <i :class="'fas fa-' + route.icon" data-icon="v"></i>
+              <span class="hide-menu">{{ ('_routes.' + route.name) | translate }}</span>
             </a>
           </li>
         </ul>
@@ -68,13 +48,13 @@
         <transition name="fade" mode="out-in">
           <router-view class="child-view"></router-view>
         </transition>
-        <dashboard-sidebar-level-2>
+        <evan-dapp-wrapper-level-2>
           <template v-slot:content>
-            dashboard-sidebar-level-2 jeha!
+            dapp wrapper-sidebar-level-2 jeha!
           </template>
-        </dashboard-sidebar-level-2>
+        </evan-dapp-wrapper-level-2>
       </template>
-    </evan-dashboard>
+    </evan-dapp-wrapper>
   </div>
 </template>
 
@@ -86,7 +66,16 @@
   export default Vue.extend({
     data () {
       return {
-        transitionName: ''
+        transitionName: '',
+        domainName: dappBrowser.getDomainName(),
+        loadingRoutes: false,
+        routes: [
+          { name: 'identities', icon: 'fas fa-id-card' },
+          { name: 'favorites', icon: 'fas fa-bookmark' },
+          { name: 'mailbox', icon: 'fas fa-envelope' },
+          { name: 'contacts', icon: 'fas fa-address-book' },
+          { name: 'profile', icon: 'fas fa-user' },
+        ] as Array<any>
       }
     },
     async created() {
@@ -103,6 +92,28 @@
           return window.location.hash = `#/onboarding.${ dappBrowser.getDomainName() }`
         }
       }
+
+      this.loadingRoutes = true;
+      // load route dapps to check for standalone configurations and names
+      const description = dappBrowser.CoreRuntime.description;
+      await this.routes.map(async (route, index) => {
+        let description;
+
+        // try load the description for the route
+        try {
+          description = await description.getDescription(`${ route.name }.${ this.domainName }`);
+
+          // try to load the i18n for the current language
+          try {
+            route.title = description.public.i18n
+          } catch(ex) {
+            // try to load the fallback language
+          }
+        } catch (ex) {
+          route.title = route.name;
+          route.standalone = false;
+        }
+      });
 
       dappBrowser.loading.finishDAppLoading();
     }

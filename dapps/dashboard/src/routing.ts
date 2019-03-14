@@ -27,6 +27,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
 /**
  * export them, so they can be used everywhere
@@ -36,7 +37,7 @@ export let basePath: any;
 
 function getRoutes() {
   return [
-    // { path: `**`, name: 'welcome', component: DashboardComponent },
+    { path: `**`, name: 'dapp-loader', component: DAppLoaderComponent },
   ];
 }
 
