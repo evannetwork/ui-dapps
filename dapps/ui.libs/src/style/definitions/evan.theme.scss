@@ -86,23 +86,24 @@ $themeEvan: map-merge(
     border-color: map-get($themeEvan, gray-300),
     btn-primary-hover: map-get($themeEvan, primary),
     btn-secondary-hover: #2cabe3,
+    font-family-sans-serif: ('Open Sans', sans-serif),
   ),
   $themeEvan
 );
 
 /**
- * dashboard
+ * dapp-wrapper
  */
 $themeEvan: map-merge(
   (
-    // dashoard
-    dashboard-nav-background: cssVar(dark),
-    dashboard-nav-color: cssVar(white),
-    dashboard-sidepanel-2-background: cssVar(gray-150),
-    dashboard-sidepanel-background: cssVar(white),
-    dashboard-sidepanel-icon-color: cssVar(gray-500),
-    dashboard-sidepanel-list-hover: cssVar(gray-200),
-    dashboard-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
+    // dapp-wrapper
+    dapp-wrapper-nav-background: cssVar(dark),
+    dapp-wrapper-nav-color: cssVar(white),
+    dapp-wrapper-sidepanel-2-background: cssVar(gray-150),
+    dapp-wrapper-sidepanel-background: cssVar(white),
+    dapp-wrapper-sidepanel-icon-color: cssVar(gray-500),
+    dapp-wrapper-sidepanel-list-hover: cssVar(gray-200),
+    dapp-wrapper-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
   ),
   $themeEvan
 );
