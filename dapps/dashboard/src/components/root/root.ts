@@ -24,40 +24,30 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+
+// vue imports
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import { getDomainName } from '@evan.network/ui-dapp-browser';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-/**
- * export them, so they can be used everywhere
- */
-export let router: any;
-export let basePath: any;
+// evan.network imports
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-function getRoutes() {
-  return [
-    { path: `**`, name: 'dapp-loader', component: DAppLoaderComponent },
+// caculated domain name for quick usage
+const domainName = dappBrowser.getDomainName();
+const i18nPref = '_dashboard.routes';
+
+@Component({ })
+export default class DashboardRootComponent extends Vue {
+  /**
+   * routes for the dapp-wrapper component
+   */
+  routes: Array<any> = [
+    { title: `${ i18nPref }.identities`, path: `identities.${ domainName }`, icon: 'fas fa-id-card' },
+    { title: `${ i18nPref }.favorites`, path: `favorites.${ domainName }`, icon: 'fas fa-bookmark' },
+    { title: `${ i18nPref }.mailbox`, path: `mailbox.${ domainName }`, icon: 'fas fa-envelope' },
+    { title: `${ i18nPref }.contacts`, path: `contacts.${ domainName }`, icon: 'fas fa-address-book' },
+    { title: `${ i18nPref }.profile`, path: `profile.${ domainName }`, icon: 'fas fa-user' },
   ];
-}
-
-/**
- * Start the routing for the current application.
- *
- * @param      {string}  dbcpName  current inserted dbcp name to map relative paths to it
- */
-export function initializeRouting(dbcpName: string) {
-  Vue.use(VueRouter);
-
-  // get the correct base paths
-  const baseDAppName = `${ dbcpName }.${ getDomainName() }`;
-  const split = window.location.hash.split(baseDAppName);
-  const beforePath = split[0];
-  basePath = (beforePath + baseDAppName).replace('#', '');
-
-  // initialize vue router using the provided routes
-  router = new VueRouter({ base: basePath, routes: getRoutes() });
-
-  // start up the router!
-  router.push({ path: `${ basePath }${ split[1] || '' }` });
 }

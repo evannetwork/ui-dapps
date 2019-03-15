@@ -11,7 +11,8 @@ module.exports = {
   entry: './src/index.ts',
   externals: {
     '@evan.network/api-blockchain-core': '@evan.network/api-blockchain-core',
-    '@evan.network/mart-contracts-co': '@evan.network/smart-contracts-core',
+    '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
+    '@evan.network/ui': '@evan.network/ui',
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
     '@evan.network/vue-core': '@evan.network/vue-core',
     'axios': 'axios',

@@ -25,25 +25,28 @@
   https://evan.network/license/
 */
 
-// import MnemonicComponent from './components/mnemonic.vue';
-// import AcceptContactComponent from './components/accept-contact.vue';
+<template>
+  <div class="evan theme-evan">
+    <evan-dapp-wrapper
+      :brand-large="$store.state.uiLibBaseUrl + '/assets/evan-logo-dark-half.svg'"
+      :brand-small="$store.state.uiLibBaseUrl + '/assets/evan-logo-small.svg'"
+      :routes="routes"
+      :routeBaseHash="$store.state.routeBaseHash">
+      <template v-slot:content>
+        <transition name="fade" mode="out-in">
+          <router-view class="child-view"></router-view>
+        </transition>
+        <evan-dapp-wrapper-level-2>
+          <template v-slot:content>
+            dapp wrapper-sidebar-level-2 jeha!
+          </template>
+        </evan-dapp-wrapper-level-2>
+      </template>
+    </evan-dapp-wrapper>
+  </div>
+</template>
 
-// list all components
-export const components: Array<any> = [
-  // { name: 'evan-onboarding-mnemonic', comp: MnemonicComponent },
-  // { name: 'evan-onboarding-accept-contact', comp: AcceptContactComponent },
-];
-
-/**
- * Registers the components within Vue. If a name is specified, register it also as component, not
- * only for routing.
- *
- * @param      {any}     Vue     vue prototype
- */
-export function registerComponents(Vue) {
-  // include all components
-  components.forEach((comp) => {
-    // register the component
-    Vue.component(comp.name, comp.comp);
-  });
-}
+<script lang="ts">
+  import DashboardRootComponent from './root.ts';
+  export default DashboardRootComponent;
+</script>

@@ -3,10 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "axios.vue.libs": "^0.18.0",
         "evan.vue.libs": "^1.0.0",
-        "recaptcha.vue.libs": "^1.1.1",
-        "router.vue.libs": "^2.5.0",
         "ui.libs": "^1.0.0",
         "vue.libs": "^2.5.0"
       },

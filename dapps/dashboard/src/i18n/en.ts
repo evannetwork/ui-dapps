@@ -27,8 +27,14 @@
 
 /* tslint:disable */
 const translations = {
-  "_onboarding": {
- 
+  "_dashboard": {
+    "routes": {
+      "identities": "Identities",
+      "favorites": "Favorites",
+      "mailbox": "Messages",
+      "contacts": "Contacts",
+      "profile": "Profile"
+    }
   }
 }
 /* tslint:enable */

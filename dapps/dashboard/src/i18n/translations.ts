@@ -27,38 +27,6 @@
 
 import de from './de';
 import en from './en';
-import Vuex from 'vuex';
-import vuexI18n from 'vuex-i18n';
-import { registerEvanI18N } from '@evan.network/vue-core';
 
-// map all langugage
-const translations = { de, en };
-
-/**
- * Register the current translations within vueJS.
- *
- * @param      {any}     Vue     vue prototype
- * @param      {any}     store   the vuex store
- */
-const registerI18N = (Vue: any, store: any) => {
-  registerEvanI18N(Vue, store);
-  Object.keys(translations).forEach(key => Vue.i18n.add(key, translations[key]));
-};
-
-/**
- * Setup vuexi18n plugin and register all i18n.
- *
- * @param      {any}     Vue     vue prototype
- * @param      {any}     store   the vuex store
- */
-const useI18N = (Vue: any, store: any) => {
-  Vue.use(vuexI18n.plugin, store);
-
-  // add all i18n definitions
-  registerI18N(Vue, store);
-
-  // use defined or browser language
-  Vue.i18n.set(window.localStorage['evan-language'] || navigator.language.split('-')[0]);
-};
-
-export { translations, registerI18N, useI18N };
+// map all langugages
+export default { de, en };
