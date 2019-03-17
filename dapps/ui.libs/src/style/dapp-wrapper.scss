@@ -45,7 +45,7 @@ $sidebar-small-width: $navbar-height;
 
     padding: 0 !important;
 
-    background-color: cssVar('dapp-wrapper-nav-background');
+    background-color: cssVar('bg-inverted');
 
     &, & > * {
       height: $navbar-height;
@@ -57,7 +57,7 @@ $sidebar-small-width: $navbar-height;
       margin-right: 0;
       padding: 10px 20px;
 
-      background-color: cssVar('dapp-wrapper-sidepanel-background');
+      background-color: cssVar('bg-level-1');
 
       img {
         height: 45px;
@@ -86,7 +86,7 @@ $sidebar-small-width: $navbar-height;
 
         vertical-align: top;
 
-        color: cssVar('dapp-wrapper-nav-color');
+        color: cssVar('bg-level-1');
         border: 0;
         outline: none;
         box-shadow: none;
@@ -187,10 +187,8 @@ $sidebar-small-width: $navbar-height;
 
     .dapp-wrapper-sidebar-2 {
       & {
-        transition: 1s ease-out width;
-
         border-right: 1px solid cssVar('border-color');
-        background-color: cssVar('dapp-wrapper-sidepanel-2-background');
+        background-color: cssVar('bg-level-2');
       }
 
       & > * {
@@ -338,6 +336,7 @@ $sidebar-small-width: $navbar-height;
         width: 100%;
         height: calc(100% - 134px);
 
+        transition: 1s ease-out width;
         transition: 0.2s ease-out left;
       }
 

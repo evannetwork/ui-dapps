@@ -25,17 +25,18 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './definitions/evan.theme';
-@include themeEvan();
+@import './utils';
 
-/**
- * load evan specific styles
- */
-@import './buttons';
-@import './content';
-@import './dapp-wrapper';
-@import './general';
-@import './open-sans';
+.evan {
+  .bg-level-1 {
+    background-color: cssVar('bg-level-1');
+  }
+
+  .bg-level-2 {
+    background-color: cssVar('bg-level-2');
+  }
+
+  .bg-level-3 {
+    background-color: cssVar('bg-level-3');
+  }
+}

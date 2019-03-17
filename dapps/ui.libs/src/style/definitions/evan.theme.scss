@@ -70,8 +70,21 @@ $themeEvan: map-merge(
     info: map-get($themeEvan, cyan),
     warning: map-get($themeEvan, yellow),
     danger: map-get($themeEvan, red),
-    light: map-get($themeEvan, gray-100),
+    light: map-get($themeEvan, gray-200),
     dark: #023845
+  ),
+  $themeEvan
+);
+
+/**
+ * evan customs
+ */
+$themeEvan: map-merge(
+  (
+    bg-level-1: map-get($themeEvan, white),
+    bg-level-2: map-get($themeEvan, gray-150),
+    bg-level-3: map-get($themeEvan, gray-200),
+    bg-inverted: map-get($themeEvan, dark)
   ),
   $themeEvan
 );
@@ -81,12 +94,14 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    body-bg: map-get($themeEvan, white),
-    body-color: map-get($themeEvan, dark),
+    body-bg: map-get($themeEvan, bg-level-1),
+    body-color: map-get($themeEvan, bg-inverted),
     border-color: map-get($themeEvan, gray-300),
     btn-primary-hover: map-get($themeEvan, primary),
     btn-secondary-hover: #2cabe3,
     font-family-sans-serif: ('Open Sans', sans-serif),
+    yiq-text-dark: map-get($themeEvan, dark),
+    yiq-text-light: map-get($themeEvan, white)
   ),
   $themeEvan
 );
@@ -97,10 +112,6 @@ $themeEvan: map-merge(
 $themeEvan: map-merge(
   (
     // dapp-wrapper
-    dapp-wrapper-nav-background: cssVar(dark),
-    dapp-wrapper-nav-color: cssVar(white),
-    dapp-wrapper-sidepanel-2-background: cssVar(gray-150),
-    dapp-wrapper-sidepanel-background: cssVar(white),
     dapp-wrapper-sidepanel-icon-color: cssVar(gray-500),
     dapp-wrapper-sidepanel-list-hover: cssVar(gray-200),
     dapp-wrapper-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
