@@ -60,18 +60,96 @@ $themeEvan: map-merge(
 );
 
 /**
+ * darken color definitions
+ */
+$themeEvan: map-merge(
+  (
+    black-darken-darken: darken(map-get($themeEvan, black), 10%),
+    blue-darken: darken(map-get($themeEvan, blue), 10%),
+    cyan-darken: darken(map-get($themeEvan, cyan), 10%),
+    gray-100-darken: darken(map-get($themeEvan, gray-100), 10%),
+    gray-150-darken: darken(map-get($themeEvan, gray-150), 10%),
+    gray-200-darken: darken(map-get($themeEvan, gray-200), 10%),
+    gray-300-darken: darken(map-get($themeEvan, gray-300), 10%),
+    gray-400-darken: darken(map-get($themeEvan, gray-400), 10%),
+    gray-500-darken: darken(map-get($themeEvan, gray-500), 10%),
+    gray-600-darken: darken(map-get($themeEvan, gray-600), 10%),
+    gray-700-darken: darken(map-get($themeEvan, gray-700), 10%),
+    gray-800-darken: darken(map-get($themeEvan, gray-800), 10%),
+    gray-900-darken: darken(map-get($themeEvan, gray-900), 10%),
+    green-darken: darken(map-get($themeEvan, green), 10%),
+    indigo-darken: darken(map-get($themeEvan, indigo), 10%),
+    orange-darken: darken(map-get($themeEvan, orange), 10%),
+    pink-darken: darken(map-get($themeEvan, pink), 10%),
+    purple-darken: darken(map-get($themeEvan, purple), 10%),
+    red-darken: darken(map-get($themeEvan, red), 10%),
+    teal-darken: darken(map-get($themeEvan, teal), 10%),
+    white-darken: darken(map-get($themeEvan, white), 10%),
+    yellow-darken: darken(map-get($themeEvan, yellow), 10%),
+  ),
+  $themeEvan
+);
+
+/**
+ * darken color definitions
+ */
+$themeEvan: map-merge(
+  (
+    black-lighten: lighten(map-get($themeEvan, black), 35%),
+    blue-lighten: lighten(map-get($themeEvan, blue), 35%),
+    cyan-lighten: lighten(map-get($themeEvan, cyan), 35%),
+    gray-100-lighten: lighten(map-get($themeEvan, gray-100), 35%),
+    gray-150-lighten: lighten(map-get($themeEvan, gray-150), 35%),
+    gray-200-lighten: lighten(map-get($themeEvan, gray-200), 35%),
+    gray-300-lighten: lighten(map-get($themeEvan, gray-300), 35%),
+    gray-400-lighten: lighten(map-get($themeEvan, gray-400), 35%),
+    gray-500-lighten: lighten(map-get($themeEvan, gray-500), 35%),
+    gray-600-lighten: lighten(map-get($themeEvan, gray-600), 35%),
+    gray-700-lighten: lighten(map-get($themeEvan, gray-700), 35%),
+    gray-800-lighten: lighten(map-get($themeEvan, gray-800), 35%),
+    gray-900-lighten: lighten(map-get($themeEvan, gray-900), 35%),
+    green-lighten: lighten(map-get($themeEvan, green), 35%),
+    indigo-lighten: lighten(map-get($themeEvan, indigo), 35%),
+    orange-lighten: lighten(map-get($themeEvan, orange), 35%),
+    pink-lighten: lighten(map-get($themeEvan, pink), 35%),
+    purple-lighten: lighten(map-get($themeEvan, purple), 35%),
+    red-lighten: lighten(map-get($themeEvan, red), 35%),
+    teal-lighten: lighten(map-get($themeEvan, teal), 35%),
+    white-lighten: lighten(map-get($themeEvan, white), 35%),
+    yellow-lighten: lighten(map-get($themeEvan, yellow), 35%),
+  ),
+  $themeEvan
+);
+
+/**
  * theme colors
  */
 $themeEvan: map-merge(
   (
-    primary: map-get($themeEvan, pink),
-    secondary: map-get($themeEvan, cyan),
-    success: map-get($themeEvan, green),
-    info: map-get($themeEvan, cyan),
-    warning: map-get($themeEvan, yellow),
-    danger: map-get($themeEvan, red),
-    light: map-get($themeEvan, gray-200),
-    dark: #023845
+    danger: cssVar('red'),
+    danger-darken: cssVar('red-darken'),
+    danger-lighten: cssVar('red-lighten'),
+    dark: #023845,
+    dark-darken: darken(#023845, 10%),
+    dark-lighten: lighten(#023845, 10%),
+    info: cssVar('cyan'),
+    info-darken: cssVar('cyan-darken'),
+    info-lighten: cssVar('cyan-lighten'),
+    light: cssVar('gray-200'),
+    light-darken: cssVar('gray-200-darken'),
+    light-lighten: cssVar('gray-200-lighten'),
+    primary: cssVar('pink'),
+    primary-darken: cssVar('pink-darken'),
+    primary-lighten: cssVar('pink-lighten'),
+    secondary: cssVar('cyan'),
+    secondary-darken: cssVar('cyan-darken'),
+    secondary-lighten: cssVar('cyan-lighten'),
+    success: cssVar('green'),
+    success-darken: cssVar('green-darken'),
+    success-lighten: cssVar('green-lighten'),
+    warning: cssVar('yellow'),
+    warning-darken: cssVar('yellow-darken'),
+    warning-lighten: cssVar('yellow-lighten'),
   ),
   $themeEvan
 );
@@ -81,10 +159,10 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    bg-level-1: map-get($themeEvan, white),
-    bg-level-2: map-get($themeEvan, gray-150),
-    bg-level-3: map-get($themeEvan, gray-200),
-    bg-inverted: map-get($themeEvan, dark)
+    bg-level-1: cssVar('white'),
+    bg-level-2: cssVar('gray-150'),
+    bg-level-3: cssVar('gray-200'),
+    bg-inverted: cssVar('dark')
   ),
   $themeEvan
 );
@@ -94,14 +172,31 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    body-bg: map-get($themeEvan, bg-level-1),
-    body-color: map-get($themeEvan, bg-inverted),
-    border-color: map-get($themeEvan, gray-300),
-    btn-primary-hover: map-get($themeEvan, primary),
+    body-bg: cssVar('bg-level-1'),
+    body-color: cssVar('bg-inverted'),
+    border-color: cssVar('gray-300'),
+    btn-primary-hover: cssVar('primary'),
     btn-secondary-hover: #2cabe3,
-    font-family-sans-serif: ('Open Sans', sans-serif),
-    yiq-text-dark: map-get($themeEvan, dark),
-    yiq-text-light: map-get($themeEvan, white)
+    font-family-sans-serif: ('Open Sans', sans-serif)
+  ),
+  $themeEvan
+);
+
+/**
+ * text-colors
+ */
+$themeEvan: map-merge(
+  (
+    yiq-text-dark: cssVar('dark'),
+    yiq-text-light: cssVar('white'),
+    bg-text-danger: cssVar('white'),
+    bg-text-dark: cssVar('white'),
+    bg-text-info: cssVar('white'),
+    bg-text-light: cssVar('white'),
+    bg-text-primary: cssVar('white'),
+    bg-text-secondary: cssVar('white'),
+    bg-text-success: cssVar('white'),
+    bg-text-warning: cssVar('white'),
   ),
   $themeEvan
 );
@@ -112,8 +207,8 @@ $themeEvan: map-merge(
 $themeEvan: map-merge(
   (
     // dapp-wrapper
-    dapp-wrapper-sidepanel-icon-color: cssVar(gray-500),
-    dapp-wrapper-sidepanel-list-hover: cssVar(gray-200),
+    dapp-wrapper-sidepanel-icon-color: cssVar('gray-500'),
+    dapp-wrapper-sidepanel-list-hover: cssVar('gray-200'),
     dapp-wrapper-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
   ),
   $themeEvan
