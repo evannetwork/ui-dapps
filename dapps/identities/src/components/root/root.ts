@@ -24,12 +24,17 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
-// map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+// vue imports
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-export default routeRegistration;
+// evan.network imports
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+@Component({ })
+export default class IdentitiesRootComponent extends Vue {
+
+}

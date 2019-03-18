@@ -24,12 +24,34 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
-// map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+import Vue from 'vue';
+import { initializeVue } from '@evan.network/ui-vue-core';
 
-export default routeRegistration;
+import Main from './components/root/root.vue';
+import translations from './i18n/translations';
+import routes from './routes';
+import components from './components/registry';
 
+/**
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
+ *
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {string}  dappEns      original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
+ */
+export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
+  await initializeVue({
+    components,
+    container,
+    dappBaseUrl,
+    dbcpName,
+    RootComponent: Main,
+    routes,
+    state: { },
+    translations: translations,
+    Vue: Vue,
+  });
+}

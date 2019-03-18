@@ -24,12 +24,14 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+
+// export them all, so other applications can access them
+export { }
 
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const componentRegistration: Array<ComponentRegistrationInterface> = [ ];
 
-export default routeRegistration;
-
+export default componentRegistration;

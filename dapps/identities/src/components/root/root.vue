@@ -24,12 +24,30 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
-// map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+<template>
+  <div class="evan theme-evan">
+    <evan-dapp-wrapper>
+      <template v-slot:content>
+        identities
+<!--         <transition name="fade" mode="out-in">
+          <router-view class="child-view"></router-view>
+        </transition> -->
+        <evan-dapp-wrapper-level-2>
+          <template v-slot:content>
+            dapp wrapper-sidebar-level-2 jeha!
+          </template>
+        </evan-dapp-wrapper-level-2>
+      </template>
+    </evan-dapp-wrapper>
+  </div>
+</template>
 
-export default routeRegistration;
+<script lang="ts">
+  import IdentitiesRootComponent from './root.ts';
+  export default IdentitiesRootComponent;
+</script>
 
+<style lang="scss" scoped>
+  @import './root';
+</style>

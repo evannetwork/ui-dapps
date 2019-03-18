@@ -34,20 +34,6 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-// caculated domain name for quick usage
-const domainName = dappBrowser.getDomainName();
-const i18nPref = '_dashboard.routes';
-
 @Component({ })
 export default class DashboardRootComponent extends Vue {
-  /**
-   * routes for the dapp-wrapper component
-   */
-  routes: Array<any> = [
-    { title: `${ i18nPref }.identities`, path: `identities.${ domainName }`, icon: 'fas fa-id-card' },
-    { title: `${ i18nPref }.favorites`, path: `favorites.${ domainName }`, icon: 'fas fa-bookmark' },
-    { title: `${ i18nPref }.mailbox`, path: `mailbox.${ domainName }`, icon: 'fas fa-envelope' },
-    { title: `${ i18nPref }.contacts`, path: `contacts.${ domainName }`, icon: 'fas fa-address-book' },
-    { title: `${ i18nPref }.profile`, path: `profile.${ domainName }`, icon: 'fas fa-user' },
-  ];
 }

@@ -27,20 +27,11 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dapp-wrapper
-      :brand-large="$store.state.uiLibBaseUrl + '/assets/evan-logo-dark-half.svg'"
-      :brand-small="$store.state.uiLibBaseUrl + '/assets/evan-logo-small.svg'"
-      :routes="routes"
-      :routeBaseHash="$store.state.routeBaseHash">
+    <evan-dapp-wrapper>
       <template v-slot:content>
         <transition name="fade" mode="out-in">
           <router-view class="child-view"></router-view>
         </transition>
-        <evan-dapp-wrapper-level-2>
-          <template v-slot:content>
-            dapp wrapper-sidebar-level-2 jeha!
-          </template>
-        </evan-dapp-wrapper-level-2>
       </template>
     </evan-dapp-wrapper>
   </div>

@@ -24,12 +24,19 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
-// map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+/* tslint:disable */
+const translations = {
+  "_identities": {
+    "routes": {
+      "identities": "Identities",
+      "favorites": "Favorites",
+      "mailbox": "Messages",
+      "contacts": "Contacts",
+      "profile": "Profile"
+    }
+  }
+}
+/* tslint:enable */
 
-export default routeRegistration;
-
+export default translations;
