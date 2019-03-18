@@ -46,6 +46,6 @@
 
 @each $color, $value in $theme-colors {
   .alert-#{$color} {
-    @include alert-variant($value, cssVar("#{ $color }-darken"), cssVar("bg-color-#{ $color }"));
+    @include alert-variant($value, cssVar("#{$color}-darken"), cssVar("bg-color-#{$color}"));
   }
 }

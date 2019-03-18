@@ -65,14 +65,14 @@ fieldset:disabled a.btn {
       cssVar("#{ $color }-darken"),
       cssVar("#{ $color }-darken"),
       cssVar("#{ $color }-darken"),
-      cssVar("bg-text-#{ color }")
+      cssVar("bg-text-#{$color}")
     );
   }
 }
 
 @each $color, $value in $theme-colors {
   .btn-outline-#{$color} {
-    @include button-outline-variant($value, cssVar("bg-text-#{ color }"));
+    @include button-outline-variant($value, cssVar("bg-text-#{$color}"));
   }
 }
 

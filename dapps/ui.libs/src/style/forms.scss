@@ -25,17 +25,8 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './definitions/evan.theme';
-@include themeEvan();
-
-/**
- * load evan specific styles
- */
-@import './buttons';
-@import './content';
-@import './dapp-wrapper';
-@import './general';
-@import './open-sans';
+.evan {
+  .form-control.is-invalid, .was-validated .form-control:invalid {
+    background-image: none !important;
+  }
+}
