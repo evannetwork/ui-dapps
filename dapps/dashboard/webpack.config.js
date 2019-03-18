@@ -14,7 +14,7 @@ module.exports = {
     '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
     '@evan.network/ui': '@evan.network/ui',
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
-    '@evan.network/vue-core': '@evan.network/vue-core',
+    '@evan.network/ui-vue-core': '@evan.network/ui-vue-core',
     'axios': 'axios',
     'vue': 'vue',
     'vue-material': 'vue-material',

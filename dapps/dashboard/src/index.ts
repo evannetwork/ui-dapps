@@ -26,7 +26,7 @@
 */
 
 import Vue from 'vue';
-import { initializeVue } from '@evan.network/vue-core';
+import { initializeVue } from '@evan.network/ui-vue-core';
 
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';

@@ -26,7 +26,7 @@
 */
 
 // import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/vue-core';
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 // export them all, so other applications can access them
 export { }
