@@ -213,11 +213,11 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
     // if no valid subject was supplied, reset it
     if (!this.isValidAddress(this.subject)) {
-      delete this.subject;
+      this.subject = '';
     }
 
     // try to resolve the latest used values
-    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'];
+    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'] || '';
 
     if (this.subjectInput.indexOf('0x') !== 0) {
       try {
