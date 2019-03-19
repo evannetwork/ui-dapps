@@ -24,17 +24,40 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+// vue imports
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-/* tslint:disable */
-export default {
-  "_identities": {
-    "routes": {
-      "identities": "Identities",
-      "favorites": "Favorites",
-      "mailbox": "Messages",
-      "contacts": "Contacts",
-      "profile": "Profile"
+// evan.network imports
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+@Component({ })
+export default class Root extends Vue {
+  async created() {
+    const activeAccount = dappBrowser.core.activeAccount();
+
+    // check if a user is already logged in, if yes, navigate to the signed in route
+    if (activeAccount && window.localStorage['evan-vault']) {
+      let isOnboarded = false;
+      try {
+        isOnboarded = await dappBrowser.bccHelper.isAccountOnboarded(activeAccount);
+      } catch (ex) { }
+
+      if (isOnboarded) {
+        dappBrowser.loading.finishDAppLoading();
+        return this.$router.push({ name: 'signed-in', query: this.$route.query });
+      }
     }
+
+    // if the user is not signed in, but the signed in route is opened, navigate to start
+    if (this.$route.name === 'signed-in') {
+      return this.$router.push({ name: 'welcome', query: this.$route.query });
+    }
+
+    dappBrowser.loading.finishDAppLoading();
   }
 }
-/* tslint:enable */;
+
+

@@ -26,7 +26,7 @@
 */
 
 /* tslint:disable */
-const translations = {
+export default {
   "_onboarding": {
     "close": "Schließen",
     "continue": "Fortfahren",
@@ -92,7 +92,6 @@ const translations = {
       "profile-informations-desc": "Bitte wählen Sie einen Nutzernames und ein Passwortes.",
       "terms-of-use": {
         "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie ihre reelle Interkation.",
-        "full": "Das ist der <b>evan.network testcore</b>.<br><br>Dieses Netzwerk ist nur für Entwicklungs- und Testzwecke und <b>nicht für den Einsatz in der Produktion geeignet.</b> Im testcore geben wir keine Garantie für Datenverlust und -verfügbarkeit.<br><br> Sie können Ihre Fragen zum evan.network in unserem Gitterchannel <a href=\"http://gitter.im/evannetwork\" target=\"_blank\">http://gitter.im/evannetwork</a> oder auf <a href=\"https://evan.network\" target=\"_blank\">https://evan.network</a> stellen.",
         "title": "Nutzungsbedingungen"
       },
       "title": "Registrieren",
@@ -112,11 +111,4 @@ const translations = {
     }
   }
 }
-
-const mainnetTexts = false;
-if (mainnetTexts) {
-  translations['sign-up']['terms-of-use-text'] = 'Hier werden bald die Mainnet-Nutzungsbedingungen angezeigt ...';
-}
 /* tslint:enable */
-
-export default translations;

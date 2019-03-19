@@ -26,7 +26,7 @@
 */
 
 /* tslint:disable */
-const translations = {
+export default {
   "_onboarding": {
     "close": "Close",
     "continue": "Continue",
@@ -98,7 +98,6 @@ const translations = {
       "profile-informations-desc": "Please define a Username and a Password.",
       "terms-of-use": {
         "desc": "Confirm the Terms of Use.",
-        "full": "This is the <b>evan.network testcore</b>.<br><br>This network is for development and showcase purposes only and <b>not for production use.</b>In the testcore we give no guarantee for any data loss and availability.<br><br>You can ask your questions regarding evan.network in our gitter channel <a href=\"http://gitter.im/evannetwork\">http://gitter.im/evannetwork</a> or through <a href=\"https://evan.network\">https://evan.network</a>.",
         "title": "Terms of use"
       },
       "title": "Sign up",
@@ -118,11 +117,4 @@ const translations = {
     }
   }
 }
-
-const mainnetTexts = false;
-if (mainnetTexts) {
-  translations['sign-up']['terms-of-use-text'] = 'Here will be the mainnet terms of use...';
-}
 /* tslint:enable */
-
-export default translations;

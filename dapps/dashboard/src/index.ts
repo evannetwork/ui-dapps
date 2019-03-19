@@ -47,6 +47,7 @@ export async function startDApp(container: any, dbcpName: any, dappEns: any, dap
     components,
     container,
     dappBaseUrl,
+    dappEnsOrContract: dappEns,
     dbcpName,
     RootComponent: Main,
     routes,

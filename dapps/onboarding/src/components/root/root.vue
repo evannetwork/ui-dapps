@@ -25,16 +25,19 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_identities": {
-    "routes": {
-      "identities": "Identities",
-      "favorites": "Favorites",
-      "mailbox": "Messages",
-      "contacts": "Contacts",
-      "profile": "Profile"
-    }
-  }
-}
-/* tslint:enable */;
+<template>
+  <div class="evan-vue-onboarding evan theme-evan">
+    <evan-dapp-wrapper :createRuntime="false">
+      <template v-slot:content>
+        <transition name="fade" mode="out-in">
+          <router-view class="child-view"></router-view>
+        </transition>
+      </template>
+    </evan-dapp-wrapper>
+  </div>
+</template>
+
+<script lang="ts">
+  import Root from './root.ts';
+  export default Root;
+</script>

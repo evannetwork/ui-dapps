@@ -28,7 +28,7 @@
 <template>
   <div>
     <div class="md-layout md-alignment-center-center">
-      <img class="logo-header" :src="$store.state.evanCoreBaseUrl + '/assets/evan-logo.svg'">
+      <img class="logo-header" :src="$store.state.uiLibBaseUrl + '/assets/evan-logo.svg'">
     </div>
     <div class="md-layout md-gutter md-alignment-center-center">
       <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
@@ -40,7 +40,7 @@
             </md-card-header-text>
 
             <md-card-media md-big>
-              <img :src="$store.state.dappBaseUrl + '/assets/sign-up.png'">
+              <img :src="$store.state.onboardingBaseUrl + '/assets/sign-up.png'">
             </md-card-media>
           </md-card-header>
 
@@ -76,7 +76,7 @@
             </md-card-header-text>
 
             <md-card-media md-big>
-              <img :src="$store.state.dappBaseUrl + '/assets/sign-in.png'" alt="People">
+              <img :src="$store.state.onboardingBaseUrl + '/assets/sign-in.png'" alt="People">
             </md-card-media>
           </md-card-header>
 
@@ -108,43 +108,7 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import * as bcc from 'bcc';
-  import { System, core, dapp, getDomainName } from 'dapp-browser';
-
-  export default Vue.extend({ });
+  import Welcome from './welcome.ts';
+  export default Welcome;
 </script>
-
-<style lang="scss" scoped>
-  .logo-header {
-    width: 600px;
-    max-width: 90%;
-    margin: 50px;
-  }
-
-  .md-card {
-    border-radius: 20px;
-    opacity: 0.7;
-    transition: 0.5s ease-out opacity;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    .md-card-actions {
-      border-bottom-right-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-  }
-
-  @media(max-width: 768px) {
-    .logo-header {
-      margin: 25px 0 0 0;
-    }
-
-    .md-card {
-      margin: 25px 0;
-    }
-  }
-</style>
 

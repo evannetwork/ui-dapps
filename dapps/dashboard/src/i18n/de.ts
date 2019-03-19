@@ -26,10 +26,8 @@
 */
 
 /* tslint:disable */
-const translations = {
+export default {
   "_dashboard": {
   }
-}
+};
 /* tslint:enable */
-
-export default translations;

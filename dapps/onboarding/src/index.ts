@@ -26,12 +26,13 @@
 */
 
 import Vue from 'vue';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { initializeVue } from '@evan.network/ui-vue-core';
 
 import components from './components/registry';
 import Main from './components/root/root.vue';
 import routes from './routes';
-import translations from './i18n/translations';
+import translations from './i18n/tranlations';
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
@@ -43,6 +44,12 @@ import translations from './i18n/translations';
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
 export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
+  // load the onboarding dbcp, so we can access assets using url
+  const onboardingDbcp = await dappBrowser.System
+    .import(`onboarding.${ dappBrowser.getDomainName() }!ens`);
+  const onboardingBaseUrl = dappBrowser.dapp.getDAppBaseUrl(onboardingDbcp,
+    `${ onboardingDbcp.name }.${ dappBrowser.getDomainName() }`);
+
   await initializeVue({
     components,
     container,
@@ -50,7 +57,7 @@ export async function startDApp(container: any, dbcpName: any, dappEns: any, dap
     dbcpName,
     RootComponent: Main,
     routes,
-    state: { },
+    state: { onboardingBaseUrl },
     translations: translations,
     Vue: Vue,
   });

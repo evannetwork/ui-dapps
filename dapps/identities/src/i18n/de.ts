@@ -26,7 +26,7 @@
 */
 
 /* tslint:disable */
-const translations = {
+export default {
   "_identities": {
     "routes": {
       "identities": "Identitäten",
@@ -37,6 +37,4 @@ const translations = {
     }
   }
 }
-/* tslint:enable */
-
-export default translations;
+/* tslint:enable */;

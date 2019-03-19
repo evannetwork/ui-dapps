@@ -26,8 +26,8 @@
 */
 
 import VueRecaptcha from 'vue-recaptcha';
-import MnemonicComponent from './components/mnemonic.vue';
-import AcceptContactComponent from './components/accept-contact.vue';
+import MnemonicComponent from './mnemonic/mnemonic.vue';
+import AcceptContactComponent from './accept-contact/accept-contact.vue';
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
@@ -41,8 +41,8 @@ export {
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'evan-onboarding-accept-contact', comp: AcceptContactComponent },
-  { name: 'evan-onboarding-mnemonic', comp: MnemonicComponent },
+  { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
+  { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
   { name: 'vue-recaptcha', comp: VueRecaptcha },
 ];
 

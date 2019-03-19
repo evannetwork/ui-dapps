@@ -36,24 +36,15 @@
         <h3>{{ '_onboarding.signed-in.title' | translate }}</h3>
       </md-toolbar>
 
-      <md-content class="evan-padding">
+      <div class="evan-padding">
         <evan-onboarding-accept-contact></evan-onboarding-accept-contact>
-      </md-content>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import * as bcc from 'bcc';
-  import * as dappBrowser from 'dapp-browser';
-
-  export default Vue.extend({ });
+  import SignedIn from './signed-in.ts';
+  export default SignedIn;
 </script>
-
-<style lang="scss" scoped>
-  .evan-onboarding-sigined-in {
-    height: 100%;
-  }
-</style>
 

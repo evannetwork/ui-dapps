@@ -47,7 +47,7 @@ async function runExec(command, runtimeFolder) {
   return new Promise((resolve, reject) => {
     exec(command, { cwd: runtimeFolder, NODE_ENV: nodeEnv }, async (err, stdout, stderr) => {
       if (err) {
-        reject(stderr);
+        reject(stdout);
       } else {
         resolve(stdout);
       }

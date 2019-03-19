@@ -29,5 +29,15 @@
 // while importing vue files
 declare module '*.vue' {
   import Vue from 'vue';
-  export default Vue;
+  import VueRouter from 'vue-router';
+  import Vuex from 'vuex';
+  import vuexI18n from 'vuex-i18n';
+
+  class EvanVue extends Vue {
+    $route: VueRouter;
+    $store: Vuex;
+    $t: vuexI18n;
+  }
+
+  export default EvanVue;
 }
