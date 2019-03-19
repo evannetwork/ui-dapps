@@ -32,12 +32,16 @@
 @include themeEvan();
 
 /**
+ * load general styles at first, they will partially overwritten
+ */
+@import './style/general';
+
+/**
  * load evan specific styles
  */
 @import './style/buttons';
 @import './style/content';
 @import './style/dapp-wrapper';
 @import './style/forms';
-@import './style/general';
 @import './style/modal';
 @import './style/open-sans';

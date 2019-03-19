@@ -12,7 +12,7 @@
   "main": "dist/index.js",
   "name": "d3.libs",
   "scripts": {
-    "build": "gulp"
+    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
   "version": "5.7.0"

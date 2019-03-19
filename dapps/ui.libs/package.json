@@ -12,7 +12,7 @@
   "main": "dist/ui.libs.js",
   "name": "@evan.network/ui",
   "scripts": {
-    "build": "gulp"
+    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
   },
   "typings": "dist/ui.libs.d.ts",
   "version": "1.0.0"
