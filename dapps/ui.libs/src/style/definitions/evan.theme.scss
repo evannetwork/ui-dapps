@@ -187,8 +187,6 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    yiq-text-dark: cssVar('dark'),
-    yiq-text-light: cssVar('white'),
     bg-text-danger: cssVar('white'),
     bg-text-dark: cssVar('white'),
     bg-text-info: cssVar('white'),
@@ -197,6 +195,10 @@ $themeEvan: map-merge(
     bg-text-secondary: cssVar('white'),
     bg-text-success: cssVar('white'),
     bg-text-warning: cssVar('white'),
+    text-color-inverted: cssVar('white'),
+    text-color: cssVar('dark'),
+    yiq-text-dark: cssVar('text-color'),
+    yiq-text-light: cssVar('text-color-inverted'),
   ),
   $themeEvan
 );
