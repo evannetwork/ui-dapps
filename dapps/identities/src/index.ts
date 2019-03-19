@@ -39,14 +39,15 @@ import components from './components/registry';
  *
  * @param      {any}     container    container element
  * @param      {string}  dbcpName     dbcp name of the dapp
- * @param      {string}  dappEns      original ens / contract address that were loaded
+ * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
-export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
+export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
   await initializeVue({
     components,
     container,
     dappBaseUrl,
+    dappEnsOrContract,
     dbcpName,
     RootComponent: Main,
     routes,
