@@ -24,34 +24,20 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+// import evan libs
+import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import Vue from 'vue';
-import { initializeVue } from '@evan.network/ui-vue-core';
+import SignedInComponent from './components/signed-in/signed-in.vue';
+import SignInComponent from './components/sign-in/sign-in.vue';
+import SignUpComponent from './components/sign-up/sign-up.vue';
+import WelcomeComponent from './components/welcome/welcome.vue';
 
-import components from './components/registry';
-import Main from './components/root/root.vue';
-import routes from './routes';
-import translations from './i18n/translations';
+// map them to element names, so they can be used within templates
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: 'sign-in', name: 'sign-in', component: SignInComponent },
+  { path: 'sign-up', name: 'sign-up', component: SignUpComponent },
+  { path: 'signed-in', name: 'signed-in', component: SignedInComponent },
+  { path: '', name: 'welcome', component: WelcomeComponent },
+];
 
-/**
- * StartDapp function that is called by the ui-dapp-browser, including an container and the current
- * dbcp. So startup, it's evan time!
- *
- * @param      {any}     container    container element
- * @param      {string}  dbcpName     dbcp name of the dapp
- * @param      {string}  dappEns      original ens / contract address that were loaded
- * @param      {string}  dappBaseUrl  origin of the dapp
- */
-export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
-  await initializeVue({
-    components,
-    container,
-    dappBaseUrl,
-    dbcpName,
-    RootComponent: Main,
-    routes,
-    state: { },
-    translations: translations,
-    Vue: Vue,
-  });
-}
+export default routeRegistration;

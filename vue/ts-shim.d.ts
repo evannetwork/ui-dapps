@@ -25,33 +25,9 @@
   https://evan.network/license/
 */
 
-import Vue from 'vue';
-import { initializeVue } from '@evan.network/ui-vue-core';
-
-import components from './components/registry';
-import Main from './components/root/root.vue';
-import routes from './routes';
-import translations from './i18n/translations';
-
-/**
- * StartDapp function that is called by the ui-dapp-browser, including an container and the current
- * dbcp. So startup, it's evan time!
- *
- * @param      {any}     container    container element
- * @param      {string}  dbcpName     dbcp name of the dapp
- * @param      {string}  dappEns      original ens / contract address that were loaded
- * @param      {string}  dappBaseUrl  origin of the dapp
- */
-export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
-  await initializeVue({
-    components,
-    container,
-    dappBaseUrl,
-    dbcpName,
-    RootComponent: Main,
-    routes,
-    state: { },
-    translations: translations,
-    Vue: Vue,
-  });
+// !IMPORTANT!: Import this d.ts file within your vue tsconfig to fix "cannot find module" errors
+// while importing vue files
+declare module '*.vue' {
+  import Vue from 'vue';
+  export default Vue;
 }

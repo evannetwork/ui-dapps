@@ -25,33 +25,35 @@
   https://evan.network/license/
 */
 
-import Vue from 'vue';
-import { initializeVue } from '@evan.network/ui-vue-core';
+<template>
+  <div class="evan-onboarding-sigined-in md-layout md-gutter md-alignment-center-center">
+    <div class="md-layout-item md-size-60 md-medium-size-80 md-small-size-100">
+      <md-toolbar class="md-accent" md-elevation="0">
+        <md-button class="md-icon-button" 
+          v-on:click="$router.push({ name: 'welcome', query: $route.query })">
+          <md-icon>chevron_left</md-icon>
+        </md-button>
+        <h3>{{ '_onboarding.signed-in.title' | translate }}</h3>
+      </md-toolbar>
 
-import components from './components/registry';
-import Main from './components/root/root.vue';
-import routes from './routes';
-import translations from './i18n/translations';
+      <md-content class="evan-padding">
+        <evan-onboarding-accept-contact></evan-onboarding-accept-contact>
+      </md-content>
+    </div>
+  </div>
+</template>
 
-/**
- * StartDapp function that is called by the ui-dapp-browser, including an container and the current
- * dbcp. So startup, it's evan time!
- *
- * @param      {any}     container    container element
- * @param      {string}  dbcpName     dbcp name of the dapp
- * @param      {string}  dappEns      original ens / contract address that were loaded
- * @param      {string}  dappBaseUrl  origin of the dapp
- */
-export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
-  await initializeVue({
-    components,
-    container,
-    dappBaseUrl,
-    dbcpName,
-    RootComponent: Main,
-    routes,
-    state: { },
-    translations: translations,
-    Vue: Vue,
-  });
-}
+<script lang="ts">
+  import Vue from 'vue';
+  import * as bcc from 'bcc';
+  import * as dappBrowser from 'dapp-browser';
+
+  export default Vue.extend({ });
+</script>
+
+<style lang="scss" scoped>
+  .evan-onboarding-sigined-in {
+    height: 100%;
+  }
+</style>
+

@@ -25,33 +25,25 @@
   https://evan.network/license/
 */
 
-import Vue from 'vue';
-import { initializeVue } from '@evan.network/ui-vue-core';
+import VueRecaptcha from 'vue-recaptcha';
+import MnemonicComponent from './components/mnemonic.vue';
+import AcceptContactComponent from './components/accept-contact.vue';
 
-import components from './components/registry';
-import Main from './components/root/root.vue';
-import routes from './routes';
-import translations from './i18n/translations';
+// import evan libs
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-/**
- * StartDapp function that is called by the ui-dapp-browser, including an container and the current
- * dbcp. So startup, it's evan time!
- *
- * @param      {any}     container    container element
- * @param      {string}  dbcpName     dbcp name of the dapp
- * @param      {string}  dappEns      original ens / contract address that were loaded
- * @param      {string}  dappBaseUrl  origin of the dapp
- */
-export async function startDApp(container: any, dbcpName: any, dappEns: any, dappBaseUrl: any) {
-  await initializeVue({
-    components,
-    container,
-    dappBaseUrl,
-    dbcpName,
-    RootComponent: Main,
-    routes,
-    state: { },
-    translations: translations,
-    Vue: Vue,
-  });
+// export them all, so other applications can access them
+export {
+  AcceptContactComponent,
+  MnemonicComponent,
+  VueRecaptcha,
 }
+
+// map them to element names, so they can be used within templates
+const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'evan-onboarding-accept-contact', comp: AcceptContactComponent },
+  { name: 'evan-onboarding-mnemonic', comp: MnemonicComponent },
+  { name: 'vue-recaptcha', comp: VueRecaptcha },
+];
+
+export default componentRegistration;

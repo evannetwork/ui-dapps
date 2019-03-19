@@ -26,7 +26,6 @@
 */
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [ ];
