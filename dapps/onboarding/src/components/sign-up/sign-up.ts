@@ -34,6 +34,8 @@ import axios from 'axios';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as evanUi from '@evan.network/ui';
+import { EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 @Component({ })
 export default class SignUp extends Vue {
@@ -49,6 +51,9 @@ export default class SignUp extends Vue {
   // mnemonicRiddle
   mnemonicRiddle = false as any;
 
+  // was the riddle already solved and only the tab was switched?
+  mnemonicRiddleSolved = false;
+
   // is the current mnemonic / password is currently checking?
   checking = false;
 
@@ -57,29 +62,21 @@ export default class SignUp extends Vue {
 
   // check if the recaptcha is initialzing
   initialzing = true;
-  profileForm = {
-    // current userName input
-    userName: '',
-    // current password input
-    passwords: [ '', '' ],
-    // valid when no error is available
-    isValid: false,
-    errors: {
-      // user name error
-      userName: null as any,
-      // current password input
-      passwords: [ null, null ] as Array<any>
-    }
-  };
 
-  // steps status configurations
-  steps = {
-    active: 'profile',
-    profile: false,
-    mnemonic: false,
-    createProfile: false,
-    signedIn: false
-  };
+  /**
+   * formular specific variables
+   */
+  profileForm: EvanForm = null;
+
+  /**
+   * Available steps represented by it's titles
+   */
+  steps: Array<any> = [ ];
+
+  /**
+   * steps status configurations
+   */
+  activeStep = 0;
 
   // currently creating the profile
   creatingProfile = 0 as any;
@@ -87,13 +84,81 @@ export default class SignUp extends Vue {
   // track the time that the profile took to be created
   creationTime = -1;
 
-  // set the creating profile error, if it fails
-  creatingProfileError = false;
-
   // timeout to show next profile creation img
   timeoutCreationStatus = null as any;
 
-  created() {
+  /**
+   * Terms of use for the current environment and the language
+   */
+  termsOfUse = '';
+
+  /**
+   * Is the component currently loading?
+   */
+  loading = true;
+
+  async created() {
+    this.profileForm = new EvanForm(this, {
+      userName: {
+        value: '',
+        validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
+          return formControl.value.length === 0;
+        }
+      },
+      password0: {
+        value: '',
+        validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
+          return vueInstance.getPasswordError(0, formControl.form);
+        }
+      },
+      password1: {
+        value: '',
+        validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
+          return vueInstance.getPasswordError(1, formControl.form);
+        }
+      },
+    });
+    // use this for debugginb
+    // this.mnemonicRiddleSolved = true;
+    // this.profileForm.userName.value = 'Test';
+    // this.profileForm.password0.value = 'Evan1234';
+    // this.profileForm.password1.value = 'Evan1234';
+
+    // set if from the created function to keep the correct disabled function context
+    this.steps = [
+      {
+        title: '_onboarding.sign-up.profile-informations',
+        disabled: () => {
+          return this.mnemonicRiddle ||
+            this.creatingProfile || this.activeStep > 2;
+        }
+      },
+      {
+        title: '_onboarding.sign-up.get-mnemonic',
+        disabled: () => {
+          return !this.profileForm.isValid ||
+            this.creatingProfile || this.activeStep > 2;
+        }
+      },
+      {
+        title: '_onboarding.sign-up.create-profile.title',
+        disabled: () => {
+          return !this.mnemonicRiddleSolved || !this.profileForm.isValid ||
+            this.mnemonicRiddle || this.creatingProfile || this.activeStep > 2;
+        }
+      },
+    ];
+
+    // if the user was inivted, show the welcome page
+    if (this.$route.query.inviteeAlias) {
+      this.steps.push({
+        title: '_onboarding.sign-up.welcome',
+        disabled: () => {
+          return this.activeStep !== 3;
+        }
+      });
+    }
+
     // set initial mnemonic from query params or use an generated one
     this.mnemonic = this.mnemonic || this.$route.query.mnemonic ||
       dappBrowser.lightwallet.generateMnemonic();
@@ -110,7 +175,39 @@ export default class SignUp extends Vue {
       this.initialzing = false;
     };
 
-    this.$nextTick(() => (this.$refs['userName'] as any).$el.focus());
+    // load the terms of use origin url
+    const runtime = dappBrowser.bccHelper.getCoreRuntime();
+    const termsOfUseEns = `termsofuse.${ dappBrowser.getDomainName() }`;
+    const termsOfUseDbcp = await runtime.description.getDescription(termsOfUseEns);
+    const termsOfUseOrigin = dappBrowser.dapp.getDAppBaseUrl(
+      Object.assign(termsOfUseDbcp.public, termsOfUseDbcp.private),
+      termsOfUseEns
+    );
+    const ipfsHost = dappBrowser.ipfs.ipfsConfig.host;
+
+    // multiple url's that can be requested one after another to fallback current runtime configurations
+    const fallbacks = [
+      // load from current ipfs host the current language, else fallback to english
+      `${ termsOfUseOrigin }/${ ipfsHost }/${ (<any>this).$i18n.locale() }.html`,
+      `${ termsOfUseOrigin }/${ ipfsHost }/en.html`,
+      // if a not registered ipfs host is requested, load the current language for mainnet, else
+      // fallback to en
+      `${ termsOfUseOrigin }/storage.evan.network/${ (<any>this).$i18n.locale() }.html`,
+      `${ termsOfUseOrigin }/storage.evan.network/en.html`,
+    ];
+
+    // try to load the terms of use for the current language, if this is not available, load the
+    // next fallback
+    for (let i = 0; i < fallbacks.length; i++) {
+      try {
+        const result = await axios.get(fallbacks[i]);
+        this.termsOfUse = result.data;
+        break;
+      } catch (ex) { }
+    }
+
+    this.loading = false;
+    setTimeout(() => this.profileForm.userName.$ref.focus());
   }
 
   destroyed() {
@@ -134,57 +231,36 @@ export default class SignUp extends Vue {
   }
 
   /**
-   * Check valid profile form.
-   */
-  setValidProfile() {
-    const errors = this.profileForm.errors;
-    // check if no error exists, invalidate also, when no check was runned for this field
-    this.profileForm.isValid = [
-      errors.userName,
-      errors.passwords[0],
-      errors.passwords[1],
-    ].filter(error => error || error === null).length === 0;
-  }
-
-  /**
-   * User name has changed.
-   */
-  userNameChanged() {
-    this.profileForm.errors.userName = !this.profileForm.userName;
-    this.setValidProfile();
-  }
-
-  /**
    * Check the password inputs, if the values are valid.
    *
    * @param      {number}  index   index of the password
    * @return     {string}  the password error
    */
-  getPasswordError(index) {
-    const passwords = this.profileForm.passwords;
+  getPasswordError(index, form) {
+    const passwordControl = form[`password${ index }`];
 
     // min 8 characters
-    if (passwords[index].length < 8) {
+    if (passwordControl.value.length < 8) {
       return '_onboarding.sign-up.errors.password-min-characters';
     }
 
     // min one character
-    if (passwords[index].search(/[a-z]/i) < 0) {
+    if (passwordControl.value.search(/[a-z]/i) < 0) {
       return '_onboarding.sign-up.errors.password-one-character';
     }
 
     // min one upper case letter
-    if (passwords[index].toLowerCase() === passwords[index]) {
+    if (passwordControl.value.toLowerCase() === passwordControl.value) {
       return '_onboarding.sign-up.errors.password-one-uppercase-character';
     }
 
     // min one digest
-    if (passwords[index].search(/[0-9]/) < 0) {
+    if (passwordControl.value.search(/[0-9]/) < 0) {
       return '_onboarding.sign-up.errors.password-one-digest-needed';
     }
 
     // must be the same password
-    if (index === 1 && passwords[0] !== passwords[1]) {
+    if (index === 1 && passwordControl.value !== this.profileForm.password0.value) {
       return '_onboarding.sign-up.errors.password-match-repeat';
     }
 
@@ -192,26 +268,11 @@ export default class SignUp extends Vue {
   }
 
   /**
-   * Password has changed, check for errors.
-   */
-  passwordChanged(index) {
-    const errors = this.profileForm.errors.passwords;
-
-    // set the new error values, set the error for the changed index if already an error was set
-    // before, set it always for the other input, to remove password match repeat errors
-    errors[0] = (index === 0 || errors[0] !== null) ? this.getPasswordError(0) : errors[0];
-    errors[1] = (index === 1 || errors[1] !== null) ? this.getPasswordError(1) : errors[1];
-
-    this.setValidProfile();
-  }
-
-  /**
    * Check if the form is valid and navigate to the next page.
    */
   useProfile() {
     if (this.profileForm.isValid) {
-      this.steps.profile = true;
-      this.steps.active = 'mnemonic';
+      this.activeStep = 1;
     }
   }
 
@@ -222,13 +283,14 @@ export default class SignUp extends Vue {
   useMnemonic() {
     if (this.validMnemonic) {
       // if no riddle was started before, start it!
-      if (!this.mnemonicRiddle) {
+      if (!this.mnemonicRiddle && !this.mnemonicRiddleSolved) {
         this.mnemonicRiddle = true;
         (this.$refs.mnemonic as any).startRiddle(
           parseInt(window.localStorage['evan-mnemonic-riddle'] || '3', 10));
       } else {
-        this.steps.mnemonic = true;
-        this.steps.active = 'createProfile';
+        this.mnemonicRiddle = false;
+        this.mnemonicRiddleSolved = true;
+        this.activeStep = 2;
       }
     }
   }
@@ -260,7 +322,7 @@ export default class SignUp extends Vue {
    */
   async createProfile() {
     if (this.recaptchaToken) {
-      const baseHost = 'https://agents.evan.network';
+      const baseHost = evanUi.agentUrl;
       const baseUrlFaucet = baseHost + '/api/smart-agents/faucet/';
       const baseUrlOnboarding = baseHost + '/api/smart-agents/onboarding/';
 
@@ -268,10 +330,9 @@ export default class SignUp extends Vue {
       this.nextCreationStatus();
 
       try {
+        const password = this.profileForm.password0.value;
         // load the vault using the current inputs and create a bcc profile runtime
-        const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic,
-          this.profileForm.passwords[0]);
-        const password = this.profileForm.passwords[0];
+        const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
         const provider = 'internal';
         const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
         const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
@@ -296,7 +357,7 @@ export default class SignUp extends Vue {
         // set my private and public keys to my addressbook
         const dhKeys = runtime.keyExchange.getDiffieHellmanKeys();
         await profile.addContactKey(accountId, 'dataKey', dhKeys.privateKey.toString('hex'));
-        await profile.addProfileKey(accountId, 'alias', this.profileForm.userName);
+        await profile.addProfileKey(accountId, 'alias', this.profileForm.userName.value);
         await profile.addPublicKey(dhKeys.publicKey.toString('hex'));
 
         // set initial structure by creating addressbook structure and saving it to ipfs
@@ -335,9 +396,13 @@ export default class SignUp extends Vue {
               captchaToken: this.recaptchaToken
             });
 
-            (!rejected) && resolve();
+            if (!rejected) {
+              resolve();
+            }
           } catch (ex) {
-            (!rejected) && reject(ex);
+            if (!rejected) {
+              reject(ex);
+            }
           }
         });
 
@@ -360,17 +425,16 @@ export default class SignUp extends Vue {
           if (!this.$route.query.inviteeAlias) {
             this.navigateToEvan();
           } else {
-            this.steps.createProfile = true;
-            this.steps.active = 'signedIn';
+            this.activeStep = 3;
           }
         }, 2000);
       } catch (ex) {
         // reset all steps of proile creation
         dappBrowser.utils.log(ex.message, 'error');
         this.creatingProfile = 0;
-        this.creatingProfileError = true;
         this.creationTime = -1;
         this.recaptchaToken = null;
+        (<any>this.$refs.creatingProfileError).showModal();
       }
 
       // stop ui status updates

@@ -41,6 +41,7 @@
             }"
             :disabled="$props.disabled && !riddelStarted"
             v-model="words[index]"
+            @keyup.enter.native="onSubmit()"
             @input="wordInputChanged(index)"
             @focus="wordInputChanged(index);"
             @blur="setDirty(index)">

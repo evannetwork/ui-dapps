@@ -39,7 +39,7 @@ export default class AcceptContact extends Vue {
   /**
    * should the alias for the user should be loaded?
    */
-  @Prop() loadAlias = false;
+  @Prop({ default: false }) loadAlias;
 
    // show loading symbol
   loading = true;
@@ -80,8 +80,25 @@ export default class AcceptContact extends Vue {
   accepted = false;
 
   async created() {
-    this.runtime = this.$store.state.runtime;
+    if (!this.$store.state.runtime) {
+      this.loading = true;
 
+      // unlock the profile directly
+      const vault = await dappBrowser.lightwallet.loadUnlockedVault();
+      const activeAccount = dappBrowser.lightwallet.getPrimaryAccount(vault);
+
+      // setup runtime and save it to the axios store
+      this.$store.state.runtime = await dappBrowser.bccHelper.createDefaultRuntime(
+        bcc,
+        activeAccount,
+        vault.encryptionKey,
+        dappBrowser.lightwallet.getPrivateKey(vault, activeAccount)
+      );
+
+      this.loading = false;
+    }
+
+    this.runtime = this.$store.state.runtime;
     this.accountId = dappBrowser.core.activeAccount();
     this.inviteeAddress = this.$route.query.inviteeAddress;
 
@@ -167,7 +184,7 @@ export default class AcceptContact extends Vue {
       }, 2000);
     } catch (ex) {
       dappBrowser.utils.log(ex.message, 'error');
-      (<any>this.$refs.logoutModal).showModal();
+      (<any>this.$refs.acceptingError).showModal();
     }
 
     // show loading

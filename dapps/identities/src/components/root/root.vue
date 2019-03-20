@@ -31,7 +31,7 @@
       <template v-slot:content>
         identities
 <!--         <transition name="fade" mode="out-in">
-          <router-view class="child-view"></router-view>
+          <router-view></router-view>
         </transition> -->
         <evan-dapp-wrapper-level-2>
           <template v-slot:content>

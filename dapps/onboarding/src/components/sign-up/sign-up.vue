@@ -26,70 +26,90 @@
 */
 
 <template>
-  <div class="evan-onboarding-signup md-layout md-gutter md-alignment-center-center">
-    <div class="md-layout-item md-size-60 md-medium-size-80 md-small-size-100">
-      <md-toolbar class="md-accent" md-elevation="0">
-        <md-button class="md-icon-button" 
-          v-on:click="$router.push({ name: 'welcome', query: $route.query })">
-          <md-icon>chevron_left</md-icon>
-        </md-button>
-        <h3>{{ '_onboarding.sign-up.title' | translate }}</h3>
-      </md-toolbar>
+  <div class="
+    container mx-auto m-5 p-0
+    border bg-level-1">
+    <evan-loading v-if="loading"></evan-loading>
+    <template v-if="!loading">
+      <div class="d-flex p-2 align-items-center">
+        <button class="btn btn-lg"
+          @click="$router.push({ name: 'welcome', query: $route.query })">
+          <i class="fas fa-chevron-left"></i>
+        </button>
 
-      <!-- <md-steppers md-vertical md-linear
-        :md-active-step.sync="steps.active">
-        <md-step id="profile"
-          :md-done.sync="steps.profile"
-          :md-editable="!creatingProfile"
-          :md-label="'_onboarding.sign-up.profile-informations' | translate"
-          :md-description="'_onboarding.sign-up.profile-informations-desc' | translate">
-          <div class="evan-content evan-padding">
-            <md-field
-              :class="profileForm.errors.userName ? 'md-invalid' : ''">
-              <label>{{ '_onboarding.sign-up.user-name' | translate }}</label>
-              <md-input required
-                ref="userName"
-                v-model="profileForm.userName"
-                @keyup.enter.native="useProfile()"
-                @input="userNameChanged()">
-              </md-input>
-              <span class="md-error" v-if="profileForm.errors.userName">
-                {{ '_onboarding.sign-up.errors.user-name' | translate }}
-              </span>
-            </md-field>
-            <md-field
-              v-for="(password, index) in profileForm.passwords"
-              :class="profileForm.errors.passwords[index] ? 'md-invalid' : ''">
-              <label>{{ ('_onboarding.sign-up.password' + index) | translate }}</label>
-              <md-input required type="password" 
-                v-model="profileForm.passwords[index]"
-                @keyup.enter.native="useProfile()"
-                @input="passwordChanged(index)">
-              </md-input>
-              <span class="md-error" v-if="profileForm.errors.passwords[index]">
-                {{ profileForm.errors.passwords[index] | translate }}
-              </span>
-            </md-field>
-          </div>
-          <div class="md-layout md-gutter md-alignment-center-center evan-margin-top">
-            <md-button class="md-raised evan-round evan-primary"
-              :disabled="!profileForm.isValid"
-              @click="useProfile()">
-              {{ '_onboarding.continue' | translate }}
-            </md-button>
-          </div>
-        </md-step>
+        <h4 class="m-0 ml-3">{{ '_onboarding.sign-up.title' | translate }}</h4>
+      </div>
 
-        <md-step id="mnemonic"
-          :md-done.sync="steps.mnemonic"
-          :md-editable="!creatingProfile"
-          :md-label="'_onboarding.sign-up.get-mnemonic' | translate"
-          :md-description="'_onboarding.sign-up.get-mnemonic-desc' | translate">
-          <div class="md-layout-item evan-content evan-warn evan-padding"
-            v-html="$t('_onboarding.sign-up.get-mnemonic-desc-long')">
-          </div>
+      <div class="evan-steps border-top p-3">
+        <div class="evan-step-header">
+          <button class="btn"
+            v-for="(step, index) of steps"
+            :disabled="step.disabled(this)"
+            @click="activeStep = index">
+            <span class="stepper-circle"
+              :class="{
+                'bg-primary': activeStep === index,
+                'bg-secondary': activeStep !== index,
+              }">
+              {{ index + 1}}
+            </span>
+            <span>{{ step.title | translate }}</span>
+          </button>
+        </div>
+        <div class="pt-3 pb-3">
+          <div class="step" v-if="activeStep === 0">
+            <h5 class="text-center mt-4 mb-4">
+              {{ '_onboarding.sign-up.profile-informations-desc' | translate }}
+            </h5>
 
-          <div class="evan-padding evan-margin-top">
+            <form class="p-4" v-on:submit.prevent="useProfile">
+              <div class="form-group">
+                <label for="userName">
+                  {{ '_onboarding.sign-up.user-name' | translate }}
+                </label>
+                <input class="form-control" required
+                  id="userName" ref="userName"
+                  :placeholder="'_onboarding.sign-up.user-name' | translate"
+                  v-model="profileForm.userName.value"
+                  v-bind:class="{ 'is-invalid' : profileForm.userName.error }"
+                  @blur="profileForm.userName.setDirty()">
+                <div class="invalid-feedback">
+                  {{ '_onboarding.sign-up.errors.user-name' | translate }}
+                </div>
+              </div>
+
+              <div class="form-group"
+                v-for="(_, index) in [ '', '' ]">
+                <label for="password">
+                  {{ ('_onboarding.sign-up.password' + index) | translate }}
+                </label>
+                <input class="form-control" type="password" required
+                  :id="`password${ index }`" :ref="`password${ index }`"
+                  :placeholder="('_onboarding.sign-up.password' + index) | translate"
+                  v-model="profileForm[`password${ index }`].value"
+                  v-bind:class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
+                  @input="profileForm[`password${ index }`].setDirty()">
+                <div class="invalid-feedback">
+                  {{ profileForm[`password${ index }`].error | translate }}
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-rounded btn-primary"
+                  :disabled="!profileForm.isValid">
+                  {{ '_onboarding.continue' | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="step" v-if="activeStep === 1">
+            <h5 class="text-center mt-4 mb-4">
+              {{ '_onboarding.sign-up.get-mnemonic-desc' | translate }}
+            </h5>
+            <div class="bg-level-3 p-3 mt-3 mb-3 border"
+              v-html="$t('_onboarding.sign-up.get-mnemonic-desc-long')">
+            </div>
+
             <evan-onboarding-mnemonic
               ref="mnemonic"
               :mnemonic.sync="mnemonic"
@@ -97,94 +117,96 @@
               :disabled="true"
               v-on:submit="useMnemonic()">
             </evan-onboarding-mnemonic>
-          </div>
-          <div class="md-layout md-gutter md-alignment-center-center evan-margin-top">
-            <md-button class="md-raised evan-round evan-primary"
-              v-if="mnemonicRiddle"
-              @click="cancelRiddle()">
-              {{ '_onboarding.sign-up.cancel-riddle' | translate }}
-            </md-button>
-            <md-button class="md-raised evan-round evan-primary"
-              :disabled="!validMnemonic"
-              @click="useMnemonic()">
-              {{ '_onboarding.continue' | translate }}
-            </md-button>
-          </div>
-        </md-step>
 
-        <md-step id="createProfile"
-          :md-done.sync="steps.createProfile"
-          :md-editable="!creatingProfile"
-          :md-label="'_onboarding.sign-up.create-profile.title' | translate"
-          :md-description="'_onboarding.sign-up.create-profile.desc' | translate">
-          <div class="evan-padding" v-if="!creatingProfile">
-            <p v-html="$t('_onboarding.sign-up.create-profile.long')"></p>
+            <div>
+              <div class="text-center mt-4">
+                <button type="button" class="btn btn-outline-secondary btn-rounded"
+                  v-if="mnemonicRiddle"
+                  @click="cancelRiddle()">
+                  {{ '_onboarding.sign-up.cancel-riddle' | translate }}
+                </button>
+                <button type="button" class="btn btn-rounded btn-primary"
+                  :disabled="!validMnemonic"
+                  @click="useMnemonic()">
+                  {{ '_onboarding.continue' | translate }}
+                </button>
+                <evan-loading v-if="checking"></evan-loading>
+              </div>
+            </div>
+          </div>
+          <div class="step" v-if="activeStep === 2">
+            <template v-if="!creatingProfile">
+              <h5 class="text-center mt-4 mb-4">
+                {{ '_onboarding.sign-up.create-profile.desc' | translate }}
+              </h5>
 
-            <div class="md-layout md-gutter md-alignment-left-left">
-              <p v-html="$t('_onboarding.sign-up.terms-of-use.full')"></p>
+              <div class="bg-level-3 p-3 mt-3 mb-3 border"
+                v-html="$t('_onboarding.sign-up.create-profile.long')">
+              </div>
+
+              <div class="bg-level-3 p-3 mt-3 mb-3 border"
+                v-html="termsOfUse">
+              </div>
+
+              <div class="d-flex justify-content-center mb-3">
+                <vue-recaptcha class="evan-recaptcha"
+                  v-if="!initialzing"
+                  ref="recaptcha"
+                  sitekey="6LfoK1IUAAAAAOK0EbTv-IqtBq2NS-bvKWcUbm8r"
+                  theme="light"
+                  @verify="onCaptchaVerified"
+                  @expired="onCaptchaExpired">
+                </vue-recaptcha>
+              </div>
+            </template>
+
+            <evan-modal ref="creatingProfileError">
+              <template v-slot:body>
+                <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>
+              </template>
+            </evan-modal>
+
+            <div class="evan-padding text-center"
+              v-if="creatingProfile">
+              <template  v-if="creatingProfile !== 5">
+                <evan-loading></evan-loading>
+                <h5>
+                  {{ ('_onboarding.sign-up.create-profile.status-' + creatingProfile) | translate }}
+                </h5>
+                <p>
+                  {{ $t('_onboarding.sign-up.create-profile.creation-time', { creationTime: creationTime }) }}
+                </p>
+                <div class="bg-inverted mx-auto p-5 col-md-6">
+                  <img class="img-fluid col-md-8"
+                    :src="$store.state.onboardingBaseUrl + '/assets/creating_' + creatingProfile + '.png'">
+                </div>
+              </template>
+              <evan-success v-if="creatingProfile === 5"></evan-success>
             </div>
 
-            <vue-recaptcha class="evan-recaptcha"
-              v-if="!initialzing"
-              ref="recaptcha"
-              sitekey="6LfoK1IUAAAAAOK0EbTv-IqtBq2NS-bvKWcUbm8r"
-              theme="light"
-              @verify="onCaptchaVerified"
-              @expired="onCaptchaExpired">
-            </vue-recaptcha>
-
-            <md-dialog-alert
-              :md-active.sync="creatingProfileError"
-              :div="'_onboarding.sign-up.profile-create-error.desc' | translate"
-              :md-confirm-text="'_onboarding.sign-up.profile-create-error.ok' | translate">
-            </md-dialog-alert>
+            <div class="text-center"
+              v-if="!creatingProfile">
+              <button type="button" class="btn btn-rounded btn-primary"
+                :disabled="!recaptchaToken"
+                @click="createProfile()">
+                {{ '_onboarding.sign-up.create-profile.title' | translate }}
+              </button>
+            </div>
           </div>
+          <div class="step" v-if="activeStep === 3">
+            <h5 class="text-center mt-4 mb-4">
+              {{ '_onboarding.sign-up.welcome-desc' | translate }}
+            </h5>
 
-          <div class="evan-padding profile-creation-container"
-            v-if="creatingProfile">
-            <md-progress-spinner
-              v-if="creatingProfile !== 5"
-              :md-diameter="30"
-              :md-stroke="3"
-              md-mode="indeterminate">
-            </md-progress-spinner>
-            <h3>
-              {{ ('_onboarding.sign-up.create-profile.status-' + creatingProfile) | translate }}
-            </h3>
-            <p v-if="creatingProfile !== 5">
-              {{ $t('_onboarding.sign-up.create-profile.creation-time', { creationTime: creationTime }) }}
-            </p>
-            <img v-if="creatingProfile !== 5"
-              :src="$store.state.dappBaseUrl + '/assets/creating_' + creatingProfile + '.png'">
-            <evan-success v-if="creatingProfile === 5"></evan-success>
+            <evan-onboarding-accept-contact
+              :loadAlias="true">
+            </evan-onboarding-accept-contact>
           </div>
-
-          <div class="md-layout md-gutter md-alignment-center-center evan-margin-top"
-            v-if="!creatingProfile">
-            <md-button class="md-raised evan-round evan-primary"
-              :disabled="!recaptchaToken"
-              @click="createProfile()">
-              {{ '_onboarding.sign-up.create-profile.title' | translate }}
-            </md-button>
-          </div>
-        </md-step>
-
-        <md-step id="signedIn"
-          v-if="$route.query.inviteeAlias"
-          :md-done.sync="steps.signedIn"
-          :md-editable="false"
-          :md-label="'_onboarding.sign-up.welcome' | translate"
-          :md-description="'_onboarding.sign-up.welcome-desc' | translate">
-          <evan-onboarding-accept-contact
-            :loadAlias="true"
-            v-if="steps.active === 'signedIn'">
-          </evan-onboarding-accept-contact>
-        </md-step>
-      </md-steppers> -->
-    </div>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
-
 
 <script lang="ts">
   import SignUp from './sign-up.ts';

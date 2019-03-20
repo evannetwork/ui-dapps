@@ -26,11 +26,11 @@
 */
 
 <template>
-  <div class="evan theme-evan bg-level-3 h-100 w-100 d-block">
-    <evan-dapp-wrapper :createRuntime="false">
+  <div class="evan theme-evan">
+    <evan-dapp-wrapper :routes="null">
       <template v-slot:content>
         <transition name="fade" mode="out-in">
-          <router-view class="child-view"></router-view>
+          <router-view></router-view>
         </transition>
       </template>
     </evan-dapp-wrapper>

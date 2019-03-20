@@ -26,20 +26,16 @@
 */
 
 <template>
-  <div class="evan-onboarding-sigined-in md-layout md-gutter md-alignment-center-center">
-    <div class="md-layout-item md-size-60 md-medium-size-80 md-small-size-100">
-      <md-toolbar class="md-accent" md-elevation="0">
-        <md-button class="md-icon-button" 
-          v-on:click="$router.push({ name: 'welcome', query: $route.query })">
-          <md-icon>chevron_left</md-icon>
-        </md-button>
-        <h3>{{ '_onboarding.signed-in.title' | translate }}</h3>
-      </md-toolbar>
-
-      <div class="evan-padding">
-        <evan-onboarding-accept-contact></evan-onboarding-accept-contact>
-      </div>
+  <div class="
+    container mx-auto m-5 p-0
+    border bg-level-1">
+    <div class="d-flex p-4 align-items-center">
+      <h4 class="m-0">{{ '_onboarding.signed-in.title' | translate }}</h4>
     </div>
+
+    <evan-onboarding-accept-contact
+      class="border-top p-3">
+    </evan-onboarding-accept-contact>
   </div>
 </template>
 

@@ -42,9 +42,6 @@ export default class SignIn extends Vue {
   // is the current mnemonic valid?
   validMnemonic = false;
 
-  // check if a profile for the entered mnemonic exists, if not, show an error
-  notOnboarded = false;
-
   // is the current mnemonic / password is currently checking?
   checking = false;
 
@@ -105,16 +102,19 @@ export default class SignIn extends Vue {
     const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
 
     // check if the current account is onboarded
-    this.notOnboarded = !(await dappBrowser.bccHelper.isAccountOnboarded(accountId));
+    const notOnboarded = !(await dappBrowser.bccHelper.isAccountOnboarded(accountId));
 
     // when it's onboarded, navigte to password dialog
-    if (!this.notOnboarded) {
+    if (!notOnboarded) {
       this.activeStep = 1;
       this.activeSteps.push(1);
       this.accountId = accountId;
 
       // set autofocus on password input
       this.$nextTick(() => (this.$refs['password'] as any).focus());
+    } else {
+      // check if a profile for the entered mnemonic exists, if not, show an error
+      (this.$refs['notOnboarded'] as any).showModal();
     }
 
     this.checking = false;

@@ -36,6 +36,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 @Component({ })
 export default class Root extends Vue {
   async created() {
+    // if we are directly on the onboarding, the signup is disabled
+    //  => redirect user to the dashboard, so this dapp will handle the correct vue logic
     const activeAccount = dappBrowser.core.activeAccount();
 
     // check if a user is already logged in, if yes, navigate to the signed in route

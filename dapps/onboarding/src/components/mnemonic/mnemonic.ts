@@ -213,8 +213,18 @@ export default class Mnemonic extends Vue {
     // update the original value
     this.updateParent();
 
+    // when enter key was pressed, send submit event to parent
+    if (isEnter) {
+      this.onSubmit();
+    }
+  }
+
+  /**
+   * Send submit event to parent if all words are correct.
+   */
+  onSubmit() {
     // on keypress enter trigger the submit event
-    if (isEnter && this.allWordsCorrect && this.mnemonicIntegrity) {
+    if (this.allWordsCorrect && this.mnemonicIntegrity) {
       this.$emit('submit', this.allWordsCorrect && this.mnemonicIntegrity);
     }
   }
@@ -303,6 +313,9 @@ export default class Mnemonic extends Vue {
 
     // calculate the new mnemonicText
     this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+
+    // make all words dirty, so the form validation will triggered
+    this.words.forEach((word, index) => this.setDirty(index));
 
     // update the original value
     this.updateParent();

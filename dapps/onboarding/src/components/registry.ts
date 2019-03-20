@@ -43,7 +43,7 @@ export {
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
   { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
-  { name: 'vue-recaptcha', comp: VueRecaptcha },
+  { name: 'vue-recaptcha', component: VueRecaptcha },
 ];
 
 export default componentRegistration;

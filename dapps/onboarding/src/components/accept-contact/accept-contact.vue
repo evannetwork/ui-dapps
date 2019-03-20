@@ -33,7 +33,7 @@
           v-if="!inviteeAddress"
           v-html="$t('_onboarding.signed-in.welcome-unlocked', { 'alias': alias, 'accountId': accountId })">
         </div>
-        <div class=""
+        <div class="border p-3 bg-level-3"
           v-if="inviteeAddress">
           <p v-html="$t('_onboarding.signed-in.invited', {
             'alias': alias,
@@ -57,9 +57,9 @@
           </template>
         </evan-modal>
 
-        <div class="evan-margin-top md-layout md-gutter md-alignment-center-center">
+        <div class="mt-3">
           <evan-success v-if="accepted"></evan-success>
-          <div v-if="!accepted">
+          <div class="text-center m-3" v-if="!accepted">
             <evan-loading v-if="accepting"></evan-loading>
 
             <button type="submit" class="btn btn-outline-secondary btn-rounded"
@@ -69,7 +69,7 @@
               <span>{{ '_onboarding.signed-in.go-to-evan' | translate }}</span>
             </button>
 
-            <button type="submit" class="btn btn-outline-secondary btn-rounded"
+            <button type="submit" class="btn btn-rounded btn-primary"
               v-if="!accepting && inviteeAddress"
               @click="acceptContact()">
               <span>{{ '_onboarding.signed-in.accept-contact' | translate }}</span>

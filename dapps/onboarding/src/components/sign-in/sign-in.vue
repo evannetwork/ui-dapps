@@ -59,37 +59,36 @@
           <h5 class="text-center mt-4 mb-4">
             {{ '_onboarding.sign-in.get-mnemonic-desc' | translate }}
           </h5>
-          <div class="evan-padding">
-            <evan-onboarding-mnemonic
-              :mnemonic.sync="mnemonic"
-              :valid.sync="validMnemonic"
-              v-on:submit="setMnemonic()">
-            </evan-onboarding-mnemonic>
 
-            <evan-modal ref="notOnboarded">
-              <template v-slot:header>
-                <h5 class="modal-title">
-                  {{ '_onboarding.sign-in.no-profile' | translate }}
-                </h5>
-              </template>
-              <template v-slot:body>
-                <p>{{ '_onboarding.sign-in.no-profile-desc' | translate }}</p>
-              </template>
-              <template v-slot:footer>
-                <button type="button" class="btn btn-rounded btn-primary"
-                  @click="openSignupWithMnemonic()">
-                  {{ '_onboarding.sign-up.title' | translate }}
-                </button>
-              </template>
-            </evan-modal>
-          </div>
+          <evan-onboarding-mnemonic
+            :mnemonic.sync="mnemonic"
+            :valid.sync="validMnemonic"
+            v-on:submit="setMnemonic()">
+          </evan-onboarding-mnemonic>
+
+          <evan-modal ref="notOnboarded">
+            <template v-slot:header>
+              <h5 class="modal-title">
+                {{ '_onboarding.sign-in.no-profile' | translate }}
+              </h5>
+            </template>
+            <template v-slot:body>
+              <p v-html="$t('_onboarding.sign-in.no-profile-desc')"></p>
+            </template>
+            <template v-slot:footer>
+              <button type="button" class="btn btn-rounded btn-primary"
+                @click="openSignupWithMnemonic()">
+                {{ '_onboarding.sign-in.title' | translate }}
+              </button>
+            </template>
+          </evan-modal>
 
           <div class="text-center mt-4">
             <button type="button" class="btn btn-rounded btn-primary"
               v-if="!checking"
               :disabled="!validMnemonic"
               @click="setMnemonic()">
-              {{ '_onboarding.sign-up.title' | translate }}
+              {{ '_onboarding.sign-in.title' | translate }}
             </button>
             <evan-loading v-if="checking"></evan-loading>
           </div>
@@ -125,9 +124,10 @@
         </div>
 
         <div class="step" v-if="activeStep === 2">
-          <!-- 
-          :md-label="'_onboarding.sign-in.welcome' | translate"
-          :md-description="'_onboarding.sign-in.welcome-desc' | translate" -->
+           <h5 class="text-center mt-4 mb-4">
+            {{ '_onboarding.sign-in.welcome-desc' | translate | translate }}
+          </h5>
+
           <evan-onboarding-accept-contact
             :loadAlias="true">
           </evan-onboarding-accept-contact>
@@ -142,5 +142,3 @@
   import SignIn from './sign-in.ts';
   export default SignIn;
 </script>
-
-

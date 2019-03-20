@@ -30,7 +30,7 @@
     <evan-dapp-wrapper>
       <template v-slot:content>
         <transition name="fade" mode="out-in">
-          <router-view class="child-view"></router-view>
+          <router-view></router-view>
         </transition>
       </template>
     </evan-dapp-wrapper>
