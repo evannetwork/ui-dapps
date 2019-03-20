@@ -40,6 +40,10 @@
     background-color: cssVar('bg-level-3');
   }
 
+  .bg-inverted {
+    background-color: cssVar('bg-inverted');
+  }
+
   .evan-highlight {
     cursor: pointer;
     transition: 0.3s ease-out transform;
