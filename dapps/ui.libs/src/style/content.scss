@@ -39,4 +39,21 @@
   .bg-level-3 {
     background-color: cssVar('bg-level-3');
   }
+
+  .evan-highlight {
+    cursor: pointer;
+    transition: 0.3s ease-out transform;
+
+    * {
+      transition: 0.8s ease-out color;
+    }
+
+    &:hover {
+      transform: scale(1.03);
+
+      * {
+        color: cssVar('primary') !important;
+      }
+    }
+  }
 }

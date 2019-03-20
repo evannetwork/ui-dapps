@@ -121,33 +121,38 @@ $themeEvan: map-merge(
   $themeEvan
 );
 
+
 /**
  * theme colors
  */
+$theme-colors: (
+  danger: cssVar('red'),
+  dark: #023845,
+  info: cssVar('cyan'),
+  light: cssVar('gray-200'),
+  primary: cssVar('pink'),
+  secondary: cssVar('cyan'),
+  success: cssVar('green'),
+  warning: cssVar('yellow'),
+);
+
+$themeEvan: map-merge($themeEvan, $theme-colors);
 $themeEvan: map-merge(
   (
-    danger: cssVar('red'),
     danger-darken: cssVar('red-darken'),
     danger-lighten: cssVar('red-lighten'),
-    dark: #023845,
     dark-darken: darken(#023845, 10%),
     dark-lighten: lighten(#023845, 10%),
-    info: cssVar('cyan'),
     info-darken: cssVar('cyan-darken'),
     info-lighten: cssVar('cyan-lighten'),
-    light: cssVar('gray-200'),
     light-darken: cssVar('gray-200-darken'),
     light-lighten: cssVar('gray-200-lighten'),
-    primary: cssVar('pink'),
     primary-darken: cssVar('pink-darken'),
     primary-lighten: cssVar('pink-lighten'),
-    secondary: cssVar('cyan'),
     secondary-darken: cssVar('cyan-darken'),
     secondary-lighten: cssVar('cyan-lighten'),
-    success: cssVar('green'),
     success-darken: cssVar('green-darken'),
     success-lighten: cssVar('green-lighten'),
-    warning: cssVar('yellow'),
     warning-darken: cssVar('yellow-darken'),
     warning-lighten: cssVar('yellow-lighten'),
   ),
@@ -197,6 +202,7 @@ $themeEvan: map-merge(
     bg-text-warning: cssVar('white'),
     text-color-inverted: cssVar('white'),
     text-color: cssVar('dark'),
+    text-muted: cssVar('gray-500'),
     yiq-text-dark: cssVar('text-color'),
     yiq-text-light: cssVar('text-color-inverted'),
   ),

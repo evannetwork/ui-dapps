@@ -80,31 +80,18 @@ $colors: () !default;
 $colors: map-merge(
   (
     "blue": $blue,
-    "blue-darken": $blue-darken,
     "cyan": $cyan,
-    "cyan-darken": $cyan-darken,
     "gray": $gray-600,
-    "gray-darken": $gray-600,
     "gray-dark": $gray-800,
-    "gray-dark-darken": $gray-800,
     "green": $green,
-    "green-darken": $green,
     "indigo": $indigo,
-    "indigo-darken":     $indigo,
     "orange": $orange,
-    "orange-darken": $orange,
     "pink": $pink,
-    "pink-darken": $pink,
     "purple": $purple,
-    "purple-darken": $purple,
     "red": $red,
-    "red-darken": $red,
     "teal": $teal,
-    "teal-darken": $teal,
     "white": $white,
-    "white-darken": $white,
-    "yellow": $yellow,
-    "yellow-darken": $yellow,
+    "yellow": $yellow
   ),
   $colors
 );
@@ -131,21 +118,13 @@ $theme-colors: () !default;
 $theme-colors: map-merge(
   (
     "danger": $danger,
-    "danger-darken": $danger-darken,
     "dark": $dark,
-    "dark-darken": $dark-darken,
     "info": $info,
-    "info-darken": $info-darken,
     "light": $light,
-    "light-darken": $light-darken,
     "primary": $primary,
-    "primary-darken": $primary-darken,
     "secondary": $secondary,
-    "secondary-darken":  $secondary-darken,
     "success": $success,
-    "success-darken": $success-darken,
     "warning": $warning,
-    "warning-darken": $warning-darken,
   ),
   $theme-colors
 );
@@ -400,7 +379,7 @@ $lead-font-weight:            300 !default;
 
 $small-font-size:             80% !default;
 
-$text-muted:                  $gray-600 !default;
+$text-muted:                  cssVar('text-muted') !default;
 
 $blockquote-small-color:      $gray-600 !default;
 $blockquote-small-font-size:  $small-font-size !default;

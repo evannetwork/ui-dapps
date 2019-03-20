@@ -25,8 +25,59 @@
   https://evan.network/license/
 */
 
+@import './utils';
+
 .evan {
-  .modal {
-    display: block !important;
+  .evan-steps {
+    .evan-step-header {
+      position: relative;
+
+      display: flex;
+      justify-content: space-between;
+
+      padding: 0 20px;
+
+      button {
+        z-index: 1;
+
+        background-color: cssVar('bg-level-1');
+
+        &:disabled {
+          opacity: 1;
+
+          * {
+            opacity: 0.65;
+          }
+        }
+
+        span:first-child {
+          line-height: 30px;
+
+          display: inline-block;
+
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+
+          color: #ffffff;
+          border-radius: 50%;
+        }
+      }
+
+      &:before {
+        position: absolute;
+        z-index: 0;
+        top: 50%;
+        right: 0;
+        left: 0;
+
+        height: 2px;
+        margin: auto;
+
+        content: ' ';
+
+        background-color: cssVar('border-color');
+      }
+    }
   }
 }

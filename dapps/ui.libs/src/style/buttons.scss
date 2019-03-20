@@ -29,6 +29,28 @@
 
 .evan {
   .btn {
+    // to ensure text-colors, spans, p, ... per default are set to the default text-color bootstrap
+    // does not set button inner element colors, so we do it here to overrule text-colors
+    @each $color, $value in $theme-colors {
+      &.btn-#{$color} {
+        * {
+          color: cssVar('bg-text-#{$color}');
+        }
+      }
+
+      &.btn-outline-#{$color} {
+        * {
+          color: $value;
+        }
+
+        &:hover {
+          * {
+            color: cssVar('bg-text-#{$color}');
+          }
+        }
+      }
+    }
+
     /**
      * special button types
      */
@@ -64,18 +86,9 @@
     }
 
     &.btn-secondary {
-      color: cssVar('white');
-
       &.focus, &:focus, &:hover {
         opacity: 0.8;
-        color: cssVar('white');
         background: cssVar('btn-secondary-hover');
-      }
-    }
-
-    &.btn-outline-secondary {
-      &.focus, &:focus, &:hover {
-        color: cssVar('white');
       }
     }
 
