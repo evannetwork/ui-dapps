@@ -48,22 +48,50 @@ export default class SignIn extends Vue {
   // is the current mnemonic / password is currently checking?
   checking = false;
 
-  // current password input
-  password = window.localStorage['evan-test-password'] || '';
-
-  // check if the inserted password is wrong
-  invalidPassword = false;
+  /**
+   * formular specific variables
+   */
+  form = {
+    /**
+     * current password input
+     */
+    password: {
+      value: window.localStorage['evan-test-password'] || '',
+      valid: false,
+      touched: false,
+      ref: null as any
+    },
+  };
 
   // when the mnemonic is valid, set the accountId
   accountId = null as any;
 
-  // steps status configurations
-  steps = {
-    active: 'mnemonic',
-    mnemonic: false,
-    password: false,
-    signedIn: false
-  };
+  /**
+   * Available steps represented by it's titles
+   */
+  steps = [
+    '_onboarding.sign-in.get-mnemonic',
+    '_onboarding.sign-in.get-password',
+  ];
+
+  /**
+   * steps status configurations
+   */
+  activeStep = 0;
+
+  /**
+   * all steps that were already solved, so the stepper can jump back again
+   */
+  activeSteps: Array<number> = [ 0 ];
+
+  /**
+   * Checks if the user was invited, so enable the 3 tab
+   */
+  created() {
+    if (this.$route.query.inviteeAlias) {
+      this.steps.push('_onboarding.sign-in.welcome');
+    }
+  }
 
   /**
    * Uses the current mnemonic value and checks, if a profile exists. If yes, navigates to
@@ -81,12 +109,12 @@ export default class SignIn extends Vue {
 
     // when it's onboarded, navigte to password dialog
     if (!this.notOnboarded) {
-      this.steps.mnemonic = true;
-      this.steps.active = 'password';
+      this.activeStep = 1;
+      this.activeSteps.push(1);
       this.accountId = accountId;
 
       // set autofocus on password input
-      this.$nextTick(() => (this.$refs['password'] as any).$el.focus());
+      this.$nextTick(() => (this.$refs['password'] as any).focus());
     }
 
     this.checking = false;
@@ -96,28 +124,30 @@ export default class SignIn extends Vue {
    * Check the current password input.
    */
   async checkPassword() {
-    if (this.password.length > 7) {
+    const password = this.form.password;
+
+    if (password.value.length > 7) {
       this.checking = true;
 
       // get the current account id
       try {
-        this.invalidPassword = !(await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
-          this.accountId, this.password));
+        password.valid = await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
+          this.accountId, password.value);
       } catch (ex) {
-        this.invalidPassword = true;
+        password.valid = false;
       }
 
       // if the password is correct, create the correct active vault in dapp-browser, so other
       // applications can access it
-      if (!this.invalidPassword) {
-        await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, this.password);
+      if (password.valid) {
+        await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
         dappBrowser.core.setCurrentProvider('internal');
 
         if (!this.$route.query.inviteeAlias) {
           this.navigateToEvan();
         } else {
-          this.steps.password = true;
-          this.steps.active = 'signedIn';
+          this.activeStep = 2;
+          this.activeSteps.push(2);
         }
       }
 

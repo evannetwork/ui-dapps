@@ -26,82 +26,30 @@
 */
 
 <template>
-  <div>
-    <div class="md-layout md-alignment-center-center">
-      <img class="logo-header" :src="$store.state.uiLibBaseUrl + '/assets/evan-logo.svg'">
+  <div class="p-3">
+    <div class="mt-5 mb-3 text-center">
+      <br>
+      <p class="text-secondary font-weight-bold">{{ '_evan.welcome-to-evan' | translate }}</p>
+      <h3>{{ '_onboarding.please-login-signup' | translate }}</h3>
+      <br>
     </div>
-    <div class="md-layout md-gutter md-alignment-center-center">
-      <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
-        <md-card>
-          <md-card-header>
-            <md-card-header-text>
-              <div class="md-title">{{ '_onboarding.sign-up.title' | translate }}</div>
-              <div class="md-subhead">{{ '_onboarding.sign-up.desc' | translate }}</div>
-            </md-card-header-text>
+    <div class="d-md-flex container justify-content-center">
+      <div class="
+          col-md-6 col-lg-5 col-xl-4
+          m-md-3 mb-3 p-4
+          text-center
+          bg-level-1 border evan-highlight"
+        v-for="(type, index) in [ 'sign-in', 'sign-up' ]"
+        v-on:click="$router.push({ name: type, query: $route.query })">
+        <img class="img-fluid col-6"
+          :src="$store.state.onboardingBaseUrl + `/assets/${ type }.png`">
 
-            <md-card-media md-big>
-              <img :src="$store.state.onboardingBaseUrl + '/assets/sign-up.png'">
-            </md-card-media>
-          </md-card-header>
-
-          <md-card-expand>
-            <md-card-actions md-alignment="space-between">
-              <md-card-expand-trigger>
-                <md-button class="md-icon-button">
-                  <md-icon>keyboard_arrow_down</md-icon>
-                </md-button>
-              </md-card-expand-trigger>
-              <div>
-                <md-button
-                  v-on:click="$router.push({ name: 'sign-up', query: $route.query })">
-                  {{ '_onboarding.continue' | translate }}
-                </md-button>
-              </div>
-            </md-card-actions>
-
-            <md-card-expand-content>
-              <md-card-content>
-                {{ '_onboarding.sign-up.desc-long' | translate }}
-              </md-card-content>
-            </md-card-expand-content>
-          </md-card-expand>
-        </md-card>
-      </div>
-      <div class="md-layout-item md-size-30 md-medium-size-40 md-small-size-100">
-        <md-card>
-          <md-card-header>
-            <md-card-header-text>
-              <div class="md-title">{{ '_onboarding.sign-in.title' | translate }}</div>
-              <div class="md-subhead">{{ '_onboarding.sign-in.desc' | translate }}</div>
-            </md-card-header-text>
-
-            <md-card-media md-big>
-              <img :src="$store.state.onboardingBaseUrl + '/assets/sign-in.png'" alt="People">
-            </md-card-media>
-          </md-card-header>
-
-          <md-card-expand>
-            <md-card-actions md-alignment="space-between">
-              <md-card-expand-trigger>
-                <md-button class="md-icon-button">
-                  <md-icon>keyboard_arrow_down</md-icon>
-                </md-button>
-              </md-card-expand-trigger>
-              <div>
-                <md-button
-                  v-on:click="$router.push({ name: 'sign-in', query: $route.query })">
-                  {{ '_onboarding.continue' | translate }}
-                </md-button>
-              </div>
-            </md-card-actions>
-
-            <md-card-expand-content>
-              <md-card-content>
-                {{ '_onboarding.sign-in.desc-long' | translate }}
-              </md-card-content>
-            </md-card-expand-content>
-          </md-card-expand>
-        </md-card>
+        <h3>
+          {{ `_onboarding.${ type }.title` | translate }}
+        </h3>
+        <small class="text-muted">
+          {{ `_onboarding.${ type }.desc` | translate }}
+        </small>
       </div>
     </div>
   </div>
@@ -111,4 +59,3 @@
   import Welcome from './welcome.ts';
   export default Welcome;
 </script>
-

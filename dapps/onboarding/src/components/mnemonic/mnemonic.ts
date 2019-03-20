@@ -39,27 +39,43 @@ export default class Mnemonic extends Vue {
   /**
    * incoming mnemonic, if empty, input will automatically enabled
    */
-  @Prop({ }) mnemonic = '';
+  @Prop({
+    type: String,
+    default: function() {
+      return '';
+    }
+  }) mnemonic;
 
   /**
    * should everything be disabled?
    */
-  @Prop({ }) disabled = '';
+  @Prop({
+    type: Boolean,
+    default: function() {
+      return false;
+    }
+  }) disabled;
 
   /**
    * words, textarea
    */
   @Prop({
+    type: String,
     default: function() {
       return 'words';
     }
-  }) mode = '';
+  }) mode;
 
   // initial words
-  initial = [ ] as Array<string>;
+  initial: Array<string> = [ ];
 
   // current mnemonic splitted
-  words = [ ] as Array<string>;
+  words: Array<string> = [ ];
+
+  /**
+   * Which words were adjusted?
+   */
+  dirtyWords: Array<boolean> = [ ];
 
   // all words concadinated into a single string, so we can insert the mnemonic also using
   // textarea
@@ -204,17 +220,6 @@ export default class Mnemonic extends Vue {
   }
 
   /**
-   * Initially selected autocompletion fix.
-   *
-   * @param      {number}  index   the active index of the mnemonic word
-   */
-  autocompleteOpened(index) {
-    (this.$refs[`mnemonicInput${ index }`] as any)[0].$el.click();
-
-    this.wordInputChanged(index);
-  }
-
-  /**
    * When an autocompletion input gets selected or changed, prefilter the mnemonic words, so the
    * browser wont die.
    *
@@ -245,6 +250,7 @@ export default class Mnemonic extends Vue {
       } else if ((this.initial[index] && this.initial[index] === this.words[index]) ||
         (!this.initial[index] && this.isCorrectWord(index))) {
         this.correctWords[index] = true;
+        this.dirtyWords[index] = true;
       // set new list of suggestions
       } else {
         this.correctWords[index] = false;
@@ -259,16 +265,14 @@ export default class Mnemonic extends Vue {
    * Set the focus for initial inputs.
    */
   setInputFocus() {
-    this.$nextTick(() => {
+    setTimeout(() => {
       if (this.useTextArea) {
-        (this.$refs['mnemonicInput0'] as any).$el.focus();
+        (this.$refs['mnemonicInput0'] as any).focus();
       } else {
         // select the first uncorrect word input
         for (let i = 0; i < 12; i++) {
           if (!this.correctWords[i]) {
-            return (this.$refs[`mnemonicInput${ i }`] as any)[0]
-              .$el.querySelectorAll('input')[0]
-              .focus();
+            return (this.$refs[`mnemonicInput${ i }`][0] as any).focus();
           }
         }
       }
@@ -314,6 +318,10 @@ export default class Mnemonic extends Vue {
     this.mnemonicText = this.initial.join(' ');
     this.riddelStarted = false;
     this.textAreaChanged(false);
+  }
+
+  setDirty(index) {
+    this.dirtyWords[index] = true
   }
 }
 

@@ -32,17 +32,19 @@ export default {
     "continue": "Fortfahren",
     "free-input": "Freie Eingabe",
     "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungs-Schlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
+    "invalid-mnemonic-word": "Dies ist kein korrektes Wort für einen Wiederherstellungschlüssel!",
     "mail-invitation-accepted": {
       "body": "Guten Tag, <br>der Benutzer mit der Email Adresse {userEmail} hat Ihre Einladung in das evan.network angenommen und ist nun verfügbar unter dem Namen: {{ userAlias }}.<br><br> Ihr evan.network Team",
       "subject": "Nutzer hat Ihre Anfrage angenommen",
       "title": "Einladung angenommen"
     },
     "mnemonic-word": "{index}. Word",
+    "mnemonic-words": "12 Wörter",
     "password": "Passwort",
+    "please-login-signup": "Nutzen Sie ein bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
     "sign-in": {
       "decrypt": "entschlüsseln",
       "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
-      "desc-long": "Nutzen Sie Ihren Wiederherstellungs-Schlüssel um Ihre bestehende Identität wiederherzustellen. Alle Daten, Kontakte und Verträge werden Sie dort vorfinden, wo Sie sie zurück gelassen haben.",
       "get-mnemonic": "Wiederherstellungs-Schlüssel",
       "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.",
       "get-password": "Identität entschlüsseln",
@@ -58,6 +60,7 @@ export default {
       "agree": "Akzeptieren",
       "cancel-riddle": "abbrechen",
       "create-profile": {
+        "creation-time": "ca. {creationTime} / 30 Sekunden",
         "desc": "Bestätigen Sie die Nutzungsbedingen und erstellen Sie Ihr Profil.",
         "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha Abfrage, um den Prozess abzuschließen.",
         "status-1": "Erstellung des Identitätsvertrages...",
@@ -65,8 +68,7 @@ export default {
         "status-3": "Erstellung Mailbox, Addressbuch, ...",
         "status-4": "Erstellung der Verifizierungsverwaltung...",
         "status-5": "Identität wurde erfolgreich erstellt...",
-        "title": "Identität erstellen",
-        "creation-time": "ca. {creationTime} / 30 Sekunden"
+        "title": "Identität erstellen"
       },
       "desc": "Erstellen Sie Ihre evan.network Identität",
       "desc-long": "Generieren Sie ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungs-Schlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",

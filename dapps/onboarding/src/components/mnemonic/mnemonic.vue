@@ -27,51 +27,55 @@
 
 <template>
   <div>
-    <div class="md-layout md-gutter md-alignment-space-between-center"
+    <form
       v-if="!useTextArea">
-      <div class="md-layout-item md-size-50"
-        v-for="(word, index) in words">
-        <md-autocomplete
-          md-dense
-          md-layout="box"
-          v-model="words[index]"
-          :class="{ 'correct-word': correctWords[index] }"
-          :disabled="$props.disabled && !riddelStarted"
-          :md-input-id="'mnemonicInput' + index"
-          :md-options="mnemonicWords[index]"
-          :ref="'mnemonicInput' + index"
-          @md-changed="wordInputChanged(index)"
-          @md-opened="autocompleteOpened(index)"
-          @md-selected="setInputFocus()">
-          <label>{{ $t('_onboarding.mnemonic-word', {'index': index + 1}) }}</label>
-        </md-autocomplete>
+      <div class="form-row">
+        <div class="form-group col-md-6"
+          v-for="(word, index) in words">
+          <input class="form-control" required
+            :id="'mnemonicInput' + index" :ref="'mnemonicInput' + index"
+            :placeholder="$t('_onboarding.mnemonic-word', {'index': index + 1})"
+            :class="{
+              'is-invalid': dirtyWords[index] && !correctWords[index],
+              'is-valid': dirtyWords[index] && correctWords[index]
+            }"
+            :disabled="$props.disabled && !riddelStarted"
+            v-model="words[index]"
+            @input="wordInputChanged(index)"
+            @focus="wordInputChanged(index);"
+            @blur="setDirty(index)">
+          <div class="invalid-feedback" v-if="dirtyWords[index] && !correctWords[index]">
+            {{ '_onboarding.invalid-mnemonic-word' | translate }}
+          </div>
+        </div>
       </div>
-    </div>
-    <div v-if="useTextArea">
-      <md-field>
-        <label>{{ '_onboarding.sign-in.get-mnemonic' | translate }}</label>
-        <md-input
-          :disabled="$props.disabled && !riddelStarted"
+    </form>
+    <form v-if="useTextArea">
+      <div class="form-group">
+        <label for="mnemonicInput0">
+          {{ '_onboarding.sign-in.get-mnemonic' | translate }}
+        </label>
+        <input class="form-control" required
           ref="mnemonicInput0"
+          :disabled="$props.disabled && !riddelStarted"
           v-model="mnemonicText"
           @keyup.enter.native="textAreaChanged(true)"
           @input="textAreaChanged()">
-        </md-input>
-      </md-field>
-    </div>
-    <div class="md-layout md-gutter md-alignment-space-between-center"
-      v-if="allWordsCorrect && !mnemonicIntegrity">
-      <span class="md-error">
-        {{ '_onboarding.invalid-mnemonic-integrity' | translate }}
-      </span>
-    </div>
-    <div class="md-layout md-gutter md-alignment-space-between-center"
-      v-if="!riddelStarted">
-      <md-switch class="md-primary"
-        v-model="useTextArea"
-        v-on:change="setInputFocus()">
-        {{ '_onboarding.free-input' | translate }}
-      </md-switch>
+        <div class="invalid-feedback" v-if="allWordsCorrect && !mnemonicIntegrity">
+          {{ '_onboarding.invalid-mnemonic-word' | translate }}
+        </div>
+      </div>
+    </form>
+    <div class="text-center d-block" v-if="!riddelStarted">
+      <div class="custom-control custom-switch mt-2">
+        <input type="checkbox" id="useTextArea"
+          class="custom-control-input"
+          v-model="useTextArea"
+          @input="setInputFocus()">
+        <label class="custom-control-label text-muted" for="useTextArea">
+          {{ '_onboarding.free-input' | translate }}
+        </label>
+      </div>
     </div>
   </div>
 </template>

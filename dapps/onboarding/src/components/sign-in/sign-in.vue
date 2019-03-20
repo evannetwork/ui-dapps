@@ -26,21 +26,39 @@
 */
 
 <template>
-  <div class="evan-onboarding-sigin md-layout md-gutter md-alignment-center-center">
-    <div class="md-layout-item md-size-60 md-medium-size-80 md-small-size-100">
-      <md-toolbar class="md-accent" md-elevation="0">
-        <md-button class="md-icon-button" 
-          v-on:click="$router.push({ name: 'welcome', query: $route.query })">
-          <md-icon>chevron_left</md-icon>
-        </md-button>
-        <h3>{{ '_onboarding.sign-in.title' | translate }}</h3>
-      </md-toolbar>
-      <md-steppers :md-active-step.sync="steps.active" md-vertical md-linear>
-        <md-step id="mnemonic"
-          :md-done.sync="steps.mnemonic"
-          :md-editable="true"
-          :md-label="'_onboarding.sign-in.get-mnemonic' | translate"
-          :md-description="'_onboarding.sign-in.get-mnemonic-desc' | translate">
+  <div class="
+      container mx-auto m-5 p-0
+      border bg-level-1">
+    <div class="d-flex p-2 align-items-center">
+      <button class="btn btn-lg"
+        @click="$router.push({ name: 'welcome', query: $route.query })">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <h4 class="m-0 ml-3">{{ '_onboarding.sign-in.title' | translate }}</h4>
+    </div>
+
+    <div class="evan-steps border-top p-3">
+      <div class="evan-step-header">
+        <button class="btn"
+          v-for="(step, index) of steps"
+          :disabled="index !== activeStep && activeSteps.indexOf(index) === -1"
+          @click="activeStep = index">
+          <span class="stepper-circle"
+            :class="{
+              'bg-primary': activeStep === index,
+              'bg-secondary': activeStep !== index,
+            }">
+            {{ index + 1}}
+          </span>
+          <span>{{ step | translate }}</span>
+        </button>
+      </div>
+      <div class="pt-3 pb-3">
+        <div class="step" v-if="activeStep === 0">
+          <h5 class="text-center mt-4 mb-4">
+            {{ '_onboarding.sign-in.get-mnemonic-desc' | translate }}
+          </h5>
           <div class="evan-padding">
             <evan-onboarding-mnemonic
               :mnemonic.sync="mnemonic"
@@ -48,83 +66,73 @@
               v-on:submit="setMnemonic()">
             </evan-onboarding-mnemonic>
 
-            <md-dialog-confirm
-              :md-active.sync="notOnboarded"
-              :md-title="'_onboarding.sign-in.no-profile' | translate"
-              :div="'_onboarding.sign-in.no-profile-desc' | translate"
-              :md-confirm-text="'_onboarding.close' | translate"
-              :md-cancel-text="'_onboarding.sign-up.title' | translate"
-              @md-cancel="openSignupWithMnemonic()"
-              @md-confirm="notOnboarded = false">
-            </md-dialog-confirm>
+            <evan-modal ref="notOnboarded">
+              <template v-slot:header>
+                <h5 class="modal-title">
+                  {{ '_onboarding.sign-in.no-profile' | translate }}
+                </h5>
+              </template>
+              <template v-slot:body>
+                <p>{{ '_onboarding.sign-in.no-profile-desc' | translate }}</p>
+              </template>
+              <template v-slot:footer>
+                <button type="button" class="btn btn-rounded btn-primary"
+                  @click="openSignupWithMnemonic()">
+                  {{ '_onboarding.sign-up.title' | translate }}
+                </button>
+              </template>
+            </evan-modal>
           </div>
 
-          <div class="md-layout md-gutter md-alignment-center-center evan-margin-top">
-            <md-button class="md-raised evan-round evan-primary"
+          <div class="text-center mt-4">
+            <button type="button" class="btn btn-rounded btn-primary"
               v-if="!checking"
               :disabled="!validMnemonic"
               @click="setMnemonic()">
-              {{ '_onboarding.continue' | translate }}
-            </md-button>
-            <md-progress-spinner
-              v-if="checking"
-              :md-diameter="30"
-              :md-stroke="3"
-              md-mode="indeterminate">
-            </md-progress-spinner>
+              {{ '_onboarding.sign-up.title' | translate }}
+            </button>
+            <evan-loading v-if="checking"></evan-loading>
           </div>
-        </md-step>
+        </div>
 
-        <md-step id="password"
-          :md-done.sync="steps.password"
-          :md-editable="false"
-          :md-label="'_onboarding.sign-in.get-password' | translate"
-          :md-description="'_onboarding.sign-in.get-password-desc' | translate">
-          <div class="evan-padding">
-            <md-field>
-              <label>{{ '_onboarding.password' | translate }}</label>
-              <md-input type="password" ref="password"
-                v-model="password"
-                @keyup.enter.native="checkPassword()">
-              </md-input>
-            </md-field>
-
-            <div class="md-layout md-gutter md-alignment-space-between-center"
-              v-if="invalidPassword">
-              <span class="md-error">
-                {{ '_onboarding.sign-in.invalid-password' | translate }}
-              </span>
+        <div class="step" v-if="activeStep === 1">
+          <h5 class="text-center mt-4 mb-4">
+            {{ '_onboarding.sign-in.get-password-desc' | translate }}
+          </h5>
+          <form class="p-4" v-on:submit.prevent="checkPassword">
+            <div class="form-group">
+              <label for="password">{{ '_evan.password' | translate }}</label>
+              <input class="form-control" type="password" required
+                id="password" ref="password"
+                :placeholder="'_evan.password-placeholder' | translate"
+                v-model="form.password.value"
+                v-bind:class="{ 'is-invalid' : form.password.touched && !form.password.valid }">
+              <div class="invalid-feedback">
+                {{ '_evan.invalid-password' | translate }}
+              </div>
             </div>
-          </div>
 
-          <div class="md-layout md-gutter md-alignment-center-center evan-margin-top">
-            <md-button class="md-raised evan-round evan-primary"
-              v-if="!checking"
-              :disabled="password.length < 8"
-              @click="checkPassword()">
-              {{ '_onboarding.sign-in.decrypt' | translate }}
-            </md-button>
-            <md-progress-spinner
-              v-if="checking"
-              :md-diameter="30"
-              :md-stroke="3"
-              md-mode="indeterminate">
-            </md-progress-spinner>
-          </div>
-        </md-step>
+            <div class="text-center">
+              <button type="submit" class="btn btn-rounded btn-primary"
+                :disabled="form.password.value.length < 8 || checking">
+                <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"
+                  v-if="checking">
+                </span>
+                {{ '_evan.use-password' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
 
-        <md-step id="signedIn"
-          v-if="$route.query.inviteeAlias"
-          :md-done.sync="steps.signedIn"
-          :md-editable="false"
+        <div class="step" v-if="activeStep === 2">
+          <!-- 
           :md-label="'_onboarding.sign-in.welcome' | translate"
-          :md-description="'_onboarding.sign-in.welcome-desc' | translate">
+          :md-description="'_onboarding.sign-in.welcome-desc' | translate" -->
           <evan-onboarding-accept-contact
-            :loadAlias="true"
-            v-if="steps.active === 'signedIn'">
+            :loadAlias="true">
           </evan-onboarding-accept-contact>
-        </md-step>
-      </md-steppers>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="evan-vue-onboarding evan theme-evan">
+  <div class="evan theme-evan bg-level-3 h-100 w-100 d-block">
     <evan-dapp-wrapper :createRuntime="false">
       <template v-slot:content>
         <transition name="fade" mode="out-in">

@@ -32,12 +32,14 @@ export default {
     "continue": "Continue",
     "free-input": "Free input",
     "invalid-mnemonic-integrity": "The composition of the words in your recovery key is incorrect. Please check your input.",
+    "invalid-mnemonic-word": "This is not a correct word for a recovery key!",
     "mail-invitation-accepted": {
       "body": "Hello, <br>the user with the email address {userEmail} accepted your invitation to the evan.network and is now available under that name: {userAlias}.<br><br> Your evan.network Team",
       "subject": "User has accepted your request",
       "title": "Invitation accepted"
     },
     "mnemonic-word": "{index}. Word",
+    "mnemonic-words": "12 Wörter",
     "password": "Password",
     "password-match-repeat": "Your password must match the second entry.",
     "password-min-characters": "Your password must be at least 8 characters long",
@@ -45,10 +47,10 @@ export default {
     "password-one-digest-needed": "Your password must contain at least one number",
     "password-one-uppercase-character": "Your password must contain at least one capital letter",
     "password-repeat": "Password repetition",
+    "please-login-signup": "Use an existing identity or create a new one to continue.",
     "sign-in": {
       "decrypt": "Decrypt",
       "desc": "Restore an existing evan.network Identity on this device",
-      "desc-long": "Use your recovery key to restore your existing Identity. You will find all your data, contacts and contracts where you left them.",
       "get-mnemonic": "Recovery Key",
       "get-mnemonic-desc": "Please enter the 12 words you received during sign up.",
       "get-password": "Decrypt Identity",
@@ -64,6 +66,7 @@ export default {
       "agree": "Agree",
       "cancel-riddle": "cancel",
       "create-profile": {
+        "creation-time": "about {creationTime} / 30 seconds",
         "desc": "Accept terms of use and create the identity",
         "long": "All data for the creation of your evan.network identity has been recorded. Please confirm the terms of use via the captcha query to complete the process.",
         "status-1": "Creating identity contract...",
@@ -71,17 +74,16 @@ export default {
         "status-3": "Creating mailbox, address book, ...",
         "status-4": "Setting up verification management...",
         "status-5": "Identity was successfully created...",
-        "title": "Create identity",
-        "creation-time": "about {creationTime} / 30 seconds"
+        "title": "Create identity"
       },
       "desc": "Create your evan.network Identity",
       "desc-long": "Generate your secure and independent Identity on the evan.network. With the help of this Identity, you can interact with business partners, contracts and companies. You can restore your identity on another device at any time using your generated recovery key and continue working.",
       "errors": {
-        "password-one-uppercase-character": "Your password must contain at least one capital letter!",
         "password-match-repeat": "Your password must match the previous one!",
         "password-min-characters": "Your password must be at least 8 characters long!",
         "password-one-character": "Your password must contain at least one lette!r",
         "password-one-digest-needed": "Your password must contain at least one number!",
+        "password-one-uppercase-character": "Your password must contain at least one capital letter!",
         "user-name": "Please enter a user name!"
       },
       "get-mnemonic": "Recovery Key",

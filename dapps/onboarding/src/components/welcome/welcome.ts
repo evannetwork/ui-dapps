@@ -35,8 +35,4 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class Welcome extends Vue {
-  created() {
-    console.log(this.$store);
-  }
-}
+export default class Welcome extends Vue { }
