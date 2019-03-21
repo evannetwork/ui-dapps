@@ -46,14 +46,16 @@
 
   .evan-highlight {
     cursor: pointer;
-    transition: 0.3s ease-out transform;
+    transition: 0.3s ease-out border;
 
     * {
       transition: 0.8s ease-out color;
     }
 
     &:hover {
-      transform: scale(1.03);
+      &.border {
+        border: 2px solid cssVar('primary') !important;
+      }
 
       * {
         color: cssVar('primary') !important;
