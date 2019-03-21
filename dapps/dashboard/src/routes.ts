@@ -25,10 +25,46 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface, DAppLoader, EvanIframe } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+import OverviewComponent from './components/overview/overview.vue';
+import ExplanationComponent from './components/explanation/explanation.vue';
+import FaqComponent from './components/faq/faq.vue';
+import DocumentationComponent from './components/documentation/documentation.vue';
 
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  {
+    path: 'documentation',
+    component: DocumentationComponent,
+    children: [
+      {
+        path: '',
+        redirect: { path: 'github' }
+      },
+      {
+        name: 'dashboard-docs-github',
+        path: 'github',
+        component: EvanIframe,
+        props: { src: 'https://evannetwork.github.io' }
+      },
+      {
+        name: 'dashboard-docs-bccdocs',
+        path: `bccdocs.${ dappBrowser.getDomainName() }`,
+        component: DAppLoader
+      },
+      {
+        name: 'dashboard-docs-uidocs',
+        path: `uidocs.${ dappBrowser.getDomainName() }`,
+        component: DAppLoader
+      },
+    ]
+  },
+  { path: 'explanations', component: ExplanationComponent },
+  { path: 'faq', component: FaqComponent },
+  { path: '', component: OverviewComponent },
+];
 
 export default routeRegistration;
 

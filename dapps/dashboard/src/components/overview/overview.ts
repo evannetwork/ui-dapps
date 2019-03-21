@@ -35,9 +35,22 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class DashboardRootComponent extends Vue {
-  bottomRoutes = [
-    { title: `_dashboard.documentation`, path: `documentation`, icon: 'fas fa-book text-secondary' },
-    { title: `_dashboard.faq`, path: `faq`, icon: 'fas fa-question text-primary' },
+export default class OverviewComponent extends Vue {
+  dashboardEntries: Array<any> = [
+    {
+      title: 'explanations',
+      icon: 'fas fa-info p-4 xxxl',
+      path: 'explanations',
+    },
+    {
+      title: 'identities',
+      icon: 'fas fa-fingerprint text-secondary p-4 xxxl',
+      path: `identities.${ dappBrowser.getDomainName() }`,
+    },
+    {
+      title: 'contacts',
+      icon: 'fas fa-address-book text-info p-4 xxxl',
+      path: `addressbook.${ dappBrowser.getDomainName() }`,
+    },
   ];
 }

@@ -8,7 +8,6 @@
       },
       "entrypoint": "onboarding.js",
       "files": [
-        "onboarding.css",
         "onboarding.js"
       ],
       "origin": "QmNQmyAnUaPRFQ5Lq5BuR92agHPFnppV462UKWGg19QBaz",

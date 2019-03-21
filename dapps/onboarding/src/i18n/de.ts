@@ -43,7 +43,7 @@ export default {
     "password": "Passwort",
     "please-login-signup": "Nutzen Sie ein bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
     "sign-in": {
-      "decrypt": "entschlüsseln",
+      "decrypt": "Entschlüsseln",
       "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
       "get-mnemonic": "Wiederherstellungs-Schlüssel",
       "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.",
@@ -58,7 +58,7 @@ export default {
     },
     "sign-up": {
       "agree": "Akzeptieren",
-      "cancel-riddle": "abbrechen",
+      "cancel-riddle": "Abbrechen",
       "create-profile": {
         "creation-time": "ca. {creationTime} / 30 Sekunden",
         "desc": "Bestätigen Sie die Nutzungsbedingen und erstellen Sie Ihr Profil.",

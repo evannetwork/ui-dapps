@@ -35,9 +35,13 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class DashboardRootComponent extends Vue {
-  bottomRoutes = [
-    { title: `_dashboard.documentation`, path: `documentation`, icon: 'fas fa-book text-secondary' },
-    { title: `_dashboard.faq`, path: `faq`, icon: 'fas fa-question text-primary' },
-  ];
+export default class FaqComponent extends Vue {
+  /**
+   * show loading indicator
+   */
+  loading = true;
+
+  created() {
+    setTimeout(() => this.loading = false, 1000);
+  }
 }

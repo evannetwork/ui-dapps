@@ -64,7 +64,7 @@ export default {
     },
     "sign-up": {
       "agree": "Agree",
-      "cancel-riddle": "cancel",
+      "cancel-riddle": "Cancel",
       "create-profile": {
         "creation-time": "about {creationTime} / 30 seconds",
         "desc": "Accept terms of use and create the identity",

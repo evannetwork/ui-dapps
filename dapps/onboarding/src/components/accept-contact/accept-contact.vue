@@ -81,6 +81,15 @@
         v-if="notLoadedButSignedIn"
         v-html="$t('_onboarding.signed-in.welcome-signed-in', { 'accountId': accountId })">
       </div>
+
+      <div class="mt-3 text-center">
+        <button type="submit" class="btn btn-outline-secondary btn-rounded"
+          v-if="!accepting"
+          :class="inviteeAddress ? 'evan-button evan-cancel' : ''"
+          @click="navigateToEvan()">
+          <span>{{ '_onboarding.signed-in.go-to-evan' | translate }}</span>
+        </button>
+      </div>
     </template>
 
     <evan-loading v-if="loading"></evan-loading>

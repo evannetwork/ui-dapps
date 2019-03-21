@@ -25,19 +25,36 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div>
+    <div class="mt-5 mb-3 text-center">
+      <br>
+      <p class="text-secondary font-weight-bold">{{ '_evan.welcome-to-evan' | translate }}</p>
+      <h3>{{ '_dashboard.startup' | translate }}</h3>
+      <br>
+    </div>
+    <div class="d-md-flex container flex-wrap justify-content-center">
+      <div class="
+          p-3 col-md-5 col-lg-4 col-xl-3
+          m-md-3 mb-3 p-4
+          text-center
+          bg-level-1 border evan-highlight"
+        v-for="(type, index) in dashboardEntries"
+        v-on:click="$router.push({ path: `${ $store.state.routeBaseHash }/${ type.path }` })">
+        <i :class="type.icon"></i>
 
-// evan.network imports
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+        <h3>
+          {{ `_dashboard.overview.${ type.title }.title` | translate }}
+        </h3>
+        <small class="text-muted">
+          {{ `_dashboard.overview.${ type.title }.desc` | translate }}
+        </small>
+      </div>
+    </div>
+  </div>
+</template>
 
-@Component({ })
-export default class DashboardRootComponent extends Vue {
-  bottomRoutes = [
-    { title: `_dashboard.documentation`, path: `documentation`, icon: 'fas fa-book text-secondary' },
-    { title: `_dashboard.faq`, path: `faq`, icon: 'fas fa-question text-primary' },
-  ];
-}
+<script lang="ts">
+  import OverviewComponent from './overview.ts';
+  export default OverviewComponent;
+</script>

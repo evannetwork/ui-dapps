@@ -27,7 +27,8 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dapp-wrapper>
+    <evan-dapp-wrapper
+      :bottomRoutes="bottomRoutes">
       <template v-slot:content>
         <transition name="fade" mode="out-in">
           <router-view></router-view>

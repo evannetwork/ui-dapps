@@ -28,6 +28,28 @@
 /* tslint:disable */
 export default {
   "_dashboard": {
+    "docs": {
+      "bcc": "Blockchain",
+      "github": "Wiki",
+      "ui": "UI"
+    },
+    "documentation": "Documentation",
+    "faq": "FAQ",
+    "overview": {
+      "contacts": {
+        "desc": "Get in touch with your business partners",
+        "title": "My contacts"
+      },
+      "explanations": {
+        "desc": "What is the evan.network and what can I do with it?",
+        "title": "How does evan work?"
+      },
+      "identities": {
+        "desc": "Manage and share your identities",
+        "title": "My identities"
+      }
+    },
+    "startup": "What would you like to start with?"
   }
-};
+}
 /* tslint:enable */

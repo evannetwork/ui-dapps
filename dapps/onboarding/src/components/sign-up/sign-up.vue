@@ -33,6 +33,7 @@
     <template v-if="!loading">
       <div class="d-flex p-2 align-items-center">
         <button class="btn btn-lg"
+          v-if="!creatingProfile"
           @click="$router.push({ name: 'welcome', query: $route.query })">
           <i class="fas fa-chevron-left"></i>
         </button>

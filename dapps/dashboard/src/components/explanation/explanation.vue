@@ -25,19 +25,13 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div class="h-100 w-100 overflow-hidden">
+    <evan-iframe src="https://evan.network"></evan-iframe>
+  </div>
+</template>
 
-// evan.network imports
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-@Component({ })
-export default class DashboardRootComponent extends Vue {
-  bottomRoutes = [
-    { title: `_dashboard.documentation`, path: `documentation`, icon: 'fas fa-book text-secondary' },
-    { title: `_dashboard.faq`, path: `faq`, icon: 'fas fa-question text-primary' },
-  ];
-}
+<script lang="ts">
+  import ExplanationComponent from './explanation.ts';
+  export default ExplanationComponent;
+</script>
