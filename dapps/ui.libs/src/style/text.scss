@@ -25,27 +25,38 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+@import './utils';
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
+.evan {
+  .bg-text-danger {
+    color: cssVar('bg-text-danger');
+  }
 
-/**
- * load evan specific styles
- */
-@import './style/buttons';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/forms';
-@import './style/icons';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/text';
-@import './style/transitions';
+  .bg-text-dark {
+    color: cssVar('bg-text-dark');
+  }
+
+  .bg-text-info {
+    color: cssVar('bg-text-info');
+  }
+
+  .bg-text-light {
+    color: cssVar('bg-text-light');
+  }
+
+  .bg-text-primary {
+    color: cssVar('bg-text-primary');
+  }
+
+  .bg-text-secondary {
+    color: cssVar('bg-text-secondary');
+  }
+
+  .bg-text-success {
+    color: cssVar('bg-text-v');
+  }
+
+  .bg-text-warning {
+    color: cssVar('bg-text-warning');
+  }
+}

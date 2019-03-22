@@ -25,27 +25,12 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+.evan {
+  .bg-transition {
+    transition: 0.3s ease-out background-color;
+  }
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
-
-/**
- * load evan specific styles
- */
-@import './style/buttons';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/forms';
-@import './style/icons';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/text';
-@import './style/transitions';
+  .all-transition {
+    transition: 0.3s ease-out all;
+  }
+}
