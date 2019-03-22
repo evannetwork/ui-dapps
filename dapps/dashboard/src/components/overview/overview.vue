@@ -40,7 +40,7 @@
           text-center
           bg-level-1 border evan-highlight"
         v-for="(type, index) in dashboardEntries"
-        v-on:click="$router.push({ path: `${ $store.state.routeBaseHash }/${ type.path }` })">
+        v-on:click="$router.push({ path: `${ activeDApp().baseHash }/${ type.path }` })">
         <i :class="type.icon"></i>
 
         <h3>
