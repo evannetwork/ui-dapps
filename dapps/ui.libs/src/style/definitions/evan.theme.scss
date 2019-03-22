@@ -182,7 +182,8 @@ $themeEvan: map-merge(
     border-color: cssVar('gray-300'),
     btn-primary-hover: cssVar('primary'),
     btn-secondary-hover: #2cabe3,
-    font-family-sans-serif: ('Open Sans', sans-serif)
+    font-family-sans-serif: ('Open Sans', sans-serif),
+    table-hover: cssVar('gray-200')
   ),
   $themeEvan
 );
@@ -218,6 +219,21 @@ $themeEvan: map-merge(
     dapp-wrapper-sidepanel-icon-color: cssVar('gray-500'),
     dapp-wrapper-sidepanel-list-hover: cssVar('gray-200'),
     dapp-wrapper-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
+  ),
+  $themeEvan
+);
+
+/**
+ * text sizes
+ */
+$themeEvan: map-merge(
+  (
+    h1-font-size: 36px,
+    h2-font-size: 28px,
+    h3-font-size: 21px,
+    h4-font-size: 18px,
+    h5-font-size: 15px,
+    h6-font-size: 13px
   ),
   $themeEvan
 );

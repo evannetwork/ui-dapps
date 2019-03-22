@@ -350,12 +350,12 @@ $font-weight-bolder:          bolder !default;
 $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
 
-$h1-font-size:                $font-size-base * 2.5 !default;
-$h2-font-size:                $font-size-base * 2 !default;
-$h3-font-size:                $font-size-base * 1.75 !default;
-$h4-font-size:                $font-size-base * 1.5 !default;
-$h5-font-size:                $font-size-base * 1.25 !default;
-$h6-font-size:                $font-size-base !default;
+$h1-font-size:                cssVar('h1-font-size');
+$h2-font-size:                cssVar('h2-font-size');
+$h3-font-size:                cssVar('h3-font-size');
+$h4-font-size:                cssVar('h4-font-size');
+$h5-font-size:                cssVar('h5-font-size');
+$h6-font-size:                cssVar('h6-font-size');
 
 $headings-margin-bottom:      $spacer / 2 !default;
 $headings-font-family:        null !default;
@@ -413,7 +413,7 @@ $table-color:                 $body-color !default;
 $table-bg:                    null !default;
 $table-accent-bg:             rgba($black, .05) !default;
 $table-hover-color:           $table-color !default;
-$table-hover-bg:              rgba($black, .075) !default;
+$table-hover-bg:              cssVar('table-hover');
 $table-active-bg:             $table-hover-bg !default;
 
 $table-border-width:          $border-width !default;

@@ -39,7 +39,7 @@ module.exports = function(name, dist, externals) {
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
   };
 
-  return {
+  const webpackConfig = {
     entry: './src/index.ts',
     externals: externals,
     devtool: '#eval-source-map',
@@ -117,22 +117,25 @@ module.exports = function(name, dist, externals) {
       hints: false
     }
   }
+
+  if (process.env.NODE_ENV === 'production') {
+    webpackConfig.devtool = '#source-map';
+    webpackConfig.plugins = (webpackConfig.plugins || []).concat([
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: '"production"'
+        }
+      }),
+      new UglifyJsPlugin({
+        test: /\.js($|\?)/i,
+        exclude: /(node_modules)/,
+        parallel: true,
+        sourceMap: false
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ])
+  }
+
+  return webpackConfig;
 }
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map';
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new UglifyJsPlugin({
-      test: /\.js($|\?)/i,
-      exclude: /(node_modules)/,
-      parallel: true,
-      sourceMap: false
-    }),
-    new OptimizeCSSAssetsPlugin({}),
-  ])
-}
