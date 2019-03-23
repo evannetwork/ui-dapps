@@ -87,7 +87,7 @@ module.exports = function(name, dist, externals) {
             loader: 'file-loader',
             options: {
               name: 'assets/[name].[ext]?[hash]',
-              publicPath: './'
+              publicPath: (url, resourcePath, context) => url
             }
           }]
         },
