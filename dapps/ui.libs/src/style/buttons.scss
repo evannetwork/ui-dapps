@@ -92,6 +92,14 @@
       }
     }
 
+    &.icon-only {
+      width: 46px;
+      height: 46px;
+      padding: 0;
+
+      text-align: center;
+    }
+
     /**
      * button contents
      */
