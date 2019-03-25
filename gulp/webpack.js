@@ -76,6 +76,16 @@ gulp.task('build', async function () {
       .on('end', () => resolve());
   });
 
+  // copy html files to the dist folder
+  await new Promise((resolve, reject) => {
+    gulp
+      .src([
+        `${ dappDir }/src/**/*.html`,
+      ])
+      .pipe(gulp.dest(`${ dappDir }/dist`))
+      .on('end', () => resolve());
+  });
+
   // create dbcp origin path json
   fs.writeFileSync(
     `${ dappDir }/dist/dbcpPath.json`,

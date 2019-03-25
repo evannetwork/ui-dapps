@@ -32,15 +32,24 @@
 
   display: initial;
 
-  a, a:hover {
-    text-decoration: none !important;
-  }
-
   .clickable {
     cursor: pointer;
   }
 
-  h1, h2, h3, h4, h5, span, p {
-    color: cssVar('text-color');
+  .border-top, .border-bottom, .border-left, .border-right .border {
+    &.small {
+      border-width: 1px;
+    }
+  }
+
+  // add font-size levels
+  @for $i from 0 through 10 {
+    .opacity-#{ $i * 10 } {
+      opacity: $i * 0.1;
+    }
+
+    .opacity-#{ ($i * 10) + 5 } {
+      font-size: ($i * 0.1) + 0.05;
+    }
   }
 }

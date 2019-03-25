@@ -71,7 +71,6 @@ $sidebar-small-width: $navbar-height;
     .nav {
       line-height: $navbar-height;
 
-      overflow-y: hidden;
       justify-content: space-between;
 
       width: 100%;
@@ -147,6 +146,11 @@ $sidebar-small-width: $navbar-height;
 
             color: cssVar('body-color');
             border-left: 4px solid transparent;
+
+            span, p {
+              font-size: 15px;
+              font-weight: 600;
+            }
 
             & > i {
               font-size: 21px;

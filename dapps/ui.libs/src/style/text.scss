@@ -59,4 +59,32 @@
   .bg-text-warning {
     color: cssVar('bg-text-warning');
   }
+
+  .bg-text-inverted {
+    color: cssVar('text-color-inverted');
+  }
+
+  h1, h2, h3, h4, h5, span, p {
+    color: cssVar('text-color');
+  }
+
+  a, a:hover {
+    text-decoration: none !important;
+  }
+
+  span, p {
+    font-size: cssVar('text-font-size');
+    font-weight: 400;
+  }
+
+  // add font-size levels
+  @for $i from 2 through 9 {
+    .font-size-#{$i * 10} {
+      font-size: 90%;
+    }
+
+    .font-size-#{ ($i * 10) + 5} {
+      font-size: 90%;
+    }
+  }
 }

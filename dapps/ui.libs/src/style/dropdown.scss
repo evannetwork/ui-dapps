@@ -25,28 +25,23 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+.evan {
+  .dropdown-menu.show {
+    display: block !important;
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
+    margin-top: 0;
 
-/**
- * load evan specific styles
- */
-@import './style/buttons';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/forms';
-@import './style/icons';
-@import './style/modal';
-@import './style/dropdown';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/text';
-@import './style/transitions';
+    border: 1px solid cssVar('border-color');
+    border-top: 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+
+    // reset weird flex text overflows
+    * {
+      min-width: 0;
+    }
+
+    .dropdown-item {
+      font-weight: 300;
+    }
+  }
+}
