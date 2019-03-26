@@ -25,145 +25,34 @@
   https://evan.network/license/
 */
 
-import {
-  getDomainName
-} from '@evan.network/ui-dapp-browser';
+import Vue from 'vue';
+import { initializeVue } from '@evan.network/ui-vue-core';
 
-import {
-  NgModule,                    // @angular/core
-  CommonModule,                // @angular/common
-  RouterModule, Routes,        // @angular/router
-  IonicModule, IonicApp,       // ionic-angular
-  BrowserAnimationsModule,     // @angular/platform-browser/animations
-} from '@evan.network/ui-angular-libs';
-
-import {
-  AngularCore,
-  DAppLoaderComponent,
-  buildModuleRoutes,
-  BootstrapComponent,
-  startAngularApplication, createIonicAppElement
-} from '@evan.network/ui-angular-core';
-
-export { ContactsDispatcher, ContactsDispatcherService } from './dispatcher/contacts';
-import { AccountDetailComponent } from './components/account-detail/account-detail';
-import { AccountListComponent } from './components/accounts-list/accounts-list';
-import { ContactsDispatcherService } from './dispatcher/contacts';
-import { ContactsRootComponent } from './components/root/root';
-import { ContactsTranslations } from './i18n/registry';
-
-/**************************************************************************************************/
-
-function getRoutes(): Routes {
-  return buildModuleRoutes(
-    `addressbook.${ getDomainName() }`,
-    ContactsRootComponent,
-    [
-      {
-        path: '',
-        component: AccountListComponent,
-        data: {
-          reload: true,
-          state: 'account-list',
-        }
-      },
-      {
-        path: 'add-via-mail',
-        component: AccountDetailComponent,
-        data: {
-          state: 'add-via-mail',
-          navigateBack : true,
-          reload: true,
-        }
-      },
-      {
-        path: 'add-via-accountid',
-        component: AccountDetailComponent,
-        data: {
-          state: 'add-via-accountid',
-          navigateBack : true,
-          reload: true,
-        }
-      },
-      {
-        path: 'add-via-qrcode',
-        component: AccountDetailComponent,
-        data: {
-          state: 'add-via-qrcode',
-          navigateBack : true,
-          reload: true,
-        }
-      },
-      {
-        path: ':id',
-        component: AccountDetailComponent,
-        data: {
-          state: 'account-detail',
-          navigateBack : true,
-          reload: true,
-        }
-      },
-    ]
-  );
-};
+import Main from './components/root/root.vue';
+import translations from './i18n/translations';
+import routes from './routes';
+import components from './components/registry';
 
 /**
- * Returns the module configuration for the normal or dispatcher module.
- * In case of the dispatcher module, Router configurations and BrowserModule imports are excluded
- * to load the module during runtime by the dispatcher service.
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
  *
- * @param isDispatcher  boolean value if the config is used for the dispatcher module
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
  */
-function getConfig(isDispatcher?: boolean) {
-  let config: any = {
-    imports: [
-      CommonModule,
-      IonicModule,
-      AngularCore,
-    ],
-    providers: [
-      ContactsTranslations,
-      ContactsDispatcherService,
-    ],
-    entryComponents: [ IonicApp ]
-  };
-
-  if (!isDispatcher) {
-    config.imports.unshift(BrowserAnimationsModule);
-    config.imports.unshift(RouterModule.forRoot(getRoutes(), { enableTracing: false, }));
-    config.imports.push(IonicModule.forRoot(BootstrapComponent, {
-      mode: 'md'
-    }));
-
-    config.bootstrap = [
-      IonicApp
-    ];
-
-    config.declarations = [
-      AccountDetailComponent,
-      AccountListComponent,
-      BootstrapComponent,
-      ContactsRootComponent,
-    ];
-  }
-
-  return config;
-}
-
-@NgModule(getConfig(true))
-export class DispatcherModule {
-  constructor() { }
-}
-
-@NgModule(getConfig(false))
-class ContactsModule {
-  constructor(private translations: ContactsTranslations) { }
-}
-
-export async function startDApp(container, dbcpName) {
-  const ionicAppEl = createIonicAppElement(container, dbcpName);
-
-  await startAngularApplication(ContactsModule, getRoutes());
-
-  container.appendChild(ionicAppEl);
+export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+  await initializeVue({
+    components,
+    container,
+    dappBaseUrl,
+    dappEnsOrContract,
+    dbcpName,
+    RootComponent: Main,
+    routes,
+    state: { },
+    translations: translations,
+    Vue: Vue,
+  });
 }

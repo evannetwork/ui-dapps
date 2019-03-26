@@ -35,7 +35,9 @@
         </transition> -->
         <evan-dapp-wrapper-level-2>
           <template v-slot:content>
-            dapp wrapper-sidebar-level-2 jeha!
+            <div class="w300">
+              dapp wrapper-sidebar-level-2 jeha!
+            </div>
           </template>
         </evan-dapp-wrapper-level-2>
       </template>

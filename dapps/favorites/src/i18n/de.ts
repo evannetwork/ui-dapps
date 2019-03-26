@@ -25,75 +25,12 @@
   https://evan.network/license/
 */
 
-export const de = {
-  'favorites': 'Verknüpfungen',
-  'dapplist': 'Verknüpfungen',
-  'dappadd': 'Verknüpfung hinzufügen',
-
-  'BookmarkDispatcher': 'Verknüpfungs-Synchronisation',
-
-  '_dappdapps': {
-    'add': 'Verknüpfung hinzufügen',
-    'adding': 'Verknüpfung wird hinzugefügt',
-    'alert': {
-      'validTitle': 'Wollen Sie diese Anwendung wirklich hinzufügen?',
-      'validMessage': `
-        <div class="advanced-alert">
-          <div class="alert-img-container">
-            <div class="alert-img evan-img-{{ name }}"></div>
-          </div>
-          <div class="alert-body">
-            <h3>{{ name }}</h3>
-            <span>{{ description }}</span>
-          </div>
-        </div>
-      `,
-      'inValidTitle': 'Ungültige Anwendung',
-      'invalidMessage': `
-        <div text-center class="advanced-alert">
-          <div class="alert-body centered-text">
-            <span>Es konnte keine gültige Anwendung für die Vertragsadresse </span>
-            <br><br><br>
-            <h3>{{ name }}</h3>
-            <br>
-            <span>
-              gefunden werden. Bitte geben Sie eine gültige Vertragsadresse ein.
-            </span>
-          </div>
-        </div>
-      `,
-      'alreadyTitle': 'Verknüpfung bereits hinzugefügt',
-      'alreadyMessage': `
-        <div class="advanced-alert">
-          <div class="alert-img-container">
-            <div class="alert-img evan-img-{{ name }}"></div>
-          </div>
-          <div class="alert-body">
-            <h3>{{ name }}</h3>
-            <span>{{ description }}</span>
-          </div>
-        </div>
-      `,
-      'deleteDAppTitle': 'Wollen Sie diese Verknüpfung wirklich entfernen?',
-    },
-    'dapps': 'Verknüpfungen',
-    'dispatcher': {
-      'add': 'Verknüpfung wurde hinzugefügt',
-      'remove': 'Verknüpfung wurde entfernt',
-      'save-bookmarks': 'Verknüpfungen synchronisieren',
-      'save-bookmarks-description': 'Aktuelle Änderungen an den Verknüpfungen in die Blockchain sichern...',
-    },
-    'edit': 'Editieren',
-    'empty-bookmarks': 'Keine Verknüpfungen erstellt...',
-    'ensaddress': 'App- / Vertragsadresse',
-    'ensaddress-desc': 'Geben Sie eine ENS- oder Vertragsadresse ein, um sie zu öffnen',
-    'featured_dapps': 'Vorgeschlagene Anwendungen',
-    'mailbox': 'Mailbox',
-    'nothing-found': 'Es wurden keine Verknüpfung für den Filter <b>{{ filter }}</b> gefunden...',
-    'remove': 'Entfernen',
-    'scan': 'QR-Code scannen',
-    'no_title': 'Kein Titel',
-    'filter_items': 'Verknüpfungen filtern',
-    'copy-url': 'URL kopieren'
+/* tslint:disable */
+export default {
+  "_favorites": {
+    "favorites": "Favoriten",
+    "overview": "Übersicht",
+    "add": "Favorit hinzufügen"
   }
-};
+}
+/* tslint:enable */;

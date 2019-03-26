@@ -25,94 +25,16 @@
   https://evan.network/license/
 */
 
-export const de = {
-  "ContactsDispatcher": "Konkaktmanagement",
-  "_dappcontacts": {
-    "accepted": "Anfrage akzeptiert",
-    "account-delete": "Kontakt entfernen",
-    "account-detail": "Kontaktdetails",
-    "account-id": "Account-ID",
-    "account-id-desc": "Account-ID des zugehörigen Profils",
-    "account-status": "Kontaktstatus",
-    "alert": {
-      "eve-missing": "Nicht genug EVE",
-      "eve-missing-description": "Sie wollen mehr Geld versenden, als Sie besitzen. Bitte laden Sie Ihr Konto auf, um diese Menge EVE zu versenden.",
-      "profile-missing": "Kein Profil",
-      "profile-missing-description": "Für die account ID des Nutzers, der eingeladen werden soll, ist kein Profil hinterlegt. Bitte überprüfen Sie die eingegebene account ID oder laden Sie den Nutzer per E-Mail ein.",
-      "remove-description": "Wollen Sie diesen Kontakt wirklich entfernen?",
-      "remove-title": "Konktakt entfernen"
-    },
-    "alias": "Name",
-    "alias-desc": "Alias des Kontakts",
+/* tslint:disable */
+export default {
+  "_addressbook": {
+    "add": "Add",
+    "addressbook": "Kontakte",
+    "alias": "Alias",
     "all": "Alle",
-    "verifications": "Verifizierungen",
-    "contact-card-invite": "Mit Visitenkarte",
-    "contact-card-invite-description": "Vernetzen Sie sich mit einem Nutzer direkt über seine evan.network Visitenkarte. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen.",
-    "copy-account-id": "Copy Account ID",
-    "create-contact": "Kontakt hinzufügen",
-    "delete": "Entfernen",
-    "dispatcher": {
-      "address-book-description": "Speichere Änderungen am Addressbuch.",
-      "key-exchange": "Einladungen",
-      "key-exchange-description": "Sende Einladungen an neue Kontakte.",
-      "undefined": ""
-    },
-    "edit-profile": "Profil editieren",
-    "email": "E-Mail",
-    "email-already-added": "Ein Kontakt mit der selben E-Mail Adresse existiert bereits in Ihren Kontakten..",
-    "email-desc": "E-Mail Adresse des Kontakts",
-    "email-invalid": "Bitte geben Sie eine gültige E-Mail Adresse sein.",
-    "empty-address-book": "Keine Kontakte hinzugefügt...",
-    "eves-to-send": "Zu sendende EVEs",
-    "filter_items": "Kontakte filtern",
-    "go-to-mails": "Zur Mailbox",
-    "invalid-address": "Ungültige Adresse (e.g.: \"0x006b0b55b83694983Ece446985BF1FcC625b2eE6\")",
-    "invalid-alias": "Bitte geben Sie einen Namen an!",
-    "invalid-already-added": "Ein Kontakt mit der selben Adresse existiert bereits in Ihren Kontakten.",
-    "invalid-is-my-account": "Sie können sich nicht selbst als Kontakt hinzufügen.",
-    "invitation": "Einladung",
-    "invitation-message": "Einladungsnachricht",
-    "invitation-message-long": "Bitte überprüfen Sie die Nachricht, die an den eingeladenen Nutzer gesendet wird.",
-    "invitation-text": {
-      "body": "Guten Tag,\n\nich möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{{ fromName }}",
-      "title": "Kontaktanfrage"
-    },
-    "me": "Ich",
-    "my-account": "Mein Account",
-    "no_alias": "Kein Name verfügbar",
-    "nothing-found": "Es wurden keine Kontakte für den Filter <b>{{ filter }}</b> gefunden...",
-    "outstanding": "Anfrage wird gesendet...",
-    "pending": "Anfrage wurde gesendet...",
-    "remove": "Entfernen",
-    "save": "Speichern",
-    "saving": "Speichern",
-    "send-invitation": "Einladung senden",
-    "send-invitation-address": "Mit Nutzer ID",
-    "send-invitation-address-description": "Vernetzen Sie sich mit einem bereits vorhandenem Nutzer. Der Nutzer erhält die Anfrage direkt in sein Postfach und kann diese bestätigen",
-    "send-invitation-mail": "Mit Email Adresse",
-    "send-invitation-mail-description": "Vernetzen Sie sich mit einem Nutzer mit Hilfe einer Email Adresse. Der Nutzer erhält eine Einladungsmail mit einem Link, um sich mit Ihnen zu verbinden.",
-    "show": "Anzeigen",
-    "status": {
-      "account-status-desc": "Beschreibung",
-      "invitation": "Einladung",
-      "invitation-answer": "Antwort",
-      "invitation-handshake": "Sichere Kommunikation"
-    },
-    "status-desc": {
-      "accepted": "Sie haben erfolgreich diesen Kontakt in Ihr Addressbuch hinzugefügt.<br><br>Nun können Sie:<ul><li>sichere Nachrichten austauschen</li><li>diesen Kontakt in Ihre Verträge einladen</li><li>von diesem Kontakt in Ihre Verträge eingeladen werden</li></ul>",
-      "outstanding": "Sie haben den Kontakt hinzugefügt. Ihre Einladung wird gerade gesendet.",
-      "pending": "Sie haben eine Einladung an einen neuen Kontakt gesendet.<br><br>Bitte überprüfen Sie Ihre eingehenden Mails auf eine Antwort und speichern Sie die aktualisierten Kontaktdaten Ihres Partners."
-    },
-    "tags": "Tags",
-    "tag-contacts-header": "Kontakte mit dem Tag \"{{ tag }}\"",
-    "tags-desc": "Tags des Kontakts",
-    "users-in-tag": "{{ amount }} Nutzer"
-  },
-  "addressbook": "Meine Kontakte",
-  "addviaaccountid": "Einladung mit einer Account ID",
-  "addviamail": "Einladung über E-Mail",
-  "addviaqrcode": "Hinzufügen mit Kontaktkarten",
-  "contactadd": "Kontakt hinzufügen",
-  "contacts": "Meine Kontakte",
-  "contacts-list": "Meine Kontakte"
-};
+    "category": "Kategorie",
+    "identifier": "Addresse / E-Mail",
+    "overview": "Übersicht"
+  }
+}
+/* tslint:enable */;

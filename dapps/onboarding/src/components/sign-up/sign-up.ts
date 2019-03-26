@@ -27,18 +27,19 @@
 
 // vue imports
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import axios from 'axios';
 
 // evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as evanUi from '@evan.network/ui';
 import { EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 @Component({ })
-export default class SignUp extends Vue {
+export default class SignUp extends mixins(EvanComponent) {
   // current mnemonic value as text
   mnemonic = '';
 

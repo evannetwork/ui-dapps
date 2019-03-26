@@ -1,44 +1,28 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "declaration": true,
-    "module": "es2015",
-    "target": "es5",
-    "baseUrl": ".",
-    "stripInternal": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "outDir": "../build",
-    "rootDir": ".",
     "lib": [
       "es2015",
       "dom"
     ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "./built/",
     "skipLibCheck": true,
-    "types": [],
-    "paths": {
-      "bcc": [
-        "../../../node_modules/@evan.network/api-blockchain-core/dist/index.js"
-      ],
-      "dapp-browser": [
-        "../../../node_modules/@evan.network/ui-dapp-browser/runtime/build/main"
-      ],
-      "angular-libs": [
-        "../../../node_modules/@evan.network/ui-angular-libs/dist/angularlibs.js"
-      ],
-      "angular-core": [
-        "../../../node_modules/@evan.network/ui-angular-core/dist/angularcore.js"
-      ]
-    }
+    "sourceMap": true,
+    "strict": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "target": "es5"
   },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true,
-    "skipTemplateCodegen": true,
-    "flatModuleOutFile": "profile.js",
-    "flatModuleId": "profile"
-  },
-  "files": [
-    "./index.ts"
+  "exclude": [
+    "../../../node_modules/@evan.network"
+  ],
+  "include": [
+    "./src/**/*",
+    "../../vue/ts-shim.d.ts"
   ]
 }

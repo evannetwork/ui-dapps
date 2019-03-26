@@ -25,143 +25,34 @@
   https://evan.network/license/
 */
 
-import {
-  getDomainName
-} from '@evan.network/ui-dapp-browser';
+import Vue from 'vue';
+import { initializeVue } from '@evan.network/ui-vue-core';
 
-import {
-  NgModule,                    // @angular/core
-  CommonModule,                // @angular/common
-  RouterModule, Routes,        // @angular/router
-  IonicModule, IonicApp,       // ionic-angular
-  BrowserAnimationsModule,     // @angular/platform-browser/animations
-} from '@evan.network/ui-angular-libs';
-
-import {
-  AngularCore,
-  DAppLoaderComponent,
-  buildModuleRoutes,
-  BootstrapComponent,
-  startAngularApplication, createIonicAppElement
-} from '@evan.network/ui-angular-core';
-
-import { AnswerMailDispatcher } from './dispatcher/answerMail';
-import { CommKeyComponent } from './components/attachment-cards/comm-key/comm-key';
-import { ContractComponent } from './components/attachment-cards/contract/contract';
-import { KeyExchangeDispatcher, } from './dispatcher/keyExchange';
-import { MailboxComponent } from './components/mailbox/mailbox';
-import { MailboxRootComponent } from './components/root/root';
-import { MailboxTranslations } from './i18n/registry';
-import { MailDetailComponent } from './components/mail-detail/mail-detail';
-import { MailDispatcherService } from './services/service';
-import { MailSendComponent } from './components/mail-send/mail-send';
-import { SendMailDispatcher, } from './dispatcher/sendMail';
-
-export {
-  AnswerMailDispatcher,
-  KeyExchangeDispatcher,
-  MailDispatcherService,
-  SendMailDispatcher,
-}
-
-/**************************************************************************************************/
-
-function getRoutes(): Routes {
-  return buildModuleRoutes(
-    `mailbox.${ getDomainName() }`,
-    MailboxRootComponent,
-    [
-      {
-        path: '',
-        component: MailboxComponent,
-        data: {
-          state: 'mailbox-list',
-          reload: true
-        },
-        children: [
-          {
-            path: 'send-mail',
-            component: MailSendComponent,
-            data: {
-              state: 'mail-send',
-              navigateBack : '..',
-              reload: true
-            },
-          },
-          {
-            path: ':id',
-            component: MailDetailComponent,
-            data: {
-              state: 'mail-detail',
-              navigateBack : '..',
-              reload: true
-            },
-          },
-        ]
-      }
-    ]
-  );
-}
+import Main from './components/root/root.vue';
+import translations from './i18n/translations';
+import routes from './routes';
+import components from './components/registry';
 
 /**
- * Returns the module configuration for the normal or dispatcher module.
- * In case of the dispatcher module, Router configurations and BrowserModule imports are excluded
- * to load the module during runtime by the dispatcher service.
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
  *
- * @param isDispatcher  boolean value if the config is used for the dispatcher module
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
  */
-function getConfig(isDispatcher?: boolean) {
-  let config: any = {
-    imports: [
-      CommonModule,
-      AngularCore,
-    ],
-    providers: [
-      MailboxTranslations,
-      MailDispatcherService,
-    ],
-    entryComponents: [ IonicApp ]
-  };
-
-  if (!isDispatcher) {
-    config.imports.unshift(BrowserAnimationsModule);
-    config.imports.unshift(RouterModule.forRoot(getRoutes(), { enableTracing: false, }));
-    config.imports.push(IonicModule.forRoot(BootstrapComponent, {
-      mode: 'md'
-    }));
-
-    config.bootstrap = [
-      IonicApp
-    ];
-
-    config.declarations = [
-      BootstrapComponent,
-      CommKeyComponent,
-      ContractComponent,
-      MailboxComponent,
-      MailboxRootComponent,
-      MailDetailComponent,
-      MailSendComponent,
-    ];
-  }
-
-  return config;
-}
-
-@NgModule(getConfig(true))
-export class DispatcherModule {
-  constructor() { }
-}
-
-@NgModule(getConfig(false))
-class MailboxModule {
-  constructor(private translations: MailboxTranslations) { }
-}
-
-export async function startDApp(container, dbcpName) {
-  const ionicAppEl = createIonicAppElement(container, dbcpName);
-
-  await startAngularApplication(MailboxModule, getRoutes());
-
-  container.appendChild(ionicAppEl);
+export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+  await initializeVue({
+    components,
+    container,
+    dappBaseUrl,
+    dappEnsOrContract,
+    dbcpName,
+    RootComponent: Main,
+    routes,
+    state: { },
+    translations: translations,
+    Vue: Vue,
+  });
 }

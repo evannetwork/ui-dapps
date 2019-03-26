@@ -25,58 +25,17 @@
   https://evan.network/license/
 */
 
-import {
-  Component, OnInit, OnDestroy, // @angular/core
-  TranslateService,             // @ngx-translate/core
-  NavController,                // ionic-angular
-  ChangeDetectorRef
-} from '@evan.network/ui-angular-libs';
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-import {
-  AnimationDefinition,
-  createRouterTransition,
-  EvanCoreService,
-  EvanBCCService,
-  createOpacityTransition,
-  EvanRoutingService,
-  EvanDAppWrapperComponent,
-  AsyncComponent
-} from '@evan.network/ui-angular-core';
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-/**************************************************************************************************/
+@Component({ })
+export default class mailboxRootComponent extends mixins(EvanComponent) {
 
-@Component({
-  selector: 'mailbox-root',
-  templateUrl: 'root.html',
-  animations: [
-    createOpacityTransition(),
-    createRouterTransition([
-      new AnimationDefinition('mailbox-list', '=>', '*', 'right'),
-      new AnimationDefinition('mail-detail', '=>', '*', 'left'),
-    ])
-  ]
-})
-
-export class MailboxRootComponent extends AsyncComponent {
-  public loading: boolean;
-  private watchRouteChange: Function;
-
-  constructor(
-    private core: EvanCoreService,
-    private bcc: EvanBCCService,
-    private ref: ChangeDetectorRef,
-    private routingService: EvanRoutingService
-  ) {
-    super(ref);
-  }
-
-  async _ngOnInit() {
-    await this.bcc.initialize((accountId) => this.bcc.globalPasswordDialog(accountId));
-    this.watchRouteChange = this.routingService.subscribeRouteChange(() => this.ref.detectChanges());
-    this.core.finishDAppLoading();
-  }
-
-  async _ngOnDestroy() {
-    this.watchRouteChange();
-  }
 }

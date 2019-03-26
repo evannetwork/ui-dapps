@@ -34,11 +34,18 @@ declare module '*.vue' {
   import vuexI18n from 'vuex-i18n';
 
   class EvanVue extends Vue {
-    $i18n: any;
-    $route: VueRouter;
+    $i18n: vuexI18n;
+    $router: VueRouter;
     $store: Vuex;
     $t: any;
   }
 
   export default EvanVue;
 }
+
+// declare module 'vue' {
+//   import Vue from 'dist/vue.runtime.common.js';
+//   import { EvanComponent } from '@evan.network/ui-vue-core';
+
+//   export default EvanComponent;
+// }
