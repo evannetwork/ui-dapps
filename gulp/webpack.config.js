@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
@@ -104,6 +105,10 @@ module.exports = function(name, dist, externals) {
         // both options are optional
         filename: `${ name }.css`,
         chunkFilename: `${ name }.css`,
+      }),
+      new DeclarationBundlerPlugin({
+        moduleName: `${ name }.js`,
+        out: `${ name }.d.ts`,
       })
     ],
     resolve: {

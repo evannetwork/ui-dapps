@@ -25,35 +25,15 @@
   https://evan.network/license/
 */
 
-.evan {
-  .bg-transition {
-    transition: 0.3s ease-out background-color;
-  }
+const DeclarationBundlerPlugin = require('declaration-bundler-webpack-plugin');
 
-  .all-transition {
-    transition: 0.3s ease-out all;
-  }
+let buggyFunc = DeclarationBundlerPlugin.prototype.generateCombinedDeclaration;
+DeclarationBundlerPlugin.prototype.generateCombinedDeclaration = function (declarationFiles) {
+    for (var fileName in declarationFiles) {
+        let declarationFile = declarationFiles[fileName];
+        declarationFile._value = declarationFile._value || declarationFile.source();
+    }
+    return buggyFunc.call(this, declarationFiles);
 }
 
-@keyframes evanHeartbeat {
-  0% {
-    -webkit-transform: scale(0);
-    opacity: 0
-  }
-  25% {
-    -webkit-transform: scale(.1);
-    opacity: .1
-  }
-  50% {
-    -webkit-transform: scale(.5);
-    opacity: .3
-  }
-  75% {
-    -webkit-transform: scale(.8);
-    opacity: .5
-  }
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 0
-  }
-}
+module.exports = DeclarationBundlerPlugin;

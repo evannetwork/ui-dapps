@@ -26,34 +26,23 @@
 */
 
 .evan {
-  .bg-transition {
-    transition: 0.3s ease-out background-color;
-  }
+  .evan-breadcrumbs {
+    min-height: 63px;
 
-  .all-transition {
-    transition: 0.3s ease-out all;
-  }
-}
+    a.evan-breadcrumb, span {
+      color: cssVar('gray-600');
+    }
 
-@keyframes evanHeartbeat {
-  0% {
-    -webkit-transform: scale(0);
-    opacity: 0
-  }
-  25% {
-    -webkit-transform: scale(.1);
-    opacity: .1
-  }
-  50% {
-    -webkit-transform: scale(.5);
-    opacity: .3
-  }
-  75% {
-    -webkit-transform: scale(.8);
-    opacity: .5
-  }
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 0
+    .evan-breadcrumb {
+      cursor: pointer;
+
+      color: cssVar('gray-600');
+
+      &.active, &:hover {
+        cursor: default;
+
+        color: cssVar('secondary');
+      }
+    }
   }
 }

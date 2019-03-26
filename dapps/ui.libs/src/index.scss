@@ -39,13 +39,14 @@
 /**
  * load evan specific styles
  */
+@import './style/breadcrumb';
 @import './style/buttons';
 @import './style/content';
 @import './style/dapp-wrapper';
+@import './style/dropdown';
 @import './style/forms';
 @import './style/icons';
 @import './style/modal';
-@import './style/dropdown';
 @import './style/open-sans';
 @import './style/steps';
 @import './style/text';
