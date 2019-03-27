@@ -50,18 +50,36 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   /**
    * All contacts build into an contacts array mapped to tags
    */
-  contacts: any = {
-    all: [ ]
-  };
+  contacts: any = null;
 
   /**
-   * Load the favorites and map the correct language keys.
+   * Run the initialization
    */
   async created() {
-    this.loading = false;
+    await this.loadContacts();
+  }
+
+  /**
+   * Load the contacts and map them to the tag categories and make it usable from the template
+   *
+   * @param      {boolean}  reload  was the component reloaded?
+   */
+  async loadContacts(reload?: boolean) {
+    this.loading = true;
+
+    // quick usage
+    const runtime = (<any>this).getRuntime();
+
+    // reset the contracts
+    this.contacts = { all: [ ] };
+
+    // force addressbook reload on clicking reloading button
+    if (reload) {
+      delete runtime.profile.trees[runtime.profile.treeLabels.addressBook];
+    }
 
     // load the address book for the current user
-    const addressBook = await (<any>this).getRuntime().profile.getAddressBook();
+    const addressBook = await runtime.profile.getAddressBook();
 
     // map all the contacts to it's categories
     Object.keys(addressBook.profile).forEach((address) => {
@@ -89,5 +107,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
 
       return contact;
     });
+
+    this.loading = false;
   }
 }

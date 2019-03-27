@@ -31,11 +31,62 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+
+interface ContactFormInterface extends EvanForm {
+  userName: EvanFormControl;
+  password0: EvanFormControl;
+  password1: EvanFormControl;
+}
+
 @Component({ })
 export default class AddComponent extends mixins(EvanComponent) {
+  /**
+   * formular specific variables
+   */
+  contactForm: ContactFormInterface = null;
 
+  /**
+   * Used for easier building form i18n keys
+   */
+  formI18nScope = '_addressbook.contact-form';
+
+  /**
+   * Setup contact form.
+   */
+  created() {
+    this.contactForm = (<ContactFormInterface>new EvanForm(this, {
+      alias: {
+        value: '',
+        validator: (vueInstance: AddComponent, formControl: EvanFormControl) => {
+          return formControl.value.length === 0;
+        }
+      },
+      useEmailInvite: {
+        value: false,
+      },
+      address: {
+        value: '',
+        validator: (vueInstance: AddComponent, formControl: EvanFormControl) => {
+          return !EvanForm.validEthAddress(formControl.value);
+        }
+      },
+      email: {
+        value: '',
+        validator: (vueInstance: AddComponent, formControl: EvanFormControl) => {
+          return !EvanForm.validateEmail(formControl.value);
+        }
+      },
+    }));
+  }
+
+  /**
+   * Save the new contact using the queue.
+   */
+  addContact() {
+
+  }
 }

@@ -28,11 +28,28 @@
 /* tslint:disable */
 export default {
   "_addressbook": {
-    "add": "Add",
+    "add": "Add contact",
     "addressbook": "Contacts",
     "alias": "Alias",
     "all": "All",
     "category": "Category",
+    "contact-form": {
+      "address": {
+        "desc": "Account ID of a known and existing profile.",
+        "error": "Please enter a valid account ID (e.g. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)!",
+        "title": "Account ID"
+      },
+      "alias": {
+        "desc": "Username of the new contact",
+        "error": "Please enter an alias!",
+        "title": "Alias"
+      },
+      "email": {
+        "desc": "E-mail address for inviting the user to the network.",
+        "error": "Please enter a valid e-mail address!",
+        "title": "E-Mail"
+      }
+    },
     "identifier": "Address / E-Mail",
     "overview": "Overview"
   }

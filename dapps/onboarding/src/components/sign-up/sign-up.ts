@@ -32,11 +32,16 @@ import { Prop } from 'vue-property-decorator';
 import axios from 'axios';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as evanUi from '@evan.network/ui';
-import { EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+
+interface ProfileFormInterface extends EvanForm {
+  userName: EvanFormControl;
+  password0: EvanFormControl;
+  password1: EvanFormControl;
+}
 
 @Component({ })
 export default class SignUp extends mixins(EvanComponent) {
@@ -67,7 +72,7 @@ export default class SignUp extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  profileForm: EvanForm = null;
+  profileForm: ProfileFormInterface = null;
 
   /**
    * Available steps represented by it's titles
@@ -99,7 +104,7 @@ export default class SignUp extends mixins(EvanComponent) {
   loading = true;
 
   async created() {
-    this.profileForm = new EvanForm(this, {
+    this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       userName: {
         value: '',
         validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
@@ -118,7 +123,7 @@ export default class SignUp extends mixins(EvanComponent) {
           return vueInstance.getPasswordError(1, formControl.form);
         }
       },
-    });
+    }));
     // use this for debugginb
     // this.mnemonicRiddleSolved = true;
     // this.profileForm.userName.value = 'Test';

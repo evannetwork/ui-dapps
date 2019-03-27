@@ -28,6 +28,65 @@
 <template>
   <div>
     <evan-breadcrumbs :i18nScope="'_addressbook'"></evan-breadcrumbs>
+
+    <div class="p-3 text-left">
+      <div class="bg-level-1 border">
+        <div class="d-flex pb-3 border-bottom align-items-center">
+          <h4 class="m-0">
+            {{ `_addressbook.add` | translate }}
+          </h4>
+        </div>
+
+        <form class="p-4" v-on:submit.prevent="addContact">
+          <div class="form-group">
+            <label for="alias">
+              {{ `${ formI18nScope }.alias.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="alias" ref="alias"
+              :placeholder="`${ formI18nScope }.alias.desc` | translate"
+              v-model="contactForm.alias.value"
+              v-bind:class="{ 'is-invalid' : contactForm.alias.error }"
+              @blur="contactForm.alias.setDirty()">
+            <div class="invalid-feedback">
+              {{ `${ formI18nScope }.alias.error` | translate }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="address">
+                {{ `${ formI18nScope }.address.title` | translate }}
+              </label>
+              <input class="form-control" required
+                id="address" ref="address"
+                :placeholder="`${ formI18nScope }.address.desc` | translate"
+                v-model="contactForm.address.value"
+                v-bind:class="{ 'is-invalid' : contactForm.address.error }"
+                @blur="contactForm.address.setDirty()">
+              <div class="invalid-feedback">
+                {{ `${ formI18nScope }.address.error` | translate }}
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="email">
+                {{ `${ formI18nScope }.email.title` | translate }}
+              </label>
+              <input class="form-control" required
+                id="email" ref="email"
+                :placeholder="`${ formI18nScope }.email.desc` | translate"
+                v-model="contactForm.email.value"
+                v-bind:class="{ 'is-invalid' : contactForm.email.error }"
+                @blur="contactForm.email.setDirty()">
+              <div class="invalid-feedback">
+                {{ `${ formI18nScope }.email.error` | translate }}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 

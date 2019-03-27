@@ -59,7 +59,10 @@
         <evan-loading v-if="loading"></evan-loading>
 
         <div v-if="!loading">
-          <evan-breadcrumbs :i18nScope="'_addressbook'">
+          <evan-breadcrumbs
+            :i18nScope="'_addressbook'"
+            :enableReload="true"
+            @reload="loadContacts(true)">
             <template v-slot:content>
               <button type="button" class="btn btn-primary btn-circle"
                 @click="evanNavigate('overview/add')">
