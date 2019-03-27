@@ -26,13 +26,16 @@
 */
 
 const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin');
+const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
-module.exports = function(name, dist, externals) {
+module.exports = function(name, dist, externals, prodMode) {
+  const packageJson = require(path.resolve(`${ dist }/../package.json`));
+
   externals = externals || {
     '@evan.network/api-blockchain-core': '@evan.network/api-blockchain-core',
     '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
@@ -107,7 +110,7 @@ module.exports = function(name, dist, externals) {
         chunkFilename: `${ name }.css`,
       }),
       new DeclarationBundlerPlugin({
-        moduleName: `${ name }.js`,
+        moduleName: `'${ packageJson.name }'`,
         out: `${ name }.d.ts`,
       })
     ],
@@ -139,6 +142,15 @@ module.exports = function(name, dist, externals) {
       }),
       new OptimizeCSSAssetsPlugin({}),
     ])
+  }
+
+  // only rebuild d.ts files when we are running in production mode or they does not exists
+  if (process.env.NODE_ENV === 'production' || prodMode ||
+    !fs.existsSync(`${ dist }/${ name }.d.ts`)) {
+    webpackConfig.plugins.push(new DeclarationBundlerPlugin({
+      moduleName: `'${ packageJson.name }'`,
+      out: `${ name }.d.ts`,
+    }));
   }
 
   return webpackConfig;

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "declaration": true,
     "experimentalDecorators": true,
     "lib": [
       "es2015",
@@ -10,16 +11,18 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "outDir": "./built/",
-    "paths": {},
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
     "target": "es5"
   },
   "exclude": [
     "../../../node_modules/@evan.network"
   ],
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "../../vue/ts-shim.d.ts"
   ]
 }
