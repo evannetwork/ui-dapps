@@ -48,8 +48,10 @@ export default {
         "desc": "E-mail address for inviting the user to the network.",
         "error": "Please enter a valid e-mail address!",
         "title": "E-Mail"
-      }
+      },
+      "submit": "Add contact"
     },
+    "detail": "Contact information",
     "identifier": "Address / E-Mail",
     "overview": "Overview"
   }

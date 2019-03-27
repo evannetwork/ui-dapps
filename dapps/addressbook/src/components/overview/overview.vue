@@ -56,50 +56,48 @@
           </template>
         </evan-dapp-wrapper-level-2>
 
+        <evan-breadcrumbs
+          :i18nScope="'_addressbook'"
+          :enableReload="true"
+          @reload="loadContacts(true)">
+          <template v-slot:content>
+            <button type="button" class="btn btn-primary btn-circle"
+              @click="evanNavigate('overview/add')">
+              <i class="fas fa-plus"></i>
+            </button>
+          </template>
+        </evan-breadcrumbs>
+
         <evan-loading v-if="loading"></evan-loading>
 
-        <div v-if="!loading">
-          <evan-breadcrumbs
-            :i18nScope="'_addressbook'"
-            :enableReload="true"
-            @reload="loadContacts(true)">
-            <template v-slot:content>
-              <button type="button" class="btn btn-primary btn-circle"
-                @click="evanNavigate('overview/add')">
-                <i class="fas fa-plus"></i>
-              </button>
-            </template>
-          </evan-breadcrumbs>
+        <div class="p-3" v-if="!loading">
+          <div class="bg-level-1 border">
+            <div class="d-flex p-2 pt-3 pb-3 border-bottom">
+              <h4 class="m-0 ml-3">
+                {{ '_addressbook.category' | translate }}: 
 
-          <div class="p-3">
-            <div class="bg-level-1 border">
-              <div class="d-flex p-2 pt-3 pb-3 border-bottom">
-                <h4 class="m-0 ml-3">
-                  {{ '_addressbook.category' | translate }}: 
+                <b v-if="activeCategory !== 'all'">{{ activeCategory }}</b>
+                <b v-if="activeCategory === 'all'">{{ '_addressbook.all' | translate }}</b>
+              </h4>
+            </div>
 
-                  <b v-if="activeCategory !== 'all'">{{ activeCategory }}</b>
-                  <b v-if="activeCategory === 'all'">{{ '_addressbook.all' | translate }}</b>
-                </h4>
-              </div>
-
-              <div class="pl-3 pr-3">
-                <table class="table table-borderless table-hover mt-3">
-                  <thead>
-                    <tr>
-                      <th>{{ '_addressbook.alias' | translate }}</th>
-                      <th>{{ '_addressbook.identifier' | translate }}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="clickable"
-                      v-for="(contact, index) in contacts[activeCategory]"
-                      @click="evanNavigate(`detail/${ vehicle.address }`)">
-                      <td class="text-primary">{{ contact.alias }}</td>
-                      <td>{{ contact.address || contact.email }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div class="pl-3 pr-3">
+              <table class="table table-borderless table-hover mt-3">
+                <thead>
+                  <tr>
+                    <th>{{ '_addressbook.alias' | translate }}</th>
+                    <th>{{ '_addressbook.identifier' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="clickable"
+                    v-for="(contact, index) in contacts[activeCategory]"
+                    @click="evanNavigate(`overview/detail/${ contact.address }`)">
+                    <td class="text-primary">{{ contact.alias }}</td>
+                    <td>{{ contact.address || contact.email }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

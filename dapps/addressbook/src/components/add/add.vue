@@ -31,7 +31,7 @@
 
     <div class="p-3 text-left">
       <div class="bg-level-1 border">
-        <div class="d-flex pb-3 border-bottom align-items-center">
+        <div class="d-flex p-3 border-bottom align-items-center">
           <h4 class="m-0">
             {{ `_addressbook.add` | translate }}
           </h4>
@@ -54,35 +54,61 @@
           </div>
 
           <div class="row">
-            <div class="form-group col-md-6">
-              <label for="address">
-                {{ `${ formI18nScope }.address.title` | translate }}
-              </label>
-              <input class="form-control" required
-                id="address" ref="address"
-                :placeholder="`${ formI18nScope }.address.desc` | translate"
-                v-model="contactForm.address.value"
-                v-bind:class="{ 'is-invalid' : contactForm.address.error }"
-                @blur="contactForm.address.setDirty()">
-              <div class="invalid-feedback">
-                {{ `${ formI18nScope }.address.error` | translate }}
+            <div class="col-md-6 d-flex align-items-center">
+              <div class="form-check mr-3">
+                <input class="form-check-input"
+                  id="emailInvite" type="radio"
+                  :value="false"
+                  v-model="contactForm.emailInvite.value">
+              </div>
+              <div class="form-group w-100">
+                <label for="address">
+                  {{ `${ formI18nScope }.address.title` | translate }}
+                </label>
+                <input class="form-control" required
+                  id="address" ref="address"
+                  :disabled="contactForm.emailInvite.value"
+                  :placeholder="`${ formI18nScope }.address.desc` | translate"
+                  v-model="contactForm.address.value"
+                  v-bind:class="{ 'is-invalid' : contactForm.address.error }"
+                  @blur="contactForm.address.setDirty()">
+                <div class="invalid-feedback">
+                  {{ `${ formI18nScope }.address.error` | translate }}
+                </div>
               </div>
             </div>
 
-            <div class="form-group col-md-6">
-              <label for="email">
-                {{ `${ formI18nScope }.email.title` | translate }}
-              </label>
-              <input class="form-control" required
-                id="email" ref="email"
-                :placeholder="`${ formI18nScope }.email.desc` | translate"
-                v-model="contactForm.email.value"
-                v-bind:class="{ 'is-invalid' : contactForm.email.error }"
-                @blur="contactForm.email.setDirty()">
-              <div class="invalid-feedback">
-                {{ `${ formI18nScope }.email.error` | translate }}
+            <div class="col-md-6 d-flex align-items-center">
+              <div class="form-check mr-3">
+                <input class="form-check-input"
+                  id="emailInvite" type="radio"
+                  :value="true"
+                  v-model="contactForm.emailInvite.value">
+              </div>
+              <div class="form-group w-100">
+                <label for="email">
+                  {{ `${ formI18nScope }.email.title` | translate }}
+                </label>
+                <input class="form-control" required
+                  id="email" ref="email"
+                  :disabled="!contactForm.emailInvite.value"
+                  :placeholder="`${ formI18nScope }.email.desc` | translate"
+                  v-model="contactForm.email.value"
+                  v-bind:class="{ 'is-invalid' : contactForm.email.error }"
+                  @blur="contactForm.email.setDirty()">
+                <div class="invalid-feedback">
+                  {{ `${ formI18nScope }.email.error` | translate }}
+                </div>
               </div>
             </div>
+          </div>
+
+          <div class="text-center mt-3 w-100">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              :disabled="!contactForm.isValid">
+              {{ `${ formI18nScope }.submit` | translate }}
+            </button>
           </div>
         </form>
       </div>

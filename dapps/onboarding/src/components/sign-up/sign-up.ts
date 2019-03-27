@@ -107,20 +107,20 @@ export default class SignUp extends mixins(EvanComponent) {
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       userName: {
         value: '',
-        validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
-          return formControl.value.length === 0;
+        validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
+          return this.value.length !== 0;
         }
       },
       password0: {
         value: '',
-        validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
-          return vueInstance.getPasswordError(0, formControl.form);
+        validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
+          return vueInstance.getPasswordError(0, this.form) || true;
         }
       },
       password1: {
         value: '',
-        validator: (vueInstance: SignUp, formControl: EvanFormControl) => {
-          return vueInstance.getPasswordError(1, formControl.form);
+        validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
+          return vueInstance.getPasswordError(1, this.form) || true;
         }
       },
     }));

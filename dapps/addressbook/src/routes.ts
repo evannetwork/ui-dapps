@@ -36,8 +36,9 @@ import DetailComponent from './components/detail/detail.vue';
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { name: 'overview' } },
   { name: 'overview', path: 'overview', component: OverviewComponent },
-  { name: 'add', path: 'overview/add', component: AddComponent },
-  { name: 'detail', path: 'detail/:addres', component: DetailComponent },
+  { path: 'overview/add', component: AddComponent },
+  { path: 'overview/detail', redirect: { name: 'overview' } },
+  { path: 'overview/detail/:addres', component: DetailComponent },
 ];
 
 export default routeRegistration;

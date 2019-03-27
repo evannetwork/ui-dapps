@@ -35,11 +35,11 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-
 interface ContactFormInterface extends EvanForm {
-  userName: EvanFormControl;
-  password0: EvanFormControl;
-  password1: EvanFormControl;
+  alias: EvanFormControl;
+  emailInvite: EvanFormControl;
+  address: EvanFormControl;
+  email: EvanFormControl;
 }
 
 @Component({ })
@@ -61,23 +61,31 @@ export default class AddComponent extends mixins(EvanComponent) {
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       alias: {
         value: '',
-        validator: (vueInstance: AddComponent, formControl: EvanFormControl) => {
-          return formControl.value.length === 0;
+        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+          return this.value.length !== 0;
         }
       },
-      useEmailInvite: {
+      emailInvite: {
         value: false,
+        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+          // trigger the validation process for the address and email contorl,
+          // when the email invite was changed
+          form.address.validate();
+          form.email.validate();
+
+          return true;
+        }
       },
       address: {
         value: '',
-        validator: (vueInstance: AddComponent, formControl: EvanFormControl) => {
-          return !EvanForm.validEthAddress(formControl.value);
+        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+          return form.emailInvite.value || EvanForm.validEthAddress(this.value);
         }
       },
       email: {
         value: '',
-        validator: (vueInstance: AddComponent, formControl: EvanFormControl) => {
-          return !EvanForm.validateEmail(formControl.value);
+        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+          return !form.emailInvite.value || EvanForm.validateEmail(this.value);
         }
       },
     }));
@@ -87,6 +95,6 @@ export default class AddComponent extends mixins(EvanComponent) {
    * Save the new contact using the queue.
    */
   addContact() {
-
+    (<any>this).evanNavigate('overview');
   }
 }

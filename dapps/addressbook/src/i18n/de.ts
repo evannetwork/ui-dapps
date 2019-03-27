@@ -48,8 +48,10 @@ export default {
         "desc": "E-Mail Addresse zum einladen des Nutzers in das Netzwerk.",
         "error": "Bitte geben Sie eine valide E-Mail Addresse an!",
         "title": "E-Mail"
-      }
+      },
+      "submit": "Kontakt hinzufügen"
     },
+    "detail": "Kontakinformationen",
     "identifier": "Addresse / E-Mail",
     "overview": "Übersicht"
   }
