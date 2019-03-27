@@ -26,11 +26,58 @@
 */
 
 .evan {
-  .form-control.is-invalid, .form-control.is-valid, .was-validated .form-control:invalid {
-    background-image: none !important;
+  table {
+    &.layout-fixed {
+      table-layout: fixed;
+    }
   }
 
-  .form-check {
-    min-height: 15px;
+  .evan-table {
+    overflow-x: auto;
+
+    padding: 1.25em;
+
+    border-top: 1px solid cssVar('border-color');
+    border-bottom: 1px solid cssVar('border-color');
+
+    table {
+      width: 100%;
+
+      thead {
+        th {
+          font-weight: 400;
+
+          padding: 1.5em;
+
+          color: cssVar('gray-600');
+        }
+      }
+
+      tbody {
+        tr:nth-child(odd) {
+          white-space: nowrap;
+
+          border: none;
+          background-color: cssVar('bg-level-1');
+          box-shadow: 0 1px 8px 0 rgba(0,0,0,0.1);
+
+          td {
+            padding: 1.5em;
+          }
+
+          &:hover {
+            td, td span {
+              color: cssVar('primary');
+            }
+          }
+        }
+
+        tr:nth-child(even) {
+          td {
+            padding: 0.5em;
+          }
+        }
+      }
+    }
   }
 }

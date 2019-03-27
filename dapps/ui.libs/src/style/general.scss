@@ -52,4 +52,38 @@
       font-size: ($i * 0.1) + 0.05;
     }
   }
+
+  .force-oneline {
+    display: block;
+    overflow: hidden;
+
+    height: 1.6em;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    br {
+      display: none;
+    }
+
+    * {
+      display: inline-block;
+    }
+  }
+
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+
+  .overflow-y-auto {
+    overflow-x: auto;
+  }
+
+  .overflow-x-none {
+    overflow-x: none;
+  }
+
+  .overflowy-none {
+    overflow-x: none;
+  }
 }
