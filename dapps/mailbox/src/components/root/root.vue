@@ -26,30 +26,130 @@
 */
 
 <template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper>
+  <div class="evan theme-evan evan-mailbox">
+    <evan-dapp-wrapper
+      v-on:loggedin="loadMails()">
       <template v-slot:content>
-        mailbox
-<!--         <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition> -->
         <evan-dapp-wrapper-level-2>
           <template v-slot:content>
             <div class="w300">
-              dapp wrapper-sidebar-level-2 jeha!
+              <div class="d-flex pl-2 pr-4 pt-3 pb-3 align-items-center justify-content-between border-bottom">
+                <h5 class="font-weight-bolder text-nowrap ml-3">
+                  {{ '_mailbox.mailbox' | translate }}
+                </h5>
+              </div>
+
+              <ul class="nav font-medium in w-100 mb-3 mt-auto">
+                <li class="w-100 p-4 clickable d-flex"
+                  v-for="(category, key) in mailCategories"
+                  :class="{ 'active': key === activeCategory }"
+                  @click="evanNavigate(activeCategory); activateCategory(key)">
+                  <i :class="category.icon"></i>
+                  <span>{{ `_mailbox.${  key }` | translate }}</span>
+                  <span class="mx-auto"></span>
+                  <i class="fas fa-chevron-right"></i>
+                </li>
+              </ul>
             </div>
           </template>
         </evan-dapp-wrapper-level-2>
+
+        <evan-breadcrumbs
+          :i18nScope="'_mailbox'"
+          :enableReload="true"
+          @reload="loadMails(true)">
+          <template v-slot:content>
+            <button type="button" class="btn btn-primary btn-circle"
+              @click="evanNavigate('add');">
+              <i class="fas fa-plus"></i>
+            </button>
+          </template>
+        </evan-breadcrumbs>
+
+        <div v-if="$route.name === 'mail-category'">
+          <evan-loading v-if="loading"></evan-loading>
+
+          <div class="p-3" v-if="!loading">
+            <div class="bg-level-1 border pt-3 pb-3">
+              <div class="evan-table table-responsive-md bg-level-2">
+                <table>
+                  <tbody>
+                    <template v-for="(mail, index) in mailCategories[activeCategory].mails">
+                      <tr v-if="index !== 0"><td></td></tr>
+                      <tr class="clickable"
+                        @click="openMailDetail(mail)">
+                        <td class="text-primary"
+                          v-if="activeCategory === 'sent'">
+                          <span class="d-block font-weight-bold">
+                            {{ addressBook[mail.to] ? addressBook[mail.to].alias : mail.to }}
+                          </span>
+                          <span class="text-truncate" v-if="addressBook[mail.to]">
+                            {{ mail.to }}
+                          </span>
+                        </td>
+                        <td class="text-primary" v-else>
+                          <span class="d-block font-weight-bold">
+                            {{ addressBook[mail.from] ? addressBook[mail.from].alias : mail.from }}
+                          </span>
+                          <span class="text-truncate" v-if="addressBook[mail.from]">
+                            {{ mail.from }}
+                          </span>
+                        </td>
+                        <td class="mail-body">
+                          <span class="d-block font-weight-bold">{{ mail.title }}</span>
+                          <span class="force-oneline"
+                            style="max-width: 600px"
+                            v-html="mail.body">
+                          </span>
+                        </td>
+                        <td 
+                          style="width: 30px; height: 70px">
+                          <i class="fas fa-envelope large text-secondary" 
+                            v-if="readMails.indexOf(mail.address) === -1">
+                          </i>
+                        </td>
+                        <td>
+                          {{ mail.sent | moment('from') }}
+                        </td>
+                        <td
+                          class="pt-4"
+                          style="width: 30px; height: 70px">
+                          <i class="fas fa-paperclip" 
+                            v-if="mail.attachments">
+                          </i>
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-3 mb-3 p-3 w-100"
+            v-if="!loading && mailCategories[activeCategory].offset <= mailCategories[activeCategory].totalResultCount">
+            <button class="btn btn-rounded btn-primary"
+              :disabled="mailCategories[activeCategory].loading"
+              @click="loadMails()">
+              <div class="spinner-border spinner-border-sm text-light mr-3"
+                v-if="mailCategories[activeCategory].loading">
+              </div>
+              {{ `_mailbox.load-more` | translate }}
+            </button>
+          </div>
+        </div>
+        <transition name="fade" mode="out-in"
+          v-else>
+          <router-view></router-view>
+        </transition>
       </template>
     </evan-dapp-wrapper>
   </div>
 </template>
 
 <script lang="ts">
-  import mailboxRootComponent from './root.ts';
-  export default mailboxRootComponent;
+  import addressbookRootComponent from './root.ts';
+  export default addressbookRootComponent;
 </script>
 
-<style lang="scss" scoped>
-  @import './root';
-</style>
+

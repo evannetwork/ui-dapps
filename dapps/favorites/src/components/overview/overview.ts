@@ -47,11 +47,24 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    */
   loading = true;
 
+  async created() {
+    await this.loadBookmarks();
+  }
+
   /**
    * Load the favorites and map the correct language keys.
    */
-  async created() {
+  async loadBookmarks(reload?: boolean) {
+    this.loading = true;
+
     const runtime = (<any>this).getRuntime();
+
+    // force bookmarks reload on clicking reloading button
+    if (reload) {
+      delete runtime.profile.trees[runtime.profile.treeLabels.bookmarkedDapps];
+    }
+
+    // load favorites
     const favorites = await runtime.profile.getBookmarkDefinitions() || {};
     const locales = [ (<any>this).$i18n.locale(), 'en' ];
 

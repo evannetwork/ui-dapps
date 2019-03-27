@@ -28,8 +28,17 @@
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import { DAppLoader } from '@evan.network/ui-vue-core';
 
+import DetailComponent from './components/detail/detail.vue';
+import AddComponent from './components/add/add.vue';
+
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', redirect: { path: 'received' } },
+  { name: 'add', path: 'add', component: AddComponent },
+  { name: 'mail-category', path: ':category', },
+  { name: 'detail', path: 'detail/:mailAddress', component: DetailComponent },
+  { name: 'detailInCategory', path: ':category/detail/:mailAddress', component: DetailComponent },
+];
 
 export default routeRegistration;
 

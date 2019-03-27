@@ -95,6 +95,6 @@ export default class AddComponent extends mixins(EvanComponent) {
    * Save the new contact using the queue.
    */
   addContact() {
-    (<any>this).evanNavigate('overview');
+    (<any>this).evanNavigate('');
   }
 }

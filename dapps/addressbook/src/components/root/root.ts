@@ -37,5 +37,75 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
 export default class AddressBookComponent extends mixins(EvanComponent) {
+  /**
+   * show the loading symbol
+   */
+  loading = true;
 
+  /**
+   * Current category of visible contacts
+   */
+  activeCategory = 'all';
+
+  /**
+   * All contacts build into an contacts array mapped to tags
+   */
+  contacts: any = null;
+
+  /**
+   * Run the initialization
+   */
+  async created() {}
+
+  /**
+   * Load the contacts and map them to the tag categories and make it usable from the template
+   *
+   * @param      {boolean}  reload  was the component reloaded?
+   */
+  async loadContacts(reload?: boolean) {
+    this.loading = true;
+
+    // quick usage
+    const runtime = (<any>this).getRuntime();
+
+    // reset the contracts
+    this.contacts = { all: [ ] };
+
+    // force addressbook reload on clicking reloading button
+    if (reload) {
+      delete runtime.profile.trees[runtime.profile.treeLabels.addressBook];
+    }
+
+    // load the address book for the current user
+    const addressBook = await runtime.profile.getAddressBook();
+
+    // map all the contacts to it's categories
+    Object.keys(addressBook.profile).forEach((address) => {
+      const contact = addressBook.profile[address];
+      contact.address = address;
+
+      // parse tags to have the correct format (move string as one entry to an new array, default
+      // is an array)
+      if (!Array.isArray(contact.tags)) {
+        if (typeof contact.tags === 'string') {
+          contact.tags = [ contact.tags ];
+        } else {
+          contact.tags = [ ];
+        }
+      }
+
+      // add the contact to the "all" category
+      this.contacts.all.push(contact);
+
+      // push the contact to each specific tag
+      contact.tags.forEach(tag => {
+        this.contacts[tag] = this.contacts[tag] || [ ];
+        this.contacts[tag].push(contact);
+      });
+
+      return contact;
+    });
+
+    this.loading = false;
+  }
 }

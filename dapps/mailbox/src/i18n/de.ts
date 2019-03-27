@@ -28,7 +28,16 @@
 /* tslint:disable */
 export default {
   "_mailbox": {
-    "routes": {
+    "add": "Nachricht senden",
+    "detail": "Nachrichtsdetails",
+    "load-more": "Mehr Laden...",
+    "mailbox": "Nachrichten",
+    "received": "Empfangen",
+    "sent": "Gesendet",
+    "to": "an",
+    "attachments": {
+      "commKey": "Kontaktanfrage akzeptieren",
+      "contract": "Vertragseinladung akzeptieren"
     }
   }
 }

@@ -27,43 +27,45 @@
 
 <template>
   <div>
-    <evan-breadcrumbs
-      :i18nScope="'_favorites'"
-      :enableReload="true"
-      @reload="loadBookmarks(true)">
-      <template v-slot:content>
-        <button type="button" class="btn btn-primary btn-circle"
-          @click="evanNavigate('overview/add')">
-          <i class="fas fa-plus"></i>
-        </button>
-      </template>
-    </evan-breadcrumbs>
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3 d-md-flex flex-wrap justify-content-center"
-      v-if="!loading">
-      <div class="favorite
-          col-md-4 col-lg-3 col-xl-2
-          p-0 m-md-3 mb-3 
-          text-center
-          bg-level-1 border evan-highlight"
-        style="min-width: 250px"
-        v-for="(favorite, index) in favorites"
-        @click="openFavorite(favorite)">
-        <img class="img-fluid p-3"
-          style="max-width: 200px; min-height: 200px;"
-          :src="favorite.imgSquare">
-
-        <div class="text-left p-3 border-top">
-          <h5 class="font-weight-bold">{{ favorite.name }}</h5>
-          <span>{{ favorite.description }}</span>
+    <div class="p-3 text-left">
+      <div class="bg-level-1 border">
+        <div class="d-flex pl-3 pr-3 pt-4 pb-4 border-bottom align-items-center">
+          <h4 class="m-0">
+            {{ `_mailbox.add` | translate }}
+          </h4>
         </div>
+
+        <form class="p-4" v-on:submit.prevent="sendMail">
+          <!-- <div class="form-group">
+            <label for="alias">
+              {{ `${ formI18nScope }.alias.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="alias" ref="alias"
+              :placeholder="`${ formI18nScope }.alias.desc` | translate"
+              v-model="contactForm.alias.value"
+              v-bind:class="{ 'is-invalid' : contactForm.alias.error }"
+              @blur="contactForm.alias.setDirty()">
+            <div class="invalid-feedback">
+              {{ `${ formI18nScope }.alias.error` | translate }}
+            </div>
+          </div>
+
+          <div class="text-center mt-3 w-100">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              :disabled="!contactForm.isValid">
+              {{ `${ formI18nScope }.submit` | translate }}
+            </button>
+          </div> -->
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './overview.ts';
+  import Component from './add.ts';
   export default Component;
 </script>
 

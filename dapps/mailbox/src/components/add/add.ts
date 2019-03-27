@@ -25,13 +25,34 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-  </div>
-</template>
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+// evan.network imports
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+interface MailFormInterface extends EvanForm {
+  alias: EvanFormControl;
+  emailInvite: EvanFormControl;
+  address: EvanFormControl;
+  email: EvanFormControl;
+}
+
+@Component({ })
+export default class AddComponent extends mixins(EvanComponent) {
+  /**
+   * Used for easier building form i18n keys
+   */
+  formI18nScope = '_addressbook.contact-form';
+
+  /**
+   * Setup contact form.
+   */
+  created() {
+    
+  }
+}

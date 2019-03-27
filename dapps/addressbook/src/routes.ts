@@ -34,11 +34,9 @@ import DetailComponent from './components/detail/detail.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', redirect: { name: 'overview' } },
-  { name: 'overview', path: 'overview', component: OverviewComponent },
-  { path: 'overview/add', component: AddComponent },
-  { path: 'overview/detail', redirect: { name: 'overview' } },
-  { path: 'overview/detail/:addres', component: DetailComponent },
+  { name: 'add', path: 'add', component: AddComponent },
+  { path: 'detail', redirect: { name: 'overview' } },
+  { name: 'detail', path: 'detail/:addres', component: DetailComponent },
 ];
 
 export default routeRegistration;

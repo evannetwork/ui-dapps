@@ -27,8 +27,6 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_addressbook'"></evan-breadcrumbs>
-
     <div class="p-3 text-left">
       <div class="bg-level-1 border">
         <div class="d-flex p-3 border-bottom align-items-center">

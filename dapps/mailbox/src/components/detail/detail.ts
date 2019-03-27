@@ -25,4 +25,48 @@
   https://evan.network/license/
 */
 
-.test { color: red }
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+@Component({ })
+export default class DetailComponent extends mixins(EvanComponent) {
+  /**
+   * mail detail of the opened mail address
+   */
+  mail: any;
+
+  /**
+   * show loading symbol
+   */
+  loading = true;
+
+  /**
+   * Currents users contacts
+   */
+  addressBook: any;
+
+  /**
+   * When an attachment gets accepted, show an loading animation and disable the buttons
+   */
+  acceptingAttachment: boolean;
+
+  /**
+   * Load the mail details
+   */
+  async created() {
+    const runtime = (<any>this).getRuntime();
+
+    this.mail = (await runtime.mailbox
+      .getMail((<any>this).$route.params.mailAddress)).content;
+    this.addressBook = (await runtime.profile.getAddressBook()).profile;
+
+    this.loading = false;
+  }
+}
