@@ -30,7 +30,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
 export * from './config';
-export { Dispatcher } from './Dispatcher';
+export { Dispatcher, DispatcherInstance } from './Dispatcher';
 import './index.scss';
 
 /**
