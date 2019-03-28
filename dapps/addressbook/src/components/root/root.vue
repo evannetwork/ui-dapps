@@ -63,7 +63,7 @@
           @reload="loadContacts(true)">
           <template v-slot:content>
             <button type="button" class="btn btn-primary btn-circle"
-              @click="evanNavigate('add'); activeCategory = ''">
+              @click="evanNavigate('add');">
               <i class="fas fa-plus"></i>
             </button>
           </template>
@@ -97,7 +97,7 @@
                         <td class="p-2"></td>
                       </tr>
                       <tr class="clickable"
-                        @click="evanNavigate(`detail/${ contact.address }`); activeCategory = ''">
+                        @click="evanNavigate(`detail/${ contact.address }`);">
                         <td class="text-primary">{{ contact.alias }}</td>
                         <td>{{ contact.address || contact.email }}</td>
                       </tr>

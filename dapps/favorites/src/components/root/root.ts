@@ -36,6 +36,69 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class favoritesRootComponent extends mixins(EvanComponent) {
+export default class OverviewComponent extends mixins(EvanComponent) {
+  /**
+   * favorites of the current user
+   */
+  favorites: Array<any> = [ ];
 
+  /**
+   * show the loading symbol
+   */
+  loading = true;
+
+  /**
+   * Load the favorites and map the correct language keys.
+   */
+  async loadBookmarks(reload?: boolean) {
+    this.loading = true;
+
+    const runtime = (<any>this).getRuntime();
+
+    // force bookmarks reload on clicking reloading button
+    if (reload) {
+      delete runtime.profile.trees[runtime.profile.treeLabels.bookmarkedDapps];
+    }
+
+    // load favorites
+    const favorites = await runtime.profile.getBookmarkDefinitions() || {};
+    const locales = [ (<any>this).$i18n.locale(), 'en' ];
+
+    // map the favorites to an array and check for the correct i18n keys
+    this.favorites = Object.keys(favorites).map(address => {
+      const favorite = favorites[address];
+      favorite.address = address;
+
+      // check for correct i18n keys
+      for (let i = 0; i < locales.length; i++) {
+        try {
+          favorite.name = favorite.i18n.name[locales[i]];
+          favorite.description = favorite.i18n.description[locales[i]];
+
+          break;
+        } catch (ex) { }
+      }
+
+      return favorite;
+    });
+
+    this.loading = false;
+  }
+
+  /**
+   * Checks if the favorite should be opened as fullscreen application or not.
+   */
+  openFavorite(favorite: any) {
+    if (favorite.standalone) {
+      window.location.hash = `#/${ favorite.address }`;
+    } else {
+      const favoritesDApp = (<any>this).dapp;
+      const parentDApp = favoritesDApp.baseHash.split('/');
+      // remove the favorites dapp from the base hash, so the new app will be openend within the
+      // parent context
+      parentDApp.pop();
+
+      window.location.hash = `#${ parentDApp.join('/') }/${ favorite.address }`;
+    }
+  }
 }

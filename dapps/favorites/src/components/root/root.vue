@@ -26,10 +26,47 @@
 */
 
 <template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper>
+  <div>
+    <evan-dapp-wrapper
+      v-on:loggedin="loadBookmarks()">
       <template v-slot:content>
-        <transition name="fade" mode="out-in">
+        <evan-breadcrumbs
+          :i18nScope="'_favorites'"
+          :enableReload="true"
+          @reload="loadBookmarks(true)">
+          <template v-slot:content>
+            <button type="button" class="btn btn-primary btn-circle"
+              v-if="$route.name !== 'add'"
+              @click="evanNavigate('add')">
+              <i class="fas fa-plus"></i>
+            </button>
+          </template>
+        </evan-breadcrumbs>
+        <template v-if="$route.name !== 'add'">
+          <evan-loading v-if="loading"></evan-loading>
+          <div class="p-3 d-md-flex flex-wrap justify-content-center"
+            v-if="!loading">
+            <div class="favorite
+                col-md-4 col-lg-3 col-xl-2
+                p-0 m-md-3 mb-3 
+                text-center
+                bg-level-1 border evan-highlight"
+              style="min-width: 250px"
+              v-for="(favorite, index) in favorites"
+              @click="openFavorite(favorite)">
+              <img class="img-fluid p-3"
+                style="max-width: 200px; min-height: 200px;"
+                :src="favorite.imgSquare">
+
+              <div class="text-left p-3 border-top">
+                <h5 class="font-weight-bold">{{ favorite.name }}</h5>
+                <span>{{ favorite.description }}</span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <transition name="fade" mode="out-in"
+          v-else>
           <router-view></router-view>
         </transition>
       </template>
@@ -38,6 +75,7 @@
 </template>
 
 <script lang="ts">
-  import favoritesRootComponent from './root.ts';
-  export default favoritesRootComponent;
+  import Component from './root.ts';
+  export default Component;
 </script>
+

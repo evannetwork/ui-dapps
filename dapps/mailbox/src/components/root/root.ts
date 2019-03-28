@@ -144,6 +144,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
 
     // check for loading more mails
     category.totalResultCount = mailResult.totalResultCount;
+    window.localStorage['evan-mail-read-count'] = category.totalResultCount;
 
     // map all the mails in to an mail array
     const mailArray = Object.keys(mailResult.mails)

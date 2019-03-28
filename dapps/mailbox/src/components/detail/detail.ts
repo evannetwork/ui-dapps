@@ -67,6 +67,57 @@ export default class DetailComponent extends mixins(EvanComponent) {
       .getMail((<any>this).$route.params.mailAddress)).content;
     this.addressBook = (await runtime.profile.getAddressBook()).profile;
 
+    // check the attachment status
+    if (this.mail.attachments) {
+      await Promise.all(this.mail.attachments.map(async (attachment) => {
+        let accepted;
+
+        switch (attachment.type) {
+          case 'commKey': {
+            // check if the commKey was already added
+            accepted = !!(await runtime.profile
+              .getContactKey(this.mail.from, 'commKey'));
+
+            break;
+          }
+          case 'contract': {
+            accepted = !!(await runtime.profile.getBcContract(
+              attachment.bc,
+              attachment.storeKey || attachment.address
+            ));
+
+            break;
+          }
+          default: {
+            attachment.unkown = true;
+          }
+        }
+
+        attachment.status = accepted ? 'accepted' : 'new';
+      }));
+    }
+
     this.loading = false;
+  }
+
+  /**
+   * Triggers the attachment dispatcher and accepts the contact / contract / ...
+   */
+  acceptAttachment(attachment: any, modalRef: any) {
+    console.log('TODO: accept the attachment')
+
+    modalRef.hide();
+  }
+
+  /**
+   * Checks if the attachment needs be accepted. If it's need to be accepted, show the accept modal,
+   * else open the attachment
+   */
+  openAttachment(attachment: any, modalRef: any) {
+    if (attachment.status === 'accepted') {
+      console.log('TODO: open the attachment');
+    } else {
+      modalRef.show();
+    }
   }
 }

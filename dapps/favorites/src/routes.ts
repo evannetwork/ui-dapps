@@ -33,9 +33,7 @@ import AddComponent from './components/add/add.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', redirect: { name: 'overview' } },
-  { name: 'overview', path: 'overview', component: OverviewComponent },
-  { name: 'add', path: 'overview/add', component: AddComponent },
+  { name: 'add', path: 'add', component: AddComponent },
 ];
 
 export default routeRegistration;

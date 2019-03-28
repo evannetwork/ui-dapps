@@ -31,11 +31,112 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import addFavoriteDispatcher from '../../dispatchers/add';
+
+interface FavoriteFormInterface extends EvanForm {
+  address: EvanFormControl;
+}
+
 @Component({ })
 export default class AddComponent extends mixins(EvanComponent) {
+  /**
+   * formular specific variables
+   */
+  favoriteForm: FavoriteFormInterface = null;
 
+  /**
+   * Can the favorite added? (added, notFound, ok)
+   */
+  addStatus: string;
+
+  /**
+   * Show loading while checking address input
+   */
+  checking: boolean;
+
+  /**
+   * Loaded description for the current address
+   */
+  description: any;
+
+  /**
+   * Setup favorite form.
+   */
+  created() {
+    this.favoriteForm = (<FavoriteFormInterface>new EvanForm(this, {
+      address: {
+        value: '',
+        validate: function(vueInstance: AddComponent, form: FavoriteFormInterface) {
+          return this.value.length !== 0;
+        }
+      },
+    }));
+
+    this.$nextTick(() => (this.$refs['address'] as any).focus());
+  }
+
+  /**
+   * Check if an favorite was already added. If not, ask for accept, else, show already added.
+   */
+  async checkFavorite() {
+    const runtime = (<any>this).getRuntime();
+    const domainName = dappBrowser.getDomainName();
+    let address = this.favoriteForm.address.value;
+
+    // load the favorites
+    const favorites = await runtime.profile.getBookmarkDefinitions() || {};
+
+    // add root domain, if it was not applied and it is not an contract
+    if (address.indexOf('0x') !== 0 &&
+      address.indexOf(domainName, address.length - domainName.length) === -1) {
+      address = `${ address }.${ domainName }`;
+    }
+
+    // favorite was already added
+    if (favorites[address]) {
+      this.addStatus = 'added';
+    } else {
+      // check if the description exists
+      try {
+        const description = await runtime.description.getDescription(address,
+          runtime.activeAccount);
+
+        // if it is invalid, show the not found
+        if (description && description.public) {
+          this.description = description.public;
+        } else {
+          this.description = null;
+        }
+      } catch (ex) {
+        this.description = null;
+      }
+
+      this.addStatus = this.description ? 'ok' : 'notFound';
+    }
+
+    (<any>this.$refs.favoriteAddModal).show();
+  }
+
+  /**
+   * Save the new favorite
+   */
+  addFavorite() {
+    addFavoriteDispatcher.start((<any>this).getRuntime(), {
+      name: this.description.name,
+      description: this.description.description,
+      i18n: this.description.i18n,
+      imgSquare: this.description.imgSquare,
+      imgWide: this.description.imgWide,
+      standalone: this.description.standalone || this.description.dapp.standalone,
+      primaryColor: this.description.primaryColor || this.description.dapp.primaryColor,
+      secondaryColor: this.description.secondaryColor || this.description.dapp.secondaryColor
+    });
+
+    (<any>this.$refs.favoriteAddModal).hide();
+    (<any>this).evanNavigate('');
+  }
 }

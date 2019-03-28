@@ -36,8 +36,17 @@ export default {
     "sent": "Sent",
     "to": "to",
     "attachments": {
-      "commKey": "Accept contact request",
-      "contract": "Accept contract invitation"
+      "continue": "continue",
+      "commKey": {
+        "new": "Accept contact request",
+        "accepted": "Show contact",
+        "modal-body": "Do you really want to add this contact?"
+      },
+      "Contract": {
+        "new": "Accept contract invitation",
+        "accepted": "Open contract",
+        "modal-body": "Do you really want to accept this contract?"
+      }
     }
   }
 }

@@ -98,13 +98,13 @@
                         <td class="mail-body">
                           <span class="d-block font-weight-bold">{{ mail.title }}</span>
                           <span class="force-oneline"
-                            style="max-width: 600px"
+                            style="max-width: 300px"
                             v-html="mail.body">
                           </span>
                         </td>
                         <td 
                           style="width: 30px; height: 70px">
-                          <i class="fas fa-envelope large text-secondary" 
+                          <i class="fas fa-envelope text-secondary" 
                             v-if="readMails.indexOf(mail.address) === -1">
                           </i>
                         </td>

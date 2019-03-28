@@ -27,7 +27,63 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_favorites'"></evan-breadcrumbs>
+    <div class="p-3 text-left">
+      <div class="bg-level-1 border">
+        <div class="d-flex p-3 border-bottom align-items-center">
+          <h4 class="m-0">
+            {{ `_favorites.add` | translate }}
+          </h4>
+        </div>
+
+        <evan-modal ref="favoriteAddModal">
+          <template v-slot:header>
+            <h5 class="modal-title">
+              {{ `_favorites.add-form.modal.${ addStatus }.title` | translate }}
+            </h5>
+          </template>
+          <template v-slot:body>
+            <p class="text-left">
+              {{ `_favorites.add-form.modal.${ addStatus }.desc`  | translate }}
+            </p>
+          </template>
+          <template v-slot:footer>
+            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+             v-if="addStatus === 'ok'"
+              @click="addFavorite();">
+              {{ `_favorites.add` | translate }}
+            </button>
+          </template>
+        </evan-modal>
+
+        <form class="p-4" v-on:submit.prevent="checkFavorite">
+          <div class="form-group">
+            <label for="address">
+              {{ `_favorites.add-form.address.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="address" ref="address"
+              :placeholder="`_favorites.add-form.address.desc` | translate"
+              v-model="favoriteForm.address.value"
+              v-bind:class="{ 'is-invalid' : favoriteForm.address.error }"
+              @blur="favoriteForm.address.setDirty()">
+            <div class="invalid-feedback">
+              {{ `_favorites.add-form.address.error` | translate }}
+            </div>
+          </div>
+
+          <div class="text-center mt-3 w-100">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              :disabled="!favoriteForm.isValid || checking">
+              <div class="spinner-border spinner-border-sm text-light mr-3"
+                v-if="checking">
+              </div>
+              {{ `_favorites.add` | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,4 +91,3 @@
   import Component from './add.ts';
   export default Component;
 </script>
-

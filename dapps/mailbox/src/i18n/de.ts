@@ -36,8 +36,17 @@ export default {
     "sent": "Gesendet",
     "to": "an",
     "attachments": {
-      "commKey": "Kontaktanfrage akzeptieren",
-      "contract": "Vertragseinladung akzeptieren"
+      "continue": "weiter",
+      "commKey": {
+        "new": "Kontaktanfrage akzeptieren",
+        "accepted": "Kontakt anzeigen",
+        "modal-body": "Wollen Sie diesen Kontakt wirklich hinzufügen?"
+      },
+      "contract": {
+        "new": "Vertragseinladung akzeptieren",
+        "accepted": "Vertrag öffnen",
+        "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?"
+      }
     }
   }
 }

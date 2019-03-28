@@ -25,37 +25,18 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_favorites": {
-    "add": "Favorit hinzufügen",
-    "add-form": {
-      "address": {
-        "desc": "Bitte geben Sie die Anwendungsadresse ein. (ENS- / Vertragsadresse)",
-        "title": "Anwendungsadresse",
-        "error": "Bitte geben Sie eine Adresse ein!"
-      },
-      "modal": {
-        "added": {
-          "desc": "Diese Anwedung ist bereits zu Ihren Favoriten hinzugefügt worden.",
-          "title": "Favorit hinzufügen"
-        },
-        "ok": {
-          "desc": "Wollen sie die ausgewählte Anwendung zu Ihren Favoriten hinzufügen?",
-          "title": "Favorit hinzufügen",
-        },
-        "notFound": {
-          "desc": "Für die angegebene Adresse konnte keine Anwendung gefunden werden.",
-          "title": "Nicht gefunden",
-        }
-      }
-    },
-    "dispatcher": {
-      "add": "Favorit hinzufügen",
-      "remove": "Favorit entfernen"
-    },
-    "favorites": "Favoriten",
-    "overview": "Übersicht"
-  }
-}
-/* tslint:enable */;
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+
+const removeFavoriteDispatcher = new Dispatcher(
+  `favorites.${ dappBrowser.getDomainName() }`,
+  'removeFavoriteDispatcher',
+  100000,
+  '_favorites.dispatcher.remove'
+)
+.step(() => {
+  console.log(this.data);
+});
+
+export default removeFavoriteDispatcher;

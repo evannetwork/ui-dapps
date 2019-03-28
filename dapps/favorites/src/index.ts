@@ -33,6 +33,11 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 
+// export dispatchers
+import addFavoriteDispatcher from './dispatchers/add';
+import removeFavoriteDispatcher from './dispatchers/remove';
+export { addFavoriteDispatcher, removeFavoriteDispatcher, translations }
+
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
  * dbcp. So startup, it's evan time!
@@ -56,3 +61,4 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     Vue: Vue,
   });
 }
+

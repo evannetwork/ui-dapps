@@ -38,6 +38,8 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'mail-category', path: ':category', },
   { name: 'detail', path: 'detail/:mailAddress', component: DetailComponent },
   { name: 'detailInCategory', path: ':category/detail/:mailAddress', component: DetailComponent },
+  { path: 'detail', component: DetailComponent },
+  { path: ':category/detail', component: DetailComponent },
 ];
 
 export default routeRegistration;

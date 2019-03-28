@@ -58,15 +58,36 @@
           </div>
 
           <div v-if="mail.attachments" class="pt-3 text-center">
-            <button class="btn btn-rounded btn-primary"
+            <template
               v-for="(attachment, index) in mail.attachments"
-              :disabled="acceptingAttachment"
-              @click="acceptAttachment(attachment)">
-              <div class="spinner-border spinner-border-sm text-light mr-3"
-                v-if="acceptingAttachment">
-              </div>
-              {{ `_mailbox.attachments.${ attachment.type }` | translate }}
-            </button>
+              v-if="!attachment.unkown">
+              <evan-modal ref="attachmentModal">
+                <template v-slot:header>
+                  <h5 class="modal-title">
+                    {{ `_mailbox.attachments.${ attachment.type }.new` | translate }}
+                  </h5>
+                </template>
+                <template v-slot:body>
+                  <p class="text-left">
+                    {{ `_mailbox.attachments.${ attachment.type }.modal-body`  | translate }}
+                  </p>
+                </template>
+                <template v-slot:footer>
+                  <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                    @click="acceptAttachment(attachment, $refs.attachmentModal[index]);">
+                    {{ `_mailbox.attachments.continue` | translate }}
+                  </button>
+                </template>
+              </evan-modal>
+              <button class="btn btn-rounded btn-primary"
+                :disabled="acceptingAttachment || attachment.disabled"
+                @click="openAttachment(attachment, $refs.attachmentModal[index])">
+                <div class="spinner-border spinner-border-sm text-light mr-3"
+                  v-if="acceptingAttachment">
+                </div>
+                {{ `_mailbox.attachments.${ attachment.type }.${ attachment.status }` | translate }}
+              </button>
+            </template>
           </div>
         </div>
       </template>
