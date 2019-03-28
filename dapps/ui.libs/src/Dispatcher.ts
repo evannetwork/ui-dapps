@@ -87,61 +87,63 @@ export class Dispatcher {
    * @param      {any}     func     Function that should be called
    */
   static watch(func: any, dappEns = '*', name = '*') {
-    document.removeEventListener(`evan-queue-${ dappEns }-${ name }`, func);
+    window.addEventListener(`evan-queue-${ dappEns }-${ name }`, func);
 
     // return the watch remove function
-    return () => document.removeEventListener(`evan-queue-${ dappEns }-${ name }`, func);
+    return () => window.removeEventListener(`evan-queue-${ dappEns }-${ name }`, func);
   }
 
   constructor(dappEns: string, name: string, price: number, title?: string) {
     this.dappEns = dappEns;
     this.name = name;
     this.title = title || name;
-    this.id = dappEns + name;
+    this.id = (`${ dappEns }|||${ name }`);
   }
 
-  /**
-   * Get the current running instances.
-   */
-  async getQueueWithInstances(runtime: any): Promise<any> {
-    if (!this.queues[runtime.activeAccount]) {
-      // create a new queue and initialize it
-      const queue = await new EvanQueue(runtime.activeAccount);
-      await queue.initialize();
+  // /**
+  //  * Get the current running instances.
+  //  */
+  // async getQueueWithInstances(runtime: any): Promise<any> {
+  //   if (!this.queues[runtime.activeAccount]) {
+  //     // create a new queue and initialize it
+  //     const queue = await new EvanQueue(runtime.activeAccount);
 
-      // recover all previous running instances for this dispatcher
-      const instances = Object.keys(queue.entries)
-        .map((entryKey: string) => {
-          const entry = queue.entries[entryKey];
+  //     // recover all previous running instances for this dispatcher
+  //     const entries = await queue.load(this.id);
+  //     const instances = { };
 
-          if (entry.dispatcher.dappEns === this.dappEns && entry.dispatcher.name === this.name) {
-            const instance = new DispatcherInstance(queue, this, runtime, entry.data);
+  //     Object.keys(entries).forEach((entryKey: string) => {
+  //       const entry = entries[entryKey];
 
-            instance.error = entry.error;
-            instance.status = entry.status;
-            instance.stepIndex = entry.stepIndex;
+  //       if (entry.dispatcher.dappEns === this.dappEns && entry.dispatcher.name === this.name) {
+  //         const instance = new DispatcherInstance(queue, this, runtime, entry.data, entry.stepIndex,
+  //           entry.id);
 
-            return instance;
-          }
-        })
-        .filter(instance => !!instance);
+  //         // set error and status manually
+  //         instance.error = entry.error;
+  //         instance.status = entry.status;
 
-      // set the queues cache
-      this.queues[runtime.activeAccount] = { queue, instances, };
-    }
+  //         // add instance to instances
+  //         instances[instance.id] = instance;
+  //       }
+  //     });
 
-    // return the queue and the instances
-    return this.queues[runtime.activeAccount];
-  }
+  //     // set the queues cache
+  //     this.queues[runtime.activeAccount] = { queue, instances, };
+  //   }
 
-  /**
-   * Gets the instances.
-   *
-   * @param      {any}  runtime  The runtime
-   */
-  async getInstances(runtime: any): Promise<Array<DispatcherInstance>> {
-    return (await this.getQueueWithInstances(runtime)).instances;
-  }
+  //   // return the queue and the instances
+  //   return this.queues[runtime.activeAccount];
+  // }
+
+  // /**
+  //  * Gets the instances.
+  //  *
+  //  * @param      {any}  runtime  The runtime
+  //  */
+  // async getInstances(runtime: any): Promise<Array<DispatcherInstance>> {
+  //   return (await this.getQueueWithInstances(runtime)).instances;
+  // }
 
   /**
    * Add a step, that should be runned every time at the begging and ignore the state.
@@ -158,9 +160,8 @@ export class Dispatcher {
    * Adds a step into the step array
    *
    * @param      {Function}  stepFunc   Function that should be called.
-   * @param      {boolean}   isStartup  Should this step runned at the beginning every time?
    */
-  step(stepFunc: Function, isStartup: boolean) {
+  step(stepFunc: Function) {
     this.steps.push(stepFunc);
 
     return this;
@@ -174,24 +175,12 @@ export class Dispatcher {
    * @param      {number}  stepIndex  at which step should be started?
    */
   async start(runtime: any, data: any, stepIndex = 0) {
-    const queueWithInstances = await this.getQueueWithInstances(runtime);
-    const instance = new DispatcherInstance(queueWithInstances.queue, this, runtime, data,
+    const queue = await new EvanQueue(runtime.activeAccount);
+    const instance = new DispatcherInstance(queue, this, runtime, data,
       stepIndex);
-    
-    // add the instance into the instances array and watch for updates
-    const clearWatcher = this.watch((event) => {
-      if (event.detail.status === 'finished') {
-        delete queueWithInstances.instances[instance.id];
-        clearWatcher();
-      }
-    });
-
-    // load all instances for this dispatcher and push the new one
-    queueWithInstances.instances[instance.id] = instance;
 
     // start the instance!
-    await instance.startup();
-    await instance.run();
+    await instance.start();
   }
 
   /**
@@ -200,10 +189,10 @@ export class Dispatcher {
    * @param      {Function}  func    function that should be called on an update
    */
   watch(func: any) {
-    document.addEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
+    window.addEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
 
     // return the watch remove function
-    return () => document.removeEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
+    return () => window.removeEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
   }
 }
 
@@ -267,13 +256,21 @@ export class DispatcherInstance {
   };
 
   constructor(queue: EvanQueue, dispatcher: Dispatcher, runtime: any, data: any, stepIndex = 0,
-    id = Date.now() + Math.round(Math.random() * 1000000)) {
+    id: any = Date.now() + Math.round(Math.random() * 1000000)) {
     this.data = data;
     this.dispatcher = dispatcher;
     this.id = id;
     this.queue = queue;
     this.runtime = runtime;
     this.stepIndex = stepIndex;
+  }
+
+  /**
+   * Run the startup and run functions.
+   */
+  async start() {
+    await this.startup();
+    await this.run();
   }
 
   /**
@@ -293,7 +290,7 @@ export class DispatcherInstance {
 
       try {
         // run the next step
-        await (this.dispatcher.steps[this.stepIndex].call(this));
+        await this.dispatcher.steps[this.stepIndex](this, this.data);
 
         // increase the stepIndex
         this.stepIndex += 1;
@@ -310,7 +307,7 @@ export class DispatcherInstance {
         await this.run();
       }
     } else {
-      this.status = 'finished';
+      this.finish();
     }
   }
 
@@ -322,8 +319,9 @@ export class DispatcherInstance {
       `evan-queue-*-*`,
       `evan-queue-${ this.dispatcher.dappEns }-*`,
       `evan-queue-${ this.dispatcher.dappEns }-${ this.dispatcher.name }`,
+      `evan-queue-${ this.id }`,
     ].forEach((eventName) =>
-      document.dispatchEvent(new CustomEvent(eventName, {
+      window.dispatchEvent(new CustomEvent(eventName, {
         detail: {
           dispatcher: this.dispatcher,
           instance: this,
@@ -339,13 +337,9 @@ export class DispatcherInstance {
   async save() {
     await this.queue.save(this.dispatcher.id, this.id, {
       data: this.data,
-      dispatcher: {
-        dappEns: this.dispatcher.dappEns,
-        name: this.dispatcher.name,
-      },
       error: this.error,
       status: this.status,
-      stepIndex: this.stepIndex
+      stepIndex: this.stepIndex,
     });
   }
 
@@ -355,5 +349,19 @@ export class DispatcherInstance {
   async finish() {
     this.status = 'finished';
     this.queue.save(this.dispatcher.id, this.id);
+  }
+
+
+
+  /**
+   * Watch for instance updates
+   *
+   * @param      {Function}  func    function that should be called on an update
+   */
+  watch(func: any) {
+    window.addEventListener(`evan-queue-${ this.id }`, func);
+
+    // return the watch remove function
+    return () => window.removeEventListener(`evan-queue-${ this.id }`, func);
   }
 }
