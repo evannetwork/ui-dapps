@@ -100,51 +100,6 @@ export class Dispatcher {
     this.id = (`${ dappEns }|||${ name }`);
   }
 
-  // /**
-  //  * Get the current running instances.
-  //  */
-  // async getQueueWithInstances(runtime: any): Promise<any> {
-  //   if (!this.queues[runtime.activeAccount]) {
-  //     // create a new queue and initialize it
-  //     const queue = await new EvanQueue(runtime.activeAccount);
-
-  //     // recover all previous running instances for this dispatcher
-  //     const entries = await queue.load(this.id);
-  //     const instances = { };
-
-  //     Object.keys(entries).forEach((entryKey: string) => {
-  //       const entry = entries[entryKey];
-
-  //       if (entry.dispatcher.dappEns === this.dappEns && entry.dispatcher.name === this.name) {
-  //         const instance = new DispatcherInstance(queue, this, runtime, entry.data, entry.stepIndex,
-  //           entry.id);
-
-  //         // set error and status manually
-  //         instance.error = entry.error;
-  //         instance.status = entry.status;
-
-  //         // add instance to instances
-  //         instances[instance.id] = instance;
-  //       }
-  //     });
-
-  //     // set the queues cache
-  //     this.queues[runtime.activeAccount] = { queue, instances, };
-  //   }
-
-  //   // return the queue and the instances
-  //   return this.queues[runtime.activeAccount];
-  // }
-
-  // /**
-  //  * Gets the instances.
-  //  *
-  //  * @param      {any}  runtime  The runtime
-  //  */
-  // async getInstances(runtime: any): Promise<Array<DispatcherInstance>> {
-  //   return (await this.getQueueWithInstances(runtime)).instances;
-  // }
-
   /**
    * Add a step, that should be runned every time at the begging and ignore the state.
    *
@@ -269,6 +224,9 @@ export class DispatcherInstance {
    * Run the startup and run functions.
    */
   async start() {
+    this.status = 'running';
+
+    await this.save();
     await this.startup();
     await this.run();
   }
@@ -277,7 +235,6 @@ export class DispatcherInstance {
    * Run all the startup functions.
    */
   async startup() {
-    this.status = 'startup';
     await this.dispatcher.startupSteps.forEach(startup => startup.call(this));
   }
 
@@ -286,8 +243,6 @@ export class DispatcherInstance {
    */
   async run() {
     if (this.stepIndex < this.dispatcher.steps.length) {
-      this.status = 'running';
-
       try {
         // run the next step
         await this.dispatcher.steps[this.stepIndex](this, this.data);
