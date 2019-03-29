@@ -32,7 +32,7 @@ import { Dispatcher, } from '@evan.network/ui';
 const removeFavoriteDispatcher = new Dispatcher(
   `favorites.${ dappBrowser.getDomainName() }`,
   'removeFavoriteDispatcher',
-  100000,
+  40 * 1000,
   '_favorites.dispatcher.remove'
 )
 

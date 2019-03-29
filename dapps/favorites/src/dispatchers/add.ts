@@ -32,7 +32,7 @@ import { Dispatcher, } from '@evan.network/ui';
 const addFavoriteDispatcher = new Dispatcher(
   `favorites.${ dappBrowser.getDomainName() }`,
   'addFavoriteDispatcher',
-  100000,
+  40 * 1000,
   '_favorites.dispatcher.add'
 )
 
