@@ -26,7 +26,7 @@
 */
 
 
-import { System, dapp, queue, getDomainName } from '@evan.network/ui-dapp-browser';
+import { System, dapp, queue, getDomainName, bccHelper } from '@evan.network/ui-dapp-browser';
 
 import EvanQueue from './Queue';
 
@@ -57,7 +57,12 @@ export class Dispatcher {
   /**
    * estimated gas price for one full steps run. 
    */
-  price: string;
+  gas: number;
+
+  /**
+   * estimated eve price for one full steps run. 
+   */
+  evePrice: number;
 
   /**
    * Steps that should be runned everytime at synchrnisation beginning
@@ -93,11 +98,12 @@ export class Dispatcher {
     return () => window.removeEventListener(`evan-queue-${ dappEns }-${ name }`, func);
   }
 
-  constructor(dappEns: string, name: string, price: number, title?: string) {
+  constructor(dappEns: string, name: string, gas: number, title?: string) {
     this.dappEns = dappEns;
     this.name = name;
     this.title = title || name;
     this.id = (`${ dappEns }|||${ name }`);
+    this.gas = gas;
   }
 
   /**
@@ -220,6 +226,11 @@ export class DispatcherInstance {
   error: any;
 
   /**
+   * If the instance must be accepted, the eve price will be estimated and saved to this instance.
+   */
+  evePrice: number;
+
+  /**
    * Set the current status.
    */
   set status(value) {
@@ -251,11 +262,26 @@ export class DispatcherInstance {
 
   /**
    * Run the startup and run functions.
+   *
+   * @param      {boolean}  accept  should the dispatcher started directly?
    */
-  async start() {
+  async start(accept?: boolean) {
     await this.save();
-    await this.startup();
 
+    // if the instance starts the first time and the price threshold is reached, ask for permissions
+    if (!accept && this.stepIndex === 0) {
+      // calculate the price
+      const defaultThreshold = 0;
+      const priceThreshold = parseFloat(window.location['dispatcher-eve-treshold'] || '0.5');
+      const gasPrice = parseInt(await this.runtime.signer.getGasPrice(), 16);
+      this.evePrice = this.runtime.web3.utils.fromWei(gasPrice.toString());
+
+      if (this.evePrice > (isNaN(priceThreshold) ? defaultThreshold : priceThreshold)) {
+        return this.status = 'accept';
+      }
+    }
+    
+    await this.startup();
     this.status = 'running';
     await this.run();
   }
@@ -267,6 +293,13 @@ export class DispatcherInstance {
     this.status = 'starting';
 
     await this.dispatcher.startupSteps.forEach(startup => startup.call(this));
+  }
+
+  /**
+   * Accept the dispatcher instance and start the synchronisation.
+   */
+  async accept() {
+    await this.start(true);
   }
 
   /**
@@ -340,15 +373,23 @@ export class DispatcherInstance {
       `evan-queue-${ this.dispatcher.dappEns }-*`,
       `evan-queue-${ this.dispatcher.dappEns }-${ this.dispatcher.name }`,
       `evan-queue-${ this.id }`,
-    ].forEach((eventName) =>
-      window.dispatchEvent(new CustomEvent(eventName, {
-        detail: {
-          dispatcher: this.dispatcher,
-          instance: this,
-          status: status,
-        }
-      }))
-    );
+    ].forEach((eventName) => this.sendEvent(eventName, status));
+  }
+
+  /**
+   * Send an event with an status for this instance.
+   *
+   * @param      {string}  eventName  event name to trigger
+   * @param      {any}     status     status that should be sent
+   */
+  sendEvent(eventName: string, status: any) {
+    window.dispatchEvent(new CustomEvent(eventName, {
+      detail: {
+        dispatcher: this.dispatcher,
+        instance: this,
+        status: status,
+      }
+    }))
   }
 
   /**
