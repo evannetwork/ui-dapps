@@ -123,6 +123,30 @@ export class Dispatcher {
   }
 
   /**
+   * Get the current running instances.
+   */
+  async getInstances(runtime: any): Promise<any> {
+    // create a new queue and initialize it
+    const queue = await new EvanQueue(runtime.activeAccount);
+
+    // recover all previous running instances for this dispatcher
+    const entries = await queue.load(this.id);
+    const instances = { };
+
+    Object.keys(entries).forEach((instanceId: string) => {
+      const entry = entries[instanceId];
+      const instance = new DispatcherInstance(queue, this, runtime, entry.data,
+        entry.stepIndex, instanceId, entry.error);
+
+      // add instance to instances
+      instances[instance.id] = instance;
+    });
+
+    // return the queue and the instances
+    return instances;
+  }
+
+  /**
    * Starts this dispatcher with an specific runtime, an data object at an specific point.
    *
    * @param      {any}     runtime    bcc runtime
@@ -188,7 +212,7 @@ export class DispatcherInstance {
   /**
    * Current running status
    */
-  _status: any;
+  _status = 'stopped';
 
   /**
    * Error message.
@@ -211,23 +235,28 @@ export class DispatcherInstance {
   };
 
   constructor(queue: EvanQueue, dispatcher: Dispatcher, runtime: any, data: any, stepIndex = 0,
-    id: any = Date.now() + Math.round(Math.random() * 1000000)) {
+    id: any = Date.now() + Math.round(Math.random() * 1000000), error = false) {
     this.data = data;
     this.dispatcher = dispatcher;
     this.id = id;
     this.queue = queue;
     this.runtime = runtime;
     this.stepIndex = stepIndex;
+
+    if (error) {
+      this.error = error;
+      this._status = 'error';
+    }
   }
 
   /**
    * Run the startup and run functions.
    */
   async start() {
-    this.status = 'running';
-
     await this.save();
     await this.startup();
+
+    this.status = 'running';
     await this.run();
   }
 
@@ -235,6 +264,8 @@ export class DispatcherInstance {
    * Run all the startup functions.
    */
   async startup() {
+    this.status = 'starting';
+
     await this.dispatcher.startupSteps.forEach(startup => startup.call(this));
   }
 
@@ -243,26 +274,60 @@ export class DispatcherInstance {
    */
   async run() {
     if (this.stepIndex < this.dispatcher.steps.length) {
-      try {
-        // run the next step
-        await this.dispatcher.steps[this.stepIndex](this, this.data);
+      if (this.status === 'running') {
+        try {
+          // run the next step
+          await this.dispatcher.steps[this.stepIndex](this, this.data);
 
-        // increase the stepIndex
-        this.stepIndex += 1;
-      } catch (ex) {
-        this.error = `${ ex.message } (${ ex.stack })`;
-        this.status = 'error';
+          // increase the stepIndex
+          this.stepIndex += 1;
+        } catch (ex) {
+          this.error = `${ ex.message } (${ ex.stack })`;
+          this.status = 'error';
 
-        this.runtime.logger.log(ex, 'error');
-      }
+          this.runtime.logger.log(ex, 'error');
+        }
 
-      await this.save();
+        // save the queue data
+        await this.save();
 
-      if (this.status !== 'error') {
-        await this.run();
+        // if no error was applied, run the next step
+        if (this.status !== 'error') {
+          await this.run();
+        }
+      } else {
+        // if the instance should be delete, remove it!
+        if (this.status === 'deleting') {
+          // else delete it directly
+          await this.queue.save(this.dispatcher.id, this.id);
+          this.status = 'deleted';
+        } else {
+          this.status = 'stopped';
+        }
       }
     } else {
       this.finish();
+    }
+  }
+
+  /**
+   * Set the stopping status to break synchronisation at the next dispatcher status.
+   */
+  stop() {
+    this.status = 'stopping';
+  }
+
+  /**
+   * Stops the current synchronisation and deletes the instance
+   */
+  async delete() {
+    // if the queue is running, wait for finished and delete in their
+    if (this.status === 'running') {
+      this.status = 'deleting';
+    } else {
+      // else delete it directly
+      await this.queue.save(this.dispatcher.id, this.id);
+      this.status = 'deleted';
     }
   }
 
@@ -302,11 +367,9 @@ export class DispatcherInstance {
    * Set the status to finished and remove the queue entry data.
    */
   async finish() {
+    await this.queue.save(this.dispatcher.id, this.id);
     this.status = 'finished';
-    this.queue.save(this.dispatcher.id, this.id);
   }
-
-
 
   /**
    * Watch for instance updates

@@ -48,7 +48,7 @@
     cursor: pointer;
     transition: 0.3s ease-out border;
 
-    * {
+    *.highlight, .highlight * {
       transition: 0.8s ease-out color;
     }
 
@@ -57,7 +57,7 @@
         border: 2px solid cssVar('primary') !important;
       }
 
-      * {
+      *.highlight, .highlight * {
         color: cssVar('primary') !important;
       }
     }
