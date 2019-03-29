@@ -31,9 +31,13 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+import addFavoriteDispatcher from '../../dispatchers/add';
+import removeFavoriteDispatcher from '../../dispatchers/remove';
 
 @Component({ })
 export default class OverviewComponent extends mixins(EvanComponent) {
@@ -43,16 +47,51 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   favorites: Array<any> = [ ];
 
   /**
+   * Current favorite dispatchers
+   */
+  dispatcherInstances = { };
+
+  /**
    * show the loading symbol
    */
   loading = true;
 
   /**
+   * Remove dispatcher watcher
+   */
+  dispatcherWatcher: Function;
+
+  /**
+   * Setup dispatcher watchers and load bookmark
+   */
+  async initialize() {
+    this.loading = true;
+
+    // load bookmark entries
+    await this.loadBookmarks();
+
+    this.loading = false;
+
+    // watch for updates
+    this.dispatcherWatcher = Dispatcher.watch(
+      () => this.loadBookmarks(),
+      `favorites.${ dappBrowser.getDomainName() }`
+    );
+  }
+
+  /**
+   * Remove watchers
+   */
+  beforeDestroy() {
+    if (this.dispatcherWatcher) {
+      this.dispatcherWatcher();
+    }
+  }
+
+  /**
    * Load the favorites and map the correct language keys.
    */
   async loadBookmarks(reload?: boolean) {
-    this.loading = true;
-
     const runtime = (<any>this).getRuntime();
 
     // force bookmarks reload on clicking reloading button
@@ -61,8 +100,24 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     }
 
     // load favorites
-    const favorites = await runtime.profile.getBookmarkDefinitions() || {};
+    const favorites = JSON.parse(JSON.stringify(await runtime.profile.getBookmarkDefinitions() ||
+      {}));
+    const addInstances = await addFavoriteDispatcher.getInstances(runtime);
+    const removeInstances = await removeFavoriteDispatcher.getInstances(runtime);
     const locales = [ (<any>this).$i18n.locale(), 'en' ];
+
+    // merge the favorites with the dispatcher instances
+    Object.keys(addInstances).forEach((instanceKey: any) => {
+      const instance = addInstances[instanceKey];
+      favorites[instance.data.address] = JSON.parse(JSON.stringify(instance.data));
+      favorites[instance.data.address].loading = true;
+    });
+    Object.keys(removeInstances).forEach((instanceKey: any) => {
+      const instance = removeInstances[instanceKey];
+      if (favorites[instance.data.address]) {
+        favorites[instance.data.address].loading = true;
+      }
+    });
 
     // map the favorites to an array and check for the correct i18n keys
     this.favorites = Object.keys(favorites).map(address => {
@@ -81,8 +136,6 @@ export default class OverviewComponent extends mixins(EvanComponent) {
 
       return favorite;
     });
-
-    this.loading = false;
   }
 
   /**
@@ -100,5 +153,14 @@ export default class OverviewComponent extends mixins(EvanComponent) {
 
       window.location.hash = `#${ parentDApp.join('/') }/${ favorite.address }`;
     }
+  }
+
+  /**
+   * Remove a favorite from the current user.
+   *
+   * @param      {any}  favorite  The favorite
+   */
+  async removeFavorite(favorite: any) {
+    await removeFavoriteDispatcher.start((<any>this).getRuntime(), { address: favorite.address });
   }
 }

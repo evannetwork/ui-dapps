@@ -32,21 +32,21 @@ export default {
     "add-form": {
       "address": {
         "desc": "Bitte geben Sie die Anwendungsadresse ein. (ENS- / Vertragsadresse)",
-        "title": "Anwendungsadresse",
-        "error": "Bitte geben Sie eine Adresse ein!"
+        "error": "Bitte geben Sie eine Adresse ein!",
+        "title": "Anwendungsadresse"
       },
       "modal": {
         "added": {
           "desc": "Diese Anwedung ist bereits zu Ihren Favoriten hinzugefügt worden.",
           "title": "Favorit hinzufügen"
         },
-        "ok": {
-          "desc": "Wollen sie die ausgewählte Anwendung zu Ihren Favoriten hinzufügen?",
-          "title": "Favorit hinzufügen",
-        },
         "notFound": {
           "desc": "Für die angegebene Adresse konnte keine Anwendung gefunden werden.",
-          "title": "Nicht gefunden",
+          "title": "Nicht gefunden"
+        },
+        "ok": {
+          "desc": "Wollen sie die ausgewählte Anwendung zu Ihren Favoriten hinzufügen?",
+          "title": "Favorit hinzufügen"
         }
       }
     },
@@ -55,7 +55,12 @@ export default {
       "remove": "Favorit entfernen"
     },
     "favorites": "Favoriten",
-    "overview": "Übersicht"
+    "overview": "Übersicht",
+    "remove": "Favorit löschen",
+    "remove-modal": {
+      "desc": "Wollen Sie diesen Favorit wirklich löschen?",
+      "title": "Favorit löschen"
+    }
   }
 }
 /* tslint:enable */;

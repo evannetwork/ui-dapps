@@ -44,10 +44,10 @@
         <img class="img-fluid col-6"
           :src="$store.state.onboardingBaseUrl + `/assets/${ type }.png`">
 
-        <h3>
+        <h3 class="highlight">
           {{ `_onboarding.${ type }.title` | translate }}
         </h3>
-        <small class="text-muted">
+        <small class="text-muted highlight">
           {{ `_onboarding.${ type }.desc` | translate }}
         </small>
       </div>

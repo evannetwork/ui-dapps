@@ -85,25 +85,24 @@ export default class AddComponent extends mixins(EvanComponent) {
   async checkFavorite() {
     const runtime = (<any>this).getRuntime();
     const domainName = dappBrowser.getDomainName();
-    let address = this.favoriteForm.address.value;
 
     // load the favorites
     const favorites = await runtime.profile.getBookmarkDefinitions() || {};
 
     // add root domain, if it was not applied and it is not an contract
-    if (address.indexOf('0x') !== 0 &&
-      address.indexOf(domainName, address.length - domainName.length) === -1) {
-      address = `${ address }.${ domainName }`;
+    if (this.favoriteForm.address.value.indexOf('0x') !== 0 &&
+      this.favoriteForm.address.value.indexOf(domainName, this.favoriteForm.address.value.length - domainName.length) === -1) {
+      this.favoriteForm.address.value = `${ this.favoriteForm.address.value }.${ domainName }`;
     }
 
     // favorite was already added
-    if (favorites[address]) {
+    if (favorites[this.favoriteForm.address.value]) {
       this.addStatus = 'added';
     } else {
       // check if the description exists
       try {
-        const description = await runtime.description.getDescription(address,
-          runtime.activeAccount);
+        const description = await runtime.description.getDescription(
+          this.favoriteForm.address.value, runtime.activeAccount);
 
         // if it is invalid, show the not found
         if (description && description.public) {
@@ -124,8 +123,12 @@ export default class AddComponent extends mixins(EvanComponent) {
   /**
    * Save the new favorite
    */
-  addFavorite() {
-    addFavoriteDispatcher.start((<any>this).getRuntime(), {
+  async addFavorite() {
+    (<any>this.$refs.favoriteAddModal).hide();
+    (<any>this).evanNavigate('');
+
+    await addFavoriteDispatcher.start((<any>this).getRuntime(), {
+      address: this.favoriteForm.address.value,
       name: this.description.name,
       description: this.description.description,
       i18n: this.description.i18n,
@@ -135,8 +138,5 @@ export default class AddComponent extends mixins(EvanComponent) {
       primaryColor: this.description.primaryColor || this.description.dapp.primaryColor,
       secondaryColor: this.description.secondaryColor || this.description.dapp.secondaryColor
     });
-
-    (<any>this.$refs.favoriteAddModal).hide();
-    (<any>this).evanNavigate('');
   }
 }

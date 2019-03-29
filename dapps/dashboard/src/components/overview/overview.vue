@@ -41,12 +41,12 @@
           bg-level-1 border evan-highlight"
         v-for="(type, index) in dashboardEntries"
         v-on:click="$router.push({ path: `${ dapp.baseHash }/${ type.path }` })">
-        <i :class="type.icon"></i>
+        <i class="highlight" :class="type.icon"></i>
 
-        <h3>
+        <h3 class="highlight">
           {{ `_dashboard.overview.${ type.title }.title` | translate }}
         </h3>
-        <small class="text-muted">
+        <small class="text-muted highlight">
           {{ `_dashboard.overview.${ type.title }.desc` | translate }}
         </small>
       </div>

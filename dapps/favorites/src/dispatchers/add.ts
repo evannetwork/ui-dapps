@@ -37,50 +37,12 @@ const addFavoriteDispatcher = new Dispatcher(
 )
 
 addFavoriteDispatcher
-.step(async (instance, data) => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        data.step1 = true;
-        console.log(data)
-        resolve();
-      }, 3000)
-    })
-  })
   .step(async (instance, data) => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        data.step2 = true;
-        console.log(data)
-        resolve();
-      }, 3000)
-    })
-  })
-  .step(async (instance, data) => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        data.step3 = true;
-        console.log(data)
-        resolve();
-      }, 3000)
-    })
-  })
-  .step(async (instance, data) => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        data.step4 = true;
-        console.log(data)
-        resolve();
-      }, 3000)
-    })
-  })
-  .step(async (instance, data) => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        data.step5 = true;
-        console.log(data)
-        resolve();
-      }, 3000)
-    })
-  })
+    const profile = instance.runtime.profile;
+
+    await profile.loadForAccount(profile.treeLabels.bookmarkedDapps);
+    await profile.addDappBookmark(data.address, data);
+    await profile.storeForAccount(profile.treeLabels.bookmarkedDapps);
+  });
 
 export default addFavoriteDispatcher;

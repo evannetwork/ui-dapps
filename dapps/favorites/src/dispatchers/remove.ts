@@ -35,8 +35,14 @@ const removeFavoriteDispatcher = new Dispatcher(
   100000,
   '_favorites.dispatcher.remove'
 )
-.step(() => {
-  console.log(this.data);
-});
+
+removeFavoriteDispatcher
+  .step(async (instance, data) => {
+    const profile = instance.runtime.profile;
+
+    await profile.loadForAccount(profile.treeLabels.bookmarkedDapps);
+    await profile.removeDappBookmark(data.address, data);
+    await profile.storeForAccount(profile.treeLabels.bookmarkedDapps);
+  });
 
 export default removeFavoriteDispatcher;

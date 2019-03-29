@@ -32,14 +32,10 @@ export default {
     "add-form": {
       "address": {
         "desc": "Please enter the application address. (ENS / contract address)",
-        "title": "Application address",
-        "error": "Please enter a application address! (e.g.: dashboard.evan / 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)"
+        "error": "Please enter a application address! (e.g.: dashboard.evan / 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
+        "title": "Application address"
       },
       "modal": {
-        "ok": {
-          "desc": "Do you want to add the selected application to your favorites?",
-          "title": "Add favorite"
-        },
         "added": {
           "desc": "This application has already been added to your favorites",
           "title": "Add favorite"
@@ -47,6 +43,10 @@ export default {
         "notFound": {
           "desc": "No application could be found for the specified address",
           "title": "Not found"
+        },
+        "ok": {
+          "desc": "Do you want to add the selected application to your favorites?",
+          "title": "Add favorite"
         }
       }
     },
@@ -55,7 +55,12 @@ export default {
       "remove": "Remove Favorit"
     },
     "favorites": "Favorites",
-    "overview": "Overview"
+    "overview": "Overview",
+    "remove": "Delete Favorite",
+    "remove-modal": {
+      "desc": "Are you sure you want to delete this favorite?",
+      "title": "Delete Favorite"
+    }
   }
 }
 /* tslint:enable */;
