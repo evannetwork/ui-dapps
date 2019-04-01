@@ -29,19 +29,19 @@
 
 .evan {
   .bg-level-1 {
-    background-color: cssVar('bg-level-1');
+    background-color: cssVar('bg-level-1') !important;
   }
 
   .bg-level-2 {
-    background-color: cssVar('bg-level-2');
+    background-color: cssVar('bg-level-2') !important;
   }
 
   .bg-level-3 {
-    background-color: cssVar('bg-level-3');
+    background-color: cssVar('bg-level-3') !important;
   }
 
   .bg-inverted {
-    background-color: cssVar('bg-inverted');
+    background-color: cssVar('bg-inverted') !important;
   }
 
   .evan-highlight {

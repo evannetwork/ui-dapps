@@ -57,6 +57,47 @@ export default class EvanQueue {
   }
 
   /**
+   * Open the correct index db for the current user. Checks also for upgrades
+   *
+   * @param      {number}  version  current db version
+   */
+  async openDB(version?: number) {
+    return new Promise((resolve, reject) => {
+      const indexDB = window['indexedDB'] ||
+        window['mozIndexedDB'] ||
+        window['webkitIndexedDB'] ||
+        window['msIndexedDB'] ||
+        window['shimIndexedDB'];
+
+      const openRequest = indexedDB.open('EvanNetworkQueueV2', version);
+      const storageName = this.storageName;
+
+      openRequest.onerror = () => reject(openRequest.error);
+      openRequest.onsuccess = async (event) => {
+        const storeExists = Object
+          .keys(openRequest.result.objectStoreNames)
+          .map(index => openRequest.result.objectStoreNames[index])
+          .indexOf(storageName) !== -1;
+
+        if (!storeExists) {
+          resolve(await this.openDB(openRequest.result.version++));
+        } else {
+          resolve(openRequest.result)
+        }
+      };
+
+      openRequest.onblocked = (event) => reject('indexDB blocked');
+
+      openRequest.onupgradeneeded = function(event) {
+        (<any>event.target).result
+          .createObjectStore(storageName, {
+            keyPath: 'dispatcherId'
+          });
+      };
+    });
+  }
+
+  /**
    * Creates a queueDB if missing and open all connections
    *
    * @param      {string}  accountId  account id to initialize the queueDB for
@@ -64,46 +105,11 @@ export default class EvanQueue {
   async initialize(): Promise<any> {
     if (!queueDB) {
       if (!this.initializing) {
-        this.initializing = new Promise((resolve, reject) => {
-          const indexDB = window['indexedDB'] ||
-            window['mozIndexedDB'] ||
-            window['webkitIndexedDB'] ||
-            window['msIndexedDB'] ||
-            window['shimIndexedDB'];
-
-          const openRequest = indexedDB.open('EvanNetworkQueueV2', 1);
-          const storageName = this.storageName;
-
-          openRequest.onerror = () => {
-            reject(openRequest.error)
-          };
-
-          openRequest.onsuccess = (event) => {
-            try {
-              (<any>event.target).result
-                .createObjectStore(storageName, {
-                  keyPath: 'dispatcherId'
-                });
-            } catch (ex) { }
-
-            queueDB = openRequest.result;
-
-            resolve();
-          };
-
-          openRequest.onblocked = function(event) {
-            console.log('IndexDB blocked: ')
-
-            resolve();
-          };
-
-          openRequest.onupgradeneeded = function(event) {
-            (<any>event.target).result
-              .createObjectStore(storageName, {
-                keyPath: 'dispatcherId'
-              });
-          };
-        })
+        try {
+          queueDB = await this.openDB();
+        } catch (ex) {
+          console.error(ex);
+        }
       }
 
       await this.initializing;

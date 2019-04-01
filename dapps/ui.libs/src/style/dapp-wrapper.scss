@@ -124,8 +124,8 @@ $sidebar-small-width: $navbar-height;
         display: none;
       }
 
-      ul {
-        li {
+      ul.nav {
+        & > li {
           width: 100%;
 
           a {
@@ -271,7 +271,7 @@ $sidebar-small-width: $navbar-height;
         width: $sidebar-small-width;
         min-width: $sidebar-small-width;
 
-        ul li a {
+        ul.nav > li a {
           padding: 0;
 
           text-align: center;
@@ -367,7 +367,7 @@ $sidebar-small-width: $navbar-height;
         }
 
 
-        ul.small {
+        ul.nav.small {
           padding-bottom: 120px;
         }
       }
@@ -395,13 +395,30 @@ $sidebar-small-width: $navbar-height;
 }
 
 .dapp-wrapper-sidebar-2 {
-  ul {
-    li {
+  ul.nav {
+    & > li {
       border-left: 4px solid transparent;
 
       &.active, &:hover {
         border-left: 4px solid cssVar('secondary');
         background-color: cssVar('bg-level-1');
+      }
+
+      ul.sub-nav {
+        margin-left: 0;
+        padding-left: 0;
+
+        list-style: none;
+
+        li {
+          a {
+            color: cssVar('text-color');
+
+            &.active, &:hover {
+              color: cssVar('secondary');
+            }
+          }
+        }
       }
     }
   }
