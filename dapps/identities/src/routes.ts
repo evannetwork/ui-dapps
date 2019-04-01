@@ -28,8 +28,29 @@
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import { DAppLoader } from '@evan.network/ui-vue-core';
 
+import IdentityGeneralComponent from './components/general/general.vue';
+import IdentityVerificationsComponent from './components/verifications/verifications.vue';
+import IdentitiesComponent from './components/identities/identities.vue';
+import OverviewComponent from './components/overview/overview.vue';
+import TemplatesComponent from './components/templates/templates.vue';
+import LinkComponent from './components/link/link.vue';
+
+/**
+ * Children that should be displayed under the detail and the add
+ */
+const detailChildren = [
+  { name: 'detailGeneral', path: '', component: IdentityGeneralComponent },
+  { name: 'detailVerifications', path: 'verifications', component: IdentityVerificationsComponent },
+];
+
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', component: OverviewComponent },
+  { path: 'identities', component: IdentitiesComponent },
+  { path: 'templates', component: TemplatesComponent },
+  { path: 'link', component: LinkComponent },
+  { path: ':identityAddress', children: detailChildren },
+];
 
 export default routeRegistration;
 

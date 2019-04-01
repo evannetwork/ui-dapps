@@ -28,13 +28,47 @@
 /* tslint:disable */
 export default {
   "_identities": {
-    "routes": {
-      "identities": "Identitäten",
-      "favorites": "Favoriten",
-      "mailbox": "Nachrichten",
-      "contacts": "Kontakte",
-      "profile": "Profil"
-    }
+    "add": "Hinzufügen",
+    "add-identity": "Identität hinzufügen",
+    "dashboard": {
+      "add": {
+        "desc": "Erstellen Sie eine neue Identität auf Grundlage ihrer bestehenden Vorlagen oder öffnen Sie Bestehende.",
+        "title": "Identität hinzufügen"
+      },
+      "identities": {
+        "desc": "Verwalten Sie Ihre letzten Identitäten oder öffnen Sie neue.",
+        "title": "Meine digitalen Identitäten"
+      },
+      "templates": {
+        "desc": "Verwalten Sie Vorlagen für Ihre Digitalen Identitäten.",
+        "title": "Meine Vorlagen"
+      }
+    },
+    "identities": "Identitäten",
+    "left-categories": {
+      "containers": {
+        "desc": "Alle, der Identität zugeordneten Datencontainer",
+        "title": "Datencontainer"
+      },
+      "general": "Metadaten",
+      "identity-details": {
+        "desc": "Generelle Informationen zu der digitalen Identität.",
+        "title": "Digitale Identität"
+      },
+      "my-identities": {
+        "desc": "Letzte Identitäten oder Neue öffnen",
+        "title": "Meine Identitäten"
+      },
+      "my-templates": {
+        "desc": "Letzte Templates oder Neue erstellen",
+        "title": "Meine Templates"
+      },
+      "open-identity": "Identität öffnen",
+      "verifications": "Verifizierungen"
+    },
+    "overview": "Übersicht",
+    "startup": "Womit möchten Sie starten?",
+    "welcome": "Willkommen in der Identitätsverwaltung"
   }
 }
-/* tslint:enable */;
+/* tslint:enable */

@@ -45,7 +45,7 @@
                   :class="{ 'active': key === activeCategory }"
                   @click="evanNavigate(activeCategory); activateCategory(key)">
                   <i :class="category.icon"></i>
-                  <span>{{ `_mailbox.${  key }` | translate }}</span>
+                  <h4 class="mb-0">{{ `_mailbox.${  key }` | translate }}</h4>
                   <span class="mx-auto"></span>
                   <i class="fas fa-chevron-right"></i>
                 </li>

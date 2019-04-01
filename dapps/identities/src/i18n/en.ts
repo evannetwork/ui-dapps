@@ -28,13 +28,47 @@
 /* tslint:disable */
 export default {
   "_identities": {
-    "routes": {
-      "identities": "Identities",
-      "favorites": "Favorites",
-      "mailbox": "Messages",
-      "contacts": "Contacts",
-      "profile": "Profile"
-    }
+    "add": "Add",
+    "add-identity": "Add identity",
+    "dashboard": {
+      "add": {
+        "desc": "Add a identity based on your existing templates or open a existing one.",
+        "title": "Add identity"
+      },
+      "identities": {
+        "desc": "Manage your last identities or open new ones.",
+        "title": "My digital identities"
+      },
+      "templates": {
+        "desc": "Manage templates for your digital identities.",
+        "title": "My Templates"
+      }
+    },
+    "identities": "Identities",
+    "left-categories": {
+      "containers": {
+        "desc": "All data containers associated with the identity",
+        "title": "Data containers"
+      },
+      "general": "Metadata",
+      "identity-details": {
+        "desc": "General information about the digital identity.",
+        "title": "Digital Identity"
+      },
+      "my-identities": {
+        "desc": "Last identities or open new ones",
+        "title": "My Identities"
+      },
+      "my-templates": {
+        "desc": "Last templates or create new ones",
+        "title": "My Templates"
+      },
+      "open-identity": "Open identity",
+      "verifications": "Verifications"
+    },
+    "overview": "Overview",
+    "startup": "What would you like to start with?",
+    "welcome": "Welcome to the identity management"
   }
 }
 /* tslint:enable */;

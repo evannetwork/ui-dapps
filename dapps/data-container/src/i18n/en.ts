@@ -25,36 +25,9 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <div class="mt-5 mb-3 text-center">
-      <br>
-      <h4 class="text-secondary font-weight-bold">{{ '_evan.welcome-to-evan' | translate }}</h4>
-      <h2 class="mt-4">{{ '_dashboard.startup' | translate }}</h2>
-      <br>
-    </div>
-    <div class="d-md-flex container flex-wrap justify-content-center">
-      <div class="
-          p-3 col-md-5 col-lg-4 col-xl-3
-          m-md-3 mb-3 p-4
-          text-center
-          bg-level-1 border evan-highlight"
-        v-for="(type, index) in dashboardEntries"
-        v-on:click="$router.push({ path: `${ dapp.baseHash }/${ type.path }` })">
-        <i class="highlight" :class="type.icon"></i>
-
-        <h3 class="highlight">
-          {{ `_dashboard.overview.${ type.title }.title` | translate }}
-        </h3>
-        <span class="text-muted highlight">
-          {{ `_dashboard.overview.${ type.title }.desc` | translate }}
-        </span>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-  import OverviewComponent from './overview.ts';
-  export default OverviewComponent;
-</script>
+/* tslint:disable */
+export default {
+  "_datacontainer": {
+  }
+}
+/* tslint:enable */;

@@ -47,8 +47,8 @@
                   v-for="(category, key) in contacts"
                   :class="{ 'active': key === activeCategory }"
                   @click="evanNavigate(''); activeCategory = key">
-                  <span v-if="key !== 'all'">{{ key }}</span>
-                  <span v-if="key === 'all'">{{ '_addressbook.all' | translate }}</span>
+                  <h4 class="mb-0" v-if="key !== 'all'">{{ key }}</h4>
+                  <h4 class="mb-0" v-if="key === 'all'">{{ '_addressbook.all' | translate }}</h4>
                   <span class="mx-auto"></span>
                   <i class="fas fa-chevron-right"></i>
                 </li>
