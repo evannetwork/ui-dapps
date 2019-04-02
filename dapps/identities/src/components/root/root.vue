@@ -40,14 +40,15 @@
 
                 <a
                   class="btn btn-rounded btn-primary font-weight-normal"
-                  :href="`${ dapp.fullUrl }/add`">
-                  {{ '_identities.add' | translate }}
+                  :href="`${ dapp.fullUrl }/lookup`">
+                  {{ '_identities.lookup.title' | translate }}
                   <i class="fas fa-arrow-right label ml-2"></i>
                 </a>
               </div>
 
               <evan-loading v-if="loading"></evan-loading>
-              <ul class="pl-4 pr-4 pb-4 border-bottom border-sm list-unstyled d-flex">
+              <ul class="pl-4 pr-4 pb-4 border-bottom border-sm list-unstyled d-flex"
+                v-if="identity">
                 <li class="mr-3">
                   <a 
                     :class="{ 'active border-bottom border-primary pb-1': leftPanelOverview, 'text-muted': !leftPanelOverview }"
@@ -56,13 +57,12 @@
                     <b>{{ '_identities.overview' | translate }}</b>
                   </a>
                 </li>
-                <li class="mr-3" v-if="identity">
+                <li class="mr-3">
                   <a
                     :class="{ 'active border-bottom border-primary pb-1': !leftPanelOverview, 'text-muted': leftPanelOverview }"
                     :href="`${ dapp.fullUrl }/${ $store.state.identity.address }`"
                     @click="leftPanelOverview = false">
-                    <b v-if="identity.address === 'add'">{{ '_identities.add-identity' | translate }}</b>
-                    <b v-else>{{ $store.state.identity.dbcp.name }}</b>
+                    <b>{{ $store.state.identity.dbcp.name || $store.state.identity.address }}</b>
                   </a>
                 </li>
               </ul>
@@ -94,8 +94,8 @@
                     <div class="text-center mt-3" v-else>
                       <a
                         class="btn btn-rounded btn-primary font-weight-normal"
-                        :href="`${ dapp.fullUrl }/add`">
-                        {{ '_identities.add' | translate }}
+                        :href="`${ dapp.fullUrl }/lookup`">
+                        {{ '_identities.lookup.title' | translate }}
                         <i class="fas fa-arrow-right label ml-2"></i>
                       </a>
                     </div>

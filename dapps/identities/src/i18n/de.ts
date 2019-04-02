@@ -29,7 +29,13 @@
 export default {
   "_identities": {
     "add": "Hinzufügen",
-    "add-identity": "Identität hinzufügen",
+    "add-identity": "Neue Identität",
+    "breadcrumbs": {
+      "add": "Hinzufügen",
+      "identities": "Identitäten",
+      "lookup": "Öffnen",
+      "templates": "Vorlagen"
+    },
     "dashboard": {
       "add": {
         "desc": "Erstellen Sie eine neue Identität auf Grundlage ihrer bestehenden Vorlagen oder öffnen Sie Bestehende.",
@@ -65,6 +71,41 @@ export default {
       },
       "open-identity": "Identität öffnen",
       "verifications": "Verifizierungen"
+    },
+    "lookup": {
+      "address": {
+        "desc": "Geben Sie die Adresse Ihrer digitalen Identität ein (z.B.: ).",
+        "error": "Bitte geben Sie eine gültige Adresse ein!",
+        "title": "Adresse"
+      },
+      "already-registered": {
+        "desc": "Die angegebene Adresse ist nicht verfügbar und gehört bereits einem anderen Nutzer.",
+        "title": "Nicht verfügbar"
+      },
+      "create": {
+        "action": "Identität erstellen",
+        "desc": "Für diese Adresse existiert noch keine Identität. Möchten Sie eine neue für diese Adresse erstellen?",
+        "title": "Nicht verfügbar"
+      },
+      "error": {
+        "desc": "Die angeforderte Addresse enthält keine valide Identität. Bitte überprüfen Sie Ihre Eingabe.",
+        "title": "Fehler beim Laden"
+      },
+      "missing-balance": {
+        "desc": "Bevor Sie eine Digitale Identität erstellen können, müssen Sie die angegeben Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
+        "title": "Adresse verfügbar"
+      },
+      "not-buyable": {
+        "desc": "Die angegeben Adresse ist nicht verfügbar und nicht kaufbar.",
+        "title": "Nicht kaufbar"
+      },
+      "purchase": {
+        "action": "Adresse kaufen",
+        "desc": "Bevor Sie eine Digitale Identität erstellen können, müssen Sie die angegeben Root-Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice }EVE</b> kaufen?",
+        "title": "Adresse verfügbar"
+      },
+      "purchasing": "ENS Adresse erwerben...",
+      "title": "Öffnen"
     },
     "overview": "Übersicht",
     "startup": "Womit möchten Sie starten?",

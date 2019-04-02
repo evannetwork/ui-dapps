@@ -25,13 +25,37 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+import { getPayableNameResolver } from '../utils';
 
-  </div>
-</template>
+const ensDispatcher = new Dispatcher(
+  `identities.${ dappBrowser.getDomainName() }`,
+  'ensDispatcher',
+  40 * 1000,
+  '_identities.lookup.purchase.action'
+);
 
-<script lang="ts">
-  import Component from './link.ts';
-  export default Component;
-</script>
+ensDispatcher
+  .step(async (instance, data) => {
+    const payableNameResolver = getPayableNameResolver(instance.runtime);
+
+    // purchaser the ens address
+    await payableNameResolver.claimAddress(
+      data.ensAddress,
+      instance.runtime.activeAccount,
+      instance.runtime.activeAccount,
+      await payableNameResolver.getPrice(data.ensAddress)
+    );
+  })
+  .step(async (instance, data) => {
+    // add the ens address to your favorites list
+    await instance.runtime.profile.addBcContract('evan-ens-management', data.ensAddress, { });
+
+    // store profile contracts
+    await instance.runtime.profile.storeForAccount(instance.runtime.profile.treeLabels.contracts);
+  });
+
+
+export default ensDispatcher;

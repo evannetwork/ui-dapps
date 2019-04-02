@@ -30,6 +30,12 @@ export default {
   "_identities": {
     "add": "Add",
     "add-identity": "Add identity",
+    "breadcrumbs": {
+      "add": "Add",
+      "identities": "Identities",
+      "lookup": "Lookup",
+      "templates": "Templates"
+    },
     "dashboard": {
       "add": {
         "desc": "Add a identity based on your existing templates or open a existing one.",
@@ -65,6 +71,41 @@ export default {
       },
       "open-identity": "Open identity",
       "verifications": "Verifications"
+    },
+    "lookup": {
+      "address": {
+        "desc": "Enter the address of your digital identity (e.g.: ).",
+        "error": "Please enter a valid address",
+        "title": "Address"
+      },
+      "already-registered": {
+        "desc": "The specified address is not available.",
+        "title": "Not available"
+      },
+      "create": {
+        "action": "Create identity",
+        "desc": "There is no identity yet for this address. Would you like to create a new one for this address?",
+        "title": "Not available"
+      },
+      "error": {
+        "desc": "The requested address does not contain a valid identity. Please check your input.",
+        "title": "Error"
+      },
+      "missing-balance": {
+        "desc": "Before you can create a Digital Identity, you must have purchased the address provided. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
+        "title": "Address available"
+      },
+      "not-buyable": {
+        "desc": "The address given is not available and not for sale.",
+        "title": "Not for sale"
+      },
+      "purchase": {
+        "action": "Buy address",
+        "desc": "Before you can create a Digital Identity, you must have purchased the specified root address. Would you like to buy this address for <b>{ensPrice} EVE</b>?",
+        "title": "Address available"
+      },
+      "purchasing": "Purchasing ENS address...",
+      "title": "Open"
     },
     "overview": "Overview",
     "startup": "What would you like to start with?",

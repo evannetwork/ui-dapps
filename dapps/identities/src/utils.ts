@@ -25,19 +25,34 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
 
-@Component({ })
-export default class LinkComponent extends mixins(EvanComponent) {
-  created() {
-
-  }
+/**
+ * Return the payable nameresolve, until the latest nameresolver is up to date.
+ *
+ * @return     {any}  bcc.nameresolve with correct configurations
+ */
+const getPayableNameResolver = function(runtime: any) {
+  const nameResolverConfig = JSON.parse(JSON.stringify(dappBrowser.config.nameResolver));
+  // set the custom ens contract address
+  nameResolverConfig.ensAddress = '0xE6ed5Ed9CF1a62f88866ef9cE2dF94e996685456';
+  nameResolverConfig.ensResolver = '0xC629135777FDC078dbbBa5b2d244a71835f4a091';
+  return new bcc.NameResolver({
+    config: nameResolverConfig,
+    contractLoader: runtime.contractLoader,
+    executor: runtime.executor,
+    web3: runtime.web3,
+  });
 }
+
+/**
+ * Returns the active domain name (currently payable, until the nameresolve is fixed)
+ *
+ * @return     {string}  domain name (default evan)
+ */
+const getDomainName = function() {
+  return 'payable' || dappBrowser.getDomainName();
+}
+
+export { getPayableNameResolver, getDomainName };

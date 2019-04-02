@@ -33,7 +33,7 @@ import IdentityVerificationsComponent from './components/verifications/verificat
 import IdentitiesComponent from './components/identities/identities.vue';
 import OverviewComponent from './components/overview/overview.vue';
 import TemplatesComponent from './components/templates/templates.vue';
-import LinkComponent from './components/link/link.vue';
+import LookupComponent from './components/lookup/lookup.vue';
 
 /**
  * Children that should be displayed under the detail and the add
@@ -48,7 +48,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', component: OverviewComponent },
   { path: 'identities', component: IdentitiesComponent },
   { path: 'templates', component: TemplatesComponent },
-  { path: 'link', component: LinkComponent },
+  { path: 'lookup', component: LookupComponent },
   { path: ':identityAddress', children: detailChildren },
 ];
 

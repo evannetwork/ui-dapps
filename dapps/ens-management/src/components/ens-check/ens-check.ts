@@ -92,7 +92,7 @@ export class ENSCheckComponent extends AsyncComponent {
   public activeAccount: string;
 
   /**
-   * if the inserted ens address is available, show the purchase popup 
+   * if the inserted ens address is available, show the purchase popup
    */
   public ensAddress: string;
 
@@ -135,7 +135,7 @@ export class ENSCheckComponent extends AsyncComponent {
    * EventEmitter that is triggered when this ref was updated, so the parent component can update
    * it's data
    */
-  @Output() updated: EventEmitter<any> = new EventEmitter(); 
+  @Output() updated: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _DomSanitizer: DomSanitizer,

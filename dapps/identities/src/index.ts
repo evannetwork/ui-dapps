@@ -33,6 +33,8 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 
+import ensDispatcher from './dispatchers/ens';
+
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
  * dbcp. So startup, it's evan time!
@@ -56,3 +58,5 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     Vue: Vue,
   });
 }
+
+export { ensDispatcher }
