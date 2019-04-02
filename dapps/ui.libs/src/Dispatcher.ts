@@ -141,8 +141,16 @@ export class Dispatcher {
 
     Object.keys(entries).forEach((instanceId: string) => {
       const entry = entries[instanceId];
-      const instance = new DispatcherInstance(queue, this, runtime, entry.data,
-        entry.stepIndex, instanceId, entry.error);
+      const instance = new DispatcherInstance({
+        queue,
+        dispatcher: this,
+        runtime,
+        data: entry.data,
+        stepIndex: entry.stepIndex,
+        id: instanceId,
+        error: entry.error,
+        customPrice: entry.customPrice,
+      });
 
       // add instance to instances
       instances[instance.id] = instance;
@@ -159,10 +167,15 @@ export class Dispatcher {
    * @param      {any}     data       data object
    * @param      {number}  stepIndex  at which step should be started?
    */
-  async start(runtime: any, data: any, stepIndex = 0) {
+  async start(runtime: any, data: any, stepIndex = 0, price?: number) {
     const queue = await new EvanQueue(runtime.activeAccount);
-    const instance = new DispatcherInstance(queue, this, runtime, data,
-      stepIndex);
+    const instance = new DispatcherInstance({
+      queue,
+      dispatcher: this,
+      runtime,
+      data: data,
+      stepIndex: stepIndex,
+    });
 
     // start the instance!
     await instance.start();
@@ -179,6 +192,17 @@ export class Dispatcher {
     // return the watch remove function
     return () => window.removeEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
   }
+}
+
+interface DispatcherInstanceOptions {
+  queue: EvanQueue;
+  dispatcher: Dispatcher;
+  runtime: any;
+  data: any;
+  stepIndex?: number;
+  customPrice?: number,
+  id?: any, 
+  error?: any
 }
 
 /**
@@ -223,12 +247,13 @@ export class DispatcherInstance {
   /**
    * Error message.
    */
-  error: any;
+  error: any = false;
 
   /**
    * If the instance must be accepted, the eve price will be estimated and saved to this instance.
    */
   evePrice: number;
+  customEvePrice: number;
 
   /**
    * Set the current status.
@@ -245,17 +270,20 @@ export class DispatcherInstance {
     return this._status;
   };
 
-  constructor(queue: EvanQueue, dispatcher: Dispatcher, runtime: any, data: any, stepIndex = 0,
-    id: any = Date.now() + Math.round(Math.random() * 1000000), error = false) {
-    this.data = data;
-    this.dispatcher = dispatcher;
-    this.id = id;
-    this.queue = queue;
-    this.runtime = runtime;
-    this.stepIndex = stepIndex;
+  constructor(options: DispatcherInstanceOptions) {
+    this.data = options.data;
+    this.dispatcher = options.dispatcher;
+    this.id = options.id || Date.now() + Math.round(Math.random() * 1000000);
+    this.queue = options.queue;
+    this.runtime = options.runtime;
+    this.stepIndex = options.stepIndex || 0;
 
-    if (error) {
-      this.error = error;
+    if (options.customPrice) {
+      this.customEvePrice = options.customPrice;
+    }
+
+    if (options.error) {
+      this.error = options.error;
       this._status = 'error';
     }
   }
@@ -273,8 +301,15 @@ export class DispatcherInstance {
       // calculate the price
       const defaultThreshold = 0;
       const priceThreshold = parseFloat(window.location['dispatcher-eve-treshold'] || '0.5');
-      const gasPrice = parseInt(await this.runtime.signer.getGasPrice(), 16);
-      this.evePrice = this.runtime.web3.utils.fromWei(gasPrice.toString());
+      let evePrice; 
+
+      // use default one or estimate the costs from dispatcher configuration
+      if (this.customEvePrice) {
+        evePrice = this.customEvePrice;
+      } else {
+        const gasPrice = parseInt(await this.runtime.signer.getGasPrice(), 16);
+        this.evePrice = this.runtime.web3.utils.fromWei(gasPrice.toString());
+      }
 
       if (this.evePrice > (isNaN(priceThreshold) ? defaultThreshold : priceThreshold)) {
         return this.status = 'accept';
@@ -401,6 +436,7 @@ export class DispatcherInstance {
       error: this.error,
       status: this.status,
       stepIndex: this.stepIndex,
+      customEvePrice: this.customEvePrice,
     });
   }
 
