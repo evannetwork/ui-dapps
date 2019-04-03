@@ -27,6 +27,7 @@
 
 
 import { System, dapp, queue, getDomainName, bccHelper } from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
 
 import EvanQueue from './Queue';
 
@@ -131,7 +132,7 @@ export class Dispatcher {
   /**
    * Get the current running instances.
    */
-  async getInstances(runtime: any): Promise<any> {
+  async getInstances(runtime: bcc.Runtime): Promise<any> {
     // create a new queue and initialize it
     const queue = await new EvanQueue(runtime.activeAccount);
 
@@ -167,7 +168,7 @@ export class Dispatcher {
    * @param      {any}     data       data object
    * @param      {number}  stepIndex  at which step should be started?
    */
-  async start(runtime: any, data: any, stepIndex = 0, price?: number) {
+  async start(runtime: bcc.Runtime, data: any, stepIndex = 0, price?: number) {
     const queue = await new EvanQueue(runtime.activeAccount);
     const instance = new DispatcherInstance({
       queue,
@@ -197,7 +198,7 @@ export class Dispatcher {
 interface DispatcherInstanceOptions {
   queue: EvanQueue;
   dispatcher: Dispatcher;
-  runtime: any;
+  runtime: bcc.Runtime;
   data: any;
   stepIndex?: number;
   customPrice?: number,
@@ -222,7 +223,7 @@ export class DispatcherInstance {
   /**
    * A initialized bcc runtime.
    */
-  runtime: any;
+  runtime: bcc.Runtime;
 
   /**
    * Data that should be passed to the steps
@@ -307,7 +308,7 @@ export class DispatcherInstance {
       if (this.customEvePrice) {
         evePrice = this.customEvePrice;
       } else {
-        const gasPrice = parseInt(await this.runtime.signer.getGasPrice(), 16);
+        const gasPrice = parseInt(await (<any>this.runtime.signer).getGasPrice(), 16);
         this.evePrice = this.runtime.web3.utils.fromWei(gasPrice.toString());
       }
 
