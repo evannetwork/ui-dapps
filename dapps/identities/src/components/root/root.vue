@@ -48,63 +48,69 @@
 
               <evan-loading v-if="loading"></evan-loading>
               <ul class="pl-4 pr-4 pb-4 border-bottom border-sm list-unstyled d-flex"
-                v-if="identity">
+                v-if="uiIdentity">
                 <li class="mr-3">
                   <a 
-                    :class="{ 'active border-bottom border-primary pb-1': leftPanelOverview, 'text-muted': !leftPanelOverview }"
+                    :class="{ 'active border-bottom border-primary pb-1': sideNav === 0, 'text-muted': sideNav !== 0 }"
                     :href="dapp.fullUrl"
-                    @click="leftPanelOverview = true">
+                    @click="sideNav = 0">
                     <b>{{ '_identities.overview' | translate }}</b>
                   </a>
                 </li>
                 <li class="mr-3">
                   <a
-                    :class="{ 'active border-bottom border-primary pb-1': !leftPanelOverview, 'text-muted': leftPanelOverview }"
-                    :href="`${ dapp.fullUrl }/${ $store.state.identity.address }`"
-                    @click="leftPanelOverview = false">
-                    <b>{{ $store.state.identity.dbcp.name || $store.state.identity.address }}</b>
+                    :class="{ 'active border-bottom border-primary pb-1': sideNav === 1, 'text-muted': sideNav !== 1 }"
+                    :href="`${ dapp.fullUrl }/${ $store.state.uiIdentity.address }`"
+                    @click="sideNav = 1">
+                    <b>{{ $store.state.uiIdentity.dbcp.name || $store.state.uiIdentity.address }}</b>
                   </a>
                 </li>
               </ul>
 
-              <ul class="nav font-medium in w-100 mb-3 mt-auto" v-if="!loading">
-                <li class="w-100 p-4 clickable"
-                  v-for="(category, index) in leftPanelOverview ? overviewCategories : containerCagegories"
-                  :class="{ 'active': category.active }"
-                  @click="toggleLeftCategory(leftPanelOverview ? overviewCategories : containerCagegories, category)">
-                  <div class="d-flex w-100">
-                    <div>
-                      <h4 class="mb-0">{{ `_identities.left-categories.${ category.name }.title` | translate }}</h4>
-                      <span class="text-muted">{{ `_identities.left-categories.${ category.name }.desc` | translate }}</span>
+              <template v-if="!loading">
+                <ul class="nav font-medium in w-100 mb-3 mt-auto"
+                  v-if="sideNav === 0 || (uiIdentity && uiIdentity.validity.exists)">
+                  <li class="w-100 p-4 clickable"
+                    v-for="(category, index) in navigation[sideNav]"
+                    :class="{ 'active': category.active }"
+                    @click="toggleLeftCategory(navigation[sideNav], category)">
+                    <div class="d-flex w-100">
+                      <div>
+                        <h4 class="mb-0">{{ `_identities.left-categories.${ category.name }.title` | translate }}</h4>
+                        <span class="text-muted">{{ `_identities.left-categories.${ category.name }.desc` | translate }}</span>
+                      </div>
+                      <span class="mx-auto"></span>
+                      <i v-if="category.active" class="fas fa-chevron-up"></i>
+                      <i v-if="!category.active" class="fas fa-chevron-down"></i>
                     </div>
-                    <span class="mx-auto"></span>
-                    <i v-if="category.active" class="fas fa-chevron-up"></i>
-                    <i v-if="!category.active" class="fas fa-chevron-down"></i>
-                  </div>
-                  <div class="mt-3" v-if="category.active">
-                    <ul class="sub-nav" v-if="category.children.length > 0">
-                      <li class="pt-2 pb-2 pl-3 pr-3"
-                        v-for="(subCategory, subIndex) in category.children">
-                        <a class="font-weight-bold"
-                          :href="`${ dapp.fullUrl }/${ subCategory.path }`">
-                          {{ `_identities.left-categories.${ subCategory.name }` | translate }}
-                        </a>
-                      </li>
-                    </ul>
-                    <div class="text-center mt-3" v-else>
-                      <a
-                        class="btn btn-rounded btn-primary font-weight-normal"
-                        :href="`${ dapp.fullUrl }/lookup`">
-                        {{ '_identities.lookup.title' | translate }}
-                        <i class="fas fa-arrow-right label ml-2"></i>
-                      </a>
+                    <div class="mt-3" v-if="category.active">
+                      <ul class="sub-nav" v-if="category.children.length > 0">
+                        <li class="pt-2 pb-2 pl-3 pr-3"
+                          v-for="(subCategory, subIndex) in category.children">
+                          <a class="font-weight-bold"
+                            :href="`${ dapp.fullUrl }/${ subCategory.path }`">
+                            {{ `_identities.left-categories.${ subCategory.name }` | translate }}
+                          </a>
+                        </li>
+                      </ul>
+                      <b class="p-3 text-center"
+                        v-else
+                        v-html="$t(`_identities.empty-navigation`)">
+                      </b>
                     </div>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+                <p class="mt-5 p-3 text-center"
+                  v-else
+                  v-html="$t('_identities.unlock-identity-panel')">
+                </p>
+              </template>
             </div>
           </template>
         </evan-dapp-wrapper-level-2>
+
+        <evan-breadcrumbs :i18nScope="'_identities.breadcrumbs'"></evan-breadcrumbs>
+
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>

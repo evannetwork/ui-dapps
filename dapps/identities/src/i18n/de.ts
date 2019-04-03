@@ -50,6 +50,21 @@ export default {
         "title": "Meine Vorlagen"
       }
     },
+    "empty-navigation": "Keine Einträge verfügbar",
+    "generalForm": {
+      "create": "Erstellen",
+      "description": {
+        "desc": "Kurze Beschreibung zu der digitalen Identität.",
+        "title": "Beschreibung"
+      },
+      "name": {
+        "desc": "Name der digitalen Identität.",
+        "error": "Bitte geben Sie einen Namen an!",
+        "title": "Name"
+      },
+      "save": "Speichern",
+      "title": "Generelle Informationen"
+    },
     "identities": "Identitäten",
     "left-categories": {
       "containers": {
@@ -109,7 +124,9 @@ export default {
     },
     "overview": "Übersicht",
     "startup": "Womit möchten Sie starten?",
-    "welcome": "Willkommen in der Identitätsverwaltung"
+    "unlock-identity-panel": "<b>Die geöffnete Identität befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
+    "welcome": "Willkommen in der Identitätsverwaltung",
+    "in-creation": "Wird erstellt..."
   }
 }
 /* tslint:enable */

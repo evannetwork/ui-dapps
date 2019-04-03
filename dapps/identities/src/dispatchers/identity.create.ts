@@ -27,48 +27,22 @@
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+import { getPayableNameResolver } from '../utils';
 
-/**
- * Return the payable nameresolve, until the latest nameresolver is up to date.
- *
- * @return     {any}  bcc.nameresolve with correct configurations
- */
-export function getPayableNameResolver(runtime: any) {
-  const nameResolverConfig = JSON.parse(JSON.stringify(dappBrowser.config.nameResolver));
-  // set the custom ens contract address
-  nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
-  nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
-  return new bcc.NameResolver({
-    config: nameResolverConfig,
-    contractLoader: runtime.contractLoader,
-    executor: runtime.executor,
-    web3: runtime.web3,
+const identityCreateDispatcher = new Dispatcher(
+  `identities.${ dappBrowser.getDomainName() }`,
+  'identityCreateDispatcher',
+  40 * 1000,
+  '_identities.in-creation'
+);
+
+identityCreateDispatcher
+  .step(async (instance, data) => {
+    // bcc.DigitalIdentity.create(instance.runtime, {
+
+    // });
   });
-}
 
-/**
- * Returns the active domain name (currently payable, until the nameresolve is fixed)
- *
- * @return     {string}  domain name (default evan)
- */
-export function getDomainName() {
-  return 'payable' || dappBrowser.getDomainName();
-}
-
-/**
- * Returns a minimal dbcp description set.
- *
- * @return     {any}  minimal dbcp description
- */
-export async function getIdentityBaseDbcp() {
-  const identityDbcp = dappBrowser.System.import(`idenity.${ dappBrowser.getDomainName() }!ens`);
-
-  return {
-    author: '',
-    dapp: identityDbcp.public.dapp,
-    dbcpVersion: 2,
-    description: '',
-    name: '',
-    version: '1.0.0',
-  };
-}
+export default identityCreateDispatcher;

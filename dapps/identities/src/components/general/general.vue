@@ -27,7 +27,55 @@
 
 <template>
   <div>
+    <div class="p-3 text-left">
+      <div class="bg-level-1 border">
+        <div class="d-flex p-3 border-bottom align-items-center">
+          <h4 class="m-0">
+            {{ `_identities.generalForm.title` | translate }}
+          </h4>
+        </div>
+        <form class="p-4"
+          v-on:submit.prevent="createIdentity">
+          <div class="form-group">
+            <label for="name">
+              {{ `_identities.generalForm.name.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="name" ref="name"
+              :placeholder="`_identities.generalForm.name.desc` | translate"
+              v-model="generalForm.name.value"
+              v-bind:class="{ 'is-invalid' : generalForm.name.error }"
+              @blur="generalForm.name.setDirty()">
+            <div class="invalid-feedback">
+              {{ `_identities.generalForm.name.error` | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">
+              {{ `_identities.generalForm.description.title` | translate }}
+            </label>
+            <textarea class="form-control" rows="3"
+              id="description" ref="description"
+              :placeholder="`_identities.generalForm.description.desc` | translate"
+              v-model="generalForm.description.value"
+              v-bind:class="{ 'is-invalid' : generalForm.description.error }"
+              @blur="generalForm.description.setDirty()">
+            </textarea>
+          </div>
 
+          <div class="text-center mt-3 w-100">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              :disabled="!generalForm.isValid || checking">
+              <div class="spinner-border spinner-border-sm text-light mr-3"
+                v-if="checking">
+              </div>
+              {{ `_identities.generalForm.create` | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 

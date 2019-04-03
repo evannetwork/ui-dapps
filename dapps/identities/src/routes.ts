@@ -35,21 +35,15 @@ import OverviewComponent from './components/overview/overview.vue';
 import TemplatesComponent from './components/templates/templates.vue';
 import LookupComponent from './components/lookup/lookup.vue';
 
-/**
- * Children that should be displayed under the detail and the add
- */
-const detailChildren = [
-  { name: 'detailGeneral', path: '', component: IdentityGeneralComponent },
-  { name: 'detailVerifications', path: 'verifications', component: IdentityVerificationsComponent },
-];
-
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', component: OverviewComponent },
   { path: 'identities', component: IdentitiesComponent },
   { path: 'templates', component: TemplatesComponent },
   { path: 'lookup', component: LookupComponent },
-  { path: ':identityAddress', children: detailChildren },
+  { path: ':identityAddress', component: IdentityGeneralComponent },
+  { path: ':identityAddress/verifications', component: IdentityVerificationsComponent },
+  // { path: ':identityAddress/:containerAddress', component: DAppLoader },
 ];
 
 export default routeRegistration;

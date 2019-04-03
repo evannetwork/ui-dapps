@@ -57,33 +57,32 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   /**
    * Show left panel overview or is an detail is opened?
    */
-  leftPanelOverview = true;
+  sideNav = 0;
 
   /**
    * Categories of the left navigation
    */
-  overviewCategories = [
-    {
-      name: 'my-identities',
-      active: true,
-      children: [ ]
-    },
-    {
-      name: 'my-templates',
-      active: false,
-      children: [ ]
-    }
-  ];
-
-  /**
-   * Categories of the container left navigation
-   */
-  containerCagegories = [ ];
+  navigation: any = [
+    [
+      {
+        name: 'my-identities',
+        active: false,
+        emptyNav: 'lookup',
+        children: [ ]
+      },
+      {
+        name: 'my-templates',
+        active: false,
+        children: [ ]
+      }
+    ],
+    [ ]
+  ]
 
   /**
    * current identity instance
    */
-  identity = null;
+  uiIdentity: EvanUIIdentity = null;
 
   /**
    * Initialize when the user has logged in.
@@ -107,46 +106,6 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Load identity data. Checks for identity changes and if a identity is opened.
-   */
-  loadIdentity() {
-    const identityAddress = (<any>this).$route.params.identityAddress;
-    this.identity = this.$store.state.identity;
-
-    // load the identity
-    if (identityAddress) {
-      if (!this.identity || identityAddress !== this.identity.address) {
-        this.identity = new EvanUIIdentity(identityAddress);
-        this.$store.state.identity = this.identity;
-        this.leftPanelOverview = false;
-
-        // apply the container categories every time, when the identity was load, so the containers
-        // and paths will be dynamic
-        this.containerCagegories = [
-          {
-            name: 'identity-details',
-            active: true,
-            children: [
-              { name: 'general', path: identityAddress },
-              { name: 'verifications', path: `${ identityAddress }/verifications` }
-            ]
-          },
-          {
-            name: 'containers',
-            active: false,
-            children: [ ]
-          }
-        ];
-
-        // if we are not loading the create components, show the details.
-        if (identityAddress !== 'create') {
-          console.log('load detail')
-        }
-      }
-    }
-  }
-
-  /**
    * Clear the hash change watcher
    */
   beforeDestroy() {
@@ -161,6 +120,32 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Load identity data. Checks for identity changes and if a identity is opened.
+   */
+  async loadIdentity() {
+    this.uiIdentity = this.$store.state.uiIdentity;
+    const identityAddress = (<any>this).$route.params.identityAddress;
+
+    // load the identity
+    if (identityAddress) {
+      if (!this.uiIdentity || identityAddress !== this.uiIdentity.address) {
+        // create new instance of the evan ui identity, that wraps general ui and navigation
+        // functions
+        this.uiIdentity = new EvanUIIdentity((<any>this).getRuntime(), this, identityAddress);
+        this.$store.state.uiIdentity = this.uiIdentity;
+
+        // load identity specific data
+        await this.uiIdentity.initialize();
+
+        // apply the container categories every time, when the identity was load, so the containers
+        // and paths will be dynamic
+        this.sideNav = 1;
+        this.navigation[1] = this.uiIdentity.navigation;
+      }
+    }
+  }
+
+  /**
    * Activate a category and close all others.
    *
    * @param      {Arrayany}  categories  List of categories that should be closed
@@ -170,5 +155,10 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
     categories.forEach(deactivateCat => deactivateCat.active = false);
 
     category.active = !category.active;
+
+    // if the category is empty, navigate directly tho the empty nav point
+    if (category.children.length === 0 && category.emptyNav) {
+      (<any>this).evanNavigate(category.emptyNav);
+    }
   }
 }

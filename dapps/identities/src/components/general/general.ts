@@ -35,9 +35,66 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import * as dispatchers from '../../dispatchers/registy';
+import EvanUIIdentity from '../../identity';
+import { getIdentityBaseDbcp } from '../../utils';
+
+interface GeneralFormInterface extends EvanForm {
+  description: EvanFormControl;
+  img: EvanFormControl;
+  name: EvanFormControl;
+  type: EvanFormControl;
+}
+
 @Component({ })
 export default class GeneralComponent extends mixins(EvanComponent) {
-  created() {
+  /**
+   * formular specific variables
+   */
+  generalForm: GeneralFormInterface = null;
 
+  /**
+   * Current ui identity
+   */
+  uiIdentity: EvanUIIdentity;
+
+  /**
+   * Setup the form.
+   */
+  created() {
+    this.uiIdentity = this.$store.state.uiIdentity;
+
+    this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
+      name: {
+        value: this.uiIdentity.dbcp.name,
+        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
+          this.uiIdentity.dbcp.name = this.value;
+        }
+      },
+      description: {
+        value: this.uiIdentity.dbcp.description,
+        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
+          this.uiIdentity.dbcp.description = this.value;
+
+          // update identity dbcp and return true, i's not required
+          return true;
+        }
+      },
+      img: {
+        value: '',
+      },
+    }));
+
+    this.$nextTick(() => this.generalForm.name.$ref.focus());
+  }
+
+  /**
+   * Create the new identity
+   */
+  createIdentity() {
+    dispatchers.identityCreateDispatcher.start((<any>this).getRuntime(), {
+      address: this.uiIdentity.address,
+      dbcp: this.uiIdentity.dbcp
+    });
   }
 }

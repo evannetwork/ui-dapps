@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import ensDispatcher from '../../dispatchers/ens';
+import * as dispatchers from '../../dispatchers/registy';
 import * as identitityUtils from '../../utils';
 
 interface LookupFormInterface extends EvanForm {
@@ -82,6 +82,11 @@ export default class LookupComponent extends mixins(EvanComponent) {
   purchasingInstances = { };
 
   /**
+   * Show loading during ens check
+   */
+  checking = false;
+
+  /**
    * Setup the Lookup form.
    */
   created() {
@@ -101,10 +106,10 @@ export default class LookupComponent extends mixins(EvanComponent) {
      * watch for ens purchase changes
      */
     this.checkPurchasing();
-    ensDispatcher.watch(() => this.checkPurchasing());
+    dispatchers.ensDispatcher.watch(() => this.checkPurchasing());
 
     // auto focus
-    this.$nextTick(() => (this.$refs['address'] as any).focus());
+    this.$nextTick(() => this.lookupForm.address.$ref.focus());
   }
 
   /**
@@ -117,7 +122,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
       this.purchasingInstances[beforeKeys[0]].data.ensAddress : null;
 
     // load new instances
-    this.purchasingInstances = await ensDispatcher.getInstances((<any>this).getRuntime());
+    this.purchasingInstances = await dispatchers.ensDispatcher.getInstances((<any>this).getRuntime());
 
     // if the synchronisation has finished, check the address again
     if (beforeKeys.length > 0 && Object.keys(this.purchasingInstances).length === 0) {
@@ -135,6 +140,8 @@ export default class LookupComponent extends mixins(EvanComponent) {
     const domainName = identitityUtils.getDomainName();
     let address = this.lookupForm.address.value;
 
+    this.checking = true;
+
     // reset lookup modal scope
     this.lookupModalScope = '';
 
@@ -148,7 +155,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
     }
 
     // create identity instance, so we can check, if the address exists
-    const isValidIdentity = await bcc.DigitalIdentity.isValidDigitalIdentity(runtime, address);
+    const isValidIdentity = await bcc.DigitalIdentity.getValidity(runtime, address);
 
     // if the identity is valid, open it!
     if (isValidIdentity.valid) {
@@ -198,6 +205,8 @@ export default class LookupComponent extends mixins(EvanComponent) {
 
       (<any>this.$refs.lookupModal).show();
     }
+
+    this.checking = false;
   }
 
   /**
@@ -235,7 +244,10 @@ export default class LookupComponent extends mixins(EvanComponent) {
    */
   purchaseAdress() {
     // start the dispatcher
-    ensDispatcher.start((<any>this).getRuntime(), { ensAddress: this.lookupForm.address.value });
+    dispatchers.ensDispatcher.start(
+      (<any>this).getRuntime(),
+      { ensAddress: this.lookupForm.address.value }
+    );
 
     // hide modal
     (<any>this.$refs.lookupModal).hide();

@@ -25,36 +25,7 @@
   https://evan.network/license/
 */
 
-import Vue from 'vue';
-import { initializeVue } from '@evan.network/ui-vue-core';
+import ensDispatcher from './ens';
+import identityCreateDispatcher from './identity.create';
 
-import Main from './components/root/root.vue';
-import translations from './i18n/translations';
-import routes from './routes';
-import components from './components/registry';
-
-export * from './dispatchers/registy';
-
-/**
- * StartDapp function that is called by the ui-dapp-browser, including an container and the current
- * dbcp. So startup, it's evan time!
- *
- * @param      {any}     container    container element
- * @param      {string}  dbcpName     dbcp name of the dapp
- * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
- * @param      {string}  dappBaseUrl  origin of the dapp
- */
-export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
-  await initializeVue({
-    components,
-    container,
-    dappBaseUrl,
-    dappEnsOrContract,
-    dbcpName,
-    RootComponent: Main,
-    routes,
-    state: { },
-    translations: translations,
-    Vue: Vue,
-  });
-}
+export { ensDispatcher, identityCreateDispatcher }
