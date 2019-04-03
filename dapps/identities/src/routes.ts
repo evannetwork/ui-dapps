@@ -37,12 +37,12 @@ import LookupComponent from './components/lookup/lookup.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', component: OverviewComponent },
-  { path: 'identities', component: IdentitiesComponent },
-  { path: 'templates', component: TemplatesComponent },
-  { path: 'lookup', component: LookupComponent },
-  { path: ':identityAddress', component: IdentityGeneralComponent },
-  { path: ':identityAddress/verifications', component: IdentityVerificationsComponent },
+  { name: 'base-overview', path: '', component: OverviewComponent },
+  { name: 'base-identities', path: 'identities', component: IdentitiesComponent },
+  { name: 'base-templates', path: 'templates', component: TemplatesComponent },
+  { name: 'base-lookup', path: 'lookup', component: LookupComponent },
+  { name: 'identity', path: ':identityAddress', component: IdentityGeneralComponent },
+  { name: 'identity-verifications', path: ':identityAddress/verifications', component: IdentityVerificationsComponent },
   // { path: ':identityAddress/:containerAddress', component: DAppLoader },
 ];
 

@@ -28,25 +28,25 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, } from '@evan.network/ui';
-import { getPayableNameResolver } from '../utils';
+import { getRuntime } from '../utils';
 
 const ensDispatcher = new Dispatcher(
   `identities.${ dappBrowser.getDomainName() }`,
   'ensDispatcher',
   40 * 1000,
-  '_identities.lookup.purchase.action'
+  '_identities.dispatcher.create'
 );
 
 ensDispatcher
   .step(async (instance, data) => {
-    const payableNameResolver = getPayableNameResolver(instance.runtime);
+    const runtime = getRuntime(instance.runtime);
 
     // purchaser the ens address
-    await payableNameResolver.claimAddress(
+    await runtime.nameResolver.claimAddress(
       data.ensAddress,
       instance.runtime.activeAccount,
       instance.runtime.activeAccount,
-      await payableNameResolver.getPrice(data.ensAddress)
+      await runtime.nameResolver.getPrice(data.ensAddress)
     );
   })
   .step(async (instance, data) => {

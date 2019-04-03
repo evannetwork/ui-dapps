@@ -29,21 +29,28 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 /**
- * Return the payable nameresolve, until the latest nameresolver is up to date.
+ * Copies and returns a runtime with the correct nameresolver for payable stuff.
  *
- * @return     {any}  bcc.nameresolve with correct configurations
+ * @param      {any}  runtime  vue instance or runtime
  */
-export function getPayableNameResolver(runtime: any) {
+export function getRuntime(runtime: any): bcc.Runtime {
+  runtime = runtime.getRuntime ? runtime.getRuntime() : runtime;
+
   const nameResolverConfig = JSON.parse(JSON.stringify(dappBrowser.config.nameResolver));
   // set the custom ens contract address
   nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
   nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
-  return new bcc.NameResolver({
+
+  // copy runtime and set the nameResolver
+  const runtimeCopy = Object.assign({ }, runtime);
+  runtimeCopy.nameResolver = new bcc.NameResolver({
     config: nameResolverConfig,
     contractLoader: runtime.contractLoader,
     executor: runtime.executor,
     web3: runtime.web3,
   });
+
+  return runtimeCopy;
 }
 
 /**
@@ -51,21 +58,20 @@ export function getPayableNameResolver(runtime: any) {
  *
  * @return     {string}  domain name (default evan)
  */
-export function getDomainName() {
+export function getDomainName(): string {
   return 'payable' || dappBrowser.getDomainName();
 }
 
 /**
  * Returns a minimal dbcp description set.
- *
- * @return     {any}  minimal dbcp description
  */
-export async function getIdentityBaseDbcp() {
-  const identityDbcp = dappBrowser.System.import(`idenity.${ dappBrowser.getDomainName() }!ens`);
+export async function getIdentityBaseDbcp(): Promise<any> {
+  const identityDbcp = await dappBrowser.System
+    .import(`identities.${ dappBrowser.getDomainName() }!ens`);
 
   return {
     author: '',
-    dapp: identityDbcp.public.dapp,
+    dapp: identityDbcp.dapp,
     dbcpVersion: 2,
     description: '',
     name: '',

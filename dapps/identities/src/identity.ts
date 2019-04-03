@@ -30,6 +30,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { getIdentityBaseDbcp } from './utils';
+import * as dispatchers from './dispatchers/registy';
 
 /**
  * Represents the UI representation for a evan.network. Handles data management and so on.
@@ -48,16 +49,6 @@ export default class EvanUIIdentity {
   address: string;
 
   /**
-   * List of data containers.
-   */
-  containers: Array<any> = [ ];
-
-  /**
-   * current bcc runtime
-   */
-  runtime: bcc.Runtime;
-
-  /**
    * bcc.DigitalIdentity.isValidDigitalIdentity result
    */
   validity: any;
@@ -68,14 +59,40 @@ export default class EvanUIIdentity {
   navigation: Array<any>;
 
   /**
-   * Current vue instance, that uses the ui identity, is used to directly add dynamic i18n, ...
+   * List of data containers.
    */
-  vueInstance: Vue;
+  containers: Array<any> = [ ];
 
-  constructor(runtime: bcc.Runtime, vueInstance: any, address: string) {
+  /**
+   * watch for dispatcher updates
+   */
+  dispatcherListeners: Array<Function> = [ ];
+
+  /**
+   * is the identity currently loading?
+   */
+  loading = true;
+
+  /**
+   * creation is in progress
+   */
+  isCreating = false;
+
+  /**
+   * Return the default identity config.
+   */
+  static getIdentityConfig(runtime: bcc.Runtime, address: string, dbcp?: any) {
+    return {
+      accountId: runtime.activeAccount,
+      address: address,
+      containerConfig: { accountId: runtime.activeAccount, },
+      description: dbcp,
+      factoryAddress: '0xE8aB5213BDD998FB39Ed41352a7c84a6898C288a',
+    }
+  }
+
+  constructor(address: string) {
     this.address = address;
-    this.runtime = runtime;
-    this.vueInstance = vueInstance;
 
     // set initial navigation
     this.navigation = [
@@ -98,31 +115,69 @@ export default class EvanUIIdentity {
   /**
    * Load the initial data for the digital identity
    */
-  async initialize() {
+  async initialize(vueInstance: any, runtime: bcc.Runtime) {
+    this.loading = true;
+
     // if we are not loading the create components, show the details.
-    this.validity = await bcc.DigitalIdentity.getValidity(<any>this.runtime, this.address);
+    this.validity = await bcc.DigitalIdentity.getValidity((<any>runtime), this.address);
 
     if (this.validity.exists) {
-      console.log('load details')
+      const identity = new bcc.DigitalIdentity(
+        <any>runtime,
+        EvanUIIdentity.getIdentityConfig(runtime, this.address)
+      );
+
+      this.dbcp = await identity.getDescription();
     } else {
       this.dbcp = await getIdentityBaseDbcp();
-
       // set default dbcp name
       this.dbcp.name = this.address;
+
+      // check for running dispatchers
+      this.setIsCreating(runtime);
+      this.dispatcherListeners.push(dispatchers.identityCreateDispatcher
+        .watch(() => this.setIsCreating(runtime)));
     }
 
-    this.setNameTranslations();
+    this.setNameTranslations(vueInstance);
+    this.loading = false;
+    console.log('finished loading')
   }
 
   /**
    * Set the translation for the current dbcp name, so the breadcrumbs will be displayed correctly.
    */
-  setNameTranslations() {
+  setNameTranslations(vueInstance: any) {
     const customTranslation = { };
-    const i18n = (<any>this.vueInstance).$i18n;
+    const i18n = vueInstance.$i18n;
 
     customTranslation[ `_identities.breadcrumbs.${ this.address }`] = this.dbcp.name;
 
     i18n.add(i18n.locale(), customTranslation);
+  }
+
+  /**
+   * Check if the current identity with the specific address is in creation
+   *
+   * @return     {<type>}  { description_of_the_return_value }
+   */
+  setIsCreating = async (runtime) => {
+    const instances = await dispatchers.identityCreateDispatcher.getInstances(runtime);
+    // is currently an identity for this address is in creation?
+    this.isCreating = Object.keys(instances)
+      .filter(id => instances[id].data.address).length !== 0;
+  }
+
+  /**
+   * Stops all dispatcher listeners and kill the vue store instance, if it's set
+   *
+   * @param      {any}  vueInstance  a vue instance
+   */
+  destroy(vueInstance?: Vue) {
+    if (vueInstance) {
+      vueInstance.$store.state.uiIdentity = null;
+    }
+
+    this.dispatcherListeners.forEach((listener: Function) => listener());
   }
 }

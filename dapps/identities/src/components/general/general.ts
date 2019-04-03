@@ -38,6 +38,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as dispatchers from '../../dispatchers/registy';
 import EvanUIIdentity from '../../identity';
 import { getIdentityBaseDbcp } from '../../utils';
+import { getRuntime, getDomainName } from '../../utils';
 
 interface GeneralFormInterface extends EvanForm {
   description: EvanFormControl;
@@ -54,27 +55,24 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   generalForm: GeneralFormInterface = null;
 
   /**
-   * Current ui identity
-   */
-  uiIdentity: EvanUIIdentity;
-
-  /**
    * Setup the form.
    */
   created() {
-    this.uiIdentity = this.$store.state.uiIdentity;
+    const uiIdentity = this.$store.state.uiIdentity;
 
     this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
       name: {
-        value: this.uiIdentity.dbcp.name,
+        value: uiIdentity.dbcp.name,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          this.uiIdentity.dbcp.name = this.value;
+          vueInstance.$store.state.uiIdentity.dbcp.name = this.value;
+
+          return this.value.length !== 0;
         }
       },
       description: {
-        value: this.uiIdentity.dbcp.description,
+        value: uiIdentity.dbcp.description,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          this.uiIdentity.dbcp.description = this.value;
+          vueInstance.$store.state.uiIdentity.dbcp.description = this.value;
 
           // update identity dbcp and return true, i's not required
           return true;
@@ -92,9 +90,9 @@ export default class GeneralComponent extends mixins(EvanComponent) {
    * Create the new identity
    */
   createIdentity() {
-    dispatchers.identityCreateDispatcher.start((<any>this).getRuntime(), {
-      address: this.uiIdentity.address,
-      dbcp: this.uiIdentity.dbcp
+    dispatchers.identityCreateDispatcher.start(getRuntime(this), {
+      address: this.$store.state.uiIdentity.address,
+      dbcp: this.$store.state.uiIdentity.dbcp
     });
   }
 }

@@ -36,6 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import EvanUIIdentity from '../../identity';
+import * as identitityUtils from '../../utils';
 
 @Component({ })
 export default class IdentitiesRootComponent extends mixins(EvanComponent) {
@@ -48,11 +49,6 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
    * Was the component destroyed, before the hash change event was bind?
    */
   wasDestroyed: boolean;
-
-  /**
-   * is currently identity data loading?
-   */
-  loadingIdentity: false;
 
   /**
    * Show left panel overview or is an detail is opened?
@@ -77,12 +73,7 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
       }
     ],
     [ ]
-  ]
-
-  /**
-   * current identity instance
-   */
-  uiIdentity: EvanUIIdentity = null;
+  ];
 
   /**
    * Initialize when the user has logged in.
@@ -117,30 +108,35 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
       // remove the hash change listener
       window.removeEventListener('hashchange', this.hashChangeWatcher);
     }
+
+    // clear listeners
+    this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
   }
 
   /**
    * Load identity data. Checks for identity changes and if a identity is opened.
    */
   async loadIdentity() {
-    this.uiIdentity = this.$store.state.uiIdentity;
     const identityAddress = (<any>this).$route.params.identityAddress;
+    let uiIdentity: EvanUIIdentity = this.$store.state.uiIdentity;
 
     // load the identity
-    if (identityAddress) {
-      if (!this.uiIdentity || identityAddress !== this.uiIdentity.address) {
+    if (identityAddress && (!uiIdentity || (uiIdentity && !uiIdentity.loading))) {
+      if (!uiIdentity || identityAddress !== uiIdentity.address) {
+        // if identity was set, destroy it
+        uiIdentity && uiIdentity.destroy(this);
+
         // create new instance of the evan ui identity, that wraps general ui and navigation
         // functions
-        this.uiIdentity = new EvanUIIdentity((<any>this).getRuntime(), this, identityAddress);
-        this.$store.state.uiIdentity = this.uiIdentity;
+        this.$set(this.$store.state, 'uiIdentity', new EvanUIIdentity(identityAddress));
 
         // load identity specific data
-        await this.uiIdentity.initialize();
+        await this.$store.state.uiIdentity.initialize(this, identitityUtils.getRuntime(this));
 
         // apply the container categories every time, when the identity was load, so the containers
         // and paths will be dynamic
         this.sideNav = 1;
-        this.navigation[1] = this.uiIdentity.navigation;
+        this.navigation[1] = this.$store.state.uiIdentity.navigation;
       }
     }
   }

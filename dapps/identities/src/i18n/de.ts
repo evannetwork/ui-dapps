@@ -50,6 +50,9 @@ export default {
         "title": "Meine Vorlagen"
       }
     },
+    "dispatcher": {
+      "create": "Digitale Identität wird erstellt"
+    },
     "empty-navigation": "Keine Einträge verfügbar",
     "generalForm": {
       "create": "Erstellen",
@@ -66,6 +69,7 @@ export default {
       "title": "Generelle Informationen"
     },
     "identities": "Identitäten",
+    "in-creation": "In Erstellung...",
     "left-categories": {
       "containers": {
         "desc": "Alle, der Identität zugeordneten Datencontainer",
@@ -125,8 +129,7 @@ export default {
     "overview": "Übersicht",
     "startup": "Womit möchten Sie starten?",
     "unlock-identity-panel": "<b>Die geöffnete Identität befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
-    "welcome": "Willkommen in der Identitätsverwaltung",
-    "in-creation": "Wird erstellt..."
+    "welcome": "Willkommen in der Identitätsverwaltung"
   }
 }
 /* tslint:enable */

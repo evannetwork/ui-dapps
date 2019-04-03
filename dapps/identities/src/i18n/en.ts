@@ -50,6 +50,9 @@ export default {
         "title": "My Templates"
       }
     },
+    "dispatcher": {
+      "create": "Digital identity creation"
+    },
     "empty-navigation": "No entries available",
     "generalForm": {
       "create": "Create",
@@ -66,6 +69,7 @@ export default {
       "title": "General Information"
     },
     "identities": "Identities",
+    "in-creation": "In creation...",
     "left-categories": {
       "containers": {
         "desc": "All data containers associated with the identity",
@@ -125,8 +129,7 @@ export default {
     "overview": "Overview",
     "startup": "What would you like to start with?",
     "unlock-identity-panel": "<b>The opened identity is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
-    "welcome": "Welcome to the identity management",
-    "in-creation": "In creation..."
+    "welcome": "Welcome to the identity management"
   }
 }
 /* tslint:enable */;

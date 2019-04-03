@@ -35,6 +35,7 @@
           </h4>
         </div>
         <form class="p-4"
+          v-if="!$store.state.uiIdentity.isCreating"
           v-on:submit.prevent="createIdentity">
           <div class="form-group">
             <label for="name">
@@ -74,6 +75,12 @@
             </button>
           </div>
         </form>
+
+        <div class="text-center" v-else>
+          <h4 class="mt-5 mb-3">{{ '_identities.in-creation' | translate }}</h4>
+          <b> {{ generalForm.name.value }} </b>
+          <evan-loading></evan-loading>
+        </div>
       </div>
     </div>
   </div>

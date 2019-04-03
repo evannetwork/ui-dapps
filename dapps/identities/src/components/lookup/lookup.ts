@@ -36,7 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registy';
-import * as identitityUtils from '../../utils';
+import { getRuntime, getDomainName } from '../../utils';
 
 interface LookupFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -72,11 +72,6 @@ export default class LookupComponent extends mixins(EvanComponent) {
   };
 
   /**
-   * Custom nameresolve for payable adresses.
-   */
-  payableNameResolver: any;
-
-  /**
    * Check if the currenrt user is purchasing an ens address
    */
   purchasingInstances = { };
@@ -99,9 +94,6 @@ export default class LookupComponent extends mixins(EvanComponent) {
       },
     }));
 
-    // create a custom nameresolve for payable adresses
-    this.payableNameResolver = identitityUtils.getPayableNameResolver((<any>this).getRuntime());
-
     /**
      * watch for ens purchase changes
      */
@@ -122,7 +114,8 @@ export default class LookupComponent extends mixins(EvanComponent) {
       this.purchasingInstances[beforeKeys[0]].data.ensAddress : null;
 
     // load new instances
-    this.purchasingInstances = await dispatchers.ensDispatcher.getInstances((<any>this).getRuntime());
+    this.purchasingInstances = await dispatchers.ensDispatcher
+      .getInstances(getRuntime(this));
 
     // if the synchronisation has finished, check the address again
     if (beforeKeys.length > 0 && Object.keys(this.purchasingInstances).length === 0) {
@@ -136,8 +129,8 @@ export default class LookupComponent extends mixins(EvanComponent) {
    * is not the owner of the ens address
    */
   async checkAddress() {
-    const runtime = (<any>this).getRuntime();
-    const domainName = identitityUtils.getDomainName();
+    const runtime: any = getRuntime(this);
+    const domainName = getDomainName();
     let address = this.lookupForm.address.value;
 
     this.checking = true;
@@ -160,6 +153,9 @@ export default class LookupComponent extends mixins(EvanComponent) {
     // if the identity is valid, open it!
     if (isValidIdentity.valid) {
       (<any>this).evanNavigate(address);
+
+      // trigger reload
+      this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
     } else {
       const errorMsg = isValidIdentity.error.message;
       if (errorMsg.indexOf('contract does not exists') !== -1) {
@@ -181,7 +177,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
               .join('.');
 
             this.modalParams.ensPrice = runtime.web3.utils.fromWei(
-              await this.payableNameResolver.getPrice(topLevelAdress));
+              await runtime.nameResolver.getPrice(topLevelAdress));
           } catch (ex) {
             runtime.logger.log(ex, 'error');
             this.lookupModalScope = 'not-buyable';
@@ -216,13 +212,13 @@ export default class LookupComponent extends mixins(EvanComponent) {
    * @param      {string}  address  ens address
    */
   async getParentRecursive(address: string, owner: string = nullAddress) {
-    const runtime = (<any>this).getRuntime();
+    const runtime = getRuntime(this);
     try {
       // load the current owner of the ens address
-      const namehash = this.payableNameResolver.namehash(address);
+      const namehash = runtime.nameResolver.namehash(address);
 
       owner = await runtime.executor.executeContractCall(
-        this.payableNameResolver.ensContract, 'owner', namehash);
+        runtime.nameResolver.ensContract, 'owner', namehash);
     } catch (ex) { }
 
     if (owner === runtime.activeAccount) {
@@ -245,7 +241,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
   purchaseAdress() {
     // start the dispatcher
     dispatchers.ensDispatcher.start(
-      (<any>this).getRuntime(),
+      getRuntime(this),
       { ensAddress: this.lookupForm.address.value }
     );
 
@@ -254,5 +250,18 @@ export default class LookupComponent extends mixins(EvanComponent) {
 
     // show loading
     this.$nextTick(() => this.checkPurchasing());
+  }
+
+  /**
+   * open identity address
+   */
+  createIdentity() {
+    (<any>this).evanNavigate(this.lookupForm.address.value);
+
+    // trigger reload
+    this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
+
+    // hide modal
+    (<any>this.$refs.lookupModal).hide();
   }
 }

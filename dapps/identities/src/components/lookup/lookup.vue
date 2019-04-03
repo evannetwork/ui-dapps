@@ -49,7 +49,7 @@
           <template v-slot:footer>
             <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
              v-if="lookupModalScope === 'create'"
-              @click="evanNavigate(lookupForm.address.value); $refs.lookupModal.hide()">
+              @click="createIdentity()">
               {{ `_identities.lookup.${ lookupModalScope }.action` | translate }}
             </button>
             <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
