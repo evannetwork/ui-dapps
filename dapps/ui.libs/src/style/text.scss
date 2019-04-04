@@ -87,4 +87,39 @@
       font-size: 90%;
     }
   }
+
+  /* http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
+  .overflow-multiline {
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    max-height: 4.3em;
+    margin-right: -1em;
+    padding-right: 1em;
+
+    text-align: justify;
+  }
+
+  .overflow-multiline:before {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+
+    content: '...';
+  }
+
+  .overflow-multiline:after {
+    position: absolute;
+    right: 0;
+
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+
+    content: '';
+
+    background: white;
+  }
 }
