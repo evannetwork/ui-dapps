@@ -28,30 +28,34 @@
 /* tslint:disable */
 export default {
   "_identities": {
-    "add": "Hinzufügen",
-    "add-identity": "Neue Identität",
+    "add": "Öffnen",
+    "add-identity": "Neue digitale Identität",
     "breadcrumbs": {
       "add": "Hinzufügen",
-      "identities": "Identitäten",
+      "identities": "digitale Identitäten",
       "lookup": "Öffnen",
       "templates": "Vorlagen"
     },
     "dashboard": {
       "add": {
-        "desc": "Erstellen Sie eine neue Identität auf Grundlage ihrer bestehenden Vorlagen oder öffnen Sie Bestehende.",
-        "title": "Identität hinzufügen"
+        "desc": "Erstellen Sie eine neue digitale Identität auf Grundlage ihrer bestehenden Vorlagen oder öffnen Sie Bestehende.",
+        "title": "Digitale Identität öffnen / hinzufügen"
       },
       "identities": {
-        "desc": "Verwalten Sie Ihre letzten Identitäten oder öffnen Sie neue.",
+        "desc": "Übersicht meiner und der der zuletzt geöffneten digitalen Identitäten.",
         "title": "Meine digitalen Identitäten"
       },
       "templates": {
-        "desc": "Verwalten Sie Vorlagen für Ihre Digitalen Identitäten.",
+        "desc": "Verwalten Sie Vorlagen für Ihre digitalen Identitäten.",
         "title": "Meine Vorlagen"
       }
     },
     "dispatcher": {
-      "create": "Digitale Identität wird erstellt"
+      "create": "Digitale Identität wird erstellt",
+      "favorite": {
+        "add": "Digitale Identität wird als Favorit gespeichert",
+        "remove": "Digitale Identität wird von den Favoriten entfernt"
+      }
     },
     "empty-navigation": "Keine Einträge verfügbar",
     "generalForm": {
@@ -68,7 +72,7 @@ export default {
       "save": "Speichern",
       "title": "Generelle Informationen"
     },
-    "identities": "Identitäten",
+    "identities": "Digitalen Identitäten",
     "in-creation": "In Erstellung...",
     "left-categories": {
       "containers": {
@@ -80,15 +84,16 @@ export default {
         "desc": "Generelle Informationen zu der digitalen Identität.",
         "title": "Digitale Identität"
       },
+      "identity-overview": "Übersicht",
       "my-identities": {
-        "desc": "Letzte Identitäten oder Neue öffnen",
-        "title": "Meine Identitäten"
+        "desc": "Übersicht letzter und meiner digitalen Identitäten",
+        "title": "Meine digitalen Identitäten"
       },
       "my-templates": {
         "desc": "Letzte Templates oder Neue erstellen",
         "title": "Meine Templates"
       },
-      "open-identity": "Identität öffnen",
+      "open-identity": "Digitale Identität öffnen",
       "verifications": "Verifizierungen"
     },
     "lookup": {
@@ -102,16 +107,16 @@ export default {
         "title": "Nicht verfügbar"
       },
       "create": {
-        "action": "Identität erstellen",
-        "desc": "Für diese Adresse existiert noch keine Identität. Möchten Sie eine neue für diese Adresse erstellen?",
+        "action": "Digitale Identität erstellen",
+        "desc": "Für diese Adresse existiert noch keine digitale Identität. Möchten Sie eine neue für diese Adresse erstellen?",
         "title": "Nicht verfügbar"
       },
       "error": {
-        "desc": "Die angeforderte Addresse enthält keine valide Identität. Bitte überprüfen Sie Ihre Eingabe.",
+        "desc": "Die angeforderte Addresse enthält keine valide digitale Identität. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"
       },
       "missing-balance": {
-        "desc": "Bevor Sie eine Digitale Identität erstellen können, müssen Sie die angegeben Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
+        "desc": "Bevor Sie eine digitale Identität erstellen können, müssen Sie die angegeben Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
         "title": "Adresse verfügbar"
       },
       "not-buyable": {
@@ -120,7 +125,7 @@ export default {
       },
       "purchase": {
         "action": "Adresse kaufen",
-        "desc": "Bevor Sie eine Digitale Identität erstellen können, müssen Sie die angegeben Root-Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice }EVE</b> kaufen?",
+        "desc": "Bevor Sie eine digitale Identität erstellen können, müssen Sie die angegeben Root-Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice }EVE</b> kaufen?",
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
@@ -128,8 +133,8 @@ export default {
     },
     "overview": "Übersicht",
     "startup": "Womit möchten Sie starten?",
-    "unlock-identity-panel": "<b>Die geöffnete Identität befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
-    "welcome": "Willkommen in der Identitätsverwaltung"
+    "unlock-identity-panel": "<b>Die geöffnete digitale Identität befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
+    "welcome": "Willkommen in der digitalen Identitätsverwaltung"
   }
 }
 /* tslint:enable */

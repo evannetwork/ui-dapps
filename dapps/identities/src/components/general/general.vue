@@ -67,6 +67,7 @@
           <div class="text-center mt-3 w-100">
             <button type="submit"
               class="btn btn-rounded btn-primary"
+              v-if="!$store.state.uiIdentity.validity.exists"
               :disabled="!generalForm.isValid || checking">
               <div class="spinner-border spinner-border-sm text-light mr-3"
                 v-if="checking">

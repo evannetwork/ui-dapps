@@ -30,14 +30,14 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { Dispatcher, } from '@evan.network/ui';
 import { getRuntime } from '../utils';
 
-const ensDispatcher = new Dispatcher(
+const dispatcher = new Dispatcher(
   `identities.${ dappBrowser.getDomainName() }`,
   'ensDispatcher',
   40 * 1000,
   '_identities.dispatcher.create'
 );
 
-ensDispatcher
+dispatcher
   .step(async (instance, data) => {
     const runtime = getRuntime(instance.runtime);
 
@@ -58,4 +58,4 @@ ensDispatcher
   });
 
 
-export default ensDispatcher;
+export default dispatcher;

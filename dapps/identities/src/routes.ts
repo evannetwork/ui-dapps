@@ -41,7 +41,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'base-identities', path: 'identities', component: IdentitiesComponent },
   { name: 'base-templates', path: 'templates', component: TemplatesComponent },
   { name: 'base-lookup', path: 'lookup', component: LookupComponent },
-  { name: 'identity', path: ':identityAddress', component: IdentityGeneralComponent },
+  { name: 'identity-general', path: ':identityAddress', component: IdentityGeneralComponent },
   { name: 'identity-verifications', path: ':identityAddress/verifications', component: IdentityVerificationsComponent },
   // { path: ':identityAddress/:containerAddress', component: DAppLoader },
 ];

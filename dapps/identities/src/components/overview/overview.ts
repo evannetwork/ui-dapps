@@ -43,13 +43,13 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   dashboardEntries: Array<any> = [
     {
       title: 'identities',
-      icon: 'fas fa-id-card text-primary p-4 xxxl',
+      icon: 'fas fa-id-card text-secondary p-4 xxxl',
       path: 'identities',
     },
     {
       title: 'add',
-      icon: 'fas fa-plus-circle text-secondary p-4 xxxl',
-      path: `add`,
+      icon: 'fas fa-search text-primary p-4 xxxl',
+      path: `lookup`,
     },
     {
       title: 'templates',

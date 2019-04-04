@@ -29,24 +29,25 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { getRuntime } from '../utils';
+import { getRuntime, } from '../utils';
 import EvanUIIdentity from '../identity';
 
 const dispatcher = new Dispatcher(
   `identities.${ dappBrowser.getDomainName() }`,
-  'identityCreateDispatcher',
+  'favoriteAddDispatcher',
   40 * 1000,
-  '_identities.in-creation'
+  '_identities.dispatcher.favorite.add'
 );
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = getRuntime(instance.runtime);
-
-    await bcc.DigitalIdentity.create(
+    const identity = new bcc.DigitalIdentity(
       <any>runtime,
-      EvanUIIdentity.getIdentityConfig(runtime, data.address, data.dbcp)
+      EvanUIIdentity.getIdentityConfig(runtime, data.address)
     );
+
+    await identity.addAsFavorite();
   });
 
 export default dispatcher;

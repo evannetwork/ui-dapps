@@ -41,6 +41,11 @@ import * as identitityUtils from '../../utils';
 @Component({ })
 export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   /**
+   * show general loading
+   */
+  loading = true;
+
+  /**
    * Watch for hash updates and load identity detail, if a identity was laod
    */
   hashChangeWatcher: any;
@@ -64,7 +69,9 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
         name: 'my-identities',
         active: false,
         emptyNav: 'lookup',
-        children: [ ]
+        children: [
+          { name: 'identity-overview', path: 'identities', i18n: true },
+        ]
       },
       {
         name: 'my-templates',
@@ -79,12 +86,17 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
    * Initialize when the user has logged in.
    */
   async initialize() {
+    this.loading = true;
+    await this.loadFavorites();
+    this.setLastOpenedIdentities();
+    this.loading = false;
+
     await this.loadIdentity();
 
     // set the hash change watcher, so we can detect identity change
     const that = this;
     this.hashChangeWatcher = function() {
-      that.initialize();
+      that.loadIdentity();
     };
 
     // add the hash change listener
@@ -114,6 +126,14 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Load the identity favorites for the current user.
+   */
+  async loadFavorites() {
+    const runtime = identitityUtils.getRuntime(this);
+    this.$store.state.favorites = await bcc.DigitalIdentity.getFavorites(<any>runtime);
+  }
+
+  /**
    * Load identity data. Checks for identity changes and if a identity is opened.
    */
   async loadIdentity() {
@@ -137,6 +157,9 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
         // and paths will be dynamic
         this.sideNav = 1;
         this.navigation[1] = this.$store.state.uiIdentity.navigation;
+
+        // show latest identities
+        this.setLastOpenedIdentities();
       }
     }
   }
@@ -156,5 +179,28 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
     if (category.children.length === 0 && category.emptyNav) {
       (<any>this).evanNavigate(category.emptyNav);
     }
+
+    if (category.children.length === 1) {
+      (<any>this).evanNavigate(category.children[0].path);
+    }
+  }
+
+  /**
+   * Checks for localStorage, which addresses were opened before.
+   */
+  setLastOpenedIdentities() {
+    let lastIdentities = identitityUtils.getLastOpenedIdentities();
+
+    // if we hadn't opened 5 identites before, use favorites
+    if (lastIdentities.length < 5) {
+      lastIdentities = lastIdentities.concat(Object.keys(this.$store.state.favorites));
+      lastIdentities = Array.from(new Set(lastIdentities));
+    }
+
+    // show everytime the overview entry and apply the last identities
+    this.navigation[0][0].children = [ this.navigation[0][0].children[0] ]
+      .concat(lastIdentities.slice(0, 5).map((address) => {
+        return { name: address, path: address, i18n: false };
+      }));
   }
 }

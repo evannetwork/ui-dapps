@@ -29,7 +29,7 @@ import Vue from 'vue';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentityBaseDbcp } from './utils';
+import { getIdentityBaseDbcp, getLastOpenedIdentities, latestIdentitiesKey } from './utils';
 import * as dispatchers from './dispatchers/registy';
 
 /**
@@ -79,6 +79,17 @@ export default class EvanUIIdentity {
   isCreating = false;
 
   /**
+   * Was the identity adjusted and a save is needed?
+   */
+  dirty = false;
+
+  /**
+   * is this identity is a favorite?
+   */
+  isFavorite = false;
+  isFavoriteLoading = false;
+
+  /**
    * Return the default identity config.
    */
   static getIdentityConfig(runtime: bcc.Runtime, address: string, dbcp?: any) {
@@ -100,8 +111,8 @@ export default class EvanUIIdentity {
         name: 'identity-details',
         active: true,
         children: [
-          { name: 'general', path: address },
-          { name: 'verifications', path: `${ address }/verifications` }
+          { name: 'general', path: address, i18n: true },
+          { name: 'verifications', path: `${ address }/verifications`, i18n: true }
         ]
       },
       {
@@ -110,6 +121,28 @@ export default class EvanUIIdentity {
         children: [ ]
       }
     ];
+
+    // apply this identity address to the last opened identities
+    const lastIdentities = getLastOpenedIdentities();
+    const existingIndex = lastIdentities.indexOf(address);
+    if (existingIndex !== -1) {
+      lastIdentities.splice(existingIndex, 1);
+    }
+    lastIdentities.unshift(address);
+    // only save the latest 20 entries
+    window.localStorage[latestIdentitiesKey] = JSON.stringify(lastIdentities.slice(0, 20));
+  }
+
+  /**
+   * Return the DigitalIdentity instance for the current class instancew.
+   *
+   * @param      {bccRuntime}  runtime  The runtime
+   */
+  getIdentityInstance(runtime: bcc.Runtime) {
+    return new bcc.DigitalIdentity(
+      <any>runtime,
+      EvanUIIdentity.getIdentityConfig(runtime, this.address)
+    );
   }
 
   /**
@@ -118,36 +151,41 @@ export default class EvanUIIdentity {
   async initialize(vueInstance: any, runtime: bcc.Runtime) {
     this.loading = true;
 
+    // clear all previous watchers
+    this.dispatcherListeners.forEach((listener) => listener());
+    this.dispatcherListeners = [ ];
+
     // if we are not loading the create components, show the details.
     this.validity = await bcc.DigitalIdentity.getValidity((<any>runtime), this.address);
 
     if (this.validity.exists) {
-      const identity = new bcc.DigitalIdentity(
-        <any>runtime,
-        EvanUIIdentity.getIdentityConfig(runtime, this.address)
-      );
+      const identity = this.getIdentityInstance(runtime);
 
       this.dbcp = await identity.getDescription();
+      this.isFavorite = await identity.isFavorite();
+
+      // check for is favorite updates
+      this.isFavoriteLoading = await this.getFavoriteLoading(runtime);
+      this.isFavoriteLoading && this.watchFavoriteLoading(runtime);
     } else {
       this.dbcp = await getIdentityBaseDbcp();
       // set default dbcp name
       this.dbcp.name = this.address;
 
       // check for running dispatchers
-      this.setIsCreating(runtime);
+      this.setIsCreating(vueInstance, runtime);
       this.dispatcherListeners.push(dispatchers.identityCreateDispatcher
-        .watch(() => this.setIsCreating(runtime)));
+        .watch(() => this.setIsCreating(vueInstance, runtime)));
     }
 
     this.setNameTranslations(vueInstance);
     this.loading = false;
-    console.log('finished loading')
   }
 
   /**
    * Set the translation for the current dbcp name, so the breadcrumbs will be displayed correctly.
    */
-  setNameTranslations(vueInstance: any) {
+  setNameTranslations(vueInstance: any): void {
     const customTranslation = { };
     const i18n = vueInstance.$i18n;
 
@@ -158,14 +196,18 @@ export default class EvanUIIdentity {
 
   /**
    * Check if the current identity with the specific address is in creation
-   *
-   * @return     {<type>}  { description_of_the_return_value }
    */
-  setIsCreating = async (runtime) => {
+   async setIsCreating(vueInstance: any, runtime: bcc.Runtime): Promise<void> {
     const instances = await dispatchers.identityCreateDispatcher.getInstances(runtime);
+    const wasCreating = this.isCreating;
+
     // is currently an identity for this address is in creation?
     this.isCreating = Object.keys(instances)
       .filter(id => instances[id].data.address).length !== 0;
+
+    if (!this.isCreating && wasCreating) {
+      await this.initialize(vueInstance, runtime);
+    }
   }
 
   /**
@@ -173,11 +215,94 @@ export default class EvanUIIdentity {
    *
    * @param      {any}  vueInstance  a vue instance
    */
-  destroy(vueInstance?: Vue) {
+  destroy(vueInstance?: Vue): void {
     if (vueInstance) {
       vueInstance.$store.state.uiIdentity = null;
     }
 
     this.dispatcherListeners.forEach((listener: Function) => listener());
+  }
+
+  /**
+   * Sets a data property and makes the identity dirty.
+   *
+   * @param      {string}  key     nested key (e.g. dbcp.name)
+   * @param      {any}     value   value that should be set
+   */
+  setData(key: string, value: any): void {
+    const splitKey = key.split('.');
+    const paramKey = splitKey.pop();
+    let parentDataObj = this;
+
+    // find the correct nested obj
+    splitKey.forEach((parentKey: string) => parentDataObj = parentDataObj[parentKey]);
+
+    // make it only dirty, when the value has changed
+    if (parentDataObj[paramKey] !== value) {
+      parentDataObj[paramKey] = value;
+
+      // make the identity dirty
+      this.dirty = true;
+    }
+  }
+
+  /**
+   * Toggle the current dispatcher state
+   */
+  async toggleFavorite(runtime) {
+    const dispatcherName = this.isFavorite ? 'favoriteRemoveDispatcher' : 'favoriteAddDispatcher';
+
+    // start the dispatcher
+    dispatchers[dispatcherName].start(runtime, { address: this.address });
+
+    // toggle favorite
+    this.isFavorite = !this.isFavorite;
+
+    // only watch, when it wasn't watched before
+    if (!this.isFavoriteLoading) {
+      this.isFavoriteLoading = true;
+      this.watchFavoriteLoading(runtime);
+    }
+  }
+
+  /**
+   * Check if currently an synchronisation is running for the favorites.
+   */
+  async getFavoriteLoading(runtime: bcc.Runtime) {
+    const add = await dispatchers['favoriteAddDispatcher'].getInstances(runtime);
+    const remove = await dispatchers['favoriteRemoveDispatcher'].getInstances(runtime);
+
+    return [ ]
+      .concat(Object.keys(add), Object.keys(remove))
+      // filter for the current identity
+      .filter((instanceKey) => {
+        const instance = add[instanceKey] || remove[instanceKey];
+        return instance.data.address === this.address;
+      })
+      .length > 0;
+  }
+
+  /**
+   * Watch for favorite loading updates
+   *
+   * @param      {bccRuntime}  runtime  The runtime
+   */
+  watchFavoriteLoading(runtime: bcc.Runtime) {
+    const watch = async () => {
+      this.isFavoriteLoading = await this.getFavoriteLoading(runtime);
+
+      // clear the watchers, when the synchronization has finished
+      if (!this.isFavoriteLoading) {
+        addListener(); removeListener();
+        this.dispatcherListeners.splice(this.dispatcherListeners.indexOf(addListener, 1));
+        this.dispatcherListeners.splice(this.dispatcherListeners.indexOf(removeListener, 1));
+      }
+    }
+
+    // watch for updates
+    const addListener = dispatchers['favoriteAddDispatcher'].watch(watch);
+    const removeListener = dispatchers['favoriteRemoveDispatcher'].watch(watch);
+    this.dispatcherListeners.push(addListener);
+    this.dispatcherListeners.push(removeListener);
   }
 }

@@ -28,21 +28,21 @@
 /* tslint:disable */
 export default {
   "_identities": {
-    "add": "Add",
-    "add-identity": "Add identity",
+    "add": "Open",
+    "add-identity": "Add digital identity",
     "breadcrumbs": {
       "add": "Add",
-      "identities": "Identities",
+      "identities": "Digital Identities",
       "lookup": "Lookup",
       "templates": "Templates"
     },
     "dashboard": {
       "add": {
-        "desc": "Add a identity based on your existing templates or open a existing one.",
-        "title": "Add identity"
+        "desc": "Add a digital identity based on your existing templates or open a existing one.",
+        "title": "Open digital identity"
       },
       "identities": {
-        "desc": "Manage your last identities or open new ones.",
+        "desc": "Overview about my and last opened identities.",
         "title": "My digital identities"
       },
       "templates": {
@@ -51,7 +51,11 @@ export default {
       }
     },
     "dispatcher": {
-      "create": "Digital identity creation"
+      "create": "Digital identity creation",
+      "favorite": {
+        "add": "Digital identity is stored as a favorite",
+        "remove": "Digital identity is removed from favorites"
+      }
     },
     "empty-navigation": "No entries available",
     "generalForm": {
@@ -72,7 +76,7 @@ export default {
     "in-creation": "In creation...",
     "left-categories": {
       "containers": {
-        "desc": "All data containers associated with the identity",
+        "desc": "All data containers associated with the digital identity",
         "title": "Data containers"
       },
       "general": "Metadata",
@@ -80,6 +84,7 @@ export default {
         "desc": "General information about the digital identity.",
         "title": "Digital Identity"
       },
+      "identity-overview": "Overview",
       "my-identities": {
         "desc": "Last identities or open new ones",
         "title": "My Identities"
@@ -88,7 +93,7 @@ export default {
         "desc": "Last templates or create new ones",
         "title": "My Templates"
       },
-      "open-identity": "Open identity",
+      "open-identity": "Open digital identity",
       "verifications": "Verifications"
     },
     "lookup": {
@@ -102,16 +107,16 @@ export default {
         "title": "Not available"
       },
       "create": {
-        "action": "Create identity",
-        "desc": "There is no identity yet for this address. Would you like to create a new one for this address?",
+        "action": "Create digital identity",
+        "desc": "There is no digital identity yet for this address. Would you like to create a new one for this address?",
         "title": "Not available"
       },
       "error": {
-        "desc": "The requested address does not contain a valid identity. Please check your input.",
+        "desc": "The requested address does not contain a valid digital identity. Please check your input.",
         "title": "Error"
       },
       "missing-balance": {
-        "desc": "Before you can create a Digital Identity, you must have purchased the address provided. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
+        "desc": "Before you can create a digital Identity, you must have purchased the address provided. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
         "title": "Address available"
       },
       "not-buyable": {
@@ -120,7 +125,7 @@ export default {
       },
       "purchase": {
         "action": "Buy address",
-        "desc": "Before you can create a Digital Identity, you must have purchased the specified root address. Would you like to buy this address for <b>{ensPrice} EVE</b>?",
+        "desc": "Before you can create a digital Identity, you must have purchased the specified root address. Would you like to buy this address for <b>{ensPrice} EVE</b>?",
         "title": "Address available"
       },
       "purchasing": "Purchasing ENS address...",
@@ -128,8 +133,8 @@ export default {
     },
     "overview": "Overview",
     "startup": "What would you like to start with?",
-    "unlock-identity-panel": "<b>The opened identity is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
-    "welcome": "Welcome to the identity management"
+    "unlock-identity-panel": "<b>The opened digital identity is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
+    "welcome": "Welcome to the digital identity management"
   }
 }
 /* tslint:enable */;

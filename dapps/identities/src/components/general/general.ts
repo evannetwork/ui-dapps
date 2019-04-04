@@ -64,7 +64,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
       name: {
         value: uiIdentity.dbcp.name,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.$store.state.uiIdentity.dbcp.name = this.value;
+          vueInstance.$store.state.uiIdentity.setData('dbcp.name', this.value);
 
           return this.value.length !== 0;
         }
@@ -72,7 +72,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
       description: {
         value: uiIdentity.dbcp.description,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.$store.state.uiIdentity.dbcp.description = this.value;
+          vueInstance.$store.state.uiIdentity.setData('dbcp.description', this.value);
 
           // update identity dbcp and return true, i's not required
           return true;
@@ -90,9 +90,11 @@ export default class GeneralComponent extends mixins(EvanComponent) {
    * Create the new identity
    */
   createIdentity() {
-    dispatchers.identityCreateDispatcher.start(getRuntime(this), {
-      address: this.$store.state.uiIdentity.address,
-      dbcp: this.$store.state.uiIdentity.dbcp
-    });
+    if (!this.$store.state.uiIdentity.exists) {
+      dispatchers.identityCreateDispatcher.start(getRuntime(this), {
+        address: this.$store.state.uiIdentity.address,
+        dbcp: this.$store.state.uiIdentity.dbcp
+      });
+    }
   }
 }

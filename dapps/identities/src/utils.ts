@@ -28,6 +28,15 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
+export const latestIdentitiesKey = 'evan-last-digital-identities';
+
+/**
+ * Return the last opened identities that were persited in the localStorage.
+ */
+export function getLastOpenedIdentities() {
+  return JSON.parse(window.localStorage[latestIdentitiesKey] || '[ ]');
+}
+
 /**
  * Copies and returns a runtime with the correct nameresolver for payable stuff.
  *

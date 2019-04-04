@@ -199,7 +199,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
         this.lookupModalScope = 'error';
       }
 
-      (<any>this.$refs.lookupModal).show();
+      this.$refs.lookupModal && (<any>this.$refs.lookupModal).show();
     }
 
     this.checking = false;

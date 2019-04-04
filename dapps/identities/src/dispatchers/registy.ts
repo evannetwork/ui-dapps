@@ -27,5 +27,7 @@
 
 import ensDispatcher from './ens';
 import identityCreateDispatcher from './identity.create';
+import favoriteAddDispatcher from './favorite.add';
+import favoriteRemoveDispatcher from './favorite.remove';
 
-export { ensDispatcher, identityCreateDispatcher }
+export { ensDispatcher, identityCreateDispatcher, favoriteAddDispatcher, favoriteRemoveDispatcher }
