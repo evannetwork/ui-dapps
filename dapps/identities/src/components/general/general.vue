@@ -55,7 +55,7 @@
             <label for="description">
               {{ `_identities.generalForm.description.title` | translate }}
             </label>
-            <textarea class="form-control" rows="3"
+            <textarea class="form-control" rows="7"
               id="description" ref="description"
               :placeholder="`_identities.generalForm.description.desc` | translate"
               v-model="generalForm.description.value"

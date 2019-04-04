@@ -158,7 +158,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
       this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
     } else {
       const errorMsg = isValidIdentity.error.message;
-      if (errorMsg.indexOf('contract does not exists') !== -1) {
+      if (errorMsg.indexOf('contract does not exist') !== -1) {
         // if no contract exists, check if the user can set something to the address
         let parentOwner = await this.getParentRecursive(address);
 

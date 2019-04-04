@@ -61,7 +61,7 @@
                         :class="{ 'active border-bottom border-primary pb-1': sideNav === 0, 'text-muted': sideNav !== 0 }"
                         :href="dapp.fullUrl"
                         @click="sideNav = 0">
-                        <b>{{ '_identities.overview' | translate }}</b>
+                        <b>{{ '_identities.overview.title' | translate }}</b>
                       </a>
                     </li>
                     <li class="mr-3">
@@ -138,9 +138,12 @@
               </div>
 
               <button type="button" class="btn btn-primary btn-circle"
-                @click="saveIdentity()"
-                :disabled="!$store.state.uiIdentity.dirty">
-                <i class="fas fa-save lg"></i>
+                @click="$store.state.uiIdentity.saveChanges(this, getRuntime())"
+                :disabled="!$store.state.uiIdentity.dirty || $store.state.uiIdentity.isSaving">
+                <div class="spinner-border spinner-border-sm"
+                  v-if="$store.state.uiIdentity.isSaving">
+                </div>
+                <i class="fas fa-save lg" v-else></i>
               </button>
             </template>
           </evan-breadcrumbs>

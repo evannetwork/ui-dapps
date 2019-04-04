@@ -70,7 +70,7 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
         active: false,
         emptyNav: 'lookup',
         children: [
-          { name: 'identity-overview', path: 'identities', i18n: true },
+          { name: 'identity-overview', path: 'overview', i18n: true },
         ]
       },
       {
@@ -86,7 +86,10 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
    * Initialize when the user has logged in.
    */
   async initialize() {
-    this.loading = true;
+    if ((<any>this).$route.name) {
+      this.navigation[0][0].active = true;
+    }
+
     await this.loadFavorites();
     this.setLastOpenedIdentities();
     this.loading = false;
@@ -95,9 +98,7 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
 
     // set the hash change watcher, so we can detect identity change
     const that = this;
-    this.hashChangeWatcher = function() {
-      that.loadIdentity();
-    };
+    this.hashChangeWatcher = () => that.loadIdentity();
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -193,7 +194,7 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
 
     // if we hadn't opened 5 identites before, use favorites
     if (lastIdentities.length < 5) {
-      lastIdentities = lastIdentities.concat(Object.keys(this.$store.state.favorites));
+      lastIdentities = lastIdentities.concat(this.$store.state.favorites.slice(0, 10));
       lastIdentities = Array.from(new Set(lastIdentities));
     }
 
@@ -202,5 +203,7 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
       .concat(lastIdentities.slice(0, 5).map((address) => {
         return { name: address, path: address, i18n: false };
       }));
+
+    this.$store.state.lastIdentities = lastIdentities;
   }
 }

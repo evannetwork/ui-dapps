@@ -32,29 +32,21 @@ export default {
     "add-identity": "Neue digitale Identität",
     "breadcrumbs": {
       "add": "Hinzufügen",
-      "identities": "digitale Identitäten",
+      "identities": "Digitale Identitäten",
       "lookup": "Öffnen",
-      "templates": "Vorlagen"
-    },
-    "dashboard": {
-      "add": {
-        "desc": "Erstellen Sie eine neue digitale Identität auf Grundlage ihrer bestehenden Vorlagen oder öffnen Sie Bestehende.",
-        "title": "Digitale Identität öffnen / hinzufügen"
-      },
-      "identities": {
-        "desc": "Übersicht meiner und der der zuletzt geöffneten digitalen Identitäten.",
-        "title": "Meine digitalen Identitäten"
-      },
-      "templates": {
-        "desc": "Verwalten Sie Vorlagen für Ihre digitalen Identitäten.",
-        "title": "Meine Vorlagen"
-      }
+      "overview": "Favoriten & letzte Identitäten",
+      "templates": "Vorlagen",
+      "verifications": "Verifizierungen"
     },
     "dispatcher": {
       "create": "Digitale Identität wird erstellt",
       "favorite": {
         "add": "Digitale Identität wird als Favorit gespeichert",
         "remove": "Digitale Identität wird von den Favoriten entfernt"
+      },
+      "identity": {
+        "create": "Digitale Identität wird erstellt",
+        "save": "Digitale Identität wird gespeichert"
       }
     },
     "empty-navigation": "Keine Einträge verfügbar",
@@ -84,7 +76,7 @@ export default {
         "desc": "Generelle Informationen zu der digitalen Identität.",
         "title": "Digitale Identität"
       },
-      "identity-overview": "Übersicht",
+      "identity-overview": "Favoriten & letzte Identitäten",
       "my-identities": {
         "desc": "Übersicht letzter und meiner digitalen Identitäten",
         "title": "Meine digitalen Identitäten"
@@ -131,7 +123,27 @@ export default {
       "purchasing": "ENS Adresse erwerben...",
       "title": "Öffnen"
     },
-    "overview": "Übersicht",
+    "overview": {
+      "empty": "Favoriten & letzte Identitäten",
+      "empty-desc": "Sie haben noch keine digitalen Identitäten geöffnet oder favoritisiert. Nutzen Sie \"öffnen\" Button, um eine digitale Identität zu öffnen oder um eine neue zu erstellen.",
+      "favorites": "Meine Favoriten",
+      "lastIdentities": "Zuletzt geöffnet",
+      "title": "Übersicht"
+    },
+    "start": {
+      "add": {
+        "desc": "Erstellen Sie eine neue digitale Identität auf Grundlage ihrer bestehenden Vorlagen oder öffnen Sie Bestehende.",
+        "title": "Digitale Identität öffnen / hinzufügen"
+      },
+      "overview": {
+        "desc": "Übersicht meiner und der der zuletzt geöffneten digitalen Identitäten.",
+        "title": "Meine digitalen Identitäten"
+      },
+      "templates": {
+        "desc": "Verwalten Sie Vorlagen für Ihre digitalen Identitäten.",
+        "title": "Meine Vorlagen"
+      }
+    },
     "startup": "Womit möchten Sie starten?",
     "unlock-identity-panel": "<b>Die geöffnete digitale Identität befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
     "welcome": "Willkommen in der digitalen Identitätsverwaltung"

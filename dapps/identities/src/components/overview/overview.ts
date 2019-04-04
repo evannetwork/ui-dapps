@@ -35,26 +35,66 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import { getRuntime } from '../../utils'
+
 @Component({ })
 export default class OverviewComponent extends mixins(EvanComponent) {
   /**
-   * List of dashboard entries.
+   * show loading symbol
    */
-  dashboardEntries: Array<any> = [
-    {
-      title: 'identities',
-      icon: 'fas fa-id-card text-secondary p-4 xxxl',
-      path: 'identities',
-    },
-    {
-      title: 'add',
-      icon: 'fas fa-search text-primary p-4 xxxl',
-      path: `lookup`,
-    },
-    {
-      title: 'templates',
-      icon: 'fas fa-pencil-ruler text-info p-4 xxxl',
-      path: `templates`,
-    },
-  ];
+  loading = true;
+
+
+  /**
+   * mapped for better iteration
+   */
+  categories: any = {
+    /**
+     * favorite identities of the current user
+     */
+    favorites: [ ],
+
+    /**
+     * dbcp description of last identities
+     */
+    lastIdentities: [ ]
+  };
+
+  /**
+   * Loaded descriptions
+   */
+  descriptions: any = { };
+
+  /**
+   * Load dbcp descriptions for the last identities, so we can display more informations.
+   */
+  async created() {
+    const runtime = getRuntime(this);
+
+    this.categories.favorites = this.$store.state.favorites;
+    this.categories.lastIdentities = this.$store.state.lastIdentities;
+
+    const loadPromises = { };
+    await Promise.all([ ].concat(this.categories.favorites, this.categories.lastIdentities)
+      .map(async (ensAddress: string) => {
+        try {
+          // load the description only once
+          loadPromises[ensAddress] = loadPromises[ensAddress] || runtime.description
+            .getDescription(ensAddress, runtime.activeAccount);
+
+          this.descriptions[ensAddress] = (await loadPromises[ensAddress]).public;
+        } catch (ex) {
+          console.log(ex);
+        }
+      })
+    );
+
+    // filter favorites, that could not be loaded
+    this.categories.favorites = this.categories.favorites
+      .filter(ensAddress => !!this.descriptions[ensAddress]);
+    this.categories.lastIdentities = this.categories.lastIdentities
+      .filter(ensAddress => !!this.descriptions[ensAddress]);
+
+    this.loading = false;
+  }
 }

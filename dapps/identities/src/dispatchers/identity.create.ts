@@ -36,7 +36,7 @@ const dispatcher = new Dispatcher(
   `identities.${ dappBrowser.getDomainName() }`,
   'identityCreateDispatcher',
   40 * 1000,
-  '_identities.in-creation'
+  '_identities.dispatcher.identity.create'
 );
 
 dispatcher

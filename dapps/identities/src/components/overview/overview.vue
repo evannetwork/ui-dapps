@@ -27,29 +27,58 @@
 
 <template>
   <div>
-    <div class="mt-5 mb-3 text-center">
-      <br>
-      <h4 class="text-secondary font-weight-bold">{{ '_identities.welcome' | translate }}</h4>
-      <h2 class="mt-4">{{ '_identities.startup' | translate }}</h2>
-      <br>
-    </div>
-    <div class="d-md-flex container flex-wrap justify-content-center">
-      <a class="
-          p-3 col-md-5 col-lg-4 col-xl-3
-          m-md-3 mb-3 p-4
-          text-center
-          bg-level-1 border evan-highlight"
-        v-for="(type, index) in dashboardEntries"
-        :href="`${ dapp.fullUrl }/${ type.path }`">
-        <i class="highlight" :class="type.icon"></i>
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="p-3 text-left" v-if="!loading">
+      <template class="bg-level-1 border mb-3"
+        v-for="(category, index) in [ 'lastIdentities', 'favorites' ]"
+        v-if="categories[category].length > 0">
+        <div class="d-flex p-3 border-bottom align-items-center">
+          <h4 class="m-0">
+            {{ `_identities.overview.${ category }` | translate }}
+          </h4>
+        </div>
+        <div class="d-md-flex flex-wrap justify-content-left">
+          <a class="
+              col-md-4 col-lg-3 col-xl-2
+              p-0 m-md-3 mb-3 
+              text-center
+              bg-level-1 border evan-highlight"
+            style="min-width: 250px"
+            v-for="(ensAddress, index) in categories[category]"
+            :href="`${ dapp.fullUrl }/${ ensAddress }`">
+            <img class="img-fluid p-3"
+              style="max-width: 200px; min-height: 200px;"
+              :src="descriptions[ensAddress].imgSquare">
 
-        <h3 class="highlight">
-          {{ `_identities.dashboard.${ type.title }.title` | translate }}
-        </h3>
-        <span class="text-muted highlight">
-          {{ `_identities.dashboard.${ type.title }.desc` | translate }}
-        </span>
-      </a>
+            <div class="text-left p-3 border-top highlight">
+              <h5 class="font-weight-bold">{{ descriptions[ensAddress].name }}</h5>
+              <span class="overflow-multiline">{{ descriptions[ensAddress].description }}</span>
+            </div>
+          </a>
+        </div>
+      </template>
+      <div class="bg-level-1 border mb-3"
+        v-if="categories.favorites.length === 0 && categories.lastIdentities.length === 0">
+        <div class="d-flex p-3 border-bottom align-items-center">
+          <h4 class="m-0">
+            {{ `_identities.overview.empty` | translate }}
+          </h4>
+        </div>
+        <div class="p-3">
+          <p>
+            {{ `_identities.overview.empty-desc` | translate }}
+          </p>
+
+          <div class="text-center">
+            <a
+              class="btn btn-rounded btn-primary font-weight-normal"
+              :href="`${ dapp.fullUrl }/lookup`">
+              {{ '_identities.lookup.title' | translate }}
+              <i class="fas fa-arrow-right label ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

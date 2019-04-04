@@ -41,13 +41,9 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = getRuntime(instance.runtime);
-    const identity = new bcc.DigitalIdentity(
-      <any>runtime,
-      EvanUIIdentity.getIdentityConfig(runtime, data.address)
-    );
-
-    await identity.removeFromFavorites();
+    await EvanUIIdentity
+      .getDigitalIdentity(instance.runtime, data.address)
+      .removeFromFavorites();
   });
 
 export default dispatcher;

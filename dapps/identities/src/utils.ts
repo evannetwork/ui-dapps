@@ -58,6 +58,7 @@ export function getRuntime(runtime: any): bcc.Runtime {
     executor: runtime.executor,
     web3: runtime.web3,
   });
+  runtimeCopy.description.nameResolver = runtimeCopy.nameResolver;
 
   return runtimeCopy;
 }

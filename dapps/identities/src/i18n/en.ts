@@ -34,27 +34,19 @@ export default {
       "add": "Add",
       "identities": "Digital Identities",
       "lookup": "Lookup",
-      "templates": "Templates"
-    },
-    "dashboard": {
-      "add": {
-        "desc": "Add a digital identity based on your existing templates or open a existing one.",
-        "title": "Open digital identity"
-      },
-      "identities": {
-        "desc": "Overview about my and last opened identities.",
-        "title": "My digital identities"
-      },
-      "templates": {
-        "desc": "Manage templates for your digital identities.",
-        "title": "My Templates"
-      }
+      "overview": "Favorites & last identities",
+      "templates": "Templates",
+      "verifications": "Verifications"
     },
     "dispatcher": {
       "create": "Digital identity creation",
       "favorite": {
         "add": "Digital identity is stored as a favorite",
         "remove": "Digital identity is removed from favorites"
+      },
+      "identity": {
+        "create": "Digital identity is created",
+        "save": "Digital identity is stored"
       }
     },
     "empty-navigation": "No entries available",
@@ -84,7 +76,7 @@ export default {
         "desc": "General information about the digital identity.",
         "title": "Digital Identity"
       },
-      "identity-overview": "Overview",
+      "identity-overview": "Favorites & last identities",
       "my-identities": {
         "desc": "Last identities or open new ones",
         "title": "My Identities"
@@ -131,7 +123,27 @@ export default {
       "purchasing": "Purchasing ENS address...",
       "title": "Open"
     },
-    "overview": "Overview",
+    "overview": {
+      "empty": "Favorites & last identities",
+      "empty-desc": "You have not yet opened or favored any digital identities. Use \"open\" button to open a digital identity or to create a new one.",
+      "favorites": "My Favorites",
+      "lastIdentities": "Last opened",
+      "title": "Overview"
+    },
+    "start": {
+      "add": {
+        "desc": "Add a digital identity based on your existing templates or open a existing one.",
+        "title": "Open digital identity"
+      },
+      "overview": {
+        "desc": "Overview about my and last opened identities.",
+        "title": "My digital identities"
+      },
+      "templates": {
+        "desc": "Manage templates for your digital identities.",
+        "title": "My Templates"
+      }
+    },
     "startup": "What would you like to start with?",
     "unlock-identity-panel": "<b>The opened digital identity is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
     "welcome": "Welcome to the digital identity management"
