@@ -118,11 +118,10 @@
             </template>
           </evan-dapp-wrapper-level-2>
 
-          <evan-breadcrumbs
-            :i18nScope="'_identities.breadcrumbs'"
-            v-if="$route.name !== 'identity-container'">
+          <evan-breadcrumbs :i18nScope="'_identities.breadcrumbs'">
+            <!-- v-if="$route.name !== 'identity-container'" -->
             <template v-slot:content
-              v-if="sideNav !== 0 && $store.state.uiDI && !$store.state.uiDI.loading && $store.state.uiDI.validity.exists">
+              v-if="sideNav !== 0 && $store.state.uiDI && !$store.state.uiDI.loading && $store.state.uiDI.validity.exists && $route.name !== 'identity-container'">
               <div class="mr-4">
                 <div class="spinner-border spinner-border-sm"
                   v-if="$store.state.uiDI.isFavoriteLoading">

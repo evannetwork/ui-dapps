@@ -25,22 +25,13 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div>
+    entry list
+  </div>
+</template>
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-@Component({ })
-export default class DetailComponent extends mixins(EvanComponent) {
-  /**
-   * { function_description }
-   */
-  created() {
-
-  }
-}
+<script lang="ts">
+  import Component from './list.ts';
+  export default Component;
+</script>

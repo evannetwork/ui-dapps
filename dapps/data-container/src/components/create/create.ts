@@ -42,7 +42,7 @@ interface CreateInterface extends EvanForm {
   description: EvanFormControl;
   img: EvanFormControl;
   name: EvanFormControl;
-  type: EvanFormControl;
+  template: EvanFormControl;
 }
 
 @Component({ })
@@ -80,9 +80,13 @@ export default class CreateComponent extends mixins(EvanComponent) {
   /**
    * Available templates
    */
-  templates: Array<string> = [
-    'metadata',
-    'list'
+  templates: Array<any> = [
+    {
+      title: '_datacontainer.createForm.base-template',
+      type: 'metadata',
+      template: 'metadata',
+      properties: { },
+    }
   ];
 
   /**
@@ -105,8 +109,8 @@ export default class CreateComponent extends mixins(EvanComponent) {
       description: {
         value: ''
       },
-      type: {
-        value: this.templates[0]
+      template: {
+        value: 0
       },
       img: {
         value: '',
@@ -117,6 +121,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
     this.steps = [
       {
         title: '_datacontainer.createForm.general',
+        disabled: () => false
       },
       {
         title: '_datacontainer.createForm.container-configuration',
@@ -137,7 +142,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
       identityAddress: this.identityAddress,
       img: this.createForm.img.value,
       name: this.createForm.name.value,
-      type: this.createForm.type.value,
+      template: this.createForm.template.value,
     });
   }
 }

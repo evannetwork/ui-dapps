@@ -34,7 +34,7 @@
             {{ `_datacontainer.createForm.title` | translate }}
           </h4>
         </div>
-        <div class="evan-steps border-top p-3">
+        <div class="evan-steps p-3">
           <div class="evan-step-header">
             <button class="btn"
               v-for="(step, index) of steps"
@@ -50,25 +50,25 @@
               <span>{{ step.title | translate }}</span>
             </button>
           </div>
-          <div class="pt-3 pb-3">
+          <div class="pt-3">
             <div class="step" v-if="activeStep === 0">
               <form class="p-4"
-                v-on:submit.prevent="create"
+                v-on:submit.prevent="activeStep = 1"
                 v-if="!creating">
-                <div class="form-group">
-                  <label for="type">
-                    {{ `_datacontainer.createForm.type.title` | translate }}
+                <div class="form-group" v-if="templates.length > 1">
+                  <label for="template">
+                    {{ `_datacontainer.createForm.template.title` | translate }}
                   </label>
                   <select class="form-control"
-                    id="type" ref="type"
-                    :placeholder="`_datacontainer.createForm.type.desc` | translate"
-                    v-model="createForm.type.value"
-                    v-bind:class="{ 'is-invalid' : createForm.type.error }"
-                    @blur="createForm.type.setDirty()">
+                    id="template" ref="template"
+                    :placeholder="`_datacontainer.createForm.template.desc` | translate"
+                    v-model="createForm.template.value"
+                    v-bind:class="{ 'is-invalid' : createForm.template.error }"
+                    @blur="createForm.template.setDirty()">
                     <option
                       v-for="(template, index) in templates"
-                      :value="template">
-                      {{ `_datacontainer.createForm.types.${ template }` | translate }}
+                      :value="index">
+                      {{ template.title | translate }}
                     </option>
                   </select>
                 </div>
@@ -111,13 +111,9 @@
                 </div>
               </form>
             </div>
-            <div class="step" v-if="activeStep === 0">
-              <di-container-metadata
-                v-if="createForm.type === 'metadata'">
-              </di-container-metadata>
-              <di-container-list
-                v-if="createForm.type === 'list'">
-              </di-container-list>
+            <div class="step" v-if="activeStep === 1">
+              <di-template-handler :template="templates[createForm.template.value]">
+              </di-template-handler>
             </div>
           </div>
         </div>

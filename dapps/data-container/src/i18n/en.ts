@@ -28,8 +28,25 @@
 /* tslint:disable */
 export default {
   "_datacontainer": {
+    "ajv": {
+      "label": {
+        "desc": "Name of the field",
+        "error": "Please enter a name that does not correspond to an existing field",
+        "title": "Field name"
+      },
+      "name": {
+        "desc": "Name of the dataset",
+        "error": "Please enter a name that does not correspond to an existing data sets!",
+        "title": "Name"
+      },
+      "type": {
+        "title": "Type"
+      }
+    },
     "createForm": {
+      "base-template": "Base Template",
       "container-configuration": "Data container configuration",
+      "continue": "continue",
       "create": "Create",
       "description": {
         "desc": "Short description for the digital identity",
@@ -42,16 +59,28 @@ export default {
         "title": "Name"
       },
       "save": "Speichern",
-      "title": "Create data container",
-      "type": {
-        "desc": "Type of the data container",
-        "title": "Type"
+      "template": {
+        "desc": "Template of the data container",
+        "title": "Template"
       },
+      "title": "Create data container"
+    },
+    "entry": {
+      "add": "Add data set",
+      "add-desc": "A data set corresponds to a separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
       "types": {
+        "files": "Files",
+        "images": "Images",
         "list": "List",
-        "metadata": "Metadata"
+        "number": "Number",
+        "object": "Metadata",
+        "string": "Text"
       },
-      "continue": "continue"
+      "value": {
+        "desc": "Value of the field",
+        "error": "Please enter a correct value",
+        "title": "Value"
+      }
     },
     "in-creation": "In Creation"
   }

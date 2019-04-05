@@ -38,7 +38,8 @@ export default {
       "overview": "Favoriten & letzte Identitäten",
       "templates": "Vorlagen",
       "verifications": "Verifizierungen",
-      "container-link": "Daten Container verlinken"
+      "container-link": "Daten Container verlinken",
+      "datacontainer.digitalidentity": "Daten Container"
     },
     "containers": {
       "create": "Erstellen",

@@ -28,8 +28,25 @@
 /* tslint:disable */
 export default {
   "_datacontainer": {
+    "ajv": {
+      "label": {
+        "desc": "Bezeichung des Feldes",
+        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!",
+        "title": "Feldname"
+      },
+      "name": {
+        "desc": "Name des Datenbereichs",
+        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Datenbereich entspricht!",
+        "title": "Name"
+      },
+      "type": {
+        "title": "Typ"
+      }
+    },
     "createForm": {
+      "base-template": "Basis-Vorlage",
       "container-configuration": "Datencontainer Konfiguration",
+      "continue": "weiter",
       "create": "Erstellen",
       "description": {
         "desc": "Kurze Beschreibung zu der digitalen Identität.",
@@ -42,16 +59,41 @@ export default {
         "title": "Name"
       },
       "save": "Speichern",
-      "title": "Datencontainer Erstellen",
+      "template": {
+        "desc": "Vorlage des Datencontainers",
+        "title": "Vorlage"
+      },
+      "title": "Datencontainer Erstellen"
+    },
+    "entry": {
+      "add": "Datenbereich hinzufügen",
+      "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig von einander an dritte geteilt werden können.",
+      "label": {
+        "desc": "Bezeichung des Feldes",
+        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!",
+        "title": "Feldname"
+      },
+      "name": {
+        "desc": "Name des Datenbereichs",
+        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Datenbereich entspricht!",
+        "title": "Name"
+      },
       "type": {
-        "desc": "Typ des Datencontainers",
         "title": "Typ"
       },
       "types": {
-        "list": "Listen",
-        "metadata": "Metadaten"
+        "files": "Dateien",
+        "images": "Bilder",
+        "list": "Liste",
+        "number": "Zahl",
+        "object": "Metadaten",
+        "string": "Text"
       },
-      "continue": "weiter"
+      "value": {
+        "desc": "Wert des Feldes",
+        "error": "Bitte geben Sie einen korrekten Wert an!",
+        "title": "Wert"
+      }
     },
     "in-creation": "In Erstellung"
   }

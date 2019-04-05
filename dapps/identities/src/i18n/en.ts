@@ -44,7 +44,8 @@ export default {
       "overview": "Favorites & last identities",
       "templates": "Templates",
       "verifications": "Verifications",
-      "container-link": "Link Data Container"
+      "container-link": "Link Data Container",
+      "datacontainer.digitalidentity": "Data Container"
     },
     "dispatcher": {
       "create": "Digital identity creation",

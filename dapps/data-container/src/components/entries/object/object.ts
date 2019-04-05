@@ -36,11 +36,16 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class DetailComponent extends mixins(EvanComponent) {
+export default class EntryObjectComponent extends mixins(EvanComponent) {
   /**
-   * { function_description }
+   * Container property template definition
+   */
+  @Prop() entry: bcc.ContainerTemplateProperty;
+
+  /**
+   * Fill empty values
    */
   created() {
-
+    this.entry.value = this.entry.value || { };
   }
 }

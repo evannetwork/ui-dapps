@@ -28,16 +28,14 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import MetadataComponent from './metadata/metadata.vue';
-import ListComponent from './list/list.vue';
+import TemplateHandlerComponent from './template-handler/template-handler.vue';
 
 // export them all, so other applications can access them
 export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'di-container-metadata', component: MetadataComponent },
-  { name: 'di-container-list', component: ListComponent },
+  { name: 'di-template-handler', component: TemplateHandlerComponent },
 ];
 
 export default componentRegistration;
