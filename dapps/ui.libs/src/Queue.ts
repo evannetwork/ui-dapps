@@ -80,7 +80,8 @@ export default class EvanQueue {
           .indexOf(storageName) !== -1;
 
         if (!storeExists) {
-          resolve(await this.openDB(openRequest.result.version++));
+          openRequest.result.close();
+          resolve(await this.openDB(openRequest.result.version + 1));
         } else {
           resolve(openRequest.result)
         }
