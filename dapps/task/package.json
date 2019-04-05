@@ -1,7 +1,7 @@
 {
   "author": "evan GmbH",
   "devDependencies": {
-    "signature_pad": "^2.3.2"
+    "signature_pad": "^3.0.0-beta.3"
   },
   "homepage": "https://evannetwork.github.io/",
   "keywords": [
