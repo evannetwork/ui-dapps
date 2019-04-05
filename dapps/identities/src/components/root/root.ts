@@ -83,6 +83,23 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   ];
 
   /**
+   * Clear the hash change watcher
+   */
+  beforeDestroy() {
+    this.wasDestroyed = true;
+
+    // only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
+    // longer and the dapp was switched before)
+    if (this.hashChangeWatcher) {
+      // remove the hash change listener
+      window.removeEventListener('hashchange', this.hashChangeWatcher);
+    }
+
+    // clear listeners
+    this.$store.state.uiDI && this.$store.state.uiDI.destroy(this);
+  }
+
+  /**
    * Initialize when the user has logged in.
    */
   async initialize() {
@@ -110,23 +127,6 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Clear the hash change watcher
-   */
-  beforeDestroy() {
-    this.wasDestroyed = true;
-
-    // only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
-    // longer and the dapp was switched before)
-    if (this.hashChangeWatcher) {
-      // remove the hash change listener
-      window.removeEventListener('hashchange', this.hashChangeWatcher);
-    }
-
-    // clear listeners
-    this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
-  }
-
-  /**
    * Load the identity favorites for the current user.
    */
   async loadFavorites() {
@@ -139,50 +139,29 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
    */
   async loadIdentity() {
     const identityAddress = (<any>this).$route.params.identityAddress;
-    let uiIdentity: EvanUIIdentity = this.$store.state.uiIdentity;
+    let uiDI: EvanUIIdentity = this.$store.state.uiDI;
 
     // load the identity
-    if (identityAddress && (!uiIdentity || (uiIdentity && !uiIdentity.loading))) {
-      if (!uiIdentity || identityAddress !== uiIdentity.address) {
+    if (identityAddress && (!uiDI || (uiDI && !uiDI.loading))) {
+      if (!uiDI || identityAddress !== uiDI.address) {
         // if identity was set, destroy it
-        uiIdentity && uiIdentity.destroy(this);
+        uiDI && uiDI.destroy(this);
 
         // create new instance of the evan ui identity, that wraps general ui and navigation
         // functions
-        this.$set(this.$store.state, 'uiIdentity', new EvanUIIdentity(identityAddress));
+        this.$set(this.$store.state, 'uiDI', new EvanUIIdentity(identityAddress));
 
         // load identity specific data
-        await this.$store.state.uiIdentity.initialize(this, identitityUtils.getRuntime(this));
+        await this.$store.state.uiDI.initialize(this, identitityUtils.getRuntime(this));
 
         // apply the container categories every time, when the identity was load, so the containers
         // and paths will be dynamic
         this.sideNav = 1;
-        this.navigation[1] = this.$store.state.uiIdentity.navigation;
+        this.navigation[1] = this.$store.state.uiDI.navigation;
 
         // show latest identities
         this.setLastOpenedIdentities();
       }
-    }
-  }
-
-  /**
-   * Activate a category and close all others.
-   *
-   * @param      {Arrayany}  categories  List of categories that should be closed
-   * @param      {any}       category    Category that should be activated
-   */
-  toggleLeftCategory(categories: Array<any>, category: any) {
-    categories.forEach(deactivateCat => deactivateCat.active = false);
-
-    category.active = !category.active;
-
-    // if the category is empty, navigate directly tho the empty nav point
-    if (category.children.length === 0 && category.emptyNav) {
-      (<any>this).evanNavigate(category.emptyNav);
-    }
-
-    if (category.children.length === 1) {
-      (<any>this).evanNavigate(category.children[0].path);
     }
   }
 
@@ -205,5 +184,26 @@ export default class IdentitiesRootComponent extends mixins(EvanComponent) {
       }));
 
     this.$store.state.lastIdentities = lastIdentities;
+  }
+
+  /**
+   * Activate a category and close all others.
+   *
+   * @param      {Arrayany}  categories  List of categories that should be closed
+   * @param      {any}       category    Category that should be activated
+   */
+  toggleLeftCategory(categories: Array<any>, category: any) {
+    categories.forEach(deactivateCat => deactivateCat.active = false);
+
+    category.active = !category.active;
+
+    // if the category is empty, navigate directly tho the empty nav point
+    if (category.children.length === 0 && category.emptyNav) {
+      (<any>this).evanNavigate(category.emptyNav);
+    }
+
+    if (category.children.length === 1) {
+      (<any>this).evanNavigate(category.children[0].path);
+    }
   }
 }

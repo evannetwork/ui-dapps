@@ -27,161 +27,165 @@
 
 @import '@evan.network/ui-angular-sass/src/variables/colors';
 
-taskboard-tasks {
-  height: 100%;
+.evan-angular {
+  taskboard-tasks {
+    height: 100%;
 
-  evan-loading {
-    width: 100%;
-  }
-
-  h1 {
-    font-size: 2.5em;
-
-    @media (min-width: 993px) {
-      margin-top: 64px;
-    }
-  }
-
-  ion-item.item-md {
-    background-color: rgba($background-color, 0.3);
-  }
-
-  .evan-content.evan-small-content {
-    @media (min-width: 993px) {
-      width: 98%;
-      margin-left: 1%;
-    }
-    @media (min-width: 1201px) {
-      width: 80%;
-      margin-left: 10%;
-    }
-    @media (min-width: 1501px) {
-      width: 60%;
-      margin-left: 20%;
-    }
-  }
-
-  ion-list.task-todo-list {
-    ion-item {
+    evan-loading {
       width: 100%;
-      margin-bottom: 16px;
-      padding: 0 8px 0 8px !important;
-
-      transition: 0.3s ease-out width !important;
-
-      &.active {
-        width: calc(100% + 25px);
-      }
-
-      .top-right {
-        line-height: 17px;
-      }
-    }
-  }
-
-  & > .animation-container {
-    &.is-side-panel {
-      & > .evan-content {
-        margin-top: 0;
-      }
     }
 
-    & > .evan-content {
-      padding-top: 0;
-
-      ion-list.task-todo-list {
-        ion-item {
-          padding: 8px !important;
-
-          box-shadow: $grid-list-item-shadow;
-        }
-      }
-    }
-
-    & > .evan-content, & > .router-container {
-      transition: 0.3s ease-out width, 0.3s ease-out margin-left, 0.3s ease-out top, 0.3s ease-out background-color;
+    h1 {
+      font-size: 2.5em;
 
       @media (min-width: 993px) {
-        position: absolute;
-
-        display: block;
-        overflow-y: auto;
-
-        height: calc(100% - 110px);
+        margin-top: 64px;
       }
     }
 
-    & > .evan-content {
+    ion-list, .evan-mini-content {
+      ion-item.item-md {
+        background-color: rgba($background-color, 0.3);
+      }
+    }
+
+    .evan-content.evan-small-content {
       @media (min-width: 993px) {
-        top: 60px;
-
-        padding: 25px;
-
-        &.task-open {
-          top: 0;
-
-          width: 400px;
-          height: 100%;
-          margin-bottom: 0;
-          margin-left: 0;
-          padding: 25px;
-        }
+        width: 98%;
+        margin-left: 1%;
       }
-
-      ion-list.task-todo-list {
-        margin-top: 25px;
+      @media (min-width: 1201px) {
+        width: 80%;
+        margin-left: 10%;
       }
+      @media (min-width: 1501px) {
+        width: 60%;
+        margin-left: 20%;
+      }
+    }
 
+    ion-list.task-todo-list {
       ion-item {
-        .progress-container {
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 0 8px 0 8px !important;
+
+        transition: 0.3s ease-out width !important;
+
+        &.active {
+          width: calc(100% + 25px);
+        }
+
+        .top-right {
+          line-height: 17px;
+        }
+      }
+    }
+
+    & > .animation-container {
+      &.is-side-panel {
+        & > .evan-content {
+          margin-top: 0;
+        }
+      }
+
+      & > .evan-content {
+        padding-top: 0;
+
+        ion-list.task-todo-list {
+          ion-item {
+            padding: 8px !important;
+
+            box-shadow: $grid-list-item-shadow;
+          }
+        }
+      }
+
+      & > .evan-content, & > .router-container {
+        transition: 0.3s ease-out width, 0.3s ease-out margin-left, 0.3s ease-out top, 0.3s ease-out background-color;
+
+        @media (min-width: 993px) {
           position: absolute;
-          top: 0;
-          left: 0;
 
-          width: 100%;
-          height: 5px;
+          display: block;
+          overflow-y: auto;
 
-          .progress {
-            display: block;
+          height: calc(100% - 110px);
+        }
+      }
 
-            width: 0;
+      & > .evan-content {
+        @media (min-width: 993px) {
+          top: 60px;
+
+          padding: 25px;
+
+          &.task-open {
+            top: 0;
+
+            width: 400px;
+            height: 100%;
+            margin-bottom: 0;
+            margin-left: 0;
+            padding: 25px;
+          }
+        }
+
+        ion-list.task-todo-list {
+          margin-top: 25px;
+        }
+
+        ion-item {
+          .progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
             height: 5px;
 
-            transition: 1s ease-out width;
+            .progress {
+              display: block;
 
-            background-color: $green;
+              width: 0;
+              height: 5px;
 
-            &.finished {
+              transition: 1s ease-out width;
+
               background-color: $green;
+
+              &.finished {
+                background-color: $green;
+              }
             }
+          }
+        }
+      }
+
+      & > .router-container {
+        @media (min-width: 993px) {
+          margin-left: 100%;
+
+          &.task-open {
+            top: 0;
+
+            width: calc(100% - 400px);
+            height: 100%;
+            margin-left: 400px;
           }
         }
       }
     }
 
-    & > .router-container {
-      @media (min-width: 993px) {
-        margin-left: 100%;
-
-        &.task-open {
-          top: 0;
-
-          width: calc(100% - 400px);
-          height: 100%;
-          margin-left: 400px;
-        }
-      }
+    ion-app {
+      height: calc(100vh - 58px) !important;
     }
-  }
 
-  ion-app {
-    height: calc(100vh - 58px) !important;
-  }
-
-  button.create-task-button {
-    position: absolute;
-    z-index: 10;
-    top: -22px;
-    right: -22px;
+    button.create-task-button {
+      position: absolute;
+      z-index: 10;
+      top: -22px;
+      right: -22px;
+    }
   }
 }

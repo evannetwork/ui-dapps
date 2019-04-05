@@ -61,7 +61,7 @@ export default class EvanUIIdentity {
   /**
    * List of data containers.
    */
-  containers: Array<any> = [ ];
+  containers: {[id: string]: bcc.DigitalIdentityIndexEntry} = { };
 
   /**
    * watch for dispatcher updates
@@ -138,7 +138,9 @@ export default class EvanUIIdentity {
       {
         name: 'containers',
         active: false,
-        children: [ ]
+        children: [
+          { name: 'container-overview', path: `${ address }/containers`, i18n: true },
+        ]
       }
     ];
 
@@ -160,7 +162,7 @@ export default class EvanUIIdentity {
    */
   destroy(vueInstance?: Vue): void {
     if (vueInstance) {
-      vueInstance.$store.state.uiIdentity = null;
+      vueInstance.$store.state.uiDI = null;
     }
 
     this.dispatcherListeners.forEach((listener: Function) => listener());
@@ -236,6 +238,7 @@ export default class EvanUIIdentity {
 
       this.dbcp = savingObj && savingObj.dbcp ? savingObj.dbcp : await identity.getDescription();
       this.isFavorite = await identity.isFavorite();
+      // this.containers = await identity.getEntries();
 
       // check, if any updates are running
       this.isFavoriteLoading = await this.getFavoriteLoading(runtime);

@@ -26,19 +26,12 @@
 */
 
 <template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper>
-      <template v-slot:content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
+  <div>
+    list
   </div>
 </template>
 
 <script lang="ts">
-  import IdentitiesRootComponent from './root.ts';
-  export default IdentitiesRootComponent;
+  import Component from './list.ts';
+  export default Component;
 </script>
-

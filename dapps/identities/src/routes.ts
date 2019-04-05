@@ -27,6 +27,7 @@
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import { DAppLoader } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import IdentityGeneralComponent from './components/general/general.vue';
 import IdentityVerificationsComponent from './components/verifications/verifications.vue';
@@ -34,16 +35,55 @@ import OverviewComponent from './components/overview/overview.vue';
 import StartComponent from './components/start/start.vue';
 import TemplatesComponent from './components/templates/templates.vue';
 import LookupComponent from './components/lookup/lookup.vue';
+import ContainersComponent from './components/containers/containers.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { name: 'base-start', path: '', component: StartComponent },
-  { name: 'base-overview', path: 'overview', component: OverviewComponent },
-  { name: 'base-templates', path: 'templates', component: TemplatesComponent },
-  { name: 'base-lookup', path: 'lookup', component: LookupComponent },
-  { name: 'identity-general', path: ':identityAddress', component: IdentityGeneralComponent },
-  { name: 'identity-verifications', path: ':identityAddress/verifications', component: IdentityVerificationsComponent },
-  // { path: ':identityAddress/:containerAddress', component: DAppLoader },
+  {
+    name: 'base-start',
+    path: '',
+    component: StartComponent
+  },
+  {
+    name: 'base-overview',
+    path: 'overview',
+    component: OverviewComponent
+  },
+  {
+    name: 'base-templates',
+    path: 'templates',
+    component: TemplatesComponent
+  },
+  {
+    name: 'base-lookup',
+    path: 'lookup',
+    component: LookupComponent
+  },
+  {
+    name: 'identity-general',
+    path: ':identityAddress',
+    component: IdentityGeneralComponent
+  },
+  {
+    name: 'identity-verifications',
+    path: ':identityAddress/verifications',
+    component: IdentityVerificationsComponent
+  },
+  {
+    name: 'identity-containers',
+    path: ':identityAddress/containers',
+    component: ContainersComponent
+  },
+  {
+    name: 'identity-container',
+    path: `:identityAddress/datacontainer.digitalidentity.${ dappBrowser.getDomainName() }`,
+    component: DAppLoader
+  },
+  {
+    name: 'identity-container',
+    path: `:identityAddress/:data-container`,
+    component: DAppLoader
+  },
 ];
 
 export default routeRegistration;

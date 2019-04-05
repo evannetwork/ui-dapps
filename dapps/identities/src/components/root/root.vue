@@ -51,10 +51,10 @@
                 </div>
 
                 <evan-loading
-                  v-if="$store.state.uiIdentity && $store.state.uiIdentity.loading && sideNav !== 0">
+                  v-if="$store.state.uiDI && $store.state.uiDI.loading && sideNav !== 0">
                 </evan-loading>
 
-                <template v-if="$store.state.uiIdentity && !$store.state.uiIdentity.loading">
+                <template v-if="$store.state.uiDI && !$store.state.uiDI.loading">
                   <ul class="pl-4 pr-4 pb-4 border-bottom border-sm list-unstyled d-flex">
                     <li class="mr-3">
                       <a 
@@ -67,14 +67,14 @@
                     <li class="mr-3">
                       <a
                         :class="{ 'active border-bottom border-primary pb-1': sideNav === 1, 'text-muted': sideNav !== 1 }"
-                        :href="`${ dapp.fullUrl }/${ $store.state.uiIdentity.address }`"
+                        :href="`${ dapp.fullUrl }/${ $store.state.uiDI.address }`"
                         @click="sideNav = 1">
-                        <b>{{ $store.state.uiIdentity.dbcp.name || $store.state.uiIdentity.address }}</b>
+                        <b>{{ $store.state.uiDI.dbcp.name || $store.state.uiDI.address }}</b>
                       </a>
                     </li>
                   </ul>
 
-                  <template v-if="!$store.state.uiIdentity.validity.exists && sideNav !== 0">
+                  <template v-if="!$store.state.uiDI.validity.exists && sideNav !== 0">
                     <p class="mt-5 p-3 text-center"
                       v-html="$t('_identities.unlock-identity-panel')">
                     </p>
@@ -82,7 +82,7 @@
                 </template>
 
                 <ul class="nav font-medium in w-100 mb-3 mt-auto"
-                  v-if="sideNav === 0 || ($store.state.uiIdentity && !$store.state.uiIdentity.loading && $store.state.uiIdentity.validity.exists)">
+                  v-if="sideNav === 0 || ($store.state.uiDI && !$store.state.uiDI.loading && $store.state.uiDI.validity.exists)">
                   <li class="w-100 p-4 clickable"
                     v-for="(category, index) in navigation[sideNav]"
                     :class="{ 'active': category.active }"
@@ -118,30 +118,32 @@
             </template>
           </evan-dapp-wrapper-level-2>
 
-          <evan-breadcrumbs :i18nScope="'_identities.breadcrumbs'">
+          <evan-breadcrumbs
+            :i18nScope="'_identities.breadcrumbs'"
+            v-if="$route.name !== 'identity-container'">
             <template v-slot:content
-              v-if="sideNav !== 0 && $store.state.uiIdentity && !$store.state.uiIdentity.loading && $store.state.uiIdentity.validity.exists">
+              v-if="sideNav !== 0 && $store.state.uiDI && !$store.state.uiDI.loading && $store.state.uiDI.validity.exists">
               <div class="mr-4">
                 <div class="spinner-border spinner-border-sm"
-                  v-if="$store.state.uiIdentity.isFavoriteLoading">
+                  v-if="$store.state.uiDI.isFavoriteLoading">
                 </div>
-                <template v-if="!$store.state.uiIdentity.isFavoriteLoading">
+                <template v-if="!$store.state.uiDI.isFavoriteLoading">
                   <i class="fas fa-star lg text-warning clickable"
-                    v-if="$store.state.uiIdentity.isFavorite"
-                    @click="$store.state.uiIdentity.toggleFavorite(getRuntime())">
+                    v-if="$store.state.uiDI.isFavorite"
+                    @click="$store.state.uiDI.toggleFavorite(getRuntime())">
                   </i>
                   <i class="far fa-star lg clickable"
-                    v-if="!$store.state.uiIdentity.isFavorite"
-                    @click="$store.state.uiIdentity.toggleFavorite(getRuntime())">
+                    v-if="!$store.state.uiDI.isFavorite"
+                    @click="$store.state.uiDI.toggleFavorite(getRuntime())">
                   </i>
                 </template>
               </div>
 
               <button type="button" class="btn btn-primary btn-circle"
-                @click="$store.state.uiIdentity.saveChanges(this, getRuntime())"
-                :disabled="!$store.state.uiIdentity.dirty || $store.state.uiIdentity.isSaving">
+                @click="$store.state.uiDI.saveChanges(this, getRuntime())"
+                :disabled="!$store.state.uiDI.dirty || $store.state.uiDI.isSaving">
                 <div class="spinner-border spinner-border-sm"
-                  v-if="$store.state.uiIdentity.isSaving">
+                  v-if="$store.state.uiDI.isSaving">
                 </div>
                 <i class="fas fa-save lg" v-else></i>
               </button>
@@ -149,7 +151,7 @@
           </evan-breadcrumbs>
 
           <transition name="fade" mode="out-in"
-            v-if="$route.name.startsWith('base-') || ($store.state.uiIdentity && !$store.state.uiIdentity.loading)">
+            v-if="$route.name.startsWith('base-') || ($store.state.uiDI && !$store.state.uiDI.loading)">
             <router-view></router-view>
           </transition>
           <evan-loading v-else></evan-loading>

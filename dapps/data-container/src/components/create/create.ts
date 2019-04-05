@@ -35,12 +35,10 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../dispatchers/registy';
-import EvanUIIdentity from '../../identity';
-import { getIdentityBaseDbcp } from '../../utils';
-import { getRuntime, getDomainName } from '../../utils';
+import * as dispatchers from '../../dispatchers/registry';
+import { getRuntime } from '../../utils';
 
-interface GeneralFormInterface extends EvanForm {
+interface CreateInterface extends EvanForm {
   description: EvanFormControl;
   img: EvanFormControl;
   name: EvanFormControl;
@@ -48,53 +46,98 @@ interface GeneralFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class GeneralComponent extends mixins(EvanComponent) {
+export default class CreateComponent extends mixins(EvanComponent) {
+  /**
+   * Show loading symbol
+   */
+  loading = true;
+
+  /**
+   * Is a datacontainer currently in creation?
+   */
+  creating = false;
+
   /**
    * formular specific variables
    */
-  generalForm: GeneralFormInterface = null;
+  createForm: CreateInterface = null;
+
+  /**
+   * identity address, where the container should be created for
+   */
+  identityAddress = '';
+
+  /**
+   * Available steps represented by it's titles
+   */
+  steps: Array<any> = [ ];
+
+  /**
+   * current active step
+   */
+  activeStep = 0;
+
+  /**
+   * Available templates
+   */
+  templates: Array<string> = [
+    'metadata',
+    'list'
+  ];
 
   /**
    * Setup the form.
    */
   created() {
-    const uiDI = this.$store.state.uiDI;
+    const splitHash = (<any>this).dapp.baseHash.split('/');
+    this.identityAddress = splitHash
+      [splitHash.indexOf(`identities.${ (<any>this).dapp.domainName }`) + 1];
 
-    this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
+    // TODO: load templates
+
+    this.createForm = (<CreateInterface>new EvanForm(this, {
       name: {
-        value: uiDI.dbcp.name,
-        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.$store.state.uiDI.setData('dbcp.name', this.value);
-
+        value: '',
+        validate: function(vueInstance: CreateComponent, form: CreateInterface) {
           return this.value.length !== 0;
         }
       },
       description: {
-        value: uiDI.dbcp.description,
-        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.$store.state.uiDI.setData('dbcp.description', this.value);
-
-          // update identity dbcp and return true, i's not required
-          return true;
-        }
+        value: ''
+      },
+      type: {
+        value: this.templates[0]
       },
       img: {
         value: '',
       },
     }));
 
-    this.$nextTick(() => this.generalForm.name.$ref.focus());
+    // configure steps and it' titles
+    this.steps = [
+      {
+        title: '_datacontainer.createForm.general',
+      },
+      {
+        title: '_datacontainer.createForm.container-configuration',
+        disabled: () => !this.createForm.isValid
+      },
+    ];
+
+    this.loading = false;
+    this.$nextTick(() => this.createForm.name.$ref.focus());
   }
 
   /**
-   * Create the new identity
+   * Create the new container
    */
-  createIdentity() {
-    if (!this.$store.state.uiDI.exists) {
-      dispatchers.identityCreateDispatcher.start(getRuntime(this), {
-        address: this.$store.state.uiDI.address,
-        dbcp: this.$store.state.uiDI.dbcp
-      });
-    }
+  create() {
+    dispatchers.createDispatcher.start(getRuntime(this), {
+      description: this.createForm.description.value,
+      identityAddress: this.identityAddress,
+      img: this.createForm.img.value,
+      name: this.createForm.name.value,
+      type: this.createForm.type.value,
+    });
   }
 }

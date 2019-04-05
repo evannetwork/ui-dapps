@@ -28,6 +28,32 @@
 /* tslint:disable */
 export default {
   "_datacontainer": {
+    "createForm": {
+      "container-configuration": "Data container configuration",
+      "create": "Create",
+      "description": {
+        "desc": "Short description for the digital identity",
+        "title": "Description"
+      },
+      "general": "General Information",
+      "name": {
+        "desc": "Name of the digital Identity",
+        "error": "Please provide a name!",
+        "title": "Name"
+      },
+      "save": "Speichern",
+      "title": "Create data container",
+      "type": {
+        "desc": "Type of the data container",
+        "title": "Type"
+      },
+      "types": {
+        "list": "List",
+        "metadata": "Metadata"
+      },
+      "continue": "continue"
+    },
+    "in-creation": "In Creation"
   }
 }
 /* tslint:enable */;

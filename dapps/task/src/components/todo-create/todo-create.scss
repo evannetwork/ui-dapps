@@ -27,138 +27,140 @@
 
 @import '@evan.network/ui-angular-sass/src/variables/colors';
 
-taskboard-todo-create {
-  display: block;
+.evan-angular {
+  taskboard-todo-create {
+    display: block;
 
-  h3 {
-    font-size: 18px;
+    h3 {
+      font-size: 18px;
 
-    color: $dark-gray;
-  }
-
-  .add-todo-button {
-    margin-top: 40px !important;
-  }
-
-  ion-item {
-    .item-inner {
-      align-items: start;
+      color: $dark-gray;
     }
 
-    &.select-container {
-      display: none;
+    .add-todo-button {
+      margin-top: 40px !important;
     }
 
-    button.remove-todo {
-      position: absolute;
-      top: 25px;
-      right: 60px;
-    }
-
-    &.todo-item {
-      ion-label {
-        width: 100%;
-        margin: 27px 8px 27px 0;
+    ion-item {
+      .item-inner {
+        align-items: start;
       }
 
-      table {
-        td {
-          position: relative;
+      &.select-container {
+        display: none;
+      }
 
-          &.critera-input {
-            min-width: 300px;
-          }
-          
-          ion-item {
-            .item-inner {
-              border-bottom: 0 solid $medium-blue !important;
+      button.remove-todo {
+        position: absolute;
+        top: 25px;
+        right: 60px;
+      }
 
-              input {
-                margin-left: 0;
+      &.todo-item {
+        ion-label {
+          width: 100%;
+          margin: 27px 8px 27px 0;
+        }
+
+        table {
+          td {
+            position: relative;
+
+            &.critera-input {
+              min-width: 300px;
+            }
+
+            ion-item {
+              .item-inner {
+                border-bottom: 0 solid $medium-blue !important;
+
+                input {
+                  margin-left: 0;
+                }
               }
             }
           }
         }
       }
-    }
 
-    ion-reorder {
-      position: absolute;
-      top: 33px;
-      right: 20px;
+      ion-reorder {
+        position: absolute;
+        top: 33px;
+        right: 20px;
 
-      width: 37px;
-      height: 37px;
+        width: 37px;
+        height: 37px;
 
-      cursor: pointer;
+        cursor: pointer;
 
-      opacity: 1 !important;
-      border: 2px solid $primary;
-      border-radius: 50%;
+        opacity: 1 !important;
+        border: 2px solid $primary;
+        border-radius: 50%;
 
-      &:hover {
-        &, ion-icon {
-          color: $light;
-          background-color: $primary;
+        &:hover {
+          &, ion-icon {
+            color: $light;
+            background-color: $primary;
+          }
+        }
+
+        ion-icon {
+          font-size: 20px;
+          font-weight: bold;
+
+          transform: rotate(135deg);
+
+          color: $primary;
+
+          &:before {
+            content: '\f1ff' !important;
+          }
         }
       }
 
-      ion-icon {
-        font-size: 20px;
-        font-weight: bold;
+      .todo-header-wrapper {
+        overflow: hidden;
 
-        transform: rotate(135deg);
+        max-width: calc(100% - 80px);
 
-        color: $primary;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
 
-        &:before {
-          content: '\f1ff' !important;
+      .todo-header {
+        h4 {
+          font-size: 18px;
+        }
+
+        h5 {
+          font-size: 14px;
+
+          margin-top: 8px;
+
+          color: #c6d1d5 !important;
+        }
+
+        @media (min-width: 769px) {
+          margin-left: 25px;
         }
       }
-    }
 
-    .todo-header-wrapper {
-      overflow: hidden;
-
-      max-width: calc(100% - 80px);
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .todo-header {
-      h4 {
-        font-size: 18px;
-      }
-
-      h5 {
-        font-size: 14px;
-
+      .evan-circle {
         margin-top: 8px;
 
-        color: #c6d1d5 !important;
-      }
-
-      @media (min-width: 769px) {
-        margin-left: 25px;
+        vertical-align: top;
       }
     }
 
-    .evan-circle {
-      margin-top: 8px;
+    .todo-sub-items {
+      hr {
+        margin-bottom: 8px;
+      }
 
-      vertical-align: top;
-    }
-  }
-
-  .todo-sub-items {
-    hr {
-      margin-bottom: 8px;
-    }
-
-    ion-item {
-      ion-reorder {
-        display: none;
+      ion-item {
+        ion-reorder {
+          display: none;
+        }
       }
     }
   }

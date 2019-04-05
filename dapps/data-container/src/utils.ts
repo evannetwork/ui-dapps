@@ -25,20 +25,33 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper>
-      <template v-slot:content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
-  </div>
-</template>
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
 
-<script lang="ts">
-  import IdentitiesRootComponent from './root.ts';
-  export default IdentitiesRootComponent;
-</script>
+export const latestIdentitiesKey = 'evan-last-digital-identities';
 
+/**
+ * Copies and returns a runtime with the correct nameresolver for payable stuff.
+ *
+ * @param      {any}  runtime  vue instance or runtime
+ */
+export function getRuntime(runtime: any): bcc.Runtime {
+  runtime = runtime.getRuntime ? runtime.getRuntime() : runtime;
+
+  const nameResolverConfig = JSON.parse(JSON.stringify(dappBrowser.config.nameResolver));
+  // set the custom ens contract address
+  nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
+  nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
+
+  // copy runtime and set the nameResolver
+  const runtimeCopy = Object.assign({ }, runtime);
+  runtimeCopy.nameResolver = new bcc.NameResolver({
+    config: nameResolverConfig,
+    contractLoader: runtime.contractLoader,
+    executor: runtime.executor,
+    web3: runtime.web3,
+  });
+  runtimeCopy.description.nameResolver = runtimeCopy.nameResolver;
+
+  return runtimeCopy;
+}

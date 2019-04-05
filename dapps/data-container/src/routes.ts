@@ -28,8 +28,14 @@
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import { DAppLoader } from '@evan.network/ui-vue-core';
 
+import CreateComponent from './components/create/create.vue';
+import DetailComponent from './components/detail/detail.vue';
+
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', component: CreateComponent },
+  { path: ':containerAddress', component: DetailComponent },
+];
 
 export default routeRegistration;
 

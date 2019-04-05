@@ -26,19 +26,39 @@
 */
 
 <template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper>
-      <template v-slot:content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
+  <div class="p-3">
+    <div class="bg-level-1 border mb-3"
+      v-if="Object.keys($store.state.uiDI.containers).length === 0">
+      <div class="d-flex p-3 border-bottom align-items-center">
+        <h4 class="m-0">
+          {{ `_identities.containers.empty` | translate }}
+        </h4>
+      </div>
+      <div class="p-3">
+        <p>
+          {{ `_identities.containers.empty-desc` | translate }}
+        </p>
+
+        <div class="text-center">
+          <a
+            class="btn btn-rounded btn-secondary font-weight-normal m-3"
+            :href="`${ dapp.fullUrl }/${ $store.state.uiDI.address }/container-link`">
+            {{ '_identities.containers.link' | translate }}
+            <i class="fas fa-arrow-right label ml-2"></i>
+          </a>
+          <a
+            class="btn btn-rounded btn-primary font-weight-normal m-3"
+            :href="`${ dapp.fullUrl }/${ $store.state.uiDI.address }/datacontainer.digitalidentity.${ dapp.domainName }`">
+            {{ '_identities.containers.create' | translate }}
+            <i class="fas fa-arrow-right label ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-  import IdentitiesRootComponent from './root.ts';
-  export default IdentitiesRootComponent;
+  import Component from './containers.ts';
+  export default Component;
 </script>
-

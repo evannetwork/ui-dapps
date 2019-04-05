@@ -25,20 +25,19 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper>
-      <template v-slot:content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
-  </div>
-</template>
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import IdentitiesRootComponent from './root.ts';
-  export default IdentitiesRootComponent;
-</script>
+// evan.network imports
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+@Component({ })
+export default class ContainersComponent extends mixins(EvanComponent) {
+  created() {
+
+  }
+}

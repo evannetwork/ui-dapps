@@ -28,15 +28,23 @@
 /* tslint:disable */
 export default {
   "_identities": {
+    "containers": {
+      "create": "Create",
+      "empty": "Data Container",
+      "empty-desc": "No data container has yet been created for this digital identity. Use the \"create\" or \"link\" button to create a new data container or to link an existing one.",
+      "link": "Link"
+    },
     "add": "Open",
     "add-identity": "Add digital identity",
     "breadcrumbs": {
       "add": "Add",
+      "containers": "Data container overview",
       "identities": "Digital Identities",
-      "lookup": "Lookup",
+      "lookup": "Open",
       "overview": "Favorites & last identities",
       "templates": "Templates",
-      "verifications": "Verifications"
+      "verifications": "Verifications",
+      "container-link": "Link Data Container"
     },
     "dispatcher": {
       "create": "Digital identity creation",
@@ -67,6 +75,7 @@ export default {
     "identities": "Identities",
     "in-creation": "In creation...",
     "left-categories": {
+      "container-overview": "Data container overview",
       "containers": {
         "desc": "All data containers associated with the digital identity",
         "title": "Data containers"
@@ -103,6 +112,7 @@ export default {
         "desc": "There is no digital identity yet for this address. Would you like to create a new one for this address?",
         "title": "Not available"
       },
+      "description": "Using the following input field, it is possible for you to verify an address for a digital identity. If an instance already exists there, it will be opened directly for you. If the address is not yet assigned, you can create a new digital identity and bind it to this address or link an existing one to this address.",
       "error": {
         "desc": "The requested address does not contain a valid digital identity. Please check your input.",
         "title": "Error"

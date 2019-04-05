@@ -32,11 +32,19 @@ export default {
     "add-identity": "Neue digitale Identität",
     "breadcrumbs": {
       "add": "Hinzufügen",
+      "containers": "Datencontainer Übersicht",
       "identities": "Digitale Identitäten",
       "lookup": "Öffnen",
       "overview": "Favoriten & letzte Identitäten",
       "templates": "Vorlagen",
-      "verifications": "Verifizierungen"
+      "verifications": "Verifizierungen",
+      "container-link": "Daten Container verlinken"
+    },
+    "containers": {
+      "create": "Erstellen",
+      "empty": "Daten Container",
+      "empty-desc": "Für diese digitale Identität wurde noch kein Daten Container angelegt. Nutzen Sie den \"erstellen\" oder \"verlinken\" Button, um einen neuen Daten Container zu erstellen oder einen bestehenden zu verlinken.",
+      "link": "Verlinken"
     },
     "dispatcher": {
       "create": "Digitale Identität wird erstellt",
@@ -67,6 +75,7 @@ export default {
     "identities": "Digitalen Identitäten",
     "in-creation": "In Erstellung...",
     "left-categories": {
+      "container-overview": "Datencontainerübersicht",
       "containers": {
         "desc": "Alle, der Identität zugeordneten Datencontainer",
         "title": "Datencontainer"
@@ -90,7 +99,7 @@ export default {
     },
     "lookup": {
       "address": {
-        "desc": "Geben Sie die Adresse Ihrer digitalen Identität ein (z.B.: ).",
+        "desc": "Geben Sie die Adresse Ihrer digitalen Identität ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Bitte geben Sie eine gültige Adresse ein!",
         "title": "Adresse"
       },
@@ -103,6 +112,7 @@ export default {
         "desc": "Für diese Adresse existiert noch keine digitale Identität. Möchten Sie eine neue für diese Adresse erstellen?",
         "title": "Nicht verfügbar"
       },
+      "description": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse für eine digitale Identität zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Identität erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
       "error": {
         "desc": "Die angeforderte Addresse enthält keine valide digitale Identität. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"

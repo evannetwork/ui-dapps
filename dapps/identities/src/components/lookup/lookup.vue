@@ -60,7 +60,10 @@
           </template>
         </evan-modal>
 
-        <form class="p-4"
+
+        <h5 class="pl-3 pr-3 pt-3">{{ `_identities.lookup.description` | translate }}</h5>
+
+        <form class="p-3"
           v-if="Object.keys(purchasingInstances).length === 0"
           v-on:submit.prevent="checkAddress">
           <div class="form-group">

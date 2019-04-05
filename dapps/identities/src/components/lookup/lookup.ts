@@ -155,7 +155,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
       (<any>this).evanNavigate(address);
 
       // trigger reload
-      this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
+      this.$store.state.uiDI && this.$store.state.uiDI.destroy(this);
     } else {
       const errorMsg = isValidIdentity.error.message;
       if (errorMsg.indexOf('contract does not exist') !== -1) {
@@ -259,7 +259,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
     (<any>this).evanNavigate(this.lookupForm.address.value);
 
     // trigger reload
-    this.$store.state.uiIdentity && this.$store.state.uiIdentity.destroy(this);
+    this.$store.state.uiDI && this.$store.state.uiDI.destroy(this);
 
     // hide modal
     (<any>this.$refs.lookupModal).hide();
