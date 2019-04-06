@@ -29,7 +29,7 @@
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 import AJVComponent from './entries/ajv/ajv.vue';
-import EntryComponent from './entry/entry.vue';
+import EntryComponent from './entries/entry/entry.vue';
 import EntryListComponent from './entries/list/list.vue';
 import EntryObjectComponent from './entries/object/object.vue';
 import FieldComponent from './fields/field/field.vue';
