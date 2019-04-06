@@ -40,7 +40,7 @@ export default class StringComponent extends mixins(EvanComponent) {
  /**
    * value / read
    */
-  @Prop({ default: 'value' }) mode;
+  @Prop({ default: 'view' }) mode;
 
   /**
    * Form control of the parent form handler (includes form and validation)

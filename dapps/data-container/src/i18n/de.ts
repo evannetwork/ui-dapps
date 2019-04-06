@@ -29,24 +29,24 @@
 export default {
   "_datacontainer": {
     "ajv": {
+      "add": "Feld hinzufügen",
       "name": {
         "desc": "Bezeichung des Feldes",
         "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!",
         "title": "Feldname"
       },
-      "value": {
-        "desc": "Wert des Feldes",
-        "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
-        "title": "Wert"
+      "not-permitted": {
+        "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen.",
+        "title": "Ungültige Berechtigung"
       },
       "type": {
         "title": "Typ"
       },
-      "not-permitted": {
-        "title": "Ungültige Berechtigung",
-        "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen."
-      },
-      "add": "Feld hinzufügen"
+      "value": {
+        "desc": "Wert des Feldes",
+        "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
+        "title": "Wert"
+      }
     },
     "createForm": {
       "base-template": "Basis-Vorlage",
@@ -81,21 +81,21 @@ export default {
       "type": {
         "title": "Typ"
       },
-      "types": {
-        "files": "Dateien",
-        "images": "Bilder",
-        "list": "Liste",
-        "number": "Zahl",
-        "object": "Metadaten",
-        "string": "Text"
-      },
       "value": {
         "desc": "Wert des Feldes",
         "error": "Bitte geben Sie einen korrekten Wert an!",
         "title": "Wert"
       }
     },
-    "in-creation": "In Erstellung"
+    "in-creation": "In Erstellung",
+    "types": {
+      "files": "Dateien",
+      "images": "Bilder",
+      "list": "Liste",
+      "number": "Zahl",
+      "object": "Metadaten",
+      "string": "Text"
+    }
   }
 }
 /* tslint:enable */;

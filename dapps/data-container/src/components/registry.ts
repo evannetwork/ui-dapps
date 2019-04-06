@@ -32,8 +32,7 @@ import AJVComponent from './entries/ajv/ajv.vue';
 import EntryComponent from './entry/entry.vue';
 import EntryListComponent from './entries/list/list.vue';
 import EntryObjectComponent from './entries/object/object.vue';
-import EntrySchemaComponent from './entries/schema/schema.vue';
-import FieldComponent from './entries/field/field.vue';
+import FieldComponent from './fields/field/field.vue';
 import FieldFilesComponent from './fields/files/files.vue';
 import FieldImagesComponent from './fields/images/images.vue';
 import FieldNumberComponent from './fields/number/number.vue';
@@ -50,7 +49,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'di-field', component: FieldComponent },
   { name: 'di-entry-list', component: EntryListComponent },
   { name: 'di-entry-object', component: EntryObjectComponent },
-  { name: 'di-entry-schema', component: EntrySchemaComponent },
   { name: 'di-field-files', component: FieldFilesComponent },
   { name: 'di-field-images', component: FieldImagesComponent },
   { name: 'di-field-number', component: FieldNumberComponent },

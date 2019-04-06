@@ -29,24 +29,24 @@
 export default {
   "_datacontainer": {
     "ajv": {
+      "add": "Add field",
       "name": {
         "desc": "Name of the field",
         "error": "Please enter a name that does not correspond to an existing field",
         "title": "Field name"
       },
-      "value": {
-        "desc": "Value of the field",
-        "error": "Please enter a value of the correct type!",
-        "title": "Value"
+      "not-permitted": {
+        "desc": "You do not have permission to view this data area.",
+        "title": "Invalid authorization"
       },
       "type": {
         "title": "Type"
       },
-      "not-permitted": {
-        "title": "Invalid authorization",
-        "desc": "You do not have permission to view this data area."
-      },
-      "add": "Add field"
+      "value": {
+        "desc": "Value of the field",
+        "error": "Please enter a value of the correct type!",
+        "title": "Value"
+      }
     },
     "createForm": {
       "base-template": "Base Template",
@@ -81,21 +81,21 @@ export default {
       "type": {
         "title": "Type"
       },
-      "types": {
-        "files": "Files",
-        "images": "Images",
-        "list": "List",
-        "number": "Number",
-        "object": "Metadata",
-        "string": "Text"
-      },
       "value": {
         "desc": "Value of the field",
         "error": "Please enter a correct value",
         "title": "Value"
       }
     },
-    "in-creation": "In Creation"
+    "in-creation": "In Creation",
+    "types": {
+      "files": "Files",
+      "images": "Images",
+      "list": "List",
+      "number": "Number",
+      "object": "Metadata",
+      "string": "Text"
+    }
   }
 }
 /* tslint:enable */;

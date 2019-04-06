@@ -49,19 +49,17 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop({ default: 'value' }) mode;
 
   /**
-   * Object entry schema (full entry schema or list entry schema)
+   * Object entry entry type
    */
-  @Prop() schema: any;
+  @Prop() type: any;
 
   /**
-   * Value corresponding to the ajv
+   * Optional Value corresponding to the ajv, needed, when no form was applied
    */
   @Prop() value: any;
 
   /**
    * Optional passed formular that also contains the value control including the type validator.
-   *
-   * @class      Prop (name)
    */
   @Prop() form: FieldFormInterface;
 
@@ -76,7 +74,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
         value: this.value,
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
           // map the value top the correct dynamic type validator
-          return validators[this.schema.type](vueInstance, form);
+          return validators[this.type](vueInstance, form);
         }
       },
     }));

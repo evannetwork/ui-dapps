@@ -62,7 +62,7 @@
       <di-field
         v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'list'" 
         :mode="activeMode"
-        :schema="entry.dataSchema"
+        :type="entry.dataSchema.type"
         :value="entry.value">
       </di-field>
     </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './ajv.ts';
+  import Component from './entry.ts';
   export default Component;
 </script>
 

@@ -30,7 +30,7 @@
     <table>
       <thead>
         <tr>
-          <th>{{ '_datacontainer.ajv.label.title' | translate }}</th>
+          <th>{{ '_datacontainer.ajv.name.title' | translate }}</th>
           <th v-if="mode !=='view'">{{ '_datacontainer.ajv.type.title' | translate }}</th>
           <th>{{ '_datacontainer.ajv.value.title' | translate }}</th>
           <th v-if="mode === 'schema'"> <!-- used for controls --></th>
@@ -68,37 +68,26 @@
                 <label for="type">
                   {{ `_datacontainer.ajv.type.title` | translate }}
                 </label>
-                <input class="form-control" required
+                <select class="form-control"
                   id="type" ref="type"
-                  :disabled="mode !=='schema'"
                   :placeholder="`_datacontainer.ajv.type.desc` | translate"
                   v-model="form.type.value"
                   v-bind:class="{ 'is-invalid' : form.type.error }"
                   @blur="form.type.setDirty()">
-                <div class="invalid-feedback">
-                  {{ `_datacontainer.ajv.type.error` | translate }}
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="type">
-                  {{ `_datacontainer.ajv.type.title` | translate }}
-                </label>
-                <select class="form-control"
-                  id="type" ref="type"
-                  :placeholder="`_datacontainer.ajv.type.desc` | translate"
-                  v-model="form.type.value.value"
-                  v-bind:class="{ 'is-invalid' : form.type.value.error }"
-                  @blur="form.type.value.setDirty()">
                   <option
                     v-for="(fieldType, index) in fieldTypes"
                     :value="fieldType">
-                    {{ `_datacontainer.ajv.types.${ fieldType }` | translate }}
+                    {{ `_datacontainer.types.${ fieldType }` | translate }}
                   </option>
                 </select>
               </div>
             </td>
             <td>
-              <di-field :mode="activeMode" :form="form"></di-field>
+              <di-field
+                :mode="activeMode"
+                :form="form"
+                :type="form.type.value">
+              </di-field>
             </td>
             <td v-if="mode === 'schema'"></td>
           </tr>

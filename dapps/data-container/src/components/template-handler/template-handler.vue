@@ -68,7 +68,7 @@
                 <option
                   v-for="(entryType, index) in entryTypes"
                   :value="entryType">
-                  {{ `_datacontainer.entry.types.${ entryType }` | translate }}
+                  {{ `_datacontainer.types.${ entryType }` | translate }}
                 </option>
               </select>
             </div>

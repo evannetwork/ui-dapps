@@ -47,6 +47,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './string.ts';
+  import Component from './number.ts';
   export default Component;
 </script>
