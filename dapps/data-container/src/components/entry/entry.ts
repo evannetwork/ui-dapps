@@ -31,26 +31,46 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class EntryObjectComponent extends mixins(EvanComponent) {
+export default class AJVComponent extends mixins(EvanComponent) {
   /**
-   * Container property template definition
+   * data container entry (metadata, list, ...)
    */
   @Prop() entry: bcc.ContainerTemplateProperty;
 
   /**
-   * schema / value / read
+   * list of available modes (schema / edit / view)
+   *
+   * @class      Prop (name)
    */
-  @Prop({ default: 'schema' }) mode;
+  @Prop({
+    default: [ 'schema', 'edit', 'view' ]
+  }) modes: Array<string>;
 
   /**
-   * Fill empty values
+   * icons for all the availables modes
+   */
+  modeIconMapping = {
+    schema: 'fas fa-cogs',
+    edit: 'fas fa-user-edit',
+    view: 'fas fa-eye',
+  };
+
+  /**
+   * active mode, default is the first of modes
+   */
+  private activeMode = '';
+
+  /**
+   * Define presets
    */
   created() {
-    this.entry.value = this.entry.value || { };
+    if (this.modes.length !== 0) {
+      this.activeMode = this.modes[0];
+    }
   }
 }

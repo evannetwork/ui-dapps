@@ -25,17 +25,26 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+export default {
+  string: (vueInstance: Vue, form: EvanForm) => {
+    console.log(this);
+    return true;
+  },
+  files: (vueInstance: Vue, form: EvanForm) => {
+    console.log(this);
+    return true;
+  },
 
-@Component({ })
-export default class EntryNumberComponent extends mixins(EvanComponent) {
+  images: (vueInstance: Vue, form: EvanForm) => {
+    console.log(this);
+    return true;
+  },
 
-}
+  number: (vueInstance: Vue, form: EvanForm) => {
+    console.log(this);
+    return true;
+  },
+};

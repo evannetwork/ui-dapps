@@ -29,24 +29,29 @@
 export default {
   "_datacontainer": {
     "ajv": {
-      "label": {
+      "name": {
         "desc": "Bezeichung des Feldes",
         "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!",
         "title": "Feldname"
       },
-      "name": {
-        "desc": "Name des Datenbereichs",
-        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Datenbereich entspricht!",
-        "title": "Name"
+      "value": {
+        "desc": "Wert des Feldes",
+        "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
+        "title": "Wert"
       },
       "type": {
         "title": "Typ"
-      }
+      },
+      "not-permitted": {
+        "title": "Ungültige Berechtigung",
+        "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen."
+      },
+      "add": "Feld hinzufügen"
     },
     "createForm": {
       "base-template": "Basis-Vorlage",
       "container-configuration": "Datencontainer Konfiguration",
-      "continue": "weiter",
+      "continue": "Weiter",
       "create": "Erstellen",
       "description": {
         "desc": "Kurze Beschreibung zu der digitalen Identität.",
@@ -68,11 +73,6 @@ export default {
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig von einander an dritte geteilt werden können.",
-      "label": {
-        "desc": "Bezeichung des Feldes",
-        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!",
-        "title": "Feldname"
-      },
       "name": {
         "desc": "Name des Datenbereichs",
         "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Datenbereich entspricht!",

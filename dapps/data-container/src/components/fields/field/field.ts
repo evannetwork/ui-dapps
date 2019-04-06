@@ -31,11 +31,54 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-@Component({ })
-export default class ListComponent extends mixins(EvanComponent) {
+import validators from '../../../validators';
 
+interface FieldFormInterface extends EvanForm {
+  value: EvanFormControl;
+}
+
+@Component({ })
+export default class FieldComponent extends mixins(EvanComponent) {
+  /**
+   * schema / value / read
+   */
+  @Prop({ default: 'value' }) mode;
+
+  /**
+   * Object entry schema (full entry schema or list entry schema)
+   */
+  @Prop() schema: any;
+
+  /**
+   * Value corresponding to the ajv
+   */
+  @Prop() value: any;
+
+  /**
+   * Optional passed formular that also contains the value control including the type validator.
+   *
+   * @class      Prop (name)
+   */
+  @Prop() form: FieldFormInterface;
+
+  /**
+   * formular specific variables
+   */
+  fieldForm: FieldFormInterface = null;
+
+  created() {
+    this.fieldForm = this.form || (<FieldFormInterface>new EvanForm(this, {
+      value: {
+        value: this.value,
+        validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
+          // map the value top the correct dynamic type validator
+          return validators[this.schema.type](vueInstance, form);
+        }
+      },
+    }));
+  }
 }

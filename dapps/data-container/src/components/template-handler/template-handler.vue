@@ -88,7 +88,7 @@
             </div>
           </form>
           <div class="mt-3 text-center">
-            <button type="submit"
+            <button
               class="btn btn-primary btn-rounded font-weight-normal"
               :disabled="!entryForm.isValid">
               {{ `_datacontainer.entry.add` | translate }}
@@ -98,10 +98,11 @@
       </div>
     </div>
 
-    <div class="evan-table table-responsive-md bg-level-2 border-bottom border-right border-left"
-      v-if="activeTab !== -1">
-      
-    </div>
+    <di-entry
+      v-if="activeTab !== -1"
+      :entry="activeEntry"
+      :modes="[ 'schema', 'edit', 'view' ]">
+    </di-entry>
   </div>
 </template>
 

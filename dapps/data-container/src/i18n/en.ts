@@ -29,24 +29,29 @@
 export default {
   "_datacontainer": {
     "ajv": {
-      "label": {
+      "name": {
         "desc": "Name of the field",
         "error": "Please enter a name that does not correspond to an existing field",
         "title": "Field name"
       },
-      "name": {
-        "desc": "Name of the dataset",
-        "error": "Please enter a name that does not correspond to an existing data sets!",
-        "title": "Name"
+      "value": {
+        "desc": "Value of the field",
+        "error": "Please enter a value of the correct type!",
+        "title": "Value"
       },
       "type": {
         "title": "Type"
-      }
+      },
+      "not-permitted": {
+        "title": "Invalid authorization",
+        "desc": "You do not have permission to view this data area."
+      },
+      "add": "Add field"
     },
     "createForm": {
       "base-template": "Base Template",
       "container-configuration": "Data container configuration",
-      "continue": "continue",
+      "continue": "Continue",
       "create": "Create",
       "description": {
         "desc": "Short description for the digital identity",
@@ -68,6 +73,14 @@ export default {
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to a separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
+      "name": {
+        "desc": "Name of the dataset",
+        "error": "Please enter a name that does not correspond to an existing data sets!",
+        "title": "Name"
+      },
+      "type": {
+        "title": "Type"
+      },
       "types": {
         "files": "Files",
         "images": "Images",

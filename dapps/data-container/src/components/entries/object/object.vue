@@ -26,9 +26,12 @@
 */
 
 <template>
-  <div>
-    entry object
-  </div>
+  <di-ajv
+    :mode="mode"
+    :enableValue="true"
+    :schema="entry.dataSchema"
+    :value="entry.value">
+  </di-ajv>
 </template>
 
 <script lang="ts">

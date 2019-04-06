@@ -112,7 +112,8 @@
               </form>
             </div>
             <div class="step" v-if="activeStep === 1">
-              <di-template-handler :template="templates[createForm.template.value]">
+              <di-template-handler
+                :template="templates[createForm.template.value]">
               </di-template-handler>
             </div>
           </div>

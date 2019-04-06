@@ -28,6 +28,16 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
+import AJVComponent from './entries/ajv/ajv.vue';
+import EntryComponent from './entry/entry.vue';
+import EntryListComponent from './entries/list/list.vue';
+import EntryObjectComponent from './entries/object/object.vue';
+import EntrySchemaComponent from './entries/schema/schema.vue';
+import FieldComponent from './entries/field/field.vue';
+import FieldFilesComponent from './fields/files/files.vue';
+import FieldImagesComponent from './fields/images/images.vue';
+import FieldNumberComponent from './fields/number/number.vue';
+import FieldStringComponent from './fields/string/string.vue';
 import TemplateHandlerComponent from './template-handler/template-handler.vue';
 
 // export them all, so other applications can access them
@@ -35,6 +45,16 @@ export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'di-ajv', component: AJVComponent },
+  { name: 'di-entry', component: EntryComponent },
+  { name: 'di-field', component: FieldComponent },
+  { name: 'di-entry-list', component: EntryListComponent },
+  { name: 'di-entry-object', component: EntryObjectComponent },
+  { name: 'di-entry-schema', component: EntrySchemaComponent },
+  { name: 'di-field-files', component: FieldFilesComponent },
+  { name: 'di-field-images', component: FieldImagesComponent },
+  { name: 'di-field-number', component: FieldNumberComponent },
+  { name: 'di-field-string', component: FieldStringComponent },
   { name: 'di-template-handler', component: TemplateHandlerComponent },
 ];
 

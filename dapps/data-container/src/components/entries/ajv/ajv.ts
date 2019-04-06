@@ -35,22 +35,73 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-@Component({ })
-export default class EntryObjectComponent extends mixins(EvanComponent) {
-  /**
-   * Container property template definition
-   */
-  @Prop() entry: bcc.ContainerTemplateProperty;
+import validators from '../../../validators';
 
+@Component({ })
+export default class AJVComponent extends mixins(EvanComponent) {
   /**
    * schema / value / read
    */
   @Prop({ default: 'schema' }) mode;
 
   /**
-   * Fill empty values
+   * Should the value row be displayed? (disabled for list configuration)
    */
+  @Prop({ }) enableValue;
+
+  /**
+   * Object entry schema (full entry schema or list entry schema)
+   */
+  @Prop() schema: any;
+
+  /**
+   * Value corresponding to the ajv
+   */
+  @Prop() value: any;
+
+  /**
+   * formular specific variables
+   */
+  forms: Array<EvanForm> = [ ];
+
+  /**
+   * all available field types
+   */
+  fieldTypes: Array<string> = [
+    'string',
+    'number',
+    'files',
+    'images',
+  ];
+
   created() {
-    this.entry.value = this.entry.value || { };
+    // map the initial schema to formulars
+    Object
+      .keys(this.schema)
+      .forEach((schemaKey: string) => this.addProperty(schemaKey, this.schema[schemaKey]));
+  }
+
+  /**
+   * Creates a new evan form to handle a new entry as one row in the ui.
+   */
+  addProperty(property: string, config: any = { type: 'string', value: '' }) {
+    this.forms.push(new EvanForm(this, {
+      name: {
+        value: property,
+        validate: function(vueInstance: AJVComponent, form: EvanForm) {
+          return this.value.length !== 0;
+        }
+      },
+      type: {
+        value: config.type
+      },
+      value: {
+        value: config.value,
+        validate: function(vueInstance: AJVComponent, form: EvanForm) {
+          // map the value top the correct dynamic type validator
+          return validators[(<any>form).type.value](vueInstance, form);
+        }
+      },
+    }));
   }
 }

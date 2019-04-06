@@ -26,12 +26,27 @@
 */
 
 <template>
-  <div>
-    entry files
+  <div class="form-group" v-if="mode === 'schema' || mode === 'edit'">
+    <label for="value">
+      {{ `_datacontainer.ajv.value.title` | translate }}
+    </label>
+    <input class="form-control" required
+      id="value" ref="value" type="text"
+      :disabled="mode !=='schema'"
+      :placeholder="`_datacontainer.ajv.value.desc` | translate"
+      v-model="control.value"
+      v-bind:class="{ 'is-invalid' : control.error }"
+      @blur="control.setDirty()">
+    <div class="invalid-feedback">
+      {{ `_datacontainer.ajv.value.error` | translate }}
+    </div>
+  </div>
+  <div v-else>
+    {{ control.value }}
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './files.ts';
+  import Component from './string.ts';
   export default Component;
 </script>

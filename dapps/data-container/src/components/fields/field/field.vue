@@ -27,11 +27,30 @@
 
 <template>
   <div>
-    list
+    <di-field-files
+      v-if="dataSchema.type === 'files'"
+      :control="fieldForm.value"
+      :mode="mode">
+    </di-field-files>
+    <di-field-images
+      v-if="dataSchema.type === 'images'"
+      :control="fieldForm.value"
+      :mode="mode">
+    </di-field-images>
+    <di-field-number
+      v-if="dataSchema.type === 'number'"
+      :control="fieldForm.value"
+      :mode="mode">
+    </di-field-number>
+    <di-field-string
+      v-if="dataSchema.type === 'string'"
+      :control="fieldForm.value"
+      :mode="mode">
+    </di-field-string>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './list.ts';
+  import Component from './ajv.ts';
   export default Component;
 </script>

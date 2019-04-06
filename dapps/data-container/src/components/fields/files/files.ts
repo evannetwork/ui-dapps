@@ -25,36 +25,25 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>{{ '_datacontainer.ajv.label.title' | translate }}</th>
-          <th>{{ '_datacontainer.ajv.type.title' | translate }}</th>
-          <th>{{ '_datacontainer.ajv.value.title' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="(property, index) in activeEntry.propertList">
-          <tr v-if="index !== 0">
-            <td class="p-2"></td>
-          </tr>
-          <tr>
-            <td class="text-primary">{{ property.name }}</td>
-            <td>{{ property.type }}</td>
-            <td>{{ property.value }}</td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
-  </div>
-</template>
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import Component from './files.ts';
-  export default Component;
-</script>
+// evan.network imports
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+@Component({ })
+export default class FilesComponent extends mixins(EvanComponent) {
+ /**
+   * value / read
+   */
+  @Prop({ default: 'value' }) mode;
 
-
+  /**
+   * Form control of the parent form handler (includes form and validation)
+   */
+  @Prop() control: EvanFormControl;
+}
