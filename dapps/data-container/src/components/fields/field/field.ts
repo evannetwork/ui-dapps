@@ -44,9 +44,9 @@ interface FieldFormInterface extends EvanForm {
 @Component({ })
 export default class FieldComponent extends mixins(EvanComponent) {
   /**
-   * schema / value / read
+   * schema / edit / vue
    */
-  @Prop({ default: 'value' }) mode;
+  @Prop({ default: 'edit' }) mode;
 
   /**
    * Object entry entry type
@@ -64,19 +64,45 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() form: FieldFormInterface;
 
   /**
+   * should the control label be rendered?
+   */
+  @Prop({
+    default: true
+  }) showLabel: boolean;
+
+  /**
    * formular specific variables
    */
   fieldForm: FieldFormInterface = null;
 
+  /**
+   * is the field standalone? (When no form was applied on startup)
+   */
+  standalone = false;
+
+  /**
+   * Set the field form, if no form was applied
+   */
   created() {
+    this.standalone = !this.form;
     this.fieldForm = this.form || (<FieldFormInterface>new EvanForm(this, {
       value: {
         value: this.value,
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
-          // map the value top the correct dynamic type validator
-          return validators[this.type](vueInstance, form);
+          return validators[vueInstance.type](vueInstance, form);
         }
       },
     }));
+  }
+
+  /**
+   * Map the current ajv formular to the data schema
+   */
+  beforeDestroy() {
+    // in standalone mode, populate the value to the parents component, else the value is handled by
+    // the parents form
+    if (this.standalone) {
+      this.$emit('update:value', this.fieldForm.value.value);
+    }
   }
 }

@@ -25,32 +25,26 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-@Component({ })
-export default class NumberComponent extends mixins(EvanComponent) {
-  /**
-   * schema / edit / vue
-   */
-  @Prop({ default: 'edit' }) mode;
-
-  /**
-   * Form control of the parent form handler (includes form and validation)
-   */
-  @Prop() control: EvanFormControl;
-
-  /**
-   * should the control label be rendered?
-   */
-  @Prop({
-    default: true
-  }) showLabel: boolean;
+/**
+ * Returns the default webpack vue externals.
+ *
+ * @param      {any}     customExcludes  object with custom externals
+ * @return     {Object}  object with all externals
+ */
+module.exports = function(customExcludes) {
+  return {
+    '@evan.network/api-blockchain-core': '@evan.network/api-blockchain-core',
+    '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
+    '@evan.network/ui': '@evan.network/ui',
+    '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
+    '@evan.network/ui-vue-core': '@evan.network/ui-vue-core',
+    'axios': 'axios',
+    'vue': 'vue',
+    'vue-material': 'vue-material',
+    'vue-recaptcha': 'vue-recaptcha',
+    'vue-router': 'vue-router',
+    'vuex': 'vuex',
+    'vuex-i18n': 'vuex-i18n',
+    ...(customExcludes || { }) 
+  };
 }

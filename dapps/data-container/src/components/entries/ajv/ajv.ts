@@ -37,10 +37,16 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import validators from '../../../validators';
 
+interface FieldFormInterface extends EvanForm {
+  name: EvanFormControl;
+  type: EvanFormControl;
+  value: EvanFormControl;
+}
+
 @Component({ })
 export default class AJVComponent extends mixins(EvanComponent) {
   /**
-   * schema / value / read
+   * schema / edit / read
    */
   @Prop({ default: 'schema' }) mode;
 
@@ -52,7 +58,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
   /**
    * Object entry schema (full entry schema or list entry schema)
    */
-  @Prop() schema: any;
+  @Prop() properties: any;
 
   /**
    * Value corresponding to the ajv
@@ -62,7 +68,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  forms: Array<EvanForm> = [ ];
+  forms: Array<FieldFormInterface> = [ ];
 
   /**
    * all available field types
@@ -77,15 +83,33 @@ export default class AJVComponent extends mixins(EvanComponent) {
   created() {
     // map the initial schema to formulars
     Object
-      .keys(this.schema)
-      .forEach((schemaKey: string) => this.addProperty(schemaKey, this.schema[schemaKey]));
+      .keys(this.properties)
+      .forEach((schemaKey: string) => this.addProperty(
+        schemaKey,
+        this.properties[schemaKey].type,
+        this.value[schemaKey]
+      ));
+  }
+
+  /**
+   * Map the current ajv formular to the data schema
+   */
+  beforeDestroy() {
+    Object.keys(this.properties).forEach(key => delete this.properties[key]);
+    Object.keys(this.value).forEach(key => delete this.value[key]);
+
+    // iterate through all forms and set the correct values to the properties
+    this.forms.forEach((form: FieldFormInterface) => {
+      this.properties[form.name.value] = { type: form.type.value };
+      this.value[form.name.value] = form.value.value;
+    });
   }
 
   /**
    * Creates a new evan form to handle a new entry as one row in the ui.
    */
-  addProperty(property: string, config: any = { type: 'string', value: '' }) {
-    this.forms.push(new EvanForm(this, {
+  addProperty(property: string, type = 'string', value: any) {
+    this.forms.push(<FieldFormInterface>new EvanForm(this, {
       name: {
         value: property,
         validate: function(vueInstance: AJVComponent, form: EvanForm) {
@@ -93,10 +117,13 @@ export default class AJVComponent extends mixins(EvanComponent) {
         }
       },
       type: {
-        value: config.type
+        value: type,
+        validate: function(vueInstance: AJVComponent, form: EvanForm) {
+          return this.value.length !== 0;
+        }
       },
       value: {
-        value: config.value,
+        value: value,
         validate: function(vueInstance: AJVComponent, form: EvanForm) {
           // map the value top the correct dynamic type validator
           return validators[(<any>form).type.value](vueInstance, form);

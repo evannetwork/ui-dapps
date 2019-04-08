@@ -37,6 +37,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registry';
 import { getRuntime } from '../../utils';
+import ContainerCache from '../../container-cache';
 
 interface CreateInterface extends EvanForm {
   description: EvanFormControl;
@@ -90,9 +91,14 @@ export default class CreateComponent extends mixins(EvanComponent) {
   ];
 
   /**
+   * unmount dispatcher listeners
+   */
+  creationWatcher: Function;
+
+  /**
    * Setup the form.
    */
-  created() {
+  async created() {
     const splitHash = (<any>this).dapp.baseHash.split('/');
     this.identityAddress = splitHash
       [splitHash.indexOf(`identities.${ (<any>this).dapp.domainName }`) + 1];
@@ -130,19 +136,51 @@ export default class CreateComponent extends mixins(EvanComponent) {
     ];
 
     this.loading = false;
-    this.$nextTick(() => this.createForm.name.$ref.focus());
+    this.watchForCreation();
+    this.$nextTick(() => this.createForm.name && this.createForm.name.$ref.focus());
+  }
+
+  /**
+   * Unmount dispatcher watchers
+   */
+  beforeDestroy() {
+    this.creationWatcher && this.creationWatcher();
   }
 
   /**
    * Create the new container
    */
-  create() {
-    dispatchers.createDispatcher.start(getRuntime(this), {
+  async create() {
+    const runtime = getRuntime(this);
+
+    await dispatchers.createDispatcher.start(runtime, {
       description: this.createForm.description.value,
       identityAddress: this.identityAddress,
       img: this.createForm.img.value,
       name: this.createForm.name.value,
-      template: this.createForm.template.value,
+      template: this.templates[this.createForm.template.value],
     });
+    this.watchForCreation();
+
+    (<any>this.$refs.createModal).hide();
+    // await (new ContainerCache(runtime.activeAccount)).delete('create');
+  }
+
+  /**
+   * Start a listener to watch for creation updates
+   */
+  async watchForCreation() {
+    const watch = async () => {
+      const dispatcherInstances = await dispatchers.createDispatcher.getInstances(getRuntime(this));
+      const idenitySpecific = Object.keys(dispatcherInstances)
+        .filter((key) => dispatcherInstances[key].data.identityAddress === this.identityAddress);
+
+      if (idenitySpecific.length > 0) {
+        this.creating = true;
+      }
+    }
+
+    watch();
+    this.creationWatcher = dispatchers.createDispatcher.watch(() => this.watchForCreation());
   }
 }

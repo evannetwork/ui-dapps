@@ -34,6 +34,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import ContainerCache from '../../container-cache';
 
 interface EntryFormInterface extends EvanForm {
   name: EvanFormControl;
@@ -43,9 +44,24 @@ interface EntryFormInterface extends EvanForm {
 @Component({ })
 export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   /**
+   * Id for the template that is edited (e.g.: create, container address, template type, ...)
+   */
+  @Prop() id: string;
+
+  /**
    * The full data container template
    */
   @Prop() template: bcc.ContainerTemplate;
+
+  /**
+   * Container cache, so we can check, if the user left some unsaved work
+   */
+  containerCache: ContainerCache;
+
+  /**
+   * Template that was cached into the indexeddb
+   */
+  cachedTemplate: any;
 
   /**
    * current displayed active template
@@ -74,6 +90,9 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     'images',
   ];
 
+  /**
+   * Initialize and try to restore latest cached template
+   */
   created() {
     this.entryForm = (<EntryFormInterface>new EvanForm(this, {
       name: {
@@ -98,6 +117,25 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     }
   }
 
+  async mounted() {
+    // try to restore previous left work
+    this.containerCache = new ContainerCache((<any>this).getRuntime().activeAccount);
+    this.cachedTemplate = await this.containerCache.get(this.id);
+
+    // ask for restore
+    if (this.cachedTemplate) {
+      (<any>this.$refs.cacheModal).show();
+    }
+  }
+
+  /**
+   * Cache latest configuration for this type, so the data wont be lost, when the users leaves
+   */
+  beforeDestroy() {
+    // wait for opened containers to saved the work
+    setTimeout(() => this.containerCache.put(this.id, this.template));
+  }
+
   /**
    * Set the active tab and apply the current data set, so it can be accessed easily.
    *
@@ -106,8 +144,10 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   activateTab(activeTab: number) {
     if (activeTab !== -1) {
       this.activeEntry = this.template.properties[Object.keys(this.template.properties)[activeTab]];
-      this.activeTab = activeTab;
     }
+    // force rerendering of ajv and field components and set the specified tab
+    this.activeTab = -2;
+    this.$nextTick(() => this.activeTab = activeTab);
   }
 
   /**
@@ -132,5 +172,15 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
       // reset add form
       this.entryForm.name.value = '';
     }
+  }
+
+  /**
+   * Restore latest template from cache
+   */
+  restoreTemplate() {
+    this.template = this.cachedTemplate;
+    this.$emit('update:template', this.template);
+
+    (<any>this.$refs.cacheModal).hide();
   }
 }

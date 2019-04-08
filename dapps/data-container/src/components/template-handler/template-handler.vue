@@ -27,6 +27,24 @@
 
 <template>
   <div>
+    <evan-modal ref="cacheModal">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_datacontainer.template-cache.title` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p class="text-left m-0"
+          v-html="$t(`_datacontainer.template-cache.desc`, modalParams)">
+        </p>
+      </template>
+      <template v-slot:footer>
+        <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+          @click="restoreTemplate()">
+          {{ `_datacontainer.template-cache.action` | translate }}
+        </button>
+      </template>
+    </evan-modal>
     <div class="d-flex border">
       <div class="d-flex align-items-center p-2 text-center border-right clickable all-transition"
         v-for="(property, index) in Object.keys(template.properties)"
@@ -36,7 +54,7 @@
       </div>
       <div class="d-block p-2 text-center border-right clickable all-transition"
         :class="activeTab === -1 ? 'bg-secondary bg-text-secondary' : 'bg-level-1'"
-        @click="activeTab = -1">
+        @click="activateTab(-1)">
         <i class="fas fa-plus-circle large"></i>
       </div>
     </div>
@@ -86,20 +104,21 @@
                 {{ `_datacontainer.entry.name.error` | translate }}
               </div>
             </div>
+
+            <div class="mt-3 text-center">
+              <button type="submit"
+                class="btn btn-rounded btn-outline-secondary"
+                :disabled="!entryForm.isValid">
+                {{ `_datacontainer.entry.add` | translate }}
+              </button>
+            </div>
           </form>
-          <div class="mt-3 text-center">
-            <button
-              class="btn btn-primary btn-rounded font-weight-normal"
-              :disabled="!entryForm.isValid">
-              {{ `_datacontainer.entry.add` | translate }}
-            </button>
-          </div>
         </div>
       </div>
     </div>
 
     <di-entry
-      v-if="activeTab !== -1"
+      v-if="activeTab > -1"
       :entry="activeEntry"
       :modes="[ 'schema', 'edit', 'view' ]">
     </di-entry>

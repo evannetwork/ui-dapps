@@ -48,6 +48,11 @@ export default {
         "title": "Wert"
       }
     },
+    "create-question": {
+      "action": "Erstellen",
+      "desc": "Haben Sie alles Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
+      "title": "Datencontainer Erstellen"
+    },
     "createForm": {
       "base-template": "Basis-Vorlage",
       "container-configuration": "Datencontainer Konfiguration",
@@ -57,6 +62,7 @@ export default {
         "desc": "Kurze Beschreibung zu der digitalen Identität.",
         "title": "Beschreibung"
       },
+      "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
       "name": {
         "desc": "Name der digitalen Identität.",
@@ -69,6 +75,9 @@ export default {
         "title": "Vorlage"
       },
       "title": "Datencontainer Erstellen"
+    },
+    "dispatcher": {
+      "create": "Datencontainer wird erstellt..."
     },
     "entry": {
       "add": "Datenbereich hinzufügen",
@@ -88,6 +97,11 @@ export default {
       }
     },
     "in-creation": "In Erstellung",
+    "template-cache": {
+      "action": "Wiederherstellen",
+      "desc": "Sie haben ungespeicherte Konfiguration zurück gelassen, möchten Sie diese wiederherstellen?",
+      "title": "Wiederherstellung"
+    },
     "types": {
       "files": "Dateien",
       "images": "Bilder",

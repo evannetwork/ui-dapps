@@ -58,12 +58,13 @@
       <di-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"
-        :mode="activeMode"></di-entry-object>
+        :mode="activeMode">
+      </di-entry-object>
       <di-field
         v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'list'" 
         :mode="activeMode"
         :type="entry.dataSchema.type"
-        :value="entry.value">
+        :value.sync="entry.value">
       </di-field>
     </div>
   </div>

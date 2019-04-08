@@ -27,10 +27,10 @@
 
 <template>
   <div>
-    <di-field-files v-if="type === 'files'" :control="fieldForm.value" :mode="mode"></di-field-files>
-    <di-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode"></di-field-images>
-    <di-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode"></di-field-number>
-    <di-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode"></di-field-string>
+    <di-field-files v-if="type === 'files'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></di-field-files>
+    <di-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></di-field-images>
+    <di-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></di-field-number>
+    <di-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></di-field-string>
   </div>
 </template>
 

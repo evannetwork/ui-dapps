@@ -47,10 +47,7 @@
                 {{ form.name.value }}
               </span>
               <span class="text-primary" v-if="mode === 'schema'">
-                <div class="form-group">
-                  <label for="name">
-                    {{ `_datacontainer.ajv.name.title` | translate }}
-                  </label>
+                <div class="form-group mb-0">
                   <input class="form-control" required
                     id="name" ref="name"
                     :placeholder="`_datacontainer.ajv.name.desc` | translate"
@@ -63,11 +60,8 @@
                 </div>
               </span>
             </td>
-            <td v-if="mode !=='view'">
-              <div class="form-group">
-                <label for="type">
-                  {{ `_datacontainer.ajv.type.title` | translate }}
-                </label>
+            <td v-if="mode !== 'view'">
+              <div class="form-group mb-0" v-if="mode === 'schema'">
                 <select class="form-control"
                   id="type" ref="type"
                   :placeholder="`_datacontainer.ajv.type.desc` | translate"
@@ -81,31 +75,34 @@
                   </option>
                 </select>
               </div>
+              <div v-else>
+                {{ `_datacontainer.types.${ form.type.value }` | translate }}
+              </div>
             </td>
             <td>
               <di-field
-                :mode="activeMode"
+                :mode="mode"
                 :form="form"
-                :type="form.type.value">
+                :type="form.type.value"
+                :showLabel="false">
               </di-field>
             </td>
-            <td v-if="mode === 'schema'"></td>
+            <td v-if="mode === 'schema'">
+              <i class="fas fa-trash clickable"
+                @click="forms.splice(forms.indexOf(form), 1)">
+              </i>
+            </td>
           </tr>
         </template>
-
-        <tr>
-          <td>
-            <button type="submit"  class="btn btn-rounded btn-primary"
-              @click="addProperty('')">
-              {{ `_datacontainer.ajv.add` | translate }}
-            </button>
-          </td>
-          <td v-if="mode !=='view'"></td>
-          <td></td>
-          <td v-if="mode === 'schema'"></td>
-        </tr>
       </tbody>
     </table>
+
+    <div class="text-center mt-3">
+      <button type="submit"  class="btn btn-rounded btn-outline-secondary"
+        @click="addProperty('')">
+        {{ `_datacontainer.ajv.add` | translate }}
+      </button>
+    </div>
   </div>
 </template>
 

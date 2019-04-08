@@ -28,7 +28,7 @@
 import Vue from 'vue';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-export default {
+const validators = {
   string: (vueInstance: Vue, form: EvanForm) => {
     console.log(this);
     return true;
@@ -48,3 +48,5 @@ export default {
     return true;
   },
 };
+
+export default validators;

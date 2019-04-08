@@ -60,7 +60,6 @@
           </template>
         </evan-modal>
 
-
         <h5 class="pl-3 pr-3 pt-3">{{ `_identities.lookup.description` | translate }}</h5>
 
         <form class="p-3"

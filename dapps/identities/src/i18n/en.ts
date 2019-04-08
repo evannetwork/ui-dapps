@@ -54,8 +54,8 @@ export default {
         "remove": "Digital identity is removed from favorites"
       },
       "identity": {
-        "create": "Digital identity is created",
-        "save": "Digital identity is stored"
+        "create": "Creating Digital identity",
+        "save": "Creating Digital identity"
       }
     },
     "empty-navigation": "No entries available",
@@ -74,7 +74,7 @@ export default {
       "title": "General Information"
     },
     "identities": "Identities",
-    "in-creation": "In creation...",
+    "in-creation": "Creating Digital Identity...",
     "left-categories": {
       "container-overview": "Data container overview",
       "containers": {

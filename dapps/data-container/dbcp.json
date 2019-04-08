@@ -3,6 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
+        "dexie": "^2.0.4",
         "evancore.vue.libs": "^1.0.0"
       },
       "entrypoint": "datacontainer.digitalidentity.js",

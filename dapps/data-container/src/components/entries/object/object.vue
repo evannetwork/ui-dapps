@@ -27,9 +27,9 @@
 
 <template>
   <di-ajv
-    :mode="mode"
     :enableValue="true"
-    :schema="entry.dataSchema"
+    :mode="mode"
+    :properties="entry.dataSchema.properties"
     :value="entry.value">
   </di-ajv>
 </template>

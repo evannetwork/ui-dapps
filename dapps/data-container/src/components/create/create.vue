@@ -34,7 +34,8 @@
             {{ `_datacontainer.createForm.title` | translate }}
           </h4>
         </div>
-        <div class="evan-steps p-3">
+        <div class="evan-steps p-3"
+          v-if="!creating">
           <div class="evan-step-header">
             <button class="btn"
               v-for="(step, index) of steps"
@@ -113,15 +114,46 @@
             </div>
             <div class="step" v-if="activeStep === 1">
               <di-template-handler
-                :template="templates[createForm.template.value]">
+                :id="'create'"
+                :template.sync="templates[createForm.template.value]">
               </di-template-handler>
+
+              <evan-modal ref="createModal">
+                <template v-slot:header>
+                  <h5 class="modal-title">
+                    {{ `_datacontainer.create-question.title` | translate }}
+                  </h5>
+                </template>
+                <template v-slot:body>
+                  <p class="text-left m-0"
+                    v-html="$t(`_datacontainer.create-question.desc`, modalParams)">
+                  </p>
+                </template>
+                <template v-slot:footer>
+                  <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                    @click="create()">
+                    {{ `_datacontainer.create-question.action` | translate }}
+                  </button>
+                </template>
+              </evan-modal>
+
+              <div class="text-center mt-3 w-100">
+                <button
+                  class="btn btn-rounded btn-primary"
+                  :disabled="!createForm.isValid || checking"
+                  @click="$refs.createModal.show()">
+                  <div class="spinner-border spinner-border-sm text-light mr-3"
+                    v-if="checking">
+                  </div>
+                  {{ `_datacontainer.createForm.finish` | translate }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="text-center" v-if="creating">
           <h4 class="mt-5 mb-3">{{ '_datacontainer.in-creation' | translate }}</h4>
-          <b> {{ createForm.name.value }} </b>
           <evan-loading></evan-loading>
         </div>
       </div>

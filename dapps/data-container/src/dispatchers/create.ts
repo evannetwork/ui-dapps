@@ -33,17 +33,20 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getRuntime } from '../utils';
 
 const dispatcher = new Dispatcher(
-  `identities.${ dappBrowser.getDomainName() }`,
-  'identityCreateDispatcher',
+  `datacontainer.digitalidentity.${ dappBrowser.getDomainName() }`,
+  'createDispatcher',
   40 * 1000,
-  '_identities.dispatcher.identity.create'
+  '_datacontainer.dispatcher.create'
 );
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = getRuntime(instance.runtime);
 
-    console.log('create!')
+    console.log('create data container');
+    console.dir(data);
+
+    await new Promise(() => setTimeout(() => { }, 30000000));
   });
 
 export default dispatcher;

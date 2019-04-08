@@ -51,6 +51,7 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
    * Fill empty values
    */
   created() {
+    this.entry.dataSchema.properties = this.entry.dataSchema.properties || { };
     this.entry.value = this.entry.value || { };
   }
 }

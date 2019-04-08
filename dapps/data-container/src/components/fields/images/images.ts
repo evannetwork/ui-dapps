@@ -37,13 +37,20 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
 export default class ImagesComponent extends mixins(EvanComponent) {
- /**
-   * value / read
+  /**
+   * schema / edit / vue
    */
-  @Prop({ default: 'value' }) mode;
+  @Prop({ default: 'edit' }) mode;
 
   /**
    * Form control of the parent form handler (includes form and validation)
    */
   @Prop() control: EvanFormControl;
+
+  /**
+   * should the control label be rendered?
+   */
+  @Prop({
+    default: true
+  }) showLabel: boolean;
 }

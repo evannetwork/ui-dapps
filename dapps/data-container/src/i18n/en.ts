@@ -48,6 +48,11 @@ export default {
         "title": "Value"
       }
     },
+    "create-question": {
+      "action": "Create",
+      "desc": "Have you configured all data correctly and would you like to continue? After the creation, the configurations of the different data containers can still be adapted",
+      "title": "Create data container"
+    },
     "createForm": {
       "base-template": "Base Template",
       "container-configuration": "Data container configuration",
@@ -57,6 +62,7 @@ export default {
         "desc": "Short description for the digital identity",
         "title": "Description"
       },
+      "finish": "Finish configuration",
       "general": "General Information",
       "name": {
         "desc": "Name of the digital Identity",
@@ -69,6 +75,9 @@ export default {
         "title": "Template"
       },
       "title": "Create data container"
+    },
+    "dispatcher": {
+      "create": "Creating Data container..."
     },
     "entry": {
       "add": "Add data set",
@@ -88,6 +97,11 @@ export default {
       }
     },
     "in-creation": "In Creation",
+    "template-cache": {
+      "action": "restore",
+      "desc": "You left unsaved configuration, do you want to restore it?",
+      "title": "Recovery"
+    },
     "types": {
       "files": "Files",
       "images": "Images",

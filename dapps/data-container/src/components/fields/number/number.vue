@@ -26,13 +26,12 @@
 */
 
 <template>
-  <div class="form-group" v-if="mode === 'schema' || mode === 'edit'">
-    <label for="value">
+  <div class="form-group mb-0" v-if="mode === 'schema' || mode === 'edit'">
+    <label for="value" v-if="showLabel">
       {{ `_datacontainer.ajv.value.title` | translate }}
     </label>
     <input class="form-control" required
       id="value" ref="value" type="text"
-      :disabled="mode !=='schema'"
       :placeholder="`_datacontainer.ajv.value.desc` | translate"
       v-model="control.value"
       v-bind:class="{ 'is-invalid' : control.error }"
