@@ -1,0 +1,36 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "dexie.js",
+      "files": [
+        "dexie.js"
+      ],
+      "origin": "QmVPfAxrW1hxzoJwNBX5c8MuiwYXvEfL8P2hBkwPzLB4DF",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "dexie"
+      }
+    },
+    "imgSquare": "",
+    "name": "dexie",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "2.0.4",
+    "versions": {}
+  }
+}

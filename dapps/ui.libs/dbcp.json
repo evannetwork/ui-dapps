@@ -11,7 +11,7 @@
         "ui.libs.js",
         "ui.libs.css"
       ],
-      "origin": "QmXUMoQHZq8HN4W2Eensg11QzrVQdSz7bwLaDpC2KymJNP",
+      "origin": "QmUPPS83TfxtN4amNjpeasinTM32LgNEPRWz6n1uZo533r",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -36,7 +36,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmQMaw6iSwMz8X7SZmXcFiiDRYFETCFgyckczC2m3hWPJJ"
+      "1.0.0": "QmNUZTBgX39P6B21thvKZVFCSFtLfrR3B8nBVCMcki3SuR"
     }
   }
 }

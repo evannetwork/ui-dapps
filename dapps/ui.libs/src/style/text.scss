@@ -29,39 +29,39 @@
 
 .evan {
   .bg-text-danger {
-    color: cssVar('bg-text-danger');
+    color: cssVar('bg-text-danger') !important;
   }
 
   .bg-text-dark {
-    color: cssVar('bg-text-dark');
+    color: cssVar('bg-text-dark') !important;
   }
 
   .bg-text-info {
-    color: cssVar('bg-text-info');
+    color: cssVar('bg-text-info') !important;
   }
 
   .bg-text-light {
-    color: cssVar('bg-text-light');
+    color: cssVar('bg-text-light') !important;
   }
 
   .bg-text-primary {
-    color: cssVar('bg-text-primary');
+    color: cssVar('bg-text-primary') !important;
   }
 
   .bg-text-secondary {
-    color: cssVar('bg-text-secondary');
+    color: cssVar('bg-text-secondary') !important;
   }
 
   .bg-text-success {
-    color: cssVar('bg-text-v');
+    color: cssVar('bg-text-v') !important;
   }
 
   .bg-text-warning {
-    color: cssVar('bg-text-warning');
+    color: cssVar('bg-text-warning') !important;
   }
 
   .bg-text-inverted {
-    color: cssVar('text-color-inverted');
+    color: cssVar('text-color-inverted') !important;
   }
 
   h1, h2, h3, h4, h5, span, p {
