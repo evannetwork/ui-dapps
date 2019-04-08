@@ -27,25 +27,34 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
-      <template v-slot:content>
-        
-      </template>
-    </evan-breadcrumbs>
+    <div class="mt-5 mb-3 text-center">
+      <br>
+      <h4 class="text-secondary font-weight-bold">{{ '_digitaltwins.welcome' | translate }}</h4>
+      <h2 class="mt-4">{{ '_digitaltwins.startup' | translate }}</h2>
+      <br>
+    </div>
+    <div class="d-md-flex container flex-wrap justify-content-center">
+      <a class="
+          p-3 col-md-5 col-lg-4 col-xl-3
+          m-md-3 mb-3 p-4
+          text-center
+          bg-level-1 border evan-highlight"
+        v-for="(type, index) in dashboardEntries"
+        :href="`${ dapp.fullUrl }/${ type.path }`">
+        <i class="highlight" :class="type.icon"></i>
 
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3" v-else>
-      <div class="bg-level-1 border p-3">
-        <dt-template-handler
-          :address="dapp.contractAddress"
-          :template.sync="template">
-        </dt-template-handler>
-      </div>
+        <h3 class="highlight">
+          {{ `_digitaltwins.start.${ type.title }.title` | translate }}
+        </h3>
+        <span class="text-muted highlight">
+          {{ `_digitaltwins.start.${ type.title }.desc` | translate }}
+        </span>
+      </a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
+  import Component from './start.ts';
   export default Component;
 </script>

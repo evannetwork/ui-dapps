@@ -30,10 +30,10 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-import { getRuntime } from '../utils';
+import * as utils from '../utils';
 
 const dispatcher = new Dispatcher(
-  `datacontainer.digitalidentity.${ dappBrowser.getDomainName() }`,
+  `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
   'createDispatcher',
   40 * 1000,
   '_datacontainer.dispatcher.create'
@@ -41,12 +41,35 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = getRuntime(instance.runtime);
+    // set the digital twin instance
+    const runtime = utils.getRuntime(instance.runtime);
 
-    console.log('create data container');
-    console.dir(data);
+    // apply formular data to the description
+    const description = await utils.getDataContainerBaseDbcp({
+      name: data.name,
+      description: data.description,
+      imgSquare: data.img,
+    });
 
-    await new Promise(() => setTimeout(() => { }, 30000000));
+    // create the container
+    const container = await bcc.Container.create(<any>runtime, {
+      accountId: runtime.activeAccount,
+      address: `${ data.name }.${ data.digitalTwinAddress }`,
+      description: description,
+      factoryAddress: utils.containerFactory,
+      template: data.template,
+    });
+
+    data.contractAddress = await container.getContractAddress();
+  })
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = utils.getRuntime(instance.runtime);
+    const twinConfig = utils.getDigitalTwinConfig(runtime, data.digitalTwinAddress);
+    const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
+
+    // save the digital entries
+    await digitalTwin.setEntry(data.name, data.contractAddress,
+      bcc.DigitalTwinEntryType.ContainerContract);
   });
 
 export default dispatcher;

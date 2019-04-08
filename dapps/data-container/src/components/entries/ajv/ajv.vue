@@ -80,12 +80,12 @@
               </div>
             </td>
             <td>
-              <di-field
+              <dt-field
                 :mode="mode"
                 :form="form"
                 :type="form.type.value"
                 :showLabel="false">
-              </di-field>
+              </dt-field>
             </td>
             <td v-if="mode === 'schema'">
               <i class="fas fa-trash clickable"

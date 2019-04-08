@@ -46,7 +46,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   /**
    * Id for the template that is edited (e.g.: create, container address, template type, ...)
    */
-  @Prop() id: string;
+  @Prop() address: string;
 
   /**
    * The full data container template
@@ -111,16 +111,18 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
 
     // auto focus property name input
     if (Object.keys(this.template.properties).length === 0) {
-      this.activeTab = -1;
+      this.activateTab(-1, false);
 
       this.$nextTick(() => this.entryForm.name.$ref.focus());
+    } else {
+      this.activateTab(0, false);
     }
   }
 
   async mounted() {
     // try to restore previous left work
     this.containerCache = new ContainerCache((<any>this).getRuntime().activeAccount);
-    this.cachedTemplate = await this.containerCache.get(this.id);
+    this.cachedTemplate = await this.containerCache.get(this.address);
 
     // ask for restore
     if (this.cachedTemplate) {
@@ -133,21 +135,27 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     // wait for opened containers to saved the work
-    setTimeout(() => this.containerCache.put(this.id, this.template));
+    setTimeout(() => this.containerCache.put(this.address, this.template));
   }
 
   /**
    * Set the active tab and apply the current data set, so it can be accessed easily.
    *
-   * @param      {number}  activeTab  index of active data set
+   * @param      {number}   activeTab  index of active data set
+   * @param      {boolean}  rerender   trigger content rerender on tab switch
    */
-  activateTab(activeTab: number) {
+  activateTab(activeTab: number, rerender = true) {
     if (activeTab !== -1) {
       this.activeEntry = this.template.properties[Object.keys(this.template.properties)[activeTab]];
     }
-    // force rerendering of ajv and field components and set the specified tab
-    this.activeTab = -2;
-    this.$nextTick(() => this.activeTab = activeTab);
+
+    if (rerender) {
+      // force rerendering of ajv and field components and set the specified tab
+      this.activeTab = -2;
+      this.$nextTick(() => this.activeTab = activeTab);
+    } else {
+      this.activeTab = activeTab;
+    }
   }
 
   /**
@@ -157,10 +165,9 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     if (!this.template.properties[this.entryForm.name.value]) {
       // create a new empty data set
       const entry = {
-        dataSchema: {
-          type: this.entryForm.type.value,
-        },
+        dataSchema: { type: this.entryForm.type.value, },
         permissions: { 0: ['set'] },
+        type: this.entryForm.type.value === 'list' ? this.entryForm.type.value : 'entry'
       };
 
       // apply it to the current template

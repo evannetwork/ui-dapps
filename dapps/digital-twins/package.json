@@ -10,7 +10,7 @@
     "CSS"
   ],
   "main": "dist/index.js",
-  "name": "@evan.network/datacontainer.digitaltwin",
+  "name": "@evan.network/digitaltwins",
   "scripts": {
     "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
   },

@@ -64,9 +64,9 @@ export default class CreateComponent extends mixins(EvanComponent) {
   createForm: CreateInterface = null;
 
   /**
-   * identity address, where the container should be created for
+   *   digitalTwin address, where the container should be created for
    */
-  identityAddress = '';
+  digitalTwinAddress = '';
 
   /**
    * Available steps represented by it's titles
@@ -85,7 +85,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
     {
       title: '_datacontainer.createForm.base-template',
       type: 'metadata',
-      template: 'metadata',
       properties: { },
     }
   ];
@@ -100,8 +99,8 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   async created() {
     const splitHash = (<any>this).dapp.baseHash.split('/');
-    this.identityAddress = splitHash
-      [splitHash.indexOf(`identities.${ (<any>this).dapp.domainName }`) + 1];
+    this.  digitalTwinAddress = splitHash
+      [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
 
     // TODO: load templates
 
@@ -155,7 +154,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     await dispatchers.createDispatcher.start(runtime, {
       description: this.createForm.description.value,
-      identityAddress: this.identityAddress,
+        digitalTwinAddress: this.  digitalTwinAddress,
       img: this.createForm.img.value,
       name: this.createForm.name.value,
       template: this.templates[this.createForm.template.value],
@@ -171,13 +170,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   async watchForCreation() {
     const watch = async () => {
-      const dispatcherInstances = await dispatchers.createDispatcher.getInstances(getRuntime(this));
-      const idenitySpecific = Object.keys(dispatcherInstances)
-        .filter((key) => dispatcherInstances[key].data.identityAddress === this.identityAddress);
+      const instances = await dispatchers.createDispatcher.getInstances(getRuntime(this));
 
-      if (idenitySpecific.length > 0) {
-        this.creating = true;
-      }
+      this.creating = Object
+        .keys(instances)
+        .filter((key) => instances[key].data.digitalTwinAddress === this.digitalTwinAddress)
+        .length > 0;
     }
 
     watch();

@@ -27,6 +27,7 @@
 
 <template>
   <div>
+    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'"></evan-breadcrumbs>
     <div class="p-3 text-left">
       <div class="bg-level-1 border">
         <div class="d-flex p-3 border-bottom align-items-center">
@@ -113,10 +114,10 @@
               </form>
             </div>
             <div class="step" v-if="activeStep === 1">
-              <di-template-handler
-                :id="'create'"
+              <dt-template-handler
+                :address="'create'"
                 :template.sync="templates[createForm.template.value]">
-              </di-template-handler>
+              </dt-template-handler>
 
               <evan-modal ref="createModal">
                 <template v-slot:header>

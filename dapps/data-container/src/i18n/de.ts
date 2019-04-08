@@ -48,6 +48,18 @@ export default {
         "title": "Wert"
       }
     },
+    "breadcrumbs": {
+      "add": "Hinzufügen",
+      "container-link": "Daten Container verlinken",
+      "containers": "Datencontainer Übersicht",
+      "create": "Erstellen",
+      "datacontainer.digitaltwin": "Daten Container",
+      "digitaltwins": "Digitale Zwillinge",
+      "lookup": "Öffnen",
+      "overview": "Favoriten & letzte Zwillinge",
+      "templates": "Vorlagen",
+      "verifications": "Verifizierungen"
+    },
     "create-question": {
       "action": "Erstellen",
       "desc": "Haben Sie alles Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
@@ -59,13 +71,13 @@ export default {
       "continue": "Weiter",
       "create": "Erstellen",
       "description": {
-        "desc": "Kurze Beschreibung zu der digitalen Identität.",
+        "desc": "Kurze Beschreibung zu des Daten Containers.",
         "title": "Beschreibung"
       },
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
       "name": {
-        "desc": "Name der digitalen Identität.",
+        "desc": "Name des digitalen Daten Containers.",
         "error": "Bitte geben Sie einen Namen an!",
         "title": "Name"
       },

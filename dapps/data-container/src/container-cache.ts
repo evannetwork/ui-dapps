@@ -45,7 +45,7 @@ export default class ContainerCache {
   cacheKey: string;
 
   constructor(activeAccount: string) {
-    this.db = new Dexie(`evan-di-datacontainer`);
+    this.db = new Dexie(`evan-dt-datacontainer`);
     this.activeAccount = activeAccount;
     this.cacheKey = `templates`;
 

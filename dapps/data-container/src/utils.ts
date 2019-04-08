@@ -28,7 +28,8 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
-export const latestIdentitiesKey = 'evan-last-digital-identities';
+export const latestTwinKey = 'evan-last-digital-twins';
+export const containerFactory = '0xFc210B36978524699daf969787aCd9E09031a0b5';
 
 /**
  * Copies and returns a runtime with the correct nameresolver for payable stuff.
@@ -54,4 +55,39 @@ export function getRuntime(runtime: any): bcc.Runtime {
   runtimeCopy.description.nameResolver = runtimeCopy.nameResolver;
 
   return runtimeCopy;
+}
+
+/**
+ * Returns a minimal dbcp description set.
+ */
+export async function getDataContainerBaseDbcp(description: any = { }): Promise<any> {
+  const digitaltwinDbcp = await dappBrowser.System
+    .import(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }!ens`);
+
+  return {
+    author: '',
+    dapp: digitaltwinDbcp.dapp,
+    dbcpVersion: 2,
+    description: '',
+    name: '',
+    version: '1.0.0',
+    ...description
+  };
+}
+
+/**
+ * Return the default digitaltwin config.
+ */
+export function getDigitalTwinConfig(
+  runtime: bcc.Runtime,
+  address: string,
+  dbcp?: any
+): bcc.DigitalTwinConfig {
+  return {
+    accountId: runtime.activeAccount,
+    address: address,
+    containerConfig: { accountId: runtime.activeAccount, },
+    description: dbcp,
+    factoryAddress: '0xE8aB5213BDD998FB39Ed41352a7c84a6898C288a',
+  }
 }

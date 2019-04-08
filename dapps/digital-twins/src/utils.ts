@@ -25,27 +25,43 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
-      <template v-slot:content>
-        
-      </template>
-    </evan-breadcrumbs>
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
 
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3" v-else>
-      <div class="bg-level-1 border p-3">
-        <dt-template-handler
-          :address="dapp.contractAddress"
-          :template.sync="template">
-        </dt-template-handler>
-      </div>
-    </div>
-  </div>
-</template>
+export * from '../../data-container/src/utils';
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+export const latestTwinsKey = 'evan-last-digital-digitaltwins';
+export const nullAddress = '0x0000000000000000000000000000000000000000';
+
+/**
+ * Return the last opened digitaltwins that were persited in the localStorage.
+ */
+export function getLastOpenedTwins() {
+  return JSON.parse(window.localStorage[latestTwinsKey] || '[ ]');
+}
+
+/**
+ * Returns the active domain name (currently payable, until the nameresolve is fixed)
+ *
+ * @return     {string}  domain name (default evan)
+ */
+export function getDomainName(): string {
+  return 'payable' || dappBrowser.getDomainName();
+}
+
+/**
+ * Returns a minimal dbcp description set.
+ */
+export async function getDigitalTwinBaseDbcp(): Promise<any> {
+  const digitaltwinDbcp = await dappBrowser.System
+    .import(`digitaltwins.${ dappBrowser.getDomainName() }!ens`);
+
+  return {
+    author: '',
+    dapp: digitaltwinDbcp.dapp,
+    dbcpVersion: 2,
+    description: '',
+    name: '',
+    version: '1.0.0',
+  };
+}

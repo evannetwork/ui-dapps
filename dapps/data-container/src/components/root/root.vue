@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-  import IdentitiesRootComponent from './root.ts';
-  export default IdentitiesRootComponent;
+  import RootComponent from './root.ts';
+  export default RootComponent;
 </script>
 

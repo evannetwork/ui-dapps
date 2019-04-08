@@ -25,27 +25,16 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
-      <template v-slot:content>
-        
-      </template>
-    </evan-breadcrumbs>
+import ensDispatcher from './ens';
+import favoriteAddDispatcher from './favorite.add';
+import favoriteRemoveDispatcher from './favorite.remove';
+import digitaltwinCreateDispatcher from './digitaltwin.create';
+import digitaltwinSaveDispatcher from './digitaltwin.save';
 
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3" v-else>
-      <div class="bg-level-1 border p-3">
-        <dt-template-handler
-          :address="dapp.contractAddress"
-          :template.sync="template">
-        </dt-template-handler>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+export {
+  ensDispatcher,
+  favoriteAddDispatcher,
+  favoriteRemoveDispatcher,
+  digitaltwinCreateDispatcher,
+  digitaltwinSaveDispatcher
+}

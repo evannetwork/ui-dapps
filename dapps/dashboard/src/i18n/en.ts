@@ -44,9 +44,9 @@ export default {
         "desc": "What is the evan.network and what can I do with it?",
         "title": "How does evan work?"
       },
-      "identities": {
-        "desc": "Manage and share your identities",
-        "title": "My identities"
+      "digitaltwins": {
+        "desc": "Manage and share your Digital Twins",
+        "title": "My Digital Twins"
       }
     },
     "startup": "What would you like to start with?"

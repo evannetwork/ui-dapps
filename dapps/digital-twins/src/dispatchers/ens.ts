@@ -25,27 +25,37 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
-      <template v-slot:content>
-        
-      </template>
-    </evan-breadcrumbs>
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+import { getRuntime } from '../utils';
 
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3" v-else>
-      <div class="bg-level-1 border p-3">
-        <dt-template-handler
-          :address="dapp.contractAddress"
-          :template.sync="template">
-        </dt-template-handler>
-      </div>
-    </div>
-  </div>
-</template>
+const dispatcher = new Dispatcher(
+  `digitaltwins.${ dappBrowser.getDomainName() }`,
+  'ensDispatcher',
+  40 * 1000,
+  '_digitaltwins.dispatcher.create'
+);
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+dispatcher
+  .step(async (instance, data) => {
+    const runtime = getRuntime(instance.runtime);
+
+    // purchaser the ens address
+    await runtime.nameResolver.claimAddress(
+      data.ensAddress,
+      instance.runtime.activeAccount,
+      instance.runtime.activeAccount,
+      await runtime.nameResolver.getPrice(data.ensAddress)
+    );
+  })
+  .step(async (instance, data) => {
+    // add the ens address to your favorites list
+    await instance.runtime.profile.addBcContract('evan-ens-management', data.ensAddress, { });
+
+    // store profile contracts
+    await instance.runtime.profile.storeForAccount(instance.runtime.profile.treeLabels.contracts);
+  });
+
+
+export default dispatcher;

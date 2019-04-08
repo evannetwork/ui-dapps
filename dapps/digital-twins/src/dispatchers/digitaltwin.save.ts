@@ -25,27 +25,28 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
-      <template v-slot:content>
-        
-      </template>
-    </evan-breadcrumbs>
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getRuntime } from '../utils';
+import EvanUIDigitalTwin from '../digitaltwin';
 
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3" v-else>
-      <div class="bg-level-1 border p-3">
-        <dt-template-handler
-          :address="dapp.contractAddress"
-          :template.sync="template">
-        </dt-template-handler>
-      </div>
-    </div>
-  </div>
-</template>
+const dispatcher = new Dispatcher(
+  `digitaltwins.${ dappBrowser.getDomainName() }`,
+  'digitaltwinSaveDispatcher',
+  40 * 1000,
+  '_digitaltwins.dispatcher.digitaltwin.save'
+);
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+dispatcher
+  // update description
+  .step(async (instance: DispatcherInstance, data: any) => {
+    if (data.dbcp) {
+      await EvanUIDigitalTwin
+        .getDigitalTwin(instance.runtime, data.address)
+        .setDescription(data.dbcp);
+    }
+  });
+
+export default dispatcher;

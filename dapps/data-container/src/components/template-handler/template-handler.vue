@@ -117,11 +117,11 @@
       </div>
     </div>
 
-    <di-entry
+    <dt-entry
       v-if="activeTab > -1"
       :entry="activeEntry"
       :modes="[ 'schema', 'edit', 'view' ]">
-    </di-entry>
+    </dt-entry>
   </div>
 </template>
 

@@ -48,6 +48,18 @@ export default {
         "title": "Value"
       }
     },
+    "breadcrumbs": {
+      "add": "Add",
+      "container-link": "Link Data Container",
+      "containers": "Data container overview",
+      "create": "Create",
+      "datacontainer.digitaltwin": "Data Container",
+      "digitaltwins": "Digital Twins",
+      "lookup": "Open",
+      "overview": "Favorites & last digitaltwins",
+      "templates": "Templates",
+      "verifications": "Verifications"
+    },
     "create-question": {
       "action": "Create",
       "desc": "Have you configured all data correctly and would you like to continue? After the creation, the configurations of the different data containers can still be adapted",
@@ -59,13 +71,13 @@ export default {
       "continue": "Continue",
       "create": "Create",
       "description": {
-        "desc": "Short description for the digital identity",
+        "desc": "Short description for the data container",
         "title": "Description"
       },
       "finish": "Finish configuration",
       "general": "General Information",
       "name": {
-        "desc": "Name of the digital Identity",
+        "desc": "Name of the data containers",
         "error": "Please provide a name!",
         "title": "Name"
       },

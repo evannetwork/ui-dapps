@@ -1,4 +1,4 @@
-# evan-dapps: datacontainer.digitaltwin
+# evan-dapps: digitaltwins
 
 ## Next Version
 ### Features

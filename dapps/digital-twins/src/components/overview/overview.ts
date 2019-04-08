@@ -31,47 +31,69 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getRuntime, containerFactory } from '../../utils';
+import { getRuntime } from '../../utils'
 
 @Component({ })
-export default class DetailComponent extends mixins(EvanComponent) {
+export default class OverviewComponent extends mixins(EvanComponent) {
   /**
-   * Show loading symbol
+   * show loading symbol
    */
   loading = true;
 
-  /**
-   * Container instance
-   */
-  container: bcc.Container;
 
   /**
-   * container description
+   * mapped for better iteration
    */
-  description: any;
+  categories: any = {
+    /**
+     * favorite digitaltwins of the current user
+     */
+    favorites: [ ],
+
+    /**
+     * dbcp description of last digitaltwins
+     */
+    lastTwins: [ ]
+  };
 
   /**
-   * containers template definition
+   * Loaded descriptions
    */
-  template: any;
+  descriptions: any = { };
 
   /**
-   * Load the container data
+   * Load dbcp descriptions for the last digitaltwins, so we can display more informations.
    */
   async created() {
     const runtime = getRuntime(this);
-    this.container = new bcc.Container(<any>runtime, {
-      accountId: runtime.activeAccount,
-      address: (<any>this).dapp.contractAddress,
-      factoryAddress: containerFactory
-    });
 
-    this.description = await this.container.getDescription();
-    this.template = await this.container.toTemplate(true);
+    this.categories.favorites = this.$store.state.favorites;
+    this.categories.lastTwins = this.$store.state.lastTwins;
+
+    const loadPromises = { };
+    await Promise.all([ ].concat(this.categories.favorites, this.categories.lastTwins)
+      .map(async (ensAddress: string) => {
+        try {
+          // load the description only once
+          loadPromises[ensAddress] = loadPromises[ensAddress] || runtime.description
+            .getDescription(ensAddress, runtime.activeAccount);
+
+          this.descriptions[ensAddress] = (await loadPromises[ensAddress]).public;
+        } catch (ex) {
+          console.log(ex);
+        }
+      })
+    );
+
+    // filter favorites, that could not be loaded
+    this.categories.favorites = this.categories.favorites
+      .filter(ensAddress => !!this.descriptions[ensAddress]);
+    this.categories.lastTwins = this.categories.lastTwins
+      .filter(ensAddress => !!this.descriptions[ensAddress]);
 
     this.loading = false;
   }

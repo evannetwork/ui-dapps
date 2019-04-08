@@ -44,9 +44,9 @@ export default class OverviewComponent extends mixins(EvanComponent) {
       path: 'explanations',
     },
     {
-      title: 'identities',
+      title: 'digitaltwins',
       icon: 'fas fa-fingerprint text-secondary p-4 xxxl',
-      path: `identities.${ dappBrowser.getDomainName() }`,
+      path: `digitaltwins.${ dappBrowser.getDomainName() }`,
     },
     {
       title: 'contacts',

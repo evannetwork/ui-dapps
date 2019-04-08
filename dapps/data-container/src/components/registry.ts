@@ -44,16 +44,16 @@ export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'di-ajv', component: AJVComponent },
-  { name: 'di-entry', component: EntryComponent },
-  { name: 'di-field', component: FieldComponent },
-  { name: 'di-entry-list', component: EntryListComponent },
-  { name: 'di-entry-object', component: EntryObjectComponent },
-  { name: 'di-field-files', component: FieldFilesComponent },
-  { name: 'di-field-images', component: FieldImagesComponent },
-  { name: 'di-field-number', component: FieldNumberComponent },
-  { name: 'di-field-string', component: FieldStringComponent },
-  { name: 'di-template-handler', component: TemplateHandlerComponent },
+  { name: 'dt-ajv', component: AJVComponent },
+  { name: 'dt-entry', component: EntryComponent },
+  { name: 'dt-field', component: FieldComponent },
+  { name: 'dt-entry-list', component: EntryListComponent },
+  { name: 'dt-entry-object', component: EntryObjectComponent },
+  { name: 'dt-field-files', component: FieldFilesComponent },
+  { name: 'dt-field-images', component: FieldImagesComponent },
+  { name: 'dt-field-number', component: FieldNumberComponent },
+  { name: 'dt-field-string', component: FieldStringComponent },
+  { name: 'dt-template-handler', component: TemplateHandlerComponent },
 ];
 
 export default componentRegistration;

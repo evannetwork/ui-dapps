@@ -26,12 +26,12 @@
 */
 
 <template>
-  <di-ajv
+  <dt-ajv
     :enableValue="true"
     :mode="mode"
     :properties="entry.dataSchema.properties"
     :value="entry.value">
-  </di-ajv>
+  </dt-ajv>
 </template>
 
 <script lang="ts">
