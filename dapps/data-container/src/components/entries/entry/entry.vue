@@ -50,18 +50,18 @@
           <i :class="modeIconMapping[mode]"></i>
         </div>
       </div>
-      <dt-entry-list
-        v-if="entry.dataSchema.type === 'list'"
+      <dt-entry-array
+        v-if="entry.dataSchema.type === 'array'"
         :entry="entry"
         :mode="activeMode">
-      </dt-entry-list>
+      </dt-entry-array>
       <dt-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"
         :mode="activeMode">
       </dt-entry-object>
       <dt-field
-        v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'list'" 
+        v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'" 
         :mode="activeMode"
         :type="entry.dataSchema.type"
         :value.sync="entry.value">

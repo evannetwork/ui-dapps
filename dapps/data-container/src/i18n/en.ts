@@ -48,6 +48,11 @@ export default {
         "title": "Value"
       }
     },
+    "array": {
+      "add-list-entry": "Add listentry",
+      "canel-list-entry": "Cancel",
+      "data": "Data"
+    },
     "breadcrumbs": {
       "add": "Add",
       "container-link": "Link Data Container",
@@ -92,6 +97,8 @@ export default {
       "create": "Creating Data container...",
       "update": "Updating Data container..."
     },
+    "edit-dbcp": "Adjust Description",
+    "edit-schema": "Adjust Data",
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to a separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
@@ -116,15 +123,13 @@ export default {
       "title": "Recovery"
     },
     "types": {
+      "array": "List",
       "files": "Files",
       "images": "Images",
-      "list": "List",
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
-    },
-    "edit-dbcp": "Adjust Description",
-    "edit-schema": "Adjust Data"
+    }
   }
 }
 /* tslint:enable */;

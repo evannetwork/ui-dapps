@@ -30,7 +30,7 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 import AJVComponent from './entries/ajv/ajv.vue';
 import EntryComponent from './entries/entry/entry.vue';
-import EntryListComponent from './entries/list/list.vue';
+import EntryArrayComponent from './entries/array/array.vue';
 import EntryObjectComponent from './entries/object/object.vue';
 import FieldComponent from './fields/field/field.vue';
 import FieldFilesComponent from './fields/files/files.vue';
@@ -46,9 +46,9 @@ export { }
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dt-ajv', component: AJVComponent },
   { name: 'dt-entry', component: EntryComponent },
-  { name: 'dt-field', component: FieldComponent },
-  { name: 'dt-entry-list', component: EntryListComponent },
+  { name: 'dt-entry-array', component: EntryArrayComponent },
   { name: 'dt-entry-object', component: EntryObjectComponent },
+  { name: 'dt-field', component: FieldComponent },
   { name: 'dt-field-files', component: FieldFilesComponent },
   { name: 'dt-field-images', component: FieldImagesComponent },
   { name: 'dt-field-number', component: FieldNumberComponent },

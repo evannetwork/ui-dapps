@@ -217,7 +217,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     }
 
     // try to resolve the latest used values
-    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'];
+    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'] || '';
 
     if (this.subjectInput.indexOf('0x') !== 0) {
       try {

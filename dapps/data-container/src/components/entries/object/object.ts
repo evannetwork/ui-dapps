@@ -46,12 +46,4 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
    * schema / value / read
    */
   @Prop({ default: 'schema' }) mode;
-
-  /**
-   * Fill empty values
-   */
-  created() {
-    this.entry.dataSchema.properties = this.entry.dataSchema.properties || { };
-    this.entry.value = this.entry.value || { };
-  }
 }

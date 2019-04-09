@@ -36,6 +36,47 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class EntryListComponent extends mixins(EvanComponent) {
+export default class EntryArrayComponent extends mixins(EvanComponent) {
+  /**
+   * Container property template definition
+   */
+  @Prop() entry: bcc.ContainerTemplateProperty;
 
+  /**
+   * schema / value / read
+   */
+  @Prop({ default: 'schema' }) mode;
+
+  /**
+   * all available field types
+   */
+  arrayTypes: Array<string> = [
+    'object',
+    'string',
+    'number',
+    'files',
+    'images',
+  ];
+
+  /**
+   * Show the add list entry dialog
+   */
+  addListEntry = false;
+
+  /**
+   * Fill empty values
+   */
+  created() {
+    this.$set(this.entry.dataSchema.items, 'type', this.entry.dataSchema.items.type);
+  }
+
+  /**
+   * Add the current form data as a new list entry.
+   */
+  addEntry() {
+    this.addListEntry = false;
+    this.entry.value.push((<any>this).entry.addValue);
+
+    this.$nextTick(() => (<any>this).entry.addValue = { });
+  }
 }

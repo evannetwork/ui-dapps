@@ -52,7 +52,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
   @Prop({ default: 'schema' }) mode;
 
   /**
-   * Should the value row be displayed? (disabled for list configuration)
+   * Should the value row be displayed? (disabled for array configuration)
    */
   @Prop({ }) enableValue;
 
@@ -102,12 +102,18 @@ export default class AJVComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     Object.keys(this.properties).forEach(key => delete this.properties[key]);
-    Object.keys(this.value).forEach(key => delete this.value[key]);
+
+    if (this.value) {
+      Object.keys(this.value).forEach(key => delete this.value[key]);
+    }
 
     // iterate through all forms and set the correct values to the properties
     this.forms.forEach((form: FieldFormInterface) => {
       this.properties[form.name.value] = { type: form.type.value };
-      this.value[form.name.value] = form.value.value;
+
+      if (this.value) {
+        this.value[form.name.value] = form.value.value;
+      }
     });
   }
 

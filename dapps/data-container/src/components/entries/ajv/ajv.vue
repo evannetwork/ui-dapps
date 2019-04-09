@@ -32,7 +32,7 @@
         <tr>
           <th>{{ '_datacontainer.ajv.name.title' | translate }}</th>
           <th v-if="mode !=='view'">{{ '_datacontainer.ajv.type.title' | translate }}</th>
-          <th>{{ '_datacontainer.ajv.value.title' | translate }}</th>
+          <th v-if="enableValue">{{ '_datacontainer.ajv.value.title' | translate }}</th>
           <th v-if="mode === 'schema'"> <!-- used for controls --></th>
         </tr>
       </thead>
@@ -81,7 +81,7 @@
                 {{ `_datacontainer.types.${ form.type.value }` | translate }}
               </div>
             </td>
-            <td>
+            <td v-if="enableValue">
               <dt-field
                 :mode="mode"
                 :form="form"
@@ -100,7 +100,7 @@
       </tbody>
     </table>
 
-    <div class="text-center mt-3">
+    <div class="text-center mt-3" v-if="mode === 'schema'">
       <button type="submit"  class="btn btn-rounded btn-outline-secondary"
         :disabled="$store.state.saving"
         @click="addProperty('')">

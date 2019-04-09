@@ -38,7 +38,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 @Component({ })
 export default class EntryComponent extends mixins(EvanComponent) {
   /**
-   * data container entry (metadata, list, ...)
+   * data container entry (metadata, array, ...)
    */
   @Prop() entry: bcc.ContainerTemplateProperty;
 
@@ -52,6 +52,13 @@ export default class EntryComponent extends mixins(EvanComponent) {
   }) modes: Array<string>;
 
   /**
+   * active mode, default is the first of modes
+   */
+  @Prop({
+    default: 'schema'
+  }) activeMode;
+
+  /**
    * icons for all the availables modes
    */
   modeIconMapping = {
@@ -61,16 +68,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
   };
 
   /**
-   * active mode, default is the first of modes
-   */
-  private activeMode = '';
-
-  /**
    * Define presets
    */
-  created() {
-    if (this.modes.length !== 0) {
-      this.activeMode = this.modes[0];
-    }
-  }
+  created() { }
 }

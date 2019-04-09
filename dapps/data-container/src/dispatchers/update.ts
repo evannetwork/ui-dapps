@@ -62,7 +62,7 @@ dispatcher
       }
 
       // check for entry value updates
-      if (!deepEqual(originProp.value, newProp.value) || newProp.type === 'list') {
+      if (!deepEqual(originProp.value, newProp.value) || newProp.type === 'arrayTypes') {
         data.entriesToSave.push(propertyKey);
       }
 

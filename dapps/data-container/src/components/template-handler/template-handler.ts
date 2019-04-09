@@ -95,12 +95,22 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    */
   entryTypes: Array<string> = [
     'object',
-    'list',
+    'array',
     'string',
     'number',
     'files',
     'images',
   ];
+
+  /**
+   * Available display modes for the current user and it's roles
+   */
+  displayModes: Array<string> = [ 'view', 'edit', 'schema', ];
+
+  /**
+   * active mode, default is the first of modes
+   */
+  activeDisplayMode = '';
 
   /**
    * Initialize and try to restore latest cached template
@@ -120,6 +130,12 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         }
       },
     }));
+
+    // in create mode, show directly the schema mode
+    if (this.address === 'create') {
+      this.displayModes = this.displayModes.reverse();
+    }
+    this.activeDisplayMode = this.displayModes[0];
 
     // auto focus property name input
     if (Object.keys(this.template.properties).length === 0) {
@@ -186,14 +202,24 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   addEntry() {
     if (!this.template.properties[this.entryForm.name.value]) {
       utils.enableDTSave();
+      this.activeDisplayMode = 'schema';
 
       // create a new empty data set
-      const entry = {
+      const entry: any = {
         $id: `${ this.entryForm.name.value }_schema`,
         dataSchema: { type: this.entryForm.type.value, },
         permissions: { 0: ['set'] },
-        type: this.entryForm.type.value === 'list' ? this.entryForm.type.value : 'entry'
+        type: this.entryForm.type.value === 'array' ? this.entryForm.type.value : 'entry'
       };
+
+      if (this.entryForm.type.value === 'object') {
+        entry.dataSchema.properties = { };
+        entry.value = { };
+      } else if (this.entryForm.type.value === 'array') {
+        entry.dataSchema.items = { type: 'object', properties: { } };
+        entry.value = [ ];
+        entry.addValue = { };
+      }
 
       // apply it to the current template
       this.$set(this.template.properties, this.entryForm.name.value, entry);

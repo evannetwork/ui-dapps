@@ -48,6 +48,11 @@ export default {
         "title": "Wert"
       }
     },
+    "array": {
+      "add-list-entry": "Listeneintrag hinzufügen",
+      "canel-list-entry": "Abbrechen",
+      "data": "Daten"
+    },
     "breadcrumbs": {
       "add": "Hinzufügen",
       "container-link": "Daten Container verlinken",
@@ -92,6 +97,8 @@ export default {
       "create": "Datencontainer wird erstellt...",
       "update": "Datencontainer wird aktualisiert..."
     },
+    "edit-dbcp": "Beschreibung anpassen",
+    "edit-schema": "Daten anpassen",
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig von einander an dritte geteilt werden können.",
@@ -116,15 +123,13 @@ export default {
       "title": "Wiederherstellung"
     },
     "types": {
+      "array": "Liste",
       "files": "Dateien",
       "images": "Bilder",
-      "list": "Liste",
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
-    },
-    "edit-dbcp": "Beschreibung anpassen",
-    "edit-schema": "Daten anpassen"
+    }
   }
 }
 /* tslint:enable */;

@@ -122,7 +122,8 @@
     <dt-entry
       v-if="activeTab > -1"
       :entry="activeEntry"
-      :modes="[ 'schema', 'edit', 'view' ]">
+      :modes="displayModes"
+      :activeMode="activeDisplayMode">
     </dt-entry>
   </div>
 </template>
