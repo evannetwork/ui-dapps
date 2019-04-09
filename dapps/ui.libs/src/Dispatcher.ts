@@ -328,7 +328,10 @@ export class DispatcherInstance {
   async startup() {
     this.status = 'starting';
 
-    await this.dispatcher.startupSteps.forEach(startup => startup.call(this));
+    await Promise.all(this.dispatcher.startupSteps.map(startup => startup(this, this.data)));
+
+    // save the queue data
+    await this.save();
   }
 
   /**

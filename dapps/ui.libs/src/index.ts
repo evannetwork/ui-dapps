@@ -34,6 +34,7 @@ import { Dispatcher, DispatcherInstance } from './Dispatcher';
 import './index.scss';
 
 export * from './config';
+export * from './utils';
 export { EvanQueue, Dispatcher, DispatcherInstance };
 
 /**
