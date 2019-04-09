@@ -89,7 +89,8 @@ export default {
       "title": "Create data container"
     },
     "dispatcher": {
-      "create": "Creating Data container..."
+      "create": "Creating Data container...",
+      "update": "Updating Data container..."
     },
     "entry": {
       "add": "Add data set",
@@ -121,7 +122,9 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
-    }
+    },
+    "edit-dbcp": "Adjust Description",
+    "edit-schema": "Adjust Data"
   }
 }
 /* tslint:enable */;

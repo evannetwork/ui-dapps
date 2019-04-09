@@ -36,6 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import validators from '../../../validators';
+import * as utils from '../../../utils';
 
 interface FieldFormInterface extends EvanForm {
   value: EvanFormControl;
@@ -89,6 +90,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
       value: {
         value: this.value,
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
+          utils.enableDTSave();
           return validators[vueInstance.type](vueInstance, form);
         }
       },

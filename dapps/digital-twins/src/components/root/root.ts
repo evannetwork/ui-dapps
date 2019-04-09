@@ -34,9 +34,11 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 import EvanUIDigitalTwin from '../../digitaltwin';
 import * as identitityUtils from '../../utils';
+import * as dispatchers from '../../dispatchers/registy';
 
 @Component({ })
 export default class TwinsRootComponent extends mixins(EvanComponent) {
@@ -49,6 +51,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
    */
   hashChangeWatcher: any;
+
+  /**
+   * Watch for dispatcher updates
+   */
+  dispatcherWatcher: Function;
 
   /**
    * Was the component destroyed, before the hash change event was bind?
@@ -67,7 +74,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     [
       {
         name: 'my-digitaltwins',
-        active: false,
+        active: true,
         emptyNav: 'lookup',
         children: [
           { name: 'digitaltwin-overview', path: 'overview', i18n: true },
@@ -88,14 +95,9 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   beforeDestroy() {
     this.wasDestroyed = true;
 
-    // only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
-    // longer and the dapp was switched before)
-    if (this.hashChangeWatcher) {
-      // remove the hash change listener
-      window.removeEventListener('hashchange', this.hashChangeWatcher);
-    }
-
     // clear listeners
+    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
+    this.dispatcherWatcher && this.dispatcherWatcher();
     this.$store.state.uiDT && this.$store.state.uiDT.destroy(this);
   }
 
@@ -103,19 +105,18 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Initialize when the user has logged in.
    */
   async initialize() {
-    if ((<any>this).$route.name) {
-      this.navigation[0][0].active = true;
-    }
-
-    await this.loadFavorites();
-    this.setLastOpenedTwins();
+    await this.updateIdentities();
     this.loading = false;
 
     await this.loadDigitalTwin();
 
-    // set the hash change watcher, so we can detect digitaltwin change
+    // set the hash change watcher, so we can detect digitaltwin change and loading
     const that = this;
     this.hashChangeWatcher = () => that.loadDigitalTwin();
+    this.dispatcherWatcher = Dispatcher.watch(
+      () => this.updateIdentities(),
+      `digitaltwins.${ (<any>this).dapp.domainName }`
+    );
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -127,11 +128,30 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Load users favorites and check for identities in creation or update process.
+   */
+  async updateIdentities() {
+    await this.loadFavorites();
+    await this.setLastOpenedTwins();
+  }
+
+  /**
    * Load the digitaltwin favorites for the current user.
    */
   async loadFavorites() {
     const runtime = identitityUtils.getRuntime(this);
-    this.$store.state.favorites = await bcc.DigitalTwin.getFavorites(<any>runtime);
+    const favorites = this.$store.state.favorites =
+      await bcc.DigitalTwin.getFavorites(<any>runtime);
+
+    // load dispatchers and merge the favorites with the favorite dispatchers
+    const add = await dispatchers.favoriteAddDispatcher.getInstances(runtime);
+    const remove = await dispatchers.favoriteRemoveDispatcher.getInstances(runtime);
+
+    // add favorites directly
+    Object.keys(add).forEach(key => favorites.push(add[key].data.address));
+    // remove favorites
+    Object.keys(remove).forEach(key =>
+      favorites.splice(favorites.indexOf(add[key].data.address), 1));
   }
 
   /**
@@ -160,7 +180,15 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         this.navigation[1] = this.$store.state.uiDT.navigation;
 
         // show latest digitaltwins
-        this.setLastOpenedTwins();
+        await this.setLastOpenedTwins();
+      } else {
+        this.sideNav = 1;
+      }
+
+      // activate second navigation when a container is opened
+      if ((<any>this).$route.name.startsWith('dt-container')) {
+        this.navigation[1][0].active = false;
+        this.navigation[1][1].active = true;
       }
     }
   }
@@ -168,7 +196,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   /**
    * Checks for localStorage, which addresses were opened before.
    */
-  setLastOpenedTwins() {
+  async setLastOpenedTwins() {
+    const runtime = identitityUtils.getRuntime(this);
     let lastTwins = identitityUtils.getLastOpenedTwins();
 
     // if we hadn't opened 5 identites before, use favorites
@@ -177,10 +206,22 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
       lastTwins = Array.from(new Set(lastTwins));
     }
 
+    let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
+    let save = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
+    const loadingAddresses = [ ].concat(
+      Object.keys(create).map(key => create[key].data.address),
+      Object.keys(save).map(key => save[key].data.address),
+    );
+
     // show everytime the overview entry and apply the last digitaltwins
     this.navigation[0][0].children = [ this.navigation[0][0].children[0] ]
       .concat(lastTwins.slice(0, 5).map((address) => {
-        return { name: address, path: address, i18n: false };
+        return {
+          name: address,
+          path: address,
+          i18n: false,
+          loading: loadingAddresses.indexOf(address) !== -1
+        };
       }));
 
     this.$store.state.lastTwins = lastTwins;

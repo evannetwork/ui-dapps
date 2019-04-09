@@ -35,7 +35,9 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getRuntime } from '../../utils'
+import { getRuntime, getLastOpenedTwins } from '../../utils';
+import * as dispatchers from '../../dispatchers/registy';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 @Component({ })
 export default class OverviewComponent extends mixins(EvanComponent) {
@@ -66,25 +68,63 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   descriptions: any = { };
 
   /**
+   * Watch for dispatcher updates
+   */
+  dispatcherWatcher: Function;
+
+  /**
    * Load dbcp descriptions for the last digitaltwins, so we can display more informations.
    */
   async created() {
+    await this.initialize();
+
+    this.dispatcherWatcher = Dispatcher.watch(
+      () => this.initialize(),
+      `digitaltwins.${ (<any>this).dapp.domainName }`
+    );
+  }
+
+  /**
+   * Clear the dispatcher watcher
+   */
+  beforeDestroy() {
+    this.dispatcherWatcher && this.dispatcherWatcher();
+  }
+
+  /**
+   * Load the favorites and last twins
+   */
+  async initialize() {
     const runtime = getRuntime(this);
 
+    this.descriptions = { };
     this.categories.favorites = this.$store.state.favorites;
-    this.categories.lastTwins = this.$store.state.lastTwins;
+    this.categories.lastTwins = getLastOpenedTwins();
+
+    let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
+    let save = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
+    save = Object.keys(save).map(key => save[key].data.address);
+
+    // add create dbcp's, so we can display all cards with loading symbol
+    Object.keys(create).map(key => {
+      this.descriptions[create[key].data.address] = JSON.parse(
+        JSON.stringify(create[key].data.dbcp));
+      this.descriptions[create[key].data.address].loading = true;
+      this.descriptions[create[key].data.address].creating = true;
+    });
 
     const loadPromises = { };
     await Promise.all([ ].concat(this.categories.favorites, this.categories.lastTwins)
       .map(async (ensAddress: string) => {
-        try {
-          // load the description only once
-          loadPromises[ensAddress] = loadPromises[ensAddress] || runtime.description
-            .getDescription(ensAddress, runtime.activeAccount);
+        if (!this.descriptions[ensAddress]) {
+          try {
+            // load the description only once
+            loadPromises[ensAddress] = loadPromises[ensAddress] || runtime.description
+              .getDescription(ensAddress, runtime.activeAccount);
+            this.descriptions[ensAddress] = (await loadPromises[ensAddress]).public;
 
-          this.descriptions[ensAddress] = (await loadPromises[ensAddress]).public;
-        } catch (ex) {
-          console.log(ex);
+            this.descriptions.loading = save.indexOf(ensAddress) !== -1;
+          } catch (ex) { }
         }
       })
     );

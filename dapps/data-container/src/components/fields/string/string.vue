@@ -33,6 +33,7 @@
     <input class="form-control" required
       id="value" ref="value" type="text"
       :placeholder="`_datacontainer.ajv.value.desc` | translate"
+      :disabled="$store.state.saving"
       v-model="control.value"
       v-bind:class="{ 'is-invalid' : control.error }"
       @blur="control.setDirty()">

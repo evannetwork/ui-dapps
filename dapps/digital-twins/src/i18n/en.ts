@@ -28,34 +28,36 @@
 /* tslint:disable */
 export default {
   "_digitaltwins": {
-    "containers": {
-      "create": "Create",
-      "empty": "Data Container",
-      "empty-desc": "No data container has yet been created for this digital Twin. Use the \"create\" or \"link\" button to create a new data container or to link an existing one.",
-      "link": "Link"
-    },
     "add": "Open",
     "add-digitaltwin": "Add digital Twin",
     "breadcrumbs": {
       "add": "Add",
+      "container-link": "Link Data Container",
       "containers": "Data container overview",
+      "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
       "overview": "Favorites & last digitaltwins",
       "templates": "Templates",
-      "verifications": "Verifications",
-      "container-link": "Link Data Container",
-      "datacontainer.digitaltwin": "Data Container"
+      "verifications": "Verifications"
     },
+    "containers": {
+      "create": "Create",
+      "empty": "Data Container",
+      "empty-desc": "No data container has yet been created for this digital Twin. Use the \"create\" or \"link\" button to create a new data container or to link an existing one.",
+      "in-creation": "in creation...",
+      "link": "Link"
+    },
+    "digitaltwins": "Twins",
     "dispatcher": {
       "create": "Digital digitaltwin creation",
-      "favorite": {
-        "add": "Digital digitaltwin is stored as a favorite",
-        "remove": "Digital digitaltwin is removed from favorites"
-      },
       "digitaltwin": {
         "create": "Creating Digital digitaltwin",
         "save": "Creating Digital digitaltwin"
+      },
+      "favorite": {
+        "add": "Digital digitaltwin is stored as a favorite",
+        "remove": "Digital digitaltwin is removed from favorites"
       }
     },
     "empty-navigation": "No entries available",
@@ -73,7 +75,6 @@ export default {
       "save": "Speichern",
       "title": "General Information"
     },
-    "digitaltwins": "Twins",
     "in-creation": "Creating Digital DigitalTwin...",
     "left-categories": {
       "container-overview": "Data container overview",
@@ -81,12 +82,12 @@ export default {
         "desc": "All data containers associated with the digital Twin",
         "title": "Data containers"
       },
-      "general": "Metadata",
       "digitaltwin-details": {
         "desc": "General information about the digital Twin.",
         "title": "Digital DigitalTwin"
       },
       "digitaltwin-overview": "Favorites & last digitaltwins",
+      "general": "Metadata",
       "my-digitaltwins": {
         "desc": "Last digitaltwins or open new ones",
         "title": "My Twins"

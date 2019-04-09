@@ -34,6 +34,7 @@ import routes from './routes';
 import components from './components/registry';
 
 export * from './dispatchers/registy';
+export { translations };
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

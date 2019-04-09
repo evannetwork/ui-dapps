@@ -33,7 +33,9 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 
+import * as containerDispatchers from './dispatchers/registry';
 export * from './dispatchers/registry';
+export { containerDispatchers, translations };
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

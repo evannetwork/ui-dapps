@@ -69,7 +69,7 @@ dispatcher
 
     // save the digital entries
     await digitalTwin.setEntry(data.name, data.contractAddress,
-      bcc.DigitalTwinEntryType.ContainerContract);
+      bcc.DigitalTwinEntryType.Container);
   });
 
 export default dispatcher;

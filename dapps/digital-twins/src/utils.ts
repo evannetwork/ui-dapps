@@ -32,6 +32,25 @@ export * from '../../data-container/src/utils';
 
 export const latestTwinsKey = 'evan-last-digital-digitaltwins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
+export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
+export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
+
+/**
+ * Add a address to the last opened twins array.
+ *
+ * @param      {string}  address  The address
+ */
+export function addLastOpenedTwin(address: string) {
+  const lastTwins = getLastOpenedTwins();
+
+  const existingIndex = lastTwins.indexOf(address);
+  if (existingIndex !== -1) {
+    lastTwins.splice(existingIndex, 1);
+  }
+  lastTwins.unshift(address);
+  // only save the latest 20 entries
+  window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
+}
 
 /**
  * Return the last opened digitaltwins that were persited in the localStorage.

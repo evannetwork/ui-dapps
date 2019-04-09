@@ -49,10 +49,22 @@
             <img class="img-fluid p-3"
               style="max-width: 200px; min-height: 200px;"
               :src="descriptions[ensAddress].imgSquare">
-
-            <div class="text-left p-3 border-top highlight">
-              <h5 class="font-weight-bold">{{ descriptions[ensAddress].name }}</h5>
-              <span class="overflow-multiline">{{ descriptions[ensAddress].description }}</span>
+              
+            <div class="text-left border-top highlight">
+              <small class="text-center p-1 d-block text-muted"
+                v-if="descriptions[ensAddress].creating">
+                {{ '_digitaltwins.containers.in-creation' | translate }}
+              </small>
+              <div class="d-flex p-3">
+                <div>
+                  <h5 class="font-weight-bold">{{ descriptions[ensAddress].name }}</h5>
+                  <span class="overflow-multiline">{{ descriptions[ensAddress].description }}</span>
+                </div>
+                <template v-if="descriptions[ensAddress].loading">
+                  <span class="mx-auto"></span>
+                  <div class="spinner-border spinner-border-sm ml-3"></div>
+                </template>
+              </div>
             </div>
           </a>
         </div>

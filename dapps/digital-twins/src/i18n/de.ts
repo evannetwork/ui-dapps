@@ -32,30 +32,32 @@ export default {
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "breadcrumbs": {
       "add": "Hinzufügen",
+      "container-link": "Daten Container verlinken",
       "containers": "Datencontainer Übersicht",
+      "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
       "lookup": "Öffnen",
       "overview": "Favoriten & letzte Zwillinge",
       "templates": "Vorlagen",
-      "verifications": "Verifizierungen",
-      "container-link": "Daten Container verlinken",
-      "datacontainer.digitaltwin": "Daten Container"
+      "verifications": "Verifizierungen"
     },
     "containers": {
       "create": "Erstellen",
       "empty": "Daten Container",
       "empty-desc": "Für diese digitale Zwilling wurde noch kein Daten Container angelegt. Nutzen Sie den \"erstellen\" oder \"verlinken\" Button, um einen neuen Daten Container zu erstellen oder einen bestehenden zu verlinken.",
+      "in-creation": "wird erstellt...",
       "link": "Verlinken"
     },
+    "digitaltwins": "Digitalen Zwillinge",
     "dispatcher": {
       "create": "Digitale Zwilling wird erstellt",
-      "favorite": {
-        "add": "Digitale Zwilling wird als Favorit gespeichert",
-        "remove": "Digitale Zwilling wird von den Favoriten entfernt"
-      },
       "digitaltwin": {
         "create": "Digitale Zwilling wird erstellt",
         "save": "Digitale Zwilling wird gespeichert"
+      },
+      "favorite": {
+        "add": "Digitale Zwilling wird als Favorit gespeichert",
+        "remove": "Digitale Zwilling wird von den Favoriten entfernt"
       }
     },
     "empty-navigation": "Keine Einträge verfügbar",
@@ -73,7 +75,6 @@ export default {
       "save": "Speichern",
       "title": "Generelle Informationen"
     },
-    "digitaltwins": "Digitalen Zwillinge",
     "in-creation": "In Erstellung...",
     "left-categories": {
       "container-overview": "Datencontainerübersicht",
@@ -81,12 +82,12 @@ export default {
         "desc": "Alle, der Zwilling zugeordneten Datencontainer",
         "title": "Datencontainer"
       },
-      "general": "Metadaten",
       "digitaltwin-details": {
         "desc": "Generelle Informationen zu der digitalen Zwilling.",
         "title": "Digitale Zwilling"
       },
       "digitaltwin-overview": "Favoriten & letzte Zwillinge",
+      "general": "Metadaten",
       "my-digitaltwins": {
         "desc": "Übersicht letzter und meiner digitalen Zwillinge",
         "title": "Meine digitalen Zwillinge"

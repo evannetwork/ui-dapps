@@ -51,6 +51,7 @@
                   <input class="form-control" required
                     id="name" ref="name"
                     :placeholder="`_datacontainer.ajv.name.desc` | translate"
+                    :disabled="$store.state.saving"
                     v-model="form.name.value"
                     v-bind:class="{ 'is-invalid' : form.name.error }"
                     @blur="form.name.setDirty()">
@@ -65,6 +66,7 @@
                 <select class="form-control"
                   id="type" ref="type"
                   :placeholder="`_datacontainer.ajv.type.desc` | translate"
+                  :disabled="$store.state.saving"
                   v-model="form.type.value"
                   v-bind:class="{ 'is-invalid' : form.type.error }"
                   @blur="form.type.setDirty()">
@@ -89,7 +91,8 @@
             </td>
             <td v-if="mode === 'schema'">
               <i class="fas fa-trash clickable"
-                @click="forms.splice(forms.indexOf(form), 1)">
+                :disabled="$store.state.saving"
+                @click="!$store.state.saving && removeProperty()">
               </i>
             </td>
           </tr>
@@ -99,6 +102,7 @@
 
     <div class="text-center mt-3">
       <button type="submit"  class="btn btn-rounded btn-outline-secondary"
+        :disabled="$store.state.saving"
         @click="addProperty('')">
         {{ `_datacontainer.ajv.add` | translate }}
       </button>

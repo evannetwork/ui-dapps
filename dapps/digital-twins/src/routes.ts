@@ -38,59 +38,23 @@ import LookupComponent from './components/lookup/lookup.vue';
 import ContainersComponent from './components/containers/containers.vue';
 import ContainerLinkComponent from './components/container-link/container-link.vue';
 
+const dtPath = (path) => `:digitaltwinAddress/${ path }`;
+
 // map them to element names, so they can be used within templates
+/* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  {
-    name: 'base-start',
-    path: '',
-    component: StartComponent
-  },
-  {
-    name: 'base-overview',
-    path: 'overview',
-    component: OverviewComponent
-  },
-  {
-    name: 'base-templates',
-    path: 'templates',
-    component: TemplatesComponent
-  },
-  {
-    name: 'base-lookup',
-    path: 'lookup',
-    component: LookupComponent
-  },
-  {
-    name: 'digitaltwin-general',
-    path: ':digitaltwinAddress',
-    component: DigitalTwinGeneralComponent
-  },
-  {
-    name: 'digitaltwin-verifications',
-    path: ':digitaltwinAddress/verifications',
-    component: DigitalTwinVerificationsComponent
-  },
-  {
-    name: 'digitaltwin-containers',
-    path: ':digitaltwinAddress/containers',
-    component: ContainersComponent
-  },
-  {
-    name: 'digitaltwin-container-link',
-    path: ':digitaltwinAddress/container-link',
-    component: ContainerLinkComponent
-  },
-  {
-    name: 'digitaltwin-container',
-    path: `:digitaltwinAddress/datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
-    component: DAppLoader
-  },
-  {
-    name: 'digitaltwin-container',
-    path: `:digitaltwinAddress/:data-container`,
-    component: DAppLoader
-  },
+  { name: 'base-start',        component: StartComponent,                    path: '', },
+  { name: 'base-overview',     component: OverviewComponent,                 path: 'overview', },
+  { name: 'base-templates',    component: TemplatesComponent,                path: 'templates', },
+  { name: 'base-lookup',       component: LookupComponent,                   path: 'lookup', },
+  { name: 'dt-general',        component: DigitalTwinGeneralComponent,       path: `:digitaltwinAddress`, },
+  { name: 'dt-verifications',  component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
+  { name: 'dt-containers',     component: ContainersComponent,               path: dtPath('containers'), },
+  { name: 'dt-container-link', component: ContainerLinkComponent,            path: dtPath('container-link'), },
+  { name: 'dt-container',      component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/create`), },
+  { name: 'dt-container',      component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/:containerAddress`), },
 ];
+/* tslint:enable */
 
 export default routeRegistration;
 

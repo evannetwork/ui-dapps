@@ -37,14 +37,26 @@
             bg-level-1 border evan-highlight"
           style="min-width: 250px"
           v-for="(container, index) in $store.state.uiDT.containers"
-          :href="`${ dapp.fullUrl }/${ container.path }`">
+          :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
           <img class="img-fluid p-3"
             style="max-width: 200px; min-height: 200px;"
             :src="container.description.imgSquare">
 
-          <div class="text-left p-3 border-top highlight">
-            <h5 class="font-weight-bold">{{ container.description.name }}</h5>
-            <span class="overflow-multiline">{{ container.description.description }}</span>
+          <div class="text-left border-top highlight">
+            <small class="text-center p-1 d-block text-muted"
+              v-if="container.creating">
+              {{ '_digitaltwins.containers.in-creation' | translate }}
+            </small>
+            <div class="d-flex p-3">
+              <div>
+                <h5 class="font-weight-bold">{{ container.description.name }}</h5>
+                <span class="overflow-multiline">{{ container.description.description }}</span>
+              </div>
+              <template v-if="container.loading">
+                <span class="mx-auto"></span>
+                <div class="spinner-border spinner-border-sm ml-3"></div>
+              </template>
+            </div>
           </div>
         </a>
       </div>

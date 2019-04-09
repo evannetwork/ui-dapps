@@ -98,13 +98,17 @@
                     </div>
                     <div class="mt-3" v-if="category.active">
                       <ul class="sub-nav" v-if="category.children.length > 0">
-                        <li class="pt-2 pb-2 pl-3 pr-3"
+                        <li class="pt-2 pb-2 pl-3 pr-3 d-flex"
                           v-for="(subCategory, subIndex) in category.children">
                           <a class="font-weight-bold"
-                            :href="`${ dapp.fullUrl }/${ subCategory.path }`"
+                            :href="!subCategory.path ? null : `${ dapp.fullUrl }/${ subCategory.path }`"
                             :class="{ 'active': $route.path.endsWith(subCategory.path) }">
                             {{ subCategory.i18n ? $t(`_digitaltwins.left-categories.${ subCategory.name }`) : subCategory.name }}
                           </a>
+                          <template v-if="subCategory.loading">
+                            <span class="mx-auto"></span>
+                            <div class="spinner-border spinner-border-sm ml-3"></div>
+                          </template>
                         </li>
                       </ul>
                       <b class="p-3 text-center"
@@ -119,11 +123,11 @@
           </evan-dapp-wrapper-level-2>
 
           <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name.indexOf('dapp-loader') === -1">
-            <!-- v-if="$route.name !== 'digitaltwin-container'" -->
+            v-if="$route.name !== 'dt-container'">
+            <!-- v-if="$route.name !== 'dt-container'" -->
             <template v-slot:content
               v-if="sideNav !== 0 && $store.state.uiDT && !$store.state.uiDT.loading && $store.state.uiDT.validity.exists">
-              <template v-if="$route.name !== 'digitaltwin-containers'">
+              <template v-if="$route.name !== 'dt-containers'">
                 <div class="mr-4">
                   <div class="spinner-border spinner-border-sm"
                     v-if="$store.state.uiDT.isFavoriteLoading">

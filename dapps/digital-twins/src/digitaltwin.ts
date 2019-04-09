@@ -28,10 +28,11 @@
 import Vue from 'vue';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-import { getDigitalTwinBaseDbcp, getLastOpenedTwins, latestTwinsKey, getRuntime,
-  nullAddress } from './utils';
+import * as utils from './utils';
 import * as dispatchers from './dispatchers/registy';
+import { containerDispatchers } from '../../data-container/src/index';
 
 /**
  * Represents the UI representation for a evan.network. Handles data management and so on.
@@ -45,9 +46,14 @@ export default class EvanUIDigitalTwin {
   dbcp: any;
 
   /**
-   * current contract address
+   * current contract address or ens address
    */
   address: string;
+
+  /**
+   * Loaded contract address for this identity
+   */
+  contractAddress: string;
 
   /**
    * bcc.DigitalTwin.isValidDigitalTwin result
@@ -109,7 +115,7 @@ export default class EvanUIDigitalTwin {
       address: address,
       containerConfig: { accountId: runtime.activeAccount, },
       description: dbcp,
-      factoryAddress: '0xE8aB5213BDD998FB39Ed41352a7c84a6898C288a',
+      factoryAddress: utils.twinFactory,
     }
   }
 
@@ -118,7 +124,7 @@ export default class EvanUIDigitalTwin {
    */
   static getDigitalTwin(runtime: bcc.Runtime, address: string): bcc.DigitalTwin {
     return new bcc.DigitalTwin(
-      <any>getRuntime(runtime),
+      <any>utils.getRuntime(runtime),
       EvanUIDigitalTwin.getDigitalTwinConfig(runtime, address)
     );
   }
@@ -146,14 +152,7 @@ export default class EvanUIDigitalTwin {
     ];
 
     // apply this digitaltwin address to the last opened digitaltwins
-    const lastTwins = getLastOpenedTwins();
-    const existingIndex = lastTwins.indexOf(address);
-    if (existingIndex !== -1) {
-      lastTwins.splice(existingIndex, 1);
-    }
-    lastTwins.unshift(address);
-    // only save the latest 20 entries
-    window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
+    utils.addLastOpenedTwin(this.address);
   }
 
   /**
@@ -237,38 +236,16 @@ export default class EvanUIDigitalTwin {
       // load saving data from dbcp, so we can hot load data from their
       const savingObj = await this.getSaving(runtime);
 
+      this.contractAddress = await digitaltwin.getContractAddress();
       this.dbcp = savingObj && savingObj.dbcp ? savingObj.dbcp : await digitaltwin.getDescription();
       this.isFavorite = await digitaltwin.isFavorite();
 
-      // load the containers, map them to an array
-      const containers = await digitaltwin.getEntries();
-      this.containers = (await Promise.all(Object.keys(containers).map(async (key: string) => {
-        // filter empty keys
-        if (key && containers[key].value !== nullAddress) {
-          const [ containerAddress, description ] = await Promise.all([
-            containers[key].value.getContractAddress(),
-            containers[key].value.getDescription(),
-          ]);
+      // load container data and watch for updates
+      await this.loadContainers(runtime);
+      await this.watchContainers(runtime);
 
-          return {
-            address: containerAddress,
-            description: description,
-            name: key,
-            path: [
-              this.address,
-              `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
-              containerAddress,
-            ].join('/'),
-            container: containers[key].value,
-          };
-        }
-      }))).filter(container => !!container);
-
-      // set the navigation for the containers => keep first entry, replace the containers
-      this.navigation[1].children = [ this.navigation[1].children[0] ]
-        .concat(this.containers.map(container => {
-          return { name: container.name, path: container.path, i18n: false }
-        }));
+      // fill left panel side nav
+      this.updateContainerNavigation();
 
       // check, if any updates are running
       this.isFavoriteLoading = await this.getFavoriteLoading(runtime);
@@ -276,7 +253,7 @@ export default class EvanUIDigitalTwin {
       this.isSaving = !!savingObj;
       this.isSaving && this.watchSaving(vueInstance, runtime);
     } else {
-      this.dbcp = await getDigitalTwinBaseDbcp();
+      this.dbcp = await utils.getDigitalTwinBaseDbcp();
       // set default dbcp name
       this.dbcp.name = this.address;
 
@@ -288,6 +265,41 @@ export default class EvanUIDigitalTwin {
 
     this.setNameTranslations(vueInstance);
     this.loading = false;
+  }
+
+  /**
+   * Load all the container for the current twin and save them into the containers array on the
+   * instances. Containers array includes also description and url paths, for quick usage in ui.
+   *
+   * @param      {bccRuntime}  runtime  The runtime
+   */
+  async loadContainers(runtime: bcc.Runtime) {
+    const digitaltwin = this.getDigitalTwinInstance(runtime);
+    // load the containers, map them to an array
+    const containers = await digitaltwin.getEntries();
+    this.containers = (await Promise.all(Object.keys(containers).map(async (key: string) => {
+      // filter empty keys
+      if (key && containers[key].value !== utils.nullAddress) {
+        const [ containerAddress, description ] = await Promise.all([
+          containers[key].value.getContractAddress(),
+          containers[key].value.getDescription(),
+        ]);
+
+        return {
+          address: containerAddress,
+          description: description,
+          name: key,
+          path: [
+            this.address,
+            `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+            containerAddress,
+          ].join('/'),
+          container: containers[key].value,
+        };
+      }
+    }))).filter(container => !!container);
+
+    await this.checkContainerLoading(runtime);
   }
 
   /**
@@ -428,5 +440,104 @@ export default class EvanUIDigitalTwin {
     });
 
     this.dispatcherListeners.push(listener);
+  }
+
+  /**
+   * Check for running containers and if they should be displayed as loading.
+   *
+   * @param      {bccRuntime}  runtime  bcc runtime
+   */
+  async checkContainerLoading(runtime: bcc.Runtime) {
+    // map all dispatcher instances to one array
+    const instances = Object.assign(
+      { },
+      ...(await Promise.all(Object.keys(containerDispatchers).map(
+        (name: string) => containerDispatchers[name].getInstances(runtime)
+      ))
+    ));
+
+    // reset previous loadings and creation containers
+    let previousCreateInstances = this.containers
+      .filter(container => container.creating)
+      .map(container => container.dispatcherInstanceId);
+    this.containers.forEach(container => container.loading = false);
+    this.containers = this.containers.filter(container => !container.creating);
+
+    // search for instances and containers specific for this twin
+    Object.keys(instances).forEach((instanceKey: string) => {
+      const instance: DispatcherInstance = instances[instanceKey];
+
+      // if an container gets created for this digital twin, add it to the containers list
+      if (instance.dispatcher.name === 'createDispatcher' &&
+        instance.data.digitalTwinAddress === this.address ||
+        instance.data.digitalTwinAddress === this.contractAddress) {
+        // remove the create instance, it's always running
+        if (previousCreateInstances.indexOf(instance.id)) {
+          previousCreateInstances.splice(instance.id, 1);
+        }
+
+        // add the container including the creating flag, so the ui will be locked, but the
+        // container will be displayed
+        this.containers.push({
+          creating: true,
+          description: {
+            name: instance.data.name,
+            description: instance.data.description,
+            imgSquare: instance.data.img,
+          },
+          dispatcherInstanceId: instance.id,
+          loading: true,
+          name: instance.data.name,
+        });
+      } else {
+        // check for containers, that are bound to this twin and check for loading
+        this.containers.forEach((container: any) => {
+          if (container.address === instance.data.address) {
+            container.loading = true;
+          }
+        });
+      }
+    });
+
+    // if no all previously create instances are running, the instance has finished creation, so we
+    // can reload the containers
+    if (previousCreateInstances.length > 0) {
+      await this.loadContainers(runtime);
+    }
+
+    // update left twin navigation
+    this.updateContainerNavigation();
+  }
+
+  /**
+   * Watch for creating or updating containers.
+   *
+   * @param      {bccRuntime}  runtime  bcc runtime
+   */
+  async watchContainers(runtime: bcc.Runtime) {
+    const listener = await Dispatcher.watch(
+      () => this.checkContainerLoading(runtime),
+      `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`
+    );
+
+    this.dispatcherListeners.push(listener);
+  }
+
+  /**
+   * Uses the current containers and fills the left digital twin navigation
+   */
+  updateContainerNavigation() {
+    // set the navigation for the containers => keep first entry, replace the containers
+    this.navigation[1].children = [ this.navigation[1].children[0] ]
+      .concat(this.containers.map(container => {
+        return {
+          creating: container.creating,
+          i18n: false,
+          loading: container.loading,
+          name: container.name,
+          path: container.path,
+        }
+      })
+    );
   }
 }

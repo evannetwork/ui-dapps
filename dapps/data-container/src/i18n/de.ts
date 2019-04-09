@@ -89,7 +89,8 @@ export default {
       "title": "Datencontainer Erstellen"
     },
     "dispatcher": {
-      "create": "Datencontainer wird erstellt..."
+      "create": "Datencontainer wird erstellt...",
+      "update": "Datencontainer wird aktualisiert..."
     },
     "entry": {
       "add": "Datenbereich hinzufügen",
@@ -121,7 +122,9 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
-    }
+    },
+    "edit-dbcp": "Beschreibung anpassen",
+    "edit-schema": "Daten anpassen"
   }
 }
 /* tslint:enable */;

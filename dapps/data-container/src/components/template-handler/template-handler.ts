@@ -32,9 +32,11 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { deepEqual } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import ContainerCache from '../../container-cache';
+import * as utils from '../../utils';
 
 interface EntryFormInterface extends EvanForm {
   name: EvanFormControl;
@@ -79,6 +81,16 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   entryForm: EntryFormInterface = null;
 
   /**
+   * Enable the save button, when anything has changed
+   */
+  cacheChanges = false;
+
+  /**
+   * Watch for updates, so we can enable the save button
+   */
+  valuesChanged: any;
+
+  /**
    * all available entry types
    */
   entryTypes: Array<string> = [
@@ -117,6 +129,10 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     } else {
       this.activateTab(0, false);
     }
+
+    // watch for changes, so the internal values can be cached
+    this.valuesChanged = ($event) => this.cacheChanges = true;
+    window.addEventListener('dt-value-changed', this.valuesChanged);
   }
 
   async mounted() {
@@ -125,7 +141,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     this.cachedTemplate = await this.containerCache.get(this.address);
 
     // ask for restore
-    if (this.cachedTemplate) {
+    if (this.cachedTemplate && !deepEqual(this.cachedTemplate, this.template)) {
       (<any>this.$refs.cacheModal).show();
     }
   }
@@ -134,8 +150,14 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * Cache latest configuration for this type, so the data wont be lost, when the users leaves
    */
   beforeDestroy() {
+    window.removeEventListener('dt-value-changed', this.valuesChanged);
+
     // wait for opened containers to saved the work
-    setTimeout(() => this.containerCache.put(this.address, this.template));
+    if (this.cacheChanges) {
+      setTimeout(() => {
+        this.containerCache.put(this.address, this.template);
+      });
+    }
   }
 
   /**
@@ -163,8 +185,11 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    */
   addEntry() {
     if (!this.template.properties[this.entryForm.name.value]) {
+      utils.enableDTSave();
+
       // create a new empty data set
       const entry = {
+        $id: `${ this.entryForm.name.value }_schema`,
         dataSchema: { type: this.entryForm.type.value, },
         permissions: { 0: ['set'] },
         type: this.entryForm.type.value === 'list' ? this.entryForm.type.value : 'entry'
@@ -187,7 +212,9 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   restoreTemplate() {
     this.template = this.cachedTemplate;
     this.$emit('update:template', this.template);
+    utils.enableDTSave();
 
     (<any>this.$refs.cacheModal).hide();
   }
 }
+

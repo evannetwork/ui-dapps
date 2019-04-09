@@ -36,6 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import validators from '../../../validators';
+import * as utils from '../../../utils';
 
 interface FieldFormInterface extends EvanForm {
   name: EvanFormControl;
@@ -64,6 +65,11 @@ export default class AJVComponent extends mixins(EvanComponent) {
    * Value corresponding to the ajv
    */
   @Prop() value: any;
+
+  /**
+   * Disable all fields (e.g. while saving)
+   */
+  @Prop() disabled: boolean;
 
   /**
    * formular specific variables
@@ -109,26 +115,42 @@ export default class AJVComponent extends mixins(EvanComponent) {
    * Creates a new evan form to handle a new entry as one row in the ui.
    */
   addProperty(property: string, type = 'string', value: any) {
+    utils.enableDTSave();
+
     this.forms.push(<FieldFormInterface>new EvanForm(this, {
       name: {
         value: property,
         validate: function(vueInstance: AJVComponent, form: EvanForm) {
+          utils.enableDTSave();
           return this.value.length !== 0;
         }
       },
       type: {
         value: type,
         validate: function(vueInstance: AJVComponent, form: EvanForm) {
+          utils.enableDTSave();
           return this.value.length !== 0;
         }
       },
       value: {
         value: value,
         validate: function(vueInstance: AJVComponent, form: EvanForm) {
+          utils.enableDTSave();
           // map the value top the correct dynamic type validator
           return validators[(<any>form).type.value](vueInstance, form);
         }
       },
     }));
+  }
+
+  /**
+   * Remove a propertyForm from the forms array.
+   *
+   * @param      {any}  propertyForm  property form
+   */
+  removeProperty(propertyForm: FieldFormInterface) {
+    utils.enableDTSave();
+
+    this.forms.splice(this.forms.indexOf(propertyForm), 1);
   }
 }

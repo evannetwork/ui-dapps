@@ -80,6 +80,7 @@
               <select class="form-control"
                 id="type" ref="type"
                 :placeholder="`_datacontainer.entry.type.desc` | translate"
+                :disabled="$store.state.saving"
                 v-model="entryForm.type.value"
                 v-bind:class="{ 'is-invalid' : entryForm.type.error }"
                 @blur="entryForm.type.setDirty()">
@@ -97,6 +98,7 @@
               <input class="form-control" required
                 id="name" ref="name"
                 :placeholder="`_datacontainer.entry.name.desc` | translate"
+                :disabled="$store.state.saving"
                 v-model="entryForm.name.value"
                 v-bind:class="{ 'is-invalid' : entryForm.name.error }"
                 @blur="entryForm.name.setDirty()">
@@ -108,7 +110,7 @@
             <div class="mt-3 text-center">
               <button type="submit"
                 class="btn btn-rounded btn-outline-secondary"
-                :disabled="!entryForm.isValid">
+                :disabled="!entryForm.isValid || $store.state.saving">
                 {{ `_datacontainer.entry.add` | translate }}
               </button>
             </div>

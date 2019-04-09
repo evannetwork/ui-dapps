@@ -30,21 +30,17 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 
 const validators = {
   string: (vueInstance: Vue, form: EvanForm) => {
-    console.log(this);
     return true;
   },
   files: (vueInstance: Vue, form: EvanForm) => {
-    console.log(this);
     return true;
   },
 
   images: (vueInstance: Vue, form: EvanForm) => {
-    console.log(this);
     return true;
   },
 
   number: (vueInstance: Vue, form: EvanForm) => {
-    console.log(this);
     return true;
   },
 };

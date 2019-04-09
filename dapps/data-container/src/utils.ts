@@ -29,7 +29,9 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 export const latestTwinKey = 'evan-last-digital-twins';
-export const containerFactory = '0xFc210B36978524699daf969787aCd9E09031a0b5';
+export const nullAddress = '0x0000000000000000000000000000000000000000';
+export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
+export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
 
 /**
  * Copies and returns a runtime with the correct nameresolver for payable stuff.
@@ -88,6 +90,26 @@ export function getDigitalTwinConfig(
     address: address,
     containerConfig: { accountId: runtime.activeAccount, },
     description: dbcp,
-    factoryAddress: '0xE8aB5213BDD998FB39Ed41352a7c84a6898C288a',
+    factoryAddress: twinFactory,
   }
+}
+
+/**
+ * Sends the 'dt-value-changed' event.
+ */
+export function enableDTSave() {
+  window.dispatchEvent(new CustomEvent('dt-value-changed'));
+}
+
+/**
+ * Return a new container instance
+ *
+ * @return     {bcc.Container}  The container.
+ */
+export function getContainer(runtime: bcc.Runtime, address: string): bcc.Container {
+  return new bcc.Container(<any>runtime, {
+    accountId: runtime.activeAccount,
+    address: address,
+    factoryAddress: containerFactory
+  });
 }

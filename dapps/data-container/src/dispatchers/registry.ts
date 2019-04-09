@@ -26,7 +26,9 @@
 */
 
 import createDispatcher from './create';
+import updateDispatcher from './update';
 
 export {
-  createDispatcher
+  createDispatcher,
+  updateDispatcher,
 }

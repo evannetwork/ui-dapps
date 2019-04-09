@@ -99,7 +99,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   async created() {
     const splitHash = (<any>this).dapp.baseHash.split('/');
-    this.  digitalTwinAddress = splitHash
+    this.digitalTwinAddress = splitHash
       [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
 
     // TODO: load templates
@@ -152,33 +152,39 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async create() {
     const runtime = getRuntime(this);
 
-    await dispatchers.createDispatcher.start(runtime, {
+    dispatchers.createDispatcher.start(runtime, {
       description: this.createForm.description.value,
-        digitalTwinAddress: this.  digitalTwinAddress,
+      digitalTwinAddress: this.digitalTwinAddress,
       img: this.createForm.img.value,
       name: this.createForm.name.value,
       template: this.templates[this.createForm.template.value],
     });
-    this.watchForCreation();
 
     (<any>this.$refs.createModal).hide();
-    // await (new ContainerCache(runtime.activeAccount)).delete('create');
+    await (new ContainerCache(runtime.activeAccount)).delete('create');
   }
 
   /**
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
-    const watch = async () => {
+    const watch = async ($event?: any) => {
       const instances = await dispatchers.createDispatcher.getInstances(getRuntime(this));
+      const beforeCreating = this.creating;
 
       this.creating = Object
         .keys(instances)
         .filter((key) => instances[key].data.digitalTwinAddress === this.digitalTwinAddress)
         .length > 0;
+
+      if (!this.creating && beforeCreating && $event) {
+        (<any>this).evanNavigate($event.data.contractAddress);
+      }
     }
 
     watch();
-    this.creationWatcher = dispatchers.createDispatcher.watch(() => this.watchForCreation());
+    if (!this.creationWatcher) {
+      this.creationWatcher = dispatchers.createDispatcher.watch(() => this.watchForCreation());
+    }
   }
 }
