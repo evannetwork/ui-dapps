@@ -27,10 +27,40 @@
 
 <template>
   <div>
-    <dt-field-files v-if="type === 'files'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></dt-field-files>
-    <dt-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></dt-field-images>
-    <dt-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></dt-field-number>
-    <dt-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode" :showLabel="showLabel"></dt-field-string>
+    <div class="d-flex p-3 align-items-center border-bottom"
+      v-if="standalone">
+      <h4 class="m-0" v-if="mode !== 'schema'">
+        {{ `_datacontainer.types.${ type }` | translate }}: {{ fieldName }}
+      </h4>
+      <h4 class="m-0" v-else>
+        {{ '_datacontainer.edit' | translate }}
+      </h4>
+
+      <span class="mx-auto"></span>
+
+      <div class="spinner-border spinner-border-sm text-light mr-3"
+        v-if="$store.state.saving">
+      </div>
+      
+      <template v-else>
+        <button type="button" class="btn btn-outline-secondary btn-circle"
+          v-if="mode !== 'schema'"
+          @click="mode = 'schema'">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-circle"
+          v-else
+          @click="mode = 'view'">
+          <i class="fas fa-save"></i>
+        </button>
+      </template>
+    </div>
+    <div :class="{ 'p-3': standalone }">
+      <dt-field-files v-if="type === 'files'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-files>
+      <dt-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-images>
+      <dt-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-number>
+      <dt-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-string>
+    </div>
   </div>
 </template>
 

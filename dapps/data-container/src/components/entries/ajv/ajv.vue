@@ -85,8 +85,7 @@
               <dt-field
                 :mode="mode"
                 :form="form"
-                :type="form.type.value"
-                :showLabel="false">
+                :type="form.type.value">
               </dt-field>
             </td>
             <td v-if="mode === 'schema'">

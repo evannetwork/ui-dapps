@@ -26,12 +26,43 @@
 */
 
 <template>
-  <dt-ajv
-    :enableValue="true"
-    :mode="mode"
-    :properties="entry.dataSchema.properties"
-    :value="entry.value">
-  </dt-ajv>
+  <div>
+    <div class="d-flex p-3 align-items-center border-bottom">
+      <h4 class="m-0" v-if="mode !== 'schema'">
+        {{ '_datacontainer.types.object' | translate }}: {{ entryName }}
+      </h4>
+      <h4 class="m-0" v-else>
+        {{ '_datacontainer.edit-schema' | translate }}
+      </h4>
+
+      <span class="mx-auto"></span>
+
+      <div class="spinner-border spinner-border-sm text-light mr-3"
+        v-if="$store.state.saving">
+      </div>
+      
+      <template v-else>
+        <button type="button" class="btn btn-outline-secondary btn-circle"
+          v-if="mode !== 'schema'"
+          @click="mode = 'schema'">
+          <i class="fas fa-cogs"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-circle"
+          v-else
+          @click="mode = 'view'">
+          <i class="fas fa-save"></i>
+        </button>
+      </template>
+    </div>
+    <div class="px-3 pb-3">
+      <dt-ajv
+        :enableValue="true"
+        :mode="mode"
+        :properties="entry.dataSchema.properties"
+        :value="entry.value">
+      </dt-ajv>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

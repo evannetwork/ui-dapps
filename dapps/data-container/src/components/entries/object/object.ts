@@ -46,4 +46,9 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
    * schema / value / read
    */
   @Prop({ default: 'schema' }) mode;
+
+  /**
+   * data contract listentries name, used for loading entries
+   */
+  @Prop() entryName: string;
 }

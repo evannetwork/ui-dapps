@@ -29,38 +29,58 @@
   <div>
     <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
       <template v-slot:content>
-        <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
-          @click="evanNavigate(`digitaltwins.${ dapp.domainName }/container-link/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)"
-          :disabled="!enableSave || $store.state.saving">
+        <button class="btn"
+          v-if="!$store.state.saving"
+          @click="$refs.containerContextMenu.show();">
           <div class="spinner-border spinner-border-sm"
             v-if="$store.state.saving">
           </div>
-          <i class="fas fa-link" v-else></i>
+          <i class="fas fa-chevron-down" v-else></i>
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
-          @click="evanNavigate(`create/${ dapp.contractAddress }`)"
-          :disabled="!enableSave || $store.state.saving">
-          <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.saving">
-          </div>
-          <i class="fas fa-copy" v-else></i>
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
-          @click="$refs.shareModal.show()"
-          v-if="contacts.length > 0"
-          :disabled="!enableSave || $store.state.saving || $store.state.sharing">
-          <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.saving || $store.state.sharing">
-          </div>
-          <i class="fas fa-share-alt" v-else></i>
-        </button>
+        <div class="position-relative">
+          <evan-dropdown ref="containerContextMenu"
+            :alignment="'right'"
+            :width="'300px'">
+            <template v-slot:content>
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+                @click="
+                  editSchema = false;
+                  $refs.containerContextMenu.hide($event);
+                ">
+                <i class="fas fa-edit mr-3" style="width: 16px;"></i>
+                {{ `_datacontainer.edit-dbcp` | translate }}
+              </a>
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+                @click="
+                  $refs.shareModal.show()
+                  $refs.containerContextMenu.hide($event);
+                ">
+                <i class="fas fa-share-alt mr-3" style="width: 16px;"></i>
+                {{ `_datacontainer.context-menu.share` | translate }}
+              </a>
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+                @click="
+                  evanNavigate(`digitaltwins.${ dapp.domainName }/container-link/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                  $refs.containerContextMenu.hide($event);
+                ">
+                <i class="fas fa-link mr-3" style="width: 16px;"></i>
+                {{ `_datacontainer.context-menu.link` | translate }}
+              </a>
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+                @click="
+                  evanNavigate(`create/${ dapp.contractAddress }`)
+                  $refs.containerContextMenu.hide($event);
+                ">
+                <i class="fas fa-copy mr-3" style="width: 16px;"></i>
+                {{ `_datacontainer.context-menu.clone` | translate }}
+              </a>
+            </template>
+          </evan-dropdown>
+        </div>
         <button type="button" class="btn btn-primary btn-circle"
           @click="saveDt()"
           :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
-          <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.saving">
-          </div>
-          <i class="fas fa-save" v-else></i>
+          <i class="fas fa-save"></i>
         </button>
       </template>
     </evan-breadcrumbs>
@@ -160,64 +180,72 @@
     </evan-modal>
 
     <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3" v-else>
-      <div class="bg-level-1 border">
-        <div class="w-100 d-flex pt-3 px-3 border-bottom">
-          <h4 class="m-0" v-if="!editSchema">
-            {{ '_datacontainer.edit-dbcp' | translate }}
-          </h4>
-          <h4 class="m-0" v-if="editSchema">
-            {{ '_datacontainer.edit-schema' | translate }}
-          </h4>
-          <span class="mx-auto"></span>
-          <div class="custom-control custom-switch pb-3">
-            <input type="checkbox" class="custom-control-input" id="editSwitch"
-              v-model="editSchema">
-            <label class="custom-control-label" for="editSwitch">
-              {{ '_datacontainer.edit-schema' | translate }}
-            </label>
+    <template v-else>
+      <div class="p-3" v-if="!editSchema">
+        <div class="bg-level-1 border">
+          <div class="w-100 d-flex p-3 border-bottom">
+            <h4 class="m-0">
+              {{ '_datacontainer.edit-dbcp' | translate }}
+            </h4>
+          </div>
+
+          <div class="p-3">
+            <form v-on:submit.prevent="saveDt">
+              <div class="form-group">
+                <label for="name">
+                  {{ `_datacontainer.createForm.name.title` | translate }}
+                </label>
+                <input class="form-control" required
+                  id="name" ref="name"
+                  :placeholder="`_datacontainer.createForm.name.desc` | translate"
+                  v-model="dbcpForm.name.value"
+                  v-bind:class="{ 'is-invalid' : dbcpForm.name.error }"
+                  @blur="dbcpForm.name.setDirty()">
+                <div class="invalid-feedback">
+                  {{ `_datacontainer.createForm.name.error` | translate }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="description">
+                  {{ `_datacontainer.createForm.description.title` | translate }}
+                </label>
+                <textarea class="form-control" rows="7"
+                  id="description" ref="description"
+                  :placeholder="`_datacontainer.createForm.description.desc` | translate"
+                  v-model="dbcpForm.description.value"
+                  v-bind:class="{ 'is-invalid' : dbcpForm.description.error }"
+                  @blur="dbcpForm.description.setDirty()">
+                </textarea>
+              </div>
+            </form>
+
+            <div class="text-center">
+              <evan-loading v-if="$store.state.saving"></evan-loading>
+              <template v-else>
+                <button
+                  class="btn btn-rounded btn-outline-secondary mr-3"
+                  @click="editSchema = true">
+                  {{ `_datacontainer.createForm.back` | translate }}
+                </button>
+                <button type="submit"
+                  class="btn btn-rounded btn-primary">
+                  {{ `_datacontainer.createForm.save` | translate }}
+                </button>
+              </template>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="p-3">
-          <form v-on:submit.prevent="saveDt"
-            v-if="!editSchema">
-            <div class="form-group">
-              <label for="name">
-                {{ `_datacontainer.createForm.name.title` | translate }}
-              </label>
-              <input class="form-control" required
-                id="name" ref="name"
-                :placeholder="`_datacontainer.createForm.name.desc` | translate"
-                v-model="dbcpForm.name.value"
-                v-bind:class="{ 'is-invalid' : dbcpForm.name.error }"
-                @blur="dbcpForm.name.setDirty()">
-              <div class="invalid-feedback">
-                {{ `_datacontainer.createForm.name.error` | translate }}
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="description">
-                {{ `_datacontainer.createForm.description.title` | translate }}
-              </label>
-              <textarea class="form-control" rows="7"
-                id="description" ref="description"
-                :placeholder="`_datacontainer.createForm.description.desc` | translate"
-                v-model="dbcpForm.description.value"
-                v-bind:class="{ 'is-invalid' : dbcpForm.description.error }"
-                @blur="dbcpForm.description.setDirty()">
-              </textarea>
-            </div>
-          </form>
-          <template v-if="editSchema">
-            <dt-template-handler
-              :address="dapp.contractAddress"
-              :template.sync="template">
-            </dt-template-handler>
-          </template>
+      <div class="p-3" v-else>
+        <div class="bg-level-1 border">
+          <dt-template-handler
+            :address="dapp.contractAddress"
+            :template.sync="template">
+          </dt-template-handler>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 

@@ -52,5 +52,5 @@ export default class ImagesComponent extends mixins(EvanComponent) {
    */
   @Prop({
     default: true
-  }) showLabel: boolean;
+  }) standalone: boolean;
 }

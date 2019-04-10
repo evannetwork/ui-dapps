@@ -65,13 +65,6 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() form: FieldFormInterface;
 
   /**
-   * should the control label be rendered?
-   */
-  @Prop({
-    default: true
-  }) showLabel: boolean;
-
-  /**
    * formular specific variables
    */
   fieldForm: FieldFormInterface = null;

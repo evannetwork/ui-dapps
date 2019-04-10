@@ -86,15 +86,16 @@ export default {
         "desc": "Template of the data container",
         "title": "Template"
       },
-      "title": "Create data container"
+      "title": "Create data container",
+      "back": "Go Back"
     },
     "dispatcher": {
       "create": "Creating Data container...",
       "update": "Updating Data container...",
       "share": "Share Data Container...",
     },
-    "edit-dbcp": "Adjust Description",
-    "edit-schema": "Adjust Data",
+    "edit-dbcp": "Adjust Container Description",
+    "edit-schema": "Data area schema definition",
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to a separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
@@ -146,9 +147,10 @@ export default {
       }
     },
     "template-cache": {
-      "action": "restore",
-      "desc": "You left unsaved configuration, do you want to restore it?",
-      "title": "Recovery"
+      "action": "Restore",
+      "clear": "Delete",
+      "desc": "You left unsaved changes, do you want to restore it?",
+      "title": "Old Work"
     },
     "types": {
       "array": "List",
@@ -157,6 +159,12 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
+    },
+    "edit": "Edit",
+    "context-menu": {
+      "link": "Link",
+      "clone": "Clone",
+      "share": "Share"
     }
   }
 }

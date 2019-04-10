@@ -86,15 +86,16 @@ export default {
         "desc": "Vorlage des Datencontainers",
         "title": "Vorlage"
       },
-      "title": "Datencontainer Erstellen"
+      "title": "Datencontainer Erstellen",
+      "back": "Zurück"
     },
     "dispatcher": {
       "create": "Datencontainer wird erstellt...",
       "update": "Datencontainer wird aktualisiert...",
       "share": "Datencontainer wird geteilt...",
     },
-    "edit-dbcp": "Beschreibung anpassen",
-    "edit-schema": "Daten anpassen",
+    "edit-dbcp": "Container Beschreibung anpassen",
+    "edit-schema": "Datenbereich Schema Definition",
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig von einander an dritte geteilt werden können.",
@@ -147,8 +148,9 @@ export default {
     },
     "template-cache": {
       "action": "Wiederherstellen",
-      "desc": "Sie haben ungespeicherte Konfiguration zurück gelassen, möchten Sie diese wiederherstellen?",
-      "title": "Wiederherstellung"
+      "clear": "Löschen",
+      "desc": "Sie haben ungespeicherte Änderungen zurück gelassen, möchten Sie diese wiederherstellen?",
+      "title": "Alte Änderungen"
     },
     "types": {
       "array": "Liste",
@@ -157,6 +159,12 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
+    },
+    "edit": "Bearbeiten",
+    "context-menu": {
+      "link": "Verlinken",
+      "clone": "Klonen",
+      "share": "Teilen"
     }
   }
 }

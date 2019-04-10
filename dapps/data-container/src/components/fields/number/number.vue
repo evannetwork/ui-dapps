@@ -27,7 +27,7 @@
 
 <template>
   <div class="form-group mb-0" v-if="mode === 'schema' || mode === 'edit'">
-    <label for="value" v-if="showLabel">
+    <label for="value" v-if="standalone">
       {{ `_datacontainer.ajv.value.title` | translate }}
     </label>
     <input class="form-control" required

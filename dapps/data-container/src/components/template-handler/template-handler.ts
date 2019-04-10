@@ -64,7 +64,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   /**
    * Template that was cached into the indexeddb
    */
-  cachedTemplate: any;
+  cachedTemplate: any = null;
 
   /**
    * current displayed active template
@@ -176,11 +176,11 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   async mounted() {
     // try to restore previous left work
     this.containerCache = new ContainerCache((<any>this).getRuntime().activeAccount);
-    this.cachedTemplate = await this.containerCache.get(this.address);
+    const cachedTemplate = await this.containerCache.get(this.address);
 
     // ask for restore
-    if (this.cachedTemplate && !deepEqual(this.cachedTemplate, this.template)) {
-      (<any>this.$refs.cacheModal).show();
+    if (cachedTemplate && !deepEqual(cachedTemplate, this.template)) {
+      this.cachedTemplate = cachedTemplate;
     }
   }
 
@@ -283,15 +283,26 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   /**
    * Restore latest template from cache
    */
-  restoreTemplate() {
+  async restoreTemplate() {
     this.template = { ...this.cachedTemplate };
     this.$emit('update:template', this.template);
+    await this.containerCache.delete(this.address);
     utils.enableDTSave();
 
     // trigger a rerender, so the current formular will be
     const activeTab = this.activeTab;
     this.activeTab = -2;
     this.$nextTick(() => this.activateTab(activeTab));
+
+    (<any>this.$refs.cacheModal).hide();
+  }
+
+  /**
+   * Clear the current template cache.
+   */
+  async clearCachedTemplate() {
+    this.cachedTemplate = null;
+    await this.containerCache.delete(this.address);
 
     (<any>this.$refs.cacheModal).hide();
   }

@@ -39,17 +39,7 @@
       </h5>
     </div>
 
-    <div class="p-3" v-if="modes.length !== 0">
-      <div class="d-flex w-100 justify-content-end"
-        v-if="modes.length !== 1">
-        <div class="d-flex align-items-center p-2 text-center border border-sm clickable all-transition"
-          style="margin-left: -1px;"
-          v-for="(mode, i) in modes"
-          :class="activeMode === mode ? 'bg-secondary bg-text-secondary' : 'bg-level-1'"
-          @click="activeMode = mode">
-          <i :class="modeIconMapping[mode]"></i>
-        </div>
-      </div>
+    <div v-if="modes.length !== 0">
       <dt-entry-list
         v-if="entry.dataSchema.type === 'array'"
         :address="address"
@@ -60,11 +50,13 @@
       <dt-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"
+        :entryName="name"
         :mode="activeMode">
       </dt-entry-object>
       <dt-field
         v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'" 
         :mode="activeMode"
+        :fieldName="name"
         :type="entry.dataSchema.type"
         :value.sync="entry.value">
       </dt-field>

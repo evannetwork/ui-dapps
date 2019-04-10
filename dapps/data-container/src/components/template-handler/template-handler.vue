@@ -39,6 +39,10 @@
         </p>
       </template>
       <template v-slot:footer>
+        <button type="button" class="btn btn-danger btn-rounded font-weight-normal"
+          @click="clearCachedTemplate()">
+          {{ `_datacontainer.template-cache.clear` | translate }}
+        </button>
         <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
           @click="restoreTemplate()">
           {{ `_datacontainer.template-cache.action` | translate }}
@@ -57,6 +61,12 @@
         @click="activateTab(-1)">
         <i class="fas fa-plus-circle large"></i>
       </div>
+      <span class="mx-auto"></span>
+      <button type="button" class="btn btn-outline-secondary btn-circle btn-sm ml-5 mt-1 mr-2 animate-hop"
+        v-if="cachedTemplate"
+        @click="$refs.cacheModal.show()">
+        <i class="fas fa-undo"></i>
+      </button>
     </div>
 
     <div class="bg-level-2 border-bottom border-right border-left p-3"
