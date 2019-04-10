@@ -39,6 +39,8 @@ const getExternals = require('./webpack.externals');
 module.exports = function(name, dist, externals = getExternals(), prodMode) {
   const packageJson = require(path.resolve(`${ dist }/../package.json`));
 
+  console.log(externals)
+
   const webpackConfig = {
     entry: './src/index.ts',
     externals: externals,

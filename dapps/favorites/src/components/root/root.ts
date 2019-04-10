@@ -82,7 +82,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
 
     // watch for updates
     this.dispatcherWatcher = Dispatcher.watch(
-      () => this.loadBookmarks(),
+      ($event: Event) => this.loadBookmarks(),
       `favorites.${ dappBrowser.getDomainName() }`
     );
   }

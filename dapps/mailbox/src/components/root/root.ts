@@ -61,7 +61,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
   /**
    * List of read mails
    */
-  readMails: Array<string> = JSON.parse(window.localStorage['evan-mail-read'] || [ ]);
+  readMails: Array<string> = JSON.parse(window.localStorage['evan-mail-read'] || '[ ]');
 
   /**
    * Currents users contacts

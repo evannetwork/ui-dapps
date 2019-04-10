@@ -50,11 +50,13 @@
           <i :class="modeIconMapping[mode]"></i>
         </div>
       </div>
-      <dt-entry-array
+      <dt-entry-list
         v-if="entry.dataSchema.type === 'array'"
+        :address="address"
+        :listName="name"
         :entry="entry"
         :mode="activeMode">
-      </dt-entry-array>
+      </dt-entry-list>
       <dt-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"

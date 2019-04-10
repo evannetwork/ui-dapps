@@ -93,7 +93,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
       .forEach((schemaKey: string) => this.addProperty(
         schemaKey,
         this.properties[schemaKey].type,
-        this.value[schemaKey]
+        this.value ? this.value[schemaKey] : ''
       ));
   }
 
@@ -101,8 +101,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
    * Map the current ajv formular to the data schema
    */
   beforeDestroy() {
+    // clear the objects to keep the original object reference
     Object.keys(this.properties).forEach(key => delete this.properties[key]);
-
     if (this.value) {
       Object.keys(this.value).forEach(key => delete this.value[key]);
     }

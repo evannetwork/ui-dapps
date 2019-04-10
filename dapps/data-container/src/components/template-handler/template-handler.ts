@@ -28,7 +28,7 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -41,6 +41,7 @@ import * as utils from '../../utils';
 interface EntryFormInterface extends EvanForm {
   name: EvanFormControl;
   type: EvanFormControl;
+  arrayType: EvanFormControl;
 }
 
 @Component({ })
@@ -73,6 +74,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   /**
    * Active dataset, that should be displayed
    */
+  activeEntryName = '';
   activeEntry: any = { };
 
   /**
@@ -98,8 +100,19 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     'array',
     'string',
     'number',
-    'files',
-    'images',
+    // 'files',
+    // 'images',
+  ];
+
+  /**
+   * all available array types
+   */
+  arrayTypes: Array<string> = [
+    'object',
+    'string',
+    'number',
+    // 'files',
+    // 'images',
   ];
 
   /**
@@ -124,10 +137,10 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         }
       },
       type: {
-        value: this.entryTypes[0],
-        validate: function(vueInstance: TemplateHandlerComponent, form: EntryFormInterface) {
-          return this.value.length !== 0;
-        }
+        value: this.entryTypes[0]
+      },
+      arrayType: {
+        value: this.arrayTypes[0]
       },
     }));
 
@@ -143,7 +156,13 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
 
       this.$nextTick(() => this.entryForm.name.$ref.focus());
     } else {
-      this.activateTab(0, false);
+      let openedEntry = 0;
+      if ((<any>this).$route.params.entry) {
+        openedEntry = Object.keys(this.template.properties)
+          .indexOf((<any>this).$route.params.entry);
+      }
+
+      this.activateTab(openedEntry === -1 ? 0 : openedEntry, false);
     }
 
     // watch for changes, so the internal values can be cached
@@ -151,6 +170,9 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     window.addEventListener('dt-value-changed', this.valuesChanged);
   }
 
+  /**
+   * Watch for container caches and ask to restore them.
+   */
   async mounted() {
     // try to restore previous left work
     this.containerCache = new ContainerCache((<any>this).getRuntime().activeAccount);
@@ -165,14 +187,25 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   /**
    * Cache latest configuration for this type, so the data wont be lost, when the users leaves
    */
-  beforeDestroy() {
+  async beforeDestroy() {
     window.removeEventListener('dt-value-changed', this.valuesChanged);
 
     // wait for opened containers to saved the work
     if (this.cacheChanges) {
-      setTimeout(() => {
-        this.containerCache.put(this.address, this.template);
-      });
+      // check for changes
+      const integrity = await utils.getEntryChanges(
+        utils.getRuntime(this),
+        this.address,
+        this.template
+      );
+
+      if (integrity.changed) {
+        setTimeout(() => {
+          this.containerCache.put(this.address, this.template);
+        });
+      } else {
+        this.containerCache.delete(this.address);
+      }
     }
   }
 
@@ -184,7 +217,18 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    */
   activateTab(activeTab: number, rerender = true) {
     if (activeTab !== -1) {
-      this.activeEntry = this.template.properties[Object.keys(this.template.properties)[activeTab]];
+      this.activeEntryName = Object.keys(this.template.properties)[activeTab];
+      this.activeEntry = this.template.properties[this.activeEntryName];
+
+      // ensure correct breadcrumb translations
+      const customTranslation = { };
+      customTranslation[ `_datacontainer.breadcrumbs.${ this.activeEntryName }`] =
+        this.activeEntryName;
+
+      (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+
+      // be sure, that value and addValue params are added
+      this.ensureEntryValues();
     }
 
     if (rerender) {
@@ -194,6 +238,10 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     } else {
       this.activeTab = activeTab;
     }
+
+    // update url to be stateful
+    const url = `${ this.address === 'create' ? 'create/' : '' }${ this.activeEntryName }`;
+    (<any>this).evanNavigate(url);
   }
 
   /**
@@ -209,20 +257,20 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         $id: `${ this.entryForm.name.value }_schema`,
         dataSchema: { type: this.entryForm.type.value, },
         permissions: { 0: ['set'] },
-        type: this.entryForm.type.value === 'array' ? this.entryForm.type.value : 'entry'
+        type: this.entryForm.type.value === 'array' ? 'list' : 'entry'
       };
 
+      // add properties and empty value object directly, so the vue listeners will work correctly in
+      // nested components
       if (this.entryForm.type.value === 'object') {
         entry.dataSchema.properties = { };
-        entry.value = { };
       } else if (this.entryForm.type.value === 'array') {
-        entry.dataSchema.items = { type: 'object', properties: { } };
-        entry.value = [ ];
-        entry.addValue = { };
+        // add the items schema, including the array type, will be defined only ontime, at entry
+        // creation
+        entry.dataSchema.items = { type: this.entryForm.arrayType.value, };
       }
 
-      // apply it to the current template
-      this.$set(this.template.properties, this.entryForm.name.value, entry);
+      this.template.properties[this.entryForm.name.value] = entry;
 
       // navigate to the new data set
       this.activateTab(Object.keys(this.template.properties).indexOf(this.entryForm.name.value));
@@ -236,11 +284,39 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * Restore latest template from cache
    */
   restoreTemplate() {
-    this.template = this.cachedTemplate;
+    this.template = { ...this.cachedTemplate };
     this.$emit('update:template', this.template);
     utils.enableDTSave();
 
+    // trigger a rerender, so the current formular will be
+    const activeTab = this.activeTab;
+    this.activeTab = -2;
+    this.$nextTick(() => this.activateTab(activeTab));
+
     (<any>this.$refs.cacheModal).hide();
+  }
+
+  /**
+   * Takes an entry and checks for type array. If it's an array, ensure, that the value array and an
+   * addValue object is added. Per default, this values are not returned by the API, templates does
+   * not support list entries export and must be load dynamically. The value array is used to handle
+   * new arrays, that will be persisted for caching to the indexeddb like the normal entries
+   *
+   * @param      {any}  entry   the entry that should be checked
+   */
+  ensureEntryValues() {
+    // add an empty value list and an addValue object, the addValue object is used for new
+    // elements formular
+    if (this.activeEntry.type === 'list') {
+      this.activeEntry.value = this.activeEntry.value || [ ];
+      this.activeEntry.addValue = this.activeEntry.addValue ||
+        (this.activeEntry.dataSchema.items.type === 'object' ? { } : '');
+    } else if (this.activeEntry.type === 'object') {
+      this.activeEntry.value = this.activeEntry.value || { };
+    }
+
+    // redefine the object and bind new watchers
+    this.activeEntry = { ...this.activeEntry };
   }
 }
 

@@ -91,6 +91,24 @@
                 </option>
               </select>
             </div>
+            <div class="form-group" v-if="entryForm.type.value === 'array'">
+              <label for="type">
+                {{ `_datacontainer.entry.array-type.title` | translate }}
+              </label>
+              <select class="form-control"
+                id="type" ref="type"
+                :placeholder="`_datacontainer.entry.array-type.desc` | translate"
+                :disabled="$store.state.saving"
+                v-model="entryForm.arrayType.value"
+                v-bind:class="{ 'is-invalid' : entryForm.arrayType.error }"
+                @blur="entryForm.arrayType.setDirty()">
+                <option
+                  v-for="(arrayType, index) in arrayTypes"
+                  :value="arrayType">
+                  {{ `_datacontainer.types.${ arrayType }` | translate }}
+                </option>
+              </select>
+            </div>
             <div class="form-group">
               <label for="name">
                 {{ `_datacontainer.entry.name.title` | translate }}
@@ -120,10 +138,12 @@
     </div>
 
     <dt-entry
-      v-if="activeTab > -1"
+      v-if="activeTab > -1 && activeEntry"
+      :activeMode="activeDisplayMode"
+      :address="address"
       :entry="activeEntry"
       :modes="displayModes"
-      :activeMode="activeDisplayMode">
+      :name="activeEntryName">
     </dt-entry>
   </div>
 </template>

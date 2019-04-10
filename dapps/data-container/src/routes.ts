@@ -34,8 +34,9 @@ import DetailComponent from './components/detail/detail.vue';
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: 'create', component: CreateComponent },
+  { path: 'create/:cloneContainer', component: CreateComponent },
   { path: '', component: DetailComponent },
-  { path: ':containerAddress', component: DetailComponent },
+  { path: ':entry', component: DetailComponent },
 ];
 
 export default routeRegistration;

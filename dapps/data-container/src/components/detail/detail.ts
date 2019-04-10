@@ -46,6 +46,10 @@ interface DbcpFormInterface extends EvanForm {
   name: EvanFormControl;
 }
 
+interface ShareFormInterface extends EvanForm {
+  subject: EvanFormControl;
+}
+
 @Component({ })
 export default class DetailComponent extends mixins(EvanComponent) {
   /**
@@ -92,11 +96,27 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * formular specific variables
    */
   dbcpForm: DbcpFormInterface = null;
+  shareForm: ShareFormInterface = null;
 
   /**
    * Watch for updates and disable current save button
    */
   savingWatcher: Function = null;
+  sharingWatcher: Function = null;
+
+  /**
+   * Share object
+   */
+  share: any = {
+    accountId: '',
+    permissions: { },
+  };
+
+  /**
+   * List of my contacts
+   */
+  contacts: Array<any> = [ ];
+  myProfile: any = null;
 
   /**
    * Load the container data
@@ -106,18 +126,31 @@ export default class DetailComponent extends mixins(EvanComponent) {
     await this.initialize();
 
     this.valuesChanged = ($event) => this.enableSave = true;
+    // watch for saving updates
     this.savingWatcher = dispatchers.updateDispatcher.watch(async () => {
       const instances = await dispatchers.updateDispatcher.getInstances(runtime);
       const beforeSaving = this.$store.state.saving;
 
-      this.$store.state.saving = Object.keys(instances)
+      const saving = Object.keys(instances)
         .filter(key => instances[key].data.address === (<any>this).dapp.contractAddress)
         .length > 0;
+
+      this.$set(this.$store.state, 'saving', saving);
 
       // reload the data
       if (!this.$store.state.saving && beforeSaving) {
         this.initialize();
       }
+    });
+
+    // watch for sharings watcher
+    this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
+      const instances = await dispatchers.shareDispatcher.getInstances(runtime);
+      const sharing = Object.keys(instances)
+        .filter(key => instances[key].data.address === (<any>this).dapp.contractAddress)
+        .length > 0;
+
+      this.$set(this.$store.state, 'sharing', sharing);
     });
 
     // watch for updates
@@ -146,6 +179,21 @@ export default class DetailComponent extends mixins(EvanComponent) {
     this.description = await this.container.getDescription();
     this.template = await this.container.toTemplate(true);
 
+    // load contacts and transform them into an array
+    const addressBook = await runtime.profile.getAddressBook();
+    bcc.Ipld.purgeCryptoInfo(addressBook);
+    this.myProfile = addressBook.profile[runtime.activeAccount];
+    this.contacts = Object
+      .keys(addressBook.profile)
+      .filter(address => address !== runtime.activeAccount)
+      .map((address) => {
+        const contact = addressBook.profile[address];
+        contact.address = address;
+
+        return contact;
+      });
+    this.share.accountId = this.contacts[0].address;
+
     // set dbcp form
     this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
       name: {
@@ -167,6 +215,22 @@ export default class DetailComponent extends mixins(EvanComponent) {
       },
     }));
 
+    // setup share form, so the user can insert a custom form
+    let subject = [
+      (<any>this).$t('_datacontainer.breadcrumbs.datacontainer.digitaltwin'),
+      `: ${ this.description.name }`,
+      this.digitalTwinAddress ? `${ this.digitalTwinAddress } - ` : ''
+    ].join('');
+
+    this.shareForm = (<ShareFormInterface>new EvanForm(this, {
+      subject: {
+        value: subject,
+        validate: function(vueInstance: DetailComponent, form: ShareFormInterface) {
+          return this.value.length !== 0;
+        }
+      },
+    }));
+
     this.loading = false;
   }
 
@@ -174,7 +238,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Trigger the digital twin save
    */
   async saveDt() {
-    if (!this.$store.state.saving) {
+    if (!this.$store.state.saving && this.dbcpForm.isValid) {
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
       // opened ajv editor is saved
       this.loading = true;
@@ -196,5 +260,47 @@ export default class DetailComponent extends mixins(EvanComponent) {
         this.loading = false;
       });
     }
+  }
+
+  /**
+   * Share the data contract with others
+   */
+  shareDt() {
+    const runtime = utils.getRuntime(this);
+    const address = (<any>this).dapp.contractAddress;
+
+    // transform the ui permission into an conainter share config
+    const perm = this.share.permissions;
+    const shareConfig: bcc.ContainerShareConfig = {
+      accountId: this.share.accountId,
+      read: Object.keys(perm).filter(entryKey => perm[entryKey] === 'read'),
+      readWrite: Object.keys(perm).filter(entryKey => perm[entryKey] === 'write'),
+    };
+    // build bmail for invited user
+    const bMailContent = {
+      content: {
+        from: runtime.activeAccount,
+        fromAlias: this.myProfile.alias,
+        title: (<any>this).$t('_datacontainer.share.bmail.title'),
+        body: (<any>this).$t('_datacontainer.share.bmail.body', {
+          alias: this.myProfile.alias,
+          subject: this.shareForm.subject.value,
+        }),
+        attachments: [{
+          address: address,
+          bc: `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
+          type: 'contract',
+        }]
+      }
+    };
+
+    // start the dispatcher
+    dispatchers.shareDispatcher.start(utils.getRuntime(this), {
+      address,
+      shareConfig,
+      bMailContent,
+    });
+
+    (<any>this.$refs.shareModal).hide();
   }
 }

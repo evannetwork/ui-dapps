@@ -78,6 +78,7 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
 
     // load the address book for the current user
     const addressBook = await runtime.profile.getAddressBook();
+    bcc.Ipld.purgeCryptoInfo(addressBook);
 
     // map all the contacts to it's categories
     Object.keys(addressBook.profile).forEach((address) => {

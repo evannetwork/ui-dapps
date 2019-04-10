@@ -27,6 +27,7 @@
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
+import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
 
 export const latestTwinKey = 'evan-last-digital-twins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
@@ -112,4 +113,49 @@ export function getContainer(runtime: bcc.Runtime, address: string): bcc.Contain
     address: address,
     factoryAddress: containerFactory
   });
+}
+
+/**
+ * Check the integrity of a new template, and if anything has changed
+ *
+ * @param      {bccRuntime}  runtime      bcc runtime
+ * @param      {string}      address      data container address
+ * @param      {any}         newTemplate  new template definition that should be checked
+ */
+export async function getEntryChanges(runtime: bcc.Runtime, address: string, newTemplate: any) {
+  const container = getContainer(runtime, address);
+  const description = await container.getDescription();
+  const template = await container.toTemplate(true);
+
+  // analyse data and check, which data fields must be saved
+  const changed = {
+    saveDescription: false,
+    entriesToSave: [ ],
+    toShare: { },
+    changed: false
+  };
+
+  // check for integrity
+  Object.keys(newTemplate.properties).map((propertyKey: string) => {
+    const newProp = newTemplate.properties[propertyKey];
+    const originProp: any = template.properties[propertyKey] || { };
+
+    // schema has been changed
+    if (!deepEqual(originProp.dataSchema, newProp.dataSchema)) {
+      changed.saveDescription = true;
+      changed.changed = true;
+    }
+
+    // if it's not an entry, check for value equality
+    // if it's an list, check if new values were added
+    if ((newProp.type !== 'list' && !deepEqual(originProp.value, newProp.value)) ||
+        (newProp.type === 'list' && newProp.value && newProp.value.length > 0)) {
+      changed.entriesToSave.push(propertyKey);
+      changed.changed = true;
+    }
+
+    // TODO: check sharing
+  });
+
+  return changed;
 }

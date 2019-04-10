@@ -28,12 +28,13 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
-export * from '../../data-container/src/utils';
+import { utils } from '@evan.network/datacontainer.digitaltwin';
 
 export const latestTwinsKey = 'evan-last-digital-digitaltwins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
 export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
 export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
+export const getRuntime = utils.getRuntime;
 
 /**
  * Add a address to the last opened twins array.

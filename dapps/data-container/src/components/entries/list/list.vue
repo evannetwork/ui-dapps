@@ -27,25 +27,7 @@
 
 <template>
   <div class="p-3">
-    {{ entry }}
     <template v-if="mode === 'schema'">
-      <div class="form-group mb-0">
-        <label for="type">
-          {{ `_datacontainer.ajv.type.name` | translate }}
-        </label>
-        <select class="form-control"
-          id="type" ref="type"
-          :placeholder="`_datacontainer.ajv.type.desc` | translate"
-          :disabled="$store.state.saving"
-          v-model="entry.dataSchema.items.type">
-          <option
-            v-for="(arrayType, index) in arrayTypes"
-            :value="arrayType">
-            {{ `_datacontainer.types.${ arrayType }` | translate }}
-          </option>
-        </select>
-      </div>
-
       <dt-ajv
         v-if="entry.dataSchema.items.type === 'object'"
         :enableValue="false"
@@ -60,11 +42,12 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>{{ '_datacontainer.array.data' | translate }}</th>
+                <th>{{ '_datacontainer.list.data' | translate }}</th>
+                <th style="width: 50px"></th>
               </tr>
             </thead>
             <tbody>
-              <template v-for="(listEntry, index) in entry.value">
+              <template v-for="(listEntry, index) in [ ].concat(entry.value, listEntries)">
                 <tr v-if="index !== 0">
                   <td class="p-2"></td>
                 </tr>
@@ -75,18 +58,37 @@
                   <td>
                     {{ listEntry }}
                   </td>
+                  <td class="text-primary" style="width: 50px">
+                    <span v-if="entry.value.indexOf(listEntry) !== -1">
+                      {{ '_datacontainer.list.new' | translate }}
+                    </span>
+                  </td>
                 </tr>
               </template>
             </tbody>
           </table>
+          <evan-loading v-if="loading"></evan-loading>
+        </div>
+
+        <div class="text-center"
+          v-if="contractAddress && mode !== 'schema'">
+          <h5 class="mt-3">
+            <b>{{ '_datacontainer.list.results' | translate }}</b>: {{ offset + entry.value.length }} / {{ maxListentries + entry.value.length }}
+          </h5>
+
+          <button type="submit"  class="btn btn-rounded btn-outline-secondary mt-3"
+            v-if="offset < maxListentries"
+            @click="loadEntries()">
+            {{ `_datacontainer.list.load-more` | translate }}
+          </button>
         </div>
 
         <div class="text-center mt-3"
-          v-if="!addListEntry && mode !== 'view'">
+          v-if="!addListEntry && mode !== 'schema'">
           <button type="submit"  class="btn btn-rounded btn-primary"
             :disabled="$store.state.saving"
             @click="addListEntry = true">
-            {{ `_datacontainer.array.add-list-entry` | translate }}
+            {{ `_datacontainer.list.add-list-entry` | translate }}
           </button>
         </div>
       </template>
@@ -103,18 +105,19 @@
           v-else
           :mode="'edit'"
           :type="entry.dataSchema.items.type"
-          :showLabel="true">
+          :showLabel="true"
+          :value.sync="entry.addValue">
         </dt-field>
 
-        <div class="text-center mt-3">
+        <div class="text-center mt-4">
           <template v-if="addListEntry">
             <button type="submit"  class="btn btn-rounded btn-outline-secondary mr-3"
               @click="addListEntry = false">
-              {{ `_datacontainer.array.canel-list-entry` | translate }}
+              {{ `_datacontainer.list.canel-list-entry` | translate }}
             </button>
             <button type="submit" class="btn btn-rounded btn-primary"
               @click="addEntry()">
-              {{ `_datacontainer.array.add-list-entry` | translate }}
+              {{ `_datacontainer.list.add-list-entry` | translate }}
             </button>
           </template>
         </div>
@@ -124,6 +127,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './array.ts';
+  import Component from './list.ts';
   export default Component;
 </script>

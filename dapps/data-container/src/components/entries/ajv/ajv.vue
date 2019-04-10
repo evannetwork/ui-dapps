@@ -33,7 +33,7 @@
           <th>{{ '_datacontainer.ajv.name.title' | translate }}</th>
           <th v-if="mode !=='view'">{{ '_datacontainer.ajv.type.title' | translate }}</th>
           <th v-if="enableValue">{{ '_datacontainer.ajv.value.title' | translate }}</th>
-          <th v-if="mode === 'schema'"> <!-- used for controls --></th>
+          <th v-if="mode === 'schema'"><!-- used for controls --></th>
         </tr>
       </thead>
       <tbody>

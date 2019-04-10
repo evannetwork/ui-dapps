@@ -25,58 +25,33 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-@Component({ })
-export default class EntryArrayComponent extends mixins(EvanComponent) {
-  /**
-   * Container property template definition
-   */
-  @Prop() entry: bcc.ContainerTemplateProperty;
+import * as utils from '../utils';
 
-  /**
-   * schema / value / read
-   */
-  @Prop({ default: 'schema' }) mode;
+const dispatcher = new Dispatcher(
+  `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+  'shareDispatcher',
+  40 * 1000,
+  '_datacontainer.dispatcher.share'
+);
 
-  /**
-   * all available field types
-   */
-  arrayTypes: Array<string> = [
-    'object',
-    'string',
-    'number',
-    'files',
-    'images',
-  ];
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    // set the digital twin instance
+    const runtime = utils.getRuntime(instance.runtime);
+    const container = utils.getContainer(runtime, data.address);
 
-  /**
-   * Show the add list entry dialog
-   */
-  addListEntry = false;
+    // share the properties and send the b-mail
+    await container.shareProperties([ data.shareConfig ]);
+    await runtime.mailbox.sendMail(
+      data.bMailContent,
+      runtime.activeAccount,
+      data.shareConfig.accountId
+    );
+  });
 
-  /**
-   * Fill empty values
-   */
-  created() {
-    this.$set(this.entry.dataSchema.items, 'type', this.entry.dataSchema.items.type);
-  }
-
-  /**
-   * Add the current form data as a new list entry.
-   */
-  addEntry() {
-    this.addListEntry = false;
-    this.entry.value.push((<any>this).entry.addValue);
-
-    this.$nextTick(() => (<any>this).entry.addValue = { });
-  }
-}
+export default dispatcher;

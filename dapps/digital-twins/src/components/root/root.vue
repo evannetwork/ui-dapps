@@ -102,7 +102,7 @@
                           v-for="(subCategory, subIndex) in category.children">
                           <a class="font-weight-bold"
                             :href="!subCategory.path ? null : `${ dapp.fullUrl }/${ subCategory.path }`"
-                            :class="{ 'active': $route.path.endsWith(subCategory.path) }">
+                            :class="{ 'active': $route.path.indexOf(subCategory.path) !== -1 }">
                             {{ subCategory.i18n ? $t(`_digitaltwins.left-categories.${ subCategory.name }`) : subCategory.name }}
                           </a>
                           <template v-if="subCategory.loading">
@@ -123,7 +123,7 @@
           </evan-dapp-wrapper-level-2>
 
           <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name !== 'dt-container'">
+            v-if="$route && $route.name !== 'dt-container'">
             <!-- v-if="$route.name !== 'dt-container'" -->
             <template v-slot:content
               v-if="sideNav !== 0 && $store.state.uiDT && !$store.state.uiDT.loading && $store.state.uiDT.validity.exists">

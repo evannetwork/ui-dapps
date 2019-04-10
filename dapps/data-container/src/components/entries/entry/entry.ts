@@ -38,9 +38,19 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 @Component({ })
 export default class EntryComponent extends mixins(EvanComponent) {
   /**
+   * Id for the template that is edited (e.g.: create, container address, template type, ...)
+   */
+  @Prop() address: string;
+
+  /**
    * data container entry (metadata, array, ...)
    */
   @Prop() entry: bcc.ContainerTemplateProperty;
+
+  /**
+   * data contract entry name
+   */
+  @Prop() name: string;
 
   /**
    * list of available modes (schema / edit / view)

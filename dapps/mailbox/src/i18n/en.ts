@@ -42,7 +42,7 @@ export default {
         "accepted": "Show contact",
         "modal-body": "Do you really want to add this contact?"
       },
-      "Contract": {
+      "contract": {
         "new": "Accept contract invitation",
         "accepted": "Open contract",
         "modal-body": "Do you really want to accept this contract?"

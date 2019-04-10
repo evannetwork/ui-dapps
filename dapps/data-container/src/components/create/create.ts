@@ -36,7 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registry';
-import { getRuntime } from '../../utils';
+import * as utils from '../../utils';
 import ContainerCache from '../../container-cache';
 
 interface CreateInterface extends EvanForm {
@@ -98,12 +98,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Setup the form.
    */
   async created() {
+    const runtime = utils.getRuntime(this);
     const splitHash = (<any>this).dapp.baseHash.split('/');
     this.digitalTwinAddress = splitHash
       [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
 
     // TODO: load templates
-
     this.createForm = (<CreateInterface>new EvanForm(this, {
       name: {
         value: '',
@@ -121,6 +121,17 @@ export default class CreateComponent extends mixins(EvanComponent) {
         value: '',
       },
     }));
+
+    if ((<any>this).$route.params.cloneContainer) {
+      const container = utils.getContainer(<any>runtime, (<any>this).dapp.contractAddress);
+      const description = await container.getDescription();
+      const template = await container.toTemplate(true);
+
+      this.activeStep = 1;
+      this.createForm.name.value = description.name;
+      this.createForm.description.value = description.description;
+      this.$set(this.templates, 0, template);
+    }
 
     // configure steps and it' titles
     this.steps = [
@@ -150,7 +161,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Create the new container
    */
   async create() {
-    const runtime = getRuntime(this);
+    const runtime = utils.getRuntime(this);
 
     dispatchers.createDispatcher.start(runtime, {
       description: this.createForm.description.value,
@@ -169,7 +180,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   async watchForCreation() {
     const watch = async ($event?: any) => {
-      const instances = await dispatchers.createDispatcher.getInstances(getRuntime(this));
+      const instances = await dispatchers.createDispatcher.getInstances(utils.getRuntime(this));
       const beforeCreating = this.creating;
 
       this.creating = Object

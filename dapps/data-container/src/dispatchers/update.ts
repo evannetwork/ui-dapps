@@ -43,31 +43,12 @@ dispatcher
   .startup(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
-    const description = await container.getDescription();
-    const template = await container.toTemplate(true);
+    const entryChanges = await utils.getEntryChanges(runtime, data.address, data.template);
 
     // analyse data and check, which data fields must be saved
-    data.saveDescription = false;
-    data.entriesToSave = [ ];
-    data.toShare = { };
-
-    // check for integrity
-    Object.keys(data.template.properties).map((propertyKey: string) => {
-      const originProp = data.template.properties[propertyKey];
-      const newProp: any = template.properties[propertyKey] || { };
-
-      // schema has been changed
-      if (!deepEqual(originProp.dataSchema, newProp.dataSchema)) {
-        data.saveDescription = true;
-      }
-
-      // check for entry value updates
-      if (!deepEqual(originProp.value, newProp.value) || newProp.type === 'arrayTypes') {
-        data.entriesToSave.push(propertyKey);
-      }
-
-      // TODO: add sharing
-    });
+    data.saveDescription = entryChanges.saveDescription;
+    data.entriesToSave = entryChanges.entriesToSave;
+    data.toShare = entryChanges.toShare;
   })
 
   // update description
@@ -109,15 +90,21 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
 
-    // save all values
-    await Promise.all(data.entriesToSave.map((entryKey: string) =>
-      container.setEntry(entryKey, data.template.properties[entryKey].value)
-    ));
-  })
+    // copy the entries to save, so the iteration will not be affected by removing entries to save
+    // from the data object => entries will be removed and the data will be persisted, after the
+    // synchronization of this entry was saved successfull, so the user won't do this twice
+    const entriesToSave = JSON.parse(JSON.stringify(data.entriesToSave));
+    await Promise.all(entriesToSave.map(async (entryKey: string, index: number) => {
+      if (data.template.properties[entryKey].type === 'list') {
+        await container.addListEntries(entryKey, data.template.properties[entryKey].value);
+      } else {
+        await container.setEntry(entryKey, data.template.properties[entryKey].value);
+      }
 
-  // update list entries
-  .step(async (instance: DispatcherInstance, data: any) => {
-    // TODO: add list entries
+      // remove the list entry and persist the state into the indexeddb
+      data.entriesToSave.splice(index, 1);
+      await instance.save();
+    }));
   });
 
 export default dispatcher;

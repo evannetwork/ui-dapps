@@ -32,7 +32,7 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 import * as utils from './utils';
 import * as dispatchers from './dispatchers/registy';
-import { containerDispatchers } from '../../data-container/src/index';
+import { containerDispatchers } from '@evan.network/datacontainer.digitaltwin';
 
 /**
  * Represents the UI representation for a evan.network. Handles data management and so on.

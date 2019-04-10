@@ -48,11 +48,6 @@ export default {
         "title": "Wert"
       }
     },
-    "array": {
-      "add-list-entry": "Listeneintrag hinzufügen",
-      "canel-list-entry": "Abbrechen",
-      "data": "Daten"
-    },
     "breadcrumbs": {
       "add": "Hinzufügen",
       "container-link": "Daten Container verlinken",
@@ -95,13 +90,17 @@ export default {
     },
     "dispatcher": {
       "create": "Datencontainer wird erstellt...",
-      "update": "Datencontainer wird aktualisiert..."
+      "update": "Datencontainer wird aktualisiert...",
+      "share": "Datencontainer wird geteilt...",
     },
     "edit-dbcp": "Beschreibung anpassen",
     "edit-schema": "Daten anpassen",
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig von einander an dritte geteilt werden können.",
+      "array-type": {
+        "title": "Listentyp"
+      },
       "name": {
         "desc": "Name des Datenbereichs",
         "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Datenbereich entspricht!",
@@ -117,6 +116,35 @@ export default {
       }
     },
     "in-creation": "In Erstellung",
+    "list": {
+      "add-list-entry": "Listeneintrag hinzufügen",
+      "canel-list-entry": "Abbrechen",
+      "data": "Daten",
+      "load-more": "Mehr laden...",
+      "new": "neu",
+      "results": "Ergebnisse"
+    },
+    "share": {
+      "action": "Teilen",
+      "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
+      "entry": "Datenbereich",
+      "read": "Lesen",
+      "read-write": "Schreiben",
+      "title": "Teilen",
+      "user": {
+        "desc": "Nutzer dem die ausgewählten Daten geteilt werden sollen.",
+        "title": "Nutzer"
+      },
+      "subject": {
+        "title": "Betreff",
+        "desc": "Geben Sie einen Betreff zu diesem Daten Container an. (z.B.: Digitaler Zwilling Zugehörigkeit, Daten Container Name)",
+        "error": "Bitte geben Sie einen Betreff ein!",
+      },
+      "bmail": {
+        "title": "Einladung in Daten Container",
+        "body": "Guten Tag,<br><br>Sie wurden von <b>{alias}</b> in einen Daten Container eingeladen: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+      }
+    },
     "template-cache": {
       "action": "Wiederherstellen",
       "desc": "Sie haben ungespeicherte Konfiguration zurück gelassen, möchten Sie diese wiederherstellen?",

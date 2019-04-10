@@ -48,11 +48,6 @@ export default {
         "title": "Value"
       }
     },
-    "array": {
-      "add-list-entry": "Add listentry",
-      "canel-list-entry": "Cancel",
-      "data": "Data"
-    },
     "breadcrumbs": {
       "add": "Add",
       "container-link": "Link Data Container",
@@ -95,13 +90,17 @@ export default {
     },
     "dispatcher": {
       "create": "Creating Data container...",
-      "update": "Updating Data container..."
+      "update": "Updating Data container...",
+      "share": "Share Data Container...",
     },
     "edit-dbcp": "Adjust Description",
     "edit-schema": "Adjust Data",
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to a separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
+      "array-type": {
+        "title": "List type"
+      },
       "name": {
         "desc": "Name of the dataset",
         "error": "Please enter a name that does not correspond to an existing data sets!",
@@ -117,6 +116,35 @@ export default {
       }
     },
     "in-creation": "In Creation",
+    "list": {
+      "add-list-entry": "Add listentry",
+      "canel-list-entry": "Cancel",
+      "data": "Data",
+      "load-more": "Load more...",
+      "new": "neu",
+      "results": "Results"
+    },
+    "share": {
+      "action": "Share",
+      "desc": "Send this data container to people in your address book and specify their access permissions.",
+      "entry": "Data area",
+      "read": "Read",
+      "read-write": "Write",
+      "title": "Share",
+      "user": {
+        "desc": "User to whom the selected data should be shared.",
+        "title": "User"
+      },
+      "subject": {
+        "title": "Subject",
+        "desc": "Specify a subject for this data container. (e.g.: Digital Twin name, Data Container Name)",
+        "error": "Please enter a subject!"
+      },
+      "bmail": {
+        "title": "Invitation to Data Container",
+        "body": "Hello,<br><br>You have been invited by <b>{alias}</b> into a data container:<br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
+      }
+    },
     "template-cache": {
       "action": "restore",
       "desc": "You left unsaved configuration, do you want to restore it?",

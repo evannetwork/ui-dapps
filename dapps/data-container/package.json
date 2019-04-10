@@ -9,7 +9,7 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/index.js",
+  "main": "dist/datacontainer.digitaltwin.js",
   "name": "@evan.network/datacontainer.digitaltwin",
   "scripts": {
     "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
