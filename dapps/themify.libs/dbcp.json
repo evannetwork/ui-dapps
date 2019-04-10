@@ -8,7 +8,7 @@
         "themify.libs.js",
         "themify.libs.css"
       ],
-      "origin": "QmTkBKWsYW6L9SWcNKQ9cnQUWAhvEKeDh8o9SYRtmKYqda",
+      "origin": "QmRAmYMpvCnTEtJ7umjowrppVZkHw3iAmpZTzaw6CcF13a",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -33,7 +33,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmX478JM6dkV3QGRek5FoyFJb2QovLHbA6svWUVVhG4PGa"
+      "1.0.0": "QmZnkvPhiywjz2iV7X46pSn5WDcjaoCYAGB16XiUxwrRGd"
     }
   }
 }
