@@ -43,20 +43,23 @@
       <dt-entry-list
         v-if="entry.dataSchema.type === 'array'"
         :address="address"
-        :listName="name"
         :entry="entry"
-        :mode="activeMode">
+        :listName="name"
+        :mode="activeMode"
+        :modes="modes">
       </dt-entry-list>
       <dt-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"
         :entryName="name"
-        :mode="activeMode">
+        :mode="activeMode"
+        :modes="modes">
       </dt-entry-object>
       <dt-field
-        v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'" 
-        :mode="activeMode"
+        v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'"
         :fieldName="name"
+        :mode="activeMode"
+        :modes="modes"
         :type="entry.dataSchema.type"
         :value.sync="entry.value">
       </dt-field>

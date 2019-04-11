@@ -116,19 +116,14 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   ];
 
   /**
-   * Available display modes for the current user and it's roles
+   * show loading symbol
    */
-  displayModes: Array<string> = [ 'view', 'edit', 'schema', ];
-
-  /**
-   * active mode, default is the first of modes
-   */
-  activeDisplayMode = '';
+  loading = false;
 
   /**
    * Initialize and try to restore latest cached template
    */
-  created() {
+  async created() {
     this.entryForm = (<EntryFormInterface>new EvanForm(this, {
       name: {
         value: '',
@@ -143,12 +138,6 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         value: this.arrayTypes[0]
       },
     }));
-
-    // in create mode, show directly the schema mode
-    if (this.address === 'create') {
-      this.displayModes = this.displayModes.reverse();
-    }
-    this.activeDisplayMode = this.displayModes[0];
 
     // auto focus property name input
     if (Object.keys(this.template.properties).length === 0) {
@@ -250,7 +239,6 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   addEntry() {
     if (!this.template.properties[this.entryForm.name.value]) {
       utils.enableDTSave();
-      this.activeDisplayMode = 'schema';
 
       // create a new empty data set
       const entry: any = {

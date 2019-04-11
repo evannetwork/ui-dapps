@@ -46,34 +46,36 @@
       
       <template v-else>
         <template v-if="mode !== 'schema'">
-          <button type="submit"  class="btn btn-rounded btn-primary mr-3"
-            v-if="!addListEntry"
-            :disabled="$store.state.saving"
-            @click="addListEntry = true">
-            {{ `_datacontainer.list.add-list-entry` | translate }}
-          </button>
-
-          <template v-else>
-            <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
-              @click="addListEntry = false">
-              {{ `_datacontainer.list.canel-list-entry` | translate }}
-            </button>
-
-            <button type="submit" class="btn btn-rounded btn-primary"
-              @click="addEntry()">
+          <template v-if="modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1">
+            <button type="submit" class="btn btn-rounded btn-primary mr-3"
+              v-if="!addListEntry"
+              :disabled="$store.state.saving"
+              @click="addListEntry = true">
               {{ `_datacontainer.list.add-list-entry` | translate }}
             </button>
+
+            <template v-else>
+              <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
+                @click="addListEntry = false">
+                {{ `_datacontainer.list.canel-list-entry` | translate }}
+              </button>
+
+              <button type="submit" class="btn btn-rounded btn-primary"
+                @click="addEntry()">
+                {{ `_datacontainer.list.add-list-entry` | translate }}
+              </button>
+            </template>
           </template>
         </template>
 
         <template v-if="entry.dataSchema.items.type === 'object' && !addListEntry">
           <button type="button" class="btn btn-outline-secondary btn-circle"
-            v-if="mode !== 'schema'"
+            v-if="modes.indexOf('schema') !== -1 && mode !== 'schema'"
             @click="mode = 'schema'">
             <i class="fas fa-cogs"></i>
           </button>
           <button type="button" class="btn btn-primary btn-circle"
-            v-else
+            v-if="mode === 'schema'"
             @click="mode = 'view'">
             <i class="fas fa-save"></i>
           </button>

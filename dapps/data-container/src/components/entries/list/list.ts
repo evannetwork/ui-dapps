@@ -54,9 +54,14 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   @Prop() entry: bcc.ContainerTemplateProperty;
 
   /**
-   * schema / value / read
+   * list of available modes (schema / edit / view)
    */
-  @Prop({ default: 'schema' }) mode;
+  @Prop() modes: Array<string>;
+
+  /**
+   * schema / edit / vue
+   */
+  @Prop() mode;
 
   /**
    * Show loading symbol, until listentries were load

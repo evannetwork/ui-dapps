@@ -43,12 +43,17 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   @Prop() entry: bcc.ContainerTemplateProperty;
 
   /**
-   * schema / value / read
-   */
-  @Prop({ default: 'schema' }) mode;
-
-  /**
    * data contract listentries name, used for loading entries
    */
   @Prop() entryName: string;
+
+  /**
+   * list of available modes (schema / edit / view)
+   */
+  @Prop() modes: Array<string>;
+
+  /**
+   * schema / edit / vue
+   */
+  @Prop() mode;
 }

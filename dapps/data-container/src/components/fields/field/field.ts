@@ -45,9 +45,14 @@ interface FieldFormInterface extends EvanForm {
 @Component({ })
 export default class FieldComponent extends mixins(EvanComponent) {
   /**
+   * list of available modes (schema / edit / view)
+   */
+  @Prop() modes: Array<string>;
+
+  /**
    * schema / edit / vue
    */
-  @Prop({ default: 'edit' }) mode;
+  @Prop({ }) mode;
 
   /**
    * Object entry entry type

@@ -43,16 +43,18 @@
       </div>
       
       <template v-else>
-        <button type="button" class="btn btn-outline-secondary btn-circle"
-          v-if="mode !== 'schema'"
-          @click="mode = 'schema'">
-          <i class="fas fa-edit"></i>
-        </button>
-        <button type="button" class="btn btn-primary btn-circle"
-          v-else
-          @click="mode = 'view'">
-          <i class="fas fa-save"></i>
-        </button>
+        <template v-if="modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1">
+          <button type="button" class="btn btn-outline-secondary btn-circle"
+            v-if="mode === 'view'"
+            @click="mode = 'edit'">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-primary btn-circle"
+            v-else
+            @click="mode = 'view'">
+            <i class="fas fa-save"></i>
+          </button>
+        </template>
       </template>
     </div>
     <div :class="{ 'p-3': standalone }">

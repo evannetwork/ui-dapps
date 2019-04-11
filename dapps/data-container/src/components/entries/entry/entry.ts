@@ -53,27 +53,20 @@ export default class EntryComponent extends mixins(EvanComponent) {
   @Prop() name: string;
 
   /**
-   * list of available modes (schema / edit / view)
-   *
-   * @class      Prop (name)
+   * Available display modes for the current user and it's roles
    */
-  @Prop({
-    default: [ 'schema', 'edit', 'view' ]
-  }) modes: Array<string>;
+  modes: Array<string> = [ 'view', 'edit', 'schema', ];
 
   /**
-   * active mode, default is the first of modes
+   * Current selected display mode
    */
-  @Prop({
-    default: 'schema'
-  }) activeMode;
+  activeMode = '';
 
   /**
-   * icons for all the availables modes
+   * Check for permitted modes
    */
-  modeIconMapping = {
-    schema: 'fas fa-cogs',
-    edit: 'fas fa-user-edit',
-    view: 'fas fa-eye',
-  };
+  created() {
+    this.modes = [ 'view', 'schema' ];
+    this.activeMode = this.modes[0];
+  }
 }

@@ -149,10 +149,8 @@
 
     <dt-entry
       v-if="activeTab > -1 && activeEntry"
-      :activeMode="activeDisplayMode"
       :address="address"
       :entry="activeEntry"
-      :modes="displayModes"
       :name="activeEntryName">
     </dt-entry>
   </div>
