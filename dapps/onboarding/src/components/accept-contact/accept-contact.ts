@@ -31,7 +31,7 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, getDomainName } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
@@ -178,8 +178,8 @@ export default class AcceptContact extends mixins(EvanComponent) {
       setTimeout(() => {
         window.location.hash = [
           '',
-          `dashboard.${ dappBrowser.getDomainName() }`,
-          `addressbook.${ dappBrowser.getDomainName() }`,
+          `dashboard.${ getDomainName() }`,
+          `addressbook.${ getDomainName() }`,
           this.inviteeAddress,
         ].join('/');
       }, 2000);

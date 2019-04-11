@@ -32,7 +32,7 @@ import { Prop } from 'vue-property-decorator';
 import axios from 'axios';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl, getDomainName } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as evanUi from '@evan.network/ui';
@@ -183,7 +183,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
     // load the terms of use origin url
     const runtime = dappBrowser.bccHelper.getCoreRuntime();
-    const termsOfUseEns = `termsofuse.${ dappBrowser.getDomainName() }`;
+    const termsOfUseEns = `termsofuse.${ getDomainName() }`;
     const termsOfUseDbcp = await runtime.description.getDescription(termsOfUseEns);
     const termsOfUseOrigin = dappBrowser.dapp.getDAppBaseUrl(
       Object.assign(termsOfUseDbcp.public, termsOfUseDbcp.private),

@@ -31,7 +31,7 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, getDomainName } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
@@ -46,12 +46,12 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     {
       title: 'digitaltwins',
       icon: 'fas fa-fingerprint text-secondary p-4 xxxl',
-      path: `digitaltwins.${ dappBrowser.getDomainName() }`,
+      path: `digitaltwins.${ getDomainName() }`,
     },
     {
       title: 'contacts',
       icon: 'fas fa-address-book text-info p-4 xxxl',
-      path: `addressbook.${ dappBrowser.getDomainName() }`,
+      path: `addressbook.${ getDomainName() }`,
     },
   ];
 }

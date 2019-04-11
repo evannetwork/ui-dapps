@@ -44,7 +44,7 @@ export default {
         "desc": "Was ist das evan.network und was kann ich damit tun?",
         "title": "Wie funktioniert evan"
       },
-      "digitaltwin": {
+      "digitaltwins": {
         "desc": "Verwalten und teilen Sie Ihre Digitalen Zwillinge",
         "title": "Meine Digitalen Zwillinge"
       }

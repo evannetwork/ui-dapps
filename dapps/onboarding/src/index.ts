@@ -27,7 +27,7 @@
 
 import Vue from 'vue';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { initializeVue } from '@evan.network/ui-vue-core';
+import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
 
 import components from './components/registry';
 import Main from './components/root/root.vue';
@@ -46,9 +46,9 @@ import translations from './i18n/tranlations';
 export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
   // load the onboarding dbcp, so we can access assets using url
   const onboardingDbcp = await dappBrowser.System
-    .import(`onboarding.${ dappBrowser.getDomainName() }!ens`);
+    .import(`onboarding.${ getDomainName() }!ens`);
   const onboardingBaseUrl = dappBrowser.dapp.getDAppBaseUrl(onboardingDbcp,
-    `${ onboardingDbcp.name }.${ dappBrowser.getDomainName() }`);
+    `${ onboardingDbcp.name }.${ getDomainName() }`);
 
   await initializeVue({
     components,
