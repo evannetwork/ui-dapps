@@ -35,7 +35,7 @@
           </h4>
         </div>
         <form class="p-4"
-          v-if="!$store.state.uiDT.isCreating"
+          v-if="!uiDT.isCreating"
           v-on:submit.prevent="createDigitalTwin">
           <div class="form-group">
             <label for="name">
@@ -67,7 +67,7 @@
           <div class="text-center mt-3 w-100">
             <button type="submit"
               class="btn btn-rounded btn-primary"
-              v-if="!$store.state.uiDT.validity.exists"
+              v-if="!uiDT.validity.exists"
               :disabled="!generalForm.isValid || checking">
               <div class="spinner-border spinner-border-sm text-light mr-3"
                 v-if="checking">

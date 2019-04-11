@@ -27,7 +27,101 @@
 
 <template>
   <div>
-    container-link
+    <div class="p-3 text-left">
+      <div class="bg-level-1 border">
+        <div class="d-flex p-3 border-bottom align-items-center">
+          <i v-if="validDTAddress && !linking"
+            class="fas fa-chevron-left clickable ml-2 mr-3"
+            @click="validDTAddress = ''">
+          </i>
+          <h4 class="m-0">
+            {{ `_digitaltwins.breadcrumbs.containerlink` | translate }}
+          </h4>
+        </div>
+
+        <template v-if="!validDTAddress">
+          <h5 class="pl-3 pr-3 pt-3">{{ `_digitaltwins.containerlink.description1` | translate }}</h5>
+          <dt-lookup-form ref="dtLookupForm"
+            :address="digitalTwinAddress"
+            :disableGlobal="true"
+            @submit="useAddress">
+          </dt-lookup-form>
+        </template>
+
+        <evan-modal ref="createDTAddress"
+          :customModal="true">
+          <template v-slot:content>
+            <dt-general ref="dtGeneralForm"
+              v-if="uiDT"
+              :uidigitaltwin="uiDT">
+            </dt-general>
+          </template>
+        </evan-modal>
+
+        <template v-if="validDTAddress">
+          <div class="text-center" v-if="linking">
+            <h4 class="mt-5 mb-3">{{ '_digitaltwins.containerlink.linking' | translate }}</h4>
+            <evan-loading></evan-loading>
+          </div>
+          <template v-else>
+            <evan-modal ref="invalidContainerModal">
+              <template v-slot:header>
+                <h5 class="modal-title">
+                  {{ `_digitaltwins.containerlink.invalid-container.title` | translate }}
+                </h5>
+              </template>
+              <template v-slot:body>
+                <p class="text-left m-0"
+                  v-html="$t(`_digitaltwins.containerlink.invalid-container.desc`, modalParams)">
+                </p>
+              </template>
+            </evan-modal>
+            <h5 class="pl-3 pr-3 pt-3">{{ `_digitaltwins.containerlink.description2` | translate }}</h5>
+            <form class="p-4" v-on:submit.prevent="linkContainer">
+              <div class="form-group">
+                <label for="name">
+                  {{ `_digitaltwins.containerlink.name.title` | translate }}
+                </label>
+                <input class="form-control" required
+                  id="name" ref="name"
+                  :placeholder="`_digitaltwins.containerlink.name.desc` | translate"
+                  v-model="containerLinkForm.name.value"
+                  v-bind:class="{ 'is-invalid' : containerLinkForm.name.error }"
+                  @blur="containerLinkForm.name.setDirty()">
+                <div class="invalid-feedback">
+                  {{ `_digitaltwins.containerlink.name.error` | translate }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="address">
+                  {{ `_digitaltwins.containerlink.address.title` | translate }}
+                </label>
+                <input class="form-control" required
+                  id="address" ref="address"
+                  :placeholder="`_digitaltwins.containerlink.address.desc` | translate"
+                  v-model="containerLinkForm.address.value"
+                  v-bind:class="{ 'is-invalid' : containerLinkForm.address.error }"
+                  @blur="containerLinkForm.address.setDirty()">
+                <div class="invalid-feedback">
+                  {{ `_digitaltwins.containerlink.address.error` | translate }}
+                </div>
+              </div>
+
+              <div class="text-center mt-3 w-100">
+                <button type="submit"
+                  class="btn btn-rounded btn-primary"
+                  :disabled="!containerLinkForm.isValid || checking">
+                  <div class="spinner-border spinner-border-sm text-light mr-3"
+                    v-if="checking">
+                  </div>
+                  {{ `_digitaltwins.containerlink.use` | translate }}
+                </button>
+              </div>
+            </form>
+          </template>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 

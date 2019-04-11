@@ -28,10 +28,16 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
+import GeneralComponent from './general/general.vue';
+import LookupFormComponent from './lookup-form/lookup-form.vue';
+
 // export them all, so other applications can access them
 export { }
 
 // map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ];
+const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'dt-general', component: GeneralComponent },
+  { name: 'dt-lookup-form', component: LookupFormComponent },
+];
 
 export default componentRegistration;

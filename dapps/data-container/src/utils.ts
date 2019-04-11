@@ -153,8 +153,6 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
       changed.entriesToSave.push(propertyKey);
       changed.changed = true;
     }
-
-    // TODO: check sharing
   });
 
   return changed;

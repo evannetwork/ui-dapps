@@ -77,14 +77,6 @@ dispatcher
     }
   })
 
-  // update permissions
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    const container = utils.getContainer(runtime, data.address);
-
-    // TODO: implement permission management
-  })
-
   // update entries
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);

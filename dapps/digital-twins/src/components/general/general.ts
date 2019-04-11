@@ -50,6 +50,16 @@ interface GeneralFormInterface extends EvanForm {
 @Component({ })
 export default class GeneralComponent extends mixins(EvanComponent) {
   /**
+   * Optional passed digital twin that should be edited.
+   */
+  @Prop({ }) uidigitaltwin;
+
+  /**
+   * Digital twin that should be used for edition
+   */
+  uiDT = null;
+
+  /**
    * formular specific variables
    */
   generalForm: GeneralFormInterface = null;
@@ -58,21 +68,21 @@ export default class GeneralComponent extends mixins(EvanComponent) {
    * Setup the form.
    */
   created() {
-    const uiDT = this.$store.state.uiDT;
+    this.uiDT = this.uidigitaltwin || this.$store.state.uiDT;
 
     this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
       name: {
-        value: uiDT.dbcp.name,
+        value: this.uiDT.dbcp.name,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.$store.state.uiDT.setData('dbcp.name', this.value);
+          vueInstance.uiDT.setData('dbcp.name', this.value);
 
           return this.value.length !== 0;
         }
       },
       description: {
-        value: uiDT.dbcp.description,
+        value: this.uiDT.dbcp.description,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.$store.state.uiDT.setData('dbcp.description', this.value);
+          vueInstance.uiDT.setData('dbcp.description', this.value);
 
           // update digitaltwin dbcp and return true, i's not required
           return true;
@@ -90,10 +100,10 @@ export default class GeneralComponent extends mixins(EvanComponent) {
    * Create the new digitaltwin
    */
   createDigitalTwin() {
-    if (!this.$store.state.uiDT.exists) {
+    if (!this.uiDT.exists) {
       dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
-        address: this.$store.state.uiDT.address,
-        dbcp: this.$store.state.uiDT.dbcp
+        address: this.uiDT.address,
+        dbcp: this.uiDT.dbcp
       });
     }
   }

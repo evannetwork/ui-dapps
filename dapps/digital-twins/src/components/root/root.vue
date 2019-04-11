@@ -122,50 +122,69 @@
             </template>
           </evan-dapp-wrapper-level-2>
 
-          <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"
+          <evan-breadcrumbs
+            :i18nScope="'_digitaltwins.breadcrumbs'"
             v-if="$route && $route.name !== 'dt-container'">
-            <!-- v-if="$route.name !== 'dt-container'" -->
             <template v-slot:content
               v-if="sideNav !== 0 && $store.state.uiDT && !$store.state.uiDT.loading && $store.state.uiDT.validity.exists">
-              <template v-if="$route.name !== 'dt-containers'">
-                <div class="mr-4">
-                  <div class="spinner-border spinner-border-sm"
-                    v-if="$store.state.uiDT.isFavoriteLoading">
+              <template v-if="!$route.name.startsWith('base-container-link')">
+                <template v-if="!$route.name.startsWith('dt-container')">
+                  <div class="mr-4">
+                    <div class="spinner-border spinner-border-sm"
+                      v-if="$store.state.uiDT.isFavoriteLoading">
+                    </div>
+                    <template v-if="!$store.state.uiDT.isFavoriteLoading">
+                      <i class="fas fa-star lg text-warning clickable"
+                        v-if="$store.state.uiDT.isFavorite"
+                        @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+                      </i>
+                      <i class="far fa-star lg clickable"
+                        v-if="!$store.state.uiDT.isFavorite"
+                        @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+                      </i>
+                    </template>
                   </div>
-                  <template v-if="!$store.state.uiDT.isFavoriteLoading">
-                    <i class="fas fa-star lg text-warning clickable"
-                      v-if="$store.state.uiDT.isFavorite"
-                      @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-                    </i>
-                    <i class="far fa-star lg clickable"
-                      v-if="!$store.state.uiDT.isFavorite"
-                      @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-                    </i>
-                  </template>
-                </div>
 
-                <button type="button" class="btn btn-primary btn-circle"
-                  @click="$store.state.uiDT.saveChanges(this, getRuntime())"
-                  :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
-                  <div class="spinner-border spinner-border-sm"
-                    v-if="$store.state.uiDT.isSaving">
+                  <button type="button" class="btn btn-primary btn-circle"
+                    @click="$store.state.uiDT.saveChanges(this, getRuntime())"
+                    :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
+                    <div class="spinner-border spinner-border-sm"
+                      v-if="$store.state.uiDT.isSaving">
+                    </div>
+                    <i class="fas fa-save" v-else></i>
+                  </button>
+                </template>
+                <template v-else>
+                  <button class="btn"
+                    @click="$refs.containerContextMenu.show();">
+                    <div class="spinner-border spinner-border-sm"
+                      v-if="$store.state.saving">
+                    </div>
+                    <i class="fas fa-chevron-down" v-else></i>
+                  </button>
+                  <div class="position-relative">
+                    <evan-dropdown ref="containerContextMenu"
+                      :alignment="'right'"
+                      :width="'300px'">
+                      <template v-slot:content>
+                        <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                          @click="
+                            evanNavigate(`${ $store.state.uiDT.address }/containerlink`)
+                            $refs.containerContextMenu.hide($event);
+                          ">
+                          <i class="fas fa-link mr-3" style="width: 16px;"></i>
+                          {{ `_digitaltwins.context-menu.link` | translate }}
+                        </a>
+                      </template>
+                    </evan-dropdown>
                   </div>
-                  <i class="fas fa-save" v-else></i>
-                </button>
-              </template>
-              <template v-else>
-                <a
-                  class="btn btn-outline-secondary btn-circle mr-3
-                    d-flex align-items-center justify-content-center"
-                  :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/container-link`">
-                  <i class="fas fa-link"></i>
-                </a>
-                <a
-                  class="btn btn-primary btn-circle
-                    d-flex align-items-center justify-content-center"
-                  :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">
-                  <i class="fas fa-plus"></i>
-                </a>
+                  <a
+                    class="btn btn-primary btn-circle
+                      d-flex align-items-center justify-content-center"
+                    :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                </template>
               </template>
             </template>
           </evan-breadcrumbs>
@@ -186,6 +205,3 @@
   export default TwinsRootComponent;
 </script>
 
-<style lang="scss" scoped>
-  @import './root';
-</style>

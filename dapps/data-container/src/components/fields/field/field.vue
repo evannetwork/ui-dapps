@@ -29,7 +29,7 @@
   <div>
     <div class="d-flex p-3 align-items-center border-bottom"
       v-if="standalone">
-      <h4 class="m-0" v-if="mode !== 'schema'">
+      <h4 class="m-0" v-if="mode === 'view'">
         {{ `_datacontainer.types.${ type }` | translate }}: {{ fieldName }}
       </h4>
       <h4 class="m-0" v-else>

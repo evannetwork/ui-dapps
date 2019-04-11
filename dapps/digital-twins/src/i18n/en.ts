@@ -32,7 +32,7 @@ export default {
     "add-digitaltwin": "Add digital Twin",
     "breadcrumbs": {
       "add": "Add",
-      "container-link": "Link Data Container",
+      "containerlink": "Link Data Container",
       "containers": "Data container overview",
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
@@ -41,12 +41,35 @@ export default {
       "templates": "Templates",
       "verifications": "Verifications"
     },
+    "containerlink": {
+      "address": {
+        "desc": "Address of the data container to be linked to the digital twin.",
+        "error": "Please enter an address!",
+        "title": "Data Container"
+      },
+      "description1": "Using the following input field, you can select an address of a digital twin into which you want to link a data container. If an existing instance already exists there, it is opened directly for you. If the address is not yet assigned, you can create a new digital twin and bind it to this address or link an existing one to this address.",
+      "description2": "Using the following input field, you can select an address of a data container that is to be linked to the digital twin.",
+      "invalid-container": {
+        "desc": "The address entered appears to be incorrect or to correspond to a contract with an invalid format. Please enter the correct address",
+        "title": "Invalid data container"
+      },
+      "linking": "Linking",
+      "name": {
+        "desc": "Alias under which the container will be stored in the digital twin.",
+        "error": "Please enter an alias",
+        "title": "Alias"
+      },
+      "use": "Link"
+    },
     "containers": {
       "create": "Create",
       "empty": "Data Container",
       "empty-desc": "No data container has yet been created for this digital Twin. Use the \"create\" or \"link\" button to create a new data container or to link an existing one.",
       "in-creation": "in creation...",
       "link": "Link"
+    },
+    "context-menu": {
+      "link": "Link data container"
     },
     "digitaltwins": "Twins",
     "dispatcher": {
@@ -101,7 +124,7 @@ export default {
     },
     "lookup": {
       "address": {
-        "desc": "Enter the address of your digital Twin (e.g.: ).",
+        "desc": "Enter the address of your digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
         "title": "Address"
       },

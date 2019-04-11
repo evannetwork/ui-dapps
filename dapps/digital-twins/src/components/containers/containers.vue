@@ -76,7 +76,7 @@
         <div class="text-center">
           <a
             class="btn btn-rounded btn-secondary font-weight-normal m-3"
-            :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/container-link`">
+            :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/containerlink`">
             {{ '_digitaltwins.containers.link' | translate }}
             <i class="fas fa-arrow-right label ml-2"></i>
           </a>

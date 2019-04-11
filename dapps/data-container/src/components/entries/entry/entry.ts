@@ -76,9 +76,4 @@ export default class EntryComponent extends mixins(EvanComponent) {
     edit: 'fas fa-user-edit',
     view: 'fas fa-eye',
   };
-
-  /**
-   * Define presets
-   */
-  created() { }
 }

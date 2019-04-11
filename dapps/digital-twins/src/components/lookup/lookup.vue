@@ -35,73 +35,11 @@
           </h4>
         </div>
 
-        <evan-modal ref="lookupModal">
-          <template v-slot:header>
-            <h5 class="modal-title">
-              {{ `_digitaltwins.lookup.${ lookupModalScope }.title` | translate }}
-            </h5>
-          </template>
-          <template v-slot:body>
-            <p class="text-left m-0"
-              v-html="$t(`_digitaltwins.lookup.${ lookupModalScope }.desc`, modalParams)">
-            </p>
-          </template>
-          <template v-slot:footer>
-            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-             v-if="lookupModalScope === 'create'"
-              @click="createDigitalTwin()">
-              {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
-            </button>
-            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-             v-if="lookupModalScope === 'purchase'"
-              @click="purchaseAdress();">
-              {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
-            </button>
-          </template>
-        </evan-modal>
-
         <h5 class="pl-3 pr-3 pt-3">{{ `_digitaltwins.lookup.description` | translate }}</h5>
 
-        <form class="p-3"
-          v-if="Object.keys(purchasingInstances).length === 0"
-          v-on:submit.prevent="checkAddress">
-          <div class="form-group">
-            <label for="address">
-              {{ `_digitaltwins.lookup.address.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="address" ref="address"
-              :placeholder="`_digitaltwins.lookup.address.desc` | translate"
-              v-model="lookupForm.address.value"
-              v-bind:class="{ 'is-invalid' : lookupForm.address.error }"
-              @blur="lookupForm.address.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_digitaltwins.lookup.address.error` | translate }}
-            </div>
-          </div>
-
-          <div class="text-center mt-3 w-100">
-            <button type="submit"
-              class="btn btn-rounded btn-primary"
-              :disabled="!lookupForm.isValid || checking">
-              <div class="spinner-border spinner-border-sm text-light mr-3"
-                v-if="checking">
-              </div>
-              {{ `_digitaltwins.lookup.title` | translate }}
-            </button>
-          </div>
-        </form>
-        <div class="text-center" v-else>
-          <h4 class="mt-5 mb-3">{{ '_digitaltwins.lookup.purchasing' | translate }}</h4>
-          <b>
-            {{
-              Object.keys(purchasingInstances)
-                .map(key => purchasingInstances[key].data.ensAddress)
-                .join(', ')
-            }}
-          </b>
-          <evan-loading></evan-loading>
-        </div>
+        <dt-lookup-form
+          @submit="openTwin">
+        </dt-lookup-form>
       </div>
     </div>
   </div>

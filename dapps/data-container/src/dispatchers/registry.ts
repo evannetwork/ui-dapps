@@ -26,11 +26,13 @@
 */
 
 import createDispatcher from './create';
+import linkDispatcher from './link';
 import shareDispatcher from './share';
 import updateDispatcher from './update';
 
 export {
   createDispatcher,
+  linkDispatcher,
   shareDispatcher,
   updateDispatcher,
 }

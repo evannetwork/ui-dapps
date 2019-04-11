@@ -42,7 +42,7 @@
             :alignment="'right'"
             :width="'300px'">
             <template v-slot:content>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
                   editSchema = false;
                   $refs.containerContextMenu.hide($event);
@@ -50,7 +50,7 @@
                 <i class="fas fa-edit mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.edit-dbcp` | translate }}
               </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
                   $refs.shareModal.show()
                   $refs.containerContextMenu.hide($event);
@@ -58,15 +58,15 @@
                 <i class="fas fa-share-alt mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.context-menu.share` | translate }}
               </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
-                  evanNavigate(`digitaltwins.${ dapp.domainName }/container-link/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                  evanNavigate(`digitaltwins.${ dapp.domainName }/containerlink/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
                   $refs.containerContextMenu.hide($event);
                 ">
                 <i class="fas fa-link mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.context-menu.link` | translate }}
               </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
                   evanNavigate(`create/${ dapp.contractAddress }`)
                   $refs.containerContextMenu.hide($event);
@@ -217,22 +217,22 @@
                   @blur="dbcpForm.description.setDirty()">
                 </textarea>
               </div>
-            </form>
 
-            <div class="text-center">
-              <evan-loading v-if="$store.state.saving"></evan-loading>
-              <template v-else>
-                <button
-                  class="btn btn-rounded btn-outline-secondary mr-3"
-                  @click="editSchema = true">
-                  {{ `_datacontainer.createForm.back` | translate }}
-                </button>
-                <button type="submit"
-                  class="btn btn-rounded btn-primary">
-                  {{ `_datacontainer.createForm.save` | translate }}
-                </button>
-              </template>
-            </div>
+              <div class="text-center">
+                <evan-loading v-if="$store.state.saving"></evan-loading>
+                <template v-else>
+                  <button
+                    class="btn btn-rounded btn-outline-secondary mr-3"
+                    @click="editSchema = true">
+                    {{ `_datacontainer.createForm.back` | translate }}
+                  </button>
+                  <button type="submit"
+                    class="btn btn-rounded btn-primary">
+                    {{ `_datacontainer.createForm.save` | translate }}
+                  </button>
+                </template>
+              </div>
+            </form>
           </div>
         </div>
       </div>

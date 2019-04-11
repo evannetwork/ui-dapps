@@ -32,7 +32,7 @@ export default {
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "breadcrumbs": {
       "add": "Hinzufügen",
-      "container-link": "Daten Container verlinken",
+      "containerlink": "Daten Container verlinken",
       "containers": "Datencontainer Übersicht",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
@@ -41,12 +41,35 @@ export default {
       "templates": "Vorlagen",
       "verifications": "Verifizierungen"
     },
+    "containerlink": {
+      "address": {
+        "desc": "Adresse des Daten Containers der in den digitalen Zwilling gelinkt werden soll.",
+        "error": "Bitte geben Sie eine Adresse ein!",
+        "title": "Daten Container"
+      },
+      "description1": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines digitalen Zwillings auszuwählen, in den Sie einen Datencontainer linken wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
+      "description2": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines Datencontainers auszuwählen, der in den digitalen Zwilling gelinkt werden soll.",
+      "invalid-container": {
+        "desc": "Die eingebene Adresse scheint falsch oder einen Vertrag mit ungültigem Format zu entsprechen. Bitte geben Sie die korrekte Adresse ein.",
+        "title": "Ungültiger Daten Container"
+      },
+      "linking": "Wird Verlinkt",
+      "name": {
+        "desc": "Alias, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
+        "error": "Bitte geben Sie einen Alias ein!",
+        "title": "Alias"
+      },
+      "use": "Verlinken"
+    },
     "containers": {
       "create": "Erstellen",
       "empty": "Daten Container",
       "empty-desc": "Für diese digitale Zwilling wurde noch kein Daten Container angelegt. Nutzen Sie den \"erstellen\" oder \"verlinken\" Button, um einen neuen Daten Container zu erstellen oder einen bestehenden zu verlinken.",
       "in-creation": "wird erstellt...",
       "link": "Verlinken"
+    },
+    "context-menu": {
+      "link": "Daten Container verlinken"
     },
     "digitaltwins": "Digitalen Zwillinge",
     "dispatcher": {
@@ -111,16 +134,16 @@ export default {
       },
       "create": {
         "action": "Digitale Zwilling erstellen",
-        "desc": "Für diese Adresse existiert noch keine digitale Zwilling. Möchten Sie eine neue für diese Adresse erstellen?",
+        "desc": "Für diese Adresse existiert noch keinen digitale Zwilling. Möchten Sie eine neue für diese Adresse erstellen?",
         "title": "Nicht verfügbar"
       },
-      "description": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse für eine digitale Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
+      "description": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse für einen digitale Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
       "error": {
-        "desc": "Die angeforderte Addresse enthält keine valide digitale Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
+        "desc": "Die angeforderte Adresse enthält keine valide digitale Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"
       },
       "missing-balance": {
-        "desc": "Bevor Sie eine digitale Zwilling erstellen können, müssen Sie die angegeben Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
+        "desc": "Bevor Sie einen digitale Zwilling erstellen können, müssen Sie die angegeben Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
         "title": "Adresse verfügbar"
       },
       "not-buyable": {
@@ -129,7 +152,7 @@ export default {
       },
       "purchase": {
         "action": "Adresse kaufen",
-        "desc": "Bevor Sie eine digitale Zwilling erstellen können, müssen Sie die angegeben Root-Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice }EVE</b> kaufen?",
+        "desc": "Bevor Sie einen digitale Zwilling erstellen können, müssen Sie die angegeben Root-Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice }EVE</b> kaufen?",
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
@@ -137,7 +160,7 @@ export default {
     },
     "overview": {
       "empty": "Favoriten & letzte Zwillinge",
-      "empty-desc": "Sie haben noch keine digitalen Zwillinge geöffnet oder favoritisiert. Nutzen Sie \"öffnen\" Button, um eine digitale Zwilling zu öffnen oder um eine neue zu erstellen.",
+      "empty-desc": "Sie haben noch keine digitalen Zwillinge geöffnet oder favoritisiert. Nutzen Sie \"öffnen\" Button, um einen digitale Zwilling zu öffnen oder um eine neue zu erstellen.",
       "favorites": "Meine Favoriten",
       "lastTwins": "Zuletzt geöffnet",
       "title": "Übersicht"

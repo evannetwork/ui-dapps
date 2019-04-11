@@ -158,18 +158,18 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Load digitaltwin data. Checks for digitaltwin changes and if a digitaltwin is opened.
    */
   async loadDigitalTwin() {
-    const digitaltwinAddress = (<any>this).$route.params.digitaltwinAddress;
+    const digitalTwinAddress = (<any>this).$route.params.digitalTwinAddress;
     let uiDT: EvanUIDigitalTwin = this.$store.state.uiDT;
 
     // load the digitaltwin
-    if (digitaltwinAddress && (!uiDT || (uiDT && !uiDT.loading))) {
-      if (!uiDT || digitaltwinAddress !== uiDT.address) {
+    if (digitalTwinAddress && (!uiDT || (uiDT && !uiDT.loading))) {
+      if (!uiDT || digitalTwinAddress !== uiDT.address) {
         // if digitaltwin was set, destroy it
         uiDT && uiDT.destroy(this);
 
         // create new instance of the evan ui digitaltwin, that wraps general ui and navigation
         // functions
-        this.$set(this.$store.state, 'uiDT', new EvanUIDigitalTwin(digitaltwinAddress));
+        this.$set(this.$store.state, 'uiDT', new EvanUIDigitalTwin(digitalTwinAddress));
 
         // load digitaltwin specific data
         await this.$store.state.uiDT.initialize(this, identitityUtils.getRuntime(this));

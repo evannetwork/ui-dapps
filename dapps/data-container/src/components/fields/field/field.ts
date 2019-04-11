@@ -65,6 +65,11 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() form: FieldFormInterface;
 
   /**
+   * data contract listentries name, used for loading entries
+   */
+  @Prop() fieldName: string;
+
+  /**
    * formular specific variables
    */
   fieldForm: FieldFormInterface = null;

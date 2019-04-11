@@ -27,7 +27,7 @@
 
 <template>
   <div>
-
+    verifications
   </div>
 </template>
 

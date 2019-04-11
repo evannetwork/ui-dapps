@@ -38,6 +38,6 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 @Component({ })
 export default class ContainersComponent extends mixins(EvanComponent) {
   created() {
-
+    
   }
 }

@@ -60,12 +60,18 @@ export default {
       "templates": "Templates",
       "verifications": "Verifications"
     },
+    "context-menu": {
+      "clone": "Clone",
+      "link": "Link",
+      "share": "Share"
+    },
     "create-question": {
       "action": "Create",
       "desc": "Have you configured all data correctly and would you like to continue? After the creation, the configurations of the different data containers can still be adapted",
       "title": "Create data container"
     },
     "createForm": {
+      "back": "Go Back",
       "base-template": "Base Template",
       "container-configuration": "Data container configuration",
       "continue": "Continue",
@@ -86,14 +92,15 @@ export default {
         "desc": "Template of the data container",
         "title": "Template"
       },
-      "title": "Create data container",
-      "back": "Go Back"
+      "title": "Create data container"
     },
     "dispatcher": {
       "create": "Creating Data container...",
-      "update": "Updating Data container...",
+      "link": "Link data container...",
       "share": "Share Data Container...",
+      "update": "Updating Data container..."
     },
+    "edit": "Edit",
     "edit-dbcp": "Adjust Container Description",
     "edit-schema": "Data area schema definition",
     "entry": {
@@ -127,23 +134,23 @@ export default {
     },
     "share": {
       "action": "Share",
+      "bmail": {
+        "body": "Hello,<br><br>You have been invited by <b>{alias}</b> into a data container:<br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
+        "title": "Invitation to Data Container"
+      },
       "desc": "Send this data container to people in your address book and specify their access permissions.",
       "entry": "Data area",
       "read": "Read",
       "read-write": "Write",
+      "subject": {
+        "desc": "Specify a subject for this data container. (e.g.: Digital Twin name, Data Container Name)",
+        "error": "Please enter a subject!",
+        "title": "Subject"
+      },
       "title": "Share",
       "user": {
         "desc": "User to whom the selected data should be shared.",
         "title": "User"
-      },
-      "subject": {
-        "title": "Subject",
-        "desc": "Specify a subject for this data container. (e.g.: Digital Twin name, Data Container Name)",
-        "error": "Please enter a subject!"
-      },
-      "bmail": {
-        "title": "Invitation to Data Container",
-        "body": "Hello,<br><br>You have been invited by <b>{alias}</b> into a data container:<br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
       }
     },
     "template-cache": {
@@ -159,12 +166,6 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
-    },
-    "edit": "Edit",
-    "context-menu": {
-      "link": "Link",
-      "clone": "Clone",
-      "share": "Share"
     }
   }
 }

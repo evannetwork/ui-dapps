@@ -60,12 +60,18 @@ export default {
       "templates": "Vorlagen",
       "verifications": "Verifizierungen"
     },
+    "context-menu": {
+      "clone": "Klonen",
+      "link": "Verlinken",
+      "share": "Teilen"
+    },
     "create-question": {
       "action": "Erstellen",
       "desc": "Haben Sie alles Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
       "title": "Datencontainer Erstellen"
     },
     "createForm": {
+      "back": "Zurück",
       "base-template": "Basis-Vorlage",
       "container-configuration": "Datencontainer Konfiguration",
       "continue": "Weiter",
@@ -86,14 +92,15 @@ export default {
         "desc": "Vorlage des Datencontainers",
         "title": "Vorlage"
       },
-      "title": "Datencontainer Erstellen",
-      "back": "Zurück"
+      "title": "Datencontainer Erstellen"
     },
     "dispatcher": {
       "create": "Datencontainer wird erstellt...",
-      "update": "Datencontainer wird aktualisiert...",
+      "link": "Datencontainer wird verlinkt...",
       "share": "Datencontainer wird geteilt...",
+      "update": "Datencontainer wird aktualisiert..."
     },
+    "edit": "Bearbeiten",
     "edit-dbcp": "Container Beschreibung anpassen",
     "edit-schema": "Datenbereich Schema Definition",
     "entry": {
@@ -127,23 +134,23 @@ export default {
     },
     "share": {
       "action": "Teilen",
+      "bmail": {
+        "body": "Guten Tag,<br><br>Sie wurden von <b>{alias}</b> in einen Daten Container eingeladen: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Einladung in Daten Container"
+      },
       "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
       "entry": "Datenbereich",
       "read": "Lesen",
       "read-write": "Schreiben",
+      "subject": {
+        "desc": "Geben Sie einen Betreff zu diesem Daten Container an. (z.B.: Digitaler Zwilling Zugehörigkeit, Daten Container Name)",
+        "error": "Bitte geben Sie einen Betreff ein!",
+        "title": "Betreff"
+      },
       "title": "Teilen",
       "user": {
         "desc": "Nutzer dem die ausgewählten Daten geteilt werden sollen.",
         "title": "Nutzer"
-      },
-      "subject": {
-        "title": "Betreff",
-        "desc": "Geben Sie einen Betreff zu diesem Daten Container an. (z.B.: Digitaler Zwilling Zugehörigkeit, Daten Container Name)",
-        "error": "Bitte geben Sie einen Betreff ein!",
-      },
-      "bmail": {
-        "title": "Einladung in Daten Container",
-        "body": "Guten Tag,<br><br>Sie wurden von <b>{alias}</b> in einen Daten Container eingeladen: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
       }
     },
     "template-cache": {
@@ -159,12 +166,6 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
-    },
-    "edit": "Bearbeiten",
-    "context-menu": {
-      "link": "Verlinken",
-      "clone": "Klonen",
-      "share": "Teilen"
     }
   }
 }

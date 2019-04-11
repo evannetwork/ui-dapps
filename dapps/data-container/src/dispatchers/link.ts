@@ -26,39 +26,37 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { Dispatcher, } from '@evan.network/ui';
-import { getRuntime } from '../utils';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+
+import * as utils from '../utils';
 
 const dispatcher = new Dispatcher(
-  `digitaltwins.${ dappBrowser.getDomainName() }`,
-  'ensDispatcher',
+  `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+  'linkDispatcher',
   40 * 1000,
-  '_digitaltwins.dispatcher.create'
+  '_datacontainer.dispatcher.link'
 );
 
 dispatcher
-  .step(async (instance, data) => {
-    const runtime = getRuntime(instance.runtime);
-    const splitAddr = data.ensAddress.split('.');
-    const topLevelAdress = splitAddr.slice(splitAddr.length - 2, splitAddr.length)
-      .join('.');
+  .step(async (instance: DispatcherInstance, data: any) => {
+    // set the digital twin instance
+    const runtime = utils.getRuntime(instance.runtime);
+    const container = utils.getContainer(runtime, data.containerAddress);
 
-    // purchaser the ens address
-    await runtime.nameResolver.claimAddress(
-      topLevelAdress,
-      instance.runtime.activeAccount,
-      instance.runtime.activeAccount,
-      await runtime.nameResolver.getPrice(topLevelAdress)
+    const digitalTwin = new bcc.DigitalTwin(
+      <any>runtime,
+      {
+        accountId: runtime.activeAccount,
+        address: data.digitalTwinAddress,
+        containerConfig: { accountId: runtime.activeAccount, },
+        factoryAddress: utils.twinFactory,
+      }
     );
-  })
-  .step(async (instance, data) => {
-    // add the ens address to your favorites list
-    await instance.runtime.profile.addBcContract('evan-ens-management', data.ensAddress, { });
 
-    // store profile contracts
-    await instance.runtime.profile.storeForAccount(instance.runtime.profile.treeLabels.contracts);
+    // map the entry into the digital twin under the new name
+    await digitalTwin.setEntry(data.name, data.containerAddress, bcc.DigitalTwinEntryType.Container);
   });
-
 
 export default dispatcher;

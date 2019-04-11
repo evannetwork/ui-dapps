@@ -461,16 +461,18 @@ export default class EvanUIDigitalTwin {
       .filter(container => container.creating)
       .map(container => container.dispatcherInstanceId);
     this.containers.forEach(container => container.loading = false);
-    this.containers = this.containers.filter(container => !container.creating);
+    this.containers = this.containers.filter(container =>
+      !(container.creating || container.linking));
 
     // search for instances and containers specific for this twin
     Object.keys(instances).forEach((instanceKey: string) => {
       const instance: DispatcherInstance = instances[instanceKey];
 
       // if an container gets created for this digital twin, add it to the containers list
-      if (instance.dispatcher.name === 'createDispatcher' &&
-        instance.data.digitalTwinAddress === this.address ||
-        instance.data.digitalTwinAddress === this.contractAddress) {
+      if ((instance.dispatcher.name === 'createDispatcher' ||
+           instance.dispatcher.name === 'linkDispatcher') &&
+        (instance.data.digitalTwinAddress === this.address ||
+        instance.data.digitalTwinAddress === this.contractAddress)) {
         // remove the create instance, it's always running
         if (previousCreateInstances.indexOf(instance.id)) {
           previousCreateInstances.splice(instance.id, 1);
@@ -478,7 +480,7 @@ export default class EvanUIDigitalTwin {
 
         // add the container including the creating flag, so the ui will be locked, but the
         // container will be displayed
-        this.containers.push({
+        const loadingContainer: any = {
           creating: true,
           description: {
             name: instance.data.name,
@@ -488,7 +490,21 @@ export default class EvanUIDigitalTwin {
           dispatcherInstanceId: instance.id,
           loading: true,
           name: instance.data.name,
-        });
+        }
+
+        // if the container gets linked, it already exists, so we can add a navigation path
+        if (instance.dispatcher.name === 'linkDispatcher') {
+          loadingContainer.creating = false;
+          loadingContainer.linking = true;
+          loadingContainer.address = instance.data.containerAddress;
+          loadingContainer.path = [
+            this.address,
+            `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+            loadingContainer.address,
+          ].join('/');
+        }
+
+        this.containers.push(loadingContainer);
       } else {
         // check for containers, that are bound to this twin and check for loading
         this.containers.forEach((container: any) => {

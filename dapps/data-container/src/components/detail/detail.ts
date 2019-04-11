@@ -257,6 +257,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
         });
 
         await (new ContainerCache(runtime.activeAccount)).delete((<any>this).dapp.contractAddress);
+        this.editSchema = true;
         this.loading = false;
       });
     }

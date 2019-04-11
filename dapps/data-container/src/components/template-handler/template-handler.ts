@@ -254,7 +254,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
 
       // create a new empty data set
       const entry: any = {
-        $id: `${ this.entryForm.name.value }_schema`,
+        // $id: `${ this.entryForm.name.value }_schema`,
         dataSchema: { type: this.entryForm.type.value, },
         permissions: { 0: ['set'] },
         type: this.entryForm.type.value === 'array' ? 'list' : 'entry'
@@ -284,12 +284,16 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * Restore latest template from cache
    */
   async restoreTemplate() {
+    // submit the cached templated, update the parent components
     this.template = { ...this.cachedTemplate };
     this.$emit('update:template', this.template);
-    await this.containerCache.delete(this.address);
     utils.enableDTSave();
 
-    // trigger a rerender, so the current formular will be
+    // clear the cached templated
+    this.cachedTemplate = null;
+    await this.containerCache.delete(this.address);
+
+    // trigger a rerender, so the current formular will be up to date
     const activeTab = this.activeTab;
     this.activeTab = -2;
     this.$nextTick(() => this.activateTab(activeTab));
@@ -316,14 +320,26 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * @param      {any}  entry   the entry that should be checked
    */
   ensureEntryValues() {
-    // add an empty value list and an addValue object, the addValue object is used for new
-    // elements formular
-    if (this.activeEntry.type === 'list') {
-      this.activeEntry.value = this.activeEntry.value || [ ];
-      this.activeEntry.addValue = this.activeEntry.addValue ||
-        (this.activeEntry.dataSchema.items.type === 'object' ? { } : '');
-    } else if (this.activeEntry.type === 'object') {
-      this.activeEntry.value = this.activeEntry.value || { };
+    switch (this.activeEntry.dataSchema.type) {
+      // add an empty value list and an addValue object, the addValue object is used for new
+      case 'array': {
+        this.activeEntry.value = this.activeEntry.value || [ ];
+        this.activeEntry.addValue = this.activeEntry.addValue ||
+          (this.activeEntry.dataSchema.items.type === 'object' ? { } : '');
+        break;
+      }
+      case 'object': {
+        this.activeEntry.value = this.activeEntry.value || { };
+        break;
+      }
+      case 'string': {
+        this.activeEntry.value = this.activeEntry.value || '';
+        break;
+      }
+      case 'number': {
+        this.activeEntry.value = this.activeEntry.value || 0;
+        break;
+      }
     }
 
     // redefine the object and bind new watchers

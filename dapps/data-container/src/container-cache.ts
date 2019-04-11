@@ -94,6 +94,6 @@ export default class ContainerCache {
    *                               ...)
    */
   async delete(id: string) {
-    await (<any>this.db).templates.delete(id);
+    await (<any>this.db).templates.delete(this.getEntryId(id));
   }
 }

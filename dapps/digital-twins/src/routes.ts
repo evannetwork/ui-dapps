@@ -38,21 +38,23 @@ import LookupComponent from './components/lookup/lookup.vue';
 import ContainersComponent from './components/containers/containers.vue';
 import ContainerLinkComponent from './components/container-link/container-link.vue';
 
-const dtPath = (path) => `:digitaltwinAddress/${ path }`;
+const dtPath = (path) => `:digitalTwinAddress/${ path }`;
 
 // map them to element names, so they can be used within templates
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { name: 'base-start',          component: StartComponent,                    path: '', },
-  { name: 'base-overview',       component: OverviewComponent,                 path: 'overview', },
-  { name: 'base-templates',      component: TemplatesComponent,                path: 'templates', },
-  { name: 'base-lookup',         component: LookupComponent,                   path: 'lookup', },
-  { name: 'dt-general',          component: DigitalTwinGeneralComponent,       path: `:digitaltwinAddress`, },
-  { name: 'dt-verifications',    component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
-  { name: 'dt-containers',       component: ContainersComponent,               path: dtPath('containers'), },
-  { name: 'dt-container-link',   component: ContainerLinkComponent,            path: dtPath('container-link'), },
-  { name: 'dt-container-link2',  component: ContainerLinkComponent,            path: dtPath('container-link/:containerAddress'), },
-  { name: 'dt-container',        component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
+  { name: 'base-start',           component: StartComponent,                    path: '', },
+  { name: 'base-overview',        component: OverviewComponent,                 path: 'overview', },
+  { name: 'base-templates',       component: TemplatesComponent,                path: 'templates', },
+  { name: 'base-lookup',          component: LookupComponent,                   path: 'lookup', },
+  { name: 'base-container-link',  component: ContainerLinkComponent,            path: 'containerlink' },
+  { name: 'base-container-link2', component: ContainerLinkComponent,            path: 'containerlink/:containerAddress' },
+  { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: `:digitalTwinAddress`, },
+  { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
+  { name: 'dt-container-link3',   component: ContainerLinkComponent,            path: dtPath('containerlink') },
+  { name: 'dt-container-link4',   component: ContainerLinkComponent,            path: dtPath('containerlink/:containerAddress') },
+  { name: 'dt-containers',        component: ContainersComponent,               path: dtPath('containers'), },
+  { name: 'dt-container',         component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
 ];
 /* tslint:enable */
 
