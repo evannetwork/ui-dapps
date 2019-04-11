@@ -6,7 +6,7 @@
       "files": [
         "compiled.js"
       ],
-      "origin": "QmQ65v9NCVNXvqkS9Kd75z9G1bqSGSNmgm1xdhc8NPvRep",
+      "origin": "QmNjJin1ZYqhwv7R5nsKTgL3aTE8vRYRgpSQxSFcpcRtWe",
       "type": "library"
     },
     "dbcpVersion": 2,
@@ -33,7 +33,7 @@
       "1.3.0": "QmP672mCVAERiRyV6gb3YQisBDzhXr2ttVM7xxkeSmBoU9",
       "1.4.0": "QmP672mCVAERiRyV6gb3YQisBDzhXr2ttVM7xxkeSmBoU9",
       "1.5.0": "QmP672mCVAERiRyV6gb3YQisBDzhXr2ttVM7xxkeSmBoU9",
-      "2.0.0": "QmP672mCVAERiRyV6gb3YQisBDzhXr2ttVM7xxkeSmBoU9"
+      "2.0.0": "QmaHqR4PGkiSnpUTLQFw3rH4DydtheDpmHHi5urScmuLVW"
     }
   }
 }
