@@ -125,7 +125,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     await this.initialize();
 
-    this.valuesChanged = ($event) => this.enableSave = true;
+    this.valuesChanged = (($event) => this.enableSave = true).bind(this);
     // watch for saving updates
     this.savingWatcher = dispatchers.updateDispatcher.watch(async () => {
       const instances = await dispatchers.updateDispatcher.getInstances(runtime);
@@ -207,7 +207,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
         value: this.description.description,
         validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
           vueInstance.enableSave = true;
-          return this.value.length !== 0;
+          return true;
         }
       },
       img: {

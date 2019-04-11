@@ -174,7 +174,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     }
 
     // watch for changes, so the internal values can be cached
-    this.valuesChanged = ($event) => this.cacheChanges = true;
+    this.valuesChanged = (($event) => this.$set(this, 'enableSave', true)).bind(this);
     window.addEventListener('dt-value-changed', this.valuesChanged);
   }
 
@@ -224,26 +224,38 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * @param      {boolean}  rerender   trigger content rerender on tab switch
    */
   activateTab(activeTab: number, rerender = true) {
-    if (activeTab !== -1) {
-      this.activeEntryName = Object.keys(this.template.properties)[activeTab];
-      this.activeEntry = this.template.properties[this.activeEntryName];
+    const beforeTab = this.activeTab;
+    const updateActiveEntry = () => {
+      // save the latest value
+      if (beforeTab !== -1 && this.activeEntry && this.activeEntryName) {
+        this.template.properties[this.activeEntryName] = this.activeEntry;
+      }
 
-      // ensure correct breadcrumb translations
-      const customTranslation = { };
-      customTranslation[ `_datacontainer.breadcrumbs.${ this.activeEntryName }`] =
-        this.activeEntryName;
+      if (activeTab !== -1) {
+        this.activeEntryName = Object.keys(this.template.properties)[activeTab];
+        this.activeEntry = this.template.properties[this.activeEntryName];
 
-      (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+        // ensure correct breadcrumb translations
+        const customTranslation = { };
+        customTranslation[ `_datacontainer.breadcrumbs.${ this.activeEntryName }`] =
+          this.activeEntryName;
 
-      // be sure, that value and addValue params are added
-      this.ensureEntryValues();
-    }
+        (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+
+        // be sure, that value and addValue params are added
+        this.ensureEntryValues();
+      }
+    };
 
     if (rerender) {
       // force rerendering of ajv and field components and set the specified tab
       this.activeTab = -2;
-      this.$nextTick(() => this.activeTab = activeTab);
+      this.$nextTick(() => {
+        updateActiveEntry();
+        this.activeTab = activeTab;
+      });
     } else {
+      updateActiveEntry();
       this.activeTab = activeTab;
     }
 
@@ -275,6 +287,9 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         // add the items schema, including the array type, will be defined only ontime, at entry
         // creation
         entry.dataSchema.items = { type: this.entryForm.arrayType.value, };
+        if (this.entryForm.arrayType.value === 'object') {
+          entry.dataSchema.items.properties = { };
+        }
       }
 
       this.template.properties[this.entryForm.name.value] = entry;

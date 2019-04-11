@@ -82,8 +82,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
   fieldTypes: Array<string> = [
     'string',
     'number',
-    'files',
-    'images',
+    // 'files',
+    // 'images',
   ];
 
   created() {
