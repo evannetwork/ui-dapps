@@ -33,27 +33,64 @@
   .all-transition {
     transition: 0.3s ease-out all;
   }
+
+  .animate-hop {
+    animation: jump 1.5s ease 0s infinite normal;
+
+    &:hover {
+      animation: jump 1.5s ease 0s 1 normal;
+    }
+  }
 }
 
 @keyframes evanHeartbeat {
   0% {
     -webkit-transform: scale(0);
-    opacity: 0
+
+    opacity: 0;
   }
   25% {
-    -webkit-transform: scale(.1);
-    opacity: .1
+    -webkit-transform: scale(0.1);
+
+    opacity: 0.1;
   }
   50% {
-    -webkit-transform: scale(.5);
-    opacity: .3
+    -webkit-transform: scale(0.5);
+
+    opacity: 0.3;
   }
   75% {
-    -webkit-transform: scale(.8);
-    opacity: .5
+    -webkit-transform: scale(0.8);
+
+    opacity: 0.5;
   }
   100% {
     -webkit-transform: scale(1);
-    opacity: 0
+
+    opacity: 0;
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
