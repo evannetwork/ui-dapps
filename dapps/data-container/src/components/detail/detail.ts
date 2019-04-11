@@ -219,7 +219,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
     let subject = [
       (<any>this).$t('_datacontainer.breadcrumbs.datacontainer.digitaltwin'),
       `: ${ this.description.name }`,
-      this.digitalTwinAddress ? `${ this.digitalTwinAddress } - ` : ''
+      this.digitalTwinAddress ? ` - ${ this.digitalTwinAddress }` : ''
     ].join('');
 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {

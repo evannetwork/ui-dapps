@@ -43,6 +43,11 @@ export default class EntryComponent extends mixins(EvanComponent) {
   @Prop() address: string;
 
   /**
+   * Permissions for the logged in user and this entry (container.getContainerShareConfigForAccount)
+   */
+  @Prop() permissions: any;
+
+  /**
    * data container entry (metadata, array, ...)
    */
   @Prop() entry: bcc.ContainerTemplateProperty;
@@ -55,7 +60,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
   /**
    * Available display modes for the current user and it's roles
    */
-  modes: Array<string> = [ 'view', 'edit', 'schema', ];
+  modes: Array<string> = null;
 
   /**
    * Current selected display mode
@@ -66,7 +71,29 @@ export default class EntryComponent extends mixins(EvanComponent) {
    * Check for permitted modes
    */
   created() {
-    this.modes = [ 'view', 'schema' ];
+    if (this.address === 'create') {
+      this.modes = [ 'schema', 'view', ];
+    } else {
+      const read = this.permissions.read || [ ];
+      const write = this.permissions.readWrite || [ ];
+      this.modes = [ ];
+
+      // check for read permissions
+      if (this.permissions.isOwner ||
+          read.indexOf(this.name) !== -1 ||
+          write.indexOf(this.name) !== -1) {
+        this.modes.push('view');
+      }
+
+      // add schema mode, when the user is the owner
+      if (this.permissions.isOwner) {
+        this.modes.push('schema');
+      // else check for read write permissions
+      } else if (write.indexOf(this.name) !== -1) {
+        this.modes.push('edit');
+      }
+    }
+
     this.activeMode = this.modes[0];
   }
 }

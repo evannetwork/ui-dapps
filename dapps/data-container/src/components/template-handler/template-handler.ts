@@ -121,6 +121,11 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   loading = false;
 
   /**
+   * Permissions for the current account
+   */
+  permissions = null;
+
+  /**
    * Initialize and try to restore latest cached template
    */
   async created() {
@@ -138,6 +143,20 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         value: this.arrayTypes[0]
       },
     }));
+
+    // load permissions for the selected container
+    if (this.address !== 'create') {
+      this.loading = true;
+
+      const runtime = utils.getRuntime(this);
+      const container = utils.getContainer(runtime, this.address);
+
+      // load the owner for the contract
+      this.permissions = await container.getContainerShareConfigForAccount(runtime.activeAccount);
+      this.permissions.isOwner = (await container.getOwner()) === runtime.activeAccount;
+
+      this.loading = false;
+    }
 
     // auto focus property name input
     if (Object.keys(this.template.properties).length === 0) {
