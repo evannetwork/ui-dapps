@@ -9,7 +9,7 @@
       "files": [
         "favorites.js"
       ],
-      "origin": "QmSwp1bUQDA7cfevTj9Ybwb8yar913FXr1R7Txrb3Atshc",
+      "origin": "QmWC6TNKLg9gZVQKTFWDwiPJE8QRHj4W7MSreqhAWAN3KZ",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
@@ -33,7 +33,7 @@
       "evan",
       "library"
     ],
-    "version": "1.3.0",
+    "version": "1.5.0",
     "versions": {
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
       "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
@@ -42,7 +42,7 @@
       "1.0.2": "QmYgSARppJeknNRQpaj5a5TMMBohyLRP59iCRUthkg4RaS",
       "1.1.0": "QmURmMvKMwnsqVkaAwZnWRZ6JNrUA2HjDbQrzh8ccGXT2t",
       "1.2.0": "QmaRFqW48Jq8VnyBPZj5C4Uat3Qvg3uJnpmDK7RCNQm5wQ",
-      "1.3.0": "Qmcu5owo8RecmiYZiv7w7Hsn1UWd8Bvc7Qx7Q4avAzAQuc"
+      "1.3.0": "QmQHkn1fsKFtga4KMMWBfAnbj9SXbdgNapNANzBke2a5xF"
     }
   }
 }

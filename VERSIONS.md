@@ -2,15 +2,21 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 2.1.0
+### Features
+- use correct imports for evan.network projects (e.g. replace `import * as bcc from 'bcc'` with `import * as bcc from '@evan.network/api-blockchain-core;`)
+- support `iconic` and evan.network angular dapps wrapped in `.evan-angular` class 
 - load terms of use from external `termsofuse.evan` dapp
 - onboarding
   - add `termsofuse` dapp
 - verifications
   - support ENS addresses
-- use correct imports for evan.network projects (e.g. replace `import * as bcc from 'bcc'` with `import * as bcc from '@evan.network/api-blockchain-core;` )
-
-### Fixes
-### Deprecations
+- profile
+  - add payment channel management
+  - credit card eve buy process
 
 
 ## Version 2.0.0

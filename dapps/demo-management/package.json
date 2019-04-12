@@ -15,5 +15,5 @@
     "build": "cd ../.. && npm run angular-build dapps/demo-management"
   },
   "typings": "dist/index.d.ts",
-  "version": "1.1.0"
+  "version": "1.5.0"
 }

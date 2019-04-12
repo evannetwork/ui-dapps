@@ -32,7 +32,7 @@
       "dapp",
       "evan"
     ],
-    "version": "1.3.0",
+    "version": "1.5.0",
     "versions": {
       "0.1.0": "QmdyLJbk7s8zbV7YipG72Ts2RHmkSyTENJCzfvVXMKQcpd",
       "0.9.0": "QmVtwoB8qs2bDB6Z4VHBsTwdMcuHND9j1U6Nag4VRcMhDK",
@@ -41,7 +41,7 @@
       "1.0.2": "QmRf8z6qwMWvpsDB7eF49bNwymrzg6iSUQonzLkV14PZXr",
       "1.1.0": "QmdLQH3r3HVNiEvF8n2gMk3XvcqoebRUD3Zed9Ch3s36wo",
       "1.2.0": "QmRC7SGXN2mVGx2co7aHLGcAjqKWabpJyQ6L5fdruWNyXK",
-      "1.3.0": "QmbhpzD4GXpmmtWsR5HsWFcjTFqcM1SkiD3JJ4gv5jWSad"
+      "1.3.0": "QmQoxDpCom98qJtAtwSSrG3H5sehCDWdTZhmCTtZ6Jhac9"
     }
   }
 }

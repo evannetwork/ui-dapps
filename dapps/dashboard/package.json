@@ -14,6 +14,6 @@
   "scripts": {
     "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
   },
-  "typings": "src/index.ts",
-  "version": "1.3.0"
+  "typings": "dist/index.d.ts",
+  "version": "1.5.0"
 }

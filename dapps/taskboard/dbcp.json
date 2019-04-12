@@ -3,8 +3,8 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^2.0.0",
-        "angular-libs": "^2.0.0"
+        "angular-core": "^2.1.0",
+        "angular-libs": "^2.1.0"
       },
       "entrypoint": "taskboard.js",
       "files": [
@@ -35,7 +35,7 @@
       "dapp",
       "evan"
     ],
-    "version": "2.0.0",
+    "version": "2.1.0",
     "versions": {
       "0.1.0": "QmV5iJacr3hS5otHGn3gCfL1ZNtETi15qF1QvwT2BrFjQX",
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
