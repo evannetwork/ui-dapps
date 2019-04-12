@@ -6,7 +6,7 @@
 ### Deprecations
 
 
-## 1.0.0
+## Version 1.0.0
 ### Features
 - add browserify builds
 - add dapp lib builds for `@evan.network/api-blockchain-core` and `@evan.network/smart-contracts-core`

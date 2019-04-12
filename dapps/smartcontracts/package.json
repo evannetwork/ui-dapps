@@ -10,7 +10,7 @@
     "CSS"
   ],
   "main": "dist/index.js",
-  "name": "bcc",
+  "name": "@evan.network/smart-contracts-core",
   "scripts": {
     "build": "node gulp/buildContracts.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd)"
   },

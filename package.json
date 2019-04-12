@@ -48,8 +48,8 @@
   },
   "description": "",
   "devDependencies": {
-    "@evan.network/api-blockchain-core": "^1.7.0",
-    "@evan.network/ui-dapp-browser": "^1.7.0"
+    "@evan.network/api-blockchain-core": "^2.1.0",
+    "@evan.network/ui-dapp-browser": "^2.1.0"
   },
   "keywords": [
     "javascript",
