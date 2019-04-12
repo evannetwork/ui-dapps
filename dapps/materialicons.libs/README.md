@@ -1,6 +1,6 @@
 # evan.networtk library wrapper
 
-DApp wrapper for: [fontawesome](https://fontawesome.com)
+DApp wrapper for: [material icons](https://material.io/tools/icons/?style=baseline)
 
 ## Build
 ```
@@ -14,7 +14,7 @@ npm run build
   ...
   "dapp": {
     "dependencies": {
-      "fontawesome.libs": "X.X.X"
+      "materialicons.libs": "X.X.X"
     },
   }
   ...

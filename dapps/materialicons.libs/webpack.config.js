@@ -25,31 +25,8 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
-
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
-
-/**
- * load evan specific styles
- */
-@import './style/breadcrumb';
-@import './style/buttons';
-@import './style/colors';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/dropdown';
-@import './style/forms';
-@import './style/icons';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/table';
-@import './style/text';
-@import './style/transitions';
+// load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
+module.exports = require('../../gulp/webpack.config')(
+  require('./dbcp.json').public.name,
+  require('path').resolve(__dirname, './dist'),
+);

@@ -25,31 +25,6 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+// map the original ui path to ui.libs
+import './index.scss';
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
-
-/**
- * load evan specific styles
- */
-@import './style/breadcrumb';
-@import './style/buttons';
-@import './style/colors';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/dropdown';
-@import './style/forms';
-@import './style/icons';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/table';
-@import './style/text';
-@import './style/transitions';

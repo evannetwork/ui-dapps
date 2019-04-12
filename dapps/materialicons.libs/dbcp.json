@@ -2,20 +2,16 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {
-        "evan.bootstrap.libs": "4.3.1",
-        "materialicons.libs": "1.8.36"
-      },
-      "entrypoint": "ui.libs.js",
+      "dependencies": {},
+      "entrypoint": "materialicons.libs.css",
       "files": [
-        "ui.libs.js",
-        "ui.libs.css"
+        "materialicons.libs.css"
       ],
-      "origin": "QmcVKQDXoGJED6iLS6KyPpoQ2DybygudpX3tegswg49WaN",
+      "origin": "QmV3rNrR1Pi4P8EEJcjbg5veXNiqTWa87emSiyfgxTsMSw",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "",
@@ -24,19 +20,19 @@
         "en": ""
       },
       "name": {
-        "en": "ui.libs"
+        "en": "materialicons.libs"
       }
     },
     "imgSquare": "",
-    "name": "ui.libs",
+    "name": "materialicons.libs",
     "tags": [
       "dapp",
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.8.36",
     "versions": {
-      "1.0.0": "QmNs2Ax9R6wgcuULD5TduHeFYDKabM4BQESPKRVR9KX9Sr"
+      "1.8.36": "QmamB2SoP5JYo9cwmgTBYAL8xu24gvb894d6XZUxZiQFQU"
     }
   }
 }

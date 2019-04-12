@@ -228,13 +228,13 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    h1-font-size: 2.250em,
-    h2-font-size: 1.750em,
-    h3-font-size: 1.313em,
-    h4-font-size: 1.125em,
-    h5-font-size: 1em,
-    h6-font-size: 0.938em,
-    text-font-size: 0.875em,
+    h1-font-size:   36px,   // 2.250em
+    h2-font-size:   28px,   // 1.750em
+    h3-font-size:   21px,   // 1.313em
+    h4-font-size:   18px,   // 1.125em
+    h5-font-size:   16px,   // 1em    
+    h6-font-size:   15px,   // 0.938em
+    text-font-size: 14px,   // 0.875em
   ),
   $themeEvan
 );

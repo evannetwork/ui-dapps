@@ -28,42 +28,6 @@
 @import './utils';
 
 .evan {
-  .bg-text-danger {
-    color: cssVar('bg-text-danger') !important;
-  }
-
-  .bg-text-dark {
-    color: cssVar('bg-text-dark') !important;
-  }
-
-  .bg-text-info {
-    color: cssVar('bg-text-info') !important;
-  }
-
-  .bg-text-light {
-    color: cssVar('bg-text-light') !important;
-  }
-
-  .bg-text-primary {
-    color: cssVar('bg-text-primary') !important;
-  }
-
-  .bg-text-secondary {
-    color: cssVar('bg-text-secondary') !important;
-  }
-
-  .bg-text-success {
-    color: cssVar('bg-text-v') !important;
-  }
-
-  .bg-text-warning {
-    color: cssVar('bg-text-warning') !important;
-  }
-
-  .bg-text-inverted {
-    color: cssVar('text-color-inverted') !important;
-  }
-
   h1, h2, h3, h4, h5, span, p {
     color: cssVar('text-color');
   }
@@ -86,6 +50,22 @@
     .font-size-#{ ($i * 10) + 5} {
       font-size: 90%;
     }
+  }
+
+  .h1 {
+    font-size: cssVar('h1-font-size') !important;
+  }
+  .h2 {
+    font-size: cssVar('h2-font-size') !important;
+  }
+  .h3 {
+    font-size: cssVar('h3-font-size') !important;
+  }
+  .h4 {
+    font-size: cssVar('h4-font-size') !important;
+  }
+  .h5 {
+    font-size: cssVar('h5-font-size') !important;
   }
 
   /* http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
