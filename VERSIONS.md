@@ -17,9 +17,6 @@
 - profile
   - add payment channel management
   - credit card eve buy process
-  
-### Fixes
-### Deprecations
 
 
 ## Version 2.0.0
