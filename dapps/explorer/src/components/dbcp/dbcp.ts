@@ -30,7 +30,7 @@ import {
   Component,     // @angular/core
   DomSanitizer,
   ViewChild
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -45,7 +45,7 @@ import {
   createTabSlideTransition,
   EvanTranslationService,
   EvanToastService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ExplorerService } from '../../services/explorer.service';
 

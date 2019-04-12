@@ -35,7 +35,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -52,7 +52,7 @@ import {
   EvanPictureService,
   EvanQueue,
   EvanRoutingService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { VerificationService } from '../../services/service';
 
@@ -86,22 +86,22 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
   /**
    * should the topic select displayed?
    */
-  @Input() showTopicSelect?: boolean = false;
+  @Input() showTopicSelect = false;
 
   /**
    * should the topic select displayed?
    */
-  @Input() showAddressSelect?: boolean = false;
+  @Input() showAddressSelect = false;
 
   /**
    * overwrite the default display mode of the verifications
    */
-  @Input() displayMode: string = 'detail';
+  @Input() displayMode = 'detail';
 
   /**
    * Show only one combined verification card for each topic
    */
-  @Input() computedVerifications: boolean = true;
+  @Input() computedVerifications = true;
 
   /*****************    variables    *****************/
   /**
@@ -117,7 +117,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
   /**
    * current topic input
    */
-  private topic: string = '';
+  private topic = '';
 
   /**
    * Should the verification container be displayed? (not used while running without standalone)
@@ -133,6 +133,16 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
    * use array of members so the user can also select users from his address book directly
    */
   private subjectInput: string;
+
+  /**
+   * try to resolve the subject input for an ens and try to get the underlying contract address
+   */
+  private subjectEnsAddress: string;
+
+  /**
+   * wait a second to resolve the input ens address
+   */
+  private subjectEnsAddressTimeout: any;
 
   /**
    * has the current user already a identity?
@@ -189,7 +199,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   /**
@@ -203,20 +213,26 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
     // if no valid subject was supplied, reset it
     if (!this.isValidAddress(this.subject)) {
-      delete this.subject;
+      this.subject = '';
     }
 
     // try to resolve the latest used values
-    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'];
+    this.subjectInput = this.subject || window.localStorage['evan-verifications-dapp-address'] || '';
+
+    if (this.subjectInput.indexOf('0x') !== 0) {
+      try {
+        this.subjectEnsAddress = await this.bcc.nameResolver.getAddress(this.subjectInput);
+      } catch (ex) { }
+    }
 
     // if no valid subject was supplied, reset it
-    if (!this.isValidAddress(this.subjectInput)) {
+    if (!this.isValidAddress(this.subjectInput) && !this.isValidAddress(this.subjectEnsAddress)) {
       delete this.subjectInput;
     }
 
     // show the address input only, if no address was applied
     this.showAddressSelect = this.showAddressSelect || !this.subject;
-    
+
     // show the topic select only if no topics were applied
     this.showTopicSelect = this.showTopicSelect || !Array.isArray(this.topics);
 
@@ -225,7 +241,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
     // try to load the list of of the last selected verification topics
     this.prefilledVerifications = window.localStorage['evan-verifications-dapp-topic'] || [
-      '/onboarding/agbaccepted',
+      '/evan/onboarding/termsofuse',
     ];
     if (!Array.isArray(this.prefilledVerifications)) {
       try {
@@ -235,7 +251,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
       }
     }
 
-    this.topic = this.prefilledVerifications.length > 0 ? this.prefilledVerifications[0] : ''; 
+    this.topic = this.prefilledVerifications.length > 0 ? this.prefilledVerifications[0] : '';
 
     // show verifications directly, when topics are available
     this.showVerifications = (!this.showTopicSelect && this.isValidAddress(this.subject)) ||
@@ -271,7 +287,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
   /**
    * Remove watchers
    */
-  _ngOnDestroy() {
+  async _ngOnDestroy() {
     this.queueWatcher();
   }
 
@@ -308,7 +324,8 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
     this.ref.detectChanges();
 
     // only use the subject input / select if they was shown
-    this.subject = this.subjectInput;
+    this.subject = this.isValidAddress(this.subjectInput) ? this.subjectInput :
+      this.subjectEnsAddress;
 
     // only overwrite topics if the input is shown
     if (this.showTopicSelect) {
@@ -322,7 +339,7 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
       window.localStorage['evan-verifications-dapp-topic'] = JSON.stringify(this.prefilledVerifications);
       window.localStorage['evan-verifications-dapp-address'] = this.subjectInput;
     }
-    
+
     // clear the cache directly for this view
     this.bcc.verifications.verificationCache = { };
 
@@ -351,7 +368,8 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
    * @return     {boolean}  True if valid form, False otherwise
    */
   isValidForm() {
-    return !!this.topic && this.bcc.web3.utils.isAddress(this.subjectInput);
+    return !!this.topic && (this.isValidAddress(this.subjectInput) ||
+      this.isValidAddress(this.subjectEnsAddress));
   }
 
   /**
@@ -407,5 +425,34 @@ export class EvanVerificationsOverviewComponent extends AsyncComponent {
 
       this.ref.detectChanges();
     } catch (ex) { }
+  }
+
+  /**
+   * Check if the current address input is an ens address and
+   *
+   * @return     {Promise<void>}  resolved when done
+   */
+  addressInputChanged(submit: boolean) {
+    if (!this.subjectEnsAddressTimeout) {
+      window.clearTimeout(this.subjectEnsAddressTimeout);
+    }
+
+    this.subjectEnsAddressTimeout = setTimeout(async () => {
+      if (this.subjectInput.length > 2 && this.subjectInput.indexOf('0x') !== 0) {
+        try {
+          this.subjectEnsAddress = await this.bcc.nameResolver.getAddress(this.subjectInput);
+        } catch (ex) { }
+      } else {
+        this.subjectEnsAddress = '';
+      }
+
+      if (submit && this.isValidForm()) {
+        this.useCurrentValues();
+      }
+
+      this.ref.detectChanges();
+    });
+
+    this.ref.detectChanges();
   }
 }

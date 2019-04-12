@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, // @angular/core
@@ -35,7 +35,7 @@ import {
   DomSanitizer,
   PopoverController, OnDestroy,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -48,7 +48,7 @@ import {
   EvanCoreService,
   EvanUtilService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -66,7 +66,7 @@ export class DAppListComponent extends AsyncComponent {
   private filterString: string;
   private clearQueue: Function
   private showItemPopover: string;
-  private loading: boolean;
+  public loading: boolean;
 
   constructor(
     public _DomSanitizer: DomSanitizer,

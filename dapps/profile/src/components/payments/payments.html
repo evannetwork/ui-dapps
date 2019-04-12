@@ -29,7 +29,7 @@
 
 <div *ngIf="!loading">
   <div class="evan-relative evan-content">
-    <ng-container *ngIf="paymentChannels.channels && paymentChannels.channels.length == 0">
+    <ng-container *ngIf="activeChannels && activeChannels.length == 0">
       <h3 class="content-header m-b-0 m-t-0">
         {{ '_dappprofile.payment.setup-payment-channel' | translate }}
       </h3>
@@ -105,7 +105,7 @@
             {{ '_dappprofile.payment.estimated-funds' | translate }}
           </b>
           <p>
-            ~ {{ paymentDetails.estimatedFunds }} Months
+            ~ {{ paymentDetails.estimatedFunds }} {{ '_dappprofile.payment.months' | translate }}
           </p>
         </ion-col>
       </ion-row>
@@ -116,13 +116,13 @@
   <ng-container *ngIf="activeChannel">
     <div margin-top class="evan-tabs evan-content">
       <button ion-button icon-left clear
-        [class.active]="actionTab === 0" 
+        [class.active]="actionTab === 0"
         (click)="activateActionTab(0);">
         <h3>{{ '_dappprofile.payment.topup-payment-channel' | translate }}</h3>
       </button>
-      
+
       <button ion-button icon-left clear
-        [class.active]="actionTab === 1" 
+        [class.active]="actionTab === 1"
         (click)="activateActionTab(1);">
         <h3>{{ '_dappprofile.payment.delete-hash' | translate }}</h3>
       </button>

@@ -26,17 +26,23 @@
 */
 
 import {
-  getDomainName
-} from 'dapp-browser';
+  getDomainName,
+  ipfs,
+} from '@evan.network/ui-dapp-browser';
 
 import {
-  Component, OnInit, // @angular/core
-  NavController,     // ionic-angular
+  Component,
+  OnInit,
+  NavController,
   DomSanitizer,
-  ViewChild, Slides, AfterViewInit,
+  ViewChild,
+  Slides,
+  AfterViewInit,
   ElementRef,
-  ChangeDetectorRef, OnDestroy
-} from 'angular-libs';
+  ChangeDetectorRef,
+  OnDestroy,
+  Http,
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -49,12 +55,9 @@ import {
   EvanUtilService,
   EvanDescriptionService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
-
-export class RegisterComponent {
-}
 /**************************************************************************************************/
 
 @Component({
@@ -67,12 +70,21 @@ export class RegisterComponent {
 
 export class TermsOfUseComponent extends AsyncComponent {
   private hasRead: boolean;
-  private loading: boolean;
+  public loading: boolean;
   private provider: string;
-  private ensOrigin: string;
   private clearCaptchaResponse: Function;
   private activeAccount: string;
   private showCaptcha: boolean;
+
+  /**
+   * onboarding dapp origin
+   */
+  private ensOrigin: string;
+
+  /**
+   * current terms of use specification
+   */
+  private termsOfUse: string;
 
   @ViewChild('captchaIframe') captchaIframe: ElementRef;
 
@@ -86,6 +98,7 @@ export class TermsOfUseComponent extends AsyncComponent {
     private onboardingService: EvanOnboardingService,
     private utils: EvanUtilService,
     private ref: ChangeDetectorRef,
+    private http: Http,
     private descriptionService: EvanDescriptionService,
   ) {
     super(ref);
@@ -98,6 +111,7 @@ export class TermsOfUseComponent extends AsyncComponent {
 
     this.provider = this.routing.getHashParam('provider');
     this.ensOrigin = await this.descriptionService.getENSOriginUrl(`onboarding.${ getDomainName() }`);
+    this.termsOfUse = await this.loadTermsOfUse();
 
     if (this.provider === 'metamask') {
       this.activeAccount = this.core.getExternalAccount();
@@ -157,6 +171,38 @@ export class TermsOfUseComponent extends AsyncComponent {
 
   async _ngOnDestroy() {
     this.clearCaptchaResponse();
+  }
+  
+  /**
+   * Load the terms of for the current chain the current language.
+   */
+  async loadTermsOfUse() {
+    // load the terms of use origin url
+    const termsOfUseOrigin = await this.descriptionService
+      .getENSOriginUrl(`termsofuse.${ getDomainName() }`);
+    const ipfsHost = ipfs.ipfsConfig.host;
+
+    // multiple url's that can be requested one after another to fallback current runtime configurations
+    const fallbacks = [
+      // load from current ipfs host the current language, else fallback to english
+      `${ termsOfUseOrigin }/${ ipfsHost }/${ this.translate.getCurrentLang() }.html`,
+      `${ termsOfUseOrigin }/${ ipfsHost }/en.html`,
+      // if a not registered ipfs host is requested, load the current language for mainnet, else
+      // fallback to en
+      `${ termsOfUseOrigin }/storage.evan.network/${ this.translate.getCurrentLang() }.html`,
+      `${ termsOfUseOrigin }/storage.evan.network/en.html`,
+    ];
+
+    // try to load the terms of use for the current language, if this is not available, load the
+    // next fallback
+    for (let i = 0; i < fallbacks.length; i++) {
+      try {
+        return (<any>await this.http
+          .get(fallbacks[i]))
+          .map((res) => res.text())
+          .toPromise();
+      } catch (ex) { }
+    }
   }
 
   onScroll($event) {

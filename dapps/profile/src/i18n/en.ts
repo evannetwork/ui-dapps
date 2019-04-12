@@ -35,6 +35,10 @@ export const en = {
     "alias": "Alias",
     "balance": "My EVEs",
     "balance-updated": "EVEs were updated...",
+    "buy-eve": {
+      "buy-eve": "Buy EVEs",
+      "buy-eve-desc": "Buy EVEs via credit card",
+    },
     "cancel": "cancel",
     "color-theme": "Color Theme",
     "color-theme-desc": "Set the color of the user interface.",
@@ -93,7 +97,8 @@ export const en = {
       "delete-hash-error": "Please enter a valid IPFS hash!",
       "estimated-funds": "Estimated months until assets are deleted",
       "funds-available": "Availabe EVE for storage",
-      "initial-eve-amount": "Initial amout of eve to lock",
+      "initial-eve-amount": "Initial amout of EVE to lock",
+      "months": "Months",
       "monthly-cost": "Monthly storage costs",
       "payments": "Storage payments",
       "payments-desc": "Manage your storage payments",
@@ -111,6 +116,63 @@ export const en = {
       "topup-payment-channel": "Topup storage funds with EVE",
       "topup-payment-channel-desc": "EVE amount",
       "topup-payment-channel-error": "Please specify an amount of EVE higher than 0."
+    },
+    "pay-eve": {
+      "desc": "You can use the following form to purchase new EVE tokens for storage credits or transactions.",
+      "name": {
+        "title": "Name",
+        "description": "John Doe"
+      },
+      "email": {
+        "title": "Email",
+        "description": "John.Doe@example.com"
+      },
+      "company": {
+        "title": "Company",
+        "description": "Company"
+      },
+      "street": {
+        "title": "Address",
+        "description": "Address"
+      },
+      "city": {
+        "title": "City",
+        "description": "San Francisco"
+      },
+      "zip": {
+        "title": "ZIP",
+        "description": "94107"
+      },
+      "country": {
+        "title": "Country",
+        "description": "US"
+      },
+      "vat": {
+        "title": "VAT",
+        "description": "DE99999999999"
+      },
+      "amount": {
+        "title": "Amount of EVE Tokens",
+        "description": "0"
+      },
+      "input": {
+        "error": "This field is required!"
+      },
+      "card": {
+        "title": "Card number"
+      },
+      "payment": {
+        "title": "Payment method"
+      },
+      "incl": "Incl.",
+      "vatPercent": "VAT",
+      "to-pay": "Total amount",
+      "sepa": "SEPA direct debit",
+      "credit": "Credit card",
+      "payment-information": "Payment details",
+      "pay": "Order at cost",
+      "error-payment": "An error occurred during the payment process. <b>Your card was NOT debited!</b> Please try again later. Error code: {{ code }}",
+      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice."
     },
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",
@@ -153,6 +215,7 @@ export const en = {
     "verifications-desc-long": "Manage Verifications that are displayed and verified by default in different applications. (Address book, contact selection, ...)"
   },
   "detail": "Profile information",
+  "buyeve": "Buy EVE",
   "payments": "Storage payments",
   "profile": "My Profile",
   "profiledetail": "My Profile",

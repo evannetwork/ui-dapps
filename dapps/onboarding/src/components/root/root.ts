@@ -28,7 +28,7 @@
 import {
   evanGlobals,
   routing
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit,      // @angular/core
@@ -36,7 +36,7 @@ import {
   NavController,          // ionic-angular
   Observable, OnDestroy,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -46,7 +46,7 @@ import {
   EvanBCCService,
   createOpacityTransition,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -86,7 +86,7 @@ import {
 export class OnboardingRootComponent extends AsyncComponent {
   private activeDApp: Observable<string>;
   private canNavigateBack: Observable<boolean>;
-  private loading: boolean;
+  public loading: boolean;
   private watchRouteChange: Function;
 
   constructor(

@@ -27,13 +27,13 @@
 
 import {
   Profile
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Component, OnInit,      // @angular/core
   TranslateService,       // @ngx-translate/core
   Input, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -43,7 +43,7 @@ import {
   EvanCoreService,
   EvanDescriptionService,
   EvanBCCService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 @Component({
   selector: 'attachment-comm-key',

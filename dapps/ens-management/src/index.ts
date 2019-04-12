@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   BrowserAnimationsModule,     // @angular/platform-browser/animations
@@ -35,7 +35,7 @@ import {
   IonicModule, IonicApp,       // ionic-angular
   NgModule,                    // @angular/core
   RouterModule, Routes,        // @angular/router
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AngularCore,
@@ -44,7 +44,7 @@ import {
   createIonicAppElement,
   DAppLoaderComponent,
   startAngularApplication,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   AceEditorModule,

@@ -27,14 +27,14 @@
 
 import {
   Profile
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Injectable,
   Component, OnInit, Input,            // @angular/core
   Validators, FormBuilder, FormGroup,  // @angular/forms
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   QueueSequence,
@@ -44,7 +44,7 @@ import {
   EvanOnboardingService,
   EvanBCCService,
   EvanTranslationService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   translations

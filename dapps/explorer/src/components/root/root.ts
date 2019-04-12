@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ChangeDetectorRef,
@@ -37,7 +37,7 @@ import {
   NavigationEnd,
   RouterEvent,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -52,7 +52,7 @@ import {
   EvanUtilService,
   EvanDescriptionService,
   EvanTranslationService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ExplorerService } from '../../services/explorer.service';
 

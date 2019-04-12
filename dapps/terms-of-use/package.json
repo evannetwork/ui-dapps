@@ -1,0 +1,18 @@
+{
+  "author": "evan GmbH",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "Angular 5",
+    "Ionic",
+    "DApp",
+    "SASS"
+  ],
+  "name": "@evan.network/terms-of-use",
+  "scripts": {
+    "build": "cd ../.. && npm run angular-build dapps/terms-of-use"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.5.0"
+}

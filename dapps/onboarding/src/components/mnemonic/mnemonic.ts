@@ -27,7 +27,7 @@
 
 import {
   lightwallet
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, // @angular/core
@@ -39,7 +39,7 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -48,7 +48,7 @@ import {
   EvanInputService,
   EvanRoutingService,
   EvanQrCodeService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -72,7 +72,7 @@ export class MnemonicComponent implements OnInit {
   private activeHelp: number;
   private activeWord: number;
   private activeWordElement: any;
-  private deactivateHelpTimeout: number;
+  private deactivateHelpTimeout: any;
   private help: Array<string>;
   private mnemonicWords: Array<string>;
   private originalWords: Array<string>;

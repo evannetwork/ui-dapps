@@ -30,7 +30,7 @@ import {
   core,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Http,
@@ -39,7 +39,7 @@ import {
   OnDestroy,
   Platform, 
   Subscription,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -52,14 +52,14 @@ import {
   EvanRoutingService,
   QueueId,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 /**
  * Utility service for the verification view DApp.
  */
 @Injectable()
-export class ProfileService implements OnDestroy {
+export class ProfileService {
   constructor(
     public bcc: EvanBCCService,
     public bookmarkService: EvanBookmarkService,

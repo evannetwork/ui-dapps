@@ -1,7 +1,7 @@
 {
   "author": "evan GmbH",
   "devDependencies": {
-    "signature_pad": "^2.3.2"
+    "signature_pad": "^3.0.0-beta.3"
   },
   "homepage": "https://evannetwork.github.io/",
   "keywords": [
@@ -24,5 +24,5 @@
     "build": "cd ../.. && npm run angular-build dapps/task"
   },
   "typings": "dist/index.d.ts",
-  "version": "2.0.0"
+  "version": "2.1.0"
 }

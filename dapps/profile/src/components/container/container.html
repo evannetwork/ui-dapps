@@ -56,6 +56,13 @@
       <ion-icon name="images"></ion-icon>
       {{ '_dappprofile.payment.payments' | translate }}
     </button>
+
+    <button ion-button icon-left clear
+      [class.active]="isActive('buy-eve')"
+      routerLink="./buy-eve">
+      <ion-icon name="card"></ion-icon>
+      {{ '_dappprofile.buy-eve.buy-eve' | translate }}
+    </button>
   </div>
 
   <div class="evan-left-panel evan-content" *ngIf="core.utils.isMD">
@@ -98,6 +105,16 @@
         </ion-avatar>
         <h2>{{ '_dappprofile.payment.payments' | translate }}</h2>
         <h3>{{ '_dappprofile.payment.payments-desc' | translate }}</h3>
+      </button>
+
+      <button ion-item
+        [class.active]="isActive('buy-eve')"
+        routerLink="./buy-eve">
+        <ion-avatar item-start>
+          <ion-icon name="card"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_dappprofile.buy-eve.buy-eve' | translate }}</h2>
+        <h3>{{ '_dappprofile.buy-eve.buy-eve-desc' | translate }}</h3>
       </button>
     </ion-list>
   </div>

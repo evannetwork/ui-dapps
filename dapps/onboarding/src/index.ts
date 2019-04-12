@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   NgModule,                    // @angular/core
@@ -36,7 +36,7 @@ import {
   IonicModule, IonicApp,       // ionic-angular
   BrowserAnimationsModule,     // @angular/platform-browser/animations
   HttpModule                   // @angular/http
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AngularCore,
@@ -44,7 +44,7 @@ import {
   buildModuleRoutes,
   BootstrapComponent,
   startAngularApplication, createIonicAppElement
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { IdentityCreateComponent } from './components/identity-create/identity-create';
 import { IdentityImportComponent } from './components/identity-import/identity-import';

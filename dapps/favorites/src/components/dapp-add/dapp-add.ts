@@ -30,7 +30,7 @@ import {
   Validators, FormBuilder, FormGroup,  // @angular/forms
   DomSanitizer, OnDestroy,
   ChangeDetectionStrategy, ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAlertService,
@@ -41,7 +41,7 @@ import {
   EvanQueue,
   EvanQrCodeService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
@@ -56,7 +56,7 @@ import {
 
 export class DAppAddComponent extends AsyncComponent {
   private dappForm: FormGroup;
-  private loading: boolean;
+  public loading: boolean;
   private isMobile: boolean;
   private featuredDapps: Array<any> = [ ];
   private featuredLoading: boolean;

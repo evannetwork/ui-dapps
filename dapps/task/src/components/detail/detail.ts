@@ -27,14 +27,14 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, OnDestroy, ViewChild,  // @angular/core
   NavController,                            // ionic-angular
   DomSanitizer, ChangeDetectorRef, ChangeDetectionStrategy,
   EventEmitter, Output, Input
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -51,7 +51,7 @@ import {
   EvanToastService,
   EvanPictureService,
   AsyncComponent
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { TaskService } from '../../services/task';
 
@@ -69,7 +69,7 @@ import *  as SignaturePad from 'signature_pad';
 })
 
 export class TaskDetailComponent extends AsyncComponent {
-  private loading: boolean;
+  public loading: boolean;
   private taskId: string;
   private task: any;
   private routeChangeSubscription: Function;

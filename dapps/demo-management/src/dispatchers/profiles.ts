@@ -18,26 +18,26 @@ import {
   bccHelper,
   getDomainName,
   lightwallet,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   buffer,
   prottle,
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Injectable,
   Component, OnInit, Input,            // @angular/core
   Validators, FormBuilder, FormGroup,  // @angular/forms
   DomSanitizer
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AngularCore,
   QueueSequence,
   QueueDispatcher,
   SingletonService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import {
   translations
@@ -119,14 +119,14 @@ export const profilesDispatcher = new QueueDispatcher(
               // call the agent 
               service.core.utils.log(`[Demo-Management] ${ user.accountId }: call the agent`,
                 'debug');
-              var apiURL = 'https://agents.evan.network/api/smart-agents/faucet/handout?apiVersion=1';
+              var apiURL = 'https://agents.test.evan.network/api/smart-agents/faucet/handout?apiVersion=1';
               const signer = user.accountId.toLowerCase();
               const pk = '0x' + user.vault.exportPrivateKey(signer, user.vault.pwDerivedKey);
               const signature = service.bcc.web3.eth.accounts.sign('Gimme Gimme Gimme!', pk)
                 .signature
               
               await service.http.post(
-                'https://agents.evan.network/api/smart-agents/faucet/handout?apiVersion=1',
+                'https://agents.test.evan.network/api/smart-agents/faucet/handout?apiVersion=1',
                 {
                   accountId: user.accountId,
                   signature: signature,

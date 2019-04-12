@@ -29,7 +29,7 @@ import {
   evanGlobals,
   lightwallet,
   routing,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Component, OnInit, // @angular/core
@@ -37,7 +37,7 @@ import {
   DomSanitizer,
   ViewChild, Slides, AfterViewInit,
   ChangeDetectorRef
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   createOpacityTransition,
@@ -50,7 +50,7 @@ import {
   EvanUtilService,
   AsyncComponent,
   EvanBCCService
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { OnboardingService } from '../../services/onboarding';
 

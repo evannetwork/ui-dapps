@@ -26,23 +26,24 @@
 */
 
 import {
+  bccHelper,
+  evanGlobals,
+  getDomainName,
   lightwallet,
   routing,
   utils,
-  evanGlobals,
-  getDomainName,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   Profile
-} from 'bcc';
+} from '@evan.network/api-blockchain-core';
 
 import {
   Router,             // '@angular/router';
   OnInit, Injectable, // '@angular/core';
   Observable, CanActivate,
   Http, Response, RequestOptions, Headers       // @angular/http
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   EvanAddressBookService,
@@ -52,15 +53,12 @@ import {
   EvanOnboardingService,
   EvanRoutingService,
   SingletonService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 /**************************************************************************************************/
 
-const baseHost = 'https://agents.evan.network';
-//const baseHost = 'http://localhost:8080';
-//const basePath = '/api/ah-etherconsole-plugin/';
-const baseUrlFaucet = baseHost + '/api/smart-agents/faucet/';
-const baseUrlOnboarding = baseHost + '/api/smart-agents/onboarding/';
+let baseUrlFaucet;
+let baseUrlOnboarding;
 
 @Injectable()
 export class OnboardingService {
@@ -81,7 +79,8 @@ export class OnboardingService {
     private routing: EvanRoutingService,
   ) {
     return singleton.create(OnboardingService, this, () => {
-
+      baseUrlFaucet = this.core.agentUrl + '/api/smart-agents/faucet/';
+      baseUrlOnboarding = this.core.agentUrl + '/api/smart-agents/onboarding/';
     });
   }
 
@@ -100,7 +99,7 @@ export class OnboardingService {
 
     if (this.core.getAccountId()) {
       try {
-        isOnboarded = await evanGlobals.CoreBundle.isAccountOnboarded(this.core.getAccountId());
+        isOnboarded = await bccHelper.isAccountOnboarded(this.core.getAccountId());
       } catch (ex) { }
 
       if (isOnboarded) {
@@ -193,6 +192,7 @@ export class OnboardingService {
       // send communication key back to the onboarding account
       this.core.setCurrentProvider('internal');
       await this.bcc.updateBCC(accountId, 'internal');
+      await this.bcc.updateTermsOfUse(accountId);
 
       if (queryParams && queryParams.onboardingID) {
         return this.routingService.navigate(`./onboarded`, true,
@@ -218,21 +218,24 @@ export class OnboardingService {
     const signer = account.toLowerCase();
 
     const msgHex = window['web3'].fromUtf8(msg);
-    
+   
     return new Promise((resolve, reject) => {
       window['web3'].currentProvider.sendAsync({
         method: 'personal_sign',
         params: [msgHex, signer],
         from: signer
       }, (err, result) => {
-        if (err || result.error) reject();
-        else resolve(result.result)
+        if (err || result.error) {
+          reject();
+        } else {
+          resolve(result.result)
+        }
       });
     });
   }
 
   async signMessage(msg: string, account: string, provider: string) {
-    if (provider == 'metamask') {
+    if (provider === 'metamask') {
       return this.signMessageMetamask(msg, account);
     } else {
       return this.signMessageBCC(msg, account);
@@ -277,17 +280,9 @@ export class OnboardingService {
      * @param provider    'metamask' || 'internal'
      */
     create: async (account: string, alias: string, password: string, provider: string) => {
-      await this.bcc.updateBCC(account, provider, true);
-
-      this.bcc.keyProvider.setKeysForAccount(
-        account,
-        lightwallet.getEncryptionKeyFromPassword(account, password)
-      );
-
       // set flag to check for profile creation interruption
       window.localStorage['evan-profile-creation'] = true;
 
-      const profile = this.bcc.profile;
       if (provider === 'metamask') {
         this.core.setAccountId(account || this.activeAccount);
       } else {
@@ -296,6 +291,14 @@ export class OnboardingService {
         await lightwallet.createVaultAndSetActive(mnemonic, password);
       }
 
+      await this.bcc.updateBCC(account, provider);
+
+      const profile = this.bcc.profile;
+
+      // disable pinning while profile files are being created
+      profile.ipld.ipfs.disablePin = true;
+      // clear hash log
+      profile.ipld.hashLog = [];
       const dhKeys = this.bcc.keyExchange.getDiffieHellmanKeys();
       await profile.addContactKey(account, 'dataKey', dhKeys.privateKey.toString('hex'));
       await profile.addProfileKey(account, 'alias', alias);
@@ -312,6 +315,17 @@ export class OnboardingService {
         { key: sharing.hashKey, }
       )
       fileHashes[profile.treeLabels.addressBook] = `0x${fileHashes[profile.treeLabels.addressBook].toString('hex')}`;
+      // keep only unique values, ignore addressbook (encrypted hash)
+      const addressBookHash = fileHashes[profile.treeLabels.addressBook];
+      fileHashes.ipfsHashes = [...profile.ipld.hashLog, ...Object.keys(fileHashes).map(key => fileHashes[key])];
+      fileHashes.ipfsHashes = (
+        (arrArg) => arrArg.filter(
+          (elem, pos, arr) => arr.indexOf(elem) === pos && elem !== addressBookHash)
+        )(fileHashes.ipfsHashes);
+      // clear hash log
+      profile.ipld.hashLog = [];
+      // re-enable pinning
+      profile.ipld.ipfs.disablePin = false;
       const generationResult = await this.onboarding.sendProfileCreationCall(account, fileHashes, provider);
       // temporary execution of setMyProfile
       const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);

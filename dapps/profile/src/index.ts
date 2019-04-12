@@ -27,7 +27,7 @@
 
 import {
   getDomainName
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   NgModule,                    // @angular/core
@@ -35,7 +35,7 @@ import {
   RouterModule, Routes,        // @angular/router
   IonicModule, IonicApp,       // ionic-angular
   BrowserAnimationsModule,     // @angular/platform-browser/animations
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AngularCore,
@@ -43,7 +43,7 @@ import {
   buildModuleRoutes,
   BootstrapComponent,
   startAngularApplication, createIonicAppElement
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ProfileTranslations } from './i18n/registry';
 import { ProfileRootComponent } from './components/root/root';
@@ -52,11 +52,14 @@ import { EvanProfileSettingsComponent } from './components/settings/settings';
 import { EvanProfileVerificationsComponent } from './components/verifications/verifications';
 import { EvanProfileContainerComponent } from './components/container/container';
 import { EvanProfilePaymentsComponent } from './components/payments/payments';
+import { EvanBuyEveComponent } from './components/buy-eve/buy-eve';
 
 import { paymentDispatcher } from './dispatchers/payment';
 import { ProfileService } from './services/service';
 import { profileVerificationsDispatcher } from './dispatchers/verifications';
 import { sendEveDispatcher } from './dispatchers/sendEve';
+
+import { NgxStripeModule } from 'ngx-stripe';
 
 export {
   paymentDispatcher,
@@ -104,6 +107,11 @@ function getRoutes(): Routes {
             path: 'payments',
             component: EvanProfilePaymentsComponent,
             data: { reload: true, state: 'payments', }
+          },
+          {
+            path: 'buy-eve',
+            component: EvanBuyEveComponent,
+            data: { reload: true, state: 'buy-eve', }
           }
         ]
       },
@@ -129,6 +137,7 @@ function getConfig(isDispatcher?: boolean) {
       CommonModule,
       IonicModule,
       AngularCore,
+      NgxStripeModule.forRoot('pk_test_kpO3T5fXA7aaftg9D0OO0w3S'),
     ],
     providers: [
       ProfileService,
@@ -155,6 +164,7 @@ function getConfig(isDispatcher?: boolean) {
       EvanProfileVerificationsComponent,
       EvanProfileDetailComponent,
       EvanProfilePaymentsComponent,
+      EvanBuyEveComponent,
       ProfileRootComponent,
     ];
   }

@@ -27,7 +27,7 @@
 
 import {
   getDomainName,
-} from 'dapp-browser';
+} from '@evan.network/ui-dapp-browser';
 
 import {
   ChangeDetectorRef,
@@ -39,7 +39,7 @@ import {
   OnInit,
   TranslateService,
   ViewChild,
-} from 'angular-libs';
+} from '@evan.network/ui-angular-libs';
 
 import {
   AnimationDefinition,
@@ -56,7 +56,7 @@ import {
   EvanPictureService,
   EvanQueue,
   EvanRoutingService,
-} from 'angular-core';
+} from '@evan.network/ui-angular-core';
 
 import { ENSManagementService } from '../../services/service';
 
@@ -128,7 +128,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
     private ref: ChangeDetectorRef,
     private routingService: EvanRoutingService,
   ) {
-    super(ref, core);
+    super(ref);
   }
 
   /**
