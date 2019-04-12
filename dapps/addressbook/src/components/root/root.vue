@@ -50,7 +50,7 @@
                   <h4 class="mb-0" v-if="key !== 'all'">{{ key }}</h4>
                   <h4 class="mb-0" v-if="key === 'all'">{{ '_addressbook.all' | translate }}</h4>
                   <span class="mx-auto"></span>
-                  <i class="fas fa-chevron-right"></i>
+                  <i class="mdi mdi-chevron-right"></i>
                 </li>
               </ul>
             </div>
@@ -64,7 +64,7 @@
           <template v-slot:content>
             <button type="button" class="btn btn-primary btn-circle"
               @click="evanNavigate('add');">
-              <i class="fas fa-plus"></i>
+              <i class="mdi mdi-plus"></i>
             </button>
           </template>
         </evan-breadcrumbs>

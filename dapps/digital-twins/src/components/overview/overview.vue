@@ -86,7 +86,7 @@
               class="btn btn-rounded btn-primary font-weight-normal"
               :href="`${ dapp.fullUrl }/lookup`">
               {{ '_digitaltwins.lookup.title' | translate }}
-              <i class="fas fa-arrow-right label ml-2"></i>
+              <i class="mdi mdi-arrow-right label ml-2"></i>
             </a>
           </div>
         </div>

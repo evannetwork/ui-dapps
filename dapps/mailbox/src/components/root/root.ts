@@ -37,8 +37,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // allowed mail categories
 const mailCategories = {
-  received: { icon: 'fas fa-envelope mr-3', offset: 0, mails: [ ] },
-  sent: { icon: 'fas fa-paper-plane mr-3', offset: 0, mails: [ ] },
+  received: { icon: 'mdi mdi-email mr-3', offset: 0, mails: [ ] },
+  sent: { icon: 'mdi mdi-send mr-3', offset: 0, mails: [ ] },
 };
 
 @Component({ })

@@ -32,7 +32,7 @@
     <div class="d-flex p-2 align-items-center">
       <button class="btn btn-lg"
         @click="$router.push({ name: 'welcome', query: $route.query })">
-        <i class="fas fa-chevron-left"></i>
+        <i class="mdi mdi-chevron-left"></i>
       </button>
 
       <h4 class="m-0 ml-3">{{ '_onboarding.sign-in.title' | translate }}</h4>

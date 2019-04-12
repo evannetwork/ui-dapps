@@ -72,12 +72,12 @@
           <button type="button" class="btn btn-outline-secondary btn-circle"
             v-if="modes.indexOf('schema') !== -1 && mode !== 'schema'"
             @click="mode = 'schema'">
-            <i class="fas fa-cogs"></i>
+            <i class="mdi mdi-cogs"></i>
           </button>
           <button type="button" class="btn btn-primary btn-circle"
             v-if="mode === 'schema'"
             @click="mode = 'view'">
-            <i class="fas fa-save"></i>
+            <i class="mdi mdi-content-save"></i>
           </button>
         </template>
       </template>

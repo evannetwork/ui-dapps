@@ -31,7 +31,7 @@
       <div class="bg-level-1 border">
         <div class="d-flex p-3 border-bottom align-items-center">
           <i v-if="validDTAddress && !linking"
-            class="fas fa-chevron-left clickable ml-2 mr-3"
+            class="mdi mdi-chevron-left clickable ml-2 mr-3"
             @click="validDTAddress = ''">
           </i>
           <h4 class="m-0">

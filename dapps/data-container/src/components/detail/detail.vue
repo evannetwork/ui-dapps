@@ -35,7 +35,7 @@
           <div class="spinner-border spinner-border-sm"
             v-if="$store.state.saving">
           </div>
-          <i class="fas fa-chevron-down" v-else></i>
+          <i class="mdi mdi-chevron-down" v-else></i>
         </button>
         <div class="position-relative">
           <evan-dropdown ref="containerContextMenu"
@@ -47,7 +47,7 @@
                   editSchema = false;
                   $refs.containerContextMenu.hide($event);
                 ">
-                <i class="fas fa-edit mr-3" style="width: 16px;"></i>
+                <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.edit-dbcp` | translate }}
               </a>
               <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
@@ -55,7 +55,7 @@
                   $refs.shareModal.show()
                   $refs.containerContextMenu.hide($event);
                 ">
-                <i class="fas fa-share-alt mr-3" style="width: 16px;"></i>
+                <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.context-menu.share` | translate }}
               </a>
               <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
@@ -63,7 +63,7 @@
                   evanNavigate(`digitaltwins.${ dapp.domainName }/containerlink/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
                   $refs.containerContextMenu.hide($event);
                 ">
-                <i class="fas fa-link mr-3" style="width: 16px;"></i>
+                <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.context-menu.link` | translate }}
               </a>
               <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
@@ -71,7 +71,7 @@
                   evanNavigate(`create/${ dapp.contractAddress }`)
                   $refs.containerContextMenu.hide($event);
                 ">
-                <i class="fas fa-copy mr-3" style="width: 16px;"></i>
+                <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
                 {{ `_datacontainer.context-menu.clone` | translate }}
               </a>
             </template>
@@ -80,7 +80,7 @@
         <button type="button" class="btn btn-primary btn-circle"
           @click="saveDt()"
           :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
-          <i class="fas fa-save"></i>
+          <i class="mdi mdi-content-save"></i>
         </button>
       </template>
     </evan-breadcrumbs>
@@ -160,7 +160,7 @@
                 </td>
                 <td class="py-2 pr-3 text-center d-flex align-items-center" style="width: 50px;">
                   <button class="btn p-0" @click="$set(share.permissions, property, 'none')">
-                    <i class="fas fa-times"></i>
+                    <i class="mdi mdi-close"></i>
                   </button>
                 </td>
               </tr>

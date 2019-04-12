@@ -38,7 +38,7 @@
             <button type="button" class="btn btn-primary btn-circle"
               v-if="$route.name !== 'add'"
               @click="evanNavigate('add')">
-              <i class="fas fa-plus"></i>
+              <i class="mdi mdi-plus"></i>
             </button>
           </template>
         </evan-breadcrumbs>
@@ -73,7 +73,7 @@
                       $refs.favoriteRemove[index].show();
                       $event.stopPropagation()
                     ">
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i class="mdi mdi-dots-vertical"></i>
                   </div>
                   <evan-dropdown ref="favoriteRemove"
                     :alignment="'right'"
@@ -85,7 +85,7 @@
                           $refs.favoriteRemove[index].hide($event);
                           $event.stopPropagation();
                         ">
-                        <i class="fas fa-delete mr-3`" style="width: 16px;"></i>
+                        <i class="mdi mdi-delete mr-3`" style="width: 16px;"></i>
                         {{ `_favorites.remove` | translate }}
                       </a>
                     </template>

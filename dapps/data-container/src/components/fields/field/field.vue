@@ -47,12 +47,12 @@
           <button type="button" class="btn btn-outline-secondary btn-circle"
             v-if="mode === 'view'"
             @click="mode = 'edit'">
-            <i class="fas fa-edit"></i>
+            <i class="mdi mdi-pencil"></i>
           </button>
           <button type="button" class="btn btn-primary btn-circle"
             v-else
             @click="mode = 'view'">
-            <i class="fas fa-save"></i>
+            <i class="mdi mdi-content-save"></i>
           </button>
         </template>
       </template>

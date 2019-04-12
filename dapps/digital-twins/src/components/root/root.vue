@@ -46,7 +46,7 @@
                     class="btn btn-rounded btn-primary font-weight-normal"
                     :href="`${ dapp.fullUrl }/lookup`">
                     {{ '_digitaltwins.lookup.title' | translate }}
-                    <i class="fas fa-arrow-right label ml-2"></i>
+                    <i class="mdi mdi-arrow-right label ml-2"></i>
                   </a>
                 </div>
 
@@ -93,8 +93,8 @@
                         <span class="text-muted">{{ `_digitaltwins.left-categories.${ category.name }.desc` | translate }}</span>
                       </div>
                       <span class="mx-auto"></span>
-                      <i v-if="category.active" class="fas fa-chevron-up"></i>
-                      <i v-if="!category.active" class="fas fa-chevron-down"></i>
+                      <i v-if="category.active" class="mdi mdi-chevron-up"></i>
+                      <i v-if="!category.active" class="mdi mdi-chevron-down"></i>
                     </div>
                     <div class="mt-3" v-if="category.active">
                       <ul class="sub-nav" v-if="category.children.length > 0">
@@ -134,7 +134,7 @@
                       v-if="$store.state.uiDT.isFavoriteLoading">
                     </div>
                     <template v-if="!$store.state.uiDT.isFavoriteLoading">
-                      <i class="fas fa-star lg text-warning clickable"
+                      <i class="mdi mdi-star lg text-warning clickable"
                         v-if="$store.state.uiDT.isFavorite"
                         @click="$store.state.uiDT.toggleFavorite(getRuntime())">
                       </i>
@@ -151,7 +151,7 @@
                     <div class="spinner-border spinner-border-sm"
                       v-if="$store.state.uiDT.isSaving">
                     </div>
-                    <i class="fas fa-save" v-else></i>
+                    <i class="mdi mdi-content-save" v-else></i>
                   </button>
                 </template>
                 <template v-else>
@@ -160,7 +160,7 @@
                     <div class="spinner-border spinner-border-sm"
                       v-if="$store.state.saving">
                     </div>
-                    <i class="fas fa-chevron-down" v-else></i>
+                    <i class="mdi mdi-chevron-down" v-else></i>
                   </button>
                   <div class="position-relative">
                     <evan-dropdown ref="containerContextMenu"
@@ -172,7 +172,7 @@
                             evanNavigate(`${ $store.state.uiDT.address }/containerlink`)
                             $refs.containerContextMenu.hide($event);
                           ">
-                          <i class="fas fa-link mr-3" style="width: 16px;"></i>
+                          <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
                           {{ `_digitaltwins.context-menu.link` | translate }}
                         </a>
                       </template>
@@ -182,7 +182,7 @@
                     class="btn btn-primary btn-circle
                       d-flex align-items-center justify-content-center"
                     :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">
-                    <i class="fas fa-plus"></i>
+                    <i class="mdi mdi-plus"></i>
                   </a>
                 </template>
               </template>

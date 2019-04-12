@@ -89,7 +89,7 @@
               </dt-field>
             </td>
             <td v-if="mode === 'schema'">
-              <i class="fas fa-trash clickable"
+              <i class="mdi mdi-delete clickable"
                 :disabled="$store.state.saving"
                 @click="!$store.state.saving && removeProperty()">
               </i>

@@ -61,13 +61,13 @@
         <div class="d-block p-2 text-center border-right clickable all-transition"
           :class="activeTab === -1 ? 'bg-secondary bg-text-secondary' : 'bg-level-1'"
           @click="activateTab(-1)">
-          <i class="fas fa-plus-circle large"></i>
+          <i class="mdi mdi-plus-circle large"></i>
         </div>
         <span class="mx-auto"></span>
         <button type="button" class="btn btn-outline-secondary btn-circle btn-sm ml-5 mt-1 mr-2 animate-hop"
           v-if="cachedTemplate"
           @click="$refs.cacheModal.show()">
-          <i class="fas fa-undo"></i>
+          <i class="mdi mdi-undo"></i>
         </button>
       </div>
 

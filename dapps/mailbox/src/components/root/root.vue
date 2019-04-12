@@ -47,7 +47,7 @@
                   <i :class="category.icon"></i>
                   <h4 class="mb-0">{{ `_mailbox.${  key }` | translate }}</h4>
                   <span class="mx-auto"></span>
-                  <i class="fas fa-chevron-right"></i>
+                  <i class="mdi mdi-chevron-right"></i>
                 </li>
               </ul>
             </div>
@@ -61,7 +61,7 @@
           <template v-slot:content>
             <button type="button" class="btn btn-primary btn-circle"
               @click="evanNavigate('add');">
-              <i class="fas fa-plus"></i>
+              <i class="mdi mdi-plus"></i>
             </button>
           </template>
         </evan-breadcrumbs>
@@ -104,7 +104,7 @@
                         </td>
                         <td 
                           style="width: 30px; height: 70px">
-                          <i class="fas fa-envelope text-secondary" 
+                          <i class="mdi mdi-email text-secondary" 
                             v-if="readMails.indexOf(mail.address) === -1">
                           </i>
                         </td>
@@ -114,7 +114,7 @@
                         <td
                           class="pt-4"
                           style="width: 30px; height: 70px">
-                          <i class="fas fa-paperclip" 
+                          <i class="mdi mdi-attachment" 
                             v-if="mail.attachments">
                           </i>
                         </td>

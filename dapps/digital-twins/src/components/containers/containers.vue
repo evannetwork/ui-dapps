@@ -78,13 +78,13 @@
             class="btn btn-rounded btn-secondary font-weight-normal m-3"
             :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/containerlink`">
             {{ '_digitaltwins.containers.link' | translate }}
-            <i class="fas fa-arrow-right label ml-2"></i>
+            <i class="mdi mdi-arrow-right label ml-2"></i>
           </a>
           <a
             class="btn btn-rounded btn-primary font-weight-normal m-3"
             :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">
             {{ '_digitaltwins.containers.create' | translate }}
-            <i class="fas fa-arrow-right label ml-2"></i>
+            <i class="mdi mdi-arrow-right label ml-2"></i>
           </a>
         </div>
       </div>
