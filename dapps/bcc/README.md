@@ -1,19 +1,37 @@
-# bcc
+# evan.networtk library wrapper
 
-Wrapper for the `@evan.network/api-blockchain-core` to be able to build this project as a browserify bundle.
-This application will be bind to the following ENS path `bcc.evan`. Within your dbcp.json, you will need to include `bcc` as a dependency, if you want to use this paackage within an dapp. Within the ts files of the dapp, the usal import `@evan.network/api-blockchain-core` import can be used.
+DApp wrapper for: [@evan.network/api-blockchain-core](https://github.com/evannetwork/api-blockchain-core)
 
 ## Build
 ```
 npm run build
 ```
 
-## DApp
 
-This is a evan.network DApp. To build and deploy your DApp, please visit the readme.md of your containing evan.network basic project.
+## Usage
+- exclude `@evan.network/api-blockchain-core` from build job
 
-For more details about how to program DApps have a look here:
+- package.json
+```
+  ...
+  "dependencies": {
+    "@evan.network/api-blockchain-core": "X.X.X"
+  },
+  ...
+```
 
-- [DApp Tutorials](https://evannetwork.github.io/dapps/basics)
-- [API Reference UI](https://ipfs.test.evan.network/ipns/QmReXE5YkiXviaHNG1ASfY6fFhEoiDKuSkgY4hxgZD9Gm8)
-- [API Reference blockchain-core / DBCP](https://ipfs.test.evan.network/ipns/QmYmsPTdPPDLig6gKB1wu1De4KJtTqAXFLF1498umYs4M6)
+- dbcp.json
+```
+  ...
+  "dapp": {
+    "dependencies": {
+      "bcc": "X.X.X"
+    },
+  }
+  ...
+```
+
+- typescript
+```
+  import * as bcc from '@evan.network/api-blockchain-core';
+```

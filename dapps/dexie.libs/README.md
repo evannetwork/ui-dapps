@@ -1,6 +1,6 @@
 # evan.networtk library wrapper
 
-DApp wrapper for: [d3](https://d3js.org/)
+DApp wrapper for: [dexie](https://dexie.org/)
 
 ## Build
 ```
@@ -9,13 +9,13 @@ npm run build
 
 
 ## Usage
-- exclude `d3` from build job
+- exclude `dexie` from build job
 
 - package.json
 ```
   ...
   "dependencies": {
-    "d3": "X.X.X"
+    "dexie": "X.X.X"
   },
   ...
 ```
@@ -25,7 +25,7 @@ npm run build
   ...
   "dapp": {
     "dependencies": {
-      "d3": "X.X.X"
+      "dexie.libs": "X.X.X"
     },
   }
   ...
@@ -33,5 +33,5 @@ npm run build
 
 - typescript
 ```
-  import * as d3 from 'd3';
+  import * as dexie from 'dexie';
 ```

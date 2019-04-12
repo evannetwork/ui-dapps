@@ -29,39 +29,39 @@
 
 .evan {
   .bg-text-danger {
-    color: cssVar('bg-text-danger');
+    color: cssVar('bg-text-danger') !important;
   }
 
   .bg-text-dark {
-    color: cssVar('bg-text-dark');
+    color: cssVar('bg-text-dark') !important;
   }
 
   .bg-text-info {
-    color: cssVar('bg-text-info');
+    color: cssVar('bg-text-info') !important;
   }
 
   .bg-text-light {
-    color: cssVar('bg-text-light');
+    color: cssVar('bg-text-light') !important;
   }
 
   .bg-text-primary {
-    color: cssVar('bg-text-primary');
+    color: cssVar('bg-text-primary') !important;
   }
 
   .bg-text-secondary {
-    color: cssVar('bg-text-secondary');
+    color: cssVar('bg-text-secondary') !important;
   }
 
   .bg-text-success {
-    color: cssVar('bg-text-v');
+    color: cssVar('bg-text-v') !important;
   }
 
   .bg-text-warning {
-    color: cssVar('bg-text-warning');
+    color: cssVar('bg-text-warning') !important;
   }
 
   .bg-text-inverted {
-    color: cssVar('text-color-inverted');
+    color: cssVar('text-color-inverted') !important;
   }
 
   h1, h2, h3, h4, h5, span, p {
@@ -86,5 +86,40 @@
     .font-size-#{ ($i * 10) + 5} {
       font-size: 90%;
     }
+  }
+
+  /* http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
+  .overflow-multiline {
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    max-height: 4.3em;
+    margin-right: -1em;
+    padding-right: 1em;
+
+    text-align: justify;
+  }
+
+  .overflow-multiline:before {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+
+    content: '...';
+  }
+
+  .overflow-multiline:after {
+    position: absolute;
+    right: 0;
+
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+
+    content: '';
+
+    background: white;
   }
 }

@@ -24,6 +24,7 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+
 /**
  * base url of the evan.network smart agents server
  */

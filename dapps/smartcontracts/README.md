@@ -1,19 +1,37 @@
-# smartcontracts
+# evan.networtk library wrapper
 
-Wrapper for the `@evan.network/smart-contracts-core` to be able to build this project as a browserify bundle.
-This application will be bind to the following ENS path `smartcontracts.evan`. Within your dbcp.json, you will need to include `smartcontracts` as a dependency, if you want to use this paackage within an dapp. Within the ts files of the dapp, the usal import `@evan.network/smart-contracts-core` import can be used.
+DApp wrapper for: [@evan.network/smart-contracts-core](https://github.com/evannetwork/smart-contracts-core)
 
 ## Build
 ```
 npm run build
 ```
 
-## DApp
 
-This is a evan.network DApp. To build and deploy your DApp, please visit the readme.md of your containing evan.network basic project.
+## Usage
+- exclude `@evan.network/smart-contracts-core` from build job
 
-For more details about how to program DApps have a look here:
+- package.json
+```
+  ...
+  "dependencies": {
+    "@evan.network/smart-contracts-core": "X.X.X"
+  },
+  ...
+```
 
-- [DApp Tutorials](https://evannetwork.github.io/dapps/basics)
-- [API Reference UI](https://ipfs.test.evan.network/ipns/QmReXE5YkiXviaHNG1ASfY6fFhEoiDKuSkgY4hxgZD9Gm8)
-- [API Reference blockchain-core / DBCP](https://ipfs.test.evan.network/ipns/QmYmsPTdPPDLig6gKB1wu1De4KJtTqAXFLF1498umYs4M6)
+- dbcp.json
+```
+  ...
+  "dapp": {
+    "dependencies": {
+      "smartcontracts": "X.X.X"
+    },
+  }
+  ...
+```
+
+- typescript
+```
+  import * as smartcontracts from '@evan.network/smart-contracts-core';
+```

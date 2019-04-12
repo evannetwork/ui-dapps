@@ -92,11 +92,12 @@ export class Dispatcher {
    * @param      {string}  name     Technical exported class member of the dispatcher within the dapp.
    * @param      {any}     func     Function that should be called
    */
-  static watch(func: any, dappEns = '*', name = '*') {
-    window.addEventListener(`evan-queue-${ dappEns }-${ name }`, func);
+  static watch(func: ($event: CustomEvent) => any, dappEns = '*', name = '*') {
+    const watch = ($event: CustomEvent) => func($event);
+    window.addEventListener(`evan-queue-${ dappEns }-${ name }`, watch);
 
     // return the watch remove function
-    return () => window.removeEventListener(`evan-queue-${ dappEns }-${ name }`, func);
+    return () => window.removeEventListener(`evan-queue-${ dappEns }-${ name }`, watch);
   }
 
   constructor(dappEns: string, name: string, gas: number, title?: string) {
@@ -187,11 +188,11 @@ export class Dispatcher {
    *
    * @param      {Function}  func    function that should be called on an update
    */
-  watch(func: any) {
-    window.addEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
-
+  watch(func: ($event: CustomEvent) => any) {
+    const watch = ($event: CustomEvent) => func($event);
+    window.addEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, watch);
     // return the watch remove function
-    return () => window.removeEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, func);
+    return () => window.removeEventListener(`evan-queue-${ this.dappEns }-${ this.name }`, watch);
   }
 }
 
@@ -328,7 +329,10 @@ export class DispatcherInstance {
   async startup() {
     this.status = 'starting';
 
-    await this.dispatcher.startupSteps.forEach(startup => startup.call(this));
+    await Promise.all(this.dispatcher.startupSteps.map(startup => startup(this, this.data)));
+
+    // save the queue data
+    await this.save();
   }
 
   /**
@@ -454,10 +458,11 @@ export class DispatcherInstance {
    *
    * @param      {Function}  func    function that should be called on an update
    */
-  watch(func: any) {
-    window.addEventListener(`evan-queue-${ this.id }`, func);
+  watch(func: ($event: CustomEvent) => any) {
+    const watch = ($event: CustomEvent) => func($event);
+    window.addEventListener(`evan-queue-${ this.id }`, watch);
 
     // return the watch remove function
-    return () => window.removeEventListener(`evan-queue-${ this.id }`, func);
+    return () => window.removeEventListener(`evan-queue-${ this.id }`, watch);
   }
 }

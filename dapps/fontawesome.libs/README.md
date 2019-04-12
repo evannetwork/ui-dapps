@@ -1,13 +1,23 @@
-# @evan.network/fontawesome
+# evan.networtk library wrapper
 
-DApp wrapper for the [fontawesome library](https://fontawesome.com). Use it as in the following example:
+DApp wrapper for: [fontawesome](https://fontawesome.com)
+
+## Build
+```
+npm run build
+```
+
+
+## Usage
+- exclude `@evan.network/api-blockchain-core` from build job
 
 - dbcp.json
 ```
   ...
-  "dependencies": {
-    "fontawesome.libs": "1.1.1"
-    ...
-  },
+  "dapp": {
+    "dependencies": {
+      "fontawesome.libs": "X.X.X"
+    },
+  }
   ...
-``` 
+```

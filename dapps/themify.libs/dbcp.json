@@ -3,12 +3,11 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "themify.libs.js",
+      "entrypoint": "themify.libs.css",
       "files": [
-        "themify.libs.js",
         "themify.libs.css"
       ],
-      "origin": "QmTkBKWsYW6L9SWcNKQ9cnQUWAhvEKeDh8o9SYRtmKYqda",
+      "origin": "QmdzawiPJSmJCLWyhk7sL6fUna1T3HkfzSLe9GFZoAKNob",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -33,7 +32,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmX478JM6dkV3QGRek5FoyFJb2QovLHbA6svWUVVhG4PGa"
+      "1.0.0": "QmNwWiRWnTqgc8dirTfLmXeo4ECbCNE8q5kbhrrV65Gc5U"
     }
   }
 }

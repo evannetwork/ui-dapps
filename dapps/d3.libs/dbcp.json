@@ -7,7 +7,7 @@
       "files": [
         "d3.libs.js"
       ],
-      "origin": "",
+      "origin": "QmPpQfe4ZRQvBJcJNWo9We6zAKg7GAxPPZ671RA3Kh8Coy",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -31,6 +31,8 @@
       "library"
     ],
     "version": "5.7.0",
-    "versions": {}
+    "versions": {
+      "5.7.0": "QmQYK8QBTQqdQJpcTJFTtdJqPdzqJnsBMSdehrJCFUqZ27"
+    }
   }
 }

@@ -9,11 +9,11 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/ui.libs.js",
-  "name": "@evan.network/ui",
+  "main": "dist/dexie.js",
+  "name": "@evan.network/fontawesome",
   "scripts": {
     "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
   },
-  "typings": "dist/ui.libs.d.ts",
-  "version": "1.0.0"
+  "typings": "dist/dexie.d.ts",
+  "version": "2.0.4"
 }
