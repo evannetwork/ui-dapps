@@ -1,13 +1,23 @@
-# @evan.network/bootstrap-them-evan
+# evan.networtk library wrapper
 
-DApp wrapper for the [bootstrap css](https://getbootstrap.com). Use it as in the following example:
+DApp wrapper for: [bootstrap 4 style](https://getbootstrap.com/).
 
+Includes an adjusted bootstrap style, including support for css variables. For all variables have a look at [ui.libs](https://github.com/evannetwork/ui-core/blob/master/dapps/ui.libs/src/style/definitions/evan.theme.scss).
+
+## Build
+```
+npm run build
+```
+
+
+## Usage
 - dbcp.json
 ```
   ...
-  "dependencies": {
-    "evan.bootstrap.libs": "4.3.1"
-    ...
-  },
+  "dapp": {
+    "dependencies": {
+      "evan.bootstrap.libs": "X.X.X"
+    },
+  }
   ...
-``` 
+```

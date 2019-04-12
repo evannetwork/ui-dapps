@@ -3,9 +3,8 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "fontawesome.libs.js",
+      "entrypoint": "fontawesome.libs.css",
       "files": [
-        "fontawesome.libs.js",
         "fontawesome.libs.css"
       ],
       "origin": "QmV3rNrR1Pi4P8EEJcjbg5veXNiqTWa87emSiyfgxTsMSw",

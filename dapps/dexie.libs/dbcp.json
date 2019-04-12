@@ -3,9 +3,9 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "dexie.js",
+      "entrypoint": "dexie.libs.js",
       "files": [
-        "dexie.js"
+        "dexie.libs.js"
       ],
       "origin": "QmZ4t8mvR27NVqQtckLspmkhwFWf88fiR1ZXHU2zuZx4RZ",
       "primaryColor": "",
@@ -20,11 +20,11 @@
         "en": ""
       },
       "name": {
-        "en": "dexie"
+        "en": "dexie.libs"
       }
     },
     "imgSquare": "",
-    "name": "dexie",
+    "name": "dexie.libs.libs",
     "tags": [
       "dapp",
       "evan",

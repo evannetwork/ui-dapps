@@ -1,14 +1,20 @@
 # ui-core
 The @evan.network/ui-core is a container for the root evan network libraries and applications.
 
-Dapps like the blockchain core or the smart contracts core are constructed simply, to exclude the wanted library and map the correct original package name. E.g.: The @evan.network/api-blockchain-core library is published using the ens address `bcc.evan`. Within the DBCP of the using DApp, this lib is referenced within the dbcp.json as dependency. Within the application it self, `@evan.network/api-blockchain-core` can be imported normally using `import * as bcc from '@evan.network/api-blockchain-core'`.
+DApp wrappers for the blockchain core, the smart contracts core, ... are constructed simply, to exclude the wanted library and map the correct original package name. E.g.: The @evan.network/api-blockchain-core library is published using the ens address `bcc.evan`. Within the DBCP of the using DApp, this lib is referenced within the dbcp.json as dependency. Within the application it self, `@evan.network/api-blockchain-core` can be imported normally using `import * as bcc from '@evan.network/api-blockchain-core'`.
 
 Available libraries:
 
-| original                           | ens address    |
-|:-----------------------------------|:---------------|
-| @evan.network/api-blockchain-core  | bcc            |
-| @evan.network/smart-contracts-core | smartcontracts |
+| original                           | ens address              |
+|:-----------------------------------|:-------------------------|
+| @evan.network/api-blockchain-core  | bcc.evan                 |
+| @evan.network/smart-contracts-core | smartcontracts.evan      |
+| @evan.network/ui                   | ui.libs.evan             |
+| bootstrap 4                        | evan.bootstrap.libs.evan |
+| d3                                 | d3.libs.evan             |
+| dexie                              | dexie.libs.evan          |
+| fontawesome                        | fontawesome.libs.evan    |
+| themify                            | themify.libs.evan        |
 
 ## Install
 - use `yarn install` or `npm install`

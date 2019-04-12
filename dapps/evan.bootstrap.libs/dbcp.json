@@ -3,9 +3,8 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "evan.bootstrap.libs.js",
+      "entrypoint": "evan.bootstrap.libs.css",
       "files": [
-        "evan.bootstrap.libs.js",
         "evan.bootstrap.libs.css"
       ],
       "origin": "QmNegNonhzDJQNL8pk91mFkca5cnohru7iTW3kppi9bSYi",

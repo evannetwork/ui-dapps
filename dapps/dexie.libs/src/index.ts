@@ -26,7 +26,7 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-dappBrowser.System.map['dexie'] = `dexie.${ dappBrowser.getDomainName() }!dapp-content`;
+dappBrowser.System.map['dexie'] = `dexie.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
 // map the original ui path to ui.libs
 import dexie from 'dexie';

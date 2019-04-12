@@ -1,13 +1,37 @@
-# @evan.network/fontawesome
+# evan.networtk library wrapper
 
-DApp wrapper for the [fontawesome library](https://fontawesome.com). Use it as in the following example:
+DApp wrapper for: [dexie](https://dexie.org/)
+
+## Build
+```
+npm run build
+```
+
+
+## Usage
+- exclude `dexie` from build job
+
+- package.json
+```
+  ...
+  "dependencies": {
+    "dexie": "X.X.X"
+  },
+  ...
+```
 
 - dbcp.json
 ```
   ...
-  "dependencies": {
-    "dexie": "1.1.1"
-    ...
-  },
+  "dapp": {
+    "dependencies": {
+      "dexie.libs": "X.X.X"
+    },
+  }
   ...
-``` 
+```
+
+- typescript
+```
+  import * as dexie from 'dexie';
+```

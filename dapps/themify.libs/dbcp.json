@@ -3,9 +3,8 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "themify.libs.js",
+      "entrypoint": "themify.libs.css",
       "files": [
-        "themify.libs.js",
         "themify.libs.css"
       ],
       "origin": "QmdzawiPJSmJCLWyhk7sL6fUna1T3HkfzSLe9GFZoAKNob",
