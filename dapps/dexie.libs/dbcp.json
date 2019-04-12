@@ -7,7 +7,7 @@
       "files": [
         "dexie.libs.js"
       ],
-      "origin": "QmZ4t8mvR27NVqQtckLspmkhwFWf88fiR1ZXHU2zuZx4RZ",
+      "origin": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -24,7 +24,7 @@
       }
     },
     "imgSquare": "",
-    "name": "dexie.libs.libs",
+    "name": "dexie.libs",
     "tags": [
       "dapp",
       "evan",
@@ -32,7 +32,7 @@
     ],
     "version": "2.0.4",
     "versions": {
-      "2.0.4": "QmXbMHkRXKyBck6iie5Z7743sKXdDBzzsNHMFaQbNk8Tyn"
+      "2.0.4": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu"
     }
   }
 }
