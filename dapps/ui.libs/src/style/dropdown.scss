@@ -31,6 +31,8 @@
 
     margin-top: 0;
 
+    cursor: initial;
+
     border: 1px solid cssVar('border-color');
     border-top: 0;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
@@ -41,7 +43,7 @@
     }
 
     .dropdown-item {
-      font-weight: 300;
+      cursor: pointer;
     }
   }
 }

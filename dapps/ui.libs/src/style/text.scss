@@ -36,36 +36,20 @@
     text-decoration: none !important;
   }
 
-  span, p {
+  span, p, a {
     font-size: cssVar('text-font-size');
     font-weight: 400;
   }
 
   // add font-size levels
   @for $i from 2 through 9 {
-    .font-size-#{$i * 10} {
-      font-size: 90%;
+    .font-size-#{ $i * 10 } {
+      font-size: #{ $i * 10 }% !important;
     }
 
-    .font-size-#{ ($i * 10) + 5} {
-      font-size: 90%;
+    .font-size-#{ ($i * 10) + 5 } {
+      font-size: #{ ($i * 10) + 5 }% !important;
     }
-  }
-
-  .h1 {
-    font-size: cssVar('h1-font-size') !important;
-  }
-  .h2 {
-    font-size: cssVar('h2-font-size') !important;
-  }
-  .h3 {
-    font-size: cssVar('h3-font-size') !important;
-  }
-  .h4 {
-    font-size: cssVar('h4-font-size') !important;
-  }
-  .h5 {
-    font-size: cssVar('h5-font-size') !important;
   }
 
   /* http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
@@ -101,5 +85,9 @@
     content: '';
 
     background: white;
+  }
+
+  .font-weight-semibold {
+    font-weight: 600 !important;
   }
 }

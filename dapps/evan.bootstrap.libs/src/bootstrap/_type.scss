@@ -64,9 +64,13 @@ hr {
 // Emphasis
 //
 
-small,
-.small {
+small {
   @include font-size($small-font-size);
+  font-weight: $font-weight-normal;
+}
+
+.small {
+  @include font-size(80%);
   font-weight: $font-weight-normal;
 }
 

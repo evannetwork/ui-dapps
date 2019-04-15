@@ -31,35 +31,35 @@
 //
 
 .rounded-sm {
-  border-radius: $border-radius-sm !important;
+  border-radius: 3px !important;
 }
 
 .rounded {
-  border-radius: $border-radius !important;
+  border-radius: 5px !important;
 }
 
 .rounded-top {
-  border-top-left-radius: $border-radius !important;
-  border-top-right-radius: $border-radius !important;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
 }
 
 .rounded-right {
-  border-top-right-radius: $border-radius !important;
-  border-bottom-right-radius: $border-radius !important;
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
 }
 
 .rounded-bottom {
-  border-bottom-right-radius: $border-radius !important;
-  border-bottom-left-radius: $border-radius !important;
+  border-bottom-right-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
 }
 
 .rounded-left {
-  border-top-left-radius: $border-radius !important;
-  border-bottom-left-radius: $border-radius !important;
+  border-top-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
 }
 
 .rounded-lg {
-  border-radius: $border-radius-lg !important;
+  border-radius: 10px !important;
 }
 
 .rounded-circle {

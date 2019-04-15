@@ -29,8 +29,21 @@
 
 .evan {
   font-family: 'Open Sans', sans-serif;
+  font-size: 1em !important;
 
   display: initial;
+
+  @media (min-width: 1200px) {
+    font-size: 1em !important;
+  }
+
+  @media (max-width: 992px) {
+    font-size: 0.9em !important;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.8em !important;
+  }
 
   .clickable {
     cursor: pointer;
@@ -38,7 +51,7 @@
 
   .border-top, .border-bottom, .border-left, .border-right .border {
     &.border-sm {
-      border-width: 1px;
+      border-width: 1px !important;
     }
   }
 

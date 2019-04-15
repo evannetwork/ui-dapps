@@ -350,12 +350,12 @@ $font-weight-bolder:          bolder !default;
 $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
 
-$h1-font-size:                cssVar('h1-font-size');
-$h2-font-size:                cssVar('h2-font-size');
-$h3-font-size:                cssVar('h3-font-size');
-$h4-font-size:                cssVar('h4-font-size');
-$h5-font-size:                cssVar('h5-font-size');
-$h6-font-size:                cssVar('h6-font-size');
+$h1-font-size:                2.250em; // cssVar('h1-font-size');
+$h2-font-size:                1.750em; // cssVar('h2-font-size');
+$h3-font-size:                1.313em; // cssVar('h3-font-size');
+$h4-font-size:                1.125em; // cssVar('h4-font-size');
+$h5-font-size:                1em    ; // cssVar('h5-font-size');
+$h6-font-size:                0.938em; // cssVar('h6-font-size');
 
 $headings-margin-bottom:      $spacer / 2 !default;
 $headings-font-family:        null !default;
@@ -377,7 +377,7 @@ $display-line-height:         $headings-line-height !default;
 $lead-font-size:              $font-size-base * 1.25 !default;
 $lead-font-weight:            300 !default;
 
-$small-font-size:             80% !default;
+$small-font-size:             cssVar('small-font-size') !default;
 
 $text-muted:                  cssVar('text-muted') !default;
 

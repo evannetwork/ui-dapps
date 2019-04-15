@@ -166,7 +166,7 @@ $themeEvan: map-merge(
   (
     bg-level-1: cssVar('white'),
     bg-level-2: cssVar('gray-150'),
-    bg-level-3: cssVar('gray-200'),
+    bg-level-3: #f5f6fa,
     bg-inverted: cssVar('dark')
   ),
   $themeEvan
@@ -216,7 +216,7 @@ $themeEvan: map-merge(
 $themeEvan: map-merge(
   (
     // dapp-wrapper
-    dapp-wrapper-sidepanel-icon-color: cssVar('text-color'),
+    dapp-wrapper-sidepanel-icon-color: cssVar('gray-500'),
     dapp-wrapper-sidepanel-list-hover: cssVar('gray-200'),
     dapp-wrapper-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
   ),
@@ -228,13 +228,14 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    h1-font-size:   36px,   // 2.250em
-    h2-font-size:   28px,   // 1.750em
-    h3-font-size:   21px,   // 1.313em
-    h4-font-size:   18px,   // 1.125em
-    h5-font-size:   16px,   // 1em    
-    h6-font-size:   15px,   // 0.938em
-    text-font-size: 14px,   // 0.875em
+    h1-font-size:   2.250rem,   // 36px / 2.250em
+    h2-font-size:   1.750rem,   // 28px / 1.750em
+    h3-font-size:   1.313rem,   // 21px / 1.313em
+    h4-font-size:   1.125rem,   // 18px / 1.125em
+    h5-font-size:   1rem    ,   // 16px / 1em    
+    h6-font-size:   0.938rem,   // 15px / 0.938em
+    text-font-size: 0.875rem,   // 14px / 0.875em
+    small-font-size: 0.6875rem,
   ),
   $themeEvan
 );

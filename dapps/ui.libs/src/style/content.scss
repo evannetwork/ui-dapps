@@ -54,11 +54,11 @@
 
     &:hover {
       &.border {
-        border: 2px solid cssVar('primary') !important;
+        border: 2px solid cssVar('secondary') !important;
       }
 
       *.highlight, .highlight * {
-        color: cssVar('primary') !important;
+        color: cssVar('secondary') !important;
       }
     }
   }
