@@ -71,7 +71,7 @@ export default {
     "context-menu": {
       "link": "Daten Container verlinken"
     },
-    "digitaltwins": "Digitalen Zwillinge",
+    "digitaltwins": "Digitale Zwillinge",
     "dispatcher": {
       "create": "Digitale Zwilling wird erstellt",
       "digitaltwin": {
@@ -87,11 +87,11 @@ export default {
     "generalForm": {
       "create": "Erstellen",
       "description": {
-        "desc": "Kurze Beschreibung zu der digitalen Zwilling.",
+        "desc": "Kurze Beschreibung zu dem digitalen Zwilling.",
         "title": "Beschreibung"
       },
       "name": {
-        "desc": "Name der digitalen Zwilling.",
+        "desc": "Name des digitalen Zwillings.",
         "error": "Bitte geben Sie einen Namen an!",
         "title": "Name"
       },
@@ -106,7 +106,7 @@ export default {
         "title": "Datencontainer"
       },
       "digitaltwin-details": {
-        "desc": "Generelle Informationen zu der digitalen Zwilling.",
+        "desc": "Generelle Informationen zu dem digitalen Zwilling.",
         "title": "Digitale Zwilling"
       },
       "digitaltwin-overview": "Favoriten & letzte Zwillinge",
@@ -124,7 +124,7 @@ export default {
     },
     "lookup": {
       "address": {
-        "desc": "Geben Sie die Adresse Ihrer digitalen Zwilling ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
+        "desc": "Geben Sie die Adresse Ihres digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Bitte geben Sie eine gültige Adresse ein!",
         "title": "Adresse"
       },
@@ -171,7 +171,7 @@ export default {
         "title": "Digitale Zwilling öffnen / hinzufügen"
       },
       "overview": {
-        "desc": "Übersicht meiner und der der zuletzt geöffneten digitalen Zwillinge.",
+        "desc": "Übersicht meiner und der zuletzt geöffneten digitalen Zwillinge.",
         "title": "Meine digitalen Zwillinge"
       },
       "templates": {

@@ -40,17 +40,17 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   dashboardEntries: Array<any> = [
     {
       title: 'explanations',
-      icon: 'mdi mdi-information p-4 xxxl',
+      img: 'performance-colored.svg',
       path: 'explanations',
     },
     {
       title: 'digitaltwins',
-      icon: 'mdi mdi-fingerprint text-secondary p-4 xxxl',
+      img: 'identity-colored.svg',
       path: `digitaltwins.${ getDomainName() }`,
     },
     {
       title: 'contacts',
-      icon: 'mdi mdi-book-multiple text-info p-4 xxxl',
+      img: 'contact-colored.svg',
       path: `addressbook.${ getDomainName() }`,
     },
   ];

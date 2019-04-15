@@ -27,15 +27,17 @@
 
 <template>
   <div>
-    <div class="mt-5 mb-3 text-center">
+    <div class="mt-3 mb-3 text-center">
       <br>
-      <h4 class="text-secondary font-weight-bold">{{ '_digitaltwins.welcome' | translate }}</h4>
-      <h2 class="mt-4">{{ '_digitaltwins.startup' | translate }}</h2>
+      <h2 class="mt-4 font-weight-semibold">{{ '_digitaltwins.welcome' | translate }}</h2>
+      <h4 class="mt-4 font-weight-semibold text-muted">{{ '_digitaltwins.startup' | translate }}</h4>
+      <div class="bg-secondary d-inline-block" style="width: 70px; height: 5px;"></div>
       <br>
     </div>
     <div class="d-md-flex container flex-wrap justify-content-center">
       <a class="
-          p-3 col-md-5 col-lg-4 col-xl-3
+          d-block
+          p-3 col-lg-12 col-xl-3
           m-md-3 mb-3 p-4
           text-center
           bg-level-1 border evan-highlight"

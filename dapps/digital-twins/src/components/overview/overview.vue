@@ -37,36 +37,34 @@
             {{ `_digitaltwins.overview.${ category }` | translate }}
           </h4>
         </div>
-        <div class="d-md-flex flex-wrap justify-content-left">
-          <a class="
-              col-md-4 col-lg-3 col-xl-2
-              p-0 m-md-3 mb-3 
-              text-center
-              bg-level-1 border evan-highlight"
-            style="min-width: 250px"
-            v-for="(ensAddress, index) in categories[category]"
-            :href="`${ dapp.fullUrl }/${ ensAddress }`">
-            <img class="img-fluid p-3"
-              style="max-width: 200px; min-height: 200px;"
-              :src="descriptions[ensAddress].imgSquare">
-              
-            <div class="text-left border-top highlight">
-              <small class="text-center p-1 d-block text-muted"
-                v-if="descriptions[ensAddress].creating">
-                {{ '_digitaltwins.containers.in-creation' | translate }}
-              </small>
-              <div class="d-flex p-3">
-                <div>
-                  <h5 class="font-weight-bold">{{ descriptions[ensAddress].name }}</h5>
-                  <span class="overflow-multiline">{{ descriptions[ensAddress].description }}</span>
+        <div class="container d-md-flex flex-wrap justify-content-left">
+          <div class="col-md-6 col-lg-4 p-3"
+            v-for="(ensAddress, index) in categories[category]">
+            <a class="text-center bg-level-1 border evan-highlight p-4"
+              style="min-width: 250px"
+              :href="`${ dapp.fullUrl }/${ ensAddress }`">
+              <img class="img-fluid p-3"
+                style="max-width: 200px; min-height: 200px;"
+                :src="descriptions[ensAddress].imgSquare">
+                
+              <div class="text-left border-top highlight">
+                <small class="text-center p-1 d-block text-muted"
+                  v-if="descriptions[ensAddress].creating">
+                  {{ '_digitaltwins.containers.in-creation' | translate }}
+                </small>
+                <div class="d-flex p-3">
+                  <div>
+                    <h5 class="font-weight-bold">{{ descriptions[ensAddress].name }}</h5>
+                    <span class="overflow-multiline">{{ descriptions[ensAddress].description }}</span>
+                  </div>
+                  <template v-if="descriptions[ensAddress].loading">
+                    <span class="mx-auto"></span>
+                    <div class="spinner-border spinner-border-sm ml-3"></div>
+                  </template>
                 </div>
-                <template v-if="descriptions[ensAddress].loading">
-                  <span class="mx-auto"></span>
-                  <div class="spinner-border spinner-border-sm ml-3"></div>
-                </template>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </template>
       <div class="bg-level-1 border mb-3"
