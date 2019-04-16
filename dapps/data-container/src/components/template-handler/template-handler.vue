@@ -51,15 +51,15 @@
           </button>
         </template>
       </evan-modal>
-      <div class="d-flex border">
-        <div class="d-flex align-items-center p-2 text-center border-right clickable all-transition"
+      <div class="evan-tabs">
+        <div class="evan-tab"
           v-for="(property, index) in Object.keys(template.properties)"
-          :class="activeTab === index ? 'bg-secondary bg-text-secondary' : 'bg-level-1'"
+          :class="{ 'active': activeTab === index }"
           @click="activateTab(index)">
           {{ property }}
         </div>
-        <div class="d-block p-2 text-center border-right clickable all-transition"
-          :class="activeTab === -1 ? 'bg-secondary bg-text-secondary' : 'bg-level-1'"
+        <div class="evan-tab"
+          :class="{ 'active': activeTab === -1 }"
           @click="activateTab(-1)">
           <i class="mdi mdi-plus-circle large"></i>
         </div>
@@ -71,19 +71,20 @@
         </button>
       </div>
 
-      <div class="bg-level-2 border-bottom border-right border-left p-3"
+      <div class="bg-level-2 p-4"
         v-if="activeTab === -1">
         <div class="bg-level-1 border">
-          <div class="d-flex p-3 border-bottom align-items-center">
-            <h4 class="m-0">
+          <div class="d-flex p-5 border-bottom border-sm align-items-center">
+            <h3 class="m-0 font-weight-semibold">
               {{ `_datacontainer.entry.add` | translate }}
-            </h4>
+            </h3>
           </div>
-          <p class="p-3 m-0">
+
+          <p class="px-4 pt-3">
             {{ `_datacontainer.entry.add-desc` | translate }}
           </p>
 
-          <div class="p-3">
+          <div class="px-4 py-3">
             <form v-on:submit.prevent="addEntry">
               <div class="form-group">
                 <label for="type">
@@ -139,7 +140,7 @@
 
               <div class="mt-3 text-center">
                 <button type="submit"
-                  class="btn btn-rounded btn-outline-secondary"
+                  class="btn btn-rounded btn-primary"
                   :disabled="!entryForm.isValid || $store.state.saving">
                   {{ `_datacontainer.entry.add` | translate }}
                 </button>

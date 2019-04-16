@@ -33,19 +33,21 @@
         <evan-dapp-wrapper-level-2>
           <template v-slot:content>
             <div class="w300">
-              <div class="d-flex pl-2 pr-4 pt-3 pb-3 align-items-center justify-content-between border-bottom">
-                <h5 class="font-weight-bolder text-nowrap ml-3">
+              <div class="d-flex flex-wrap pl-4 pr-4 pt-4 pb-3 align-items-center ">
+                <a :href="`${ dapp.fullUrl }`">
+                  <h5 class="font-weight-semibold text-uppercase text-nowrap">
                   {{ '_mailbox.mailbox' | translate }}
-                </h5>
+                  </h5>
+                </a>
               </div>
 
               <ul class="nav font-medium in w-100 mb-3 mt-auto">
-                <li class="w-100 p-4 clickable d-flex"
+                <li class="w-100 p-3 clickable d-flex align-items-center"
                   v-for="(category, key) in mailCategories"
                   :class="{ 'active': key === activeCategory }"
                   @click="evanNavigate(activeCategory); activateCategory(key)">
                   <i :class="category.icon"></i>
-                  <h4 class="mb-0">{{ `_mailbox.${  key }` | translate }}</h4>
+                  <h6 class="mb-0">{{ `_mailbox.${  key }` | translate }}</h6>
                   <span class="mx-auto"></span>
                   <i class="mdi mdi-chevron-right"></i>
                 </li>
@@ -71,58 +73,63 @@
 
           <div class="p-3" v-if="!loading">
             <div class="bg-level-1 border pt-3 pb-3">
-              <div class="evan-table table-responsive-md bg-level-2">
-                <table>
-                  <tbody>
-                    <template v-for="(mail, index) in mailCategories[activeCategory].mails">
-                      <tr v-if="index !== 0"><td></td></tr>
-                      <tr class="clickable"
-                        @click="openMailDetail(mail)">
-                        <td class="text-primary"
-                          v-if="activeCategory === 'sent'">
-                          <span class="d-block font-weight-bold">
-                            {{ addressBook[mail.to] ? addressBook[mail.to].alias : mail.to }}
-                          </span>
-                          <span class="text-truncate" v-if="addressBook[mail.to]">
-                            {{ mail.to }}
-                          </span>
-                        </td>
-                        <td class="text-primary" v-else>
-                          <span class="d-block font-weight-bold">
-                            {{ addressBook[mail.from] ? addressBook[mail.from].alias : mail.from }}
-                          </span>
-                          <span class="text-truncate" v-if="addressBook[mail.from]">
-                            {{ mail.from }}
-                          </span>
-                        </td>
-                        <td class="mail-body">
-                          <span class="d-block font-weight-bold">{{ mail.title }}</span>
-                          <span class="force-oneline"
-                            style="max-width: 300px"
-                            v-html="mail.body">
-                          </span>
-                        </td>
-                        <td 
-                          style="width: 30px; height: 70px">
-                          <i class="mdi mdi-email text-secondary" 
-                            v-if="readMails.indexOf(mail.address) === -1">
-                          </i>
-                        </td>
-                        <td>
-                          {{ mail.sent | moment('from') }}
-                        </td>
-                        <td
-                          class="pt-4"
-                          style="width: 30px; height: 70px">
-                          <i class="mdi mdi-attachment" 
-                            v-if="mail.attachments">
-                          </i>
-                        </td>
-                      </tr>
-                    </template>
-                  </tbody>
-                </table>
-              </div>
+              <table class="evan-flex-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="clickable"
+                    v-for="(mail, index) in mailCategories[activeCategory].mails"
+                    @click="openMailDetail(mail)">
+                    <td class="text-primary"
+                      style="min-width: 300px"
+                      v-if="activeCategory === 'sent'">
+                      <span class="font-weight-bold text-truncate">
+                        {{ addressBook[mail.to] ? addressBook[mail.to].alias : mail.to }}
+                      </span>
+                      <span class="d-block text-truncate" v-if="addressBook[mail.to]">
+                        {{ mail.to }}
+                      </span>
+                    </td>
+                    <td class="text-primary text-truncate"
+                      style="min-width: 200px"
+                      v-else>
+                      <span class="font-weight-bold">
+                        {{ addressBook[mail.from] ? addressBook[mail.from].alias : mail.from }}
+                      </span>
+                      <span class="d-block text-truncate" v-if="addressBook[mail.from]">
+                        {{ mail.from }}
+                      </span>
+                    </td>
+                    <td class="mail-body"
+                      style="width: 50%; min-width: 50%;">
+                      <span class="font-weight-bold">{{ mail.title }}</span>
+                      <span class="force-oneline"
+                        v-html="mail.body">
+                      </span>
+                    </td>
+                    <td style="min-width: 200px">
+                      {{ mail.sent | moment('from') }}
+                    </td>
+                    <td style="max-width: 50px;">
+                      <i class="mdi mdi-email text-secondary" 
+                        v-if="readMails.indexOf(mail.address) === -1">
+                      </i>
+                    </td>
+                    <td style="max-width: 50px;">
+                      <i class="mdi mdi-attachment" 
+                        v-if="mail.attachments">
+                      </i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 

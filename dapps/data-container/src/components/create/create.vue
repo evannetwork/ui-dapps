@@ -29,12 +29,12 @@
   <div>
     <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'"></evan-breadcrumbs>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3 text-left" v-else>
+    <div class="p-4 text-left" v-else>
       <div class="bg-level-1 border">
-        <div class="d-flex p-3 border-bottom align-items-center">
-          <h4 class="m-0">
+        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+          <h3 class="m-0 font-weight-semibold">
             {{ `_datacontainer.createForm.title` | translate }}
-          </h4>
+          </h3>
         </div>
         <div class="evan-steps p-3"
           v-if="!creating">
@@ -55,7 +55,7 @@
           </div>
           <div class="pt-3">
             <div class="step" v-if="activeStep === 0">
-              <form class="p-4"
+              <form class="px-4"
                 v-on:submit.prevent="activeStep = 1"
                 v-if="!creating">
                 <div class="form-group" v-if="templates.length > 1">

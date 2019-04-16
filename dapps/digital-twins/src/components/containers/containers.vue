@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="p-3">
+  <div class="p-1 p-md-4">
     <template class="bg-level-1 border mb-3"
       v-if="$store.state.uiDT.containers.length !== 0">
       <div class="d-md-flex flex-wrap justify-content-left">
@@ -63,13 +63,13 @@
     </template>
     <div class="bg-level-1 border mb-3"
       v-else>
-      <div class="d-flex p-3 border-bottom align-items-center">
-        <h4 class="m-0">
+      <div class="d-flex p-5 border-bottom border-sm align-items-center">
+        <h3 class="m-0 font-weight-semibold">
           {{ `_digitaltwins.containers.empty` | translate }}
-        </h4>
+        </h3>
       </div>
-      <div class="p-3">
-        <p>
+      <div class="px-5 py-3">
+        <p class="text-justify">
           {{ `_digitaltwins.containers.empty-desc` | translate }}
         </p>
 

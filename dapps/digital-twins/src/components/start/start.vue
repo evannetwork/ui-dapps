@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div>
+  <div class="container mx-auto">
     <div class="mt-3 mb-3 text-center">
       <br>
       <h2 class="mt-4 font-weight-semibold">{{ '_digitaltwins.welcome' | translate }}</h2>
@@ -34,7 +34,7 @@
       <div class="bg-secondary d-inline-block" style="width: 70px; height: 5px;"></div>
       <br>
     </div>
-    <div class="d-md-flex container flex-wrap justify-content-center">
+    <div class="d-md-flex flex-wrap justify-content-center p-0 p-xs-3">
       <a class="
           d-block
           p-3 col-lg-12 col-xl-3
@@ -42,6 +42,7 @@
           text-center
           bg-level-1 border evan-highlight"
         v-for="(type, index) in dashboardEntries"
+        style="min-width: 250px"
         :href="`${ dapp.fullUrl }/${ type.path }`">
         <i class="highlight" :class="type.icon"></i>
 

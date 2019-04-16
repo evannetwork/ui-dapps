@@ -32,18 +32,19 @@
       <template v-slot:content>
         <evan-loading v-if="loading"></evan-loading>
         <template v-else>
-          <evan-dapp-wrapper-level-2>
+          <evan-dapp-wrapper-level-2 ref="level2Wrapper">
             <template v-slot:content>
-              <div class="w300">
-                <div class="d-flex pl-4 pr-4 pt-3 pb-3 align-items-center justify-content-between">
+              <div style="width: 360px">
+                <div class="d-flex flex-wrap pl-4 pr-4 pt-3 pb-3 align-items-center justify-content-between">
                   <a :href="`${ dapp.fullUrl }`">
-                    <h5 class="font-weight-bolder text-nowrap">
+                    <h5 class="font-weight-semibold text-uppercase text-nowrap">
                       {{ '_digitaltwins.digitaltwins' | translate }}
                     </h5>
                   </a>
 
                   <a
                     class="btn btn-rounded btn-primary font-weight-normal"
+                    @click="$refs.level2Wrapper.hide()"
                     :href="`${ dapp.fullUrl }/lookup`">
                     {{ '_digitaltwins.lookup.title' | translate }}
                     <i class="mdi mdi-arrow-right label ml-2"></i>
@@ -55,9 +56,9 @@
                 </evan-loading>
 
                 <template v-if="$store.state.uiDT && !$store.state.uiDT.loading">
-                  <ul class="pl-4 pr-4 pb-4 border-bottom border-sm list-unstyled d-flex">
+                  <ul class="pl-4 pr-4 list-unstyled d-flex">
                     <li class="mr-3">
-                      <a 
+                      <a
                         :class="{ 'active border-bottom border-primary pb-1': sideNav === 0, 'text-muted': sideNav !== 0 }"
                         :href="dapp.fullUrl"
                         @click="sideNav = 0">
@@ -83,14 +84,18 @@
 
                 <ul class="nav font-medium in w-100 mb-3 mt-auto"
                   v-if="sideNav === 0 || ($store.state.uiDT && !$store.state.uiDT.loading && $store.state.uiDT.validity.exists)">
-                  <li class="w-100 p-4 clickable"
+                  <li class="w-100 p-4 clickable border-top border-sm"
                     v-for="(category, index) in navigation[sideNav]"
                     :class="{ 'active': category.active }"
                     @click="toggleLeftCategory(navigation[sideNav], category)">
                     <div class="d-flex w-100">
                       <div>
-                        <h4 class="mb-0">{{ `_digitaltwins.left-categories.${ category.name }.title` | translate }}</h4>
-                        <span class="text-muted">{{ `_digitaltwins.left-categories.${ category.name }.desc` | translate }}</span>
+                        <h6 class="mb-1 font-weight-semibold">
+                          {{ `_digitaltwins.left-categories.${ category.name }.title` | translate }}
+                        </h6>
+                        <small class="text-muted font-weight-semibold">
+                          {{ `_digitaltwins.left-categories.${ category.name }.desc` | translate }}
+                        </small>
                       </div>
                       <span class="mx-auto"></span>
                       <i v-if="category.active" class="mdi mdi-chevron-up"></i>
@@ -100,7 +105,8 @@
                       <ul class="sub-nav" v-if="category.children.length > 0">
                         <li class="pt-2 pb-2 pl-3 pr-3 d-flex"
                           v-for="(subCategory, subIndex) in category.children">
-                          <a class="font-weight-bold"
+                          <a class="font-weight-semibold"
+                            @click="$refs.level2Wrapper.hide()"
                             :href="!subCategory.path ? null : `${ dapp.fullUrl }/${ subCategory.path }`"
                             :class="{ 'active': $route.path.indexOf(subCategory.path) !== -1 }">
                             {{ subCategory.i18n ? $t(`_digitaltwins.left-categories.${ subCategory.name }`) : subCategory.name }}
@@ -111,7 +117,7 @@
                           </template>
                         </li>
                       </ul>
-                      <b class="p-3 text-center"
+                      <b class="p-2 text-center small d-block"
                         v-else
                         v-html="$t(`_digitaltwins.empty-navigation`)">
                       </b>

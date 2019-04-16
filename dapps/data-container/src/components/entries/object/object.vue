@@ -27,13 +27,14 @@
 
 <template>
   <div>
-    <div class="d-flex p-3 align-items-center border-bottom">
-      <h4 class="m-0" v-if="mode !== 'schema'">
+    <div class="d-flex border-bottom border-sm align-items-center"
+      :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'">
+      <h3 class="m-0 font-weight-semibold" v-if="mode !== 'schema'">
         {{ '_datacontainer.types.object' | translate }}: {{ entryName }}
-      </h4>
-      <h4 class="m-0" v-else>
+      </h3>
+      <h3 class="m-0 font-weight-semibold" v-else>
         {{ '_datacontainer.edit-schema' | translate }}
-      </h4>
+      </h3>
 
       <span class="mx-auto"></span>
 
@@ -52,14 +53,14 @@
           @click="mode = 'edit'">
           <i class="mdi mdi-pencil"></i>
         </button>
-        <button type="button" class="btn btn-primary btn-circle"
+        <button type="button" class="btn btn-outline-secondary btn-circle"
           v-if="mode === 'schema' || mode === 'edit'"
           @click="mode = 'view'">
           <i class="mdi mdi-content-save"></i>
         </button>
       </template>
     </div>
-    <div class="px-3 pb-3">
+    <div>
       <dt-ajv
         :enableValue="true"
         :mode="mode"

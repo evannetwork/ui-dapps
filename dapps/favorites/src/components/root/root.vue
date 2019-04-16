@@ -60,7 +60,7 @@
 
               <div class="text-left p-3 border-top highlight">
                 <h5 class="font-weight-bold">{{ favorite.name }}</h5>
-                <span>{{ favorite.description }}</span>
+                <small>{{ favorite.description }}</small>
               </div>
 
               <div class="top-right">

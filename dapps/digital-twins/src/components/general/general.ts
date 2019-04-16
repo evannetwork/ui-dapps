@@ -55,6 +55,13 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   @Prop({ }) uidigitaltwin;
 
   /**
+   * If false, disables paddings and borders, so the form can be embedded
+   */
+  @Prop({
+    default: true
+  }) standalone;
+
+  /**
    * Digital twin that should be used for edition
    */
   uiDT = null;

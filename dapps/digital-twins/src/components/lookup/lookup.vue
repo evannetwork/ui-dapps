@@ -27,19 +27,20 @@
 
 <template>
   <div>
-    <div class="p-3 text-left">
+    <div class="p-1 p-md-4 text-left">
       <div class="bg-level-1 border">
-        <div class="d-flex p-3 border-bottom align-items-center">
-          <h4 class="m-0">
+        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+          <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.lookup.title` | translate }}
-          </h4>
+          </h3>
         </div>
 
-        <h5 class="pl-3 pr-3 pt-3">{{ `_digitaltwins.lookup.description` | translate }}</h5>
-
-        <dt-lookup-form
-          @submit="openTwin">
-        </dt-lookup-form>
+        <div class="px-5 py-3">
+          <p class="mb-4 text-justify">{{ `_digitaltwins.lookup.description` | translate }}</p>
+          <dt-lookup-form
+            @submit="openTwin">
+          </dt-lookup-form>
+        </div>
       </div>
     </div>
   </div>

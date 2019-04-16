@@ -27,25 +27,23 @@
 
 <template>
   <div>
-    <div class="p-3 text-left">
+    <div class="p-1 p-md-4 text-left">
       <div class="bg-level-1 border">
-        <div class="d-flex p-3 border-bottom align-items-center">
-          <i v-if="validDTAddress && !linking"
-            class="mdi mdi-chevron-left clickable ml-2 mr-3"
-            @click="validDTAddress = ''">
-          </i>
-          <h4 class="m-0">
+        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+          <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.breadcrumbs.containerlink` | translate }}
-          </h4>
+          </h3>
         </div>
 
         <template v-if="!validDTAddress">
-          <h5 class="pl-3 pr-3 pt-3">{{ `_digitaltwins.containerlink.description1` | translate }}</h5>
-          <dt-lookup-form ref="dtLookupForm"
-            :address="digitalTwinAddress"
-            :disableGlobal="true"
-            @submit="useAddress">
-          </dt-lookup-form>
+          <p class="px-5 pt-3 text-justify">{{ `_digitaltwins.containerlink.description1` | translate }}</p>
+          <div class="px-5 py-3">
+            <dt-lookup-form ref="dtLookupForm"
+              :address="digitalTwinAddress"
+              :disableGlobal="true"
+              @submit="useAddress">
+            </dt-lookup-form>
+          </div>
         </template>
 
         <evan-modal ref="createDTAddress"
@@ -53,7 +51,8 @@
           <template v-slot:content>
             <dt-general ref="dtGeneralForm"
               v-if="uiDT"
-              :uidigitaltwin="uiDT">
+              :uidigitaltwin="uiDT"
+              :standalone="false">
             </dt-general>
           </template>
         </evan-modal>
@@ -66,9 +65,9 @@
           <template v-else>
             <evan-modal ref="invalidContainerModal">
               <template v-slot:header>
-                <h5 class="modal-title">
+                <p class="modal-title">
                   {{ `_digitaltwins.containerlink.invalid-container.title` | translate }}
-                </h5>
+                </p>
               </template>
               <template v-slot:body>
                 <p class="text-left m-0"
@@ -76,8 +75,25 @@
                 </p>
               </template>
             </evan-modal>
-            <h5 class="pl-3 pr-3 pt-3">{{ `_digitaltwins.containerlink.description2` | translate }}</h5>
-            <form class="p-4" v-on:submit.prevent="linkContainer">
+
+            <div class="d-flex px-5 pt-3 align-items-center">
+              <p class="m-0">
+                {{ `_digitaltwins.containerlink.digitaltwin` | translate }}: <b>{{ validDTAddress }}</b>
+              </p>
+              <button class="btn"
+                v-if="validDTAddress && !linking"
+                @click="validDTAddress = ''">
+                <i class="mdi mdi-file-document-edit-outline"></i>
+                <!-- <span>
+                  {{ '_digitaltwins.containerlink.change-twin' | translate }}
+                </span> -->
+              </button>
+            </div>
+
+            <p class="px-5 text-justify">
+              {{ `_digitaltwins.containerlink.description2` | translate }}
+            </p>
+            <form class="px-5 pb-3" v-on:submit.prevent="linkContainer">
               <div class="form-group">
                 <label for="name">
                   {{ `_digitaltwins.containerlink.name.title` | translate }}

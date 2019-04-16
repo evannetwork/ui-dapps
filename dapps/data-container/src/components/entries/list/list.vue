@@ -27,16 +27,17 @@
 
 <template>
   <div>
-    <div class="d-flex p-3 align-items-center border-bottom">
-      <h4 class="m-0" v-if="!addListEntry && mode !== 'schema'">
+    <div class="d-flex border-bottom border-sm align-items-center"
+      :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'">
+      <h3 class="m-0 font-weight-semibold" v-if="!addListEntry && mode !== 'schema'">
         {{ '_datacontainer.types.array' | translate }}: {{ listName }}
-      </h4>
-      <h4 class="m-0" v-if="addListEntry">
+      </h3>
+      <h3 class="m-0 font-weight-semibold" v-if="addListEntry">
         {{ '_datacontainer.list.add-list-entry' | translate }}
-      </h4>
-      <h4 class="m-0" v-if="mode === 'schema'">
+      </h3>
+      <h3 class="m-0 font-weight-semibold" v-if="mode === 'schema'">
         {{ '_datacontainer.edit-schema' | translate }}
-      </h4>
+      </h3>
 
       <span class="mx-auto"></span>
 
@@ -60,7 +61,7 @@
                 {{ `_datacontainer.list.canel-list-entry` | translate }}
               </button>
 
-              <button type="submit" class="btn btn-rounded btn-primary"
+              <button type="submit" class="btn btn-rounded btn-outline-secondary"
                 @click="addEntry()">
                 {{ `_datacontainer.list.add-list-entry` | translate }}
               </button>
@@ -74,7 +75,7 @@
             @click="mode = 'schema'">
             <i class="mdi mdi-cogs"></i>
           </button>
-          <button type="button" class="btn btn-primary btn-circle"
+          <button type="button" class="btn btn-outline-secondary btn-circle"
             v-if="mode === 'schema'"
             @click="mode = 'view'">
             <i class="mdi mdi-content-save"></i>
@@ -82,7 +83,7 @@
         </template>
       </template>
     </div>
-    <div class="px-3 pb-3">
+    <div>
       <template v-if="mode === 'schema'">
         <dt-ajv
           v-if="entry.dataSchema.items.type === 'object'"
@@ -93,52 +94,45 @@
       </template>
       <template v-else>
         <template v-if="!addListEntry">
-          <div class="evan-table table-responsive-md border-0 p-0">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>{{ '_datacontainer.list.data' | translate }}</th>
-                  <th style="width: 50px"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <template v-for="(listEntry, index) in [ ].concat(entry.value, listEntries)">
-                  <tr v-if="index !== 0">
-                    <td class="p-2"></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      {{ index + 1}}
-                    </td>
-                    <td>
-                      {{ listEntry }}
-                    </td>
-                    <td class="text-primary" style="width: 50px">
-                      <span v-if="entry.value.indexOf(listEntry) !== -1">
-                        {{ '_datacontainer.list.new' | translate }}
-                      </span>
-                    </td>
-                  </tr>
-                </template>
-              </tbody>
-            </table>
+          <table class="evan-flex-table">
+            <thead>
+              <tr class="text-muted">
+                <th>#</th>
+                <th>{{ '_datacontainer.list.data' | translate }}</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                v-for="(listEntry, index) in [ ].concat(entry.value, listEntries)">
+                <td>
+                  {{ index + 1}}
+                </td>
+                <td>
+                  {{ listEntry }}
+                </td>
+                <td class="text-primary" style="width: 50px">
+                  <span v-if="entry.value.indexOf(listEntry) !== -1">
+                    {{ '_datacontainer.list.new' | translate }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
             <evan-loading v-if="loading"></evan-loading>
-          </div>
+            <div class="text-center mt-3"
+              v-if="contractAddress && mode !== 'schema' && !loading">
+              <h5 class="mt-3">
+                <b>{{ '_datacontainer.list.results' | translate }}</b>: {{ offset + entry.value.length }} / {{ maxListentries + entry.value.length }}
+              </h5>
 
-          <div class="text-center"
-            v-if="contractAddress && mode !== 'schema' && !loading">
-            <h5 class="mt-3">
-              <b>{{ '_datacontainer.list.results' | translate }}</b>: {{ offset + entry.value.length }} / {{ maxListentries + entry.value.length }}
-            </h5>
-
-            <button type="submit"  class="btn btn-rounded btn-outline-secondary mt-3"
-              v-if="offset < maxListentries"
-              @click="loadEntries()">
-              {{ `_datacontainer.list.load-more` | translate }}
-            </button>
-          </div>
-
+              <button type="submit"  class="btn btn-rounded btn-outline-secondary mt-3"
+                v-if="offset < maxListentries"
+                @click="loadEntries()">
+                {{ `_datacontainer.list.load-more` | translate }}
+              </button>
+            </div>
+          </table>
         </template>
 
         <template v-else>

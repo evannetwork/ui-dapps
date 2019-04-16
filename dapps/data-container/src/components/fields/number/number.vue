@@ -41,9 +41,9 @@
       {{ `_datacontainer.ajv.value.error` | translate }}
     </div>
   </div>
-  <div v-else>
+  <span class="text-primary" v-else>
     {{ control.value }}
-  </div>
+  </span>
 </template>
 
 <script lang="ts">

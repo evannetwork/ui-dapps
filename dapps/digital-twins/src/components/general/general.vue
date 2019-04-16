@@ -27,12 +27,14 @@
 
 <template>
   <div>
-    <div class="p-3 text-left">
-      <div class="bg-level-1 border">
-        <div class="d-flex p-3 border-bottom align-items-center">
-          <h4 class="m-0">
+    <div class="text-left"
+      :class="{ 'p-1 p-md-4': standalone }">
+      <div class="bg-level-1"
+        :class="{ 'border': standalone }">
+        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+          <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.generalForm.title` | translate }}
-          </h4>
+          </h3>
         </div>
         <form class="p-4"
           v-if="!uiDT.isCreating"

@@ -29,10 +29,10 @@
   <div>
     <div class="p-3 text-left">
       <div class="bg-level-1 border">
-        <div class="d-flex p-3 border-bottom align-items-center">
-          <h4 class="m-0">
+        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+          <h3 class="m-0 font-weight-semibold">
             {{ `_favorites.add` | translate }}
-          </h4>
+          </h3>
         </div>
 
         <evan-modal ref="favoriteAddModal">

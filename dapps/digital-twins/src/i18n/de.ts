@@ -47,6 +47,7 @@ export default {
         "error": "Bitte geben Sie eine Adresse ein!",
         "title": "Daten Container"
       },
+      "change-twin": "Digitalen Zwilling ändern",
       "description1": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines digitalen Zwillings auszuwählen, in den Sie einen Datencontainer linken wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
       "description2": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines Datencontainers auszuwählen, der in den digitalen Zwilling gelinkt werden soll.",
       "invalid-container": {
@@ -59,7 +60,8 @@ export default {
         "error": "Bitte geben Sie einen Alias ein!",
         "title": "Alias"
       },
-      "use": "Verlinken"
+      "use": "Verlinken",
+      "digitaltwin": "Digitaler Zwilling"
     },
     "containers": {
       "create": "Erstellen",

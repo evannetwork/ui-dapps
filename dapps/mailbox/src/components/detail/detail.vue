@@ -53,8 +53,10 @@
             <span>{{ mail.sent | moment('from') }}</span>
           </div>
 
-          <div class="mt-4 mb-4 p-3 border bg-level-2"
-            v-html="mail.body">
+          <div class="mt-4 mb-4 p-3 border bg-level-2">
+            <span 
+              v-html="mail.body">
+            </span>
           </div>
 
           <div v-if="mail.attachments" class="pt-3 text-center">

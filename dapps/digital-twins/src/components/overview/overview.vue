@@ -28,7 +28,7 @@
 <template>
   <div>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="p-3 text-left" v-if="!loading">
+    <div class="p-4 text-left" v-if="!loading">
       <template class="bg-level-1 border mb-3"
         v-for="(category, index) in [ 'lastTwins', 'favorites' ]"
         v-if="categories[category].length > 0">
@@ -40,7 +40,7 @@
         <div class="container d-md-flex flex-wrap justify-content-left">
           <div class="col-md-6 col-lg-4 p-3"
             v-for="(ensAddress, index) in categories[category]">
-            <a class="text-center bg-level-1 border evan-highlight p-4"
+            <a class="d-block text-center bg-level-1 border evan-highlight"
               style="min-width: 250px"
               :href="`${ dapp.fullUrl }/${ ensAddress }`">
               <img class="img-fluid p-3"

@@ -47,6 +47,7 @@ export default {
         "error": "Please enter an address!",
         "title": "Data Container"
       },
+      "change-twin": "Digitalen Zwilling ändern",
       "description1": "Using the following input field, you can select an address of a digital twin into which you want to link a data container. If an existing instance already exists there, it is opened directly for you. If the address is not yet assigned, you can create a new digital twin and bind it to this address or link an existing one to this address.",
       "description2": "Using the following input field, you can select an address of a data container that is to be linked to the digital twin.",
       "invalid-container": {
@@ -59,7 +60,8 @@ export default {
         "error": "Please enter an alias",
         "title": "Alias"
       },
-      "use": "Link"
+      "use": "Link",
+      "digitaltwin": "Digital Twin"
     },
     "containers": {
       "create": "Create",

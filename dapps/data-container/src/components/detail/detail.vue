@@ -181,15 +181,15 @@
 
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <div class="p-3" v-if="!editSchema">
+      <div class="p-1 p-md-4" v-if="!editSchema">
         <div class="bg-level-1 border">
-          <div class="w-100 d-flex p-3 border-bottom">
-            <h4 class="m-0">
+          <div class="d-flex p-5 border-bottom border-sm align-items-center">
+            <h3 class="m-0 font-weight-semibold">
               {{ '_datacontainer.edit-dbcp' | translate }}
-            </h4>
+            </h3>
           </div>
 
-          <div class="p-3">
+          <div class="px-5 py-3">
             <form v-on:submit.prevent="saveDt">
               <div class="form-group">
                 <label for="name">
@@ -237,13 +237,11 @@
         </div>
       </div>
 
-      <div class="p-3" v-else>
-        <div class="bg-level-1 border">
-          <dt-template-handler
-            :address="dapp.contractAddress"
-            :template.sync="template">
-          </dt-template-handler>
-        </div>
+      <div v-else>
+        <dt-template-handler
+          :address="dapp.contractAddress"
+          :template.sync="template">
+        </dt-template-handler>
       </div>
     </template>
   </div>

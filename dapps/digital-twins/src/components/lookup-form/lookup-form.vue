@@ -52,7 +52,7 @@
       </template>
     </evan-modal>
 
-    <form class="p-3"
+    <form
       v-if="Object.keys(purchasingInstances).length === 0"
       v-on:submit.prevent="checkAddress">
       <div class="form-group">
