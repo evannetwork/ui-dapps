@@ -25,15 +25,29 @@
   https://evan.network/license/
 */
 
+@import './utils';
+
 .evan {
-  .modal {
-    display: block !important;
+  // d-flex align-items-center py-2 px-4 text-center clickable all-transition
+  .evan-tabs {
+    display: flex;
+    overflow-x: auto;
 
-    .modal-dialog {
-      .modal-content {
-        overflow-y: auto;
+    .evan-tab {
+      font-size: cssVar('text-font-size');
+      font-weight: 400;
 
-        max-height: 90vh;
+      display: flex;
+      align-items: center;
+
+      height: 70px;
+      padding: 0 25px;
+
+      background-color: cssVar('bg-level-1');
+
+      &.active {
+        color: cssVar('bg-text-secondary');
+        background-color: cssVar('secondary');
       }
     }
   }

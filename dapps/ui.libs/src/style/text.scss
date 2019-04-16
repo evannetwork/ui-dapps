@@ -28,7 +28,7 @@
 @import './utils';
 
 .evan {
-  h1, h2, h3, h4, h5, span, p {
+  h1, h2, h3, h4, h5, span, p, li {
     color: cssVar('text-color');
   }
 
@@ -36,7 +36,7 @@
     text-decoration: none !important;
   }
 
-  span, p, a {
+  span, p, a, th, td, label, li {
     font-size: cssVar('text-font-size');
     font-weight: 400;
   }

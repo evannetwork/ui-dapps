@@ -41,18 +41,28 @@
     font-size: 0.9em !important;
   }
 
-  @media (max-width: 768px) {
-    font-size: 0.8em !important;
-  }
+  // @media (max-width: 768px) {
+  //   font-size: 0.85em !important;
+  // }
 
   .clickable {
     cursor: pointer;
   }
 
-  .border-top, .border-bottom, .border-left, .border-right .border {
-    &.border-sm {
-      border-width: 1px !important;
-    }
+  .border-top.border-sm {
+    border-top-width: 1px !important;
+  }
+
+  .border-bottom.border-sm {
+    border-bottom-width: 1px !important;
+  }
+
+  .border-left.border-sm {
+    border-left-width: 1px !important;
+  }
+
+  .border-right.border-sm {
+    border-right-width: 1px !important;
   }
 
   // add font-size levels

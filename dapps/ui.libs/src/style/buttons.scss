@@ -29,6 +29,8 @@
 
 .evan {
   .btn {
+    white-space: nowrap;
+
     // to ensure text-colors, spans, p, ... per default are set to the default text-color bootstrap
     // does not set button inner element colors, so we do it here to overrule text-colors
     @each $color, $value in $theme-colors {
@@ -60,6 +62,7 @@
 
     &.btn-circle {
       width: 45px;
+      min-width: 45px;
       height: 45px;
       padding: 6px 0;
 

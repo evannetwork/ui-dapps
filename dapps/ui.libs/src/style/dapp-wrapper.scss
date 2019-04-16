@@ -245,6 +245,10 @@ $sidebar-small-width: $navbar-height;
       height: 100%;
 
       background-color: cssVar('bg-level-3');
+
+      .dapp-wrapper-sidebar-2 {
+        display: none;
+      }
     }
   }
 

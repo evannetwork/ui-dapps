@@ -429,7 +429,7 @@ export class DispatcherInstance {
         instance: this,
         status: status,
       }
-    }))
+    }));
   }
 
   /**

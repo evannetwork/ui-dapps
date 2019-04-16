@@ -135,7 +135,6 @@ $theme-colors: (
   success: cssVar('green'),
   warning: cssVar('yellow'),
 );
-
 $themeEvan: map-merge($themeEvan, $theme-colors);
 $themeEvan: map-merge(
   (
@@ -183,7 +182,9 @@ $themeEvan: map-merge(
     btn-primary-hover: cssVar('primary'),
     btn-secondary-hover: #2cabe3,
     font-family-sans-serif: ('Open Sans', sans-serif),
-    table-hover: cssVar('gray-200')
+    table-hover: cssVar('gray-200'),
+    table-row-odd: cssVar('bg-level-1'),
+    table-row-even: #f4f7f9,
   ),
   $themeEvan
 );
@@ -218,7 +219,7 @@ $themeEvan: map-merge(
     // dapp-wrapper
     dapp-wrapper-sidepanel-icon-color: cssVar('gray-500'),
     dapp-wrapper-sidepanel-list-hover: cssVar('gray-200'),
-    dapp-wrapper-sidepanel-shadow: 1px 0px 20px rgba(0, 0, 0, 0.15),
+    dapp-wrapper-sidepanel-shadow: 1px 0 20px rgba(0, 0, 0, 0.15),
   ),
   $themeEvan
 );
@@ -228,18 +229,17 @@ $themeEvan: map-merge(
  */
 $themeEvan: map-merge(
   (
-    h1-font-size:   2.250rem,   // 36px / 2.250em
-    h2-font-size:   1.750rem,   // 28px / 1.750em
-    h3-font-size:   1.313rem,   // 21px / 1.313em
-    h4-font-size:   1.125rem,   // 18px / 1.125em
-    h5-font-size:   1rem    ,   // 16px / 1em    
-    h6-font-size:   0.938rem,   // 15px / 0.938em
-    text-font-size: 0.875rem,   // 14px / 0.875em
-    small-font-size: 0.6875rem,
+    h1-font-size:    2.250em,   // 36px / 2.250em / 2.250rem
+    h2-font-size:    1.750em,   // 28px / 1.750em / 1.750rem
+    h3-font-size:    21px   ,   // 21px / 1.313em / 1.313rem
+    h4-font-size:    18px   ,   // 18px / 1.125em / 1.125rem
+    h5-font-size:    16px   ,   // 16px / 1em     / 1rem    
+    h6-font-size:    15px   ,   // 15px / 0.938em / 0.938rem
+    text-font-size:  14px   ,   // 14px / 0.875em
+    small-font-size: 12px   ,
   ),
   $themeEvan
 );
-
 @mixin themeEvan() {
   .theme-evan {
     @include evanVariables($themeEvan);

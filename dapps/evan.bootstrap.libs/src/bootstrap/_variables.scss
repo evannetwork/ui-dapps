@@ -198,7 +198,12 @@ $spacers: map-merge(
     2: ($spacer * .5),
     3: $spacer,
     4: ($spacer * 1.5),
-    5: ($spacer * 3)
+    5: ($spacer * 2),
+    6: ($spacer * 2.5),
+    7: ($spacer * 3),
+    8: ($spacer * 3.5),
+    9: ($spacer * 4),
+    1o: ($spacer * 4.5),
   ),
   $spacers
 );
@@ -350,12 +355,12 @@ $font-weight-bolder:          bolder !default;
 $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
 
-$h1-font-size:                2.250em; // cssVar('h1-font-size');
-$h2-font-size:                1.750em; // cssVar('h2-font-size');
-$h3-font-size:                1.313em; // cssVar('h3-font-size');
-$h4-font-size:                1.125em; // cssVar('h4-font-size');
-$h5-font-size:                1em    ; // cssVar('h5-font-size');
-$h6-font-size:                0.938em; // cssVar('h6-font-size');
+$h1-font-size:                cssVar('h1-font-size'); // 2.250em;
+$h2-font-size:                cssVar('h2-font-size'); // 1.750em;
+$h3-font-size:                cssVar('h3-font-size'); // 1.313em;
+$h4-font-size:                cssVar('h4-font-size'); // 1.125em;
+$h5-font-size:                cssVar('h5-font-size'); // 1em    ;
+$h6-font-size:                cssVar('h6-font-size'); // 0.938em;
 
 $headings-margin-bottom:      $spacer / 2 !default;
 $headings-font-family:        null !default;
