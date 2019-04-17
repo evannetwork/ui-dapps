@@ -3,6 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
+        "dexie.libs": "2.0.4",
         "evan.bootstrap.libs": "4.3.1",
         "materialicons.libs": "1.8.36"
       },
@@ -11,7 +12,7 @@
         "ui.libs.js",
         "ui.libs.css"
       ],
-      "origin": "QmcVKQDXoGJED6iLS6KyPpoQ2DybygudpX3tegswg49WaN",
+      "origin": "QmYaReeNG9CgABzVttYsBj9bxgSFtoEmWeAAUuhjQRrjWV",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -36,7 +37,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmNs2Ax9R6wgcuULD5TduHeFYDKabM4BQESPKRVR9KX9Sr"
+      "1.0.0": "QmdhBHHYpnxdsyxrg5Cfbhcyvip6Udr6wYmaCRZCg3BBj1"
     }
   }
 }

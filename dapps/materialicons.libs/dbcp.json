@@ -3,11 +3,12 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "materialicons.libs.css",
+      "entrypoint": "materialicons.libs.js",
       "files": [
-        "materialicons.libs.css"
+        "materialicons.libs.css",
+        "materialicons.libs.js"
       ],
-      "origin": "QmV3rNrR1Pi4P8EEJcjbg5veXNiqTWa87emSiyfgxTsMSw",
+      "origin": "Qmc6EKmMiAjhHVvMEJqoPsGZGj1mXZWZDwNQT3u4YZSv9r",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +33,7 @@
     ],
     "version": "1.8.36",
     "versions": {
-      "1.8.36": "QmamB2SoP5JYo9cwmgTBYAL8xu24gvb894d6XZUxZiQFQU"
+      "1.8.36": "QmYpvei3kkW81rv3bmuZkM8GhLEWKg5rsSNL2E1DXhuVCs"
     }
   }
 }
