@@ -96,15 +96,38 @@
           </i>
         </td>
       </tr>
+      <!-- add empty row that watches on click events for adding new entries -->
+      <tr class="clickable position-relative"
+        v-if="mode === 'schema'"
+        @click="!$store.state.saving && addProperty('')">
+        <td class="fill-content">
+          <div class="ajv-add-overlay">
+            <!-- <h5 class="text-muted">{{ '_datacontainer.ajv.add' | translate }}</h5> -->
+          </div>
+          <div class="form-group mb-0" v-if="mode === 'schema'">
+            <input class="form-control bg-level-1"
+              disabled
+              :placeholder="`_datacontainer.ajv.name.desc` | translate">
+          </div>
+        </td>
+        <td class="fill-content">
+          <div class="form-group mb-0" v-if="mode === 'schema'">
+            <select class="form-control bg-level-1" disabled
+              :placeholder="`_datacontainer.ajv.type.desc` | translate">
+              <option>
+                {{ `_datacontainer.types.string` | translate }}
+              </option>
+            </select>
+          </div>
+        </td>
+        <td class="fill-content" v-if="enableValue">
+          <input class="form-control bg-level-1"
+            type="text" disabled
+            :placeholder="`_datacontainer.ajv.value.desc` | translate">
+        </td>
+        <td class="last"></td>
+      </tr>
     </tbody>
-
-    <div class="text-center mt-3" v-if="mode === 'schema'">
-      <button type="submit" class="btn btn-rounded btn-primary"
-        :disabled="$store.state.saving"
-        @click="addProperty('')">
-        {{ `_datacontainer.ajv.add` | translate }}
-      </button>
-    </div>
   </table>
 </template>
 
@@ -112,3 +135,7 @@
   import Component from './ajv.ts';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './ajv.scss';
+</style>

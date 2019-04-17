@@ -50,11 +50,6 @@
             @click="mode = 'edit'">
             <i class="mdi mdi-pencil"></i>
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-circle"
-            v-else
-            @click="mode = 'view'">
-            <i class="mdi mdi-content-save"></i>
-          </button>
         </template>
       </template>
     </div>
@@ -63,6 +58,14 @@
       <dt-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-images>
       <dt-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-number>
       <dt-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-string>
+
+      <div class="mb-3 text-center" v-if="standalone && !$store.state.saving && mode !== 'view'">
+        <button class="btn btn-primary btn-rounded"
+          @click="mode = 'view'">
+          {{ '_datacontainer.ajv.save' | translate }}
+          <i class="mdi mdi-arrow-right label ml-2"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>

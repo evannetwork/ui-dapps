@@ -9,7 +9,7 @@
       "files": [
         "addressbook.js"
       ],
-      "origin": "QmdCVC8288VsnPGgKBh7GA4YWtReqseszFQyzxoF9uRrhB",
+      "origin": "QmaVhiPQy9rzU3PYBvULs1gxhHfe2goTqUNdyoqnRDtqXB",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"
@@ -41,7 +41,8 @@
       "1.0.2": "QmRf8z6qwMWvpsDB7eF49bNwymrzg6iSUQonzLkV14PZXr",
       "1.1.0": "QmdLQH3r3HVNiEvF8n2gMk3XvcqoebRUD3Zed9Ch3s36wo",
       "1.2.0": "QmRC7SGXN2mVGx2co7aHLGcAjqKWabpJyQ6L5fdruWNyXK",
-      "1.3.0": "QmQoxDpCom98qJtAtwSSrG3H5sehCDWdTZhmCTtZ6Jhac9"
+      "1.3.0": "QmQoxDpCom98qJtAtwSSrG3H5sehCDWdTZhmCTtZ6Jhac9",
+      "1.5.0": "QmdmgijEqvPyxiVEibBe7rrLKEhC3X6hYpwNrGbdc8Kr41"
     }
   }
 }

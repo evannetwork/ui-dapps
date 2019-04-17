@@ -8,9 +8,10 @@
       },
       "entrypoint": "datacontainer.digitaltwin.js",
       "files": [
-        "datacontainer.digitaltwin.js"
+        "datacontainer.digitaltwin.js",
+        "datacontainer.digitaltwin.css"
       ],
-      "origin": "QmWUPS4acQr2vSUUELwbAErk9Gii44PCwtCPunXT4W9fzV",
+      "origin": "QmQ5MfseWvDmTuFonCUdznbU9kwA3rMXncMuX5EMBmmkbe",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -45,7 +46,7 @@
       "1.0.2": "QmezBtAdT6ybhkC3VUa2Y8QLooUjGvANgav6HpBsBbwdVQ",
       "1.1.0": "QmTL17BzqctDHv4bPUgjY4AAEVANUFcgeRw25cx1B1QWm2",
       "1.2.0": "QmNxWJxV4XqQj4ZsKg8fVmRx5voQrjUKNnGWEYwLvyWS82",
-      "1.3.0": "QmWRP33kzg3XwENLzYLw3BdvBZdqq6AEZwMcDtHVqjA5rg"
+      "1.3.0": "QmdPpJrEvggWCfe1JUKKKC1ZvccyJx64UTGCMJAsSozXZ7"
     }
   }
 }

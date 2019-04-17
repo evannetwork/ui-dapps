@@ -39,6 +39,7 @@ export default {
         "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen.",
         "title": "Ungültige Berechtigung"
       },
+      "save": "Übernehmen",
       "type": {
         "title": "Typ"
       },
@@ -111,7 +112,7 @@ export default {
       },
       "name": {
         "desc": "Name des Datenbereichs",
-        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Datenbereich entspricht!",
+        "error": "Der Name des Datebreich darf keine Sonderzeichen, Leerzeichen, ... enhalten und nicht einem bestehenden entsprechen!",
         "title": "Name"
       },
       "type": {

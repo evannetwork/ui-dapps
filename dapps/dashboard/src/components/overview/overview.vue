@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="container mx-auto m-0">
+  <div class="mx-auto m-0">
     <div class="mt-5 mb-3 text-center">
       <br>
       <h1 class="mt-4 font-weight-semibold">{{ '_dashboard.startup' | translate }}</h1>
@@ -35,23 +35,26 @@
       <br>
     </div>
     <div class="d-md-flex flex-wrap justify-content-center p-0 p-xs-3">
-      <div class="col-md-6 col-lg-4 p-3"
-        v-for="(type, index) in dashboardEntries">
-        <div class="d-flex flex-column text-center bg-level-1 border evan-highlight p-4"
-          style="min-width: 250px"
-          v-on:click="$router.push({ path: `${ dapp.baseHash }/${ type.path }` })">
-          <img class="my-5" style="height: 120px"
-            :src="`${ $store.state.uiBaseUrl }/assets/${ type.img }`">
+      <a class="
+        d-block
+        p-3 col-lg-12 col-xl-3
+        m-md-3 mb-3 p-4
+        text-center
+        bg-level-1 border evan-highlight"
+      v-for="(type, index) in dashboardEntries"
+      style="min-width: 250px"
+      :href="`${ dapp.fullUrl }/${ type.path }`">
+        <img class="my-5" style="height: 120px"
+          :src="`${ $store.state.uiBaseUrl }/assets/${ type.img }`">
 
-          <h3 class="highlight font-weight-semibold mb-3">
-            {{ `_dashboard.overview.${ type.title }.title` | translate }}
-          </h3>
-          <span class="text-muted highlight font-weight-semibold d-inline-block"
-            style="max-width: 250px;">
-            {{ `_dashboard.overview.${ type.title }.desc` | translate }}
-          </span>
-        </div>
-      </div>
+        <h3 class="highlight font-weight-semibold mb-3">
+          {{ `_dashboard.overview.${ type.title }.title` | translate }}
+        </h3>
+        <span class="text-muted highlight font-weight-semibold d-inline-block"
+          style="max-width: 250px;">
+          {{ `_dashboard.overview.${ type.title }.desc` | translate }}
+        </span>
+      </a>
     </div>
   </div>
 </template>

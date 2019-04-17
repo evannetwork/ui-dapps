@@ -147,6 +147,12 @@ export default class AJVComponent extends mixins(EvanComponent) {
         }
       },
     }));
+
+    // auto focus new form element
+    this.$nextTick(() => {
+      const nameInputs = this.$el.querySelectorAll('table tr td:first-child input');
+      (<any>nameInputs[nameInputs.length - 2]).focus();
+    });
   }
 
   /**

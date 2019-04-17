@@ -39,6 +39,7 @@ export default {
         "desc": "You do not have permission to view this data area.",
         "title": "Invalid authorization"
       },
+      "save": "Apply",
       "type": {
         "title": "Type"
       },
@@ -111,7 +112,7 @@ export default {
       },
       "name": {
         "desc": "Name of the dataset",
-        "error": "Please enter a name that does not correspond to an existing data sets!",
+        "error": "The name of the data area must not contain any special characters, spaces, ... and do not correspond to an existing one!",
         "title": "Name"
       },
       "type": {

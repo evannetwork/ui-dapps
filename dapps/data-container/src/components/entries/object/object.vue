@@ -53,11 +53,6 @@
           @click="mode = 'edit'">
           <i class="mdi mdi-pencil"></i>
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-circle"
-          v-if="mode === 'schema' || mode === 'edit'"
-          @click="mode = 'view'">
-          <i class="mdi mdi-content-save"></i>
-        </button>
       </template>
     </div>
     <div>
@@ -67,6 +62,15 @@
         :properties="entry.dataSchema.properties"
         :value="entry.value">
       </dt-ajv>
+
+      <div class="mb-3 text-center"
+        v-if="mode === 'schema' || mode === 'edit'">
+        <button class="btn btn-primary btn-rounded"
+          @click="mode = 'view'">
+          {{ '_datacontainer.ajv.save' | translate }}
+          <i class="mdi mdi-arrow-right label ml-2"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>

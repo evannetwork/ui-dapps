@@ -54,18 +54,6 @@
               @click="addListEntry = true">
               {{ `_datacontainer.list.add-list-entry` | translate }}
             </button>
-
-            <template v-else>
-              <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
-                @click="addListEntry = false">
-                {{ `_datacontainer.list.canel-list-entry` | translate }}
-              </button>
-
-              <button type="submit" class="btn btn-rounded btn-outline-secondary"
-                @click="addEntry()">
-                {{ `_datacontainer.list.add-list-entry` | translate }}
-              </button>
-            </template>
           </template>
         </template>
 
@@ -74,11 +62,6 @@
             v-if="modes.indexOf('schema') !== -1 && mode !== 'schema'"
             @click="mode = 'schema'">
             <i class="mdi mdi-cogs"></i>
-          </button>
-          <button type="button" class="btn btn-outline-secondary btn-circle"
-            v-if="mode === 'schema'"
-            @click="mode = 'view'">
-            <i class="mdi mdi-content-save"></i>
           </button>
         </template>
       </template>
@@ -91,6 +74,14 @@
           :mode="mode"
           :properties="entry.dataSchema.items.properties">
         </dt-ajv>
+        
+        <div class="mb-3 text-center">
+          <button class="btn btn-primary btn-rounded"
+            @click="mode = 'view'">
+            {{ '_datacontainer.ajv.save' | translate }}
+            <i class="mdi mdi-arrow-right label ml-2"></i>
+          </button>
+        </div>
       </template>
       <template v-else>
         <template v-if="!addListEntry">
@@ -149,6 +140,18 @@
             :type="entry.dataSchema.items.type"
             :value.sync="entry.addValue">
           </dt-field>
+
+          <div class="mb-3  text-center" v-if="addListEntry">
+            <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
+              @click="addListEntry = false">
+              {{ `_datacontainer.list.canel-list-entry` | translate }}
+            </button>
+
+            <button type="submit" class="btn btn-rounded btn-primary"
+              @click="addEntry()">
+              {{ `_datacontainer.list.add-list-entry` | translate }}
+            </button>
+          </div>
         </template>
       </template>
     </div>
