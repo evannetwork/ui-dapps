@@ -26,8 +26,8 @@
 */
 
 <template>
-  <div>
-    <div class="d-flex border-bottom border-sm align-items-center"
+  <div :class="{ 'standalone': 'white-box border rounded' }">
+    <div class="header"
       :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'"
       v-if="standalone">
       <h3 class="m-0 font-weight-semibold" v-if="mode === 'view'">
@@ -59,7 +59,7 @@
       <dt-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-number>
       <dt-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-string>
 
-      <div class="mb-3 text-center" v-if="standalone && !$store.state.saving && mode !== 'view'">
+      <div class="footer" v-if="standalone && !$store.state.saving && mode !== 'view'">
         <button class="btn btn-primary btn-rounded"
           @click="mode = 'view'">
           {{ '_datacontainer.ajv.save' | translate }}

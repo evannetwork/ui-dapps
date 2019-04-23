@@ -40,7 +40,8 @@ export default {
       "overview": "Favoriten & letzte Zwillinge",
       "template": "Vorlage",
       "templates": "Vorlagen",
-      "verifications": "Verifizierungen"
+      "verifications": "Verifizierungen",
+      "create-template": "Vorlage erstellen"
     },
     "containerlink": {
       "address": {

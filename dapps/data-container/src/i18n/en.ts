@@ -92,12 +92,13 @@ export default {
         "error": "Please provide a name!",
         "title": "Name"
       },
-      "save": "Speichern",
+      "save": "Save Data Container",
       "template": {
         "desc": "Template of the data container",
         "title": "Template"
       },
-      "title": "Create data container"
+      "title": "Create data container",
+      "sub-title": "Specifiy general information, data schema and values."
     },
     "dispatcher": {
       "create": "Creating Data container...",
@@ -167,7 +168,8 @@ export default {
       },
       "create-title": "Create new template",
       "create-container": "Create Data Container",
-      "edit-dbcp": "Adjust Description"
+      "edit-dbcp": "Adjust Description",
+      "save": "Save Template"
     },
     "template-cache": {
       "action": "Restore",

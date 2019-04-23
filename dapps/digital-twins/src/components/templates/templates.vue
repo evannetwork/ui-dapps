@@ -63,7 +63,7 @@
         <div class="row content">
           <div class="col-md-6 col-lg-4 mb-4"
             v-for="(templateKey, index) in Object.keys(templates)">
-            <a class="d-flex bg-level-1 border rounded evan-highlight"
+            <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
               :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/template/${ templateKey }`">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
@@ -80,7 +80,7 @@
                     v-if="templates[templateKey].creating">
                     {{ '_digitaltwins.containers.in-creation' | translate }}
                   </small>
-                  <div class="d-flex p-3">
+                  <div class="d-flex p-3 flex-truncate">
                     <div>
                       <h4 class="font-weight-semibold mb-0">
                         {{ templates[templateKey].description.name }}

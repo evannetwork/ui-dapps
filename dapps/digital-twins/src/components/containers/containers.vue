@@ -71,7 +71,7 @@
       <div class="content">
         <div class="col-md-6 col-lg-4 mb-4"
           v-for="(container, index) in $store.state.uiDT.containers">
-          <a class="d-flex bg-level-1 border rounded evan-highlight"
+          <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
             :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
             <div class="row align-items-center m-0 w-100">
               <div class="col-2">
@@ -88,7 +88,7 @@
                   v-if="container.creating">
                   {{ '_digitaltwins.containers.in-creation' | translate }}
                 </small>
-                <div class="d-flex p-3">
+                <div class="d-flex p-3 flex-truncate">
                   <div>
                     <h4 class="font-weight-semibold mb-0">
                       {{ container.description.name }}

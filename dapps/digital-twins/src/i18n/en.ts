@@ -40,7 +40,8 @@ export default {
       "overview": "Favorites & last digitaltwins",
       "template": "Template",
       "templates": "Templates",
-      "verifications": "Verifications"
+      "verifications": "Verifications",
+      "create-template": "Vorlage erstellen"
     },
     "containerlink": {
       "address": {

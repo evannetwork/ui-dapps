@@ -26,73 +26,7 @@
 */
 
 <template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
-      <template v-slot:content>
-        <button class="btn"
-          v-if="!$store.state.saving"
-          @click="$refs.containerContextMenu.show();">
-          <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.saving">
-          </div>
-          <i class="mdi mdi-chevron-down" v-else></i>
-        </button>
-        <div class="position-relative">
-          <evan-dropdown ref="containerContextMenu"
-            :alignment="'right'"
-            :width="'300px'">
-            <template v-slot:content>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                @click="
-                  $refs.dbcpModal.show()
-                  $refs.containerContextMenu.hide($event);
-                ">
-                <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.edit-dbcp` | translate }}
-              </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                @click="
-                  $refs.shareModal.show()
-                  $refs.containerContextMenu.hide($event);
-                ">
-                <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.share` | translate }}
-              </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                @click="
-                  evanNavigate(`digitaltwins.${ dapp.domainName }/containerlink/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
-                  $refs.containerContextMenu.hide($event);
-                ">
-                <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.link` | translate }}
-              </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                @click="
-                  evanNavigate(`create/${ dapp.contractAddress }`)
-                  $refs.containerContextMenu.hide($event);
-                ">
-                <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.clone` | translate }}
-              </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                @click="
-                  evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
-                  $refs.containerContextMenu.hide($event);
-                ">
-                <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.template-save` | translate }}
-              </a>
-            </template>
-          </evan-dropdown>
-        </div>
-        <button type="button" class="btn btn-primary btn-circle"
-          @click="saveDt()"
-          :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
-          <i class="mdi mdi-content-save"></i>
-        </button>
-      </template>
-    </evan-breadcrumbs>
-
+  <div class="container-wide">
     <evan-modal ref="shareModal">
       <template v-slot:header>
         <h5 class="modal-title">
@@ -189,6 +123,81 @@
 
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
+      <div class="d-flex mb-3 align-items-center">
+        <div class="flex-truncate" style="max-width: 50%;">
+          <h3 class="font-weight-bold mb-0">
+            {{ dbcpForm.name.value }}
+          </h3>
+          <p class="text-muted font-weight-semibold m-t-0">
+            {{ dbcpForm.description.value }}
+          </p>
+        </div>
+        <span class="mx-auto"></span>
+        <div class="d-flex">
+          <button class="btn"
+            v-if="!$store.state.saving"
+            @click="$refs.containerContextMenu.show();">
+            <div class="spinner-border spinner-border-sm"
+              v-if="$store.state.saving">
+            </div>
+            <i class="mdi mdi-chevron-down" v-else></i>
+          </button>
+          <div class="position-relative">
+            <evan-dropdown ref="containerContextMenu"
+              :alignment="'right'"
+              :width="'300px'">
+              <template v-slot:content>
+                <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                  @click="
+                    $refs.dbcpModal.show()
+                    $refs.containerContextMenu.hide($event);
+                  ">
+                  <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
+                  {{ `_datacontainer.edit-dbcp` | translate }}
+                </a>
+                <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                  @click="
+                    $refs.shareModal.show()
+                    $refs.containerContextMenu.hide($event);
+                  ">
+                  <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
+                  {{ `_datacontainer.context-menu.share` | translate }}
+                </a>
+                <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                  @click="
+                    evanNavigate(`digitaltwins.${ dapp.domainName }/containerlink/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                    $refs.containerContextMenu.hide($event);
+                  ">
+                  <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
+                  {{ `_datacontainer.context-menu.link` | translate }}
+                </a>
+                <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                  @click="
+                    evanNavigate(`create/${ dapp.contractAddress }`)
+                    $refs.containerContextMenu.hide($event);
+                  ">
+                  <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
+                  {{ `_datacontainer.context-menu.clone` | translate }}
+                </a>
+                <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                  @click="
+                    evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                    $refs.containerContextMenu.hide($event);
+                  ">
+                  <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
+                  {{ `_datacontainer.context-menu.template-save` | translate }}
+                </a>
+              </template>
+            </evan-dropdown>
+          </div>
+          <button type="button" class="btn btn-primary btn-rounded"
+            @click="saveDt()"
+            :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
+            {{ '_datacontainer.createForm.save' | translate }}
+            <i class="mdi mdi-content-save label"></i>
+          </button>
+        </div>
+      </div>
       <evan-modal ref="dbcpModal">
         <template v-slot:header>
           <h5 class="modal-title">

@@ -26,8 +26,8 @@
 */
 
 <template>
-  <div>
-    <div class="d-flex border-bottom border-sm align-items-center"
+  <div class="white-box border rounded">
+    <div class="header"
       :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'">
       <h3 class="m-0 font-weight-semibold" v-if="!addListEntry && mode !== 'schema'">
         {{ '_datacontainer.types.array' | translate }}: {{ listName }}
@@ -53,6 +53,7 @@
               :disabled="$store.state.saving"
               @click="addListEntry = true">
               {{ `_datacontainer.list.add-list-entry` | translate }}
+              <i class="mdi mdi-arrow-right label"></i>
             </button>
           </template>
         </template>
@@ -75,7 +76,7 @@
           :properties="entry.dataSchema.items.properties">
         </dt-ajv>
         
-        <div class="mb-3 text-center">
+        <div class="footer">
           <button class="btn btn-primary btn-rounded"
             @click="mode = 'view'">
             {{ '_datacontainer.ajv.save' | translate }}
@@ -141,10 +142,11 @@
             :value.sync="entry.addValue">
           </dt-field>
 
-          <div class="mb-3  text-center" v-if="addListEntry">
+          <div class="footer" v-if="addListEntry">
             <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
               @click="addListEntry = false">
               {{ `_datacontainer.list.canel-list-entry` | translate }}
+              <i class="mdi mdi-arrow-right"></i>
             </button>
 
             <button type="submit" class="btn btn-rounded btn-primary"

@@ -26,8 +26,8 @@
 */
 
 <template>
-  <div>
-    <div class="d-flex border-bottom border-sm align-items-center"
+  <div class="white-box border rounded">
+    <div class="header"
       :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'">
       <h3 class="m-0 font-weight-semibold" v-if="mode !== 'schema'">
         {{ '_datacontainer.types.object' | translate }}: {{ entryName }}
@@ -63,7 +63,7 @@
         :value="entry.value">
       </dt-ajv>
 
-      <div class="mb-3 text-center"
+      <div class="footer"
         v-if="mode === 'schema' || mode === 'edit'">
         <button class="btn btn-primary btn-rounded"
           @click="mode = 'view'">

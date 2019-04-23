@@ -92,12 +92,13 @@ export default {
         "error": "Bitte geben Sie einen Namen an!",
         "title": "Name"
       },
-      "save": "Speichern",
+      "save": "Daten Container Speichern",
       "template": {
         "desc": "Vorlage des Datencontainers",
         "title": "Vorlage"
       },
-      "title": "Datencontainer Erstellen"
+      "title": "Datencontainer Erstellen",
+      "sub-title": "Allgemeine Informationen, Datenschema und Werte."
     },
     "dispatcher": {
       "create": "Datencontainer wird erstellt...",
@@ -167,7 +168,8 @@ export default {
       },
       "create-title": "Neue Vorlage erstellen",
       "create-container": "Daten Container erzeugen",
-      "edit-dbcp": "Beschreibung Anpassen"
+      "edit-dbcp": "Beschreibung Anpassen",
+      "save": "Vorlage speichern"
     },
     "template-cache": {
       "action": "Wiederherstellen",

@@ -26,45 +26,43 @@
 */
 
 <template>
-  <div class="bg-level-2 position-relative">
-    <div v-if="modes.length === 0">
-      <div class="d-flex p-5 border-bottom border-sm align-items-center">
+  <div>
+    <div class="whitebox" v-if="modes.length === 0">
+      <div class="header">
         <h3 class="m-0 font-weight-semibold">
           {{ `_datacontainer.ajv.not-permitted.title` | translate }}
         </h3>
       </div>
 
-      <p class="p-3">
+      <div class="content">
         {{ `_datacontainer.ajv.not-permitted.desc` | translate }}
-      </p>
+      </div>
     </div>
 
-    <div class="p-1 p-md-4" v-if="modes.length !== 0">
-      <div class="bg-level-1 border">
-        <dt-entry-list
-          v-if="entry.dataSchema.type === 'array'"
-          :address="address"
-          :entry="entry"
-          :listName="name"
-          :mode="activeMode"
-          :modes="modes">
-        </dt-entry-list>
-        <dt-entry-object
-          v-if="entry.dataSchema.type === 'object'"
-          :entry="entry"
-          :entryName="name"
-          :mode="activeMode"
-          :modes="modes">
-        </dt-entry-object>
-        <dt-field
-          v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'"
-          :fieldName="name"
-          :mode="activeMode"
-          :modes="modes"
-          :type="entry.dataSchema.type"
-          :value.sync="entry.value">
-        </dt-field>
-      </div>
+    <div class="mt-3" v-if="modes.length !== 0">
+      <dt-entry-list
+        v-if="entry.dataSchema.type === 'array'"
+        :address="address"
+        :entry="entry"
+        :listName="name"
+        :mode="activeMode"
+        :modes="modes">
+      </dt-entry-list>
+      <dt-entry-object
+        v-if="entry.dataSchema.type === 'object'"
+        :entry="entry"
+        :entryName="name"
+        :mode="activeMode"
+        :modes="modes">
+      </dt-entry-object>
+      <dt-field
+        v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'"
+        :fieldName="name"
+        :mode="activeMode"
+        :modes="modes"
+        :type="entry.dataSchema.type"
+        :value.sync="entry.value">
+      </dt-field>
     </div>
   </div>
 </template>

@@ -71,7 +71,7 @@
         </div>
         <div class="row content">
           <div class="col-md-6 col-lg-4 mb-4" v-for="(ensAddress, index) in categories[category]">
-            <a class="d-flex bg-level-1 border rounded evan-highlight"
+            <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
               :href="`${ dapp.fullUrl }/${ ensAddress }/containers`">
               <div class="row align-items-center m-0">
                 <div class="col-2">
@@ -88,7 +88,7 @@
                     v-if="descriptions[ensAddress].creating">
                     {{ '_digitaltwins.containers.in-creation' | translate }}
                   </small>
-                  <div class="d-flex p-3">
+                  <div class="d-flex p-3 flex-truncate">
                     <div>
                       <h4 class="font-weight-semibold mb-0">
                         {{ descriptions[ensAddress].name }}

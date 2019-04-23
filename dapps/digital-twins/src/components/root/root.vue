@@ -109,7 +109,10 @@
               </div>
             </template>
           </evan-dapp-wrapper-level-2>
-          <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
+          <evan-breadcrumbs
+            :i18nScope="'_digitaltwins.breadcrumbs'"
+            v-if="$route.name !== 'dt-template' && $route.name !== 'dt-container'">
+          </evan-breadcrumbs>
           <div v-if="!$store.state.uiDT">
             <div class="evan-navigation-tabs">
               <div class="evan-tab bg-secondary"

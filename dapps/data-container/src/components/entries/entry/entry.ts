@@ -72,7 +72,11 @@ export default class EntryComponent extends mixins(EvanComponent) {
    */
   created() {
     if (!this.address.startsWith('0x')) {
-      this.modes = [ 'schema', 'view', ];
+      if (this.address.startsWith('create')) {
+        this.modes = [ 'schema', 'view', ];
+      } else {
+        this.modes = [ 'view', 'schema', ];
+      }
     } else {
       const read = this.permissions.read || [ ];
       const write = this.permissions.readWrite || [ ];

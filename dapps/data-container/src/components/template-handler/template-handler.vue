@@ -51,19 +51,18 @@
           </button>
         </template>
       </evan-modal>
-      <div class="evan-tabs">
-        <div class="evan-tab"
+      <div class="bg-level-1 p-3 border rounded d-flex flex-wrap">
+        <div class="property-label"
           v-for="(property, index) in Object.keys(template.properties)"
           :class="{ 'active': activeTab === index }"
           @click="activateTab(index)">
           {{ property }}
         </div>
-        <div class="evan-tab"
+        <div class="property-label"
           :class="{ 'active': activeTab === -1 }"
           @click="activateTab(-1)">
-          <i class="mdi mdi-plus-circle large"></i>
+          <i class="mdi mdi-plus-circle"></i>
         </div>
-        <span class="mx-auto"></span>
         <button type="button" class="btn btn-outline-secondary btn-circle btn-sm ml-5 mt-1 mr-2 animate-hop"
           v-if="cachedTemplate"
           @click="$refs.cacheModal.show()">
@@ -71,20 +70,19 @@
         </button>
       </div>
 
-      <div class="bg-level-2 p-4"
-        v-if="activeTab === -1">
-        <div class="bg-level-1 border">
-          <div class="d-flex p-5 border-bottom border-sm align-items-center">
+      <template v-if="activeTab === -1">
+        <div class="white-box border rounded mt-3">
+          <div class="header">
             <h3 class="m-0 font-weight-semibold">
               {{ `_datacontainer.entry.add` | translate }}
             </h3>
           </div>
 
-          <p class="px-4 pt-3">
-            {{ `_datacontainer.entry.add-desc` | translate }}
-          </p>
+          <div class="content">
+            <p class="mb-3">
+              {{ `_datacontainer.entry.add-desc` | translate }}
+            </p>
 
-          <div class="px-4 py-3">
             <form v-on:submit.prevent="addEntry">
               <div class="form-group">
                 <label for="type">
@@ -137,18 +135,19 @@
                   {{ `_datacontainer.entry.name.error` | translate }}
                 </div>
               </div>
-
-              <div class="mt-3 text-center">
-                <button type="submit"
-                  class="btn btn-rounded btn-primary"
-                  :disabled="!entryForm.isValid || $store.state.saving">
-                  {{ `_datacontainer.entry.add` | translate }}
-                </button>
-              </div>
             </form>
           </div>
+          <div class="footer">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              @click="addEntry()"
+              :disabled="!entryForm.isValid || $store.state.saving">
+              {{ `_datacontainer.entry.add` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
+            </button>
+          </div>
         </div>
-      </div>
+      </template>
 
       <dt-entry
         v-if="activeTab > -1 && activeEntry"
@@ -165,3 +164,8 @@
   import Component from './template-handler.ts';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './template-handler.scss';
+</style>
+
