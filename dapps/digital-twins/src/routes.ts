@@ -44,7 +44,7 @@ const templatePath = (path) => `datacontainer.digitaltwin.${ dappBrowser.getDoma
 // map them to element names, so they can be used within templates
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { name: 'base-start',           component: StartComponent,                    path: '', },
+  { path: '', redirect: { path: 'overview' }  },
   { name: 'base-overview',        component: OverviewComponent,                 path: 'overview', },
   { name: 'base-templates',       component: TemplatesComponent,                path: 'templates', },
   { name: 'base-lookup',          component: LookupComponent,                   path: 'lookup', },

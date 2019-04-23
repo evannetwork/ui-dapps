@@ -27,21 +27,17 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
-    <div class="p-1 p-md-4 text-left">
-      <div class="bg-level-1 border">
-        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+    <div class="container-wide" v-if="!loading">
+      <div class="white-box mt-4 border rounded">
+        <div class="header">
           <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.lookup.title` | translate }}
           </h3>
         </div>
 
-        <div class="px-5 py-3">
-          <p class="mb-4 text-justify">{{ `_digitaltwins.lookup.description` | translate }}</p>
-          <dt-lookup-form
-            @submit="openTwin">
-          </dt-lookup-form>
-        </div>
+        <dt-lookup-form
+          @submit="openTwin">
+        </dt-lookup-form>
       </div>
     </div>
   </div>

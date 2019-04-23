@@ -46,7 +46,6 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    */
   loading = true;
 
-
   /**
    * mapped for better iteration
    */
@@ -98,7 +97,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     const runtime = getRuntime(this);
 
     this.descriptions = { };
-    this.categories.favorites = this.$store.state.favorites;
+    this.categories.favorites = await this.loadFavorites();
     this.categories.lastTwins = getLastOpenedTwins();
 
     let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
@@ -136,5 +135,25 @@ export default class OverviewComponent extends mixins(EvanComponent) {
       .filter(ensAddress => !!this.descriptions[ensAddress]);
 
     this.loading = false;
+  }
+
+  /**
+   * Load the digitaltwin favorites for the current user.
+   */
+  async loadFavorites() {
+    const runtime = getRuntime(this);
+    const favorites = await bcc.DigitalTwin.getFavorites(<any>runtime);
+
+    // load dispatchers and merge the favorites with the favorite dispatchers
+    const add = await dispatchers.favoriteAddDispatcher.getInstances(runtime);
+    const remove = await dispatchers.favoriteRemoveDispatcher.getInstances(runtime);
+
+    // add favorites directly
+    add.forEach(instance => favorites.push(instance.data.address));
+    // remove favorites
+    remove.forEach(instance =>
+      favorites.splice(favorites.indexOf(instance.data.address), 1));
+
+    return favorites;
   }
 }

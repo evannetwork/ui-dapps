@@ -62,7 +62,7 @@ export default {
         "error": "Please enter an alias",
         "title": "Alias"
       },
-      "use": "Link"
+      "use": "Link Daten Container"
     },
     "containers": {
       "create": "Create",
@@ -115,14 +115,14 @@ export default {
       "digitaltwin-overview": "Favorites & last digitaltwins",
       "general": "Metadata",
       "my-digitaltwins": {
-        "desc": "Last digitaltwins or open new ones",
-        "title": "My Twins"
+        "desc": "Overview of my Digital Twins.",
+        "title": "Digital Twins"
       },
       "my-templates": {
         "desc": "Last templates or create new ones",
         "title": "My Templates"
       },
-      "open-digitaltwin": "Open digital Twin",
+      "open-digitaltwin": "Open Digital Twin",
       "templates-overview": "My templates",
       "verifications": "Verifications"
     },
@@ -130,7 +130,7 @@ export default {
       "address": {
         "desc": "Enter the address of your digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
-        "title": "Address"
+        "title": "Address of your digital twin"
       },
       "already-registered": {
         "desc": "The specified address is not available.",
@@ -160,9 +160,10 @@ export default {
         "title": "Address available"
       },
       "purchasing": "Purchasing ENS address...",
-      "title": "Open"
+      "title": "Open Digital Twin"
     },
     "overview": {
+      "create-container": "Create data container",
       "empty": "Favorites & last digitaltwins",
       "empty-desc": "You have not yet opened or favored any digital Twins. Use \"open\" button to open a digital Twin or to create a new one.",
       "favorites": "My Favorites",
@@ -185,11 +186,15 @@ export default {
     },
     "startup": "What would you like to start with?",
     "templates": {
-      "create": "Create",
+      "create": "Create Template",
       "empty": "My Templates",
       "empty-desc": "You have not yet created any templates. Use \"Create\" button to create a new template."
     },
     "unlock-digitaltwin-panel": "<b>The opened digital Twin is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
+    "verifications": {
+      "description": "Each digital twin and data container can be automatically verified. The user interface is currently under development.",
+      "title": "Verifications"
+    },
     "welcome": "Welcome to the digital Twin management"
   }
 }

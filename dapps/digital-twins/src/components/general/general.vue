@@ -27,85 +27,85 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'">
-      <template v-slot:content>
-        <div class="mr-4">
-          <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.uiDT.isFavoriteLoading">
-          </div>
-          <template v-if="!$store.state.uiDT.isFavoriteLoading">
-            <i class="mdi mdi-star lg text-warning clickable"
-              v-if="$store.state.uiDT.isFavorite"
-              @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-            </i>
-            <i class="far fa-star lg clickable"
-              v-if="!$store.state.uiDT.isFavorite"
-              @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-            </i>
-          </template>
-        </div>
-
-        <button type="button" class="btn btn-primary btn-circle"
-          @click="$store.state.uiDT.saveChanges(this, getRuntime())"
-          :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
-          <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.uiDT.isSaving">
-          </div>
-          <i class="mdi mdi-content-save" v-else></i>
-        </button>
-      </template>
-    </evan-breadcrumbs>
     <div class="text-left"
-      :class="{ 'p-1 p-md-4': standalone }">
-      <div class="bg-level-1"
-        :class="{ 'border': standalone }">
-        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+      :class="{ 'container-wide': standalone }">
+      <div class="white-box" :class="{ 'border rounded': standalone }">
+        <div class="header">
           <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.generalForm.title` | translate }}
           </h3>
-        </div>
-        <form class="p-4"
-          v-if="!uiDT.isCreating"
-          v-on:submit.prevent="createDigitalTwin">
-          <div class="form-group">
-            <label for="name">
-              {{ `_digitaltwins.generalForm.name.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="name" ref="name"
-              :placeholder="`_digitaltwins.generalForm.name.desc` | translate"
-              v-model="generalForm.name.value"
-              v-bind:class="{ 'is-invalid' : generalForm.name.error }"
-              @blur="generalForm.name.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_digitaltwins.generalForm.name.error` | translate }}
+          <span class="mx-auto"></span>
+          <div class="mr-4">
+            <div class="spinner-border spinner-border-sm"
+              v-if="$store.state.uiDT.isFavoriteLoading">
             </div>
+            <template v-if="!$store.state.uiDT.isFavoriteLoading">
+              <i class="mdi mdi-star lg text-warning clickable"
+                v-if="$store.state.uiDT.isFavorite"
+                @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+              </i>
+              <i class="far fa-star lg clickable"
+                v-if="!$store.state.uiDT.isFavorite"
+                @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+              </i>
+            </template>
           </div>
-          <div class="form-group">
-            <label for="description">
-              {{ `_digitaltwins.generalForm.description.title` | translate }}
-            </label>
-            <textarea class="form-control" rows="7"
-              id="description" ref="description"
-              :placeholder="`_digitaltwins.generalForm.description.desc` | translate"
-              v-model="generalForm.description.value"
-              v-bind:class="{ 'is-invalid' : generalForm.description.error }"
-              @blur="generalForm.description.setDirty()">
-            </textarea>
-          </div>
-
-          <div class="text-center mt-3 w-100">
-            <button type="submit"
-              class="btn btn-rounded btn-primary"
-              v-if="!uiDT.validity.exists"
-              :disabled="!generalForm.isValid || checking">
-              <div class="spinner-border spinner-border-sm text-light mr-3"
-                v-if="checking">
+        </div>
+        <template
+          v-if="!uiDT.isCreating">
+          <form class="content"
+            v-on:submit.prevent="createDigitalTwin">
+            <div class="form-group">
+              <label for="name">
+                {{ `_digitaltwins.generalForm.name.title` | translate }}
+              </label>
+              <input class="form-control" required
+                id="name" ref="name"
+                :placeholder="`_digitaltwins.generalForm.name.desc` | translate"
+                v-model="generalForm.name.value"
+                v-bind:class="{ 'is-invalid' : generalForm.name.error }"
+                @blur="generalForm.name.setDirty()">
+              <div class="invalid-feedback">
+                {{ `_digitaltwins.generalForm.name.error` | translate }}
               </div>
-              {{ `_digitaltwins.generalForm.create` | translate }}
+            </div>
+            <div class="form-group">
+              <label for="description">
+                {{ `_digitaltwins.generalForm.description.title` | translate }}
+              </label>
+              <textarea class="form-control" rows="7"
+                id="description" ref="description"
+                :placeholder="`_digitaltwins.generalForm.description.desc` | translate"
+                v-model="generalForm.description.value"
+                v-bind:class="{ 'is-invalid' : generalForm.description.error }"
+                @blur="generalForm.description.setDirty()">
+              </textarea>
+            </div>
+
+            <div class="text-center mt-3 w-100">
+              <button type="submit"
+                class="btn btn-rounded btn-primary"
+                v-if="!uiDT.validity.exists"
+                :disabled="!generalForm.isValid || checking">
+                <div class="spinner-border spinner-border-sm text-light mr-3"
+                  v-if="checking">
+                </div>
+                {{ `_digitaltwins.generalForm.create` | translate }}
+              </button>
+            </div>
+          </form>
+          <div class="footer">
+            <button type="button" class="btn btn-primary btn-rounded"
+              @click="$store.state.uiDT.saveChanges(this, getRuntime())"
+              :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
+              {{ `_digitaltwins.generalForm.save` | translate }}
+              <div class="spinner-border spinner-border-sm"
+                v-if="$store.state.uiDT.isSaving">
+              </div>
+              <i class="mdi mdi-content-save label ml-2" v-else></i>
             </button>
           </div>
-        </form>
+        </template>
 
         <div class="text-center" v-else>
           <h4 class="mt-5 mb-3">{{ '_digitaltwins.in-creation' | translate }}</h4>

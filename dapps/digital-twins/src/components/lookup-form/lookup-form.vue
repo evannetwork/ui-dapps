@@ -52,35 +52,48 @@
       </template>
     </evan-modal>
 
-    <form
-      v-if="Object.keys(purchasingInstances).length === 0"
-      v-on:submit.prevent="checkAddress">
-      <div class="form-group">
-        <label for="address">
-          {{ `_digitaltwins.lookup.address.title` | translate }}
-        </label>
-        <input class="form-control" required
-          id="address" ref="address"
-          :placeholder="`_digitaltwins.lookup.address.desc` | translate"
-          v-model="lookupForm.address.value"
-          v-bind:class="{ 'is-invalid' : lookupForm.address.error }"
-          @blur="lookupForm.address.setDirty()">
-        <div class="invalid-feedback">
-          {{ `_digitaltwins.lookup.address.error` | translate }}
-        </div>
+    <template v-if="Object.keys(purchasingInstances).length === 0">
+      <div class="content">
+        <form
+          class="col-sm-9 mx-auto"
+          v-on:submit.prevent="checkAddress">
+          <div class="form-group">
+            <label for="address">
+              {{ `_digitaltwins.lookup.address.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="address" ref="address"
+              :placeholder="`_digitaltwins.lookup.address.desc` | translate"
+              v-model="lookupForm.address.value"
+              v-bind:class="{ 'is-invalid' : lookupForm.address.error }"
+              @blur="lookupForm.address.setDirty()">
+            <div class="invalid-feedback">
+              {{ `_digitaltwins.lookup.address.error` | translate }}
+            </div>
+          </div>
+
+          <div class="d-flex mt-3 align-items-center">
+            <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
+            <p class="m-0 text-justify">
+              {{ `_digitaltwins.lookup.description` | translate }}
+            </p>
+          </div>
+        </form>
       </div>
 
-      <div class="text-center mt-3 w-100">
+      <div class="footer">
         <button type="submit"
           class="btn btn-rounded btn-primary"
+          @click="checkAddress()"
           :disabled="!lookupForm.isValid || checking">
+          {{ `_digitaltwins.lookup.title` | translate }}
+          <i class="mdi mdi-arrow-right label ml-3"></i>
           <div class="spinner-border spinner-border-sm text-light mr-3"
             v-if="checking">
           </div>
-          {{ `_digitaltwins.lookup.title` | translate }}
         </button>
       </div>
-    </form>
+    </template>
     <div class="text-center" v-else>
       <h4 class="mt-5 mb-3">{{ '_digitaltwins.lookup.purchasing' | translate }}</h4>
       <b>

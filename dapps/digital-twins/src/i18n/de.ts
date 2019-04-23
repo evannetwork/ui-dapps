@@ -62,7 +62,7 @@ export default {
         "error": "Bitte geben Sie einen Alias ein!",
         "title": "Alias"
       },
-      "use": "Verlinken"
+      "use": "Daten Container verlinken"
     },
     "containers": {
       "create": "Erstellen",
@@ -115,8 +115,8 @@ export default {
       "digitaltwin-overview": "Favoriten & letzte Zwillinge",
       "general": "Metadaten",
       "my-digitaltwins": {
-        "desc": "Übersicht letzter und meiner digitalen Zwillinge",
-        "title": "Meine digitalen Zwillinge"
+        "desc": "Übersicht meiner digitalen Zwillinge",
+        "title": "Digitale Zwillinge"
       },
       "my-templates": {
         "desc": "Letzte Vorlagen oder Neue erstellen",
@@ -130,7 +130,7 @@ export default {
       "address": {
         "desc": "Geben Sie die Adresse Ihres digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Bitte geben Sie eine gültige Adresse ein!",
-        "title": "Adresse"
+        "title": "Adresse Ihres Digitalen Zwillings"
       },
       "already-registered": {
         "desc": "Die angegebene Adresse ist nicht verfügbar und gehört bereits einem anderen Nutzer.",
@@ -160,9 +160,10 @@ export default {
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
-      "title": "Öffnen"
+      "title": "Digitalen Zwilling Öffnen"
     },
     "overview": {
+      "create-container": "Daten Container erstellen",
       "empty": "Favoriten & letzte Zwillinge",
       "empty-desc": "Sie haben noch keine digitalen Zwillinge geöffnet oder favoritisiert. Nutzen Sie \"öffnen\" Button, um einen digitale Zwilling zu öffnen oder um eine neue zu erstellen.",
       "favorites": "Meine Favoriten",
@@ -185,11 +186,15 @@ export default {
     },
     "startup": "Womit möchten Sie starten?",
     "templates": {
-      "create": "Erstellen",
+      "create": "Vorlage Erstellen",
       "empty": "Meine Vorlagen",
       "empty-desc": "Sie haben noch keine Templates erstellt. Nutzen Sie \"Erstellen\" Button, um eine neue Vorlage zu erstellen."
     },
     "unlock-digitaltwin-panel": "<b>Die geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
+    "verifications": {
+      "description": "An jeden Digitale Zwilling und Daten Container können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
+      "title": "Verizifierungen"
+    },
     "welcome": "Willkommen in der digitalen Zwillingsverwaltung"
   }
 }

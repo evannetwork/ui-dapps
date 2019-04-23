@@ -69,39 +69,19 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   wasDestroyed: boolean;
 
   /**
-   * Show left panel overview or is an detail is opened?
-   */
-  sideNav = 0;
-
-  /**
    * Categories of the left navigation
    */
-  navigation: any = [
-    [
-      {
-        name: 'my-digitaltwins',
-        active: true,
-        emptyNav: 'lookup',
-        children: [
-          { name: 'digitaltwin-overview', path: 'overview', i18n: true },
-        ]
-      },
-      {
-        name: 'my-templates',
-        active: false,
-        emptyNav: 'templates',
-        children: [
-          { name: 'templates-overview', path: 'templates', i18n: true },
-        ]
-      }
-    ],
-    [ ]
-  ];
+  twinNavigation: any = [ ];
 
   /**
    * List of available templates
    */
   templates: any = { };
+
+  /**
+   * Current activated tab (digital twins / templates)
+   */
+  activeTab = 0;
 
   /**
    * Clear the hash change watcher
@@ -120,22 +100,16 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Initialize when the user has logged in.
    */
   async initialize() {
-    await this.updateIdentities();
     this.loading = false;
-
-    await this.loadDigitalTwin();
 
     // set the hash change watcher, so we can detect digitaltwin change and loading
     const that = this;
-    this.hashChangeWatcher = () => that.loadDigitalTwin();
-    this.dispatcherWatcher = Dispatcher.watch(
-      () => this.updateIdentities(),
-      `digitaltwins.${ (<any>this).dapp.domainName }`
-    );
-    this.templatesWatcher = Dispatcher.watch(
-      () => this.loadTemplates(),
-      `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`
-    );
+    this.hashChangeWatcher = async () => {
+      that.setTabStatus();
+      await that.loadDigitalTwin();
+    };
+
+    await this.hashChangeWatcher();
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -147,31 +121,18 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Load users favorites and check for identities in creation or update process.
+   * Check the active route and set the active tab status.
    */
-  async updateIdentities() {
-    await this.loadFavorites();
-    await this.loadTemplates();
-    await this.setLastOpenedTwins();
-  }
+  setTabStatus() {
+    const tab1Routes = [ 'base-overview', 'base-lookup', 'base-container-link',
+      'base-container-link2', ];
+    const tab2Routes = [ 'base-templates', 'dt-template' ];
 
-  /**
-   * Load the digitaltwin favorites for the current user.
-   */
-  async loadFavorites() {
-    const runtime = identitityUtils.getRuntime(this);
-    const favorites = this.$store.state.favorites =
-      await bcc.DigitalTwin.getFavorites(<any>runtime);
-
-    // load dispatchers and merge the favorites with the favorite dispatchers
-    const add = await dispatchers.favoriteAddDispatcher.getInstances(runtime);
-    const remove = await dispatchers.favoriteRemoveDispatcher.getInstances(runtime);
-
-    // add favorites directly
-    add.forEach(instance => favorites.push(instance.data.address));
-    // remove favorites
-    remove.forEach(instance =>
-      favorites.splice(favorites.indexOf(instance.data.address), 1));
+    if (tab1Routes.indexOf(this.$route.name) !== -1) {
+      this.activeTab = 0;
+    } else if (tab2Routes.indexOf(this.$route.name) !== -1) {
+      this.activeTab = 1;
+    }
   }
 
   /**
@@ -182,8 +143,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     let uiDT: EvanUIDigitalTwin = this.$store.state.uiDT;
 
     // load the digitaltwin
-    if (digitalTwinAddress && (!uiDT || (uiDT && !uiDT.loading))) {
-      if (!uiDT || digitalTwinAddress !== uiDT.address) {
+    if (digitalTwinAddress) {
+      if (!uiDT || (uiDT && digitalTwinAddress !== uiDT.address && !uiDT.loading)) {
         // if digitaltwin was set, destroy it
         uiDT && uiDT.destroy(this);
 
@@ -196,72 +157,17 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
 
         // apply the container categories every time, when the digitaltwin was load, so the containers
         // and paths will be dynamic
-        this.sideNav = 1;
-        this.navigation[1] = this.$store.state.uiDT.navigation;
+        this.twinNavigation = this.$store.state.uiDT.navigation;
 
-        // show latest digitaltwins
-        await this.setLastOpenedTwins();
-      } else {
-        this.sideNav = 1;
+        // activate second navigation when a container is opened
+        if ((<any>this).$route.name.startsWith('dt-container')) {
+          this.twinNavigation[0].active = false;
+          this.twinNavigation[1].active = true;
+        }
       }
-
-      // activate second navigation when a container is opened
-      if ((<any>this).$route.name.startsWith('dt-container')) {
-        this.navigation[1][0].active = false;
-        this.navigation[1][1].active = true;
-      }
+    } else {
+      this.$set(this.$store.state, 'uiDT', null);
     }
-  }
-
-  /**
-   * Load the list of templates for the current user.
-   */
-  async loadTemplates() {
-    this.templates = await getMyTemplates(getRuntime(this));
-
-    this.navigation[0][1].children = [ this.navigation[0][1].children[0] ]
-      .concat(Object.keys(this.templates).slice(0, 5).map((address) => {
-        return {
-          i18n: false,
-          loading: this.templates[address].loading,
-          name: address,
-          path: `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }/template/${ address }`,
-        };
-      }));
-  }
-
-  /**
-   * Checks for localStorage, which addresses were opened before.
-   */
-  async setLastOpenedTwins() {
-    const runtime = identitityUtils.getRuntime(this);
-    let lastTwins = identitityUtils.getLastOpenedTwins();
-
-    // if we hadn't opened 5 identites before, use favorites
-    if (lastTwins.length < 5) {
-      lastTwins = lastTwins.concat(this.$store.state.favorites.slice(0, 10));
-      lastTwins = Array.from(new Set(lastTwins));
-    }
-
-    let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
-    let save = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
-    const loadingAddresses = [ ].concat(
-      create.map(instance => instance.data.address),
-      save.map(instance => instance.data.address),
-    );
-
-    // show everytime the overview entry and apply the last digitaltwins
-    this.navigation[0][0].children = [ this.navigation[0][0].children[0] ]
-      .concat(lastTwins.slice(0, 5).map((address) => {
-        return {
-          name: address,
-          path: `${ address }/containers`,
-          i18n: false,
-          loading: loadingAddresses.indexOf(address) !== -1
-        };
-      }));
-
-    this.$store.state.lastTwins = lastTwins;
   }
 
   /**

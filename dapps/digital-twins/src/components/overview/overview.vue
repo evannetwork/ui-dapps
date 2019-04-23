@@ -27,67 +27,98 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="p-4 text-left" v-if="!loading">
-      <template class="bg-level-1 border mb-3"
+    <div class="container-wide" v-if="!loading">
+      <div class="d-flex mb-3 align-items-center">
+        <div>
+          <h3 class="font-weight-bold mb-0">
+            {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
+          </h3>
+          <p class="text-muted font-weight-semibold m-t-0">
+            {{ '_digitaltwins.left-categories.my-digitaltwins.desc' | translate }}
+          </p>
+        </div>
+        <span class="mx-auto"></span>
+        <div>
+          <a
+            class="btn btn-rounded btn-light font-weight-normal"
+            @click="$refs.level2Wrapper.hide()"
+            :href="`${ dapp.fullUrl }/lookup`">
+            <i class="mdi mdi-plus mr-1 m-0"></i>
+            <span>{{ '_digitaltwins.overview.create-container' | translate }}</span>
+          </a>
+          <a
+            class="btn btn-rounded btn-primary font-weight-semibold"
+            @click="$refs.level2Wrapper.hide()"
+            :href="`${ dapp.fullUrl }/lookup`">
+            {{ '_digitaltwins.lookup.title' | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="white-box border rounded"
         v-for="(category, index) in [ 'lastTwins', 'favorites' ]"
         v-if="categories[category].length > 0">
-        <div class="d-flex p-3 border-bottom align-items-center">
-          <h4 class="m-0">
-            {{ `_digitaltwins.overview.${ category }` | translate }}
-          </h4>
+        <div class="header">
+          <div>
+            <h3 class="font-weight-semibold m-0">
+              {{ `_digitaltwins.overview.${ category }` | translate }}
+            </h3>
+          </div>
+          <span class="mx-auto"></span>
+          <div></div>
         </div>
-        <div class="container d-md-flex flex-wrap justify-content-left">
-          <div class="col-md-6 col-lg-4 p-3"
-            v-for="(ensAddress, index) in categories[category]">
-            <a class="d-block text-center bg-level-1 border evan-highlight h-100"
-              style="min-width: 250px"
+        <div class="row content">
+          <div class="col-md-6 col-lg-4 mb-4" v-for="(ensAddress, index) in categories[category]">
+            <a class="d-flex bg-level-1 border rounded evan-highlight"
               :href="`${ dapp.fullUrl }/${ ensAddress }/containers`">
-              <img class="img-fluid p-3"
-                style="max-width: 200px; min-height: 200px;"
-                :src="descriptions[ensAddress].imgSquare">
-                
-              <div class="text-left border-top highlight">
-                <small class="text-center p-1 d-block text-muted"
-                  v-if="descriptions[ensAddress].creating">
-                  {{ '_digitaltwins.containers.in-creation' | translate }}
-                </small>
-                <div class="d-flex p-3">
-                  <div>
-                    <h5 class="font-weight-bold">{{ descriptions[ensAddress].name }}</h5>
-                    <span class="overflow-multiline">{{ descriptions[ensAddress].description }}</span>
+              <div class="row align-items-center m-0">
+                <div class="col-2">
+                  <img class="img-fluid p-3"
+                    v-if="descriptions[ensAddress].imgSquare"
+                    :src="descriptions[ensAddress].imgSquare">
+                  <i
+                    class="mdi mdi-fingerprint"
+                    style="font-size:60px;">
+                  </i>
+                </div>
+                <div class="col-10">
+                  <small class="text-center p-1 d-block text-muted"
+                    v-if="descriptions[ensAddress].creating">
+                    {{ '_digitaltwins.containers.in-creation' | translate }}
+                  </small>
+                  <div class="d-flex p-3">
+                    <div>
+                      <h4 class="font-weight-semibold mb-0">
+                        {{ descriptions[ensAddress].name }}
+                      </h4>
+                      <span class="text-justify d-block font-weight-semibold text-muted">
+                        {{ descriptions[ensAddress].description }}
+                      </span>
+                    </div>
+                    <template v-if="descriptions[ensAddress].loading">
+                      <span class="mx-auto"></span>
+                      <div class="spinner-border spinner-border-sm ml-3"></div>
+                    </template>
                   </div>
-                  <template v-if="descriptions[ensAddress].loading">
-                    <span class="mx-auto"></span>
-                    <div class="spinner-border spinner-border-sm ml-3"></div>
-                  </template>
                 </div>
               </div>
             </a>
           </div>
         </div>
-      </template>
-      <div class="bg-level-1 border mb-3"
+      </div>
+      <div class="white-box border rounded"
         v-if="categories.favorites.length === 0 && categories.lastTwins.length === 0">
-        <div class="d-flex p-3 border-bottom align-items-center">
+        <div class="header">
           <h4 class="m-0">
             {{ `_digitaltwins.overview.empty` | translate }}
           </h4>
         </div>
-        <div class="p-3">
-          <p>
+        <div class="content">
+          <p class="m-0">
             {{ `_digitaltwins.overview.empty-desc` | translate }}
           </p>
-
-          <div class="text-center">
-            <a
-              class="btn btn-rounded btn-primary font-weight-normal"
-              :href="`${ dapp.fullUrl }/lookup`">
-              {{ '_digitaltwins.lookup.title' | translate }}
-              <i class="mdi mdi-arrow-right label ml-2"></i>
-            </a>
-          </div>
         </div>
       </div>
     </div>

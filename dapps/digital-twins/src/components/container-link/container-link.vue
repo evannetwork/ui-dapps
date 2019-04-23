@@ -27,10 +27,9 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
     <div class="p-1 p-md-4 text-left">
-      <div class="bg-level-1 border">
-        <div class="d-flex p-5 border-bottom border-sm align-items-center">
+      <div class="white-box border rounded">
+        <div class="header">
           <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.breadcrumbs.containerlink` | translate }}
           </h3>
@@ -64,77 +63,80 @@
             <evan-loading></evan-loading>
           </div>
           <template v-else>
-            <evan-modal ref="invalidContainerModal">
-              <template v-slot:header>
-                <p class="modal-title">
-                  {{ `_digitaltwins.containerlink.invalid-container.title` | translate }}
+            <div class="content">
+              <evan-modal ref="invalidContainerModal">
+                <template v-slot:header>
+                  <p class="modal-title">
+                    {{ `_digitaltwins.containerlink.invalid-container.title` | translate }}
+                  </p>
+                </template>
+                <template v-slot:body>
+                  <p class="text-left m-0"
+                    v-html="$t(`_digitaltwins.containerlink.invalid-container.desc`, modalParams)">
+                  </p>
+                </template>
+              </evan-modal>
+
+              <div class="d-flex align-items-center mb-3">
+                <p class="m-0">
+                  {{ `_digitaltwins.containerlink.digitaltwin` | translate }}: <b>{{ validDTAddress }}</b>
                 </p>
-              </template>
-              <template v-slot:body>
-                <p class="text-left m-0"
-                  v-html="$t(`_digitaltwins.containerlink.invalid-container.desc`, modalParams)">
-                </p>
-              </template>
-            </evan-modal>
-
-            <div class="d-flex px-5 pt-3 align-items-center">
-              <p class="m-0">
-                {{ `_digitaltwins.containerlink.digitaltwin` | translate }}: <b>{{ validDTAddress }}</b>
-              </p>
-              <button class="btn"
-                v-if="validDTAddress && !linking"
-                @click="validDTAddress = ''">
-                <i class="mdi mdi-file-document-edit-outline"></i>
-                <!-- <span>
-                  {{ '_digitaltwins.containerlink.change-twin' | translate }}
-                </span> -->
-              </button>
-            </div>
-
-            <p class="px-5 text-justify">
-              {{ `_digitaltwins.containerlink.description2` | translate }}
-            </p>
-            <form class="px-5 pb-3" v-on:submit.prevent="linkContainer">
-              <div class="form-group">
-                <label for="name">
-                  {{ `_digitaltwins.containerlink.name.title` | translate }}
-                </label>
-                <input class="form-control" required
-                  id="name" ref="name"
-                  :placeholder="`_digitaltwins.containerlink.name.desc` | translate"
-                  v-model="containerLinkForm.name.value"
-                  v-bind:class="{ 'is-invalid' : containerLinkForm.name.error }"
-                  @blur="containerLinkForm.name.setDirty()">
-                <div class="invalid-feedback">
-                  {{ `_digitaltwins.containerlink.name.error` | translate }}
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="address">
-                  {{ `_digitaltwins.containerlink.address.title` | translate }}
-                </label>
-                <input class="form-control" required
-                  id="address" ref="address"
-                  :placeholder="`_digitaltwins.containerlink.address.desc` | translate"
-                  v-model="containerLinkForm.address.value"
-                  v-bind:class="{ 'is-invalid' : containerLinkForm.address.error }"
-                  @blur="containerLinkForm.address.setDirty()">
-                <div class="invalid-feedback">
-                  {{ `_digitaltwins.containerlink.address.error` | translate }}
-                </div>
-              </div>
-
-              <div class="text-center mt-3 w-100">
-                <button type="submit"
-                  class="btn btn-rounded btn-primary"
-                  :disabled="!containerLinkForm.isValid || checking">
-                  <div class="spinner-border spinner-border-sm text-light mr-3"
-                    v-if="checking">
-                  </div>
-                  {{ `_digitaltwins.containerlink.use` | translate }}
+                <button class="btn py-0"
+                  v-if="validDTAddress && !linking"
+                  @click="validDTAddress = ''">
+                  <i class="mdi mdi-file-document-edit-outline"></i>
+                  <!-- <span>
+                    {{ '_digitaltwins.containerlink.change-twin' | translate }}
+                  </span> -->
                 </button>
               </div>
-            </form>
+
+              <p class="text-justify">
+                {{ `_digitaltwins.containerlink.description2` | translate }}
+              </p>
+              <form v-on:submit.prevent="linkContainer">
+                <div class="form-group">
+                  <label for="name">
+                    {{ `_digitaltwins.containerlink.name.title` | translate }}
+                  </label>
+                  <input class="form-control" required
+                    id="name" ref="name"
+                    :placeholder="`_digitaltwins.containerlink.name.desc` | translate"
+                    v-model="containerLinkForm.name.value"
+                    v-bind:class="{ 'is-invalid' : containerLinkForm.name.error }"
+                    @blur="containerLinkForm.name.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ `_digitaltwins.containerlink.name.error` | translate }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="address">
+                    {{ `_digitaltwins.containerlink.address.title` | translate }}
+                  </label>
+                  <input class="form-control" required
+                    id="address" ref="address"
+                    :placeholder="`_digitaltwins.containerlink.address.desc` | translate"
+                    v-model="containerLinkForm.address.value"
+                    v-bind:class="{ 'is-invalid' : containerLinkForm.address.error }"
+                    @blur="containerLinkForm.address.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ `_digitaltwins.containerlink.address.error` | translate }}
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="footer text-right">
+              <button type="submit"
+                class="btn btn-rounded btn-primary"
+                :disabled="!containerLinkForm.isValid || checking"
+                @click="linkContainer()">
+                {{ `_digitaltwins.containerlink.use` | translate }}
+                <i class="mdi mdi-arrow-right label ml-3"></i>
+                <div class="spinner-border spinner-border-sm text-light mr-3"
+                  v-if="checking">
+                </div>
+              </button>
+            </div>
           </template>
         </template>
       </div>

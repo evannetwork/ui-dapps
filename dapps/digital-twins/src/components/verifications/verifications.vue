@@ -26,9 +26,24 @@
 */
 
 <template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
-    verifications
+  <div class="container-wide">
+    <div class="white-box border rounded">
+      <div class="header">
+        <h3 class="m-0 font-weight-semibold">
+          {{ `_digitaltwins.verifications.title` | translate }}
+        </h3>
+      </div>
+      <div class="content">
+        <div class="d-flex align-items-center">
+          <i class="mdi mdi-shield-check text-secondary mr-3" style="font-size: 60px;"></i>
+          <p class="m-0 text-justify">
+            {{ `_digitaltwins.verifications.description` | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="footer">
+      </div>
+    </div>
   </div>
 </template>
 

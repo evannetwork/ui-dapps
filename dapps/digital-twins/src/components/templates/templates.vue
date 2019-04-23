@@ -27,62 +27,90 @@
 
 <template>
   <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
-    <div class="p-1 p-md-4">
-      <template class="bg-level-1 border mb-3"
-        v-if="Object.keys(templates).length !== 0">
-        <div class="d-md-flex flex-wrap justify-content-left">
-          <a class="
-              col-md-4 col-lg-3 col-xl-2
-              p-0 m-md-3 mb-3 
-              text-center
-              bg-level-1 border evan-highlight"
-            style="min-width: 250px"
-            v-for="(templateKey, index) in Object.keys(templates)"
-            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/template/${ templateKey }`">
-            <img class="img-fluid p-3"
-              style="max-width: 200px; min-height: 200px;"
-              :src="templates[templateKey].description.imgSquare">
-
-            <div class="text-left border-top highlight">
-              <small class="text-center p-1 d-block text-muted"
-                v-if="templates[templateKey].creating">
-                {{ '_digitaltwins.containers.in-creation' | translate }}
-              </small>
-              <div class="d-flex p-3">
-                <div>
-                  <h5 class="font-weight-bold">{{ templates[templateKey].description.name }}</h5>
-                  <span class="overflow-multiline">{{ templates[templateKey].description.description }}</span>
-                </div>
-                <template v-if="templates[templateKey].loading">
-                  <span class="mx-auto"></span>
-                  <div class="spinner-border spinner-border-sm ml-3"></div>
-                </template>
-              </div>
-            </div>
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="container-wide" v-if="!loading">
+      <div class="d-flex mb-3">
+        <div>
+          <h3 class="font-weight-bold mb-0">
+            {{ '_digitaltwins.left-categories.my-templates.title' | translate }}
+          </h3>
+          <p class="text-muted font-weight-semibold m-t-0">
+            {{ '_digitaltwins.left-categories.my-templates.desc' | translate }}
+          </p>
+        </div>
+        <span class="mx-auto"></span>
+        <div>
+          <a
+            class="btn btn-rounded btn-primary font-weight-normal"
+            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/create-template`">
+            {{ '_digitaltwins.templates.create' | translate }}
+            <i class="mdi mdi-arrow-right label ml-2"></i>
           </a>
         </div>
-      </template>
-      <div class="bg-level-1 border mb-3"
-        v-else>
-        <div class="d-flex p-5 border-bottom border-sm align-items-center">
-          <h3 class="m-0 font-weight-semibold">
-            {{ `_digitaltwins.templates.empty` | translate }}
-          </h3>
-        </div>
-        <div class="px-5 py-3">
-          <p class="text-justify">
-            {{ `_digitaltwins.templates.empty-desc` | translate }}
-          </p>
+      </div>
 
-          <div class="text-center">
-            <a
-              class="btn btn-rounded btn-primary font-weight-normal m-3"
-              :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/create-template`">
-              {{ '_digitaltwins.templates.create' | translate }}
-              <i class="mdi mdi-arrow-right label ml-2"></i>
+      <div class="white-box rounded border"
+        v-if="Object.keys(templates).length !== 0">
+        <div class="header">
+          <div>
+            <h3 class="font-weight-semibold m-0">
+              {{ `_digitaltwins.left-categories.my-templates.title` | translate }}
+            </h3>
+          </div>
+          <span class="mx-auto"></span>
+          <div></div>
+        </div>
+        <div class="row content">
+          <div class="col-md-6 col-lg-4 mb-4"
+            v-for="(templateKey, index) in Object.keys(templates)">
+            <a class="d-flex bg-level-1 border rounded evan-highlight"
+              :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/template/${ templateKey }`">
+              <div class="row align-items-center m-0 w-100">
+                <div class="col-2">
+                  <img class="img-fluid p-3"
+                    v-if="templates[templateKey].imgSquare"
+                    :src="templates[templateKey].imgSquare">
+                  <i
+                    class="mdi mdi-fingerprint"
+                    style="font-size:60px;">
+                  </i>
+                </div>
+                <div class="col-10">
+                  <small class="text-center p-1 d-block text-muted"
+                    v-if="templates[templateKey].creating">
+                    {{ '_digitaltwins.containers.in-creation' | translate }}
+                  </small>
+                  <div class="d-flex p-3">
+                    <div>
+                      <h4 class="font-weight-semibold mb-0">
+                        {{ templates[templateKey].description.name }}
+                      </h4>
+                      <span class="text-justify d-block font-weight-semibold text-muted">
+                        {{ templates[templateKey].description.description }}
+                      </span>
+                    </div>
+                    <template v-if="templates[templateKey].loading">
+                      <span class="mx-auto"></span>
+                      <div class="spinner-border spinner-border-sm ml-3"></div>
+                    </template>
+                  </div>
+                </div>
+              </div>
             </a>
           </div>
+        </div>
+      </div>
+      <div class="white-box rounded border"
+        v-else>
+        <div class="header">
+          <h4 class="m-0">
+            {{ `_digitaltwins.templates.empty` | translate }}
+          </h4>
+        </div>
+        <div class="content">
+          <p class="m-0">
+            {{ `_digitaltwins.templates.empty-desc` | translate }}
+          </p>
         </div>
       </div>
     </div>

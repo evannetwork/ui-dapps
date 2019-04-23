@@ -79,6 +79,7 @@ export default class EvanUIDigitalTwin {
    * is the digitaltwin currently loading?
    */
   loading = true;
+  initialized = false;
 
   /**
    * creation is in progress
@@ -263,6 +264,7 @@ export default class EvanUIDigitalTwin {
 
     this.setNameTranslations(vueInstance);
     this.loading = false;
+    this.initialized = true;
   }
 
   /**
