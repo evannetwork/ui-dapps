@@ -132,8 +132,11 @@ export class Dispatcher {
 
   /**
    * Get the current running instances.
+   *
+   * @param      {bccRuntime}  runtime  bcc runtime
+   * @param      {boolean}     asArray  should be the result an array?
    */
-  async getInstances(runtime: bcc.Runtime): Promise<any> {
+  async getInstances(runtime: bcc.Runtime, asArray = true): Promise<any> {
     // create a new queue and initialize it
     const queue = await new EvanQueue(runtime.activeAccount);
 
@@ -159,7 +162,11 @@ export class Dispatcher {
     });
 
     // return the queue and the instances
-    return instances;
+    if (!asArray) {
+      return instances;
+    } else {
+      return Object.keys(instances).map((key) => instances[key]);
+    }
   }
 
   /**
