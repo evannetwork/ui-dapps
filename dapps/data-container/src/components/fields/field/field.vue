@@ -26,7 +26,8 @@
 */
 
 <template>
-  <div :class="{ 'standalone': 'white-box border rounded' }">
+  <div :class="{ 'standalone': 'white-box border rounded' }"
+    style="display: inline;">
     <div class="header"
       :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'"
       v-if="standalone">
@@ -53,7 +54,8 @@
         </template>
       </template>
     </div>
-    <div :class="{ 'p-3': standalone }">
+    <div :class="{ 'p-3': standalone }"
+      style="display: inline;">
       <dt-field-files v-if="type === 'files'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-files>
       <dt-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-images>
       <dt-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-number>

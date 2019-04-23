@@ -138,7 +138,9 @@ export default {
       "data": "Data",
       "load-more": "Load more...",
       "new": "neu",
-      "results": "Results"
+      "results": "Results",
+      "show-more": "Show more",
+      "show-less": "Show less"
     },
     "share": {
       "action": "Share",

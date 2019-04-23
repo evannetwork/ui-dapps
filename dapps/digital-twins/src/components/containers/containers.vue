@@ -69,10 +69,11 @@
         </div>
       </div>
       <div class="content">
-        <div class="col-md-6 col-lg-4 mb-4"
+        <div class="col-md-6 mb-4"
           v-for="(container, index) in $store.state.uiDT.containers">
           <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
-            :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
+            :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`"
+            style="min-width: 350px;">
             <div class="row align-items-center m-0 w-100">
               <div class="col-2">
                 <img class="img-fluid p-3"

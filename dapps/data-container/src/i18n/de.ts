@@ -138,7 +138,9 @@ export default {
       "data": "Daten",
       "load-more": "Mehr laden...",
       "new": "neu",
-      "results": "Ergebnisse"
+      "results": "Ergebnisse",
+      "show-more": "Mehr Anzeigen",
+      "show-less": "Weniger Anzeigen"
     },
     "share": {
       "action": "Teilen",

@@ -52,13 +52,13 @@
         </template>
       </evan-modal>
       <div class="bg-level-1 p-3 border rounded d-flex flex-wrap">
-        <div class="property-label"
+        <div class="batch-label"
           v-for="(property, index) in Object.keys(template.properties)"
           :class="{ 'active': activeTab === index }"
           @click="activateTab(index)">
           {{ property }}
         </div>
-        <div class="property-label"
+        <div class="batch-label"
           :class="{ 'active': activeTab === -1 }"
           @click="activateTab(-1)">
           <i class="mdi mdi-plus-circle"></i>
@@ -164,8 +164,3 @@
   import Component from './template-handler.ts';
   export default Component;
 </script>
-
-<style lang="scss" scoped>
-  @import './template-handler.scss';
-</style>
-

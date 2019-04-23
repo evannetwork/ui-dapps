@@ -50,7 +50,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() modes: Array<string>;
 
   /**
-   * schema / edit / vue
+   * schema / edit / view
    */
   @Prop({ }) mode;
 

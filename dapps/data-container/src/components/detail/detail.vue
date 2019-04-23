@@ -123,12 +123,12 @@
 
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <div class="d-flex mb-3 align-items-center">
+      <div class="d-flex mb-5 align-items-center">
         <div class="flex-truncate" style="max-width: 50%;">
           <h3 class="font-weight-bold mb-0">
             {{ dbcpForm.name.value }}
           </h3>
-          <p class="text-muted font-weight-semibold m-t-0">
+          <p class="text-muted font-weight-semibold mb-0">
             {{ dbcpForm.description.value }}
           </p>
         </div>

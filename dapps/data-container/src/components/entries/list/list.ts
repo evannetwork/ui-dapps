@@ -88,7 +88,7 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    * List of existing list entries, when an real container was opened
    */
   listEntries: Array<any> = [ ];
-
+  expandListEntries: any = { };
   /**
    * paging specific values
    */

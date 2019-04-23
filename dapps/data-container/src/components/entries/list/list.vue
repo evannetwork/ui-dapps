@@ -89,22 +89,47 @@
           <table class="evan-flex-table">
             <thead>
               <tr class="text-muted">
-                <th>#</th>
-                <th>{{ '_datacontainer.list.data' | translate }}</th>
-                <th></th>
+                <th class="flex-grow-0">#</th>
+                <th class="flex-grow-1">{{ '_datacontainer.list.data' | translate }}</th>
+                <th class="flex-grow-0"></th>
               </tr>
             </thead>
 
             <tbody>
               <tr
                 v-for="(listEntry, index) in [ ].concat(entry.value, listEntries)">
-                <td>
+                <td class="font-weight-semibold flex-grow-0">
                   {{ index + 1}}
                 </td>
-                <td>
-                  {{ listEntry }}
+                <td class="flex-grow-1">
+                  <template v-if="entry.dataSchema.items.type === 'object'">
+                    <div
+                      v-for="(key, index) in Object
+                        .keys(listEntry)
+                        .slice(0, !expandListEntries[i] ? 5 : 100)">
+                      <b style="white-space: nowrap;">{{ key }}</b>:
+                      <dt-field
+                        :mode="'view'"
+                        :modes="[ 'view' ]"
+                        :form="{ value: { value: listEntry[key] }}"
+                        :type="entry.dataSchema.items.properties[key].type">
+                      </dt-field>
+                    </div>
+                    <button class="btn text-secondary p-0"
+                      v-if="Object.keys(listEntry).length > 5"
+                      @click="$set(expandListEntries, i, !expandListEntries[i])">
+                      <template v-if="!expandListEntries[i]">
+                        {{ '_datacontainer.list.show-more' | translate }}
+                      </template>
+                      <template v-else>
+                        {{ '_datacontainer.list.show-less' | translate }}
+                      </template>
+                    </button>
+                  </template>
+                  <template v-else></template>
                 </td>
-                <td class="text-primary" style="width: 50px">
+                <td class="text-primary flex-grow-0"
+                  style="white-space: nowrap;">
                   <span v-if="entry.value.indexOf(listEntry) !== -1">
                     {{ '_datacontainer.list.new' | translate }}
                   </span>
