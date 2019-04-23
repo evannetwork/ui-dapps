@@ -95,4 +95,17 @@
   .font-weight-semibold {
     font-weight: 600 !important;
   }
+
+  /**
+   * https://css-tricks.com/flexbox-truncated-text/
+   */
+  .flex-truncate {
+    flex: 1;
+    &, & > * {
+      overflow: hidden;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
 }
