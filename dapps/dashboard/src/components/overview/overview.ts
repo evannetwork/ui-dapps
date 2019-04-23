@@ -31,7 +31,7 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, getDomainName } from '@evan.network/ui-vue-core';
+import { EvanComponent, getDomainName,  } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
@@ -54,4 +54,22 @@ export default class OverviewComponent extends mixins(EvanComponent) {
       path: `addressbook.${ getDomainName() }`,
     },
   ];
+
+  /**
+   * Ask for continue latest work
+   */
+  mounted() {
+    // restore the recovery url when it's available and the last url wasn't the dashboard 
+    if (window.localStorage['evan-recovery-url'] &&
+        !window.localStorage['evan-recovery-url'].endsWith(`dashboard.${ getDomainName() }`)) {
+      (<any>this.$refs.recoveryModal).show();
+    }
+  }
+
+  /**
+   * Takes the window.localStorage['evan-recovery-url'] and navigate the user to this url.
+   */
+  recoverUrl() {
+    window.location.href = window.localStorage['evan-recovery-url'];
+  }
 }

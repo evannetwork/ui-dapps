@@ -25,29 +25,29 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
-    <div class="p-1 p-md-4 text-left">
-      <div class="bg-level-1 border">
-        <div class="d-flex p-5 border-bottom border-sm align-items-center">
-          <h3 class="m-0 font-weight-semibold">
-            {{ `_digitaltwins.lookup.title` | translate }}
-          </h3>
-        </div>
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-        <div class="px-5 py-3">
-          <p class="mb-4 text-justify">{{ `_digitaltwins.lookup.description` | translate }}</p>
-          <dt-lookup-form
-            @submit="openTwin">
-          </dt-lookup-form>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+import * as utils from '../utils';
 
-<script lang="ts">
-  import Component from './lookup.ts';
-  export default Component;
-</script>
+const dispatcher = new Dispatcher(
+  `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+  'templateShareDispatcher',
+  40 * 1000,
+  '_datacontainer.dispatcher.template-share'
+);
+
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    // set the digital twin instance
+    const runtime = utils.getRuntime(instance.runtime);
+    await runtime.mailbox.sendMail(
+      data.bMailContent,
+      runtime.activeAccount,
+      data.shareConfig.accountId
+    );
+  });
+
+export default dispatcher;

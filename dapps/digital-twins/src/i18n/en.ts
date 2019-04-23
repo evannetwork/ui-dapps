@@ -38,6 +38,7 @@ export default {
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
       "overview": "Favorites & last digitaltwins",
+      "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"
     },
@@ -50,6 +51,7 @@ export default {
       "change-twin": "Digitalen Zwilling ändern",
       "description1": "Using the following input field, you can select an address of a digital twin into which you want to link a data container. If an existing instance already exists there, it is opened directly for you. If the address is not yet assigned, you can create a new digital twin and bind it to this address or link an existing one to this address.",
       "description2": "Using the following input field, you can select an address of a data container that is to be linked to the digital twin.",
+      "digitaltwin": "Digital Twin",
       "invalid-container": {
         "desc": "The address entered appears to be incorrect or to correspond to a contract with an invalid format. Please enter the correct address",
         "title": "Invalid data container"
@@ -60,8 +62,7 @@ export default {
         "error": "Please enter an alias",
         "title": "Alias"
       },
-      "use": "Link",
-      "digitaltwin": "Digital Twin"
+      "use": "Link"
     },
     "containers": {
       "create": "Create",
@@ -75,14 +76,14 @@ export default {
     },
     "digitaltwins": "Twins",
     "dispatcher": {
-      "create": "Digital digitaltwin creation",
+      "create": "Digital twin creation",
       "digitaltwin": {
-        "create": "Creating Digital digitaltwin",
-        "save": "Creating Digital digitaltwin"
+        "create": "Creating Digital twin",
+        "save": "Creating Digital twin"
       },
       "favorite": {
-        "add": "Digital digitaltwin is stored as a favorite",
-        "remove": "Digital digitaltwin is removed from favorites"
+        "add": "Digital twin is stored as a favorite",
+        "remove": "Digital twin is removed from favorites"
       }
     },
     "empty-navigation": "No entries available",
@@ -93,14 +94,14 @@ export default {
         "title": "Description"
       },
       "name": {
-        "desc": "Name of the digital DigitalTwin",
+        "desc": "Name of the Digital Twin",
         "error": "Please provide a name!",
         "title": "Name"
       },
       "save": "Speichern",
       "title": "General Information"
     },
-    "in-creation": "Creating Digital DigitalTwin...",
+    "in-creation": "Creating Digital Twin...",
     "left-categories": {
       "container-overview": "Data container overview",
       "containers": {
@@ -109,7 +110,7 @@ export default {
       },
       "digitaltwin-details": {
         "desc": "General information about the digital Twin.",
-        "title": "Digital DigitalTwin"
+        "title": "Digital Twin"
       },
       "digitaltwin-overview": "Favorites & last digitaltwins",
       "general": "Metadata",
@@ -122,6 +123,7 @@ export default {
         "title": "My Templates"
       },
       "open-digitaltwin": "Open digital Twin",
+      "templates-overview": "My templates",
       "verifications": "Verifications"
     },
     "lookup": {
@@ -145,7 +147,7 @@ export default {
         "title": "Error"
       },
       "missing-balance": {
-        "desc": "Before you can create a digital DigitalTwin, you must have purchased the address provided. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
+        "desc": "Before you can create a Digital Twin, you must have purchased the address provided. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
         "title": "Address available"
       },
       "not-buyable": {
@@ -154,7 +156,7 @@ export default {
       },
       "purchase": {
         "action": "Buy address",
-        "desc": "Before you can create a digital DigitalTwin, you must have purchased the specified root address. Would you like to buy this address for <b>{ensPrice} EVE</b>?",
+        "desc": "Before you can create a Digital Twin, you must have purchased the specified root address. Would you like to buy this address for <b>{ensPrice} EVE</b>?",
         "title": "Address available"
       },
       "purchasing": "Purchasing ENS address...",
@@ -182,6 +184,11 @@ export default {
       }
     },
     "startup": "What would you like to start with?",
+    "templates": {
+      "create": "Create",
+      "empty": "My Templates",
+      "empty-desc": "You have not yet created any templates. Use \"Create\" button to create a new template."
+    },
     "unlock-digitaltwin-panel": "<b>The opened digital Twin is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
     "welcome": "Welcome to the digital Twin management"
   }

@@ -54,17 +54,21 @@ export default {
       "container-link": "Link Data Container",
       "containers": "Data container overview",
       "create": "Create",
+      "create-template": "Create Template",
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
       "overview": "Favorites & last digitaltwins",
+      "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"
     },
     "context-menu": {
       "clone": "Clone",
       "link": "Link",
-      "share": "Share"
+      "share": "Share",
+      "template-save": "Save as template",
+      "create-container": "Create data container"
     },
     "create-question": {
       "action": "Create",
@@ -99,6 +103,8 @@ export default {
       "create": "Creating Data container...",
       "link": "Link data container...",
       "share": "Share Data Container...",
+      "template": "Saving template...",
+      "template-share": "Sharing template...",
       "update": "Updating Data container..."
     },
     "edit": "Edit",
@@ -153,6 +159,15 @@ export default {
         "desc": "User to whom the selected data should be shared.",
         "title": "User"
       }
+    },
+    "template": {
+      "bmail": {
+        "body": "Hello,<br><br>You have received a data container template from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
+        "title": "Invitation to Data Container Template"
+      },
+      "create-title": "Create new template",
+      "create-container": "Create Data Container",
+      "edit-dbcp": "Adjust Description"
     },
     "template-cache": {
       "action": "Restore",

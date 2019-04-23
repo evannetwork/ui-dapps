@@ -27,6 +27,7 @@
 
 <template>
   <div>
+    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
     <evan-loading v-if="loading"></evan-loading>
     <div class="p-4 text-left" v-if="!loading">
       <template class="bg-level-1 border mb-3"
@@ -40,9 +41,9 @@
         <div class="container d-md-flex flex-wrap justify-content-left">
           <div class="col-md-6 col-lg-4 p-3"
             v-for="(ensAddress, index) in categories[category]">
-            <a class="d-block text-center bg-level-1 border evan-highlight"
+            <a class="d-block text-center bg-level-1 border evan-highlight h-100"
               style="min-width: 250px"
-              :href="`${ dapp.fullUrl }/${ ensAddress }`">
+              :href="`${ dapp.fullUrl }/${ ensAddress }/containers`">
               <img class="img-fluid p-3"
                 style="max-width: 200px; min-height: 200px;"
                 :src="descriptions[ensAddress].imgSquare">

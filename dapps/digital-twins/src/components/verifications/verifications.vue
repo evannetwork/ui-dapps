@@ -27,6 +27,7 @@
 
 <template>
   <div>
+    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
     verifications
   </div>
 </template>

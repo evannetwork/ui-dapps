@@ -115,13 +115,11 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     const locales = [ (<any>this).$i18n.locale(), 'en' ];
 
     // merge the favorites with the dispatcher instances
-    Object.keys(addInstances).forEach((instanceKey: any) => {
-      const instance = addInstances[instanceKey];
+    addInstances.forEach((instance: any) => {
       favorites[instance.data.address] = JSON.parse(JSON.stringify(instance.data));
       favorites[instance.data.address].loading = true;
     });
-    Object.keys(removeInstances).forEach((instanceKey: any) => {
-      const instance = removeInstances[instanceKey];
+    removeInstances.forEach((instance: any) => {
       if (favorites[instance.data.address]) {
         favorites[instance.data.address].loading = true;
       }

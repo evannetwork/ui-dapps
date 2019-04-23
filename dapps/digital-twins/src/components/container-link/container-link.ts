@@ -125,7 +125,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
       const instances = await dispatchers.digitaltwinCreateDispatcher
         .getInstances(utils.getRuntime(this));
 
-      if (Object.keys(instances).length === 0) {
+      if (instances.length === 0) {
         (<any>this.$refs.createDTAddress).hide();
         this.uiDT = null;
         this.$nextTick((<any>this.$refs.dtLookupForm).checkAddress());
@@ -229,9 +229,8 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
       // load link instances and check for corresponding instances
       const instances = await dataContainerAPI.containerDispatchers.linkDispatcher
         .getInstances(runtime);
-      const contextInstances = Object
-        .keys(instances)
-        .map(key => instances[key].data)
+      const contextInstances = instances
+        .map(instance => instance.data)
         .filter((data) => data.digitalTwinAddress === this.validDTAddress);
 
       // load previous container address and set linking status

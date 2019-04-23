@@ -27,6 +27,7 @@
 
 <template>
   <div>
+    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'"></evan-breadcrumbs>
     <div class="p-1 p-md-4 text-left">
       <div class="bg-level-1 border">
         <div class="d-flex p-5 border-bottom border-sm align-items-center">

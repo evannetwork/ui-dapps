@@ -157,3 +157,4 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
 
   return changed;
 }
+

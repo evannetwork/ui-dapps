@@ -56,6 +56,24 @@
         </span>
       </a>
     </div>
+    <evan-modal ref="recoveryModal">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_dashboard.overview.recovery.title` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p class="text-left m-0"
+          v-html="$t(`_dashboard.overview.recovery.desc`, modalParams)">
+        </p>
+      </template>
+      <template v-slot:footer>
+        <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+          @click="recoverUrl()">
+          {{ `_dashboard.overview.recovery.action` | translate }}
+        </button>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

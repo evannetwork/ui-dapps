@@ -103,14 +103,14 @@ export default class OverviewComponent extends mixins(EvanComponent) {
 
     let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
     let save = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
-    save = Object.keys(save).map(key => save[key].data.address);
+    save = save.map(instance => instance.data.address);
 
     // add create dbcp's, so we can display all cards with loading symbol
-    Object.keys(create).map(key => {
-      this.descriptions[create[key].data.address] = JSON.parse(
-        JSON.stringify(create[key].data.dbcp));
-      this.descriptions[create[key].data.address].loading = true;
-      this.descriptions[create[key].data.address].creating = true;
+    create.map(instance => {
+      this.descriptions[instance.data.address] = JSON.parse(
+        JSON.stringify(instance.data.dbcp));
+      this.descriptions[instance.data.address].loading = true;
+      this.descriptions[instance.data.address].creating = true;
     });
 
     const loadPromises = { };

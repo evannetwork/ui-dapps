@@ -40,13 +40,18 @@ export default {
         "desc": "Treten Sie mit Ihren Geschäftspartnern in Kontakt",
         "title": "Meine Kontakte"
       },
+      "digitaltwins": {
+        "desc": "Verwalten und teilen Sie Ihre Digitalen Zwillinge",
+        "title": "Meine Digitalen Zwillinge"
+      },
       "explanations": {
         "desc": "Was ist das evan.network und was kann ich damit tun?",
         "title": "Wie funktioniert evan"
       },
-      "digitaltwins": {
-        "desc": "Verwalten und teilen Sie Ihre Digitalen Zwillinge",
-        "title": "Meine Digitalen Zwillinge"
+      "recovery": {
+        "action": "Sitzung fortfahren",
+        "desc": "Möchten Sie mit Ihrer vorherigen Sitzung fortfahren und die zuletzt geöffnete Anwendung starten?",
+        "title": "Sitzung fortfahren"
       }
     },
     "startup": "Womit möchtest du starten?"

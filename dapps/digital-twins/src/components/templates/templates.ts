@@ -34,10 +34,25 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { getMyTemplates, getRuntime } from '../../utils';
 
 @Component({ })
 export default class TemplatesComponent extends mixins(EvanComponent) {
-  created() {
+  /**
+   * My templates
+   */
+  templates: any = { };
 
+  /**
+   * show loading symbol
+   */
+  loading = true;
+
+  /**
+   * Load my templates
+   */
+  async created() {
+    this.templates = await getMyTemplates(getRuntime(this));
+    this.loading = false;
   }
 }

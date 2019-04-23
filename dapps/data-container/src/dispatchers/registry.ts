@@ -29,10 +29,14 @@ import createDispatcher from './create';
 import linkDispatcher from './link';
 import shareDispatcher from './share';
 import updateDispatcher from './update';
+import templateDispatcher from './template';
+import templateShareDispatcher from './template-share';
 
 export {
   createDispatcher,
   linkDispatcher,
   shareDispatcher,
+  templateDispatcher,
+  templateShareDispatcher,
   updateDispatcher,
 }

@@ -95,6 +95,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
   creationWatcher: Function;
 
   /**
+   * Should a template be saved?
+   */
+  templateMode = false;
+
+  /**
    * Setup the form.
    */
   async created() {
@@ -102,6 +107,9 @@ export default class CreateComponent extends mixins(EvanComponent) {
     const splitHash = (<any>this).dapp.baseHash.split('/');
     this.digitalTwinAddress = splitHash
       [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
+
+    // start template mode!
+    this.templateMode = this.$route.name.startsWith('create-template');
 
     // TODO: load templates
     this.createForm = (<CreateInterface>new EvanForm(this, {
@@ -122,14 +130,28 @@ export default class CreateComponent extends mixins(EvanComponent) {
       },
     }));
 
+    // check if a existing container should be cloned
     if ((<any>this).$route.params.cloneContainer) {
-      const container = utils.getContainer(<any>runtime, (<any>this).dapp.contractAddress);
-      const description = await container.getDescription();
-      const template = await container.toTemplate(true);
+      let template;
+      // when it's a contract that should be cloned, load a container instance
+      if (!this.templateMode || (<any>this).$route.params.cloneContainer.startsWith('0x')) {
+        const container = utils.getContainer(<any>runtime, (<any>this).$route.params.cloneContainer);
+        const description = await container.getDescription();
+        template = await container.toTemplate(true);
+
+        this.createForm.name.value = description.name;
+        this.createForm.description.value = description.description;
+      // if we are running in template mode and a template should be cloned, load it from profile
+      } else {
+        const loadedTemplate = await bcc.Container.getContainerTemplate(runtime.profile,
+          (<any>this).$route.params.cloneContainer);
+
+        template = loadedTemplate.template;
+        this.createForm.name.value = loadedTemplate.description.name;
+        this.createForm.description.value = loadedTemplate.description.description;
+      }
 
       this.activeStep = 1;
-      this.createForm.name.value = description.name;
-      this.createForm.description.value = description.description;
       this.$set(this.templates, 0, template);
     }
 
@@ -163,29 +185,41 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async create() {
     const runtime = utils.getRuntime(this);
 
-    dispatchers.createDispatcher.start(runtime, {
-      description: this.createForm.description.value,
-      digitalTwinAddress: this.digitalTwinAddress,
-      img: this.createForm.img.value,
-      name: this.createForm.name.value,
-      template: this.templates[this.createForm.template.value],
-    });
+    if (!this.templateMode) {
+      dispatchers.createDispatcher.start(runtime, {
+        description: this.createForm.description.value,
+        digitalTwinAddress: this.digitalTwinAddress,
+        img: this.createForm.img.value,
+        name: this.createForm.name.value,
+        template: this.templates[this.createForm.template.value],
+      });
+    } else {
+      dispatchers.templateDispatcher.start(runtime, {
+        description: this.createForm.description.value,
+        img: this.createForm.img.value,
+        name: this.createForm.name.value,
+        template: this.templates[this.createForm.template.value],
+      });
+    }
 
     (<any>this.$refs.createModal).hide();
-    await (new ContainerCache(runtime.activeAccount)).delete('create');
+    await (new ContainerCache(runtime.activeAccount))
+      .delete(!this.templateMode ? 'create' : 'template-create');
   }
 
   /**
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
+    const dispatcher = !this.templateMode ?
+      dispatchers.templateDispatcher : dispatchers.createDispatcher;
+
     const watch = async ($event?: any) => {
-      const instances = await dispatchers.createDispatcher.getInstances(utils.getRuntime(this));
+      const instances = await dispatcher.getInstances(utils.getRuntime(this));
       const beforeCreating = this.creating;
 
-      this.creating = Object
-        .keys(instances)
-        .filter((key) => instances[key].data.digitalTwinAddress === this.digitalTwinAddress)
+      this.creating = instances
+        .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)
         .length > 0;
 
       if (!this.creating && beforeCreating && $event) {
@@ -195,7 +229,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     watch();
     if (!this.creationWatcher) {
-      this.creationWatcher = dispatchers.createDispatcher.watch(() => this.watchForCreation());
+      this.creationWatcher = dispatcher.watch(() => this.watchForCreation());
     }
   }
 }

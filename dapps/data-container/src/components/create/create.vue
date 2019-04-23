@@ -32,8 +32,11 @@
     <div class="p-4 text-left" v-else>
       <div class="bg-level-1 border">
         <div class="d-flex p-5 border-bottom border-sm align-items-center">
-          <h3 class="m-0 font-weight-semibold">
+          <h3 class="m-0 font-weight-semibold" v-if="!templateMode">
             {{ `_datacontainer.createForm.title` | translate }}
+          </h3>
+          <h3 class="m-0 font-weight-semibold" v-else>
+            {{ `_datacontainer.template.create-title` | translate }}
           </h3>
         </div>
         <div class="evan-steps p-3"
@@ -116,14 +119,17 @@
             </div>
             <div class="step" v-if="activeStep === 1">
               <dt-template-handler
-                :address="'create'"
+                :address="!templateMode ? 'create' : 'create-template'"
                 :template.sync="templates[createForm.template.value]">
               </dt-template-handler>
 
               <evan-modal ref="createModal">
                 <template v-slot:header>
-                  <h5 class="modal-title">
+                  <h5 class="modal-title" v-if="!templateMode">
                     {{ `_datacontainer.create-question.title` | translate }}
+                  </h5>
+                  <h5 class="modal-title" v-else>
+                    {{ `_datacontainer.template.create-title` | translate }}
                   </h5>
                 </template>
                 <template v-slot:body>

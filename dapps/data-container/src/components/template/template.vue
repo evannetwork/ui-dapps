@@ -30,10 +30,10 @@
     <evan-breadcrumbs :i18nScope="'_datacontainer.breadcrumbs'">
       <template v-slot:content>
         <button class="btn"
-          v-if="!$store.state.saving"
+          v-if="!saving"
           @click="$refs.containerContextMenu.show();">
           <div class="spinner-border spinner-border-sm"
-            v-if="$store.state.saving">
+            v-if="saving">
           </div>
           <i class="mdi mdi-chevron-down" v-else></i>
         </button>
@@ -48,7 +48,7 @@
                   $refs.containerContextMenu.hide($event);
                 ">
                 <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.edit-dbcp` | translate }}
+                {{ `_datacontainer.template.edit-dbcp` | translate }}
               </a>
               <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
@@ -60,39 +60,30 @@
               </a>
               <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
-                  evanNavigate(`digitaltwins.${ dapp.domainName }/containerlink/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
-                  $refs.containerContextMenu.hide($event);
-                ">
-                <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.link` | translate }}
-              </a>
-              <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                @click="
                   evanNavigate(`create/${ dapp.contractAddress }`)
                   $refs.containerContextMenu.hide($event);
                 ">
                 <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.clone` | translate }}
+                {{ `_datacontainer.context-menu.create-container` | translate }}
               </a>
               <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                 @click="
-                  evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                  evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ $route.params.template }`, `/${ dapp.rootEns }`)
                   $refs.containerContextMenu.hide($event);
                 ">
                 <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
-                {{ `_datacontainer.context-menu.template-save` | translate }}
+                {{ `_datacontainer.context-menu.clone` | translate }}
               </a>
             </template>
           </evan-dropdown>
         </div>
         <button type="button" class="btn btn-primary btn-circle"
-          @click="saveDt()"
-          :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
+          @click="saveTemplate()"
+          :disabled="!enableSave || saving || !dbcpForm.isValid">
           <i class="mdi mdi-content-save"></i>
         </button>
       </template>
     </evan-breadcrumbs>
-
     <evan-modal ref="shareModal">
       <template v-slot:header>
         <h5 class="modal-title">
@@ -126,7 +117,7 @@
           <select class="form-control"
             id="shareUser" ref="shareUser"
             :placeholder="`_datacontainer.share.user.desc` | translate"
-            v-model="share.accountId">
+            v-model="shareAccount">
             <option
               v-for="(contact, index) in contacts"
               :value="contact.address">
@@ -134,53 +125,10 @@
             </option>
           </select>
         </div>
-
-        <div class="table-responsive-md border-0 p-0 mt-3">
-          <table class="w-100">
-            <thead>
-              <tr>
-                <th>{{ '_datacontainer.share.entry' | translate }}</th>
-                <th>{{ '_datacontainer.share.read' | translate }}</th>
-                <th>{{ '_datacontainer.share.read-write' | translate }}</th>
-                <th style="width: 50px;"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(property, index) in Object.keys(template.properties)">
-                <td class="py-2 pr-3">{{ property }}</td>
-                <td class="py-2 pl-2 pr-2">
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input"
-                      :id="`read${ index }`" :name="`permission${ index }`"
-                      :value="'read'"
-                      v-model="share.permissions[property]">
-                    <label class="custom-control-label" :for="`read${ index }`"></label>
-                  </div>
-                </td>
-                <td class="py-2 pl-2 pr-2">
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input"
-                      :id="`write${ index }`" :name="`permission${ index }`"
-                      :value="'write'"
-                      v-model="share.permissions[property]">
-                    <label class="custom-control-label" :for="`write${ index }`"></label>
-                  </div>
-                </td>
-                <td class="py-2 pr-3 text-center d-flex align-items-center" style="width: 50px;">
-                  <button class="btn p-0" @click="$set(share.permissions, property, 'none')">
-                    <i class="mdi mdi-close"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </template>
       <template v-slot:footer>
         <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-          :disabled="!shareForm.isValid || Object.keys(share.permissions)
-            .filter(entry => share.permissions[entry] && share.permissions[entry] !== 'none')
-            .length === 0"
+          :disabled="!shareForm.isValid"
           @click="shareDt()">
           {{ `_datacontainer.share.action` | translate }}
         </button>
@@ -196,7 +144,7 @@
           </h5>
         </template>
         <template v-slot:body>
-          <form v-on:submit.prevent="saveDt">
+          <form v-on:submit.prevent="saveTemplate">
             <div class="form-group">
               <label for="name">
                 {{ `_datacontainer.createForm.name.title` | translate }}
@@ -229,7 +177,7 @@
           <evan-loading v-if="$store.state.saving"></evan-loading>
           <button type="submit"
             v-else
-            @click="saveDt()"
+            @click="saveTemplate()"
             class="btn btn-rounded btn-primary"
             :disabled="!dbcpForm.isValid">
             {{ `_datacontainer.createForm.save` | translate }}
@@ -238,7 +186,7 @@
       </evan-modal>
 
       <dt-template-handler
-        :address="dapp.contractAddress"
+        :address="$route.params.template"
         :template.sync="template">
       </dt-template-handler>
     </template>
@@ -246,6 +194,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
+  import Component from './template.ts';
   export default Component;
 </script>

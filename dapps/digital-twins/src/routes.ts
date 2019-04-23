@@ -39,6 +39,7 @@ import ContainersComponent from './components/containers/containers.vue';
 import ContainerLinkComponent from './components/container-link/container-link.vue';
 
 const dtPath = (path) => `:digitalTwinAddress/${ path }`;
+const templatePath = (path) => `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/template`;
 
 // map them to element names, so they can be used within templates
 /* tslint:disable */
@@ -49,6 +50,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'base-lookup',          component: LookupComponent,                   path: 'lookup', },
   { name: 'base-container-link',  component: ContainerLinkComponent,            path: 'containerlink' },
   { name: 'base-container-link2', component: ContainerLinkComponent,            path: 'containerlink/:containerAddress' },
+  { name: 'dt-template',          component: DAppLoader,                        path: `${ templatePath }`, },
   { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: `:digitalTwinAddress`, },
   { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
   { name: 'dt-container-link3',   component: ContainerLinkComponent,            path: dtPath('containerlink') },

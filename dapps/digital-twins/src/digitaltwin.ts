@@ -61,7 +61,7 @@ export default class EvanUIDigitalTwin {
   validity: any;
 
   /**
-   * Digital digitaltwin left navigation entries
+   * Digital twin left navigation entries
    */
   navigation: Array<any>;
 
@@ -189,12 +189,11 @@ export default class EvanUIDigitalTwin {
     const instances = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
 
     // filter instances for this address
-    const instanceKeys = Object
-      .keys(instances)
-      .filter(instanceKey => instances[instanceKey].data.address === this.address);
+    const filteredInstances = instances
+      .filter(instance => instance.data.address === this.address);
 
-    if (instanceKeys.length > 0) {
-      return instances[instanceKeys[0]].data;
+    if (filteredInstances.length > 0) {
+      return filteredInstances[0].data;
     }
   }
 
@@ -206,10 +205,9 @@ export default class EvanUIDigitalTwin {
     const remove = await dispatchers['favoriteRemoveDispatcher'].getInstances(runtime);
 
     return [ ]
-      .concat(Object.keys(add), Object.keys(remove))
+      .concat(add, remove)
       // filter for the current digitaltwin
-      .filter((instanceKey) => {
-        const instance = add[instanceKey] || remove[instanceKey];
+      .filter((instance) => {
         return instance.data.address === this.address;
       })
       .length > 0;
@@ -356,8 +354,8 @@ export default class EvanUIDigitalTwin {
     const wasCreating = this.isCreating;
 
     // is currently an digitaltwin for this address is in creation?
-    this.isCreating = Object.keys(instances)
-      .filter(id => instances[id].data.address).length !== 0;
+    this.isCreating = instances
+      .filter(instance => instance.data.address).length !== 0;
 
     if (!this.isCreating && wasCreating) {
       await this.initialize(vueInstance, runtime);
@@ -452,7 +450,7 @@ export default class EvanUIDigitalTwin {
     const instances = Object.assign(
       { },
       ...(await Promise.all(Object.keys(containerDispatchers).map(
-        (name: string) => containerDispatchers[name].getInstances(runtime)
+        (name: string) => containerDispatchers[name].getInstances(runtime, false)
       ))
     ));
 

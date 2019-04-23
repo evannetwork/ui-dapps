@@ -51,7 +51,7 @@ interface ShareFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class DetailComponent extends mixins(EvanComponent) {
+export default class TemplateComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
@@ -63,14 +63,14 @@ export default class DetailComponent extends mixins(EvanComponent) {
   enableSave = false;
 
   /**
-   * digitalTwin address, where the container should be created for
+   * Is a save dispatcher for this template running?
    */
-  digitalTwinAddress = '';
+  saving = false;
 
   /**
-   * Container instance
+   * is a sharing dispatcher for this template running?
    */
-  container: bcc.Container;
+  sharing = false;
 
   /**
    * container description
@@ -102,10 +102,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
   /**
    * Share object
    */
-  share: any = {
-    accountId: '',
-    permissions: { },
-  };
+  shareAccount = '';
 
   /**
    * List of my contacts
@@ -122,30 +119,22 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
     this.valuesChanged = (($event) => this.enableSave = true).bind(this);
     // watch for saving updates
-    this.savingWatcher = dispatchers.updateDispatcher.watch(async () => {
-      const instances = await dispatchers.updateDispatcher.getInstances(runtime);
-      const beforeSaving = this.$store.state.saving;
+    this.savingWatcher = dispatchers.templateDispatcher.watch(async () => {
+      const beforeSaving = this.saving;
 
-      const saving = instances
-        .filter(instance => instance.data.address === (<any>this).dapp.contractAddress)
+      this.saving = (await dispatchers.templateDispatcher.getInstances(runtime))
+        .filter(instance => instance.data.name === this.$route.params.template)
         .length > 0;
 
-      this.$set(this.$store.state, 'saving', saving);
-
       // reload the data
-      if (!this.$store.state.saving && beforeSaving) {
-        this.initialize();
-      }
+      !this.saving && beforeSaving && this.initialize();
     });
 
     // watch for sharings watcher
     this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
-      const instances = await dispatchers.shareDispatcher.getInstances(runtime);
-      const sharing = instances
-        .filter(instance => instance.data.address === (<any>this).dapp.contractAddress)
+      this.sharing = (await dispatchers.templateDispatcher.getInstances(runtime))
+        .filter(instance => instance.data.name === this.$route.params.template)
         .length > 0;
-
-      this.$set(this.$store.state, 'sharing', sharing);
     });
 
     // watch for updates
@@ -166,13 +155,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    const splitHash = (<any>this).dapp.baseHash.split('/');
-    this.digitalTwinAddress = splitHash
-      [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
+    const loadedTemplate = await bcc.Container.getContainerTemplate(runtime.profile,
+      this.$route.params.template);
 
-    this.container = utils.getContainer(<any>runtime, (<any>this).dapp.contractAddress);
-    this.description = await this.container.getDescription();
-    this.template = await this.container.toTemplate(true);
+    this.description = loadedTemplate.description;
+    this.template = loadedTemplate.template;
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
@@ -187,20 +174,20 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
         return contact;
       });
-    this.share.accountId = this.contacts[0].address;
+    this.shareAccount = this.contacts[0].address;
 
     // set dbcp form
     this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
       name: {
         value: this.description.name,
-        validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
+        validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
           vueInstance.enableSave = true;
           return this.value.length !== 0;
         }
       },
       description: {
         value: this.description.description,
-        validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
+        validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
           vueInstance.enableSave = true;
           return true;
         }
@@ -212,15 +199,15 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
     // setup share form, so the user can insert a custom form
     let subject = [
-      (<any>this).$t('_datacontainer.breadcrumbs.datacontainer.digitaltwin'),
+      (<any>this).$t('_datacontainer.breadcrumbs.template'),
       `: ${ this.description.name }`,
-      this.digitalTwinAddress ? ` - ${ this.digitalTwinAddress }` : ''
+      this.$route.params.template ? ` - ${ this.$route.params.template }` : ''
     ].join('');
 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
       subject: {
         value: subject,
-        validate: function(vueInstance: DetailComponent, form: ShareFormInterface) {
+        validate: function(vueInstance: TemplateComponent, form: ShareFormInterface) {
           return this.value.length !== 0;
         }
       },
@@ -232,27 +219,25 @@ export default class DetailComponent extends mixins(EvanComponent) {
   /**
    * Trigger the digital twin save
    */
-  async saveDt() {
-    if (!this.$store.state.saving && this.dbcpForm.isValid) {
+  async saveTemplate() {
+    if (!this.saving && this.dbcpForm.isValid) {
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
       // opened ajv editor is saved
       this.loading = true;
-      this.$store.state.saving = true;
+      this.saving = true;
 
       this.$nextTick(async () => {
         const runtime = utils.getRuntime(this);
 
-        dispatchers.updateDispatcher.start(runtime, {
-          address: (<any>this).dapp.contractAddress,
+        dispatchers.templateDispatcher.start(runtime, {
+          beforeName: this.$route.params.template,
           description: this.dbcpForm.description.value,
-          digitalTwinAddress: this.digitalTwinAddress,
           img: this.dbcpForm.img.value,
           name: this.dbcpForm.name.value,
           template: this.template,
         });
 
-        await (new ContainerCache(runtime.activeAccount)).delete((<any>this).dapp.contractAddress);
-        (<any>this.$refs.dbcpModal).hide();
+        await (new ContainerCache(runtime.activeAccount)).delete(this.$route.params.template);
         this.loading = false;
       });
     }
@@ -263,29 +248,39 @@ export default class DetailComponent extends mixins(EvanComponent) {
    */
   shareDt() {
     const runtime = utils.getRuntime(this);
-    const address = (<any>this).dapp.contractAddress;
+    const address = this.$route.params.template;
 
     // transform the ui permission into an conainter share config
-    const perm = this.share.permissions;
-    const shareConfig: bcc.ContainerShareConfig = {
-      accountId: this.share.accountId,
-      read: Object.keys(perm).filter(entryKey => perm[entryKey] === 'read'),
-      readWrite: Object.keys(perm).filter(entryKey => perm[entryKey] === 'write'),
-    };
+    const shareConfig: bcc.ContainerShareConfig = { accountId: this.shareAccount, };
+
     // build bmail for invited user
     const bMailContent = {
       content: {
         from: runtime.activeAccount,
         fromAlias: this.myProfile.alias,
-        title: (<any>this).$t('_datacontainer.share.bmail.title'),
-        body: (<any>this).$t('_datacontainer.share.bmail.body', {
+        title: (<any>this).$t('_datacontainer.template.bmail.title'),
+        body: (<any>this).$t('_datacontainer.template.bmail.body', {
           alias: this.myProfile.alias,
           subject: this.shareForm.subject.value,
         }),
         attachments: [{
-          address: address,
-          bc: `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
+          address: this.$route.params.template,
+          bc: bcc.Container.profileTemplatesKey,
+          fullPath: [
+            `/digitaltwins.${ (<any>this).dapp.domainName }`,
+            `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
+            `template/${ this.dbcpForm.name.value }`,
+          ].join('/'),
           type: 'contract',
+          storeKey: this.$route.params.template,
+          storeValue: {
+            description: {
+              description: this.dbcpForm.description.value,
+              img: this.dbcpForm.img.value,
+              name: this.dbcpForm.name.value,
+            },
+            template: this.template,
+          },
         }]
       }
     };

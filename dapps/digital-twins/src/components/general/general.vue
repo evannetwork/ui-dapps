@@ -27,6 +27,34 @@
 
 <template>
   <div>
+    <evan-breadcrumbs :i18nScope="'_digitaltwins.breadcrumbs'">
+      <template v-slot:content>
+        <div class="mr-4">
+          <div class="spinner-border spinner-border-sm"
+            v-if="$store.state.uiDT.isFavoriteLoading">
+          </div>
+          <template v-if="!$store.state.uiDT.isFavoriteLoading">
+            <i class="mdi mdi-star lg text-warning clickable"
+              v-if="$store.state.uiDT.isFavorite"
+              @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+            </i>
+            <i class="far fa-star lg clickable"
+              v-if="!$store.state.uiDT.isFavorite"
+              @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+            </i>
+          </template>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-circle"
+          @click="$store.state.uiDT.saveChanges(this, getRuntime())"
+          :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
+          <div class="spinner-border spinner-border-sm"
+            v-if="$store.state.uiDT.isSaving">
+          </div>
+          <i class="mdi mdi-content-save" v-else></i>
+        </button>
+      </template>
+    </evan-breadcrumbs>
     <div class="text-left"
       :class="{ 'p-1 p-md-4': standalone }">
       <div class="bg-level-1"

@@ -101,7 +101,7 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    * Load listentries
    */
   async created() {
-    if (this.address !== 'create') {
+    if (this.address.startsWith('0x')) {
       let dataContainer;
       let contractAddress;
 

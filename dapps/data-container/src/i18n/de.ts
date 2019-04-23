@@ -54,17 +54,21 @@ export default {
       "container-link": "Daten Container verlinken",
       "containers": "Datencontainer Übersicht",
       "create": "Erstellen",
+      "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
       "lookup": "Öffnen",
       "overview": "Favoriten & letzte Zwillinge",
+      "template": "Vorlage",
       "templates": "Vorlagen",
       "verifications": "Verifizierungen"
     },
     "context-menu": {
       "clone": "Klonen",
       "link": "Verlinken",
-      "share": "Teilen"
+      "share": "Teilen",
+      "template-save": "Als Vorlage speichern",
+      "create-container": "Daten Container erstellen"
     },
     "create-question": {
       "action": "Erstellen",
@@ -99,6 +103,8 @@ export default {
       "create": "Datencontainer wird erstellt...",
       "link": "Datencontainer wird verlinkt...",
       "share": "Datencontainer wird geteilt...",
+      "template": "Vorlage speichern",
+      "template-share": "Vorlage teilen",
       "update": "Datencontainer wird aktualisiert..."
     },
     "edit": "Bearbeiten",
@@ -153,6 +159,15 @@ export default {
         "desc": "Nutzer dem die ausgewählten Daten geteilt werden sollen.",
         "title": "Nutzer"
       }
+    },
+    "template": {
+      "bmail": {
+        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Vorlage von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Daten Container Vorlage"
+      },
+      "create-title": "Neue Vorlage erstellen",
+      "create-container": "Daten Container erzeugen",
+      "edit-dbcp": "Beschreibung Anpassen"
     },
     "template-cache": {
       "action": "Wiederherstellen",

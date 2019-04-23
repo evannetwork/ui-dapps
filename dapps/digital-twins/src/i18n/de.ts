@@ -38,6 +38,7 @@ export default {
       "digitaltwins": "Digitale Zwillinge",
       "lookup": "Öffnen",
       "overview": "Favoriten & letzte Zwillinge",
+      "template": "Vorlage",
       "templates": "Vorlagen",
       "verifications": "Verifizierungen"
     },
@@ -50,6 +51,7 @@ export default {
       "change-twin": "Digitalen Zwilling ändern",
       "description1": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines digitalen Zwillings auszuwählen, in den Sie einen Datencontainer linken wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
       "description2": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines Datencontainers auszuwählen, der in den digitalen Zwilling gelinkt werden soll.",
+      "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
         "desc": "Die eingebene Adresse scheint falsch oder einen Vertrag mit ungültigem Format zu entsprechen. Bitte geben Sie die korrekte Adresse ein.",
         "title": "Ungültiger Daten Container"
@@ -60,8 +62,7 @@ export default {
         "error": "Bitte geben Sie einen Alias ein!",
         "title": "Alias"
       },
-      "use": "Verlinken",
-      "digitaltwin": "Digitaler Zwilling"
+      "use": "Verlinken"
     },
     "containers": {
       "create": "Erstellen",
@@ -118,10 +119,11 @@ export default {
         "title": "Meine digitalen Zwillinge"
       },
       "my-templates": {
-        "desc": "Letzte Templates oder Neue erstellen",
-        "title": "Meine Templates"
+        "desc": "Letzte Vorlagen oder Neue erstellen",
+        "title": "Meine Vorlagen"
       },
       "open-digitaltwin": "Digitale Zwilling öffnen",
+      "templates-overview": "Meine Vorlagen",
       "verifications": "Verifizierungen"
     },
     "lookup": {
@@ -182,6 +184,11 @@ export default {
       }
     },
     "startup": "Womit möchten Sie starten?",
+    "templates": {
+      "create": "Erstellen",
+      "empty": "Meine Vorlagen",
+      "empty-desc": "Sie haben noch keine Templates erstellt. Nutzen Sie \"Erstellen\" Button, um eine neue Vorlage zu erstellen."
+    },
     "unlock-digitaltwin-panel": "<b>Die geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
     "welcome": "Willkommen in der digitalen Zwillingsverwaltung"
   }

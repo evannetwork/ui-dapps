@@ -39,6 +39,7 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import EvanUIDigitalTwin from '../../digitaltwin';
 import * as identitityUtils from '../../utils';
 import * as dispatchers from '../../dispatchers/registy';
+import { getMyTemplates, getRuntime } from '../../utils';
 
 @Component({ })
 export default class TwinsRootComponent extends mixins(EvanComponent) {
@@ -56,6 +57,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Watch for dispatcher updates
    */
   dispatcherWatcher: Function;
+
+  /**
+   * Watch for template updates.
+   */
+  templatesWatcher: Function;
 
   /**
    * Was the component destroyed, before the hash change event was bind?
@@ -83,11 +89,19 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
       {
         name: 'my-templates',
         active: false,
-        children: [ ]
+        emptyNav: 'templates',
+        children: [
+          { name: 'templates-overview', path: 'templates', i18n: true },
+        ]
       }
     ],
     [ ]
   ];
+
+  /**
+   * List of available templates
+   */
+  templates: any = { };
 
   /**
    * Clear the hash change watcher
@@ -98,6 +112,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     // clear listeners
     this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
     this.dispatcherWatcher && this.dispatcherWatcher();
+    this.templatesWatcher && this.templatesWatcher();
     this.$store.state.uiDT && this.$store.state.uiDT.destroy(this);
   }
 
@@ -117,6 +132,10 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
       () => this.updateIdentities(),
       `digitaltwins.${ (<any>this).dapp.domainName }`
     );
+    this.templatesWatcher = Dispatcher.watch(
+      () => this.loadTemplates(),
+      `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`
+    );
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -132,6 +151,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    */
   async updateIdentities() {
     await this.loadFavorites();
+    await this.loadTemplates();
     await this.setLastOpenedTwins();
   }
 
@@ -148,10 +168,10 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     const remove = await dispatchers.favoriteRemoveDispatcher.getInstances(runtime);
 
     // add favorites directly
-    Object.keys(add).forEach(key => favorites.push(add[key].data.address));
+    add.forEach(instance => favorites.push(instance.data.address));
     // remove favorites
-    Object.keys(remove).forEach(key =>
-      favorites.splice(favorites.indexOf(add[key].data.address), 1));
+    remove.forEach(instance =>
+      favorites.splice(favorites.indexOf(instance.data.address), 1));
   }
 
   /**
@@ -194,6 +214,23 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Load the list of templates for the current user.
+   */
+  async loadTemplates() {
+    this.templates = await getMyTemplates(getRuntime(this));
+
+    this.navigation[0][1].children = [ this.navigation[0][1].children[0] ]
+      .concat(Object.keys(this.templates).slice(0, 5).map((address) => {
+        return {
+          i18n: false,
+          loading: this.templates[address].loading,
+          name: address,
+          path: `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }/template/${ address }`,
+        };
+      }));
+  }
+
+  /**
    * Checks for localStorage, which addresses were opened before.
    */
   async setLastOpenedTwins() {
@@ -209,8 +246,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
     let save = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
     const loadingAddresses = [ ].concat(
-      Object.keys(create).map(key => create[key].data.address),
-      Object.keys(save).map(key => save[key].data.address),
+      create.map(instance => instance.data.address),
+      save.map(instance => instance.data.address),
     );
 
     // show everytime the overview entry and apply the last digitaltwins
@@ -218,7 +255,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
       .concat(lastTwins.slice(0, 5).map((address) => {
         return {
           name: address,
-          path: address,
+          path: `${ address }/containers`,
           i18n: false,
           loading: loadingAddresses.indexOf(address) !== -1
         };

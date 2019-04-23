@@ -40,13 +40,18 @@ export default {
         "desc": "Get in touch with your business partners",
         "title": "My contacts"
       },
+      "digitaltwins": {
+        "desc": "Manage and share your Digital Twins",
+        "title": "My Digital Twins"
+      },
       "explanations": {
         "desc": "What is the evan.network and what can I do with it?",
         "title": "How does evan work?"
       },
-      "digitaltwins": {
-        "desc": "Manage and share your Digital Twins",
-        "title": "My Digital Twins"
+      "recovery": {
+        "action": "Continue session",
+        "desc": "Do you want to continue with your previous session and start the last opened application?",
+        "title": "Continue where you left from"
       }
     },
     "startup": "What would you like to start with?"

@@ -145,7 +145,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     }));
 
     // load permissions for the selected container
-    if (this.address !== 'create') {
+    if (this.address.startsWith('0x')) {
       this.loading = true;
 
       const runtime = utils.getRuntime(this);
@@ -260,7 +260,20 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     }
 
     // update url to be stateful
-    const url = `${ this.address === 'create' ? 'create/' : '' }${ this.activeEntryName }`;
+    let relativeUrl = '';
+    let relativeBasePath = this.$route.path.replace((<any>this).dapp.baseHash, '');
+    if (relativeBasePath.startsWith('/')) {
+      relativeBasePath = relativeBasePath.slice(1, relativeBasePath.length);
+    }
+    // check if we are in template or container create mode, then navigate to create base
+    if (this.address.startsWith('create')) {
+      relativeUrl = `${ this.address }/`;
+    // if a template is opened, navigate to template base
+    } else if (relativeBasePath.startsWith('template')) {
+      relativeUrl = `template/${ this.address }/`;
+    }
+
+    const url = `${ relativeUrl }${ this.activeEntryName }`;
     (<any>this).evanNavigate(url);
   }
 

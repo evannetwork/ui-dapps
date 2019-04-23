@@ -86,7 +86,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
   /**
    * Check if the currenrt user is purchasing an ens address
    */
-  purchasingInstances = { };
+  purchasingInstances: Array<any> = [ ];
 
   /**
    * Show loading during ens check
@@ -121,16 +121,16 @@ export default class LookupComponent extends mixins(EvanComponent) {
    */
   async checkPurchasing() {
     // tracking before instances, to directly open the modal after purchasing has finished
-    const beforeKeys = Object.keys(this.purchasingInstances);
-    let beforeAddress = beforeKeys.length > 0 ?
-      this.purchasingInstances[beforeKeys[0]].data.ensAddress : null;
+    const beforeInstances = this.purchasingInstances;
+    let beforeAddress = beforeInstances.length > 0 ?
+      beforeInstances[0].data.ensAddress : null;
 
     // load new instances
     this.purchasingInstances = await dispatchers.ensDispatcher
       .getInstances(getRuntime(this));
 
     // if the synchronisation has finished, check the address again
-    if (beforeKeys.length > 0 && Object.keys(this.purchasingInstances).length === 0) {
+    if (beforeInstances.length > 0 && this.purchasingInstances.length === 0) {
       this.lookupForm.address.value = beforeAddress || this.lookupForm.address.value;
       this.checkAddress();
     }

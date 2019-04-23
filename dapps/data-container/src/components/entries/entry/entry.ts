@@ -71,7 +71,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
    * Check for permitted modes
    */
   created() {
-    if (this.address === 'create') {
+    if (!this.address.startsWith('0x')) {
       this.modes = [ 'schema', 'view', ];
     } else {
       const read = this.permissions.read || [ ];
