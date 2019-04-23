@@ -107,4 +107,29 @@
       border-top: 1px solid cssVar('border-color');
     }
   }
+
+  .batch-label {
+    font-size: 12px;
+
+    display: inline-block;
+
+    height: 32px;
+    margin-right: 5px;
+    padding: 8px 12px 7px;
+
+    cursor: pointer;
+
+    color: #023845;
+    border-radius: 3px;
+    background: #cddde2;
+
+    &:hover, &.active {
+      color: #ffffff;
+      background: #61cbc8;
+    }
+
+    i {
+      line-height: 18px;
+    }
+  }
 }
