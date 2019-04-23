@@ -28,26 +28,42 @@
 @import './utils';
 
 .evan {
-  // d-flex align-items-center py-2 px-4 text-center clickable all-transition
-  .evan-tabs {
+  .evan-tabs, .evan-navigation-tabs {
     display: flex;
     overflow-x: auto;
 
     .evan-tab {
-      font-size: cssVar('text-font-size');
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 600;
 
       display: flex;
       align-items: center;
+      justify-content: center;
 
-      height: 70px;
+      height: 65px;
       padding: 0 25px;
 
+      cursor: pointer;
+    }
+  }
+
+  .evan-tabs {
+    .evan-tab {
       background-color: cssVar('bg-level-1');
 
       &.active {
         color: cssVar('bg-text-secondary');
         background-color: cssVar('secondary');
+      }
+    }
+  }
+
+  .evan-navigation-tabs {
+    .evan-tab {
+      width: 100%;
+
+      &.active {
+        height: 70px;
       }
     }
   }

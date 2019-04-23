@@ -36,9 +36,14 @@
     text-decoration: none !important;
   }
 
-  span, p, a, th, td, label, li {
+  span, p, a, th, td, li {
     font-size: cssVar('text-font-size');
     font-weight: 400;
+  }
+
+  label {
+    font-size: cssVar('text-font-size');
+    font-weight: 600;
   }
 
   // add font-size levels

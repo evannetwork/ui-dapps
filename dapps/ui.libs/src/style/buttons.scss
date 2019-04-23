@@ -93,6 +93,46 @@
       }
     }
 
+    &.btn-light {
+      font-weight: 600 !important;
+
+      transition: 0.3s ease-out background-color, 0.3s ease-out color;
+
+      color: cssVar('bg-text-white') !important;
+      border: 2px solid cssVar('border-color') !important;
+      background-color: cssVar('white') !important;
+
+      i {
+        font-size: 19px;
+        line-height: 26px;
+
+        display: inline-block;
+
+        width: 26px;
+        height: 26px;
+        margin-right: -0.625rem;
+        margin-left: 8px;
+        padding: 0;
+
+        vertical-align: middle;
+
+        border-radius: 60px;
+      }
+
+      * {
+        background-color: transparent !important;
+      }
+
+      &:hover {
+        color: cssVar('bg-text-secondary') !important;
+        background-color: cssVar('secondary') !important;
+
+        * {
+          color: cssVar('bg-text-secondary') !important;
+        }
+      }
+    }
+
     &.btn-secondary {
       &.focus, &:focus, &:hover {
         opacity: 0.8;
@@ -112,8 +152,8 @@
      * button contents
      */
     .label {
-      font-size: 12px;
-      line-height: 2;
+      font-size: 19px;
+      line-height: 26px;
 
       display: inline-block;
 
