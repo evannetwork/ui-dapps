@@ -24,7 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
 import * as digitalTwin from '@evan.network/digitaltwin';
 
 /* tslint:disable */
@@ -76,13 +75,17 @@ export default {
     },
     "overview": {
       "create-twin": "Digitalen Zwilling erstellen",
-      "empty": "Favoriten & letzte Zwillinge",
-      "empty-desc": "Sie haben noch keine digitalen Zwillinge geöffnet oder favoritisiert. Nutzen Sie \"öffnen\" Button, um einen digitale Zwilling zu öffnen oder um eine neue zu erstellen.",
+      "empty": "Digitale Zwillinge",
+      "empty-desc": "Maschinen, Autos, Produkte und Menschen können alle mit einem digitalen Zwilling dargestellt werden. Digitale Zwillinge spiegeln die Attribute und den Status des Assets oder der Person in der Blockchain wieder. Die Erstellung eines Zwillings für Autos, Gabelstapler und andere Anlagen ermöglicht es ihnen, ihren Status in Bruchteilen einer Sekunde an das Netzwerk zu melden und autonom auf Anfragen zu reagieren.<br><br><br>Ein Digitaler Zwilling ist daher eine einzigartige Darstellung eines realen Objekts im evan.network. Es kann Attribute und alle anderen Daten über das reale Objekt enthalten, und Operationen und Aufgaben bezüglich des realen Objekts implementieren, die alle kryptographisch auf der Blockchain gesichert sind.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keinen digitalen Zwilling geöffnet oder favoritisiert. Benutzen Sie den \"Digitalen Zwilling erstellen\" oder \"Digitalen Zwilling öffbeb\" Button, um einen Neuen zu erstellen oder einen Bestehenden zu öffnen.</b>",
       "favorites": "Meine Favoriten",
       "lastTwins": "Zuletzt geöffnet",
       "title": "Übersicht"
     },
-    "welcome": "Willkommen in der digitalen Zwillingsverwaltung"
+    "templates": {
+      "create": "Vorlage Erstellen",
+      "empty": "Meine Vorlagen",
+      "empty-desc": "Jeder Daten Container enthält alle Datenspezifikationen, inklusive deren Format und Validierung. Über Vorlagen lassen sich diese Datendefinitionen extrahiert speichern und mehrfach, für verschiedene Daten Container benutzen.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keine Vorlagen erstellt. Benutzen Sie den \"Vorlagen erstellen\" Button, um eine Neue zu erstellen.</b>"
+    }
   }
 }
 /* tslint:enable */

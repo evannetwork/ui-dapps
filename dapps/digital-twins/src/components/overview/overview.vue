@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <div class="white-box border rounded"
+      <div class="white-box border rounded mt-3 "
         v-if="categories.favorites.length === 0 && categories.lastTwins.length === 0">
         <div class="header">
           <h4 class="m-0">
@@ -114,8 +114,8 @@
           </h4>
         </div>
         <div class="content">
-          <p class="m-0">
-            {{ `_digitaltwins.overview.empty-desc` | translate }}
+          <p class="m-0"
+            v-html="$t('_digitaltwins.overview.empty-desc')">
           </p>
         </div>
       </div>

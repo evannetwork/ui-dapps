@@ -259,22 +259,16 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
       this.activeTab = activeTab;
     }
 
-    // update url to be stateful
-    let relativeUrl = '';
-    let relativeBasePath = this.$route.path.replace((<any>this).dapp.baseHash, '');
-    if (relativeBasePath.startsWith('/')) {
-      relativeBasePath = relativeBasePath.slice(1, relativeBasePath.length);
-    }
-    // check if we are in template or container create mode, then navigate to create base
-    if (this.address.startsWith('create')) {
-      relativeUrl = `${ this.address }/`;
-    // if a template is opened, navigate to template base
-    } else if (relativeBasePath.startsWith('template')) {
-      relativeUrl = `template/${ this.address }/`;
-    }
+    // let relativeUrl = this.$route.path.replace((<any>this).dapp.baseHash, '');
+    // relativeUrl = relativeUrl.slice(relativeUrl.startsWith('/') ? 1 : 0, relativeUrl.length);
 
-    const url = `${ relativeUrl }${ this.activeEntryName }`;
-    (<any>this).evanNavigate(url);
+    // if (this.$route.params.entry) {
+    //   const split = relativeUrl.split('/');
+    //   relativeUrl = split.slice(0, split.length - 1).join('/');
+    // }
+
+    // const url = `${ relativeUrl }/${ this.activeEntryName }`;
+    // (<any>this).evanNavigate(url);
   }
 
   /**

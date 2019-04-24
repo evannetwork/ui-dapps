@@ -57,7 +57,7 @@
           <label for="shareUser">
             {{ `_datacontainer.share.user.title` | translate }}
           </label>
-          <select class="form-control"
+          <select class="form-control custom-select"
             id="shareUser" ref="shareUser"
             :placeholder="`_datacontainer.share.user.desc` | translate"
             v-model="shareAccount">

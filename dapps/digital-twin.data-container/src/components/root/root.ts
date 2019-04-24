@@ -37,5 +37,39 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
 export default class RootComponent extends mixins(EvanComponent) {
+  /**
+   * Watch for hash updates and load data container detail
+   */
+  hashChangeWatcher: any;
 
+  /**
+   * used to force reloading, when url is changing
+   */
+  loading = false;
+
+  created() {
+    // set the hash change watcher, so we can detect data container change and loading
+    const that = this;
+    let previousContainer = this.$route.params.contractAddress;
+
+    // force reload, when container address has changed
+    this.hashChangeWatcher = async () => {
+      if (previousContainer !== that.$route.params.contractAddress) {
+        previousContainer = that.$route.params.contractAddress;
+        that.loading = true;
+
+        that.$nextTick(() => that.loading = false);
+      }
+    };
+
+    // add the hash change listener
+    window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Remove the hash event listener
+   */
+  destroyed() {
+    window.removeEventListener('hashchange', this.hashChangeWatcher);
+  }
 }

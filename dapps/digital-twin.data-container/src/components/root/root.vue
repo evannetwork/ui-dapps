@@ -29,7 +29,8 @@
   <div class="evan theme-evan">
     <evan-dapp-wrapper>
       <template v-slot:content>
-        <transition name="fade" mode="out-in">
+        <transition name="fade" mode="out-in"
+          v-if="!loading">
           <router-view></router-view>
         </transition>
       </template>

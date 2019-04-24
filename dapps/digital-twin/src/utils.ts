@@ -45,7 +45,7 @@ export const getRuntime = utils.getRuntime;
  */
 export function addLastOpenedTwin(address: string) {
   if (address &&
-      address !== 'dt-address' &&
+      address !== 'dt-create' &&
       address !== 'undefined') {
     const lastTwins = getLastOpenedTwins();
 

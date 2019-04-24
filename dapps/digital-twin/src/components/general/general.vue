@@ -96,7 +96,7 @@
               @click="$store.state.uiDT.saveChanges(this, getRuntime())"
               :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
               {{ `_digitaltwins.generalForm.save` | translate }}
-              <div class="spinner-border spinner-border-sm"
+              <div class="spinner-border spinner-border-sm ml-3"
                 v-if="$store.state.uiDT.isSaving">
               </div>
               <i class="mdi mdi-content-save label" v-else></i>

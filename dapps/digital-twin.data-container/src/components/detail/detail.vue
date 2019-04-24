@@ -61,7 +61,7 @@
             <label for="shareUser">
               {{ `_datacontainer.share.user.title` | translate }}
             </label>
-            <select class="form-control"
+            <select class="form-control custom-select"
               id="shareUser" ref="shareUser"
               :placeholder="`_datacontainer.share.user.desc` | translate"
               v-model="share.accountId">
@@ -170,7 +170,7 @@
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                     @click="
-                      evanNavigate(`digitaltwins.${ dapp.domainName }/containerlink/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                      evanNavigate(`digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/containerlink/${ $route.params.containerAddress }`, `/${ dapp.rootEns }`)
                       $refs.containerContextMenu.hide($event);
                     ">
                     <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
@@ -178,7 +178,7 @@
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                     @click="
-                      evanNavigate(`create/${ dapp.contractAddress }`)
+                      evanNavigate(`create/${ $route.params.containerAddress }`)
                       $refs.containerContextMenu.hide($event);
                     ">
                     <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
@@ -186,7 +186,7 @@
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                     @click="
-                      evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ dapp.contractAddress }`, `/${ dapp.rootEns }`)
+                      evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ $route.params.containerAddress }`, `/${ dapp.rootEns }`)
                       $refs.containerContextMenu.hide($event);
                     ">
                     <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
@@ -253,7 +253,7 @@
         </evan-modal>
 
         <dt-template-handler
-          :address="dapp.contractAddress"
+          :address="$route.params.containerAddress"
           :template.sync="template">
         </dt-template-handler>
       </template>

@@ -105,8 +105,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = utils.getRuntime(this);
     const splitHash = (<any>this).dapp.baseHash.split('/');
-    this.digitalTwinAddress = splitHash
-      [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
+    const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
+
+    if (twinDAppIndex !== -1) {
+      this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
+    }
 
     // start template mode!
     this.templateMode = this.$route.name.startsWith('create-template');
@@ -211,7 +214,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
-    const dispatcher = !this.templateMode ?
+    const dispatcher = this.templateMode ?
       dispatchers.templateDispatcher : dispatchers.createDispatcher;
 
     const watch = async ($event?: any) => {
@@ -223,13 +226,13 @@ export default class CreateComponent extends mixins(EvanComponent) {
         .length > 0;
 
       if (!this.creating && beforeCreating && $event) {
-        (<any>this).evanNavigate($event.data.contractAddress);
+        (<any>this).evanNavigate($event.detail.instance.data.contractAddress);
       }
     }
 
     watch();
     if (!this.creationWatcher) {
-      this.creationWatcher = dispatcher.watch(() => this.watchForCreation());
+      this.creationWatcher = dispatcher.watch(($event: any) => watch($event));
     }
   }
 }

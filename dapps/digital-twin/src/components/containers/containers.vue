@@ -71,12 +71,12 @@
           </a>
         </div>
       </div>
-      <div class="content" v-if="$store.state.uiDT.containers.length !== 0">
+      <div class="content row" v-if="$store.state.uiDT.containers.length !== 0">
         <div class="col-md-6 mb-4"
-          v-for="(container, index) in $store.state.uiDT.containers">
+          v-for="(container, index) in $store.state.uiDT.containers"
+          style="min-width: 350px;">
           <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
-            :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`"
-            style="min-width: 350px;">
+            :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
             <div class="row align-items-center m-0 w-100">
               <div class="col-2">
                 <img class="img-fluid p-3"
@@ -112,8 +112,8 @@
         </div>
       </div>
       <div class="content" v-else>
-        <p class="text-justify m-0">
-          {{ `_digitaltwins.containers.empty-desc` | translate }}
+        <p class="text-justify m-0"
+          v-html="$t(`_digitaltwins.containers.empty-desc`)">
         </p>
       </div>
     </div>

@@ -114,7 +114,10 @@ export default class GeneralComponent extends mixins(EvanComponent) {
 
           // when the synchronisation has finished, navigate to the correct entry
           if (instance.status === 'finished') {
-            (<any>this).evanNavigate(instance.data.address || instance.data.contractAddress);
+            (<any>this).evanNavigate(
+              (instance.data.address === 'dt-create' ? '' : instance.data.address) ||
+              instance.data.contractAddress
+            );
           }
         });
     }

@@ -64,7 +64,7 @@
         </td>
         <td class="fill-content" v-if="mode !== 'view'">
           <div class="form-group mb-0" v-if="mode === 'schema'">
-            <select class="form-control"
+            <select class="form-control custom-select"
               id="type" ref="type"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
               :disabled="$store.state.saving"
@@ -112,7 +112,7 @@
         </td>
         <td class="fill-content">
           <div class="form-group mb-0" v-if="mode === 'schema'">
-            <select class="form-control bg-level-1" disabled
+            <select class="form-control custom-select bg-level-1" disabled
               :placeholder="`_datacontainer.ajv.type.desc` | translate">
               <option>
                 {{ `_datacontainer.types.string` | translate }}

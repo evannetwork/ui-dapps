@@ -142,9 +142,10 @@
                 :disabled="!containerLinkForm.isValid || checking"
                 @click="linkContainer()">
                 {{ `_digitaltwins.containerlink.use` | translate }}
-                <i class="mdi mdi-arrow-right label ml-3"></i>
-                <div class="spinner-border spinner-border-sm text-light mr-3"
-                  v-if="checking">
+                <i class="mdi mdi-arrow-right label ml-2"
+                  v-if="!checking"></i>
+                <div class="spinner-border spinner-border-sm text-light ml-2"
+                  v-else>
                 </div>
               </button>
             </div>

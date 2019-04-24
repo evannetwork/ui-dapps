@@ -78,7 +78,7 @@ export default {
     "createForm": {
       "back": "Go Back",
       "base-template": "Base Template",
-      "container-configuration": "Data container configuration",
+      "container-configuration": "Data configuration",
       "continue": "Continue",
       "create": "Create",
       "description": {

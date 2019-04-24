@@ -93,7 +93,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     // set the hash change watcher, so we can detect digitaltwin change and loading
     const that = this;
     this.hashChangeWatcher = async () => await that.loadDigitalTwin();
-    await this.hashChangeWatcher();
+    await this.loadDigitalTwin();
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -110,7 +110,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   async loadDigitalTwin() {
     const $route = (<any>this).$route;
     const digitalTwinAddress = $route.name === 'dt-create' ? 'dt-create' :
-      ((<any>this).dapp.contractAddress || $route.params.digitalTwinAddress);
+      $route.params.digitalTwinAddress;
     let uiDT: EvanUIDigitalTwin = this.$store.state.uiDT;
 
     // load the digitaltwin
@@ -137,6 +137,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         }
       }
     } else {
+      if (uiDT) {
+        // if digitaltwin was set, destroy it
+        uiDT && uiDT.destroy(this);
+      }
+
       this.$set(this.$store.state, 'uiDT', null);
     }
   }

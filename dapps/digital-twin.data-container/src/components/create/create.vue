@@ -29,14 +29,19 @@
   <div>
     <evan-breadcrumbs 
       :i18nScope="'_datacontainer.breadcrumbs'"
-      v-if="!$route.name.startsWith('create-template')">
+      v-if="$route.name && !$route.name.startsWith('create-template')">
     </evan-breadcrumbs>
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-else>
       <div class="d-flex mb-3 align-items-center">
         <div>
           <h3 class="font-weight-bold mb-0">
-            {{ `_datacontainer.createForm.title` | translate }}
+            <template v-if="!templateMode">
+              {{ `_datacontainer.createForm.title` | translate }}
+            </template>
+            <template v-else>
+              {{ `_datacontainer.template.create-title` | translate }}
+            </template>
           </h3>
           <p class="text-muted font-weight-semibold m-t-0">
             {{ `_datacontainer.createForm.sub-title` | translate }}
@@ -44,6 +49,17 @@
         </div>
         <span class="mx-auto"></span>
         <div>
+          <button
+            class="btn btn-rounded btn-primary"
+            v-if="activeStep === 1 && !creating"
+            :disabled="!createForm.isValid || checking"
+            @click="$refs.createModal.show()">
+            {{ `_datacontainer.createForm.finish` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
+            <div class="spinner-border spinner-border-sm text-light mr-3"
+              v-if="checking">
+            </div>
+          </button>
         </div>
       </div>
       <div class="evan-steps"
@@ -75,7 +91,7 @@
                 <label for="template">
                   {{ `_datacontainer.createForm.template.title` | translate }}
                 </label>
-                <select class="form-control"
+                <select class="form-control custom-select"
                   id="template" ref="template"
                   :placeholder="`_datacontainer.createForm.template.desc` | translate"
                   v-model="createForm.template.value"
@@ -152,22 +168,10 @@
                 <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
                   @click="create()">
                   {{ `_datacontainer.create-question.action` | translate }}
+                  <i class="mdi mdi-arrow-right label ml-3"></i>
                 </button>
               </template>
             </evan-modal>
-
-            <div class="p-4 text-center">
-              <button
-                class="btn btn-rounded btn-primary"
-                :disabled="!createForm.isValid || checking"
-                @click="$refs.createModal.show()">
-                {{ `_datacontainer.createForm.finish` | translate }}
-                <i class="mdi mdi-arrow-right label ml-3"></i>
-                <div class="spinner-border spinner-border-sm text-light mr-3"
-                  v-if="checking">
-                </div>
-              </button>
-            </div>
           </div>
         </div>
       </div>

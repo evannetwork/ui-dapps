@@ -34,8 +34,9 @@
           $route.name === 'base-overview' ||
           $route.name === 'base-templates' ||
           $route.name === 'dt-lookup' ||
-          $route.name === 'dt-template'
+          $route.name.startsWith('dt-template')
           ">
+          <evan-dapp-wrapper-level-2 ref="level2Wrapper"></evan-dapp-wrapper-level-2>
           <evan-breadcrumbs
             :i18nScope="'_digitaltwins.breadcrumbs'"
             v-if="$route.name !== 'dt-template' && $route.name !== 'dt-container'">

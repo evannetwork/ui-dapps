@@ -91,7 +91,7 @@
                 <label for="type">
                   {{ `_datacontainer.entry.type.title` | translate }}
                 </label>
-                <select class="form-control"
+                <select class="form-control custom-select"
                   id="type" ref="type"
                   :placeholder="`_datacontainer.entry.type.desc` | translate"
                   :disabled="$store.state.saving"
@@ -109,7 +109,7 @@
                 <label for="type">
                   {{ `_datacontainer.entry.array-type.title` | translate }}
                 </label>
-                <select class="form-control"
+                <select class="form-control custom-select"
                   id="type" ref="type"
                   :placeholder="`_datacontainer.entry.array-type.desc` | translate"
                   :disabled="$store.state.saving"

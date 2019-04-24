@@ -70,7 +70,7 @@ export default {
     "containers": {
       "create": "Create",
       "empty": "Data Container",
-      "empty-desc": "No data container has yet been created for this digital Twin. Use the \"create\" or \"link\" button to create a new data container or to link an existing one.",
+      "empty-desc": "Each Digital Twin represents a collection of different data containers. Each data container can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No data container has yet been created for this digital twin. Use the \"create\" or \"link\" function. button to create a new data container or link to an existing one.</b>",
       "in-creation": "in creation...",
       "link": "Link"
     },
@@ -166,34 +166,7 @@ export default {
       "purchasing": "Purchasing ENS address...",
       "title": "Open Digital Twin"
     },
-    "overview": {
-      "create-twin": "Create Digital Twin",
-      "empty": "Favorites & last digitaltwins",
-      "empty-desc": "You have not yet opened or favored any digital Twins. Use \"open\" button to open a digital Twin or to create a new one.",
-      "favorites": "My Favorites",
-      "lastTwins": "Last opened",
-      "title": "Overview"
-    },
-    "start": {
-      "add": {
-        "desc": "Add a digital Twin based on your existing templates or open a existing one.",
-        "title": "Open digital Twin"
-      },
-      "overview": {
-        "desc": "Overview about my and last opened digitaltwins.",
-        "title": "My digital Twins"
-      },
-      "templates": {
-        "desc": "Manage templates for your digital Twins.",
-        "title": "My Templates"
-      }
-    },
     "startup": "What would you like to start with?",
-    "templates": {
-      "create": "Create Template",
-      "empty": "My Templates",
-      "empty-desc": "You have not yet created any templates. Use \"Create\" button to create a new template."
-    },
     "unlock-digitaltwin-panel": "<b>The opened digital Twin is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
     "verifications": {
       "description": "Each digital twin and data container can be automatically verified. The user interface is currently under development.",

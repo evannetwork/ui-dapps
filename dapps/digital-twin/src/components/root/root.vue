@@ -114,11 +114,11 @@
           </evan-dapp-wrapper-level-2>
           <evan-breadcrumbs
             :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name !== 'dt-template' && $route.name !== 'dt-container'">
+            v-if="$route.name !== 'dt-template' && !$route.name.startsWith('dt-container-detail')">
           </evan-breadcrumbs>
 
           <transition name="fade" mode="out-in"
-            v-if="$store.state.uiDT && !$store.state.uiDT.loading">
+            v-if="!$store.state.uiDT || ($store.state.uiDT && !$store.state.uiDT.loading)">
             <router-view></router-view>
           </transition>
           <evan-loading v-else></evan-loading>

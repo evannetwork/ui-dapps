@@ -75,8 +75,8 @@ export default {
     },
     "overview": {
       "create-twin": "Create Digital Twin",
-      "empty": "Favorites & last digitaltwins",
-      "empty-desc": "You have not yet opened or favored any digital Twins. Use \"open\" button to open a digital Twin or to create a new one.",
+      "empty": "Digital Twins",
+      "empty-desc": "Machines, cars, products, and people can all be represented with a digital twin. Digital twins mirror the asset’s or person’s attributes and status on the blockchain. Creating a twin for cars, forklifts, and other assets enables them to report their status to the network in fractions of a second and respond to requests autonomously.<br><br>A Digital Twin therefore is a unique representation of a real world object in the evan.network. It can hold attributes and any other data about the real world object, and implement operations and tasks concerning the real world object, all cryptographically secured on the blockchain.<br><br><b class=\"text-center d-block mt-3\">Use the \"Create Digital Twin\" or \"Open Digital Twin\" button to create a new one or to open an existing one.</b>",
       "favorites": "My Favorites",
       "lastTwins": "Last opened",
       "title": "Overview"
@@ -84,7 +84,7 @@ export default {
     "templates": {
       "create": "Create Template",
       "empty": "My Templates",
-      "empty-desc": "You have not yet created any templates. Use \"Create\" button to create a new template."
+      "empty-desc": "Each data container contains all data specifications, including their format and validation. Using templates these data definitions can be saved extracted and used multiple times for different data containers.<br><br><b class=\"text-center d-block mt-3\">You haven't created any templates yet. Use the \"Create Templates\" button to create a new one.</b>"
     }
   }
 }

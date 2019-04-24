@@ -51,7 +51,8 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'dt-container-link3',   component: ContainerLinkComponent,            path: dtPath('containerlink') },
   { name: 'dt-container-link4',   component: ContainerLinkComponent,            path: dtPath('containerlink/:containerAddress') },
   { name: 'dt-containers',        component: ContainersComponent,               path: dtPath('containers'), },
-  { name: 'dt-container',         component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
+  { name: 'dt-container-detail',  component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`), },
+  { name: 'dt-container-detail2', component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
 ];
 /* tslint:enable */
 

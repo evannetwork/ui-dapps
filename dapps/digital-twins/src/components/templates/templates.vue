@@ -108,8 +108,8 @@
           </h4>
         </div>
         <div class="content">
-          <p class="m-0">
-            {{ `_digitaltwins.templates.empty-desc` | translate }}
+          <p class="m-0"
+            v-html="$t( `_digitaltwins.templates.empty-desc`)">
           </p>
         </div>
       </div>

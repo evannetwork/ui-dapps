@@ -44,6 +44,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'dt-lookup',            component: LookupComponent,    path: `lookup`, },
   { name: 'dt',                   component: DAppLoader,         path: `digitaltwin.${ dappBrowser.getDomainName() }`, },
   { name: 'dt-template',          component: DAppLoader,         path: `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/template`, },
+  { name: 'dt-template2',         component: DAppLoader,         path: `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/create-template`, },
 ];
 /* tslint:enable */
 

@@ -127,7 +127,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
       const beforeSaving = this.$store.state.saving;
 
       const saving = instances
-        .filter(instance => instance.data.address === (<any>this).dapp.contractAddress)
+        .filter(instance => instance.data.address === this.$route.params.containerAddress)
         .length > 0;
 
       this.$set(this.$store.state, 'saving', saving);
@@ -142,7 +142,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
     this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
       const instances = await dispatchers.shareDispatcher.getInstances(runtime);
       const sharing = instances
-        .filter(instance => instance.data.address === (<any>this).dapp.contractAddress)
+        .filter(instance => instance.data.address === this.$route.params.containerAddress)
         .length > 0;
 
       this.$set(this.$store.state, 'sharing', sharing);
@@ -167,10 +167,12 @@ export default class DetailComponent extends mixins(EvanComponent) {
     this.loading = true;
 
     const splitHash = (<any>this).dapp.baseHash.split('/');
-    this.digitalTwinAddress = splitHash
-      [splitHash.indexOf(`digitaltwins.${ (<any>this).dapp.domainName }`) + 1];
+    const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
+    if (twinDAppIndex !== -1) {
+      this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
+    }
 
-    this.container = utils.getContainer(<any>runtime, (<any>this).dapp.contractAddress);
+    this.container = utils.getContainer(<any>runtime, this.$route.params.containerAddress);
     this.description = await this.container.getDescription();
     this.template = await this.container.toTemplate(true);
 
@@ -243,7 +245,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
         const runtime = utils.getRuntime(this);
 
         dispatchers.updateDispatcher.start(runtime, {
-          address: (<any>this).dapp.contractAddress,
+          address: this.$route.params.containerAddress,
           description: this.dbcpForm.description.value,
           digitalTwinAddress: this.digitalTwinAddress,
           img: this.dbcpForm.img.value,
@@ -251,7 +253,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
           template: this.template,
         });
 
-        await (new ContainerCache(runtime.activeAccount)).delete((<any>this).dapp.contractAddress);
+        await (new ContainerCache(runtime.activeAccount)).delete(this.$route.params.containerAddress);
         (<any>this.$refs.dbcpModal).hide();
         this.loading = false;
       });
@@ -263,7 +265,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
    */
   shareDt() {
     const runtime = utils.getRuntime(this);
-    const address = (<any>this).dapp.contractAddress;
+    const address = this.$route.params.containerAddress;
 
     // transform the ui permission into an conainter share config
     const perm = this.share.permissions;

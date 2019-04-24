@@ -248,12 +248,10 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
         if (beforeLink) {
           const dapp = (<any>this).dapp;
           (<any>this).evanNavigate([
-              `digitaltwins.${ dapp.domainName }`,
               this.validDTAddress,
               `datacontainer.digitaltwin.${ dapp.domainName }`,
               this.containerLinkForm.address.value,
-            ].join('/'),
-            `/${ dapp.rootEns }`
+            ].join('/')
           );
         }
       }
