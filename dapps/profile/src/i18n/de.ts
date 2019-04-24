@@ -160,7 +160,8 @@ export const de = {
         "description": "0"
       },
       "input": {
-        "error": "Dieses Feld muss ausgefüllt werden!"
+        "error": "Dieses Feld muss ausgefüllt werden!",
+        "errorAmount": "Es müssen mindestens 10 EVE gekauft werden!"
       },
       "card": {
         "title": "Kartennummer"

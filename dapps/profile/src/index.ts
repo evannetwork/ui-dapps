@@ -137,7 +137,7 @@ function getConfig(isDispatcher?: boolean) {
       CommonModule,
       IonicModule,
       AngularCore,
-      NgxStripeModule.forRoot('pk_test_kpO3T5fXA7aaftg9D0OO0w3S'),
+      NgxStripeModule.forRoot('pk_live_n9t3p2C3UZb3r90Xzca5wISM'),
     ],
     providers: [
       ProfileService,
