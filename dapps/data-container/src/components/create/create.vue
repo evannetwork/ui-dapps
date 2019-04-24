@@ -29,8 +29,9 @@
   <div>
     <evan-breadcrumbs 
       :i18nScope="'_datacontainer.breadcrumbs'"
-      v-if="$route.name !== 'create-template'">
+      v-if="!$route.name.startsWith('create-template')">
     </evan-breadcrumbs>
+    {{ $route.name }}
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-else>
       <div class="d-flex mb-3 align-items-center">

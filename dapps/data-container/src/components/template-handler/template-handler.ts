@@ -174,7 +174,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     }
 
     // watch for changes, so the internal values can be cached
-    this.valuesChanged = (($event) => this.$set(this, 'enableSave', true)).bind(this);
+    this.valuesChanged = (($event) => this.$set(this, 'cacheChanges', true)).bind(this);
     window.addEventListener('dt-value-changed', this.valuesChanged);
   }
 

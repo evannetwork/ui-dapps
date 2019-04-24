@@ -102,6 +102,8 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
    * link form
    */
   async created() {
+    const runtime = utils.getRuntime(this);
+
     this.digitalTwinAddress = (<any>this).$route.params.digitalTwinAddress;
     this.containerAddress = (<any>this).$route.params.containerAddress;
 
@@ -123,7 +125,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
     // wait until the dt was created and check again
     this.createDtWatcher = dispatchers.digitaltwinCreateDispatcher.watch(async () => {
       const instances = await dispatchers.digitaltwinCreateDispatcher
-        .getInstances(utils.getRuntime(this));
+        .getInstances(runtime);
 
       if (instances.length === 0) {
         (<any>this.$refs.createDTAddress).hide();

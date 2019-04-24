@@ -129,7 +129,11 @@
           </div>
 
           <transition name="fade" mode="out-in"
-            v-if="$route.name.startsWith('base-') || !$route.params.digitalTwinAddress || ($store.state.uiDT && !$store.state.uiDT.loading)">
+            v-if="
+              $route.name.startsWith('base-') ||
+              (!$route.params.digitalTwinAddress && $route.name !== 'dt-create') ||
+              ($store.state.uiDT && !$store.state.uiDT.loading)
+            ">
             <router-view></router-view>
           </transition>
           <evan-loading v-else></evan-loading>

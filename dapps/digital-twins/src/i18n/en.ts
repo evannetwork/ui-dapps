@@ -34,14 +34,15 @@ export default {
       "add": "Add",
       "containerlink": "Link Data Container",
       "containers": "Data container overview",
+      "create-template": "Create Template",
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
+      "dt-create": "Create Digital Twin",
       "lookup": "Open",
       "overview": "Favorites & last digitaltwins",
       "template": "Template",
       "templates": "Templates",
-      "verifications": "Verifications",
-      "create-template": "Vorlage erstellen"
+      "verifications": "Verifications"
     },
     "containerlink": {
       "address": {
@@ -94,6 +95,7 @@ export default {
         "desc": "Short description for the digital Twin",
         "title": "Description"
       },
+      "my-new-twin": "My new Digital Twin",
       "name": {
         "desc": "Name of the Digital Twin",
         "error": "Please provide a name!",
@@ -164,7 +166,7 @@ export default {
       "title": "Open Digital Twin"
     },
     "overview": {
-      "create-container": "Create data container",
+      "create-twin": "Create Digital Twin",
       "empty": "Favorites & last digitaltwins",
       "empty-desc": "You have not yet opened or favored any digital Twins. Use \"open\" button to open a digital Twin or to create a new one.",
       "favorites": "My Favorites",

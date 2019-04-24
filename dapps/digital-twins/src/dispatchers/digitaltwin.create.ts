@@ -42,11 +42,21 @@ const dispatcher = new Dispatcher(
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = getRuntime(instance.runtime);
-
-    await bcc.DigitalTwin.create(
+    const twin = await bcc.DigitalTwin.create(
       <any>runtime,
       EvanUIDigitalTwin.getDigitalTwinConfig(runtime, data.address, data.dbcp)
     );
+
+    data.contractAddress = await twin.getContractAddress();
+  })
+  // store the twin directly as favorite
+  .step(async (instance: DispatcherInstance, data: any) => {
+    if (data.isFavorite) {
+      const address = (data.address === 'dt-create' ? '' : data.address) || data.contractAddress;
+      await EvanUIDigitalTwin
+        .getDigitalTwin(instance.runtime, address)
+        .addAsFavorite();
+    }
   });
 
 export default dispatcher;

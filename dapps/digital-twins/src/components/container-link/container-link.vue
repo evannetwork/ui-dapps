@@ -29,19 +29,30 @@
   <div>
     <div class="p-1 p-md-4 text-left">
       <div class="white-box border rounded">
-        <div class="header">
+        <div class="header p-0">
+          <button class="btn large"
+            @click="$router.history.go(-1)">
+            <i class="mdi mdi-chevron-left"></i>
+          </button>
           <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.breadcrumbs.containerlink` | translate }}
           </h3>
         </div>
 
         <template v-if="!validDTAddress">
-          <p class="px-5 pt-3 text-justify">{{ `_digitaltwins.containerlink.description1` | translate }}</p>
           <div class="px-5 py-3">
             <dt-lookup-form ref="dtLookupForm"
               :address="digitalTwinAddress"
               :disableGlobal="true"
               @submit="useAddress">
+              <template v-slot:description>
+                <div class="d-flex mt-3 align-items-center">
+                  <i class="mdi mdi-link-variant text-secondary mr-3" style="font-size: 60px;"></i>
+                  <p class="m-0 text-justify">
+                    {{ `_digitaltwins.containerlink.description1` | translate }}
+                  </p>
+                </div>
+              </template>
             </dt-lookup-form>
           </div>
         </template>

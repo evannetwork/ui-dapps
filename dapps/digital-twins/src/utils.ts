@@ -29,7 +29,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import { utils } from '@evan.network/datacontainer.digitaltwin';
-import { containerDispatchers } from '@evan.network/datacontainer.digitaltwin';
+import { containerDispatchers, } from '@evan.network/datacontainer.digitaltwin';
+import { favoriteAddDispatcher, favoriteRemoveDispatcher, } from './dispatchers/registy';
 
 export const latestTwinsKey = 'evan-last-digital-digitaltwins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
@@ -43,15 +44,19 @@ export const getRuntime = utils.getRuntime;
  * @param      {string}  address  The address
  */
 export function addLastOpenedTwin(address: string) {
-  const lastTwins = getLastOpenedTwins();
+  if (address &&
+      address !== 'dt-address' &&
+      address !== 'undefined') {
+    const lastTwins = getLastOpenedTwins();
 
-  const existingIndex = lastTwins.indexOf(address);
-  if (existingIndex !== -1) {
-    lastTwins.splice(existingIndex, 1);
+    const existingIndex = lastTwins.indexOf(address);
+    if (existingIndex !== -1) {
+      lastTwins.splice(existingIndex, 1);
+    }
+    lastTwins.unshift(address);
+    // only save the latest 20 entries
+    window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
   }
-  lastTwins.unshift(address);
-  // only save the latest 20 entries
-  window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
 }
 
 /**
@@ -124,4 +129,25 @@ export async function getMyTemplates(runtime: bcc.Runtime) {
   });
 
   return templates;
+}
+
+/**
+ * Load the digitaltwin favorites for the current user.
+ *
+ * @param      {bcc.Runtime}  runtime  bcc runtime
+ */
+export async function loadFavorites(runtime: bcc.Runtime) {
+  const favorites = await bcc.DigitalTwin.getFavorites(<any>runtime);
+
+  // load dispatchers and merge the favorites with the favorite dispatchers
+  const add = await favoriteAddDispatcher.getInstances(runtime);
+  const remove = await favoriteRemoveDispatcher.getInstances(runtime);
+
+  // add favorites directly
+  add.forEach(instance => favorites.push(instance.data.address));
+  // remove favorites
+  remove.forEach(instance =>
+    favorites.splice(favorites.indexOf(instance.data.address), 1));
+
+  return favorites;
 }

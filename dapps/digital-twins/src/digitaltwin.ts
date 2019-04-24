@@ -113,7 +113,7 @@ export default class EvanUIDigitalTwin {
   ): bcc.DigitalTwinConfig {
     return {
       accountId: runtime.activeAccount,
-      address: address,
+      address: address === 'dt-create' ? '' : address,
       containerConfig: { accountId: runtime.activeAccount, },
       description: dbcp,
       factoryAddress: utils.twinFactory,
@@ -228,7 +228,11 @@ export default class EvanUIDigitalTwin {
     this.dispatcherListeners = [ ];
 
     // if we are not loading the create components, show the details.
-    this.validity = await bcc.DigitalTwin.getValidity((<any>runtime), this.address);
+    if (this.address === 'dt-create') {
+      this.validity = { valid: true, error: false, exists: false };
+    } else {
+      this.validity = await bcc.DigitalTwin.getValidity((<any>runtime), this.address);
+    }
 
     if (this.validity.exists) {
       const digitaltwin = this.getDigitalTwinInstance(runtime);
@@ -253,8 +257,14 @@ export default class EvanUIDigitalTwin {
       this.isSaving && this.watchSaving(vueInstance, runtime);
     } else {
       this.dbcp = await utils.getDigitalTwinBaseDbcp();
+      this.isFavorite = true;
+
       // set default dbcp name
-      this.dbcp.name = this.address;
+      if (this.address === 'dt-create') {
+        this.dbcp.name = vueInstance.$i18n.translate('_digitaltwins.generalForm.my-new-twin');
+      } else {
+        this.dbcp.name = this.address;
+      }
 
       // check for running dispatchers
       this.setIsCreating(vueInstance, runtime);
@@ -382,18 +392,22 @@ export default class EvanUIDigitalTwin {
    * Toggle the current dispatcher state
    */
   async toggleFavorite(runtime) {
-    const dispatcherName = this.isFavorite ? 'favoriteRemoveDispatcher' : 'favoriteAddDispatcher';
+    if (this.address !== 'dt-create') {
+      const dispatcherName = this.isFavorite ? 'favoriteRemoveDispatcher' : 'favoriteAddDispatcher';
 
-    // start the dispatcher
-    dispatchers[dispatcherName].start(runtime, { address: this.address });
+      // start the dispatcher
+      dispatchers[dispatcherName].start(runtime, { address: this.address });
 
-    // toggle favorite
-    this.isFavorite = !this.isFavorite;
+      // toggle favorite
+      this.isFavorite = !this.isFavorite;
 
-    // only watch, when it wasn't watched before
-    if (!this.isFavoriteLoading) {
-      this.isFavoriteLoading = true;
-      this.watchFavoriteLoading(runtime);
+      // only watch, when it wasn't watched before
+      if (!this.isFavoriteLoading) {
+        this.isFavoriteLoading = true;
+        this.watchFavoriteLoading(runtime);
+      }
+    } else {
+      this.isFavorite = !this.isFavorite;
     }
   }
 

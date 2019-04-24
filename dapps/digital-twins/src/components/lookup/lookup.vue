@@ -29,7 +29,11 @@
   <div>
     <div class="container-wide" v-if="!loading">
       <div class="white-box mt-4 border rounded">
-        <div class="header">
+        <div class="p-0 header">
+          <a class="btn large"
+            :href="`${ dapp.fullUrl }`">
+            <i class="mdi mdi-chevron-left"></i>
+          </a>
           <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.lookup.title` | translate }}
           </h3>
@@ -37,6 +41,14 @@
 
         <dt-lookup-form
           @submit="openTwin">
+          <template v-slot:description>
+            <div class="d-flex mt-3 align-items-center">
+              <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
+              <p class="m-0 text-justify">
+                {{ `_digitaltwins.lookup.description` | translate }}
+              </p>
+            </div>
+          </template>
         </dt-lookup-form>
       </div>
     </div>

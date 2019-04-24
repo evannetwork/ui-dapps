@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getRuntime, getLastOpenedTwins } from '../../utils';
+import { getRuntime, getLastOpenedTwins, loadFavorites } from '../../utils';
 import * as dispatchers from '../../dispatchers/registy';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
@@ -97,7 +97,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     const runtime = getRuntime(this);
 
     this.descriptions = { };
-    this.categories.favorites = await this.loadFavorites();
+    this.categories.favorites = await loadFavorites(runtime);
     this.categories.lastTwins = getLastOpenedTwins();
 
     let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
@@ -135,25 +135,5 @@ export default class OverviewComponent extends mixins(EvanComponent) {
       .filter(ensAddress => !!this.descriptions[ensAddress]);
 
     this.loading = false;
-  }
-
-  /**
-   * Load the digitaltwin favorites for the current user.
-   */
-  async loadFavorites() {
-    const runtime = getRuntime(this);
-    const favorites = await bcc.DigitalTwin.getFavorites(<any>runtime);
-
-    // load dispatchers and merge the favorites with the favorite dispatchers
-    const add = await dispatchers.favoriteAddDispatcher.getInstances(runtime);
-    const remove = await dispatchers.favoriteRemoveDispatcher.getInstances(runtime);
-
-    // add favorites directly
-    add.forEach(instance => favorites.push(instance.data.address));
-    // remove favorites
-    remove.forEach(instance =>
-      favorites.splice(favorites.indexOf(instance.data.address), 1));
-
-    return favorites;
   }
 }

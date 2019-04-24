@@ -27,14 +27,17 @@
 
 <template>
   <div class="container-wide">
-    <div class="white-box border rounded"
-      v-if="$store.state.uiDT.containers.length !== 0">
+    <div class="white-box border rounded">
       <div class="header">
-        <div>
-          <h3 class="font-weight-semibold m-0">
+        <h3 class="font-weight-semibold m-0">
+          <template
+            v-if="$store.state.uiDT.containers.length !== 0">
             {{ `_digitaltwins.breadcrumbs.containers` | translate }}
-          </h3>
-        </div>
+          </template>
+          <template v-else>
+            {{ `_digitaltwins.containers.empty` | translate }}
+          </template>
+        </h3>
         <span class="mx-auto"></span>
         <div class="d-flex align-items-center">
           <button class="btn"
@@ -68,7 +71,7 @@
           </a>
         </div>
       </div>
-      <div class="content">
+      <div class="content" v-if="$store.state.uiDT.containers.length !== 0">
         <div class="col-md-6 mb-4"
           v-for="(container, index) in $store.state.uiDT.containers">
           <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
@@ -108,15 +111,7 @@
           </a>
         </div>
       </div>
-    </div>
-    <div class="white-box border-rounded"
-      v-else>
-      <div class="header">
-        <h3 class="m-0 font-weight-semibold">
-          {{ `_digitaltwins.containers.empty` | translate }}
-        </h3>
-      </div>
-      <div class="content">
+      <div class="content" v-else>
         <p class="text-justify m-0">
           {{ `_digitaltwins.containers.empty-desc` | translate }}
         </p>

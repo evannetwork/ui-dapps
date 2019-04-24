@@ -44,7 +44,7 @@
                 v-if="$store.state.uiDT.isFavorite"
                 @click="$store.state.uiDT.toggleFavorite(getRuntime())">
               </i>
-              <i class="far fa-star lg clickable"
+              <i class="mdi mdi-star lg clickable"
                 v-if="!$store.state.uiDT.isFavorite"
                 @click="$store.state.uiDT.toggleFavorite(getRuntime())">
               </i>
@@ -81,28 +81,25 @@
                 @blur="generalForm.description.setDirty()">
               </textarea>
             </div>
-
-            <div class="text-center mt-3 w-100">
-              <button type="submit"
-                class="btn btn-rounded btn-primary"
-                v-if="!uiDT.validity.exists"
-                :disabled="!generalForm.isValid || checking">
-                <div class="spinner-border spinner-border-sm text-light mr-3"
-                  v-if="checking">
-                </div>
-                {{ `_digitaltwins.generalForm.create` | translate }}
-              </button>
-            </div>
           </form>
           <div class="footer">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              v-if="!uiDT.validity.exists"
+              @click="createDigitalTwin()"
+              :disabled="!generalForm.isValid">
+              {{ `_digitaltwins.generalForm.create` | translate }}
+              <i class="mdi mdi-content-save label"></i>
+            </button>
             <button type="button" class="btn btn-primary btn-rounded"
+              v-else
               @click="$store.state.uiDT.saveChanges(this, getRuntime())"
               :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
               {{ `_digitaltwins.generalForm.save` | translate }}
               <div class="spinner-border spinner-border-sm"
                 v-if="$store.state.uiDT.isSaving">
               </div>
-              <i class="mdi mdi-content-save label ml-2" v-else></i>
+              <i class="mdi mdi-content-save label" v-else></i>
             </button>
           </div>
         </template>

@@ -57,27 +57,33 @@
         <form
           class="col-sm-9 mx-auto"
           v-on:submit.prevent="checkAddress">
-          <div class="form-group">
-            <label for="address">
-              {{ `_digitaltwins.lookup.address.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="address" ref="address"
-              :placeholder="`_digitaltwins.lookup.address.desc` | translate"
-              v-model="lookupForm.address.value"
-              v-bind:class="{ 'is-invalid' : lookupForm.address.error }"
-              @blur="lookupForm.address.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_digitaltwins.lookup.address.error` | translate }}
+          <div class="d-flex align-items-end">
+            <div class="form-group flex-grow-1">
+              <label for="address">
+                {{ `_digitaltwins.lookup.address.title` | translate }}
+              </label>
+              <input class="form-control" required
+                id="address" ref="address"
+                :placeholder="`_digitaltwins.lookup.address.desc` | translate"
+                v-model="lookupForm.address.value"
+                v-bind:class="{ 'is-invalid' : lookupForm.address.error }"
+                @blur="lookupForm.address.setDirty()">
+              <div class="invalid-feedback">
+                {{ `_digitaltwins.lookup.address.error` | translate }}
+              </div>
             </div>
+            <select class="form-control only-arrows"
+              id="myTwins" ref="myTwins"
+              v-model="lookupForm.address.value">
+              <option
+                v-for="(twin, index) in myTwins"
+                :value="twin">
+                {{ twin }}
+              </option>
+            </select>
           </div>
 
-          <div class="d-flex mt-3 align-items-center">
-            <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
-            <p class="m-0 text-justify">
-              {{ `_digitaltwins.lookup.description` | translate }}
-            </p>
-          </div>
+          <slot name="description"></slot>
         </form>
       </div>
 

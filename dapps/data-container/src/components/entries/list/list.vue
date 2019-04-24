@@ -130,9 +130,15 @@
                 </td>
                 <td class="text-primary flex-grow-0"
                   style="white-space: nowrap;">
-                  <span v-if="entry.value.indexOf(listEntry) !== -1">
-                    {{ '_datacontainer.list.new' | translate }}
-                  </span>
+                  <template v-if="entry.value.indexOf(listEntry) !== -1">
+                    <span>
+                      {{ '_datacontainer.list.new' | translate }}
+                    </span>
+                    <i class="mdi mdi-delete clickable"
+                      :disabled="$store.state.saving"
+                      @click="entry.value.splice(index, 1)">
+                    </i>
+                  </template>
                 </td>
               </tr>
             </tbody>
@@ -171,12 +177,12 @@
             <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
               @click="addListEntry = false">
               {{ `_datacontainer.list.canel-list-entry` | translate }}
-              <i class="mdi mdi-arrow-right"></i>
             </button>
 
             <button type="submit" class="btn btn-rounded btn-primary"
               @click="addEntry()">
               {{ `_datacontainer.list.add-list-entry` | translate }}
+              <i class="mdi mdi-arrow-right label ml-2"></i>
             </button>
           </div>
         </template>

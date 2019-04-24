@@ -29,7 +29,7 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-if="!loading">
-      <div class="d-flex mb-3 align-items-center">
+      <div class="d-flex align-items-center">
         <div>
           <h3 class="font-weight-bold mb-0">
             {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
@@ -43,9 +43,9 @@
           <a
             class="btn btn-rounded btn-light font-weight-normal"
             @click="$refs.level2Wrapper.hide()"
-            :href="`${ dapp.fullUrl }/lookup`">
+            :href="`${ dapp.fullUrl }/dt-create`">
             <i class="mdi mdi-plus mr-1 m-0"></i>
-            <span>{{ '_digitaltwins.overview.create-container' | translate }}</span>
+            <span>{{ '_digitaltwins.overview.create-twin' | translate }}</span>
           </a>
           <a
             class="btn btn-rounded btn-primary font-weight-semibold"
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="white-box border rounded"
+      <div class="white-box border rounded mt-3"
         v-for="(category, index) in [ 'lastTwins', 'favorites' ]"
         v-if="categories[category].length > 0">
         <div class="header">

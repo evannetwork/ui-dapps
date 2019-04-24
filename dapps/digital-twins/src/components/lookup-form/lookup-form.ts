@@ -36,7 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registy';
-import { getRuntime, getDomainName } from '../../utils';
+import * as utils from '../../utils';
 
 interface LookupFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -54,10 +54,13 @@ export default class LookupComponent extends mixins(EvanComponent) {
 
   /**
    * do not check for global uiDT instances.
-   *
-   * @class      Prop (name)
    */
   @Prop({ }) disableGlobal;
+
+  /**
+   * Show loading symbold
+   */
+  loading = true;
 
   /**
    * formular specific variables
@@ -94,9 +97,14 @@ export default class LookupComponent extends mixins(EvanComponent) {
   checking = false;
 
   /**
+   * List of my twins, so the user have a preselection of it's twins
+   */
+  myTwins = null;
+
+  /**
    * Setup the Lookup form.
    */
-  created() {
+  async created() {
     this.lookupForm = (<LookupFormInterface>new EvanForm(this, {
       address: {
         value: this.address || '',
@@ -105,6 +113,15 @@ export default class LookupComponent extends mixins(EvanComponent) {
         }
       },
     }));
+
+    // load my twins, so we can provide a user selection
+    const runtime = utils.getRuntime(this);
+    this.myTwins = Array.from(new Set([ ].concat(
+      await utils.loadFavorites(runtime),
+      utils.getLastOpenedTwins()
+    )));
+
+    this.loading = false;
 
     /**
      * watch for ens purchase changes
@@ -127,7 +144,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
 
     // load new instances
     this.purchasingInstances = await dispatchers.ensDispatcher
-      .getInstances(getRuntime(this));
+      .getInstances(utils.getRuntime(this));
 
     // if the synchronisation has finished, check the address again
     if (beforeInstances.length > 0 && this.purchasingInstances.length === 0) {
@@ -141,8 +158,8 @@ export default class LookupComponent extends mixins(EvanComponent) {
    * is not the owner of the ens address
    */
   async checkAddress() {
-    const runtime: any = getRuntime(this);
-    const domainName = getDomainName();
+    const runtime: any = utils.getRuntime(this);
+    const domainName = utils.getDomainName();
     let address = this.lookupForm.address.value;
 
     this.checking = true;
@@ -227,7 +244,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
    * @param      {string}  address  ens address
    */
   async getParentRecursive(address: string, owner: string = nullAddress) {
-    const runtime = getRuntime(this);
+    const runtime = utils.getRuntime(this);
     try {
       // load the current owner of the ens address
       const namehash = runtime.nameResolver.namehash(address);
@@ -256,7 +273,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
   purchaseAdress() {
     // start the dispatcher
     dispatchers.ensDispatcher.start(
-      getRuntime(this),
+      utils.getRuntime(this),
       { ensAddress: this.lookupForm.address.value }
     );
 

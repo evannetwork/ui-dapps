@@ -34,14 +34,15 @@ export default {
       "add": "Hinzufügen",
       "containerlink": "Daten Container verlinken",
       "containers": "Datencontainer Übersicht",
+      "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
+      "dt-create": "Digitalen Zwilling erstellen",
       "lookup": "Öffnen",
       "overview": "Favoriten & letzte Zwillinge",
       "template": "Vorlage",
       "templates": "Vorlagen",
-      "verifications": "Verifizierungen",
-      "create-template": "Vorlage erstellen"
+      "verifications": "Verifizierungen"
     },
     "containerlink": {
       "address": {
@@ -94,6 +95,7 @@ export default {
         "desc": "Kurze Beschreibung zu dem digitalen Zwilling.",
         "title": "Beschreibung"
       },
+      "my-new-twin": "Mein Neuer Digitaler Zwilling",
       "name": {
         "desc": "Name des digitalen Zwillings.",
         "error": "Bitte geben Sie einen Namen an!",
@@ -164,7 +166,7 @@ export default {
       "title": "Digitalen Zwilling Öffnen"
     },
     "overview": {
-      "create-container": "Daten Container erstellen",
+      "create-twin": "Digitalen Zwilling erstellen",
       "empty": "Favoriten & letzte Zwillinge",
       "empty-desc": "Sie haben noch keine digitalen Zwillinge geöffnet oder favoritisiert. Nutzen Sie \"öffnen\" Button, um einen digitale Zwilling zu öffnen oder um eine neue zu erstellen.",
       "favorites": "Meine Favoriten",

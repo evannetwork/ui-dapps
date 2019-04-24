@@ -37,8 +37,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registy';
 import EvanUIDigitalTwin from '../../digitaltwin';
-import { getDigitalTwinBaseDbcp } from '../../utils';
-import { getRuntime, getDomainName } from '../../utils';
+import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
 
 interface GeneralFormInterface extends EvanForm {
   description: EvanFormControl;
@@ -72,6 +71,11 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   generalForm: GeneralFormInterface = null;
 
   /**
+   * Watch for updates, when the twin gets created
+   */
+  watchForCreation: Function;
+
+  /**
    * Setup the form.
    */
   created() {
@@ -101,6 +105,26 @@ export default class GeneralComponent extends mixins(EvanComponent) {
     }));
 
     this.$nextTick(() => this.generalForm.name.$ref.focus());
+
+    // watch for creation to redirect to the correct page after creation
+    if (!this.uiDT.validity.exists) {
+      this.watchForCreation = dispatchers.digitaltwinCreateDispatcher
+        .watch(($event: CustomEvent) => {
+          const instance = $event.detail.instance;
+
+          // when the synchronisation has finished, navigate to the correct entry
+          if (instance.status === 'finished') {
+            (<any>this).evanNavigate(instance.data.address || instance.data.contractAddress);
+          }
+        });
+    }
+  }
+
+  /**
+   * Remove listeners
+   */
+  beforeDestroy() {
+    this.watchForCreation && this.watchForCreation();
   }
 
   /**
@@ -110,7 +134,8 @@ export default class GeneralComponent extends mixins(EvanComponent) {
     if (!this.uiDT.exists) {
       dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
         address: this.uiDT.address,
-        dbcp: this.uiDT.dbcp
+        dbcp: this.uiDT.dbcp,
+        isFavorite: this.uiDT.isFavorite,
       });
     }
   }

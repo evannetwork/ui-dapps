@@ -51,6 +51,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'base-container-link',  component: ContainerLinkComponent,            path: 'containerlink' },
   { name: 'base-container-link2', component: ContainerLinkComponent,            path: 'containerlink/:containerAddress' },
   { name: 'dt-template',          component: DAppLoader,                        path: `${ templatePath }`, },
+  { name: 'dt-create',            component: DigitalTwinGeneralComponent,       path: `dt-create`, },
   { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: `:digitalTwinAddress`, },
   { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
   { name: 'dt-container-link3',   component: ContainerLinkComponent,            path: dtPath('containerlink') },

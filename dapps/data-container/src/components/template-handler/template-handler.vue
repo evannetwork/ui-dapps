@@ -44,10 +44,12 @@
           <button type="button" class="btn btn-danger btn-rounded font-weight-normal"
             @click="clearCachedTemplate()">
             {{ `_datacontainer.template-cache.clear` | translate }}
+            <i class="mdi mdi-delete label"></i>
           </button>
           <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
             @click="restoreTemplate()">
             {{ `_datacontainer.template-cache.action` | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
           </button>
         </template>
       </evan-modal>
@@ -63,11 +65,12 @@
           @click="activateTab(-1)">
           <i class="mdi mdi-plus-circle"></i>
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-circle btn-sm ml-5 mt-1 mr-2 animate-hop"
+
+        <div class="batch-label animate-hop bg-primary bg-text-primary"
           v-if="cachedTemplate"
           @click="$refs.cacheModal.show()">
           <i class="mdi mdi-undo"></i>
-        </button>
+        </div>
       </div>
 
       <template v-if="activeTab === -1">

@@ -117,6 +117,7 @@
             .length === 0"
           @click="shareDt()">
           {{ `_datacontainer.share.action` | translate }}
+          <i class="mdi mdi-arrow-right label"></i>
         </button>
       </template>
     </evan-modal>
@@ -242,6 +243,7 @@
             class="btn btn-rounded btn-primary"
             :disabled="!dbcpForm.isValid">
             {{ `_datacontainer.createForm.save` | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
           </button>
         </template>
       </evan-modal>
