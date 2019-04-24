@@ -25,15 +25,8 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as digitalTwin from '@evan.network/digitaltwin';
+import de from './de';
+import en from './en';
 
-// export them all, so other applications can access them
-export { }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
-
-export default componentRegistration;
+// map all langugages
+export default { de, en };

@@ -27,13 +27,19 @@
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as digitalTwin from '@evan.network/digitaltwin';
+
+import GeneralComponent from './general/general.vue';
+import LookupComponent from './lookup/lookup.vue';
+import LookupFormComponent from './lookup-form/lookup-form.vue';
 
 // export them all, so other applications can access them
-export { }
+export { GeneralComponent, LookupComponent, LookupFormComponent }
 
 // map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
+const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'dt-general', component: GeneralComponent },
+  { name: 'dt-lookup', component: LookupComponent },
+  { name: 'dt-lookup-form', component: LookupFormComponent },
+];
 
 export default componentRegistration;

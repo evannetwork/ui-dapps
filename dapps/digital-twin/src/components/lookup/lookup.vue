@@ -25,15 +25,35 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as digitalTwin from '@evan.network/digitaltwin';
+<template>
+  <div class="container-wide">
+    <div class="white-box mt-4 border rounded">
+      <div class="p-0 header">
+        <a class="btn large"
+          :href="`${ dapp.fullUrl }`">
+          <i class="mdi mdi-chevron-left"></i>
+        </a>
+        <h3 class="m-0 font-weight-semibold">
+          {{ `_digitaltwins.lookup.title` | translate }}
+        </h3>
+      </div>
 
-// export them all, so other applications can access them
-export { }
+      <dt-lookup-form
+        @submit="openTwin">
+        <template v-slot:description>
+          <div class="d-flex mt-3 align-items-center">
+            <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
+            <p class="m-0 text-justify">
+              {{ `_digitaltwins.lookup.description` | translate }}
+            </p>
+          </div>
+        </template>
+      </dt-lookup-form>
+    </div>
+  </div>
+</template>
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
-
-export default componentRegistration;
+<script lang="ts">
+  import Component from './lookup.ts';
+  export default Component;
+</script>

@@ -25,15 +25,12 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as digitalTwin from '@evan.network/digitaltwin';
+const getExternals = require('../../vue/webpack.externals');
 
-// export them all, so other applications can access them
-export { }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
-
-export default componentRegistration;
+module.exports = require('../../vue/webpack.config')(
+  require('./dbcp.json').public.name,
+  require('path').resolve(__dirname, './dist'),
+  getExternals({
+    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin'
+  })
+);

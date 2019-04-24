@@ -35,8 +35,8 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getRuntime, getLastOpenedTwins, loadFavorites } from '../../utils';
-import * as dispatchers from '../../dispatchers/registy';
+import { getRuntime, getLastOpenedTwins, loadFavorites } from '@evan.network/digitaltwin';
+import { dispatchers } from '@evan.network/digitaltwin';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 @Component({ })

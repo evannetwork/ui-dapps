@@ -31,6 +31,7 @@ module.exports = require('../../vue/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
   getExternals({
-    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin'
+    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin',
+    '@evan.network/digitaltwin': '@evan.network/digitaltwin',
   })
 );

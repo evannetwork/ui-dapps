@@ -25,34 +25,38 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { getMyTemplates, getRuntime } from '@evan.network/digitaltwin';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getRuntime } from '../utils';
+import EvanUIDigitalTwin from '../digitaltwin';
 
-@Component({ })
-export default class TemplatesComponent extends mixins(EvanComponent) {
-  /**
-   * My templates
-   */
-  templates: any = { };
+const dispatcher = new Dispatcher(
+  `digitaltwin.${ dappBrowser.getDomainName() }`,
+  'digitaltwinCreateDispatcher',
+  40 * 1000,
+  '_digitaltwins.dispatcher.digitaltwin.create'
+);
 
-  /**
-   * show loading symbol
-   */
-  loading = true;
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = getRuntime(instance.runtime);
+    const twin = await bcc.DigitalTwin.create(
+      <any>runtime,
+      EvanUIDigitalTwin.getDigitalTwinConfig(runtime, data.address, data.dbcp)
+    );
 
-  /**
-   * Load my templates
-   */
-  async created() {
-    this.templates = await getMyTemplates(getRuntime(this));
-    this.loading = false;
-  }
-}
+    data.contractAddress = await twin.getContractAddress();
+  })
+  // store the twin directly as favorite
+  .step(async (instance: DispatcherInstance, data: any) => {
+    if (data.isFavorite) {
+      const address = (data.address === 'dt-create' ? '' : data.address) || data.contractAddress;
+      await EvanUIDigitalTwin
+        .getDigitalTwin(instance.runtime, address)
+        .addAsFavorite();
+    }
+  });
+
+export default dispatcher;

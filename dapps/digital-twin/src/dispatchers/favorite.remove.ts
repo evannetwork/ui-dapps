@@ -25,15 +25,25 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as digitalTwin from '@evan.network/digitaltwin';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getRuntime, } from '../utils';
+import EvanUIDigitalTwin from '../digitaltwin';
 
-// export them all, so other applications can access them
-export { }
+const dispatcher = new Dispatcher(
+  `digitaltwin.${ dappBrowser.getDomainName() }`,
+  'favoriteRemoveDispatcher',
+  40 * 1000,
+  '_digitaltwins.dispatcher.favorite.remove'
+);
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    await EvanUIDigitalTwin
+      .getDigitalTwin(instance.runtime, data.address)
+      .removeFromFavorites();
+  });
 
-export default componentRegistration;
+export default dispatcher;

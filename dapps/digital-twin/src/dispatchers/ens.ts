@@ -25,34 +25,40 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { getMyTemplates, getRuntime } from '@evan.network/digitaltwin';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+import { getRuntime } from '../utils';
 
-@Component({ })
-export default class TemplatesComponent extends mixins(EvanComponent) {
-  /**
-   * My templates
-   */
-  templates: any = { };
+const dispatcher = new Dispatcher(
+  `digitaltwin.${ dappBrowser.getDomainName() }`,
+  'ensDispatcher',
+  40 * 1000,
+  '_digitaltwins.dispatcher.create'
+);
 
-  /**
-   * show loading symbol
-   */
-  loading = true;
+dispatcher
+  .step(async (instance, data) => {
+    const runtime = getRuntime(instance.runtime);
+    const splitAddr = data.ensAddress.split('.');
+    const topLevelAdress = splitAddr.slice(splitAddr.length - 2, splitAddr.length)
+      .join('.');
 
-  /**
-   * Load my templates
-   */
-  async created() {
-    this.templates = await getMyTemplates(getRuntime(this));
-    this.loading = false;
-  }
-}
+    // purchaser the ens address
+    await runtime.nameResolver.claimAddress(
+      topLevelAdress,
+      instance.runtime.activeAccount,
+      instance.runtime.activeAccount,
+      await runtime.nameResolver.getPrice(topLevelAdress)
+    );
+  })
+  .step(async (instance, data) => {
+    // add the ens address to your favorites list
+    await instance.runtime.profile.addBcContract('evan-ens-management', data.ensAddress, { });
+
+    // store profile contracts
+    await instance.runtime.profile.storeForAccount(instance.runtime.profile.treeLabels.contracts);
+  });
+
+
+export default dispatcher;

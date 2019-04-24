@@ -20,9 +20,6 @@
     "paths": {
       "@evan.network/datacontainer.digitaltwin": [
         "../../digital-twin.data-container/dist/datacontainer.digitaltwin.js"
-      ],
-      "@evan.network/digitaltwin": [
-        "../../digital-twin/dist/digitaltwin.js"
       ]
     }
   },

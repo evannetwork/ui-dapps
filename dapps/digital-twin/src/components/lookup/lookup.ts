@@ -25,15 +25,34 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as digitalTwin from '@evan.network/digitaltwin';
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-// export them all, so other applications can access them
-export { }
+// evan.network imports
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
+import * as dispatchers from '../../dispatchers/registy';
+import { getRuntime, getDomainName } from '../../utils';
 
-export default componentRegistration;
+interface LookupFormInterface extends EvanForm {
+  address: EvanFormControl;
+}
+
+@Component({ })
+export default class LookupComponent extends mixins(EvanComponent) {
+  /**
+   * Takes the twin address from the lookup form component and opens it.
+   *
+   * @param      {any}  eventResult  twin address that should be opened
+   */
+  openTwin(eventResult: any) {
+    (<any>this).evanNavigate([
+      `digitaltwin.${ (<any>this).dapp.domainName }`,
+      eventResult.address
+    ].join('/'));
+  }
+}

@@ -71,7 +71,7 @@
                     v-if="templates[templateKey].imgSquare"
                     :src="templates[templateKey].imgSquare">
                   <i
-                    class="mdi mdi-fingerprint"
+                    class="mdi mdi-circle-edit-outline"
                     style="font-size:60px;">
                   </i>
                 </div>

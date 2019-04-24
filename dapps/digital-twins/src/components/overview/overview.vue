@@ -42,14 +42,12 @@
         <div>
           <a
             class="btn btn-rounded btn-light font-weight-normal"
-            @click="$refs.level2Wrapper.hide()"
-            :href="`${ dapp.fullUrl }/dt-create`">
+            :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/dt-create`">
             <i class="mdi mdi-plus mr-1 m-0"></i>
             <span>{{ '_digitaltwins.overview.create-twin' | translate }}</span>
           </a>
           <a
             class="btn btn-rounded btn-primary font-weight-semibold"
-            @click="$refs.level2Wrapper.hide()"
             :href="`${ dapp.fullUrl }/lookup`">
             {{ '_digitaltwins.lookup.title' | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
@@ -72,7 +70,7 @@
         <div class="row content">
           <div class="col-md-6 col-lg-4 mb-4" v-for="(ensAddress, index) in categories[category]">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
-              :href="`${ dapp.fullUrl }/${ ensAddress }/containers`">
+              :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`">
               <div class="row align-items-center m-0">
                 <div class="col-2">
                   <img class="img-fluid p-3"
