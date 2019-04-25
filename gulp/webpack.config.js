@@ -112,7 +112,9 @@ module.exports = function(name, dist, externals, prodMode) {
       new DeclarationBundlerPlugin({
         moduleName: `'${ packageJson.name }'`,
         out: `${ name }.d.ts`,
-      })
+      }),
+      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|de/),
     ],
     resolve: {
       extensions: ['.ts', '.js', '.json'],

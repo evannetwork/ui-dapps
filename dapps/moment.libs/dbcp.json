@@ -3,16 +3,15 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "evan.bootstrap.libs.js",
+      "entrypoint": "moment.libs.js",
       "files": [
-        "evan.bootstrap.libs.js",
-        "evan.bootstrap.libs.css"
+        "moment.libs.js"
       ],
-      "origin": "Qma1mnXEHcmy1PonNPhum5knkzzsYru5Tiie8Y3yzj5DPo",
+      "origin": "QmU2BvqthbiEU1c5w1GepWfraDVp3JHhn2SWC8avoYSDRY",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "",
@@ -21,19 +20,19 @@
         "en": ""
       },
       "name": {
-        "en": "evan.bootstrap.libs"
+        "en": "moment.libs"
       }
     },
     "imgSquare": "",
-    "name": "evan.bootstrap.libs",
+    "name": "moment.libs",
     "tags": [
       "dapp",
       "evan",
       "library"
     ],
-    "version": "4.3.1",
+    "version": "2.24.0",
     "versions": {
-      "4.3.1": "Qmefb6NVYYhy7ao9Jc1womUqnEt6YTDacyWmbPfCvZH9P3"
+      "2.24.0": "QmU2BvqthbiEU1c5w1GepWfraDVp3JHhn2SWC8avoYSDRY"
     }
   }
 }
