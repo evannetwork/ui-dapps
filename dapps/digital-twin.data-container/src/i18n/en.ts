@@ -36,7 +36,7 @@ export default {
         "title": "Field name"
       },
       "not-permitted": {
-        "desc": "You do not have permission to view this data area.",
+        "desc": "You do not have permission to view this data set.",
         "title": "Invalid authorization"
       },
       "save": "Apply",
@@ -58,7 +58,7 @@ export default {
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
-      "overview": "Favorites & last Digital Twins",
+      "overview": "Favorites & recent Digital Twins",
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"
@@ -110,7 +110,7 @@ export default {
     },
     "edit": "Edit",
     "edit-dbcp": "Adjust Container Description",
-    "edit-schema": "Data area schema definition",
+    "edit-schema": "Data set schema definition",
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
@@ -133,7 +133,7 @@ export default {
     },
     "in-creation": "In Creation",
     "list": {
-      "add-list-entry": "Add listentry",
+      "add-list-entry": "Add list entry",
       "canel-list-entry": "Cancel",
       "data": "Data",
       "load-more": "Load more...",
@@ -148,7 +148,7 @@ export default {
         "title": "Invitation to Data Container"
       },
       "desc": "Send this data container to people in your address book and specify their access permissions.",
-      "entry": "Data area",
+      "entry": "Data set",
       "read": "Read",
       "read-write": "Read and Write",
       "subject": {

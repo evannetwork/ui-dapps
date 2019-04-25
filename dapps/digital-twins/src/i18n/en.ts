@@ -41,7 +41,7 @@ export default {
       "digitaltwins": "Digital Twins",
       "dt-create": "Create Digital Twin",
       "lookup": "Open",
-      "overview": "Favorites & last digitaltwins",
+      "overview": "Favorites & recent Digital Twins",
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"
@@ -59,14 +59,14 @@ export default {
         "desc": "General information about the digital Twin.",
         "title": "Digital Twin"
       },
-      "digitaltwin-overview": "Favorites & last digitaltwins",
+      "digitaltwin-overview": "Favorites & recent Digital Twins",
       "general": "Metadata",
       "my-digitaltwins": {
         "desc": "Overview of my Digital Twins.",
         "title": "Digital Twins"
       },
       "my-templates": {
-        "desc": "Last templates or create new ones",
+        "desc": "Recent templates or create new ones",
         "title": "My Templates"
       },
       "open-digitaltwin": "Open Digital Twin",
