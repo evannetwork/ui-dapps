@@ -29,7 +29,7 @@
 export default {
   "_digitaltwins": {
     "add": "Open",
-    "add-digitaltwin": "Add digital Twin",
+    "add-digitaltwin": "Add Digital Twin",
     "breadcrumbs": {
       "add": "Add",
       "containerlink": "Link Data Container",
@@ -39,7 +39,7 @@ export default {
       "digitaltwins": "Digital Twins",
       "dt-create": "Create Digital Twin",
       "lookup": "Open",
-      "overview": "Favorites & last digitaltwins",
+      "overview": "Favorites & last Digital Twins",
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications",
@@ -52,13 +52,13 @@ export default {
         "error": "Please enter an address!",
         "title": "Data Container"
       },
-      "change-twin": "Digitalen Zwilling ändern",
-      "description1": "Using the following input field, you can select an address of a digital twin into which you want to link a data container. If an existing instance already exists there, it is opened directly for you. If the address is not yet assigned, you can create a new digital twin and bind it to this address or link an existing one to this address.",
-      "description2": "Using the following input field, you can select an address of a data container that is to be linked to the digital twin.",
+      "change-twin": "Change Digital Twin",
+      "description1": "Use the input field, you can select an address of a digital twin into which you want to link a data container. If an existing instance already exists there, it is opened directly for you. If the address is not yet assigned, you can create a new digital twin and bind it to this address or link an existing one to this address.",
+      "description2": "Use the input field, you can select an address of a data container that is to be linked to the digital twin.",
       "digitaltwin": "Digital Twin",
       "invalid-container": {
         "desc": "The address entered appears to be incorrect or to correspond to a contract with an invalid format. Please enter the correct address",
-        "title": "Invalid data container"
+        "title": "Invalid Data Container"
       },
       "linking": "Linking",
       "name": {
@@ -66,35 +66,35 @@ export default {
         "error": "Please enter an alias",
         "title": "Alias"
       },
-      "use": "Link Daten Container"
+      "use": "Link Data Container"
     },
     "containers": {
       "create": "Create",
       "empty": "Data Container",
-      "empty-desc": "Each Digital Twin represents a collection of different data containers. Each data container can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No data container has yet been created for this digital twin. Use the \"create\" or \"link\" function. button to create a new data container or link to an existing one.</b>",
+      "empty-desc": "Each Digital Twin represents a collection of different data containers. Each data container can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No data container has yet been created for this digital twin. Use the \"create\" or \"link\" button on the top to create a new data container or link to an existing one.</b>",
       "in-creation": "in creation...",
       "link": "Link"
     },
     "context-menu": {
-      "link": "Link data container"
+      "link": "Link Data Container"
     },
     "digitaltwins": "Twins",
     "dispatcher": {
-      "create": "Digital twin creation",
+      "create": "Digital Twin creation",
       "digitaltwin": {
-        "create": "Creating Digital twin",
-        "save": "Creating Digital twin"
+        "create": "Creating Digital Twin",
+        "save": "Creating Digital Twin"
       },
       "favorite": {
-        "add": "Digital twin is stored as a favorite",
-        "remove": "Digital twin is removed from favorites"
+        "add": "Digital Twin is stored as a favorite",
+        "remove": "Digital Twin is removed from favorites"
       }
     },
     "empty-navigation": "No entries available",
     "generalForm": {
       "create": "Create",
       "description": {
-        "desc": "Short description for the digital Twin",
+        "desc": "Short description for the Digital Twin",
         "title": "Description"
       },
       "my-new-twin": "New Digital Twin",
@@ -111,23 +111,23 @@ export default {
     },
     "in-creation": "Creating Digital Twin...",
     "left-categories": {
-      "container-overview": "Data container overview",
+      "container-overview": "Data Container overview",
       "containers": {
-        "desc": "All data containers associated with the digital Twin",
-        "title": "Data containers"
+        "desc": "All Data Containers associated with the Digital Twin",
+        "title": "Data Containers"
       },
       "digitaltwin-details": {
-        "desc": "General information about the digital Twin.",
+        "desc": "General information about the Digital Twin.",
         "title": "Digital Twin"
       },
-      "digitaltwin-overview": "Favorites & last digitaltwins",
+      "digitaltwin-overview": "Favorites & last Digital Twins",
       "general": "General information",
       "my-digitaltwins": {
-        "desc": "Overview of my Digital Twins.",
+        "desc": "Overview of my Digital Twins",
         "title": "Digital Twins"
       },
       "my-templates": {
-        "desc": "Last templates or create new ones",
+        "desc": "Recent templates or create new ones",
         "title": "My Templates"
       },
       "open-digitaltwin": "Open Digital Twin",
@@ -136,26 +136,26 @@ export default {
     },
     "lookup": {
       "address": {
-        "desc": "Enter the address of your digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
+        "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
-        "title": "Address of your digital twin"
+        "title": "Address of your Digital Twin"
       },
       "already-registered": {
         "desc": "The specified address is not available.",
         "title": "Not available"
       },
       "create": {
-        "action": "Create digital Twin",
-        "desc": "There is no digital Twin yet for this address. Would you like to create a new one for this address?",
+        "action": "Create Digital Twin",
+        "desc": "There is no Digital Twin yet for this address. Would you like to create a new one for this address?",
         "title": "Not available"
       },
-      "description": "Using the following input field, it is possible for you to verify an address for a digital Twin. If an instance already exists there, it will be opened directly for you. If the address is not yet assigned, you can create a new digital Twin and bind it to this address or link an existing one to this address.",
+      "description": "Using the following input field, it is possible for you to verify an address for a Digital Twin. If an instance already exists there, it will be opened directly for you. If the address is not yet assigned, you can create a new Digital Twin and bind it to this address or link an existing one to this address.",
       "error": {
-        "desc": "The requested address does not contain a valid digital Twin. Please check your input.",
+        "desc": "The requested address does not contain a valid Digital Twin. Please check your input.",
         "title": "Error"
       },
       "missing-balance": {
-        "desc": "Before you can create a Digital Twin, you must have purchased the address provided. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
+        "desc": "Before you can create a Digital Twin, you must have purchased the address. You can buy this address for <b>{ensPrice} EVE</b>, but you only have {balance} EVE. Please top up your account to continue",
         "title": "Address available"
       },
       "not-buyable": {
@@ -171,16 +171,16 @@ export default {
       "title": "Open Digital Twin"
     },
     "map-ens": {
-      "description": "Using the previous input field, you can check and select a domain for a digital twin.",
+      "description": "Using the previous input field, you can check and select a domain for a Digital Twin.",
       "title": "Bind a Digital Twin to a Domain Name"
     },
     "startup": "What would you like to start with?",
-    "unlock-digitaltwin-panel": "<b>The opened digital Twin is in creation.</b><br><br>Please finish creation to unlock the page navigation.",
+    "unlock-digitaltwin-panel": "<b>This Digital Twin is being created.</b><br><br>Please finish creation to see the page navigation.",
     "verifications": {
-      "description": "Each digital twin and data container can be automatically verified. The user interface is currently under development.",
+      "description": "Each Digital Twin and Data Container can be automatically verified. The user interface is currently under development.",
       "title": "Verifications"
     },
-    "welcome": "Welcome to the digital Twin management"
+    "welcome": "Welcome to the Digital Twin management"
   }
 }
 /* tslint:enable */;
