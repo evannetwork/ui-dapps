@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import validators from '../../../validators';
+import { validators, parser, } from '../../../fields';
 import * as utils from '../../../utils';
 
 interface FieldFormInterface extends EvanForm {
@@ -47,7 +47,9 @@ export default class FieldComponent extends mixins(EvanComponent) {
   /**
    * list of available modes (schema / edit / view)
    */
-  @Prop() modes: Array<string>;
+  @Prop({
+    default: [ ]
+  }) modes: Array<string>;
 
   /**
    * schema / edit / view
@@ -75,26 +77,37 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() fieldName: string;
 
   /**
+   * hide borders, buttons, ...
+   */
+  @Prop() integrated: boolean;
+
+  /**
+   * Force standalone mode
+   */
+  @Prop() standalone: boolean;
+
+  /**
    * formular specific variables
    */
   fieldForm: FieldFormInterface = null;
 
   /**
-   * is the field standalone? (When no form was applied on startup)
+   * field is automatically standalone, when no form was applied or standalone is explicit set to
+   * true
    */
-  standalone = false;
+  _standalone = false;
 
   /**
    * Set the field form, if no form was applied
    */
   created() {
-    this.standalone = !this.form;
+    this._standalone = typeof this.standalone !== 'undefined' ? this.standalone : !this.form;
     this.fieldForm = this.form || (<FieldFormInterface>new EvanForm(this, {
       value: {
         value: this.value,
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
           utils.enableDTSave();
-          return validators[vueInstance.type](vueInstance, form);
+          return validators[vueInstance.type](this, vueInstance, form);
         }
       },
     }));
@@ -106,8 +119,8 @@ export default class FieldComponent extends mixins(EvanComponent) {
   beforeDestroy() {
     // in standalone mode, populate the value to the parents component, else the value is handled by
     // the parents form
-    if (this.standalone) {
-      this.$emit('update:value', this.fieldForm.value.value);
+    if (!this.form) {
+      this.$emit('update:value', parser[this.type](this.fieldForm.value.value));
     }
   }
 }

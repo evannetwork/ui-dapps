@@ -137,7 +137,6 @@ export default {
       "canel-list-entry": "Cancel",
       "data": "Data",
       "load-more": "Load more...",
-      "new": "neu",
       "results": "Results",
       "show-more": "Show more",
       "show-less": "Show less"

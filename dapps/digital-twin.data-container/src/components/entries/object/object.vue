@@ -38,7 +38,7 @@
 
       <span class="mx-auto"></span>
 
-      <div class="spinner-border spinner-border-sm text-light mr-3"
+      <div class="spinner-border spinner-border-sm mr-3"
         v-if="$store.state.saving">
       </div>
       
@@ -57,6 +57,7 @@
     </div>
     <div>
       <dt-ajv
+        ref="ajvComp"
         :enableValue="true"
         :mode="mode"
         :properties="entry.dataSchema.properties"
@@ -66,6 +67,7 @@
       <div class="footer"
         v-if="mode === 'schema' || mode === 'edit'">
         <button class="btn btn-primary btn-rounded"
+          :disabled="!$refs.ajvComp.isValid"
           @click="mode = 'view'">
           {{ '_datacontainer.ajv.save' | translate }}
           <i class="mdi mdi-arrow-right label ml-2"></i>

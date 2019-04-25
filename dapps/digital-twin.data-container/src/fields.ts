@@ -28,21 +28,43 @@
 import Vue from 'vue';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
+/**
+ * Validator functions for each field type.
+ */
 const validators = {
-  string: (vueInstance: Vue, form: EvanForm) => {
+  string: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
+    return field.value &&
+      field.value.trim().length !== 0;
+  },
+  files: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
     return true;
   },
-  files: (vueInstance: Vue, form: EvanForm) => {
+  images: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
     return true;
   },
-
-  images: (vueInstance: Vue, form: EvanForm) => {
-    return true;
-  },
-
-  number: (vueInstance: Vue, form: EvanForm) => {
-    return true;
+  number: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
+    return field.value &&
+      field.value.trim().length !== 0 &&
+      !isNaN(parseFloat(field.value));
   },
 };
 
-export default validators;
+/**
+ * Parser for field values.
+ */
+const parser = {
+  string: (value: string) => {
+    return value.trim();
+  },
+  files: (value: string) => {
+    return value;
+  },
+  images: (value: string) => {
+    return value;
+  },
+  number: (value: string) => {
+    return parseFloat(value);
+  },
+}
+
+export { validators, parser };

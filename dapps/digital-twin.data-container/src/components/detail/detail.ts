@@ -197,7 +197,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
         value: this.description.name,
         validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
           vueInstance.enableSave = true;
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
       description: {
@@ -223,7 +223,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
       subject: {
         value: subject,
         validate: function(vueInstance: DetailComponent, form: ShareFormInterface) {
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
     }));
@@ -234,7 +234,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
   /**
    * Trigger the digital twin save
    */
-  async saveDt() {
+  async saveContainer() {
     if (!this.$store.state.saving && this.dbcpForm.isValid) {
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
       // opened ajv editor is saved
@@ -254,7 +254,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
         });
 
         await (new ContainerCache(runtime.activeAccount)).delete(this.$route.params.containerAddress);
-        (<any>this.$refs.dbcpModal).hide();
+        (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
         this.loading = false;
       });
     }

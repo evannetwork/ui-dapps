@@ -44,7 +44,8 @@ export default {
       "overview": "Favorites & last Digital Twins",
       "template": "Template",
       "templates": "Templates",
-      "verifications": "Verifications"
+      "verifications": "Verifications",
+      "general": "General Information"
     },
     "containerlink": {
       "address": {

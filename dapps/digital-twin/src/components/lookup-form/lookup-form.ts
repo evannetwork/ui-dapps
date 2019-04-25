@@ -133,7 +133,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
       address: {
         value: this.address || '',
         validate: function(vueInstance: LookupComponent, form: LookupFormInterface) {
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
     }));

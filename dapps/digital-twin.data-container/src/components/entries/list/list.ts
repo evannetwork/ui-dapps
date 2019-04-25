@@ -131,8 +131,13 @@ export default class EntryListComponent extends mixins(EvanComponent) {
 
     // wait until the field is removed from dom and beforeDestroy handler has updated the value
     this.$nextTick(() => {
+      // add the new value
       this.entry.value.unshift((<any>this).entry.addValue);
-      (<any>this).entry.addValue = this.entry.dataSchema.items.type === 'object' ? { } : '';
+
+      // set it to null to force addValue reset
+      (<any>this).entry.addValue = null;
+      // add correct default values
+      utils.ensureEntryValues((<any>this).entry);
     });
   }
 

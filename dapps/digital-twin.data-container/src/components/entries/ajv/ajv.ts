@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import validators from '../../../validators';
+import { validators } from '../../../fields';
 import * as utils from '../../../utils';
 
 interface FieldFormInterface extends EvanForm {
@@ -86,6 +86,14 @@ export default class AJVComponent extends mixins(EvanComponent) {
     // 'images',
   ];
 
+  /**
+   * Are all field forms valid?
+   */
+  isValid = false;
+
+  /**
+   * Setup all field properties
+   */
   created() {
     // map the initial schema to formulars
     Object
@@ -126,24 +134,31 @@ export default class AJVComponent extends mixins(EvanComponent) {
     this.forms.push(<FieldFormInterface>new EvanForm(this, {
       name: {
         value: property,
-        validate: function(vueInstance: AJVComponent, form: EvanForm) {
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           utils.enableDTSave();
-          return this.value.length !== 0;
+          vueInstance.checkFormValidity();
+          return this.value.trim().length !== 0;
         }
       },
       type: {
         value: type,
-        validate: function(vueInstance: AJVComponent, form: EvanForm) {
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           utils.enableDTSave();
-          return this.value.length !== 0;
+          vueInstance.checkFormValidity();
+
+          // force value evaluation
+          form.value.value = form.value.value;
+
+          return this.value.trim().length !== 0;
         }
       },
       value: {
         value: value,
-        validate: function(vueInstance: AJVComponent, form: EvanForm) {
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           utils.enableDTSave();
+          vueInstance.checkFormValidity();
           // map the value top the correct dynamic type validator
-          return validators[(<any>form).type.value](vueInstance, form);
+          return validators[(<any>form).type.value](this, vueInstance, form);
         }
       },
     }));
@@ -154,6 +169,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
       const focusInput: any = nameInputs[nameInputs.length - 2];
 
       focusInput && focusInput.focus();
+      this.checkFormValidity();
     });
   }
 
@@ -166,5 +182,15 @@ export default class AJVComponent extends mixins(EvanComponent) {
     utils.enableDTSave();
 
     this.forms.splice(this.forms.indexOf(propertyForm), 1);
+    this.checkFormValidity();
+  }
+
+  /**
+   * Iterate through all forms and set the current form
+   */
+  checkFormValidity() {
+    this.$nextTick(() => {
+      this.isValid = !this.forms.some((form: FieldFormInterface) => !form.isValid);
+    });
   }
 }

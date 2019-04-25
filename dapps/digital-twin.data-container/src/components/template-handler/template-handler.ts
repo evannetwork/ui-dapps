@@ -133,7 +133,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
       name: {
         value: '',
         validate: function(vueInstance: TemplateHandlerComponent, form: EntryFormInterface) {
-          return this.value.length !== 0 && !vueInstance.template.properties[this.value];
+          return this.value.trim().length !== 0 && !vueInstance.template.properties[this.value];
         }
       },
       type: {
@@ -349,27 +349,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * @param      {any}  entry   the entry that should be checked
    */
   ensureEntryValues() {
-    switch (this.activeEntry.dataSchema.type) {
-      // add an empty value list and an addValue object, the addValue object is used for new
-      case 'array': {
-        this.activeEntry.value = this.activeEntry.value || [ ];
-        this.activeEntry.addValue = this.activeEntry.addValue ||
-          (this.activeEntry.dataSchema.items.type === 'object' ? { } : '');
-        break;
-      }
-      case 'object': {
-        this.activeEntry.value = this.activeEntry.value || { };
-        break;
-      }
-      case 'string': {
-        this.activeEntry.value = this.activeEntry.value || '';
-        break;
-      }
-      case 'number': {
-        this.activeEntry.value = this.activeEntry.value || 0;
-        break;
-      }
-    }
+    utils.ensureEntryValues(this.activeEntry);
 
     // redefine the object and bind new watchers
     this.activeEntry = { ...this.activeEntry };

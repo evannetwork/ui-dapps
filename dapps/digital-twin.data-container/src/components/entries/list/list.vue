@@ -69,20 +69,24 @@
     </div>
     <div>
       <template v-if="mode === 'schema'">
-        <dt-ajv
-          v-if="entry.dataSchema.items.type === 'object'"
-          :enableValue="false"
-          :mode="mode"
-          :properties="entry.dataSchema.items.properties">
-        </dt-ajv>
-        
-        <div class="footer">
-          <button class="btn btn-primary btn-rounded"
-            @click="mode = 'view'">
-            {{ '_datacontainer.ajv.save' | translate }}
-            <i class="mdi mdi-arrow-right label ml-2"></i>
-          </button>
-        </div>
+        <template v-if="entry.dataSchema.items.type === 'object'">
+          <dt-ajv
+            ref="ajvComp"
+            :enableValue="false"
+            :mode="mode"
+            :properties="entry.dataSchema.items.properties">
+          </dt-ajv>
+          <!-- 
+          {{ Object.keys($refs) }}
+          <div class="footer" v-if="$refs.ajvComp">
+            <button class="btn btn-primary btn-rounded"
+              :disabled="!$refs.ajvComp.isValid"
+              @click="mode = 'view'">
+              {{ '_datacontainer.ajv.save' | translate }}
+              <i class="mdi mdi-arrow-right label ml-2"></i>
+            </button>
+          </div> -->
+        </template>
       </template>
       <template v-else>
         <template v-if="!addListEntry">
@@ -126,14 +130,16 @@
                       </template>
                     </button>
                   </template>
-                  <template v-else></template>
+                  <dt-field v-else
+                    :mode="'view'"
+                    :type="entry.dataSchema.items.type"
+                    :value.sync="listEntry"
+                    :standalone="false">
+                  </dt-field>
                 </td>
                 <td class="text-primary flex-grow-0"
                   style="white-space: nowrap;">
                   <template v-if="entry.value.indexOf(listEntry) !== -1">
-                    <span>
-                      {{ '_datacontainer.list.new' | translate }}
-                    </span>
                     <i class="mdi mdi-delete clickable"
                       :disabled="$store.state.saving"
                       @click="entry.value.splice(index, 1)">
@@ -170,7 +176,8 @@
             v-else
             :mode="'edit'"
             :type="entry.dataSchema.items.type"
-            :value.sync="entry.addValue">
+            :value.sync="entry.addValue"
+            :integrated="true">
           </dt-field>
 
           <div class="footer" v-if="addListEntry">

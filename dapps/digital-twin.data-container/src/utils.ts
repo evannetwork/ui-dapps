@@ -204,3 +204,37 @@ export async function getMyTemplates(runtime: bcc.Runtime) {
 
   return templates;
 }
+
+/**
+ * Takes an entry and checks for type array. If it's an array, ensure, that the value array and an
+ * addValue object is added. Per default, this values are not returned by the API, templates does
+ * not support list entries export and must be load dynamically. The value array is used to handle
+ * new arrays, that will be persisted for caching to the indexeddb like the normal entries
+ *
+ * @param      {any}     entry   the entry that should be checked
+ */
+export function ensureEntryValues(entry: any) {
+  switch (entry.dataSchema.type) {
+    // add an empty value list and an addValue object, the addValue object is used for new
+    case 'array': {
+      entry.value = entry.value || [ ];
+      entry.addValue = entry.addValue ||
+        ensureEntryValues({ dataSchema: { type: entry.dataSchema.items.type } }).value;
+      break;
+    }
+    case 'object': {
+      entry.value = entry.value || { };
+      break;
+    }
+    case 'string': {
+      entry.value = entry.value || '';
+      break;
+    }
+    case 'number': {
+      entry.value = entry.value || 0;
+      break;
+    }
+  }
+
+  return entry;
+}

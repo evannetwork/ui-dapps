@@ -111,13 +111,13 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
       name: {
         value: '',
         validate: function(vueInstance: ContainerLinkComponent, form: ContainerLinkFormInterface) {
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
       address: {
         value: this.containerAddress || '',
         validate: function(vueInstance: ContainerLinkComponent, form: ContainerLinkFormInterface) {
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
     }));

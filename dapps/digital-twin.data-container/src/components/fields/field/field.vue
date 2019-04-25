@@ -26,11 +26,9 @@
 */
 
 <template>
-  <div :class="{ 'standalone': 'white-box border rounded' }"
-    style="display: inline;">
-    <div class="header"
-      :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'"
-      v-if="standalone">
+  <div :class="{ 'white-box border rounded': _standalone && !integrated }"
+    :style="_standalone ? '' : 'display: inline'">
+    <div class="header" v-if="_standalone && !integrated">
       <h3 class="m-0 font-weight-semibold" v-if="mode === 'view'">
         {{ `_datacontainer.types.${ type }` | translate }}: {{ fieldName }}
       </h3>
@@ -45,7 +43,7 @@
       </div>
       
       <template v-else>
-        <template v-if="modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1">
+        <template v-if="modes && modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1">
           <button type="button" class="btn btn-outline-secondary btn-circle"
             v-if="mode === 'view'"
             @click="mode = 'edit'">
@@ -54,20 +52,23 @@
         </template>
       </template>
     </div>
-    <div :class="{ 'p-3': standalone }"
-      style="display: inline;">
-      <dt-field-files v-if="type === 'files'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-files>
-      <dt-field-images v-if="type === 'images'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-images>
-      <dt-field-number v-if="type === 'number'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-number>
-      <dt-field-string v-if="type === 'string'" :control="fieldForm.value" :mode="mode" :standalone="standalone"></dt-field-string>
-
-      <div class="footer" v-if="standalone && !$store.state.saving && mode !== 'view'">
-        <button class="btn btn-primary btn-rounded"
-          @click="mode = 'view'">
-          {{ '_datacontainer.ajv.save' | translate }}
-          <i class="mdi mdi-arrow-right label ml-2"></i>
-        </button>
-      </div>
+    <div
+      :class="{ 'content': _standalone }"
+      :style="_standalone ? '' : 'display: inline'">
+      <component
+        :is="`dt-field-${ type }`"
+        :control="fieldForm.value"
+        :mode="mode"
+        :standalone="_standalone">
+      </component>
+    </div>
+    <div class="footer" v-if="_standalone && !integrated && !$store.state.saving && mode !== 'view'">
+      <button class="btn btn-primary btn-rounded"
+        :disabled="!fieldForm.isValid"
+        @click="mode = 'view'">
+        {{ '_datacontainer.ajv.save' | translate }}
+        <i class="mdi mdi-arrow-right label ml-2"></i>
+      </button>
     </div>
   </div>
 </template>

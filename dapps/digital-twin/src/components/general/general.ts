@@ -87,7 +87,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
           vueInstance.uiDT.setData('dbcp.name', this.value);
 
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
       description: {

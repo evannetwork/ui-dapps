@@ -182,7 +182,7 @@ export default class TemplateComponent extends mixins(EvanComponent) {
         value: this.description.name,
         validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
           vueInstance.enableSave = true;
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
       description: {
@@ -208,7 +208,7 @@ export default class TemplateComponent extends mixins(EvanComponent) {
       subject: {
         value: subject,
         validate: function(vueInstance: TemplateComponent, form: ShareFormInterface) {
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
     }));

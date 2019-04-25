@@ -196,7 +196,7 @@
               </evan-dropdown>
             </div>
             <button type="button" class="btn btn-primary btn-rounded"
-              @click="saveDt()"
+              @click="saveContainer()"
               :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
               {{ '_datacontainer.createForm.save' | translate }}
               <i class="mdi mdi-content-save label"></i>
@@ -210,7 +210,7 @@
             </h5>
           </template>
           <template v-slot:body>
-            <form v-on:submit.prevent="saveDt">
+            <form v-on:submit.prevent="saveContainer">
               <div class="form-group">
                 <label for="name">
                   {{ `_datacontainer.createForm.name.title` | translate }}
@@ -243,7 +243,7 @@
             <evan-loading v-if="$store.state.saving"></evan-loading>
             <button type="submit"
               v-else
-              @click="saveDt()"
+              @click="saveContainer()"
               class="btn btn-rounded btn-primary"
               :disabled="!dbcpForm.isValid">
               {{ `_datacontainer.createForm.save` | translate }}

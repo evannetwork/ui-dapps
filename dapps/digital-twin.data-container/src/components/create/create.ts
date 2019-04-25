@@ -126,7 +126,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
       name: {
         value: '',
         validate: function(vueInstance: CreateComponent, form: CreateInterface) {
-          return this.value.length !== 0;
+          return this.value.trim().length !== 0;
         }
       },
       description: {
