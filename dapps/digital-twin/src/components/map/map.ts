@@ -45,14 +45,95 @@ interface LookupFormInterface extends EvanForm {
 @Component({ })
 export default class MapComponent extends mixins(EvanComponent) {
   /**
+   * Watch if the current contract address is binding
+   */
+  watchForBinding: Function;
+
+  /**
+   * Switch the texts for the current lookup modal.
+   */
+  lookupModalScope = '';
+
+  /**
+   * Address that was returned by the lookup form
+   */
+  ensAddress: string;
+
+  /**
+   * gets this digital twin bind to a ens address?
+   */
+  binding = false;
+
+  /**
+   * Watch for updates
+   */
+  created() {
+    const watchForBinding = async ($event?: CustomEvent) => {
+      const ensAddresses = (await dispatchers.mapEnsDispatcher
+        .getInstances(getRuntime(this)))
+        .filter((inst: any) =>
+          inst.data.contractAddress === this.$route.params.digitalTwinAddress
+        )
+        .map((inst: any) => inst.data.ensAddress);
+
+      // set binding and ens address status
+      this.binding = ensAddresses.length > 0;
+      if (this.binding) {
+        this.ensAddress = ensAddresses[0];
+      }
+
+      if ($event) {
+        // when the synchronisation has finished, navigate to the correct entry
+        const instance = $event.detail.instance;
+        if (!this.binding && instance.status === 'finished') {
+          (<any>this).evanNavigate(instance.data.ensAddress);
+        }
+      }
+    };
+
+    watchForBinding();
+    this.watchForBinding = dispatchers.mapEnsDispatcher.watch(watchForBinding);
+  }
+
+  /**
+   * Remove watch binding listener.
+   */
+  beforeDestroy() {
+    this.watchForBinding && this.watchForBinding();
+  }
+
+  /**
    * Takes the twin address from the lookup form component and opens it.
    *
    * @param      {any}  eventResult  twin address that should be opened
    */
   openTwin(eventResult: any) {
-    (<any>this).evanNavigate([
-      `digitaltwin.${ (<any>this).dapp.domainName }`,
-      eventResult.address
-    ].join('/'));
+    if (eventResult.status === 'open') {
+      if (eventResult.validity.valid) {
+        this.lookupModalScope = 'exists';
+        this.ensAddress = '';
+      } else if (
+        eventResult.validity.error &&
+        eventResult.validity.error.message.indexOf('contract address null') !== -1) {
+        this.ensAddress = eventResult.address;
+        this.lookupModalScope = 'available';
+      }
+
+      (<any>this).$refs.lookupModal.show();
+    } else {
+      this.ensAddress = '';
+    }
+  }
+
+  /**
+   * Map the twin to the specific ens address.
+   */
+  mapEns() {
+    dispatchers.mapEnsDispatcher.start(getRuntime(this), {
+      ensAddress: this.ensAddress,
+      contractAddress: this.$route.params.digitalTwinAddress,
+    });
+
+    (<any>this).$refs.lookupModal.hide();
   }
 }

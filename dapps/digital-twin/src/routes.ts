@@ -46,7 +46,8 @@ const dtPath = (path) => `:digitalTwinAddress/${ path }`;
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'dt-container-link',    component: ContainerLinkComponent,            path: 'containerlink/:containerAddress?' },
   { name: 'dt-create',            component: DigitalTwinGeneralComponent,       path: `dt-create`, },
-  { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: `:digitalTwinAddress`, },
+  { name: 'dt-general',           redirect: { path: dtPath('general') },        path: `:digitalTwinAddress`, },
+  { name: 'dt-map',               component: DigitalTwinGeneralComponent,       path: dtPath('general'), },
   { name: 'dt-map',               component: MapComponent,                      path: dtPath('map'), },
   { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
   { name: 'dt-containers',        component: ContainersComponent,               path: dtPath('containers'), },

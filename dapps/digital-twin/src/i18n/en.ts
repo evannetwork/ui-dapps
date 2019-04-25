@@ -36,15 +36,15 @@ export default {
       "containers": "Data container overview",
       "create-template": "Create Template",
       "datacontainer.digitaltwin": "Data Container",
+      "digitaltwin": "Digital Twin",
       "digitaltwins": "Digital Twins",
       "dt-create": "Create Digital Twin",
       "lookup": "Open",
+      "map": "Bind to domain name",
       "overview": "Favorites & last Digital Twins",
       "template": "Template",
       "templates": "Templates",
-      "verifications": "Verifications",
-      "digitaltwin": "Digital Twin",
-      "map": "Bind to domain name"
+      "verifications": "Verifications"
     },
     "containerlink": {
       "address": {
@@ -80,6 +80,7 @@ export default {
     },
     "digitaltwins": "Twins",
     "dispatcher": {
+      "binding": "Digital twin is bound to domain...",
       "create": "Digital Twin creation",
       "digitaltwin": {
         "create": "Creating Digital Twin",
@@ -88,26 +89,27 @@ export default {
       "favorite": {
         "add": "Digital Twin is stored as a favorite",
         "remove": "Digital Twin is removed from favorites"
-      }
+      },
+      "map-ens": "Bind Digital Twin to domain"
     },
     "empty-navigation": "No entries available",
     "generalForm": {
+      "add-favorite": "Add as favorite",
       "create": "Create",
       "description": {
         "desc": "Short description for the Digital Twin",
         "title": "Description"
       },
+      "map-to-ens": "Bind to domain name",
       "my-new-twin": "New Digital Twin",
       "name": {
         "desc": "Name of the Digital Twin",
         "error": "Please provide a name!",
         "title": "Name"
       },
-      "save": "Save",
-      "title": "Metadata",
       "remove-favorite": "Remove from favorites",
-      "add-favorite": "Add as favorite",
-      "map-to-ens": "Bind to domain name"
+      "save": "Save",
+      "title": "Metadata"
     },
     "in-creation": "Creating Digital Twin...",
     "left-categories": {
@@ -151,7 +153,7 @@ export default {
       },
       "description": "Using the following input field, it is possible for you to verify an address for a Digital Twin. If an instance already exists there, it will be opened directly for you. If the address is not yet assigned, you can create a new Digital Twin and bind it to this address or link an existing one to this address.",
       "error": {
-        "desc": "The requested address does not contain a valid Digital Twin. Please check your input.",
+        "desc": "The requested address is already assigned or does not contain a valid Digital Twin. Please check your input.",
         "title": "Error"
       },
       "missing-balance": {
@@ -171,7 +173,20 @@ export default {
       "title": "Open Digital Twin"
     },
     "map-ens": {
+      "check-ens": "Check Domain",
       "description": "Using the previous input field, you can check and select a domain for a Digital Twin.",
+      "ens": "Domain address",
+      "modal": {
+        "available": {
+          "action": "Bind Digital Twin",
+          "desc": "The given address is available. Do you want to bind this Digital Twin to this address?",
+          "title": "Domain available"
+        },
+        "exists": {
+          "desc": "The specified domain is already assigned.",
+          "title": "Assign domain"
+        }
+      },
       "title": "Bind a Digital Twin to a Domain Name"
     },
     "startup": "What would you like to start with?",

@@ -36,15 +36,15 @@ export default {
       "containers": "Daten Container Übersicht",
       "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
+      "digitaltwin": "Digitaler Zwilling",
       "digitaltwins": "Digitale Zwillinge",
       "dt-create": "Digitalen Zwilling erstellen",
       "lookup": "Öffnen",
+      "map": "An Domainnamen binden",
       "overview": "Favoriten & letzte Zwillinge",
       "template": "Vorlage",
       "templates": "Vorlagen",
-      "verifications": "Verifizierungen",
-      "digitaltwin": "Digitaler Zwilling",
-      "map": "An Domainnamen binden"
+      "verifications": "Verifizierungen"
     },
     "containerlink": {
       "address": {
@@ -80,6 +80,7 @@ export default {
     },
     "digitaltwins": "Digitale Zwillinge",
     "dispatcher": {
+      "binding": "Digitaler Zwilling wird an Domain gebunden...",
       "create": "Digitaler Zwilling wird erstellt",
       "digitaltwin": {
         "create": "Digitaler Zwilling wird erstellt",
@@ -88,26 +89,27 @@ export default {
       "favorite": {
         "add": "Digitaler Zwilling wird als Favorit gespeichert",
         "remove": "Digitaler Zwilling wird aus den Favoriten entfernt"
-      }
+      },
+      "map-ens": "Digitalen Zwilling an Domain binden"
     },
     "empty-navigation": "Keine Einträge verfügbar",
     "generalForm": {
+      "add-favorite": "Als Favorit hinzufügen",
       "create": "Erstellen",
       "description": {
         "desc": "Kurze Beschreibung des digitalen Zwillings.",
         "title": "Beschreibung"
       },
+      "map-to-ens": "An Domainnamen binden",
       "my-new-twin": "Neuer Digitaler Zwilling",
       "name": {
         "desc": "Name des digitalen Zwillings.",
         "error": "Bitte geben Sie einen Namen ein!",
         "title": "Name"
       },
-      "save": "Speichern",
-      "title": "Metadaten",
       "remove-favorite": "Als Favorit entfernen",
-      "add-favorite": "Als Favorit hinzufügen",
-      "map-to-ens": "An Domainnamen binden"
+      "save": "Speichern",
+      "title": "Metadaten"
     },
     "in-creation": "In Erstellung...",
     "left-categories": {
@@ -171,8 +173,21 @@ export default {
       "title": "Digitalen Zwilling Öffnen"
     },
     "map-ens": {
-      "description": "Über das Eingabefeld ist es Ihnen möglich, eine Domain für einen digitalen Zwilling zu überprüfen und auszuwählen.",
-      "title": "Digitalen Zwilling an Domain Namen binden"
+      "check-ens": "Domain überprüfen",
+      "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Domain für einen digitale Zwilling zu überprüfen und auszuwählen.",
+      "ens": "Domain Addresse",
+      "modal": {
+        "available": {
+          "action": "Digitalen Zwilling binden",
+          "desc": "Die angegeben Adresse ist verfügbar. Wollen Sie diesen Digitalen Zwilling auf diese Adresse binden?",
+          "title": "Domain verfügbar"
+        },
+        "exists": {
+          "desc": "Die angegeben Domain ist bereits vergeben.",
+          "title": "Domain vergeben"
+        }
+      },
+      "title": "Digitalen Zwilling auf Domainnamen binden"
     },
     "startup": "Womit möchten Sie starten?",
     "unlock-digitaltwin-panel": "<b>Der geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung ab, um die Seitennavigation freizuschalten.",

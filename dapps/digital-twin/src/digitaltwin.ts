@@ -139,7 +139,7 @@ export default class EvanUIDigitalTwin {
         name: 'digitaltwin-details',
         active: true,
         children: [
-          { name: 'general', path: address, i18n: true },
+          { name: 'general', path: `${ address }/general`, i18n: true },
           { name: 'verifications', path: `${ address }/verifications`, i18n: true }
         ]
       },

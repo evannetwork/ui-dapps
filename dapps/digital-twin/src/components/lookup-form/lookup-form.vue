@@ -62,7 +62,7 @@
             <div class="d-flex align-items-start">
               <div class="form-group flex-grow-1">
                 <label for="address">
-                  {{ `_digitaltwins.lookup.address.title` | translate }}
+                  {{ titleText | translate }}
                 </label>
                 <input class="form-control" required
                   id="address" ref="address"
@@ -95,11 +95,11 @@
             class="btn btn-rounded btn-primary"
             @click="checkAddress()"
             :disabled="!lookupForm.isValid || checking">
-            {{ `_digitaltwins.lookup.title` | translate }}
-            <i class="mdi mdi-arrow-right label ml-3"></i>
+            {{ buttonText | translate }}
             <div class="spinner-border spinner-border-sm text-light mr-3"
               v-if="checking">
             </div>
+            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>
         </div>
       </template>

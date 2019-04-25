@@ -46,52 +46,8 @@
           <evan-loading v-if="loading"></evan-loading>
           <div class="p-3 d-md-flex flex-wrap justify-content-center"
             v-if="!loading">
-            <div class="favorite position-relative
-                col-md-4 col-lg-3 col-xl-2
-                p-0 m-md-3 mb-3 
-                text-center
-                bg-level-1 border evan-highlight"
-              style="min-width: 250px"
-              v-for="(favorite, index) in favorites"
-              @click="openFavorite(favorite)">
-              <img class="img-fluid p-3"
-                style="max-width: 200px; min-height: 200px;"
-                :src="favorite.imgSquare">
-
-              <div class="text-left p-3 border-top highlight">
-                <h5 class="font-weight-bold">{{ favorite.name }}</h5>
-                <small>{{ favorite.description }}</small>
-              </div>
-
-              <div class="top-right">
-                <div class="pt-1 pb-1 pr-2 pl-2" v-if="favorite.loading">
-                  <div class="spinner-border spinner-border-sm text-secondary"></div>
-                </div>
-                <div v-else>
-                  <div class="btn"
-                    @click="
-                      $refs.favoriteRemove[index].show();
-                      $event.stopPropagation()
-                    ">
-                    <i class="mdi mdi-dots-vertical"></i>
-                  </div>
-                  <evan-dropdown ref="favoriteRemove"
-                    :alignment="'right'"
-                    :width="'300px'">
-                    <template v-slot:content>
-                      <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
-                        @click="
-                          $refs.favoriteRemoveModal[index].show($event);
-                          $refs.favoriteRemove[index].hide($event);
-                          $event.stopPropagation();
-                        ">
-                        <i class="mdi mdi-delete mr-3`" style="width: 16px;"></i>
-                        {{ `_favorites.remove` | translate }}
-                      </a>
-                    </template>
-                  </evan-dropdown>
-                </div>
-              </div>
+            <template
+              v-for="(favorite, index) in favorites">
               <evan-modal ref="favoriteRemoveModal">
                 <template v-slot:header>
                   <h5 class="modal-title">
@@ -114,7 +70,53 @@
                   </button>
                 </template>
               </evan-modal>
-            </div>
+              <div class="favorite position-relative
+                  col-md-4 col-lg-3 col-xl-2
+                  p-0 m-md-3 mb-3 
+                  text-center
+                  bg-level-1 border evan-highlight"
+                style="min-width: 250px"
+                @click="openFavorite(favorite)">
+                <img class="img-fluid p-3"
+                  style="max-width: 200px; min-height: 200px;"
+                  :src="favorite.imgSquare">
+
+                <div class="text-left p-3 border-top highlight">
+                  <h5 class="font-weight-bold">{{ favorite.name }}</h5>
+                  <small>{{ favorite.description }}</small>
+                </div>
+
+                <div class="top-right">
+                  <div class="pt-1 pb-1 pr-2 pl-2" v-if="favorite.loading">
+                    <div class="spinner-border spinner-border-sm text-secondary"></div>
+                  </div>
+                  <div v-else>
+                    <div class="btn"
+                      @click="
+                        $refs.favoriteRemove[index].show();
+                        $event.stopPropagation()
+                      ">
+                      <i class="mdi mdi-dots-vertical"></i>
+                    </div>
+                    <evan-dropdown ref="favoriteRemove"
+                      :alignment="'right'"
+                      :width="'300px'">
+                      <template v-slot:content>
+                        <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+                          @click="
+                            $refs.favoriteRemoveModal[index].show($event);
+                            $refs.favoriteRemove[index].hide($event);
+                            $event.stopPropagation();
+                          ">
+                          <i class="mdi mdi-delete mr-3`" style="width: 16px;"></i>
+                          {{ `_favorites.remove` | translate }}
+                        </a>
+                      </template>
+                    </evan-dropdown>
+                  </div>
+                </div>
+              </div>
+            </template>
           </div>
         </template>
         <transition name="fade" mode="out-in"
