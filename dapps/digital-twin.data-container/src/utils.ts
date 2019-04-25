@@ -28,6 +28,7 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
+import { templateDispatcher, templateShareDispatcher } from './dispatchers/registry';
 
 export const latestTwinKey = 'evan-last-digital-twins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
@@ -123,10 +124,6 @@ export function getContainer(runtime: bcc.Runtime, address: string): bcc.Contain
  * @param      {any}         newTemplate  new template definition that should be checked
  */
 export async function getEntryChanges(runtime: bcc.Runtime, address: string, newTemplate: any) {
-  const container = getContainer(runtime, address);
-  const description = await container.getDescription();
-  const template = await container.toTemplate(true);
-
   // analyse data and check, which data fields must be saved
   const changed = {
     saveDescription: false,
@@ -135,26 +132,75 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
     changed: false
   };
 
-  // check for integrity
-  Object.keys(newTemplate.properties).map((propertyKey: string) => {
-    const newProp = newTemplate.properties[propertyKey];
-    const originProp: any = template.properties[propertyKey] || { };
+  if (!address || address === 'create-template') {
+    changed.saveDescription = true;
+    changed.changed = true;
+    changed.entriesToSave = Object.keys(newTemplate.properties).map(propertyKey => propertyKey);
+  } else {
+    const container = getContainer(runtime, address);
+    const description = await container.getDescription();
+    const template = await container.toTemplate(true);
 
-    // schema has been changed
-    if (!deepEqual(originProp.dataSchema, newProp.dataSchema)) {
-      changed.saveDescription = true;
-      changed.changed = true;
-    }
+    // check for integrity
+    Object.keys(newTemplate.properties).map((propertyKey: string) => {
+      const newProp = newTemplate.properties[propertyKey];
+      const originProp: any = template.properties[propertyKey] || { };
 
-    // if it's not an entry, check for value equality
-    // if it's an list, check if new values were added
-    if ((newProp.type !== 'list' && !deepEqual(originProp.value, newProp.value)) ||
-        (newProp.type === 'list' && newProp.value && newProp.value.length > 0)) {
-      changed.entriesToSave.push(propertyKey);
-      changed.changed = true;
-    }
-  });
+      // schema has been changed
+      if (!deepEqual(originProp.dataSchema, newProp.dataSchema)) {
+        changed.saveDescription = true;
+        changed.changed = true;
+      }
+
+      // if it's not an entry, check for value equality
+      // if it's an list, check if new values were added
+      if ((newProp.type !== 'list' && !deepEqual(originProp.value, newProp.value)) ||
+          (newProp.type === 'list' && newProp.value && newProp.value.length > 0)) {
+        changed.entriesToSave.push(propertyKey);
+        changed.changed = true;
+      }
+    });
+  }
 
   return changed;
 }
 
+
+/**
+ * Return my templates and merge them with current running dispatchers.
+ *
+ * @param      {bccRuntime}  runtime  bcc runtime
+ */
+export async function getMyTemplates(runtime: bcc.Runtime) {
+  const templates: any = await bcc.Container.getContainerTemplates(runtime.profile);
+
+  // watch for new and sharing containers
+  const saving = await templateDispatcher.getInstances(runtime);
+  const sharing = await templateShareDispatcher.getInstances(runtime);
+
+  // apply saving templates
+  saving.forEach(instance => {
+    // template gets updated
+    if (instance.data.beforeName) {
+      delete templates[instance.data.beforeName];
+    }
+
+    templates[instance.data.name] = {
+      creating: !!instance.data.beforeName,
+      description: {
+        description: instance.data.description,
+        img: instance.data.img,
+        name: instance.data.name
+      },
+      loading: true,
+      template: instance.data.template,
+    };
+  });
+
+  // show loading for shared containers
+  sharing.forEach(instance => {
+    templates[instance.data.name].loading = true;
+  });
+
+  return templates;
+}

@@ -34,8 +34,9 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 import * as utils from './utils';
-
 import * as containerDispatchers from './dispatchers/registry';
+
+export * from './utils';
 export * from './dispatchers/registry';
 export { containerDispatchers, translations,  utils };
 

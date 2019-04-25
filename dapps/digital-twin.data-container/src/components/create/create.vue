@@ -27,9 +27,9 @@
 
 <template>
   <div>
-    <evan-breadcrumbs 
+    <evan-breadcrumbs
       :i18nScope="'_datacontainer.breadcrumbs'"
-      v-if="$route.name && !$route.name.startsWith('create-template')">
+      v-if="!hideBreadcrumbs">
     </evan-breadcrumbs>
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-else>

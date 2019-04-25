@@ -39,7 +39,6 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import EvanUIDigitalTwin from '../../digitaltwin';
 import * as identitityUtils from '../../utils';
 import * as dispatchers from '../../dispatchers/registy';
-import { getMyTemplates, getRuntime } from '../../utils';
 
 @Component({ })
 export default class TwinsRootComponent extends mixins(EvanComponent) {

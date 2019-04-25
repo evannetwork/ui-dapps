@@ -31,15 +31,12 @@
       v-on:loggedin="initialize()">
       <template v-slot:content>
         <template v-if="
-          $route.name === 'base-overview' ||
-          $route.name === 'base-templates' ||
-          $route.name === 'dt-lookup' ||
-          $route.name.startsWith('dt-template')
-          ">
+          $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 ||
+          $route.path.indexOf(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }`) !== -1
+        ">
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"></evan-dapp-wrapper-level-2>
           <evan-breadcrumbs
-            :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name !== 'dt-template' && $route.name !== 'dt-container'">
+            :i18nScope="'_digitaltwins.breadcrumbs'">
           </evan-breadcrumbs>
           <div class="evan-navigation-tabs">
             <div class="evan-tab bg-secondary"

@@ -92,14 +92,15 @@
         </div>
         <span class="mx-auto"></span>
         <div class="d-flex">
+          <div class="spinner-border spinner-border-sm"
+            v-if="saving">
+          </div>
           <button class="btn"
-            v-if="!saving"
+            v-else
             @click="$refs.containerContextMenu.show();">
-            <div class="spinner-border spinner-border-sm"
-              v-if="saving">
-            </div>
-            <i class="mdi mdi-chevron-down" v-else></i>
+            <i class="mdi mdi-chevron-down"></i>
           </button>
+
           <div class="position-relative">
             <evan-dropdown ref="containerContextMenu"
               :alignment="'right'"
@@ -123,7 +124,7 @@
                 </a>
                 <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                   @click="
-                    evanNavigate(`create/${ dapp.contractAddress }`)
+                    evanNavigate(`create/${ $route.params.template }`)
                     $refs.containerContextMenu.hide($event);
                   ">
                   <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>

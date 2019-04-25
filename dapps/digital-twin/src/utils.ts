@@ -93,45 +93,6 @@ export async function getDigitalTwinBaseDbcp(): Promise<any> {
 }
 
 /**
- * Return my templates and merge them with current running dispatchers.
- *
- * @param      {bccRuntime}  runtime  bcc runtime
- */
-export async function getMyTemplates(runtime: bcc.Runtime) {
-  const templates: any = await bcc.Container.getContainerTemplates(runtime.profile);
-
-  // watch for new and sharing containers
-  const saving = await containerDispatchers.templateDispatcher.getInstances(runtime);
-  const sharing = await containerDispatchers.templateDispatcher.getInstances(runtime);
-
-  // apply saving templates
-  saving.forEach(instance => {
-    // template gets updated
-    if (instance.data.beforeName) {
-      delete templates[instance.data.beforeName];
-    }
-
-    templates[instance.data.name] = {
-      creating: !!instance.data.beforeName,
-      description: {
-        description: instance.data.description,
-        img: instance.data.img,
-        name: instance.data.name
-      },
-      loading: true,
-      template: instance.data.template,
-    };
-  });
-
-  // show loading for shared containers
-  sharing.forEach(instance => {
-    templates[instance.data.name].loading = true;
-  });
-
-  return templates;
-}
-
-/**
  * Load the digitaltwin favorites for the current user.
  *
  * @param      {bcc.Runtime}  runtime  bcc runtime

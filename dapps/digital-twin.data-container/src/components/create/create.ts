@@ -100,12 +100,19 @@ export default class CreateComponent extends mixins(EvanComponent) {
   templateMode = false;
 
   /**
+   * Should the breadcrumbs be displayed? Hidden when evan-navigation tabs are visible
+   */
+  hideBreadcrumbs = false;
+
+  /**
    * Setup the form.
    */
   async created() {
     const runtime = utils.getRuntime(this);
     const splitHash = (<any>this).dapp.baseHash.split('/');
     const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
+
+    this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
 
     if (twinDAppIndex !== -1) {
       this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
@@ -133,29 +140,60 @@ export default class CreateComponent extends mixins(EvanComponent) {
       },
     }));
 
+    const templates = await utils.getMyTemplates(runtime);
+    Object.keys(templates).forEach((key: string) => {
+      this.templates.push({
+        title: templates[key].description.name,
+        type: templates[key].template.type,
+        properties: templates[key].template.properties,
+      });
+    });
+
     // check if a existing container should be cloned
-    if ((<any>this).$route.params.cloneContainer) {
+    const cloneContainer = (<any>this).$route.params.cloneContainer;
+    if (cloneContainer) {
       let template;
-      // when it's a contract that should be cloned, load a container instance
-      if (!this.templateMode || (<any>this).$route.params.cloneContainer.startsWith('0x')) {
-        const container = utils.getContainer(<any>runtime, (<any>this).$route.params.cloneContainer);
+
+      // if a template is available that should used to create a container / template, load the
+      // template
+      if (templates[cloneContainer]) {
+        const loadedTemplate = await bcc.Container.getContainerTemplate(runtime.profile,
+          cloneContainer);
+
+        // setup template and description
+        template = loadedTemplate.template;
+        this.createForm.name.value = loadedTemplate.description.name;
+        this.createForm.description.value = loadedTemplate.description.description;
+
+        // search for active template index
+        for (let i = 0; i < this.templates.length; i++) {
+          if (this.templates[i].title === cloneContainer) {
+            this.createForm.template.value = i;
+
+            break;
+          }
+        }
+
+        this.activeStep = 1;
+      } else if (cloneContainer.startsWith('0x')) {
+        const container = utils.getContainer(<any>runtime, cloneContainer);
         const description = await container.getDescription();
         template = await container.toTemplate(true);
 
         this.createForm.name.value = description.name;
         this.createForm.description.value = description.description;
-      // if we are running in template mode and a template should be cloned, load it from profile
-      } else {
-        const loadedTemplate = await bcc.Container.getContainerTemplate(runtime.profile,
-          (<any>this).$route.params.cloneContainer);
 
-        template = loadedTemplate.template;
-        this.createForm.name.value = loadedTemplate.description.name;
-        this.createForm.description.value = loadedTemplate.description.description;
+        // apply the contract as template
+        this.$set(this.templates, this.templates.length, {
+          title: description.name,
+          type: 'metadata',
+          template: template
+        });
+
+        // set correct template index
+        this.createForm.template.value = this.templates.length - 1;
+        this.activeStep = 1;
       }
-
-      this.activeStep = 1;
-      this.$set(this.templates, 0, template);
     }
 
     // configure steps and it' titles
@@ -172,7 +210,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     this.loading = false;
     this.watchForCreation();
-    this.$nextTick(() => this.createForm.name && this.createForm.name.$ref.focus());
+    this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
   }
 
   /**
@@ -188,17 +226,17 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async create() {
     const runtime = utils.getRuntime(this);
 
-    if (!this.templateMode) {
-      dispatchers.createDispatcher.start(runtime, {
+    if (this.templateMode) {
+      dispatchers.templateDispatcher.start(runtime, {
         description: this.createForm.description.value,
-        digitalTwinAddress: this.digitalTwinAddress,
         img: this.createForm.img.value,
         name: this.createForm.name.value,
         template: this.templates[this.createForm.template.value],
       });
     } else {
-      dispatchers.templateDispatcher.start(runtime, {
+      dispatchers.createDispatcher.start(runtime, {
         description: this.createForm.description.value,
+        digitalTwinAddress: this.digitalTwinAddress,
         img: this.createForm.img.value,
         name: this.createForm.name.value,
         template: this.templates[this.createForm.template.value],
@@ -214,25 +252,42 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
-    const dispatcher = this.templateMode ?
+    const getDispatcher = () => this.templateMode ?
       dispatchers.templateDispatcher : dispatchers.createDispatcher;
 
     const watch = async ($event?: any) => {
-      const instances = await dispatcher.getInstances(utils.getRuntime(this));
       const beforeCreating = this.creating;
+      let toOpen;
 
-      this.creating = instances
-        .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)
-        .length > 0;
+      // when creating a template, use the templateDispatcher and check for any instances
+      if (this.templateMode) {
+        const instances = await dispatchers.templateDispatcher.getInstances(utils.getRuntime(this));
+        this.creating = instances.length > 0;
 
+        if ($event) {
+          toOpen = `template/${ $event.detail.instance.data.name }`;
+        }
+      } else {
+        // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address
+        const instances = await dispatchers.createDispatcher.getInstances(utils.getRuntime(this));
+        this.creating = instances
+          .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)
+          .length > 0;
+
+        if ($event) {
+          toOpen = $event.detail.instance.data.contractAddress;
+        }
+      }
+
+      // if the synchronisation has finished, navigate to the new template / container
       if (!this.creating && beforeCreating && $event) {
-        (<any>this).evanNavigate($event.detail.instance.data.contractAddress);
+        (<any>this).evanNavigate(toOpen);
       }
     }
 
     watch();
     if (!this.creationWatcher) {
-      this.creationWatcher = dispatcher.watch(($event: any) => watch($event));
+      this.creationWatcher = getDispatcher().watch(($event: any) => watch($event));
     }
   }
 }
