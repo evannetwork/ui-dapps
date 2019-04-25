@@ -84,7 +84,7 @@ export default {
     "templates": {
       "create": "Create Template",
       "empty": "My Templates",
-      "empty-desc": "Each data container contains all data specifications, including their format and validation. Using templates these data definitions can be saved extracted and used multiple times for different data containers.<br><br><b class=\"text-center d-block mt-3\">You haven't created any templates yet. Use the \"Create Templates\" button to create a new one.</b>"
+      "empty-desc": "Each data container contains all data specifications, including their format and validation. Using templates, these data definitions can be saved, extracted and used multiple times for different data containers.<br><br><b class=\"text-center d-block mt-3\">You haven't created any templates yet. Use the \"Create Templates\" button to create a new one.</b>"
     }
   }
 }

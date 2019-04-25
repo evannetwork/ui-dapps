@@ -80,6 +80,7 @@ export default {
     },
     "digitaltwins": "Digitale Zwillinge",
     "dispatcher": {
+      "binding": "Digitaler Zwilling wird auf Domain gebunden...",
       "create": "Digitale Zwilling wird erstellt",
       "digitaltwin": {
         "create": "Digitale Zwilling wird erstellt",
@@ -89,8 +90,7 @@ export default {
         "add": "Digitale Zwilling wird als Favorit gespeichert",
         "remove": "Digitale Zwilling wird von den Favoriten entfernt"
       },
-      "map-ens": "Digitalen Zwilling auf Domain binden",
-      "binding": "Digitaler Zwilling wird auf Domain gebunden..."
+      "map-ens": "Digitalen Zwilling auf Domain binden"
     },
     "empty-navigation": "Keine Einträge verfügbar",
     "generalForm": {

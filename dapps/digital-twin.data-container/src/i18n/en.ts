@@ -52,74 +52,74 @@ export default {
     "breadcrumbs": {
       "add": "Add",
       "container-link": "Link Data Container",
-      "containers": "Data container overview",
+      "containers": "Data Container overview",
       "create": "Create",
       "create-template": "Create Template",
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
-      "overview": "Favorites & last digitaltwins",
+      "overview": "Favorites & last Digital Twins",
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"
     },
     "context-menu": {
       "clone": "Clone",
-      "link": "Link to digital twin",
+      "link": "Link to Digital Twin",
       "share": "Share",
       "template-save": "Save as template",
-      "create-container": "Create data container"
+      "create-container": "Create Data Container"
     },
     "create-question": {
       "action": "Create",
-      "desc": "Have you configured all data correctly and would you like to continue? After the creation, the configurations of the different data containers can still be adapted",
-      "title": "Create data container"
+      "desc": "Have you configured all data correctly and would you like to continue? After the creation, the configurations of the different Data Container can still be updated.",
+      "title": "Create Data Container"
     },
     "createForm": {
       "back": "Go Back",
       "base-template": "Base Template",
-      "container-configuration": "Data configuration",
+      "container-configuration": "Data Configuration",
       "continue": "Continue",
       "create": "Create",
       "description": {
-        "desc": "Short description for the data container",
+        "desc": "Short description for the Data Container",
         "title": "Description"
       },
       "finish": "Finish configuration",
       "general": "General Information",
       "name": {
-        "desc": "Name of the data containers",
+        "desc": "Name of the Data Container",
         "error": "Please provide a name!",
         "title": "Name"
       },
       "save": "Save Data Container",
       "template": {
-        "desc": "Template of the data container",
+        "desc": "Template of the Data Container",
         "title": "Template"
       },
-      "title": "Create data container",
-      "sub-title": "Specifiy general information, data schema and values."
+      "title": "Create Data Container",
+      "sub-title": "Specify general information, data schema and values."
     },
     "dispatcher": {
-      "create": "Creating Data container...",
-      "link": "Link data container...",
+      "create": "Creating Data Container...",
+      "link": "Link Data Container...",
       "share": "Share Data Container...",
       "template": "Saving template...",
       "template-share": "Sharing template...",
-      "update": "Updating Data container..."
+      "update": "Updating Data Container..."
     },
     "edit": "Edit",
     "edit-dbcp": "Adjust Container Description",
     "edit-schema": "Data area schema definition",
     "entry": {
       "add": "Add data set",
-      "add-desc": "A data set corresponds to a separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
+      "add-desc": "A data set corresponds to separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
       "array-type": {
         "title": "List type"
       },
       "name": {
-        "desc": "Name of the dataset",
-        "error": "The name of the data area must not contain any special characters, spaces, ... and do not correspond to an existing one!",
+        "desc": "Name of the data set",
+        "error": "The name of the data set must not contain any special characters, spaces, ... and do not correspond to an existing one!",
         "title": "Name"
       },
       "type": {
@@ -151,7 +151,7 @@ export default {
       "desc": "Send this data container to people in your address book and specify their access permissions.",
       "entry": "Data area",
       "read": "Read",
-      "read-write": "Write",
+      "read-write": "Read and Write",
       "subject": {
         "desc": "Specify a subject for this data container. (e.g.: Digital Twin name, Data Container Name)",
         "error": "Please enter a subject!",
@@ -166,9 +166,9 @@ export default {
     "template": {
       "bmail": {
         "body": "Hello,<br><br>You have received a data container template from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container Template"
+        "title": "Invitation to Data Container template"
       },
-      "create-title": "Create new template",
+      "create-title": "Create new Template",
       "create-container": "Create Data Container",
       "edit-dbcp": "Adjust Description",
       "save": "Save Template"
@@ -176,8 +176,8 @@ export default {
     "template-cache": {
       "action": "Restore",
       "clear": "Delete",
-      "desc": "You left unsaved changes, do you want to restore it?",
-      "title": "Old Work"
+      "desc": "You have unsaved changes, do you want to restore it?",
+      "title": "Unsaved changes"
     },
     "types": {
       "array": "List",
