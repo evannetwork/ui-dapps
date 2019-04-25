@@ -58,7 +58,7 @@ export default {
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
-      "overview": "Favorites & last Digital Twins",
+      "overview": "Favorites & recent Digital Twins",
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"

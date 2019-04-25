@@ -41,7 +41,7 @@ export default {
       "dt-create": "Create Digital Twin",
       "lookup": "Open",
       "map": "Bind to domain name",
-      "overview": "Favorites & last Digital Twins",
+      "overview": "Favorites & recent Digital Twins",
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications"
@@ -122,7 +122,7 @@ export default {
         "desc": "General information about the Digital Twin.",
         "title": "Digital Twin"
       },
-      "digitaltwin-overview": "Favorites & last Digital Twins",
+      "digitaltwin-overview": "Favorites & recent Digital Twins",
       "general": "General information",
       "my-digitaltwins": {
         "desc": "Overview of my Digital Twins",
