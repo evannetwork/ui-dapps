@@ -34,8 +34,8 @@ export default {
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "breadcrumbs": {
       "add": "Hinzufügen",
-      "containerlink": "Daten Container verlinken",
-      "containers": "Datencontainer Übersicht",
+      "containerlink": "Daten Container verknüpfen",
+      "containers": "Daten Container Übersicht",
       "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
@@ -50,13 +50,13 @@ export default {
     "empty-navigation": "Keine Einträge verfügbar",
     "in-creation": "In Erstellung...",
     "left-categories": {
-      "container-overview": "Datencontainerübersicht",
+      "container-overview": "Daten Container Übersicht",
       "containers": {
-        "desc": "Alle, der Zwilling zugeordneten Datencontainer",
-        "title": "Datencontainer"
+        "desc": "Zugeordnete Datencontainer",
+        "title": "Daten Container"
       },
       "digitaltwin-details": {
-        "desc": "Generelle Informationen zu dem digitalen Zwilling.",
+        "desc": "Generelle Informationen zu dem digitalen Zwilling",
         "title": "Digitale Zwilling"
       },
       "digitaltwin-overview": "Favoriten & letzte Zwillinge",
@@ -76,7 +76,7 @@ export default {
     "overview": {
       "create-twin": "Digitalen Zwilling erstellen",
       "empty": "Digitale Zwillinge",
-      "empty-desc": "Maschinen, Autos, Produkte und Menschen können alle mit einem digitalen Zwilling dargestellt werden. Digitale Zwillinge spiegeln die Attribute und den Status des Assets oder der Person in der Blockchain wieder. Die Erstellung eines Zwillings für Autos, Gabelstapler und andere Anlagen ermöglicht es ihnen, ihren Status in Bruchteilen einer Sekunde an das Netzwerk zu melden und autonom auf Anfragen zu reagieren.<br><br><br>Ein Digitaler Zwilling ist daher eine einzigartige Darstellung eines realen Objekts im evan.network. Es kann Attribute und alle anderen Daten über das reale Objekt enthalten, und Operationen und Aufgaben bezüglich des realen Objekts implementieren, die alle kryptographisch auf der Blockchain gesichert sind.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keinen digitalen Zwilling geöffnet oder favoritisiert. Benutzen Sie den \"Digitalen Zwilling erstellen\" oder \"Digitalen Zwilling öffbeb\" Button, um einen Neuen zu erstellen oder einen Bestehenden zu öffnen.</b>",
+      "empty-desc": "Maschinen, Autos, Produkte und Menschen können alle mit einem digitalen Zwilling dargestellt werden. Digitale Zwillinge spiegeln die Attribute und den Status des Assets oder der Person in der Blockchain wieder. Die Erstellung eines Zwillings für Autos, Gabelstapler und andere Anlagen ermöglicht es Ihnen, ihren Status in Bruchteilen einer Sekunde an das Netzwerk zu melden und autonom auf Anfragen zu reagieren.<br><br><br>Ein Digitaler Zwilling ist daher eine einzigartige Darstellung eines realen Objekts im evan.network. Es kann Attribute und alle anderen Daten über das reale Objekt enthalten, und Operationen und Aufgaben bezüglich des realen Objekts implementieren, die alle kryptographisch auf der Blockchain gesichert sind.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keinen digitalen Zwilling geöffnet oder favoritisiert. Benutzen Sie den \"Digitalen Zwilling erstellen\" oder \"Digitalen Zwilling öffnen\" Button, um einen Neuen zu erstellen oder einen Bestehenden zu öffnen.</b>",
       "favorites": "Meine Favoriten",
       "lastTwins": "Zuletzt geöffnet",
       "title": "Übersicht"

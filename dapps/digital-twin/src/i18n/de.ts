@@ -32,8 +32,8 @@ export default {
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "breadcrumbs": {
       "add": "Hinzufügen",
-      "containerlink": "Daten Container verlinken",
-      "containers": "Datencontainer Übersicht",
+      "containerlink": "Daten Container verknüpfen",
+      "containers": "Daten Container Übersicht",
       "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
@@ -48,59 +48,59 @@ export default {
     },
     "containerlink": {
       "address": {
-        "desc": "Adresse des Daten Containers der in den digitalen Zwilling gelinkt werden soll.",
+        "desc": "Adresse des Daten Containers der in den digitalen Zwilling verknüpft werden soll.",
         "error": "Bitte geben Sie eine Adresse ein!",
         "title": "Daten Container"
       },
       "change-twin": "Digitalen Zwilling ändern",
-      "description1": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines digitalen Zwillings auszuwählen, in den Sie einen Datencontainer linken wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
-      "description2": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse eines Datencontainers auszuwählen, der in den digitalen Zwilling gelinkt werden soll.",
+      "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Daten Container verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
+      "description2": "Über das Eingabefeld können Sie eine Adresse eines Datencontainers auswählen, der in den digitalen Zwilling verknüpft werden soll.",
       "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
-        "desc": "Die eingebene Adresse scheint falsch oder einen Vertrag mit ungültigem Format zu entsprechen. Bitte geben Sie die korrekte Adresse ein.",
+        "desc": "Die eingebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
         "title": "Ungültiger Daten Container"
       },
-      "linking": "Wird Verlinkt",
+      "linking": "Wird verknüpft",
       "name": {
         "desc": "Alias, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
         "error": "Bitte geben Sie einen Alias ein!",
         "title": "Alias"
       },
-      "use": "Daten Container verlinken"
+      "use": "Daten Container verknüpfen"
     },
     "containers": {
       "create": "Erstellen",
       "empty": "Daten Container",
-      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Daten Containern. Jeder Daten Container kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">Für diesen Digitalen Zwilling wurde noch kein Daten Container angelegt. Nutzen Sie den \"erstellen\" oder \"verlinken\" Button, um einen neuen Daten Container zu erstellen oder einen bestehenden zu verlinken.</b>",
+      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Daten Containern. Jeder Daten Container kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">Für diesen Digitalen Zwilling wurde noch kein Daten Container angelegt. Nutzen Sie den \"erstellen\" oder \"verknüpfen\" Button, um einen neuen Daten Container zu erstellen oder einen bestehenden zu verknüpfen.</b>",
       "in-creation": "wird erstellt...",
-      "link": "Verlinken"
+      "link": "Verknüpfen"
     },
     "context-menu": {
-      "link": "Daten Container verlinken"
+      "link": "Daten Container verknüpfen"
     },
     "digitaltwins": "Digitale Zwillinge",
     "dispatcher": {
-      "create": "Digitale Zwilling wird erstellt",
+      "create": "Digitaler Zwilling wird erstellt",
       "digitaltwin": {
-        "create": "Digitale Zwilling wird erstellt",
-        "save": "Digitale Zwilling wird gespeichert"
+        "create": "Digitaler Zwilling wird erstellt",
+        "save": "Digitaler Zwilling wird gespeichert"
       },
       "favorite": {
-        "add": "Digitale Zwilling wird als Favorit gespeichert",
-        "remove": "Digitale Zwilling wird von den Favoriten entfernt"
+        "add": "Digitaler Zwilling wird als Favorit gespeichert",
+        "remove": "Digitaler Zwilling wird aus den Favoriten entfernt"
       }
     },
     "empty-navigation": "Keine Einträge verfügbar",
     "generalForm": {
       "create": "Erstellen",
       "description": {
-        "desc": "Kurze Beschreibung zu dem digitalen Zwilling.",
+        "desc": "Kurze Beschreibung des digitalen Zwillings.",
         "title": "Beschreibung"
       },
       "my-new-twin": "Neuer Digitaler Zwilling",
       "name": {
         "desc": "Name des digitalen Zwillings.",
-        "error": "Bitte geben Sie einen Namen an!",
+        "error": "Bitte geben Sie einen Namen ein!",
         "title": "Name"
       },
       "save": "Speichern",
@@ -111,14 +111,14 @@ export default {
     },
     "in-creation": "In Erstellung...",
     "left-categories": {
-      "container-overview": "Datencontainerübersicht",
+      "container-overview": "Daten Container Übersicht",
       "containers": {
-        "desc": "Alle, der Zwilling zugeordneten Datencontainer",
-        "title": "Datencontainer"
+        "desc": "Alle zugeordneten Daten Container",
+        "title": "Daten Container"
       },
       "digitaltwin-details": {
-        "desc": "Generelle Informationen zu dem digitalen Zwilling.",
-        "title": "Digitale Zwilling"
+        "desc": "Generelle Informationen des digitalen Zwillings",
+        "title": "Digitaler Zwilling"
       },
       "digitaltwin-overview": "Favoriten & letzte Zwillinge",
       "general": "Generelle Informationen",
@@ -130,7 +130,7 @@ export default {
         "desc": "Letzte Vorlagen oder Neue erstellen",
         "title": "Meine Vorlagen"
       },
-      "open-digitaltwin": "Digitale Zwilling öffnen",
+      "open-digitaltwin": "Digitalen Zwilling öffnen",
       "templates-overview": "Meine Vorlagen",
       "verifications": "Verifizierungen"
     },
@@ -146,38 +146,38 @@ export default {
       },
       "create": {
         "action": "Digitale Zwilling erstellen",
-        "desc": "Für diese Adresse existiert noch keinen digitale Zwilling. Möchten Sie eine neue für diese Adresse erstellen?",
+        "desc": "Für diese Adresse existiert noch kein digitaler Zwilling. Möchten Sie einen neuen für diese Adresse erstellen?",
         "title": "Nicht verfügbar"
       },
-      "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Adresse für einen digitale Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
+      "description": "Über das Eingabefeld ist es Ihnen möglich eine Adresse für einen digitalen Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
       "error": {
-        "desc": "Die angeforderte Adresse enthält keine valide digitale Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
+        "desc": "Die angeforderte Adresse enthält keinen validen digitalen Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"
       },
       "missing-balance": {
-        "desc": "Bevor Sie einen digitale Zwilling erstellen können, müssen Sie die angegeben Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
+        "desc": "Bevor Sie einen digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf um fortzufahren.",
         "title": "Adresse verfügbar"
       },
       "not-buyable": {
-        "desc": "Die angegeben Adresse ist nicht verfügbar und nicht kaufbar.",
-        "title": "Nicht kaufbar"
+        "desc": "Die angegebene Adresse ist nicht verfügbar.",
+        "title": "Nicht verfügbar"
       },
       "purchase": {
         "action": "Adresse kaufen",
-        "desc": "Bevor Sie einen digitale Zwilling erstellen können, müssen Sie die angegeben Root-Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice }EVE</b> kaufen?",
+        "desc": "Bevor Sie einen digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice } EVE</b> kaufen?",
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
       "title": "Digitalen Zwilling Öffnen"
     },
     "map-ens": {
-      "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Domain für einen digitale Zwilling zu überprüfen und auszuwählen.",
-      "title": "Digitalen Zwilling auf Domainnamen binden"
+      "description": "Über das Eingabefeld ist es Ihnen möglich, eine Domain für einen digitalen Zwilling zu überprüfen und auszuwählen.",
+      "title": "Digitalen Zwilling an Domain Namen binden"
     },
     "startup": "Womit möchten Sie starten?",
-    "unlock-digitaltwin-panel": "<b>Die geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",
+    "unlock-digitaltwin-panel": "<b>Der geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung ab, um die Seitennavigation freizuschalten.",
     "verifications": {
-      "description": "An jeden Digitale Zwilling und Daten Container können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
+      "description": "An jeden digitalen Zwilling und Daten Container können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
       "title": "Verizifierungen"
     },
     "welcome": "Willkommen in der digitalen Zwillingsverwaltung"

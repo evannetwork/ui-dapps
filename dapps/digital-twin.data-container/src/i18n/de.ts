@@ -51,8 +51,8 @@ export default {
     },
     "breadcrumbs": {
       "add": "Hinzufügen",
-      "container-link": "Daten Container verlinken",
-      "containers": "Datencontainer Übersicht",
+      "container-link": "Daten Container verknüpfen",
+      "containers": "Daten Container Übersicht",
       "create": "Erstellen",
       "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
@@ -65,30 +65,30 @@ export default {
     },
     "context-menu": {
       "clone": "Klonen",
-      "link": "In Digitalen Zwilling verlinken",
+      "link": "Container verknüpfen",
       "share": "Teilen",
       "template-save": "Als Vorlage speichern",
       "create-container": "Daten Container erstellen"
     },
     "create-question": {
       "action": "Erstellen",
-      "desc": "Haben Sie alles Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
+      "desc": "Haben Sie alle Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
       "title": "Datencontainer Erstellen"
     },
     "createForm": {
       "back": "Zurück",
       "base-template": "Basis-Vorlage",
-      "container-configuration": "Datenkonfiguration",
+      "container-configuration": "Daten Konfiguration",
       "continue": "Weiter",
       "create": "Erstellen",
       "description": {
-        "desc": "Kurze Beschreibung zu des Daten Containers.",
+        "desc": "Kurze Beschreibung des Daten Containers",
         "title": "Beschreibung"
       },
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
       "name": {
-        "desc": "Name des digitalen Daten Containers.",
+        "desc": "Name des Daten Containers",
         "error": "Bitte geben Sie einen Namen an!",
         "title": "Name"
       },
@@ -97,29 +97,29 @@ export default {
         "desc": "Vorlage des Datencontainers",
         "title": "Vorlage"
       },
-      "title": "Datencontainer Erstellen",
+      "title": "Daten Container erstellen",
       "sub-title": "Allgemeine Informationen, Datenschema und Werte."
     },
     "dispatcher": {
-      "create": "Datencontainer wird erstellt...",
-      "link": "Datencontainer wird verlinkt...",
-      "share": "Datencontainer wird geteilt...",
+      "create": "Daten Container wird erstellt...",
+      "link": "Daten Container wird verlinkt...",
+      "share": "Daten Container wird geteilt...",
       "template": "Vorlage speichern",
       "template-share": "Vorlage teilen",
-      "update": "Datencontainer wird aktualisiert..."
+      "update": "Daten Container wird aktualisiert..."
     },
     "edit": "Bearbeiten",
     "edit-dbcp": "Container Beschreibung anpassen",
     "edit-schema": "Datenbereich Schema Definition",
     "entry": {
       "add": "Datenbereich hinzufügen",
-      "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig von einander an dritte geteilt werden können.",
+      "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig voneinander an dritte geteilt werden können.",
       "array-type": {
         "title": "Listentyp"
       },
       "name": {
         "desc": "Name des Datenbereichs",
-        "error": "Der Name des Datebreich darf keine Sonderzeichen, Leerzeichen, ... enhalten und nicht einem bestehenden entsprechen!",
+        "error": "Der Name des Datenbereichs darf keine Sonderzeichen oder Leerzeichen enhalten und nicht einem bestehenden Namen entsprechen!",
         "title": "Name"
       },
       "type": {
@@ -139,8 +139,8 @@ export default {
       "load-more": "Mehr laden...",
       "new": "neu",
       "results": "Ergebnisse",
-      "show-more": "Mehr Anzeigen",
-      "show-less": "Weniger Anzeigen"
+      "show-more": "Mehr anzeigen",
+      "show-less": "Weniger anzeigen"
     },
     "share": {
       "action": "Teilen",
@@ -151,7 +151,7 @@ export default {
       "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
       "entry": "Datenbereich",
       "read": "Lesen",
-      "read-write": "Schreiben",
+      "read-write": "Lesen und Schreiben",
       "subject": {
         "desc": "Geben Sie einen Betreff zu diesem Daten Container an. (z.B.: Digitaler Zwilling Zugehörigkeit, Daten Container Name)",
         "error": "Bitte geben Sie einen Betreff ein!",
@@ -176,8 +176,8 @@ export default {
     "template-cache": {
       "action": "Wiederherstellen",
       "clear": "Löschen",
-      "desc": "Sie haben ungespeicherte Änderungen zurück gelassen, möchten Sie diese wiederherstellen?",
-      "title": "Alte Änderungen"
+      "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
+      "title": "Ungespeicherte Änderungen"
     },
     "types": {
       "array": "Liste",
