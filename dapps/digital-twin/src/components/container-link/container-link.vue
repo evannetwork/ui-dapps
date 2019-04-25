@@ -88,7 +88,8 @@
                 </template>
               </evan-modal>
 
-              <div class="d-flex align-items-center mb-3">
+              <div class="d-flex align-items-center mb-3"
+                v-if="!($route.params.digitalTwinAddress && validDTAddress)">
                 <p class="m-0">
                   {{ `_digitaltwins.containerlink.digitaltwin` | translate }}: <b>{{ validDTAddress }}</b>
                 </p>

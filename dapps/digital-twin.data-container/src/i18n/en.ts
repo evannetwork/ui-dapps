@@ -65,7 +65,7 @@ export default {
     },
     "context-menu": {
       "clone": "Clone",
-      "link": "Link",
+      "link": "Link to digital twin",
       "share": "Share",
       "template-save": "Save as template",
       "create-container": "Create data container"

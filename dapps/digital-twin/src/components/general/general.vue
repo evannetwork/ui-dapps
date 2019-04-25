@@ -29,27 +29,59 @@
   <div>
     <div class="text-left"
       :class="{ 'container-wide': standalone }">
+      <div class="d-flex mb-5 align-items-center" v-if="standalone">
+        <div>
+          <h3 class="font-weight-bold mb-0">
+            {{ generalForm.name.value }}
+          </h3>
+        </div>
+        <span class="mx-auto"></span>
+        <div v-if="!uiDT.isCreating">
+          <div class="spinner-border spinner-border-sm"
+            v-if="$store.state.uiDT.isFavoriteLoading">
+          </div>
+          <template v-if="!$store.state.uiDT.isFavoriteLoading">
+            <button class="btn"
+              @click="$refs.contextMenu.show();">
+              <i class="mdi mdi-chevron-down"></i>
+            </button>
+            <div class="position-relative">
+              <evan-dropdown ref="contextMenu"
+                :alignment="'right'"
+                :width="'300px'">
+                <template v-slot:content>
+                  <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                    @click="
+                      $store.state.uiDT.toggleFavorite(getRuntime())
+                      $refs.contextMenu.hide($event);
+                    ">
+                    <i class="mdi mdi-star mr-3"></i>
+                    <template v-if="$store.state.uiDT.isFavorite">
+                      {{ `_digitaltwins.generalForm.remove-favorite` | translate }}
+                    </template>
+                    <template v-else>
+                      {{ `_digitaltwins.generalForm.add-favorite` | translate }}
+                    </template>
+                  </a>
+                  <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                    @click="
+                      evanNavigate(`${ $route.params.digitalTwinAddress }/map`)
+                      $refs.contextMenu.hide($event);
+                    ">
+                    <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
+                    {{ `_digitaltwins.generalForm.map-to-ens` | translate }}
+                  </a>
+                </template>
+              </evan-dropdown>
+            </div>
+          </template>
+        </div>
+      </div>
       <div class="white-box" :class="{ 'border rounded': standalone }">
         <div class="header">
           <h3 class="m-0 font-weight-semibold">
             {{ `_digitaltwins.generalForm.title` | translate }}
           </h3>
-          <span class="mx-auto"></span>
-          <div class="mr-4">
-            <div class="spinner-border spinner-border-sm"
-              v-if="$store.state.uiDT.isFavoriteLoading">
-            </div>
-            <template v-if="!$store.state.uiDT.isFavoriteLoading">
-              <i class="mdi mdi-star lg text-warning clickable"
-                v-if="$store.state.uiDT.isFavorite"
-                @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-              </i>
-              <i class="mdi mdi-star lg clickable"
-                v-if="!$store.state.uiDT.isFavorite"
-                @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-              </i>
-            </template>
-          </div>
         </div>
         <template
           v-if="!uiDT.isCreating">

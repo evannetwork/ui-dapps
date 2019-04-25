@@ -35,5 +35,3 @@ build/*
 # Playground tmp files
 .playground
 .tmp
-
-documentation/

@@ -28,8 +28,8 @@ import * as digitalTwin from '@evan.network/digitaltwin';
 
 /* tslint:disable */
 export default {
-  ...digitalTwin.translations.de._digitaltwins,
   "_digitaltwins": {
+    ...digitalTwin.translations.de._digitaltwins,
     "add": "Öffnen",
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "breadcrumbs": {

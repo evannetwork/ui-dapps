@@ -43,7 +43,8 @@ export default {
       "template": "Vorlage",
       "templates": "Vorlagen",
       "verifications": "Verifizierungen",
-      "digitaltwin": "Digitaler Zwilling"
+      "digitaltwin": "Digitaler Zwilling",
+      "map": "An Domainnamen binden"
     },
     "containerlink": {
       "address": {
@@ -103,7 +104,10 @@ export default {
         "title": "Name"
       },
       "save": "Speichern",
-      "title": "Generelle Informationen"
+      "title": "Metadaten",
+      "remove-favorite": "Als Favorit entfernen",
+      "add-favorite": "Als Favorit hinzufügen",
+      "map-to-ens": "An Domainnamen binden"
     },
     "in-creation": "In Erstellung...",
     "left-categories": {
@@ -117,7 +121,7 @@ export default {
         "title": "Digitale Zwilling"
       },
       "digitaltwin-overview": "Favoriten & letzte Zwillinge",
-      "general": "Metadaten",
+      "general": "Generelle Informationen",
       "my-digitaltwins": {
         "desc": "Übersicht meiner digitalen Zwillinge",
         "title": "Digitale Zwillinge"
@@ -145,7 +149,7 @@ export default {
         "desc": "Für diese Adresse existiert noch keinen digitale Zwilling. Möchten Sie eine neue für diese Adresse erstellen?",
         "title": "Nicht verfügbar"
       },
-      "description": "Über das nachfolgende Eingabefeld, ist es Ihnen möglich, eine Adresse für einen digitale Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
+      "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Adresse für einen digitale Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
       "error": {
         "desc": "Die angeforderte Adresse enthält keine valide digitale Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"
@@ -165,6 +169,10 @@ export default {
       },
       "purchasing": "ENS Adresse erwerben...",
       "title": "Digitalen Zwilling Öffnen"
+    },
+    "map-ens": {
+      "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Domain für einen digitale Zwilling zu überprüfen und auszuwählen.",
+      "title": "Digitalen Zwilling auf Domainnamen binden"
     },
     "startup": "Womit möchten Sie starten?",
     "unlock-digitaltwin-panel": "<b>Die geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung, um die Seitennavigation freizuschalten.",

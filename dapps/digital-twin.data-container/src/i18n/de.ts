@@ -65,7 +65,7 @@ export default {
     },
     "context-menu": {
       "clone": "Klonen",
-      "link": "Verlinken",
+      "link": "In Digitalen Zwilling verlinken",
       "share": "Teilen",
       "template-save": "Als Vorlage speichern",
       "create-container": "Daten Container erstellen"

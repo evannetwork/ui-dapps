@@ -43,7 +43,8 @@ export default {
       "template": "Template",
       "templates": "Templates",
       "verifications": "Verifications",
-      "digitaltwin": "Digital Twin"
+      "digitaltwin": "Digital Twin",
+      "map": "Bind to domain name"
     },
     "containerlink": {
       "address": {
@@ -102,8 +103,11 @@ export default {
         "error": "Please provide a name!",
         "title": "Name"
       },
-      "save": "Speichern",
-      "title": "General Information"
+      "save": "Save",
+      "title": "Metadata",
+      "remove-favorite": "Remove from favorites",
+      "add-favorite": "Add as favorite",
+      "map-to-ens": "Bind to domain name"
     },
     "in-creation": "Creating Digital Twin...",
     "left-categories": {
@@ -117,7 +121,7 @@ export default {
         "title": "Digital Twin"
       },
       "digitaltwin-overview": "Favorites & last digitaltwins",
-      "general": "Metadata",
+      "general": "General information",
       "my-digitaltwins": {
         "desc": "Overview of my Digital Twins.",
         "title": "Digital Twins"
@@ -165,6 +169,10 @@ export default {
       },
       "purchasing": "Purchasing ENS address...",
       "title": "Open Digital Twin"
+    },
+    "map-ens": {
+      "description": "Using the previous input field, you can check and select a domain for a digital twin.",
+      "title": "Bind a Digital Twin to a Domain Name"
     },
     "startup": "What would you like to start with?",
     "unlock-digitaltwin-panel": "<b>The opened digital Twin is in creation.</b><br><br>Please finish creation to unlock the page navigation.",

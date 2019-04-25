@@ -184,10 +184,10 @@ export default class CreateComponent extends mixins(EvanComponent) {
         this.createForm.description.value = description.description;
 
         // apply the contract as template
-        this.$set(this.templates, this.templates.length, {
+        this.templates.push({
           title: description.name,
-          type: 'metadata',
-          template: template
+          type: template.type,
+          properties: template.properties,
         });
 
         // set correct template index
