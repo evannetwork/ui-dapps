@@ -25,18 +25,33 @@
   https://evan.network/license/
 */
 
-import ensDispatcher from './ens';
-import favoriteAddDispatcher from './favorite.add';
-import favoriteRemoveDispatcher from './favorite.remove';
-import digitaltwinCreateDispatcher from './digitaltwin.create';
-import digitaltwinSaveDispatcher from './digitaltwin.save';
-import mapEnsDispatcher from './map-ens';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+import { getRuntime } from '../utils';
+import EvanUIDigitalTwin from '../digitaltwin';
 
-export {
-  digitaltwinCreateDispatcher,
-  digitaltwinSaveDispatcher,
-  ensDispatcher,
-  favoriteAddDispatcher,
-  favoriteRemoveDispatcher,
-  mapEnsDispatcher,
-}
+const dispatcher = new Dispatcher(
+  `digitaltwin.${ dappBrowser.getDomainName() }`,
+  'mapEnsDispatcher',
+  40 * 1000,
+  '_digitaltwins.dispatcher.map-ens'
+);
+
+dispatcher
+  .step(async (instance, data) => {
+    const runtime = getRuntime(instance.runtime);
+    const contractAddress = await EvanUIDigitalTwin
+      .getDigitalTwin(runtime, data.contractAddress)
+      .getContractAddress();
+
+    // purchaser the ens address
+    await runtime.nameResolver.setAddress(
+      data.ensAddress,
+      contractAddress,
+      runtime.activeAccount
+    );
+  });
+
+
+export default dispatcher;

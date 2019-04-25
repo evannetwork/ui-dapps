@@ -58,6 +58,30 @@ export default class LookupComponent extends mixins(EvanComponent) {
   @Prop({ }) disableGlobal;
 
   /**
+   * Disable twin autocompletion
+   */
+  @Prop({ }) disableAutocompletion;
+
+  /**
+   * Only use the flow until the ens address is valid
+   */
+  @Prop({ }) disableCreate;
+
+  /**
+   * Overwrite input title text
+   */
+  @Prop({
+    default: '_digitaltwins.lookup.address.title'
+  }) titleText;
+
+  /**
+   * Overwrite button text
+   */
+  @Prop({
+    default: '_digitaltwins.lookup.title'
+  }) buttonText;
+
+  /**
    * Show loading symbold
    */
   loading = true;
@@ -115,11 +139,15 @@ export default class LookupComponent extends mixins(EvanComponent) {
     }));
 
     // load my twins, so we can provide a user selection
-    const runtime = utils.getRuntime(this);
-    this.myTwins = Array.from(new Set([ ].concat(
-      await utils.loadFavorites(runtime),
-      utils.getLastOpenedTwins()
-    )));
+    if (!this.disableAutocompletion) {
+      const runtime = utils.getRuntime(this);
+      this.myTwins = Array.from(new Set([ ].concat(
+        await utils.loadFavorites(runtime),
+        utils.getLastOpenedTwins()
+      )));
+    } else {
+      this.myTwins = [ ];
+    }
 
     this.loading = false;
 
@@ -177,26 +205,37 @@ export default class LookupComponent extends mixins(EvanComponent) {
     }
 
     // create digitaltwin instance, so we can check, if the address exists
-    const isValidDigitalTwin = await bcc.DigitalTwin.getValidity(runtime, address);
+    const twinValidity = await bcc.DigitalTwin.getValidity(runtime, address);
 
     // if the digitaltwin is valid, open it!
-    if (isValidDigitalTwin.valid) {
+    if (twinValidity.valid) {
       this.$emit('submit', {
         address: this.lookupForm.address.value,
         status: 'open',
+        validity: twinValidity,
       });
 
       // trigger reload
       !this.disableGlobal && this.$store.state.uiDT && this.$store.state.uiDT.destroy(this);
     } else {
-      const errorMsg = isValidDigitalTwin.error.message;
+      const errorMsg = twinValidity.error.message;
       if (errorMsg.indexOf('contract does not exist') !== -1) {
         // if no contract exists, check if the user can set something to the address
         let parentOwner = await this.getParentRecursive(address);
 
         // if no owner exists, show the purchase dialog, else check for permissions
         if (parentOwner === runtime.activeAccount) {
-          this.lookupModalScope = 'create';
+          if (this.disableCreate) {
+            this.checking = false;
+
+            return this.$emit('submit', {
+              address: this.lookupForm.address.value,
+              status: 'open',
+              validity: twinValidity,
+            });
+          } else {
+            this.lookupModalScope = 'create';
+          }
         } else if (parentOwner === nullAddress) {
           // load the currents users balance
           this.modalParams.balance = await dappBrowser.core.getBalance(runtime.activeAccount);

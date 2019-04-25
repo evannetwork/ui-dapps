@@ -27,7 +27,8 @@
 
 <template>
   <div class="container-wide">
-    <div class="white-box mt-4 border rounded">
+    <div class="white-box mt-4 border rounded"
+      v-if="!binding">
       <div class="p-0 header">
         <a class="btn large"
           :href="`${ dapp.fullUrl }`">
@@ -38,10 +39,35 @@
         </h3>
       </div>
 
+      <evan-modal ref="lookupModal">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.title` | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <p class="text-left m-0"
+            v-html="$t(`_digitaltwins.map-ens.modal.${ lookupModalScope }.desc`, modalParams)">
+          </p>
+        </template>
+        <template v-slot:footer>
+          <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+           v-if="lookupModalScope === 'available'"
+            @click="mapEns()">
+            {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.action` | translate }}
+          </button>
+        </template>
+      </evan-modal>
+
       <dt-lookup-form
-        @submit="openTwin">
+        @submit="openTwin"
+        :titleText="'_digitaltwins.map-ens.ens'"
+        :buttonText="'_digitaltwins.map-ens.check-ens'"
+        :disableCreate="true"
+        :disableGlobal="true"
+        :disableAutocompletion="true">
         <template v-slot:description>
-          <div class="d-flex mt-3 align-items-center">
+          <div class="d-flex align-items-center">
             <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
             <p class="m-0 text-justify">
               {{ `_digitaltwins.map-ens.description` | translate }}
@@ -49,6 +75,11 @@
           </div>
         </template>
       </dt-lookup-form>
+    </div>
+    <div class="text-center" v-else>
+      <h4 class="mt-5 mb-3">{{ '_digitaltwins.dispatcher.binding' | translate }}</h4>
+      <b> {{ ensAddress }} </b>
+      <evan-loading></evan-loading>
     </div>
   </div>
 </template>

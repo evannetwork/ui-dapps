@@ -36,15 +36,15 @@ export default {
       "containers": "Datencontainer Übersicht",
       "create-template": "Vorlage erstellen",
       "datacontainer.digitaltwin": "Daten Container",
+      "digitaltwin": "Digitaler Zwilling",
       "digitaltwins": "Digitale Zwillinge",
       "dt-create": "Digitalen Zwilling erstellen",
       "lookup": "Öffnen",
+      "map": "An Domainnamen binden",
       "overview": "Favoriten & letzte Zwillinge",
       "template": "Vorlage",
       "templates": "Vorlagen",
-      "verifications": "Verifizierungen",
-      "digitaltwin": "Digitaler Zwilling",
-      "map": "An Domainnamen binden"
+      "verifications": "Verifizierungen"
     },
     "containerlink": {
       "address": {
@@ -88,26 +88,28 @@ export default {
       "favorite": {
         "add": "Digitale Zwilling wird als Favorit gespeichert",
         "remove": "Digitale Zwilling wird von den Favoriten entfernt"
-      }
+      },
+      "map-ens": "Digitalen Zwilling auf Domain binden",
+      "binding": "Digitaler Zwilling wird auf Domain gebunden..."
     },
     "empty-navigation": "Keine Einträge verfügbar",
     "generalForm": {
+      "add-favorite": "Als Favorit hinzufügen",
       "create": "Erstellen",
       "description": {
         "desc": "Kurze Beschreibung zu dem digitalen Zwilling.",
         "title": "Beschreibung"
       },
+      "map-to-ens": "An Domainnamen binden",
       "my-new-twin": "Neuer Digitaler Zwilling",
       "name": {
         "desc": "Name des digitalen Zwillings.",
         "error": "Bitte geben Sie einen Namen an!",
         "title": "Name"
       },
-      "save": "Speichern",
-      "title": "Metadaten",
       "remove-favorite": "Als Favorit entfernen",
-      "add-favorite": "Als Favorit hinzufügen",
-      "map-to-ens": "An Domainnamen binden"
+      "save": "Speichern",
+      "title": "Metadaten"
     },
     "in-creation": "In Erstellung...",
     "left-categories": {
@@ -151,7 +153,7 @@ export default {
       },
       "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Adresse für einen digitale Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie eine neue digitale Zwilling erstellen und an diese Adresse binden oder eine bestehende mit dieser Adresse verlinken.",
       "error": {
-        "desc": "Die angeforderte Adresse enthält keine valide digitale Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
+        "desc": "Die angeforderte Adresse ist bereits vergeben oder enthält keinen validen Digitalen Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"
       },
       "missing-balance": {
@@ -171,7 +173,20 @@ export default {
       "title": "Digitalen Zwilling Öffnen"
     },
     "map-ens": {
+      "check-ens": "Domain überprüfen",
       "description": "Über das vorherige Eingabefeld, ist es Ihnen möglich, eine Domain für einen digitale Zwilling zu überprüfen und auszuwählen.",
+      "ens": "Domain Addresse",
+      "modal": {
+        "available": {
+          "action": "Digitalen Zwilling binden",
+          "desc": "Die angegeben Adresse ist verfügbar. Wollen Sie diesen Digitalen Zwilling auf diese Adresse binden?",
+          "title": "Domain verfügbar"
+        },
+        "exists": {
+          "desc": "Die angegeben Domain ist bereits vergeben.",
+          "title": "Domain vergeben"
+        }
+      },
       "title": "Digitalen Zwilling auf Domainnamen binden"
     },
     "startup": "Womit möchten Sie starten?",
