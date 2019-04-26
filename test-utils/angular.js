@@ -55,14 +55,12 @@ const evan = {
       .pause(3 * 1000);
   },
   /**
-   * Login to the browser using an mnemonic and password.
+   * Logout from current session
    *
-   * @param      {any}  browser   nightwatch browser instance
-   * @param      {string}  mnemonic  12 word mnemonic seeed
-   * @param      {string}  password  password th unlock the account
-   * @return     {any}     nightwatch browser result chain
+   * @param      {any}  browser  nightwatch browser instance
+   * @return     {any}  nightwatch browser result chain
    */
-  logout: function(browser, mnemonic, password) {
+  logout: function(browser) {
     if (loggedIn) {
       loggedIn = false;
 
@@ -128,19 +126,32 @@ const evan = {
  * @param      {any}  customs  custom properties that should be added to the evan context
  */
 exports.setupEvan = function(browser, customs) {
-  const merged = Object.assign({ }, evan, customs, browser.options.globals);
-
-  // bind all the functions to the browser context
-  Object.keys(merged).forEach(funcName => {
-    if (typeof merged[funcName] === 'function') {
-      merged[funcName] = merged[funcName].bind(merged, browser);
+  evan.url = 'https://dashboard.test.evan.network/';
+  evan.ensRoot = 'evan';
+  const merged = Object.assign({ }, evan, customs );
+  
+  // define proxy for late binding
+  // maybe we rework this later to reduce obscurity
+  var handler = {
+    get: (obj, prop) => {
+      let toReturn;
+      if (browser.options.globals[prop]) {
+        toReturn = browser.options.globals[prop];
+      } else if (customs && customs[prop]) {
+        toReturn = customs[prop];
+      } else {
+        toReturn = evan[prop];
+      }
+      return typeof toReturn === 'function' ? toReturn.bind(obj, browser) : toReturn;
     }
-  });
+  };
+
+  var proxy = new Proxy(merged, handler);
 
   // fix event listener maximum:
   //    MaxListenersExceededWarning: Possible EventEmitter memory leak
   //    detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit
   require('events').EventEmitter.defaultMaxListeners = 100;
 
-  browser.evan = merged;
+  return proxy;
 }

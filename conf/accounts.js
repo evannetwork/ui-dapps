@@ -35,15 +35,13 @@ module.exports = {
       mnemonic: process.env.USER_DEFAULT_MNEMONIC,
       password: process.env.USER_DEFAULT_PASSWORD
     },
-    rental: {
-      dispo: {
-        mnemonic: process.env.USER_RENTAL_DISPO_MNEMONIC,
-        password: process.env.USER_RENTAL_DISPO_PASSWORD
-      },
-      driver: {
-        mnemonic: process.env.USER_RENTAL_DRIVER_MNEMONIC,
-        password: process.env.USER_RENTAL_DRIVER_PASSWORD
-      },
+    rentalDispo: {
+      mnemonic: process.env.USER_RENTAL_DISPO_MNEMONIC,
+      password: process.env.USER_RENTAL_DISPO_PASSWORD
+    },
+    rentalDriver: {
+      mnemonic: process.env.USER_RENTAL_DRIVER_MNEMONIC,
+      password: process.env.USER_RENTAL_DRIVER_PASSWORD
     },
   },
 };

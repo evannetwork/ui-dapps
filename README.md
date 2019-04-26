@@ -3,7 +3,17 @@
 
 ![BrowserStack Logo](https://d98b8t1nnulk5.cloudfront.net/production/images/layout/logo-header.png?1469004780)
 
-<img src ="http://nightwatchjs.org/img/logo-nightwatch.png" height = "110">
+<img src ="http://nightwatchjs.org/img/logo-nightwat h.png" height = "110">
+
+## STRUCTURE HAS BEEN HEAVILY
+Documentation update will follow but for now just use
+
+```
+  npm run test-testnet
+```
+
+And make sure you have your ```.env``` set up correctly (see example file).
+
 
 ## Running your tests
 - running tests on [localhost](http://localhost:3000/dev.html)
