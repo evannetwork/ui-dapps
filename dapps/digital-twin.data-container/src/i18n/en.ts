@@ -39,7 +39,11 @@ export default {
         "desc": "You do not have permission to view this data set.",
         "title": "Invalid authorization"
       },
-      "save": "Apply",
+      "save": {
+        "schema": "Use Schema",
+        "edit": "Save",
+        "save": "Save"
+      },
       "type": {
         "title": "Type"
       },
@@ -47,7 +51,9 @@ export default {
         "desc": "Value of the field",
         "error": "Please enter a value of the correct type!",
         "title": "Value"
-      }
+      },
+      "reset-values": "Cancel",
+      "edit-schema": "Edit schema"
     },
     "breadcrumbs": {
       "add": "Add",
@@ -185,6 +191,9 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
+    },
+    "field": {
+      "edit": "Edit"
     }
   }
 }

@@ -37,6 +37,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import ContainerCache from '../../container-cache';
 import * as utils from '../../utils';
+import * as entryUtils from '../../entries';
 
 interface EntryFormInterface extends EvanForm {
   name: EvanFormControl;
@@ -258,17 +259,6 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
       updateActiveEntry();
       this.activeTab = activeTab;
     }
-
-    // let relativeUrl = this.$route.path.replace((<any>this).dapp.baseHash, '');
-    // relativeUrl = relativeUrl.slice(relativeUrl.startsWith('/') ? 1 : 0, relativeUrl.length);
-
-    // if (this.$route.params.entry) {
-    //   const split = relativeUrl.split('/');
-    //   relativeUrl = split.slice(0, split.length - 1).join('/');
-    // }
-
-    // const url = `${ relativeUrl }/${ this.activeEntryName }`;
-    // (<any>this).evanNavigate(url);
   }
 
   /**
@@ -276,14 +266,12 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    */
   addEntry() {
     if (!this.template.properties[this.entryForm.name.value]) {
-      utils.enableDTSave();
-
       // create a new empty data set
       const entry: any = {
-        // $id: `${ this.entryForm.name.value }_schema`,
         dataSchema: { type: this.entryForm.type.value, },
+        mode: 'schema',
         permissions: { 0: ['set'] },
-        type: this.entryForm.type.value === 'array' ? 'list' : 'entry'
+        type: this.entryForm.type.value === 'array' ? 'list' : 'entry',
       };
 
       // add properties and empty value object directly, so the vue listeners will work correctly in
@@ -349,7 +337,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * @param      {any}  entry   the entry that should be checked
    */
   ensureEntryValues() {
-    utils.ensureEntryValues(this.activeEntry);
+    entryUtils.ensureValues(this.activeEntry);
 
     // redefine the object and bind new watchers
     this.activeEntry = { ...this.activeEntry };

@@ -196,14 +196,12 @@ export default class DetailComponent extends mixins(EvanComponent) {
       name: {
         value: this.description.name,
         validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
-          vueInstance.enableSave = true;
           return this.value.trim().length !== 0;
         }
       },
       description: {
         value: this.description.description,
         validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
-          vueInstance.enableSave = true;
           return true;
         }
       },
@@ -240,6 +238,10 @@ export default class DetailComponent extends mixins(EvanComponent) {
       // opened ajv editor is saved
       this.loading = true;
       this.$store.state.saving = true;
+
+      // update description backup
+      this.description.name = this.dbcpForm.name.value;
+      this.description.description = this.dbcpForm.description.value;
 
       this.$nextTick(async () => {
         const runtime = utils.getRuntime(this);
@@ -300,5 +302,20 @@ export default class DetailComponent extends mixins(EvanComponent) {
     });
 
     (<any>this.$refs.shareModal).hide();
+  }
+
+  /**
+   * When the dbcp edit modal was canceled, restore original dbcp value
+   */
+  cancelDbcpModal(eventArgs: any) {
+    this.$nextTick(() => {
+      // don't close on backdrop
+      if (eventArgs.backdrop) {
+        (<any>this).$refs.dbcpModal.show();
+      } else {
+        this.dbcpForm.name.value = this.description.name;
+        this.dbcpForm.description.value = this.description.description;
+      }
+    });
   }
 }

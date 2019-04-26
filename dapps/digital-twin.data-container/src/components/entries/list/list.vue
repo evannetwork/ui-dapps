@@ -47,8 +47,15 @@
       
       <template v-else>
         <template v-if="mode !== 'schema'">
+          <template v-if="entry.dataSchema.items.type === 'object' && !addListEntry">
+            <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
+              v-if="modes.indexOf('schema') !== -1 && mode !== 'schema'"
+              @click="mode = 'schema'">
+              <i class="mdi mdi-cogs"></i>
+            </button>
+          </template>
           <template v-if="modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1">
-            <button type="submit" class="btn btn-rounded btn-primary mr-3"
+            <button type="submit" class="btn btn-rounded btn-primary"
               v-if="!addListEntry"
               :disabled="$store.state.saving"
               @click="addListEntry = true">
@@ -56,14 +63,6 @@
               <i class="mdi mdi-arrow-right label"></i>
             </button>
           </template>
-        </template>
-
-        <template v-if="entry.dataSchema.items.type === 'object' && !addListEntry">
-          <button type="button" class="btn btn-outline-secondary btn-circle"
-            v-if="modes.indexOf('schema') !== -1 && mode !== 'schema'"
-            @click="mode = 'schema'">
-            <i class="mdi mdi-cogs"></i>
-          </button>
         </template>
       </template>
     </div>
@@ -82,7 +81,7 @@
             <button class="btn btn-primary btn-rounded"
               :disabled="!$refs.ajvComp.isValid"
               @click="mode = 'view'">
-              {{ '_datacontainer.ajv.save' | translate }}
+              {{ '_datacontainer.ajv.save.save' | translate }}
               <i class="mdi mdi-arrow-right label ml-2"></i>
             </button>
           </div> -->

@@ -35,6 +35,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as utils from '../../../utils';
+import * as entryUtils from '../../../entries';
 
 @Component({ })
 export default class EntryListComponent extends mixins(EvanComponent) {
@@ -137,7 +138,7 @@ export default class EntryListComponent extends mixins(EvanComponent) {
       // set it to null to force addValue reset
       (<any>this).entry.addValue = null;
       // add correct default values
-      utils.ensureEntryValues((<any>this).entry);
+      entryUtils.ensureValues((<any>this).entry);
     });
   }
 

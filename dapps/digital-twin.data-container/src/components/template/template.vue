@@ -149,7 +149,8 @@
           </button>
         </div>
       </div>
-      <evan-modal ref="dbcpModal">
+      <evan-modal ref="dbcpModal"
+        @canceled="cancelDbcpModal">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ '_datacontainer.edit-dbcp' | translate }}

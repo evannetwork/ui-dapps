@@ -226,6 +226,10 @@ export default class TemplateComponent extends mixins(EvanComponent) {
       this.loading = true;
       this.saving = true;
 
+      // update description backup
+      this.description.name = this.dbcpForm.name.value;
+      this.description.description = this.dbcpForm.description.value;
+
       this.$nextTick(async () => {
         const runtime = utils.getRuntime(this);
 
@@ -293,5 +297,20 @@ export default class TemplateComponent extends mixins(EvanComponent) {
     });
 
     (<any>this.$refs.shareModal).hide();
+  }
+
+  /**
+   * When the dbcp edit modal was canceled, restore original dbcp value
+   */
+  cancelDbcpModal(eventArgs: any) {
+    this.$nextTick(() => {
+      // don't close on backdrop
+      if (eventArgs.backdrop) {
+        (<any>this).$refs.dbcpModal.show();
+      } else {
+        this.dbcpForm.name.value = this.description.name;
+        this.dbcpForm.description.value = this.description.description;
+      }
+    });
   }
 }

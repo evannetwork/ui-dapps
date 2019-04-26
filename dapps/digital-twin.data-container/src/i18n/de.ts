@@ -39,7 +39,11 @@ export default {
         "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen.",
         "title": "Ungültige Berechtigung"
       },
-      "save": "Übernehmen",
+      "save": {
+        "schema": "Schema übernehmen",
+        "edit": "Werte übernehmen",
+        "save": "Speichern"
+      },
       "type": {
         "title": "Typ"
       },
@@ -47,7 +51,9 @@ export default {
         "desc": "Wert des Feldes",
         "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
         "title": "Wert"
-      }
+      },
+      "reset-values": "Abbrechen",
+      "edit-schema": "Schema bearbeiten"
     },
     "breadcrumbs": {
       "add": "Hinzufügen",
@@ -185,6 +191,9 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
+    },
+    "field": {
+      "edit": "Bearbeiten"
     }
   }
 }

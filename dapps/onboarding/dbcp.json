@@ -10,7 +10,7 @@
       "files": [
         "onboarding.js"
       ],
-      "origin": "QmPUpaqViXGPRG19iX9bQkm7oonBpvskdHKNBapg6QvSxz",
+      "origin": "QmRs45dW6cNnLbb83DAzcjQMimqvAP5xYPyA5XHjDh5KMG",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"
@@ -42,7 +42,8 @@
       "1.0.2": "QmTkSFkHcKSAtRTQeKimXw1jFTXa77hTMr2QJtwpkKHxBV",
       "1.1.0": "Qmd7zge9BRBXgrUHLk5LWCe4BuQnNUWEMxs1D79SDsEjDV",
       "1.2.0": "QmRPqJqGyyji6cg6TuuDNFygov8dezLg2ndYN69RpdjFUg",
-      "1.3.0": "QmYPvMeWGYqBd3toMAx3vf3zFd2Bm49wLnf6uFD942j4yL"
+      "1.3.0": "QmYPvMeWGYqBd3toMAx3vf3zFd2Bm49wLnf6uFD942j4yL",
+      "1.5.0": "QmbszJypUSn1Hp22tnBx2tV6NBWLqamKTXSjYfBATh7MpV"
     }
   }
 }

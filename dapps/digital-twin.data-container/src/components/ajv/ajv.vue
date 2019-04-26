@@ -83,11 +83,12 @@
           </div>
         </td>
         <td class="fill-content" v-if="enableValue">
-          <dt-field
+          <component
+            :is="`dt-field-${ form.type.value }`"
+            :control="form.value"
             :mode="mode"
-            :form="form"
-            :type="form.type.value">
-          </dt-field>
+            :standalone="false">
+          </component>
         </td>
         <td class="last" v-if="mode === 'schema'">
           <i class="mdi mdi-delete clickable"

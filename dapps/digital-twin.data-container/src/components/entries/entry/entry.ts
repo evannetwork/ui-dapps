@@ -50,7 +50,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
   /**
    * data container entry (metadata, array, ...)
    */
-  @Prop() entry: bcc.ContainerTemplateProperty;
+  @Prop() entry: any;
 
   /**
    * data contract entry name
@@ -63,20 +63,12 @@ export default class EntryComponent extends mixins(EvanComponent) {
   modes: Array<string> = null;
 
   /**
-   * Current selected display mode
-   */
-  activeMode = '';
-
-  /**
    * Check for permitted modes
    */
   created() {
+    // check permissions and set permitted modes
     if (!this.address.startsWith('0x')) {
-      if (this.address.startsWith('create')) {
-        this.modes = [ 'schema', 'view', ];
-      } else {
-        this.modes = [ 'view', 'schema', ];
-      }
+      this.modes = [ 'view', 'schema', ];
     } else {
       const read = this.permissions.read || [ ];
       const write = this.permissions.readWrite || [ ];
@@ -98,6 +90,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
       }
     }
 
-    this.activeMode = this.modes[0];
+    // fill empty mode as default value
+    this.$set(this.entry, 'mode', this.entry.mode || this.modes[0]);
   }
 }

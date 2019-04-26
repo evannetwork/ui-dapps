@@ -40,28 +40,25 @@
     </div>
 
     <div class="mt-3" v-if="modes.length !== 0">
-      <dt-entry-list
-        v-if="entry.dataSchema.type === 'array'"
-        :address="address"
-        :entry="entry"
-        :listName="name"
-        :mode="activeMode"
-        :modes="modes">
-      </dt-entry-list>
       <dt-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"
         :entryName="name"
-        :mode="activeMode"
         :modes="modes">
       </dt-entry-object>
+      <dt-entry-list
+        v-else-if="entry.dataSchema.type === 'array'"
+        @reset="resetValue" @save="saveValue"
+        :address="address"
+        :entry="entry"
+        :listName="name"
+        :modes="modes">
+      </dt-entry-list>
       <dt-field
-        v-if="entry.dataSchema.type !== 'object' && entry.dataSchema.type !== 'array'"
-        :fieldName="name"
-        :mode="activeMode"
-        :modes="modes"
-        :type="entry.dataSchema.type"
-        :value.sync="entry.value">
+        v-else
+        :entry="entry"
+        :entryName="name"
+        :modes="modes">
       </dt-field>
     </div>
   </div>

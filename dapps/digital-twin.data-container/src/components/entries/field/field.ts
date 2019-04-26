@@ -35,7 +35,8 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { validators, parser, } from '../../../fields';
+import * as fieldUtils from '../../../fields';
+import * as entryUtils from '../../../entries';
 import * as utils from '../../../utils';
 
 interface FieldFormInterface extends EvanForm {
@@ -45,6 +46,16 @@ interface FieldFormInterface extends EvanForm {
 @Component({ })
 export default class FieldComponent extends mixins(EvanComponent) {
   /**
+   * Object entry entry type
+   */
+  @Prop() entry: any;
+
+  /**
+   * data contract listentries name, used for loading entries
+   */
+  @Prop() entryName: string;
+
+  /**
    * list of available modes (schema / edit / view)
    */
   @Prop({
@@ -52,75 +63,49 @@ export default class FieldComponent extends mixins(EvanComponent) {
   }) modes: Array<string>;
 
   /**
-   * schema / edit / view
-   */
-  @Prop({ }) mode;
-
-  /**
-   * Object entry entry type
-   */
-  @Prop() type: any;
-
-  /**
-   * Optional Value corresponding to the ajv, needed, when no form was applied
-   */
-  @Prop() value: any;
-
-  /**
-   * Optional passed formular that also contains the value control including the type validator.
-   */
-  @Prop() form: FieldFormInterface;
-
-  /**
-   * data contract listentries name, used for loading entries
-   */
-  @Prop() fieldName: string;
-
-  /**
-   * hide borders, buttons, ...
-   */
-  @Prop() integrated: boolean;
-
-  /**
-   * Force standalone mode
-   */
-  @Prop() standalone: boolean;
-
-  /**
    * formular specific variables
    */
   fieldForm: FieldFormInterface = null;
 
   /**
-   * field is automatically standalone, when no form was applied or standalone is explicit set to
-   * true
-   */
-  _standalone = false;
-
-  /**
    * Set the field form, if no form was applied
    */
   created() {
-    this._standalone = typeof this.standalone !== 'undefined' ? this.standalone : !this.form;
-    this.fieldForm = this.form || (<FieldFormInterface>new EvanForm(this, {
+    this.fieldForm = <FieldFormInterface>new EvanForm(this, {
       value: {
-        value: this.value,
+        value: this.entry.edit.value,
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
-          utils.enableDTSave();
-          return validators[vueInstance.type](this, vueInstance, form);
+          return fieldUtils.validateField(
+            vueInstance.entry.dataSchema.type,
+            this,
+            vueInstance,
+            form
+          );
         }
       },
-    }));
+    });
   }
 
   /**
-   * Map the current ajv formular to the data schema
+   * populate the value to the parents component, else the value is handled by the parents form
    */
   beforeDestroy() {
-    // in standalone mode, populate the value to the parents component, else the value is handled by
-    // the parents form
-    if (!this.form) {
-      this.$emit('update:value', parser[this.type](this.fieldForm.value.value));
-    }
+    this.entry.edit.value = this.fieldForm.value.value;
+  }
+
+  /**
+   * Reset the current edit values.
+   */
+  reset() {
+    entryUtils.resetValue(this, this.entry);
+    this.fieldForm.value.value = this.entry.value;
+  }
+
+  /**
+   * Save the current value and enable the save button
+   */
+  save() {
+    // update entry backup to the latest value
+    entryUtils.saveValue(this, this.entry);
   }
 }

@@ -26,10 +26,10 @@
 */
 
 <template>
-  <div class="white-box border rounded">
+  <div class="white-box border rounded" v-if="!loading">
     <div class="header"
       :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'">
-      <h3 class="m-0 font-weight-semibold" v-if="mode !== 'schema'">
+      <h3 class="m-0 font-weight-semibold" v-if="entry.mode !== 'schema'">
         {{ '_datacontainer.types.object' | translate }}: {{ entryName }}
       </h3>
       <h3 class="m-0 font-weight-semibold" v-else>
@@ -44,35 +44,39 @@
       
       <template v-else>
         <button type="button" class="btn btn-outline-secondary btn-circle"
-          v-if="modes.indexOf('schema') !== -1 && mode !== 'schema'"
-          @click="mode = 'schema'">
+          v-if="modes.indexOf('schema') !== -1 && entry.mode === 'edit'"
+          @click="entry.mode = 'schema'">
           <i class="mdi mdi-cogs"></i>
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-circle"
-          v-if="modes.indexOf('edit') !== -1 && mode !== 'edit'"
-          @click="mode = 'edit'">
-          <i class="mdi mdi-pencil"></i>
+        <button type="button" class="btn btn-primary btn-rounded"
+          v-if="(modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1) && entry.mode === 'view'"
+          @click="entry.mode = 'edit'">
+          {{ `_datacontainer.field.edit` | translate }}
+          <i class="mdi mdi-arrow-right label"></i>
         </button>
       </template>
     </div>
-    <div>
-      <dt-ajv
-        ref="ajvComp"
-        :enableValue="true"
-        :mode="mode"
-        :properties="entry.dataSchema.properties"
-        :value="entry.value">
-      </dt-ajv>
+    <dt-ajv
+      ref="ajv"
+      :enableValue="entry.mode !== 'schema'"
+      :mode="entry.mode"
+      :properties="entry.edit.dataSchema.properties"
+      :value="entry.edit.value"
+      @init="$set(reactiveRefs, 'ajv', $event)">
+    </dt-ajv>
 
-      <div class="footer"
-        v-if="mode === 'schema' || mode === 'edit'">
-        <button class="btn btn-primary btn-rounded"
-          :disabled="!$refs.ajvComp.isValid"
-          @click="mode = 'view'">
-          {{ '_datacontainer.ajv.save' | translate }}
-          <i class="mdi mdi-arrow-right label ml-2"></i>
-        </button>
-      </div>
+    <div class="footer"
+      v-if="reactiveRefs.ajv && (entry.mode === 'schema' || entry.mode === 'edit')">
+      <button class="btn btn-outline-secondary btn-rounded mr-3"
+        @click="reset()">
+        {{ '_datacontainer.ajv.reset-values' | translate }}
+      </button>
+      <button class="btn btn-primary btn-rounded"
+        :disabled="!reactiveRefs.ajv.isValid"
+        @click="save()">
+        {{ `_datacontainer.ajv.save.${ entry.mode }` | translate }}
+        <i class="mdi mdi-arrow-right label ml-2"></i>
+      </button>
     </div>
   </div>
 </template>

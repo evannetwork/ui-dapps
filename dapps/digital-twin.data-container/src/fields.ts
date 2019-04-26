@@ -30,41 +30,48 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 
 /**
  * Validator functions for each field type.
+ *
+ * @param      {string}           type         field type (string, files, ...)
+ * @param      {EvanFormControl}  field        from control for the field values
+ * @param      {Vue}              vueInstance  original vue component instance
+ * @param      {EvanForm}         form         parent form of the field
  */
-const validators = {
-  string: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
-    return field.value &&
-      field.value.trim().length !== 0;
-  },
-  files: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
-    return true;
-  },
-  images: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
-    return true;
-  },
-  number: (field: EvanFormControl, vueInstance: Vue, form: EvanForm) => {
-    return field.value &&
-      field.value.trim().length !== 0 &&
-      !isNaN(parseFloat(field.value));
-  },
+export function validateField(
+  type: string,
+  field: EvanFormControl,
+  vueInstance: Vue,
+  form: EvanForm
+) {
+  switch (type) {
+    case 'string': {
+      return field.value &&
+        field.value.trim().length !== 0;
+    }
+    case 'number': {
+      return field.value &&
+        field.value.trim().length !== 0 &&
+        !isNaN(parseFloat(field.value));
+    }
+  }
 };
 
 /**
- * Parser for field values.
+ * Validator functions for each field type.
+ *
+ * @param      {string}  type    field type (string, files, ...)
+ * @param      {any}     value   value of the field
  */
-const parser = {
-  string: (value: string) => {
-    return value.trim();
-  },
-  files: (value: string) => {
-    return value;
-  },
-  images: (value: string) => {
-    return value;
-  },
-  number: (value: string) => {
-    return parseFloat(value);
-  },
-}
+export function parseFieldValue(
+  type: string,
+  value: any
+) {
+  switch (type) {
+    case 'string': {
+      return value.trim();
+    }
+    case 'number': {
+      return parseFloat(value);
+    }
+  }
+};
 
-export { validators, parser };

@@ -197,13 +197,14 @@
             </div>
             <button type="button" class="btn btn-primary btn-rounded"
               @click="saveContainer()"
-              :disabled="!enableSave || $store.state.saving || !dbcpForm.isValid">
+              :disabled="!enableSave || $store.state.saving">
               {{ '_datacontainer.createForm.save' | translate }}
               <i class="mdi mdi-content-save label"></i>
             </button>
           </div>
         </div>
-        <evan-modal ref="dbcpModal">
+        <evan-modal ref="dbcpModal"
+          @canceled="cancelDbcpModal">
           <template v-slot:header>
             <h5 class="modal-title">
               {{ '_datacontainer.edit-dbcp' | translate }}

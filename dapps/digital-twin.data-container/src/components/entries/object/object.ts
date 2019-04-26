@@ -28,19 +28,22 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import * as entryUtils from '../../../entries';
+import * as utils from '../../../utils';
+
 @Component({ })
 export default class EntryObjectComponent extends mixins(EvanComponent) {
   /**
    * Container property template definition
    */
-  @Prop() entry: bcc.ContainerTemplateProperty;
+  @Prop() entry: any;
 
   /**
    * data contract listentries name, used for loading entries
@@ -56,4 +59,50 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
    * schema / edit / vue
    */
   @Prop() mode;
+
+  /**
+   * Force loading of ajv component
+   */
+  loading = false;
+
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
+   * Reset the current edit values.
+   */
+  reset() {
+    // for ajv component rerender
+    this.loading = true;
+    this.$nextTick(() => {
+      // reset specific values
+      entryUtils.resetValue(this, this.entry);
+
+      // display the components
+      this.loading = false;
+    })
+  }
+
+  /**
+   * If the mode is schema, force the edit mode, so all values matches the correct field type.
+   */
+  save() {
+    if (this.entry.mode === 'schema') {
+      this.entry.mode = 'edit';
+
+      // iterate through all forms and make alle values dirty and set the value again to trigger
+      // form validation
+      this.$nextTick(() => {
+        this.reactiveRefs.ajv.forms.forEach((form: any) => {
+          form.value.value = form.value.value;
+          form.value.dirty = true;
+        });
+      });
+    } else {
+      // update entry backup to the latest value
+      entryUtils.saveValue(this, this.entry);
+    }
+  }
 }

@@ -28,11 +28,11 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import AJVComponent from './entries/ajv/ajv.vue';
+import AJVComponent from './ajv/ajv.vue';
 import EntryComponent from './entries/entry/entry.vue';
 import EntryListComponent from './entries/list/list.vue';
 import EntryObjectComponent from './entries/object/object.vue';
-import FieldComponent from './fields/field/field.vue';
+import FieldComponent from './entries/field/field.vue';
 import FieldFilesComponent from './fields/files/files.vue';
 import FieldImagesComponent from './fields/images/images.vue';
 import FieldNumberComponent from './fields/number/number.vue';
