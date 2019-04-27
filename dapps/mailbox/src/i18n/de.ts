@@ -35,6 +35,9 @@ export default {
     "received": "Empfangen",
     "sent": "Gesendet",
     "to": "an",
+    "dispatcher": {
+      "attachment": "Kontakt/Vertrag sync"
+    },
     "attachments": {
       "continue": "weiter",
       "commKey": {
