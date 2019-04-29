@@ -84,7 +84,7 @@
         </td>
         <td class="fill-content" v-if="enableValue">
           <component
-            :is="`dt-field-${ form.type.value }`"
+            :is="`dc-field-${ form.type.value }`"
             :control="form.value"
             :mode="mode"
             :standalone="false">

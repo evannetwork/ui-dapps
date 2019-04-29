@@ -31,11 +31,18 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import * as utils from '../../../utils';
+
 import * as entryUtils from '../../../entries';
+import * as fieldUtils from '../../../fields';
+import * as utils from '../../../utils';
+import { UIContainerTemplateProperty } from '../../../interfaces';
+
+interface FieldFormInterface extends EvanForm {
+  value: EvanFormControl;
+}
 
 @Component({ })
 export default class EntryListComponent extends mixins(EvanComponent) {
@@ -47,22 +54,17 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   /**
    * data contract listentries name, used for loading entries
    */
-  @Prop() listName: string;
+  @Prop() entryName: string;
 
   /**
    * Container property template definition
    */
-  @Prop() entry: bcc.ContainerTemplateProperty;
+  @Prop() entry: UIContainerTemplateProperty;
 
   /**
    * list of available modes (schema / edit / view)
    */
   @Prop() modes: Array<string>;
-
-  /**
-   * schema / edit / vue
-   */
-  @Prop() mode;
 
   /**
    * Show loading symbol, until listentries were load
@@ -79,6 +81,7 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    * Show the add list entry dialog
    */
   addListEntry = false;
+  addListEntryForm: FieldFormInterface = null;
 
   /**
    * Data container instance, if an address was opened, so we can easily load entries
@@ -90,6 +93,7 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    */
   listEntries: Array<any> = [ ];
   expandListEntries: any = { };
+
   /**
    * paging specific values
    */
@@ -97,6 +101,11 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   maxListentries = 0;
   offset = 0;
   reverse = true;
+
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
 
   /**
    * Load listentries
@@ -121,6 +130,23 @@ export default class EntryListComponent extends mixins(EvanComponent) {
       }
     }
 
+    // add form handling for field controls
+    if (this.entry.dataSchema.items.type !== 'object') {
+      this.addListEntryForm = <FieldFormInterface>new EvanForm(this, {
+        value: {
+          value: this.entry.edit.value,
+          validate: function(vueInstance: EntryListComponent, form: FieldFormInterface) {
+            return fieldUtils.validateField(
+              vueInstance.entry.dataSchema.type,
+              this,
+              vueInstance,
+              form
+            );
+          }
+        },
+      });
+    }
+
     this.loading = false;
   }
 
@@ -130,16 +156,10 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   addEntry() {
     this.addListEntry = false;
 
-    // wait until the field is removed from dom and beforeDestroy handler has updated the value
-    this.$nextTick(() => {
-      // add the new value
-      this.entry.value.unshift((<any>this).entry.addValue);
-
-      // set it to null to force addValue reset
-      (<any>this).entry.addValue = null;
-      // add correct default values
-      entryUtils.ensureValues((<any>this).entry);
-    });
+    // save the current ajv values to the edit.value object and save the value into the original
+    // object
+    this.reactiveRefs.addAjv.save();
+    entryUtils.saveValue(this, this.entry);
   }
 
   /**
@@ -152,12 +172,12 @@ export default class EntryListComponent extends mixins(EvanComponent) {
     // detect maxListEntries, so we can load until the max list entries were loaded
     this.maxListentries = await runtime.dataContract.getListEntryCount(
       this.contractAddress,
-      this.listName
+      this.entryName
     );
 
     // load the next entries
     const newEntries = await this.dataContainer.getListEntries(
-      this.listName,
+      this.entryName,
       this.count,
       this.offset,
       this.reverse
@@ -168,5 +188,29 @@ export default class EntryListComponent extends mixins(EvanComponent) {
     this.listEntries = this.listEntries.concat(newEntries);
 
     this.loading = false;
+  }
+
+  /**
+   * Cancel the schema edit and use the original values.
+   */
+  resetSchema() {
+    // disable value overwrite
+    this.reactiveRefs.schemaAjv.deleted = true;
+
+    // reset the schema
+    entryUtils.resetSchema(this.entry);
+    this.$set(this.entry, 'mode', 'view');
+  }
+
+  /**
+   * Save the current schema.
+   */
+  saveSchema() {
+    // save the current schema into the edit properties
+    this.reactiveRefs.schemaAjv.save();
+
+    // save the schema
+    entryUtils.saveSchema(this.entry);
+    this.$set(this.entry, 'mode', 'view');
   }
 }

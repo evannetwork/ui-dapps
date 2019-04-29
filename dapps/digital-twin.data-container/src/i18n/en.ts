@@ -137,7 +137,8 @@ export default {
         "title": "Value"
       }
     },
-    "in-creation": "In Creation",
+    "in-creation": "In Creation...",
+    "in-saving": "Saving...",
     "list": {
       "add-list-entry": "Add list entry",
       "canel-list-entry": "Cancel",

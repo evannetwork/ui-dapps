@@ -52,7 +52,7 @@
     </div>
     <div class="content">
       <component
-        :is="`dt-field-${ entry.dataSchema.type }`"
+        :is="`dc-field-${ entry.dataSchema.type }`"
         :control="fieldForm.value"
         :mode="entry.mode"
         :standalone="true">

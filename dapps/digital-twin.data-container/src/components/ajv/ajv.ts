@@ -92,6 +92,11 @@ export default class AJVComponent extends mixins(EvanComponent) {
   isValid = false;
 
   /**
+   * Do not save the properties multiple times automatically
+   */
+  deleted = false;
+
+  /**
    * Setup all field properties
    */
   created() {
@@ -111,6 +116,15 @@ export default class AJVComponent extends mixins(EvanComponent) {
    * Map the current ajv formular to the data schema
    */
   beforeDestroy() {
+    !this.deleted && this.save();
+
+    this.deleted = true;
+  }
+
+  /**
+   * Takes the current form values and write them back into the properties object.
+   */
+  save() {
     // clear the objects to keep the original object reference
     Object.keys(this.properties).forEach(key => delete this.properties[key]);
     if (this.value) {

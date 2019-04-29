@@ -40,26 +40,26 @@
     </div>
 
     <div class="mt-3" v-if="modes.length !== 0">
-      <dt-entry-object
+      <dc-entry-object
         v-if="entry.dataSchema.type === 'object'"
         :entry="entry"
-        :entryName="name"
+        :entryName="entryName"
         :modes="modes">
-      </dt-entry-object>
-      <dt-entry-list
+      </dc-entry-object>
+      <dc-entry-list
         v-else-if="entry.dataSchema.type === 'array'"
         @reset="resetValue" @save="saveValue"
         :address="address"
         :entry="entry"
-        :listName="name"
+        :entryName="entryName"
         :modes="modes">
-      </dt-entry-list>
-      <dt-field
+      </dc-entry-list>
+      <dc-entry-field
         v-else
         :entry="entry"
-        :entryName="name"
+        :entryName="entryName"
         :modes="modes">
-      </dt-field>
+      </dc-entry-field>
     </div>
   </div>
 </template>

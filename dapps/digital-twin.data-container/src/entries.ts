@@ -27,6 +27,7 @@
 
 import EntryComponent from './components/entries/entry/entry';
 import * as utils from './utils';
+import { UIContainerTemplateProperty } from './interfaces';
 
 /**
  * Takes an entry and checks for type array. If it's an array, ensure, that the value array and an
@@ -34,19 +35,19 @@ import * as utils from './utils';
  * not support list entries export and must be load dynamically. The value array is used to handle
  * new arrays, that will be persisted for caching to the indexeddb like the normal entries
  *
- * @param      {any}  entry   the entry that should be checked
+ * @param      {UIContainerTemplateProperty}  entry   the entry that should be checked
  */
-export function ensureValues(entry: any) {
-  entry.edit = entry.edit || {
+export function ensureValues(entry: UIContainerTemplateProperty) {
+  entry.edit = (<any>entry.edit || {
     dataSchema: JSON.parse(JSON.stringify(entry.dataSchema))
-  };
+  });
 
   switch (entry.dataSchema.type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
       entry.value = entry.value || [ ];
       entry.edit.value = entry.edit.value ||
-        ensureValues({ dataSchema: { type: entry.dataSchema.items.type } }).value;
+        ensureValues(<any>{ dataSchema: { type: entry.dataSchema.items.type } }).value;
       break;
     }
     case 'object': {
@@ -70,14 +71,25 @@ export function ensureValues(entry: any) {
 }
 
 /**
+ * Resets the schema of an data container entry.
+ *
+ * @param      {UIContainerTemplateProperty}  entry   entry for that the dataSchema should be
+ *                                                    resetted
+ */
+export function resetSchema(entry: UIContainerTemplateProperty) {
+  entry.edit.dataSchema = JSON.parse(JSON.stringify(entry.dataSchema));
+}
+
+/**
  * Reset the edit value of the entry to the original one.
  *
- * @param      {Vue}  vueInstance  vue component instance
- * @param      {any}  entry        entry for that the edit.value should be resetted
+ * @param      {Vue}                          vueInstance  vue component instance
+ * @param      {UIContainerTemplateProperty}  entry        entry for that the edit.value should be
+ *                                                         resetted
  */
-export function resetValue(vueInstance: any, entry: any) {
+export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty) {
   // use the correct data schema
-  entry.edit.dataSchema = JSON.parse(JSON.stringify(entry.dataSchema));
+  resetSchema(entry);
 
   switch (entry.dataSchema.type) {
     // add an empty value list and an addValue object, the addValue object is used for new
@@ -111,20 +123,36 @@ export function resetValue(vueInstance: any, entry: any) {
 }
 
 /**
+ * Save the schema of an data container entry.
+ *
+ * @param      {UIContainerTemplateProperty}  entry   entry, for that the entry.edit.dataSchema
+ *                                                    should be used.
+ */
+export function saveSchema(entry: UIContainerTemplateProperty) {
+  entry.dataSchema = JSON.parse(JSON.stringify(entry.edit.dataSchema));
+}
+
+/**
  * Use the current edit value and save it into the value.
  *
- * @param      {Vue}  vueInstance  vue component instance
- * @param      {any}  entry   entry for that the edit.value should be saved
+ * @param      {Vue}                          vueInstance  vue component instance
+ * @param      {UIContainerTemplateProperty}  entry        entry for that the edit.value should be
+ *                                                         saved
  */
-export function saveValue(vueInstance: any, entry: any) {
+export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) {
   // use the correct data schema
-  entry.dataSchema = JSON.parse(JSON.stringify(entry.edit.dataSchema));
+  saveSchema(entry);
 
   // lookup values
   switch (entry.dataSchema.type) {
-    // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
-      // we do not need to do anything, value save is handled by the component it self
+      // apply the new value into the array, and clear the old add value
+      entry.value.unshift(entry.edit.value);
+      entry.edit.value = null;
+
+      // ensure the new empty edit.value
+      ensureValues(entry);
+
       break;
     }
     case 'object': {

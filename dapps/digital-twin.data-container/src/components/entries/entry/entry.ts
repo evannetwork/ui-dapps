@@ -55,7 +55,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
   /**
    * data contract entry name
    */
-  @Prop() name: string;
+  @Prop() entryName: string;
 
   /**
    * Available display modes for the current user and it's roles
@@ -76,8 +76,8 @@ export default class EntryComponent extends mixins(EvanComponent) {
 
       // check for read permissions
       if (this.permissions.isOwner ||
-          read.indexOf(this.name) !== -1 ||
-          write.indexOf(this.name) !== -1) {
+          read.indexOf(this.entryName) !== -1 ||
+          write.indexOf(this.entryName) !== -1) {
         this.modes.push('view');
       }
 
@@ -85,7 +85,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
       if (this.permissions.isOwner) {
         this.modes.push('schema');
       // else check for read write permissions
-      } else if (write.indexOf(this.name) !== -1) {
+      } else if (write.indexOf(this.entryName) !== -1) {
         this.modes.push('edit');
       }
     }

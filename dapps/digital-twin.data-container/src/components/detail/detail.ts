@@ -53,6 +53,13 @@ interface ShareFormInterface extends EvanForm {
 @Component({ })
 export default class DetailComponent extends mixins(EvanComponent) {
   /**
+   * Current opened container address (save it from routes to this variable, so all beforeDestroy
+   * listeners for template-handlers will work correctly and do not uses a new address that is
+   * laoding)
+   */
+  containerAddress = '';
+
+  /**
    * Show loading symbol
    */
   loading = true;
@@ -117,6 +124,8 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Load the container data
    */
   async created() {
+    this.containerAddress = this.$route.params.containerAddress;
+
     const runtime = utils.getRuntime(this);
     await this.initialize();
 
@@ -127,7 +136,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
       const beforeSaving = this.$store.state.saving;
 
       const saving = instances
-        .filter(instance => instance.data.address === this.$route.params.containerAddress)
+        .filter(instance => instance.data.address === this.containerAddress)
         .length > 0;
 
       this.$set(this.$store.state, 'saving', saving);
@@ -142,21 +151,21 @@ export default class DetailComponent extends mixins(EvanComponent) {
     this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
       const instances = await dispatchers.shareDispatcher.getInstances(runtime);
       const sharing = instances
-        .filter(instance => instance.data.address === this.$route.params.containerAddress)
+        .filter(instance => instance.data.address === this.containerAddress)
         .length > 0;
 
       this.$set(this.$store.state, 'sharing', sharing);
     });
 
     // watch for updates
-    window.addEventListener('dt-value-changed', this.valuesChanged);
+    window.addEventListener('dc-value-changed', this.valuesChanged);
   }
 
   /**
    * Clear watchers
    */
   beforeDestroy() {
-    window.removeEventListener('dt-value-changed', this.valuesChanged);
+    window.removeEventListener('dc-value-changed', this.valuesChanged);
   }
 
   /**
@@ -172,7 +181,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
       this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
     }
 
-    this.container = utils.getContainer(<any>runtime, this.$route.params.containerAddress);
+    this.container = utils.getContainer(<any>runtime, this.containerAddress);
     this.description = await this.container.getDescription();
     this.template = await this.container.toTemplate(true);
 
@@ -233,7 +242,10 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Trigger the digital twin save
    */
   async saveContainer() {
+    console.log('prepare saving')
     if (!this.$store.state.saving && this.dbcpForm.isValid) {
+      const runtime = utils.getRuntime(this);
+
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
       // opened ajv editor is saved
       this.loading = true;
@@ -243,11 +255,18 @@ export default class DetailComponent extends mixins(EvanComponent) {
       this.description.name = this.dbcpForm.name.value;
       this.description.description = this.dbcpForm.description.value;
 
-      this.$nextTick(async () => {
-        const runtime = utils.getRuntime(this);
+      // disable value caching within the template handler and delete the latest cache
+      (<any>this.$refs.templateHandler).cacheChanges = false;
+      await (new ContainerCache(runtime.activeAccount)).delete(this.containerAddress);
 
+      // hide dbcp modal
+      (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
+
+      // wait for the template handler to saved all the data
+      this.$nextTick(async () => {
+        console.log('start saving')
         dispatchers.updateDispatcher.start(runtime, {
-          address: this.$route.params.containerAddress,
+          address: this.containerAddress,
           description: this.dbcpForm.description.value,
           digitalTwinAddress: this.digitalTwinAddress,
           img: this.dbcpForm.img.value,
@@ -255,8 +274,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
           template: this.template,
         });
 
-        await (new ContainerCache(runtime.activeAccount)).delete(this.$route.params.containerAddress);
-        (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
         this.loading = false;
       });
     }
@@ -267,7 +284,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
    */
   shareDt() {
     const runtime = utils.getRuntime(this);
-    const address = this.$route.params.containerAddress;
+    const address = this.containerAddress;
 
     // transform the ui permission into an conainter share config
     const perm = this.share.permissions;

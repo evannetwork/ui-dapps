@@ -152,13 +152,13 @@
         </div>
       </template>
 
-      <dt-entry
+      <dc-entry
         v-if="activeTab > -1 && activeEntry"
         :address="address"
         :entry="activeEntry"
-        :permissions="permissions"
-        :name="activeEntryName">
-      </dt-entry>
+        :entryName="activeEntryName"
+        :permissions="permissions">
+      </dc-entry>
     </template>
   </div>
 </template>

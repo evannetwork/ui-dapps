@@ -100,7 +100,7 @@ export function getDigitalTwinConfig(
  * Sends the 'dt-value-changed' event.
  */
 export function enableDTSave() {
-  window.dispatchEvent(new CustomEvent('dt-value-changed'));
+  window.dispatchEvent(new CustomEvent('dc-value-changed'));
 }
 
 /**

@@ -175,8 +175,8 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     }
 
     // watch for changes, so the internal values can be cached
-    this.valuesChanged = (($event) => this.$set(this, 'cacheChanges', true)).bind(this);
-    window.addEventListener('dt-value-changed', this.valuesChanged);
+    this.valuesChanged = (($event) => this.cacheChanges = true).bind(this);
+    window.addEventListener('dc-value-changed', this.valuesChanged);
   }
 
   /**
@@ -185,19 +185,21 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   async mounted() {
     // try to restore previous left work
     this.containerCache = new ContainerCache((<any>this).getRuntime().activeAccount);
-    const cachedTemplate = await this.containerCache.get(this.address);
-
-    // ask for restore
-    if (cachedTemplate && !deepEqual(cachedTemplate, this.template)) {
-      this.cachedTemplate = cachedTemplate;
-    }
+    this.cachedTemplate = await this.containerCache.get(this.address);
   }
 
   /**
    * Cache latest configuration for this type, so the data wont be lost, when the users leaves
    */
   async beforeDestroy() {
-    window.removeEventListener('dt-value-changed', this.valuesChanged);
+    console.log('destroy template handler')
+    window.removeEventListener('dc-value-changed', this.valuesChanged);
+
+    // save latest change for the current active entry to the template so the correct values will be
+    // cached
+    this.updateTemplateProperty();
+
+    console.dir(this.template)
 
     // wait for opened containers to saved the work
     if (this.cacheChanges) {
@@ -208,13 +210,28 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         this.template
       );
 
+      // if something has changed, cache it!
       if (integrity.changed) {
-        setTimeout(() => {
-          this.containerCache.put(this.address, this.template);
-        });
+        //
+        // wait for all editors (ajv / field components to save the work and persist them)
+        //
+        // @param      {<type>}  thisaddress   The thisaddress
+        // @param      {<type>}  thistemplate  The thistemplate
+        //
+        setTimeout(() =>  this.containerCache.put(this.address, this.template));
       } else {
         this.containerCache.delete(this.address);
       }
+    }
+  }
+
+  /**
+   * save the latest active entry values to the template properties
+   */
+  updateTemplateProperty() {
+    // save the latest value
+    if (this.activeEntry && this.activeEntryName) {
+      this.template.properties[this.activeEntryName] = this.activeEntry;
     }
   }
 
@@ -228,9 +245,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     const beforeTab = this.activeTab;
     const updateActiveEntry = () => {
       // save the latest value
-      if (beforeTab !== -1 && this.activeEntry && this.activeEntryName) {
-        this.template.properties[this.activeEntryName] = this.activeEntry;
-      }
+      beforeTab !== -1 && this.updateTemplateProperty();
 
       if (activeTab !== -1) {
         this.activeEntryName = Object.keys(this.template.properties)[activeTab];

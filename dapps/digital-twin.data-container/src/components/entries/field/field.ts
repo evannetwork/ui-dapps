@@ -75,6 +75,11 @@ export default class FieldComponent extends mixins(EvanComponent) {
       value: {
         value: this.entry.edit.value,
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
+          // populate the value to the parents component, else the value is handled by the parents
+          // form
+          vueInstance.entry.edit.value = this.value;
+
+          // run validation
           return fieldUtils.validateField(
             vueInstance.entry.dataSchema.type,
             this,
@@ -87,18 +92,11 @@ export default class FieldComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * populate the value to the parents component, else the value is handled by the parents form
-   */
-  beforeDestroy() {
-    this.entry.edit.value = this.fieldForm.value.value;
-  }
-
-  /**
    * Reset the current edit values.
    */
   reset() {
     entryUtils.resetValue(this, this.entry);
-    this.fieldForm.value.value = this.entry.value;
+    this.fieldForm.value.value = this.entry.edit.value;
   }
 
   /**

@@ -56,16 +56,16 @@
         </button>
       </template>
     </div>
-    <dt-ajv
-      ref="ajv"
+    <dc-ajv
       :enableValue="entry.mode !== 'schema'"
       :mode="entry.mode"
       :properties="entry.edit.dataSchema.properties"
       :value="entry.edit.value"
       @init="$set(reactiveRefs, 'ajv', $event)">
-    </dt-ajv>
+    </dc-ajv>
 
     <div class="footer"
+      style="margin-top: -25px"
       v-if="reactiveRefs.ajv && (entry.mode === 'schema' || entry.mode === 'edit')">
       <button class="btn btn-outline-secondary btn-rounded mr-3"
         @click="reset()">

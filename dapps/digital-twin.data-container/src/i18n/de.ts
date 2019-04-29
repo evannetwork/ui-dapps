@@ -137,7 +137,8 @@ export default {
         "title": "Wert"
       }
     },
-    "in-creation": "In Erstellung",
+    "in-creation": "In Erstellung...",
+    "in-saving": "Wird gespeichert...",
     "list": {
       "add-list-entry": "Listeneintrag hinzufügen",
       "canel-list-entry": "Abbrechen",

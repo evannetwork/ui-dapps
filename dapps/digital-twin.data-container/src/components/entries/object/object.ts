@@ -35,6 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import { UIContainerTemplateProperty } from '../../../interfaces';
 import * as entryUtils from '../../../entries';
 import * as utils from '../../../utils';
 
@@ -43,7 +44,7 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   /**
    * Container property template definition
    */
-  @Prop() entry: any;
+  @Prop() entry: UIContainerTemplateProperty;
 
   /**
    * data contract listentries name, used for loading entries
@@ -54,11 +55,6 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
    * list of available modes (schema / edit / view)
    */
   @Prop() modes: Array<string>;
-
-  /**
-   * schema / edit / vue
-   */
-  @Prop() mode;
 
   /**
    * Force loading of ajv component
@@ -82,7 +78,7 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
 
       // display the components
       this.loading = false;
-    })
+    });
   }
 
   /**
@@ -101,6 +97,8 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
         });
       });
     } else {
+      // trigger saving
+      this.reactiveRefs.ajv.save();
       // update entry backup to the latest value
       entryUtils.saveValue(this, this.entry);
     }

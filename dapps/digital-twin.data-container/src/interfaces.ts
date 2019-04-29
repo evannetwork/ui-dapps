@@ -25,51 +25,16 @@
   https://evan.network/license/
 */
 
-import Vue from 'vue';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
 
-/**
- * Validator functions for each field type.
- *
- * @param      {string}           type         field type (string, files, ...)
- * @param      {EvanFormControl}  field        from control for the field values
- * @param      {Vue}              vueInstance  original vue component instance
- * @param      {EvanForm}         form         parent form of the field
- */
-export function validateField(
-  type: string,
-  field: EvanFormControl,
-  vueInstance: Vue,
-  form: EvanForm
-) {
-  switch (type) {
-    case 'string': {
-      return field.value &&
-        field.value.trim().length !== 0;
-    }
-    case 'number': {
-      return isNaN(parseFloat(field.value));
-    }
-  }
-};
+export interface UIContainerTemplateProperty extends bcc.ContainerTemplateProperty {
+  /**
+   * Current edit mode for UI interactions. (schema, edit, view)
+   */
+  mode: string;
 
-/**
- * Validator functions for each field type.
- *
- * @param      {string}  type    field type (string, files, ...)
- * @param      {any}     value   value of the field
- */
-export function parseFieldValue(
-  type: string,
-  value: any
-) {
-  switch (type) {
-    case 'string': {
-      return value.trim();
-    }
-    case 'number': {
-      return parseFloat(value);
-    }
-  }
-};
-
+  /**
+   * object that contains runtime values for edit forms.
+   */
+  edit: { dataSchema: any, value: any, };
+}

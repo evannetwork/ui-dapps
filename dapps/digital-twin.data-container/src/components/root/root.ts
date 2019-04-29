@@ -49,18 +49,17 @@ export default class RootComponent extends mixins(EvanComponent) {
 
   created() {
     // set the hash change watcher, so we can detect data container change and loading
-    const that = this;
     let previousContainer = this.$route.params.containerAddress;
 
     // force reload, when container address has changed
-    this.hashChangeWatcher = async () => {
-      if (previousContainer !== that.$route.params.containerAddress) {
-        previousContainer = that.$route.params.containerAddress;
-        that.loading = true;
+    this.hashChangeWatcher = (async () => {
+      if (previousContainer !== this.$route.params.containerAddress) {
+        previousContainer = this.$route.params.containerAddress;
+        this.loading = true;
 
-        that.$nextTick(() => that.loading = false);
+        this.$nextTick(() => this.loading = false);
       }
-    };
+    }).bind(this);
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);

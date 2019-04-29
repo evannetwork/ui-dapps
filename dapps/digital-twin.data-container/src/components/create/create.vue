@@ -145,10 +145,10 @@
             </div>
           </div>
           <div class="step" v-if="activeStep === 1">
-            <dt-template-handler
+            <dc-template-handler
               :address="!templateMode ? 'create' : 'create-template'"
               :template.sync="templates[createForm.template.value]">
-            </dt-template-handler>
+            </dc-template-handler>
 
             <evan-modal ref="createModal">
               <template v-slot:header>
