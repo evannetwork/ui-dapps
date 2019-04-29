@@ -114,18 +114,18 @@
     display: inline-block;
 
     height: 32px;
-    margin-right: 5px;
+    margin: 0 5px 5px 5px;
     padding: 8px 12px 7px;
 
-    cursor: pointer;
+    transition: 0.3s ease-out background-color;
 
-    color: #023845;
+    color: cssVar('text-color');
     border-radius: 3px;
-    background: #cddde2;
+    background: cssVar('gray-200');
 
     &:hover, &.active {
-      color: #ffffff;
-      background: #61cbc8;
+      color: cssVar('light');
+      background: cssVar('secondary');
     }
 
     i {

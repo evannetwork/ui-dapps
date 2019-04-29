@@ -32,10 +32,11 @@ dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainNa
 import EvanQueue from './Queue';
 import { Dispatcher, DispatcherInstance } from './Dispatcher';
 import './index.scss';
+import * as FileHandler from './Files'; 
 
 export * from './config';
 export * from './utils';
-export { EvanQueue, Dispatcher, DispatcherInstance };
+export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler };
 
 /**
  * if the ui.evan dapp is loaded as an normal dapp, show the style preview.
