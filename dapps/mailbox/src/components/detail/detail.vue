@@ -54,7 +54,7 @@
           </div>
 
           <div class="mt-4 mb-4 p-3 border bg-level-2">
-            <span 
+            <span
               v-html="mail.body">
             </span>
           </div>
@@ -76,7 +76,7 @@
                 </template>
                 <template v-slot:footer>
                   <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-                    @click="acceptAttachment(attachment, $refs.attachmentModal[index]);">
+                    @click="acceptAttachment(attachment, mail, index, $refs.attachmentModal[index]);">
                     {{ `_mailbox.attachments.continue` | translate }}
                   </button>
                 </template>

@@ -35,6 +35,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import attachmentDispatcher from '../../dispatchers/attachmentDispatcher';
+
 @Component({ })
 export default class DetailComponent extends mixins(EvanComponent) {
   /**
@@ -55,7 +57,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
   /**
    * When an attachment gets accepted, show an loading animation and disable the buttons
    */
-  acceptingAttachment: boolean;
+  acceptingAttachment = false;
 
   /**
    * Load the mail details
@@ -103,9 +105,22 @@ export default class DetailComponent extends mixins(EvanComponent) {
   /**
    * Triggers the attachment dispatcher and accepts the contact / contract / ...
    */
-  acceptAttachment(attachment: any, modalRef: any) {
-    console.log('TODO: accept the attachment')
+  acceptAttachment(attachment: any, mail: any, index: number, modalRef: any) {
+    const runtime = (<any>this).getRuntime();
+    attachmentDispatcher.start(runtime, {
+      attachment,
+      mail,
+    });
+    this.acceptingAttachment = true;
+    attachmentDispatcher.watch(($event: CustomEvent) => {
+      const instance = $event.detail.instance;
 
+      // when the synchronisation has finished, navigate to the correct entry
+      if (instance.status === 'finished') {
+        this.mail.attachments[index].status = 'accepted';
+        this.acceptingAttachment = false;
+      }
+    });
     modalRef.hide();
   }
 
@@ -115,7 +130,20 @@ export default class DetailComponent extends mixins(EvanComponent) {
    */
   openAttachment(attachment: any, modalRef: any) {
     if (attachment.status === 'accepted') {
-      console.log('TODO: open the attachment');
+      if (attachment.fullPath) {
+        (<any>this).evanNavigate(attachment.fullPath);
+      } else {
+        let storeKey = attachment.storeKey || attachment.address;
+        // use storeKey as default value that should be opened
+        let toOpen = `/${ storeKey }`;
+
+        // when a bc was addes, open it including the bc
+        if (attachment.bc) {
+          toOpen = `/${ attachment.bc }${ toOpen }`;
+        }
+
+        window.location.hash = `${ toOpen }`;
+      }
     } else {
       modalRef.show();
     }
