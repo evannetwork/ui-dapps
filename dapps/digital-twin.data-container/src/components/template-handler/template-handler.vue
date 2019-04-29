@@ -53,20 +53,21 @@
           </button>
         </template>
       </evan-modal>
-      <div class="bg-level-1 p-3 border rounded d-flex flex-wrap">
-        <div class="batch-label"
+      <div class="bg-level-1 p-3 pb-2 border rounded d-flex flex-wrap"
+        style="height: 65px;">
+        <div class="batch-label clickable"
           v-for="(property, index) in Object.keys(template.properties)"
           :class="{ 'active': activeTab === index }"
           @click="activateTab(index)">
           {{ property }}
         </div>
-        <div class="batch-label"
+        <div class="batch-label clickable"
           :class="{ 'active': activeTab === -1 }"
           @click="activateTab(-1)">
           <i class="mdi mdi-plus-circle"></i>
         </div>
 
-        <div class="batch-label animate-hop bg-primary bg-text-primary"
+        <div class="batch-label clickable animate-hop bg-primary bg-text-primary"
           v-if="cachedTemplate"
           @click="$refs.cacheModal.show()">
           <i class="mdi mdi-undo"></i>
@@ -96,7 +97,7 @@
                   :placeholder="`_datacontainer.entry.type.desc` | translate"
                   :disabled="$store.state.saving"
                   v-model="entryForm.type.value"
-                  v-bind:class="{ 'is-invalid' : entryForm.type.error }"
+                  :class="{ 'is-invalid' : entryForm.type.error }"
                   @blur="entryForm.type.setDirty()">
                   <option
                     v-for="(entryType, index) in entryTypes"
@@ -114,7 +115,7 @@
                   :placeholder="`_datacontainer.entry.array-type.desc` | translate"
                   :disabled="$store.state.saving"
                   v-model="entryForm.arrayType.value"
-                  v-bind:class="{ 'is-invalid' : entryForm.arrayType.error }"
+                  :class="{ 'is-invalid' : entryForm.arrayType.error }"
                   @blur="entryForm.arrayType.setDirty()">
                   <option
                     v-for="(arrayType, index) in arrayTypes"
@@ -132,7 +133,7 @@
                   :placeholder="`_datacontainer.entry.name.desc` | translate"
                   :disabled="$store.state.saving"
                   v-model="entryForm.name.value"
-                  v-bind:class="{ 'is-invalid' : entryForm.name.error }"
+                  :class="{ 'is-invalid' : entryForm.name.error }"
                   @blur="entryForm.name.setDirty()">
                 <div class="invalid-feedback">
                   {{ `_datacontainer.entry.name.error` | translate }}

@@ -50,6 +50,9 @@ export function validateField(
     case 'number': {
       return isNaN(parseFloat(field.value));
     }
+    case 'files': {
+      return true;
+    }
   }
 };
 
@@ -69,6 +72,9 @@ export function parseFieldValue(
     }
     case 'number': {
       return parseFloat(value);
+    }
+    case 'files': {
+      return value;
     }
   }
 };

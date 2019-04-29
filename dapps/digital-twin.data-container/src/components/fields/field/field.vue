@@ -27,11 +27,11 @@
 
 <template>
   <div>
-    images
+    <component
+      :is="`dc-field-${ type }`"
+      :control="control"
+      :mode="mode"
+      :standalone="standalone">
+    </component>
   </div>
 </template>
-
-<script lang="ts">
-  import Component from './images.ts';
-  export default Component;
-</script>

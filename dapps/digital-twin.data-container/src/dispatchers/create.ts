@@ -67,7 +67,7 @@ dispatcher
     const twinConfig = utils.getDigitalTwinConfig(runtime, data.digitalTwinAddress);
     const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
 
-    // save the digital entries
+    // save the digital twin entries
     await digitalTwin.setEntry(data.name, data.contractAddress,
       bcc.DigitalTwinEntryType.Container);
   });

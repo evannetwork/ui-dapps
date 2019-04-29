@@ -95,7 +95,7 @@
                   id="template" ref="template"
                   :placeholder="`_datacontainer.createForm.template.desc` | translate"
                   v-model="createForm.template.value"
-                  v-bind:class="{ 'is-invalid' : createForm.template.error }"
+                  :class="{ 'is-invalid' : createForm.template.error }"
                   @blur="createForm.template.setDirty()">
                   <option
                     v-for="(template, index) in templates"
@@ -112,7 +112,7 @@
                   id="name" ref="name"
                   :placeholder="`_datacontainer.createForm.name.desc` | translate"
                   v-model="createForm.name.value"
-                  v-bind:class="{ 'is-invalid' : createForm.name.error }"
+                  :class="{ 'is-invalid' : createForm.name.error }"
                   @blur="createForm.name.setDirty()">
                 <div class="invalid-feedback">
                   {{ `_datacontainer.createForm.name.error` | translate }}
@@ -126,7 +126,7 @@
                   id="description" ref="description"
                   :placeholder="`_datacontainer.createForm.description.desc` | translate"
                   v-model="createForm.description.value"
-                  v-bind:class="{ 'is-invalid' : createForm.description.error }"
+                  :class="{ 'is-invalid' : createForm.description.error }"
                   @blur="createForm.description.setDirty()">
                 </textarea>
               </div>

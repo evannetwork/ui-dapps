@@ -27,7 +27,13 @@
 
 <template>
   <div>
-    files
+    <evan-file-input
+      id="value" ref="value"
+      :disabled="$store.state.saving || mode === 'view'"
+      :class="{ 'is-invalid' : control.error }"
+      v-model="control.value"
+      @input="control.setDirty()">
+    </evan-file-input>
   </div>
 </template>
 

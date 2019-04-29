@@ -44,7 +44,7 @@
               id="alias" ref="alias"
               :placeholder="`${ formI18nScope }.alias.desc` | translate"
               v-model="contactForm.alias.value"
-              v-bind:class="{ 'is-invalid' : contactForm.alias.error }"
+              :class="{ 'is-invalid' : contactForm.alias.error }"
               @blur="contactForm.alias.setDirty()">
             <div class="invalid-feedback">
               {{ `${ formI18nScope }.alias.error` | translate }}

@@ -72,7 +72,7 @@
                   id="userName" ref="userName"
                   :placeholder="'_onboarding.sign-up.user-name' | translate"
                   v-model="profileForm.userName.value"
-                  v-bind:class="{ 'is-invalid' : profileForm.userName.error }"
+                  :class="{ 'is-invalid' : profileForm.userName.error }"
                   @blur="profileForm.userName.setDirty()">
                 <div class="invalid-feedback">
                   {{ '_onboarding.sign-up.errors.user-name' | translate }}
@@ -88,7 +88,7 @@
                   :id="`password${ index }`" :ref="`password${ index }`"
                   :placeholder="('_onboarding.sign-up.password' + index) | translate"
                   v-model="profileForm[`password${ index }`].value"
-                  v-bind:class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
+                  :class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
                   @input="profileForm[`password${ index }`].setDirty()">
                 <div class="invalid-feedback">
                   {{ profileForm[`password${ index }`].error | translate }}

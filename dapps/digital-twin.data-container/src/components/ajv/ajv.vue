@@ -54,7 +54,7 @@
                 :placeholder="`_datacontainer.ajv.name.desc` | translate"
                 :disabled="$store.state.saving"
                 v-model="form.name.value"
-                v-bind:class="{ 'is-invalid' : form.name.error }"
+                :class="{ 'is-invalid' : form.name.error }"
                 @blur="form.name.setDirty()">
               <div class="invalid-feedback">
                 {{ `_datacontainer.ajv.name.error` | translate }}
@@ -69,7 +69,7 @@
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
               :disabled="$store.state.saving"
               v-model="form.type.value"
-              v-bind:class="{ 'is-invalid' : form.type.error }"
+              :class="{ 'is-invalid' : form.type.error }"
               @blur="form.type.setDirty()">
               <option
                 v-for="(fieldType, index) in fieldTypes"

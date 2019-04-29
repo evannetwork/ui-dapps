@@ -115,7 +115,7 @@
                     id="name" ref="name"
                     :placeholder="`_digitaltwins.containerlink.name.desc` | translate"
                     v-model="containerLinkForm.name.value"
-                    v-bind:class="{ 'is-invalid' : containerLinkForm.name.error }"
+                    :class="{ 'is-invalid' : containerLinkForm.name.error }"
                     @blur="containerLinkForm.name.setDirty()">
                   <div class="invalid-feedback">
                     {{ `_digitaltwins.containerlink.name.error` | translate }}
@@ -129,7 +129,7 @@
                     id="address" ref="address"
                     :placeholder="`_digitaltwins.containerlink.address.desc` | translate"
                     v-model="containerLinkForm.address.value"
-                    v-bind:class="{ 'is-invalid' : containerLinkForm.address.error }"
+                    :class="{ 'is-invalid' : containerLinkForm.address.error }"
                     @blur="containerLinkForm.address.setDirty()">
                   <div class="invalid-feedback">
                     {{ `_digitaltwins.containerlink.address.error` | translate }}

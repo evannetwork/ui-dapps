@@ -32,9 +32,9 @@ import AJVComponent from './ajv/ajv.vue';
 import EntryComponent from './entries/entry/entry.vue';
 import EntryListComponent from './entries/list/list.vue';
 import EntryObjectComponent from './entries/object/object.vue';
-import FieldComponent from './entries/field/field.vue';
+import EntryFieldComponent from './entries/field/field.vue';
+import FieldComponent from './fields/field/field.vue';
 import FieldFilesComponent from './fields/files/files.vue';
-import FieldImagesComponent from './fields/images/images.vue';
 import FieldNumberComponent from './fields/number/number.vue';
 import FieldStringComponent from './fields/string/string.vue';
 import TemplateHandlerComponent from './template-handler/template-handler.vue';
@@ -46,11 +46,11 @@ export { }
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-ajv', component: AJVComponent },
   { name: 'dc-entry', component: EntryComponent },
+  { name: 'dc-entry-field', component: EntryFieldComponent },
   { name: 'dc-entry-list', component: EntryListComponent },
   { name: 'dc-entry-object', component: EntryObjectComponent },
-  { name: 'dc-entry-field', component: FieldComponent },
+  { name: 'dc-field', component: FieldComponent },
   { name: 'dc-field-files', component: FieldFilesComponent },
-  { name: 'dc-field-images', component: FieldImagesComponent },
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-template-handler', component: TemplateHandlerComponent },

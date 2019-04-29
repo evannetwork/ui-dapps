@@ -50,7 +50,7 @@
               id="subject" ref="subject"
               :placeholder="`_datacontainer.share.subject.desc` | translate"
               v-model="shareForm.subject.value"
-              v-bind:class="{ 'is-invalid' : shareForm.subject.error }"
+              :class="{ 'is-invalid' : shareForm.subject.error }"
               @blur="shareForm.subject.setDirty()">
             <div class="invalid-feedback">
               {{ `_datacontainer.share.subject.error` | translate }}
@@ -216,7 +216,7 @@
                     id="name" ref="name"
                     :placeholder="`_datacontainer.createForm.name.desc` | translate"
                     v-model="dbcpForm.name.value"
-                    v-bind:class="{ 'is-invalid' : dbcpForm.name.error }"
+                    :class="{ 'is-invalid' : dbcpForm.name.error }"
                     @blur="dbcpForm.name.setDirty()">
                   <div class="invalid-feedback">
                     {{ `_datacontainer.createForm.name.error` | translate }}
@@ -230,7 +230,7 @@
                     id="description" ref="description"
                     :placeholder="`_datacontainer.createForm.description.desc` | translate"
                     v-model="dbcpForm.description.value"
-                    v-bind:class="{ 'is-invalid' : dbcpForm.description.error }"
+                    :class="{ 'is-invalid' : dbcpForm.description.error }"
                     @blur="dbcpForm.description.setDirty()">
                   </textarea>
                 </div>

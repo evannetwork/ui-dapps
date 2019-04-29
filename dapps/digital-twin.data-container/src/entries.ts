@@ -65,6 +65,11 @@ export function ensureValues(entry: UIContainerTemplateProperty) {
       entry.edit.value = entry.edit.value || entry.value;
       break;
     }
+    case 'files': {
+      entry.value = entry.value || [ ];
+      entry.edit.value = entry.edit.value || [ ].concat(entry.value);
+      break;
+    }
   }
 
   return entry;
@@ -119,6 +124,11 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
       vueInstance.$set(vueInstance.entry, 'mode', 'view');
       break;
     }
+    case 'files': {
+      entry.edit.value = [ ].concat(entry.value);
+      vueInstance.$set(vueInstance.entry, 'mode', 'view');
+      break;
+    }
   }
 }
 
@@ -165,6 +175,13 @@ export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) 
     }
     case 'number': {
       entry.value = entry.edit.value;
+      break;
+    }
+    case 'files': {
+      entry.value = entry.edit.value;
+
+      console.log('TODO: is this correct?')
+
       break;
     }
   }

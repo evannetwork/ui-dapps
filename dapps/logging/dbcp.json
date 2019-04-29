@@ -11,7 +11,7 @@
         "logging.css",
         "logging.js"
       ],
-      "origin": "QmNPB2RUKCtqoQXwipqSG6NeyUpYFDDraqEpPNSrughKMM",
+      "origin": "QmUU9qwep6fH4A9haHVCogeWk5Xh7HCHo2z6tiFq8KoSqZ",
       "primaryColor": "#1e9bc0",
       "secondaryColor": "#f5f5f5",
       "type": "dapp"
@@ -43,7 +43,8 @@
       "1.0.2": "QmRj8U63sU2Bai8GYTmcUFe5kiqjnf8uJnYieMSEtjrSEi",
       "1.1.0": "QmWDKuBYiDAM6eD3AkziDE8XxV1YcEGvJuMA6cCqquwyAB",
       "1.2.0": "QmZfiJ2VHW2ESqdYYHuwH38H7UnbCRfh4H4pCk1Pu1652h",
-      "1.3.0": "QmNPB2RUKCtqoQXwipqSG6NeyUpYFDDraqEpPNSrughKMM"
+      "1.3.0": "QmNPB2RUKCtqoQXwipqSG6NeyUpYFDDraqEpPNSrughKMM",
+      "1.5.0": "QmYY7vDPuVr2UpKrqZGkwqKcWY3PLpWsbfZpyzazJAj2Q3"
     }
   }
 }

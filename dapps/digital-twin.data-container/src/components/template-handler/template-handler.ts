@@ -101,8 +101,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     'array',
     'string',
     'number',
-    // 'files',
-    // 'images',
+    'files',
   ];
 
   /**
@@ -112,8 +111,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     'object',
     'string',
     'number',
-    // 'files',
-    // 'images',
+    'files',
   ];
 
   /**
@@ -192,14 +190,11 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * Cache latest configuration for this type, so the data wont be lost, when the users leaves
    */
   async beforeDestroy() {
-    console.log('destroy template handler')
     window.removeEventListener('dc-value-changed', this.valuesChanged);
 
     // save latest change for the current active entry to the template so the correct values will be
     // cached
     this.updateTemplateProperty();
-
-    console.dir(this.template)
 
     // wait for opened containers to saved the work
     if (this.cacheChanges) {

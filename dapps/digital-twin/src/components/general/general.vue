@@ -95,7 +95,7 @@
                 id="name" ref="name"
                 :placeholder="`_digitaltwins.generalForm.name.desc` | translate"
                 v-model="generalForm.name.value"
-                v-bind:class="{ 'is-invalid' : generalForm.name.error }"
+                :class="{ 'is-invalid' : generalForm.name.error }"
                 @blur="generalForm.name.setDirty()">
               <div class="invalid-feedback">
                 {{ `_digitaltwins.generalForm.name.error` | translate }}
@@ -109,7 +109,7 @@
                 id="description" ref="description"
                 :placeholder="`_digitaltwins.generalForm.description.desc` | translate"
                 v-model="generalForm.description.value"
-                v-bind:class="{ 'is-invalid' : generalForm.description.error }"
+                :class="{ 'is-invalid' : generalForm.description.error }"
                 @blur="generalForm.description.setDirty()">
               </textarea>
             </div>

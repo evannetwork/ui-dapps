@@ -44,7 +44,7 @@
               id="alias" ref="alias"
               :placeholder="`${ formI18nScope }.alias.desc` | translate"
               v-model="contactForm.alias.value"
-              v-bind:class="{ 'is-invalid' : contactForm.alias.error }"
+              :class="{ 'is-invalid' : contactForm.alias.error }"
               @blur="contactForm.alias.setDirty()">
             <div class="invalid-feedback">
               {{ `${ formI18nScope }.alias.error` | translate }}
@@ -68,7 +68,7 @@
                   :disabled="contactForm.emailInvite.value"
                   :placeholder="`${ formI18nScope }.address.desc` | translate"
                   v-model="contactForm.address.value"
-                  v-bind:class="{ 'is-invalid' : contactForm.address.error }"
+                  :class="{ 'is-invalid' : contactForm.address.error }"
                   @blur="contactForm.address.setDirty()">
                 <div class="invalid-feedback">
                   {{ `${ formI18nScope }.address.error` | translate }}
@@ -92,7 +92,7 @@
                   :disabled="!contactForm.emailInvite.value"
                   :placeholder="`${ formI18nScope }.email.desc` | translate"
                   v-model="contactForm.email.value"
-                  v-bind:class="{ 'is-invalid' : contactForm.email.error }"
+                  :class="{ 'is-invalid' : contactForm.email.error }"
                   @blur="contactForm.email.setDirty()">
                 <div class="invalid-feedback">
                   {{ `${ formI18nScope }.email.error` | translate }}

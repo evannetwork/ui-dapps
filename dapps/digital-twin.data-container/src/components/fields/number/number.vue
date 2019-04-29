@@ -35,7 +35,7 @@
       :placeholder="`_datacontainer.ajv.value.desc` | translate"
       :disabled="$store.state.saving"
       v-model="control.value"
-      v-bind:class="{ 'is-invalid' : control.error }"
+      :class="{ 'is-invalid' : control.error }"
       @blur="control.setDirty()">
     <div class="invalid-feedback">
       {{ `_datacontainer.ajv.value.error` | translate }}

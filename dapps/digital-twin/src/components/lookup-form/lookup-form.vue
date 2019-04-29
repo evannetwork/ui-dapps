@@ -68,7 +68,7 @@
                   id="address" ref="address"
                   :placeholder="`_digitaltwins.lookup.address.desc` | translate"
                   v-model="lookupForm.address.value"
-                  v-bind:class="{ 'is-invalid' : lookupForm.address.error }"
+                  :class="{ 'is-invalid' : lookupForm.address.error }"
                   @blur="lookupForm.address.setDirty()">
                 <div class="invalid-feedback">
                   {{ `_digitaltwins.lookup.address.error` | translate }}

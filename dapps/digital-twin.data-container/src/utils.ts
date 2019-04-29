@@ -204,4 +204,3 @@ export async function getMyTemplates(runtime: bcc.Runtime) {
 
   return templates;
 }
-

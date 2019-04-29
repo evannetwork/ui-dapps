@@ -64,7 +64,7 @@
               id="address" ref="address"
               :placeholder="`_favorites.add-form.address.desc` | translate"
               v-model="favoriteForm.address.value"
-              v-bind:class="{ 'is-invalid' : favoriteForm.address.error }"
+              :class="{ 'is-invalid' : favoriteForm.address.error }"
               @blur="favoriteForm.address.setDirty()">
             <div class="invalid-feedback">
               {{ `_favorites.add-form.address.error` | translate }}
