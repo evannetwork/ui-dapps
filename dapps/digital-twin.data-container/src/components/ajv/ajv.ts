@@ -52,11 +52,6 @@ export default class AJVComponent extends mixins(EvanComponent) {
   @Prop({ default: 'schema' }) mode;
 
   /**
-   * Should the value row be displayed? (disabled for array configuration)
-   */
-  @Prop({ }) enableValue;
-
-  /**
    * Object entry schema (full entry schema or list entry schema)
    */
   @Prop() properties: any;
@@ -64,7 +59,9 @@ export default class AJVComponent extends mixins(EvanComponent) {
   /**
    * Value corresponding to the ajv
    */
-  @Prop() value: any;
+  @Prop({
+    default: { }
+  }) value: any;
 
   /**
    * Disable all fields (e.g. while saving)
@@ -106,8 +103,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
       .keys(this.properties)
       .forEach((schemaKey: string) => this.addProperty(
         schemaKey,
-        this.properties[schemaKey].type,
-        this.value ? this.value[schemaKey] : ''
+        this.properties[schemaKey],
+        this.value[schemaKey]
       ));
   }
 
@@ -116,7 +113,6 @@ export default class AJVComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     !this.deleted && this.save();
-
     this.deleted = true;
   }
 
@@ -126,13 +122,19 @@ export default class AJVComponent extends mixins(EvanComponent) {
   save() {
     // clear the objects to keep the original object reference
     Object.keys(this.properties).forEach(key => delete this.properties[key]);
-    if (this.value) {
-      Object.keys(this.value).forEach(key => delete this.value[key]);
-    }
+    Object.keys(this.value).forEach(key => delete this.value[key]);
 
     // iterate through all forms and set the correct values to the properties
     this.forms.forEach((form: FieldFormInterface) => {
-      this.properties[form.name.value] = { type: form.type.value };
+      switch (form.type.value) {
+        case 'files': {
+          this.properties[form.name.value] = bcc.Container.defaultSchemas.filesList;
+          break;
+        }
+        default: {
+          this.properties[form.name.value] = { type: form.type.value };
+        }
+      }
 
       if (this.value) {
         this.value[form.name.value] = form.value.value;
@@ -143,7 +145,9 @@ export default class AJVComponent extends mixins(EvanComponent) {
   /**
    * Creates a new evan form to handle a new entry as one row in the ui.
    */
-  addProperty(property: string, type = 'string', value: any) {
+  addProperty(property: string, schema = { type: 'string' }, value: any) {
+    const type = fieldUtils.getType(schema);
+
     this.forms.push(<FieldFormInterface>new EvanForm(this, {
       name: {
         value: property,
@@ -158,20 +162,18 @@ export default class AJVComponent extends mixins(EvanComponent) {
           vueInstance.checkFormValidity();
 
           // force value evaluation
-          if (this.enableValue) {
-            form.value.value = form.value.value;
-          }
+          form.value.value = fieldUtils.defaultValue(this.value);
 
           return this.value.trim().length !== 0;
-        },
+        }
       },
       value: {
-        value: value,
+        value: value || fieldUtils.defaultValue(type),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
-          vueInstance.checkFormValidity();
-
           // only check validity when the value is enabled
-          if (vueInstance.enableValue) {
+          if (vueInstance.mode !== 'schema') {
+            vueInstance.checkFormValidity();
+
             // map the value top the correct dynamic type validator
             return fieldUtils.validateField((<any>form).type.value, this, vueInstance, form);
           } else {

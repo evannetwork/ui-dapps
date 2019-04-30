@@ -167,25 +167,28 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    */
   async loadEntries() {
     this.loading = true;
-    const runtime = utils.getRuntime(this);
 
-    // detect maxListEntries, so we can load until the max list entries were loaded
-    this.maxListentries = await runtime.dataContract.getListEntryCount(
-      this.contractAddress,
-      this.entryName
-    );
+    try {
+      const runtime = utils.getRuntime(this);
 
-    // load the next entries
-    const newEntries = await this.dataContainer.getListEntries(
-      this.entryName,
-      this.count,
-      this.offset,
-      this.reverse
-    );
+      // detect maxListEntries, so we can load until the max list entries were loaded
+      this.maxListentries = await runtime.dataContract.getListEntryCount(
+        this.contractAddress,
+        this.entryName
+      );
 
-    // apply the new entries to the list and increase the page params
-    this.offset += newEntries.length;
-    this.listEntries = this.listEntries.concat(newEntries);
+      // load the next entries
+      const newEntries = await this.dataContainer.getListEntries(
+        this.entryName,
+        this.count,
+        this.offset,
+        this.reverse
+      );
+
+      // apply the new entries to the list and increase the page params
+      this.offset += newEntries.length;
+      this.listEntries = this.listEntries.concat(newEntries);
+    } catch (ex) { }
 
     this.loading = false;
   }

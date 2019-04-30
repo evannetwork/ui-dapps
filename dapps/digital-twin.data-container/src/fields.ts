@@ -29,6 +29,64 @@ import Vue from 'vue';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 /**
+ * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
+ *
+ * @param      {any}      subSchema   ajv sub schema
+ * @param      {boolean}  firstLevel  only check the first level recursively
+ * @return     {string}   The type.
+ */
+export function getType(subSchema: any, firstLevel = true): string {
+  // check if it's a file
+  if (subSchema.$comment) {
+    let $comment;
+
+    try {
+      $comment = JSON.parse(subSchema.$comment);
+    } catch (ex) { }
+
+    if ($comment && $comment.isEncryptedFile) {
+      return 'files';
+    }
+  }
+
+  // if it's type of array, check also for the type => usally, the UI uses only files arrays
+  if (subSchema.items && firstLevel) {
+    const isFile = getType(subSchema.items, false) === 'files';
+    if (isFile) {
+      return 'files';
+    }
+  }
+
+  return subSchema.type;
+}
+
+/**
+ * Get the default value for a field type.
+ *
+ * @param      {string}  type    field type (string, object, array, number, files)
+ */
+export function defaultValue(type: string) {
+  switch (type) {
+    // add an empty value list and an addValue object, the addValue object is used for new
+    case 'array': {
+      return [ ];
+    }
+    case 'object': {
+      return { };
+    }
+    case 'string': {
+      return '';
+    }
+    case 'number': {
+      return 0;
+    }
+    case 'files': {
+      return [ ];
+    }
+  }
+}
+
+/**
  * Validator functions for each field type.
  *
  * @param      {string}           type         field type (string, files, ...)

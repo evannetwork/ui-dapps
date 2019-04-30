@@ -26,12 +26,15 @@
 */
 
 <template>
-  <div>
-    <component
-      :is="`dc-field-${ type }`"
-      :control="control"
-      :mode="mode"
-      :standalone="standalone">
-    </component>
-  </div>
+  <component
+    :is="`dc-field-${ _type }`"
+    :control="control"
+    :mode="mode"
+    :standalone="standalone">
+  </component>
 </template>
+
+<script lang="ts">
+  import Component from './field.ts';
+  export default Component;
+</script>

@@ -29,7 +29,7 @@
   <div class="white-box border rounded">
     <div class="header">
       <h3 class="m-0 font-weight-semibold" v-if="entry.mode === 'view'">
-        {{ `_datacontainer.types.${ entry.dataSchema.type }` | translate }}: {{ entryName }}
+        {{ `_datacontainer.types.${ type }` | translate }}: {{ entryName }}
       </h3>
       <h3 class="m-0 font-weight-semibold" v-else>
         {{ '_datacontainer.edit' | translate }}
@@ -51,12 +51,12 @@
       </template>
     </div>
     <div class="content">
-      <component
-        :is="`dc-field-${ entry.dataSchema.type }`"
+      <dc-field
+        :type="type"
         :control="fieldForm.value"
         :mode="entry.mode"
         :standalone="true">
-      </component>
+      </dc-field>
     </div>
     <div class="footer" v-if="!$store.state.saving && entry.mode !== 'view'">
       <button class="btn btn-outline-secondary btn-rounded mr-3"

@@ -68,7 +68,6 @@
     </div>
     <template v-if="entry.mode === 'schema' && entry.dataSchema.items.type === 'object'">
       <dc-ajv
-        :enableValue="false"
         :mode="entry.mode"
         :properties="entry.edit.dataSchema.items.properties"
         @init="$set(reactiveRefs, 'schemaAjv', $event)">
@@ -110,12 +109,12 @@
                       .keys(listEntry)
                       .slice(0, !expandListEntries[index] ? 5 : 100)">
                     <b style="white-space: nowrap;">{{ key }}</b>:
-                    <component
-                      :is="`dc-field-${ entry.dataSchema.items.properties[key].type }`"
+                    <dc-field
+                      :schema="entry.dataSchema.items.properties[key]"
                       :control="{ value: listEntry[key] }"
                       :mode="'view'"
                       :standalone="false">
-                    </component>
+                    </dc-field>
                   </div>
                   <button class="btn text-secondary p-0"
                     v-if="Object.keys(listEntry).length > 5"
@@ -128,12 +127,12 @@
                     </template>
                   </button>
                 </template>
-                <component v-else
-                  :is="`dc-field-${ entry.dataSchema.items.type }`"
+                <dc-field v-else
+                  :schema="entry.dataSchema.items"
                   :control="{ value: listEntry }"
                   :mode="'view'"
                   :standalone="false">
-                </component>
+                </dc-field>
               </td>
               <td class="text-primary flex-grow-0"
                 style="white-space: nowrap;">
@@ -165,19 +164,18 @@
       <template v-else>
         <dc-ajv
           v-if="entry.dataSchema.items.type === 'object'"
-          :enableValue="true"
           :mode="'edit'"
           :properties="entry.dataSchema.items.properties"
           :value="entry.edit.value"
           @init="$set(reactiveRefs, 'addAjv', $event)">
         </dc-ajv>
-        <component
+        <dc-field
           v-else
-          :is="`dc-field-${ entry.dataSchema.items.type }`"
+          :schema="entry.dataSchema.items"
           :control="addListEntryForm.value"
           :mode="'edit'"
           :standalone="true">
-        </component>
+        </dc-field>
 
         <div class="footer">
           <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"

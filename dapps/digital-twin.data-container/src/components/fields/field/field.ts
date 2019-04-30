@@ -34,18 +34,24 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as fieldUtils from '../../../fields';
 
 @Component({ })
-export default class FilesComponent extends mixins(EvanComponent) {
+export default class FieldComponent extends mixins(EvanComponent) {
   /**
    * schema / edit / vue
    */
   @Prop({ default: 'edit' }) mode;
 
   /**
-   * AJV Sub schema definition of the specific field (files, number, string, ...)
+   * AJV schema type (files, number, string, ...)
    */
-  @Prop() subSchema: any;
+  @Prop() type: string;
+
+  /**
+   * If no type is given, check a given schema
+   */
+  @Prop() schema: any;
 
   /**
    * Form control of the parent form handler (includes form and validation)
@@ -60,23 +66,14 @@ export default class FilesComponent extends mixins(EvanComponent) {
   }) standalone: boolean;
 
   /**
-   * Correct detected field type
+   * Calculated type from props type or calucated from schema
    */
-  type: string;
+  _type = null;
 
   /**
-   * Check for correct field.
+   * Check for the correct type.
    */
   created() {
-    if (this.subSchema.$comment) {
-      try {
-        const $comment = JSON.parse(JSON.stringify(this.subSchema.$comment));
-        if ($comment.isEncryptedFile) {
-          return this.type = 'files';
-        }
-      } catch (ex) { }
-    }
-
-    this.type = this.subSchema.type;
+    this._type = this.type || fieldUtils.getType(this.schema);
   }
 }

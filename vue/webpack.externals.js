@@ -46,6 +46,7 @@ module.exports = function(customExcludes) {
     'vue-router': 'vue-router',
     'vuex': 'vuex',
     'vuex-i18n': 'vuex-i18n',
+    'lodash': 'lodash',
     ...(customExcludes || { }) 
   };
 }

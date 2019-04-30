@@ -41,13 +41,13 @@
 
     <div class="mt-3" v-if="modes.length !== 0">
       <dc-entry-object
-        v-if="entry.dataSchema.type === 'object'"
+        v-if="type === 'object'"
         :entry="entry"
         :entryName="entryName"
         :modes="modes">
       </dc-entry-object>
       <dc-entry-list
-        v-else-if="entry.dataSchema.type === 'array'"
+        v-else-if="type === 'array'"
         @reset="resetValue" @save="saveValue"
         :address="address"
         :entry="entry"

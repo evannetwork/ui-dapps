@@ -34,6 +34,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import * as fieldUtils from '../../../fields';
 
 @Component({ })
 export default class EntryComponent extends mixins(EvanComponent) {
@@ -63,9 +64,16 @@ export default class EntryComponent extends mixins(EvanComponent) {
   modes: Array<string> = null;
 
   /**
+   * Calculated entry type (check special type definitions)
+   */
+  type: string = null;
+
+  /**
    * Check for permitted modes
    */
   created() {
+    this.type = fieldUtils.getType(this.entry.dataSchema);
+
     // check permissions and set permitted modes
     if (!this.address.startsWith('0x')) {
       this.modes = [ 'view', 'schema', ];

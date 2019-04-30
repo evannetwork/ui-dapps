@@ -25,8 +25,10 @@
   https://evan.network/license/
 */
 
-import EntryComponent from './components/entries/entry/entry';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as fieldUtils from './fields';
 import * as utils from './utils';
+import EntryComponent from './components/entries/entry/entry';
 import { UIContainerTemplateProperty } from './interfaces';
 
 /**
@@ -38,35 +40,36 @@ import { UIContainerTemplateProperty } from './interfaces';
  * @param      {UIContainerTemplateProperty}  entry   the entry that should be checked
  */
 export function ensureValues(entry: UIContainerTemplateProperty) {
+  // use calculated type!
+  const type = fieldUtils.getType(entry.dataSchema);
+
   entry.edit = (<any>entry.edit || {
-    dataSchema: JSON.parse(JSON.stringify(entry.dataSchema))
+    dataSchema: bcc.lodash.cloneDeep(entry.dataSchema)
   });
 
-  switch (entry.dataSchema.type) {
+  // set default value
+  entry.value = entry.value || fieldUtils.defaultValue(type);
+
+  switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
-      entry.value = entry.value || [ ];
       entry.edit.value = entry.edit.value ||
-        ensureValues(<any>{ dataSchema: { type: entry.dataSchema.items.type } }).value;
+        ensureValues(<any>{ dataSchema: entry.dataSchema.items }).value;
       break;
     }
     case 'object': {
-      entry.value = entry.value || { };
-      entry.edit.value = entry.edit.value || JSON.parse(JSON.stringify(entry.value));
+      entry.edit.value = entry.edit.value || bcc.lodash.cloneDeep(entry.value);
       break;
     }
     case 'string': {
-      entry.value = entry.value || '';
       entry.edit.value = entry.edit.value || entry.value;
       break;
     }
     case 'number': {
-      entry.value = entry.value || 0;
       entry.edit.value = entry.edit.value || entry.value;
       break;
     }
     case 'files': {
-      entry.value = entry.value || [ ];
       entry.edit.value = entry.edit.value || [ ].concat(entry.value);
       break;
     }
@@ -82,7 +85,7 @@ export function ensureValues(entry: UIContainerTemplateProperty) {
  *                                                    resetted
  */
 export function resetSchema(entry: UIContainerTemplateProperty) {
-  entry.edit.dataSchema = JSON.parse(JSON.stringify(entry.dataSchema));
+  entry.edit.dataSchema = bcc.lodash.cloneDeep(entry.dataSchema);
 }
 
 /**
@@ -93,10 +96,13 @@ export function resetSchema(entry: UIContainerTemplateProperty) {
  *                                                         resetted
  */
 export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty) {
+  // use calculated type!
+  const type = fieldUtils.getType(entry.dataSchema);
+
   // use the correct data schema
   resetSchema(entry);
 
-  switch (entry.dataSchema.type) {
+  switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
       // we do not need to do anything, value save is handled by the component it self
@@ -109,7 +115,7 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
         vueInstance.$set(vueInstance.entry, 'mode', 'edit');
       } else {
         // in edit mode reset the value and go to view mode
-        entry.edit.value = JSON.parse(JSON.stringify(entry.value));
+        entry.edit.value = bcc.lodash.cloneDeep(entry.value);
         vueInstance.$set(vueInstance.entry, 'mode', 'view');
       }
       break;
@@ -139,7 +145,7 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
  *                                                    should be used.
  */
 export function saveSchema(entry: UIContainerTemplateProperty) {
-  entry.dataSchema = JSON.parse(JSON.stringify(entry.edit.dataSchema));
+  entry.dataSchema = bcc.lodash.cloneDeep(entry.edit.dataSchema);
 }
 
 /**
@@ -150,11 +156,14 @@ export function saveSchema(entry: UIContainerTemplateProperty) {
  *                                                         saved
  */
 export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) {
+  // use calculated type!
+  const type = fieldUtils.getType(entry.dataSchema);
+
   // use the correct data schema
   saveSchema(entry);
 
   // lookup values
-  switch (entry.dataSchema.type) {
+  switch (type) {
     case 'array': {
       // apply the new value into the array, and clear the old add value
       entry.value.unshift(entry.edit.value);
@@ -166,7 +175,7 @@ export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) 
       break;
     }
     case 'object': {
-      entry.value = JSON.parse(JSON.stringify(entry.edit.value));
+      entry.value = bcc.lodash.cloneDeep(entry.edit.value);
       break;
     }
     case 'string': {

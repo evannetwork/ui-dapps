@@ -29,21 +29,27 @@
   <table class="evan-flex-table">
     <thead>
       <tr class="text-muted">
-        <th>
+        <th
+          :class="{ 'flex-grow-0': mode !== 'schema' }"
+          :style="mode !== 'schema' ? 'flex-basis: 150px' : ''">
           {{ '_datacontainer.ajv.name.title' | translate }}
         </th>
-        <th v-if="mode !=='view'">
+        <th v-if="mode === 'schema'">
           {{ '_datacontainer.ajv.type.title' | translate }}
         </th>
-        <th v-if="enableValue">
+        <th v-if="mode !== 'schema'">
           {{ '_datacontainer.ajv.value.title' | translate }}
         </th>
-        <th class="last" v-if="mode === 'schema'"><!-- used for controls --></th>
+        <th class="flex-grow-0" v-if="mode === 'schema'">
+          <i class="mdi mdi-delete clickable opacity-0"></i>
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(form, index) in forms">
-        <td class="fill-content">
+        <td class="fill-content"
+          :class="{ 'flex-grow-0': mode !== 'schema' }"
+          :style="mode !== 'schema' ? 'flex-basis: 150px' : ''">
           <span class="font-weight-semibold" v-if="mode !== 'schema'">
             {{ form.name.value }}
           </span>
@@ -62,8 +68,8 @@
             </div>
           </span>
         </td>
-        <td class="fill-content" v-if="mode !== 'view'">
-          <div class="form-group mb-0" v-if="mode === 'schema'">
+        <td v-if="mode === 'schema'">
+          <div class="form-group mb-0">
             <select class="form-control custom-select"
               id="type" ref="type"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
@@ -78,19 +84,16 @@
               </option>
             </select>
           </div>
-          <div v-else>
-            {{ `_datacontainer.types.${ form.type.value }` | translate }}
-          </div>
         </td>
-        <td class="fill-content" v-if="enableValue">
-          <component
-            :is="`dc-field-${ form.type.value }`"
+        <td class="fill-content" v-if="mode !== 'schema'">
+          <dc-field
+            :type="form.type.value"
             :control="form.value"
             :mode="mode"
             :standalone="false">
-          </component>
+          </dc-field>
         </td>
-        <td class="last" v-if="mode === 'schema'">
+        <td class="flex-grow-0" v-if="mode === 'schema'">
           <i class="mdi mdi-delete clickable"
             :disabled="$store.state.saving"
             @click="!$store.state.saving && removeProperty()">
@@ -121,12 +124,14 @@
             </select>
           </div>
         </td>
-        <td class="fill-content" v-if="enableValue">
+        <td class="fill-content" v-if="mode !== 'schema'">
           <input class="form-control bg-level-1"
             type="text" disabled
             :placeholder="`_datacontainer.ajv.value.desc` | translate">
         </td>
-        <td class="last"></td>
+        <td class="flex-grow-0">
+          <i class="mdi mdi-delete clickable opacity-0"></i>
+        </td>
       </tr>
     </tbody>
   </table>

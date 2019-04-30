@@ -57,7 +57,6 @@
       </template>
     </div>
     <dc-ajv
-      :enableValue="entry.mode !== 'schema'"
       :mode="entry.mode"
       :properties="entry.edit.dataSchema.properties"
       :value="entry.edit.value"

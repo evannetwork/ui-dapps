@@ -242,7 +242,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Trigger the digital twin save
    */
   async saveContainer() {
-    console.log('prepare saving')
     if (!this.$store.state.saving && this.dbcpForm.isValid) {
       const runtime = utils.getRuntime(this);
 
@@ -264,7 +263,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
       // wait for the template handler to saved all the data
       this.$nextTick(async () => {
-        console.log('start saving')
         dispatchers.updateDispatcher.start(runtime, {
           address: this.containerAddress,
           description: this.dbcpForm.description.value,

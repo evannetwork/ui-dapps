@@ -207,12 +207,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
 
       // if something has changed, cache it!
       if (integrity.changed) {
-        //
         // wait for all editors (ajv / field components to save the work and persist them)
-        //
-        // @param      {<type>}  thisaddress   The thisaddress
-        // @param      {<type>}  thistemplate  The thistemplate
-        //
         setTimeout(() =>  this.containerCache.put(this.address, this.template));
       } else {
         this.containerCache.delete(this.address);
@@ -294,7 +289,11 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         entry.dataSchema.items = { type: this.entryForm.arrayType.value, };
         if (this.entryForm.arrayType.value === 'object') {
           entry.dataSchema.items.properties = { };
+        } else if (this.entryForm.arrayType.value === 'files') {
+          entry.dataSchema.items = bcc.Container.defaultSchemas.filesList;
         }
+      } else if (this.entryForm.type.value === 'files') {
+        entry.dataSchema = bcc.Container.defaultSchemas.filesList;
       }
 
       this.template.properties[this.entryForm.name.value] = entry;

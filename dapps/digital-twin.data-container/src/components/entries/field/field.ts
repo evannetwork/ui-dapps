@@ -68,9 +68,18 @@ export default class FieldComponent extends mixins(EvanComponent) {
   fieldForm: FieldFormInterface = null;
 
   /**
+   * Calculated entry schema type
+   */
+  type: string = null;
+
+  /**
    * Set the field form, if no form was applied
    */
   created() {
+    // Calculated entry schema type
+    this.type = fieldUtils.getType(this.entry.dataSchema);
+
+    // setup field form
     this.fieldForm = <FieldFormInterface>new EvanForm(this, {
       value: {
         value: this.entry.edit.value,
@@ -81,7 +90,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
 
           // run validation
           return fieldUtils.validateField(
-            vueInstance.entry.dataSchema.type,
+            vueInstance.type,
             this,
             vueInstance,
             form
