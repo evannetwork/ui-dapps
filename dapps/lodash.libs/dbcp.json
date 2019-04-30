@@ -1,0 +1,38 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "lodash.libs.js",
+      "files": [
+        "lodash.libs.js"
+      ],
+      "origin": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "lodash.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "lodash.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "4.17.11",
+    "versions": {
+      "4.17.11": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu"
+    }
+  }
+}

@@ -324,6 +324,9 @@ export class DispatcherInstance {
         return this.status = 'accept';
       }
     }
+
+    // reset previous errors
+    this.error = null;
     
     await this.startup();
     this.status = 'running';

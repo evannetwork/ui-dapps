@@ -40,6 +40,7 @@ export interface UIContainerFile extends bcc.ContainerFile {
 
   // downloadable url
   blobUri: string;
+  blob: Blob;
 }
 
 /**
@@ -51,22 +52,21 @@ export interface UIContainerFile extends bcc.ContainerFile {
 export async function fileToContainerFile(
   file: any,
 ): Promise<UIContainerFile> {
+  // use html 5 files and already saved files whit another structure
+  const fileOrigin = file.file ? file.file : file;
+  const type = file.type || file.fileType;
+
+  // use the correct url creator, search for the correct buffer object and create a blob and blob
+  // uri
   const urlCreator = (<any>window).URL || (<any>window).webkitURL;
-  let buffer, blob;
-
-  // check if the file is a JSON.parsed buffer and convert it back
-  if ((file.type || file.fileType) === 'Buffer' && (<any>file).data) {
-    buffer = new Uint8Array(file.data);
-  } else {
-    buffer = await readFileAsArrayBuffer(file);
-  }
-
-  blob = new Blob([ buffer ], { type: file.type });
+  const buffer = fileOrigin.buffer ? fileOrigin.buffer : await readFileAsArrayBuffer(fileOrigin);
+  const blob = new Blob([ buffer ], { type });
 
   return {
+    blob: blob,
     blobUri: urlCreator.createObjectURL(blob),
     file: buffer,
-    fileType: file.type,
+    fileType: type,
     name: file.name,
     readableSize: getReadableFileSize(file.size),
     size: file.size,
@@ -81,15 +81,19 @@ export async function fileToContainerFile(
  * @return     {Promise<any>}  uploaded files transformed into an encryption object 
  */
 export async function readFileAsArrayBuffer(file: File): Promise<any> {
-  return await new Promise(resolve => {
-    const fileReader = new FileReader();
+  if (file instanceof ArrayBuffer) {
+    return file;
+  } else {
+    return await new Promise(resolve => {
+      const fileReader = new FileReader();
 
-    // when the file was loaded successfully, return the uploaded file
-    fileReader.onloadend = ($event: any) => resolve($event.target.result);
+      // when the file was loaded successfully, return the uploaded file
+      fileReader.onloadend = ($event: any) => resolve($event.target.result);
 
-    // start file reading
-    fileReader.readAsArrayBuffer(file);
-  });
+      // start file reading
+      fileReader.readAsArrayBuffer(file);
+    });
+  }
 }
 
 
