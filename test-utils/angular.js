@@ -46,6 +46,7 @@ const evan = {
       }, [], function(result) {})
       .waitForElementVisible('onboarding-welcome', 30 * 1000)
       .assert.elementPresent('.slide-zoom > h3')
+      .pause(3 * 1000)
       .click('.start-buttons > button:nth-child(2)')
       .waitForElementVisible('mnemonic-display', 10 * 1000)
       .click('mnemonic-display ion-toggle')
@@ -69,6 +70,7 @@ const evan = {
         .waitForElementPresent('evan-profile-detail .evan-content button.button-outline-md-alert', 10 * 1000)
         .click('evan-profile-detail .evan-content button.button-outline-md-alert')
         .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
+        .pause(3 * 1000)
         .click(`ion-alert .alert-button-group button:nth-child(2)`)
         .pause(3 * 1000);
     }

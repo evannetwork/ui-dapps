@@ -4,3 +4,4 @@ node_modules
 tests_output
 yarn-error.log
 yarn.lock
+selenium-server.log
