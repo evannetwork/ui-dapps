@@ -55,7 +55,7 @@ module.exports = {
       .url(evan.url)
       .waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
       .setValue(selectors.login.passwordInput, [password, client.Keys.ENTER])
-      .pause(1000)
+      .pause(2000)
     ;
   },
 };
