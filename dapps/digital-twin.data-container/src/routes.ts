@@ -34,11 +34,15 @@ import TemplateComponent from './components/template/template.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '',                  redirect: { path: 'create' } },
-  { name: 'create-container',  path: 'create/:cloneContainer?',            component: CreateComponent },
-  { name: 'create-template',   path: 'create-template/:cloneContainer?',    component: CreateComponent },
-  {                            path: 'template/:template',                  component: TemplateComponent },
-  {                            path: ':containerAddress',                   component: DetailComponent },
+  {
+    path: '',
+    // root route is not used, so navigate the user back
+    beforeEnter: (to, from, next) => window.location.hash = from.fullPath
+  },
+  { name: 'create-container',  path: 'create/:cloneContainer?',           component: CreateComponent },
+  { name: 'create-template',   path: 'create-template/:cloneContainer?',  component: CreateComponent },
+  {                            path: 'template/:template',                component: TemplateComponent },
+  {                            path: ':containerAddress',                 component: DetailComponent },
 ];
 
 export default routeRegistration;

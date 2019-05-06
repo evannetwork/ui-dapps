@@ -126,15 +126,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
     // iterate through all forms and set the correct values to the properties
     this.forms.forEach((form: FieldFormInterface) => {
-      switch (form.type.value) {
-        case 'files': {
-          this.properties[form.name.value] = bcc.Container.defaultSchemas.filesList;
-          break;
-        }
-        default: {
-          this.properties[form.name.value] = { type: form.type.value };
-        }
-      }
+      this.properties[form.name.value] = bcc.Container.defaultSchemas[`${ form.type.value }Entry`];
 
       if (this.value) {
         this.value[form.name.value] = form.value.value;

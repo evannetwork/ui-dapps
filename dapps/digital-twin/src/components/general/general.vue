@@ -36,7 +36,7 @@
           </h3>
         </div>
         <span class="mx-auto"></span>
-        <div v-if="!uiDT.isCreating">
+        <div v-if="!uiDT.isCreating && uiDT.validity.exists">
           <div class="spinner-border spinner-border-sm"
             v-if="$store.state.uiDT.isFavoriteLoading">
           </div>

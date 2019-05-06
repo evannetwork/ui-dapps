@@ -87,7 +87,7 @@
                       </div>
                       <div class="mt-3" v-if="category.active">
                         <ul class="sub-nav" v-if="category.children.length > 0">
-                          <li class="pt-2 pb-2 pl-3 pr-3 d-flex"
+                          <li class="pt-2 pb-2 pl-3 pr-3 d-flex flex-truncate"
                             v-for="(subCategory, subIndex) in category.children">
                             <a class="font-weight-semibold"
                               @click="$refs.level2Wrapper.hide()"

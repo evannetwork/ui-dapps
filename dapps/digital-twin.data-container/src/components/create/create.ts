@@ -105,6 +105,15 @@ export default class CreateComponent extends mixins(EvanComponent) {
   hideBreadcrumbs = false;
 
   /**
+   * Empty permissions that can be passed using isOwner flag to template-handler
+   */
+  permissions = {
+    isOwner: true,
+    read: [ ],
+    readWrite: [ ],
+  };
+
+  /**
    * Setup the form.
    */
   async created() {
@@ -173,8 +182,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
             break;
           }
         }
-
-        this.activeStep = 1;
       } else if (cloneContainer.startsWith('0x')) {
         const container = utils.getContainer(<any>runtime, cloneContainer);
         const description = await container.getDescription();
@@ -192,7 +199,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
         // set correct template index
         this.createForm.template.value = this.templates.length - 1;
-        this.activeStep = 1;
       }
     }
 

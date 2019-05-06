@@ -136,10 +136,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         }
       }
     } else {
-      if (uiDT) {
-        // if digitaltwin was set, destroy it
-        uiDT && uiDT.destroy(this);
-      }
+      // if digitaltwin was set, destroy it
+      uiDT && uiDT.destroy(this);
 
       this.$set(this.$store.state, 'uiDT', null);
     }

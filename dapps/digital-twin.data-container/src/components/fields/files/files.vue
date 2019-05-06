@@ -31,7 +31,7 @@
       id="value" ref="value"
       :disabled="$store.state.saving || mode === 'view'"
       :class="{ 'is-invalid' : control.error }"
-      v-model="control.value"
+      v-model="control.value.files"
       @input="control.setDirty()">
     </evan-file-input>
   </div>

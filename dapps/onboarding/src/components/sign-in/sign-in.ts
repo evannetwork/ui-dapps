@@ -115,7 +115,7 @@ export default class SignIn extends mixins(EvanComponent) {
       this.$nextTick(() => (this.$refs['password'] as any).focus());
     } else {
       // check if a profile for the entered mnemonic exists, if not, show an error
-      (this.$refs['notOnboarded'] as any).showModal();
+      (this.$refs['notOnboarded'] as any).show();
     }
 
     this.checking = false;

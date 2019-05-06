@@ -108,9 +108,17 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
+   * Calculated entry schema itemType
+   */
+  itemType: string = null;
+
+  /**
    * Load listentries
    */
   async created() {
+    // Calculated entry schema itemType
+    this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
+
     if (this.address.startsWith('0x')) {
       let dataContainer;
       let contractAddress;
@@ -131,13 +139,13 @@ export default class EntryListComponent extends mixins(EvanComponent) {
     }
 
     // add form handling for field controls
-    if (this.entry.dataSchema.items.type !== 'object') {
+    if (this.itemType !== 'object') {
       this.addListEntryForm = <FieldFormInterface>new EvanForm(this, {
         value: {
           value: this.entry.edit.value,
           validate: function(vueInstance: EntryListComponent, form: FieldFormInterface) {
             return fieldUtils.validateField(
-              vueInstance.entry.dataSchema.type,
+              vueInstance.itemType,
               this,
               vueInstance,
               form
@@ -156,10 +164,19 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   addEntry() {
     this.addListEntry = false;
 
-    // save the current ajv values to the edit.value object and save the value into the original
-    // object
-    this.reactiveRefs.addAjv.save();
-    entryUtils.saveValue(this, this.entry);
+    if (this.itemType === 'object') {
+      // save the current ajv values to the edit.value object and save the value into the original
+      // object
+      this.reactiveRefs.addAjv.save();
+      entryUtils.saveValue(this, this.entry);
+    } else {
+      // apply the new data to the list
+      this.entry.value.push(this.addListEntryForm.value.value);
+
+      // clear the formular value
+      this.entry.edit.value = fieldUtils.defaultValue(this.itemType);
+      this.addListEntryForm.value.value = this.entry.edit.value;
+    }
   }
 
   /**

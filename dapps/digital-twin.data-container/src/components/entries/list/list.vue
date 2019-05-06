@@ -45,28 +45,29 @@
         v-if="$store.state.saving">
       </div>
       
-      <template v-else>
-        <template v-if="entry.mode !== 'schema'">
-          <template v-if="entry.dataSchema.items.type === 'object' && !addListEntry">
-            <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
-              v-if="modes.indexOf('schema') !== -1 && entry.mode !== 'schema'"
-              @click="$set(entry, 'mode', 'schema')">
-              <i class="mdi mdi-cogs"></i>
-            </button>
-          </template>
-          <template v-if="modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1">
-            <button type="submit" class="btn btn-rounded btn-primary"
-              v-if="!addListEntry"
-              :disabled="$store.state.saving"
-              @click="addListEntry = true">
-              {{ `_datacontainer.list.add-list-entry` | translate }}
-              <i class="mdi mdi-arrow-right label"></i>
-            </button>
-          </template>
-        </template>
+      <template v-else-if="entry.mode !== 'schema'">
+        <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
+          v-if="
+            itemType === 'object' &&
+            !addListEntry &&
+            modes.indexOf('schema') !== -1 && entry.mode !== 'schema'
+          "
+          @click="$set(entry, 'mode', 'schema')">
+          <i class="mdi mdi-cogs"></i>
+        </button>
+        <button type="submit" class="btn btn-rounded btn-primary"
+          v-if="
+            !addListEntry &&
+            (modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1)
+          "
+          :disabled="$store.state.saving"
+          @click="addListEntry = true">
+          {{ `_datacontainer.list.add-list-entry` | translate }}
+          <i class="mdi mdi-arrow-right label"></i>
+        </button>
       </template>
     </div>
-    <template v-if="entry.mode === 'schema' && entry.dataSchema.items.type === 'object'">
+    <template v-if="entry.mode === 'schema' && itemType === 'object'">
       <dc-ajv
         :mode="entry.mode"
         :properties="entry.edit.dataSchema.items.properties"
@@ -103,7 +104,7 @@
                 {{ index + 1}}
               </td>
               <td class="flex-grow-1">
-                <template v-if="entry.dataSchema.items.type === 'object'">
+                <template v-if="itemType === 'object'">
                   <div
                     v-for="(key, keyIndex) in Object
                       .keys(listEntry)
@@ -163,13 +164,14 @@
 
       <template v-else>
         <dc-ajv
-          v-if="entry.dataSchema.items.type === 'object'"
+          v-if="itemType === 'object'"
           :mode="'edit'"
           :properties="entry.dataSchema.items.properties"
           :value="entry.edit.value"
           @init="$set(reactiveRefs, 'addAjv', $event)">
         </dc-ajv>
         <dc-field
+          class="p-3"
           v-else
           :schema="entry.dataSchema.items"
           :control="addListEntryForm.value"
@@ -184,7 +186,7 @@
           </button>
 
           <button type="submit" class="btn btn-rounded btn-primary"
-            :disabled="entry.dataSchema.items.type === 'object' ?
+            :disabled="itemType === 'object' ?
               (!reactiveRefs.addAjv || !reactiveRefs.addAjv.isValid) :
               !addListEntryForm.isValid"
             @click="addEntry()">

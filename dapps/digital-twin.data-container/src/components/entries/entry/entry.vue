@@ -27,7 +27,7 @@
 
 <template>
   <div>
-    <div class="whitebox" v-if="modes.length === 0">
+    <div class="white-box border rounded mt-3" v-if="modes.length === 0">
       <div class="header">
         <h3 class="m-0 font-weight-semibold">
           {{ `_datacontainer.ajv.not-permitted.title` | translate }}

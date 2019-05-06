@@ -58,6 +58,13 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   @Prop() template: bcc.ContainerTemplate;
 
   /**
+   * Permissions for the current account
+   *
+   * @class      Prop (name)
+   */
+  @Prop() permissions: any;
+
+  /**
    * Container cache, so we can check, if the user left some unsaved work
    */
   containerCache: ContainerCache;
@@ -120,11 +127,6 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   loading = false;
 
   /**
-   * Permissions for the current account
-   */
-  permissions = null;
-
-  /**
    * Initialize and try to restore latest cached template
    */
   async created() {
@@ -142,20 +144,6 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         value: this.arrayTypes[0]
       },
     }));
-
-    // load permissions for the selected container
-    if (this.address.startsWith('0x')) {
-      this.loading = true;
-
-      const runtime = utils.getRuntime(this);
-      const container = utils.getContainer(runtime, this.address);
-
-      // load the owner for the contract
-      this.permissions = await container.getContainerShareConfigForAccount(runtime.activeAccount);
-      this.permissions.isOwner = (await container.getOwner()) === runtime.activeAccount;
-
-      this.loading = false;
-    }
 
     // auto focus property name input
     if (Object.keys(this.template.properties).length === 0) {
@@ -272,28 +260,36 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
   addEntry() {
     if (!this.template.properties[this.entryForm.name.value]) {
       // create a new empty data set
+      const entryType = this.entryForm.type.value === 'array' ? 'List' : 'Entry';
       const entry: any = {
-        dataSchema: { type: this.entryForm.type.value, },
         mode: 'schema',
         permissions: { 0: ['set'] },
-        type: this.entryForm.type.value === 'array' ? 'list' : 'entry',
+        type: entryType.toLowerCase(),
       };
+
+      if (this.entryForm.type.value === 'array') {
+        // set the default schema for arrayType
+        entry.dataSchema = bcc.Container
+          .defaultSchemas[`${ this.entryForm.arrayType.value }${ entryType }`];
+
+        // add the items schema, including the array type, will be defined only ontime, at entry
+        // creation
+        if (this.entryForm.arrayType.value === 'object') {
+          entry.dataSchema.items.properties = { };
+        } else {
+         // do not enter schema mode on normal field lists
+          entry.mode = 'view';
+        }
+      } else {
+        // set the default schema
+        entry.dataSchema = bcc.Container
+          .defaultSchemas[`${ this.entryForm.type.value }${ entryType }`];
+      }
 
       // add properties and empty value object directly, so the vue listeners will work correctly in
       // nested components
       if (this.entryForm.type.value === 'object') {
         entry.dataSchema.properties = { };
-      } else if (this.entryForm.type.value === 'array') {
-        // add the items schema, including the array type, will be defined only ontime, at entry
-        // creation
-        entry.dataSchema.items = { type: this.entryForm.arrayType.value, };
-        if (this.entryForm.arrayType.value === 'object') {
-          entry.dataSchema.items.properties = { };
-        } else if (this.entryForm.arrayType.value === 'files') {
-          entry.dataSchema.items = bcc.Container.defaultSchemas.filesList;
-        }
-      } else if (this.entryForm.type.value === 'files') {
-        entry.dataSchema = bcc.Container.defaultSchemas.filesList;
       }
 
       this.template.properties[this.entryForm.name.value] = entry;

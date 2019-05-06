@@ -149,22 +149,25 @@
                   :alignment="'right'"
                   :width="'300px'">
                   <template v-slot:content>
-                    <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                      @click="
-                        $refs.dbcpModal.show()
-                        $refs.containerContextMenu.hide($event);
-                      ">
-                      <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
-                      {{ `_datacontainer.edit-dbcp` | translate }}
-                    </a>
-                    <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                      @click="
-                        $refs.shareModal.show()
-                        $refs.containerContextMenu.hide($event);
-                      ">
-                      <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
-                      {{ `_datacontainer.context-menu.share` | translate }}
-                    </a>
+                    <template
+                      v-if="permissions.isOwner">
+                      <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                        @click="
+                          $refs.dbcpModal.show()
+                          $refs.containerContextMenu.hide($event);
+                        ">
+                        <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
+                        {{ `_datacontainer.edit-dbcp` | translate }}
+                      </a>
+                      <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                        @click="
+                          $refs.shareModal.show()
+                          $refs.containerContextMenu.hide($event);
+                        ">
+                        <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
+                        {{ `_datacontainer.context-menu.share` | translate }}
+                      </a>
+                    </template>
                     <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                       @click="
                         evanNavigate(`digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/containerlink/${ containerAddress }`, `/${ dapp.rootEns }`)
@@ -193,7 +196,8 @@
                 </evan-dropdown>
               </div>
               <button type="button" class="btn btn-primary btn-rounded"
-                @click="saveContainer()">
+                @click="saveContainer()"
+                :disabled="!enableSave">
                 {{ '_datacontainer.createForm.save' | translate }}
                 <i class="mdi mdi-content-save label"></i>
               </button>
@@ -250,7 +254,8 @@
           <dc-template-handler
             ref="templateHandler"
             :address="containerAddress"
-            :template.sync="template">
+            :template.sync="template"
+            :permissions="permissions">
           </dc-template-handler>
         </template>
         <div class="white-box border rounded" v-else>

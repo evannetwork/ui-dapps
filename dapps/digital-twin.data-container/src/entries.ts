@@ -70,7 +70,9 @@ export function ensureValues(entry: UIContainerTemplateProperty) {
       break;
     }
     case 'files': {
-      entry.edit.value = entry.edit.value || [ ].concat(entry.value);
+      entry.edit.value = entry.edit.value || {
+        files: [ ].concat(entry.value.files)
+      };
       break;
     }
   }
@@ -131,7 +133,9 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
       break;
     }
     case 'files': {
-      entry.edit.value = [ ].concat(entry.value);
+      entry.edit.value = {
+        files: [ ].concat(entry.value.files)
+      };
       vueInstance.$set(vueInstance.entry, 'mode', 'view');
       break;
     }
@@ -178,20 +182,8 @@ export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) 
       entry.value = bcc.lodash.cloneDeep(entry.edit.value);
       break;
     }
-    case 'string': {
-      entry.value = entry.edit.value;
-      break;
-    }
-    case 'number': {
-      entry.value = entry.edit.value;
-      break;
-    }
-    case 'files': {
-      entry.value = entry.edit.value;
-
-      console.log('TODO: is this correct?')
-
-      break;
+    default: {
+      entry.value = fieldUtils.parseFieldValue(type, entry.edit.value);
     }
   }
 

@@ -44,6 +44,11 @@ const dtPath = (path) => `:digitalTwinAddress/${ path }`;
 // map them to element names, so they can be used within templates
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
+  {
+    path: '',
+    // root route is not used, so navigate the user back
+    beforeEnter: (to, from, next) => window.location.hash = from.fullPath
+  },
   { name: 'dt-container-link',    component: ContainerLinkComponent,            path: 'containerlink/:containerAddress?' },
   { name: 'dt-create',            component: DigitalTwinGeneralComponent,       path: `dt-create`, },
   { name: 'dt-general',           redirect: { path: dtPath('general') },        path: `:digitalTwinAddress`, },

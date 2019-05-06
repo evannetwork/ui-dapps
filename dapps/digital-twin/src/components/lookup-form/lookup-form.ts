@@ -236,7 +236,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
           } else {
             this.lookupModalScope = 'create';
           }
-        } else if (parentOwner === nullAddress) {
+        } else if (parentOwner === nullAddress && !this.disableCreate) {
           // load the currents users balance
           this.modalParams.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
 

@@ -49,14 +49,6 @@ export function getType(subSchema: any, firstLevel = true): string {
     }
   }
 
-  // if it's type of array, check also for the type => usally, the UI uses only files arrays
-  if (subSchema.items && firstLevel) {
-    const isFile = getType(subSchema.items, false) === 'files';
-    if (isFile) {
-      return 'files';
-    }
-  }
-
   return subSchema.type;
 }
 
@@ -81,7 +73,9 @@ export function defaultValue(type: string) {
       return 0;
     }
     case 'files': {
-      return [ ];
+      return {
+        files: [ ]
+      };
     }
   }
 }
@@ -106,7 +100,7 @@ export function validateField(
         field.value.trim().length !== 0;
     }
     case 'number': {
-      return isNaN(parseFloat(field.value));
+      return !isNaN(parseFloat(field.value));
     }
     case 'files': {
       return true;

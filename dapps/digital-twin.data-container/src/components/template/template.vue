@@ -196,7 +196,8 @@
 
         <dc-template-handler
           :address="templateName"
-          :template.sync="template">
+          :template.sync="template"
+          :permissions="permissions">
         </dc-template-handler>
       </template>
 

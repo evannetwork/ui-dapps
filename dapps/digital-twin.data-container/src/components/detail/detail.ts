@@ -121,6 +121,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
   myProfile: any = null;
 
   /**
+   * Permissions for the current account
+   */
+  permissions = null;
+
+  /**
    * Load the container data
    */
   async created() {
@@ -143,6 +148,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
       // reload the data
       if (!this.$store.state.saving && beforeSaving) {
+        this.enableSave = false;
         this.initialize();
       }
     });
@@ -181,9 +187,24 @@ export default class DetailComponent extends mixins(EvanComponent) {
       this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
     }
 
+    // get the container instance and load the template including all values
     this.container = utils.getContainer(<any>runtime, this.containerAddress);
-    this.description = await this.container.getDescription();
-    this.template = await this.container.toTemplate(true);
+    const [ description, template, permissions, isOwner ] = await Promise.all([
+      this.container.getDescription(),
+      this.container.toTemplate(true),
+      this.container.getContainerShareConfigForAccount(runtime.activeAccount),
+      (await this.container.getOwner()) === runtime.activeAccount
+    ]);
+    this.description = description;
+    this.template = template;
+    this.permissions = permissions;
+    this.permissions.isOwner = isOwner;
+
+    // set custom translation
+    const customTranslation = { };
+    customTranslation[ `_datacontainer.breadcrumbs.${ this.containerAddress }`] =
+      this.description.name;
+    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();

@@ -53,21 +53,22 @@
           </button>
         </template>
       </evan-modal>
-      <div class="bg-level-1 p-3 pb-2 border rounded d-flex flex-wrap"
-        style="height: 65px;">
-        <div class="batch-label clickable"
+      <div class="bg-level-1 p-2 border rounded d-flex flex-wrap"
+        style="min-height: 65px;">
+        <div class="batch-label clickable mt-2"
           v-for="(property, index) in Object.keys(template.properties)"
           :class="{ 'active': activeTab === index }"
           @click="activateTab(index)">
           {{ property }}
         </div>
-        <div class="batch-label clickable"
+        <div class="batch-label clickable mt-2"
           :class="{ 'active': activeTab === -1 }"
+          v-if="permissions.isOwner"
           @click="activateTab(-1)">
           <i class="mdi mdi-plus-circle"></i>
         </div>
 
-        <div class="batch-label clickable animate-hop bg-primary bg-text-primary"
+        <div class="batch-label clickable mt-2 animate-hop bg-primary bg-text-primary"
           v-if="cachedTemplate"
           @click="$refs.cacheModal.show()">
           <i class="mdi mdi-undo"></i>

@@ -118,6 +118,15 @@ export default class TemplateComponent extends mixins(EvanComponent) {
   myProfile: any = null;
 
   /**
+   * Empty permissions that can be passed using isOwner flag to template-handler
+   */
+  permissions = {
+    isOwner: true,
+    read: [ ],
+    readWrite: [ ],
+  };
+
+  /**
    * Load the container data
    */
   async created() {

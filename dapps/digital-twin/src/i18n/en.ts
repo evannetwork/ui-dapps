@@ -54,8 +54,8 @@ export default {
         "title": "Data Container"
       },
       "change-twin": "Change Digital Twin",
-      "description1": "Use the input field, you can select an address of a digital twin into which you want to link a data container. If an existing instance already exists there, it is opened directly for you. If the address is not yet assigned, you can create a new digital twin and bind it to this address or link an existing one to this address.",
-      "description2": "Use the input field, you can select an address of a data container that is to be linked to the digital twin.",
+      "description1": "Using the input field, You can select an address of a digital twin into which You want to link a data container. If an existing instance already exists there, it is opened directly for You. If the address is not yet assigned, You can create a new digital twin and bind it to this address or link an existing one to this address.",
+      "description2": "Using the input field, You can select an address of a data container that is to be linked to the digital twin.",
       "digitaltwin": "Digital Twin",
       "invalid-container": {
         "desc": "The address entered appears to be incorrect or to correspond to a contract with an invalid format. Please enter the correct address",

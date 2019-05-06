@@ -243,6 +243,11 @@ export default class EvanUIDigitalTwin {
       this.dbcp = savingObj && savingObj.dbcp ? savingObj.dbcp : await digitaltwin.getDescription();
       this.isFavorite = await digitaltwin.isFavorite();
 
+      // set custom translation
+      const customTranslation = { };
+      customTranslation[`_digitaltwins.breadcrumbs.${ this.address }`] = this.dbcp.name;
+      (<any>vueInstance).$i18n.add((<any>vueInstance).$i18n.locale(), customTranslation);
+
       // load container data and watch for updates
       await this.loadContainers(runtime);
       await this.watchContainers(runtime);
@@ -261,7 +266,7 @@ export default class EvanUIDigitalTwin {
 
       // set default dbcp name
       if (this.address === 'dt-create') {
-        this.dbcp.name = vueInstance.$i18n.translate('_digitaltwins.generalForm.my-new-twin');
+        this.dbcp.name = '';
       } else {
         this.dbcp.name = this.address;
       }
@@ -472,7 +477,7 @@ export default class EvanUIDigitalTwin {
 
     // reset previous loadings and creation containers
     let previousCreateInstances = this.containers
-      .filter(container => container.creating)
+      .filter(container => container.creating || container.linking)
       .map(container => container.dispatcherInstanceId);
     this.containers.forEach(container => container.loading = false);
     this.containers = this.containers.filter(container =>
@@ -488,9 +493,8 @@ export default class EvanUIDigitalTwin {
         (instance.data.digitalTwinAddress === this.address ||
         instance.data.digitalTwinAddress === this.contractAddress)) {
         // remove the create instance, it's always running
-        if (previousCreateInstances.indexOf(instance.id)) {
-          previousCreateInstances.splice(instance.id, 1);
-        }
+        const runningIndex = previousCreateInstances.indexOf(instance.id);
+        runningIndex !== -1 && previousCreateInstances.splice(runningIndex, 1);
 
         // add the container including the creating flag, so the ui will be locked, but the
         // container will be displayed
@@ -529,7 +533,7 @@ export default class EvanUIDigitalTwin {
       }
     });
 
-    // if no all previously create instances are running, the instance has finished creation, so we
+    // if not all previously create instances are running, the instance has finished creation, so we
     // can reload the containers
     if (previousCreateInstances.length > 0) {
       await this.loadContainers(runtime);
