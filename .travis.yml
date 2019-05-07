@@ -1,11 +1,20 @@
 language: node_js
-node_js: "8.11.3"
 
 install:
   - npm install
 
-script:
-  - NIGHTWATCH_ENV=chrome npm run test-testnet chrome
-  - NIGHTWATCH_ENV=firefox npm run test-testnet firefox
-  # - npm run test-testnet safari
-  # - npm run test-testnet edge
+matrix:
+  include:
+  - chrome
+    node_js: "8.11.3"
+    env:
+      - NIGHTWATCH_ENV=chrome
+    script:
+      - npm run test-testnet
+
+  - firefox
+    node_js: "8.11.3"
+    env:
+      - NIGHTWATCH_ENV=firefox
+    script:
+      - npm run test-testnet
