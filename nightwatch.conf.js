@@ -41,47 +41,36 @@ if (localBrowser) {
     },
   };
 }
-
+const chromeSettings = {
+  desiredCapabilities: {
+    browserName: 'chrome',
+    javascriptEnabled: true,
+    acceptSslCerts: true,
+    chromeOptions: {
+      args: [
+        'disable-gpu',
+        'use-fake-device-for-media-stream', 
+        'use-fake-ui-for-media-stream',
+      ],
+    },
+  },
+};
+const firefoxSettings = {
+  desiredCapabilities: {
+    browserName: 'firefox',
+    javascriptEnabled: true,
+    acceptSslCerts: true,
+    marionette: false,
+  }
+};
+if (process.env.LOCAL_BROWSER_HEADLESS && JSON.parse(process.env.LOCAL_BROWSER_HEADLESS)) {
+  chromeSettings.desiredCapabilities.chromeOptions.args.push('headless');
+  firefoxSettings.desiredCapabilities.marionette = true;
+}
 module.exports = {
   test_settings: {
     default: defaultConfig,
-    chrome: {
-      desiredCapabilities: {
-        browserName: 'chrome',
-        javascriptEnabled: true,
-        acceptSslCerts: true,
-        chromeOptions: {
-          args: [
-            'incognito',
-            'disable-gpu',
-            'use-fake-device-for-media-stream', 
-            'use-fake-ui-for-media-stream',
-            process.env.LOCAL_BROWSER_HEADLESS ? JSON.parse(process.env.LOCAL_BROWSER_HEADLESS) : ''
-          ]
-        }
-      },
-    },
-    chromeLocal: {
-      desiredCapabilities: {
-        browserName: 'chrome',
-        javascriptEnabled: true,
-        acceptSslCerts: true,
-        chromeOptions: {
-          args: [
-            'disable-gpu',
-            'use-fake-device-for-media-stream', 
-            'use-fake-ui-for-media-stream'
-          ]
-        }
-      }
-    },
-    firefox: {
-      desiredCapabilities: {
-        browserName: 'firefox',
-        javascriptEnabled: true,
-        acceptSslCerts: true,
-        marionette: true
-      }
-    }
-  }
+    chrome: chromeSettings,
+    firefox: firefoxSettings,
+  },
 };
