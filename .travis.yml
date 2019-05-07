@@ -5,14 +5,14 @@ install:
 
 matrix:
   include:
-  - chrome
+  - name: "chrome"
     node_js: "8.11.3"
     env:
       - NIGHTWATCH_ENV=chrome
     script:
       - npm run test-testnet
 
-  - firefox
+  - name: "firefox"
     node_js: "8.11.3"
     env:
       - NIGHTWATCH_ENV=firefox
