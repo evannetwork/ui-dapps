@@ -1,5 +1,6 @@
 .csscomb.json
 .editorconfig
+.env.local
 src/
 tsconfig.json
 tsconfig.spec.json
