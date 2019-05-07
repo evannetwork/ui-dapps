@@ -5,7 +5,7 @@ const { accounts } = require('./conf/accounts.js');
 const seleniumServer = require('selenium-server-standalone-jar');
 const chromeDriver = require('chromedriver');
 
-config();
+config({ allowEmptyValues: true });
 
 let localBrowser = process.env.LOCAL_BROWSER ? JSON.parse(process.env.LOCAL_BROWSER) : false;
 let defaultConfig;
