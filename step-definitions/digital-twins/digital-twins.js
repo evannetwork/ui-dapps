@@ -8,27 +8,40 @@ import { backspaces, pauseHere, switchToVue } from '../../test-utils/test-utils.
 const evan = setupEvan(client);
 
 const selectors = {
+  loading: 'nav > div.nav.flex-nowrap > div.mr-md-3.d-flex > button:nth-child(2) > div.spinner-border.spinner-border-sm.bg-text-inverted',
+  loadingDone: 'nav > div.nav.flex-nowrap > div.mr-md-3.d-flex > button:nth-child(2) > i.mdi-rotate-3d',
   mainMenu: {
     digitalTwinsButton: '#main-menu > li:nth-child(1) > a',
   },
   container: {
     edit: {
-      addDataSet: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div.bg-level-1.p-3.border.rounded.d-flex.flex-wrap > div > i',
+      addDataSet: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div.bg-level-1.p-2.border.rounded.d-flex.flex-wrap > div > i',
       dataSet: {
         edit: {
           addButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div.white-box.border.rounded.mt-3 > div.footer > button',
           createConfirmButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(2) > div.modal.fade.show > div > div > div.modal-footer > button.btn.btn-primary.btn-rounded.font-weight-normal',
+          editButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > div.header > button > i',
           fieldName: (i) => `#name`,
           fieldValue: (i) => '#value',
           finishButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.d-flex.mb-3.align-items-center > div:nth-child(3) > button',
           firstTab: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div.bg-level-1.p-3.border.rounded.d-flex.flex-wrap > div.batch-label.active',
           name: '#name',
           saveUpdateButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.d-flex.mb-5.align-items-center > div.d-flex > button.btn.btn-primary.btn-rounded',
-          schemaApply: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div:nth-child(3) > div > div > div:nth-child(2) > div > button',
+          schemaApply: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div:nth-child(3) > div > div > div button',
+          typeOption: {
+            Metadata: '#type > option[value="object"]',
+            List: '#type > option[value="array"]',
+            Text: '#type > option[value="string"]',
+            Number: '#type > option[value="number"]',
+          },
+          typeSelect: '#type',
+          useSchema: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div:nth-child(3) > div > div > div.footer > button.btn.btn-primary.btn-rounded',
+          value: '#value',
         },
         view: {
-          fieldName: (i) => 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > div:nth-child(2) > table > tbody > tr > td:nth-child(1) > span',
-          fieldValue: (i) => 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > div:nth-child(2) > table > tbody > tr > td:nth-child(2) > div > div > span',
+          fieldName: (i) => 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > table > tbody > tr > td.fill-content.flex-grow-0 > span',
+          fieldValue: (i) => 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > table > tbody > tr > td:nth-child(2) > span', 
+          fieldValueSingle: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > div.content > span',
         },
       },
       description: '#description',
@@ -48,13 +61,38 @@ const selectors = {
       saveButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(4) > div > div.white-box.border.rounded > div.footer > button',
       submitButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(4) > div > div.white-box.border.rounded > div.footer > button',
     },
-    favoriteTwins: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(5) > div > div.white-box.border.rounded.mt-3 > div.row.content > div > a > div > div.col-10 > div > div > h4',
-    firstTwin: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(5) > div > div.white-box.border.rounded.mt-3 > div.row.content > div:nth-child(1) > a > div > div.col-10 > div > div > h4',
+    favoriteTwins: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(5) > div > div.white-box.border.rounded.mt-3 > div.row.content > div:first-child > a > div > div.col-10 > div > div > h4',
+    firstTwin: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(5) > div > div.white-box.border.rounded.mt-3 > div.row.content > div:first-child > a > div > div.col-10 > div > div > h4',
     view: {
       generalInformation: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-sidebar-2 > div > ul > li.w-100.p-4.clickable.border-top.border-sm.active > div.mt-3 > ul > li:nth-child(1) > a',
       twinData: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-sidebar-2 > div > ul > li:nth-child(1)',
     },
   },
+};
+
+// atm not in use but keep it for custom js based selectors
+// const createUniqueSelector = async (finder) => {
+//   return new Promise((resolve) => {
+//     client.execute(
+//       function(finderString){
+//         const found = (new Function('return ' + finderString)())()
+//         const now = Date.now();
+//         found.className += now;
+//         return now;
+//       }, [finder.toString()], (result) => {
+//         resolve(`.${result.value}`);
+//       });
+//   }); 
+// };
+// const test = await createUniqueSelector(function() {
+//   const firstDiv = document.querySelectorAll('div')[0];
+//   return firstDiv;
+// });
+// console.dir(test);
+
+const waitForSyncFinished = async (preLoading = 300000, loading = 300000) => {
+  await client.waitForElementPresent(selectors.loading, preLoading);
+  await client.waitForElementPresent(selectors.loadingDone, loading);
 };
 
 When(/^I create a new digital twin with the name "([^"]+)" and the description "([^"]+)"$/,
@@ -90,18 +128,43 @@ When(/^I add a container with the name "([^"]+)" and the description "([^"]+)"$/
   },
 );
 
-When(/^I add a data set with the default type and the name "([^"]+)"$/,
-  async (name) => {
+When(/^I add a data set with the type "(([^"]+))", the name "([^"]+)" and the value "([^"]+)"$/,
+  async (type, name, value) => {
+    // start
     await client.click(selectors.container.edit.addDataSet);
+
+    // select type
+    await client.click(selectors.container.edit.dataSet.edit.typeSelect);
+    await client.click(selectors.container.edit.dataSet.edit.typeOption[type]);
+
+    // enter name and confirm
     await client.setValue(selectors.container.edit.dataSet.edit.name, [backspaces(20), name]);
     await client.waitForElementPresent(selectors.container.edit.dataSet.edit.addButton, 10000);
     await client.click(selectors.container.edit.dataSet.edit.addButton);
 
-    // click on field name, enter name and value (1x)
-    await client.click('.ajv-add-overlay');
-    await client.pause(1000);
-    await client.setValue(selectors.container.edit.dataSet.edit.fieldName(0), 'field 1');
-    await client.setValue(selectors.container.edit.dataSet.edit.fieldValue(0), 'value 1');
+    // enter value
+    switch (type) {
+      case 'Metadata': {
+        await client.click('.ajv-add-overlay');
+        await client.pause(1000);
+        const [ field0, value0 ] = value.split(':');
+        await client.waitForElementPresent(selectors.container.edit.dataSet.edit.fieldName(0), 10000);
+        await client.setValue(selectors.container.edit.dataSet.edit.fieldName(0), field0);
+        await client.click(selectors.container.edit.dataSet.edit.useSchema);
+        await client.waitForElementPresent(selectors.container.edit.dataSet.edit.fieldValue(0), 10000);
+        await client.setValue(selectors.container.edit.dataSet.edit.fieldValue(0), value0);
+        break;
+      }
+      case 'Text':
+      case 'Number': {
+        // await client.click(selectors.container.edit.dataSet.edit.editButton);
+        // await client.pause(1000);
+        await client.setValue(selectors.container.edit.dataSet.edit.value, value);
+        break;
+      }
+      case 'List':
+      default: throw new Error(`unknown type: ${type}`);
+    } 
 
     await client.click(selectors.container.edit.dataSet.edit.schemaApply);
     await client.pause(1000);
@@ -137,8 +200,12 @@ Then(/^I can see that the twin name is "([^"]+)" and the description is "([^"]+)
 });
 
 Then(/^I can see that the first property has a key named "([^"]+)" and a value of "([^"]+)"$/, async (name, value) => {
-  // await client.click(selectors.container.edit.dataSet.edit.firstTab);
   await client.pause(1000);
   await client.expect.element(selectors.container.edit.dataSet.view.fieldName(0)).text.to.equal(name);
   await client.expect.element(selectors.container.edit.dataSet.view.fieldValue(0)).text.to.equal(value);
+});
+
+Then(/^I can see that the value is "([^"]+)"$/, async (value) => {
+  await client.pause(1000);
+  await client.expect.element(selectors.container.edit.dataSet.view.fieldValueSingle).text.to.equal(value);
 });

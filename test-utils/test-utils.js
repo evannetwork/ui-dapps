@@ -1,3 +1,5 @@
+import { client } from 'nightwatch-api';
+
 const selectors = {
   login: {
     passwordInput: '#password',
@@ -12,12 +14,20 @@ const selectors = {
     },
     settingsTab: 'evan-profile-container > div.evan-left-panel > ion-list > button:nth-child(3)',
   },
+  vueSwitch: '.theme-evan',
 };
 
 const backspaces = (n) => [...Array(n)].map(() => '\ue003').join('');
 
+const isVue = async () => {
+  const elements = await new Promise((resolve) => {
+    client.elements('css selector', selectors.vueSwitch, result => resolve(result.value)); });
+  return !!elements.length;
+};
+
 module.exports = {
   backspaces,
+  isVue,
   pauseHere: async () => {
     console.log('/******************************************************************************/');
     console.log('test paused, enjoy your developer tools :3');
@@ -25,37 +35,39 @@ module.exports = {
     return new Promise(() => {});
   },
   switchToVue: async ({ client, evan, password }) => {
-    return client
-      .url(`${ evan.url }#/profile.evan`)
-      // go to settings
-      .waitForElementPresent(selectors.profile.settingsTab, 10 * 1000)
-      .pause(1000)
-      .click(selectors.profile.settingsTab)
-      // enable dev mode
-      .waitForElementPresent(selectors.profile.settings.devToggle, 10 * 1000)
-      .pause(1000)
-      .click(selectors.profile.settings.devToggle)
-      // enable custom domains (and cancel reload popup)
-      .waitForElementPresent(selectors.profile.settings.domainToggle, 10 * 1000)
-      .pause(1000)
-      .click(selectors.profile.settings.domainToggle)
-      .waitForElementPresent(selectors.profile.settings.domainPopupNo, 10 * 1000)
-      .pause(1000)
-      .click(selectors.profile.settings.domainPopupNo)
-      // enter custom domain and confirm popup
-      .waitForElementPresent(selectors.profile.settings.domainInput, 10 * 1000)
-      .pause(1000)
-      .setValue(selectors.profile.settings.domainInput, [backspaces(10), 'vue.evan'])
-      .waitForElementPresent(selectors.profile.settings.domainPopupYes, 10 * 1000)
-      .pause(2000)
-      .click(selectors.profile.settings.domainPopupYes)
-      // enter password on login screen
-      .waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
-      // .url('https://dashboard.test.evan.network')
-      .url(evan.url)
-      .waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
-      .setValue(selectors.login.passwordInput, [password, client.Keys.ENTER])
-      .pause(2000)
+    if (await isVue()) {
+      return;
+    }
+    await client.url(`${ evan.url }#/profile.evan`)
+    // go to settings
+    await client.waitForElementPresent(selectors.profile.settingsTab, 10 * 1000)
+    await client.pause(1000)
+    await client.click(selectors.profile.settingsTab)
+    // enable dev mode
+    await client.waitForElementPresent(selectors.profile.settings.devToggle, 10 * 1000)
+    await client.pause(1000)
+    await client.click(selectors.profile.settings.devToggle)
+    // enable custom domains (and cancel reload popup)
+    await client.waitForElementPresent(selectors.profile.settings.domainToggle, 10 * 1000)
+    await client.pause(1000)
+    await client.click(selectors.profile.settings.domainToggle)
+    await client.waitForElementPresent(selectors.profile.settings.domainPopupNo, 10 * 1000)
+    await client.pause(1000)
+    await client.click(selectors.profile.settings.domainPopupNo)
+    // enter custom domain and confirm popup
+    await client.waitForElementPresent(selectors.profile.settings.domainInput, 10 * 1000)
+    await client.pause(1000)
+    await client.setValue(selectors.profile.settings.domainInput, [backspaces(10), 'vue.evan'])
+    await client.waitForElementPresent(selectors.profile.settings.domainPopupYes, 10 * 1000)
+    await client.pause(2000)
+    await client.click(selectors.profile.settings.domainPopupYes)
+    // enter password on login screen
+    await client.waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
+    // .url('https://dashboard.test.evan.network')
+    await client.url(evan.url)
+    await client.waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
+    await client.setValue(selectors.login.passwordInput, [password, client.Keys.ENTER])
+    await client.pause(2000)
     ;
   },
 };

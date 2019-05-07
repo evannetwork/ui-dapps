@@ -25,6 +25,10 @@
   https://evan.network/license/
 */
 
+const selectors = {
+  vueSwitch: '.theme-evan',
+};
+
 let loggedIn = false;
 const evan = {
   /**
