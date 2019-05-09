@@ -40,6 +40,7 @@
 
       <dt-lookup-form
         :disableCreate="true"
+        :disablePurchase="true"
         @submit="openTwin">
         <template v-slot:description>
           <div class="d-flex mt-3 align-items-center">

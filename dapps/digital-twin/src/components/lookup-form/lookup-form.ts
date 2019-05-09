@@ -68,6 +68,11 @@ export default class LookupComponent extends mixins(EvanComponent) {
   @Prop({ }) disableCreate;
 
   /**
+   * Disable ens purchase dialog
+   */
+  @Prop({ }) disablePurchase;
+
+  /**
    * Overwrite input title text
    */
   @Prop({
@@ -236,7 +241,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
           } else {
             this.lookupModalScope = 'create';
           }
-        } else if (parentOwner === nullAddress && !this.disableCreate) {
+        } else if (parentOwner === nullAddress && !this.disablePurchase) {
           // load the currents users balance
           this.modalParams.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
 

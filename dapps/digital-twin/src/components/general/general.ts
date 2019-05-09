@@ -78,7 +78,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   /**
    * Setup the form.
    */
-  created() {
+  async created() {
     this.uiDT = this.uidigitaltwin || this.$store.state.uiDT;
 
     this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
@@ -114,10 +114,12 @@ export default class GeneralComponent extends mixins(EvanComponent) {
 
           // when the synchronisation has finished, navigate to the correct entry
           if (instance.status === 'finished') {
-            (<any>this).evanNavigate(
-              (instance.data.address === 'dt-create' ? '' : instance.data.address) ||
-              instance.data.contractAddress
-            );
+            if (this.standalone) {
+              (<any>this).evanNavigate(
+                (instance.data.address === 'dt-create' ? '' : instance.data.address) ||
+                instance.data.contractAddress
+              );
+            }
           }
         });
     }

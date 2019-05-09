@@ -134,7 +134,17 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
       name: {
         value: '',
         validate: function(vueInstance: TemplateHandlerComponent, form: EntryFormInterface) {
-          return this.value.trim().length !== 0 && !vueInstance.template.properties[this.value];
+          const trimmed = this.value.trim();
+
+          if (trimmed.length === 0) {
+            return `_datacontainer.entry.name.error.length`;
+          } else if (vueInstance.template.properties[trimmed]) {
+            return `_datacontainer.entry.name.error.already`;
+          } else if (trimmed === 'type') {
+            return `_datacontainer.entry.name.error.reserved`;
+          } else {
+            return true;
+          }
         }
       },
       type: {
@@ -258,7 +268,9 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
    * Add a new, empty property to the metadata
    */
   addEntry() {
-    if (!this.template.properties[this.entryForm.name.value]) {
+    const trimmedName = this.entryForm.name.value;
+
+    if (!this.template.properties[trimmedName]) {
       // create a new empty data set
       const entryType = this.entryForm.type.value === 'array' ? 'List' : 'Entry';
       const entry: any = {
@@ -292,10 +304,10 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
         entry.dataSchema.properties = { };
       }
 
-      this.template.properties[this.entryForm.name.value] = entry;
+      this.template.properties[trimmedName] = entry;
 
       // navigate to the new data set
-      this.activateTab(Object.keys(this.template.properties).indexOf(this.entryForm.name.value));
+      this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
 
       // reset add form
       this.entryForm.name.value = '';
@@ -346,6 +358,33 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
 
     // redefine the object and bind new watchers
     this.activeEntry = { ...this.activeEntry };
+  }
+
+  /**
+   * Is currently an entry a edit mode?
+   *
+   * @param      {boolean}  showWarning  Open the next entry in edit mode and show a warning.
+   */
+  getUnsavedChanges(showWarning: boolean): Array<any> {
+    const mappedProperties = Object
+      .keys(this.template.properties)
+      .map((name: string, index: number) => ({
+        index: index,
+        // activeEntry is a copy of the original entry and does not contain the correct mode
+        // status ==> use the activeEntry object for activated tabs
+        mode: this.activeEntryName === name ? this.activeEntry.mode :
+          (<any>this.template.properties[name]).mode,
+        name: name,
+      }));
+
+    // open the entry in edit mode an show an popup, that everything should be saved
+    const editProperties = mappedProperties.filter(mappedProp => mappedProp.mode !== 'view');
+    if (editProperties.length > 0) {
+      this.activateTab(editProperties[0].index, true);
+      (<any>this.$refs.editModes).show();
+    }
+
+    return editProperties;
   }
 }
 

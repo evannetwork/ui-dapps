@@ -131,7 +131,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
   openAttachment(attachment: any, modalRef: any) {
     if (attachment.status === 'accepted') {
       if (attachment.fullPath) {
-        (<any>this).evanNavigate(attachment.fullPath);
+        window.location.hash = attachment.fullPath;
       } else {
         let storeKey = attachment.storeKey || attachment.address;
         // use storeKey as default value that should be opened

@@ -53,6 +53,18 @@
           </button>
         </template>
       </evan-modal>
+      <evan-modal ref="editModes">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ `_datacontainer.template-handler.edit-modes.title` | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <p class="text-left m-0"
+            v-html="$t(`_datacontainer.template-handler.edit-modes.desc`, modalParams)">
+          </p>
+        </template>
+      </evan-modal>
       <div class="bg-level-1 p-2 border rounded d-flex flex-wrap"
         style="min-height: 65px;">
         <div class="batch-label clickable mt-2"
@@ -133,11 +145,11 @@
                   id="name" ref="name"
                   :placeholder="`_datacontainer.entry.name.desc` | translate"
                   :disabled="$store.state.saving"
-                  v-model="entryForm.name.value"
                   :class="{ 'is-invalid' : entryForm.name.error }"
+                  v-model="entryForm.name.value"
                   @blur="entryForm.name.setDirty()">
                 <div class="invalid-feedback">
-                  {{ `_datacontainer.entry.name.error` | translate }}
+                  {{ entryForm.name.error | translate }}
                 </div>
               </div>
             </form>
@@ -153,7 +165,6 @@
           </div>
         </div>
       </template>
-
       <dc-entry
         v-if="activeTab > -1 && activeEntry"
         :address="address"

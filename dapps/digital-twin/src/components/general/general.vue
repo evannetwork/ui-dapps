@@ -94,8 +94,9 @@
               <input class="form-control" required
                 id="name" ref="name"
                 :placeholder="`_digitaltwins.generalForm.name.desc` | translate"
-                v-model="generalForm.name.value"
                 :class="{ 'is-invalid' : generalForm.name.error }"
+                :readonly="!uiDT.isOwner"
+                v-model="generalForm.name.value"
                 @blur="generalForm.name.setDirty()">
               <div class="invalid-feedback">
                 {{ `_digitaltwins.generalForm.name.error` | translate }}
@@ -108,13 +109,15 @@
               <textarea class="form-control" rows="7"
                 id="description" ref="description"
                 :placeholder="`_digitaltwins.generalForm.description.desc` | translate"
-                v-model="generalForm.description.value"
+                :readonly="!uiDT.isOwner"
                 :class="{ 'is-invalid' : generalForm.description.error }"
+                v-model="generalForm.description.value"
                 @blur="generalForm.description.setDirty()">
               </textarea>
             </div>
           </form>
-          <div class="footer">
+          <div class="footer"
+            v-if="!uiDT.validity.exists || uiDT.isOwner">
             <button type="submit"
               class="btn btn-rounded btn-primary"
               v-if="!uiDT.validity.exists"

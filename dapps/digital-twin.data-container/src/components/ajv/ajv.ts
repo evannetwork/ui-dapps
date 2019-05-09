@@ -144,13 +144,35 @@ export default class AJVComponent extends mixins(EvanComponent) {
       name: {
         value: property,
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          const trimmed = this.value.trim();
+
+          // trigger form validation
           vueInstance.checkFormValidity();
-          return this.value.trim().length !== 0;
+
+          // name must have at least one character
+          if (trimmed.length === 0) {
+            return '_datacontainer.ajv.name.error.empty';
+          } else {
+            // check for fields with the same name
+            const existingName = vueInstance.forms
+              // ignore the current form
+              .filter(propForm => propForm !== form)
+              .map(propForm => propForm.name.value.trim())
+              .filter(name => name === trimmed)
+              .length > 0;
+
+            if (existingName) {
+              return '_datacontainer.ajv.name.error.exists';
+            }
+          }
+
+          return true;
         }
       },
       type: {
         value: type,
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          // trigger form validation
           vueInstance.checkFormValidity();
 
           // force value evaluation
@@ -164,6 +186,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // only check validity when the value is enabled
           if (vueInstance.mode !== 'schema') {
+            // trigger form validation
             vueInstance.checkFormValidity();
 
             // map the value top the correct dynamic type validator

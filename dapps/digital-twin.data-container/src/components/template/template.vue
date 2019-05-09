@@ -27,60 +27,78 @@
 
 <template>
   <div class="container-wide">
-    <evan-modal ref="shareModal">
-      <template v-slot:header>
-        <h5 class="modal-title">
-          {{ `_datacontainer.share.title` | translate }}
-        </h5>
-      </template>
-      <template v-slot:body>
-        <p class="text-left m-0"
-          v-html="$t(`_datacontainer.share.desc`, modalParams)">
-        </p>
-
-        <div class="form-group mt-3">
-          <label for="name">
-            {{ `_datacontainer.share.subject.title` | translate }}
-          </label>
-          <input class="form-control" required
-            id="subject" ref="subject"
-            :placeholder="`_datacontainer.share.subject.desc` | translate"
-            v-model="shareForm.subject.value"
-            :class="{ 'is-invalid' : shareForm.subject.error }"
-            @blur="shareForm.subject.setDirty()">
-          <div class="invalid-feedback">
-            {{ `_datacontainer.share.subject.error` | translate }}
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="shareUser">
-            {{ `_datacontainer.share.user.title` | translate }}
-          </label>
-          <select class="form-control custom-select"
-            id="shareUser" ref="shareUser"
-            :placeholder="`_datacontainer.share.user.desc` | translate"
-            v-model="shareAccount">
-            <option
-              v-for="(contact, index) in contacts"
-              :value="contact.address">
-              {{ contact.alias }} ({{ contact.address || contact.email }})
-            </option>
-          </select>
-        </div>
-      </template>
-      <template v-slot:footer>
-        <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-          :disabled="!shareForm.isValid"
-          @click="shareDt()">
-          {{ `_datacontainer.share.action` | translate }}
-          <i class="mdi mdi-arrow-right label"></i>
-        </button>
-      </template>
-    </evan-modal>
-
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
+      <evan-modal ref="shareModal" v-if="contacts.length !== 0">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ `_datacontainer.share.title` | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <p class="text-left m-0"
+            v-html="$t(`_datacontainer.share.desc`, modalParams)">
+          </p>
+
+          <div class="form-group mt-3">
+            <label for="name">
+              {{ `_datacontainer.share.subject.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="subject" ref="subject"
+              :placeholder="`_datacontainer.share.subject.desc` | translate"
+              v-model="shareForm.subject.value"
+              :class="{ 'is-invalid' : shareForm.subject.error }"
+              @blur="shareForm.subject.setDirty()">
+            <div class="invalid-feedback">
+              {{ `_datacontainer.share.subject.error` | translate }}
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <label for="shareUser">
+              {{ `_datacontainer.share.user.title` | translate }}
+            </label>
+            <select class="form-control custom-select"
+              id="shareUser" ref="shareUser"
+              :placeholder="`_datacontainer.share.user.desc` | translate"
+              v-model="shareAccount">
+              <option
+                v-for="(contact, index) in contacts"
+                :value="contact.address">
+                {{ contact.alias }} ({{ contact.address || contact.email }})
+              </option>
+            </select>
+          </div>
+        </template>
+        <template v-slot:footer>
+          <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+            :disabled="!shareForm.isValid"
+            @click="shareDt()">
+            {{ `_datacontainer.share.action` | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
+          </button>
+        </template>
+      </evan-modal>
+      <evan-modal ref="shareModal" v-else>
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ `_datacontainer.share.no-contacts.title` | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <p class="text-left m-0"
+            v-html="$t(`_datacontainer.share.no-contacts.desc`, modalParams)">
+          </p>
+        </template>
+        <template v-slot:footer>
+          <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+            @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }.${ dapp.domainName }`)">
+            {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
+          </button>
+        </template>
+      </evan-modal>
       <template v-if="!saving">
         <div class="d-flex mb-3 align-items-center">
           <div class="flex-truncate" style="max-width: 50%;">
@@ -140,7 +158,7 @@
             </div>
             <button type="button" class="btn btn-primary btn-rounded"
               @click="saveTemplate()"
-              :disabled="!enableSave || !dbcpForm.isValid">
+              :disabled="!enableSave">
               {{ '_datacontainer.template.save' | translate }}
               <i class="mdi mdi-content-save label"></i>
             </button>
@@ -154,7 +172,7 @@
             </h5>
           </template>
           <template v-slot:body>
-            <form v-on:submit.prevent="saveTemplate">
+            <form v-on:submit.prevent="saveTemplate(true)">
               <div class="form-group">
                 <label for="name">
                   {{ `_datacontainer.createForm.name.title` | translate }}
@@ -185,7 +203,7 @@
           </template>
           <template v-slot:footer>
             <button type="submit"
-              @click="saveTemplate()"
+              @click="saveTemplate(true)"
               class="btn btn-rounded btn-primary"
               :disabled="!dbcpForm.isValid">
               {{ `_datacontainer.createForm.save` | translate }}
@@ -195,6 +213,7 @@
         </evan-modal>
 
         <dc-template-handler
+          ref="templateHandler"
           :address="templateName"
           :template.sync="template"
           :permissions="permissions">

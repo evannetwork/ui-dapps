@@ -146,18 +146,20 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
       const newProp = newTemplate.properties[propertyKey];
       const originProp: any = template.properties[propertyKey] || { };
 
-      // schema has been changed
-      if (!deepEqual(originProp.dataSchema, newProp.dataSchema)) {
-        changed.saveDescription = true;
-        changed.changed = true;
-      }
+      if (typeof newProp.value !== 'undefined') {
+        // schema has been changed
+        if (!deepEqual(originProp.dataSchema, newProp.dataSchema)) {
+          changed.saveDescription = true;
+          changed.changed = true;
+        }
 
-      // if it's not an entry, check for value equality
-      // if it's an list, check if new values were added
-      if ((newProp.type !== 'list' && !deepEqual(originProp.value, newProp.value)) ||
-          (newProp.type === 'list' && newProp.value && newProp.value.length > 0)) {
-        changed.entriesToSave.push(propertyKey);
-        changed.changed = true;
+        // if it's not an entry, check for value equality
+        // if it's an list, check if new values were added
+        if ((newProp.type !== 'list' && !deepEqual(originProp.value, newProp.value)) ||
+            (newProp.type === 'list' && newProp.value && newProp.value.length > 0)) {
+          changed.entriesToSave.push(propertyKey);
+          changed.changed = true;
+        }
       }
     });
   }

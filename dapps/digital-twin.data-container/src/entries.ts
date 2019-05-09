@@ -184,6 +184,7 @@ export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) 
     }
     default: {
       entry.value = fieldUtils.parseFieldValue(type, entry.edit.value);
+      entry.edit.value = entry.value;
     }
   }
 

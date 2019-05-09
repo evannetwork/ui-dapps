@@ -30,19 +30,24 @@ export default {
   "_datacontainer": {
     "ajv": {
       "add": "Feld hinzufügen",
+      "edit-schema": "Schema bearbeiten",
       "name": {
         "desc": "Bezeichung des Feldes",
-        "error": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!",
+        "error": {
+          "empty": "Bitte geben Sie einen Namen ein!",
+          "exists": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!"
+        },
         "title": "Feldname"
       },
       "not-permitted": {
         "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen.",
         "title": "Ungültige Berechtigung"
       },
+      "reset-values": "Abbrechen",
       "save": {
-        "schema": "Schema übernehmen",
         "edit": "Werte übernehmen",
-        "save": "Speichern"
+        "save": "Speichern",
+        "schema": "Schema übernehmen"
       },
       "type": {
         "title": "Typ"
@@ -51,9 +56,7 @@ export default {
         "desc": "Wert des Feldes",
         "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
         "title": "Wert"
-      },
-      "reset-values": "Abbrechen",
-      "edit-schema": "Schema bearbeiten"
+      }
     },
     "breadcrumbs": {
       "add": "Hinzufügen",
@@ -71,10 +74,10 @@ export default {
     },
     "context-menu": {
       "clone": "Klonen",
+      "create-container": "Daten Container erstellen",
       "link": "Container verknüpfen",
       "share": "Teilen",
-      "template-save": "Als Vorlage speichern",
-      "create-container": "Daten Container erstellen"
+      "template-save": "Als Vorlage speichern"
     },
     "create-question": {
       "action": "Erstellen",
@@ -99,12 +102,12 @@ export default {
         "title": "Name"
       },
       "save": "Daten Container Speichern",
+      "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
       "template": {
         "desc": "Vorlage des Datencontainers",
         "title": "Vorlage"
       },
-      "title": "Daten Container erstellen",
-      "sub-title": "Allgemeine Informationen, Datenschema und Werte."
+      "title": "Daten Container erstellen"
     },
     "dispatcher": {
       "create": "Daten Container wird erstellt...",
@@ -125,7 +128,11 @@ export default {
       },
       "name": {
         "desc": "Name des Datenbereichs",
-        "error": "Der Name des Datenbereichs darf keine Sonderzeichen oder Leerzeichen enhalten und nicht einem bestehenden Namen entsprechen!",
+        "error": {
+          "already": "Bitte geben Sie einen Namen an, der noch nicht existiert.",
+          "length": "Bitte geben Sie einen gültigen Namen (keine Sonderzeichen, mindestens ein Buchstabe).",
+          "reserved": "Der eingebene Name ist reserviert und kann nicht verwendet werden."
+        },
         "title": "Name"
       },
       "type": {
@@ -137,6 +144,9 @@ export default {
         "title": "Wert"
       }
     },
+    "field": {
+      "edit": "Bearbeiten"
+    },
     "in-creation": "In Erstellung...",
     "in-saving": "Wird gespeichert...",
     "list": {
@@ -145,8 +155,12 @@ export default {
       "data": "Daten",
       "load-more": "Mehr laden...",
       "results": "Ergebnisse",
-      "show-more": "Mehr anzeigen",
-      "show-less": "Weniger anzeigen"
+      "show-less": "Weniger anzeigen",
+      "show-more": "Mehr anzeigen"
+    },
+    "no-permissions": {
+      "desc": "Sie besitzen keine Berechtigungen diesen Datencontainer einzusehen.",
+      "title": "Keine Berechtigungen"
     },
     "share": {
       "action": "Teilen",
@@ -156,6 +170,15 @@ export default {
       },
       "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
       "entry": "Datenbereich",
+      "no-contacts": {
+        "desc": "Daten können nur mit Kontakten und einem validen Schlüsselaustausch geteilt werden. Sie besitzen noch keine Kontakte, um Daten zu teilen.<br>Wollen sie die Kontakte öffnen?",
+        "open-contacts": "Kontakte öffnen",
+        "title": "Keine Kontakte"
+      },
+      "no-permissions": {
+        "desc": "Sie haben keine Berechtigungen, diesen Daten Container zu teilen.",
+        "title": "Nicht berechtigt"
+      },
       "read": "Lesen",
       "read-write": "Lesen und Schreiben",
       "subject": {
@@ -174,8 +197,8 @@ export default {
         "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Vorlage von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
         "title": "Daten Container Vorlage"
       },
-      "create-title": "Neue Vorlage erstellen",
       "create-container": "Daten Container erzeugen",
+      "create-title": "Neue Vorlage erstellen",
       "edit-dbcp": "Beschreibung Anpassen",
       "save": "Vorlage speichern"
     },
@@ -185,6 +208,12 @@ export default {
       "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
       "title": "Ungespeicherte Änderungen"
     },
+    "template-handler": {
+      "edit-modes": {
+        "desc": "Bitte schließen Sie alle Änderungen ab, um speichern zu können.",
+        "title": "Ungespeicherte Änderungen"
+      }
+    },
     "types": {
       "array": "Liste",
       "files": "Dateien",
@@ -192,9 +221,6 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
-    },
-    "field": {
-      "edit": "Bearbeiten"
     }
   }
 }

@@ -30,19 +30,24 @@ export default {
   "_datacontainer": {
     "ajv": {
       "add": "Add field",
+      "edit-schema": "Edit schema",
       "name": {
         "desc": "Name of the field",
-        "error": "Please enter a name that does not correspond to an existing field",
+        "error": {
+          "empty": "Please enter a name!",
+          "exists": "Please enter a name that does not correspond to an existing field!"
+        },
         "title": "Field name"
       },
       "not-permitted": {
         "desc": "You do not have permission to view this data set.",
         "title": "Invalid authorization"
       },
+      "reset-values": "Cancel",
       "save": {
-        "schema": "Use Schema",
         "edit": "Save",
-        "save": "Save"
+        "save": "Save",
+        "schema": "Use Schema"
       },
       "type": {
         "title": "Type"
@@ -51,9 +56,7 @@ export default {
         "desc": "Value of the field",
         "error": "Please enter a value of the correct type!",
         "title": "Value"
-      },
-      "reset-values": "Cancel",
-      "edit-schema": "Edit schema"
+      }
     },
     "breadcrumbs": {
       "add": "Add",
@@ -71,10 +74,10 @@ export default {
     },
     "context-menu": {
       "clone": "Clone",
+      "create-container": "Create Data Container",
       "link": "Link to Digital Twin",
       "share": "Share",
-      "template-save": "Save as template",
-      "create-container": "Create Data Container"
+      "template-save": "Save as template"
     },
     "create-question": {
       "action": "Create",
@@ -99,12 +102,12 @@ export default {
         "title": "Name"
       },
       "save": "Save Data Container",
+      "sub-title": "Specify general information, data schema and values.",
       "template": {
         "desc": "Template of the Data Container",
         "title": "Template"
       },
-      "title": "Create Data Container",
-      "sub-title": "Specify general information, data schema and values."
+      "title": "Create Data Container"
     },
     "dispatcher": {
       "create": "Creating Data Container...",
@@ -125,7 +128,11 @@ export default {
       },
       "name": {
         "desc": "Name of the data set",
-        "error": "The name of the data set must not contain any special characters, spaces, ... and do not correspond to an existing one!",
+        "error": {
+          "already": "Please enter a name that does not yet exist",
+          "length": "Please enter a valid name (no special characters, at least one letter)",
+          "reserved": "The entered name is reserved and cannot be used."
+        },
         "title": "Name"
       },
       "type": {
@@ -137,6 +144,9 @@ export default {
         "title": "Value"
       }
     },
+    "field": {
+      "edit": "Edit"
+    },
     "in-creation": "In Creation...",
     "in-saving": "Saving...",
     "list": {
@@ -145,8 +155,12 @@ export default {
       "data": "Data",
       "load-more": "Load more...",
       "results": "Results",
-      "show-more": "Show more",
-      "show-less": "Show less"
+      "show-less": "Show less",
+      "show-more": "Show more"
+    },
+    "no-permissions": {
+      "desc": "You have no permission to view this data container.",
+      "title": "No permissions"
     },
     "share": {
       "action": "Share",
@@ -156,6 +170,15 @@ export default {
       },
       "desc": "Send this data container to people in your address book and specify their access permissions.",
       "entry": "Data set",
+      "no-contacts": {
+        "desc": "Data can only be shared with contacts and a valid key exchange. You do not yet have contacts to share data. <br>Do you want to open the contacts?",
+        "open-contacts": "Open Contacts",
+        "title": "No contacts"
+      },
+      "no-permissions": {
+        "desc": "You do not have permissions to share this data container.",
+        "title": "Not permitted"
+      },
       "read": "Read",
       "read-write": "Read and Write",
       "subject": {
@@ -174,8 +197,8 @@ export default {
         "body": "Hello,<br><br>You have received a data container template from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
         "title": "Invitation to Data Container template"
       },
-      "create-title": "Create new Template",
       "create-container": "Create Data Container",
+      "create-title": "Create new Template",
       "edit-dbcp": "Adjust Description",
       "save": "Save Template"
     },
@@ -185,6 +208,12 @@ export default {
       "desc": "You have unsaved changes, do you want to restore it?",
       "title": "Unsaved changes"
     },
+    "template-handler": {
+      "edit-modes": {
+        "desc": "Please complete all changes to be able to save.",
+        "title": "Unsaved changes"
+      }
+    },
     "types": {
       "array": "List",
       "files": "Files",
@@ -192,9 +221,6 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
-    },
-    "field": {
-      "edit": "Edit"
     }
   }
 }

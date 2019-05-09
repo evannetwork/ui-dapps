@@ -45,12 +45,16 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const profile = runtime.profile;
 
+    // apply the possibility to only save the description, without touching the template.
+    data.template = data.template || (await bcc.Container
+      .getContainerTemplate(profile, data.beforeName)).template;
+
     // load latest contracts to be up to date
     await profile.loadForAccount(profile.treeLabels.contracts);
 
     // on an update and when the name has changed, remove the previous template
     if (data.beforeName && data.name !== data.beforeName) {
-      await runtime.profile.removeBcContract(bcc.Container.profileTemplatesKey, data.name);
+      await runtime.profile.removeBcContract(bcc.Container.profileTemplatesKey, data.beforeName);
     }
 
     // save the new template

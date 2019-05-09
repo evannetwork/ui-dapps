@@ -31,103 +31,135 @@
       :i18nScope="'_datacontainer.breadcrumbs'">
     </evan-breadcrumbs>
     <div class="container-wide">
-      <evan-modal ref="shareModal">
-        <template v-slot:header>
-          <h5 class="modal-title">
-            {{ `_datacontainer.share.title` | translate }}
-          </h5>
-        </template>
-        <template v-slot:body>
-          <p class="text-left m-0"
-            v-html="$t(`_datacontainer.share.desc`, modalParams)">
-          </p>
-
-          <div class="form-group mt-3">
-            <label for="name">
-              {{ `_datacontainer.share.subject.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="subject" ref="subject"
-              :placeholder="`_datacontainer.share.subject.desc` | translate"
-              v-model="shareForm.subject.value"
-              :class="{ 'is-invalid' : shareForm.subject.error }"
-              @blur="shareForm.subject.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_datacontainer.share.subject.error` | translate }}
-            </div>
-          </div>
-
-          <div class="form-group mt-3">
-            <label for="shareUser">
-              {{ `_datacontainer.share.user.title` | translate }}
-            </label>
-            <select class="form-control custom-select"
-              id="shareUser" ref="shareUser"
-              :placeholder="`_datacontainer.share.user.desc` | translate"
-              v-model="share.accountId">
-              <option
-                v-for="(contact, index) in contacts"
-                :value="contact.address">
-                {{ contact.alias }} ({{ contact.address || contact.email }})
-              </option>
-            </select>
-          </div>
-
-          <div class="table-responsive-md border-0 p-0 mt-3">
-            <table class="w-100">
-              <thead>
-                <tr>
-                  <th>{{ '_datacontainer.share.entry' | translate }}</th>
-                  <th>{{ '_datacontainer.share.read' | translate }}</th>
-                  <th>{{ '_datacontainer.share.read-write' | translate }}</th>
-                  <th style="width: 50px;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(property, index) in Object.keys(template.properties)">
-                  <td class="py-2 pr-3">{{ property }}</td>
-                  <td class="py-2 pl-2 pr-2">
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input"
-                        :id="`read${ index }`" :name="`permission${ index }`"
-                        :value="'read'"
-                        v-model="share.permissions[property]">
-                      <label class="custom-control-label" :for="`read${ index }`"></label>
-                    </div>
-                  </td>
-                  <td class="py-2 pl-2 pr-2">
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input"
-                        :id="`write${ index }`" :name="`permission${ index }`"
-                        :value="'write'"
-                        v-model="share.permissions[property]">
-                      <label class="custom-control-label" :for="`write${ index }`"></label>
-                    </div>
-                  </td>
-                  <td class="py-2 pr-3 text-center d-flex align-items-center" style="width: 50px;">
-                    <button class="btn p-0" @click="$set(share.permissions, property, 'none')">
-                      <i class="mdi mdi-close"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </template>
-        <template v-slot:footer>
-          <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-            :disabled="!shareForm.isValid || Object.keys(share.permissions)
-              .filter(entry => share.permissions[entry] && share.permissions[entry] !== 'none')
-              .length === 0"
-            @click="shareDt()">
-            {{ `_datacontainer.share.action` | translate }}
-            <i class="mdi mdi-arrow-right label"></i>
-          </button>
-        </template>
-      </evan-modal>
-
       <evan-loading v-if="loading"></evan-loading>
+      <div class="white-box border rounded"
+        v-else-if="error">
+        <div class="header">
+          <h3 class="m-0 font-weight-semibold">
+            {{ '_datacontainer.no-permissions.title' | translate }}
+          </h3>
+        </div>
+        <div class="content"
+          v-html="$t('_datacontainer.no-permissions.desc')">
+        </div>
+      </div>
       <template v-else>
+        <evan-modal ref="shareModal"
+          v-if="!share.error">
+          <template v-slot:header>
+            <h5 class="modal-title">
+              {{ `_datacontainer.share.title` | translate }}
+            </h5>
+          </template>
+          <template v-slot:body>
+            <p class="text-left m-0"
+              v-html="$t(`_datacontainer.share.desc`, modalParams)">
+            </p>
+
+            <div class="form-group mt-3">
+              <label for="name">
+                {{ `_datacontainer.share.subject.title` | translate }}
+              </label>
+              <input class="form-control" required
+                id="subject" ref="subject"
+                :placeholder="`_datacontainer.share.subject.desc` | translate"
+                v-model="shareForm.subject.value"
+                :class="{ 'is-invalid' : shareForm.subject.error }"
+                @blur="shareForm.subject.setDirty()">
+              <div class="invalid-feedback">
+                {{ `_datacontainer.share.subject.error` | translate }}
+              </div>
+            </div>
+
+            <div class="form-group mt-3">
+              <label for="shareUser">
+                {{ `_datacontainer.share.user.title` | translate }}
+              </label>
+              <select class="form-control custom-select"
+                id="shareUser" ref="shareUser"
+                :placeholder="`_datacontainer.share.user.desc` | translate"
+                v-model="share.accountId">
+                <option
+                  v-for="(contact, index) in contacts"
+                  :value="contact.address">
+                  {{ contact.alias }} ({{ contact.address || contact.email }})
+                </option>
+              </select>
+            </div>
+
+            <div class="table-responsive-md border-0 p-0 mt-3">
+              <table class="w-100">
+                <thead>
+                  <tr>
+                    <th>{{ '_datacontainer.share.entry' | translate }}</th>
+                    <th>{{ '_datacontainer.share.read' | translate }}</th>
+                    <th>{{ '_datacontainer.share.read-write' | translate }}</th>
+                    <th style="width: 50px;"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(property, index) in Object.keys(template.properties)">
+                    <td class="py-2 pr-3">{{ property }}</td>
+                    <td class="py-2 pl-2 pr-2">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input"
+                          :id="`read${ index }`" :name="`permission${ index }`"
+                          :value="'read'"
+                          v-model="share.permissions[property]">
+                        <label class="custom-control-label" :for="`read${ index }`"></label>
+                      </div>
+                    </td>
+                    <td class="py-2 pl-2 pr-2">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input"
+                          :id="`write${ index }`" :name="`permission${ index }`"
+                          :value="'write'"
+                          v-model="share.permissions[property]">
+                        <label class="custom-control-label" :for="`write${ index }`"></label>
+                      </div>
+                    </td>
+                    <td class="py-2 pr-3 text-center d-flex align-items-center" style="width: 50px;">
+                      <button class="btn p-0" @click="$set(share.permissions, property, 'none')">
+                        <i class="mdi mdi-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </template>
+          <template v-slot:footer>
+            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+              :disabled="!shareForm.isValid || Object.keys(share.permissions)
+                .filter(entry => share.permissions[entry] && share.permissions[entry] !== 'none')
+                .length === 0"
+              @click="shareDt()">
+              {{ `_datacontainer.share.action` | translate }}
+              <i class="mdi mdi-arrow-right label"></i>
+            </button>
+          </template>
+        </evan-modal>
+        <evan-modal ref="shareModal" v-else>
+          <template v-slot:header>
+            <h5 class="modal-title">
+              {{ `_datacontainer.share.${ share.error }.title` | translate }}
+            </h5>
+          </template>
+          <template v-slot:body>
+            <p class="text-left m-0"
+              v-html="$t(`_datacontainer.share.${ share.error }.desc`, modalParams)">
+            </p>
+          </template>
+          <template v-slot:footer
+            v-if="share.error === 'no-contacts'">
+            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+              @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }`)">
+              {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
+              <i class="mdi mdi-arrow-right label"></i>
+            </button>
+          </template>
+        </evan-modal>
         <template v-if="!$store.state.saving">
           <div class="d-flex mb-5 align-items-center">
             <div class="flex-truncate" style="max-width: 50%;">
@@ -160,10 +192,7 @@
                         {{ `_datacontainer.edit-dbcp` | translate }}
                       </a>
                       <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                        @click="
-                          $refs.shareModal.show()
-                          $refs.containerContextMenu.hide($event);
-                        ">
+                        @click="openShareDialog">
                         <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
                         {{ `_datacontainer.context-menu.share` | translate }}
                       </a>
@@ -211,7 +240,7 @@
               </h5>
             </template>
             <template v-slot:body>
-              <form v-on:submit.prevent="saveContainer">
+              <form v-on:submit.prevent="saveContainer(true)">
                 <div class="form-group">
                   <label for="name">
                     {{ `_datacontainer.createForm.name.title` | translate }}
@@ -242,7 +271,7 @@
             </template>
             <template v-slot:footer>
               <button type="submit"
-                @click="saveContainer()"
+                @click="saveContainer(true)"
                 class="btn btn-rounded btn-primary"
                 :disabled="!dbcpForm.isValid">
                 {{ `_datacontainer.createForm.save` | translate }}

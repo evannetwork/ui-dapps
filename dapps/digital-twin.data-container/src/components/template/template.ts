@@ -145,7 +145,10 @@ export default class TemplateComponent extends mixins(EvanComponent) {
         .length > 0;
 
       // reload the data
-      !this.saving && beforeSaving && this.initialize();
+      if (!this.saving && beforeSaving) {
+        this.enableSave = false;
+        this.initialize();
+      }
     });
 
     // watch for sharings watcher
@@ -192,21 +195,23 @@ export default class TemplateComponent extends mixins(EvanComponent) {
 
         return contact;
       });
-    this.shareAccount = this.contacts[0].address;
+
+    // sharing requires at least one contact
+    if (this.contacts.length > 0) {
+      this.shareAccount = this.contacts[0].address;
+    }
 
     // set dbcp form
     this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
       name: {
         value: this.description.name,
         validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
-          vueInstance.enableSave = true;
           return this.value.trim().length !== 0;
         }
       },
       description: {
         value: this.description.description,
         validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
-          vueInstance.enableSave = true;
           return true;
         }
       },
@@ -236,9 +241,19 @@ export default class TemplateComponent extends mixins(EvanComponent) {
 
   /**
    * Trigger the digital twin save
+   *
+   * @param      {boolean}  onlyDbcp  save only the description
    */
-  async saveTemplate() {
+  async saveTemplate(onlyDbcp = false) {
     if (!this.saving && this.dbcpForm.isValid) {
+      // when the template should be saved, check if all changes have been changed
+      if (!onlyDbcp) {
+        const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
+        if (unsavedChanges.length !== 0) {
+          return;
+        }
+      }
+
       const runtime = utils.getRuntime(this);
 
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
@@ -264,7 +279,7 @@ export default class TemplateComponent extends mixins(EvanComponent) {
           description: this.dbcpForm.description.value,
           img: this.dbcpForm.img.value,
           name: this.dbcpForm.name.value,
-          template: this.template,
+          template: onlyDbcp ? undefined : this.template,
         });
 
         this.loading = false;
@@ -296,7 +311,8 @@ export default class TemplateComponent extends mixins(EvanComponent) {
           address: this.templateName,
           bc: bcc.Container.profileTemplatesKey,
           fullPath: [
-            `/digitaltwins.${ (<any>this).dapp.domainName }`,
+            `/${ (<any>this).dapp.rootEns }`,
+            `digitaltwins.${ (<any>this).dapp.domainName }`,
             `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
             `template/${ this.dbcpForm.name.value }`,
           ].join('/'),
@@ -310,8 +326,8 @@ export default class TemplateComponent extends mixins(EvanComponent) {
             },
             template: this.template,
           },
-        }]
-      }
+        }],
+      },
     };
 
     // start the dispatcher

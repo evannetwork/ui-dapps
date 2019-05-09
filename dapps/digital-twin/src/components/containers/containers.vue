@@ -39,7 +39,8 @@
           </template>
         </h3>
         <span class="mx-auto"></span>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center"
+          v-if="$store.state.uiDT.isOwner">
           <button class="btn"
             @click="$refs.containerContextMenu.show();">
             <div class="spinner-border spinner-border-sm"

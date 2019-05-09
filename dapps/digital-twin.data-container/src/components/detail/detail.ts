@@ -65,6 +65,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * Data container could not be loaded, e.g. no permissions.
+   */
+  error = false;
+
+  /**
    * Enable the save button, when anything has changed
    */
   enableSave = false;
@@ -111,6 +116,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
    */
   share: any = {
     accountId: '',
+    error: '',
     permissions: { },
   };
 
@@ -187,18 +193,29 @@ export default class DetailComponent extends mixins(EvanComponent) {
       this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
     }
 
-    // get the container instance and load the template including all values
-    this.container = utils.getContainer(<any>runtime, this.containerAddress);
-    const [ description, template, permissions, isOwner ] = await Promise.all([
-      this.container.getDescription(),
-      this.container.toTemplate(true),
-      this.container.getContainerShareConfigForAccount(runtime.activeAccount),
-      (await this.container.getOwner()) === runtime.activeAccount
-    ]);
-    this.description = description;
-    this.template = template;
-    this.permissions = permissions;
-    this.permissions.isOwner = isOwner;
+    try {
+      // get the container instance and load the template including all values
+      this.container = utils.getContainer(<any>runtime, this.containerAddress);
+      const [ description, template, permissions, isOwner ] = await Promise.all([
+        this.container.getDescription(),
+        this.container.toTemplate(true),
+        this.container.getContainerShareConfigForAccount(runtime.activeAccount),
+        (await this.container.getOwner()) === runtime.activeAccount
+      ]);
+
+      this.description = description;
+      this.permissions = permissions;
+      this.permissions.isOwner = isOwner;
+      this.permissions.read = this.permissions.read || [ ];
+      this.permissions.readWrite = this.permissions.readWrite || [ ];
+      this.template = template;
+    } catch (ex) {
+      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
+      this.error = true;
+      this.loading = false;
+
+      return;
+    }
 
     // set custom translation
     const customTranslation = { };
@@ -219,7 +236,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
         return contact;
       });
-    this.share.accountId = this.contacts[0].address;
+
+    // sharing requires at least one contact
+    if (this.contacts.length > 0) {
+      this.share.accountId = this.contacts[0].address;
+    }
 
     // set dbcp form
     this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
@@ -261,9 +282,19 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
   /**
    * Trigger the digital twin save
+   *
+   * @param      {boolean}  onlyDbcp  save only the description
    */
-  async saveContainer() {
+  async saveContainer(onlyDbcp = false) {
     if (!this.$store.state.saving && this.dbcpForm.isValid) {
+      // when the template should be saved, check if all changes have been changed
+      if (!onlyDbcp) {
+        const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
+        if (unsavedChanges.length !== 0) {
+          return;
+        }
+      }
+
       const runtime = utils.getRuntime(this);
 
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
@@ -290,7 +321,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
           digitalTwinAddress: this.digitalTwinAddress,
           img: this.dbcpForm.img.value,
           name: this.dbcpForm.name.value,
-          template: this.template,
+          template: onlyDbcp ? undefined : this.template,
         });
 
         this.loading = false;
@@ -326,8 +357,13 @@ export default class DetailComponent extends mixins(EvanComponent) {
           address: address,
           bc: `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
           type: 'contract',
-        }]
-      }
+          fullPath: [
+            `/${ (<any>this).dapp.rootEns }`,
+            `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
+            address,
+          ].join('/'),
+        }],
+      },
     };
 
     // start the dispatcher
@@ -352,6 +388,26 @@ export default class DetailComponent extends mixins(EvanComponent) {
         this.dbcpForm.name.value = this.description.name;
         this.dbcpForm.description.value = this.description.description;
       }
+    });
+  }
+
+  /**
+   * Open the share dialog.
+   *
+   * @param      {any}  $event  click event
+   */
+  openShareDialog($event: any) {
+    if (!this.permissions.isOwner) {
+      this.share.error = 'no-permissions';
+    } else if (this.contacts.length === 0) {
+      this.share.error = 'no-contacts';
+    } else {
+      this.share.error = false;
+    }
+
+    this.$nextTick(() => {
+      (<any>this).$refs.shareModal.show();
+      (<any>this).$refs.containerContextMenu.hide($event);
     });
   }
 }

@@ -35,7 +35,11 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { getRuntime } from '@evan.network/digitaltwin';
-import { getMyTemplates } from '@evan.network/datacontainer.digitaltwin';
+import {
+  getMyTemplates,
+  templateDispatcher,
+  templateShareDispatcher
+} from '@evan.network/datacontainer.digitaltwin';
 
 @Component({ })
 export default class TemplatesComponent extends mixins(EvanComponent) {
@@ -50,10 +54,68 @@ export default class TemplatesComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * watch for template save opertations
+   */
+  saveWatcher = Function;
+
+
+  /**
+   * watch for template save opertations
+   */
+  shareWatcher = Function;
+
+  /**
    * Load my templates
    */
   async created() {
-    this.templates = await getMyTemplates(getRuntime(this));
+    await this.reloadTemplates();
     this.loading = false;
+
+    this.bindDispatchers();
+  }
+
+  /**
+   * Clear the contracts cache and load the templates for the current user.
+   */
+  async reloadTemplates() {
+    const runtime = getRuntime(this);
+
+    delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
+    this.templates = await getMyTemplates(runtime);
+  }
+
+  /**
+   * Loads templates.
+   */
+  async bindDispatchers() {
+    const runtime = getRuntime(this);
+    let beforeSaving = -1;
+
+    /**
+     * Check current dispatcher instances and reload templates if the save process has finished
+     */
+    const checkTemplates = async () => {
+      const saving = await templateDispatcher.getInstances(runtime);
+      const sharing = await templateShareDispatcher.getInstances(runtime);
+      const savingCount = saving.length + sharing.length;
+
+      // for reload
+      if (beforeSaving < savingCount) {
+        await this.reloadTemplates();
+      }
+
+      beforeSaving = savingCount;
+    };
+
+    this.saveWatcher = templateDispatcher.watch(() => checkTemplates());
+    this.shareWatcher = templateDispatcher.watch(() => checkTemplates());
+  }
+
+  /**
+   * Clear the dispatcher watchers.
+   */
+  beforeDestroy() {
+    this.saveWatcher && this.saveWatcher();
+    this.shareWatcher && this.shareWatcher();
   }
 }

@@ -71,7 +71,7 @@
           <div class="col-md-6 col-lg-4 mb-4" v-for="(ensAddress, index) in categories[category]">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
               :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`">
-              <div class="row align-items-center m-0">
+              <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
                   <img class="img-fluid p-3"
                     v-if="descriptions[ensAddress].imgSquare"

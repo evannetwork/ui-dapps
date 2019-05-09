@@ -63,7 +63,7 @@
                 :class="{ 'is-invalid' : form.name.error }"
                 @blur="form.name.setDirty()">
               <div class="invalid-feedback">
-                {{ `_datacontainer.ajv.name.error` | translate }}
+                {{ form.name.error | translate }}
               </div>
             </div>
           </span>

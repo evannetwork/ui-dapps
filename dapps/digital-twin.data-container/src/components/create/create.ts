@@ -202,6 +202,13 @@ export default class CreateComponent extends mixins(EvanComponent) {
       }
     }
 
+    // enable the edit mode for all properties for a template
+    this.templates.forEach(template => {
+      Object.keys(template.properties).forEach((propertyName: string) => {
+        template.properties[propertyName].mode = 'edit';
+      });
+    });
+
     // configure steps and it' titles
     this.steps = [
       {
@@ -224,6 +231,17 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     this.creationWatcher && this.creationWatcher();
+  }
+
+  /**
+   * Open the create modal, when all entries are saved.
+   */
+  triggerCreateDialog() {
+    const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
+
+    if (unsavedChanges.length === 0) {
+      (<any>this.$refs.createModal).show();
+    }
   }
 
   /**
@@ -263,30 +281,33 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     const watch = async ($event?: any) => {
       const beforeCreating = this.creating;
+      const runtime = utils.getRuntime(this);
       let toOpen;
 
       // when creating a template, use the templateDispatcher and check for any instances
       if (this.templateMode) {
-        const instances = await dispatchers.templateDispatcher.getInstances(utils.getRuntime(this));
+        const instances = await dispatchers.templateDispatcher.getInstances(runtime);
         this.creating = instances.length > 0;
 
-        if ($event) {
+        if ($event && $event.detail.instance.data.name) {
+          // force reload
+          delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
           toOpen = `template/${ $event.detail.instance.data.name }`;
         }
       } else {
         // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address
-        const instances = await dispatchers.createDispatcher.getInstances(utils.getRuntime(this));
+        const instances = await dispatchers.createDispatcher.getInstances(runtime);
         this.creating = instances
           .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)
           .length > 0;
 
-        if ($event) {
+        if ($event && $event.detail.instance.data.contractAddress) {
           toOpen = $event.detail.instance.data.contractAddress;
         }
       }
 
       // if the synchronisation has finished, navigate to the new template / container
-      if (!this.creating && beforeCreating && $event) {
+      if (!this.creating && beforeCreating && $event && toOpen) {
         (<any>this).evanNavigate(toOpen);
       }
     }

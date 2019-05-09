@@ -53,7 +53,7 @@
             class="btn btn-rounded btn-primary"
             v-if="activeStep === 1 && !creating"
             :disabled="!createForm.isValid || checking"
-            @click="$refs.createModal.show()">
+            @click="triggerCreateDialog()">
             {{ `_datacontainer.createForm.finish` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
             <div class="spinner-border spinner-border-sm text-light mr-3"
@@ -146,6 +146,7 @@
           </div>
           <div class="step" v-if="activeStep === 1">
             <dc-template-handler
+              ref="templateHandler"
               :address="!templateMode ? 'create' : 'create-template'"
               :template.sync="templates[createForm.template.value]"
               :permissions="permissions">

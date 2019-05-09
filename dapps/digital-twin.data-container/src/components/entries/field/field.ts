@@ -114,5 +114,6 @@ export default class FieldComponent extends mixins(EvanComponent) {
   save() {
     // update entry backup to the latest value
     entryUtils.saveValue(this, this.entry);
+    this.fieldForm.value.value = this.entry.value;
   }
 }

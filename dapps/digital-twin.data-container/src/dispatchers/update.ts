@@ -43,6 +43,7 @@ dispatcher
   .startup(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
+    data.template = data.template || await container.toTemplate(false);
     const entryChanges = await utils.getEntryChanges(runtime, data.address, data.template);
 
     // analyse data and check, which data fields must be saved
