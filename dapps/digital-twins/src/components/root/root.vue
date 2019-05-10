@@ -39,16 +39,20 @@
             :i18nScope="'_digitaltwins.breadcrumbs'">
           </evan-breadcrumbs>
           <div class="evan-navigation-tabs">
-            <div class="evan-tab bg-secondary"
+            <a class="evan-tab bg-secondary text-white"
+              id="evan-dt-overview"
               :class="{ 'active': activeTab === 0 }"
-              @click="evanNavigate('overview'); activeTab = 0">
+              :href="`${ dapp.fullUrl }/overview`"
+              @click="activeTab = 0">
               {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
-            </div>
-            <div class="evan-tab bg-inverted"
+            </a>
+            <a class="evan-tab bg-inverted text-white"
+              id="evan-dt-templates"
               :class="{ 'active': activeTab === 1 }"
-              @click="evanNavigate('templates'); activeTab = 1">
+              :href="`${ dapp.fullUrl }/templates`"
+              @click="activeTab = 1">
               {{ '_digitaltwins.left-categories.my-templates.title' | translate }}
-            </div>
+            </a>
           </div>
         </template>
 

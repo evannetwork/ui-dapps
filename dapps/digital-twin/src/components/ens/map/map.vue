@@ -39,7 +39,9 @@
           </h3>
         </div>
 
-        <evan-modal ref="lookupModal">
+        <evan-modal
+          id="evan-dt-map-modal"
+          ref="lookupModal">
           <template v-slot:header>
             <h5 class="modal-title">
               {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.title` | translate }}
@@ -52,7 +54,8 @@
           </template>
           <template v-slot:footer>
             <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-             v-if="lookupModalScope === 'available'"
+              id="evan-dt-map-ens"
+              v-if="lookupModalScope === 'available'"
               @click="mapEns()">
               {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.action` | translate }}
             </button>
@@ -69,6 +72,7 @@
         <div class="content"
           v-if="reactiveRefs.ensActions && !reactiveRefs.ensActions.purchasing">
           <form
+            id="evan-dt-ens-form"
             class="col-sm-9 mx-auto"
             v-on:submit.prevent="checkAddress">
             <dt-ens-field
@@ -91,6 +95,7 @@
         <div class="footer"
           v-if="reactiveRefs.ensActions && reactiveRefs.ensField && !reactiveRefs.ensActions.purchasing">
           <button type="submit"
+            id="evan-dt-map-check-ens"
             class="btn btn-rounded btn-primary"
             @click="checkAddress()"
             :disabled="!lookupForm.isValid || reactiveRefs.ensActions.loading">
@@ -102,7 +107,9 @@
           </button>
         </div>
       </template>
-      <div class="text-center" v-else>
+      <div
+        id="evan-dt-map-binding"
+        class="text-center" v-else>
         <h4 class="mt-5 mb-3">{{ '_digitaltwins.dispatcher.binding' | translate }}</h4>
         <b> {{ ensAddress }} </b>
         <evan-loading></evan-loading>

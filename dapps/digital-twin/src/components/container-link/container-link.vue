@@ -72,6 +72,7 @@
             <div class="footer"
               v-if="reactiveRefs.ensActions">
               <button type="submit"
+                id="evan-dt-container-lookup"
                 class="btn btn-rounded btn-primary"
                 @click="reactiveRefs.ensActions.checkAddress(reactiveRefs.ensField.lookupForm.address.value)"
                 :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
@@ -98,13 +99,17 @@
       </evan-modal>
 
       <template v-if="validDTAddress">
-        <div class="text-center" v-if="linking">
+        <div class="text-center"
+          id="evan-dt-container-linking"
+          v-if="linking">
           <h4 class="mt-5 mb-3">{{ '_digitaltwins.containerlink.linking' | translate }}</h4>
           <evan-loading></evan-loading>
         </div>
         <template v-else>
           <div class="content">
-            <evan-modal ref="invalidContainerModal">
+            <evan-modal
+              id="evan-dt-container-link-invalid"
+              ref="invalidContainerModal">
               <template v-slot:header>
                 <p class="modal-title">
                   {{ `_digitaltwins.containerlink.invalid-container.title` | translate }}
@@ -123,6 +128,7 @@
                 {{ `_digitaltwins.containerlink.digitaltwin` | translate }}: <b>{{ validDTAddress }}</b>
               </p>
               <button class="btn py-0"
+                id="evan-dt-container-dt-change"
                 v-if="validDTAddress && !linking"
                 @click="validDTAddress = ''">
                 <i class="mdi mdi-file-document-edit-outline"></i>
@@ -132,7 +138,9 @@
             <p class="text-justify">
               {{ `_digitaltwins.containerlink.description2` | translate }}
             </p>
-            <form v-on:submit.prevent="linkContainer">
+            <form
+              id="evan-dt-container-link-form"
+              v-on:submit.prevent="linkContainer">
               <div class="form-group">
                 <label for="name">
                   {{ `_digitaltwins.containerlink.name.title` | translate }}
@@ -166,6 +174,7 @@
           <div class="footer text-right">
             <button type="submit"
               class="btn btn-rounded btn-primary"
+              id="evan-dt-container-link"
               :disabled="!containerLinkForm.isValid || checking"
               @click="linkContainer()">
               {{ `_digitaltwins.containerlink.use` | translate }}

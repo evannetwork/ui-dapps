@@ -41,12 +41,14 @@
         <span class="mx-auto"></span>
         <div>
           <a
+            id="evan-dt-create"
             class="btn btn-rounded btn-light font-weight-normal"
             :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/dt-create`">
             <i class="mdi mdi-plus mr-1 m-0"></i>
             <span>{{ '_digitaltwins.overview.create-twin' | translate }}</span>
           </a>
           <a
+            id="evan-dt-open"
             class="btn btn-rounded btn-primary font-weight-semibold"
             :href="`${ dapp.fullUrl }/open`">
             {{ '_digitaltwins.lookup.title' | translate }}
@@ -68,8 +70,11 @@
           <div></div>
         </div>
         <div class="row content">
-          <div class="col-md-6 col-lg-4 mb-4" v-for="(ensAddress, index) in categories[category]">
+          <div class="col-md-6 col-lg-4 mb-4"
+            :id="`evan-dt-${ category }`"
+            v-for="(ensAddress, index) in categories[category]">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
+              :id="`evan-dt-${ category }-${ ensAddress.replace('.', '') }`"
               :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">

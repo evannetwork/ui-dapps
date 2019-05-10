@@ -41,6 +41,7 @@
         <span class="mx-auto"></span>
         <div>
           <a
+            id="evan-dt-template-create"
             class="btn btn-rounded btn-primary font-weight-normal"
             :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/create-template`">
             {{ '_digitaltwins.templates.create' | translate }}
@@ -64,6 +65,7 @@
           <div class="col-md-6 col-lg-4 mb-4"
             v-for="(templateKey, index) in Object.keys(templates)">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
+              :id="`evan-dt-template-${ templateKey.replace('.', '') }`"
               :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/template/${ templateKey }`">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">

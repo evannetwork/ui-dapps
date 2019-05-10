@@ -113,7 +113,8 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     });
 
     const loadPromises = { };
-    await Promise.all([ ].concat(this.categories.favorites, this.categories.lastTwins)
+    await Promise.all([ ]
+      .concat(this.categories.favorites, this.categories.lastTwins)
       .map(async (ensAddress: string) => {
         if (!this.descriptions[ensAddress]) {
           try {

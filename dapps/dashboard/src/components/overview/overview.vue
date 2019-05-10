@@ -41,9 +41,9 @@
         m-md-3 mb-3 p-4
         text-center
         bg-level-1 border evan-highlight"
-      v-for="(type, index) in dashboardEntries"
-      style="min-width: 250px"
-      :href="`${ dapp.fullUrl }/${ type.path }`">
+        v-for="(type, index) in dashboardEntries"
+        style="min-width: 250px"
+        :href="`${ dapp.fullUrl }/${ type.path }`">
         <img class="my-5" style="height: 120px"
           :src="`${ $store.state.uiBaseUrl }/assets/${ type.img }`">
 

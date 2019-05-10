@@ -128,17 +128,12 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     // map the favorites to an array and check for the correct i18n keys
     this.favorites = Object.keys(favorites).map(address => {
       const favorite = favorites[address];
+      const i18n = favorite.i18n;
       favorite.address = address;
 
       // check for correct i18n keys
-      for (let i = 0; i < locales.length; i++) {
-        try {
-          favorite.name = favorite.i18n.name[locales[i]];
-          favorite.description = favorite.i18n.description[locales[i]];
-
-          break;
-        } catch (ex) { }
-      }
+      favorite.name = i18n.name[locales[0]] || i18n.name[locales[1]];
+      favorite.description = i18n.description[locales[0]] || i18n.description[locales[1]];
 
       return favorite;
     });

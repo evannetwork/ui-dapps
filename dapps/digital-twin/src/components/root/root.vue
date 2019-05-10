@@ -75,6 +75,7 @@
                     v-if="$store.state.uiDT.validity.exists">
                     <li class="w-100 p-4 clickable border-top border-sm"
                       v-for="(category, index) in twinNavigation"
+                      :id="`evan-dt-nav-${ category.name }`"
                       :class="{ 'active': category.active }"
                       @click="toggleLeftCategory(twinNavigation, category)">
                       <div class="d-flex w-100">
@@ -95,6 +96,7 @@
                           <li class="pt-2 pb-2 pl-3 pr-3 d-flex flex-truncate"
                             v-for="(subCategory, subIndex) in category.children">
                             <a class="font-weight-semibold"
+                              :id="`evan-dt-nav-${ subCategory.path.split('/').pop() }`"
                               @click="$refs.level2Wrapper.hide()"
                               :href="!subCategory.path ? null : `${ dapp.fullUrl }/${ subCategory.path }`"
                               :class="{ 'active': $route.path.indexOf(subCategory.path) !== -1 }">

@@ -110,5 +110,5 @@ export async function loadFavorites(runtime: bcc.Runtime) {
   remove.forEach(instance =>
     favorites.splice(favorites.indexOf(instance.data.address), 1));
 
-  return favorites;
+  return favorites.reverse();
 }

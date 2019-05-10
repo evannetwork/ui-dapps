@@ -80,6 +80,7 @@
           v-if="reactiveRefs.ensActions">
           <button type="submit"
             class="btn btn-rounded btn-primary"
+            id="evan-dt-lookup"
             @click="checkAddress()"
             :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
             {{ '_digitaltwins.lookup.title' | translate }}
