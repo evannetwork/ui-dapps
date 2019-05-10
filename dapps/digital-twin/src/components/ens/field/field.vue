@@ -46,7 +46,7 @@
         </div>
       </div>
       <select class="form-control custom-select only-arrows"
-        id="evan-dt-ens-select" ref="myTwins"
+        id="dt-ens-select" ref="myTwins"
         v-if="myTwins.length > 0"
         v-model="lookupForm.address.value"
         @change="$refs.address.focus()">

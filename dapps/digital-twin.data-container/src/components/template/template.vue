@@ -29,7 +29,8 @@
   <div class="container-wide">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <evan-modal ref="shareModal" v-if="contacts.length !== 0">
+      <evan-modal id="template-share-modal" ref="shareModal"
+        v-if="contacts.length !== 0">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ `_datacontainer.share.title` | translate }}
@@ -72,7 +73,9 @@
           </div>
         </template>
         <template v-slot:footer>
-          <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+          <button
+            id="template-share"
+            type="button" class="btn btn-primary btn-rounded font-weight-normal"
             :disabled="!shareForm.isValid"
             @click="shareDt()">
             {{ `_datacontainer.share.action` | translate }}
@@ -80,7 +83,7 @@
           </button>
         </template>
       </evan-modal>
-      <evan-modal ref="shareModal" v-else>
+      <evan-modal id="template-share-modal" ref="shareModal" v-else>
         <template v-slot:header>
           <h5 class="modal-title">
             {{ `_datacontainer.share.no-contacts.title` | translate }}
@@ -92,7 +95,9 @@
           </p>
         </template>
         <template v-slot:footer>
-          <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+          <button
+            id="template-go-addressbook"
+            type="button" class="btn btn-primary btn-rounded font-weight-normal"
             @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }.${ dapp.domainName }`)">
             {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
             <i class="mdi mdi-arrow-right label"></i>
@@ -112,16 +117,20 @@
           <span class="mx-auto"></span>
           <div class="d-flex">
             <button class="btn"
+              id="template-context-menu"
               @click="$refs.containerContextMenu.show();">
               <i class="mdi mdi-chevron-down"></i>
             </button>
 
             <div class="position-relative">
-              <evan-dropdown ref="containerContextMenu"
+              <evan-dropdown
+                id="template-context-menu"
+                ref="containerContextMenu"
                 :alignment="'right'"
                 :width="'300px'">
                 <template v-slot:content>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                    id="template-dbcp-edit"
                     @click="
                       $refs.dbcpModal.show()
                       $refs.containerContextMenu.hide($event);
@@ -130,6 +139,7 @@
                     {{ `_datacontainer.template.edit-dbcp` | translate }}
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                    id="template-share"
                     @click="
                       $refs.shareModal.show()
                       $refs.containerContextMenu.hide($event);
@@ -138,6 +148,7 @@
                     {{ `_datacontainer.context-menu.share` | translate }}
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                    id="template-container-create"
                     @click="
                       evanNavigate(`create/${ templateName }`)
                       $refs.containerContextMenu.hide($event);
@@ -146,6 +157,7 @@
                     {{ `_datacontainer.context-menu.create-container` | translate }}
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
+                    id="template-clone"
                     @click="
                       evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ templateName }`, `/${ dapp.rootEns }`)
                       $refs.containerContextMenu.hide($event);
@@ -157,6 +169,7 @@
               </evan-dropdown>
             </div>
             <button type="button" class="btn btn-primary btn-rounded"
+              id="template-save"
               @click="saveTemplate()"
               :disabled="!enableSave">
               {{ '_datacontainer.template.save' | translate }}
@@ -164,7 +177,9 @@
             </button>
           </div>
         </div>
-        <evan-modal ref="dbcpModal"
+        <evan-modal
+          id="template-dbcp-modal"
+          ref="dbcpModal"
           @canceled="cancelDbcpModal">
           <template v-slot:header>
             <h5 class="modal-title">
@@ -203,6 +218,7 @@
           </template>
           <template v-slot:footer>
             <button type="submit"
+              id="template-dbcp-save"
               @click="saveTemplate(true)"
               class="btn btn-rounded btn-primary"
               :disabled="!dbcpForm.isValid">
@@ -220,7 +236,9 @@
         </dc-template-handler>
       </template>
 
-      <div class="white-box border rounded" v-else>
+      <div class="white-box border rounded"
+        id="template-saving"
+        v-else>
         <div class="text-center">
           <h4 class="mt-5 mb-3">{{ '_datacontainer.in-saving' | translate }}</h4>
           <evan-loading></evan-loading>

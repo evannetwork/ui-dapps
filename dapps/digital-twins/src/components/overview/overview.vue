@@ -41,14 +41,14 @@
         <span class="mx-auto"></span>
         <div>
           <a
-            id="evan-dt-create"
+            id="dt-create"
             class="btn btn-rounded btn-light font-weight-normal"
             :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/dt-create`">
             <i class="mdi mdi-plus mr-1 m-0"></i>
             <span>{{ '_digitaltwins.overview.create-twin' | translate }}</span>
           </a>
           <a
-            id="evan-dt-open"
+            id="dt-open"
             class="btn btn-rounded btn-primary font-weight-semibold"
             :href="`${ dapp.fullUrl }/open`">
             {{ '_digitaltwins.lookup.title' | translate }}

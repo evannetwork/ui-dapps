@@ -40,14 +40,14 @@
           </evan-breadcrumbs>
           <div class="evan-navigation-tabs">
             <a class="evan-tab bg-secondary text-white"
-              id="evan-dt-overview"
+              id="dt-overview"
               :class="{ 'active': activeTab === 0 }"
               :href="`${ dapp.fullUrl }/overview`"
               @click="activeTab = 0">
               {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
             </a>
             <a class="evan-tab bg-inverted text-white"
-              id="evan-dt-templates"
+              id="dt-templates"
               :class="{ 'active': activeTab === 1 }"
               :href="`${ dapp.fullUrl }/templates`"
               @click="activeTab = 1">

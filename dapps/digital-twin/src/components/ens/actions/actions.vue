@@ -43,13 +43,13 @@
       <template v-slot:footer
         v-if="lookupModalScope === 'purchase' || lookupModalScope === 'create'">
         <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-          id="evan-dt-ens-create"
+          id="dt-ens-create"
           v-if="lookupModalScope === 'create'"
           @click="$refs.lookupModal.hide(); checkAddress(undefined, true);">
           {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
         </button>
         <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-          id="evan-dt-ens-purchase"
+          id="dt-ens-purchase"
           v-else-if="lookupModalScope === 'purchase'"
           @click="purchaseAdress();">
           {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
@@ -57,7 +57,7 @@
       </template>
     </evan-modal>
     <div class="text-center"
-      id="evan-dt-ens-purchasing"
+      id="dt-ens-purchasing"
       v-if="purchasing">
       <h4 class="mt-5 mb-3">{{ '_digitaltwins.lookup.purchasing' | translate }}</h4>
       <b>

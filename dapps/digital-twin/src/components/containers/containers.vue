@@ -42,7 +42,7 @@
         <div class="d-flex align-items-center"
           v-if="$store.state.uiDT.isOwner">
           <button class="btn"
-            id="evan-dt-containers-dropdown"
+            id="dt-containers-dropdown"
             @click="$refs.containerContextMenu.show();">
             <div class="spinner-border spinner-border-sm"
               v-if="$store.state.saving">
@@ -56,7 +56,7 @@
               :width="'300px'">
               <template v-slot:content>
                 <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                  id="evan-dt-container-link"
+                  id="dt-container-link"
                   @click="
                     evanNavigate(`${ $store.state.uiDT.address }/containerlink`)
                     $refs.containerContextMenu.hide($event);
@@ -68,7 +68,7 @@
             </evan-dropdown>
           </div>
           <a
-            id="evan-dt-container-create"
+            id="dt-container-create"
             class="btn btn-primary btn-circle
               d-flex align-items-center justify-content-center"
             :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">

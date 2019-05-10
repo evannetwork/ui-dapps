@@ -51,6 +51,7 @@
         <div>
           <button
             class="btn btn-rounded btn-primary"
+            id="container-finish"
             v-if="activeStep === 1 && !creating"
             :disabled="!createForm.isValid || checking"
             @click="triggerCreateDialog()">
@@ -67,6 +68,7 @@
         <div class="evan-step-header bg-level-1 p-3 border rounded">
           <button class="btn"
             v-for="(step, index) of steps"
+            :id="`evan-container-create-step-${ index }`"
             :disabled="step.disabled(this)"
             @click="activeStep = index">
             <span class="stepper-circle"
@@ -85,6 +87,7 @@
               {{ steps[0].title | translate }}
             </div>
             <form class="content"
+              id="container-create-form"
               v-on:submit.prevent="activeStep = 1"
               v-if="!creating">
               <div class="form-group" v-if="templates.length > 1">
@@ -134,6 +137,7 @@
             <div class="footer">
               <button type="submit"
                 class="btn btn-rounded btn-primary"
+                id="container-create-step-0-finish"
                 @click="activeStep = 1"
                 :disabled="!createForm.isValid || checking">
                 {{ `_datacontainer.createForm.continue` | translate }}
@@ -152,7 +156,9 @@
               :permissions="permissions">
             </dc-template-handler>
 
-            <evan-modal ref="createModal">
+            <evan-modal
+              id="container-create-question"
+              ref="createModal">
               <template v-slot:header>
                 <h5 class="modal-title" v-if="!templateMode">
                   {{ `_datacontainer.create-question.title` | translate }}
@@ -168,6 +174,7 @@
               </template>
               <template v-slot:footer>
                 <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                  id="container-create"
                   @click="create()">
                   {{ `_datacontainer.create-question.action` | translate }}
                   <i class="mdi mdi-arrow-right label ml-3"></i>

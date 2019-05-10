@@ -42,7 +42,7 @@
           </div>
           <template v-if="!$store.state.uiDT.isFavoriteLoading">
             <button class="btn"
-              id="evan-dt-general-dropdown"
+              id="dt-general-dropdown"
               @click="$refs.contextMenu.show();">
               <i class="mdi mdi-chevron-down"></i>
             </button>
@@ -52,7 +52,7 @@
                 :width="'300px'">
                 <template v-slot:content>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                    id="evan-dt-general-favorite-toggle"
+                    id="dt-general-favorite-toggle"
                     @click="
                       $store.state.uiDT.toggleFavorite(getRuntime())
                       $refs.contextMenu.hide($event);
@@ -66,7 +66,7 @@
                     </template>
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                    id="evan-dt-general-map-ens"
+                    id="dt-general-map-ens"
                     @click="
                       evanNavigate(`${ $route.params.digitalTwinAddress }/map`)
                       $refs.contextMenu.hide($event);
@@ -97,7 +97,7 @@
         <template v-if="!uiDT.isCreating">
           <template v-if="(!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing)">
             <form class="content"
-              id="evan-dt-general-form"
+              id="dt-general-form"
               v-on:submit.prevent="createDigitalTwin">
               <div class="form-check mb-5"
                 v-if="!uiDT.validity.exists && uiDT.address === 'dt-create'">
@@ -152,7 +152,7 @@
               v-if="!uiDT.validity.exists || uiDT.isOwner">
               <button type="submit"
                 class="btn btn-rounded btn-primary"
-                id="evan-dt-create"
+                id="dt-create"
                 v-if="!uiDT.validity.exists"
                 @click="createDigitalTwin()"
                 :disabled="!generalForm.isValid">
@@ -160,7 +160,7 @@
                 <i class="mdi mdi-content-save label"></i>
               </button>
               <button type="button" class="btn btn-primary btn-rounded"
-                id="evan-dt-save"
+                id="dt-save"
                 v-else
                 @click="$store.state.uiDT.saveChanges(this, getRuntime())"
                 :disabled="!$store.state.uiDT.dirty || $store.state.uiDT.isSaving">
@@ -175,7 +175,7 @@
         </template>
 
         <div class="text-center"
-          id="evan-dt-creating"
+          id="dt-creating"
           v-else>
           <h4 class="mt-5 mb-3">{{ '_digitaltwins.in-creation' | translate }}</h4>
           <b> {{ generalForm.name.value }} </b>

@@ -29,7 +29,9 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <evan-modal ref="cacheModal">
+      <evan-modal
+        id="th-cache-modal"
+        ref="cacheModal">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ `_datacontainer.template-cache.title` | translate }}
@@ -42,18 +44,22 @@
         </template>
         <template v-slot:footer>
           <button type="button" class="btn btn-danger btn-rounded font-weight-normal"
+            id="th-cache-clear"
             @click="clearCachedTemplate()">
             {{ `_datacontainer.template-cache.clear` | translate }}
             <i class="mdi mdi-delete label"></i>
           </button>
           <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+            id="th-cache-restore"
             @click="restoreTemplate()">
             {{ `_datacontainer.template-cache.action` | translate }}
             <i class="mdi mdi-arrow-right label"></i>
           </button>
         </template>
       </evan-modal>
-      <evan-modal ref="editModes">
+      <evan-modal
+        id="th-unsaved-changes-modal"
+        ref="editModes">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ `_datacontainer.template-handler.edit-modes.title` | translate }}
@@ -69,11 +75,13 @@
         style="min-height: 65px;">
         <div class="batch-label clickable mt-2"
           v-for="(property, index) in Object.keys(template.properties)"
+          :id="`th-entry-${ property.replace('.', '') }`"
           :class="{ 'active': activeTab === index }"
           @click="activateTab(index)">
           {{ property }}
         </div>
         <div class="batch-label clickable mt-2"
+          id="th-entry-add-show"
           :class="{ 'active': activeTab === -1 }"
           v-if="permissions.isOwner"
           @click="activateTab(-1)">
@@ -81,6 +89,7 @@
         </div>
 
         <div class="batch-label clickable mt-2 animate-hop bg-primary bg-text-primary"
+          id="th-cache-modal-show"
           v-if="cachedTemplate"
           @click="$refs.cacheModal.show()">
           <i class="mdi mdi-undo"></i>
@@ -100,7 +109,9 @@
               {{ `_datacontainer.entry.add-desc` | translate }}
             </p>
 
-            <form v-on:submit.prevent="addEntry">
+            <form
+              id="th-entry-add-form"
+              v-on:submit.prevent="addEntry">
               <div class="form-group">
                 <label for="type">
                   {{ `_datacontainer.entry.type.title` | translate }}
@@ -120,11 +131,11 @@
                 </select>
               </div>
               <div class="form-group" v-if="entryForm.type.value === 'array'">
-                <label for="type">
+                <label for="arrayType">
                   {{ `_datacontainer.entry.array-type.title` | translate }}
                 </label>
                 <select class="form-control custom-select"
-                  id="type" ref="type"
+                  id="arrayType" ref="arrayType"
                   :placeholder="`_datacontainer.entry.array-type.desc` | translate"
                   :disabled="$store.state.saving"
                   v-model="entryForm.arrayType.value"
@@ -155,8 +166,9 @@
             </form>
           </div>
           <div class="footer">
-            <button type="submit"
-              class="btn btn-rounded btn-primary"
+            <button class="btn btn-rounded btn-primary"
+              id="th-add-entry"
+              type="submit"
               @click="addEntry()"
               :disabled="!entryForm.isValid || $store.state.saving">
               {{ `_datacontainer.entry.add` | translate }}
