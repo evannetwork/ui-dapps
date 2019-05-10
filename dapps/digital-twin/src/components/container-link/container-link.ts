@@ -178,7 +178,8 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
    * @param      {any}  eventResult  twin address that should be opened
    */
   async useAddress(eventResult: any) {
-    this.digitalTwinAddress = eventResult.address;
+    this.digitalTwinAddress = this.reactiveRefs.ensField.lookupForm.address.value =
+      eventResult.address;
 
     if (eventResult.type === 'create') {
       const uiDT = new EvanUIDigitalTwin(eventResult.address);

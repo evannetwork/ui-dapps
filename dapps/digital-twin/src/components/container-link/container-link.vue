@@ -39,48 +39,50 @@
       </div>
 
       <template v-if="!validDTAddress">
-        <div class="content">
-          <form
-            class="col-sm-9 mx-auto"
-            v-on:submit.prevent="checkAddress()">
-            <dt-ens-field
-              @init="$set(reactiveRefs, 'ensField', $event)"
-              :address="digitalTwinAddress"
-              :autocomplete="true">
-            </dt-ens-field>
-            <div class="d-flex mt-3 align-items-center">
-              <i class="mdi mdi-link-variant text-secondary mr-3" style="font-size: 60px;"></i>
-              <p class="m-0 text-justify">
-                {{ `_digitaltwins.containerlink.description1` | translate }}
-              </p>
-            </div>
-          </form>
-        </div>
-        <template v-if="reactiveRefs.ensField">
-          <dt-ens-actions
-            :address="reactiveRefs.ensField.lookupForm.address.value"
-            :purchaseEnsAddress="true"
-            :askForCreate="true"
-            @init="
-              $set(reactiveRefs, 'ensActions', $event);
-              $route.params.digitalTwinAddress && checkAddress();
-            "
-            @submit="useAddress">
-          </dt-ens-actions>
+        <dt-ens-actions
+          :address="reactiveRefs.ensField && reactiveRefs.ensField.lookupForm.address.value"
+          :purchaseEnsAddress="true"
+          :askForCreate="true"
+          @init="
+            $set(reactiveRefs, 'ensActions', $event);
+            $route.params.digitalTwinAddress && checkAddress();
+          "
+          @submit="useAddress">
+        </dt-ens-actions>
 
-          <div class="footer"
-            v-if="reactiveRefs.ensActions">
-            <button type="submit"
-              class="btn btn-rounded btn-primary"
-              @click="reactiveRefs.ensActions.checkAddress(reactiveRefs.ensField.lookupForm.address.value)"
-              :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
-              {{ '_digitaltwins.lookup.title' | translate }}
-              <div class="spinner-border spinner-border-sm text-light ml-3"
-                v-if="reactiveRefs.ensActions.loading">
+        <template v-if="reactiveRefs.ensActions && !reactiveRefs.ensActions.purchasing">
+          <div class="content">
+            <form
+              class="col-sm-9 mx-auto"
+              v-on:submit.prevent="checkAddress()">
+              <dt-ens-field
+                @init="$set(reactiveRefs, 'ensField', $event)"
+                :address="digitalTwinAddress"
+                :autocomplete="true">
+              </dt-ens-field>
+              <div class="d-flex mt-3 align-items-center">
+                <i class="mdi mdi-link-variant text-secondary mr-3" style="font-size: 60px;"></i>
+                <p class="m-0 text-justify">
+                  {{ `_digitaltwins.containerlink.description1` | translate }}
+                </p>
               </div>
-              <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-            </button>
+            </form>
           </div>
+          <template v-if="reactiveRefs.ensField">
+            <div class="footer"
+              v-if="reactiveRefs.ensActions">
+              <button type="submit"
+                class="btn btn-rounded btn-primary"
+                @click="reactiveRefs.ensActions.checkAddress(reactiveRefs.ensField.lookupForm.address.value)"
+                :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
+                {{ '_digitaltwins.lookup.title' | translate }}
+                <div class="spinner-border spinner-border-sm text-light ml-3"
+                  v-if="reactiveRefs.ensActions.loading">
+                </div>
+                <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+              </button>
+            </div>
+          </template>
         </template>
       </template>
 

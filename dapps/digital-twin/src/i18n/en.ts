@@ -141,7 +141,8 @@ export default {
       "address": {
         "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
-        "title": "Address of your Digital Twin"
+        "title": "Address of your Digital Twin",
+        "use-address": "Bind digital twin to ens address"
       },
       "already-registered": {
         "desc": "The specified address is not available.",
@@ -150,7 +151,7 @@ export default {
       "create": {
         "action": "Create Digital Twin",
         "desc": "There is no Digital Twin yet for this address. Would you like to create a new one for this address?",
-        "title": "Not available"
+        "title": "Create Digital Twin"
       },
       "description": "Using the following input field, it is possible for you to verify an address for a Digital Twin. If an instance already exists there, it will be opened directly for you. If the address is not yet assigned, you can create a new Digital Twin and bind it to this address or link an existing one to this address.",
       "error": {

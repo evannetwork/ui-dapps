@@ -54,9 +54,14 @@ export default class ENSFieldComponent extends mixins(EvanComponent) {
   @Prop({ }) purchaseEnsAddress;
 
   /**
-   * Shows a dialog, befor triggering the create event
+   * Shows a dialog, before triggering the create event
    */
   @Prop({ }) askForCreate;
+
+  /**
+   * Shows a error dialog, instead of opening a contract
+   */
+  @Prop({ }) disableOpen;
 
   /**
    * Show loading symbold
@@ -171,7 +176,11 @@ export default class ENSFieldComponent extends mixins(EvanComponent) {
 
     // if the digitaltwin is valid, open it!
     if (twinValidity.valid) {
-      return sendEvent('open');
+      if (this.disableOpen) {
+        this.lookupModalScope = 'already-registered';
+      } else {
+        return sendEvent('open');
+      }
     } else {
       const errorMsg = twinValidity.error.message;
       if (errorMsg.indexOf('contract does not exist') !== -1) {
@@ -217,10 +226,9 @@ export default class ENSFieldComponent extends mixins(EvanComponent) {
       } else {
         sendEvent('error', true);
       }
-
-      this.$refs.lookupModal && (<any>this.$refs.lookupModal).show();
     }
 
+    this.lookupModalScope && this.$refs.lookupModal && (<any>this.$refs.lookupModal).show();
     this.loading = false;
   }
 

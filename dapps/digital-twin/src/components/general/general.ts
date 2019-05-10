@@ -40,10 +40,12 @@ import EvanUIDigitalTwin from '../../digitaltwin';
 import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
 
 interface GeneralFormInterface extends EvanForm {
+  address: EvanFormControl;
   description: EvanFormControl;
   img: EvanFormControl;
   name: EvanFormControl;
   type: EvanFormControl;
+  useAddress: EvanFormControl;
 }
 
 @Component({ })
@@ -76,12 +78,32 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   watchForCreation: Function;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
    * Setup the form.
    */
   async created() {
     this.uiDT = this.uidigitaltwin || this.$store.state.uiDT;
 
     this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
+      useAddress: {
+        value: false,
+        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
+          // force form evaluation
+          form.address.value = form.address.value;
+
+          return true;
+        }
+      },
+      address: {
+        value: '',
+        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
+          return !form.useAddress.value || this.value.trim().length !== 0;
+        }
+      },
       name: {
         value: this.uiDT.dbcp.name,
         validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
@@ -133,15 +155,38 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Create the new digitaltwin
+   * Ensure ens domain address and trigger the address check
    */
-  createDigitalTwin() {
+  checkAddress() {
+    const ensField = this.reactiveRefs.ensField;
+    const ensActions = this.reactiveRefs.ensActions;
+
+    if (ensField) {
+      if (ensField.lookupForm.isValid) {
+        ensField.checkAddressEnsDomain();
+        ensActions.checkAddress(this.generalForm.address.value);
+      }
+    }
+  }
+
+  /**
+   * Create the new digitaltwin
+   *
+   * @param      {boolean}  triggerDispatcher  should the dispatcher be triggered or the ens address
+   *                                           be checked?
+   */
+  createDigitalTwin(triggerDispatcher = !this.generalForm.useAddress.value) {
     if (!this.uiDT.exists) {
-      dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
-        address: this.uiDT.address,
-        dbcp: this.uiDT.dbcp,
-        isFavorite: this.uiDT.isFavorite,
-      });
+      if (!triggerDispatcher) {
+        this.checkAddress();
+      } else {
+        dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
+          address: this.generalForm.useAddress.value ? this.generalForm.address.value :
+            this.uiDT.address,
+          dbcp: this.uiDT.dbcp,
+          isFavorite: this.uiDT.isFavorite,
+        });
+      }
     }
   }
 }

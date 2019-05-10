@@ -141,7 +141,8 @@ export default {
       "address": {
         "desc": "Geben Sie die Adresse Ihres digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Bitte geben Sie eine gültige Adresse ein!",
-        "title": "Adresse Ihres Digitalen Zwillings"
+        "title": "Adresse Ihres Digitalen Zwillings",
+        "use-address": "Digitalen Zwilling auf ENS Adresse binden"
       },
       "already-registered": {
         "desc": "Die angegebene Adresse ist nicht verfügbar und gehört bereits einem anderen Nutzer.",
@@ -150,7 +151,7 @@ export default {
       "create": {
         "action": "Digitale Zwilling erstellen",
         "desc": "Für diese Adresse existiert noch kein digitaler Zwilling. Möchten Sie einen neuen für diese Adresse erstellen?",
-        "title": "Nicht verfügbar"
+        "title": "Digitale Zwilling erstellen"
       },
       "description": "Über das Eingabefeld ist es Ihnen möglich eine Adresse für einen digitalen Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
       "error": {
