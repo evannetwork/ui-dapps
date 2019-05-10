@@ -2,8 +2,25 @@
 
 ## Next Version
 ### Features
+- fix `vue` dapps font-sizes and alignments
+- `dashboard`
+  - use evan images for dashboard start page
+- `mailbox`
+  - add dispatcher for mailbox attachments
+- `digitaltwin`
+  - restructure digital twins ui
+  - add ens address mapping on twin create
+  - `ens-form` refactoring
+- `datacontainer.digitaltwin`
+  - correct data container formular handling (entries / containers can only be saved when the full formular is valid)
+  - add file handling
+  - add correct container link logic
+
 ### Fixes
+- fix `vue` dapps font-sizes and alignments
+
 ### Deprecations
+
 
 ## Version 2.1.0
 ### Features
