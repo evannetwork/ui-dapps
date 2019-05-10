@@ -39,7 +39,7 @@ export default {
       "digitaltwin": "Digital Twin",
       "digitaltwins": "Digital Twins",
       "dt-create": "Create Digital Twin",
-      "lookup": "Open",
+      "open": "Open",
       "map": "Bind to domain name",
       "overview": "Favorites & recent Digital Twins",
       "template": "Template",
@@ -154,7 +154,7 @@ export default {
       },
       "description": "Using the following input field, it is possible for you to verify an address for a Digital Twin. If an instance already exists there, it will be opened directly for you. If the address is not yet assigned, you can create a new Digital Twin and bind it to this address or link an existing one to this address.",
       "error": {
-        "desc": "The requested address is already assigned or does not contain a valid Digital Twin. Please check your input.",
+        "desc": "The requested address does not contain a valid Digital Twin. Please check your input.",
         "title": "Error"
       },
       "missing-balance": {

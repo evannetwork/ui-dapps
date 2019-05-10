@@ -54,7 +54,12 @@
                       <a
                         :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }`">
                         <h4 class="font-weight-semibold text-uppercase text-nowrap m-0">
-                          {{ $store.state.uiDT.dbcp.name || $store.state.uiDT.address }}
+                          <template v-if="$store.state.uiDT.address === 'dt-create'">
+                            {{ '_digitaltwins.breadcrumbs.dt-create' | translate }}
+                          </template>
+                          <template v-else>
+                            {{ $store.state.uiDT.dbcp.name || $store.state.uiDT.address }}
+                          </template>
                         </h4>
                       </a>
                     </div>

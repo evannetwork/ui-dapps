@@ -26,36 +26,41 @@
 */
 
 <template>
-  <div class="container-wide">
-    <div class="white-box mt-4 border rounded">
-      <div class="p-0 header">
-        <a class="btn large"
-          :href="`${ dapp.fullUrl }`">
-          <i class="mdi mdi-chevron-left"></i>
-        </a>
-        <h3 class="m-0 font-weight-semibold">
-          {{ `_digitaltwins.lookup.title` | translate }}
-        </h3>
+  <div>
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="d-flex align-items-start" v-else>
+      <div class="form-group flex-grow-1">
+        <label for="address">
+          <slot name="label">
+            {{ '_digitaltwins.lookup.address.title' | translate }}
+          </slot>
+        </label>
+        <input class="form-control" required
+          id="address" ref="address"
+          :placeholder="`_digitaltwins.lookup.address.desc` | translate"
+          v-model="lookupForm.address.value"
+          :class="{ 'is-invalid' : lookupForm.address.error }"
+          @blur="lookupForm.address.setDirty()">
+        <div class="invalid-feedback">
+          {{ `_digitaltwins.lookup.address.error` | translate }}
+        </div>
       </div>
-
-      <dt-lookup-form
-        :disableCreate="true"
-        :disablePurchase="true"
-        @submit="openTwin">
-        <template v-slot:description>
-          <div class="d-flex mt-3 align-items-center">
-            <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
-            <p class="m-0 text-justify">
-              {{ `_digitaltwins.lookup.description` | translate }}
-            </p>
-          </div>
-        </template>
-      </dt-lookup-form>
+      <select class="form-control custom-select only-arrows"
+        v-if="myTwins.length > 0"
+        id="myTwins" ref="myTwins"
+        v-model="lookupForm.address.value"
+        @change="$refs.address.focus()">
+        <option
+          v-for="(twin, index) in myTwins"
+          :value="twin">
+          {{ twin }}
+        </option>
+      </select>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './lookup.ts';
+  import Component from './field.ts';
   export default Component;
 </script>

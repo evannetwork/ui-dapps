@@ -33,7 +33,7 @@ import OverviewComponent from './components/overview/overview.vue';
 import TemplatesComponent from './components/templates/templates.vue';
 import ContainersComponent from './components/containers/containers.vue';
 
-import { LookupComponent } from '@evan.network/digitaltwin';
+import { EnsOpenComponent } from '@evan.network/digitaltwin';
 
 // map them to element names, so they can be used within templates
 /* tslint:disable */
@@ -41,7 +41,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'overview' }  },
   { name: 'base-overview',        component: OverviewComponent,  path: 'overview', },
   { name: 'base-templates',       component: TemplatesComponent, path: 'templates', },
-  { name: 'dt-lookup',            component: LookupComponent,    path: `lookup`, },
+  { name: 'dt-open',              component: EnsOpenComponent,   path: `open`, },
 ];
 /* tslint:enable */
 

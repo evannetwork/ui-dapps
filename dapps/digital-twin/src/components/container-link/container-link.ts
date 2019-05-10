@@ -98,6 +98,16 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
   linking = false;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
+   * Run initial digital twin check address only at first startup
+   */
+  initialAddressCheck = true;
+
+  /**
    * Check digital twin addresses and container addresses. Start evaluation and create container
    * link form
    */
@@ -130,23 +140,13 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
       if (instances.length === 0) {
         (<any>this.$refs.createDTAddress).hide();
         this.uiDT = null;
-        this.$nextTick((<any>this.$refs.dtLookupForm).checkAddress());
+        this.$nextTick((<any>this.reactiveRefs.ensActions).checkAddress());
       }
     });
 
     // watch for linking to be finished
     this.linkContainerWatcher = dataContainerAPI.containerDispatchers.linkDispatcher
       .watch(() => this.checkLinking());
-  }
-
-  /**
-   * Trigger address check after
-   */
-  mounted() {
-    // if a digital twin address was opened directly, start the evaluation directly
-    if (this.digitalTwinAddress) {
-      (<any>this.$refs.dtLookupForm).checkAddress();
-    }
   }
 
   /**
@@ -158,6 +158,21 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Ensure ens domain address and trigger the address check
+   */
+  checkAddress() {
+    const ensField = this.reactiveRefs.ensField;
+    const ensActions = this.reactiveRefs.ensActions;
+
+    if (ensField) {
+      if (ensField.lookupForm.isValid) {
+        ensField.checkAddressEnsDomain();
+        ensActions.checkAddress(ensField.lookupForm.address.value);
+      }
+    }
+  }
+
+  /**
    * Takes the twin address from the lookup form component and opens it.
    *
    * @param      {any}  eventResult  twin address that should be opened
@@ -165,13 +180,13 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
   async useAddress(eventResult: any) {
     this.digitalTwinAddress = eventResult.address;
 
-    if (eventResult.status === 'create') {
+    if (eventResult.type === 'create') {
       const uiDT = new EvanUIDigitalTwin(eventResult.address);
       await uiDT.initialize(this, utils.getRuntime(this));
 
       this.uiDT = uiDT;
       (<any>this.$refs.createDTAddress).show();
-    } else {
+    } else if (eventResult.type === 'open') {
       this.validDTAddress = eventResult.address;
       this.checkLinking();
     }

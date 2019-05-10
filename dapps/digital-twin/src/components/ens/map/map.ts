@@ -35,8 +35,8 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../dispatchers/registy';
-import { getRuntime, getDomainName } from '../../utils';
+import * as dispatchers from '../../../dispatchers/registy';
+import { getRuntime, getDomainName } from '../../../utils';
 
 interface LookupFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -65,9 +65,28 @@ export default class MapComponent extends mixins(EvanComponent) {
   binding = false;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
+   * formular specific variables
+   */
+  lookupForm: LookupFormInterface = null;
+
+  /**
    * Watch for updates
    */
   created() {
+    this.lookupForm = (<LookupFormInterface>new EvanForm(this, {
+      address: {
+        value: '',
+        validate: function(vueInstance: MapComponent, form: LookupFormInterface) {
+          return this.value.trim().length !== 0;
+        }
+      },
+    }));
+
     const watchForBinding = async ($event?: CustomEvent) => {
       const ensAddresses = (await dispatchers.mapEnsDispatcher
         .getInstances(getRuntime(this)))
@@ -76,7 +95,7 @@ export default class MapComponent extends mixins(EvanComponent) {
         )
         .map((inst: any) => inst.data.ensAddress);
 
-      // set binding and ens address status
+      // set binding and ens address type
       this.binding = ensAddresses.length > 0;
       if (this.binding) {
         this.ensAddress = ensAddresses[0];
@@ -103,26 +122,37 @@ export default class MapComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Ensure ens domain address and trigger the address check
+   */
+  checkAddress() {
+    const ensField = this.reactiveRefs.ensField;
+    const ensActions = this.reactiveRefs.ensActions;
+
+    if (ensField) {
+      if (ensField.lookupForm.isValid) {
+        ensField.checkAddressEnsDomain();
+        ensActions.checkAddress(this.lookupForm.address.value);
+      }
+    }
+  }
+
+  /**
    * Takes the twin address from the lookup form component and opens it.
    *
    * @param      {any}  eventResult  twin address that should be opened
    */
   openTwin(eventResult: any) {
-    if (eventResult.status === 'open') {
-      if (eventResult.validity.valid) {
-        this.lookupModalScope = 'exists';
-        this.ensAddress = '';
-      } else if (
-        eventResult.validity.error &&
-        eventResult.validity.error.message.indexOf('contract address null') !== -1) {
-        this.ensAddress = eventResult.address;
-        this.lookupModalScope = 'available';
-      }
-
-      (<any>this).$refs.lookupModal.show();
-    } else {
+    if (eventResult.type === 'open') {
+      this.lookupModalScope = 'exists';
       this.ensAddress = '';
+    } else if (eventResult.type === 'create') {
+      this.ensAddress = this.lookupForm.address.value = eventResult.address;
+      this.lookupModalScope = 'available';
+    } else {
+      this.lookupModalScope = '';
     }
+
+    this.lookupModalScope && (<any>this).$refs.lookupModal.show();
   }
 
   /**

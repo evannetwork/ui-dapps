@@ -35,15 +35,29 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../dispatchers/registy';
-import { getRuntime, getDomainName } from '../../utils';
-
 interface LookupFormInterface extends EvanForm {
   address: EvanFormControl;
 }
 
 @Component({ })
-export default class LookupComponent extends mixins(EvanComponent) {
+export default class EnsOpenComponent extends mixins(EvanComponent) {
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
+   * Ensure ens domain address and trigger the address check
+   */
+  checkAddress() {
+    if (this.reactiveRefs.ensField) {
+      if (this.reactiveRefs.ensField.lookupForm.isValid) {
+        this.reactiveRefs.ensField.checkAddressEnsDomain();
+        this.reactiveRefs.ensActions.checkAddress();
+      }
+    }
+  }
+
   /**
    * Takes the twin address from the lookup form component and opens it.
    *

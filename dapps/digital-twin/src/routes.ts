@@ -34,7 +34,7 @@ import ContainersComponent from './components/containers/containers.vue';
 import DigitalTwinGeneralComponent from './components/general/general.vue';
 import DigitalTwinVerificationsComponent from './components/verifications/verifications.vue';
 import LookupComponent from './components/lookup/lookup.vue';
-import MapComponent from './components/map/map.vue';
+import MapComponent from './components/ens/map/map.vue';
 import OverviewComponent from './components/overview/overview.vue';
 import StartComponent from './components/start/start.vue';
 import TemplatesComponent from './components/templates/templates.vue';
@@ -51,8 +51,8 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   },
   { name: 'dt-container-link',    component: ContainerLinkComponent,            path: 'containerlink/:containerAddress?' },
   { name: 'dt-create',            component: DigitalTwinGeneralComponent,       path: `dt-create`, },
-  { name: 'dt-general',           redirect: { path: dtPath('general') },        path: `:digitalTwinAddress`, },
-  { name: 'dt-map',               component: DigitalTwinGeneralComponent,       path: dtPath('general'), },
+  {                               redirect: { path: dtPath('general') },        path: `:digitalTwinAddress`, },
+  { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: dtPath('general'), },
   { name: 'dt-map',               component: MapComponent,                      path: dtPath('map'), },
   { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
   { name: 'dt-containers',        component: ContainersComponent,               path: dtPath('containers'), },

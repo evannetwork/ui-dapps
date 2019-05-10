@@ -35,66 +35,38 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../dispatchers/registy';
-import * as utils from '../../utils';
-
-interface LookupFormInterface extends EvanForm {
-  address: EvanFormControl;
-}
+import * as dispatchers from '../../../dispatchers/registy';
+import * as utils from '../../../utils';
 
 // empty contract address
 const nullAddress = '0x0000000000000000000000000000000000000000';
 
 @Component({ })
-export default class LookupComponent extends mixins(EvanComponent) {
+export default class ENSFieldComponent extends mixins(EvanComponent) {
   /**
    * Address that should be used directly to fill the input field.
    */
   @Prop({ }) address;
 
   /**
-   * do not check for global uiDT instances.
-   */
-  @Prop({ }) disableGlobal;
-
-  /**
-   * Disable twin autocompletion
-   */
-  @Prop({ }) disableAutocompletion;
-
-  /**
-   * Only use the flow until the ens address is valid
-   */
-  @Prop({ }) disableCreate;
-
-  /**
    * Disable ens purchase dialog
    */
-  @Prop({ }) disablePurchase;
+  @Prop({ }) purchaseEnsAddress;
 
   /**
-   * Overwrite input title text
+   * Shows a dialog, befor triggering the create event
    */
-  @Prop({
-    default: '_digitaltwins.lookup.address.title'
-  }) titleText;
-
-  /**
-   * Overwrite button text
-   */
-  @Prop({
-    default: '_digitaltwins.lookup.title'
-  }) buttonText;
+  @Prop({ }) askForCreate;
 
   /**
    * Show loading symbold
    */
-  loading = true;
+  loading = false;
 
   /**
-   * formular specific variables
+   * is a ens address in purchasing process?
    */
-  lookupForm: LookupFormInterface = null;
+  purchasing = false;
 
   /**
    * Switch the texts for the current lookup modal.
@@ -121,11 +93,6 @@ export default class LookupComponent extends mixins(EvanComponent) {
   purchasingInstances: Array<any> = [ ];
 
   /**
-   * Show loading during ens check
-   */
-  checking = false;
-
-  /**
    * List of my twins, so the user have a preselection of it's twins
    */
   myTwins = null;
@@ -134,36 +101,13 @@ export default class LookupComponent extends mixins(EvanComponent) {
    * Setup the Lookup form.
    */
   async created() {
-    this.lookupForm = (<LookupFormInterface>new EvanForm(this, {
-      address: {
-        value: this.address || '',
-        validate: function(vueInstance: LookupComponent, form: LookupFormInterface) {
-          return this.value.trim().length !== 0;
-        }
-      },
-    }));
-
-    // load my twins, so we can provide a user selection
-    if (!this.disableAutocompletion) {
-      const runtime = utils.getRuntime(this);
-      this.myTwins = Array.from(new Set([ ].concat(
-        await utils.loadFavorites(runtime),
-        utils.getLastOpenedTwins()
-      )));
-    } else {
-      this.myTwins = [ ];
-    }
-
-    this.loading = false;
+    this.$emit('init', this);
 
     /**
      * watch for ens purchase changes
      */
     this.checkPurchasing();
     dispatchers.ensDispatcher.watch(() => this.checkPurchasing());
-
-    // auto focus
-    this.$nextTick(() => this.lookupForm.address.$ref.focus());
   }
 
   /**
@@ -178,50 +122,56 @@ export default class LookupComponent extends mixins(EvanComponent) {
     // load new instances
     this.purchasingInstances = await dispatchers.ensDispatcher
       .getInstances(utils.getRuntime(this));
+    this.purchasing = this.purchasingInstances.length !== 0;
 
     // if the synchronisation has finished, check the address again
-    if (beforeInstances.length > 0 && this.purchasingInstances.length === 0) {
-      this.lookupForm.address.value = beforeAddress || this.lookupForm.address.value;
-      this.checkAddress();
+    if (beforeInstances.length > 0 && !this.purchasing) {
+      this.address = beforeAddress || this.address;
+      await this.checkAddress();
     }
   }
 
   /**
-   * Check, if an digitaltwin exists for the address. If not, ask the user to create one. If the user
-   * is not the owner of the ens address
+   * Check, if an digitaltwin exists for the address. If not, ask the user to create one. If the
+   * user is not the owner of the ens address
+   *
+   * @param      {string}   address      optional address to overwrite scopes address
+   * @param      {boolean}  forceCreate  do not ask for create
    */
-  async checkAddress() {
+  async checkAddress(address = this.address, forceCreate = false) {
     const runtime: any = utils.getRuntime(this);
     const domainName = utils.getDomainName();
-    let address = this.lookupForm.address.value;
+    address = address.replace(/\.\./g, '.');
 
-    this.checking = true;
+    this.loading = true;
 
     // reset lookup modal scope
     this.lookupModalScope = '';
 
-    // replace duplicated dots
-    address = address.replace(/\.\./g, '.');
-
-    // add root domain, if it was not applied and it is not an contract
-    if (address.indexOf('0x') !== 0 &&
-        address.indexOf(domainName, address.length - domainName.length) === -1) {
-      this.lookupForm.address.value = address = `${ address }.${ domainName }`;
-    }
-
     // create digitaltwin instance, so we can check, if the address exists
     const twinValidity = await bcc.DigitalTwin.getValidity(runtime, address);
 
+    /**
+     * Sends a event to the parent component using the current twin validity. Optional, show an
+     * specific modal.
+     *
+     * @param      {string}  eventName   $emit event name
+     * @param      {string}  modalScope  i18n subscope and show modal
+     */
+    const sendEvent = (eventName: string, showModal = false) => {
+      const eventArgs = { type: eventName, address: address, validity: twinValidity, };
+      this.loading = false;
+      this.$emit('submit', eventArgs);
+      this.$emit(eventName, eventArgs);
+
+      if (showModal) {
+        this.lookupModalScope = eventName;
+      }
+    };
+
     // if the digitaltwin is valid, open it!
     if (twinValidity.valid) {
-      this.$emit('submit', {
-        address: this.lookupForm.address.value,
-        status: 'open',
-        validity: twinValidity,
-      });
-
-      // trigger reload
-      !this.disableGlobal && this.$store.state.uiDT && this.$store.state.uiDT.destroy(this);
+      return sendEvent('open');
     } else {
       const errorMsg = twinValidity.error.message;
       if (errorMsg.indexOf('contract does not exist') !== -1) {
@@ -230,18 +180,12 @@ export default class LookupComponent extends mixins(EvanComponent) {
 
         // if no owner exists, show the purchase dialog, else check for permissions
         if (parentOwner === runtime.activeAccount) {
-          if (this.disableCreate) {
-            this.checking = false;
-
-            return this.$emit('submit', {
-              address: this.lookupForm.address.value,
-              status: 'open',
-              validity: twinValidity,
-            });
-          } else {
+          if (this.askForCreate && !forceCreate) {
             this.lookupModalScope = 'create';
+          } else {
+            return sendEvent('create');
           }
-        } else if (parentOwner === nullAddress && !this.disablePurchase) {
+        } else if (parentOwner === nullAddress && this.purchaseEnsAddress) {
           // load the currents users balance
           this.modalParams.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
 
@@ -251,34 +195,33 @@ export default class LookupComponent extends mixins(EvanComponent) {
             const splitAddr = address.split('.');
             const topLevelAdress = splitAddr.slice(splitAddr.length - 2, splitAddr.length)
               .join('.');
-
             this.modalParams.ensPrice = runtime.web3.utils.fromWei(
               await runtime.nameResolver.getPrice(topLevelAdress));
           } catch (ex) {
             runtime.logger.log(ex, 'error');
-            this.lookupModalScope = 'not-buyable';
+            sendEvent('error', true);
           }
 
           // when it's not buyable, check if the user has enough funds
           if (this.lookupModalScope !== 'not-buyable') {
             // check for users balance
             if (this.modalParams.balance < this.modalParams.ensPrice) {
-              this.lookupModalScope = 'missing-balance';
+              sendEvent('missing-balance', true);
             } else {
-              this.lookupModalScope = 'purchase';
+              sendEvent('purchase', true);
             }
           }
         } else {
-          this.lookupModalScope = 'already-registered';
+          sendEvent('already-registered', true);
         }
       } else {
-        this.lookupModalScope = 'error';
+        sendEvent('error', true);
       }
 
       this.$refs.lookupModal && (<any>this.$refs.lookupModal).show();
     }
 
-    this.checking = false;
+    this.loading = false;
   }
 
   /**
@@ -318,7 +261,7 @@ export default class LookupComponent extends mixins(EvanComponent) {
     // start the dispatcher
     dispatchers.ensDispatcher.start(
       utils.getRuntime(this),
-      { ensAddress: this.lookupForm.address.value }
+      { ensAddress: this.address }
     );
 
     // hide modal
@@ -326,21 +269,5 @@ export default class LookupComponent extends mixins(EvanComponent) {
 
     // show loading
     this.$nextTick(() => this.checkPurchasing());
-  }
-
-  /**
-   * open digitaltwin address
-   */
-  createDigitalTwin() {
-    this.$emit('submit', {
-      address: this.lookupForm.address.value,
-      status: 'create',
-    });
-
-    // trigger reload
-    !this.disableGlobal && this.$store.state.uiDT && this.$store.state.uiDT.destroy(this);
-
-    // hide modal
-    (<any>this.$refs.lookupModal).hide();
   }
 }

@@ -39,7 +39,7 @@ export default {
       "digitaltwin": "Digitaler Zwilling",
       "digitaltwins": "Digitale Zwillinge",
       "dt-create": "Digitalen Zwilling erstellen",
-      "lookup": "Öffnen",
+      "open": "Öffnen",
       "map": "An Domainnamen binden",
       "overview": "Favoriten & letzte Zwillinge",
       "template": "Vorlage",

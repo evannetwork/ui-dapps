@@ -271,6 +271,7 @@ export default class EvanUIDigitalTwin {
     } else {
       this.dbcp = await utils.getDigitalTwinBaseDbcp();
       this.isFavorite = true;
+      this.isOwner = true;
 
       // set default dbcp name
       if (this.address === 'dt-create') {
@@ -393,12 +394,14 @@ export default class EvanUIDigitalTwin {
    * @param      {any}         vueInstance  a vue component instance
    */
   setNameTranslations(vueInstance: any): void {
-    const customTranslation = { };
-    const i18n = vueInstance.$i18n;
+    if (this.address !== 'dt-create') {
+      const customTranslation = { };
+      const i18n = vueInstance.$i18n;
 
-    customTranslation[ `_digitaltwins.breadcrumbs.${ this.address }`] = this.dbcp.name;
+      customTranslation[ `_digitaltwins.breadcrumbs.${ this.address }`] = this.dbcp.name;
 
-    i18n.add(i18n.locale(), customTranslation);
+      i18n.add(i18n.locale(), customTranslation);
+    }
   }
 
   /**
