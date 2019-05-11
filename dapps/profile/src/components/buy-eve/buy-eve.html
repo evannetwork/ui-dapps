@@ -32,24 +32,26 @@
     </p>
 
     <div *ngIf="paymentResponse" text-center padding-top>
-      <ion-chip class="error-hint w100" *ngIf="paymentResponse?.status === 'error'" color="danger">
+      <div class="error-hint w100 chip-md-danger" *ngIf="paymentResponse?.status === 'error'" color="danger">
         <ion-row>
           <ion-col col-2 class="display-flex-justify">
             <ion-icon name="close-circle-outline"></ion-icon>
           </ion-col>
-          <ion-col col-10>
+          <ion-col col-8>
             <ion-label [innerHTML]="'_dappprofile.pay-eve.error-payment' | translate : paymentResponse"></ion-label>
           </ion-col>
         </ion-row>
-      </ion-chip>
-      <ion-chip class="success-hint w100" *ngIf="paymentResponse?.status === 'success'" color="success">
-        <ion-col col-2 class="display-flex-justify">
-          <ion-icon name="checkmark-circle-outline"></ion-icon>
-        </ion-col>
-        <ion-col col-10>
-          <ion-label [innerHTML]="'_dappprofile.pay-eve.successful-payment' | translate"></ion-label>
-        </ion-col>
-      </ion-chip>
+      </div>
+      <div class="success-hint w100 chip-md-success" *ngIf="paymentResponse?.status === 'success'" color="success">
+        <ion-row>
+          <ion-col col-2 class="display-flex-justify">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-col>
+          <ion-col col-8>
+            <ion-label [innerHTML]="'_dappprofile.pay-eve.successful-payment' | translate"></ion-label>
+          </ion-col>
+        </ion-row>
+      </div>
     </div>
     <form *ngIf="!paymentResponse" novalidate [formGroup]="stripePayment">
       <ion-row>
