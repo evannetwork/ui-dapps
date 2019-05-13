@@ -44,14 +44,14 @@
       
       <template v-else>
         <button
-          id="entry-object-schema-edit"
+          id="entry-schema-edit"
           type="button" class="btn btn-outline-secondary btn-circle"
           v-if="modes.indexOf('schema') !== -1 && entry.mode === 'edit'"
           @click="entry.mode = 'schema'">
           <i class="mdi mdi-cogs"></i>
         </button>
         <button
-          id="entry-object-edit"
+          id="entry-edit"
           type="button" class="btn btn-primary btn-rounded"
           v-if="(modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1) && entry.mode === 'view'"
           @click="entry.mode = 'edit'">
@@ -71,13 +71,13 @@
       style="margin-top: -25px"
       v-if="reactiveRefs.ajv && (entry.mode === 'schema' || entry.mode === 'edit')">
       <button
-        id="entry-object-edit-cancel"
+        id="entry-cancel"
         class="btn btn-outline-secondary btn-rounded mr-3"
         @click="reset()">
         {{ '_datacontainer.ajv.reset-values' | translate }}
       </button>
       <button 
-        id="entry-object-edit-save"
+        id="entry-save"
         class="btn btn-primary btn-rounded"
         :disabled="!reactiveRefs.ajv.isValid"
         @click="save()">

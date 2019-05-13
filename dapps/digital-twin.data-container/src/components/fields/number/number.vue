@@ -31,7 +31,7 @@
       {{ `_datacontainer.ajv.value.title` | translate }}
     </label>
     <input class="form-control" required
-      id="value" ref="value" type="text"
+      :id="id" ref="value" type="text"
       :placeholder="`_datacontainer.ajv.value.desc` | translate"
       :disabled="$store.state.saving"
       v-model="control.value"
@@ -41,7 +41,7 @@
       {{ `_datacontainer.ajv.value.error` | translate }}
     </div>
   </div>
-  <span class="text-primary" v-else>
+  <span :id="id" class="text-primary" v-else>
     {{ control.value }}
   </span>
 </template>

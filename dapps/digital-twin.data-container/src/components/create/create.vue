@@ -51,7 +51,7 @@
         <div>
           <button
             class="btn btn-rounded btn-primary"
-            id="container-finish"
+            id="container-save"
             v-if="activeStep === 1 && !creating"
             :disabled="!createForm.isValid || checking"
             @click="triggerCreateDialog()">

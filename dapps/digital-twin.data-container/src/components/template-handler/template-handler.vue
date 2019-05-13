@@ -71,7 +71,9 @@
           </p>
         </template>
       </evan-modal>
-      <div class="bg-level-1 p-2 border rounded d-flex flex-wrap"
+      <div 
+        id="th-entries"
+        class="bg-level-1 p-2 border rounded d-flex flex-wrap"
         style="min-height: 65px;">
         <div class="batch-label clickable mt-2"
           v-for="(property, index) in Object.keys(template.properties)"

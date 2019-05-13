@@ -10,7 +10,7 @@ Handle data containers in digital twins.
   - #name
   - #description
 - #container-create-step-0-finish
-- #container-finish
+- #container-save
 - #container-create-question
   - #container-create
 
@@ -63,7 +63,8 @@ Handle data containers in digital twins.
   - #th-cache-clear
   - #th-cache-restore
 - #th-unsaved-changes-modal
-- #th-entry-${ property.replace('.', '')
+- #th-entries
+  - #th-entry-${ property.replace('.', '')
 - #th-entry-add-show
 - #th-cache-modal-show
 - #th-entry-add-form
@@ -80,22 +81,22 @@ Handle data containers in digital twins.
 - [Entry-Field](###Entry-Field)
 
 ### Entry-Object
-- #entry-object-schema-edit
-- #entry-object-edit
-- #entry-object-edit-cancel
-- #entry-object-edit-save
+- #entry-schema-edit
+- #entry-edit
+- #entry-cancel
+- #entry-save
 - [AJV-Editor](###AJV-Editor)
 
 ### Entry-List
-- #entry-list-schema-edit
-- #entry-list-schema
-  - #entry-list-schema-cancel
-  - #entry-list-schema-save
+- #entry-schema-edit
+- #entry-schema
+  - #entry-cancel
+  - #entry-save
   - [AJV-Editor](###AJV-Editor)
-- #entry-list-add-entry
+- #entry-add-entry
 - #entry-list-add
-  - #entry-list-add-cancel
-  - #entry-list-add-save
+  - #entry-cancel
+  - #entry-save
   - [AJV-Editor](###AJV-Editor)
   - [Single-Field](###Single-Field)
 - #entry-list-table
@@ -105,9 +106,9 @@ Handle data containers in digital twins.
     - list-value-${ index }
 
 ### Entry-Field
-- #entry-field-edit
-- #entry-field-cancel
-- #entry-field-save
+- #entry-edit
+- #entry-cancel
+- #entry-save
 - [Single-Field](###Single-Field)
 
 ### Single-Field
@@ -116,8 +117,9 @@ Handle data containers in digital twins.
 - [Single-String](###Single-String)
 
 ### AJV-Editor
-- #name-${ index }
-- #type-${ index }
+- #ajv-name-${ index }
+- #ajv-type-${ index }
+- #ajv-value-${ index }
 - #ajv-add-field
 - #ajv-remove-field
 - #dc-field-${ index }

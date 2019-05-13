@@ -47,7 +47,7 @@
       
       <template v-else-if="entry.mode !== 'schema'">
         <button
-          id="entry-list-schema-edit"
+          id="entry-schema-edit"
           type="button" class="btn btn-outline-secondary btn-circle mr-3"
           v-if="
             itemType === 'object' &&
@@ -58,7 +58,7 @@
           <i class="mdi mdi-cogs"></i>
         </button>
         <button
-          id="entry-list-add-entry"
+          id="entry-add-entry"
           type="submit" class="btn btn-rounded btn-primary"
           v-if="
             !addListEntry &&
@@ -72,7 +72,7 @@
       </template>
     </div>
     <div
-      id="entry-list-schema"
+      id="entry-schema"
       v-if="entry.mode === 'schema' && itemType === 'object'">
       <dc-ajv
         :mode="entry.mode"
@@ -81,13 +81,13 @@
       </dc-ajv>
       <div class="footer" v-if="reactiveRefs.schemaAjv">
         <button
-          id="entry-list-schema-cancel"
+          id="entry-cancel"
           class="btn btn-outline-secondary btn-rounded mr-3"
           @click="resetSchema()">
           {{ '_datacontainer.ajv.reset-values' | translate }}
         </button>
         <button
-          id="entry-list-schema-save"
+          id="entry-save"
           class="btn btn-primary btn-rounded"
           :disabled="!reactiveRefs.schemaAjv.isValid"
           @click="saveSchema()">
@@ -199,14 +199,14 @@
 
         <div class="footer">
           <button
-            id="entry-list-add-cancel"
+            id="entry-cancel"
             type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
             @click="addListEntry = false">
             {{ `_datacontainer.list.canel-list-entry` | translate }}
           </button>
 
           <button
-            id="entry-list-add-save"
+            id="entry-save"
             type="submit" class="btn btn-rounded btn-primary"
             :disabled="itemType === 'object' ?
               (!reactiveRefs.addAjv || !reactiveRefs.addAjv.isValid) :

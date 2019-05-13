@@ -10,7 +10,7 @@
       "files": [
         "digitaltwin.js"
       ],
-      "origin": "QmZ5VcY2WTB2yteWVARBLkT3xoA3yXm1Pkf8G6SjepuYfZ",
+      "origin": "QmQGoaH2ZWgAnCnGTAWnGN24wc1jN5pdzio7DujNhHAcSe",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -39,7 +39,7 @@
     "version": "1.3.0",
     "versions": {
       "1.0.0": "QmeYwDawNsTEhFWZ92zP7T4X4htYoHyEzBekchzHGyYBNn",
-      "1.3.0": "QmQ9o9erX7ZkVwV8dMbY9sukXWDoMYXg693ici4xxfgoxC"
+      "1.3.0": "QmSh4xeArPqcUkaEuBgHwEc8MAohSpKRYsXSRcfiB4b4E9"
     }
   }
 }

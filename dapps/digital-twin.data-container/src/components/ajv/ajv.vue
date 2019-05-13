@@ -26,7 +26,7 @@
 */
 
 <template>
-  <table class="evan-flex-table">
+  <table id="ajv-table" class="evan-flex-table">
     <thead>
       <tr class="text-muted">
         <th
@@ -47,7 +47,9 @@
     </thead>
     <tbody>
       <tr v-for="(form, index) in forms">
-        <td class="fill-content"
+        <td
+          :id="`ajv-name-${ index }`"
+          class="fill-content"
           :class="{ 'flex-grow-0': mode !== 'schema' }"
           :style="mode !== 'schema' ? 'flex-basis: 150px' : ''">
           <span class="font-weight-semibold" v-if="mode !== 'schema'">
@@ -56,7 +58,7 @@
           <span class="text-primary" v-if="mode === 'schema'">
             <div class="form-group mb-0">
               <input class="form-control" required
-                :id="`name-${ index }`" ref="name"
+                ref="name"
                 :placeholder="`_datacontainer.ajv.name.desc` | translate"
                 :disabled="$store.state.saving"
                 v-model="form.name.value"
@@ -68,10 +70,11 @@
             </div>
           </span>
         </td>
-        <td v-if="mode === 'schema'">
+        <td :id="`ajv-type-${ index }`"
+          v-if="mode === 'schema'">
           <div class="form-group mb-0">
             <select class="form-control custom-select"
-              :id="`type-${ index }`" ref="type"
+              ref="type"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
               :disabled="$store.state.saving"
               v-model="form.type.value"
@@ -85,7 +88,9 @@
             </select>
           </div>
         </td>
-        <td class="fill-content" v-if="mode !== 'schema'">
+        <td 
+          :id="`ajv-value-${ index }`"
+          class="fill-content" v-if="mode !== 'schema'">
           <dc-field
             :id="`dc-field-${ index }`"
             :type="form.type.value"

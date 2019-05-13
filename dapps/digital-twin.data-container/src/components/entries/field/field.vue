@@ -43,7 +43,7 @@
       
       <template v-else>
         <button
-          id="entry-field-edit"
+          id="entry-edit"
           type="button" class="btn btn-primary btn-rounded"
           v-if="modes && modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1 && entry.mode === 'view'"
           @click="entry.mode = 'edit'">
@@ -62,13 +62,13 @@
     </div>
     <div class="footer" v-if="!$store.state.saving && entry.mode !== 'view'">
       <button
-        id="entry-field-cancel"
+        id="entry-cancel"
         class="btn btn-outline-secondary btn-rounded mr-3"
         @click="reset()">
         {{ '_datacontainer.ajv.reset-values' | translate }}
       </button>
       <button
-        id="entry-field-save"
+        id="entry-save"
         class="btn btn-primary btn-rounded"
         :disabled="!fieldForm.isValid"
         @click="save()">

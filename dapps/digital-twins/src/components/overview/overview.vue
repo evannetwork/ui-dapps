@@ -69,9 +69,9 @@
           <span class="mx-auto"></span>
           <div></div>
         </div>
-        <div class="row content">
+        <div class="row content"
+          :id="`evan-dt-${ category }`">
           <div class="col-md-6 col-lg-4 mb-4"
-            :id="`evan-dt-${ category }`"
             v-for="(ensAddress, index) in categories[category]">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
               :id="`evan-dt-${ category }-${ ensAddress.replace('.', '') }`"

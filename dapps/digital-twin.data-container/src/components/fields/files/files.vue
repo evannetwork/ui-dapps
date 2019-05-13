@@ -29,7 +29,7 @@
   <div>
     <evan-file-input
       v-if="control.value && control.value.files"
-      id="value" ref="value"
+      :id="id" ref="value"
       :disabled="$store.state.saving || mode === 'view'"
       :class="{ 'is-invalid' : control.error }"
       v-model="control.value.files"
