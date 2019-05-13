@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 3.0.0
+### Features
 - fix `vue` dapps font-sizes and alignments
 - `dashboard`
   - use evan images for dashboard start page
@@ -20,8 +25,6 @@
 
 ### Fixes
 - fix `vue` dapps font-sizes and alignments
-
-### Deprecations
 
 
 ## Version 2.1.0
