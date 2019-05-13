@@ -3,6 +3,9 @@
 ## Next Version
 ### Features
 ### Fixes
+- `digitaltwins`, `datacontainer.digitaltwins`
+  - use correct html selector id's
+
 ### Deprecations
 
 ## Version 3.0.0
