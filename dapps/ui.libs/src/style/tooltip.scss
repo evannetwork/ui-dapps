@@ -49,18 +49,18 @@
   }
 
   &.bs-tooltip-top {
-    top: -100%;
+    bottom: 100%;
   }
 
   &.bs-tooltip-bottom {
-    bottom: -100%;
+    top: 100%;
   }
 
   &.bs-tooltip-left {
-    left: -100%;
+    right: 100%;
   }
 
   &.bs-tooltip-right {
-    right: -100%;
+    left: 100%;
   }
 }
