@@ -4,14 +4,14 @@
     "dapp": {
       "dependencies": {
         "dexie": "^2.0.4",
-        "evancore.vue.libs": "^1.0.0"
+        "evancore.vue.libs": "^1.1.0"
       },
       "entrypoint": "datacontainer.digitaltwin.js",
       "files": [
         "datacontainer.digitaltwin.js",
         "datacontainer.digitaltwin.css"
       ],
-      "origin": "QmaKhZ6mkTqcCzrzLSejtnZakzWR8R4ggD7Z2g5PJX3jHs",
+      "origin": "QmUeH9xAYL1wQPGYcRiwKgFhoKzgExKPuaFbQZ2az9jw4A",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -46,7 +46,7 @@
       "1.0.2": "QmezBtAdT6ybhkC3VUa2Y8QLooUjGvANgav6HpBsBbwdVQ",
       "1.1.0": "QmTL17BzqctDHv4bPUgjY4AAEVANUFcgeRw25cx1B1QWm2",
       "1.2.0": "QmNxWJxV4XqQj4ZsKg8fVmRx5voQrjUKNnGWEYwLvyWS82",
-      "1.3.0": "QmNXGbevK4WJi4K5Wuqa33LcqXMpjB1DkxxvErya6gEnSJ"
+      "1.3.0": "QmPaACguNXuai6KMP75AVkQTFCGQEQdk9iJj7uzbTZfgAL"
     }
   }
 }

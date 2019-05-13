@@ -44,12 +44,12 @@
   },
   "devDependencies": {
     "@evan.network/angular-gulp": "^2.1.0",
-    "@evan.network/api-blockchain-core": "^2.1.0",
-    "@evan.network/smart-contracts-core": "^2.1.0",
+    "@evan.network/api-blockchain-core": "^2.3.0",
+    "@evan.network/smart-contracts-core": "^2.1.1",
     "@evan.network/ui-angular-core": "^2.1.0",
     "@evan.network/ui-angular-libs": "^2.1.0",
     "@evan.network/ui-angular-sass": "^2.1.0",
-    "@evan.network/ui-dapp-browser": "^2.1.0"
+    "@evan.network/ui-dapp-browser": "^2.1.2"
   },
   "keywords": [
     "javascript",
@@ -69,5 +69,5 @@
     "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config <%= deploymentConfigLocation %>",
     "serve": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve"
   },
-  "version": "2.1.0"
+  "version": "3.0.0"
 }
