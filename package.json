@@ -51,8 +51,8 @@
   },
   "description": "",
   "devDependencies": {
-    "@evan.network/api-blockchain-core": "^2.1.0",
-    "@evan.network/ui-dapp-browser": "^2.1.0"
+    "@evan.network/api-blockchain-core": "^2.3.0",
+    "@evan.network/ui-dapp-browser": "^2.1.2"
   },
   "keywords": [
     "javascript",
@@ -74,5 +74,5 @@
     "serve-build": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

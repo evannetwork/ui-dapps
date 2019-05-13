@@ -2,6 +2,12 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+
+## Version 1.1.0
+### Features
 - add material icons as `materialicons.libs` dapp
 - add moment js as `moment.libs` dapp
 - add lodash js as `lodash.libs` dapp
@@ -13,9 +19,6 @@
   - fix breadcrumb design
 - `evan.bootstrap.libs`
   - fix loading symbols wrapped in flex containers
-
-### Fixes
-### Deprecations
 
 
 ## Version 1.0.0
