@@ -97,7 +97,7 @@ const waitForSyncFinished = async (preLoading = 300000, loading = 300000) => {
 
 When(/^I create a new digital twin with the name "([^"]+)" and the description "([^"]+)"$/,
   async (name, description) => {
-    await client.url('https://dashboard.test.evan.network/#/dashboard.evan/digitaltwins.evan/overview');
+    await client.url(`${ evan.baseUrl }/#/dashboard.evan/digitaltwins.evan/overview`);
     await client.waitForElementPresent(selectors.twins.createButton, 10000);
     await client.click(selectors.twins.createButton);
     // fill in twin data

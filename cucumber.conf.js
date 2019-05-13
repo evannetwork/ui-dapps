@@ -8,7 +8,7 @@ setDefaultTimeout(600000);
 
 
 BeforeAll(async () => {
-  const options = { env: process.env.NIGHTWATCH_ENV || 'chrome' };
+  const options = { env: process.env.NIGHTWATCH_ENV || 'chrome', };
   await startWebDriver(options);
   await createSession(options);
 });

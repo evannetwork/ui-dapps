@@ -19,7 +19,7 @@ const selectors = {
 Given(/^I log in to evan.network( with )?(\w+)?$/, async (customPart, accountName) => {
   const evan = setupEvan(client);
 
-  await client.url('https://dashboard.test.evan.network');
+  await client.url(evan.baseUrl);
   await client.pause(5000);
   if (customPart && !evan.accounts[accountName]) {
     throw new Error(`no account data found for account ${accountName}`);
