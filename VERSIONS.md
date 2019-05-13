@@ -4,6 +4,7 @@
 ### Features
 - add material icons as `materialicons.libs` dapp
 - add moment js as `moment.libs` dapp
+- add lodash js as `lodash.libs` dapp
 - use correct font-sizes
 - `ui.libs`
   - add file handling
