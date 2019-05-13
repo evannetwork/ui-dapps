@@ -3,11 +3,12 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "evan.bootstrap.libs.css",
+      "entrypoint": "evan.bootstrap.libs.js",
       "files": [
+        "evan.bootstrap.libs.js",
         "evan.bootstrap.libs.css"
       ],
-      "origin": "QmNegNonhzDJQNL8pk91mFkca5cnohru7iTW3kppi9bSYi",
+      "origin": "QmWuxpLR1xp3UarNwmSUzmB2QFxMsDF1M5ap6iFcEdRvNx",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +33,7 @@
     ],
     "version": "4.3.1",
     "versions": {
-      "4.3.1": "QmRfbxbfQ336kxLZkr1ii5qQcbwQb5tmzvH4qQzMhe7fDv"
+      "4.3.1": "QmaGnGP9TLoehpnDfkeGUwRoJeejdWzgc94rt8kuJca2v3"
     }
   }
 }

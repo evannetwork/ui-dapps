@@ -26,4 +26,3 @@
 */
 
 import './style/index.scss';
-

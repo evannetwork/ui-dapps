@@ -28,5 +28,21 @@
 .evan {
   .modal {
     display: block !important;
+
+    .modal-dialog {
+      .modal-header {
+        border-bottom: 1px solid cssVar('border-color');
+      }
+
+      .modal-content {
+        overflow-y: auto;
+
+        max-height: 90vh;
+      }
+
+      .modal-footer {
+        border-top: 1px solid cssVar('border-color');
+      }
+    }
   }
 }

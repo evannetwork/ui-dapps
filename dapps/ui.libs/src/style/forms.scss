@@ -33,4 +33,22 @@
   .form-check {
     min-height: 15px;
   }
+
+  select.form-control.only-arrows {
+    flex-grow: 0;
+
+    width: 20px;
+    margin-top: 30px;
+
+    border: 0;
+  }
+
+  .custom-select {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+
+    &.form-control {
+      border-radius: 5px;
+    }
+  }
 }

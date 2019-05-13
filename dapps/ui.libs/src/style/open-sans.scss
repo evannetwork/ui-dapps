@@ -24,50 +24,27 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-/* ==> https://google-webfonts-helper.herokuapp.com/fonts/open-sans?subsets=cyrillic,greek-ext,cyrillic-ext,greek,latin-ext,latin,vietnamese */
 
-/* open-sans-300 - vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic */
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'),
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+$OpenSansPath: '~open-sans-fontface/fonts' !default;
+$OpenSansVersion: '1.1.0' !default; 
+
+// copied mixins to force woff2 usage
+@mixin fontdef($OpenSansPath, $OpenSansVersion, $FontType:"Regular") {
+  src:  url('#{$OpenSansPath}/#{$FontType}/OpenSans-#{$FontType}.eot?v=#{$OpenSansVersion}');
+  src:  url('#{$OpenSansPath}/#{$FontType}/OpenSans-#{$FontType}.eot?#iefix&v=#{$OpenSansVersion}') format('embedded-opentype'),
+        url('#{$OpenSansPath}/#{$FontType}/OpenSans-#{$FontType}.woff?v=#{$OpenSansVersion}') format('woff'),
+        url('#{$OpenSansPath}/#{$FontType}/OpenSans-#{$FontType}.woff2?v=#{$OpenSansVersion}') format('woff2'),
+        url('#{$OpenSansPath}/#{$FontType}/OpenSans-#{$FontType}.ttf?v=#{$OpenSansVersion}') format('truetype'),
+        url('#{$OpenSansPath}/#{$FontType}/OpenSans-#{$FontType}.svg?v=#{$OpenSansVersion}##{$FontType}') format('svg');
 }
-/* open-sans-regular - vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic */
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans Regular'), local('OpenSans-Regular'),
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-/* open-sans-600 - vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic */
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'),
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-/* open-sans-700 - vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic */
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'),
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-/* open-sans-800 - vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic */
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'),
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('./open-sans/open-sans-v15-vietnamese_latin_latin-ext_greek_cyrillic-ext_greek-ext_cyrillic-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
+
+@import '~open-sans-fontface/sass/Light';
+@import '~open-sans-fontface/sass/LightItalic';
+@import '~open-sans-fontface/sass/Regular';
+@import '~open-sans-fontface/sass/Italic';
+@import '~open-sans-fontface/sass/SemiBold';
+@import '~open-sans-fontface/sass/SemiBoldItalic';
+@import '~open-sans-fontface/sass/Bold';
+@import '~open-sans-fontface/sass/BoldItalic';
+@import '~open-sans-fontface/sass/ExtraBold';
+@import '~open-sans-fontface/sass/ExtraBoldItalic';

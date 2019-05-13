@@ -46,19 +46,23 @@
 
   .evan-highlight {
     cursor: pointer;
-    transition: 0.3s ease-out border;
+    transition: 0.3s ease-out border, 0.3s ease-out transform;
 
     *.highlight, .highlight * {
       transition: 0.8s ease-out color;
     }
 
     &:hover {
+      transform: translateY(-3px);
+
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
       &.border {
-        border: 2px solid cssVar('primary') !important;
+        border: 2px solid cssVar('secondary') !important;
       }
 
       *.highlight, .highlight * {
-        color: cssVar('primary') !important;
+        color: cssVar('secondary') !important;
       }
     }
   }
@@ -72,5 +76,60 @@
     left: 0;
 
     margin: auto;
+  }
+
+  .container-wide {
+    padding: 30px 3%;
+  }
+
+  .white-box {
+    background-color: cssVar('white');
+
+    .header, .footer {
+      display: flex;
+      align-items: center;
+
+      height: 86px;
+      padding: 0 1.5rem;
+    }
+
+    .header {
+      border-bottom: 1px solid cssVar('border-color');
+    }
+
+    .content {
+      padding: 1.5rem;
+    }
+
+    .footer {
+      justify-content: flex-end;
+
+      border-top: 1px solid cssVar('border-color');
+    }
+  }
+
+  .batch-label {
+    font-size: 12px;
+
+    display: inline-block;
+
+    height: 32px;
+    margin: 0 5px 5px 5px;
+    padding: 8px 12px 7px;
+
+    transition: 0.3s ease-out background-color;
+
+    color: cssVar('text-color');
+    border-radius: 3px;
+    background: cssVar('gray-200');
+
+    &:hover, &.active {
+      color: cssVar('light');
+      background: cssVar('secondary');
+    }
+
+    i {
+      line-height: 18px;
+    }
   }
 }

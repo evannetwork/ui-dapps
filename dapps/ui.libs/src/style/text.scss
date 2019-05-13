@@ -28,43 +28,7 @@
 @import './utils';
 
 .evan {
-  .bg-text-danger {
-    color: cssVar('bg-text-danger') !important;
-  }
-
-  .bg-text-dark {
-    color: cssVar('bg-text-dark') !important;
-  }
-
-  .bg-text-info {
-    color: cssVar('bg-text-info') !important;
-  }
-
-  .bg-text-light {
-    color: cssVar('bg-text-light') !important;
-  }
-
-  .bg-text-primary {
-    color: cssVar('bg-text-primary') !important;
-  }
-
-  .bg-text-secondary {
-    color: cssVar('bg-text-secondary') !important;
-  }
-
-  .bg-text-success {
-    color: cssVar('bg-text-v') !important;
-  }
-
-  .bg-text-warning {
-    color: cssVar('bg-text-warning') !important;
-  }
-
-  .bg-text-inverted {
-    color: cssVar('text-color-inverted') !important;
-  }
-
-  h1, h2, h3, h4, h5, span, p {
+  h1, h2, h3, h4, h5, span, p, li {
     color: cssVar('text-color');
   }
 
@@ -72,19 +36,24 @@
     text-decoration: none !important;
   }
 
-  span, p {
+  span, p, a, th, td, li {
     font-size: cssVar('text-font-size');
     font-weight: 400;
   }
 
+  label {
+    font-size: cssVar('text-font-size');
+    font-weight: 600;
+  }
+
   // add font-size levels
   @for $i from 2 through 9 {
-    .font-size-#{$i * 10} {
-      font-size: 90%;
+    .font-size-#{ $i * 10 } {
+      font-size: #{ $i * 10 }% !important;
     }
 
-    .font-size-#{ ($i * 10) + 5} {
-      font-size: 90%;
+    .font-size-#{ ($i * 10) + 5 } {
+      font-size: #{ ($i * 10) + 5 }% !important;
     }
   }
 
@@ -121,5 +90,22 @@
     content: '';
 
     background: white;
+  }
+
+  .font-weight-semibold {
+    font-weight: 600 !important;
+  }
+
+  /**
+   * https://css-tricks.com/flexbox-truncated-text/
+   */
+  .flex-truncate {
+    flex: 1;
+    &, & > * {
+      overflow: hidden;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 }

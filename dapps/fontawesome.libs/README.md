@@ -9,8 +9,6 @@ npm run build
 
 
 ## Usage
-- exclude `@evan.network/api-blockchain-core` from build job
-
 - dbcp.json
 ```
   ...

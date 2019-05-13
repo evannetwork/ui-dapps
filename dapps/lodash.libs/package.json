@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/lodash.js",
+  "name": "@evan.network/fontawesome",
+  "scripts": {
+    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+  },
+  "typings": "dist/lodash.d.ts",
+  "version": "4.17.11"
+}

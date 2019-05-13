@@ -37,7 +37,7 @@ $sidebar-small-width: $navbar-height;
   height: 100%;
 
   .navbar {
-    z-index: 50;
+    z-index: 1030;
 
     display: flex;
     flex-wrap: nowrap;
@@ -76,7 +76,7 @@ $sidebar-small-width: $navbar-height;
       width: 100%;
 
       button {
-        font-weight: 200;
+        font-weight: 600;
 
         height: 100%;
         margin: 0;
@@ -112,7 +112,7 @@ $sidebar-small-width: $navbar-height;
     height: 100%;
 
     .dapp-wrapper-sidebar {
-      z-index: 25;
+      z-index: 1028;
 
       width: $sidebar-width;
       min-width: $sidebar-width;
@@ -153,7 +153,7 @@ $sidebar-small-width: $navbar-height;
             }
 
             & > i {
-              font-size: 21px;
+              font-size: 24px;
               font-style: normal;
 
               display: inline-block;
@@ -245,6 +245,10 @@ $sidebar-small-width: $navbar-height;
       height: 100%;
 
       background-color: cssVar('bg-level-3');
+
+      .dapp-wrapper-sidebar-2 {
+        display: none;
+      }
     }
   }
 
@@ -331,7 +335,7 @@ $sidebar-small-width: $navbar-height;
 
         .dapp-wrapper-sidebar-background {
           position: fixed;
-          z-index: 20;
+          z-index: 1017;
           top: 0;
           right: 0;
           bottom: 0;
@@ -349,6 +353,19 @@ $sidebar-small-width: $navbar-height;
    * the screen is very small
    */
   @media (max-width: 768px) {
+    .navbar {
+      .dropdown-menu {
+        position: fixed;
+        top: 64px;
+        right: 0;
+
+        overflow-y: auto;
+
+        width: 100% !important;
+        height: calc(100% - 64px);
+      }
+    }
+
     .dapp-wrapper-body {
       .dapp-wrapper-sidebar {
         left: -100%;
@@ -366,7 +383,6 @@ $sidebar-small-width: $navbar-height;
           padding: 0 10px 10px 26px;
         }
 
-
         ul.nav.small {
           padding-bottom: 120px;
         }
@@ -374,7 +390,7 @@ $sidebar-small-width: $navbar-height;
 
       .dapp-wrapper-sidebar-2 {
         position: fixed;
-        z-index: 40;
+        z-index: 1029;
         top: 130px;
         left: -100%;
 
@@ -383,6 +399,10 @@ $sidebar-small-width: $navbar-height;
 
         transition: 1s ease-out width;
         transition: 0.2s ease-out left;
+
+        & > * {
+          width: 100% !important;
+        }
       }
 
       &.show-sidebar.show-sidebar-2 {
@@ -427,21 +447,21 @@ $sidebar-small-width: $navbar-height;
 .evan {
   .notification-dot {
     position: absolute;
-    top: -3px;
-    right: -3px;
+    top: 3px;
+    right: -6px;
 
     display: block;
 
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
-    background-color: cssVar('primary');
+    background-color: cssVar('secondary');
 
     &:before {
       position: absolute;
-      top: -8px;
-      left: -8px;
+      top: -9.5px;
+      left: -9.5px;
 
       width: 25px;
       height: 25px;
@@ -451,8 +471,8 @@ $sidebar-small-width: $navbar-height;
       animation-iteration-count: infinite;
 
       opacity: 0.6;
+      border: 5px solid cssVar('secondary');
       border-radius: 50%;
-      background-color: cssVar('primary');
     }
   }
 }

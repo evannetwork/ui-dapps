@@ -3,11 +3,12 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "fontawesome.libs.css",
+      "entrypoint": "fontawesome.libs.js",
       "files": [
+        "fontawesome.libs.js",
         "fontawesome.libs.css"
       ],
-      "origin": "QmV3rNrR1Pi4P8EEJcjbg5veXNiqTWa87emSiyfgxTsMSw",
+      "origin": "QmTVoaRewYH98oXb4vvEPnWr3MBUPP9E2gzPJYWFkfZya1",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +33,7 @@
     ],
     "version": "5.7.2",
     "versions": {
-      "5.7.2": "QmamB2SoP5JYo9cwmgTBYAL8xu24gvb894d6XZUxZiQFQU"
+      "5.7.2": "QmaTgmyxdQ88NaP7htJx94QzE4qisYFstQrnrJ1RcJRPg2"
     }
   }
 }
