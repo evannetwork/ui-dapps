@@ -8,26 +8,25 @@ import { backspaces, pauseHere, switchToVue } from '../../test-utils/test-utils.
 const evan = setupEvan(client);
 
 const selectors = {
-  loading: 'nav > div.nav.flex-nowrap > div.mr-md-3.d-flex > button:nth-child(2) > div.spinner-border.spinner-border-sm.bg-text-inverted',
-  loadingDone: 'nav > div.nav.flex-nowrap > div.mr-md-3.d-flex > button:nth-child(2) > i.mdi-rotate-3d',
+  loading: '#dropdown-queue.running',
+  loadingDone: '#dropdown-queue.finished',
   mainMenu: {
-    digitalTwinsButton: '#main-menu > li:nth-child(1) > a',
+    digitalTwinsButton: '#evan-dapp-digitaltwins',
   },
   container: {
     edit: {
-      addDataSet: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div.bg-level-1.p-2.border.rounded.d-flex.flex-wrap > div > i',
+      addDataSet: '#th-entry-add-show',
       dataSet: {
         edit: {
-          addButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div.white-box.border.rounded.mt-3 > div.footer > button',
-          createConfirmButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(2) > div.modal.fade.show > div > div > div.modal-footer > button.btn.btn-primary.btn-rounded.font-weight-normal',
-          editButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > div.header > button > i',
-          fieldName: (i) => `#name`,
-          fieldValue: (i) => '#value',
-          finishButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.d-flex.mb-3.align-items-center > div:nth-child(3) > button',
-          firstTab: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div.bg-level-1.p-3.border.rounded.d-flex.flex-wrap > div.batch-label.active',
+          addButton: '#th-add-entry',
+          createConfirmButton: '#container-create-question #container-create',
+          editButton: '#entry-edit',
+          fieldName: (i) => `#ajv-name-${ i } input`,
+          fieldValue: (i) => `#ajv-value-${ i } input`,
+          finishButton: '#container-save',
+          firstTab: 'th-entries > div:first-child',
           name: '#name',
-          saveUpdateButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.d-flex.mb-5.align-items-center > div.d-flex > button.btn.btn-primary.btn-rounded',
-          schemaApply: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div:nth-child(3) > div > div > div button',
+          schemaApply: '#entry-save',
           typeOption: {
             Metadata: '#type > option[value="object"]',
             List: '#type > option[value="array"]',
@@ -35,37 +34,37 @@ const selectors = {
             Number: '#type > option[value="number"]',
           },
           typeSelect: '#type',
-          useSchema: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div:nth-child(3) > div > div > div.footer > button.btn.btn-primary.btn-rounded',
+          useSchema: '#entry-save',
           value: '#value',
         },
         view: {
-          fieldName: (i) => 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > table > tbody > tr > td.fill-content.flex-grow-0 > span',
-          fieldValue: (i) => 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > table > tbody > tr > td:nth-child(2) > span', 
-          fieldValueSingle: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div:nth-child(4) > div:nth-child(3) > div > div > div.content > span',
+          fieldName: (i) => `#ajv-name-${ i } span`,
+          fieldValue: (i) => `#ajv-value-${ i } span`,
+          fieldValueSingle: '#value',
         },
       },
       description: '#description',
       name: '#name',
-      saveButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div:nth-child(1) > div.white-box.border.rounded.mt-3 > div.footer > button',
-      spinner: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.white-box.border.rounded > div > div > div > div',
-      submitButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(2) > div.container-wide > div.evan-steps > div.pt-3 > div > div.footer > button',
+      saveButton: '#container-save',
+      spinner: '.evan-loading',
+      step1Button: '#container-create-step-0-finish',
     },
   },
   twins: {
     backButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-sidebar-2 > div > div > div > button',
-    createButton: 'div.dapp-wrapper-body > div.dapp-wrapper-content > div:nth-child(5) > div > div.d-flex.align-items-center > div:nth-child(3) > a.btn.btn-rounded.btn-light.font-weight-normal',
-    createContainerButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div.container-wide > div > div.header > div > a > i',
+    createButton: '#dt-create',
+    createContainerButton: '#dt-container-create',
     edit: {
-      description: '#description',
-      name: '#name',
-      saveButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(4) > div > div.white-box.border.rounded > div.footer > button',
-      submitButton: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(4) > div > div.white-box.border.rounded > div.footer > button',
+      description: '#dt-general-form #description',
+      name: '#dt-general-form #name',
+      saveButton: '#dt-save',
+      submitButton: '#dt-create',
     },
-    favoriteTwins: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(5) > div > div.white-box.border.rounded.mt-3 > div.row.content > div:first-child > a > div > div.col-10 > div > div > h4',
-    firstTwin: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-content > div:nth-child(5) > div > div.white-box.border.rounded.mt-3 > div.row.content > div:first-child > a > div > div.col-10 > div > div > h4',
+    favoriteTwins: '#evan-dt-favorites > div > a h4',
+    firstTwin: '#evan-dt-favorites > div:first-child > a',
     view: {
-      generalInformation: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-sidebar-2 > div > ul > li.w-100.p-4.clickable.border-top.border-sm.active > div.mt-3 > ul > li:nth-child(1) > a',
-      twinData: 'div.dapp-wrapper-body.show-sidebar-2 > div.dapp-wrapper-sidebar-2 > div > ul > li:nth-child(1)',
+      generalInformation: '#evan-dt-nav-general',
+      twinData: '#evan-dt-nav-digitaltwin-details',
     },
   },
 };
@@ -97,11 +96,12 @@ const waitForSyncFinished = async (preLoading = 300000, loading = 300000) => {
 
 When(/^I create a new digital twin with the name "([^"]+)" and the description "([^"]+)"$/,
   async (name, description) => {
-    await client.url(`${ evan.baseUrl }/#/dashboard.evan/digitaltwins.evan/overview`);
+    await client.url(`${ evan.baseUrl }#/dashboard.evan/digitaltwins.evan/overview`);
     await client.waitForElementPresent(selectors.twins.createButton, 10000);
     await client.click(selectors.twins.createButton);
     // fill in twin data
     await client.waitForElementPresent(selectors.twins.edit.submitButton, 10000);
+    await client.waitForElementPresent(selectors.twins.edit.name, 10000);
     await client.setValue(selectors.twins.edit.name, [backspaces(20), name]);
     await client.setValue(selectors.twins.edit.description, description);
     await client.click(selectors.twins.edit.submitButton);
@@ -110,8 +110,9 @@ When(/^I create a new digital twin with the name "([^"]+)" and the description "
     await client.waitForElementPresent(selectors.twins.edit.saveButton, 60000);
     await client.pause(1000);
     // go back
+    await client.waitForElementPresent(selectors.twins.backButton, 10e3);
     await client.click(selectors.twins.backButton);
-    await client.waitForElementPresent(selectors.twins.createButton, 10000);
+    await client.waitForElementPresent(selectors.twins.createButton, 10e3);
   },
 );
 
@@ -119,10 +120,11 @@ When(/^I add a container with the name "([^"]+)" and the description "([^"]+)"$/
   async (name, description) => {
     await client.waitForElementPresent(selectors.twins.createContainerButton, 10000);
     await client.click(selectors.twins.createContainerButton);
-    await client.waitForElementPresent(selectors.container.edit.submitButton, 10000);
+    await client.waitForElementPresent(selectors.container.edit.step1Button, 10000);
+    await client.waitForElementPresent(selectors.container.edit.name, 10000);
     await client.setValue(selectors.container.edit.name, [backspaces(20), name]);
     await client.setValue(selectors.container.edit.description, description);
-    await client.click(selectors.container.edit.submitButton);
+    await client.click(selectors.container.edit.step1Button);
     await client.waitForElementPresent(selectors.container.edit.saveButton, 60000);
     await client.pause(1000);
   },
@@ -173,7 +175,7 @@ When(/^I add a data set with the type "(([^"]+))", the name "([^"]+)" and the va
     await client.click(selectors.container.edit.dataSet.edit.createConfirmButton);
 
     await client.waitForElementPresent(selectors.container.edit.spinner, 10000);
-    await client.waitForElementPresent(selectors.container.edit.dataSet.edit.saveUpdateButton, 120000);
+    await client.waitForElementPresent(selectors.container.edit.saveButton, 120000);
   },
 );
 

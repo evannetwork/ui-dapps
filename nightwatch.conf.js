@@ -43,7 +43,7 @@ if (localBrowser) {
 }
 
 // set base url for testing
-defaultConfig.globals.baseUrl = process.env.NIGHTWATCH_URL || 'https://dashboard.test.evan.network';
+defaultConfig.globals.baseUrl = process.env.NIGHTWATCH_URL || 'https://dashboard.test.evan.network/';
 
 const chromeSettings = {
   desiredCapabilities: {
