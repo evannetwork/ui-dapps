@@ -56,7 +56,7 @@
           <span class="text-primary" v-if="mode === 'schema'">
             <div class="form-group mb-0">
               <input class="form-control" required
-                id="name" ref="name"
+                :id="`name-${ index }`" ref="name"
                 :placeholder="`_datacontainer.ajv.name.desc` | translate"
                 :disabled="$store.state.saving"
                 v-model="form.name.value"
@@ -71,7 +71,7 @@
         <td v-if="mode === 'schema'">
           <div class="form-group mb-0">
             <select class="form-control custom-select"
-              id="type" ref="type"
+              :id="`type-${ index }`" ref="type"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
               :disabled="$store.state.saving"
               v-model="form.type.value"
@@ -87,6 +87,7 @@
         </td>
         <td class="fill-content" v-if="mode !== 'schema'">
           <dc-field
+            :id="`dc-field-${ index }`"
             :type="form.type.value"
             :control="form.value"
             :mode="mode"
@@ -94,14 +95,18 @@
           </dc-field>
         </td>
         <td class="flex-grow-0" v-if="mode === 'schema'">
-          <i class="mdi mdi-delete clickable"
+          <i
+            id="ajv-remove-field"
+            class="mdi mdi-delete clickable"
             :disabled="$store.state.saving"
             @click="!$store.state.saving && removeProperty()">
           </i>
         </td>
       </tr>
       <!-- add empty row that watches on click events for adding new entries -->
-      <tr class="clickable position-relative"
+      <tr
+        id="ajv-add-field"
+        class="clickable position-relative"
         v-if="mode === 'schema'"
         @click="!$store.state.saving && addProperty('')">
         <td class="fill-content">

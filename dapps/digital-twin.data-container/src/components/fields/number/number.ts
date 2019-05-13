@@ -38,6 +38,11 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 @Component({ })
 export default class NumberComponent extends mixins(EvanComponent) {
   /**
+   * Dynamic html input element id
+   */
+  @Prop({ default: 'value' }) id;
+
+  /**
    * schema / edit / vue
    */
   @Prop({ default: 'edit' }) mode;

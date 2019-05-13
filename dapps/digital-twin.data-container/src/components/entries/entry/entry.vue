@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div>
+  <div :id="`dc-entry-${ entryName }`">
     <div class="white-box border rounded mt-3" v-if="modes.length === 0">
       <div class="header">
         <h3 class="m-0 font-weight-semibold">

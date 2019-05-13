@@ -27,6 +27,7 @@
 
 <template>
   <component
+    :id="id"
     :is="`dc-field-${ _type }`"
     :control="control"
     :mode="mode"

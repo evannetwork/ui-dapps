@@ -39,6 +39,11 @@ import * as fieldUtils from '../../../fields';
 @Component({ })
 export default class FieldComponent extends mixins(EvanComponent) {
   /**
+   * Dynamic html input element id
+   */
+  @Prop({ default: 'value' }) id;
+
+  /**
    * schema / edit / vue
    */
   @Prop({ default: 'edit' }) mode;

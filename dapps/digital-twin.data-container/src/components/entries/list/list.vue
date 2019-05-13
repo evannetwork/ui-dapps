@@ -46,7 +46,9 @@
       </div>
       
       <template v-else-if="entry.mode !== 'schema'">
-        <button type="button" class="btn btn-outline-secondary btn-circle mr-3"
+        <button
+          id="entry-list-schema-edit"
+          type="button" class="btn btn-outline-secondary btn-circle mr-3"
           v-if="
             itemType === 'object' &&
             !addListEntry &&
@@ -55,7 +57,9 @@
           @click="$set(entry, 'mode', 'schema')">
           <i class="mdi mdi-cogs"></i>
         </button>
-        <button type="submit" class="btn btn-rounded btn-primary"
+        <button
+          id="entry-list-add-entry"
+          type="submit" class="btn btn-rounded btn-primary"
           v-if="
             !addListEntry &&
             (modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1)
@@ -67,28 +71,36 @@
         </button>
       </template>
     </div>
-    <template v-if="entry.mode === 'schema' && itemType === 'object'">
+    <div
+      id="entry-list-schema"
+      v-if="entry.mode === 'schema' && itemType === 'object'">
       <dc-ajv
         :mode="entry.mode"
         :properties="entry.edit.dataSchema.items.properties"
         @init="$set(reactiveRefs, 'schemaAjv', $event)">
       </dc-ajv>
       <div class="footer" v-if="reactiveRefs.schemaAjv">
-        <button class="btn btn-outline-secondary btn-rounded mr-3"
+        <button
+          id="entry-list-schema-cancel"
+          class="btn btn-outline-secondary btn-rounded mr-3"
           @click="resetSchema()">
           {{ '_datacontainer.ajv.reset-values' | translate }}
         </button>
-        <button class="btn btn-primary btn-rounded"
+        <button
+          id="entry-list-schema-save"
+          class="btn btn-primary btn-rounded"
           :disabled="!reactiveRefs.schemaAjv.isValid"
           @click="saveSchema()">
           {{ `_datacontainer.ajv.save.schema` | translate }}
           <i class="mdi mdi-arrow-right label ml-2"></i>
         </button>
       </div>
-    </template>
+    </div>
     <template v-else>
       <template v-if="!addListEntry">
-        <table class="evan-flex-table">
+        <table
+          id="entry-list-table"
+          class="evan-flex-table">
           <thead>
             <tr class="text-muted">
               <th class="flex-grow-0">#</th>
@@ -111,6 +123,7 @@
                       .slice(0, !expandListEntries[index] ? 5 : 100)">
                     <b style="white-space: nowrap;">{{ key }}</b>:
                     <dc-field
+                      :id="`list-value-${ index }`"
                       :schema="entry.dataSchema.items.properties[key]"
                       :control="{ value: listEntry[key] }"
                       :mode="'view'"
@@ -137,7 +150,9 @@
               </td>
               <td class="text-primary flex-grow-0"
                 style="white-space: nowrap;">
-                <template v-if="!$store.state.saving && entry.value.indexOf(listEntry) !== -1">
+                <template
+                  id="entry-list-remove"
+                  v-if="!$store.state.saving && entry.value.indexOf(listEntry) !== -1">
                   <i class="mdi mdi-delete clickable"
                     :disabled="$store.state.saving"
                     @click="entry.value.splice(index, 1)">
@@ -153,7 +168,9 @@
               <b>{{ '_datacontainer.list.results' | translate }}</b>: {{ offset + entry.value.length }} / {{ maxListentries + entry.value.length }}
             </h5>
 
-            <button type="submit"  class="btn btn-rounded btn-outline-secondary mt-3"
+            <button
+              id="entry-list-load-more"
+              type="submit" class="btn btn-rounded btn-outline-secondary mt-3"
               v-if="offset < maxListentries"
               @click="loadEntries()">
               {{ `_datacontainer.list.load-more` | translate }}
@@ -162,7 +179,8 @@
         </table>
       </template>
 
-      <template v-else>
+      <div id="entry-list-add"
+        v-else>
         <dc-ajv
           v-if="itemType === 'object'"
           :mode="'edit'"
@@ -180,12 +198,16 @@
         </dc-field>
 
         <div class="footer">
-          <button type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
+          <button
+            id="entry-list-add-cancel"
+            type="submit" class="btn btn-rounded btn-outline-secondary mr-3"
             @click="addListEntry = false">
             {{ `_datacontainer.list.canel-list-entry` | translate }}
           </button>
 
-          <button type="submit" class="btn btn-rounded btn-primary"
+          <button
+            id="entry-list-add-save"
+            type="submit" class="btn btn-rounded btn-primary"
             :disabled="itemType === 'object' ?
               (!reactiveRefs.addAjv || !reactiveRefs.addAjv.isValid) :
               !addListEntryForm.isValid"
@@ -194,7 +216,7 @@
             <i class="mdi mdi-arrow-right label ml-2"></i>
           </button>
         </div>
-      </template>
+      </div>
     </template>
   </div>
 </template>

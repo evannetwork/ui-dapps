@@ -43,12 +43,16 @@
       </div>
       
       <template v-else>
-        <button type="button" class="btn btn-outline-secondary btn-circle"
+        <button
+          id="entry-object-schema-edit"
+          type="button" class="btn btn-outline-secondary btn-circle"
           v-if="modes.indexOf('schema') !== -1 && entry.mode === 'edit'"
           @click="entry.mode = 'schema'">
           <i class="mdi mdi-cogs"></i>
         </button>
-        <button type="button" class="btn btn-primary btn-rounded"
+        <button
+          id="entry-object-edit"
+          type="button" class="btn btn-primary btn-rounded"
           v-if="(modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1) && entry.mode === 'view'"
           @click="entry.mode = 'edit'">
           {{ `_datacontainer.field.edit` | translate }}
@@ -66,11 +70,15 @@
     <div class="footer"
       style="margin-top: -25px"
       v-if="reactiveRefs.ajv && (entry.mode === 'schema' || entry.mode === 'edit')">
-      <button class="btn btn-outline-secondary btn-rounded mr-3"
+      <button
+        id="entry-object-edit-cancel"
+        class="btn btn-outline-secondary btn-rounded mr-3"
         @click="reset()">
         {{ '_datacontainer.ajv.reset-values' | translate }}
       </button>
-      <button class="btn btn-primary btn-rounded"
+      <button 
+        id="entry-object-edit-save"
+        class="btn btn-primary btn-rounded"
         :disabled="!reactiveRefs.ajv.isValid"
         @click="save()">
         {{ `_datacontainer.ajv.save.${ entry.mode }` | translate }}
