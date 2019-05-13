@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- add correct tooltip stylings
+
 ### Fixes
 ### Deprecations
 

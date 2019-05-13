@@ -25,34 +25,42 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+.evan-tooltip-parent {
+  position: relative;
+}
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
+.evan-tooltip {
+  position: absolute  !important;
 
-/**
- * load evan specific styles
- */
-@import './style/breadcrumb';
-@import './style/buttons';
-@import './style/colors';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/dropdown';
-@import './style/forms';
-@import './style/icons';
-@import './style/loading';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/table';
-@import './style/tabs';
-@import './style/text';
-@import './style/tooltip';
-@import './style/transitions';
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 1;
+
+  &.bs-tooltip-top, &.bs-tooltip-bottom {
+    right: 0;
+    left: 0;
+  }
+
+  &.bs-tooltip-left, &.bs-tooltip-right {
+    top: 0;
+    bottom: 0;
+  }
+
+  &.bs-tooltip-top {
+    top: -100%;
+  }
+
+  &.bs-tooltip-bottom {
+    bottom: -100%;
+  }
+
+  &.bs-tooltip-left {
+    left: -100%;
+  }
+
+  &.bs-tooltip-right {
+    right: -100%;
+  }
+}
