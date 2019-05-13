@@ -11,10 +11,12 @@
   - restructure digital twins ui
   - add ens address mapping on twin create
   - `ens-form` refactoring
+  - add html selector id's
 - `datacontainer.digitaltwin`
   - correct data container formular handling (entries / containers can only be saved when the full formular is valid)
   - add file handling
   - add correct container link logic
+  - add html selector id's
 
 ### Fixes
 - fix `vue` dapps font-sizes and alignments
