@@ -32,7 +32,7 @@ dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainNa
 import EvanQueue from './Queue';
 import { Dispatcher, DispatcherInstance } from './Dispatcher';
 import './index.scss';
-import * as FileHandler from './Files'; 
+import * as FileHandler from './Files';
 
 export * from './config';
 export * from './utils';
@@ -46,7 +46,7 @@ export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler };
  */
 export async function startDApp(container, dbcpName, dappEns, dappBaseUrl) {
   let xmlhttp = (<any>window).XMLHttpRequest ? new XMLHttpRequest() :
-    new (<any>window).ActiveXObject("Microsoft.XMLHTTP");
+    new (<any>window).ActiveXObject('Microsoft.XMLHTTP');
 
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
@@ -56,6 +56,6 @@ export async function startDApp(container, dbcpName, dappEns, dappBaseUrl) {
     }
   }
 
-  xmlhttp.open("GET", `${ dappBaseUrl }/index.html`, false);
+  xmlhttp.open('GET', `${ dappBaseUrl }/index.html`, false);
   xmlhttp.send();
 }

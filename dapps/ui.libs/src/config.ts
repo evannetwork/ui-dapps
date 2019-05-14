@@ -28,4 +28,4 @@
 /**
  * base url of the evan.network smart agents server
  */
-export const agentUrl = 'https://agents.test.evan.network'; 
+export const agentUrl = 'https://agents.test.evan.network';
