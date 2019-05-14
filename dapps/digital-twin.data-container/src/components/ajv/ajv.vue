@@ -31,7 +31,7 @@
       <tr class="text-muted">
         <th
           :class="{ 'flex-grow-0': mode !== 'schema' }"
-          :style="mode !== 'schema' ? 'flex-basis: 150px' : ''">
+          :style="mode !== 'schema' ? 'flex-basis: 300px' : ''">
           {{ '_datacontainer.ajv.name.title' | translate }}
         </th>
         <th v-if="mode === 'schema'">
@@ -51,7 +51,7 @@
           :id="`ajv-name-${ index }`"
           class="fill-content"
           :class="{ 'flex-grow-0': mode !== 'schema' }"
-          :style="mode !== 'schema' ? 'flex-basis: 150px' : ''">
+          :style="mode !== 'schema' ? 'flex-basis: 300px' : ''">
           <span class="font-weight-semibold" v-if="mode !== 'schema'">
             {{ form.name.value }}
           </span>
@@ -104,7 +104,7 @@
             id="ajv-remove-field"
             class="mdi mdi-delete clickable"
             :disabled="$store.state.saving"
-            @click="!$store.state.saving && removeProperty()">
+            @click="!$store.state.saving && removeProperty(form)">
           </i>
         </td>
       </tr>

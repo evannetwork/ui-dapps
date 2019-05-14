@@ -129,7 +129,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
       this.properties[form.name.value] = bcc.Container.defaultSchemas[`${ form.type.value }Entry`];
 
       if (this.value) {
-        this.value[form.name.value] = form.value.value;
+        this.value[form.name.value] = fieldUtils.parseFieldValue(form.type.value, form.value.value);
       }
     });
   }

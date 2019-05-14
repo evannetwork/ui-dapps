@@ -44,14 +44,14 @@
                   <div
                     class="d-flex flex-wrap align-items-center justify-content-between bg-level-1"
                     style="height: 59px">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center flex-truncate">
                       <button class="btn large"
                         @click="$route.path.indexOf('digitaltwins') !== -1 ?
                           evanNavigate(`digitaltwins.${ dapp.domainName }`, `/dashboard.${ dapp.domainName }`) :
                           $router.history.go(-1)">
                         <i class="mdi mdi-chevron-left"></i>
                       </button>
-                      <a
+                      <a class="flex-truncate"
                         :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }`">
                         <h4 class="font-weight-semibold text-uppercase text-nowrap m-0">
                           <template v-if="$store.state.uiDT.address === 'dt-create'">

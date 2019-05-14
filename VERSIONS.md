@@ -5,6 +5,12 @@
 ### Fixes
 - `digitaltwins`, `datacontainer.digitaltwins`
   - use correct html selector id's
+- `digitaltwin`
+  - fix top left digital twin name display overflow
+- `datacontainer.digitaltwins`
+  - `ajv-editor` use `parseFieldValue` value on save
+  - increase `ajv-editor` name td size to 300px
+
 
 ### Deprecations
 
