@@ -1,0 +1,65 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+*/
+
+evan-buy-eve {
+  .success-hint {
+    border-radius: 0;
+    background-color: rgba(83, 230, 157, 0.5);
+  }
+  .error-hint, .success-hint {
+    &.chip-md {
+      height: auto;
+    }
+    ion-icon {
+      font-size: 50px;
+    }
+    ion-label {
+      white-space: normal;
+      text-overflow: unset;
+    }
+  }
+
+  .evan-tabs-container {
+    height: 75px;
+    margin-bottom: 20px;
+  }
+
+  .w100 {
+    width: 100%;
+  }
+
+  .evan-tabs.evan-content {
+    width: 100%;
+    height: 25px;
+    margin: 0;
+
+    h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+  }
+}

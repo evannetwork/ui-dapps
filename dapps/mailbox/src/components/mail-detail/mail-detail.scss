@@ -1,0 +1,112 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+
+  You can be released from the requirements of the GNU Affero General Public
+  License by purchasing a commercial license.
+  Buying such a license is mandatory as soon as you use this software or parts
+  of it on other blockchains than evan.network.
+
+  For more information, please contact evan GmbH at this address:
+  https://evan.network/license/
+*/
+
+@import '@evan.network/ui-angular-sass/src/variables/colors';
+
+mail-detail {
+  span.top-right {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+
+  .sender-header {
+    position: relative;
+
+    margin: 25px 0;
+  }
+
+  .evan-small-seperator {
+    width: calc(100% + 50px);
+    margin-left: -25px;
+
+    background-color: rgba(112, 122, 128, 0.5);
+  }
+
+  @media(min-width: 769px) {
+    .evan-content {
+      width: calc(100% - 20px);
+      margin: 0 10px;
+    }
+  }
+
+  .answer {
+    position: relative;
+
+    width: calc(100% - 50px);
+    margin-top: 10px;
+    padding: 10px 25px;
+
+    border-radius: 10px;
+
+    &.left {
+      background-color: #0f4c56;
+    }
+
+    &.right {
+      margin-left: 50px;
+
+      background-color: #3b9395;
+    }
+
+    .answer-header {
+      font-weight: 600;
+    }
+
+    .answer-date {
+      position: absolute;
+      right: 15px;
+      bottom: -5px;
+
+      color: #d2d2d2;
+    }
+  }
+
+  evan-profile-verifications {
+    position: absolute;
+    top: 0;
+    right: -10px;
+  }
+}
+
+.evan-light {
+  mail-detail {
+    .answer {
+      &.right {
+        background-color: #d4d4d4;
+      }
+
+      &.left {
+        background-color: $light;
+      }
+
+      p, p.answer-date {
+        color: #4a4a4a;
+      }
+    }
+  }
+}
