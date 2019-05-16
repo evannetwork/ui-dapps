@@ -28,6 +28,7 @@
 <template>
   <div class="evan theme-evan evan-mailbox">
     <evan-dapp-wrapper
+      :routes="[ ]"
       v-on:loggedin="loadMails()">
       <template v-slot:content>
         <evan-dapp-wrapper-level-2>

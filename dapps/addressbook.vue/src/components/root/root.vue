@@ -28,6 +28,7 @@
 <template>
   <div class="evan theme-evan">
     <evan-dapp-wrapper
+      :routes="[ ]"
       v-on:loggedin="loadContacts()">
       <template v-slot:content>
         <evan-dapp-wrapper-level-2>
