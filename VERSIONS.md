@@ -5,6 +5,8 @@
 - Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
 
 ### Fixes
+- `vue dapps`
+  - disable left panel for standalone dapps
 - `digitaltwins`, `datacontainer.digitaltwins`
   - use correct html selector id's
 - `digitaltwin`

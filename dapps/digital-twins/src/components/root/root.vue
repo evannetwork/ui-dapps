@@ -28,6 +28,7 @@
 <template>
   <div class="evan theme-evan">
     <evan-dapp-wrapper
+      :routes="[ ]"
       v-on:loggedin="initialize()">
       <template v-slot:content>
         <template v-if="
