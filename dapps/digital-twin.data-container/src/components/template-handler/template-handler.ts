@@ -311,6 +311,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
 
       // reset add form
       this.entryForm.name.value = '';
+      utils.enableDTSave();
     }
   }
 

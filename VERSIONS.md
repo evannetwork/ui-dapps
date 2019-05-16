@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
+
 ### Fixes
 - `digitaltwins`, `datacontainer.digitaltwins`
   - use correct html selector id's
@@ -11,8 +13,8 @@
   - `ajv-editor` use `parseFieldValue` value on save
   - increase `ajv-editor` name td size to 300px
 
-
 ### Deprecations
+
 
 ## Version 3.0.0
 ### Features

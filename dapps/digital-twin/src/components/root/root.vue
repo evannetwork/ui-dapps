@@ -47,7 +47,7 @@
                     <div class="d-flex align-items-center flex-truncate">
                       <button class="btn large"
                         @click="$route.path.indexOf('digitaltwins') !== -1 ?
-                          evanNavigate(`digitaltwins.${ dapp.domainName }`, `/dashboard.${ dapp.domainName }`) :
+                          evanNavigate(`digitaltwins.${ dapp.domainName }`, `/dashboard.vue.${ dapp.domainName }`) :
                           $router.history.go(-1)">
                         <i class="mdi mdi-chevron-left"></i>
                       </button>
