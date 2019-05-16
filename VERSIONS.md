@@ -3,6 +3,8 @@
 ## Next Version
 ### Features
 - Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
+- `termsoufuse`
+  - use latest terms of use and data protection specifications
 
 ### Fixes
 - `vue dapps`
