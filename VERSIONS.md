@@ -2,8 +2,41 @@
 
 ## Next Version
 ### Features
+- Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
+
 ### Fixes
+- `digitaltwins`, `datacontainer.digitaltwins`
+  - use correct html selector id's
+- `digitaltwin`
+  - fix top left digital twin name display overflow
+- `datacontainer.digitaltwins`
+  - `ajv-editor` use `parseFieldValue` value on save
+  - increase `ajv-editor` name td size to 300px
+
 ### Deprecations
+
+
+## Version 3.0.0
+### Features
+- fix `vue` dapps font-sizes and alignments
+- `dashboard`
+  - use evan images for dashboard start page
+- `mailbox`
+  - add dispatcher for mailbox attachments
+- `digitaltwin`
+  - restructure digital twins ui
+  - add ens address mapping on twin create
+  - `ens-form` refactoring
+  - add html selector id's
+- `datacontainer.digitaltwin`
+  - correct data container formular handling (entries / containers can only be saved when the full formular is valid)
+  - add file handling
+  - add correct container link logic
+  - add html selector id's
+
+### Fixes
+- fix `vue` dapps font-sizes and alignments
+
 
 ## Version 2.1.0
 ### Features

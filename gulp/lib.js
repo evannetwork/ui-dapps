@@ -30,9 +30,11 @@ const path = require('path');
 const { lstatSync, readdirSync } = require('fs');
 
 const scriptsFolder = process.cwd();
-const isDirectory = source => lstatSync(source).isDirectory()
+const isDirectory = source => lstatSync(source).isDirectory();
 const getDirectories = source =>
-  readdirSync(source).map(name => path.join(source, name)).filter(isDirectory)
+  readdirSync(source).map(name => path.join(source, name)).filter(isDirectory);
+const nodeEnv = process.argv.indexOf('--prod') !== -1 ?'production' :
+  process.env.NODE_ENV || 'development';
 
 /**
  * Executes and console command
@@ -43,14 +45,14 @@ const getDirectories = source =>
  */
 async function runExec(command, runtimeFolder) {
   return new Promise((resolve, reject) => {
-    exec(command, { cwd: runtimeFolder }, async (err, stdout, stderr) => {
-      if (err || stderr) {
-        reject({ stdout, stderr });
+    exec(command, { cwd: runtimeFolder, NODE_ENV: nodeEnv }, async (err, stdout, stderr) => {
+      if (err) {
+        reject(stdout);
       } else {
-        resolve({ stdout, stderr });
+        resolve(stdout);
       }
     });
   });
 }
 
-module.exports = { runExec, scriptsFolder, isDirectory, getDirectories }
+module.exports = { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv }

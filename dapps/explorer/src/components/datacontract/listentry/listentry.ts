@@ -152,7 +152,7 @@ export class ExplorerDataContractListEntryComponent extends AsyncComponent {
       // iterate through all parameters and check for images and so on
       for (let key of keys) {
         // if we have an object, move recursivly through it
-        if (typeof data[key] === 'object' && data[key] !== 'undefined') {
+        if (data[key] && typeof data[key] === 'object' && data[key] !== 'undefined') {
           if (data[key].fileType && data[key].file) {
             await this.valueDataAnalyse(data[key], key, fullKey, deep);
           } else if (deep < 20) {
@@ -174,7 +174,7 @@ export class ExplorerDataContractListEntryComponent extends AsyncComponent {
    * @param      {number}         deep     current recursion deep
    * @return     {Promise<void>}  resolved when done
    */
-  async valueDataAnalyse(data:any, currKey: string, fullKey: string, deep: number) {
+  async valueDataAnalyse(data: any, currKey: string, fullKey: string, deep: number) {
     // check for decrypted file
     if (typeof data === 'object' && data !== 'undefined' && data.fileType && data.file) {
       // we have decrypted successfully an image :)
