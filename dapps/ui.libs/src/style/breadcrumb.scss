@@ -27,16 +27,25 @@
 
 .evan {
   .evan-breadcrumbs {
-    min-height: 60px;
+    min-height: 70px;
 
-    a.evan-breadcrumb, span {
-      color: cssVar('gray-600');
+    #breadcrumb-goback {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      padding: 0;
+
+      border: 2px solid;
+    }
+
+    a.evan-breadcrumb, span, i {
+      color: cssVar('gray-500');
     }
 
     .evan-breadcrumb {
       cursor: pointer;
 
-      color: cssVar('gray-600');
+      color: cssVar('gray-500');
 
       &.active, &:hover {
         cursor: default;
