@@ -37,11 +37,11 @@ import LookupComponent from './components/lookup/lookup.vue';
 import MapComponent from './components/ens/map/map.vue';
 import OverviewComponent from './components/overview/overview.vue';
 import StartComponent from './components/start/start.vue';
-import TemplatesComponent from './components/templates/templates.vue';
+import PluginsComponent from './components/plugins/plugins.vue';
 
 const dtPath = (path) => `:digitalTwinAddress/${ path }`;
 
-// map them to element names, so they can be used within templates
+// map them to element names, so they can be used within plugins
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
   {

@@ -32,46 +32,46 @@
       <div class="d-flex mb-3">
         <div>
           <h3 class="font-weight-bold mb-0">
-            {{ '_digitaltwins.left-categories.my-templates.title' | translate }}
+            {{ '_digitaltwins.left-categories.my-plugins.title' | translate }}
           </h3>
           <p class="text-muted font-weight-semibold m-t-0">
-            {{ '_digitaltwins.left-categories.my-templates.desc' | translate }}
+            {{ '_digitaltwins.left-categories.my-plugins.desc' | translate }}
           </p>
         </div>
         <span class="mx-auto"></span>
         <div>
           <a
-            id="dt-template-create"
+            id="dt-plugin-create"
             class="btn btn-rounded btn-primary font-weight-normal"
-            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/create-template`">
-            {{ '_digitaltwins.templates.create' | translate }}
+            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/create-plugin`">
+            {{ '_digitaltwins.plugins.create' | translate }}
             <i class="mdi mdi-arrow-right label ml-2"></i>
           </a>
         </div>
       </div>
 
       <div class="white-box rounded border"
-        v-if="Object.keys(templates).length !== 0">
+        v-if="Object.keys(plugins).length !== 0">
         <div class="header">
           <div>
             <h3 class="font-weight-semibold m-0">
-              {{ `_digitaltwins.left-categories.my-templates.title` | translate }}
+              {{ `_digitaltwins.left-categories.my-plugins.title` | translate }}
             </h3>
           </div>
           <span class="mx-auto"></span>
           <div></div>
         </div>
         <div class="row content">
-          <div class="col-md-6 col-lg-4 mb-4"
-            v-for="(templateKey, index) in Object.keys(templates)">
+          <div class="col-md-6 col-lg-3 mb-4"
+            v-for="(pluginKey, index) in Object.keys(plugins)">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
-              :id="`evan-dt-template-${ templateKey.replace('.', '') }`"
-              :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/template/${ templateKey }`">
+              :id="`evan-dt-plugin-${ pluginKey.replace('.', '') }`"
+              :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/plugin/${ pluginKey }`">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
                   <img class="img-fluid p-3"
-                    v-if="templates[templateKey].imgSquare"
-                    :src="templates[templateKey].imgSquare">
+                    v-if="plugins[pluginKey].imgSquare"
+                    :src="plugins[pluginKey].imgSquare">
                   <i
                     class="mdi mdi-circle-edit-outline"
                     style="font-size:60px;">
@@ -79,19 +79,19 @@
                 </div>
                 <div class="col-10">
                   <small class="text-center p-1 d-block text-muted"
-                    v-if="templates[templateKey].creating">
+                    v-if="plugins[pluginKey].creating">
                     {{ '_digitaltwins.containers.in-creation' | translate }}
                   </small>
                   <div class="d-flex p-3 flex-truncate">
                     <div>
                       <h4 class="font-weight-semibold mb-0">
-                        {{ templates[templateKey].description.name }}
+                        {{ plugins[pluginKey].description.name }}
                       </h4>
                       <span class="text-justify d-block font-weight-semibold text-muted">
-                        {{ templates[templateKey].description.description }}
+                        {{ plugins[pluginKey].description.description }}
                       </span>
                     </div>
-                    <template v-if="templates[templateKey].loading">
+                    <template v-if="plugins[pluginKey].loading">
                       <span class="mx-auto"></span>
                       <div class="spinner-border spinner-border-sm ml-3"></div>
                     </template>
@@ -106,12 +106,12 @@
         v-else>
         <div class="header">
           <h4 class="m-0">
-            {{ `_digitaltwins.templates.empty` | translate }}
+            {{ `_digitaltwins.plugins.empty` | translate }}
           </h4>
         </div>
         <div class="content">
           <p class="m-0"
-            v-html="$t( `_digitaltwins.templates.empty-desc`)">
+            v-html="$t( `_digitaltwins.plugins.empty-desc`)">
           </p>
         </div>
       </div>
@@ -120,6 +120,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './templates.ts';
+  import Component from './plugins.ts';
   export default Component;
 </script>

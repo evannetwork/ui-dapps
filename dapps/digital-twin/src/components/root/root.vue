@@ -122,7 +122,7 @@
           </evan-dapp-wrapper-level-2>
           <evan-breadcrumbs
             :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name !== 'dt-template' && $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1">
+            v-if="$route.name !== 'dc-plugin' && $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1">
           </evan-breadcrumbs>
 
           <transition name="fade" mode="out-in"

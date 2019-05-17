@@ -61,12 +61,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   twinNavigation: any = [ ];
 
   /**
-   * List of available templates
-   */
-  templates: any = { };
-
-  /**
-   * Current activated tab (digital twins / templates)
+   * Current activated tab (digital twins / plugins)
    */
   activeTab = 0;
 
@@ -106,7 +101,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   setTabStatus() {
     const tab1Routes = [ 'base-overview', 'base-lookup', 'base-container-link',
       'base-container-link2', ];
-    const tab2Routes = [ 'base-templates', 'dt-template' ];
+    const tab2Routes = [ 'base-plugins', 'dt-template' ];
 
     if (tab1Routes.indexOf(this.$route.name) !== -1) {
       this.activeTab = 0;

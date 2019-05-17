@@ -30,7 +30,7 @@ import { DAppLoader } from '@evan.network/ui-vue-core';
 
 import CreateComponent from './components/create/create.vue';
 import DetailComponent from './components/detail/detail.vue';
-import TemplateComponent from './components/template/template.vue';
+import TemplateComponent from './components/plugin/plugin.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
@@ -40,8 +40,8 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
   { name: 'create-container',  path: 'create/:cloneContainer?',           component: CreateComponent },
-  { name: 'create-template',   path: 'create-template/:cloneContainer?',  component: CreateComponent },
-  {                            path: 'template/:template',                component: TemplateComponent },
+  { name: 'create-plugin',     path: 'create-plugin/:cloneContainer?',    component: CreateComponent },
+  {                            path: 'plugin/:plugin',                    component: PluginComponent },
   {                            path: ':containerAddress',                 component: DetailComponent },
 ];
 

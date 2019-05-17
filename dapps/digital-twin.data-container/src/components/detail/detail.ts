@@ -317,10 +317,12 @@ export default class DetailComponent extends mixins(EvanComponent) {
       this.$nextTick(async () => {
         dispatchers.updateDispatcher.start(runtime, {
           address: this.containerAddress,
-          description: this.dbcpForm.description.value,
+          description: {
+            description: this.dbcpForm.description.value,
+            imgSquare: this.dbcpForm.img.value,
+            name: this.dbcpForm.name.value,
+          },
           digitalTwinAddress: this.digitalTwinAddress,
-          img: this.dbcpForm.img.value,
-          name: this.dbcpForm.name.value,
           template: onlyDbcp ? undefined : this.template,
         });
 

@@ -63,13 +63,13 @@ export default {
       "container-link": "Link Data Container",
       "containers": "Data Container overview",
       "create": "Create",
-      "create-template": "Create Template",
+      "create-plugin": "Create Plugin",
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwins": "Digital Twins",
       "lookup": "Open",
       "overview": "Favorites & recent Digital Twins",
-      "template": "Template",
-      "templates": "Templates",
+      "plugin": "Plugin",
+      "plugins": "Plugins",
       "verifications": "Verifications"
     },
     "context-menu": {
@@ -77,7 +77,7 @@ export default {
       "create-container": "Create Data Container",
       "link": "Link to Digital Twin",
       "share": "Share",
-      "template-save": "Save as template"
+      "plugin-save": "Save as plugin"
     },
     "create-question": {
       "action": "Create",
@@ -86,7 +86,7 @@ export default {
     },
     "createForm": {
       "back": "Go Back",
-      "base-template": "Base Template",
+      "base-plugin": "Base Plugin",
       "container-configuration": "Data Configuration",
       "continue": "Continue",
       "create": "Create",
@@ -103,9 +103,9 @@ export default {
       },
       "save": "Save Data Container",
       "sub-title": "Specify general information, data schema and values.",
-      "template": {
-        "desc": "Template of the Data Container",
-        "title": "Template"
+      "plugin": {
+        "desc": "Plugin of the Data Container",
+        "title": "Plugin"
       },
       "title": "Create Data Container"
     },
@@ -113,8 +113,8 @@ export default {
       "create": "Creating Data Container...",
       "link": "Link Data Container...",
       "share": "Share Data Container...",
-      "template": "Saving template...",
-      "template-share": "Sharing template...",
+      "plugin": "Saving plugin...",
+      "plugin-share": "Sharing plugin...",
       "update": "Updating Data Container..."
     },
     "edit": "Edit",
@@ -192,23 +192,23 @@ export default {
         "title": "User"
       }
     },
-    "template": {
+    "plugin": {
       "bmail": {
-        "body": "Hello,<br><br>You have received a data container template from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container template"
+        "body": "Hello,<br><br>You have received a data container plugin from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
+        "title": "Invitation to Data Container plugin"
       },
       "create-container": "Create Data Container",
-      "create-title": "Create new Template",
+      "create-title": "Create new Plugin",
       "edit-dbcp": "Adjust Description",
-      "save": "Save Template"
+      "save": "Save Plugin"
     },
-    "template-cache": {
+    "plugin-cache": {
       "action": "Restore",
       "clear": "Delete",
       "desc": "You have unsaved changes, do you want to restore it?",
       "title": "Unsaved changes"
     },
-    "template-handler": {
+    "plugin-handler": {
       "edit-modes": {
         "desc": "Please complete all changes to be able to save.",
         "title": "Unsaved changes"

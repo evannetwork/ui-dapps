@@ -63,13 +63,13 @@ export default {
       "container-link": "Daten Container verknüpfen",
       "containers": "Daten Container Übersicht",
       "create": "Erstellen",
-      "create-template": "Vorlage erstellen",
+      "create-plugin": "Plugin erstellen",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwins": "Digitale Zwillinge",
       "lookup": "Öffnen",
       "overview": "Favoriten & letzte Zwillinge",
-      "template": "Vorlage",
-      "templates": "Vorlagen",
+      "plugin": "Plugin",
+      "plugins": "Plugins",
       "verifications": "Verifizierungen"
     },
     "context-menu": {
@@ -77,7 +77,7 @@ export default {
       "create-container": "Daten Container erstellen",
       "link": "Container verknüpfen",
       "share": "Teilen",
-      "template-save": "Als Vorlage speichern"
+      "plugin-save": "Als Plugin speichern"
     },
     "create-question": {
       "action": "Erstellen",
@@ -86,7 +86,7 @@ export default {
     },
     "createForm": {
       "back": "Zurück",
-      "base-template": "Basis-Vorlage",
+      "base-plugin": "Basis-Plugin",
       "container-configuration": "Daten Konfiguration",
       "continue": "Weiter",
       "create": "Erstellen",
@@ -103,9 +103,9 @@ export default {
       },
       "save": "Daten Container Speichern",
       "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
-      "template": {
-        "desc": "Vorlage des Datencontainers",
-        "title": "Vorlage"
+      "plugin": {
+        "desc": "Plugin des Datencontainers",
+        "title": "Plugin"
       },
       "title": "Daten Container erstellen"
     },
@@ -113,8 +113,8 @@ export default {
       "create": "Daten Container wird erstellt...",
       "link": "Daten Container wird verlinkt...",
       "share": "Daten Container wird geteilt...",
-      "template": "Vorlage speichern",
-      "template-share": "Vorlage teilen",
+      "plugin": "Plugin speichern",
+      "plugin-share": "Plugin teilen",
       "update": "Daten Container wird aktualisiert..."
     },
     "edit": "Bearbeiten",
@@ -192,23 +192,23 @@ export default {
         "title": "Nutzer"
       }
     },
-    "template": {
+    "plugin": {
       "bmail": {
-        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Vorlage von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Daten Container Vorlage"
+        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Plugin von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Daten Container Plugin"
       },
       "create-container": "Daten Container erzeugen",
-      "create-title": "Neue Vorlage erstellen",
+      "create-title": "Neue Plugin erstellen",
       "edit-dbcp": "Beschreibung Anpassen",
-      "save": "Vorlage speichern"
+      "save": "Plugin speichern"
     },
-    "template-cache": {
+    "plugin-cache": {
       "action": "Wiederherstellen",
       "clear": "Löschen",
       "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
       "title": "Ungespeicherte Änderungen"
     },
-    "template-handler": {
+    "plugin-handler": {
       "edit-modes": {
         "desc": "Bitte schließen Sie alle Änderungen ab, um speichern zu können.",
         "title": "Ungespeicherte Änderungen"

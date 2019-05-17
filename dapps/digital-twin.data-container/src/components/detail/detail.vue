@@ -230,13 +230,13 @@
                       {{ `_datacontainer.context-menu.clone` | translate }}
                     </a>
                     <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                      id="container-template-create"
+                      id="container-plugin-create"
                       @click="
-                        evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ containerAddress }`, `/${ dapp.rootEns }`)
+                        evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-plugin/${ containerAddress }`, `/${ dapp.rootEns }`)
                         $refs.containerContextMenu.hide($event);
                       ">
                       <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
-                      {{ `_datacontainer.context-menu.template-save` | translate }}
+                      {{ `_datacontainer.context-menu.plugin-save` | translate }}
                     </a>
                   </template>
                 </evan-dropdown>

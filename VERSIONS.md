@@ -3,6 +3,11 @@
 ## Next Version
 ### Features
 - Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
+  - dashboard.vue.evan
+  - addressbook.vue.evan
+  - favorites.vue.evan
+  - mailbox.vue.evan
+  - profile.vue.evan
 - `termsoufuse`
   - use latest terms of use and data protection specifications
 
@@ -11,6 +16,7 @@
   - disable left panel for standalone dapps
 - `digitaltwins`, `datacontainer.digitaltwins`
   - use correct html selector id's
+  - reorder twin overview and template overview
 - `digitaltwin`
   - fix top left digital twin name display overflow
 - `datacontainer.digitaltwins`
@@ -18,6 +24,7 @@
   - increase `ajv-editor` name td size to 300px
 
 ### Deprecations
+- rename `templates` to `plugins`
 
 
 ## Version 3.0.0

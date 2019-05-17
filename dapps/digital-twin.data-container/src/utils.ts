@@ -28,7 +28,7 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
-import { templateDispatcher, templateShareDispatcher } from './dispatchers/registry';
+import { pluginDispatcher, pluginShareDispatcher } from './dispatchers/registry';
 
 export const latestTwinKey = 'evan-last-digital-twins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
@@ -121,9 +121,9 @@ export function getContainer(runtime: bcc.Runtime, address: string): bcc.Contain
  *
  * @param      {bccRuntime}  runtime      bcc runtime
  * @param      {string}      address      data container address
- * @param      {any}         newTemplate  new template definition that should be checked
+ * @param      {any}         newPlugin    new template definition that should be checked
  */
-export async function getEntryChanges(runtime: bcc.Runtime, address: string, newTemplate: any) {
+export async function getEntryChanges(runtime: bcc.Runtime, address: string, newPlugin: any) {
   // analyse data and check, which data fields must be saved
   const changed = {
     saveDescription: false,
@@ -132,18 +132,18 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
     changed: false
   };
 
-  if (!address || address === 'create-template') {
+  if (!address || address === 'create-plugin') {
     changed.saveDescription = true;
     changed.changed = true;
-    changed.entriesToSave = Object.keys(newTemplate.properties).map(propertyKey => propertyKey);
+    changed.entriesToSave = Object.keys(newPlugin.properties).map(propertyKey => propertyKey);
   } else {
     const container = getContainer(runtime, address);
     const description = await container.getDescription();
     const template = await container.toTemplate(true);
 
     // check for integrity
-    Object.keys(newTemplate.properties).map((propertyKey: string) => {
-      const newProp = newTemplate.properties[propertyKey];
+    Object.keys(newPlugin.properties).map((propertyKey: string) => {
+      const newProp = newPlugin.properties[propertyKey];
       const originProp: any = template.properties[propertyKey] || { };
 
       if (typeof newProp.value !== 'undefined') {
@@ -169,25 +169,25 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
 
 
 /**
- * Return my templates and merge them with current running dispatchers.
+ * Return my plugins and merge them with current running dispatchers.
  *
  * @param      {bccRuntime}  runtime  bcc runtime
  */
-export async function getMyTemplates(runtime: bcc.Runtime) {
-  const templates: any = await bcc.Container.getContainerTemplates(runtime.profile);
+export async function getMyPlugins(runtime: bcc.Runtime) {
+  const plugins: any = await bcc.Container.getContainerTemplates(runtime.profile);
 
   // watch for new and sharing containers
-  const saving = await templateDispatcher.getInstances(runtime);
-  const sharing = await templateShareDispatcher.getInstances(runtime);
+  const saving = await pluginDispatcher.getInstances(runtime);
+  const sharing = await pluginShareDispatcher.getInstances(runtime);
 
-  // apply saving templates
+  // apply saving plugins
   saving.forEach(instance => {
-    // template gets updated
+    // plugin gets updated
     if (instance.data.beforeName) {
-      delete templates[instance.data.beforeName];
+      delete plugins[instance.data.beforeName];
     }
 
-    templates[instance.data.name] = {
+    plugins[instance.data.name] = {
       creating: !!instance.data.beforeName,
       description: {
         description: instance.data.description,
@@ -200,9 +200,6 @@ export async function getMyTemplates(runtime: bcc.Runtime) {
   });
 
   // show loading for shared containers
-  sharing.forEach(instance => {
-    templates[instance.data.name].loading = true;
-  });
-
-  return templates;
+  sharing.forEach(instance => plugins[instance.data.name].loading = true);
+  return plugins;
 }

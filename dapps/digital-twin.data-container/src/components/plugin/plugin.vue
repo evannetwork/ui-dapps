@@ -29,7 +29,7 @@
   <div class="container-wide">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <evan-modal id="template-share-modal" ref="shareModal"
+      <evan-modal id="plugin-share-modal" ref="shareModal"
         v-if="contacts.length !== 0">
         <template v-slot:header>
           <h5 class="modal-title">
@@ -74,7 +74,7 @@
         </template>
         <template v-slot:footer>
           <button
-            id="template-share"
+            id="plugin-share"
             type="button" class="btn btn-primary btn-rounded font-weight-normal"
             :disabled="!shareForm.isValid"
             @click="shareDt()">
@@ -83,7 +83,7 @@
           </button>
         </template>
       </evan-modal>
-      <evan-modal id="template-share-modal" ref="shareModal" v-else>
+      <evan-modal id="plugin-share-modal" ref="shareModal" v-else>
         <template v-slot:header>
           <h5 class="modal-title">
             {{ `_datacontainer.share.no-contacts.title` | translate }}
@@ -96,7 +96,7 @@
         </template>
         <template v-slot:footer>
           <button
-            id="template-go-addressbook"
+            id="plugin-go-addressbook"
             type="button" class="btn btn-primary btn-rounded font-weight-normal"
             @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }.${ dapp.domainName }`)">
             {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
@@ -117,29 +117,29 @@
           <span class="mx-auto"></span>
           <div class="d-flex">
             <button class="btn"
-              id="template-context-menu"
+              id="plugin-context-menu"
               @click="$refs.containerContextMenu.show();">
               <i class="mdi mdi-chevron-down"></i>
             </button>
 
             <div class="position-relative">
               <evan-dropdown
-                id="template-context-menu"
+                id="plugin-context-menu"
                 ref="containerContextMenu"
                 :alignment="'right'"
                 :width="'300px'">
                 <template v-slot:content>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                    id="template-dbcp-edit"
+                    id="plugin-dbcp-edit"
                     @click="
                       $refs.dbcpModal.show()
                       $refs.containerContextMenu.hide($event);
                     ">
                     <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
-                    {{ `_datacontainer.template.edit-dbcp` | translate }}
+                    {{ `_datacontainer.plugin.edit-dbcp` | translate }}
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                    id="template-share"
+                    id="plugin-share"
                     @click="
                       $refs.shareModal.show()
                       $refs.containerContextMenu.hide($event);
@@ -148,18 +148,18 @@
                     {{ `_datacontainer.context-menu.share` | translate }}
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                    id="template-container-create"
+                    id="plugin-container-create"
                     @click="
-                      evanNavigate(`create/${ templateName }`)
+                      evanNavigate(`create/${ pluginName }`)
                       $refs.containerContextMenu.hide($event);
                     ">
                     <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
                     {{ `_datacontainer.context-menu.create-container` | translate }}
                   </a>
                   <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                    id="template-clone"
+                    id="plugin-clone"
                     @click="
-                      evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-template/${ templateName }`, `/${ dapp.rootEns }`)
+                      evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-plugin/${ pluginName }`, `/${ dapp.rootEns }`)
                       $refs.containerContextMenu.hide($event);
                     ">
                     <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
@@ -169,16 +169,16 @@
               </evan-dropdown>
             </div>
             <button type="button" class="btn btn-primary btn-rounded"
-              id="template-save"
-              @click="saveTemplate()"
+              id="plugin-save"
+              @click="savePlugin()"
               :disabled="!enableSave">
-              {{ '_datacontainer.template.save' | translate }}
+              {{ '_datacontainer.plugin.save' | translate }}
               <i class="mdi mdi-content-save label"></i>
             </button>
           </div>
         </div>
         <evan-modal
-          id="template-dbcp-modal"
+          id="plugin-dbcp-modal"
           ref="dbcpModal"
           @canceled="cancelDbcpModal">
           <template v-slot:header>
@@ -187,7 +187,7 @@
             </h5>
           </template>
           <template v-slot:body>
-            <form v-on:submit.prevent="saveTemplate(true)">
+            <form v-on:submit.prevent="savePlugin(true)">
               <div class="form-group">
                 <label for="name">
                   {{ `_datacontainer.createForm.name.title` | translate }}
@@ -218,8 +218,8 @@
           </template>
           <template v-slot:footer>
             <button type="submit"
-              id="template-dbcp-save"
-              @click="saveTemplate(true)"
+              id="plugin-dbcp-save"
+              @click="savePlugin(true)"
               class="btn btn-rounded btn-primary"
               :disabled="!dbcpForm.isValid">
               {{ `_datacontainer.createForm.save` | translate }}
@@ -230,14 +230,14 @@
 
         <dc-template-handler
           ref="templateHandler"
-          :address="templateName"
+          :address="pluginName"
           :template.sync="template"
           :permissions="permissions">
         </dc-template-handler>
       </template>
 
       <div class="white-box border rounded"
-        id="template-saving"
+        id="plugin-saving"
         v-else>
         <div class="text-center">
           <h4 class="mt-5 mb-3">{{ '_datacontainer.in-saving' | translate }}</h4>
@@ -249,6 +249,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './template.ts';
+  import Component from './plugin.ts';
   export default Component;
 </script>

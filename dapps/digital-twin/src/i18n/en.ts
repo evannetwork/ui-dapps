@@ -34,7 +34,7 @@ export default {
       "add": "Add",
       "containerlink": "Link Data Container",
       "containers": "Data container overview",
-      "create-template": "Create Template",
+      "create-plugin": "Create Plugin",
       "datacontainer.digitaltwin": "Data Container",
       "digitaltwin": "Digital Twin",
       "digitaltwins": "Digital Twins",
@@ -42,8 +42,8 @@ export default {
       "open": "Open",
       "map": "Bind to domain name",
       "overview": "Favorites & recent Digital Twins",
-      "template": "Template",
-      "templates": "Templates",
+      "plugin": "Plugin",
+      "plugins": "Plugins",
       "verifications": "Verifications",
       "general": "General Information"
     },
@@ -123,18 +123,7 @@ export default {
         "desc": "General information about the Digital Twin.",
         "title": "Digital Twin"
       },
-      "digitaltwin-overview": "Favorites & recent Digital Twins",
       "general": "General information",
-      "my-digitaltwins": {
-        "desc": "Overview of my Digital Twins",
-        "title": "Digital Twins"
-      },
-      "my-templates": {
-        "desc": "Recent templates or create new ones",
-        "title": "My Templates"
-      },
-      "open-digitaltwin": "Open Digital Twin",
-      "templates-overview": "My templates",
       "verifications": "Verifications"
     },
     "lookup": {

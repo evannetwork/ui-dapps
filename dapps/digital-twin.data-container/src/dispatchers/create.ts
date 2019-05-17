@@ -45,11 +45,7 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
 
     // apply formular data to the description
-    const description = await utils.getDataContainerBaseDbcp({
-      name: data.name,
-      description: data.description,
-      imgSquare: data.img,
-    });
+    const description = await utils.getDataContainerBaseDbcp(data.description);
 
     // create the container
     const container = await bcc.Container.create(<any>runtime, {

@@ -58,23 +58,22 @@
       </div>
 
       <div class="white-box border rounded mt-3"
-        v-for="(category, index) in [ 'lastTwins', 'favorites' ]"
-        v-if="categories[category].length > 0">
-        <div class="header">
+        v-if="twins.length !== 0">
+        <div class="header border-0">
           <div>
             <h3 class="font-weight-semibold m-0">
-              {{ `_digitaltwins.overview.${ category }` | translate }}
+              {{ `_digitaltwins.overview.my-twins` | translate }}
             </h3>
           </div>
           <span class="mx-auto"></span>
           <div></div>
         </div>
         <div class="row content"
-          :id="`evan-dt-${ category }`">
-          <div class="col-md-6 col-lg-4 mb-4"
-            v-for="(ensAddress, index) in categories[category]">
+          :id="`evan-dt-twins`">
+          <div class="col-md-6 col-lg-3 mb-4"
+            v-for="(ensAddress, index) in twins">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
-              :id="`evan-dt-${ category }-${ ensAddress.replace('.', '') }`"
+              :id="`evan-dt-${ ensAddress.replace('.', '') }`"
               :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
@@ -87,17 +86,18 @@
                   </i>
                 </div>
                 <div class="col-10">
-                  <small class="text-center p-1 d-block text-muted"
-                    v-if="descriptions[ensAddress].creating">
-                    {{ '_digitaltwins.containers.in-creation' | translate }}
-                  </small>
-                  <div class="d-flex p-3 flex-truncate">
+                  <div class="d-flex p-3 flex-truncate align-items-center">
                     <div>
                       <h4 class="font-weight-semibold mb-0">
                         {{ descriptions[ensAddress].name }}
                       </h4>
                       <span class="text-justify d-block font-weight-semibold text-muted">
-                        {{ descriptions[ensAddress].description }}
+                        <template v-if="descriptions[ensAddress].creating">
+                          {{ '_digitaltwins.containers.in-creation' | translate }}
+                        </template>
+                        <template v-else>
+                          {{ descriptions[ensAddress].description }}
+                        </template>
                       </span>
                     </div>
                     <template v-if="descriptions[ensAddress].loading">
@@ -112,7 +112,7 @@
         </div>
       </div>
       <div class="white-box border rounded mt-3 "
-        v-if="categories.favorites.length === 0 && categories.lastTwins.length === 0">
+        v-else>
         <div class="header">
           <h4 class="m-0">
             {{ `_digitaltwins.overview.empty` | translate }}

@@ -7,7 +7,7 @@
       "files": [
         "**"
       ],
-      "origin": "QmTj6a1a7EF22dCB4SjxyBdAnox6svWWt2CqHbTSWosYJ5",
+      "origin": "QmQkfpd4eLAC5bRQvTQcxsU3gemrjVTSX86uYzdvXVGjES",
       "primaryColor": "#c30f1b",
       "secondaryColor": "#ffffff",
       "type": "dapp"
@@ -29,7 +29,8 @@
     "tags": [],
     "version": "1.5.0",
     "versions": {
-      "1.0.0": "Qmc6WxsC6g8FugzKcg7pnoueJ1CFtR6PjVD8HFYn53PrRE"
+      "1.0.0": "Qmc6WxsC6g8FugzKcg7pnoueJ1CFtR6PjVD8HFYn53PrRE",
+      "1.5.0": "QmYD3u1ruJmmGEQdcKmbRZbPN2mjbFje7mA1u7ma6YfdgY"
     }
   }
 }

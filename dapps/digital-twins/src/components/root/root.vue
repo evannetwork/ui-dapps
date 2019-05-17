@@ -48,11 +48,11 @@
               {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
             </a>
             <a class="evan-tab bg-inverted text-white"
-              id="dt-templates"
+              id="dt-plugins"
               :class="{ 'active': activeTab === 1 }"
-              :href="`${ dapp.fullUrl }/templates`"
+              :href="`${ dapp.fullUrl }/plugins`"
               @click="activeTab = 1">
-              {{ '_digitaltwins.left-categories.my-templates.title' | translate }}
+              {{ '_digitaltwins.left-categories.my-plugins.title' | translate }}
             </a>
           </div>
         </template>

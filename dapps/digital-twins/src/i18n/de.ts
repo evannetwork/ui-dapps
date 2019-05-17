@@ -35,42 +35,32 @@ export default {
     "digitaltwins": "Digitale Zwillinge",
     "empty-navigation": "Keine Einträge verfügbar",
     "in-creation": "In Erstellung...",
-    "left-categories": {
-      "container-overview": "Daten Container Übersicht",
-      "containers": {
-        "desc": "Zugeordnete Datencontainer",
-        "title": "Daten Container"
-      },
-      "digitaltwin-details": {
-        "desc": "Generelle Informationen zu dem digitalen Zwilling",
-        "title": "Digitale Zwilling"
-      },
-      "digitaltwin-overview": "Favoriten & letzte Zwillinge",
-      "general": "Metadaten",
-      "my-digitaltwins": {
-        "desc": "Übersicht meiner digitalen Zwillinge",
-        "title": "Digitale Zwillinge"
-      },
-      "my-templates": {
-        "desc": "Letzte Vorlagen oder Neue erstellen",
-        "title": "Meine Vorlagen"
-      },
-      "open-digitaltwin": "Digitale Zwilling öffnen",
-      "templates-overview": "Meine Vorlagen",
-      "verifications": "Verifizierungen"
+    "digitaltwin-details": {
+      "desc": "Generelle Informationen zu dem digitalen Zwilling",
+      "title": "Digitale Zwilling"
     },
+    "general": "Metadaten",
+    "my-digitaltwins": {
+      "desc": "Übersicht meiner digitalen Zwillinge",
+      "title": "Meine Digitalen Zwillinge"
+    },
+    "my-plugins": {
+      "desc": "Letzte Plugins oder Neue erstellen",
+      "title": "Meine Plugins"
+    },
+    "open-digitaltwin": "Digitale Zwilling öffnen",
+    "plugins-overview": "Meine Plugins",
     "overview": {
       "create-twin": "Digitalen Zwilling erstellen",
       "empty": "Digitale Zwillinge",
       "empty-desc": "Maschinen, Autos, Produkte und Menschen können alle mit einem digitalen Zwilling dargestellt werden. Digitale Zwillinge spiegeln die Attribute und den Status des Assets oder der Person in der Blockchain wieder. Die Erstellung eines Zwillings für Autos, Gabelstapler und andere Anlagen ermöglicht es Ihnen, ihren Status in Bruchteilen einer Sekunde an das Netzwerk zu melden und autonom auf Anfragen zu reagieren.<br><br><br>Ein Digitaler Zwilling ist daher eine einzigartige Darstellung eines realen Objekts im evan.network. Es kann Attribute und alle anderen Daten über das reale Objekt enthalten, und Operationen und Aufgaben bezüglich des realen Objekts implementieren, die alle kryptographisch auf der Blockchain gesichert sind.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keinen digitalen Zwilling geöffnet oder favoritisiert. Benutzen Sie den \"Digitalen Zwilling erstellen\" oder \"Digitalen Zwilling öffnen\" Button, um einen Neuen zu erstellen oder einen Bestehenden zu öffnen.</b>",
-      "favorites": "Meine Favoriten",
-      "lastTwins": "Zuletzt geöffnet",
+      "my-twins": "Meine Digitalen Zwillinge",
       "title": "Übersicht"
     },
-    "templates": {
+    "plugins": {
       "create": "Vorlage Erstellen",
-      "empty": "Meine Vorlagen",
-      "empty-desc": "Jeder Daten Container enthält alle Datenspezifikationen, inklusive deren Format und Validierung. Über Vorlagen lassen sich diese Datendefinitionen extrahiert speichern und mehrfach, für verschiedene Daten Container benutzen.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keine Vorlagen erstellt. Benutzen Sie den \"Vorlagen erstellen\" Button, um eine Neue zu erstellen.</b>"
+      "empty": "Meine Plugins",
+      "empty-desc": "Jeder Daten Container enthält alle Datenspezifikationen, inklusive deren Format und Validierung. Über Plugins lassen sich diese Datendefinitionen extrahiert speichern und mehrfach, für verschiedene Daten Container benutzen.<br><br><b class=\"text-center d-block mt-3\">Sie haben noch keine Vorlagen erstellt. Benutzen Sie den \"Vorlagen erstellen\" Button, um eine Neue zu erstellen.</b>"
     }
   }
 }

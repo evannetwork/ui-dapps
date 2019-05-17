@@ -34,41 +34,20 @@ import * as utils from '../utils';
 
 const dispatcher = new Dispatcher(
   `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
-  'templateDispatcher',
+  'pluginShareDispatcher',
   40 * 1000,
-  '_datacontainer.dispatcher.template'
+  '_datacontainer.dispatcher.plugin-share'
 );
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     // set the digital twin instance
     const runtime = utils.getRuntime(instance.runtime);
-    const profile = runtime.profile;
-
-    // apply the possibility to only save the description, without touching the template.
-    data.template = data.template || (await bcc.Container
-      .getContainerTemplate(profile, data.beforeName)).template;
-
-    // load latest contracts to be up to date
-    await profile.loadForAccount(profile.treeLabels.contracts);
-
-    // on an update and when the name has changed, remove the previous template
-    if (data.beforeName && data.name !== data.beforeName) {
-      await runtime.profile.removeBcContract(bcc.Container.profileTemplatesKey, data.beforeName);
-    }
-
-    // save the new template
-    await profile.addBcContract(bcc.Container.profileTemplatesKey, data.name, {
-      description: {
-        description: data.description,
-        img: data.img,
-        name: data.name,
-      },
-      template: data.template,
-    });
-
-    // save the profile
-    await profile.storeForAccount(profile.treeLabels.contracts);
+    await runtime.mailbox.sendMail(
+      data.bMailContent,
+      runtime.activeAccount,
+      data.shareConfig.accountId
+    );
   });
 
 export default dispatcher;

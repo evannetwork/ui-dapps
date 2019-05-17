@@ -49,28 +49,27 @@ export default {
       "general": "Metadata",
       "my-digitaltwins": {
         "desc": "Overview of my Digital Twins.",
-        "title": "Digital Twins"
+        "title": "My Digital Twins"
       },
-      "my-templates": {
-        "desc": "Recent templates or create new ones",
+      "my-plugins": {
+        "desc": "Recent plugins or create new ones",
         "title": "My Templates"
       },
       "open-digitaltwin": "Open Digital Twin",
-      "templates-overview": "My templates",
+      "plugins-overview": "My plugins",
       "verifications": "Verifications"
     },
     "overview": {
       "create-twin": "Create Digital Twin",
-      "empty": "Digital Twins",
+      "empty": "My Digital Twins",
       "empty-desc": "Machines, cars, products, and people can all be represented with a digital twin. Digital twins mirror the asset’s or person’s attributes and status on the blockchain. Creating a twin for cars, forklifts, and other assets enables them to report their status to the network in fractions of a second and respond to requests autonomously.<br><br>A Digital Twin therefore is a unique representation of a real world object in the evan.network. It can hold attributes and any other data about the real world object, and implement operations and tasks concerning the real world object, all cryptographically secured on the blockchain.<br><br><b class=\"text-center d-block mt-3\">Use the \"Create Digital Twin\" or \"Open Digital Twin\" button to create a new one or to open an existing one.</b>",
-      "favorites": "My Favorites",
-      "lastTwins": "Last opened",
+      "my-twins": "My digital twins",
       "title": "Overview"
     },
-    "templates": {
+    "plugins": {
       "create": "Create Template",
       "empty": "My Templates",
-      "empty-desc": "Each data container contains all data specifications, including their format and validation. Using templates, these data definitions can be saved, extracted and used multiple times for different data containers.<br><br><b class=\"text-center d-block mt-3\">You haven't created any templates yet. Use the \"Create Templates\" button to create a new one.</b>"
+      "empty-desc": "Each data container contains all data specifications, including their format and validation. Using plugins, these data definitions can be saved, extracted and used multiple times for different data containers.<br><br><b class=\"text-center d-block mt-3\">You haven't created any plugins yet. Use the \"Create Templates\" button to create a new one.</b>"
     }
   }
 }

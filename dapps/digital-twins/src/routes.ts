@@ -30,17 +30,17 @@ import { DAppLoader } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import OverviewComponent from './components/overview/overview.vue';
-import TemplatesComponent from './components/templates/templates.vue';
+import PluginsComponent from './components/plugins/plugins.vue';
 import ContainersComponent from './components/containers/containers.vue';
 
 import { EnsOpenComponent } from '@evan.network/digitaltwin';
 
-// map them to element names, so they can be used within templates
+// map them to element names, so they can be used within plugins
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'overview' }  },
   { name: 'base-overview',        component: OverviewComponent,  path: 'overview', },
-  { name: 'base-templates',       component: TemplatesComponent, path: 'templates', },
+  { name: 'base-plugins',         component: PluginsComponent, path: 'plugins', },
   { name: 'dt-open',              component: EnsOpenComponent,   path: `open`, },
 ];
 /* tslint:enable */

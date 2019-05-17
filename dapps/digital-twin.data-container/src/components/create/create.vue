@@ -36,11 +36,11 @@
       <div class="d-flex mb-3 align-items-center">
         <div>
           <h3 class="font-weight-bold mb-0">
-            <template v-if="!templateMode">
+            <template v-if="!pluginMode">
               {{ `_datacontainer.createForm.title` | translate }}
             </template>
             <template v-else>
-              {{ `_datacontainer.template.create-title` | translate }}
+              {{ `_datacontainer.plugin.create-title` | translate }}
             </template>
           </h3>
           <p class="text-muted font-weight-semibold m-t-0">
@@ -90,20 +90,20 @@
               id="container-create-form"
               v-on:submit.prevent="activeStep = 1"
               v-if="!creating">
-              <div class="form-group" v-if="templates.length > 1">
-                <label for="template">
-                  {{ `_datacontainer.createForm.template.title` | translate }}
+              <div class="form-group" v-if="plugins.length > 1">
+                <label for="plugin">
+                  {{ `_datacontainer.createForm.plugin.title` | translate }}
                 </label>
                 <select class="form-control custom-select"
-                  id="template" ref="template"
-                  :placeholder="`_datacontainer.createForm.template.desc` | translate"
-                  v-model="createForm.template.value"
-                  :class="{ 'is-invalid' : createForm.template.error }"
-                  @blur="createForm.template.setDirty()">
+                  id="plugin" ref="plugin"
+                  :placeholder="`_datacontainer.createForm.plugin.desc` | translate"
+                  v-model="createForm.plugin.value"
+                  :class="{ 'is-invalid' : createForm.plugin.error }"
+                  @blur="createForm.plugin.setDirty()">
                   <option
-                    v-for="(template, index) in templates"
+                    v-for="(plugin, index) in plugins"
                     :value="index">
-                    {{ template.title | translate }}
+                    {{ plugin.description.title | translate }}
                   </option>
                 </select>
               </div>
@@ -151,8 +151,8 @@
           <div class="step" v-if="activeStep === 1">
             <dc-template-handler
               ref="templateHandler"
-              :address="!templateMode ? 'create' : 'create-template'"
-              :template.sync="templates[createForm.template.value]"
+              :address="!pluginMode ? 'create' : 'create-plugin'"
+              :template.sync="plugins[createForm.plugin.value]"
               :permissions="permissions">
             </dc-template-handler>
 
@@ -160,11 +160,11 @@
               id="container-create-question"
               ref="createModal">
               <template v-slot:header>
-                <h5 class="modal-title" v-if="!templateMode">
+                <h5 class="modal-title" v-if="!pluginMode">
                   {{ `_datacontainer.create-question.title` | translate }}
                 </h5>
                 <h5 class="modal-title" v-else>
-                  {{ `_datacontainer.template.create-title` | translate }}
+                  {{ `_datacontainer.plugin.create-title` | translate }}
                 </h5>
               </template>
               <template v-slot:body>

@@ -36,17 +36,17 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { getRuntime } from '@evan.network/digitaltwin';
 import {
-  getMyTemplates,
-  templateDispatcher,
-  templateShareDispatcher
+  getMyPlugins,
+  pluginDispatcher,
+  pluginShareDispatcher
 } from '@evan.network/datacontainer.digitaltwin';
 
 @Component({ })
-export default class TemplatesComponent extends mixins(EvanComponent) {
+export default class PluginsComponent extends mixins(EvanComponent) {
   /**
-   * My templates
+   * My plugins
    */
-  templates: any = { };
+  plugins: any = { };
 
   /**
    * show loading symbol
@@ -54,61 +54,61 @@ export default class TemplatesComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
-   * watch for template save opertations
+   * watch for plugin save opertations
    */
   saveWatcher = Function;
 
 
   /**
-   * watch for template save opertations
+   * watch for plugin save opertations
    */
   shareWatcher = Function;
 
   /**
-   * Load my templates
+   * Load my plugins
    */
   async created() {
-    await this.reloadTemplates();
+    await this.reloadPlugins();
     this.loading = false;
 
     this.bindDispatchers();
   }
 
   /**
-   * Clear the contracts cache and load the templates for the current user.
+   * Clear the contracts cache and load the plugins for the current user.
    */
-  async reloadTemplates() {
+  async reloadPlugins() {
     const runtime = getRuntime(this);
 
     delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-    this.templates = await getMyTemplates(runtime);
+    this.plugins = await getMyPlugins(runtime);
   }
 
   /**
-   * Loads templates.
+   * Loads plugins.
    */
   async bindDispatchers() {
     const runtime = getRuntime(this);
     let beforeSaving = -1;
 
     /**
-     * Check current dispatcher instances and reload templates if the save process has finished
+     * Check current dispatcher instances and reload plugins if the save process has finished
      */
-    const checkTemplates = async () => {
-      const saving = await templateDispatcher.getInstances(runtime);
-      const sharing = await templateShareDispatcher.getInstances(runtime);
+    const checkPlugins = async () => {
+      const saving = await pluginDispatcher.getInstances(runtime);
+      const sharing = await pluginShareDispatcher.getInstances(runtime);
       const savingCount = saving.length + sharing.length;
 
       // for reload
       if (beforeSaving < savingCount) {
-        await this.reloadTemplates();
+        await this.reloadPlugins();
       }
 
       beforeSaving = savingCount;
     };
 
-    this.saveWatcher = templateDispatcher.watch(() => checkTemplates());
-    this.shareWatcher = templateDispatcher.watch(() => checkTemplates());
+    this.saveWatcher = pluginDispatcher.watch(() => checkPlugins());
+    this.shareWatcher = pluginDispatcher.watch(() => checkPlugins());
   }
 
   /**

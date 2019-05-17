@@ -51,13 +51,13 @@ interface ShareFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class TemplateComponent extends mixins(EvanComponent) {
+export default class PluginComponent extends mixins(EvanComponent) {
   /**
-   * Current opened template name (save it from routes to this variable, so all beforeDestroy
+   * Current opened plugin name (save it from routes to this variable, so all beforeDestroy
    * listeners for template-handlers will work correctly and do not uses a new address that is
    * laoding)
    */
-  templateName = '';
+  pluginName = '';
 
   /**
    * Show loading symbol
@@ -70,12 +70,12 @@ export default class TemplateComponent extends mixins(EvanComponent) {
   enableSave = false;
 
   /**
-   * Is a save dispatcher for this template running?
+   * Is a save dispatcher for this plugin running?
    */
   saving = false;
 
   /**
-   * is a sharing dispatcher for this template running?
+   * is a sharing dispatcher for this plugin running?
    */
   sharing = false;
 
@@ -130,18 +130,18 @@ export default class TemplateComponent extends mixins(EvanComponent) {
    * Load the container data
    */
   async created() {
-    this.templateName = this.$route.params.template;
+    this.pluginName = this.$route.params.plugin;
 
     const runtime = utils.getRuntime(this);
     await this.initialize();
 
     this.valuesChanged = (($event) => this.enableSave = true).bind(this);
     // watch for saving updates
-    this.savingWatcher = dispatchers.templateDispatcher.watch(async () => {
+    this.savingWatcher = dispatchers.pluginDispatcher.watch(async () => {
       const beforeSaving = this.saving;
 
-      this.saving = (await dispatchers.templateDispatcher.getInstances(runtime))
-        .filter(instance => instance.data.name === this.templateName)
+      this.saving = (await dispatchers.pluginDispatcher.getInstances(runtime))
+        .filter(instance => instance.data.name === this.pluginName)
         .length > 0;
 
       // reload the data
@@ -153,8 +153,8 @@ export default class TemplateComponent extends mixins(EvanComponent) {
 
     // watch for sharings watcher
     this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
-      this.sharing = (await dispatchers.templateDispatcher.getInstances(runtime))
-        .filter(instance => instance.data.name === this.templateName)
+      this.sharing = (await dispatchers.pluginDispatcher.getInstances(runtime))
+        .filter(instance => instance.data.name === this.pluginName)
         .length > 0;
     });
 
@@ -176,11 +176,11 @@ export default class TemplateComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    const loadedTemplate = await bcc.Container.getContainerTemplate(runtime.profile,
-      this.templateName);
+    const loadedPlugin = await bcc.Container.getContainerTemplate(runtime.profile,
+      this.pluginName);
 
-    this.description = loadedTemplate.description;
-    this.template = loadedTemplate.template;
+    this.description = loadedPlugin.description;
+    this.template = loadedPlugin.template;
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
@@ -205,13 +205,13 @@ export default class TemplateComponent extends mixins(EvanComponent) {
     this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
       name: {
         value: this.description.name,
-        validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
+        validate: function(vueInstance: PluginComponent, form: DbcpFormInterface) {
           return this.value.trim().length !== 0;
         }
       },
       description: {
         value: this.description.description,
-        validate: function(vueInstance: TemplateComponent, form: DbcpFormInterface) {
+        validate: function(vueInstance: PluginComponent, form: DbcpFormInterface) {
           return true;
         }
       },
@@ -222,15 +222,15 @@ export default class TemplateComponent extends mixins(EvanComponent) {
 
     // setup share form, so the user can insert a custom form
     let subject = [
-      (<any>this).$t('_datacontainer.breadcrumbs.template'),
+      (<any>this).$t('_datacontainer.breadcrumbs.plugin'),
       `: ${ this.description.name }`,
-      this.templateName ? ` - ${ this.templateName }` : ''
+      this.pluginName ? ` - ${ this.pluginName }` : ''
     ].join('');
 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
       subject: {
         value: subject,
-        validate: function(vueInstance: TemplateComponent, form: ShareFormInterface) {
+        validate: function(vueInstance: PluginComponent, form: ShareFormInterface) {
           return this.value.trim().length !== 0;
         }
       },
@@ -244,9 +244,9 @@ export default class TemplateComponent extends mixins(EvanComponent) {
    *
    * @param      {boolean}  onlyDbcp  save only the description
    */
-  async saveTemplate(onlyDbcp = false) {
+  async savePlugin(onlyDbcp = false) {
     if (!this.saving && this.dbcpForm.isValid) {
-      // when the template should be saved, check if all changes have been changed
+      // when the plugin should be saved, check if all changes have been changed
       if (!onlyDbcp) {
         const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
         if (unsavedChanges.length !== 0) {
@@ -267,18 +267,20 @@ export default class TemplateComponent extends mixins(EvanComponent) {
 
       // disable value caching within the template handler and delete the latest cache
       (<any>this.$refs.templateHandler).cacheChanges = false;
-      await (new ContainerCache(runtime.activeAccount)).delete(this.templateName);
+      await (new ContainerCache(runtime.activeAccount)).delete(this.pluginName);
 
       // hide dbcp modal
       (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
 
       // wait for the template handler to saved all the data
       this.$nextTick(async () => {
-        dispatchers.templateDispatcher.start(runtime, {
-          beforeName: this.templateName,
-          description: this.dbcpForm.description.value,
-          img: this.dbcpForm.img.value,
-          name: this.dbcpForm.name.value,
+        dispatchers.pluginDispatcher.start(runtime, {
+          description: {
+            description: this.dbcpForm.description.value,
+            imgSquare: this.dbcpForm.img.value,
+            name: this.dbcpForm.name.value,
+          },
+          beforeName: this.pluginName,
           template: onlyDbcp ? undefined : this.template,
         });
 
@@ -292,7 +294,7 @@ export default class TemplateComponent extends mixins(EvanComponent) {
    */
   shareDt() {
     const runtime = utils.getRuntime(this);
-    const address = this.templateName;
+    const address = this.pluginName;
 
     // transform the ui permission into an conainter share config
     const shareConfig: bcc.ContainerShareConfig = { accountId: this.shareAccount, };
@@ -302,22 +304,22 @@ export default class TemplateComponent extends mixins(EvanComponent) {
       content: {
         from: runtime.activeAccount,
         fromAlias: this.myProfile.alias,
-        title: (<any>this).$t('_datacontainer.template.bmail.title'),
-        body: (<any>this).$t('_datacontainer.template.bmail.body', {
+        title: (<any>this).$t('_datacontainer.plugin.bmail.title'),
+        body: (<any>this).$t('_datacontainer.plugin.bmail.body', {
           alias: this.myProfile.alias,
           subject: this.shareForm.subject.value,
         }),
         attachments: [{
-          address: this.templateName,
+          address: this.pluginName,
           bc: bcc.Container.profileTemplatesKey,
           fullPath: [
             `/${ (<any>this).dapp.rootEns }`,
             `digitaltwins.${ (<any>this).dapp.domainName }`,
             `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-            `template/${ this.dbcpForm.name.value }`,
+            `plugin/${ this.dbcpForm.name.value }`,
           ].join('/'),
           type: 'contract',
-          storeKey: this.templateName,
+          storeKey: this.pluginName,
           storeValue: {
             description: {
               description: this.dbcpForm.description.value,

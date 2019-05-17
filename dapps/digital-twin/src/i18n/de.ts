@@ -34,7 +34,7 @@ export default {
       "add": "Hinzufügen",
       "containerlink": "Daten Container verknüpfen",
       "containers": "Daten Container Übersicht",
-      "create-template": "Vorlage erstellen",
+      "create-plugin": "Plugin erstellen",
       "datacontainer.digitaltwin": "Daten Container",
       "digitaltwin": "Digitaler Zwilling",
       "digitaltwins": "Digitale Zwillinge",
@@ -42,8 +42,8 @@ export default {
       "open": "Öffnen",
       "map": "An Domainnamen binden",
       "overview": "Favoriten & letzte Zwillinge",
-      "template": "Vorlage",
-      "templates": "Vorlagen",
+      "plugin": "Plugin",
+      "plugins": "Plugins",
       "verifications": "Verifizierungen",
       "general": "Generelle Informationen"
     },
@@ -123,18 +123,7 @@ export default {
         "desc": "Generelle Informationen des digitalen Zwillings",
         "title": "Digitaler Zwilling"
       },
-      "digitaltwin-overview": "Favoriten & letzte Zwillinge",
       "general": "Generelle Informationen",
-      "my-digitaltwins": {
-        "desc": "Übersicht meiner digitalen Zwillinge",
-        "title": "Digitale Zwillinge"
-      },
-      "my-templates": {
-        "desc": "Letzte Vorlagen oder Neue erstellen",
-        "title": "Meine Vorlagen"
-      },
-      "open-digitaltwin": "Digitalen Zwilling öffnen",
-      "templates-overview": "Meine Vorlagen",
       "verifications": "Verifizierungen"
     },
     "lookup": {

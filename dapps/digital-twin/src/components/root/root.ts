@@ -63,16 +63,6 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   twinNavigation: any = [ ];
 
   /**
-   * List of available templates
-   */
-  templates: any = { };
-
-  /**
-   * Current activated tab (digital twins / templates)
-   */
-  activeTab = 0;
-
-  /**
    * Clear the hash change watcher
    */
   beforeDestroy() {

@@ -57,16 +57,17 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
     const description = await container.getDescription();
+    const newDescription = data.description;
 
     // check for changed data
     if (data.saveDescription ||
-        description.name !== data.name ||
-        description.description !== data.description ||
-        description.imgSquare !== data.img) {
+        description.name !== newDescription.name ||
+        description.description !== newDescription.description ||
+        description.imgSquare !== newDescription.img) {
       // set dbcp values
-      description.name = data.name;
-      description.description = data.description;
-      description.imgSquare = data.img;
+      description.name = newDescription.name;
+      description.description = newDescription.description;
+      description.imgSquare = newDescription.imgSquare;
 
       // don't forget to update the template schema
       description.dataSchema = { };
