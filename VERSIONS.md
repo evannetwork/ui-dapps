@@ -24,7 +24,8 @@
   - increase `ajv-editor` name td size to 300px
 
 ### Deprecations
-- rename `templates` to `plugins`
+- `digitaltwins`, `datacontainer.digitaltwins`
+  - rename `templates` to `plugins`
 
 
 ## Version 3.0.0
