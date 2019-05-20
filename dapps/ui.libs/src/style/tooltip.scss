@@ -30,13 +30,19 @@
 }
 
 .evan-tooltip {
-  position: absolute  !important;
+  position: absolute !important;
 
-  display: flex !important;
+  display: none !important;
   align-items: center;
   justify-content: center;
 
-  opacity: 1;
+  min-width: 100px;
+
+  opacity: 1 !important;
+
+  &.show-tooltip {
+    display: flex !important;
+  }
 
   &.bs-tooltip-top, &.bs-tooltip-bottom {
     right: 0;

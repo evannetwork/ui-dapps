@@ -25,7 +25,7 @@
   https://evan.network/license/
 */
 // map the original vue path to axios.vue.libs
-import { System, getDomainName } from '@evan.network/ui-dapp-browser';
+import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 System.map['@evan.network/api-blockchain-core'] = `bcc.${ getDomainName() }!dapp-content`;
 System.map['@evan.network/dbcp'] = `bcc.${ getDomainName() }!dapp-content`;
 

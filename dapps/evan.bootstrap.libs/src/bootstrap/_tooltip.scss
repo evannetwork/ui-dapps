@@ -121,14 +121,6 @@
   }
 }
 
-.evan .btn.btn-light {
-  .tooltip-inner {
-    color: $tooltip-color !important;
-    border-radius: 5px;
-    background-color: $tooltip-bg !important;
-  }
-}
-
 // Wrapper for the tooltip content
 .tooltip-inner {
   max-width: $tooltip-max-width;

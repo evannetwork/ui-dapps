@@ -26,7 +26,7 @@
 */
 
 // map the original vue path to axios.vue.libs
-import { System, getDomainName } from '@evan.network/ui-dapp-browser';
+import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${ getDomainName() }!dapp-content`;
 
 export * from '@evan.network/smart-contracts-core/contracts/compiled.js';

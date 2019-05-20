@@ -913,6 +913,8 @@ $card-columns-margin:               $card-spacer-y !default;
 
 $tooltip-font-size:                 $font-size-sm !default;
 $tooltip-max-width:                 200px !default;
+$popover-header-bg:                 cssVar('tooltip-color') !default;
+$popover-header-bg-darken:          cssVar('tooltip-bg') !default;
 $tooltip-color:                     $white !default;
 $tooltip-bg:                        $black !default;
 $tooltip-border-radius:             $border-radius !default;

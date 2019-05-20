@@ -25,7 +25,7 @@
   https://evan.network/license/
 */
 // map the original vue path to d3.libs
-import { System, getDomainName } from '@evan.network/ui-dapp-browser';
+import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 System.map['d3'] = `d3.libs.${ getDomainName() }!dapp-content`;
 
 // 3d.js
