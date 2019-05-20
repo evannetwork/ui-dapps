@@ -31,10 +31,13 @@ $navbar-height: 63px;
 $sidebar-small-width: $navbar-height;
 
 .evan .evan-dapp-wrapper {
-  display: flex;
-  flex-direction: column;
+  &, .dapp-wrapper-main, .dapp-wrapper-content-wrapper {
+    display: flex;
+    flex-direction: column;
 
-  height: 100%;
+    width: 100%;
+    height: 100%;
+  }
 
   .navbar {
     z-index: 1030;

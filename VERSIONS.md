@@ -2,7 +2,9 @@
 
 ## Next Version
 ### Features
-- add correct tooltip stylings
+- add tooltip stylings
+- add `btn-tertiary` style
+- add `dapp-wrapper-header` style
 
 ### Fixes
 ### Deprecations
