@@ -83,9 +83,14 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   plugins: Array<any> = [
     {
-      title: '_datacontainer.createForm.base-plugin',
-      type: 'metadata',
-      properties: { },
+      description: {
+        name: '_datacontainer.createForm.base-plugin',
+        description: '',
+      },
+      template: {
+        type: 'metadata',
+        properties: { },
+      }
     }
   ];
 
@@ -157,18 +162,15 @@ export default class CreateComponent extends mixins(EvanComponent) {
     // check if a existing container should be cloned
     const cloneContainer = (<any>this).$route.params.cloneContainer;
     if (cloneContainer) {
-      let template;
-
       // if a plugin is available that should used to create a container / plugin, load the
       // plugin
       if (plugins[cloneContainer]) {
-        const loadedPlugin = await bcc.Container.getContainerTemplate(runtime.profile,
+        const plugin = await bcc.Container.getContainerPlugin(runtime.profile,
           cloneContainer);
 
         // setup plugin and description
-        template = loadedPlugin.template;
-        this.createForm.name.value = loadedPlugin.description.name;
-        this.createForm.description.value = loadedPlugin.description.description;
+        this.createForm.name.value = plugin.description.name;
+        this.createForm.description.value = plugin.description.description;
 
         // search for active plugin index
         for (let i = 0; i < this.plugins.length; i++) {
@@ -180,14 +182,13 @@ export default class CreateComponent extends mixins(EvanComponent) {
         }
       } else if (cloneContainer.startsWith('0x')) {
         const container = utils.getContainer(<any>runtime, cloneContainer);
-        const description = await container.getDescription();
-        template = await container.toTemplate(true);
+        const plugin = await container.toPlugin(true);
 
-        this.createForm.name.value = description.name;
-        this.createForm.description.value = description.description;
+        this.createForm.name.value = plugin.description.name;
+        this.createForm.description.value = plugin.description.description;
 
         // apply the contract as template
-        this.plugins.push({ description, template });
+        this.plugins.push(plugin);
 
         // set correct template index
         this.createForm.plugin.value = this.plugins.length - 1;
@@ -249,7 +250,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
           imgSquare: this.createForm.img.value,
           name: this.createForm.name.value,
         },
-        template: this.plugins[this.createForm.plugin.value].template,
+        plugin: this.plugins[this.createForm.plugin.value],
       });
     } else {
       dispatchers.createDispatcher.start(runtime, {
@@ -259,7 +260,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
           imgSquare: this.createForm.img.value,
           name: this.createForm.name.value,
         },
-        template: this.plugins[this.createForm.plugin.value].template,
+        plugin: this.plugins[this.createForm.plugin.value],
       });
     }
 

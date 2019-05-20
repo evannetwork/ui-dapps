@@ -53,7 +53,7 @@ dispatcher
       address: `${ data.name }.${ data.digitalTwinAddress }`,
       description: description,
       factoryAddress: utils.containerFactory,
-      template: data.template,
+      plugin: data.plugin,
     });
 
     data.contractAddress = await container.getContractAddress();

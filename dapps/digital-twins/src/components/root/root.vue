@@ -43,16 +43,16 @@
             <a class="evan-tab bg-secondary text-white"
               id="dt-overview"
               :class="{ 'active': activeTab === 0 }"
-              :href="`${ dapp.fullUrl }/overview`"
+              :href="`${ dapp.fullUrl }/my-twins`"
               @click="activeTab = 0">
-              {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
+              {{ '_digitaltwins.digitaltwins.title' | translate }}
             </a>
             <a class="evan-tab bg-inverted text-white"
               id="dt-plugins"
               :class="{ 'active': activeTab === 1 }"
-              :href="`${ dapp.fullUrl }/plugins`"
+              :href="`${ dapp.fullUrl }/my-plugins`"
               @click="activeTab = 1">
-              {{ '_digitaltwins.left-categories.my-plugins.title' | translate }}
+              {{ '_digitaltwins.plugins.title' | translate }}
             </a>
           </div>
         </template>

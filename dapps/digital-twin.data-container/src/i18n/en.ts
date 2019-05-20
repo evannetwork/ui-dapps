@@ -27,6 +27,25 @@
 
 /* tslint:disable */
 export default {
+  "_digitaltwins": {
+    "breadcrumbs": {
+      "add": "Add",
+      "containerlink": "Link Data Container",
+      "containers": "Data container overview",
+      "create-plugin": "Create Plugin",
+      "datacontainer.digitaltwin": "Data Container",
+      "digitaltwin": "Digital Twin",
+      "digitaltwins": "Digital Twins",
+      "my-twins": "My Digital Twins",
+      "dt-create": "Create Digital Twin",
+      "open": "Open",
+      "map": "Bind to domain name",
+      "plugin": "Plugin",
+      "plugins": "My Plugins",
+      "verifications": "Verifications",
+      "general": "General Information"
+    }
+  },
   "_datacontainer": {
     "ajv": {
       "add": "Add field",
@@ -57,20 +76,6 @@ export default {
         "error": "Please enter a value of the correct type!",
         "title": "Value"
       }
-    },
-    "breadcrumbs": {
-      "add": "Add",
-      "container-link": "Link Data Container",
-      "containers": "Data Container overview",
-      "create": "Create",
-      "create-plugin": "Create Plugin",
-      "datacontainer.digitaltwin": "Data Container",
-      "digitaltwins": "Digital Twins",
-      "lookup": "Open",
-      "overview": "Favorites & recent Digital Twins",
-      "plugin": "Plugin",
-      "plugins": "Plugins",
-      "verifications": "Verifications"
     },
     "context-menu": {
       "clone": "Clone",

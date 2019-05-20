@@ -24,29 +24,14 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
 
 /* tslint:disable */
 export default {
   "_digitaltwins": {
     "add": "Open",
     "add-digitaltwin": "Add Digital Twin",
-    "breadcrumbs": {
-      "add": "Add",
-      "containerlink": "Link Data Container",
-      "containers": "Data container overview",
-      "create-plugin": "Create Plugin",
-      "datacontainer.digitaltwin": "Data Container",
-      "digitaltwin": "Digital Twin",
-      "digitaltwins": "Digital Twins",
-      "dt-create": "Create Digital Twin",
-      "open": "Open",
-      "map": "Bind to domain name",
-      "overview": "Favorites & recent Digital Twins",
-      "plugin": "Plugin",
-      "plugins": "Plugins",
-      "verifications": "Verifications",
-      "general": "General Information"
-    },
+    "breadcrumbs": dataContainer.translations.en._digitaltwins.breadcrumbs
     "containerlink": {
       "address": {
         "desc": "Address of the data container to be linked to the digital twin.",

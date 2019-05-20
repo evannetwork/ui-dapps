@@ -103,7 +103,7 @@
                   <option
                     v-for="(plugin, index) in plugins"
                     :value="index">
-                    {{ plugin.description.title | translate }}
+                    {{ plugin.description.name | translate }}
                   </option>
                 </select>
               </div>

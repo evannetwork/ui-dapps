@@ -29,13 +29,13 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-if="!loading">
-      <div class="d-flex mb-3">
+      <div class="d-flex align-items-center mb-5">
         <div>
           <h3 class="font-weight-bold mb-0">
-            {{ '_digitaltwins.left-categories.my-plugins.title' | translate }}
+            {{ '_digitaltwins.plugins.title' | translate }}
           </h3>
-          <p class="text-muted font-weight-semibold m-t-0">
-            {{ '_digitaltwins.left-categories.my-plugins.desc' | translate }}
+          <p class="text-muted font-weight-semibold m-0">
+            {{ '_digitaltwins.plugins.desc' | translate }}
           </p>
         </div>
         <span class="mx-auto"></span>
@@ -52,16 +52,16 @@
 
       <div class="white-box rounded border"
         v-if="Object.keys(plugins).length !== 0">
-        <div class="header">
+        <div class="header border-0">
           <div>
             <h3 class="font-weight-semibold m-0">
-              {{ `_digitaltwins.left-categories.my-plugins.title` | translate }}
+              {{ `_digitaltwins.plugins.title` | translate }}
             </h3>
           </div>
           <span class="mx-auto"></span>
           <div></div>
         </div>
-        <div class="row content">
+        <div class="row content pt-1 pb-0">
           <div class="col-md-6 col-lg-3 mb-4"
             v-for="(pluginKey, index) in Object.keys(plugins)">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
@@ -80,7 +80,7 @@
                 <div class="col-10">
                   <small class="text-center p-1 d-block text-muted"
                     v-if="plugins[pluginKey].creating">
-                    {{ '_digitaltwins.containers.in-creation' | translate }}
+                    {{ '_digitaltwins.plugins.in-creation' | translate }}
                   </small>
                   <div class="d-flex p-3 flex-truncate">
                     <div>

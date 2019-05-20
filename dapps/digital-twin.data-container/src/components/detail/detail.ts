@@ -196,19 +196,18 @@ export default class DetailComponent extends mixins(EvanComponent) {
     try {
       // get the container instance and load the template including all values
       this.container = utils.getContainer(<any>runtime, this.containerAddress);
-      const [ description, template, permissions, isOwner ] = await Promise.all([
-        this.container.getDescription(),
-        this.container.toTemplate(true),
+      const [ plugin, permissions, isOwner ] = await Promise.all([
+        this.container.toPlugin(true),
         this.container.getContainerShareConfigForAccount(runtime.activeAccount),
         (await this.container.getOwner()) === runtime.activeAccount
       ]);
 
-      this.description = description;
+      this.description = plugin.description;
       this.permissions = permissions;
       this.permissions.isOwner = isOwner;
       this.permissions.read = this.permissions.read || [ ];
       this.permissions.readWrite = this.permissions.readWrite || [ ];
-      this.template = template;
+      this.template = plugin.template;
     } catch (ex) {
       runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
       this.error = true;

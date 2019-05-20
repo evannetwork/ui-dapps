@@ -139,7 +139,8 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
   } else {
     const container = getContainer(runtime, address);
     const description = await container.getDescription();
-    const template = await container.toTemplate(true);
+    const plugin = await container.toPlugin(true);
+    const template = plugin.template;
 
     // check for integrity
     Object.keys(newPlugin.properties).map((propertyKey: string) => {
@@ -174,7 +175,7 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
  * @param      {bccRuntime}  runtime  bcc runtime
  */
 export async function getMyPlugins(runtime: bcc.Runtime) {
-  const plugins: any = await bcc.Container.getContainerTemplates(runtime.profile);
+  const plugins: any = await bcc.Container.getContainerPlugins(runtime.profile);
 
   // watch for new and sharing containers
   const saving = await pluginDispatcher.getInstances(runtime);
@@ -189,11 +190,7 @@ export async function getMyPlugins(runtime: bcc.Runtime) {
 
     plugins[instance.data.name] = {
       creating: !!instance.data.beforeName,
-      description: {
-        description: instance.data.description,
-        img: instance.data.img,
-        name: instance.data.name
-      },
+      description: instance.data.description,
       loading: true,
       template: instance.data.template,
     };

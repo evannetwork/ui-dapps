@@ -25,28 +25,14 @@
   https://evan.network/license/
 */
 
+import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
+
 /* tslint:disable */
 export default {
   "_digitaltwins": {
     "add": "Öffnen",
     "add-digitaltwin": "Neuer digitaler Zwilling",
-    "breadcrumbs": {
-      "add": "Hinzufügen",
-      "containerlink": "Daten Container verknüpfen",
-      "containers": "Daten Container Übersicht",
-      "create-plugin": "Plugin erstellen",
-      "datacontainer.digitaltwin": "Daten Container",
-      "digitaltwin": "Digitaler Zwilling",
-      "digitaltwins": "Digitale Zwillinge",
-      "dt-create": "Digitalen Zwilling erstellen",
-      "open": "Öffnen",
-      "map": "An Domainnamen binden",
-      "overview": "Favoriten & letzte Zwillinge",
-      "plugin": "Plugin",
-      "plugins": "Plugins",
-      "verifications": "Verifizierungen",
-      "general": "Generelle Informationen"
-    },
+    "breadcrumbs": dataContainer.translations.de._digitaltwins.breadcrumbs
     "containerlink": {
       "address": {
         "desc": "Adresse des Daten Containers der in den digitalen Zwilling verknüpft werden soll.",

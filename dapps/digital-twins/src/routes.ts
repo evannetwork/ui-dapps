@@ -39,9 +39,9 @@ import { EnsOpenComponent } from '@evan.network/digitaltwin';
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'overview' }  },
-  { name: 'base-overview',        component: OverviewComponent,  path: 'overview', },
-  { name: 'base-plugins',         component: PluginsComponent, path: 'plugins', },
-  { name: 'dt-open',              component: EnsOpenComponent,   path: `open`, },
+  { name: 'base-overview', component: OverviewComponent,  path: 'my-twins', },
+  { name: 'base-plugins',  component: PluginsComponent,   path: 'my-plugins', },
+  { name: 'dt-open',       component: EnsOpenComponent,   path: `open`, },
 ];
 /* tslint:enable */
 

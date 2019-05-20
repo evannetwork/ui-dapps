@@ -176,7 +176,7 @@ export default class PluginComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    const loadedPlugin = await bcc.Container.getContainerTemplate(runtime.profile,
+    const loadedPlugin = await bcc.Container.getContainerPlugin(runtime.profile,
       this.pluginName);
 
     this.description = loadedPlugin.description;
@@ -311,7 +311,7 @@ export default class PluginComponent extends mixins(EvanComponent) {
         }),
         attachments: [{
           address: this.pluginName,
-          bc: bcc.Container.profileTemplatesKey,
+          bc: bcc.Container.profilePluginsKey,
           fullPath: [
             `/${ (<any>this).dapp.rootEns }`,
             `digitaltwins.${ (<any>this).dapp.domainName }`,

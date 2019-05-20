@@ -27,6 +27,24 @@
 
 /* tslint:disable */
 export default {
+  "_digitaltwins": {
+    "breadcrumbs": {
+      "add": "Hinzufügen",
+      "containerlink": "Daten Container verknüpfen",
+      "containers": "Daten Container Übersicht",
+      "create-plugin": "Plugin erstellen",
+      "datacontainer.digitaltwin": "Daten Container",
+      "digitaltwin": "Digitaler Zwilling",
+      "digitaltwins": "Digitale Zwillinge",
+      "open": "Öffnen",
+      "map": "An Domainnamen binden",
+      "my-twins": "Meine Digitalen Zwillinge",
+      "plugin": "Plugin",
+      "my-plugins": "Plugins",
+      "verifications": "Verifizierungen",
+      "general": "Generelle Informationen"
+    }
+  },
   "_datacontainer": {
     "ajv": {
       "add": "Feld hinzufügen",
@@ -57,20 +75,6 @@ export default {
         "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
         "title": "Wert"
       }
-    },
-    "breadcrumbs": {
-      "add": "Hinzufügen",
-      "container-link": "Daten Container verknüpfen",
-      "containers": "Daten Container Übersicht",
-      "create": "Erstellen",
-      "create-plugin": "Plugin erstellen",
-      "datacontainer.digitaltwin": "Daten Container",
-      "digitaltwins": "Digitale Zwillinge",
-      "lookup": "Öffnen",
-      "overview": "Favoriten & letzte Zwillinge",
-      "plugin": "Plugin",
-      "plugins": "Plugins",
-      "verifications": "Verifizierungen"
     },
     "context-menu": {
       "clone": "Klonen",
