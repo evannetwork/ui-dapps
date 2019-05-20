@@ -35,8 +35,8 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as fieldUtils from '../../fields';
-import * as utils from '../../utils';
+import * as fieldUtils from '../../../fields';
+import * as utils from '../../../utils';
 
 interface FieldFormInterface extends EvanForm {
   name: EvanFormControl;

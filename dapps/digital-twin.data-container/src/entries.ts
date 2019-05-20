@@ -28,7 +28,7 @@
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as fieldUtils from './fields';
 import * as utils from './utils';
-import EntryComponent from './components/entries/entry/entry';
+import EntryComponent from './components/schema/entries/entry/entry';
 import { UIContainerTemplateProperty } from './interfaces';
 
 /**

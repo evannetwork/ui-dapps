@@ -98,8 +98,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    */
   async loadDigitalTwin() {
     const $route = (<any>this).$route;
-    const digitalTwinAddress = $route.name === 'dt-create' ? 'dt-create' :
-      $route.params.digitalTwinAddress;
+    const digitalTwinAddress = $route.params.digitalTwinAddress;
     let uiDT: EvanUIDigitalTwin = this.$store.state.uiDT;
 
     // load the digitaltwin

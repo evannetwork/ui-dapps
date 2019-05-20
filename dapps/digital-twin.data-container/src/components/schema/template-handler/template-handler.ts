@@ -35,9 +35,9 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { deepEqual } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import ContainerCache from '../../container-cache';
-import * as utils from '../../utils';
-import * as entryUtils from '../../entries';
+import ContainerCache from '../../../container-cache';
+import * as utils from '../../../utils';
+import * as entryUtils from '../../../entries';
 
 interface EntryFormInterface extends EvanForm {
   name: EvanFormControl;

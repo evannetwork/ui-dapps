@@ -30,11 +30,18 @@
     <evan-dapp-wrapper
       :routes="[ ]"
       v-on:loggedin="initialize()">
+      <template v-slot:header
+        v-if="$route.path.indexOf(`digitaltwins.${ dapp.domainName }`) === -1">
+        <evan-breadcrumbs
+          :attachToDAppWrapper="true"
+          :i18nScope="'_digitaltwins.breadcrumbs'">
+        </evan-breadcrumbs>
+      </template>
       <template v-slot:content>
-        <evan-loading v-if="loading"></evan-loading>
+        <evan-loading v-if="loading || ($store.state.uiDT && $store.state.uiDT.loading)"></evan-loading>
         <template v-else>
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"
-            v-if="$store.state.uiDT">
+            v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
             <template v-slot:content>
               <div style="width: 360px">
                 <evan-loading
@@ -42,38 +49,7 @@
                 </evan-loading>
 
                 <template v-else>
-                  <div
-                    class="d-flex flex-wrap align-items-center justify-content-between bg-level-1"
-                    style="height: 59px">
-                    <div class="d-flex align-items-center flex-truncate">
-                      <button class="btn large"
-                        @click="$route.path.indexOf('digitaltwins') !== -1 ?
-                          evanNavigate(`digitaltwins.${ dapp.domainName }`, `/dashboard.vue.${ dapp.domainName }`) :
-                          $router.history.go(-1)">
-                        <i class="mdi mdi-chevron-left"></i>
-                      </button>
-                      <a class="flex-truncate"
-                        :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }`">
-                        <h4 class="font-weight-semibold text-uppercase text-nowrap m-0">
-                          <template v-if="$store.state.uiDT.address === 'dt-create'">
-                            {{ '_digitaltwins.breadcrumbs.dt-create' | translate }}
-                          </template>
-                          <template v-else>
-                            {{ $store.state.uiDT.dbcp.name || $store.state.uiDT.address }}
-                          </template>
-                        </h4>
-                      </a>
-                    </div>
-                  </div>
-
-                  <template v-if="!$store.state.uiDT.validity.exists">
-                    <p class="mt-5 p-3 text-center"
-                      v-html="$t('_digitaltwins.unlock-digitaltwin-panel')">
-                    </p>
-                  </template>
-
-                  <ul class="nav font-medium in w-100 mb-3 mt-auto"
-                    v-if="$store.state.uiDT.validity.exists">
+                  <ul class="nav font-medium in w-100 mb-3 mt-auto">
                     <li class="w-100 p-4 clickable border-top border-sm"
                       v-for="(category, index) in twinNavigation"
                       :id="`evan-dt-nav-${ category.name }`"
@@ -120,10 +96,6 @@
               </div>
             </template>
           </evan-dapp-wrapper-level-2>
-          <evan-breadcrumbs
-            :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name !== 'dc-plugin' && $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1">
-          </evan-breadcrumbs>
 
           <transition name="fade" mode="out-in"
             v-if="!$store.state.uiDT || ($store.state.uiDT && !$store.state.uiDT.loading)">

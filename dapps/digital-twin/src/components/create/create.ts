@@ -39,7 +39,7 @@ import * as dispatchers from '../../dispatchers/registy';
 import EvanUIDigitalTwin from '../../digitaltwin';
 import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
 
-interface GeneralFormInterface extends EvanForm {
+interface CreateFormInterface extends EvanForm {
   address: EvanFormControl;
   description: EvanFormControl;
   img: EvanFormControl;
@@ -49,19 +49,7 @@ interface GeneralFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class GeneralComponent extends mixins(EvanComponent) {
-  /**
-   * Optional passed digital twin that should be edited.
-   */
-  @Prop({ }) uidigitaltwin;
-
-  /**
-   * If false, disables paddings and borders, so the form can be embedded
-   */
-  @Prop({
-    default: true
-  }) standalone;
-
+export default class CreateComponent extends mixins(EvanComponent) {
   /**
    * Digital twin that should be used for edition
    */
@@ -70,7 +58,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  generalForm: GeneralFormInterface = null;
+  createForm: CreateFormInterface = null;
 
   /**
    * Watch for updates, when the twin gets created
@@ -83,15 +71,21 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
+   * Show loading during uiDT initialization
+   */
+  loading = true;
+
+  /**
    * Setup the form.
    */
   async created() {
-    this.uiDT = this.uidigitaltwin || this.$store.state.uiDT;
+    this.uiDT = new EvanUIDigitalTwin('dt-create');
+    await this.uiDT.initialize(this, getRuntime(this));
 
-    this.generalForm = (<GeneralFormInterface>new EvanForm(this, {
+    this.createForm = (<CreateFormInterface>new EvanForm(this, {
       useAddress: {
         value: false,
-        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
+        validate: function(vueInstance: CreateComponent, form: CreateFormInterface) {
           // force form evaluation
           form.address.value = form.address.value;
 
@@ -100,51 +94,27 @@ export default class GeneralComponent extends mixins(EvanComponent) {
       },
       address: {
         value: '',
-        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
+        validate: function(vueInstance: CreateComponent, form: CreateFormInterface) {
           return !form.useAddress.value || this.value.trim().length !== 0;
         }
       },
-      name: {
-        value: this.uiDT.dbcp.name,
-        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.uiDT.setData('dbcp.name', this.value);
-
-          return this.value.trim().length !== 0;
-        }
-      },
-      description: {
-        value: this.uiDT.dbcp.description,
-        validate: function(vueInstance: GeneralComponent, form: GeneralFormInterface) {
-          vueInstance.uiDT.setData('dbcp.description', this.value);
-
-          // update digitaltwin dbcp and return true, i's not required
-          return true;
-        }
-      },
-      img: {
-        value: '',
-      },
     }));
 
-    this.$nextTick(() => this.generalForm.name.$ref.focus());
-
     // watch for creation to redirect to the correct page after creation
-    if (!this.uiDT.validity.exists) {
-      this.watchForCreation = dispatchers.digitaltwinCreateDispatcher
-        .watch(($event: CustomEvent) => {
-          const instance = $event.detail.instance;
+    this.watchForCreation = dispatchers.digitaltwinCreateDispatcher
+      .watch(($event: CustomEvent) => {
+        const instance = $event.detail.instance;
 
-          // when the synchronisation has finished, navigate to the correct entry
-          if (instance.status === 'finished') {
-            if (this.standalone) {
-              (<any>this).evanNavigate(
-                (instance.data.address === 'dt-create' ? '' : instance.data.address) ||
-                instance.data.contractAddress
-              );
-            }
-          }
-        });
-    }
+        // when the synchronisation has finished, navigate to the correct entry
+        if (instance.status === 'finished') {
+          (<any>this).evanNavigate(
+            (instance.data.address === 'dt-create' ? '' : instance.data.address) ||
+            instance.data.contractAddress
+          );
+        }
+      });
+
+    this.loading = false;
   }
 
   /**
@@ -164,7 +134,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
     if (ensField) {
       if (ensField.lookupForm.isValid) {
         ensField.checkAddressEnsDomain();
-        ensActions.checkAddress(this.generalForm.address.value);
+        ensActions.checkAddress(this.createForm.address.value);
       }
     }
   }
@@ -175,18 +145,29 @@ export default class GeneralComponent extends mixins(EvanComponent) {
    * @param      {boolean}  triggerDispatcher  should the dispatcher be triggered or the ens address
    *                                           be checked?
    */
-  createDigitalTwin(triggerDispatcher = !this.generalForm.useAddress.value) {
-    if (!this.uiDT.exists) {
-      if (!triggerDispatcher) {
-        this.checkAddress();
-      } else {
-        dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
-          address: this.generalForm.useAddress.value ? this.generalForm.address.value :
-            this.uiDT.address,
-          dbcp: this.uiDT.dbcp,
-          isFavorite: this.uiDT.isFavorite,
-        });
-      }
+  createDigitalTwin(triggerDispatcher = !this.createForm.useAddress.value) {
+    if (!triggerDispatcher) {
+      this.checkAddress();
+    } else {
+      // hide create modal
+      (<any>this.$refs.createModal).show();
     }
+  }
+
+  /**
+   * Start the create dispatcher.
+   */
+  triggerCreateDispatcher() {
+    (<any>this.$refs.createModal).hide();
+
+    this.uiDT.dbcp.name = this.createForm.name.value;
+    this.uiDT.dbcp.description = this.createForm.description.value;
+
+    dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
+      address: this.createForm.useAddress.value ? this.createForm.address.value :
+        this.uiDT.address,
+      dbcp: this.uiDT.dbcp,
+      isFavorite: this.uiDT.isFavorite,
+    });
   }
 }

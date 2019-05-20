@@ -27,11 +27,12 @@
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import * as dataContainerAPI from '@evan.network/datacontainer.digitaltwin';
 
 import EnsActionsComponent from './ens/actions/actions.vue';
 import EnsFieldComponent from './ens/field/field.vue';
 import EnsOpenComponent from './ens/open/open.vue';
-import GeneralComponent from './general/general.vue';
+import DetailComponent from './detail/detail.vue';
 
 // export them all, so other applications can access them
 export { EnsActionsComponent, EnsFieldComponent, EnsOpenComponent, }
@@ -39,8 +40,8 @@ export { EnsActionsComponent, EnsFieldComponent, EnsOpenComponent, }
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dt-ens-actions', component: EnsActionsComponent },
-  { name: 'dt-ens-field', component: EnsFieldComponent },
-  { name: 'dt-general', component: GeneralComponent },
-];
+  { name: 'dt-ens-field',   component: EnsFieldComponent },
+  { name: 'dt-detail',      component: DetailComponent },
+].concat(dataContainerAPI.components);
 
 export default componentRegistration;

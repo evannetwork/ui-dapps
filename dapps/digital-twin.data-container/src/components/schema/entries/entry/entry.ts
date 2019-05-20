@@ -34,7 +34,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import * as fieldUtils from '../../../fields';
+import * as fieldUtils from '../../../../fields';
 
 @Component({ })
 export default class EntryComponent extends mixins(EvanComponent) {

@@ -29,10 +29,11 @@ import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
 
 /* tslint:disable */
 export default {
+  "_datacontainer": dataContainer.translations.de._datacontainer,
   "_digitaltwins": {
     "add": "Öffnen",
     "add-digitaltwin": "Neuer digitaler Zwilling",
-    "breadcrumbs": dataContainer.translations.de._digitaltwins.breadcrumbs
+    "breadcrumbs": dataContainer.translations.de._digitaltwins.breadcrumbs,
     "containerlink": {
       "address": {
         "desc": "Adresse des Daten Containers der in den digitalen Zwilling verknüpft werden soll.",
@@ -80,23 +81,22 @@ export default {
       "map-ens": "Digitalen Zwilling an Domain binden"
     },
     "empty-navigation": "Keine Einträge verfügbar",
-    "generalForm": {
+    "createForm": {
+      "create": "Digitalen Zwilling erstellen",
+      "desc": "Geben Sie die generellen Daten Ihres Digitalen Zwillings an.",
+      "question": {
+        "title": "Digitalen Zwilling erstellen",
+        "desc": "Haben Sie alle Daten korrekt angegeben?",
+        "action": "Erstellen"
+      }
+    },
+    "detailForm": {
       "add-favorite": "Als Favorit hinzufügen",
-      "create": "Erstellen",
-      "description": {
-        "desc": "Kurze Beschreibung des digitalen Zwillings.",
-        "title": "Beschreibung"
-      },
       "map-to-ens": "An Domainnamen binden",
       "my-new-twin": "Neuer Digitaler Zwilling",
-      "name": {
-        "desc": "Name des digitalen Zwillings.",
-        "error": "Bitte geben Sie einen Namen ein!",
-        "title": "Name"
-      },
       "remove-favorite": "Als Favorit entfernen",
       "save": "Speichern",
-      "title": "Metadaten"
+      "title": "Metadaten des Digitalen Zwillings"
     },
     "in-creation": "In Erstellung...",
     "left-categories": {
@@ -167,7 +167,6 @@ export default {
       "title": "Digitalen Zwilling auf Domainnamen binden"
     },
     "startup": "Womit möchten Sie starten?",
-    "unlock-digitaltwin-panel": "<b>Der geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung ab, um die Seitennavigation freizuschalten.",
     "verifications": {
       "description": "An jeden digitalen Zwilling und Daten Container können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
       "title": "Verizifierungen"

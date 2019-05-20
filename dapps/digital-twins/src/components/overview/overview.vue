@@ -77,7 +77,10 @@
             v-for="(ensAddress, index) in twins">
             <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
               :id="`evan-dt-${ ensAddress.replace('.', '') }`"
-              :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`">
+              :href="descriptions[ensAddress].creating ?
+                null :
+                `${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`
+              ">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
                   <img class="img-fluid p-3"

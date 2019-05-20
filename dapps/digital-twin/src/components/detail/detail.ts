@@ -28,38 +28,32 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
+import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { UIContainerTemplateProperty } from '../../../interfaces';
-import * as entryUtils from '../../../entries';
-import * as utils from '../../../utils';
+import * as dispatchers from '../../dispatchers/registy';
+import EvanUIDigitalTwin from '../../digitaltwin';
+import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
+
+interface detailFormInterface extends EvanForm {
+  address: EvanFormControl;
+  description: EvanFormControl;
+  img: EvanFormControl;
+  name: EvanFormControl;
+  type: EvanFormControl;
+  useAddress: EvanFormControl;
+}
 
 @Component({ })
-export default class EntryObjectComponent extends mixins(EvanComponent) {
+export default class GeneralComponent extends mixins(EvanComponent) {
   /**
-   * Container property template definition
+   * Digital twin that should be used for edition
    */
-  @Prop() entry: UIContainerTemplateProperty;
-
-  /**
-   * data contract listentries name, used for loading entries
-   */
-  @Prop() entryName: string;
-
-  /**
-   * list of available modes (schema / edit / view)
-   */
-  @Prop() modes: Array<string>;
-
-  /**
-   * Force loading of ajv component
-   */
-  loading = false;
+  uiDT = null;
 
   /**
    * ref handlers
@@ -67,40 +61,9 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
-   * Reset the current edit values.
+   * Setup the form.
    */
-  reset() {
-    // for ajv component rerender
-    this.loading = true;
-    this.$nextTick(() => {
-      // reset specific values
-      entryUtils.resetValue(this, this.entry);
-
-      // display the components
-      this.loading = false;
-    });
-  }
-
-  /**
-   * If the mode is schema, force the edit mode, so all values matches the correct field type.
-   */
-  save() {
-    if (this.entry.mode === 'schema') {
-      this.entry.mode = 'edit';
-
-      // iterate through all forms and make alle values dirty and set the value again to trigger
-      // form validation
-      this.$nextTick(() => {
-        this.reactiveRefs.ajv.forms.forEach((form: any) => {
-          form.value.value = form.value.value;
-          form.value.dirty = true;
-        });
-      });
-    } else {
-      // trigger saving
-      this.reactiveRefs.ajv.save();
-      // update entry backup to the latest value
-      entryUtils.saveValue(this, this.entry);
-    }
+  async created() {
+    this.uiDT = this.$store.state.uiDT;
   }
 }

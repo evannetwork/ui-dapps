@@ -41,9 +41,9 @@ export default {
       "open": "Open",
       "map": "Bind to domain name",
       "plugin": "Plugin",
-      "plugins": "My Plugins",
+      "my-plugins": "My Plugins",
       "verifications": "Verifications",
-      "general": "General Information"
+      "dt-detail": "Details"
     }
   },
   "_datacontainer": {
@@ -95,17 +95,8 @@ export default {
       "container-configuration": "Data Configuration",
       "continue": "Continue",
       "create": "Create",
-      "description": {
-        "desc": "Short description for the Data Container",
-        "title": "Description"
-      },
       "finish": "Finish configuration",
       "general": "General Information",
-      "name": {
-        "desc": "Name of the Data Container",
-        "error": "Please provide a name!",
-        "title": "Name"
-      },
       "save": "Save Data Container",
       "sub-title": "Specify general information, data schema and values.",
       "plugin": {
@@ -113,6 +104,17 @@ export default {
         "title": "Plugin"
       },
       "title": "Create Data Container"
+    },
+    "dbcp": {
+      "description": {
+        "desc": "Short description for the Data Container",
+        "title": "Description"
+      },
+      "name": {
+        "desc": "Name of the Data Container",
+        "error": "Please provide a name!",
+        "title": "Name"
+      }
     },
     "dispatcher": {
       "create": "Creating Data Container...",

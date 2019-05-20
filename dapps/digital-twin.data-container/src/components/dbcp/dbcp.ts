@@ -34,51 +34,65 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import * as fieldUtils from '../../../fields';
+
+import * as dispatchers from '../../dispatchers/registry';
+import * as utils from '../../utils';
+import ContainerCache from '../../container-cache';
+
+interface DBCPForm extends EvanForm {
+  description: EvanFormControl;
+  imgSquare: EvanFormControl;
+  name: EvanFormControl;
+}
 
 @Component({ })
-export default class FieldComponent extends mixins(EvanComponent) {
+export default class DBCPComponent extends mixins(EvanComponent) {
   /**
-   * Dynamic html input element id
+   * Apply DBCP form from outside to have the full control of validation. If empty, default form is
+   * used.
    */
-  @Prop({ default: 'value' }) id;
+  @Prop() form;
 
   /**
-   * schema / edit / vue
+   * Dbcp definition including predefined values.
    */
-  @Prop({ default: 'edit' }) mode;
+  @Prop() dbcp;
 
   /**
-   * AJV schema type (files, number, string, ...)
+   * Currently used dbcp form instance for getting name, imgSquare, description
    */
-  @Prop() type: string;
+  _dbcpForm: DBCPForm;
 
   /**
-   * If no type is given, check a given schema
+   * Setup the form.
    */
-  @Prop() schema: any;
+  async created() {
+    this._dbcpForm = this.form || (<DBCPForm>new EvanForm(this, { }));
 
-  /**
-   * Form control of the parent form handler (includes form and validation)
-   */
-  @Prop() control: EvanFormControl;
+    // fill empty name control
+    if (!this._dbcpForm.name) {
+      this._dbcpForm.addControl('name', {
+        value: (this.dbcp && this.dbcp.name) ? this.dbcp.name : '',
+        validate: function(vueInstance: DBCPComponent, form: DBCPForm) {
+          return this.value.trim().length !== 0;
+        }
+      });
+    }
 
-  /**
-   * should the control label be rendered?
-   */
-  @Prop({
-    default: true
-  }) standalone: boolean;
+    // fill empty description control
+    if (!this._dbcpForm.description) {
+      this._dbcpForm.addControl('description', {
+        value: (this.dbcp && this.dbcp.description) ? this.dbcp.description : '',
+      });
+    }
 
-  /**
-   * Calculated type from props type or calucated from schema
-   */
-  _type = null;
+    // fill empty imgSquare control
+    if (!this._dbcpForm.imgSquare) {
+      this._dbcpForm.addControl('imgSquare', {
+        value: (this.dbcp && this.dbcp.imgSquare) ? this.dbcp.imgSquare : '',
+      });
+    }
 
-  /**
-   * Check for the correct type.
-   */
-  created() {
-    this._type = this.type || fieldUtils.getType(this.schema);
+    this.$nextTick(() => (<any>this.$refs.name).focus());
   }
 }

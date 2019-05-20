@@ -90,11 +90,11 @@
       <evan-modal ref="createDTAddress"
         :customModal="true">
         <template v-slot:content>
-          <dt-general ref="dtGeneralForm"
+          <dt-detail ref="dtdetailForm"
             v-if="uiDT"
             :uidigitaltwin="uiDT"
             :standalone="false">
-          </dt-general>
+          </dt-detail>
         </template>
       </evan-modal>
 

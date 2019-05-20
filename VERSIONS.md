@@ -19,9 +19,11 @@
   - reorder twin overview and template overview
 - `digitaltwin`
   - fix top left digital twin name display overflow
+  - standalone `dt-create` page
 - `datacontainer.digitaltwins`
   - `ajv-editor` use `parseFieldValue` value on save
   - increase `ajv-editor` name td size to 300px
+  - add `dt-dbcp` component for editing dbcp
 
 ### Deprecations
 - `digitaltwins`, `datacontainer.digitaltwins`

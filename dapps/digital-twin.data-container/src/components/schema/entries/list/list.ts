@@ -35,10 +35,10 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as entryUtils from '../../../entries';
-import * as fieldUtils from '../../../fields';
-import * as utils from '../../../utils';
-import { UIContainerTemplateProperty } from '../../../interfaces';
+import * as entryUtils from '../../../../entries';
+import * as fieldUtils from '../../../../fields';
+import * as utils from '../../../../utils';
+import { UIContainerTemplateProperty } from '../../../../interfaces';
 
 interface FieldFormInterface extends EvanForm {
   value: EvanFormControl;

@@ -40,9 +40,9 @@ export default {
       "map": "An Domainnamen binden",
       "my-twins": "Meine Digitalen Zwillinge",
       "plugin": "Plugin",
-      "my-plugins": "Plugins",
+      "my-plugins": "Meine Plugins",
       "verifications": "Verifizierungen",
-      "general": "Generelle Informationen"
+      "dt-detail": "Details"
     }
   },
   "_datacontainer": {
@@ -94,17 +94,8 @@ export default {
       "container-configuration": "Daten Konfiguration",
       "continue": "Weiter",
       "create": "Erstellen",
-      "description": {
-        "desc": "Kurze Beschreibung des Daten Containers",
-        "title": "Beschreibung"
-      },
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
-      "name": {
-        "desc": "Name des Daten Containers",
-        "error": "Bitte geben Sie einen Namen an!",
-        "title": "Name"
-      },
       "save": "Daten Container Speichern",
       "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
       "plugin": {
@@ -112,6 +103,17 @@ export default {
         "title": "Plugin"
       },
       "title": "Daten Container erstellen"
+    },
+    "dbcp": {
+      "description": {
+        "desc": "Kurze Beschreibung",
+        "title": "Beschreibung"
+      },
+      "name": {
+        "desc": "Name",
+        "error": "Bitte geben Sie einen Namen an!",
+        "title": "Name"
+      }
     },
     "dispatcher": {
       "create": "Daten Container wird erstellt...",

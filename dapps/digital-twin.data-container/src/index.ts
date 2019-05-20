@@ -38,7 +38,7 @@ import * as containerDispatchers from './dispatchers/registry';
 
 export * from './utils';
 export * from './dispatchers/registry';
-export { containerDispatchers, translations,  utils };
+export { containerDispatchers, translations,  utils, components };
 
 System.map['@evan.network/datacontainer.digitaltwin'] =
   `datacontainer.digitaltwin.${ getDomainName() }!dapp-content`;

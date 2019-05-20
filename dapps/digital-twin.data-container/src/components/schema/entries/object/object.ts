@@ -28,27 +28,23 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as fieldUtils from '../../../fields';
-import * as entryUtils from '../../../entries';
-import * as utils from '../../../utils';
-
-interface FieldFormInterface extends EvanForm {
-  value: EvanFormControl;
-}
+import { UIContainerTemplateProperty } from '../../../../interfaces';
+import * as entryUtils from '../../../../entries';
+import * as utils from '../../../../utils';
 
 @Component({ })
-export default class FieldComponent extends mixins(EvanComponent) {
+export default class EntryObjectComponent extends mixins(EvanComponent) {
   /**
-   * Object entry entry type
+   * Container property template definition
    */
-  @Prop() entry: any;
+  @Prop() entry: UIContainerTemplateProperty;
 
   /**
    * data contract listentries name, used for loading entries
@@ -58,62 +54,53 @@ export default class FieldComponent extends mixins(EvanComponent) {
   /**
    * list of available modes (schema / edit / view)
    */
-  @Prop({
-    default: [ ]
-  }) modes: Array<string>;
+  @Prop() modes: Array<string>;
 
   /**
-   * formular specific variables
+   * Force loading of ajv component
    */
-  fieldForm: FieldFormInterface = null;
+  loading = false;
 
   /**
-   * Calculated entry schema type
+   * ref handlers
    */
-  type: string = null;
-
-  /**
-   * Set the field form, if no form was applied
-   */
-  created() {
-    // Calculated entry schema type
-    this.type = fieldUtils.getType(this.entry.dataSchema);
-
-    // setup field form
-    this.fieldForm = <FieldFormInterface>new EvanForm(this, {
-      value: {
-        value: this.entry.edit.value,
-        validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
-          // populate the value to the parents component, else the value is handled by the parents
-          // form
-          vueInstance.entry.edit.value = this.value;
-
-          // run validation
-          return fieldUtils.validateField(
-            vueInstance.type,
-            this,
-            vueInstance,
-            form
-          );
-        }
-      },
-    });
-  }
+  reactiveRefs: any = { };
 
   /**
    * Reset the current edit values.
    */
   reset() {
-    entryUtils.resetValue(this, this.entry);
-    this.fieldForm.value.value = this.entry.edit.value;
+    // for ajv component rerender
+    this.loading = true;
+    this.$nextTick(() => {
+      // reset specific values
+      entryUtils.resetValue(this, this.entry);
+
+      // display the components
+      this.loading = false;
+    });
   }
 
   /**
-   * Save the current value and enable the save button
+   * If the mode is schema, force the edit mode, so all values matches the correct field type.
    */
   save() {
-    // update entry backup to the latest value
-    entryUtils.saveValue(this, this.entry);
-    this.fieldForm.value.value = this.entry.value;
+    if (this.entry.mode === 'schema') {
+      this.entry.mode = 'edit';
+
+      // iterate through all forms and make alle values dirty and set the value again to trigger
+      // form validation
+      this.$nextTick(() => {
+        this.reactiveRefs.ajv.forms.forEach((form: any) => {
+          form.value.value = form.value.value;
+          form.value.dirty = true;
+        });
+      });
+    } else {
+      // trigger saving
+      this.reactiveRefs.ajv.save();
+      // update entry backup to the latest value
+      entryUtils.saveValue(this, this.entry);
+    }
   }
 }

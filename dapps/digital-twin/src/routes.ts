@@ -31,13 +31,14 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import ContainerLinkComponent from './components/container-link/container-link.vue';
 import ContainersComponent from './components/containers/containers.vue';
-import DigitalTwinGeneralComponent from './components/general/general.vue';
+import DigitaTwinCreateComponent from './components/create/create.vue';
+import DigitalTwinDetailComponent from './components/detail/detail.vue';
 import DigitalTwinVerificationsComponent from './components/verifications/verifications.vue';
 import LookupComponent from './components/lookup/lookup.vue';
 import MapComponent from './components/ens/map/map.vue';
 import OverviewComponent from './components/overview/overview.vue';
-import StartComponent from './components/start/start.vue';
 import PluginsComponent from './components/plugins/plugins.vue';
+import StartComponent from './components/start/start.vue';
 
 const dtPath = (path) => `:digitalTwinAddress/${ path }`;
 
@@ -50,9 +51,9 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
   { name: 'dt-container-link',    component: ContainerLinkComponent,            path: 'containerlink/:containerAddress?' },
-  { name: 'dt-create',            component: DigitalTwinGeneralComponent,       path: `dt-create`, },
-  {                               redirect: { path: dtPath('general') },        path: `:digitalTwinAddress`, },
-  { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: dtPath('general'), },
+  { name: 'dt-create',            component: DigitaTwinCreateComponent,         path: `dt-create`, },
+  {                               redirect: { path: dtPath('dt-detail') },      path: `:digitalTwinAddress`, },
+  { name: 'dt-detail',            component: DigitalTwinDetailComponent,        path: dtPath('dt-detail'), },
   { name: 'dt-map',               component: MapComponent,                      path: dtPath('map'), },
   { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
   { name: 'dt-containers',        component: ContainersComponent,               path: dtPath('containers'), },

@@ -30,15 +30,16 @@
     <evan-dapp-wrapper
       :routes="[ ]"
       v-on:loggedin="initialize()">
-      <template v-slot:content>
+      <template v-slot:header>
+        <evan-breadcrumbs
+          :attachToDAppWrapper="true"
+          :i18nScope="'_digitaltwins.breadcrumbs'">
+        </evan-breadcrumbs>
         <template v-if="
           $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 ||
           $route.path.indexOf(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }`) !== -1
         ">
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"></evan-dapp-wrapper-level-2>
-          <evan-breadcrumbs
-            :i18nScope="'_digitaltwins.breadcrumbs'">
-          </evan-breadcrumbs>
           <div class="evan-navigation-tabs">
             <a class="evan-tab bg-secondary text-white"
               id="dt-overview"
@@ -47,16 +48,18 @@
               @click="activeTab = 0">
               {{ '_digitaltwins.digitaltwins.title' | translate }}
             </a>
-            <a class="evan-tab bg-inverted text-white"
+            <a class="evan-tab text-white"
               id="dt-plugins"
               :class="{ 'active': activeTab === 1 }"
               :href="`${ dapp.fullUrl }/my-plugins`"
+              style="background-color: rgba(36,84,94,1) !important;"
               @click="activeTab = 1">
               {{ '_digitaltwins.plugins.title' | translate }}
             </a>
           </div>
         </template>
-
+      </template>
+      <template v-slot:content>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>

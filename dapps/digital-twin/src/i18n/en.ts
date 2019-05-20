@@ -28,10 +28,11 @@ import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
 
 /* tslint:disable */
 export default {
+  "_datacontainer": dataContainer.translations.en._datacontainer,
   "_digitaltwins": {
     "add": "Open",
     "add-digitaltwin": "Add Digital Twin",
-    "breadcrumbs": dataContainer.translations.en._digitaltwins.breadcrumbs
+    "breadcrumbs": dataContainer.translations.en._digitaltwins.breadcrumbs,
     "containerlink": {
       "address": {
         "desc": "Address of the data container to be linked to the digital twin.",
@@ -79,23 +80,22 @@ export default {
       "map-ens": "Bind Digital Twin to domain"
     },
     "empty-navigation": "No entries available",
-    "generalForm": {
+    "createForm": {
+      "create": "Create Digital Twin",
+      "desc": "Enter the general data of your digital twin.",
+      "question": {
+        "title": "Create Digital Twin",
+        "desc": "Did you enter all data correctly?",
+        "action": "Create"
+      }
+    },
+    "detailForm": {
       "add-favorite": "Add as favorite",
-      "create": "Create",
-      "description": {
-        "desc": "Short description for the Digital Twin",
-        "title": "Description"
-      },
-      "map-to-ens": "Bind to domain name",
+      "map-to-ens": "Bind to alias",
       "my-new-twin": "New Digital Twin",
-      "name": {
-        "desc": "Name of the Digital Twin",
-        "error": "Please provide a name!",
-        "title": "Name"
-      },
       "remove-favorite": "Remove from favorites",
       "save": "Save",
-      "title": "Metadata"
+      "title": "Metadata of the Digital Twin"
     },
     "in-creation": "Creating Digital Twin...",
     "left-categories": {
@@ -116,7 +116,7 @@ export default {
         "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
         "title": "Address of your Digital Twin",
-        "use-address": "Bind digital twin to ens address"
+        "use-address": "Bind digital twin to alias"
       },
       "already-registered": {
         "desc": "The specified address is not available.",
@@ -166,7 +166,6 @@ export default {
       "title": "Bind a Digital Twin to a Domain Name"
     },
     "startup": "What would you like to start with?",
-    "unlock-digitaltwin-panel": "<b>This Digital Twin is being created.</b><br><br>Please finish creation to see the page navigation.",
     "verifications": {
       "description": "Each Digital Twin and Data Container can be automatically verified. The user interface is currently under development.",
       "title": "Verifications"

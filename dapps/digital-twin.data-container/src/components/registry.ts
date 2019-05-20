@@ -28,16 +28,17 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import AJVComponent from './ajv/ajv.vue';
-import EntryComponent from './entries/entry/entry.vue';
-import EntryListComponent from './entries/list/list.vue';
-import EntryObjectComponent from './entries/object/object.vue';
-import EntryFieldComponent from './entries/field/field.vue';
-import FieldComponent from './fields/field/field.vue';
-import FieldFilesComponent from './fields/files/files.vue';
-import FieldNumberComponent from './fields/number/number.vue';
-import FieldStringComponent from './fields/string/string.vue';
-import TemplateHandlerComponent from './template-handler/template-handler.vue';
+import AJVComponent from './schema/ajv/ajv.vue';
+import DBCPComponent from './dbcp/dbcp.vue';
+import EntryComponent from './schema/entries/entry/entry.vue';
+import EntryFieldComponent from './schema/entries/field/field.vue';
+import EntryListComponent from './schema/entries/list/list.vue';
+import EntryObjectComponent from './schema/entries/object/object.vue';
+import FieldComponent from './schema/fields/field/field.vue';
+import FieldFilesComponent from './schema/fields/files/files.vue';
+import FieldNumberComponent from './schema/fields/number/number.vue';
+import FieldStringComponent from './schema/fields/string/string.vue';
+import TemplateHandlerComponent from './schema/template-handler/template-handler.vue';
 
 // export them all, so other applications can access them
 export { }
@@ -54,6 +55,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-template-handler', component: TemplateHandlerComponent },
+  { name: 'dt-dbcp', component: DBCPComponent },
 ];
 
 export default componentRegistration;
