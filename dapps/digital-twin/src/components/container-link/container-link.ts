@@ -112,6 +112,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
    * link form
    */
   async created() {
+    this.$emit('init', this);
     const runtime = utils.getRuntime(this);
 
     this.digitalTwinAddress = (<any>this).$route.params.digitalTwinAddress;
@@ -210,8 +211,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
     let valid = true;
     let description;
     try {
-      await container.toTemplate();
-      description = await container.getDescription();
+      description = (await container.toPlugin()).description;
     } catch (ex) {
       valid = false;
       runtime.logger.log(ex, 'error');

@@ -40,14 +40,14 @@
       <span class="mx-auto"></span>
       <div class="d-flex align-items-center"
         v-if="$store.state.uiDT.isOwner">
-        <a class="btn btn-circle btn-sm btn-tertiary mr-3"
+        <button class="btn btn-circle btn-sm btn-tertiary mr-3"
           id="dt-container-link"
-          :href="`${ dapp.fullUrl }/${ $route.params.digitalTwinAddress }/containerlink`">
+          @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show()">
           <i class="mdi mdi-link-variant" style="width: 16px;"></i>
           <evan-tooltip :placement="'bottom'">
             {{ `_digitaltwins.containers.link` | translate }}
           </evan-tooltip>
-        </a>
+        </button>
         <a
           id="dt-container-create"
           class="btn btn-primary btn-circle d-flex align-items-center justify-content-center"
@@ -105,6 +105,9 @@
         v-html="$t(`_digitaltwins.containers.empty-desc`)">
       </p>
     </div>
+    <dc-link
+      @init="$set(reactiveRefs, 'dtContainerLink', $event)">
+    </dc-link>
   </div>
 </template>
 

@@ -29,6 +29,7 @@
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as dataContainerAPI from '@evan.network/datacontainer.digitaltwin';
 
+import ContainerLinkComponent from './container-link/container-link.vue';
 import DetailComponent from './detail/detail.vue';
 import EnsActionsComponent from './ens/actions/actions.vue';
 import EnsFieldComponent from './ens/field/field.vue';
@@ -40,9 +41,10 @@ export { EnsActionsComponent, EnsFieldComponent, EnsOpenComponent, }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'dc-link',        component: ContainerLinkComponent },
+  { name: 'dt-detail',      component: DetailComponent },
   { name: 'dt-ens-actions', component: EnsActionsComponent },
   { name: 'dt-ens-field',   component: EnsFieldComponent },
-  { name: 'dt-detail',      component: DetailComponent },
   { name: 'dt-ens-map',     component: EnsMapComponent },
 ].concat(dataContainerAPI.components);
 

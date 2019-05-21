@@ -34,25 +34,25 @@ const i18n: any = {
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "containerlink": {
       "address": {
-        "desc": "Adresse des Daten Containers der in den digitalen Zwilling verknüpft werden soll.",
+        "desc": "Adresse des Plugins der in den digitalen Zwilling verknüpft werden soll.",
         "error": "Bitte geben Sie eine Adresse ein!",
-        "title": "Daten Container"
+        "title": "Plugin"
       },
       "change-twin": "Digitalen Zwilling ändern",
-      "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Daten Container verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
+      "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Plugin verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
       "description2": "Über das Eingabefeld können Sie eine Adresse eines Datencontainers auswählen, der in den digitalen Zwilling verknüpft werden soll.",
       "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
         "desc": "Die eingebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
-        "title": "Ungültiger Daten Container"
+        "title": "Ungültiger Plugin"
       },
-      "linking": "Wird verknüpft",
+      "linking": "Bestehendes Plugin Wird verknüpft...",
       "name": {
         "desc": "Alias, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
         "error": "Bitte geben Sie einen Alias ein!",
         "title": "Alias"
       },
-      "use": "Daten Container verknüpfen"
+      "use": "Plugin verknüpfen"
     },
     "containers": {
       "create": "Plugin hinzufügen",
@@ -156,7 +156,7 @@ const i18n: any = {
     },
     "startup": "Womit möchten Sie starten?",
     "verifications": {
-      "description": "An jeden digitalen Zwilling und Daten Container können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
+      "description": "An jeden digitalen Zwilling und Plugin können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
       "title": "Verizifierungen"
     },
     "welcome": "Willkommen in der digitalen Zwillingsverwaltung"

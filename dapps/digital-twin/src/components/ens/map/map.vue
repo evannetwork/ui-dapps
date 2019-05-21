@@ -28,11 +28,12 @@
 <template>
   <div>
     <evan-modal
+      :maxWidth="'800px'"
       ref="mapEnsModal">
       <template v-slot:header>
-        <p class="modal-title">
-            {{ `_digitaltwins.map-ens.title` | translate }}
-        </p>
+        <h5 class="modal-title">
+          {{ `_digitaltwins.map-ens.title` | translate }}
+        </h5>
       </template>
       <template v-slot:body>
         <template v-if="!binding">
@@ -70,7 +71,6 @@
             v-if="reactiveRefs.ensActions && !reactiveRefs.ensActions.purchasing">
             <form
               id="dt-ens-form"
-              class="col-sm-9 mx-auto"
               v-on:submit.prevent="checkAddress">
               <dt-ens-field
                 @init="$set(reactiveRefs, 'ensField', $event)"
@@ -104,19 +104,17 @@
           reactiveRefs.ensField &&
           !reactiveRefs.ensActions.purchasing
         ">
-        <div class="footer">
-          <button type="submit"
-            id="dt-map-check-ens"
-            class="btn btn-rounded btn-primary"
-            @click="checkAddress()"
-            :disabled="!lookupForm.isValid || reactiveRefs.ensActions.loading">
-            {{ '_digitaltwins.map-ens.check-ens' | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3"
-              v-if="reactiveRefs.ensActions.loading || reactiveRefs.ensActions.purchasing">
-            </div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-          </button>
-        </div>
+        <button type="submit"
+          id="dt-map-check-ens"
+          class="btn btn-rounded btn-primary"
+          @click="checkAddress()"
+          :disabled="!lookupForm.isValid || reactiveRefs.ensActions.loading">
+          {{ '_digitaltwins.map-ens.check-ens' | translate }}
+          <div class="spinner-border spinner-border-sm text-light ml-3"
+            v-if="reactiveRefs.ensActions.loading || reactiveRefs.ensActions.purchasing">
+          </div>
+          <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+        </button>
       </template>
     </evan-modal>
   </div>
