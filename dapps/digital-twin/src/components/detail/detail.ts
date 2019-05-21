@@ -39,13 +39,10 @@ import * as dispatchers from '../../dispatchers/registy';
 import EvanUIDigitalTwin from '../../digitaltwin';
 import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
 
-interface detailFormInterface extends EvanForm {
-  address: EvanFormControl;
+interface DetailFormInterface extends EvanForm {
   description: EvanFormControl;
-  img: EvanFormControl;
+  imgSquare: EvanFormControl;
   name: EvanFormControl;
-  type: EvanFormControl;
-  useAddress: EvanFormControl;
 }
 
 @Component({ })
@@ -61,9 +58,23 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
+   * Tabs for top navigation
+   */
+  tabs: Array<any> = [ ];
+
+  /**
    * Setup the form.
    */
   async created() {
     this.uiDT = this.$store.state.uiDT;
+
+    // easy transform sub navigations to full href and reference id's
+    const twinAddress = this.$route.params.digitalTwinAddress;
+    this.tabs = [ 'dt-plugins', 'dt-technical', 'dt-changes' ]
+      .map(urlKey => ({
+        id: `tab-${ urlKey }`,
+        href: `${ (<any>this).dapp.fullUrl }/${ twinAddress }/dt-detail/${ urlKey }`,
+        text: `_digitaltwins.breadcrumbs.${ urlKey }`
+      }));
   }
 }

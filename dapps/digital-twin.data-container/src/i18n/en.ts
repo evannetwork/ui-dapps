@@ -27,25 +27,6 @@
 
 /* tslint:disable */
 export default {
-  "_digitaltwins": {
-    "breadcrumbs": {
-      "add": "Add",
-      "containerlink": "Link Data Container",
-      "containers": "Data container overview",
-      "create-plugin": "Create Plugin",
-      "datacontainer.digitaltwin": "Data Container",
-      "digitaltwin": "Digital Twin",
-      "digitaltwins": "Digital Twins",
-      "my-twins": "My Digital Twins",
-      "dt-create": "Create Digital Twin",
-      "open": "Open",
-      "map": "Bind to domain name",
-      "plugin": "Plugin",
-      "my-plugins": "My Plugins",
-      "verifications": "Verifications",
-      "dt-detail": "Details"
-    }
-  },
   "_datacontainer": {
     "ajv": {
       "add": "Add field",
@@ -81,8 +62,8 @@ export default {
       "clone": "Clone",
       "create-container": "Create Data Container",
       "link": "Link to Digital Twin",
-      "share": "Share",
-      "plugin-save": "Save as plugin"
+      "plugin-save": "Save as plugin",
+      "share": "Share"
     },
     "create-question": {
       "action": "Create",
@@ -97,12 +78,12 @@ export default {
       "create": "Create",
       "finish": "Finish configuration",
       "general": "General Information",
-      "save": "Save Data Container",
-      "sub-title": "Specify general information, data schema and values.",
       "plugin": {
         "desc": "Plugin of the Data Container",
         "title": "Plugin"
       },
+      "save": "Save Data Container",
+      "sub-title": "Specify general information, data schema and values.",
       "title": "Create Data Container"
     },
     "dbcp": {
@@ -119,9 +100,9 @@ export default {
     "dispatcher": {
       "create": "Creating Data Container...",
       "link": "Link Data Container...",
-      "share": "Share Data Container...",
       "plugin": "Saving plugin...",
       "plugin-share": "Sharing plugin...",
+      "share": "Share Data Container...",
       "update": "Updating Data Container..."
     },
     "edit": "Edit",
@@ -169,6 +150,28 @@ export default {
       "desc": "You have no permission to view this data container.",
       "title": "No permissions"
     },
+    "plugin": {
+      "bmail": {
+        "body": "Hello,<br><br>You have received a data container plugin from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
+        "title": "Invitation to Data Container plugin"
+      },
+      "create-container": "Create Data Container",
+      "create-title": "Create new Plugin",
+      "edit-dbcp": "Adjust Description",
+      "save": "Save Plugin"
+    },
+    "plugin-cache": {
+      "action": "Restore",
+      "clear": "Delete",
+      "desc": "You have unsaved changes, do you want to restore it?",
+      "title": "Unsaved changes"
+    },
+    "plugin-handler": {
+      "edit-modes": {
+        "desc": "Please complete all changes to be able to save.",
+        "title": "Unsaved changes"
+      }
+    },
     "share": {
       "action": "Share",
       "bmail": {
@@ -199,28 +202,6 @@ export default {
         "title": "User"
       }
     },
-    "plugin": {
-      "bmail": {
-        "body": "Hello,<br><br>You have received a data container plugin from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container plugin"
-      },
-      "create-container": "Create Data Container",
-      "create-title": "Create new Plugin",
-      "edit-dbcp": "Adjust Description",
-      "save": "Save Plugin"
-    },
-    "plugin-cache": {
-      "action": "Restore",
-      "clear": "Delete",
-      "desc": "You have unsaved changes, do you want to restore it?",
-      "title": "Unsaved changes"
-    },
-    "plugin-handler": {
-      "edit-modes": {
-        "desc": "Please complete all changes to be able to save.",
-        "title": "Unsaved changes"
-      }
-    },
     "types": {
       "array": "List",
       "files": "Files",
@@ -228,6 +209,28 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
+    }
+  },
+  "_digitaltwins": {
+    "breadcrumbs": {
+      "add": "Add",
+      "containerlink": "Link Plugin",
+      "containers": "Plugin overview",
+      "create-plugin": "Create Plugin",
+      "datacontainer.digitaltwin": "Plugin",
+      "digitaltwin": "Digital Twin",
+      "digitaltwins": "Digital Twins",
+      "dt-changes": "Last Changes",
+      "dt-plugins": "Plugin Overview",
+      "dt-create": "Create Digital Twin",
+      "dt-detail": "Details",
+      "dt-technical": "Technical Details",
+      "map": "Bind to domain name",
+      "my-plugins": "My Plugins",
+      "my-twins": "My Digital Twins",
+      "open": "Open",
+      "plugin": "Plugin",
+      "verifications": "Verifications"
     }
   }
 }

@@ -27,12 +27,10 @@
 import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
 
 /* tslint:disable */
-export default {
-  "_datacontainer": dataContainer.translations.en._datacontainer,
+const i18n: any = {
   "_digitaltwins": {
     "add": "Open",
     "add-digitaltwin": "Add Digital Twin",
-    "breadcrumbs": dataContainer.translations.en._digitaltwins.breadcrumbs,
     "containerlink": {
       "address": {
         "desc": "Address of the data container to be linked to the digital twin.",
@@ -56,14 +54,35 @@ export default {
       "use": "Link Data Container"
     },
     "containers": {
-      "create": "Create",
-      "empty": "Data Container",
-      "empty-desc": "Each Digital Twin represents a collection of different data containers. Each data container can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No data container has yet been created for this digital twin. Use the \"create\" or \"link\" button on the top to create a new data container or link to an existing one.</b>",
+      "create": "Add Plugin",
+      "desc": "All Data Containers associated with the Digital Twin",
+      "empty": "Plugins",
+      "empty-desc": "Each Digital Twin represents a collection of different Plugins. Each Plugin can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No Plugin has yet been created for this digital twin. Use the \"create\" or \"link\" button on the top to create a new Plugin or link to an existing Plugin instance.</b>",
       "in-creation": "in creation...",
-      "link": "Link"
+      "link": "Link Plugin",
+      "title": "Plugins"
     },
-    "context-menu": {
-      "link": "Link Data Container"
+    "createForm": {
+      "create": "Create Digital Twin",
+      "desc": "Enter the general data of your digital twin.",
+      "question": {
+        "action": "Create",
+        "desc": "Did you enter all data correctly?",
+        "title": "Create Digital Twin"
+      }
+    },
+    "detail": {
+      "add-favorite": "Add as favorite",
+      "edit": "Edit Description",
+      "error": {
+        "desc": "The selected address does not correspond to a valid Digital Twin. Please make sure that the correct address has been opened.",
+        "title": "Invalid Digital Twin"
+      },
+      "map-to-ens": "Bind to alias",
+      "my-new-twin": "New Digital Twin",
+      "remove-favorite": "Remove from favorites",
+      "save": "Save",
+      "title": "Metadata of the Digital Twin"
     },
     "digitaltwins": "Twins",
     "dispatcher": {
@@ -80,37 +99,7 @@ export default {
       "map-ens": "Bind Digital Twin to domain"
     },
     "empty-navigation": "No entries available",
-    "createForm": {
-      "create": "Create Digital Twin",
-      "desc": "Enter the general data of your digital twin.",
-      "question": {
-        "title": "Create Digital Twin",
-        "desc": "Did you enter all data correctly?",
-        "action": "Create"
-      }
-    },
-    "detailForm": {
-      "add-favorite": "Add as favorite",
-      "map-to-ens": "Bind to alias",
-      "my-new-twin": "New Digital Twin",
-      "remove-favorite": "Remove from favorites",
-      "save": "Save",
-      "title": "Metadata of the Digital Twin"
-    },
     "in-creation": "Creating Digital Twin...",
-    "left-categories": {
-      "container-overview": "Data Container overview",
-      "containers": {
-        "desc": "All Data Containers associated with the Digital Twin",
-        "title": "Data Containers"
-      },
-      "digitaltwin-details": {
-        "desc": "General information about the Digital Twin.",
-        "title": "Digital Twin"
-      },
-      "general": "General information",
-      "verifications": "Verifications"
-    },
     "lookup": {
       "address": {
         "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
@@ -173,4 +162,9 @@ export default {
     "welcome": "Welcome to the Digital Twin management"
   }
 }
-/* tslint:enable */;
+/* tslint:enable */
+
+i18n._datacontainer = dataContainer.translations.en._datacontainer;
+i18n._digitaltwins.breadcrumbs = dataContainer.translations.en._digitaltwins.breadcrumbs;
+
+export default i18n;

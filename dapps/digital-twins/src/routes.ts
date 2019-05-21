@@ -26,7 +26,6 @@
 */
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoader } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import OverviewComponent from './components/overview/overview.vue';

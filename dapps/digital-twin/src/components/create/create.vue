@@ -66,7 +66,7 @@
         <div class="white-box border rounded">
           <div class="header">
             <h3 class="m-0 font-weight-semibold">
-              {{ `_digitaltwins.detailForm.title` | translate }}
+              {{ `_digitaltwins.detail.title` | translate }}
             </h3>
             <span class="mx-auto"></span> 
             <div v-if="(!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing)">

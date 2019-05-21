@@ -56,57 +56,25 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   wasDestroyed: boolean;
 
   /**
-   * Categories of the left navigation
+   * Tabs for top navigation
    */
-  twinNavigation: any = [ ];
-
-  /**
-   * Current activated tab (digital twins / plugins)
-   */
-  activeTab = 0;
-
-  /**
-   * Clear the hash change watcher
-   */
-  beforeDestroy() {
-    this.wasDestroyed = true;
-
-    // clear listeners
-    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
-  }
+  tabs: any = [ ];
 
   /**
    * Initialize when the user has logged in.
    */
   async initialize() {
-    this.loading = false;
-
-    // set the hash change watcher, so we can detect digitaltwin change and loading
-    const that = this;
-    this.hashChangeWatcher = async () => that.setTabStatus();
-    await this.hashChangeWatcher();
-
-    // add the hash change listener
-    window.addEventListener('hashchange', this.hashChangeWatcher);
-
-    // clear the watcher if the component was already destroyed
-    if (this.wasDestroyed) {
-      this.beforeDestroy();
-    }
-  }
-
-  /**
-   * Check the active route and set the active tab status.
-   */
-  setTabStatus() {
-    const tab1Routes = [ 'base-overview', 'base-lookup', 'base-container-link',
-      'base-container-link2', ];
-    const tab2Routes = [ 'base-plugins', 'dt-template' ];
-
-    if (tab1Routes.indexOf(this.$route.name) !== -1) {
-      this.activeTab = 0;
-    } else if (tab2Routes.indexOf(this.$route.name) !== -1) {
-      this.activeTab = 1;
-    }
+    this.tabs = [
+      {
+        id: 'dt-overview',
+        href: `${ (<any>this).dapp.fullUrl }/my-twins`,
+        text: '_digitaltwins.digitaltwins.title'
+      },
+      {
+        id: 'dt-plugins',
+        href: `${ (<any>this).dapp.fullUrl }/my-plugins`,
+        text: '_digitaltwins.plugins.title'
+      },
+    ];
   }
 }

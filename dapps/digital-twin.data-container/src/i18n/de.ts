@@ -27,24 +27,6 @@
 
 /* tslint:disable */
 export default {
-  "_digitaltwins": {
-    "breadcrumbs": {
-      "add": "Hinzufügen",
-      "containerlink": "Daten Container verknüpfen",
-      "containers": "Daten Container Übersicht",
-      "create-plugin": "Plugin erstellen",
-      "datacontainer.digitaltwin": "Daten Container",
-      "digitaltwin": "Digitaler Zwilling",
-      "digitaltwins": "Digitale Zwillinge",
-      "open": "Öffnen",
-      "map": "An Domainnamen binden",
-      "my-twins": "Meine Digitalen Zwillinge",
-      "plugin": "Plugin",
-      "my-plugins": "Meine Plugins",
-      "verifications": "Verifizierungen",
-      "dt-detail": "Details"
-    }
-  },
   "_datacontainer": {
     "ajv": {
       "add": "Feld hinzufügen",
@@ -80,8 +62,8 @@ export default {
       "clone": "Klonen",
       "create-container": "Daten Container erstellen",
       "link": "Container verknüpfen",
-      "share": "Teilen",
-      "plugin-save": "Als Plugin speichern"
+      "plugin-save": "Als Plugin speichern",
+      "share": "Teilen"
     },
     "create-question": {
       "action": "Erstellen",
@@ -96,12 +78,12 @@ export default {
       "create": "Erstellen",
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
-      "save": "Daten Container Speichern",
-      "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
       "plugin": {
         "desc": "Plugin des Datencontainers",
         "title": "Plugin"
       },
+      "save": "Daten Container Speichern",
+      "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
       "title": "Daten Container erstellen"
     },
     "dbcp": {
@@ -118,9 +100,9 @@ export default {
     "dispatcher": {
       "create": "Daten Container wird erstellt...",
       "link": "Daten Container wird verlinkt...",
-      "share": "Daten Container wird geteilt...",
       "plugin": "Plugin speichern",
       "plugin-share": "Plugin teilen",
+      "share": "Daten Container wird geteilt...",
       "update": "Daten Container wird aktualisiert..."
     },
     "edit": "Bearbeiten",
@@ -168,6 +150,28 @@ export default {
       "desc": "Sie besitzen keine Berechtigungen diesen Datencontainer einzusehen.",
       "title": "Keine Berechtigungen"
     },
+    "plugin": {
+      "bmail": {
+        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Plugin von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Daten Container Plugin"
+      },
+      "create-container": "Daten Container erzeugen",
+      "create-title": "Neue Plugin erstellen",
+      "edit-dbcp": "Beschreibung Anpassen",
+      "save": "Plugin speichern"
+    },
+    "plugin-cache": {
+      "action": "Wiederherstellen",
+      "clear": "Löschen",
+      "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
+      "title": "Ungespeicherte Änderungen"
+    },
+    "plugin-handler": {
+      "edit-modes": {
+        "desc": "Bitte schließen Sie alle Änderungen ab, um speichern zu können.",
+        "title": "Ungespeicherte Änderungen"
+      }
+    },
     "share": {
       "action": "Teilen",
       "bmail": {
@@ -198,28 +202,6 @@ export default {
         "title": "Nutzer"
       }
     },
-    "plugin": {
-      "bmail": {
-        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Plugin von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Daten Container Plugin"
-      },
-      "create-container": "Daten Container erzeugen",
-      "create-title": "Neue Plugin erstellen",
-      "edit-dbcp": "Beschreibung Anpassen",
-      "save": "Plugin speichern"
-    },
-    "plugin-cache": {
-      "action": "Wiederherstellen",
-      "clear": "Löschen",
-      "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
-      "title": "Ungespeicherte Änderungen"
-    },
-    "plugin-handler": {
-      "edit-modes": {
-        "desc": "Bitte schließen Sie alle Änderungen ab, um speichern zu können.",
-        "title": "Ungespeicherte Änderungen"
-      }
-    },
     "types": {
       "array": "Liste",
       "files": "Dateien",
@@ -227,6 +209,26 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
+    }
+  },
+  "_digitaltwins": {
+    "breadcrumbs": {
+      "add": "Hinzufügen",
+      "containerlink": "Plugin verknüpfen",
+      "create-plugin": "Plugin erstellen",
+      "datacontainer.digitaltwin": "Plugin",
+      "digitaltwin": "Digitaler Zwilling",
+      "digitaltwins": "Digitale Zwillinge",
+      "dt-changes": "Letzte Änderungen",
+      "dt-plugins": "Plugin Übersicht",
+      "dt-detail": "Details",
+      "dt-technical": "Technische Details",
+      "map": "An Domainnamen binden",
+      "my-plugins": "Meine Plugins",
+      "my-twins": "Meine Digitalen Zwillinge",
+      "open": "Öffnen",
+      "plugin": "Plugin",
+      "verifications": "Verifizierungen"
     }
   }
 }

@@ -79,7 +79,7 @@
               :id="`evan-dt-${ ensAddress.replace('.', '') }`"
               :href="descriptions[ensAddress].creating ?
                 null :
-                `${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`
+                `${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }`
               ">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">

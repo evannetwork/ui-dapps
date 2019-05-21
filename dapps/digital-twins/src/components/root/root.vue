@@ -40,23 +40,7 @@
           $route.path.indexOf(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }`) !== -1
         ">
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"></evan-dapp-wrapper-level-2>
-          <div class="evan-navigation-tabs">
-            <a class="evan-tab bg-secondary text-white"
-              id="dt-overview"
-              :class="{ 'active': activeTab === 0 }"
-              :href="`${ dapp.fullUrl }/my-twins`"
-              @click="activeTab = 0">
-              {{ '_digitaltwins.digitaltwins.title' | translate }}
-            </a>
-            <a class="evan-tab text-white"
-              id="dt-plugins"
-              :class="{ 'active': activeTab === 1 }"
-              :href="`${ dapp.fullUrl }/my-plugins`"
-              style="background-color: rgba(36,84,94,1) !important;"
-              @click="activeTab = 1">
-              {{ '_digitaltwins.plugins.title' | translate }}
-            </a>
-          </div>
+          <evan-nav-tabs :tabs="tabs"></evan-nav-tabs>
         </template>
       </template>
       <template v-slot:content>
