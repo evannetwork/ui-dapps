@@ -61,17 +61,17 @@ export default class DBCPComponent extends mixins(EvanComponent) {
   /**
    * Currently used dbcp form instance for getting name, imgSquare, description
    */
-  _dbcpForm: DBCPForm;
+  _form: DBCPForm = null;
 
   /**
    * Setup the form.
    */
   async created() {
-    this._dbcpForm = this.form || (<DBCPForm>new EvanForm(this, { }));
+    this._form = this.form || (<DBCPForm>new EvanForm(this, { }));
 
     // fill empty name control
-    if (!this._dbcpForm.name) {
-      this._dbcpForm.addControl('name', {
+    if (!this._form.name) {
+      this._form.addControl('name', {
         value: (this.dbcp && this.dbcp.name) ? this.dbcp.name : '',
         validate: function(vueInstance: DBCPComponent, form: DBCPForm) {
           return this.value.trim().length !== 0;
@@ -80,19 +80,33 @@ export default class DBCPComponent extends mixins(EvanComponent) {
     }
 
     // fill empty description control
-    if (!this._dbcpForm.description) {
-      this._dbcpForm.addControl('description', {
+    if (!this._form.description) {
+      this._form.addControl('description', {
         value: (this.dbcp && this.dbcp.description) ? this.dbcp.description : '',
       });
     }
 
     // fill empty imgSquare control
-    if (!this._dbcpForm.imgSquare) {
-      this._dbcpForm.addControl('imgSquare', {
+    if (!this._form.imgSquare) {
+      this._form.addControl('imgSquare', {
         value: (this.dbcp && this.dbcp.imgSquare) ? this.dbcp.imgSquare : '',
       });
     }
 
+    this.$emit('init', this);
     this.$nextTick(() => (<any>this.$refs.name).focus());
+  }
+
+  /**
+   * Trigger the submit event for the current formular.
+   */
+  save() {
+    if (this._form.isValid) {
+      this.$emit('submit', {
+        name: this._form.name.value,
+        description: this._form.description.value,
+        imgSquare: this._form.imgSquare.value,
+      });
+    }
   }
 }

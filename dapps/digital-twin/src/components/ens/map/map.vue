@@ -26,74 +26,85 @@
 */
 
 <template>
-  <div class="container-wide">
-    <div class="white-box mt-4 border rounded">
-      <template v-if="!binding">
-        <div class="p-0 header">
-          <a class="btn large"
-            :href="`${ dapp.fullUrl }`">
-            <i class="mdi mdi-chevron-left"></i>
-          </a>
-          <h3 class="m-0 font-weight-semibold">
+  <div>
+    <evan-modal
+      ref="mapEnsModal">
+      <template v-slot:header>
+        <p class="modal-title">
             {{ `_digitaltwins.map-ens.title` | translate }}
-          </h3>
-        </div>
-
-        <evan-modal
-          id="dt-map-modal"
-          ref="lookupModal">
-          <template v-slot:header>
-            <h5 class="modal-title">
-              {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.title` | translate }}
-            </h5>
-          </template>
-          <template v-slot:body>
-            <p class="text-left m-0"
-              v-html="$t(`_digitaltwins.map-ens.modal.${ lookupModalScope }.desc`, modalParams)">
-            </p>
-          </template>
-          <template v-slot:footer>
-            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-              id="dt-map-ens"
-              v-if="lookupModalScope === 'available'"
-              @click="mapEns()">
-              {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.action` | translate }}
-            </button>
-          </template>
-        </evan-modal>
-
-        <dt-ens-actions
-          :address="lookupForm.address.value"
-          :purchaseEnsAddress="true"
-          @init="$set(reactiveRefs, 'ensActions', $event)"
-          @submit="openTwin">
-        </dt-ens-actions>
-
-        <div class="content"
-          v-if="reactiveRefs.ensActions && !reactiveRefs.ensActions.purchasing">
-          <form
-            id="dt-ens-form"
-            class="col-sm-9 mx-auto"
-            v-on:submit.prevent="checkAddress">
-            <dt-ens-field
-              @init="$set(reactiveRefs, 'ensField', $event)"
-              :autocomplete="true"
-              :form="lookupForm">
-              <template slot:label>
-                {{ '_digitaltwins.map-ens.ens' | translate }}
-              </template>
-            </dt-ens-field>
-            <div class="d-flex align-items-center">
-              <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
-              <p class="m-0 text-justify">
-                {{ `_digitaltwins.map-ens.description` | translate }}
+        </p>
+      </template>
+      <template v-slot:body>
+        <template v-if="!binding">
+          <evan-modal
+            id="dt-map-modal"
+            ref="lookupModal">
+            <template v-slot:header>
+              <h5 class="modal-title">
+                {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.title` | translate }}
+              </h5>
+            </template>
+            <template v-slot:body>
+              <p class="text-left m-0"
+                v-html="$t(`_digitaltwins.map-ens.modal.${ lookupModalScope }.desc`, modalParams)">
               </p>
-            </div>
-          </form>
-        </div>
+            </template>
+            <template v-slot:footer>
+              <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                id="dt-map-ens"
+                v-if="lookupModalScope === 'available'"
+                @click="mapEns()">
+                {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.action` | translate }}
+              </button>
+            </template>
+          </evan-modal>
 
-        <div class="footer"
-          v-if="reactiveRefs.ensActions && reactiveRefs.ensField && !reactiveRefs.ensActions.purchasing">
+          <dt-ens-actions
+            :address="lookupForm.address.value"
+            :purchaseEnsAddress="true"
+            @init="$set(reactiveRefs, 'ensActions', $event)"
+            @submit="openTwin">
+          </dt-ens-actions>
+
+          <div class="content"
+            v-if="reactiveRefs.ensActions && !reactiveRefs.ensActions.purchasing">
+            <form
+              id="dt-ens-form"
+              class="col-sm-9 mx-auto"
+              v-on:submit.prevent="checkAddress">
+              <dt-ens-field
+                @init="$set(reactiveRefs, 'ensField', $event)"
+                :autocomplete="true"
+                :form="lookupForm">
+                <template slot:label>
+                  {{ '_digitaltwins.map-ens.ens' | translate }}
+                </template>
+              </dt-ens-field>
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-fingerprint text-secondary mr-3" style="font-size: 60px;"></i>
+                <p class="m-0 text-justify">
+                  {{ `_digitaltwins.map-ens.description` | translate }}
+                </p>
+              </div>
+            </form>
+          </div>
+        </template>
+        <div
+          id="dt-map-binding"
+          class="text-center" v-else>
+          <h4 class="mt-5 mb-3">{{ '_digitaltwins.dispatcher.binding' | translate }}</h4>
+          <b> {{ ensAddress }} </b>
+          <evan-loading></evan-loading>
+        </div>
+      </template>
+      <template v-slot:footer
+        v-if="
+          !binding &&
+          reactiveRefs.ensActions &&
+          reactiveRefs.ensField &&
+          !reactiveRefs.ensActions.purchasing
+        ">
+        <div class="footer">
           <button type="submit"
             id="dt-map-check-ens"
             class="btn btn-rounded btn-primary"
@@ -107,14 +118,7 @@
           </button>
         </div>
       </template>
-      <div
-        id="dt-map-binding"
-        class="text-center" v-else>
-        <h4 class="mt-5 mb-3">{{ '_digitaltwins.dispatcher.binding' | translate }}</h4>
-        <b> {{ ensAddress }} </b>
-        <evan-loading></evan-loading>
-      </div>
-    </div>
+    </evan-modal>
   </div>
 </template>
 

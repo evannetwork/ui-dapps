@@ -77,4 +77,20 @@ export default class GeneralComponent extends mixins(EvanComponent) {
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
   }
+
+  /**
+   * Gets the edited dbcp information from the dc-dbcp-edit component and saves the twin
+   *
+   * @param      {any}  newDbcp  The new dbcp
+   */
+  saveDbcp(newDbcp: any) {
+    // hide dbcp modal
+    (<any>this.$refs.dbcpModal).hide();
+
+    // save the dbcp
+    this.uiDT.dbcp.name = newDbcp.name;
+    this.uiDT.dbcp.description = newDbcp.description;
+    this.uiDT.dbcp.imgSquare = newDbcp.imgSquare;
+    this.uiDT.saveDbcp(this, getRuntime(this));
+  }
 }

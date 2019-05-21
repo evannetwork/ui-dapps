@@ -87,8 +87,8 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     // load favorite and last twins
     const runtime = getRuntime(this);
     const twins = Array.from(new Set([ ].concat(
-      await loadFavorites(runtime),
       getLastOpenedTwins(),
+      await loadFavorites(runtime),
     )));
     // all descriptions of the twins
     this.descriptions = { };

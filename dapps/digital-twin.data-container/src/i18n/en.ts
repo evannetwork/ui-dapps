@@ -225,7 +225,7 @@ export default {
       "dt-create": "Create Digital Twin",
       "dt-detail": "Details",
       "dt-technical": "Technical Details",
-      "map": "Bind to domain name",
+      "dt-map": "Bind to domain name",
       "my-plugins": "My Plugins",
       "my-twins": "My Digital Twins",
       "open": "Open",

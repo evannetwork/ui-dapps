@@ -28,7 +28,7 @@
 <template>
   <div>
     <form class="content" id="dbcp-form"
-      v-on:submit.prevent="_dbcpForm.isValid && $emit('submit', _dbcpForm)">
+      v-on:submit.prevent="save()">
       <slot name="before-inputs"></slot>
       <div class="form-group">
         <label for="name">
@@ -37,9 +37,9 @@
         <input class="form-control" required
           id="name" ref="name"
           :placeholder="`_datacontainer.dbcp.name.desc` | translate"
-          v-model="_dbcpForm.name.value"
-          :class="{ 'is-invalid' : _dbcpForm.name.error }"
-          @blur="_dbcpForm.name.setDirty()">
+          v-model="_form.name.value"
+          :class="{ 'is-invalid' : _form.name.error }"
+          @blur="_form.name.setDirty()">
         <div class="invalid-feedback">
           {{ `_datacontainer.dbcp.name.error` | translate }}
         </div>
@@ -51,9 +51,9 @@
         <textarea class="form-control" rows="7"
           id="description" ref="description"
           :placeholder="`_datacontainer.dbcp.description.desc` | translate"
-          v-model="_dbcpForm.description.value"
-          :class="{ 'is-invalid' : _dbcpForm.description.error }"
-          @blur="_dbcpForm.description.setDirty()">
+          v-model="_form.description.value"
+          :class="{ 'is-invalid' : _form.description.error }"
+          @blur="_form.description.setDirty()">
         </textarea>
         <slot name="after-inputs"></slot>
       </div>

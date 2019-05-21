@@ -78,6 +78,8 @@ export default class MapComponent extends mixins(EvanComponent) {
    * Watch for updates
    */
   created() {
+    this.$emit('init', this);
+
     this.lookupForm = (<LookupFormInterface>new EvanForm(this, {
       address: {
         value: '',

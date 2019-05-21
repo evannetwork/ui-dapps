@@ -32,11 +32,11 @@
       <div class="white-box border rounded">
         <div class="header">
           <h3 class="m-0 font-weight-semibold">
-            {{ '_datacontainer.detail.error.title' | translate }}
+            {{ '_digitaltwins.detail.error.title' | translate }}
           </h3>
         </div>
         <div class="content"
-          v-html="$t('_datacontainer.detail.error.desc')">
+          v-html="$t('_digitaltwins.detail.error.desc')">
         </div>
       </div>
     </div>
@@ -58,17 +58,17 @@
           <div>
             <button class="btn btn-circle btn-sm btn-tertiary mr-2"
               id="dt-favorite-toggle"
-              :disabled="$store.state.uiDT.isFavoriteLoading"
-              @click="$store.state.uiDT.toggleFavorite(getRuntime())">
+              :disabled="uiDT.isFavoriteLoading"
+              @click="uiDT.toggleFavorite(getRuntime())">
               <div class="spinner-border spinner-border-sm"
-                v-if="$store.state.uiDT.isFavoriteLoading">
+                v-if="uiDT.isFavoriteLoading">
               </div>
               <i class="mdi mdi-star"
-                :class="{ 'text-warning': $store.state.uiDT.isFavorite }"
+                :class="{ 'text-warning': uiDT.isFavorite }"
                 v-else>
               </i>
               <evan-tooltip :placement="'bottom'">
-                <template v-if="$store.state.uiDT.isFavorite">
+                <template v-if="uiDT.isFavorite">
                   {{ `_digitaltwins.detail.remove-favorite` | translate }}
                 </template>
                 <template v-else>
@@ -78,7 +78,7 @@
             </button>
             <button class="btn btn-circle btn-sm btn-tertiary mr-2"
               id="dt-map-ens"
-              @click="evanNavigate(`${ $route.params.digitalTwinAddress }/map`)">
+              @click="reactiveRefs.dtEnsMap.$refs.mapEnsModal.show();">
               <i class="mdi mdi-link-variant" style="width: 16px;"></i>
               <evan-tooltip :placement="'bottom'">
                 {{ `_digitaltwins.detail.map-to-ens` | translate }}
@@ -86,71 +86,55 @@
             </button>
             <button class="btn btn-circle btn-sm btn-tertiary"
               id="dt-edit"
-              @click="">
-              <i class="mdi mdi-pencil" style="width: 16px;"></i>
+              :disabled="uiDT.isSaving"
+              @click="$refs.dbcpModal.show();">
+              <div class="spinner-border spinner-border-sm"
+                v-if="uiDT.isSaving">
+              </div>
+              <i class="mdi mdi-pencil"
+                style="width: 16px;"
+                v-else>
+              </i>
               <evan-tooltip :placement="'bottom'">
                 {{ `_digitaltwins.detail.edit` | translate }}
               </evan-tooltip>
             </button>
           </div>
         </div>
-        <div class="d-flex mb-5 align-items-center">
-          <div>
-            <h3 class="font-weight-bold mb-0">
-              {{ detail.name.value }}
-            </h3>
-          </div>
-          <span class="mx-auto"></span>
-          <div>
-            <button class="btn btn-circle btn-sm btn-tertiary mr-3"
-              id="dt-general-favorite-toggle"
-              @click="$store.state.uiDT.toggleFavorite(getRuntime())">
-              <div class="spinner-border spinner-border-sm"
-                v-if="$store.state.uiDT.isFavoriteLoading">
-              </div>
-              <i class="mdi mdi-star" v-else></i>
-              <evan-tooltip :placement="'bottom'">
-                <template v-if="$store.state.uiDT.isFavorite">
-                  {{ `_digitaltwins.detail.remove-favorite` | translate }}
-                </template>
-                <template v-else>
-                  {{ `_digitaltwins.detail.add-favorite` | translate }}
-                </template>
-              </evan-tooltip>
-            </button>
-            <a class="btn btn-circle btn-sm btn-tertiary mr-3"
-              id="dt-general-map-ens"
-              :href="`${ dapp.fullUrl }/${ $route.params.digitalTwinAddress }/map`">
-              <i class="mdi mdi-link-variant" style="width: 16px;"></i>
-              <evan-tooltip :placement="'bottom'">
-                {{ `_digitaltwins.detail.map-to-ens` | translate }}
-              </evan-tooltip>
-            </a>
-            <div class="spinner-border spinner-border-sm"
-              v-if="$store.state.uiDT.isFavoriteLoading">
-            </div>
-            <template v-if="!$store.state.uiDT.isFavoriteLoading">
-              <button class="btn"
-                id="dt-general-dropdown"
-                @click="$refs.contextMenu.show();">
-                <i class="mdi mdi-chevron-down"></i>
-              </button>
-              <div class="position-relative">
-                <evan-dropdown ref="contextMenu"
-                  :alignment="'right'"
-                  :width="'300px'">
-                  <template v-slot:content>
-                    
-                  </template>
-                </evan-dropdown>
-              </div>
-            </template>
-          </div>
-        </div>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>
       </div>
+      <evan-modal
+        id="dt-dbcp-modal"
+        ref="dbcpModal">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ '_datacontainer.edit-dbcp' | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <dt-dbcp
+            ref="dbcpForm"
+            :dbcp="uiDT.dbcp"
+            @init="$set(reactiveRefs, 'dbcpForm', $event)"
+            @submit="saveDbcp($event)">
+          </dt-dbcp>
+        </template>
+        <template v-slot:footer v-if="reactiveRefs.dbcpForm">
+          <button type="submit"
+            id="container-dbcp-save"
+            class="btn btn-rounded btn-primary"
+            @click="reactiveRefs.dbcpForm.save()"
+            :disabled="!reactiveRefs.dbcpForm._form.isValid">
+            {{ `_digitaltwins.detail.save` | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
+          </button>
+        </template>
+      </evan-modal>
+      <dt-ens-map
+        @init="$set(reactiveRefs, 'dtEnsMap', $event)">
+      </dt-ens-map>
     </template>
   </div>
 </template>

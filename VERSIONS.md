@@ -18,8 +18,12 @@
   - use correct html selector id's
   - reorder twin overview and template overview
 - `digitaltwin`
-  - fix top left digital twin name display overflow
   - standalone `dt-create` page
+  - overwork dt-edit page
+    - move dbcp edit to modal
+    - move ens map to modal
+    - add detail tabs for future features
+    - map containers overview to dt-edit sub navigation
 - `datacontainer.digitaltwins`
   - `ajv-editor` use `parseFieldValue` value on save
   - increase `ajv-editor` name td size to 300px

@@ -87,12 +87,6 @@ export default class EvanUIDigitalTwin {
   isCreating = false;
 
   /**
-   * Was the digitaltwin adjusted and a save is needed?
-   */
-  dirty = false;
-  dirtyObjects = [ ];
-
-  /**
    * is this digitaltwin is a favorite?
    */
   isFavorite = false;
@@ -332,44 +326,14 @@ export default class EvanUIDigitalTwin {
    * @param      {Vue}         vueInstance  a vue component instance
    * @param      {bccRuntime}  runtime      bcc runtime
    */
-  saveChanges(vueInstance: Vue, runtime: bcc.Runtime) {
-    if (this.dirty) {
-      // lookup dirty objects and pass them into the save object
-      const dataToSave = { address: this.address };
-      this.dirtyObjects.forEach((key) => dataToSave[key] = this[key]);
+  saveDbcp(vueInstance: Vue, runtime: bcc.Runtime) {
+    // lookup dirty objects and pass them into the save object
+    const dataToSave = { address: this.address, dbcp: this.dbcp };
 
-      // start the dispatcher and watch for updates
-      this.isSaving = true;
-      dispatchers.digitaltwinSaveDispatcher.start(runtime, dataToSave);
-      this.watchSaving(vueInstance, runtime);
-    }
-  }
-
-  /**
-   * Sets a data property and makes the digitaltwin dirty.
-   *
-   * @param      {string}  key     nested key (e.g. dbcp.name)
-   * @param      {any}     value   value that should be set
-   */
-  setData(key: string, value: any): void {
-    const splitKey = key.split('.');
-    const paramKey = splitKey.pop();
-    let parentDataObj = this;
-
-    // find the correct nested obj
-    splitKey.forEach((parentKey: string) => parentDataObj = parentDataObj[parentKey]);
-
-    // make it only dirty, when the value has changed
-    if (parentDataObj[paramKey] !== value) {
-      parentDataObj[paramKey] = value;
-
-      if (this.dirtyObjects.indexOf(splitKey[0]) === -1) {
-        this.dirtyObjects.push(splitKey[0]);
-      }
-
-      // make the digitaltwin dirty
-      this.dirty = true;
-    }
+    // start the dispatcher and watch for updates
+    this.isSaving = true;
+    dispatchers.digitaltwinSaveDispatcher.start(runtime, dataToSave);
+    this.watchSaving(vueInstance, runtime);
   }
 
   /**
@@ -464,8 +428,6 @@ export default class EvanUIDigitalTwin {
       if (!this.isSaving) {
         listener();
         this.dispatcherListeners.splice(this.dispatcherListeners.indexOf(listener, 1));
-        this.dirty = false;
-        this.dirtyObjects = [ ];
       }
     });
 

@@ -223,7 +223,7 @@ export default {
       "dt-plugins": "Plugin Übersicht",
       "dt-detail": "Details",
       "dt-technical": "Technische Details",
-      "map": "An Domainnamen binden",
+      "dt-map": "An Domainnamen binden",
       "my-plugins": "Meine Plugins",
       "my-twins": "Meine Digitalen Zwillinge",
       "open": "Öffnen",

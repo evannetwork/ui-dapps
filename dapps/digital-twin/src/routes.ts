@@ -82,10 +82,9 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   },
 
   /**************************************** stuff ***********************************************/
-  { name: 'dt-map',               component: MapComponent,                      path: dtPath('map'), },
-  { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
-  { name: 'dt-container-link2',   component: ContainerLinkComponent,            path: dtPath('containerlink/:containerAddress?') },
-  { name: 'dt-container',         component: DAppLoaderComponent,               path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
+  { name: 'dt-map',               component: MapComponent,           path: dtPath('dt-map'), },
+  { name: 'dt-container-link2',   component: ContainerLinkComponent, path: dtPath('containerlink/:containerAddress?') },
+  { name: 'dt-container',         component: DAppLoaderComponent,    path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
 ];
 /* tslint:enable */
 
