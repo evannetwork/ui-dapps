@@ -166,7 +166,10 @@ $themeEvan: map-merge(
     bg-level-1: cssVar('white'),
     bg-level-2: cssVar('gray-150'),
     bg-level-3: #f5f6fa,
-    bg-inverted: cssVar('dark')
+    bg-inverted: cssVar('dark'),
+    tab-color-1: cssVar('secondary'),
+    tab-color-2: #24545e,
+    tab-color-3: #8b9a9e,
   ),
   $themeEvan
 );

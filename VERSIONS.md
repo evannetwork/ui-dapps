@@ -5,6 +5,8 @@
 - add tooltip stylings
 - add `btn-tertiary` style
 - add `dapp-wrapper-header` style
+- add `under-construction.svg`
+- add `tabs` colors
 
 ### Fixes
 ### Deprecations

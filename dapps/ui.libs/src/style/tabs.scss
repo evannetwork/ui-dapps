@@ -28,6 +28,21 @@
 @import './utils';
 
 .evan {
+  .tab-1 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-1') !important;
+  }
+
+  .tab-2 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-2') !important;
+  }
+
+  .tab-3 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-3') !important;
+  }
+
   .evan-tabs, .evan-navigation-tabs {
     display: flex;
     overflow-x: auto;
