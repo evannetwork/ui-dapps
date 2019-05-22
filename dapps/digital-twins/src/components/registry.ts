@@ -28,12 +28,14 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as digitalTwin from '@evan.network/digitaltwin';
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 // export them all, so other applications can access them
 export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [ ]
-  .concat(digitalTwin.componentRegistration);
+  .concat(digitalTwin.componentRegistration)
+  .concat(dtLib.componentRegistration);
 
 export default componentRegistration;

@@ -25,13 +25,20 @@
   https://evan.network/license/
 */
 
-const getExternals = require('../../vue/webpack.externals');
+<template>
+  <evan-breadcrumbs
+    :attachToDAppWrapper="true"
+    :i18nScope="'_digitaltwins.breadcrumbs'"
+    :ignored="[
+      'dc-detail',
+      'dt-detail',
+      `digitaltwin.${ dapp.domainName }`,
+      `digitaltwin.datacontainer.${ dapp.domainName }`,
+    ]">
+  </evan-breadcrumbs>
+</template>
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  getExternals({
-    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin',
-    '@evan.network/digitaltwin.lib': '@evan.network/digitaltwin.lib',
-  })
-);
+<script lang="ts">
+  import TwinsRootComponent from './breadcrumbs.ts';
+  export default TwinsRootComponent;
+</script>

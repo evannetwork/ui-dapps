@@ -23,6 +23,9 @@
       ],
       "@evan.network/digitaltwin": [
         "../../digital-twin/dist/digitaltwin.js"
+      ],
+      "@evan.network/digitaltwin.lib": [
+        "../../digital-twin.lib/dist/digitaltwin.lib.js"
       ]
     }
   },

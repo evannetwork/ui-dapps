@@ -88,7 +88,7 @@
                     :src="descriptions[ensAddress].imgSquare">
                   <i
                     class="mdi mdi-fingerprint"
-                    style="font-size:60px;">
+                    style="font-size: 50px;">
                   </i>
                 </div>
                 <div class="col-10">

@@ -25,13 +25,21 @@
   https://evan.network/license/
 */
 
-const getExternals = require('../../vue/webpack.externals');
+import Vue from 'vue';
+import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
+import { System, } from '@evan.network/ui-dapp-browser';
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  getExternals({
-    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin',
-    '@evan.network/digitaltwin.lib': '@evan.network/digitaltwin.lib',
-  })
-);
+import Main from './components/root/root.vue';
+import translations from './i18n/translations';
+import components from './components/registry';
+import componentRegistration from './components/registry';
+import * as utils from './utils';
+
+export * from './utils';
+export * from './components/registry';
+export { translations, utils, componentRegistration };
+
+System.map['@evan.network/digitaltwin.lib'] =
+  `digitaltwin.lib.${ getDomainName() }!dapp-content`;
+
+

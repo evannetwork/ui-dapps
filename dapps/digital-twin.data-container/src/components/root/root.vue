@@ -30,10 +30,7 @@
     <evan-dapp-wrapper :routes="[ ]">
       <template v-slot:header
         v-if="$route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1">
-        <evan-breadcrumbs
-          :attachToDAppWrapper="true"
-          :i18nScope="'_digitaltwins.breadcrumbs'">
-        </evan-breadcrumbs>
+        <dt-breadcrumbs></dt-breadcrumbs>
       </template>
       <template v-slot:content>
         <transition name="fade" mode="out-in"

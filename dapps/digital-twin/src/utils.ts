@@ -28,15 +28,22 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
-import { utils } from '@evan.network/datacontainer.digitaltwin';
-import { containerDispatchers, } from '@evan.network/datacontainer.digitaltwin';
-import { favoriteAddDispatcher, favoriteRemoveDispatcher, } from './dispatchers/registy';
+import * as dtLib from '@evan.network/digitaltwin.lib';
+export {
+  containerFactory,
+  enableDTSave,
+  getDigitalTwinConfig,
+  getDomainName,
+  getRuntime,
+  latestTwinsKey,
+  nullAddress,
+  twinFactory,
+} from '@evan.network/digitaltwin.lib';
 
-export const latestTwinsKey = 'evan-last-digital-digitaltwins';
-export const nullAddress = '0x0000000000000000000000000000000000000000';
-export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
-export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
-export const getRuntime = utils.getRuntime;
+import {
+  favoriteAddDispatcher,
+  favoriteRemoveDispatcher,
+} from './dispatchers/registy';
 
 /**
  * Add a address to the last opened twins array.
@@ -55,7 +62,7 @@ export function addLastOpenedTwin(address: string) {
     }
     lastTwins.unshift(address);
     // only save the latest 20 entries
-    window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
+    window.localStorage[dtLib.latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
   }
 }
 
@@ -63,16 +70,7 @@ export function addLastOpenedTwin(address: string) {
  * Return the last opened digitaltwins that were persited in the localStorage.
  */
 export function getLastOpenedTwins() {
-  return JSON.parse(window.localStorage[latestTwinsKey] || '[ ]');
-}
-
-/**
- * Returns the active domain name (currently payable, until the nameresolve is fixed)
- *
- * @return     {string}  domain name (default evan)
- */
-export function getDomainName(): string {
-  return 'payable' || dappBrowser.getDomainName();
+  return JSON.parse(window.localStorage[dtLib.latestTwinsKey] || '[ ]');
 }
 
 /**

@@ -31,7 +31,7 @@
       <h3 class="font-weight-semibold m-0">
         <template
           v-if="$store.state.uiDT.containers.length !== 0">
-          {{ `_digitaltwins.breadcrumbs.containers` | translate }}
+          {{ `_digitaltwins.breadcrumbs.dt-plugins` | translate }}
         </template>
         <template v-else>
           {{ `_digitaltwins.containers.empty` | translate }}
@@ -59,8 +59,8 @@
         </a>
       </div>
     </div>
-    <div class="content row" v-if="$store.state.uiDT.containers.length !== 0">
-      <div class="col-md-6 mb-4"
+    <div class="content row pb-0" v-if="$store.state.uiDT.containers.length !== 0">
+      <div class="col-md-4 mb-4"
         v-for="(container, index) in $store.state.uiDT.containers"
         style="min-width: 350px;">
         <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
@@ -73,7 +73,7 @@
                 :src="container.imgSquare">
               <i
                 class="mdi mdi-buffer"
-                style="font-size:60px;">
+                style="font-size:50px;">
               </i>
             </div>
             <div class="col-10">

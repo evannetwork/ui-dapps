@@ -10,6 +10,8 @@
   - profile.vue.evan
 - `termsoufuse`
   - use latest terms of use and data protection specifications
+- `digitaltwin.lib`
+  - add global repo for shared twin sources
 
 ### Fixes
 - `vue dapps`

@@ -25,13 +25,18 @@
   https://evan.network/license/
 */
 
-const getExternals = require('../../vue/webpack.externals');
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  getExternals({
-    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin',
-    '@evan.network/digitaltwin.lib': '@evan.network/digitaltwin.lib',
-  })
-);
+// evan.network imports
+import { EvanComponent, BreadcrumbsComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+
+@Component({ })
+export default class TwinBreadcrumbsComponent extends mixins(EvanComponent) {
+
+}

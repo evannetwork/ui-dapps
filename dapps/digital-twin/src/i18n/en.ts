@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
 const i18n: any = {
@@ -165,6 +166,6 @@ const i18n: any = {
 /* tslint:enable */
 
 i18n._datacontainer = dataContainer.translations.en._datacontainer;
-i18n._digitaltwins.breadcrumbs = dataContainer.translations.en._digitaltwins.breadcrumbs;
+i18n._digitaltwins.breadcrumbs = dtLib.translations.en.breadcrumbs;
 
 export default i18n;

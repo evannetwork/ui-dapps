@@ -25,8 +25,10 @@
   https://evan.network/license/
 */
 
+import * as dtLib from '@evan.network/digitaltwin.lib';
+
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_datacontainer": {
     "ajv": {
       "add": "Add field",
@@ -210,28 +212,10 @@ export default {
       "object": "Metadata",
       "string": "Text"
     }
-  },
-  "_digitaltwins": {
-    "breadcrumbs": {
-      "add": "Add",
-      "containerlink": "Link Plugin",
-      "containers": "Plugin overview",
-      "create-plugin": "Create Plugin",
-      "datacontainer.digitaltwin": "Plugin",
-      "digitaltwin": "Digital Twin",
-      "digitaltwins": "Digital Twins",
-      "dt-changes": "Last Changes",
-      "dt-plugins": "Plugin Overview",
-      "dt-create": "Create Digital Twin",
-      "dt-detail": "Details",
-      "dt-technical": "Technical Details",
-      "dt-map": "Bind to domain name",
-      "my-plugins": "My Plugins",
-      "my-twins": "My Digital Twins",
-      "open": "Open",
-      "plugin": "Plugin",
-      "verifications": "Verifications"
-    }
   }
 }
 /* tslint:enable */;
+
+i18n._digitaltwins = { breadcrumbs: dtLib.translations.en.breadcrumbs };
+
+export default i18n;

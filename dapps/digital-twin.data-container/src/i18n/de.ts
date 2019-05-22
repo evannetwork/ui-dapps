@@ -24,9 +24,10 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_datacontainer": {
     "ajv": {
       "add": "Feld hinzufügen",
@@ -210,26 +211,10 @@ export default {
       "object": "Metadaten",
       "string": "Text"
     }
-  },
-  "_digitaltwins": {
-    "breadcrumbs": {
-      "add": "Hinzufügen",
-      "containerlink": "Plugin verknüpfen",
-      "create-plugin": "Plugin erstellen",
-      "datacontainer.digitaltwin": "Plugin",
-      "digitaltwin": "Digitaler Zwilling",
-      "digitaltwins": "Digitale Zwillinge",
-      "dt-changes": "Letzte Änderungen",
-      "dt-plugins": "Plugin Übersicht",
-      "dt-detail": "Details",
-      "dt-technical": "Technische Details",
-      "dt-map": "An Domainnamen binden",
-      "my-plugins": "Meine Plugins",
-      "my-twins": "Meine Digitalen Zwillinge",
-      "open": "Öffnen",
-      "plugin": "Plugin",
-      "verifications": "Verifizierungen"
-    }
   }
 }
 /* tslint:enable */;
+
+i18n._digitaltwins = { breadcrumbs: dtLib.translations.de.breadcrumbs };
+
+export default i18n;

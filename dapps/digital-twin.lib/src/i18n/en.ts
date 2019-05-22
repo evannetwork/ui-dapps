@@ -25,13 +25,28 @@
   https://evan.network/license/
 */
 
-const getExternals = require('../../vue/webpack.externals');
+/* tslint:disable */
+const i18n: any = {
+  "breadcrumbs": {
+    "add": "Add",
+    "containerlink": "Link Plugin",
+    "create-plugin": "Create Plugin",
+    "datacontainer.digitaltwin": "Plugin",
+    "digitaltwin": "Digital Twin",
+    "digitaltwins": "Digital Twins",
+    "dt-changes": "Last Changes",
+    "dt-plugins": "Plugin Overview",
+    "dt-create": "Create Digital Twin",
+    "dt-detail": "Details",
+    "dt-technical": "Technical Details",
+    "dt-map": "Bind to domain name",
+    "my-plugins": "My Plugins",
+    "my-twins": "My Digital Twins",
+    "open": "Open",
+    "plugin": "Plugin",
+    "verifications": "Verifications"
+  }
+}
+/* tslint:enable */
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  getExternals({
-    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin',
-    '@evan.network/digitaltwin.lib': '@evan.network/digitaltwin.lib',
-  })
-);
+export default i18n;

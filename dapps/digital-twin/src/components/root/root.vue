@@ -32,10 +32,7 @@
       v-on:loggedin="initialize()">
       <template v-slot:header
         v-if="$route.path.indexOf(`digitaltwins.${ dapp.domainName }`) === -1">
-        <evan-breadcrumbs
-          :attachToDAppWrapper="true"
-          :i18nScope="'_digitaltwins.breadcrumbs'">
-        </evan-breadcrumbs>
+        <dt-breadcrumbs></dt-breadcrumbs>
       </template>
       <template v-slot:content>
         <evan-loading v-if="loading || ($store.state.uiDT && $store.state.uiDT.loading)"></evan-loading>

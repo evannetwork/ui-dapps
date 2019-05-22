@@ -30,36 +30,17 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
 import { pluginDispatcher, pluginShareDispatcher } from './dispatchers/registry';
 
-export const latestTwinKey = 'evan-last-digital-twins';
-export const nullAddress = '0x0000000000000000000000000000000000000000';
-export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
-export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
-
-/**
- * Copies and returns a runtime with the correct nameresolver for payable stuff.
- *
- * @param      {any}  runtime  vue instance or runtime
- */
-export function getRuntime(runtime: any): bcc.Runtime {
-  runtime = runtime.getRuntime ? runtime.getRuntime() : runtime;
-
-  const nameResolverConfig = JSON.parse(JSON.stringify(dappBrowser.config.nameResolver));
-  // set the custom ens contract address
-  nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
-  nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
-
-  // copy runtime and set the nameResolver
-  const runtimeCopy = Object.assign({ }, runtime);
-  runtimeCopy.nameResolver = new bcc.NameResolver({
-    config: nameResolverConfig,
-    contractLoader: runtime.contractLoader,
-    executor: runtime.executor,
-    web3: runtime.web3,
-  });
-  runtimeCopy.description.nameResolver = runtimeCopy.nameResolver;
-
-  return runtimeCopy;
-}
+import * as dtLib from '@evan.network/digitaltwin.lib';
+export {
+  containerFactory,
+  enableDTSave,
+  getDigitalTwinConfig,
+  getDomainName,
+  getRuntime,
+  latestTwinsKey,
+  nullAddress,
+  twinFactory,
+} from '@evan.network/digitaltwin.lib';
 
 /**
  * Returns a minimal dbcp description set.
@@ -80,30 +61,6 @@ export async function getDataContainerBaseDbcp(description: any = { }): Promise<
 }
 
 /**
- * Return the default digitaltwin config.
- */
-export function getDigitalTwinConfig(
-  runtime: bcc.Runtime,
-  address: string,
-  dbcp?: any
-): bcc.DigitalTwinConfig {
-  return {
-    accountId: runtime.activeAccount,
-    address: address,
-    containerConfig: { accountId: runtime.activeAccount, },
-    description: dbcp,
-    factoryAddress: twinFactory,
-  }
-}
-
-/**
- * Sends the 'dt-value-changed' event.
- */
-export function enableDTSave() {
-  window.dispatchEvent(new CustomEvent('dc-value-changed'));
-}
-
-/**
  * Return a new container instance
  *
  * @return     {bcc.Container}  The container.
@@ -112,7 +69,7 @@ export function getContainer(runtime: bcc.Runtime, address: string): bcc.Contain
   return new bcc.Container(<any>runtime, {
     accountId: runtime.activeAccount,
     address: address,
-    factoryAddress: containerFactory
+    factoryAddress: dtLib.containerFactory
   });
 }
 

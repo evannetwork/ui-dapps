@@ -27,6 +27,7 @@
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 import AJVComponent from './schema/ajv/ajv.vue';
 import DBCPComponent from './dbcp/dbcp.vue';
@@ -56,6 +57,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-template-handler', component: TemplateHandlerComponent },
   { name: 'dt-dbcp', component: DBCPComponent },
-];
+].concat(dtLib.componentRegistration);
 
 export default componentRegistration;

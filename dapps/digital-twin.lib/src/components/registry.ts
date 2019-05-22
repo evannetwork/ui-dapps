@@ -27,28 +27,11 @@
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import * as dataContainerAPI from '@evan.network/datacontainer.digitaltwin';
-import * as dtLib from '@evan.network/digitaltwin.lib';
-
-import ContainerLinkComponent from './container-link/container-link.vue';
-import DetailComponent from './detail/detail.vue';
-import EnsActionsComponent from './ens/actions/actions.vue';
-import EnsFieldComponent from './ens/field/field.vue';
-import EnsMapComponent from './ens/map/map.vue';
-import EnsOpenComponent from './ens/open/open.vue';
-
-// export them all, so other applications can access them
-export { EnsActionsComponent, EnsFieldComponent, EnsOpenComponent, }
+import TwinBreadcrumbsComponent from './breadcrumbs/breadcrumbs.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'dc-link',        component: ContainerLinkComponent },
-  { name: 'dt-detail',      component: DetailComponent },
-  { name: 'dt-ens-actions', component: EnsActionsComponent },
-  { name: 'dt-ens-field',   component: EnsFieldComponent },
-  { name: 'dt-ens-map',     component: EnsMapComponent },
-]
-.concat(dataContainerAPI.components)
-.concat(dtLib.componentRegistration);
+  { name: 'dt-breadcrumbs', component: TwinBreadcrumbsComponent },
+];
 
 export default componentRegistration;
