@@ -53,10 +53,7 @@
     "@evan.network/ui-dapp-browser": "^2.1.2"
   },
   "husky": {
-    "hooks": {
-      "commit-msg": "node scripts/commit-msg",
-      "pre-commit": "tslint --config tslint.json \"./dapps/*/src/**/*.ts\""
-    }
+    "hooks": {}
   },
   "keywords": [
     "javascript",
