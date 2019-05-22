@@ -26,28 +26,51 @@
 */
 
 <template>
-  <div class="container-wide">
-    <div class="white-box border rounded">
-      <div class="header">
-        <h3 class="m-0 font-weight-semibold">
-          {{ `_digitaltwins.verifications.title` | translate }}
-        </h3>
-      </div>
-      <div class="content">
-        <div class="d-flex align-items-center">
-          <i class="mdi mdi-shield-check text-secondary mr-3" style="font-size: 60px;"></i>
-          <p class="m-0 text-justify">
-            {{ `_digitaltwins.verifications.description` | translate }}
-          </p>
+  <div class="d-flex flex-column h-100">
+    <div class="container-wide"
+      v-if="uiDT.validity.error">
+      <div class="white-box border rounded">
+        <div class="header">
+          <h3 class="m-0 font-weight-semibold">
+            {{ '_digitaltwins.detail.error.title' | translate }}
+          </h3>
+        </div>
+        <div class="content"
+          v-html="$t('_digitaltwins.detail.error.desc')">
         </div>
       </div>
-      <div class="footer">
-      </div>
     </div>
+    <template v-else>
+      <evan-nav-tabs class="flex-shrink-0"
+        :tabs="tabs">
+      </evan-nav-tabs>
+      <div class="container-wide overflow-y-auto">
+        <div class="d-flex mb-5 align-items-center">
+          <div>
+            <h3 class="font-weight-bold mb-0">
+              {{ uiDT.dbcp.name }}
+            </h3>
+            <p class="text-muted font-weight-semibold m-0">
+              {{ uiDT.dbcp.description }}
+            </p>
+          </div>
+          <span class="mx-auto"></span>
+          <dt-actions
+            :uiDT="uiDT"
+            :dtActions="true"
+            :containerActions="false"
+            :displayMode="'buttons'">
+          </dt-actions>
+        </div>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './verifications.ts';
+  import Component from './detail.ts';
   export default Component;
 </script>

@@ -31,13 +31,12 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import { getRuntime, getLastOpenedTwins, loadFavorites } from '@evan.network/digitaltwin';
-import { dispatchers } from '@evan.network/digitaltwin';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { dispatchers } from '@evan.network/digitaltwin';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 @Component({ })
 export default class OverviewComponent extends mixins(EvanComponent) {
@@ -85,10 +84,10 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    */
   async initialize() {
     // load favorite and last twins
-    const runtime = getRuntime(this);
+    const runtime = utils.getRuntime(this);
     const twins = Array.from(new Set([ ].concat(
-      getLastOpenedTwins(),
-      await loadFavorites(runtime),
+      utils.getLastOpenedTwins(),
+      await utils.loadTwinFavorites(runtime),
     )));
     // all descriptions of the twins
     this.descriptions = { };

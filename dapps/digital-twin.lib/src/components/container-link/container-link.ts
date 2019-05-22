@@ -35,10 +35,9 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../dispatchers/registy';
+import dispatchers from '../../dispatchers';
 import EvanUIDigitalTwin from '../../digitaltwin';
 import * as utils from '../../utils';
-import * as dataContainerAPI from '@evan.network/datacontainer.digitaltwin';
 
 interface ContainerLinkFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -134,8 +133,8 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
     }));
 
     // wait until the dt was created and check again
-    this.createDtWatcher = dispatchers.digitaltwinCreateDispatcher.watch(async () => {
-      const instances = await dispatchers.digitaltwinCreateDispatcher
+    this.createDtWatcher = dispatchers.dt.digitaltwinCreateDispatcher.watch(async () => {
+      const instances = await dispatchers.dt.digitaltwinCreateDispatcher
         .getInstances(runtime);
 
       if (instances.length === 0) {
@@ -146,7 +145,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
     });
 
     // watch for linking to be finished
-    this.linkContainerWatcher = dataContainerAPI.containerDispatchers.linkDispatcher
+    this.linkContainerWatcher = dispatchers.dc.linkDispatcher
       .watch(() => this.checkLinking());
   }
 
@@ -199,7 +198,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
    */
   async linkContainer() {
     const runtime = utils.getRuntime(this);
-    const container = dataContainerAPI.utils.getContainer(
+    const container = utils.getContainer(
       runtime,
       this.containerLinkForm.address.value
     );
@@ -223,7 +222,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
     if (valid) {
       // apply the also the description properties, so the container will be shown already in
       // digital twin left panel
-      dataContainerAPI.containerDispatchers.linkDispatcher.start(runtime, {
+      dispatchers.dc.linkDispatcher.start(runtime, {
         containerAddress: this.containerLinkForm.address.value,
         description: description.description,
         digitalTwinAddress: this.validDTAddress,
@@ -245,7 +244,7 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
     // if a valid address was selected check for this dt to gets a new linked container
     if (this.validDTAddress) {
       // load link instances and check for corresponding instances
-      const instances = await dataContainerAPI.containerDispatchers.linkDispatcher
+      const instances = await dispatchers.dc.linkDispatcher
         .getInstances(runtime);
       const contextInstances = instances
         .map(instance => instance.data)

@@ -31,8 +31,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 import * as utils from './utils';
-import * as dispatchers from './dispatchers/registy';
-import { containerDispatchers } from '@evan.network/datacontainer.digitaltwin';
+import dispatchers from './dispatchers';
 
 /**
  * Represents the UI representation for a evan.network. Handles data management and so on.
@@ -186,7 +185,7 @@ export default class EvanUIDigitalTwin {
    * @param      {bccRuntime}  runtime  bcc runtime
    */
   async getSaving(runtime: bcc.Runtime): Promise<any> {
-    const instances = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
+    const instances = await dispatchers.dt.digitaltwinSaveDispatcher.getInstances(runtime);
 
     // filter instances for this address
     const filteredInstances = instances
@@ -201,8 +200,8 @@ export default class EvanUIDigitalTwin {
    * Check if currently an synchronisation is running for the favorites.
    */
   async getFavoriteLoading(runtime: bcc.Runtime) {
-    const add = await dispatchers['favoriteAddDispatcher'].getInstances(runtime);
-    const remove = await dispatchers['favoriteRemoveDispatcher'].getInstances(runtime);
+    const add = await dispatchers.dt.favoriteAddDispatcher.getInstances(runtime);
+    const remove = await dispatchers.dt.favoriteRemoveDispatcher.getInstances(runtime);
 
     return [ ]
       .concat(add, remove)
@@ -276,7 +275,7 @@ export default class EvanUIDigitalTwin {
 
       // check for running dispatchers
       this.setIsCreating(vueInstance, runtime);
-      this.dispatcherListeners.push(dispatchers.digitaltwinCreateDispatcher
+      this.dispatcherListeners.push(dispatchers.dt.digitaltwinCreateDispatcher
         .watch(() => this.setIsCreating(vueInstance, runtime)));
     }
 
@@ -326,13 +325,13 @@ export default class EvanUIDigitalTwin {
    * @param      {Vue}         vueInstance  a vue component instance
    * @param      {bccRuntime}  runtime      bcc runtime
    */
-  saveDbcp(vueInstance: Vue, runtime: bcc.Runtime) {
+  saveDbcp(vueInstance: Vue, runtime: bcc.Runtime, digitaltwinSaveDispatcher: Dispatcher) {
     // lookup dirty objects and pass them into the save object
     const dataToSave = { address: this.address, dbcp: this.dbcp };
 
     // start the dispatcher and watch for updates
     this.isSaving = true;
-    dispatchers.digitaltwinSaveDispatcher.start(runtime, dataToSave);
+    digitaltwinSaveDispatcher.start(runtime, dataToSave);
     this.watchSaving(vueInstance, runtime);
   }
 
@@ -340,7 +339,7 @@ export default class EvanUIDigitalTwin {
    * Check if the current digitaltwin with the specific address is in creation
    */
   async setIsCreating(vueInstance: any, runtime: bcc.Runtime): Promise<void> {
-    const instances = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
+    const instances = await dispatchers.dt.digitaltwinCreateDispatcher.getInstances(runtime);
     const wasCreating = this.isCreating;
 
     // is currently an digitaltwin for this address is in creation?
@@ -371,12 +370,16 @@ export default class EvanUIDigitalTwin {
   /**
    * Toggle the current dispatcher state
    */
-  async toggleFavorite(runtime) {
+  async toggleFavorite(
+    runtime: bcc.Runtime,
+    favoriteAddDispatcher: Dispatcher,
+    favoriteRemoveDispatcher: Dispatcher
+  ) {
     if (this.address !== 'dt-create') {
-      const dispatcherName = this.isFavorite ? 'favoriteRemoveDispatcher' : 'favoriteAddDispatcher';
+      const dispatcher = this.isFavorite ? favoriteRemoveDispatcher : favoriteAddDispatcher;
 
       // start the dispatcher
-      dispatchers[dispatcherName].start(runtime, { address: this.address });
+      dispatcher.start(runtime, { address: this.address });
 
       // toggle favorite
       this.isFavorite = !this.isFavorite;
@@ -422,7 +425,7 @@ export default class EvanUIDigitalTwin {
    * @param      {bccRuntime}  runtime      bcc runtime
    */
   async watchSaving(vueInstance: Vue, runtime: bcc.Runtime): Promise<void> {
-    const listener = await dispatchers.digitaltwinSaveDispatcher.watch(async () => {
+    const listener = await dispatchers.dt.digitaltwinSaveDispatcher.watch(async () => {
       this.isSaving = await this.getSaving(runtime);
 
       if (!this.isSaving) {
@@ -443,8 +446,8 @@ export default class EvanUIDigitalTwin {
     // map all dispatcher instances to one array
     const instances = Object.assign(
       { },
-      ...(await Promise.all(Object.keys(containerDispatchers).map(
-        (name: string) => containerDispatchers[name].getInstances(runtime, false)
+      ...(await Promise.all(Object.keys(dispatchers.dc).map(
+        (name: string) => dispatchers.dc[name].getInstances(runtime, false)
       ))
     ));
 

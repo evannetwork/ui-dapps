@@ -25,19 +25,20 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { deepEqual } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import ContainerCache from '../../../container-cache';
-import * as utils from '../../../utils';
+import { deepEqual } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
+
+import * as dcUtils from '../../../utils';
 import * as entryUtils from '../../../entries';
+import ContainerCache from '../../../container-cache';
+
 
 interface EntryFormInterface extends EvanForm {
   name: EvanFormControl;
@@ -197,7 +198,7 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     // wait for opened containers to saved the work
     if (this.cacheChanges) {
       // check for changes
-      const integrity = await utils.getEntryChanges(
+      const integrity = await dcUtils.getEntryChanges(
         utils.getRuntime(this),
         this.address,
         this.template

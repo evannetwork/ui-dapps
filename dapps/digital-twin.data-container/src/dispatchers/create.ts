@@ -25,12 +25,12 @@
   https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
-import * as utils from '../utils';
 
 const dispatcher = new Dispatcher(
   `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,

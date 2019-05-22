@@ -29,8 +29,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
-
-import * as utils from '../utils';
+import { utils } from '@evan.network/digitaltwin.lib';
+import * as dcUtils from '../utils';
 
 const dispatcher = new Dispatcher(
   `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
@@ -44,7 +44,7 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
     data.template = data.template || (await container.toPlugin(false)).template;
-    const entryChanges = await utils.getEntryChanges(runtime, data.address, data.template);
+    const entryChanges = await dcUtils.getEntryChanges(runtime, data.address, data.template);
 
     // analyse data and check, which data fields must be saved
     data.saveDescription = entryChanges.saveDescription;

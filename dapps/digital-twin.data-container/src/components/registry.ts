@@ -30,7 +30,6 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
 import AJVComponent from './schema/ajv/ajv.vue';
-import DBCPComponent from './dbcp/dbcp.vue';
 import EntryComponent from './schema/entries/entry/entry.vue';
 import EntryFieldComponent from './schema/entries/field/field.vue';
 import EntryListComponent from './schema/entries/list/list.vue';
@@ -56,7 +55,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-template-handler', component: TemplateHandlerComponent },
-  { name: 'dt-dbcp', component: DBCPComponent },
 ].concat(dtLib.componentRegistration);
 
 export default componentRegistration;

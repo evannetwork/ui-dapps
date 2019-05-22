@@ -28,6 +28,8 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
+import dispatchers from './dispatchers';
+
 /**
  * Global constants
  */
@@ -35,6 +37,147 @@ export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
 export const latestTwinsKey = 'evan-last-digital-twins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
 export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
+
+/**
+ * Add a address to the last opened twins array.
+ *
+ * @param      {string}  address  The address
+ */
+export function addLastOpenedTwin(address: string) {
+  if (address &&
+      address !== 'dt-create' &&
+      address !== 'undefined') {
+    const lastTwins = getLastOpenedTwins();
+
+    const existingIndex = lastTwins.indexOf(address);
+    if (existingIndex !== -1) {
+      lastTwins.splice(existingIndex, 1);
+    }
+    lastTwins.unshift(address);
+    // only save the latest 20 entries
+    window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
+  }
+}
+
+/**
+ * Sends the 'dt-value-changed' event.
+ */
+export function enableDTSave() {
+  window.dispatchEvent(new CustomEvent('dc-value-changed'));
+}
+
+/**
+ * Return a new container instance
+ *
+ * @return     {bcc.Container}  The container.
+ */
+export function getContainer(runtime: bcc.Runtime, address: string): bcc.Container {
+  return new bcc.Container(<any>runtime, {
+    accountId: runtime.activeAccount,
+    address: address,
+    factoryAddress: containerFactory
+  });
+}
+
+/**
+ * Returns a minimal dbcp description set.
+ */
+export async function getDigitalTwinBaseDbcp(): Promise<any> {
+  const digitaltwinDbcp = await dappBrowser.System
+    .import(`digitaltwins.${ dappBrowser.getDomainName() }!ens`);
+
+  return {
+    author: '',
+    dapp: digitaltwinDbcp.dapp,
+    dbcpVersion: 2,
+    description: '',
+    name: '',
+    version: '1.0.0',
+  };
+}
+
+/**
+ * Returns the active domain name (currently payable, until the nameresolve is fixed)
+ *
+ * @return     {string}  domain name (default evan)
+ */
+export function getDomainName(): string {
+  return 'payable' || dappBrowser.getDomainName();
+}
+
+/**
+ * Returns a minimal dbcp description set.
+ */
+export async function getDataContainerBaseDbcp(description: any = { }): Promise<any> {
+  const digitaltwinDbcp = await dappBrowser.System
+    .import(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }!ens`);
+
+  return {
+    author: '',
+    dapp: digitaltwinDbcp.dapp,
+    dbcpVersion: 2,
+    description: '',
+    name: '',
+    version: '1.0.0',
+    ...description
+  };
+}
+
+/**
+ * Return the default digitaltwin config.
+ */
+export function getDigitalTwinConfig(
+  runtime: bcc.Runtime,
+  address: string,
+  dbcp?: any
+): bcc.DigitalTwinConfig {
+  return {
+    accountId: runtime.activeAccount,
+    address: address,
+    containerConfig: { accountId: runtime.activeAccount, },
+    description: dbcp,
+    factoryAddress: twinFactory,
+  }
+}
+
+/**
+ * Return the last opened digitaltwins that were persited in the localStorage.
+ */
+export function getLastOpenedTwins() {
+  return JSON.parse(window.localStorage[latestTwinsKey] || '[ ]');
+}
+
+/**
+ * Return my plugins and merge them with current running dispatchers.
+ *
+ * @param      {bccRuntime}  runtime  bcc runtime
+ */
+export async function getMyPlugins(runtime: bcc.Runtime) {
+  const plugins: any = await bcc.Container.getContainerPlugins(runtime.profile);
+
+  // watch for new and sharing containers
+  const saving = await dispatchers.dc.pluginDispatcher.getInstances(runtime);
+  const sharing = await dispatchers.dc.pluginShareDispatcher.getInstances(runtime);
+
+  // apply saving plugins
+  saving.forEach(instance => {
+    // plugin gets updated
+    if (instance.data.beforeName) {
+      delete plugins[instance.data.beforeName];
+    }
+
+    plugins[instance.data.name] = {
+      creating: !!instance.data.beforeName,
+      description: instance.data.description,
+      loading: true,
+      template: instance.data.template,
+    };
+  });
+
+  // show loading for shared containers
+  sharing.forEach(instance => plugins[instance.data.name].loading = true);
+  return plugins;
+}
 
 /**
  * Copies and returns a runtime with the correct nameresolver for payable stuff.
@@ -63,35 +206,23 @@ export function getRuntime(runtime: any): bcc.Runtime {
 }
 
 /**
- * Returns the active domain name (currently payable, until the nameresolve is fixed)
+ * Load the digitaltwin favorites for the current user.
  *
- * @return     {string}  domain name (default evan)
+ * @param      {bcc.Runtime}  runtime  bcc runtime
  */
-export function getDomainName(): string {
-  return 'payable' || dappBrowser.getDomainName();
-}
+export async function loadTwinFavorites(runtime: bcc.Runtime) {
+  const favorites = await bcc.DigitalTwin.getFavorites(<any>runtime);
 
-/**
- * Return the default digitaltwin config.
- */
-export function getDigitalTwinConfig(
-  runtime: bcc.Runtime,
-  address: string,
-  dbcp?: any
-): bcc.DigitalTwinConfig {
-  return {
-    accountId: runtime.activeAccount,
-    address: address,
-    containerConfig: { accountId: runtime.activeAccount, },
-    description: dbcp,
-    factoryAddress: twinFactory,
-  }
-}
+  // load dispatchers and merge the favorites with the favorite dispatchers
+  const add = await dispatchers.dt.favoriteAddDispatcher.getInstances(runtime);
+  const remove = await dispatchers.dt.favoriteRemoveDispatcher.getInstances(runtime);
 
-/**
- * Sends the 'dt-value-changed' event.
- */
-export function enableDTSave() {
-  window.dispatchEvent(new CustomEvent('dc-value-changed'));
+  // add favorites directly
+  add.forEach(instance => favorites.push(instance.data.address));
+  // remove favorites
+  remove.forEach(instance =>
+    favorites.splice(favorites.indexOf(instance.data.address), 1));
+
+  return favorites.reverse();
 }
 

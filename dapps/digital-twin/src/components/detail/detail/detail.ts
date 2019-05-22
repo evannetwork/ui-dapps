@@ -25,19 +25,54 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+
+import * as dispatchers from '../../../dispatchers/registy';
+
+
+interface DetailFormInterface extends EvanForm {
+  description: EvanFormControl;
+  imgSquare: EvanFormControl;
+  name: EvanFormControl;
+}
 
 @Component({ })
-export default class VerificationsComponent extends mixins(EvanComponent) {
-  created() {
+export default class GeneralComponent extends mixins(EvanComponent) {
+  /**
+   * Digital twin that should be used for edition
+   */
+  uiDT = null;
 
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
+   * Tabs for top navigation
+   */
+  tabs: Array<any> = [ ];
+
+  /**
+   * Setup the form.
+   */
+  async created() {
+    this.uiDT = this.$store.state.uiDT;
+
+    // easy transform sub navigations to full href and reference id's
+    const twinAddress = this.$route.params.digitalTwinAddress;
+    this.tabs = [ 'dt-plugins', 'dt-technical', 'dt-changes' ]
+      .map(urlKey => ({
+        id: `tab-${ urlKey }`,
+        href: `${ (<any>this).dapp.fullUrl }/${ twinAddress }/dt-detail/${ urlKey }`,
+        text: `_digitaltwins.breadcrumbs.${ urlKey }`
+      }));
   }
 }

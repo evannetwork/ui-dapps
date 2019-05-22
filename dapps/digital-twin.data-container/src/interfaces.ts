@@ -27,6 +27,7 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 
+
 export interface UIContainerTemplateProperty extends bcc.ContainerTemplateProperty {
   /**
    * Current edit mode for UI interactions. (schema, edit, view)

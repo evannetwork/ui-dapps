@@ -26,6 +26,7 @@
 */
 
 import Vue from 'vue';
+
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName, } from '@evan.network/ui-dapp-browser';
 
@@ -38,7 +39,8 @@ import * as containerDispatchers from './dispatchers/registry';
 
 export * from './utils';
 export * from './dispatchers/registry';
-export { containerDispatchers, translations,  utils, components };
+export { containerDispatchers, translations, utils, components };
+
 
 System.map['@evan.network/datacontainer.digitaltwin'] =
   `datacontainer.digitaltwin.${ getDomainName() }!dapp-content`;

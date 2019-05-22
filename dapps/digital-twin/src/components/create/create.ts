@@ -25,19 +25,16 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registy';
-import EvanUIDigitalTwin from '../../digitaltwin';
-import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
 
 interface CreateFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -80,7 +77,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   async created() {
     this.uiDT = new EvanUIDigitalTwin('dt-create');
-    await this.uiDT.initialize(this, getRuntime(this));
+    await this.uiDT.initialize(this, utils.getRuntime(this));
 
     this.createForm = (<CreateFormInterface>new EvanForm(this, {
       useAddress: {
@@ -163,7 +160,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
     this.uiDT.dbcp.name = this.createForm.name.value;
     this.uiDT.dbcp.description = this.createForm.description.value;
 
-    dispatchers.digitaltwinCreateDispatcher.start(getRuntime(this), {
+    dispatchers.digitaltwinCreateDispatcher.start(utils.getRuntime(this), {
       address: this.createForm.useAddress.value ? this.createForm.address.value :
         this.uiDT.address,
       dbcp: this.uiDT.dbcp,

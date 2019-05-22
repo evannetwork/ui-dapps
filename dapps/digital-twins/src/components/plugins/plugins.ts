@@ -31,15 +31,10 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { getRuntime } from '@evan.network/digitaltwin';
-import {
-  getMyPlugins,
-  pluginDispatcher,
-  pluginShareDispatcher
-} from '@evan.network/datacontainer.digitaltwin';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 @Component({ })
 export default class PluginsComponent extends mixins(EvanComponent) {
@@ -78,25 +73,25 @@ export default class PluginsComponent extends mixins(EvanComponent) {
    * Clear the contracts cache and load the plugins for the current user.
    */
   async reloadPlugins() {
-    const runtime = getRuntime(this);
+    const runtime = utils.getRuntime(this);
 
     delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-    this.plugins = await getMyPlugins(runtime);
+    this.plugins = await utils.getMyPlugins(runtime);
   }
 
   /**
    * Loads plugins.
    */
   async bindDispatchers() {
-    const runtime = getRuntime(this);
+    const runtime = utils.getRuntime(this);
     let beforeSaving = -1;
 
     /**
      * Check current dispatcher instances and reload plugins if the save process has finished
      */
     const checkPlugins = async () => {
-      const saving = await pluginDispatcher.getInstances(runtime);
-      const sharing = await pluginShareDispatcher.getInstances(runtime);
+      const saving = await utils.pluginDispatcher.getInstances(runtime);
+      const sharing = await utils.pluginShareDispatcher.getInstances(runtime);
       const savingCount = saving.length + sharing.length;
 
       // for reload
@@ -107,8 +102,8 @@ export default class PluginsComponent extends mixins(EvanComponent) {
       beforeSaving = savingCount;
     };
 
-    this.saveWatcher = pluginDispatcher.watch(() => checkPlugins());
-    this.shareWatcher = pluginDispatcher.watch(() => checkPlugins());
+    this.saveWatcher = utils.pluginDispatcher.watch(() => checkPlugins());
+    this.shareWatcher = utils.pluginDispatcher.watch(() => checkPlugins());
   }
 
   /**

@@ -25,19 +25,17 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
 import * as dispatchers from '../../dispatchers/registy';
-import EvanUIDigitalTwin from '../../digitaltwin';
-import { getDigitalTwinBaseDbcp, getRuntime, getDomainName } from '../../utils';
+
 
 interface DetailFormInterface extends EvanForm {
   description: EvanFormControl;
@@ -46,11 +44,28 @@ interface DetailFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class GeneralComponent extends mixins(EvanComponent) {
+export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   /**
-   * Digital twin that should be used for edition
+   * UI Digital Twin instances, where the actions should be triggered.
    */
-  uiDT = null;
+  @Prop() uiDT;
+
+  /**
+   * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
+   */
+  @Prop() dtActions;
+
+  /**
+   * Enable container actions (link container, container add)
+   */
+  @Prop() containerActions;
+
+  /**
+   * Dropdown mode (buttons / dropdownButton / dropdownIcon)
+   */
+  @Prop({
+    default: 'buttons'
+  }) displayMode;
 
   /**
    * ref handlers
@@ -58,24 +73,21 @@ export default class GeneralComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
-   * Tabs for top navigation
+   * Used per default for normal buttons (will be overwritten within dropdown)
    */
-  tabs: Array<any> = [ ];
+  tertiarButtonClass = 'btn btn-circle btn-sm btn-tertiary mr-3';
+  primaryButtonClass = 'btn btn-primary btn-circle d-flex align-items-center justify-content-center';
+  buttonTextComp = 'evan-tooltip';
 
   /**
-   * Setup the form.
+   * Set button classes
    */
-  async created() {
-    this.uiDT = this.$store.state.uiDT;
-
-    // easy transform sub navigations to full href and reference id's
-    const twinAddress = this.$route.params.digitalTwinAddress;
-    this.tabs = [ 'dt-plugins', 'dt-technical', 'dt-changes' ]
-      .map(urlKey => ({
-        id: `tab-${ urlKey }`,
-        href: `${ (<any>this).dapp.fullUrl }/${ twinAddress }/dt-detail/${ urlKey }`,
-        text: `_digitaltwins.breadcrumbs.${ urlKey }`
-      }));
+  created() {
+    if (this.displayMode !== 'buttons') {
+      this.tertiarButtonClass = this.primaryButtonClass =
+        'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable';
+      this.buttonTextComp = 'span';
+    }
   }
 
   /**
@@ -91,6 +103,17 @@ export default class GeneralComponent extends mixins(EvanComponent) {
     this.uiDT.dbcp.name = newDbcp.name;
     this.uiDT.dbcp.description = newDbcp.description;
     this.uiDT.dbcp.imgSquare = newDbcp.imgSquare;
-    this.uiDT.saveDbcp(this, getRuntime(this));
+    this.uiDT.saveDbcp(this, utils.getRuntime(this), dispatchers.digitaltwinSaveDispatcher);
+  }
+
+  /**
+   * Add / remove the twin from profile favorites.
+   */
+  toggleFavorite() {
+    this.uiDT.toggleFavorite(
+      utils.getRuntime(this),
+      dispatchers.favoriteAddDispatcher,
+      dispatchers.favoriteRemoveDispatcher
+    );
   }
 }

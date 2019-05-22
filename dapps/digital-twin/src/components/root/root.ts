@@ -25,19 +25,16 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
-import EvanUIDigitalTwin from '../../digitaltwin';
-import * as identitityUtils from '../../utils';
 import * as dispatchers from '../../dispatchers/registy';
 
 @Component({ })
@@ -112,7 +109,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         this.$set(this.$store.state, 'uiDT', new EvanUIDigitalTwin(digitalTwinAddress));
 
         // load digitaltwin specific data
-        await this.$store.state.uiDT.initialize(this, identitityUtils.getRuntime(this));
+        await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
 
         // apply the container categories every time, when the digitaltwin was load, so the containers
         // and paths will be dynamic

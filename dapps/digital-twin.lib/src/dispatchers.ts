@@ -25,37 +25,34 @@
   https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib'
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-const dispatcher = new Dispatcher(
-  `digitaltwin.${ dappBrowser.getDomainName() }`,
-  'digitaltwinCreateDispatcher',
-  40 * 1000,
-  '_digitaltwins.dispatcher.digitaltwin.create'
-);
+/**
+ * This dispatchers are only created for watching and not for starting them! They are orignally
+ * defined, within the digital-twin / digital-twin.data-container dapp
+ */
+const dtDomain = `digitaltwin.${ dappBrowser.getDomainName() }`;
+const dcDomain = `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`;
+const dispatchers = {
+  dt: {
+    'digitaltwinCreateDispatcher': new Dispatcher(dtDomain, 'digitaltwinCreateDispatcher', 0),
+    'digitaltwinSaveDispatcher': new Dispatcher(dtDomain, 'digitaltwinSaveDispatcher', 0),
+    'favoriteAddDispatcher': new Dispatcher(dtDomain, 'favoriteAddDispatcher', 0),
+    'favoriteRemoveDispatcher': new Dispatcher(dtDomain, 'favoriteRemoveDispatcher', 0),
+  },
+  dc: {
+    'createDispatcher': new Dispatcher(dcDomain, 'createDispatcher', 0),
+    'linkDispatcher': new Dispatcher(dcDomain, 'linkDispatcher', 0),
+    'pluginShareDispatcher': new Dispatcher(dcDomain, 'pluginShareDispatcher', 0),
+    'pluginDispatcher': new Dispatcher(dcDomain, 'pluginDispatcher', 0),
+    'updateDispatcher': new Dispatcher(dcDomain, 'updateDispatcher', 0),
+    'shareDispatcher': new Dispatcher(dcDomain, 'shareDispatcher', 0),
+  }
+};
 
-dispatcher
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    const twin = await bcc.DigitalTwin.create(
-      <any>runtime,
-      EvanUIDigitalTwin.getDigitalTwinConfig(runtime, data.address, data.dbcp)
-    );
 
-    data.contractAddress = await twin.getContractAddress();
-  })
-  // store the twin directly as favorite
-  .step(async (instance: DispatcherInstance, data: any) => {
-    if (data.isFavorite) {
-      const address = (data.address === 'dt-create' ? '' : data.address) || data.contractAddress;
-      await EvanUIDigitalTwin
-        .getDigitalTwin(instance.runtime, address)
-        .addAsFavorite();
-    }
-  });
+export default dispatchers;
 
-export default dispatcher;

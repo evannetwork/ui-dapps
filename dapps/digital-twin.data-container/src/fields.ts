@@ -26,7 +26,9 @@
 */
 
 import Vue from 'vue';
+
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+
 
 /**
  * Return the easy type definition from a ajv schema (e.g. used to detect file fields).

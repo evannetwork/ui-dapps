@@ -26,10 +26,12 @@
 */
 
 import * as bcc from '@evan.network/api-blockchain-core';
+import { utils } from '@evan.network/digitaltwin.lib';
+
 import * as fieldUtils from './fields';
-import * as utils from './utils';
 import EntryComponent from './components/schema/entries/entry/entry';
 import { UIContainerTemplateProperty } from './interfaces';
+
 
 /**
  * Takes an entry and checks for type array. If it's an array, ensure, that the value array and an

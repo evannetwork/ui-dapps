@@ -31,6 +31,7 @@ import CreateComponent from './components/create/create.vue';
 import DetailComponent from './components/detail/detail.vue';
 import PluginComponent from './components/plugin/plugin.vue';
 
+
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   {

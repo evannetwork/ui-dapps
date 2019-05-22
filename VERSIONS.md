@@ -12,6 +12,10 @@
   - use latest terms of use and data protection specifications
 - `digitaltwin.lib`
   - add global repo for shared twin sources
+  - add `dt-bread` component for ignoring breadcrumb paths
+  - add `dt-dbcp` component for editing dbcp
+  - move `UIDigitalTwin` from `digitaltwin` to `digitaltwin.lib` dapp
+  - move utils from `digitaltwin` and `datacontainer.digitaltwin` dapp to `digitaltwin.lib` dapp
 
 ### Fixes
 - `vue dapps`
@@ -26,10 +30,10 @@
     - move ens map to modal
     - add detail tabs for future features
     - map containers overview to dt-edit sub navigation
+  - add `dt-actions-component`
 - `datacontainer.digitaltwins`
   - `ajv-editor` use `parseFieldValue` value on save
   - increase `ajv-editor` name td size to 300px
-  - add `dt-dbcp` component for editing dbcp
 
 ### Deprecations
 - `digitaltwins`, `datacontainer.digitaltwins`

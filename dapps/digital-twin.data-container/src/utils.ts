@@ -25,53 +25,12 @@
   https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
-import { pluginDispatcher, pluginShareDispatcher } from './dispatchers/registry';
-
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as dtLib from '@evan.network/digitaltwin.lib';
-export {
-  containerFactory,
-  enableDTSave,
-  getDigitalTwinConfig,
-  getDomainName,
-  getRuntime,
-  latestTwinsKey,
-  nullAddress,
-  twinFactory,
-} from '@evan.network/digitaltwin.lib';
+import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
 
-/**
- * Returns a minimal dbcp description set.
- */
-export async function getDataContainerBaseDbcp(description: any = { }): Promise<any> {
-  const digitaltwinDbcp = await dappBrowser.System
-    .import(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }!ens`);
-
-  return {
-    author: '',
-    dapp: digitaltwinDbcp.dapp,
-    dbcpVersion: 2,
-    description: '',
-    name: '',
-    version: '1.0.0',
-    ...description
-  };
-}
-
-/**
- * Return a new container instance
- *
- * @return     {bcc.Container}  The container.
- */
-export function getContainer(runtime: bcc.Runtime, address: string): bcc.Container {
-  return new bcc.Container(<any>runtime, {
-    accountId: runtime.activeAccount,
-    address: address,
-    factoryAddress: dtLib.containerFactory
-  });
-}
+import { pluginDispatcher, pluginShareDispatcher } from './dispatchers/registry';
 
 /**
  * Check the integrity of a new template, and if anything has changed
@@ -94,7 +53,7 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
     changed.changed = true;
     changed.entriesToSave = Object.keys(newPlugin.properties).map(propertyKey => propertyKey);
   } else {
-    const container = getContainer(runtime, address);
+    const container = dtLib.getContainer(runtime, address);
     const description = await container.getDescription();
     const plugin = await container.toPlugin(true);
     const template = plugin.template;
@@ -125,35 +84,3 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
   return changed;
 }
 
-
-/**
- * Return my plugins and merge them with current running dispatchers.
- *
- * @param      {bccRuntime}  runtime  bcc runtime
- */
-export async function getMyPlugins(runtime: bcc.Runtime) {
-  const plugins: any = await bcc.Container.getContainerPlugins(runtime.profile);
-
-  // watch for new and sharing containers
-  const saving = await pluginDispatcher.getInstances(runtime);
-  const sharing = await pluginShareDispatcher.getInstances(runtime);
-
-  // apply saving plugins
-  saving.forEach(instance => {
-    // plugin gets updated
-    if (instance.data.beforeName) {
-      delete plugins[instance.data.beforeName];
-    }
-
-    plugins[instance.data.name] = {
-      creating: !!instance.data.beforeName,
-      description: instance.data.description,
-      loading: true,
-      template: instance.data.template,
-    };
-  });
-
-  // show loading for shared containers
-  sharing.forEach(instance => plugins[instance.data.name].loading = true);
-  return plugins;
-}

@@ -29,11 +29,9 @@ import { RouteRegistrationInterface, UnderDevelopmentComponent } from '@evan.net
 import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import ContainerLinkComponent from './components/container-link/container-link.vue';
-import ContainersComponent from './components/containers/containers.vue';
+import ContainersComponent from './components/detail/containers/containers.vue';
+import DigitalTwinDetailComponent from './components/detail/detail/detail.vue';
 import DigitaTwinCreateComponent from './components/create/create.vue';
-import DigitalTwinDetailComponent from './components/detail/detail.vue';
-import DigitalTwinVerificationsComponent from './components/verifications/verifications.vue';
 import LookupComponent from './components/lookup/lookup.vue';
 import MapComponent from './components/ens/map/map.vue';
 import OverviewComponent from './components/overview/overview.vue';
@@ -53,11 +51,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   },
 
   /************************************* twin details *********************************************/
-  {
-    name: 'dt-container-link',
-    component: ContainerLinkComponent,
-    path: 'containerlink/:containerAddress?'
-  },
   {
     name: 'dt-create',
     component: DigitaTwinCreateComponent,
@@ -83,7 +76,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
 
   /**************************************** stuff ***********************************************/
   { name: 'dt-map',               component: MapComponent,           path: dtPath('dt-map'), },
-  { name: 'dt-container-link2',   component: ContainerLinkComponent, path: dtPath('containerlink/:containerAddress?') },
   { name: 'dt-container',         component: DAppLoaderComponent,    path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
 ];
 /* tslint:enable */

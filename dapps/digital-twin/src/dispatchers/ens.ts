@@ -26,9 +26,9 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, } from '@evan.network/ui';
-import { getRuntime } from '../utils';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 const dispatcher = new Dispatcher(
   `digitaltwin.${ dappBrowser.getDomainName() }`,
@@ -39,7 +39,7 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance, data) => {
-    const runtime = getRuntime(instance.runtime);
+    const runtime = utils.getRuntime(instance.runtime);
     const splitAddr = data.ensAddress.split('.');
     const topLevelAdress = splitAddr.slice(splitAddr.length - 2, splitAddr.length)
       .join('.');

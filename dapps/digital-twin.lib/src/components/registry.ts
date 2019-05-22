@@ -26,11 +26,15 @@
 */
 
 // import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import ContainerLinkComponent from './container-link/container-link.vue';
+import DBCPComponent from './dbcp/dbcp.vue';
 import TwinBreadcrumbsComponent from './breadcrumbs/breadcrumbs.vue';
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'dt-dbcp',        component: DBCPComponent },
+  { name: 'dc-link',        component: ContainerLinkComponent },
   { name: 'dt-breadcrumbs', component: TwinBreadcrumbsComponent },
 ];
 

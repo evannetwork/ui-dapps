@@ -25,19 +25,18 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 import { UIContainerTemplateProperty } from '../../../../interfaces';
 import * as entryUtils from '../../../../entries';
-import * as utils from '../../../../utils';
+
 
 @Component({ })
 export default class EntryObjectComponent extends mixins(EvanComponent) {
