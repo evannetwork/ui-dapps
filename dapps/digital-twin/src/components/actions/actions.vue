@@ -28,16 +28,16 @@
 <template>
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
-    :style="{ 'margin-right': '-1em' }">
+    :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <!-- show dropdown button  -->
     <button class="btn"
-      v-if="displayMode !== 'buttons'"
+      v-if="displayMode !== 'buttons' && displayMode !== 'dropdownHidden'"
       :class="{
         'btn btn-circle btn-sm btn-tertiary': displayMode === 'dropdownButton'
       }"
       id="digitaltwin-context-menu-open"
       @click="$refs.dtContextMenu.show();">
-      <i class="mdi mdi-chevron-down"></i>
+      <i class="mdi mdi-dots-vertical"></i>
     </button>
 
     <!-- show dropdown or only dropdown content -->
@@ -147,7 +147,6 @@
     <dt-ens-map
       @init="$set(reactiveRefs, 'dtEnsMap', $event)">
     </dt-ens-map>
-
     <dc-link
       @init="$set(reactiveRefs, 'dtContainerLink', $event)">
     </dc-link>

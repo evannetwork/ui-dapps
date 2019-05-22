@@ -61,7 +61,7 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   @Prop() containerActions;
 
   /**
-   * Dropdown mode (buttons / dropdownButton / dropdownIcon)
+   * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
    */
   @Prop({
     default: 'buttons'
@@ -88,6 +88,15 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
         'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable';
       this.buttonTextComp = 'span';
     }
+  }
+
+  /**
+   * Show the actions dropdown.
+   */
+  showDropdown($event?: any) {
+    (<any>this).$refs.dtContextMenu.show();
+
+    $event && $event.preventDefault();
   }
 
   /**

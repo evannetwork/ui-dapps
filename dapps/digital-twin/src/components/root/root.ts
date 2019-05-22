@@ -60,6 +60,16 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   twinNavigation: any = [ ];
 
   /**
+   * Full reference url to the current twin
+   */
+  twinUrl = '';
+
+  /**
+   * Toggle tree view
+   */
+  isTreeOpen  = true;
+
+  /**
    * Clear the hash change watcher
    */
   beforeDestroy() {
@@ -75,6 +85,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    */
   async initialize() {
     this.loading = false;
+
+    console.dir(this.$route);
 
     // set the hash change watcher, so we can detect digitaltwin change and loading
     const that = this;
@@ -111,9 +123,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         // load digitaltwin specific data
         await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
 
-        // apply the container categories every time, when the digitaltwin was load, so the containers
-        // and paths will be dynamic
-        this.twinNavigation = this.$store.state.uiDT.navigation;
+        // specify twin url for left tree root
+        this.twinUrl = [
+          (<any>this).dapp.fullUrl,
+          this.$route.params.digitalTwinAddress,
+        ].join('/');
 
         // activate second navigation when a container is opened
         if ((<any>this).$route.name.startsWith('dt-container')) {
@@ -148,5 +162,12 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     if (category.children.length === 1) {
       (<any>this).evanNavigate(category.children[0].path);
     }
+  }
+
+  /**
+   * Is the twin tree entry active?
+   */
+  isActive() {
+    return window.location.href.indexOf(`${ this.twinUrl }/dt-detail`) !== -1;
   }
 }

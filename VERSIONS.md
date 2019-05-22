@@ -31,6 +31,7 @@
     - add detail tabs for future features
     - map containers overview to dt-edit sub navigation
   - add `dt-actions-component`
+  - add new tree side panel
 - `datacontainer.digitaltwins`
   - `ajv-editor` use `parseFieldValue` value on save
   - increase `ajv-editor` name td size to 300px

@@ -60,11 +60,6 @@ export default class EvanUIDigitalTwin {
   validity: any;
 
   /**
-   * Digital twin left navigation entries
-   */
-  navigation: Array<any>;
-
-  /**
    * List of data containers.
    */
   containers: Array<any> = [ ];
@@ -130,25 +125,6 @@ export default class EvanUIDigitalTwin {
 
   constructor(address: string) {
     this.address = address;
-
-    // set initial navigation
-    this.navigation = [
-      {
-        name: 'digitaltwin-details',
-        active: true,
-        children: [
-          { name: 'general', path: `${ address }/general`, i18n: true },
-          { name: 'verifications', path: `${ address }/verifications`, i18n: true }
-        ]
-      },
-      {
-        name: 'containers',
-        active: false,
-        children: [
-          { name: 'container-overview', path: `${ address }/containers`, i18n: true },
-        ]
-      }
-    ];
 
     // apply this digitaltwin address to the last opened digitaltwins
     utils.addLastOpenedTwin(this.address);
@@ -252,9 +228,6 @@ export default class EvanUIDigitalTwin {
       // load container data and watch for updates
       await this.loadContainers(runtime);
       await this.watchContainers(runtime);
-
-      // fill left panel side nav
-      this.updateContainerNavigation();
 
       // check, if any updates are running
       this.isFavoriteLoading = await this.getFavoriteLoading(runtime);
@@ -514,9 +487,6 @@ export default class EvanUIDigitalTwin {
     if (previousCreateInstances.length > 0) {
       await this.loadContainers(runtime);
     }
-
-    // update left twin navigation
-    this.updateContainerNavigation();
   }
 
   /**
@@ -531,23 +501,5 @@ export default class EvanUIDigitalTwin {
     );
 
     this.dispatcherListeners.push(listener);
-  }
-
-  /**
-   * Uses the current containers and fills the left digital twin navigation
-   */
-  updateContainerNavigation() {
-    // set the navigation for the containers => keep first entry, replace the containers
-    this.navigation[1].children = [ this.navigation[1].children[0] ]
-      .concat(this.containers.map(container => {
-        return {
-          creating: container.creating,
-          i18n: false,
-          loading: container.loading,
-          name: container.name,
-          path: container.path,
-        }
-      })
-    );
   }
 }

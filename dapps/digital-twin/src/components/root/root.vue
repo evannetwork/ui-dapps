@@ -40,55 +40,45 @@
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"
             v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
             <template v-slot:content>
-              <div style="width: 360px">
+              <div class="bg-level-1" style="width: 360px">
                 <evan-loading
                   v-if="$store.state.uiDT.loading && !$store.state.uiDT.initialized">
                 </evan-loading>
 
                 <template v-else>
-                  <ul class="nav font-medium in w-100 mb-3 mt-auto">
-                    <li class="w-100 p-4 clickable border-top border-sm"
-                      v-for="(category, index) in twinNavigation"
-                      :id="`evan-dt-nav-${ category.name }`"
-                      :class="{ 'active': category.active }"
-                      @click="toggleLeftCategory(twinNavigation, category)">
-                      <div class="d-flex w-100">
-                        <div>
-                          <h6 class="mb-1 font-weight-semibold">
-                            {{ `_digitaltwins.left-categories.${ category.name }.title` | translate }}
-                          </h6>
-                          <small class="text-muted font-weight-semibold">
-                            {{ `_digitaltwins.left-categories.${ category.name }.desc` | translate }}
-                          </small>
-                        </div>
-                        <span class="mx-auto"></span>
-                        <i v-if="category.active" class="mdi mdi-chevron-up"></i>
-                        <i v-if="!category.active" class="mdi mdi-chevron-down"></i>
-                      </div>
-                      <div class="mt-3" v-if="category.active">
-                        <ul class="sub-nav" v-if="category.children.length > 0">
-                          <li class="pt-2 pb-2 pl-3 pr-3 d-flex flex-truncate"
-                            v-for="(subCategory, subIndex) in category.children">
-                            <a class="font-weight-semibold"
-                              :id="`evan-dt-nav-${ subCategory.path.split('/').pop() }`"
-                              @click="$refs.level2Wrapper.hide()"
-                              :href="!subCategory.path ? null : `${ dapp.fullUrl }/${ subCategory.path }`"
-                              :class="{ 'active': $route.path.indexOf(subCategory.path) !== -1 }">
-                              {{ subCategory.i18n ? $t(`_digitaltwins.left-categories.${ subCategory.name }`) : subCategory.name }}
-                            </a>
-                            <template v-if="subCategory.loading">
-                              <span class="mx-auto"></span>
-                              <div class="spinner-border spinner-border-sm ml-3"></div>
-                            </template>
-                          </li>
-                        </ul>
-                        <b class="p-2 text-center small d-block"
-                          v-else
-                          v-html="$t(`_digitaltwins.empty-navigation`)">
-                        </b>
-                      </div>
-                    </li>
-                  </ul>
+                  <div class="evan-tree">
+                    <div class="evan-tree-entry"
+                      :class="{ 'active': isActive() }"
+                      @contextmenu="$refs.dtActions.showDropdown($event)">
+                      <i class="toggle-icon"
+                        :class="{
+                          'mdi mdi-chevron-up': isTreeOpen,
+                          'mdi mdi-chevron-down': !isTreeOpen,
+                        }"
+                        @click="isTreeOpen = !isTreeOpen">
+                      </i>
+                      <a
+                        :href="`${ twinUrl }/dt-detail`">
+                        {{ $store.state.uiDT.dbcp.name }}
+                      </a>
+
+                      <dt-actions
+                        ref="dtActions"
+                        :uiDT="$store.state.uiDT"
+                        :dtActions="true"
+                        :containerActions="true"
+                        :displayMode="'dropdownHidden'">
+                      </dt-actions>
+                    </div>
+
+                    <dc-tree
+                      v-if="isTreeOpen"
+                      v-for="(container, index) in $store.state.uiDT.containers"
+                      :address="container.address"
+                      :baseUrl="twinUrl"
+                      :dbcp="container.description">
+                    </dc-tree>
+                  </div>
                 </template>
               </div>
             </template>
