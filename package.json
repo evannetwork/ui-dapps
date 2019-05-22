@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "tslint": "^5.16.0"
+  },
   "description": "",
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -55,6 +58,7 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "node scripts/commit-msg",
       "pre-commit": "tslint --config tslint.json \"./dapps/*/src/**/*.ts\""
     }
   },
@@ -78,8 +82,5 @@
     "serve-build": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
-  "version": "1.1.0",
-  "dependencies": {
-    "tslint": "^5.16.0"
-  }
+  "version": "1.1.0"
 }
