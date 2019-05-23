@@ -11,6 +11,9 @@
   - add `mini` class to buttons
 
 ### Fixes
+- rename dapp containers for `@evan.network/api-blockchain-core` and `@evan.network/smart-contracts-core` to end with `-browserfied`
+- add support for using `bcc` and `smartcontracts` to run without `ui-dapp-browser`
+
 ### Deprecations
 
 

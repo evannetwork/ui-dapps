@@ -24,9 +24,14 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// map the original vue path to axios.vue.libs
-import { getDomainName, System } from '@evan.network/ui-dapp-browser';
-System.map['@evan.network/api-blockchain-core'] = `bcc.${ getDomainName() }!dapp-content`;
-System.map['@evan.network/dbcp'] = `bcc.${ getDomainName() }!dapp-content`;
+// map the original System.path to @evan.network/api-blockchain-core
+try {
+  // tslint:disable-next-line
+  const { getDomainName, System } = require('@evan.network/ui-dapp-browser');
+  System.map['@evan.network/api-blockchain-core'] = `bcc.${ getDomainName() }!dapp-content`;
+  System.map['@evan.network/dbcp'] = `bcc.${ getDomainName() }!dapp-content`;
+} catch (ex) {
+  // ignore this warning
+}
 
 export * from '@evan.network/api-blockchain-core';

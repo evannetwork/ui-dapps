@@ -9,13 +9,13 @@ npm run build
 
 
 ## Usage
-- exclude `@evan.network/smart-contracts-core` from build job
+- exclude `@evan.network/smart-contracts-core-browserified` from build job
 
 - package.json
 ```
   ...
   "dependencies": {
-    "@evan.network/smart-contracts-core": "X.X.X"
+    "@evan.network/smart-contracts-core-browserified": "X.X.X"
   },
   ...
 ```
@@ -33,5 +33,5 @@ npm run build
 
 - typescript
 ```
-  import * as smartcontracts from '@evan.network/smart-contracts-core';
+  import * as smartcontracts from '@evan.network/smart-contracts-core-browserified';
 ```
