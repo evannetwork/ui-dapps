@@ -106,6 +106,15 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Close the actions dropdown.
+   */
+  closeDropdown() {
+    if ((<any>this).$refs.dtContextMenu) {
+      (<any>this).$refs.dtContextMenu.hide();
+    }
+  }
+
+  /**
    * Gets the edited dbcp information from the dc-dbcp-edit component and saves the twin
    *
    * @param      {any}  newDbcp  The new dbcp

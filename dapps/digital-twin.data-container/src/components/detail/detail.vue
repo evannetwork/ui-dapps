@@ -27,9 +27,6 @@
 
 <template>
   <div>
-    <evan-breadcrumbs 
-      :i18nScope="'_datacontainer.breadcrumbs'">
-    </evan-breadcrumbs>
     <div class="container-wide">
       <evan-loading v-if="loading"></evan-loading>
       <div class="white-box border rounded"
@@ -232,7 +229,7 @@
                     <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
                       id="container-plugin-create"
                       @click="
-                        evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/create-plugin/${ containerAddress }`, `/${ dapp.rootEns }`)
+                        evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ containerAddress }`, `/${ dapp.rootEns }`)
                         $refs.containerContextMenu.hide($event);
                       ">
                       <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>

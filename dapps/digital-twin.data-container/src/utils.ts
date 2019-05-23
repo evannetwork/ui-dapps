@@ -48,7 +48,7 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
     changed: false
   };
 
-  if (!address || address === 'create-plugin') {
+  if (!address || address === 'plugin-create') {
     changed.saveDescription = true;
     changed.changed = true;
     changed.entriesToSave = Object.keys(newPlugin.properties).map(propertyKey => propertyKey);

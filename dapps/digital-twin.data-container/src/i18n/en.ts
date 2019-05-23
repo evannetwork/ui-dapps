@@ -81,12 +81,12 @@ const i18n: any = {
       "finish": "Finish configuration",
       "general": "General Information",
       "plugin": {
-        "desc": "Plugin of the Data Container",
-        "title": "Plugin"
+        "desc": "Configuration of the new plugin",
+        "title": "Plugin Type"
       },
-      "save": "Save Data Container",
       "sub-title": "Specify general information, data schema and values.",
-      "title": "Create Data Container"
+      "add-plugin": "Add Plugin",
+      "create-plugin": "Create Standalone Plugin"
     },
     "dbcp": {
       "description": {

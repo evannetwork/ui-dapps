@@ -76,7 +76,6 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
    * Setup nested Routes and correct active url states
    */
   created() {
-    console.log('DataContainerTreeComponent created')
     this.dcUrl = [
       this.baseUrl,
       `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,

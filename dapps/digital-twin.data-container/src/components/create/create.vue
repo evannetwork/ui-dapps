@@ -27,21 +27,27 @@
 
 <template>
   <div>
-    <evan-breadcrumbs
-      :i18nScope="'_datacontainer.breadcrumbs'"
-      v-if="!hideBreadcrumbs">
-    </evan-breadcrumbs>
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-else>
+      <!---------------------------------- header ---------------------------------->
       <div class="d-flex mb-3 align-items-center">
         <div>
           <h3 class="font-weight-bold mb-0">
             <template v-if="!pluginMode">
-              {{ `_datacontainer.createForm.title` | translate }}
+              <template v-if="digitalTwinAddress">
+                {{ `_datacontainer.createForm.add-plugin` | translate }}
+              </template>
+              <template v-else>
+                {{ `_datacontainer.createForm.create-plugin` | translate }}
+              </template>
             </template>
             <template v-else>
               {{ `_datacontainer.plugin.create-title` | translate }}
             </template>
+
+            <b v-if="activePlugin">
+              - {{ createForm.name.value }}
+            </b>
           </h3>
           <p class="text-muted font-weight-semibold m-t-0">
             {{ `_datacontainer.createForm.sub-title` | translate }}
@@ -49,7 +55,17 @@
         </div>
         <span class="mx-auto"></span>
         <div>
-          <button
+          <button class="btn btn-circle btn-sm btn-tertiary"
+            v-if="activePlugin"
+            id="dc-edit"
+            :disabled="creating"
+            @click="activePlugin = null">
+            <i class="mdi mdi-pencil"></i>
+            <evan-tooltip :placement="'bottom'">
+              {{ `_datacontainer.edit-dbcp` | translate }}
+            </evan-tooltip>
+          </button>
+          <!-- <button
             class="btn btn-rounded btn-primary"
             id="container-save"
             v-if="activeStep === 1 && !creating"
@@ -60,37 +76,24 @@
             <div class="spinner-border spinner-border-sm text-light mr-3"
               v-if="checking">
             </div>
-          </button>
+          </button> -->
         </div>
       </div>
-      <div class="evan-steps"
-        v-if="!creating">
-        <div class="evan-step-header bg-level-1 p-3 border rounded">
-          <button class="btn"
-            v-for="(step, index) of steps"
-            :id="`evan-container-create-step-${ index }`"
-            :disabled="step.disabled(this)"
-            @click="activeStep = index">
-            <span class="stepper-circle"
-              :class="{
-                'bg-primary': activeStep === index,
-                'bg-secondary': activeStep !== index,
-              }">
-              {{ index + 1}}
-            </span>
-            <span>{{ step.title | translate }}</span>
-          </button>
-        </div>
-        <div class="pt-3">
-          <div class="white-box border rounded step" v-if="activeStep === 0">
-            <div class="header">
-              {{ steps[0].title | translate }}
-            </div>
-            <form class="content"
-              id="container-create-form"
-              v-on:submit.prevent="activeStep = 1"
-              v-if="!creating">
-              <div class="form-group" v-if="plugins.length > 1">
+
+      <!---------------------------------- content ---------------------------------->
+      <template v-if="!creating">
+        <!---------------------------------- dbcp metadata ---------------------------------->
+        <div class="white-box border rounded" v-if="!activePlugin">
+          <div class="header">
+            {{ '_datacontainer.createForm.general' | translate }}
+          </div>
+          <dt-dbcp
+            v-if="!creating"
+            :form="createForm"
+            @submit="activatePlugin(plugins[createForm.plugin.value])">
+            <template v-slot:before-inputs
+               v-if="plugins.length > 1">
+              <div class="form-group">
                 <label for="plugin">
                   {{ `_datacontainer.createForm.plugin.title` | translate }}
                 </label>
@@ -107,83 +110,86 @@
                   </option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="name">
-                  {{ `_datacontainer.createForm.name.title` | translate }}
-                </label>
-                <input class="form-control" required
-                  id="name" ref="name"
-                  :placeholder="`_datacontainer.createForm.name.desc` | translate"
-                  v-model="createForm.name.value"
-                  :class="{ 'is-invalid' : createForm.name.error }"
-                  @blur="createForm.name.setDirty()">
-                <div class="invalid-feedback">
-                  {{ `_datacontainer.createForm.name.error` | translate }}
-                </div>
+            </template>
+          </dt-dbcp>
+          <div class="footer">
+            <button type="submit"
+              class="btn btn-rounded btn-primary"
+              id="container-create-step-0-finish"
+              @click="activatePlugin(plugins[createForm.plugin.value])"
+              :disabled="!createForm.isValid || checking">
+              {{ `_datacontainer.createForm.continue` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
+              <div class="spinner-border spinner-border-sm text-light mr-3"
+                v-if="checking">
               </div>
-              <div class="form-group">
-                <label for="description">
-                  {{ `_datacontainer.createForm.description.title` | translate }}
-                </label>
-                <textarea class="form-control" rows="7"
-                  id="description" ref="description"
-                  :placeholder="`_datacontainer.createForm.description.desc` | translate"
-                  v-model="createForm.description.value"
-                  :class="{ 'is-invalid' : createForm.description.error }"
-                  @blur="createForm.description.setDirty()">
-                </textarea>
-              </div>
-            </form>
-            <div class="footer">
-              <button type="submit"
-                class="btn btn-rounded btn-primary"
-                id="container-create-step-0-finish"
-                @click="activeStep = 1"
-                :disabled="!createForm.isValid || checking">
-                {{ `_datacontainer.createForm.continue` | translate }}
-                <i class="mdi mdi-arrow-right label ml-3"></i>
-                <div class="spinner-border spinner-border-sm text-light mr-3"
-                  v-if="checking">
-                </div>
-              </button>
-            </div>
-          </div>
-          <div class="step" v-if="activeStep === 1">
-            <dc-template-handler
-              ref="templateHandler"
-              :address="!pluginMode ? 'create' : 'create-plugin'"
-              :template.sync="plugins[createForm.plugin.value]"
-              :permissions="permissions">
-            </dc-template-handler>
-
-            <evan-modal
-              id="container-create-question"
-              ref="createModal">
-              <template v-slot:header>
-                <h5 class="modal-title" v-if="!pluginMode">
-                  {{ `_datacontainer.create-question.title` | translate }}
-                </h5>
-                <h5 class="modal-title" v-else>
-                  {{ `_datacontainer.plugin.create-title` | translate }}
-                </h5>
-              </template>
-              <template v-slot:body>
-                <p class="text-left m-0"
-                  v-html="$t(`_datacontainer.create-question.desc`, modalParams)">
-                </p>
-              </template>
-              <template v-slot:footer>
-                <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-                  id="container-create"
-                  @click="create()">
-                  {{ `_datacontainer.create-question.action` | translate }}
-                  <i class="mdi mdi-arrow-right label ml-3"></i>
-                </button>
-              </template>
-            </evan-modal>
+            </button>
           </div>
         </div>
-      </div>
+
+        <!---------------------------------- fill the schema ---------------------------------->
+        <div class="white-box border rounded" v-else>
+          <div class="header">
+            {{ '_datacontainer.createForm.container-configuration' | translate }}
+          </div>
+
+          <div class="evan-steps">
+            <div class="evan-step-header mt-3">
+              <button class="btn"
+                v-for="(step, index) of steps"
+                :id="`evan-container-create-step-${ index }`"
+                :disabled="step.disabled(this)"
+                @click="activeStep = index">
+                <span class="stepper-circle"
+                  :class="{
+                    'bg-primary': activeStep === index,
+                    'bg-secondary': activeStep !== index,
+                  }">
+                  {{ index + 1}}
+                </span>
+                <span>{{ step.title | translate }}</span>
+              </button>
+            </div>
+            <div class="pt-3">
+              <div class="step" v-if="activeStep === 1">
+                <dc-template-handler
+                  ref="templateHandler"
+                  :address="!pluginMode ? 'dc-create' : 'plugin-create'"
+                  :template.sync="plugins[createForm.plugin.value].template"
+                  :permissions="permissions">
+                </dc-template-handler>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!---------------------------------- modals ---------------------------------->
+        <evan-modal
+          id="container-create-question"
+          ref="createModal">
+          <template v-slot:header>
+            <h5 class="modal-title" v-if="!pluginMode">
+              {{ `_datacontainer.create-question.title` | translate }}
+            </h5>
+            <h5 class="modal-title" v-else>
+              {{ `_datacontainer.plugin.create-title` | translate }}
+            </h5>
+          </template>
+          <template v-slot:body>
+            <p class="text-left m-0"
+              v-html="$t(`_datacontainer.create-question.desc`, modalParams)">
+            </p>
+          </template>
+          <template v-slot:footer>
+            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+              id="container-create"
+              @click="create()">
+              {{ `_datacontainer.create-question.action` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
+            </button>
+          </template>
+        </evan-modal>
+      </template>
       <div class="white-box border rounded" v-else>
         <div class="text-center">
           <h4 class="mt-5 mb-3">{{ '_datacontainer.in-creation' | translate }}</h4>

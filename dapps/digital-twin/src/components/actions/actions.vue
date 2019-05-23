@@ -54,7 +54,7 @@
             <button :class="buttonClasses.tertiar"
               id="dt-favorite-toggle"
               :disabled="uiDT.isFavoriteLoading"
-              @click="toggleFavorite()">
+              @click="toggleFavorite(); closeDropdown();">
               <div class="spinner-border spinner-border-sm"
                 v-if="uiDT.isFavoriteLoading">
               </div>
@@ -73,7 +73,7 @@
             </button>
             <button :class="buttonClasses.tertiar"
               id="dt-map-ens"
-              @click="reactiveRefs.dtEnsMap.$refs.mapEnsModal.show();">
+              @click="reactiveRefs.dtEnsMap.$refs.mapEnsModal.show(); closeDropdown();">
               <i class="mdi mdi-link-variant"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_digitaltwins.detail.map-to-ens` | translate }}
@@ -82,7 +82,7 @@
             <button :class="buttonClasses.tertiar"
               id="dt-edit"
               :disabled="uiDT.isSaving"
-              @click="$refs.dbcpModal.show();">
+              @click="$refs.dbcpModal.show(); closeDropdown();">
               <div class="spinner-border spinner-border-sm"
                 v-if="uiDT.isSaving">
               </div>
@@ -97,7 +97,7 @@
           <template v-if="containerActions">
             <button :class="buttonClasses.secondary"
               id="dt-container-link"
-              @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show()">
+              @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show(); closeDropdown();">
               <i class="mdi mdi-link-variant"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_digitaltwins.containers.link` | translate }}
@@ -106,7 +106,8 @@
             <a
               id="dt-container-create"
               :class="buttonClasses.primary"
-              :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">
+              :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create`"
+              @click="closeDropdown();">
               <i class="mdi mdi-plus"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_digitaltwins.containers.create` | translate }}

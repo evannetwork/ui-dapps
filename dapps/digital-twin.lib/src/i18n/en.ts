@@ -28,7 +28,7 @@
 /* tslint:disable */
 const i18n: any = {
   "breadcrumbs": {
-    "add": "Add",
+    "dc-create": "Add Plugin",
     "containerlink": "Link Plugin",
     "create-plugin": "Create Plugin",
     "datacontainer.digitaltwin": "Plugin",

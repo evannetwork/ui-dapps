@@ -118,6 +118,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
   };
 
   /**
+   * Plugin that was selected from the plugin list. When set, will activate steppers.
+   */
+  activePlugin = null;
+
+  /**
    * Setup the form.
    */
   async created() {
@@ -132,7 +137,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
     }
 
     // start plugin mode!
-    this.pluginMode = this.$route.name.startsWith('create-plugin');
+    this.pluginMode = this.$route.name.startsWith('plugin-create');
 
     // TODO: load plugins
     this.createForm = (<CreateInterface>new EvanForm(this, {
@@ -147,9 +152,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
       },
       plugin: {
         value: 0
-      },
-      img: {
-        value: '',
       },
     }));
 
@@ -203,14 +205,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     // configure steps and it' titles
     this.steps = [
-      {
-        title: '_datacontainer.createForm.general',
-        disabled: () => false
-      },
-      {
-        title: '_datacontainer.createForm.container-configuration',
-        disabled: () => !this.createForm.isValid
-      },
+
     ];
 
     this.loading = false;
@@ -265,7 +260,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     (<any>this.$refs.createModal).hide();
     await (new ContainerCache(runtime.activeAccount))
-      .delete(!this.pluginMode ? 'create' : 'plugin-create');
+      .delete(!this.pluginMode ? 'dc-create' : 'plugin-create');
   }
 
   /**
@@ -312,5 +307,14 @@ export default class CreateComponent extends mixins(EvanComponent) {
     if (!this.creationWatcher) {
       this.creationWatcher = getDispatcher().watch(($event: any) => watch($event));
     }
+  }
+
+  /**
+   * Activate a plugin and calculate the steppers.
+   *
+   * @param      {any}  plugin  The plugin
+   */
+  activatePlugin(plugin: any) {
+    this.activatePlugin = plugin;
   }
 }

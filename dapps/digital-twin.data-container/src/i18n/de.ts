@@ -80,12 +80,12 @@ const i18n: any = {
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
       "plugin": {
-        "desc": "Plugin des Datencontainers",
-        "title": "Plugin"
+        "desc": "Konfiguration des neuen Plugins",
+        "title": "Plugin-Typ"
       },
-      "save": "Daten Container Speichern",
       "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
-      "title": "Daten Container erstellen"
+      "add-plugin": "Plugin hinzufügen",
+      "create-plugin": "Alleinstehendes Plugin erstellen"
     },
     "dbcp": {
       "description": {
