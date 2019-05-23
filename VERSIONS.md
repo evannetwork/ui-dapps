@@ -2,11 +2,13 @@
 
 ## Next Version
 ### Features
-- add tooltip stylings
-- add `btn-tertiary` style
-- add `dapp-wrapper-header` style
-- add `under-construction.svg`
-- add `tabs` colors
+- `ui.libs`
+  - add tooltip stylings
+  - add `btn-tertiary` style
+  - add `dapp-wrapper-header` style
+  - add `under-construction.svg`
+  - add `tabs` colors
+  - add `mini` class to buttons
 
 ### Fixes
 ### Deprecations

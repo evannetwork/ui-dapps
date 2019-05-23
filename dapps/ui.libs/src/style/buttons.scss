@@ -130,6 +130,23 @@
       text-align: center;
     }
 
+    &.mini {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 22px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0;
+
+      i {
+        line-height: 20px;
+
+        width: 20px;
+      }
+    }
+
     /**
      * button contents
      */
