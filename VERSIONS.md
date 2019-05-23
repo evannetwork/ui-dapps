@@ -16,6 +16,7 @@
   - add `dt-dbcp` component for editing dbcp
   - move `UIDigitalTwin` from `digitaltwin` to `digitaltwin.lib` dapp
   - move utils from `digitaltwin` and `datacontainer.digitaltwin` dapp to `digitaltwin.lib` dapp
+  - add `tree-root-component` for displaying dt, dc, plugin left tree top with same logic 
 
 ### Fixes
 - `vue dapps`

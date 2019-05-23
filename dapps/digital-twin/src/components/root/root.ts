@@ -55,19 +55,9 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   wasDestroyed: boolean;
 
   /**
-   * Categories of the left navigation
-   */
-  twinNavigation: any = [ ];
-
-  /**
    * Full reference url to the current twin
    */
   twinUrl = '';
-
-  /**
-   * Toggle tree view
-   */
-  isTreeOpen  = true;
 
   /**
    * Clear the hash change watcher
@@ -84,14 +74,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Initialize when the user has logged in.
    */
   async initialize() {
-    this.loading = false;
-
-    console.dir(this.$route);
-
     // set the hash change watcher, so we can detect digitaltwin change and loading
     const that = this;
     this.hashChangeWatcher = async () => await that.loadDigitalTwin();
     await this.loadDigitalTwin();
+    this.loading = false;
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -119,9 +106,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         // create new instance of the evan ui digitaltwin, that wraps general ui and navigation
         // functions
         this.$set(this.$store.state, 'uiDT', new EvanUIDigitalTwin(digitalTwinAddress));
-
-        // load digitaltwin specific data
-        await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
+        this.$store.state.uiDT.loading = true;
 
         // specify twin url for left tree root
         this.twinUrl = [
@@ -129,11 +114,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
           this.$route.params.digitalTwinAddress,
         ].join('/');
 
-        // activate second navigation when a container is opened
-        if ((<any>this).$route.name.startsWith('dt-container')) {
-          this.twinNavigation[0].active = false;
-          this.twinNavigation[1].active = true;
-        }
+        // load digitaltwin specific data
+        await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
       }
     } else {
       // if digitaltwin was set, destroy it
@@ -162,12 +144,5 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
     if (category.children.length === 1) {
       (<any>this).evanNavigate(category.children[0].path);
     }
-  }
-
-  /**
-   * Is the twin tree entry active?
-   */
-  isActive() {
-    return window.location.href.indexOf(`${ this.twinUrl }/dt-detail`) !== -1;
   }
 }

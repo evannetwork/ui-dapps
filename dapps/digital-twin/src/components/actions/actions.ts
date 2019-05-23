@@ -75,8 +75,12 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   /**
    * Used per default for normal buttons (will be overwritten within dropdown)
    */
-  tertiarButtonClass = 'btn btn-circle btn-sm btn-tertiary mr-3';
-  primaryButtonClass = 'btn btn-primary btn-circle d-flex align-items-center justify-content-center';
+  buttonClasses = {
+    primary: 'btn btn-primary btn-circle d-flex align-items-center justify-content-center mr-3',
+    secondary: 'btn btn-circle btn-outline-secondary mr-3',
+    tertiar: 'btn btn-circle btn-sm btn-tertiary mr-3',
+  }
+
   buttonTextComp = 'evan-tooltip';
 
   /**
@@ -84,8 +88,10 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
    */
   created() {
     if (this.displayMode !== 'buttons') {
-      this.tertiarButtonClass = this.primaryButtonClass =
-        'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable';
+      Object.keys(this.buttonClasses).forEach(
+        type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
+      );
+
       this.buttonTextComp = 'span';
     }
   }

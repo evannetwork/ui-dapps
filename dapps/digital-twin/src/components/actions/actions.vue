@@ -51,7 +51,7 @@
         :renderOnlyContent="displayMode === 'buttons'">
         <template v-slot:content>
           <template v-if="dtActions">
-            <button :class="tertiarButtonClass"
+            <button :class="buttonClasses.tertiar"
               id="dt-favorite-toggle"
               :disabled="uiDT.isFavoriteLoading"
               @click="toggleFavorite()">
@@ -71,7 +71,7 @@
                 </template>
               </component>
             </button>
-            <button :class="tertiarButtonClass"
+            <button :class="buttonClasses.tertiar"
               id="dt-map-ens"
               @click="reactiveRefs.dtEnsMap.$refs.mapEnsModal.show();">
               <i class="mdi mdi-link-variant"></i>
@@ -79,7 +79,7 @@
                 {{ `_digitaltwins.detail.map-to-ens` | translate }}
               </component>
             </button>
-            <button :class="tertiarButtonClass"
+            <button :class="buttonClasses.tertiar"
               id="dt-edit"
               :disabled="uiDT.isSaving"
               @click="$refs.dbcpModal.show();">
@@ -95,7 +95,7 @@
             </button>
           </template>
           <template v-if="containerActions">
-            <button :class="tertiarButtonClass"
+            <button :class="buttonClasses.secondary"
               id="dt-container-link"
               @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show()">
               <i class="mdi mdi-link-variant"></i>
@@ -105,7 +105,7 @@
             </button>
             <a
               id="dt-container-create"
-              :class="primaryButtonClass"
+              :class="buttonClasses.primary"
               :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/create`">
               <i class="mdi mdi-plus"></i>
               <component :is="buttonTextComp" :placement="'bottom'">

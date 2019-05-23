@@ -109,6 +109,7 @@ const i18n: any = {
     "edit": "Bearbeiten",
     "edit-dbcp": "Container Beschreibung anpassen",
     "edit-schema": "Datenbereich Schema Definition",
+    "entries": "Datensets",
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig voneinander an dritte geteilt werden können.",

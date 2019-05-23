@@ -32,55 +32,36 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { utils } from '@evan.network/digitaltwin.lib';
-
 
 @Component({ })
-export default class DataContainerTreeComponent extends mixins(EvanComponent) {
+export default class DtTreeRootComponent extends mixins(EvanComponent) {
   /**
-   * Container address / plugin name
+   * Url that should be opened when clicking on title
    */
-  @Prop() address;
+  @Prop() url;
 
   /**
-   * Base Url. The component will navigate relative to this url.
+   * Type of content (digital twin, data-container, plugin)
    */
-  @Prop() baseUrl;
+  @Prop() topic;
 
   /**
-   * dbcp.public of the address / plugin
+   * Name of the content (Cool Vehicle, ...)
    */
-  @Prop() dbcp;
+  @Prop() title;
 
   /**
-   * Hide the container name and show only the corresponding data sets
+   * Icon before text
    */
-  @Prop() onlySets;
+  @Prop() icon;
 
   /**
-   * Full Url to the currently selected twin
+   * Toggle tree view
    */
-  dcUrl = '';
-
-  /**
-   * Show the entries
-   */
-  isOpen = false;
+  isTreeOpen  = true;
 
   /**
    * base window url for checking for active urls
    */
   windowLocation = window.location.origin + window.location.pathname;
-
-  /**
-   * Setup nested Routes and correct active url states
-   */
-  created() {
-    console.log('DataContainerTreeComponent created')
-    this.dcUrl = [
-      this.baseUrl,
-      `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-      this.address,
-    ].join('/');
-  }
 }

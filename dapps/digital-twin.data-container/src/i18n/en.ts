@@ -110,6 +110,7 @@ const i18n: any = {
     "edit": "Edit",
     "edit-dbcp": "Adjust Container Description",
     "edit-schema": "Data set schema definition",
+    "entries": "Data Sets",
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",

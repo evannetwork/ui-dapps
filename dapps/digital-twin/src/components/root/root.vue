@@ -35,33 +35,28 @@
         <dt-breadcrumbs></dt-breadcrumbs>
       </template>
       <template v-slot:content>
-        <evan-loading v-if="loading || ($store.state.uiDT && $store.state.uiDT.loading)"></evan-loading>
+        <evan-loading v-if="loading">
+        </evan-loading>
         <template v-else>
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"
             v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
             <template v-slot:content>
-              <div class="bg-level-1" style="width: 360px">
+              <div style="width: 360px">
                 <evan-loading
                   v-if="$store.state.uiDT.loading && !$store.state.uiDT.initialized">
                 </evan-loading>
 
-                <template v-else>
-                  <div class="evan-tree">
-                    <div class="evan-tree-entry"
-                      :class="{ 'active': isActive() }"
-                      @contextmenu="$refs.dtActions.showDropdown($event)">
-                      <i class="toggle-icon"
-                        :class="{
-                          'mdi mdi-chevron-up': isTreeOpen,
-                          'mdi mdi-chevron-down': !isTreeOpen,
-                        }"
-                        @click="isTreeOpen = !isTreeOpen">
+                <template v-else-if="twinUrl">
+                  <dt-tree-root
+                    :url="`${ twinUrl }/dt-detail`"
+                    :topic="`_digitaltwins.breadcrumbs.digitaltwin`"
+                    :title="$store.state.uiDT.dbcp.name"
+                    :icon="`mdi mdi-fingerprint`"
+                    @rightClick="$refs.dtActions.showDropdown($event)">
+                    <template v-slot:context-menu>
+                      <i class="mdi mdi-dots-vertical clickable"
+                        @click="$refs.dtActions.showDropdown($event)">
                       </i>
-                      <a
-                        :href="`${ twinUrl }/dt-detail`">
-                        {{ $store.state.uiDT.dbcp.name }}
-                      </a>
-
                       <dt-actions
                         ref="dtActions"
                         :uiDT="$store.state.uiDT"
@@ -69,10 +64,17 @@
                         :containerActions="true"
                         :displayMode="'dropdownHidden'">
                       </dt-actions>
-                    </div>
+                    </template>
+                  </dt-tree-root>
 
+                  <div class="pl-6 pr-3 pt-3">
+                    <small class="text-muted text-uppercase font-weight-semibold">
+                      {{ '_digitaltwins.breadcrumbs.dt-plugins' | translate }}
+                    </small>
+                  </div>
+
+                  <div class="border-bottom border-sm">
                     <dc-tree
-                      v-if="isTreeOpen"
                       v-for="(container, index) in $store.state.uiDT.containers"
                       :address="container.address"
                       :baseUrl="twinUrl"

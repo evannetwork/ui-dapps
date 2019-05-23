@@ -26,32 +26,63 @@
 */
 
 <template>
-  <div class="evan-tree" v-if="!loading">
-    <div class="evan-tree-entry"
-      :class="{ 'active': isActive(dcUrl) }">
-      <i class="toggle-icon"
-        :class="{
-          'mdi mdi-chevron-up': isOpen,
-          'mdi mdi-chevron-down': !isOpen,
-        }"
-        @click="isOpen = !isOpen">
-      </i>
+  <div
+    :style="!onlySets && isOpen ?
+      'border-left: 4px solid var(--evan-secondary)' :
+      'border-left: 4px solid transparent'"
+    >
+    <div class="d-flex align-items-center pl-6 pr-3 py-3"
+      v-if="!onlySets"
+      @contextmenu="">
       <a
+        class="d-flex align-items-center dark-link"
+        :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(dcUrl) !== -1 }"
         :href="dcUrl"
-        @click="isOpen = true;">
-        {{ dbcp.name }}
+        @click="isOpen = true">
+        <i
+          class="mdi mdi-note-multiple-outline text-muted mr-2"
+          style="font-size: 17px">
+        </i>
+        <span class="m-0 font-weight-semibold">{{ dbcp.name }}</span>
       </a>
+      <span class="mx-auto"></span>
+      <div class="position-relative d-flex align-items-center">
+        <button class="btn mini border btn-circle border-secondary"
+          @click="isOpen = !isOpen">
+          <i class="text-secondary"
+            :class="{
+              'mdi mdi-chevron-up': isOpen,
+              'mdi mdi-chevron-down': !isOpen,
+            }">
+          </i>
+        </button>
+      </div>
     </div>
-    <div class="evan-tree"
-      v-if="isOpen">
-      <div class="evan-tree-entry"
-        :class="{ 'active': isActive(`${ dcUrl }/${ entry }`) }"
-        v-for="(entry, index) in Object.keys(dbcp.dataSchema)">
-        <i class="toggle-icon"></i>
+
+    <div class="pb-3"
+      v-if="onlySets || isOpen">
+      <div class="pl-8 pr-3 pb-1">
+        <small class="text-muted text-uppercase font-weight-semibold">
+          {{ '_datacontainer.entries' | translate }}
+        </small>
+      </div>
+      <div class="d-flex align-items-center pl-8 pr-3 py-2"
+        v-for="(entry, index) in Object.keys(dbcp.dataSchema)"
+        @contextmenu="">
         <a
+          class="d-flex align-items-center dark-link"
+          :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/${ entry }`) !== -1 }"
           :href="`${ dcUrl }/${ entry }`">
-          {{ entry }}
+          <i
+            class="mdi mdi-cube-outline text-muted mr-2"
+            style="font-size: 17px">
+          </i>
+          <span class="m-0">{{ entry }}</span>
         </a>
+        <span class="mx-auto"></span>
+        <div class="position-relative d-flex align-items-center">
+          
+        </div>
       </div>
     </div>
   </div>
