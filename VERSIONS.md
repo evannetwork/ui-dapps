@@ -9,6 +9,7 @@
   - add `under-construction.svg`
   - add `tabs` colors
   - add `mini` class to buttons
+  - add `border-smooth` class
 
 ### Fixes
 - rename dapp containers for `@evan.network/api-blockchain-core` and `@evan.network/smart-contracts-core` to end with `-browserfied`

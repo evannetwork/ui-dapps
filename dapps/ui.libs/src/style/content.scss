@@ -94,7 +94,7 @@
     }
 
     .header {
-      border-bottom: 1px solid cssVar('border-color');
+      border-bottom: 1px solid cssVar('border-color-2');
     }
 
     .content {
@@ -104,7 +104,7 @@
     .footer {
       justify-content: flex-end;
 
-      border-top: 1px solid cssVar('border-color');
+      border-top: 1px solid cssVar('border-color-2');
     }
   }
 
