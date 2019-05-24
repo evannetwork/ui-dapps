@@ -27,6 +27,7 @@
 
 <template>
   <component
+    v-if="!loading"
     :id="id"
     :is="`dc-field-${ _type }`"
     :control="control"

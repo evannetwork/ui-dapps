@@ -27,7 +27,7 @@
 
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
@@ -74,6 +74,21 @@ export default class FieldComponent extends mixins(EvanComponent) {
    * Calculated type from props type or calucated from schema
    */
   _type = null;
+
+  /**
+   * Used to rerender field components
+   */
+  loading = false;
+
+  @Watch('type')
+  onChildChanged(val: string, oldVal: string) {
+    // if type has changed and it was already rendered, force rerender
+    if (val !== this._type) {
+      this._type = this.type || fieldUtils.getType(this.schema);
+      this.loading = true;
+      this.$nextTick(() => this.loading = false);
+    }
+  }
 
   /**
    * Check for the correct type.

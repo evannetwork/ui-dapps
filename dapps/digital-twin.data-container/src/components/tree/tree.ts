@@ -58,6 +58,16 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   @Prop() onlySets;
 
   /**
+   * show loading symbol
+   */
+  @Prop() loading;
+
+  /**
+   * disable open
+   */
+  @Prop() creating;
+
+  /**
    * Full Url to the currently selected twin
    */
   dcUrl = '';

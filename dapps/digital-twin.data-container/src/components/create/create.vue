@@ -45,25 +45,24 @@
               {{ `_datacontainer.plugin.create-title` | translate }}
             </template>
 
-            <b v-if="activePlugin">
+            <template v-if="activePlugin">
               - {{ createForm.name.value }}
-            </b>
+            </template>
           </h3>
           <p class="text-muted font-weight-semibold m-t-0">
             {{ `_datacontainer.createForm.sub-title` | translate }}
           </p>
         </div>
         <span class="mx-auto"></span>
-        <div>
+        <div v-if="!creating">
           <button class="btn btn-circle btn-sm btn-tertiary"
             v-if="activePlugin"
             id="dc-edit"
-            :disabled="creating"
             @click="activePlugin = null">
             <i class="mdi mdi-pencil"></i>
             <evan-tooltip
               ref="editDbcphint"
-              :placement="'bottom'">
+              :placement="'left'">
               {{ `_datacontainer.createForm.edit-dbcp-hint` | translate }}
             </evan-tooltip>
           </button>
@@ -84,7 +83,7 @@
             :form="createForm"
             @submit="activatePlugin(plugins[createForm.plugin.value])">
             <template v-slot:before-inputs
-               v-if="plugins.length > 0">
+               v-if="plugins.length !== 0">
               <div class="form-group">
                 <label for="plugin">
                   {{ `_datacontainer.createForm.plugin.title` | translate }}
@@ -128,7 +127,7 @@
             <span class="mx-auto"></span>
             <div>
               <button type="submit"
-                v-if="steps.length === 0"
+                v-if="steps.length !== 0"
                 class="btn btn-primary btn-circle "
                 id="th-add-entry"
                 @click="$refs.dcNewEntry.showModal();">
@@ -142,10 +141,12 @@
 
           <div class="evan-steps" v-if="steps.length !== 0">
             <div class="evan-step-header mt-3">
+              <!-- step button is disabled when a previous step was reactived and is currently invalid -->
               <button class="btn"
                 v-for="(step, index) of steps"
                 :id="`evan-container-create-step-${ index }`"
-                :disabled="step.disabled(this)"
+                :disabled="index > activeStep &&
+                  steps[activeStep].entryComp && !steps[activeStep].entryComp.isValid()"
                 @click="activeStep = index">
                 <span class="stepper-circle"
                   :class="{
@@ -157,12 +158,15 @@
                 <span>{{ step.title | translate }}</span>
               </button>
             </div>
-            <div class="pt-3">
+            <div class="pt-3"
+              v-for="(step, index) of steps">
               <dc-entry
+                v-if="index === activeStep"
                 :address="!templateMode ? 'create' : 'create-template'"
                 :entry="activePlugin.template.properties[steps[activeStep].entryName]"
                 :entryName="steps[activeStep].entryName"
-                :permissions="permissions">
+                :permissions="permissions"
+                @init="$set(steps[activeStep], 'entryComp', $event)">
               </dc-entry>
             </div>
           </div>
@@ -181,15 +185,13 @@
               {{ `_datacontainer.entry.add` | translate }}
             </button>
           </div>
-          <div class="footer">
+          <div class="footer"
+            v-if="steps.length === 0 || (steps[activeStep] && steps[activeStep].entryComp)">
             <button
               class="btn btn-rounded btn-primary"
               id="container-save"
-              @click="
-                steps.length === 0 || activeStep === (steps.length - 1) ?
-                  triggerCreateDialog() :
-                  activeStep = activeStep + 1;
-              ">
+              :disabled="steps.length !== 0 && !steps[activeStep].entryComp.isValid()"
+              @click="nextStep()">
               <template v-if="steps.length === 0 || activeStep === (steps.length - 1)">
                 {{ `_datacontainer.createForm.finish` | translate }}
               </template>

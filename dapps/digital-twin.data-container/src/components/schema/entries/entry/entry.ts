@@ -60,9 +60,9 @@ export default class EntryComponent extends mixins(EvanComponent) {
   @Prop() entryName: string;
 
   /**
-   * Available display modes for the current user and it's roles
+   * Active display mode (schema, edit, view)
    */
-  modes: Array<string> = null;
+  activeMode = 'loading';
 
   /**
    * Calculated entry type (check special type definitions)
@@ -73,33 +73,55 @@ export default class EntryComponent extends mixins(EvanComponent) {
    * Check for permitted modes
    */
   created() {
+    this.$emit('init', this);
     this.type = fieldUtils.getType(this.entry.dataSchema);
 
     // check permissions and set permitted modes
     if (!this.address.startsWith('0x')) {
-      this.modes = [ 'view', 'schema', ];
+      if (this.address === 'dc-create') {
+        this.activeMode = 'edit';
+      } else {
+        this.activeMode = 'schema';
+      }
     } else {
       const read = this.permissions.read || [ ];
       const write = this.permissions.readWrite || [ ];
-      this.modes = [ ];
-
-      // check for read permissions
-      if (this.permissions.isOwner ||
-          read.indexOf(this.entryName) !== -1 ||
-          write.indexOf(this.entryName) !== -1) {
-        this.modes.push('view');
-      }
 
       // add schema mode, when the user is the owner
       if (this.permissions.isOwner) {
-        this.modes.push('schema');
+        this.activeMode = 'schema';
       // else check for read write permissions
       } else if (write.indexOf(this.entryName) !== -1) {
-        this.modes.push('edit');
+        this.activeMode = 'edit';
+      // check for read permissions
+      } else if (this.permissions.isOwner ||
+        read.indexOf(this.entryName) !== -1 ||
+        write.indexOf(this.entryName) !== -1) {
+        this.activeMode = 'view';
+      } else {
+        this.activeMode = '';
       }
     }
+  }
 
-    // fill empty mode as default value
-    this.$set(this.entry, 'mode', this.entry.mode || this.modes[0]);
+  /**
+   * Triggers the sub component save function.
+   */
+  async save() {
+    return await (<any>this.$refs.entryComp).save();
+  }
+
+  /**
+   * Triggers the sub component reset function.
+   */
+  async reset() {
+    return await (<any>this.$refs.entryComp).reset();
+  }
+
+  /**
+   * Is the sub component forms valid?.
+   */
+  isValid() {
+    return this.$refs.entryComp && (<any>this.$refs.entryComp).isValid();
   }
 }

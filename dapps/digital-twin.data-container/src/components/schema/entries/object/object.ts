@@ -56,6 +56,11 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   @Prop() modes: Array<string>;
 
   /**
+   * Almost highest available mode
+   */
+  @Prop() mode: string;
+
+  /**
    * Force loading of ajv component
    */
   loading = false;
@@ -83,23 +88,17 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   /**
    * If the mode is schema, force the edit mode, so all values matches the correct field type.
    */
-  save() {
-    if (this.entry.mode === 'schema') {
-      this.entry.mode = 'edit';
+  async save() {
+    // trigger saving
+    this.reactiveRefs.ajv.save();
+    // update entry backup to the latest value
+    entryUtils.saveValue(this, this.entry);
+  }
 
-      // iterate through all forms and make alle values dirty and set the value again to trigger
-      // form validation
-      this.$nextTick(() => {
-        this.reactiveRefs.ajv.forms.forEach((form: any) => {
-          form.value.value = form.value.value;
-          form.value.dirty = true;
-        });
-      });
-    } else {
-      // trigger saving
-      this.reactiveRefs.ajv.save();
-      // update entry backup to the latest value
-      entryUtils.saveValue(this, this.entry);
-    }
+  /**
+   * Determines if valid.
+   */
+  isValid() {
+    return this.reactiveRefs.ajv.isValid;
   }
 }

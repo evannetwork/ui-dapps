@@ -37,7 +37,7 @@
       <a
         class="d-flex align-items-center dark-link"
         :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(dcUrl) !== -1 }"
-        :href="dcUrl"
+        :href="creating ? null : dcUrl"
         @click="isOpen = true">
         <i
           class="mdi mdi-note-multiple-outline text-muted mr-2"
@@ -48,7 +48,8 @@
       <span class="mx-auto"></span>
       <div class="position-relative d-flex align-items-center">
         <button class="btn mini border btn-circle border-secondary"
-          @click="isOpen = !isOpen">
+          @click="isOpen = !isOpen"
+          v-if="!creating">
           <i class="text-secondary"
             :class="{
               'mdi mdi-chevron-up': isOpen,
@@ -56,6 +57,9 @@
             }">
           </i>
         </button>
+        <div class="spinner-border spinner-border-sm text-secondary ml-3"
+          v-if="loading">
+        </div>
       </div>
     </div>
 

@@ -43,7 +43,7 @@
           <a
             id="dt-plugin-create"
             class="btn btn-rounded btn-primary font-weight-normal"
-            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/create-plugin`">
+            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create`">
             {{ '_digitaltwins.plugins.create' | translate }}
             <i class="mdi mdi-arrow-right label ml-2"></i>
           </a>

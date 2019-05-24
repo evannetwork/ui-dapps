@@ -78,7 +78,9 @@
                       v-for="(container, index) in $store.state.uiDT.containers"
                       :address="container.address"
                       :baseUrl="twinUrl"
-                      :dbcp="container.description">
+                      :creating="container.creating"
+                      :dbcp="container.description"
+                      :loading="container.loading">
                     </dc-tree>
                   </div>
                 </template>

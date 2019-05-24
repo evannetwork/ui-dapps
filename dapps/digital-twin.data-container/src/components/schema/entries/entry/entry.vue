@@ -27,40 +27,44 @@
 
 <template>
   <div :id="`dc-entry-${ entryName }`">
-    <div class="white-box border-smooth rounded mt-3" v-if="modes.length === 0">
-      <div class="header">
-        <h3 class="m-0 font-weight-semibold">
-          {{ `_datacontainer.ajv.not-permitted.title` | translate }}
+    <evan-loading
+      v-if="activeMode === 'loading'">
+    </evan-loading>
+
+    <template v-else>
+      <div class="text-center p-5" v-if="!activeMode">
+        <h3 class="mt-4 font-weight-semibold">
+          {{ '_datacontainer.no-permissions.title' | translate }}
         </h3>
+        <h5 class="font-weight-semibold text-muted">
+          {{ '_datacontainer.no-permissions.desc' | translate }}
+        </h5>
       </div>
-
-      <div class="content">
-        {{ `_datacontainer.ajv.not-permitted.desc` | translate }}
-      </div>
-    </div>
-
-    <div class="mt-3" v-if="modes.length !== 0">
       <dc-entry-object
-        v-if="type === 'object'"
+        ref="entryComp"
+        v-else-if="type === 'object'"
+        :activeMode="activeMode"
         :entry="entry"
-        :entryName="entryName"
-        :modes="modes">
+        :entryName="entryName">
       </dc-entry-object>
       <dc-entry-list
+        ref="entryComp"
         v-else-if="type === 'array'"
-        @reset="resetValue" @save="saveValue"
+        @reset="resetValue"
+        @save="saveValue"
+        :activeMode="activeMode"
         :address="address"
         :entry="entry"
-        :entryName="entryName"
-        :modes="modes">
+        :entryName="entryName">
       </dc-entry-list>
       <dc-entry-field
+        ref="entryComp"
         v-else
+        :activeMode="activeMode"
         :entry="entry"
-        :entryName="entryName"
-        :modes="modes">
+        :entryName="entryName">
       </dc-entry-field>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -68,6 +72,3 @@
   import Component from './entry.ts';
   export default Component;
 </script>
-
-
-

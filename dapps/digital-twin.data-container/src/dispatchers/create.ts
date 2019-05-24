@@ -64,7 +64,7 @@ dispatcher
     const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
 
     // save the digital twin entries
-    await digitalTwin.setEntry(data.name, data.contractAddress,
+    await digitalTwin.setEntry(data.description.name, data.contractAddress,
       bcc.DigitalTwinEntryType.Container);
   });
 

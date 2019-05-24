@@ -53,12 +53,12 @@ dispatcher
     await profile.loadForAccount(profile.treeLabels.contracts);
 
     // on an update and when the name has changed, remove the previous template
-    if (data.beforeName && data.name !== data.beforeName) {
+    if (data.beforeName && data.description.name !== data.beforeName) {
       await runtime.profile.removeBcContract(bcc.Container.profilePluginsKey, data.beforeName);
     }
 
     // save the new template
-    await profile.addBcContract(bcc.Container.profilePluginsKey, data.name, {
+    await profile.addBcContract(bcc.Container.profilePluginsKey, data.description.name, {
       description: data.description,
       template: data.template,
     });

@@ -51,7 +51,7 @@
         v-for="(container, index) in $store.state.uiDT.containers"
         style="min-width: 350px;">
         <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
-          :id="`evan-dt-container-${ container.path.split('/').pop() }`"
+          :id="`evan-dt-container-${ container.path ? container.path.split('/').pop() : 'creating' }`"
           :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
           <div class="row align-items-center m-0 w-100">
             <div class="col-2">
@@ -64,17 +64,17 @@
               </i>
             </div>
             <div class="col-10">
-              <small class="text-center p-1 d-block text-muted"
-                v-if="container.creating">
-                {{ '_digitaltwins.containers.in-creation' | translate }}
-              </small>
               <div class="d-flex p-3 flex-truncate">
                 <div>
                   <h4 class="font-weight-semibold mb-0">
                     {{ container.description.name }}
                   </h4>
-                  <span class="text-justify d-block font-weight-semibold text-muted">
+                  <span class="text-justify d-block font-weight-semibold text-muted"
+                    v-if="!container.creating">
                     {{ container.description.description }}
+                  </span>
+                  <span v-else>
+                    {{ '_digitaltwins.containers.in-creation' | translate }}
                   </span>
                 </div>
                 <template v-if="container.loading">

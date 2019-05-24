@@ -449,11 +449,7 @@ export default class EvanUIDigitalTwin {
         // container will be displayed
         const loadingContainer: any = {
           creating: true,
-          description: {
-            name: instance.data.name,
-            description: instance.data.description,
-            imgSquare: instance.data.img,
-          },
+          description: instance.data.description,
           dispatcherInstanceId: instance.id,
           loading: true,
           name: instance.data.name,

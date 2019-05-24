@@ -389,4 +389,3 @@ export default class TemplateHandlerComponent extends mixins(EvanComponent) {
     return editProperties;
   }
 }
-

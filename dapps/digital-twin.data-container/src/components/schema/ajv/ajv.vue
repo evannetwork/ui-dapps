@@ -29,9 +29,7 @@
   <table id="ajv-table" class="evan-flex-table">
     <thead>
       <tr class="text-muted">
-        <th
-          :class="{ 'flex-grow-0': mode !== 'schema' }"
-          :style="mode !== 'schema' ? 'flex-basis: 300px' : ''">
+        <th>
           {{ '_datacontainer.ajv.name.title' | translate }}
         </th>
         <th v-if="mode === 'schema'">
@@ -49,18 +47,13 @@
       <tr v-for="(form, index) in forms">
         <td
           :id="`ajv-name-${ index }`"
-          class="fill-content"
-          :class="{ 'flex-grow-0': mode !== 'schema' }"
-          :style="mode !== 'schema' ? 'flex-basis: 300px' : ''">
-          <span class="font-weight-semibold" v-if="mode !== 'schema'">
-            {{ form.name.value }}
-          </span>
-          <span class="text-primary" v-if="mode === 'schema'">
+          class="fill-content">
+          <span class="text-primary">
             <div class="form-group mb-0">
               <input class="form-control" required
                 ref="name"
                 :placeholder="`_datacontainer.ajv.name.desc` | translate"
-                :disabled="$store.state.saving"
+                :disabled="$store.state.saving || mode !== 'schema'"
                 v-model="form.name.value"
                 :class="{ 'is-invalid' : form.name.error }"
                 @blur="form.name.setDirty()">
@@ -70,13 +63,12 @@
             </div>
           </span>
         </td>
-        <td :id="`ajv-type-${ index }`"
-          v-if="mode === 'schema'">
+        <td :id="`ajv-type-${ index }`">
           <div class="form-group mb-0">
             <select class="form-control custom-select"
               ref="type"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
-              :disabled="$store.state.saving"
+              :disabled="$store.state.saving || mode !== 'schema'"
               v-model="form.type.value"
               :class="{ 'is-invalid' : form.type.error }"
               @blur="form.type.setDirty()">
@@ -90,7 +82,8 @@
         </td>
         <td 
           :id="`ajv-value-${ index }`"
-          class="fill-content" v-if="mode !== 'schema'">
+          class="fill-content"
+          v-if="!disableValue">
           <dc-field
             :id="`dc-field-${ index }`"
             :type="form.type.value"
@@ -118,14 +111,14 @@
           <div class="ajv-add-overlay">
             <!-- <h5 class="text-muted">{{ '_datacontainer.ajv.add' | translate }}</h5> -->
           </div>
-          <div class="form-group mb-0" v-if="mode === 'schema'">
+          <div class="form-group mb-0">
             <input class="form-control bg-level-1"
               disabled
               :placeholder="`_datacontainer.ajv.name.desc` | translate">
           </div>
         </td>
         <td class="fill-content">
-          <div class="form-group mb-0" v-if="mode === 'schema'">
+          <div class="form-group mb-0">
             <select class="form-control custom-select bg-level-1" disabled
               :placeholder="`_datacontainer.ajv.type.desc` | translate">
               <option>
@@ -134,7 +127,8 @@
             </select>
           </div>
         </td>
-        <td class="fill-content" v-if="mode !== 'schema'">
+        <td class="fill-content"
+          v-if="!disableValue">
           <input class="form-control bg-level-1"
             type="text" disabled
             :placeholder="`_datacontainer.ajv.value.desc` | translate">

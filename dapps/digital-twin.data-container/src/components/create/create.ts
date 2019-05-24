@@ -41,7 +41,7 @@ import ContainerCache from '../../container-cache';
 
 interface CreateInterface extends EvanForm {
   description: EvanFormControl;
-  img: EvanFormControl;
+  imgSquare: EvanFormControl;
   name: EvanFormControl;
   plugin: EvanFormControl;
 }
@@ -154,6 +154,9 @@ export default class CreateComponent extends mixins(EvanComponent) {
       plugin: {
         value: 0
       },
+      imgSquare: {
+        value: ''
+      },
     }));
 
     const plugins = await utils.getMyPlugins(runtime);
@@ -210,24 +213,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Unmount dispatcher watchers
-   */
-  beforeDestroy() {
-    this.creationWatcher && this.creationWatcher();
-  }
-
-  /**
-   * Open the create modal, when all entries are saved.
-   */
-  triggerCreateDialog() {
-    const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
-
-    if (unsavedChanges.length === 0) {
-      (<any>this.$refs.createModal).show();
-    }
-  }
-
-  /**
    * Create the new container
    */
   async create() {
@@ -237,7 +222,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
       dispatchers.pluginDispatcher.start(runtime, {
         description: {
           description: this.createForm.description.value,
-          imgSquare: this.createForm.img.value,
+          imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
         plugin: this.plugins[this.createForm.plugin.value],
@@ -247,7 +232,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         digitalTwinAddress: this.digitalTwinAddress,
         description: {
           description: this.createForm.description.value,
-          imgSquare: this.createForm.img.value,
+          imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
         plugin: this.plugins[this.createForm.plugin.value],
@@ -257,6 +242,105 @@ export default class CreateComponent extends mixins(EvanComponent) {
     (<any>this.$refs.createModal).hide();
     await (new ContainerCache(runtime.activeAccount))
       .delete(!this.pluginMode ? 'dc-create' : 'plugin-create');
+  }
+
+  /**
+   * Unmount dispatcher watchers
+   */
+  beforeDestroy() {
+    this.creationWatcher && this.creationWatcher();
+  }
+
+  /**
+   * Activate a plugin and calculate the steppers.
+   *
+   * @param      {any}      plugin    plugin that should be activated
+   * @param      {boolean}  dbcpHint  hide edit dbcp hint when false
+   */
+  activatePlugin(plugin: any, dbcpHint = true) {
+    this.saveActiveStep();
+    this.activePlugin = plugin;
+
+    // reset steps
+    this.$set(this, 'steps', [ ]);
+
+    // apply the new active plugin entries as new steps
+    const customTranslation = { };
+    Object.keys(plugin.template.properties).forEach((entryName: string) => {
+      // add the steps
+      const title = `_datacontainer.breadcrumbs.${ entryName }`;
+      this.steps.push({
+        title,
+        entryName,
+        disabled: () => false
+      });
+      customTranslation[title] = entryName;
+
+      /**
+       * Takes an entry and checks for type array. If it's an array, ensure, that the value array
+       * and an addValue object is added. Per default, this values are not returned by the API,
+       * templates does not support list entries export and must be load dynamically. The value
+       * array is used to handle new arrays, that will be persisted for caching to the indexeddb
+       * like the normal entries
+       */
+      entryUtils.ensureValues(plugin.template.properties[entryName]);
+    });
+    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+
+    if (dbcpHint) {
+      // wait for rendering the dbcp-edit button and show a tooltip hint
+      this.$nextTick(() => {
+        const tooltip = (<any>this.$refs.editDbcphint);
+
+        // show the tooltip
+        tooltip.onMouseEnter();
+
+        // hide the tooltip
+        setTimeout(() => {
+          tooltip.onMouseLeave();
+        }, 5e3);
+      });
+    }
+  }
+
+  /**
+   * Takes the response from the dc-new-entry and adds the new property
+   *
+   * @param      {any}  entryData  The entry data
+   */
+  addNewEntry(entryData: any) {
+    this.activePlugin.template.properties[entryData.name] = entryData.entry;
+
+    // navigate to the new data set
+    // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
+
+    utils.enableDTSave();
+    this.activatePlugin(this.activePlugin, true);
+  }
+
+  /**
+   * Saves current changes and navigates to next step.
+   */
+  nextStep() {
+    this.saveActiveStep();
+
+    // if we are on the last step, ask to finish creation
+    if (this.steps.length === 0 || this.activeStep === (this.steps.length - 1)) {
+      (<any>this.$refs.createModal).show();
+    } else {
+      // navigate to next step.
+      this.steps[this.activeStep].valid = true;
+      this.activeStep = this.activeStep + 1;
+    }
+  }
+
+  /**
+   * Save latest step entry edit values.
+   */
+  saveActiveStep() {
+    if (this.steps[this.activeStep] && this.steps[this.activeStep].entryComp) {
+      this.steps[this.activeStep].entryComp.save();
+    }
   }
 
   /**
@@ -303,69 +387,5 @@ export default class CreateComponent extends mixins(EvanComponent) {
     if (!this.creationWatcher) {
       this.creationWatcher = getDispatcher().watch(($event: any) => watch($event));
     }
-  }
-
-  /**
-   * Activate a plugin and calculate the steppers.
-   *
-   * @param      {any}      plugin    plugin that should be activated
-   * @param      {boolean}  dbcpHint  hide edit dbcp hint when false
-   */
-  activatePlugin(plugin: any, dbcpHint = true) {
-    this.activePlugin = plugin;
-
-    // reset steps
-    this.$set(this, 'steps', [ ]);
-
-    // apply the new active plugin entries as new steps
-    const customTranslation = { };
-    Object.keys(plugin.template.properties).forEach((entryName: string) => {
-      // add the steps
-      const title = `_datacontainer.breadcrumbs.${ entryName }`;
-      this.steps.push({
-        title,
-        entryName,
-        disabled: () => false
-      });
-      customTranslation[title] = entryName;
-
-      /**
-       * Takes an entry and checks for type array. If it's an array, ensure, that the value array
-       * and an addValue object is added. Per default, this values are not returned by the API,
-       * templates does not support list entries export and must be load dynamically. The value
-       * array is used to handle new arrays, that will be persisted for caching to the indexeddb
-       * like the normal entries
-       */
-      entryUtils.ensureValues(plugin.template.properties[entryName]);
-    });
-    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
-
-    // wait for rendering the dbcp-edit button and show a tooltip hint
-    this.$nextTick(() => {
-      const tooltip = (<any>this.$refs.editDbcphint);
-
-      // show the tooltip
-      tooltip.onMouseEnter();
-
-      // hide the tooltip
-      setTimeout(() => {
-        tooltip.onMouseLeave();
-      }, 5e3);
-    });
-  }
-
-  /**
-   * Takes the response from the dc-new-entry and adds the new property
-   *
-   * @param      {any}  entryData  The entry data
-   */
-  addNewEntry(entryData: any) {
-    this.activePlugin.template.properties[entryData.name] = entryData.entry;
-
-    // navigate to the new data set
-    // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
-
-    utils.enableDTSave();
-    this.activatePlugin(this.activePlugin, true);
   }
 }
