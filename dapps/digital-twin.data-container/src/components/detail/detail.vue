@@ -41,6 +41,35 @@
         </div>
       </div>
       <template v-else>
+        <div class="d-flex mb-5 align-items-center">
+          <div class="flex-truncate" style="max-width: 50%;">
+            <h3 class="font-weight-bold mb-0">
+              {{ description.name }}
+            </h3>
+            <p class="text-muted font-weight-semibold mb-0">
+              {{ description.description }}
+            </p>
+          </div>
+          <span class="mx-auto"></span>
+          <div class="d-flex">
+            <dc-actions
+              :containerAddress="containerAddress"
+              :digitalTwinAddress="digitalTwinAddress"
+              :dbcp="description"
+              :dcActions="true"
+              :setActions="false">
+            </dc-actions>
+          </div>
+        </div>
+
+        <dc-template-handler
+          ref="templateHandler"
+          :address="containerAddress"
+          :template.sync="template"
+          :permissions="permissions">
+        </dc-template-handler>
+
+        <!-------------------------- actions section -------------------------->
         <evan-modal
           id="container-share-modal"
           ref="shareModal"
@@ -166,153 +195,6 @@
             </button>
           </template>
         </evan-modal>
-        <template v-if="!$store.state.saving">
-          <div class="d-flex mb-5 align-items-center">
-            <div class="flex-truncate" style="max-width: 50%;">
-              <h3 class="font-weight-bold mb-0">
-                {{ dbcpForm.name.value }}
-              </h3>
-              <p class="text-muted font-weight-semibold mb-0">
-                {{ dbcpForm.description.value }}
-              </p>
-            </div>
-            <span class="mx-auto"></span>
-            <div class="d-flex">
-              <button class="btn"
-                id="container-context-menu-open"
-                @click="$refs.containerContextMenu.show();">
-                <i class="mdi mdi-chevron-down"></i>
-              </button>
-              <div class="position-relative">
-                <evan-dropdown
-                  id="container-context-menu"
-                  ref="containerContextMenu"
-                  :alignment="'right'"
-                  :width="'300px'">
-                  <template v-slot:content>
-                    <template
-                      v-if="permissions.isOwner">
-                      <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                        id="container-dbcp-edit"
-                        @click="
-                          $refs.dbcpModal.show()
-                          $refs.containerContextMenu.hide($event);
-                        ">
-                        <i class="mdi mdi-pencil mr-3" style="width: 16px;"></i>
-                        {{ `_datacontainer.edit-dbcp` | translate }}
-                      </a>
-                      <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                        id="container-share"
-                        @click="openShareDialog">
-                        <i class="mdi mdi-share-variant mr-3" style="width: 16px;"></i>
-                        {{ `_datacontainer.context-menu.share` | translate }}
-                      </a>
-                    </template>
-                    <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                      id="container-container-link"
-                      @click="
-                        evanNavigate(`digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/containerlink/${ containerAddress }`, `/${ dapp.rootEns }`)
-                        $refs.containerContextMenu.hide($event);
-                      ">
-                      <i class="mdi mdi-link-variant mr-3" style="width: 16px;"></i>
-                      {{ `_datacontainer.context-menu.link` | translate }}
-                    </a>
-                    <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                      id="container-clone"
-                      @click="
-                        evanNavigate(`create/${ containerAddress }`)
-                        $refs.containerContextMenu.hide($event);
-                      ">
-                      <i class="mdi mdi-content-copy mr-3" style="width: 16px;"></i>
-                      {{ `_datacontainer.context-menu.clone` | translate }}
-                    </a>
-                    <a class="dropdown-item pt-2 pb-2 pl-3 pr-3 clickable"
-                      id="container-plugin-create"
-                      @click="
-                        evanNavigate(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ containerAddress }`, `/${ dapp.rootEns }`)
-                        $refs.containerContextMenu.hide($event);
-                      ">
-                      <i class="mdi mdi-content-duplicate mr-3" style="width: 16px;"></i>
-                      {{ `_datacontainer.context-menu.plugin-save` | translate }}
-                    </a>
-                  </template>
-                </evan-dropdown>
-              </div>
-              <button type="button" class="btn btn-primary btn-rounded"
-                id="container-save"
-                @click="saveContainer()"
-                :disabled="!enableSave">
-                {{ '_datacontainer.createForm.save' | translate }}
-                <i class="mdi mdi-content-save label"></i>
-              </button>
-            </div>
-          </div>
-          <evan-modal
-            id="container-dbcp-modal"
-            ref="dbcpModal"
-            @canceled="cancelDbcpModal">
-            <template v-slot:header>
-              <h5 class="modal-title">
-                {{ '_datacontainer.edit-dbcp' | translate }}
-              </h5>
-            </template>
-            <template v-slot:body>
-              <form v-on:submit.prevent="saveContainer(true)">
-                <div class="form-group">
-                  <label for="name">
-                    {{ `_datacontainer.createForm.name.title` | translate }}
-                  </label>
-                  <input class="form-control" required
-                    id="name" ref="name"
-                    :placeholder="`_datacontainer.createForm.name.desc` | translate"
-                    v-model="dbcpForm.name.value"
-                    :class="{ 'is-invalid' : dbcpForm.name.error }"
-                    @blur="dbcpForm.name.setDirty()">
-                  <div class="invalid-feedback">
-                    {{ `_datacontainer.createForm.name.error` | translate }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="description">
-                    {{ `_datacontainer.createForm.description.title` | translate }}
-                  </label>
-                  <textarea class="form-control" rows="7"
-                    id="description" ref="description"
-                    :placeholder="`_datacontainer.createForm.description.desc` | translate"
-                    v-model="dbcpForm.description.value"
-                    :class="{ 'is-invalid' : dbcpForm.description.error }"
-                    @blur="dbcpForm.description.setDirty()">
-                  </textarea>
-                </div>
-              </form>
-            </template>
-            <template v-slot:footer>
-              <button type="submit"
-                id="container-dbcp-save"
-                @click="saveContainer(true)"
-                class="btn btn-rounded btn-primary"
-                :disabled="!dbcpForm.isValid">
-                {{ `_datacontainer.createForm.save` | translate }}
-                <i class="mdi mdi-arrow-right label"></i>
-              </button>
-            </template>
-          </evan-modal>
-
-          <dc-template-handler
-            ref="templateHandler"
-            :address="containerAddress"
-            :template.sync="template"
-            :permissions="permissions">
-          </dc-template-handler>
-        </template>
-        <div class="white-box border-smooth rounded"
-          id="container-saving"
-          v-else>
-          <div class="text-center">
-            <h4 class="mt-5 mb-3">{{ '_datacontainer.in-saving' | translate }}</h4>
-            <evan-loading></evan-loading>
-          </div>
-        </div>
       </template>
     </div>
   </div>

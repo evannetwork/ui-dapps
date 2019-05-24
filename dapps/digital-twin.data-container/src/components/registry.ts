@@ -30,6 +30,8 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
 import AJVComponent from './schema/ajv/ajv.vue';
+import DataContainerActionsComponent from './detail-actions/detail-actions.vue';
+import DataContainerTreeComponent from './tree/tree.vue';
 import EntryComponent from './schema/entries/entry/entry.vue';
 import EntryFieldComponent from './schema/entries/field/field.vue';
 import EntryListComponent from './schema/entries/list/list.vue';
@@ -38,15 +40,15 @@ import FieldComponent from './schema/fields/field/field.vue';
 import FieldFilesComponent from './schema/fields/files/files.vue';
 import FieldNumberComponent from './schema/fields/number/number.vue';
 import FieldStringComponent from './schema/fields/string/string.vue';
-import TemplateHandlerComponent from './schema/template-handler/template-handler.vue';
-import DataContainerTreeComponent from './tree/tree.vue';
 import NewEntryComponent from './schema/new-entry/new-entry.vue';
+import TemplateHandlerComponent from './schema/template-handler/template-handler.vue';
 
 // export them all, so other applications can access them
 export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'dc-actions', component: DataContainerActionsComponent },
   { name: 'dc-ajv', component: AJVComponent },
   { name: 'dc-entry', component: EntryComponent },
   { name: 'dc-entry-field', component: EntryFieldComponent },

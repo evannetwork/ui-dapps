@@ -39,12 +39,6 @@ import * as dispatchers from '../../dispatchers/registry';
 import ContainerCache from '../../container-cache';
 
 
-interface DbcpFormInterface extends EvanForm {
-  description: EvanFormControl;
-  img: EvanFormControl;
-  name: EvanFormControl;
-}
-
 interface ShareFormInterface extends EvanForm {
   subject: EvanFormControl;
 }
@@ -69,46 +63,20 @@ export default class DetailComponent extends mixins(EvanComponent) {
   error = false;
 
   /**
-   * Enable the save button, when anything has changed
-   */
-  enableSave = false;
-
-  /**
    * digitalTwin address, where the container should be created for
    */
   digitalTwinAddress = '';
 
   /**
-   * Container instance
-   */
-  container: bcc.Container;
-
-  /**
-   * container description
-   */
-  description: any;
-
-  /**
-   * containers template definition
-   */
-  template: any;
-
-  /**
-   * Watch for updates, so we can enable the save button
-   */
-  valuesChanged: any;
-
-  /**
    * formular specific variables
    */
-  dbcpForm: DbcpFormInterface = null;
   shareForm: ShareFormInterface = null;
 
   /**
    * Watch for updates and disable current save button
    */
-  savingWatcher: Function = null;
   sharingWatcher: Function = null;
+  savingWatcher: Function = null;
 
   /**
    * Share object
@@ -131,6 +99,21 @@ export default class DetailComponent extends mixins(EvanComponent) {
   permissions = null;
 
   /**
+   * Container instance
+   */
+  container: bcc.Container;
+
+  /**
+   * container description
+   */
+  description: any;
+
+  /**
+   * containers template definition
+   */
+  template: any;
+
+  /**
    * Load the container data
    */
   async created() {
@@ -139,7 +122,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     await this.initialize();
 
-    this.valuesChanged = (($event) => this.enableSave = true).bind(this);
     // watch for saving updates
     this.savingWatcher = dispatchers.updateDispatcher.watch(async () => {
       const instances = await dispatchers.updateDispatcher.getInstances(runtime);
@@ -153,7 +135,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
       // reload the data
       if (!this.$store.state.saving && beforeSaving) {
-        this.enableSave = false;
         this.initialize();
       }
     });
@@ -167,16 +148,13 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
       this.$set(this.$store.state, 'sharing', sharing);
     });
-
-    // watch for updates
-    window.addEventListener('dc-value-changed', this.valuesChanged);
   }
 
   /**
    * Clear watchers
    */
   beforeDestroy() {
-    window.removeEventListener('dc-value-changed', this.valuesChanged);
+    this.sharingWatcher();
   }
 
   /**
@@ -240,25 +218,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
       this.share.accountId = this.contacts[0].address;
     }
 
-    // set dbcp form
-    this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
-      name: {
-        value: this.description.name,
-        validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
-          return this.value.trim().length !== 0;
-        }
-      },
-      description: {
-        value: this.description.description,
-        validate: function(vueInstance: DetailComponent, form: DbcpFormInterface) {
-          return true;
-        }
-      },
-      img: {
-        value: '',
-      },
-    }));
-
     // setup share form, so the user can insert a custom form
     let subject = [
       (<any>this).$t('_datacontainer.breadcrumbs.datacontainer.digitaltwin'),
@@ -276,57 +235,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
     }));
 
     this.loading = false;
-  }
-
-  /**
-   * Trigger the digital twin save
-   *
-   * @param      {boolean}  onlyDbcp  save only the description
-   */
-  async saveContainer(onlyDbcp = false) {
-    if (!this.$store.state.saving && this.dbcpForm.isValid) {
-      // when the template should be saved, check if all changes have been changed
-      if (!onlyDbcp) {
-        const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
-        if (unsavedChanges.length !== 0) {
-          return;
-        }
-      }
-
-      const runtime = utils.getRuntime(this);
-
-      // hide current schema editor, so the beforeDestroy event is triggered and the data of the
-      // opened ajv editor is saved
-      this.loading = true;
-      this.$store.state.saving = true;
-
-      // update description backup
-      this.description.name = this.dbcpForm.name.value;
-      this.description.description = this.dbcpForm.description.value;
-
-      // disable value caching within the template handler and delete the latest cache
-      (<any>this.$refs.templateHandler).cacheChanges = false;
-      await (new ContainerCache(runtime.activeAccount)).delete(this.containerAddress);
-
-      // hide dbcp modal
-      (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
-
-      // wait for the template handler to saved all the data
-      this.$nextTick(async () => {
-        dispatchers.updateDispatcher.start(runtime, {
-          address: this.containerAddress,
-          description: {
-            description: this.dbcpForm.description.value,
-            imgSquare: this.dbcpForm.img.value,
-            name: this.dbcpForm.name.value,
-          },
-          digitalTwinAddress: this.digitalTwinAddress,
-          template: onlyDbcp ? undefined : this.template,
-        });
-
-        this.loading = false;
-      });
-    }
   }
 
   /**
@@ -374,21 +282,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
     });
 
     (<any>this.$refs.shareModal).hide();
-  }
-
-  /**
-   * When the dbcp edit modal was canceled, restore original dbcp value
-   */
-  cancelDbcpModal(eventArgs: any) {
-    this.$nextTick(() => {
-      // don't close on backdrop
-      if (eventArgs.backdrop) {
-        (<any>this).$refs.dbcpModal.show();
-      } else {
-        this.dbcpForm.name.value = this.description.name;
-        this.dbcpForm.description.value = this.description.description;
-      }
-    });
   }
 
   /**
