@@ -64,7 +64,7 @@
         <div class="row content pt-1 pb-0">
           <div class="col-md-6 col-lg-3 mb-4"
             v-for="(pluginKey, index) in Object.keys(plugins)">
-            <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
               :id="`evan-dt-plugin-${ pluginKey.replace('.', '') }`"
               :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/plugin/${ pluginKey }`">
               <div class="row align-items-center m-0 w-100">

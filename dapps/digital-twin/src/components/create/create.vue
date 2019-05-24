@@ -63,7 +63,7 @@
             </button>
           </template>
         </evan-modal>
-        <div class="white-box border rounded">
+        <div class="white-box border-smooth rounded">
           <div class="header">
             <h3 class="m-0 font-weight-semibold">
               {{ `_digitaltwins.detail.title` | translate }}
@@ -120,7 +120,7 @@
           </template>
         </div>
       </template>
-      <div class="white-box border rounded text-center" id="dt-creating"
+      <div class="white-box border-smooth rounded text-center" id="dt-creating"
         v-else>
         <h4 class="mt-5 mb-3">{{ '_digitaltwins.in-creation' | translate }}</h4>
         <b> {{ createForm.name.value }} </b>

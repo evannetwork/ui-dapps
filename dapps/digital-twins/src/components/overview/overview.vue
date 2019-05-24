@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="white-box border rounded mt-3"
+      <div class="white-box border-smooth rounded mt-3"
         v-if="twins.length !== 0">
         <div class="header border-0">
           <div>
@@ -75,7 +75,7 @@
           :id="`evan-dt-twins`">
           <div class="col-md-6 col-lg-3 mb-4"
             v-for="(ensAddress, index) in twins">
-            <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
               :id="`evan-dt-${ ensAddress.replace('.', '') }`"
               :href="descriptions[ensAddress].creating ?
                 null :
@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
-      <div class="white-box border rounded mt-3 "
+      <div class="white-box border-smooth rounded mt-3 "
         v-else>
         <div class="header">
           <h4 class="m-0">

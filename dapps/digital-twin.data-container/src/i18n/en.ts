@@ -73,20 +73,21 @@ const i18n: any = {
       "title": "Create Data Container"
     },
     "createForm": {
+      "add-plugin": "Add Plugin",
       "back": "Go Back",
       "base-plugin": "Base Plugin",
       "container-configuration": "Data Configuration",
       "continue": "Continue",
       "create": "Create",
+      "create-plugin": "Create Standalone Plugin",
+      "edit-dbcp-hint": "Wrong plugin selected? Change it here.",
       "finish": "Finish configuration",
       "general": "General Information",
       "plugin": {
         "desc": "Configuration of the new plugin",
         "title": "Plugin Type"
       },
-      "sub-title": "Specify general information, data schema and values.",
-      "add-plugin": "Add Plugin",
-      "create-plugin": "Create Standalone Plugin"
+      "sub-title": "Specify general information, data schema and values."
     },
     "dbcp": {
       "description": {
@@ -148,6 +149,10 @@ const i18n: any = {
       "results": "Results",
       "show-less": "Show less",
       "show-more": "Show more"
+    },
+    "no-entries": {
+      "desc": "No data sets have been added to the plugin yet. Use the button below to add and configure data sets.",
+      "title": "Empty plugin"
     },
     "no-permissions": {
       "desc": "You have no permission to view this data container.",

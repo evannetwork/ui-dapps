@@ -34,6 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as fieldUtils from '../../../../fields';
+import * as entryUtils from '../../../../entries';
 
 
 @Component({ })

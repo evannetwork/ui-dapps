@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="white-box border rounded" v-if="!loading">
+  <div class="white-box border-smooth rounded" v-if="!loading">
     <div class="header"
       :class="modes.indexOf('schema') !== -1 || modes.indexOf('edit') !== -1 ? 'px-5 py-4' : 'p-5'">
       <h3 class="m-0 font-weight-semibold" v-if="entry.mode !== 'schema'">

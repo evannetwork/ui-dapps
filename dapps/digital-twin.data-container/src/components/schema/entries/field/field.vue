@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="white-box border rounded">
+  <div class="white-box border-smooth rounded">
     <div class="header">
       <h3 class="m-0 font-weight-semibold" v-if="entry.mode === 'view'">
         {{ `_datacontainer.types.${ type }` | translate }}: {{ entryName }}

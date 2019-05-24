@@ -72,20 +72,21 @@ const i18n: any = {
       "title": "Datencontainer Erstellen"
     },
     "createForm": {
+      "add-plugin": "Plugin hinzufügen",
       "back": "Zurück",
       "base-plugin": "Basis-Plugin",
       "container-configuration": "Daten Konfiguration",
       "continue": "Weiter",
       "create": "Erstellen",
+      "create-plugin": "Alleinstehendes Plugin erstellen",
+      "edit-dbcp-hint": "Falsches Plugin ausgewählt? Ändern Sie es hier.",
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
       "plugin": {
         "desc": "Konfiguration des neuen Plugins",
         "title": "Plugin-Typ"
       },
-      "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
-      "add-plugin": "Plugin hinzufügen",
-      "create-plugin": "Alleinstehendes Plugin erstellen"
+      "sub-title": "Allgemeine Informationen, Datenschema und Werte."
     },
     "dbcp": {
       "description": {
@@ -147,6 +148,10 @@ const i18n: any = {
       "results": "Ergebnisse",
       "show-less": "Weniger anzeigen",
       "show-more": "Mehr anzeigen"
+    },
+    "no-entries": {
+      "desc": "Dem Plugin wurden noch keine Daten-Sets hinzugefügt. Nutzen Sie den nachfolgenden Button, um Daten-Sets hinzuzufügen und zu konfigurieren.",
+      "title": "Leeres Plugin"
     },
     "no-permissions": {
       "desc": "Sie besitzen keine Berechtigungen diesen Datencontainer einzusehen.",

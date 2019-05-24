@@ -29,7 +29,7 @@
   <div>
     <div class="container-wide">
       <evan-loading v-if="loading"></evan-loading>
-      <div class="white-box border rounded"
+      <div class="white-box border-smooth rounded"
         v-else-if="error">
         <div class="header">
           <h3 class="m-0 font-weight-semibold">
@@ -305,7 +305,7 @@
             :permissions="permissions">
           </dc-template-handler>
         </template>
-        <div class="white-box border rounded"
+        <div class="white-box border-smooth rounded"
           id="container-saving"
           v-else>
           <div class="text-center">

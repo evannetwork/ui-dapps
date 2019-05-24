@@ -236,7 +236,7 @@
         </dc-template-handler>
       </template>
 
-      <div class="white-box border rounded"
+      <div class="white-box border-smooth rounded"
         id="plugin-saving"
         v-else>
         <div class="text-center">

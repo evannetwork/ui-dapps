@@ -73,7 +73,7 @@
       </evan-modal>
       <div 
         id="th-entries"
-        class="bg-level-1 p-2 border rounded d-flex flex-wrap"
+        class="bg-level-1 p-2 border-smooth rounded d-flex flex-wrap"
         style="min-height: 65px;">
         <div class="batch-label clickable mt-2"
           v-for="(property, index) in Object.keys(template.properties)"
@@ -99,7 +99,7 @@
       </div>
 
       <template v-if="activeTab === -1">
-        <div class="white-box border rounded mt-3">
+        <div class="white-box border-smooth rounded mt-3">
           <div class="header">
             <h3 class="m-0 font-weight-semibold">
               {{ `_datacontainer.entry.add` | translate }}

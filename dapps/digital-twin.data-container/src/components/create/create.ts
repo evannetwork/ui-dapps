@@ -35,6 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registry';
+import * as entryUtils from '../../entries';
 import ContainerCache from '../../container-cache';
 
 
@@ -203,11 +204,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
       });
     });
 
-    // configure steps and it' titles
-    this.steps = [
-
-    ];
-
     this.loading = false;
     this.watchForCreation();
     this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
@@ -312,9 +308,64 @@ export default class CreateComponent extends mixins(EvanComponent) {
   /**
    * Activate a plugin and calculate the steppers.
    *
-   * @param      {any}  plugin  The plugin
+   * @param      {any}      plugin    plugin that should be activated
+   * @param      {boolean}  dbcpHint  hide edit dbcp hint when false
    */
-  activatePlugin(plugin: any) {
-    this.activatePlugin = plugin;
+  activatePlugin(plugin: any, dbcpHint = true) {
+    this.activePlugin = plugin;
+
+    // reset steps
+    this.$set(this, 'steps', [ ]);
+
+    // apply the new active plugin entries as new steps
+    const customTranslation = { };
+    Object.keys(plugin.template.properties).forEach((entryName: string) => {
+      // add the steps
+      const title = `_datacontainer.breadcrumbs.${ entryName }`;
+      this.steps.push({
+        title,
+        entryName,
+        disabled: () => false
+      });
+      customTranslation[title] = entryName;
+
+      /**
+       * Takes an entry and checks for type array. If it's an array, ensure, that the value array
+       * and an addValue object is added. Per default, this values are not returned by the API,
+       * templates does not support list entries export and must be load dynamically. The value
+       * array is used to handle new arrays, that will be persisted for caching to the indexeddb
+       * like the normal entries
+       */
+      entryUtils.ensureValues(plugin.template.properties[entryName]);
+    });
+    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+
+    // wait for rendering the dbcp-edit button and show a tooltip hint
+    this.$nextTick(() => {
+      const tooltip = (<any>this.$refs.editDbcphint);
+
+      // show the tooltip
+      tooltip.onMouseEnter();
+
+      // hide the tooltip
+      setTimeout(() => {
+        tooltip.onMouseLeave();
+      }, 5e3);
+    });
+  }
+
+  /**
+   * Takes the response from the dc-new-entry and adds the new property
+   *
+   * @param      {any}  entryData  The entry data
+   */
+  addNewEntry(entryData: any) {
+    this.activePlugin.template.properties[entryData.name] = entryData.entry;
+
+    // navigate to the new data set
+    // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
+
+    utils.enableDTSave();
+    this.activatePlugin(this.activePlugin, true);
   }
 }

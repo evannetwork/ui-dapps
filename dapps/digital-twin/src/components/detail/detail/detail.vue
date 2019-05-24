@@ -29,7 +29,7 @@
   <div class="d-flex flex-column h-100">
     <div class="container-wide"
       v-if="uiDT.validity.error">
-      <div class="white-box border rounded">
+      <div class="white-box border-smooth rounded">
         <div class="header">
           <h3 class="m-0 font-weight-semibold">
             {{ '_digitaltwins.detail.error.title' | translate }}

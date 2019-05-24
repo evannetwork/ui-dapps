@@ -40,6 +40,7 @@ import FieldNumberComponent from './schema/fields/number/number.vue';
 import FieldStringComponent from './schema/fields/string/string.vue';
 import TemplateHandlerComponent from './schema/template-handler/template-handler.vue';
 import DataContainerTreeComponent from './tree/tree.vue';
+import NewEntryComponent from './schema/new-entry/new-entry.vue';
 
 // export them all, so other applications can access them
 export { }
@@ -55,6 +56,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-files', component: FieldFilesComponent },
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
+  { name: 'dc-new-entry', component: NewEntryComponent },
   { name: 'dc-template-handler', component: TemplateHandlerComponent },
   { name: 'dc-tree', component: DataContainerTreeComponent },
 ].concat(dtLib.componentRegistration);

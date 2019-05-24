@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="white-box border rounded">
+  <div class="white-box border-smooth rounded">
     <div class="header">
       <h3 class="font-weight-semibold m-0">
         <template
@@ -50,7 +50,7 @@
       <div class="col-md-4 mb-4"
         v-for="(container, index) in $store.state.uiDT.containers"
         style="min-width: 350px;">
-        <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
+        <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
           :id="`evan-dt-container-${ container.path.split('/').pop() }`"
           :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
           <div class="row align-items-center m-0 w-100">
