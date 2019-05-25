@@ -159,6 +159,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './detail-actions.ts';
+  import Component from './container-actions.ts';
   export default Component;
 </script>

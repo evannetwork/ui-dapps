@@ -26,20 +26,32 @@
 */
 
 <template>
-  <evan-breadcrumbs
-    :attachToDAppWrapper="true"
-    :i18nScope="'_digitaltwins.breadcrumbs'"
-    :ignored="[
-      'dc-detail',
-      'dt-detail',
-      'data-set',
-      `datacontainer.digitaltwin.${ dapp.domainName }`,
-      `digitaltwin.${ dapp.domainName }`,
-    ]">
-  </evan-breadcrumbs>
+  <div>
+    <evan-nav-tabs class="flex-shrink-0"
+      :tabs="tabs">
+    </evan-nav-tabs>
+    <div class="container-wide overflow-y-auto">
+      <div class="d-flex mb-5 align-items-center">
+        <div class="flex-truncate" style="max-width: 50%;">
+          <h3 class="font-weight-bold mb-0">
+            {{ entryName }}
+          </h3>
+        </div>
+        <span class="mx-auto"></span>
+        <set-actions
+          :containerAddress="containerAddress"
+          :entryName="entryName">
+        </set-actions>
+      </div>
+
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-  import TwinsRootComponent from './breadcrumbs.ts';
-  export default TwinsRootComponent;
+  import Component from './set.ts';
+  export default Component;
 </script>

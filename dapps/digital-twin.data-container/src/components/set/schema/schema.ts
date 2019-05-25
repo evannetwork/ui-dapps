@@ -34,37 +34,46 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
+import * as entryUtils from '../../../entries';
 
 @Component({ })
-export default class DataContainerActionsComponent extends mixins(EvanComponent) {
+export default class SetSchemaComponent extends mixins(EvanComponent) {
   /**
    * Current opened container address (save it from routes to this variable, so all beforeDestroy
    * listeners for template-handlers will work correctly and do not uses a new address that is
    * laoding)
    */
-  @Prop() containerAddress = '';
-  
-  /**
-   * UI Digital Twin instances, where the actions should be triggered.
-   */
-  @Prop() dataContainer;
+  containerAddress = '';
 
   /**
-   * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
+   * selected entry name
    */
-  @Prop() dcActions;
+   entryName = '';
 
   /**
-   * Enable data set actions (add set)
+   * Show loading symbol
    */
-  @Prop() setActions;
+  loading = true;
 
   /**
-   * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
+   * Data container could not be loaded, e.g. no permissions.
    */
-  @Prop({
-    default: 'buttons'
-  }) displayMode;
+  error = false;
+
+  /**
+   * Currents container template definition.
+   */
+  templateEntry: any = null;
+
+  /**
+   * Active data container entry
+   */
+  selectedEntry = 'string';
+
+  /**
+   * Data container permission specifications
+   */
+  permissions: any = null;
 
   /**
    * ref handlers
@@ -72,44 +81,35 @@ export default class DataContainerActionsComponent extends mixins(EvanComponent)
   reactiveRefs: any = { };
 
   /**
-   * Used per default for normal buttons (will be overwritten within dropdown)
-   */
-  buttonClasses = {
-    primary: 'btn btn-primary btn-circle d-flex align-items-center justify-content-center mr-3',
-    secondary: 'btn btn-circle btn-outline-secondary mr-3',
-    tertiar: 'btn btn-circle btn-sm btn-tertiary mr-3',
-  }
-
-  buttonTextComp = 'evan-tooltip';
-
-  /**
    * Set button classes
    */
-  created() {
-    if (this.displayMode !== 'buttons') {
-      Object.keys(this.buttonClasses).forEach(
-        type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
-      );
+  async created() {
+    this.containerAddress = this.$route.params.containerAddress;
+    this.entryName = this.$route.params.entryName;
+    const runtime = utils.getRuntime(this);
 
-      this.buttonTextComp = 'span';
+    try {
+      // get the container instance and load the template including all values
+      const container = utils.getContainer(<any>runtime, this.containerAddress);
+      const [ plugin, entryValue, shareConfig ] = await Promise.all([
+        container.toPlugin(false),
+        container.getEntry(this.entryName),
+        container.getContainerShareConfigForAccount(runtime.activeAccount),
+      ]);
+
+      // map loaded values to scope
+      this.templateEntry = plugin.template.properties[this.entryName];
+      this.templateEntry.value = entryValue;
+      this.permissions = shareConfig;
+      // ensure edit values for schema component
+      entryUtils.ensureValues(this.templateEntry);
+    } catch (ex) {
+      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
+      this.error = true;
+
+      return;
     }
-  }
 
-  /**
-   * Show the actions dropdown.
-   */
-  showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
-
-    $event && $event.preventDefault();
-  }
-
-  /**
-   * Close the actions dropdown.
-   */
-  closeDropdown() {
-    if ((<any>this).$refs.dtContextMenu) {
-      (<any>this).$refs.dtContextMenu.hide();
-    }
+    this.loading = false;
   }
 }

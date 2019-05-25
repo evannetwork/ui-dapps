@@ -1,3 +1,4 @@
+
 /*
   Copyright (C) 2018-present evan GmbH.
 
@@ -26,20 +27,13 @@
 */
 
 <template>
-  <evan-breadcrumbs
-    :attachToDAppWrapper="true"
-    :i18nScope="'_digitaltwins.breadcrumbs'"
-    :ignored="[
-      'dc-detail',
-      'dt-detail',
-      'data-set',
-      `datacontainer.digitaltwin.${ dapp.domainName }`,
-      `digitaltwin.${ dapp.domainName }`,
-    ]">
-  </evan-breadcrumbs>
+  <div>
+    <dc-detail v-if="isContainer"></dc-detail>
+    <dc-plugin v-else></dc-plugin>
+  </div>
 </template>
 
 <script lang="ts">
-  import TwinsRootComponent from './breadcrumbs.ts';
-  export default TwinsRootComponent;
+  import Component from './container-plugin-switch.ts';
+  export default Component;
 </script>

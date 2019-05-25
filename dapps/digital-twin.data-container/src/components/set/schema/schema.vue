@@ -26,20 +26,46 @@
 */
 
 <template>
-  <evan-breadcrumbs
-    :attachToDAppWrapper="true"
-    :i18nScope="'_digitaltwins.breadcrumbs'"
-    :ignored="[
-      'dc-detail',
-      'dt-detail',
-      'data-set',
-      `datacontainer.digitaltwin.${ dapp.domainName }`,
-      `digitaltwin.${ dapp.domainName }`,
-    ]">
-  </evan-breadcrumbs>
+  <div>
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="white-box border-smooth rounded"
+      v-else-if="error">
+      <div class="header">
+        <h3 class="m-0 font-weight-semibold">
+          {{ '_datacontainer.no-permissions.title' | translate }}
+        </h3>
+      </div>
+      <div class="content"
+        v-html="$t('_datacontainer.no-permissions.desc')">
+      </div>
+    </div>
+    <template v-else>
+      <div class="white-box border-smooth rounded">
+        <div class="header">
+          <h3 class="font-weight-semibold m-0">
+            <template>
+              {{ `_digitaltwins.breadcrumbs.entry-schema` | translate }}
+            </template>
+          </h3>
+          <span class="mx-auto"></span>
+          <div>
+            
+          </div>
+        </div>
+
+        <dc-entry
+          :address="containerAddress"
+          :entry="templateEntry"
+          :entryName="entryName"
+          :permissions="permissions"
+          @init="$set(reactiveRefs, 'entryComp', $event)">
+        </dc-entry>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
-  import TwinsRootComponent from './breadcrumbs.ts';
-  export default TwinsRootComponent;
+  import Component from './schema.ts';
+  export default Component;
 </script>

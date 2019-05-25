@@ -35,8 +35,8 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
-import * as dispatchers from '../../dispatchers/registry';
-import ContainerCache from '../../container-cache';
+import * as dispatchers from '../../../dispatchers/registry';
+import ContainerCache from '../../../container-cache';
 
 
 interface DbcpFormInterface extends EvanForm {

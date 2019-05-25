@@ -34,8 +34,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 
-import * as dispatchers from '../../dispatchers/registry';
-import ContainerCache from '../../container-cache';
+import * as dispatchers from '../../../dispatchers/registry';
+import ContainerCache from '../../../container-cache';
 
 interface DbcpFormInterface extends EvanForm {
   description: EvanFormControl;
@@ -44,7 +44,7 @@ interface DbcpFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class DataContainerActionsComponent extends mixins(EvanComponent) {
+export default class ContainerActionsComponent extends mixins(EvanComponent) {
   /**
    * Current opened container address (save it from routes to this variable, so all beforeDestroy
    * listeners for template-handlers will work correctly and do not uses a new address that is
@@ -134,13 +134,13 @@ export default class DataContainerActionsComponent extends mixins(EvanComponent)
     this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
       name: {
         value: this.dbcp.name,
-        validate: function(vueInstance: DataContainerActionsComponent, form: DbcpFormInterface) {
+        validate: function(vueInstance: ContainerActionsComponent, form: DbcpFormInterface) {
           return this.value.trim().length !== 0;
         }
       },
       description: {
         value: this.dbcp.description,
-        validate: function(vueInstance: DataContainerActionsComponent, form: DbcpFormInterface) {
+        validate: function(vueInstance: ContainerActionsComponent, form: DbcpFormInterface) {
           return true;
         }
       },

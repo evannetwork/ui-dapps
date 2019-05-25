@@ -36,80 +36,53 @@ import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
 
 @Component({ })
-export default class DataContainerActionsComponent extends mixins(EvanComponent) {
+export default class DataSetsComponent extends mixins(EvanComponent) {
   /**
    * Current opened container address (save it from routes to this variable, so all beforeDestroy
    * listeners for template-handlers will work correctly and do not uses a new address that is
    * laoding)
    */
-  @Prop() containerAddress = '';
-  
-  /**
-   * UI Digital Twin instances, where the actions should be triggered.
-   */
-  @Prop() dataContainer;
+  containerAddress = '';
 
   /**
-   * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
+   * Show loading symbol
    */
-  @Prop() dcActions;
+  loading = true;
 
   /**
-   * Enable data set actions (add set)
+   * Data container could not be loaded, e.g. no permissions.
    */
-  @Prop() setActions;
+  error = false;
 
   /**
-   * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
+   * Currents container template definition.
    */
-  @Prop({
-    default: 'buttons'
-  }) displayMode;
+  template: bcc.ContainerTemplate = null;
 
   /**
-   * ref handlers
+   * List of Container properties.
    */
-  reactiveRefs: any = { };
-
-  /**
-   * Used per default for normal buttons (will be overwritten within dropdown)
-   */
-  buttonClasses = {
-    primary: 'btn btn-primary btn-circle d-flex align-items-center justify-content-center mr-3',
-    secondary: 'btn btn-circle btn-outline-secondary mr-3',
-    tertiar: 'btn btn-circle btn-sm btn-tertiary mr-3',
-  }
-
-  buttonTextComp = 'evan-tooltip';
+  properties = [ ];
 
   /**
    * Set button classes
    */
-  created() {
-    if (this.displayMode !== 'buttons') {
-      Object.keys(this.buttonClasses).forEach(
-        type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
-      );
+  async created() {
+    this.containerAddress = this.$route.params.containerAddress;
+    const runtime = utils.getRuntime(this);
 
-      this.buttonTextComp = 'span';
+    try {
+      // get the container instance and load the template including all values
+      const container = utils.getContainer(<any>runtime, this.containerAddress);
+      this.template = (await container.toPlugin(false)).template;
+      this.properties = Object.keys(this.template.properties);
+    } catch (ex) {
+      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
+      this.error = true;
+
+      return;
     }
-  }
 
-  /**
-   * Show the actions dropdown.
-   */
-  showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
-
-    $event && $event.preventDefault();
-  }
-
-  /**
-   * Close the actions dropdown.
-   */
-  closeDropdown() {
-    if ((<any>this).$refs.dtContextMenu) {
-      (<any>this).$refs.dtContextMenu.hide();
-    }
+    this.loading = false;
   }
 }

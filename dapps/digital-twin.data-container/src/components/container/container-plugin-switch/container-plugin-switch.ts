@@ -25,21 +25,27 @@
   https://evan.network/license/
 */
 
-<template>
-  <evan-breadcrumbs
-    :attachToDAppWrapper="true"
-    :i18nScope="'_digitaltwins.breadcrumbs'"
-    :ignored="[
-      'dc-detail',
-      'dt-detail',
-      'data-set',
-      `datacontainer.digitaltwin.${ dapp.domainName }`,
-      `digitaltwin.${ dapp.domainName }`,
-    ]">
-  </evan-breadcrumbs>
-</template>
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import TwinsRootComponent from './breadcrumbs.ts';
-  export default TwinsRootComponent;
-</script>
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+
+
+@Component({ })
+export default class DataSetComponent extends mixins(EvanComponent) {
+  /**
+   * Starts the container address with 0x it's a container, else a plugin
+   */
+  isContainer = true;
+
+  /**
+   * Set button classes
+   */
+  created() {
+    this.isContainer = this.$route.params.containerAddress.startsWith('0x');
+  }
+}

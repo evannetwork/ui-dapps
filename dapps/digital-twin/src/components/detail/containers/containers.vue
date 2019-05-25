@@ -59,7 +59,7 @@
                 v-if="container.imgSquare"
                 :src="container.imgSquare">
               <i
-                class="mdi mdi-buffer"
+                class="mdi mdi-note-multiple-outline"
                 style="font-size:50px;">
               </i>
             </div>

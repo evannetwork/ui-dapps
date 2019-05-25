@@ -26,48 +26,8 @@
 */
 
 <template>
-  <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
-  <div
-    :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
-    <!-- show dropdown button  -->
-    <button class="btn"
-      v-if="displayMode !== 'buttons' && displayMode !== 'dropdownHidden'"
-      :class="{
-        'btn btn-circle btn-sm btn-tertiary': displayMode === 'dropdownButton'
-      }"
-      id="datacontainer-context-menu-open"
-      @click="$refs.dtContextMenu.show();">
-      <i class="mdi mdi-dots-vertical"></i>
-    </button>
-
-    <!-- show dropdown or only dropdown content -->
-    <div class="position-relative">
-      <evan-dropdown
-        id="datacontainer-context-menu"
-        ref="dtContextMenu"
-        :alignment="'right'"
-        :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
-        :width="'300px'"
-        :renderOnlyContent="displayMode === 'buttons'">
-        <template v-slot:content>
-          <template v-if="dcActions">
-
-          </template>
-          <template v-if="setActions">
-            <a
-              id="dc-set-add"
-              :class="buttonClasses.primary"
-              :href=""
-              @click="closeDropdown();">
-              <i class="mdi mdi-plus"></i>
-              <component :is="buttonTextComp" :placement="'bottom'">
-                {{ `_digitaltwins.containers.create` | translate }}
-              </component>
-            </a>
-          </template>
-        </template>
-      </evan-dropdown>
-    </div>
+  <div>
+    <evan-loading v-if="loading"></evan-loading>
     <!-------------------------- actions section -------------------------->
     <evan-modal
       id="container-share-modal"
@@ -198,6 +158,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './actions.ts';
+  import Component from './permissions.ts';
   export default Component;
 </script>

@@ -72,11 +72,12 @@
       </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
         v-for="(entry, index) in Object.keys(dbcp.dataSchema)"
+        v-if="entry !== 'type'"
         @contextmenu="">
         <a
           class="d-flex align-items-center dark-link"
-          :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/${ entry }`) !== -1 }"
-          :href="`${ dcUrl }/${ entry }`">
+          :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
+          :href="`${ dcUrl }/data-set/${ entry }`">
           <i
             class="mdi mdi-cube-outline text-muted mr-2"
             style="font-size: 17px">

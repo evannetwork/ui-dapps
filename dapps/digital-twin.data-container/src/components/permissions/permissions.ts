@@ -44,13 +44,18 @@ interface ShareFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class DetailComponent extends mixins(EvanComponent) {
+export default class PermissionsComponent extends mixins(EvanComponent) {
   /**
    * Current opened container address (save it from routes to this variable, so all beforeDestroy
    * listeners for template-handlers will work correctly and do not uses a new address that is
    * laoding)
    */
-  containerAddress = '';
+  @Prop() containerAddress;
+
+  /**
+   * Is container opened in context to the digital twin
+   */
+  @Prop() digitalTwinAddress;
 
   /**
    * Show loading symbol
@@ -63,11 +68,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
   error = false;
 
   /**
-   * digitalTwin address, where the container should be created for
-   */
-  digitalTwinAddress = '';
-
-  /**
    * formular specific variables
    */
   shareForm: ShareFormInterface = null;
@@ -76,7 +76,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Watch for updates and disable current save button
    */
   sharingWatcher: Function = null;
-  savingWatcher: Function = null;
 
   /**
    * Share object
@@ -122,23 +121,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     await this.initialize();
 
-    // watch for saving updates
-    this.savingWatcher = dispatchers.updateDispatcher.watch(async () => {
-      const instances = await dispatchers.updateDispatcher.getInstances(runtime);
-      const beforeSaving = this.$store.state.saving;
-
-      const saving = instances
-        .filter(instance => instance.data.address === this.containerAddress)
-        .length > 0;
-
-      this.$set(this.$store.state, 'saving', saving);
-
-      // reload the data
-      if (!this.$store.state.saving && beforeSaving) {
-        this.initialize();
-      }
-    });
-
     // watch for sharings watcher
     this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
       const instances = await dispatchers.shareDispatcher.getInstances(runtime);
@@ -164,17 +146,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    const splitHash = (<any>this).dapp.baseHash.split('/');
-    const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
-    if (twinDAppIndex !== -1) {
-      this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
-    }
-
     try {
       // get the container instance and load the template including all values
       this.container = utils.getContainer(<any>runtime, this.containerAddress);
       const [ plugin, permissions, isOwner ] = await Promise.all([
-        this.container.toPlugin(true),
+        this.container.toPlugin(false),
         this.container.getContainerShareConfigForAccount(runtime.activeAccount),
         (await this.container.getOwner()) === runtime.activeAccount
       ]);
@@ -192,12 +168,6 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
       return;
     }
-
-    // set custom translation
-    const customTranslation = { };
-    customTranslation[ `_datacontainer.breadcrumbs.${ this.containerAddress }`] =
-      this.description.name;
-    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
@@ -228,7 +198,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
       subject: {
         value: subject,
-        validate: function(vueInstance: DetailComponent, form: ShareFormInterface) {
+        validate: function(vueInstance: PermissionsComponent, form: ShareFormInterface) {
           return this.value.trim().length !== 0;
         }
       },

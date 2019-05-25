@@ -28,10 +28,14 @@
 /* tslint:disable */
 const i18n: any = {
   "breadcrumbs": {
-    "dc-create": "Plugin hinzufügen",
     "containerlink": "Plugin verknüpfen",
     "create-plugin": "Plugin erstellen",
     "datacontainer.digitaltwin": "Plugin",
+    "dc-changes": "Letzte Änderungen",
+    "dc-create": "Plugin hinzufügen",
+    "dc-permissions": "Freigaben",
+    "dc-sets": "Daten-Sets",
+    "dc-technical": "Technische Details",
     "digitaltwin": "Digitaler Zwilling",
     "digitaltwins": "Digitale Zwillinge",
     "dt-changes": "Letzte Änderungen",
@@ -40,6 +44,9 @@ const i18n: any = {
     "dt-map": "An Domainnamen binden",
     "dt-plugins": "Plugin Übersicht",
     "dt-technical": "Technische Details",
+    "entry-changes": "Letzte Änderungen",
+    "entry-permissions": "Freigaben",
+    "entry-schema": "Daten-Schema",
     "my-plugins": "Meine Plugins",
     "my-twins": "Meine Digitalen Zwillinge",
     "open": "Öffnen",
