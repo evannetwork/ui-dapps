@@ -29,7 +29,7 @@
   <div class="evan theme-evan">
     <evan-dapp-wrapper :routes="[ ]">
       <template v-slot:header
-        v-if="$route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1">
+        v-if="$route.path.indexOf(`/digitaltwin.${ dapp.domainName }`) === -1">
         <dt-breadcrumbs></dt-breadcrumbs>
       </template>
       <template v-slot:content>

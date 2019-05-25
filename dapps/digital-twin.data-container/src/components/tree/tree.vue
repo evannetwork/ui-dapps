@@ -65,7 +65,11 @@
 
     <div class="pb-3"
       v-if="onlySets || isOpen">
-      <div class="pl-8 pr-3 pb-1">
+      <div class="pl-8 pr-3 pb-1"
+        :class="{
+          'pl-6': !onlySets,
+          'pl-8': onlySets,
+        }">
         <small class="text-muted text-uppercase font-weight-semibold">
           {{ '_datacontainer.entries' | translate }}
         </small>

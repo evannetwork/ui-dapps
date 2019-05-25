@@ -30,6 +30,7 @@ const i18n: any = {
   "breadcrumbs": {
     "containerlink": "Link Plugin",
     "create-plugin": "Create Plugin",
+    "datacontainer": "Data-Container",
     "datacontainer.digitaltwin": "Plugin",
     "dc-changes": "Last Changes",
     "dc-create": "Add Plugin",

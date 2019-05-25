@@ -66,7 +66,7 @@
             v-for="(pluginKey, index) in Object.keys(plugins)">
             <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
               :id="`evan-dt-plugin-${ pluginKey.replace('.', '') }`"
-              :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/plugin/${ pluginKey }`">
+              :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ pluginKey }`">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
                   <img class="img-fluid p-3"

@@ -50,8 +50,43 @@
         :width="'300px'"
         :renderOnlyContent="displayMode === 'buttons'">
         <template v-slot:content>
-          <template v-if="dcActions">
-
+          <template v-if="pluginActions">
+            <a :class="buttonClasses.tertiar"
+              id="plugin-dbcp-edit"
+              @click="$refs.dbcpModal.show(); closeDropdown();">
+              <i class="mdi mdi-pencil" style="width: 16px;"></i>
+              <component :is="buttonTextComp" :placement="'bottom'">
+                {{ `_datacontainer.plugin.edit-dbcp` | translate }}
+              </component>
+            </a>
+            <a :class="buttonClasses.tertiar"
+              id="plugin-share"
+              @click="$refs.shareModal.show(); closeDropdown();">
+              <i class="mdi mdi-share-variant" style="width: 16px;"></i>
+              <component :is="buttonTextComp" :placement="'bottom'">
+                {{ `_datacontainer.context-menu.share` | translate }}
+              </component>
+            </a>
+            <a :class="buttonClasses.tertiar"
+              id="plugin-container-create"
+              :href="`${ dapp.fullUrl }/create/${ pluginName }`"
+              @click="$refs.containerContextMenu.hide($event);">
+              <i class="mdi mdi-content-copy" style="width: 16px;"></i>
+              <component :is="buttonTextComp" :placement="'bottom'">
+                {{ `_datacontainer.context-menu.create-container` | translate }}
+              </component>
+            </a>
+            <a :class="buttonClasses.tertiar"
+              id="plugin-clone"
+              :href="`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ pluginName }`"
+              @click="
+                $refs.containerContextMenu.hide($event);
+              ">
+              <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
+              <component :is="buttonTextComp" :placement="'bottom'">
+                {{ `_datacontainer.context-menu.clone` | translate }}
+              </component>
+            </a>
           </template>
           <template v-if="setActions">
           
@@ -60,7 +95,131 @@
       </evan-dropdown>
     </div>
     <!-------------------------- actions section -------------------------->
+    <evan-modal
+      id="plugin-dbcp-modal"
+      ref="dbcpModal"
+      @canceled="cancelDbcpModal">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_datacontainer.edit-dbcp' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <form v-on:submit.prevent="savePlugin(true)">
+          <div class="form-group">
+            <label for="name">
+              {{ `_datacontainer.createForm.name.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="name" ref="name"
+              :placeholder="`_datacontainer.createForm.name.desc` | translate"
+              v-model="dbcpForm.name.value"
+              :class="{ 'is-invalid' : dbcpForm.name.error }"
+              @blur="dbcpForm.name.setDirty()">
+            <div class="invalid-feedback">
+              {{ `_datacontainer.createForm.name.error` | translate }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">
+              {{ `_datacontainer.createForm.description.title` | translate }}
+            </label>
+            <textarea class="form-control" rows="7"
+              id="description" ref="description"
+              :placeholder="`_datacontainer.createForm.description.desc` | translate"
+              v-model="dbcpForm.description.value"
+              :class="{ 'is-invalid' : dbcpForm.description.error }"
+              @blur="dbcpForm.description.setDirty()">
+            </textarea>
+          </div>
+        </form>
+      </template>
+      <template v-slot:footer>
+        <button type="submit"
+          id="plugin-dbcp-save"
+          @click="savePlugin(true)"
+          class="btn btn-rounded btn-primary"
+          :disabled="!dbcpForm.isValid">
+          {{ `_datacontainer.createForm.save` | translate }}
+          <i class="mdi mdi-arrow-right label"></i>
+        </button>
+      </template>
+    </evan-modal>
+    <evan-modal id="plugin-share-modal" ref="shareModal"
+      v-if="contacts.length !== 0">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_datacontainer.share.title` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p class="text-left m-0"
+          v-html="$t(`_datacontainer.share.desc`, modalParams)">
+        </p>
 
+        <div class="form-group mt-3">
+          <label for="name">
+            {{ `_datacontainer.share.subject.title` | translate }}
+          </label>
+          <input class="form-control" required
+            id="subject" ref="subject"
+            :placeholder="`_datacontainer.share.subject.desc` | translate"
+            v-model="shareForm.subject.value"
+            :class="{ 'is-invalid' : shareForm.subject.error }"
+            @blur="shareForm.subject.setDirty()">
+          <div class="invalid-feedback">
+            {{ `_datacontainer.share.subject.error` | translate }}
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="shareUser">
+            {{ `_datacontainer.share.user.title` | translate }}
+          </label>
+          <select class="form-control custom-select"
+            id="shareUser" ref="shareUser"
+            :placeholder="`_datacontainer.share.user.desc` | translate"
+            v-model="shareAccount">
+            <option
+              v-for="(contact, index) in contacts"
+              :value="contact.address">
+              {{ contact.alias }} ({{ contact.address || contact.email }})
+            </option>
+          </select>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <button
+          id="plugin-share"
+          type="button" class="btn btn-primary btn-rounded font-weight-normal"
+          :disabled="!shareForm.isValid"
+          @click="shareDt()">
+          {{ `_datacontainer.share.action` | translate }}
+          <i class="mdi mdi-arrow-right label"></i>
+        </button>
+      </template>
+    </evan-modal>
+    <evan-modal id="plugin-share-modal" ref="shareModal" v-else>
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_datacontainer.share.no-contacts.title` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p class="text-left m-0"
+          v-html="$t(`_datacontainer.share.no-contacts.desc`, modalParams)">
+        </p>
+      </template>
+      <template v-slot:footer>
+        <button
+          id="plugin-go-addressbook"
+          type="button" class="btn btn-primary btn-rounded font-weight-normal"
+          @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }.${ dapp.domainName }`)">
+          {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
+          <i class="mdi mdi-arrow-right label"></i>
+        </button>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

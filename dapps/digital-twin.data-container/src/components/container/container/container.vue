@@ -28,45 +28,84 @@
 <template>
   <div>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="white-box border-smooth rounded"
-      v-else-if="error">
-      <div class="header">
-        <h3 class="m-0 font-weight-semibold">
-          {{ '_datacontainer.no-permissions.title' | translate }}
-        </h3>
-      </div>
-      <div class="content"
-        v-html="$t('_datacontainer.no-permissions.desc')">
-      </div>
-    </div>
     <template v-else>
-      <evan-nav-tabs class="flex-shrink-0"
-        :tabs="tabs">
-      </evan-nav-tabs>
-      <div class="container-wide overflow-y-auto">
-        <div class="d-flex mb-5 align-items-center">
-          <div class="flex-truncate" style="max-width: 50%;">
-            <h3 class="font-weight-bold mb-0">
-              {{ description.name }}
-            </h3>
-            <p class="text-muted font-weight-semibold mb-0">
-              {{ description.description }}
-            </p>
-          </div>
-          <span class="mx-auto"></span>
-          <dc-actions
-            :containerAddress="containerAddress"
-            :digitalTwinAddress="digitalTwinAddress"
-            :dbcp="description"
-            :dcActions="true"
-            :setActions="false">
-          </dc-actions>
-        </div>
+      <evan-dapp-wrapper-level-2 ref="level2Wrapper"
+        v-if="!digitalTwinAddress">
+        <template v-slot:content>
+          <div style="width: 360px">
+            <dt-tree-root
+              :url="`${ twinUrl }/dt-detail`"
+              :topic="`_digitaltwins.breadcrumbs.datacontainer`"
+              :title="description.name"
+              :icon="`mdi mdi-note-multiple-outline`"
+              @rightClick="$refs.dcActions.showDropdown($event)">
+              <template v-slot:context-menu>
+                <i class="mdi mdi-dots-vertical clickable"
+                  @click="$refs.dcActions.showDropdown($event)">
+                </i>
+                <dc-actions
+                  ref="dcActions"
+                  :containerAddress="containerAddress"
+                  :digitalTwinAddress="digitalTwinAddress"
+                  :displayMode="'dropdownHidden'"
+                  :dbcp="description"
+                  :dcActions="true"
+                  :setActions="false">
+                </dc-actions>
+              </template>
+            </dt-tree-root>
 
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
+            <div class="border-bottom border-sm pt-3">
+              <dc-tree
+                :address="containerAddress"
+                :baseUrl="twinUrl"
+                :dbcp="description"
+                :onlySets="true">
+              </dc-tree>
+            </div>
+          </div>
+        </template>
+      </evan-dapp-wrapper-level-2>
+      <div class="white-box border-smooth rounded"
+        v-else-if="error">
+        <div class="header">
+          <h3 class="m-0 font-weight-semibold">
+            {{ '_datacontainer.no-permissions.title' | translate }}
+          </h3>
+        </div>
+        <div class="content"
+          v-html="$t('_datacontainer.no-permissions.desc')">
+        </div>
       </div>
+      <template v-else>
+        <evan-nav-tabs class="flex-shrink-0"
+          :tabs="tabs">
+        </evan-nav-tabs>
+        <div class="container-wide overflow-y-auto">
+          <div class="d-flex mb-5 align-items-center">
+            <div class="flex-truncate" style="max-width: 50%;">
+              <h3 class="font-weight-bold mb-0">
+                {{ description.name }}
+              </h3>
+              <p class="text-muted font-weight-semibold mb-0">
+                {{ description.description }}
+              </p>
+            </div>
+            <span class="mx-auto"></span>
+            <dc-actions
+              :containerAddress="containerAddress"
+              :digitalTwinAddress="digitalTwinAddress"
+              :dbcp="description"
+              :dcActions="true"
+              :setActions="false">
+            </dc-actions>
+          </div>
+
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </div>
+      </template>
     </template>
   </div>
 </template>

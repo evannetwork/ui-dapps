@@ -72,9 +72,20 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
 
     try {
-      // get the container instance and load the template including all values
-      const container = utils.getContainer(<any>runtime, this.containerAddress);
-      this.template = (await container.toPlugin(false)).template;
+      let plugin;
+
+      // if it's a contract, load the contract
+      if (this.containerAddress.startsWith('0x')) {
+        // get the container instance and load the template including all values
+        const container = utils.getContainer(<any>runtime, this.containerAddress);
+        plugin = await container.toPlugin(false);
+      // else try to laod a plugin from profile
+      } else {
+        plugin = await bcc.Container.getContainerPlugin(runtime.profile,
+          this.containerAddress);
+      }
+
+      this.template = plugin.template;
       this.properties = Object.keys(this.template.properties);
     } catch (ex) {
       runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
