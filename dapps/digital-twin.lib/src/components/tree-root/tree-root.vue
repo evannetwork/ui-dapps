@@ -38,7 +38,7 @@
     </div>
 
     <div class="d-flex align-items-center px-3 py-4"
-      @contextmenu="$emit('rightClick')">
+      @contextmenu="$emit('rightClick'); $event.preventDefault()">
       <a
         class="d-flex align-items-center dark-link"
         :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(url) !== -1 }"

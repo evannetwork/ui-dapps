@@ -54,15 +54,12 @@
                     :icon="`mdi mdi-fingerprint`"
                     @rightClick="$refs.dtActions.showDropdown($event)">
                     <template v-slot:context-menu>
-                      <i class="mdi mdi-dots-vertical clickable"
-                        @click="$refs.dtActions.showDropdown($event)">
-                      </i>
                       <dt-actions
                         ref="dtActions"
                         :uiDT="$store.state.uiDT"
                         :dtActions="true"
                         :containerActions="true"
-                        :displayMode="'dropdownHidden'">
+                        :displayMode="'dropdownIcon'">
                       </dt-actions>
                     </template>
                   </dt-tree-root>
@@ -80,6 +77,8 @@
                       :baseUrl="twinUrl"
                       :creating="container.creating"
                       :dbcp="container.description"
+                      :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
+                      :digitalTwinAddress="$store.state.uiDT.address"
                       :loading="container.loading">
                     </dc-tree>
                   </div>

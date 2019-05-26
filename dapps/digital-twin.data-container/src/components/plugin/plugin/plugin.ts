@@ -80,8 +80,6 @@ export default class PluginComponent extends mixins(EvanComponent) {
     const plugin = await bcc.Container.getContainerPlugin(runtime.profile, this.pluginName);
     this.description = plugin.description;
 
-    console.log(plugin)
-
     this.loading = false;
   }
 }

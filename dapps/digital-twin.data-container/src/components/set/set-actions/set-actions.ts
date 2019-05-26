@@ -45,11 +45,6 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   @Prop() containerAddress = '';
 
   /**
-   * UI Digital Twin instances, where the actions should be triggered.
-   */
-  @Prop() dataContainer;
-
-  /**
    * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
    */
   @Prop() dcActions;

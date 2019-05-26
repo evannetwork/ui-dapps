@@ -33,7 +33,7 @@
     >
     <div class="d-flex align-items-center pl-6 pr-3 py-3"
       v-if="!onlySets"
-      @contextmenu="">
+      @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()">
       <a
         class="d-flex align-items-center dark-link"
         :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(dcUrl) !== -1 }"
@@ -47,6 +47,15 @@
       </a>
       <span class="mx-auto"></span>
       <div class="position-relative d-flex align-items-center">
+        <dc-actions
+          ref="dcActions"
+          :containerAddress="address"
+          :digitalTwinAddress="digitalTwinAddress"
+          :displayMode="'dropdownIcon'"
+          :dbcp="dbcp"
+          :dcActions="true"
+          :setActions="false">
+        </dc-actions>
         <button class="btn mini border btn-circle border-secondary"
           @click="isOpen = !isOpen"
           v-if="!creating">
@@ -77,7 +86,7 @@
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
         v-for="(entry, index) in Object.keys(dbcp.dataSchema)"
         v-if="entry !== 'type'"
-        @contextmenu="">
+        @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()">
         <a
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
@@ -90,7 +99,10 @@
         </a>
         <span class="mx-auto"></span>
         <div class="position-relative d-flex align-items-center">
-          
+          <dc-set-actions
+            ref="dcSetActions"
+            :displayMode="'dropdownIcon'">
+          </dc-set-actions>
         </div>
       </div>
     </div>

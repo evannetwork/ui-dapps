@@ -34,6 +34,7 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as dataContainerApi from '@evan.network/datacontainer.digitaltwin';
 import { utils } from '@evan.network/digitaltwin.lib';
 
 @Component({ })
@@ -90,8 +91,8 @@ export default class PluginsComponent extends mixins(EvanComponent) {
      * Check current dispatcher instances and reload plugins if the save process has finished
      */
     const checkPlugins = async () => {
-      const saving = await utils.pluginDispatcher.getInstances(runtime);
-      const sharing = await utils.pluginShareDispatcher.getInstances(runtime);
+      const saving = await dataContainerApi.pluginDispatcher.getInstances(runtime);
+      const sharing = await dataContainerApi.pluginShareDispatcher.getInstances(runtime);
       const savingCount = saving.length + sharing.length;
 
       // for reload
@@ -102,8 +103,8 @@ export default class PluginsComponent extends mixins(EvanComponent) {
       beforeSaving = savingCount;
     };
 
-    this.saveWatcher = utils.pluginDispatcher.watch(() => checkPlugins());
-    this.shareWatcher = utils.pluginDispatcher.watch(() => checkPlugins());
+    this.saveWatcher = dataContainerApi.pluginDispatcher.watch(() => checkPlugins());
+    this.shareWatcher = dataContainerApi.pluginShareDispatcher.watch(() => checkPlugins());
   }
 
   /**

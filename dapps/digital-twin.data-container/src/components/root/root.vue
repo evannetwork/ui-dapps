@@ -27,16 +27,70 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dapp-wrapper :routes="[ ]">
+    <evan-dapp-wrapper :routes="[ ]"
+      v-on:loggedin="initialize()">
       <template v-slot:header
-        v-if="$route.path.indexOf(`/digitaltwin.${ dapp.domainName }`) === -1">
+        v-if="
+          $route.path.indexOf(`/digitaltwins.${ dapp.domainName }`) === -1 &&
+          $route.path.indexOf(`/digitaltwin.${ dapp.domainName }`) === -1
+        ">
         <dt-breadcrumbs></dt-breadcrumbs>
       </template>
       <template v-slot:content>
-        <transition name="fade" mode="out-in"
-          v-if="!loading">
-          <router-view></router-view>
-        </transition>
+        <evan-loading v-if="loading"></evan-loading>
+        <template v-else>
+          <evan-dapp-wrapper-level-2 ref="level2Wrapper"
+            v-if="!digitalTwinAddress">
+            <template v-slot:content>
+              <div style="width: 360px">
+                <dt-tree-root
+                  :url="`${ dapp.fullUrl }/${ containerAddress }`"
+                  :topic="isContainer ?
+                    `_digitaltwins.breadcrumbs.datacontainer` :
+                    `_digitaltwins.breadcrumbs.plugin`"
+                  :title="description.name"
+                  :icon="isContainer ?
+                    `mdi mdi-note-multiple-outline`:
+                    `mdi mdi-note-multiple-outline`
+                  "
+                  @rightClick="$refs.contextMenu.showDropdown($event)">
+                  <template v-slot:context-menu>
+                    <dc-actions
+                      ref="contextMenu"
+                      v-if="isContainer"
+                      :containerAddress="containerAddress"
+                      :digitalTwinAddress="digitalTwinAddress"
+                      :displayMode="'dropdownIcon'"
+                      :dbcp="description"
+                      :dcActions="true"
+                      :setActions="false">
+                    </dc-actions>
+                    <dc-plugin-actions
+                      ref="contextMenu"
+                      v-else
+                      :pluginName="containerAddress"
+                      :pluginActions="true"
+                      :setActions="false"
+                      :displayMode="'dropdownIcon'">
+                    </dc-plugin-actions>
+                  </template>
+                </dt-tree-root>
+
+                <div class="border-bottom border-sm pt-3">
+                  <dc-tree
+                    :address="containerAddress"
+                    :dcUrl="`${ dapp.fullUrl }/${ containerAddress }`"
+                    :dbcp="description"
+                    :onlySets="true">
+                  </dc-tree>
+                </div>
+              </div>
+            </template>
+          </evan-dapp-wrapper-level-2>
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </template>
       </template>
     </evan-dapp-wrapper>
   </div>

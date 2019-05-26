@@ -29,42 +29,6 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <evan-dapp-wrapper-level-2 ref="level2Wrapper"
-        v-if="!digitalTwinAddress">
-        <template v-slot:content>
-          <div style="width: 360px">
-            <dt-tree-root
-              :url="`${ twinUrl }/dt-detail`"
-              :topic="`_digitaltwins.breadcrumbs.plugin`"
-              :title="description.name"
-              :icon="`mdi mdi-note-multiple-outline`"
-              @rightClick="$refs.pluginActions.showDropdown($event)">
-              <template v-slot:context-menu>
-                <i class="mdi mdi-dots-vertical clickable"
-                  @click="$refs.pluginActions.showDropdown($event)">
-                </i>
-
-                <dc-plugin-actions
-                  ref="pluginActions"
-                  :pluginName="pluginName"
-                  :pluginActions="true"
-                  :setActions="false"
-                  :displayMode="'dropdownHidden'">
-                </dc-plugin-actions>
-              </template>
-            </dt-tree-root>
-
-            <div class="border-bottom border-sm pt-3">
-              <dc-tree
-                :address="pluginName"
-                :baseUrl="twinUrl"
-                :dbcp="description"
-                :onlySets="true">
-              </dc-tree>
-            </div>
-          </div>
-        </template>
-      </evan-dapp-wrapper-level-2>
       <evan-nav-tabs class="flex-shrink-0"
         :tabs="tabs">
       </evan-nav-tabs>

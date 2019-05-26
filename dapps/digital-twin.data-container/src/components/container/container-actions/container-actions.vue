@@ -31,15 +31,18 @@
     v-if="!loading"
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <!-- show dropdown button  -->
-    <button class="btn"
-      v-if="displayMode !== 'buttons' && displayMode !== 'dropdownHidden'"
-      :class="{
-        'btn btn-circle btn-sm btn-tertiary': displayMode === 'dropdownButton'
-      }"
+    <button class="btn btn-circle btn-sm btn-tertiary"
+      v-if="displayMode === 'dropdownButton'"
       id="datacontainer-context-menu-open"
       @click="$refs.dtContextMenu.show();">
-      <i class="mdi mdi-dots-vertical"></i>
+      <i class="mdi mdi-dots-vertical clickable"></i>
     </button>
+
+    <i class="mdi mdi-dots-vertical clickable"
+      id="datacontainer-context-menu-open"
+      v-if="displayMode === 'dropdownIcon'"
+      @click="$refs.dtContextMenu.show();">
+    </i>
 
     <!-- show dropdown or only dropdown content -->
     <div class="position-relative">

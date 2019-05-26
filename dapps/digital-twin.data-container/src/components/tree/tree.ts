@@ -43,9 +43,14 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   @Prop() address;
 
   /**
-   * Base Url. The component will navigate relative to this url.
+   * optional digital twin address
    */
-  @Prop() baseUrl;
+  @Prop() digitalTwinAddress;
+
+  /**
+   * Full Url to the currently selected twin
+   */
+  @Prop() dcUrl;
 
   /**
    * dbcp.public of the address / plugin
@@ -68,11 +73,6 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   @Prop() creating;
 
   /**
-   * Full Url to the currently selected twin
-   */
-  dcUrl = '';
-
-  /**
    * Show the entries
    */
   isOpen = false;
@@ -81,15 +81,4 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
    * base window url for checking for active urls
    */
   windowLocation = window.location.origin + window.location.pathname;
-
-  /**
-   * Setup nested Routes and correct active url states
-   */
-  created() {
-    this.dcUrl = [
-      this.baseUrl,
-      `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-      this.address,
-    ].join('/');
-  }
 }
