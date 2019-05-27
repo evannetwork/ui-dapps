@@ -60,23 +60,38 @@
               v-if="isOwner"
               id="container-dbcp-edit"
               @click="$refs.dbcpModal.show(); closeDropdown();">
-              <i class="mdi mdi-pencil" style="width: 16px;"></i>
+              <div class="spinner-border spinner-border-sm"
+                v-if="$store.state.saving">
+              </div>
+              <i class="mdi mdi-pencil" style="width: 16px;" v-else></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_datacontainer.edit-dbcp` | translate }}
               </component>
             </button>
-            <a :class="buttonClasses.tertiar"
+            <button :class="buttonClasses.tertiar"
+              id="container-share"
+              @click="reactiveRefs.dcPermissions.openShareDialog()">
+              <div class="spinner-border spinner-border-sm"
+                v-if="$store.state.sharing">
+              </div>
+              <i class="mdi mdi-share-variant" style="width: 16px;"></i>
+              <component :is="buttonTextComp" :placement="'bottom'">
+                {{ `_datacontainer.context-menu.share` | translate }}
+              </component>
+            </button>
+            <button :class="buttonClasses.tertiar"
               id="container-container-link"
-              :href="`/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/containerlink/${ containerAddress }`"
-              @click="closeDropdown();">
+              @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show(); closeDropdown();">
               <i class="mdi mdi-link-variant" style="width: 16px;"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_datacontainer.context-menu.link` | translate }}
               </component>
-            </a>
+            </button>
             <a :class="buttonClasses.tertiar"
               id="container-clone"
-              :href="`create/${ containerAddress }`"
+              :href="digitalTwinAddress ?
+                `${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/${ digitalTwinAddress }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ containerAddress }`:
+                `${ dapp.baseUrl }/${ dapp.rootEns }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ containerAddress }`"
               @click="closeDropdown();">
               <i class="mdi mdi-content-copy" style="width: 16px;"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
@@ -85,7 +100,7 @@
             </a>
             <a :class="buttonClasses.tertiar"
               id="container-plugin-create"
-              :href="`/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ containerAddress }`"
+              :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ containerAddress }`"
               @click="closeDropdown();">
               <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
@@ -110,54 +125,44 @@
     <!-------------------------- actions section -------------------------->
     <evan-modal
       id="container-dbcp-modal"
-      ref="dbcpModal"
-      @canceled="cancelDbcpModal">
+      ref="dbcpModal">
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_datacontainer.edit-dbcp' | translate }}
         </h5>
       </template>
       <template v-slot:body>
-        <form v-on:submit.prevent="saveContainer(true)">
-          <div class="form-group">
-            <label for="name">
-              {{ `_datacontainer.createForm.name.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="name" ref="name"
-              :placeholder="`_datacontainer.createForm.name.desc` | translate"
-              v-model="dbcpForm.name.value"
-              :class="{ 'is-invalid' : dbcpForm.name.error }"
-              @blur="dbcpForm.name.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_datacontainer.createForm.name.error` | translate }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="description">
-              {{ `_datacontainer.createForm.description.title` | translate }}
-            </label>
-            <textarea class="form-control" rows="7"
-              id="description" ref="description"
-              :placeholder="`_datacontainer.createForm.description.desc` | translate"
-              v-model="dbcpForm.description.value"
-              :class="{ 'is-invalid' : dbcpForm.description.error }"
-              @blur="dbcpForm.description.setDirty()">
-            </textarea>
-          </div>
-        </form>
+        <dt-dbcp
+          ref="dbcpComp"
+          :dbcp="dbcp"
+          :disabled="$store.state.saving"
+          @init="$set(reactiveRefs, 'dbcpForm', $event._form)"
+          @submit="saveDbcp()">
+        </dt-dbcp>
       </template>
       <template v-slot:footer>
         <button type="submit"
           id="container-dbcp-save"
-          @click="saveContainer(true)"
           class="btn btn-rounded btn-primary"
-          :disabled="!dbcpForm.isValid">
-          {{ `_datacontainer.createForm.save` | translate }}
-          <i class="mdi mdi-arrow-right label"></i>
+          v-if="reactiveRefs.dbcpForm"
+          :disabled="$store.state.saving || !reactiveRefs.dbcpForm.isValid"
+          @click="saveDbcp()">
+          {{ `_datacontainer.save-dbcp` | translate }}
+          <div class="spinner-border spinner-border-sm ml-3"
+            v-if="$store.state.saving">
+          </div>
+          <i class="mdi mdi-arrow-right label" v-else></i>
         </button>
       </template>
     </evan-modal>
+    <dc-link
+      @init="$set(reactiveRefs, 'dtContainerLink', $event)">
+    </dc-link>
+    <dc-permissions
+      @init="$set(reactiveRefs, 'dcPermissions', $event)"
+      :containerAddress="containerAddress"
+      :digitalTwinAddress="digitalTwinAddress">
+    </dc-permissions>
   </div>
 </template>
 

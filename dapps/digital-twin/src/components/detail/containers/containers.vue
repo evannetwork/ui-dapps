@@ -64,7 +64,7 @@
               </i>
             </div>
             <div class="col-10">
-              <div class="d-flex p-3 flex-truncate">
+              <div class="d-flex p-3 flex-truncate align-items-center">
                 <div>
                   <h4 class="font-weight-semibold mb-0">
                     {{ container.description.name }}

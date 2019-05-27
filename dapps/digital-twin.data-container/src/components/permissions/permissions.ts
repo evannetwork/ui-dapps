@@ -116,8 +116,6 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
    * Load the container data
    */
   async created() {
-    this.containerAddress = this.$route.params.containerAddress;
-
     const runtime = utils.getRuntime(this);
     await this.initialize();
 
@@ -130,6 +128,8 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
 
       this.$set(this.$store.state, 'sharing', sharing);
     });
+
+    this.$emit('init', this);
   }
 
   /**
@@ -190,7 +190,7 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
 
     // setup share form, so the user can insert a custom form
     let subject = [
-      (<any>this).$t('_datacontainer.breadcrumbs.datacontainer.digitaltwin'),
+      (<any>this).$t('_digitaltwins.breadcrumbs.datacontainer.digitaltwin'),
       `: ${ this.description.name }`,
       this.digitalTwinAddress ? ` - ${ this.digitalTwinAddress }` : ''
     ].join('');
@@ -268,9 +268,6 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
       this.share.error = false;
     }
 
-    this.$nextTick(() => {
-      (<any>this).$refs.shareModal.show();
-      (<any>this).$refs.containerContextMenu.hide($event);
-    });
+    this.$nextTick(() => (<any>this).$refs.shareModal.show());
   }
 }

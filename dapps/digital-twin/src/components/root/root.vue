@@ -70,18 +70,16 @@
                     </small>
                   </div>
 
-                  <div class="border-bottom border-sm">
-                    <dc-tree
-                      v-for="(container, index) in $store.state.uiDT.containers"
-                      :address="container.address"
-                      :baseUrl="twinUrl"
-                      :creating="container.creating"
-                      :dbcp="container.description"
-                      :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
-                      :digitalTwinAddress="$store.state.uiDT.address"
-                      :loading="container.loading">
-                    </dc-tree>
-                  </div>
+                  <dc-tree
+                    v-for="(container, index) in $store.state.uiDT.containers"
+                    :address="container.address"
+                    :baseUrl="twinUrl"
+                    :creating="container.creating"
+                    :dbcp="container.description"
+                    :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
+                    :digitalTwinAddress="$store.state.uiDT.address"
+                    :loading="container.loading">
+                  </dc-tree>
                 </template>
               </div>
             </template>

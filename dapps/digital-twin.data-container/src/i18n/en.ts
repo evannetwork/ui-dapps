@@ -180,6 +180,7 @@ const i18n: any = {
         "title": "Unsaved changes"
       }
     },
+    "save-dbcp": "Save",
     "share": {
       "action": "Share",
       "bmail": {

@@ -52,6 +52,7 @@ const i18n: any = {
     "my-twins": "My Digital Twins",
     "open": "Open",
     "plugin": "Plugin",
+    "plugin-create": "Create Plugin",
     "verifications": "Verifications"
   }
 }

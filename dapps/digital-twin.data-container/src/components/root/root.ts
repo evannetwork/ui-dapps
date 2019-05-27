@@ -60,6 +60,11 @@ export default class RootComponent extends mixins(EvanComponent) {
   digitalTwinAddress = '';
 
   /**
+   * dc-create / plugin-create is opened
+   */
+  isCreate = false;
+
+  /**
    * Starts the container address with 0x it's a container, else a plugin
    */
   isContainer = true;
@@ -109,6 +114,8 @@ export default class RootComponent extends mixins(EvanComponent) {
     }
 
     // if no digital twin was opened, check for container or plugin
+    this.isCreate = this.$route.fullPath.indexOf('dc-create') !== -1 ||
+      this.$route.fullPath.indexOf('plugin-create') !== -1;
     this.containerAddress = this.$route.params.containerAddress;
     if (!this.digitalTwinAddress && this.containerAddress) {
       this.isContainer = this.containerAddress.startsWith('0x');

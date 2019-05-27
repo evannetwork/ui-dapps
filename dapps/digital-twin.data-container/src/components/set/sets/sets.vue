@@ -70,7 +70,7 @@
                   </i>
                 </div>
                 <div class="col-10">
-                  <div class="d-flex p-3 flex-truncate">
+                  <div class="d-flex p-3 flex-truncate align-items-center">
                     <div>
                       <h4 class="font-weight-semibold mb-0">
                         {{ property }}
@@ -93,7 +93,7 @@
             </a>
           </div>
         </div>
-        <div class="content" v-else>
+        <div class="content text-center" v-else>
           <h3 class="mt-4 font-weight-semibold">
             {{ '_datacontainer.no-entries.title' | translate }}
           </h3>

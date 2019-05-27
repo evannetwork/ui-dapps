@@ -27,13 +27,24 @@
 
 <template>
   <div
+    class="border-bottom border-sm"
     :style="!onlySets && isOpen ?
       'border-left: 4px solid var(--evan-secondary)' :
       'border-left: 4px solid transparent'"
     >
-    <div class="d-flex align-items-center pl-6 pr-3 py-3"
-      v-if="!onlySets"
-      @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()">
+    <div class="d-flex align-items-center pl-3 pr-3 py-3"
+      v-if="!onlySets">
+      <!-- @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()" -->
+      <button class="btn mini border btn-circle border-secondary mr-3"
+        @click="isOpen = !isOpen"
+        v-if="!creating">
+        <i class="text-secondary"
+          :class="{
+            'mdi mdi-chevron-up': isOpen,
+            'mdi mdi-chevron-down': !isOpen,
+          }">
+        </i>
+      </button>
       <a
         class="d-flex align-items-center dark-link"
         :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(dcUrl) !== -1 }"
@@ -56,16 +67,6 @@
           :dcActions="true"
           :setActions="false">
         </dc-actions>
-        <button class="btn mini border btn-circle border-secondary"
-          @click="isOpen = !isOpen"
-          v-if="!creating">
-          <i class="text-secondary"
-            :class="{
-              'mdi mdi-chevron-up': isOpen,
-              'mdi mdi-chevron-down': !isOpen,
-            }">
-          </i>
-        </button>
         <div class="spinner-border spinner-border-sm text-secondary ml-3"
           v-if="loading">
         </div>
@@ -85,8 +86,8 @@
       </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
         v-for="(entry, index) in Object.keys(dbcp.dataSchema)"
-        v-if="entry !== 'type'"
-        @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()">
+        v-if="entry !== 'type'">
+        <!-- @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()" -->
         <a
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"

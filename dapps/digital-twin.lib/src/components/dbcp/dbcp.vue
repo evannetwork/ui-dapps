@@ -37,6 +37,7 @@
         <input class="form-control" required
           id="name" ref="name"
           :placeholder="`_datacontainer.dbcp.name.desc` | translate"
+          :disabled="disabled"
           v-model="_form.name.value"
           :class="{ 'is-invalid' : _form.name.error }"
           @blur="_form.name.setDirty()">
@@ -51,6 +52,7 @@
         <textarea class="form-control" rows="7"
           id="description" ref="description"
           :placeholder="`_datacontainer.dbcp.description.desc` | translate"
+          :disabled="disabled"
           v-model="_form.description.value"
           :class="{ 'is-invalid' : _form.description.error }"
           @blur="_form.description.setDirty()">

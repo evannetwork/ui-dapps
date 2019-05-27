@@ -54,6 +54,11 @@ export default class DBCPComponent extends mixins(EvanComponent) {
   @Prop() dbcp;
 
   /**
+   * Disable all inputs.
+   */
+  @Prop() disabled;
+
+  /**
    * Currently used dbcp form instance for getting name, imgSquare, description
    */
   _form: DBCPForm = null;

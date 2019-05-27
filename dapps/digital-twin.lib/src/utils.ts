@@ -166,7 +166,7 @@ export async function getMyPlugins(runtime: bcc.Runtime) {
       delete plugins[instance.data.beforeName];
     }
 
-    plugins[instance.data.name] = {
+    plugins[instance.data.description.name] = {
       creating: !!instance.data.beforeName,
       description: instance.data.description,
       loading: true,

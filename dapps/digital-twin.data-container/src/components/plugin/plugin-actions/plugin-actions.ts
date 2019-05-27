@@ -38,12 +38,6 @@ import * as dispatchers from '../../../dispatchers/registry';
 import ContainerCache from '../../../container-cache';
 
 
-interface DbcpFormInterface extends EvanForm {
-  description: EvanFormControl;
-  img: EvanFormControl;
-  name: EvanFormControl;
-}
-
 interface ShareFormInterface extends EvanForm {
   subject: EvanFormControl;
 }
@@ -53,7 +47,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * plugin that should be loaded
    */
-  @Prop() pluginName = '';
+  @Prop() pluginName;
 
   /**
    * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
@@ -107,7 +101,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  dbcpForm: DbcpFormInterface = null;
   shareForm: ShareFormInterface = null;
 
   /**
@@ -148,9 +141,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * Set button classes
    */
-  created() {
-    const runtime = utils.getRuntime(this);
-
+  async created() {
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -159,26 +150,21 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
-    // watch for saving updates
-    this.savingWatcher = dispatchers.pluginDispatcher.watch(async () => {
-      const beforeSaving = this.saving;
+    // watch for updates
+    this.savingWatcher = dispatchers.pluginDispatcher.watch(this.checkSaving);
+    this.sharingWatcher = dispatchers.shareDispatcher.watch(this.checkSharing);
 
-      this.saving = (await dispatchers.pluginDispatcher.getInstances(runtime))
-        .filter(instance => instance.data.name === this.pluginName)
-        .length > 0;
+    await this.checkSaving();
+    await this.checkSharing();
+    await this.initialize();
+  }
 
-      // reload the data
-      if (!this.saving && beforeSaving) {
-        this.initialize();
-      }
-    });
-
-    // watch for sharings watcher
-    this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
-      this.sharing = (await dispatchers.pluginDispatcher.getInstances(runtime))
-        .filter(instance => instance.data.name === this.pluginName)
-        .length > 0;
-    });
+  /**
+   * Clear watchers.
+   */
+  beforeDestroy() {
+    this.savingWatcher();
+    this.sharingWatcher();
   }
 
   /**
@@ -232,28 +218,9 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.shareAccount = this.contacts[0].address;
     }
 
-    // set dbcp form
-    this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
-      name: {
-        value: this.description.name,
-        validate: function(vueInstance: PluginActionsComponent, form: DbcpFormInterface) {
-          return this.value.trim().length !== 0;
-        }
-      },
-      description: {
-        value: this.description.description,
-        validate: function(vueInstance: PluginActionsComponent, form: DbcpFormInterface) {
-          return true;
-        }
-      },
-      img: {
-        value: '',
-      },
-    }));
-
     // setup share form, so the user can insert a custom form
     let subject = [
-      (<any>this).$t('_datacontainer.breadcrumbs.plugin'),
+      (<any>this).$t('_digitaltwins.breadcrumbs.plugin'),
       `: ${ this.description.name }`,
       this.pluginName ? ` - ${ this.pluginName }` : ''
     ].join('');
@@ -275,16 +242,10 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    *
    * @param      {boolean}  onlyDbcp  save only the description
    */
-  async savePlugin(onlyDbcp = false) {
-    if (!this.saving && this.dbcpForm.isValid) {
-      // when the plugin should be saved, check if all changes have been changed
-      if (!onlyDbcp) {
-        const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
-        if (unsavedChanges.length !== 0) {
-          return;
-        }
-      }
+  async saveDbcp() {
+    const dbcpForm = this.reactiveRefs.dbcpForm;
 
+    if (!this.saving && dbcpForm.isValid) {
       const runtime = utils.getRuntime(this);
 
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
@@ -293,12 +254,8 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.saving = true;
 
       // update description backup
-      this.description.name = this.dbcpForm.name.value;
-      this.description.description = this.dbcpForm.description.value;
-
-      // disable value caching within the template handler and delete the latest cache
-      (<any>this.$refs.templateHandler).cacheChanges = false;
-      await (new ContainerCache(runtime.activeAccount)).delete(this.pluginName);
+      this.description.name = dbcpForm.name.value;
+      this.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
       (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
@@ -307,12 +264,11 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.$nextTick(async () => {
         dispatchers.pluginDispatcher.start(runtime, {
           description: {
-            description: this.dbcpForm.description.value,
-            imgSquare: this.dbcpForm.img.value,
-            name: this.dbcpForm.name.value,
+            description: dbcpForm.description.value,
+            imgSquare: dbcpForm.imgSquare.value,
+            name: dbcpForm.name.value,
           },
           beforeName: this.pluginName,
-          template: onlyDbcp ? undefined : this.template,
         });
 
         this.loading = false;
@@ -347,15 +303,15 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
             `/${ (<any>this).dapp.rootEns }`,
             `digitaltwins.${ (<any>this).dapp.domainName }`,
             `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-            `plugin/${ this.dbcpForm.name.value }`,
+            `plugin/${ this.description.name.value }`,
           ].join('/'),
           type: 'contract',
           storeKey: this.pluginName,
           storeValue: {
             description: {
-              description: this.dbcpForm.description.value,
-              img: this.dbcpForm.img.value,
-              name: this.dbcpForm.name.value,
+              description: this.description.description.value,
+              imgSquare: this.description.imgSquare.value,
+              name: this.description.name.value,
             },
             template: this.template,
           },
@@ -374,17 +330,29 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * When the dbcp edit modal was canceled, restore original dbcp value
+   * Check if dbcp gets saved.
    */
-  cancelDbcpModal(eventArgs: any) {
-    this.$nextTick(() => {
-      // don't close on backdrop
-      if (eventArgs.backdrop) {
-        (<any>this).$refs.dbcpModal.show();
-      } else {
-        this.dbcpForm.name.value = this.description.name;
-        this.dbcpForm.description.value = this.description.description;
-      }
-    });
+  async checkSaving() {
+    const runtime = utils.getRuntime(this);
+    const beforeSaving = this.saving;
+
+    this.saving = (await dispatchers.pluginDispatcher.getInstances(runtime))
+      .filter(instance => instance.data.description.name === this.pluginName)
+      .length > 0;
+
+    // reload the data
+    if (!this.saving && beforeSaving) {
+      this.initialize();
+    }
+  }
+
+  /**
+   * Check if the plugin gets shared.
+   */
+  async checkSharing() {
+    const runtime = utils.getRuntime(this);
+    this.sharing = (await dispatchers.pluginDispatcher.getInstances(runtime))
+      .filter(instance => instance.data.description.name === this.pluginName)
+      .length > 0;
   }
 }

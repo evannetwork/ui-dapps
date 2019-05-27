@@ -179,6 +179,7 @@ const i18n: any = {
         "title": "Ungespeicherte Änderungen"
       }
     },
+    "save-dbcp": "Speichern",
     "share": {
       "action": "Teilen",
       "bmail": {

@@ -202,9 +202,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     // enable the edit mode for all properties for a template
     this.plugins.forEach(plugin => {
-      Object.keys(plugin.template.properties).forEach((propertyName: string) => {
-        plugin.template.properties[propertyName].mode = 'edit';
-      });
+      if (plugin.template) {
+        Object.keys(plugin.template.properties).forEach((propertyName: string) => {
+          plugin.template.properties[propertyName].mode = 'edit';
+        });
+      }
     });
 
     this.loading = false;
@@ -360,10 +362,10 @@ export default class CreateComponent extends mixins(EvanComponent) {
         const instances = await dispatchers.pluginDispatcher.getInstances(runtime);
         this.creating = instances.length > 0;
 
-        if ($event && $event.detail.instance.data.name) {
+        if ($event && $event.detail.instance.data.description.name) {
           // force reload
           delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-          toOpen = `plugin/${ $event.detail.instance.data.name }`;
+          toOpen = `${ $event.detail.instance.data.description.name }`;
         }
       } else {
         // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address

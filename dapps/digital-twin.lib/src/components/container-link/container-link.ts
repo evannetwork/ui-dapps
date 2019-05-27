@@ -262,11 +262,15 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
         // if linking was finished, navigate to the container
         if (beforeLink) {
           const dapp = (<any>this).dapp;
+
           (<any>this).evanNavigate([
+              `digitaltwins.${ dapp.domainName }`,
+              `digitaltwin.${ dapp.domainName }`,
               this.validDTAddress,
               `datacontainer.digitaltwin.${ dapp.domainName }`,
               this.containerLinkForm.address.value,
-            ].join('/')
+            ].join('/'),
+            dapp.rootEns
           );
         }
       }

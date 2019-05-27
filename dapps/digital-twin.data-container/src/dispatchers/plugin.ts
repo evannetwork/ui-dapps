@@ -46,8 +46,8 @@ dispatcher
     const profile = runtime.profile;
 
     // apply the possibility to only save the description, without touching the template.
-    data.template = data.template || (await bcc.Container
-      .getContainerPlugin(profile, data.beforeName)).template;
+    data.plugin = data.plugin || (await bcc.Container
+      .getContainerPlugin(profile, data.beforeName));
 
     // load latest contracts to be up to date
     await profile.loadForAccount(profile.treeLabels.contracts);
@@ -60,7 +60,7 @@ dispatcher
     // save the new template
     await profile.addBcContract(bcc.Container.profilePluginsKey, data.description.name, {
       description: data.description,
-      template: data.template,
+      plugin: data.plugin,
     });
 
     // save the profile

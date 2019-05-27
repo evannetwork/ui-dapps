@@ -39,7 +39,7 @@ import ContainerCache from '../../../container-cache';
 
 interface DbcpFormInterface extends EvanForm {
   description: EvanFormControl;
-  img: EvanFormControl;
+  imgSquare: EvanFormControl;
   name: EvanFormControl;
 }
 
@@ -78,11 +78,6 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   @Prop({
     default: 'buttons'
   }) displayMode;
-
-  /**
-   * formular specific variables
-   */
-  dbcpForm: DbcpFormInterface = null;
 
   /**
    * ref handlers
@@ -130,40 +125,13 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
-    // set dbcp form
-    this.dbcpForm = (<DbcpFormInterface>new EvanForm(this, {
-      name: {
-        value: this.dbcp.name,
-        validate: function(vueInstance: ContainerActionsComponent, form: DbcpFormInterface) {
-          return this.value.trim().length !== 0;
-        }
-      },
-      description: {
-        value: this.dbcp.description,
-        validate: function(vueInstance: ContainerActionsComponent, form: DbcpFormInterface) {
-          return true;
-        }
-      },
-      img: {
-        value: '',
-      },
-    }));
-
     // watch for saving updates
-    this.savingWatcher = dispatchers.updateDispatcher.watch(async () => {
-      const instances = await dispatchers.updateDispatcher.getInstances(runtime);
-      const beforeSaving = this.$store.state.saving;
-
-      const saving = instances
-        .filter(instance => instance.data.address === this.containerAddress)
-        .length > 0;
-
-      this.$set(this.$store.state, 'saving', saving);
-    });
+    this.savingWatcher = dispatchers.updateDispatcher.watch(this.checkSaving);
 
     // load the owner
     const container = utils.getContainer(<any>runtime, this.containerAddress);
     this.isOwner = (await container.getOwner()) === runtime.activeAccount;
+    this.checkSaving();
 
     this.loading = false;
   }
@@ -187,12 +155,35 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Check, if currently a dbcp definition gets saved.
+   */
+  async checkSaving() {
+    const runtime = utils.getRuntime(this);
+
+    const instances = await dispatchers.updateDispatcher.getInstances(runtime);
+    const beforeSaving = this.$store.state.saving;
+    const saving = instances
+      .filter(instance => instance.data.address === this.containerAddress)
+      .map(instance => instance.data.description);
+
+    if (saving.length !== 0) {
+      this.dbcp.description = saving[0].description;
+      this.dbcp.imqSquare = saving[0].imqSquare;
+      this.dbcp.name = saving[0].name;
+    }
+
+    this.$set(this.$store.state, 'saving', saving.length > 0);
+  }
+
+  /**
    * Trigger the digital twin save
    *
    * @param      {boolean}  onlyDbcp  save only the description
    */
   async saveDbcp() {
-    if (!this.$store.state.saving && this.dbcpForm.isValid) {
+    const dbcpForm = this.reactiveRefs.dbcpForm;
+
+    if (!this.$store.state.saving && dbcpForm.isValid) {
       const runtime = utils.getRuntime(this);
 
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
@@ -201,8 +192,8 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.$store.state.saving = true;
 
       // update description backup
-      this.dbcp.name = this.dbcpForm.name.value;
-      this.dbcp.description = this.dbcpForm.description.value;
+      this.dbcp.name = dbcpForm.name.value;
+      this.dbcp.description = dbcpForm.description.value;
 
       // hide dbcp modal
       (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
@@ -212,9 +203,9 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
         dispatchers.updateDispatcher.start(runtime, {
           address: this.containerAddress,
           description: {
-            description: this.dbcpForm.description.value,
-            imgSquare: this.dbcpForm.img.value,
-            name: this.dbcpForm.name.value,
+            description: dbcpForm.description.value,
+            imgSquare: dbcpForm.imgSquare.value,
+            name: dbcpForm.name.value,
           },
           digitalTwinAddress: this.digitalTwinAddress,
         });
@@ -222,20 +213,5 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
         this.loading = false;
       });
     }
-  }
-
-  /**
-   * When the dbcp edit modal was canceled, restore original dbcp value
-   */
-  cancelDbcpModal(eventArgs: any) {
-    this.$nextTick(() => {
-      // don't close on backdrop
-      if (eventArgs.backdrop) {
-        (<any>this).$refs.dbcpModal.show();
-      } else {
-        this.dbcpForm.name.value = this.dbcp.name;
-        this.dbcpForm.description.value = this.dbcp.description;
-      }
-    });
   }
 }

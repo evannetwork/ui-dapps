@@ -40,7 +40,7 @@
         <evan-loading v-if="loading"></evan-loading>
         <template v-else>
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"
-            v-if="!digitalTwinAddress">
+            v-if="!digitalTwinAddress && !isCreate">
             <template v-slot:content>
               <div style="width: 360px">
                 <dt-tree-root

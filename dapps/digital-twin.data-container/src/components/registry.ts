@@ -66,7 +66,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-new-entry', component: NewEntryComponent },
-  { name: 'dc-permissions', component: EntryListComponent },
   { name: 'dc-permissions', component: PermissionsComponent },
   { name: 'dc-plugin', component: PluginComponent },
   { name: 'dc-plugin-actions', component: PluginActions },
