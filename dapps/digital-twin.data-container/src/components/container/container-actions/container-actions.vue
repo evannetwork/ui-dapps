@@ -110,8 +110,9 @@
           </template>
           <template v-if="setActions">
             <a
-              id="dc-set-add"
+              id="dc-container-add"
               :class="buttonClasses.primary"
+              :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')"
               @click="closeDropdown();">
               <i class="mdi mdi-plus"></i>
               <component :is="buttonTextComp" :placement="'bottom'">

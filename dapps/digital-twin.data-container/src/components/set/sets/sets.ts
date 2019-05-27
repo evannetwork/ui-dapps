@@ -32,8 +32,9 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 
+import { getDcDtAddress } from '../../../utils';
 
 @Component({ })
 export default class DataSetsComponent extends mixins(EvanComponent) {
@@ -43,6 +44,11 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
    * laoding)
    */
   containerAddress = '';
+
+  /**
+   * digitalTwin address, where the container should be created for
+   */
+  digitalTwinAddress = '';
 
   /**
    * Show loading symbol
@@ -69,6 +75,7 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
    */
   async created() {
     this.containerAddress = this.$route.params.containerAddress;
+    this.digitalTwinAddress = getDcDtAddress((<any>this).dapp);
     const runtime = utils.getRuntime(this);
 
     try {

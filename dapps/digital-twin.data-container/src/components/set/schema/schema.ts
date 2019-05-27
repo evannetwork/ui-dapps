@@ -39,9 +39,7 @@ import * as entryUtils from '../../../entries';
 @Component({ })
 export default class SetSchemaComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
   containerAddress = '';
 

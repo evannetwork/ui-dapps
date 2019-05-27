@@ -53,12 +53,7 @@
         :width="'300px'"
         :renderOnlyContent="displayMode === 'buttons'">
         <template v-slot:content>
-          <template v-if="dcActions">
-
-          </template>
-          <template v-if="setActions">
           
-          </template>
         </template>
       </evan-dropdown>
     </div>

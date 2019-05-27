@@ -36,6 +36,7 @@ const i18n: any = {
     "dc-create": "Add Plugin",
     "dc-permissions": "Shares",
     "dc-sets": "Data-Sets",
+    "dc-sets-add": "Add Data-Set",
     "dc-technical": "Technical Details",
     "digitaltwin": "Digital Twin",
     "digitaltwins": "Digital Twins",

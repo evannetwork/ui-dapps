@@ -31,6 +31,7 @@ import ContainerPluginSwitchComponent from './components/container/container-plu
 import CreateComponent from './components/create/create.vue';
 import DataSetComponent from './components/set/set/set.vue';
 import DataSetsComponent from './components/set/sets/sets.vue';
+import NewDataSetComponent from './components/set/new-set/new-set.vue';
 import SetSchemaComponent from './components/set/schema/schema.vue';
 
 
@@ -56,10 +57,11 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     component: ContainerPluginSwitchComponent,
     children: [
       { redirect: { path: 'dc-sets' }, path: '', },
-      { name: 'dc-sets',        component: DataSetsComponent, path: 'dc-sets', },
-      { name: 'dc-technical',   component: UnderDevelopmentComponent, path: 'dc-technical', },
-      { name: 'dc-permissions', component: UnderDevelopmentComponent, path: 'dc-permissions', },
       { name: 'dc-changes',     component: UnderDevelopmentComponent, path: 'dc-changes', },
+      { name: 'dc-permissions', component: UnderDevelopmentComponent, path: 'dc-permissions', },
+      { name: 'dc-sets',        component: DataSetsComponent, path: 'dc-sets', },
+      { name: 'dc-sets-add',    component: NewDataSetComponent, path: 'dc-sets-add', },
+      { name: 'dc-technical',   component: UnderDevelopmentComponent, path: 'dc-technical', },
     ]
   },
   {
@@ -67,9 +69,10 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     component: DataSetComponent,
     children: [
       { redirect: { path: 'entry-schema' }, path: '', },
-      { name: 'entry-schema',      component: SetSchemaComponent, path: 'entry-schema', },
-      { name: 'entry-permissions', component: UnderDevelopmentComponent, path: 'entry-permissions', },
+      { name: 'dc-sets-add',    component: NewDataSetComponent, path: 'dc-sets-add', },
       { name: 'entry-changes',     component: UnderDevelopmentComponent, path: 'entry-changes', },
+      { name: 'entry-permissions', component: UnderDevelopmentComponent, path: 'entry-permissions', },
+      { name: 'entry-schema',      component: SetSchemaComponent, path: 'entry-schema', },
     ]
   },
 ];

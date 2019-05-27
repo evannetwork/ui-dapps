@@ -34,22 +34,24 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
+import { getContainerOrPlugin } from '../../../utils';
 
 @Component({ })
-export default class SetActionsComponent extends mixins(EvanComponent) {
+export default class NewDataSetComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
-  @Prop() containerAddress = '';
+  containerAddress = '';
 
   /**
-   * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
+   * Template of the opened container
    */
-  @Prop({
-    default: 'buttons'
-  }) displayMode;
+  template: any = null;
+
+  /**
+   * New entry definition
+   */
+  newEntry: any = null;
 
   /**
    * ref handlers
@@ -57,44 +59,16 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
-   * Used per default for normal buttons (will be overwritten within dropdown)
+   * Show loading symbol
    */
-  buttonClasses = {
-    primary: 'btn btn-primary btn-circle d-flex align-items-center justify-content-center mr-3',
-    secondary: 'btn btn-circle btn-outline-secondary mr-3',
-    tertiar: 'btn btn-circle btn-sm btn-tertiary mr-3',
-  }
+  loading = true;
 
-  buttonTextComp = 'evan-tooltip';
+  async created() {
+    const runtime = utils.getRuntime(this);
 
-  /**
-   * Set button classes
-   */
-  created() {
-    if (this.displayMode !== 'buttons') {
-      Object.keys(this.buttonClasses).forEach(
-        type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
-      );
+    this.containerAddress = this.$route.params.containerAddress;
+    this.template = (await getContainerOrPlugin(runtime, this.containerAddress)).template;
 
-      this.buttonTextComp = 'span';
-    }
-  }
-
-  /**
-   * Show the actions dropdown.
-   */
-  showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
-
-    $event && $event.preventDefault();
-  }
-
-  /**
-   * Close the actions dropdown.
-   */
-  closeDropdown() {
-    if ((<any>this).$refs.dtContextMenu) {
-      (<any>this).$refs.dtContextMenu.hide();
-    }
+    this.loading = false;
   }
 }

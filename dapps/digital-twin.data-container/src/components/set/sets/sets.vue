@@ -49,7 +49,21 @@
           </h3>
           <span class="mx-auto"></span>
           <div>
-            
+            <dc-actions
+              v-if="containerAddress.startsWith('0x')"
+              :containerAddress="containerAddress"
+              :digitalTwinAddress="digitalTwinAddress"
+              :dcActions="false"
+              :setActions="true">
+            </dc-actions>
+
+            <dc-plugin-actions
+              v-else
+              :pluginName="containerAddress"
+              :pluginActions="false"
+              :setActions="true"
+              :displayMode="'buttons'">
+            </dc-plugin-actions>
           </div>
         </div>
         <div class="content row pb-0" v-if="properties.length !== 0">

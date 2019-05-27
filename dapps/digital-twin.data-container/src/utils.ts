@@ -31,6 +31,42 @@ import * as dtLib from '@evan.network/digitaltwin.lib';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
 
 import { pluginDispatcher, pluginShareDispatcher } from './dispatchers/registry';
+import { utils } from '@evan.network/digitaltwin.lib';
+
+/**
+ * Load the digital twin address for a opened data container / plugin.
+ *
+ * @param      {any}  dapp    dapp routing information
+ */
+export function getDcDtAddress(dapp: any) {
+  const splitHash = dapp.baseHash.split('/');
+  const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ dapp.domainName }`);
+  let digitalTwinAddress;
+  if (twinDAppIndex !== -1) {
+    digitalTwinAddress = splitHash[twinDAppIndex + 1];
+  }
+
+  return digitalTwinAddress;
+}
+
+/**
+ * Returns the plugin definition for a container or plugin.
+ *
+ * @param      {bccRuntime}  runtime           bcc runtime
+ * @param      {string}      containerAddress  container address / plugin name
+ */
+export async function getContainerOrPlugin(runtime: bcc.Runtime, containerAddress: string) {
+  // if it's a contract, load the contract
+  if (containerAddress.startsWith('0x')) {
+    // get the container instance and load the template including all values
+    const container = utils.getContainer(<any>runtime, containerAddress);
+    return await container.toPlugin(false);
+  // else try to laod a plugin from profile
+  } else {
+    return await bcc.Container.getContainerPlugin(runtime.profile,
+      containerAddress);
+  }
+}
 
 /**
  * Check the integrity of a new template, and if anything has changed

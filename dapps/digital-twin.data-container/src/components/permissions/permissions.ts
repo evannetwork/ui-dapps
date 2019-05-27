@@ -117,7 +117,6 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
    */
   async created() {
     const runtime = utils.getRuntime(this);
-    await this.initialize();
 
     // watch for sharings watcher
     this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
@@ -129,6 +128,7 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
       this.$set(this.$store.state, 'sharing', sharing);
     });
 
+    await this.initialize();
     this.$emit('init', this);
   }
 

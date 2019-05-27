@@ -27,9 +27,8 @@
 
 <template>
   <div>
-    <evan-loading v-if="loading"></evan-loading>
     <!-------------------------- actions section -------------------------->
-    <template v-else>
+    <template v-if="!loading">
       <evan-modal
         id="container-share-modal"
         ref="shareModal"

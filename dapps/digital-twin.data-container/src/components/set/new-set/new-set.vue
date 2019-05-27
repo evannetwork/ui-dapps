@@ -25,38 +25,43 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-const i18n: any = {
-  "breadcrumbs": {
-    "containerlink": "Plugin verknüpfen",
-    "create-plugin": "Plugin erstellen",
-    "datacontainer": "Daten Container",
-    "datacontainer.digitaltwin": "Plugin",
-    "dc-changes": "Letzte Änderungen",
-    "dc-create": "Plugin hinzufügen",
-    "dc-permissions": "Freigaben",
-    "dc-sets": "Daten-Sets",
-    "dc-sets-add": "Daten-Set hinzufügen",
-    "dc-technical": "Technische Details",
-    "digitaltwin": "Digitaler Zwilling",
-    "digitaltwins": "Digitale Zwillinge",
-    "dt-changes": "Letzte Änderungen",
-    "dt-create": "Digitalen Zwilling Erstellen",
-    "dt-detail": "Details",
-    "dt-map": "An Domainnamen binden",
-    "dt-plugins": "Plugin Übersicht",
-    "dt-technical": "Technische Details",
-    "entry-changes": "Letzte Änderungen",
-    "entry-permissions": "Freigaben",
-    "entry-schema": "Daten-Schema",
-    "my-plugins": "Meine Plugins",
-    "my-twins": "Meine Digitalen Zwillinge",
-    "open": "Öffnen",
-    "plugin": "Plugin",
-    "plugin-create": "Plugin Erstellen",
-    "verifications": "Verifizierungen"
-  }
-}
-/* tslint:enable */
+<template>
+  <div>
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="white-box border-smooth rounded" v-else>
+      <div class="header">
+        <h3 class="font-weight-semibold m-0">
+          {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
+        </h3>
+        <span class="mx-auto"></span>
+        <div>
+          
+        </div>
+      </div>
+      <div class="content">
+        <dc-new-entry
+          v-if="!newEntry"
+          ref="dcNewEntry"
+          :template="template"
+          @submit="newEntry = $event">
+        </dc-new-entry>
+        <dc-entry
+          v-else
+          :address="containerAddress"
+          :entry="newEntry.entry"
+          :entryName="newEntry.trimmed"
+          :permissions="{ readWrite: [ newEntry.trimmed ]}"
+          @init="$set(reactiveRefs, 'entryComp', $event)">
+        </dc-entry>
+      </div>
+      <div class="footer">
+        
+      </div>
+    </div>
+  </div>
+</template>
 
-export default i18n;
+<script lang="ts">
+  import Component from './new-set.ts';
+  export default Component;
+</script>

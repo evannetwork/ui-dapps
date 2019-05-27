@@ -65,7 +65,7 @@
           :displayMode="'dropdownIcon'"
           :dbcp="dbcp"
           :dcActions="true"
-          :setActions="false">
+          :setActions="true">
         </dc-actions>
         <div class="spinner-border spinner-border-sm text-secondary ml-3"
           v-if="loading">

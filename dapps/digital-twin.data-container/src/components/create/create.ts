@@ -37,6 +37,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
 import * as dispatchers from '../../dispatchers/registry';
 import * as entryUtils from '../../entries';
 import ContainerCache from '../../container-cache';
+import { getDcDtAddress } from '../../utils';
 
 
 interface CreateInterface extends EvanForm {
@@ -128,14 +129,8 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   async created() {
     const runtime = utils.getRuntime(this);
-    const splitHash = (<any>this).dapp.baseHash.split('/');
-    const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
-
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
-
-    if (twinDAppIndex !== -1) {
-      this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
-    }
+    this.digitalTwinAddress = getDcDtAddress((<any>this).dapp);
 
     // start plugin mode!
     this.pluginMode = this.$route.name.startsWith('plugin-create');
@@ -174,7 +169,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
           cloneContainer);
 
         // setup plugin and description
-        this.createForm.name.value = plugin.description.name;
+        // this.createForm.name.value = plugin.description.name;
         this.createForm.description.value = plugin.description.description;
 
         // search for active plugin index
@@ -189,7 +184,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         const container = utils.getContainer(<any>runtime, cloneContainer);
         const plugin = await container.toPlugin(true);
 
-        this.createForm.name.value = plugin.description.name;
+        // this.createForm.name.value = plugin.description.name;
         this.createForm.description.value = plugin.description.description;
 
         // apply the contract as template

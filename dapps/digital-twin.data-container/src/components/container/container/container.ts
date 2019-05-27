@@ -34,6 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
+import { getDcDtAddress } from '../../../utils';
 
 import * as dispatchers from '../../../dispatchers/registry';
 import ContainerCache from '../../../container-cache';
@@ -105,11 +106,7 @@ export default class ContainerComponent extends mixins(EvanComponent) {
       }));
 
     const runtime = utils.getRuntime(this);
-    const splitHash = (<any>this).dapp.baseHash.split('/');
-    const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
-    if (twinDAppIndex !== -1) {
-      this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
-    }
+    this.digitalTwinAddress = getDcDtAddress((<any>this).dapp);
 
     try {
       // get the container instance and load the template including all values
