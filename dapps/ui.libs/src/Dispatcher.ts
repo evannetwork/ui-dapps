@@ -178,6 +178,15 @@ export class Dispatcher {
    */
   async start(runtime: bcc.Runtime, data: any, stepIndex = 0, price?: number) {
     const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
+
+    // map the original dispatcher instance to the current one => other dapps can create a
+    // dispatcher instance pointing to the original ens and can watch and start the dispatcher
+    // without implementing the original logic
+    const originalDispatcher = (await System.import(`${ this.dappEns }!dapp-content`))[this.name];
+    if (originalDispatcher) {
+      Object.keys(originalDispatcher).forEach(key => this[key] = originalDispatcher[key]);
+    }
+
     const instance = new DispatcherInstance({
       queue: uiCoreQueue,
       dispatcher: this,

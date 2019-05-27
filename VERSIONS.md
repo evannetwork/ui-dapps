@@ -10,6 +10,7 @@
   - add `tabs` colors
   - add `mini` class to buttons
   - add `border-smooth` class
+  - load `Dispatcher` definition from original ens address before starting
 
 ### Fixes
 - rename dapp containers for `@evan.network/api-blockchain-core` and `@evan.network/smart-contracts-core` to end with `-browserfied`
