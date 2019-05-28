@@ -51,14 +51,9 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   @Prop() entryName: string;
 
   /**
-   * list of available modes (schema / edit / view)
-   */
-  @Prop() modes: Array<string>;
-
-  /**
    * Almost highest available mode
    */
-  @Prop() mode: string;
+  @Prop() activeMode: string;
 
   /**
    * Force loading of ajv component

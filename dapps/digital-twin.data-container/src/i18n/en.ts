@@ -218,6 +218,12 @@ const i18n: any = {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
+    },
+    "sets": {
+      "reset": {
+        "title": "Reset data set",
+        "desc": "Do you want to reset the current changes?"
+      }
     }
   }
 }

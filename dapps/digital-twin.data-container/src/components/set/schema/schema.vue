@@ -49,7 +49,13 @@
           </h3>
           <span class="mx-auto"></span>
           <div>
-            
+            <dc-set-actions
+              :containerAddress="containerAddress"
+              :entryName="entryName"
+              :displayMode="'buttons'"
+              :setActions="false"
+              :schemaActions="true">
+            </dc-set-actions>
           </div>
         </div>
 
@@ -62,17 +68,17 @@
         </dc-entry>
         
         <div class="footer text-right"
-          v-if="reactiveRefs.entryComp">
+          v-if="reactiveRefs.entryComp && permissions.readWrite.indexOf(entryName) !== -1">
           <button
             class="btn btn-rounded btn-primary"
             id="schema-save"
             :disabled="!reactiveRefs.entryComp.isValid() || saving"
             @click="saveEntry()">
             {{ `_datacontainer.ajv.save.save` | translate }}
-            <i class="mdi mdi-arrow-right label ml-3"></i>
-            <div class="spinner-border spinner-border-sm text-light mr-3"
+            <div class="spinner-border spinner-border-sm text-light ml-3"
               v-if="saving">
             </div>
+            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>
         </div>
       </div>

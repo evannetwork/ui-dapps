@@ -34,15 +34,20 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
+import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 @Component({ })
 export default class SetActionsComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
-  @Prop() containerAddress = '';
+  @Prop() containerAddress;
+
+  /**
+   * Current opened set
+   */
+  @Prop() entryName = '';
 
   /**
    * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
@@ -50,6 +55,16 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   @Prop({
     default: 'buttons'
   }) displayMode;
+
+  /**
+   * Set actions (delete, ...)
+   */
+  @Prop() setActions;
+
+  /**
+   * Show functions like, schema reset, ...
+   */
+  @Prop() schemaActions;
 
   /**
    * ref handlers
@@ -68,9 +83,31 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   buttonTextComp = 'evan-tooltip';
 
   /**
+   * ui container instance
+   */
+  uiContainer: any = null;
+
+  /**
+   * Currents container template definition.
+   */
+  templateEntry: any = null;
+
+  /**
+   * Show loading symbol
+   */
+  loading = true;
+
+  /**
+   * Watch for cache updates
+   */
+  saving = false;
+  cacheWatcher = null;
+  savingWatcher = null;
+
+  /**
    * Set button classes
    */
-  created() {
+  async created() {
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -78,6 +115,29 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
 
       this.buttonTextComp = 'span';
     }
+
+    // load the data
+    this.uiContainer = new UiContainer(this);
+    (await this.uiContainer.loadData(false));
+    this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
+    this.saving = await this.uiContainer.isSaving();
+
+    // watch for cache updates
+    this.savingWatcher = this.uiContainer
+      .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
+    this.cacheWatcher = this.uiContainer.watchForUpdates(async () => {
+      (await this.uiContainer.loadData(false));
+      this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
+    });
+
+    this.loading = false;
+  }
+
+  /**
+   * Clear update watcher
+   */
+  beforeDestroy() {
+    this.cacheWatcher && this.cacheWatcher();
   }
 
   /**
@@ -96,5 +156,21 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
     if ((<any>this).$refs.dtContextMenu) {
       (<any>this).$refs.dtContextMenu.hide();
     }
+  }
+
+  /**
+   * Reset the current changes and reloads the data.
+   */
+  async resetEntry() {
+    const runtime = utils.getRuntime(this);
+
+    delete this.uiContainer.plugin.template.properties[this.entryName];
+
+    // reset the cache
+    const containerCache = new ContainerCache(runtime.activeAccount);
+    containerCache.put(this.containerAddress, this.uiContainer.plugin);
+
+    // hide the modal
+    (<any>this.$refs.resetModal) && (<any>this.$refs.resetModal).hide();
   }
 }

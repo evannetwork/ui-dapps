@@ -126,12 +126,14 @@ export default class ContainerCache {
   sendEvent(id: string, type: string, data?: any) {
     const eventName = this.getEventName(id);
 
-    window.dispatchEvent(new CustomEvent(eventName, {
-      detail: {
-        type: type,
-        data: data
-      }
-    }));
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent(eventName, {
+        detail: {
+          type: type,
+          data: data
+        }
+      }));
+    });
   }
 
   /**

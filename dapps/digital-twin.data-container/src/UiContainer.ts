@@ -134,23 +134,30 @@ export default class UiContainer {
 
         try {
           // check if it was already loaded before
-          if (containerCache[containerAddress]) {
+          if (false && containerCache[containerAddress]) {
             plugin = containerCache[containerAddress];
           } else {
             const cached = await this.containerCache.get(containerAddress);
             const container = utils.getContainer(this.runtime, containerAddress);
 
-            // return cached template
-            if (cached) {
-              plugin = cached;
-            // if it's a contract, load the contract
-            } else if (containerAddress.startsWith('0x')) {
+            if (containerAddress.startsWith('0x')) {
               // get the container instance and load the template including all values
               plugin = await container.toPlugin(includeValue);
               // else try to laod a plugin from profile
             } else {
               plugin = await bcc.Container.getContainerPlugin(this.runtime.profile,
                 containerAddress);
+            }
+
+            // merged cached values with the correct loaded one
+            if (cached) {
+              const properties = cached.template.properties;
+
+              Object.keys(properties).forEach((property) => {
+                if (properties[property].changed) {
+                  plugin.template.properties[property] = properties[property];
+                }
+              });
             }
 
             // load the owner
@@ -186,7 +193,7 @@ export default class UiContainer {
           this.vueInstance.$i18n.add(this.vueInstance.$i18n.locale(), customTranslation);
 
           // cache the latest result
-          if (plugin) {
+          if (false && plugin) {
             containerCache[containerAddress] = plugin;
           }
         } catch (ex) {
@@ -244,7 +251,7 @@ export default class UiContainer {
   /**
    * Start and return a dispatcher watcher for the current container.
    */
-  async watchSaving(callback: any) {
+  watchSaving(callback: any) {
     if (this.containerAddress.startsWith('0x')) {
       return dispatchers.updateDispatcher.watch(callback);
     } else {

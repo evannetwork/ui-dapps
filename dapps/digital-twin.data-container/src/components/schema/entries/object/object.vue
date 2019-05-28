@@ -28,7 +28,7 @@
 <template>
   <div v-if="!loading">
     <dc-ajv
-      :mode="entry.mode"
+      :mode="activeMode"
       :properties="entry.edit.dataSchema.properties"
       :value="entry.edit.value"
       @init="$set(reactiveRefs, 'ajv', $event)">

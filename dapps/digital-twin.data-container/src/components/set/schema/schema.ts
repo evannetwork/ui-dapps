@@ -31,13 +31,15 @@ import { Prop } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { deepEqual } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+import { EvanUIDigitalTwink, utils, } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../../dispatchers/registry';
 import * as entryUtils from '../../../entries';
 import ContainerCache from '../../../container-cache';
 import UiContainer from '../../../UiContainer';
+import { getEntryChanges } from '../../../utils';
 
 @Component({ })
 export default class SetSchemaComponent extends mixins(EvanComponent) {
@@ -49,7 +51,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   /**
    * selected entry name
    */
-   entryName = '';
+  entryName = '';
 
   /**
    * Show loading symbol
@@ -91,6 +93,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    */
   saving = false;
   savingWatcher = null;
+  cacheWatcher = null;
 
   /**
    * Set button classes
@@ -98,10 +101,24 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   async created() {
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
+    this.uiContainer = new UiContainer(this);
+
+    this.savingWatcher = this.uiContainer
+      .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
+    this.cacheWatcher = this.uiContainer.watchForUpdates(() => this.initialize());
+
+    await this.initialize();
+  }
+
+  /**
+   * Load the entry data
+   */
+  async initialize() {
+    this.loading = true;
+
     const runtime = utils.getRuntime(this);
 
     try {
-      this.uiContainer = new UiContainer(this);
       (await this.uiContainer.loadData(false));
       this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
       this.permissions = this.uiContainer.permissions;
@@ -121,8 +138,6 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       }
 
       this.saving = await this.uiContainer.isSaving();
-      this.savingWatcher = this.uiContainer
-        .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
 
       // ensure edit values for schema component
       entryUtils.ensureValues(this.templateEntry);
@@ -141,15 +156,28 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     this.savingWatcher && this.savingWatcher();
+    this.cacheWatcher && this.cacheWatcher();
 
-    this.templateEntry.changed = true;
     this.loading = true;
-
-    this.$nextTick(() => {
-      // send event
+    this.$nextTick(async () => {
       const runtime = utils.getRuntime(this);
-      const containerCache = new ContainerCache(runtime.activeAccount);
-      containerCache.put(this.containerAddress, this.uiContainer.plugin);
+      const edit = this.templateEntry.edit;
+      const entry = this.templateEntry;
+
+      const schemaChanged = !deepEqual(edit.dataSchema, entry.dataSchema);
+      let valueChanged;
+      if (entry.type !== 'list') {
+        valueChanged = !deepEqual(edit.value, entry.value);
+      } else {
+        valueChanged = entry.value && entry.value.length > 0;
+      }
+
+      // if the current entry was changed, cache the values
+      if (schemaChanged || valueChanged) {
+        this.templateEntry.changed = true;
+        const containerCache = new ContainerCache(runtime.activeAccount);
+        containerCache.put(this.containerAddress, this.uiContainer.plugin);
+      }
     });
   }
 

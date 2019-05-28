@@ -217,6 +217,12 @@ const i18n: any = {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
+    },
+    "sets": {
+      "reset": {
+        "title": "Daten-Set zurücksetzen",
+        "desc": "Wollen sie die aktuellen Änderungen zurücksetzen?"
+      }
     }
   }
 }

@@ -30,6 +30,8 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
 import { utils } from '@evan.network/digitaltwin.lib';
+
+import ContainerCache from '../container-cache';
 import * as dcUtils from '../utils';
 
 const dispatcher = new Dispatcher(
@@ -83,6 +85,7 @@ dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
+    const containerCache = new ContainerCache(runtime.activeAccount);
 
     // copy the entries to save, so the iteration will not be affected by removing entries to save
     // from the data object => entries will be removed and the data will be persisted, after the
@@ -93,6 +96,13 @@ dispatcher
         await container.addListEntries(entryKey, data.plugin.template.properties[entryKey].value);
       } else {
         await container.setEntry(entryKey, data.plugin.template.properties[entryKey].value);
+      }
+
+      // delete cached entry
+      const cached = await containerCache.get(data.address);
+      if (cached) {
+        delete cached.template.properties[entryKey];
+        await containerCache.put(data.address, cached);
       }
 
       // remove the list entry and persist the state into the indexeddb

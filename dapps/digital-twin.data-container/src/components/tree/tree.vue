@@ -60,6 +60,9 @@
       </a>
       <span class="mx-auto"></span>
       <div class="position-relative d-flex align-items-center">
+        <div class="spinner-border spinner-border-sm text-secondary ml-3"
+          v-if="loading || initializing">
+        </div>
         <dc-actions
           ref="dcActions"
           :containerAddress="containerAddress"
@@ -68,9 +71,6 @@
           :dcActions="true"
           :setActions="true">
         </dc-actions>
-        <div class="spinner-border spinner-border-sm text-secondary ml-3"
-          v-if="loading || initializing">
-        </div>
       </div>
     </div>
 
@@ -86,6 +86,7 @@
         </small>
       </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
+        style="height: 40px;"
         v-for="(entry, index) in Object.keys(plugin.template.properties)"
         v-if="entry !== 'type'">
         <!-- @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()" -->
@@ -93,17 +94,27 @@
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
           :href="`${ dcUrl }/data-set/${ entry }`">
-          <i
-            class="mdi mdi-cube-outline text-muted mr-2"
-            style="font-size: 17px">
-          </i>
-          <span class="m-0">{{ entry }}</span>
+          <span class="position-relative">
+            <i
+              class="mdi mdi-cube-outline text-muted mr-2"
+              style="font-size: 17px">
+            </i>
+            <span class="m-0">{{ entry }}</span>
+            <span class="notification-dot"
+              v-if="plugin.template.properties[entry].changed ||
+                plugin.template.properties[entry].isNew">
+            </span>
+          </span>
         </a>
         <span class="mx-auto"></span>
         <div class="position-relative d-flex align-items-center">
           <dc-set-actions
             ref="dcSetActions"
-            :displayMode="'dropdownIcon'">
+            :containerAddress="containerAddress"
+            :entryName="entry"
+            :displayMode="'dropdownIcon'"
+            :setActions="true"
+            :schemaActions="true">
           </dc-set-actions>
         </div>
       </div>

@@ -57,7 +57,7 @@ export function getDtAddressFromUrl(dapp: any) {
  * @param      {string}      address      data container address
  * @param      {any}         newPlugin    new template definition that should be checked
  */
-export async function getEntryChanges(runtime: bcc.Runtime, address: string, newPlugin: any) {
+export async function getEntryChanges(runtime: bcc.Runtime, address: string, template: any) {
   // analyse data and check, which data fields must be saved
   const changed = {
     saveDescription: false,
@@ -69,17 +69,16 @@ export async function getEntryChanges(runtime: bcc.Runtime, address: string, new
   if (!address || address === 'plugin-create') {
     changed.saveDescription = true;
     changed.changed = true;
-    changed.entriesToSave = Object.keys(newPlugin.properties).map(propertyKey => propertyKey);
+    changed.entriesToSave = Object.keys(template.properties).map(propertyKey => propertyKey);
   } else {
     const container = dtLib.getContainer(runtime, address);
     const description = await container.getDescription();
-    const plugin = await container.toPlugin(true);
-    const template = plugin.template;
+    const originTemplate = (await container.toPlugin(true)).template;
 
     // check for integrity
-    Object.keys(newPlugin.properties).map((propertyKey: string) => {
-      const newProp = newPlugin.properties[propertyKey];
-      const originProp: any = template.properties[propertyKey] || { };
+    Object.keys(template.properties).map((propertyKey: string) => {
+      const newProp = template.properties[propertyKey];
+      const originProp: any = originTemplate.properties[propertyKey] || { };
 
       if (typeof newProp.value !== 'undefined') {
         // schema has been changed
