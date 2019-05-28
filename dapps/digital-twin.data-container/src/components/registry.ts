@@ -47,7 +47,6 @@ import PluginActions from './plugin/plugin-actions/plugin-actions.vue';
 import PluginComponent from './plugin/plugin/plugin.vue';
 import SetActionsComponent from './set/set-actions/set-actions.vue';
 import SetSchemaComponent from './set/schema/schema.vue';
-import TemplateHandlerComponent from './schema/template-handler/template-handler.vue';
 
 // export them all, so other applications can access them
 export { }
@@ -71,7 +70,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-plugin-actions', component: PluginActions },
   { name: 'dc-set-actions', component: SetActionsComponent },
   { name: 'dc-set-schema', component: SetSchemaComponent },
-  { name: 'dc-template-handler', component: TemplateHandlerComponent },
   { name: 'dc-tree', component: DataContainerTreeComponent },
 ].concat(dtLib.componentRegistration);
 

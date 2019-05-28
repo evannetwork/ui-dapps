@@ -61,7 +61,6 @@
                       :containerAddress="containerAddress"
                       :digitalTwinAddress="digitalTwinAddress"
                       :displayMode="'dropdownIcon'"
-                      :dbcp="description"
                       :dcActions="true"
                       :setActions="false">
                     </dc-actions>
@@ -80,7 +79,6 @@
                   <dc-tree
                     :address="containerAddress"
                     :dcUrl="`${ dapp.fullUrl }/${ containerAddress }`"
-                    :dbcp="description"
                     :onlySets="true">
                   </dc-tree>
                 </div>

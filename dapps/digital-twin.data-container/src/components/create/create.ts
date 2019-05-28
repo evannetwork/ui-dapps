@@ -37,7 +37,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
 import * as dispatchers from '../../dispatchers/registry';
 import * as entryUtils from '../../entries';
 import ContainerCache from '../../container-cache';
-import { getDcDtAddress } from '../../utils';
+import { getDtAddressFromUrl } from '../../utils';
 
 
 interface CreateInterface extends EvanForm {
@@ -130,7 +130,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = utils.getRuntime(this);
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
-    this.digitalTwinAddress = getDcDtAddress((<any>this).dapp);
+    this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
 
     // start plugin mode!
     this.pluginMode = this.$route.name.startsWith('plugin-create');

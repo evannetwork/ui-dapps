@@ -35,6 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../../dispatchers/registry';
+import * as entryUtils from '../../../entries';
 import ContainerCache from '../../../container-cache';
 
 interface DbcpFormInterface extends EvanForm {
@@ -56,11 +57,6 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
    * Is container opened in context to the digital twin
    */
   @Prop() digitalTwinAddress;
-
-  /**
-   * UI Digital Twin instances, where the actions should be triggered.
-   */
-  @Prop() dbcp;
 
   /**
    * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
@@ -111,6 +107,11 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   isOwner = false;
 
   /**
+   * Containers transformed to plugin
+   */
+  plugin: any = null;
+
+  /**
    * Set button classes
    */
   async created() {
@@ -130,7 +131,13 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
 
     // load the owner
     const container = utils.getContainer(<any>runtime, this.containerAddress);
-    this.isOwner = (await container.getOwner()) === runtime.activeAccount;
+    const [ plugin, owner ] = await Promise.all([
+      container.toPlugin(false),
+      container.getOwner()
+    ]);
+
+    this.plugin = plugin;
+    this.isOwner = owner === runtime.activeAccount;
     this.checkSaving();
 
     this.loading = false;
@@ -167,9 +174,9 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       .map(instance => instance.data.description);
 
     if (saving.length !== 0) {
-      this.dbcp.description = saving[0].description;
-      this.dbcp.imqSquare = saving[0].imqSquare;
-      this.dbcp.name = saving[0].name;
+      this.plugin.description.description = saving[0].description;
+      this.plugin.description.imqSquare = saving[0].imqSquare;
+      this.plugin.description.name = saving[0].name;
     }
 
     this.$set(this.$store.state, 'saving', saving.length > 0);
@@ -192,8 +199,8 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.$store.state.saving = true;
 
       // update description backup
-      this.dbcp.name = dbcpForm.name.value;
-      this.dbcp.description = dbcpForm.description.value;
+      this.plugin.description.name = dbcpForm.name.value;
+      this.plugin.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
       (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
@@ -213,5 +220,23 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
         this.loading = false;
       });
     }
+  }
+
+  /**
+   * Executed by the `dc-new-entry` components submit event.
+   *
+   * @param      {any}  newEntry  dc-new-entry result obj
+   */
+  addNewEntry(newEntry: any) {
+    const runtime = utils.getRuntime(this);
+    const containerCache = new ContainerCache(runtime.activeAccount);
+
+    // update template
+    newEntry.entry.isNew = true;
+    this.plugin.template.properties[newEntry.name] = newEntry.entry;
+    entryUtils.ensureValues(this.plugin.template.properties[newEntry.name]);
+
+    // send event
+    containerCache.put(this.containerAddress, this.plugin);
   }
 }

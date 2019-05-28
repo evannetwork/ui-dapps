@@ -34,7 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import { utils } from '@evan.network/digitaltwin.lib';
-import { getDcDtAddress } from '../../utils';
+import { getDtAddressFromUrl } from '../../utils';
 
 @Component({ })
 export default class RootComponent extends mixins(EvanComponent) {
@@ -108,7 +108,7 @@ export default class RootComponent extends mixins(EvanComponent) {
 
     // check if container / plugin is opened under a digital twin address
     const runtime = utils.getRuntime(this);
-    this.digitalTwinAddress = getDcDtAddress((<any>this).dapp);
+    this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
 
     // if no digital twin was opened, check for container or plugin
     this.isCreate = this.$route.fullPath.indexOf('dc-create') !== -1 ||
@@ -123,16 +123,6 @@ export default class RootComponent extends mixins(EvanComponent) {
       } else {
         const plugin = await bcc.Container.getContainerPlugin(runtime.profile, this.containerAddress);
         this.description = plugin.description;
-
-        // apply data schema to plugin description for displaying correct left panel tree
-        this.description.dataSchema = { };
-        for (let field of Object.keys(plugin.template.properties)) {
-          const fieldId = field.replace(/[^a-zA-Z0-9]/g, '');
-          this.description.dataSchema[field] = {
-            $id: `${fieldId}_schema`,
-            ...plugin.template.properties[field].dataSchema
-          };
-        }
       }
     }
 

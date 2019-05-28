@@ -34,6 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
+import * as dcUtils from '../../../utils';
 import * as entryUtils from '../../../entries';
 
 @Component({ })
@@ -87,18 +88,29 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
 
     try {
-      // get the container instance and load the template including all values
-      const container = utils.getContainer(<any>runtime, this.containerAddress);
-      const [ plugin, entryValue, shareConfig ] = await Promise.all([
-        container.toPlugin(false),
-        container.getEntry(this.entryName),
-        container.getContainerShareConfigForAccount(runtime.activeAccount),
-      ]);
-
-      // map loaded values to scope
+      const plugin = await dcUtils.getContainerOrPlugin(runtime, this.containerAddress, false);
       this.templateEntry = plugin.template.properties[this.entryName];
-      this.templateEntry.value = entryValue;
-      this.permissions = shareConfig;
+
+      if (this.containerAddress.startsWith('0x')) {
+        const container = utils.getContainer(<any>runtime, this.containerAddress);
+
+        // load only the value, when it wasn't cached before
+        if (!this.templateEntry.value) {
+          this.templateEntry.value = await container.getEntry(this.entryName);
+        }
+
+        // map loaded values to scope
+        this.permissions = await container.getContainerShareConfigForAccount(runtime.activeAccount);
+      } else {
+        // map loaded values to scope
+        this.permissions = plugin.permissions || { readWrite: [ this.entryName ] };
+      }
+
+      // if it's a new value, apply full readWrite permissions
+      if (this.templateEntry.isNew) {
+        this.permissions.readWrite.push(this.entryName);
+      }
+
       // ensure edit values for schema component
       entryUtils.ensureValues(this.templateEntry);
     } catch (ex) {

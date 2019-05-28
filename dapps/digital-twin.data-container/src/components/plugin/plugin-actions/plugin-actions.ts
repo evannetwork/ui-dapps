@@ -355,4 +355,11 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       .filter(instance => instance.data.description.name === this.pluginName)
       .length > 0;
   }
+
+  /**
+   * Executed by the `dc-new-entry` components submit event.
+   */
+  addNewEntry() {
+    
+  }
 }

@@ -109,14 +109,15 @@
             </a>
           </template>
           <template v-if="setActions">
+            <!-- :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')" -->
             <a
               id="dc-container-add"
+              v-if="isOwner"
               :class="buttonClasses.primary"
-              :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')"
-              @click="closeDropdown();">
+              @click="$refs.dcNewEntry.showModal(); closeDropdown();">
               <i class="mdi mdi-plus"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
-                {{ `_digitaltwins.containers.create` | translate }}
+                {{ `_digitaltwins.breadcrumbs.dc-sets-add` | translate }}
               </component>
             </a>
           </template>
@@ -135,7 +136,7 @@
       <template v-slot:body>
         <dt-dbcp
           ref="dbcpComp"
-          :dbcp="dbcp"
+          :dbcp="plugin.description"
           :disabled="$store.state.saving"
           @init="$set(reactiveRefs, 'dbcpForm', $event._form)"
           @submit="saveDbcp()">
@@ -164,6 +165,11 @@
       :containerAddress="containerAddress"
       :digitalTwinAddress="digitalTwinAddress">
     </dc-permissions>
+    <dc-new-entry
+      ref="dcNewEntry"
+      :template="plugin.template"
+      @submit="addNewEntry($event)">
+    </dc-new-entry>
   </div>
 </template>
 

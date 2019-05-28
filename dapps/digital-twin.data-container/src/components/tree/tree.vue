@@ -54,7 +54,9 @@
           class="mdi mdi-note-multiple-outline text-muted mr-2"
           style="font-size: 17px">
         </i>
-        <span class="m-0 font-weight-semibold">{{ dbcp.name }}</span>
+        <span class="m-0 font-weight-semibold">
+          {{ plugin && plugin.description ? plugin.description.name : '' }}
+        </span>
       </a>
       <span class="mx-auto"></span>
       <div class="position-relative d-flex align-items-center">
@@ -63,18 +65,17 @@
           :containerAddress="address"
           :digitalTwinAddress="digitalTwinAddress"
           :displayMode="'dropdownIcon'"
-          :dbcp="dbcp"
           :dcActions="true"
           :setActions="true">
         </dc-actions>
         <div class="spinner-border spinner-border-sm text-secondary ml-3"
-          v-if="loading">
+          v-if="loading || initializing">
         </div>
       </div>
     </div>
 
     <div class="pb-3"
-      v-if="onlySets || isOpen">
+      v-if="!initializing && (onlySets || isOpen)">
       <div class="pl-8 pr-3 pb-1"
         :class="{
           'pl-6': !onlySets,
@@ -85,7 +86,7 @@
         </small>
       </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
-        v-for="(entry, index) in Object.keys(dbcp.dataSchema)"
+        v-for="(entry, index) in Object.keys(plugin.template.properties)"
         v-if="entry !== 'type'">
         <!-- @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()" -->
         <a

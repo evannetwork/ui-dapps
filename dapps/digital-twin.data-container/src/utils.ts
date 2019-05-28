@@ -30,6 +30,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
 
+import ContainerCache from './container-cache';
 import { pluginDispatcher, pluginShareDispatcher } from './dispatchers/registry';
 import { utils } from '@evan.network/digitaltwin.lib';
 
@@ -38,7 +39,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
  *
  * @param      {any}  dapp    dapp routing information
  */
-export function getDcDtAddress(dapp: any) {
+export function getDtAddressFromUrl(dapp: any) {
   const splitHash = dapp.baseHash.split('/');
   const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ dapp.domainName }`);
   let digitalTwinAddress;
@@ -50,22 +51,50 @@ export function getDcDtAddress(dapp: any) {
 }
 
 /**
+ * watch for container or plugin updates
+ *
+ * @param      {bccRuntime}  runtime           The runtime
+ * @param      {string}      containerAddress  The container address
+ */
+export function watchForUpdates(
+  runtime: bcc.Runtime,
+  containerAddress: string,
+  callback: any,
+) {
+  const containerCache = new ContainerCache(runtime.activeAccount);
+  return containerCache.watch(containerAddress, callback);
+}
+
+/**
  * Returns the plugin definition for a container or plugin.
  *
  * @param      {bccRuntime}  runtime           bcc runtime
  * @param      {string}      containerAddress  container address / plugin name
  */
-export async function getContainerOrPlugin(runtime: bcc.Runtime, containerAddress: string) {
+export async function getContainerOrPlugin(
+  runtime: bcc.Runtime,
+  containerAddress: string,
+  includeValue = false
+) {
+  const containerCache = new ContainerCache(runtime.activeAccount);
+  const cached = await containerCache.get(containerAddress);
+  let plugin;
+
+  // return cached template
+  if (cached) {
+    plugin = cached;
   // if it's a contract, load the contract
-  if (containerAddress.startsWith('0x')) {
+  } else if (containerAddress.startsWith('0x')) {
     // get the container instance and load the template including all values
     const container = utils.getContainer(<any>runtime, containerAddress);
-    return await container.toPlugin(false);
+    plugin = await container.toPlugin(includeValue);
   // else try to laod a plugin from profile
   } else {
-    return await bcc.Container.getContainerPlugin(runtime.profile,
+    plugin = await bcc.Container.getContainerPlugin(runtime.profile,
       containerAddress);
   }
+
+  return plugin;
 }
 
 /**

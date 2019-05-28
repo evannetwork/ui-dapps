@@ -57,7 +57,6 @@
           <dc-actions
             :containerAddress="containerAddress"
             :digitalTwinAddress="digitalTwinAddress"
-            :dbcp="description"
             :dcActions="true"
             :setActions="false">
           </dc-actions>

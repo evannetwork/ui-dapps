@@ -34,7 +34,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 
-import { getDcDtAddress } from '../../../utils';
+import * as dcUtils from '../../../utils';
+import ContainerCache from '../../../container-cache';
 
 @Component({ })
 export default class DataSetsComponent extends mixins(EvanComponent) {
@@ -71,26 +72,46 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
   properties = [ ];
 
   /**
+   * Container cache for loading last template changes
+   */
+  containerCache: ContainerCache = null;
+
+  /**
+   * Watch for container template updates
+   */
+  cacheWatcher: any;
+
+  /**
    * Set button classes
    */
   async created() {
+    const runtime = utils.getRuntime(this);
     this.containerAddress = this.$route.params.containerAddress;
-    this.digitalTwinAddress = getDcDtAddress((<any>this).dapp);
+    this.digitalTwinAddress = dcUtils.getDtAddressFromUrl((<any>this).dapp);
+
+    //  watch for updates and load initial data
+    this.cacheWatcher = dcUtils.watchForUpdates(runtime, this.containerAddress,
+      () => this.initialize());
+    await this.initialize();
+
+    this.loading = false;
+  }
+
+  /**
+   * Clear container cache updates
+   */
+  beforeDestroy() {
+    this.cacheWatcher();
+  }
+
+  /**
+   * Load the plugin definition for the opened container / plugin.
+   */
+  async initialize() {
     const runtime = utils.getRuntime(this);
 
     try {
-      let plugin;
-
-      // if it's a contract, load the contract
-      if (this.containerAddress.startsWith('0x')) {
-        // get the container instance and load the template including all values
-        const container = utils.getContainer(<any>runtime, this.containerAddress);
-        plugin = await container.toPlugin(false);
-      // else try to laod a plugin from profile
-      } else {
-        plugin = await bcc.Container.getContainerPlugin(runtime.profile,
-          this.containerAddress);
-      }
+      let plugin = await dcUtils.getContainerOrPlugin(runtime, this.containerAddress, false);
 
       this.template = plugin.template;
       this.properties = Object.keys(this.template.properties);
@@ -100,7 +121,5 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
 
       return;
     }
-
-    this.loading = false;
   }
 }

@@ -94,7 +94,16 @@
             </a>
           </template>
           <template v-if="setActions">
-          
+            <!-- :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')" -->
+            <a
+              id="dc-container-add"
+              :class="buttonClasses.primary"
+              @click="$refs.dcNewEntry.showModal(); closeDropdown();">
+              <i class="mdi mdi-plus"></i>
+              <component :is="buttonTextComp" :placement="'bottom'">
+                {{ `_digitaltwins.breadcrumbs.dc-sets-add` | translate }}
+              </component>
+            </a>
           </template>
         </template>
       </evan-dropdown>
@@ -207,6 +216,11 @@
         </button>
       </template>
     </evan-modal>
+    <dc-new-entry
+      ref="dcNewEntry"
+      :template="template"
+      @submit="addNewEntry($event)">
+    </dc-new-entry>
   </div>
 </template>
 

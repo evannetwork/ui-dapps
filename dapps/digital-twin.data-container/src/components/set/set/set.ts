@@ -70,6 +70,5 @@ export default class DataSetComponent extends mixins(EvanComponent) {
         ].join('/'),
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
-
   }
 }

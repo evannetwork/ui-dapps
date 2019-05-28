@@ -34,6 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
+import * as dcUtils from '../../utils';
 
 @Component({ })
 export default class DataContainerTreeComponent extends mixins(EvanComponent) {
@@ -51,11 +52,6 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
    * Full Url to the currently selected twin
    */
   @Prop() dcUrl;
-
-  /**
-   * dbcp.public of the address / plugin
-   */
-  @Prop() dbcp;
 
   /**
    * Hide the container name and show only the corresponding data sets
@@ -78,7 +74,43 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   isOpen = false;
 
   /**
+   * Watch for container template updates
+   */
+  cacheWatcher: any;
+
+  /**
    * base window url for checking for active urls
    */
   windowLocation = window.location.origin + window.location.pathname;
+
+  /**
+   * Currents container / plugin exported plugin definition
+   */
+  plugin: any = null;
+
+  /**
+   * Initially loading
+   */
+  initializing = true;
+
+  async created() {
+    const runtime = utils.getRuntime(this);
+
+    //  watch for updates and load initial data
+    this.cacheWatcher = dcUtils.watchForUpdates(runtime, this.address,
+      async () => this.plugin = await dcUtils.getContainerOrPlugin(runtime, this.address, false)
+    );
+
+    // load the plugin
+    this.plugin = await dcUtils.getContainerOrPlugin(runtime, this.address, false);
+
+    this.initializing = false;
+  }
+
+  /**
+   * Clear watchers
+   */
+  beforeDestroy() {
+    this.cacheWatcher();
+  }
 }
