@@ -45,7 +45,7 @@ interface FieldFormInterface extends EvanForm {
 @Component({ })
 export default class FieldComponent extends mixins(EvanComponent) {
   /**
-   * Object entry entry type
+   * Container property template definition
    */
   @Prop() entry: any;
 
@@ -55,11 +55,9 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() entryName: string;
 
   /**
-   * list of available modes (schema / edit / view)
+   * Almost highest available mode
    */
-  @Prop({
-    default: [ ]
-  }) modes: Array<string>;
+  @Prop() activeMode: string;
 
   /**
    * formular specific variables
@@ -114,5 +112,12 @@ export default class FieldComponent extends mixins(EvanComponent) {
     // update entry backup to the latest value
     entryUtils.saveValue(this, this.entry);
     this.fieldForm.value.value = this.entry.value;
+  }
+
+  /**
+   * Determines if valid.
+   */
+  isValid() {
+    return this.fieldForm.isValid;
   }
 }

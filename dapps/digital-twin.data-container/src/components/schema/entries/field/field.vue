@@ -26,56 +26,13 @@
 */
 
 <template>
-  <div class="white-box border-smooth rounded">
-    <div class="header">
-      <h3 class="m-0 font-weight-semibold" v-if="entry.mode === 'view'">
-        {{ `_datacontainer.types.${ type }` | translate }}: {{ entryName }}
-      </h3>
-      <h3 class="m-0 font-weight-semibold" v-else>
-        {{ '_datacontainer.edit' | translate }}
-      </h3>
-
-      <span class="mx-auto"></span>
-
-      <div class="spinner-border spinner-border-sm text-light mr-3"
-        v-if="$store.state.saving">
-      </div>
-      
-      <template v-else>
-        <button
-          id="entry-edit"
-          type="button" class="btn btn-primary btn-rounded"
-          v-if="modes && modes.indexOf('edit') !== -1 || modes.indexOf('schema') !== -1 && entry.mode === 'view'"
-          @click="entry.mode = 'edit'">
-          {{ `_datacontainer.field.edit` | translate }}
-          <i class="mdi mdi-arrow-right label"></i>
-        </button>
-      </template>
-    </div>
-    <div class="content">
-      <dc-field
-        :type="type"
-        :control="fieldForm.value"
-        :mode="entry.mode"
-        :standalone="true">
-      </dc-field>
-    </div>
-    <div class="footer" v-if="!$store.state.saving && entry.mode !== 'view'">
-      <button
-        id="entry-cancel"
-        class="btn btn-outline-secondary btn-rounded mr-3"
-        @click="reset()">
-        {{ '_datacontainer.ajv.reset-values' | translate }}
-      </button>
-      <button
-        id="entry-save"
-        class="btn btn-primary btn-rounded"
-        :disabled="!fieldForm.isValid"
-        @click="save()">
-        {{ '_datacontainer.ajv.save.save' | translate }}
-        <i class="mdi mdi-arrow-right label ml-2"></i>
-      </button>
-    </div>
+  <div>
+    <dc-field
+      :type="type"
+      :control="fieldForm.value"
+      :mode="entry.mode"
+      :standalone="true">
+    </dc-field>
   </div>
 </template>
 

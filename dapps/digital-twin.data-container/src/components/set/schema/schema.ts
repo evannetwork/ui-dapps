@@ -127,7 +127,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
         const container = utils.getContainer(<any>runtime, this.containerAddress);
 
         // load only the value, when it wasn't cached before
-        if (!this.templateEntry.value) {
+        if (typeof this.templateEntry.value === 'undefined') {
           this.templateEntry.value = await container.getEntry(this.entryName);
         }
       }

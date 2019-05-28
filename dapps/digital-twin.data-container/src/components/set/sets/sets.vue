@@ -85,22 +85,14 @@
                 </div>
                 <div class="col-10">
                   <div class="d-flex p-3 flex-truncate align-items-center">
-                    <div>
-                      <h4 class="font-weight-semibold mb-0">
+                    <div class="overflow-visible">
+                      <h4 class="font-weight-semibold mb-0 position-relative">
                         {{ property }}
                       </h4>
-                      <!-- <span class="text-justify d-block font-weight-semibold text-muted"
-                        v-if="!creating">
-                        {{ description }}
+                      <span class="notification-dot"
+                        v-if="template.properties[property].changed || template.properties[property].isNew">
                       </span>
-                      <span v-else>
-                        {{ '_digitaltwins.containers.in-creation' | translate }}
-                      </span> -->
                     </div>
-                    <!-- <template v-if="container.loading">
-                      <span class="mx-auto"></span>
-                      <div class="spinner-border spinner-border-sm ml-3"></div>
-                    </template> -->
                   </div>
                 </div>
               </div>

@@ -60,6 +60,9 @@
         </div>
 
         <dc-entry
+          :class="{
+            'content': templateEntry.type !== 'object' && templateEntry.type !== 'array'
+          }"
           :address="containerAddress"
           :entry="templateEntry"
           :entryName="entryName"
