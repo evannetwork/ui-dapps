@@ -72,7 +72,7 @@
 
                   <dc-tree
                     v-for="(container, index) in $store.state.uiDT.containers"
-                    :address="container.address"
+                    :containerAddress="container.address"
                     :baseUrl="twinUrl"
                     :creating="container.creating"
                     :dbcp="container.description"

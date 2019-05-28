@@ -32,10 +32,10 @@
         <th>
           {{ '_datacontainer.ajv.name.title' | translate }}
         </th>
-        <th v-if="mode === 'schema'">
+        <th>
           {{ '_datacontainer.ajv.type.title' | translate }}
         </th>
-        <th v-if="mode !== 'schema'">
+        <th>
           {{ '_datacontainer.ajv.value.title' | translate }}
         </th>
         <th class="flex-grow-0" v-if="mode === 'schema'">
@@ -48,7 +48,10 @@
         <td
           :id="`ajv-name-${ index }`"
           class="fill-content">
-          <span class="text-primary">
+          <span class="font-weight-semibold" v-if="mode !== 'schema'">
+            {{ form.name.value }}
+          </span>
+          <span class="text-primary" v-else>
             <div class="form-group mb-0">
               <input class="form-control" required
                 ref="name"
@@ -65,7 +68,11 @@
         </td>
         <td :id="`ajv-type-${ index }`">
           <div class="form-group mb-0">
+            <span class="font-weight-semibold" v-if="mode !== 'schema'">
+              {{ `_datacontainer.types.${ form.type.value }` | translate }}
+            </span>
             <select class="form-control custom-select"
+              v-else
               ref="type"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
               :disabled="$store.state.saving || mode !== 'schema'"

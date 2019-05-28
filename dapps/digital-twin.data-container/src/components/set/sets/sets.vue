@@ -52,7 +52,7 @@
             <dc-actions
               v-if="containerAddress.startsWith('0x')"
               :containerAddress="containerAddress"
-              :digitalTwinAddress="digitalTwinAddress"
+              :digitalTwinAddress="uiContainer.digitalTwinAddress"
               :dcActions="false"
               :setActions="true">
             </dc-actions>

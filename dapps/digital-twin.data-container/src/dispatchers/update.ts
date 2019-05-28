@@ -43,8 +43,8 @@ dispatcher
   .startup(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
-    data.template = data.template || (await container.toPlugin(false)).template;
-    const entryChanges = await dcUtils.getEntryChanges(runtime, data.address, data.template);
+    data.plugin = data.plugin || await container.toPlugin(false);
+    const entryChanges = await dcUtils.getEntryChanges(runtime, data.address, data.plugin.template);
 
     // analyse data and check, which data fields must be saved
     data.saveDescription = entryChanges.saveDescription;
@@ -71,8 +71,8 @@ dispatcher
 
       // don't forget to update the template schema
       description.dataSchema = { };
-      Object.keys(data.template.properties).forEach(property =>
-        description.dataSchema[property] = data.template.properties[property].dataSchema
+      Object.keys(data.plugin.template.properties).forEach(property =>
+        description.dataSchema[property] = data.plugin.template.properties[property].dataSchema
       );
 
       await container.setDescription(description);
@@ -89,10 +89,10 @@ dispatcher
     // synchronization of this entry was saved successfull, so the user won't do this twice
     const entriesToSave = JSON.parse(JSON.stringify(data.entriesToSave));
     await Promise.all(entriesToSave.map(async (entryKey: string, index: number) => {
-      if (data.template.properties[entryKey].type === 'list') {
-        await container.addListEntries(entryKey, data.template.properties[entryKey].value);
+      if (data.plugin.template.properties[entryKey].type === 'list') {
+        await container.addListEntries(entryKey, data.plugin.template.properties[entryKey].value);
       } else {
-        await container.setEntry(entryKey, data.template.properties[entryKey].value);
+        await container.setEntry(entryKey, data.plugin.template.properties[entryKey].value);
       }
 
       // remove the list entry and persist the state into the indexeddb

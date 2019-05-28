@@ -34,8 +34,10 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
-import * as dcUtils from '../../../utils';
+import * as dispatchers from '../../../dispatchers/registry';
 import * as entryUtils from '../../../entries';
+import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 @Component({ })
 export default class SetSchemaComponent extends mixins(EvanComponent) {
@@ -60,6 +62,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   error = false;
 
   /**
+   * ui container instance
+   */
+  uiContainer: any = null;
+
+  /**
    * Currents container template definition.
    */
   templateEntry: any = null;
@@ -80,6 +87,12 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
+   * is the current container in save mode
+   */
+  saving = false;
+  savingWatcher = null;
+
+  /**
    * Set button classes
    */
   async created() {
@@ -88,8 +101,10 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
 
     try {
-      const plugin = await dcUtils.getContainerOrPlugin(runtime, this.containerAddress, false);
-      this.templateEntry = plugin.template.properties[this.entryName];
+      this.uiContainer = new UiContainer(this);
+      (await this.uiContainer.loadData(false));
+      this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
+      this.permissions = this.uiContainer.permissions;
 
       if (this.containerAddress.startsWith('0x')) {
         const container = utils.getContainer(<any>runtime, this.containerAddress);
@@ -98,18 +113,16 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
         if (!this.templateEntry.value) {
           this.templateEntry.value = await container.getEntry(this.entryName);
         }
-
-        // map loaded values to scope
-        this.permissions = await container.getContainerShareConfigForAccount(runtime.activeAccount);
-      } else {
-        // map loaded values to scope
-        this.permissions = plugin.permissions || { readWrite: [ this.entryName ] };
       }
 
       // if it's a new value, apply full readWrite permissions
       if (this.templateEntry.isNew) {
         this.permissions.readWrite.push(this.entryName);
       }
+
+      this.saving = await this.uiContainer.isSaving();
+      this.savingWatcher = this.uiContainer
+        .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
 
       // ensure edit values for schema component
       entryUtils.ensureValues(this.templateEntry);
@@ -121,5 +134,46 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     }
 
     this.loading = false;
+  }
+
+  /**
+   * Save latest changes to cache
+   */
+  beforeDestroy() {
+    this.savingWatcher && this.savingWatcher();
+
+    this.templateEntry.changed = true;
+    this.loading = true;
+
+    this.$nextTick(() => {
+      // send event
+      const runtime = utils.getRuntime(this);
+      const containerCache = new ContainerCache(runtime.activeAccount);
+      containerCache.put(this.containerAddress, this.uiContainer.plugin);
+    });
+  }
+
+  /**
+   * Save the current changes.
+   */
+  saveEntry() {
+    const runtime = utils.getRuntime(this);
+
+    // save changes for this entry
+    this.reactiveRefs.entryComp.save();
+
+    if (this.containerAddress.startsWith('0x')) {
+      dispatchers.updateDispatcher.start(runtime, {
+        address: this.containerAddress,
+        description: this.uiContainer.description,
+        digitalTwinAddress: this.uiContainer.digitalTwinAddress,
+        plugin: this.uiContainer.plugin,
+      });
+    } else {
+      dispatchers.pluginDispatcher.start(runtime, {
+        description: this.uiContainer.description,
+        plugin: this.uiContainer.plugin,
+      });
+    }
   }
 }

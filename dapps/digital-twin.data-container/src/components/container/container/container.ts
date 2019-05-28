@@ -34,10 +34,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
-import { getDtAddressFromUrl } from '../../../utils';
 
-import * as dispatchers from '../../../dispatchers/registry';
-import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 
 interface ShareFormInterface extends EvanForm {
@@ -47,11 +45,24 @@ interface ShareFormInterface extends EvanForm {
 @Component({ })
 export default class ContainerComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
   containerAddress = '';
+
+  /**
+   * Opened digital twin
+   */
+  digitalTwinAddress = null;
+
+  /**
+   * Ui container instance
+   */
+  uiContainer: UiContainer = null;
+
+  /**
+   * Tabs for top navigation
+   */
+  tabs: Array<any> = [ ];
 
   /**
    * Show loading symbol
@@ -59,39 +70,14 @@ export default class ContainerComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
-   * Data container could not be loaded, e.g. no permissions.
+   * Error during load
    */
-  error = false;
+  error = true;
 
   /**
-   * digitalTwin address, where the container should be created for
+   * Containers description
    */
-  digitalTwinAddress = '';
-
-  /**
-   * Watch for updates and disable current save button
-   */
-  savingWatcher: Function = null;
-
-  /**
-   * Container instance
-   */
-  container: bcc.Container;
-
-  /**
-   * container description
-   */
-  description: any;
-
-  /**
-   * containers template definition
-   */
-  template: any;
-
-  /**
-   * Tabs for top navigation
-   */
-  tabs: Array<any> = [ ];
+  description = null;
 
   /**
    * Load the container data
@@ -105,26 +91,12 @@ export default class ContainerComponent extends mixins(EvanComponent) {
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
 
-    const runtime = utils.getRuntime(this);
-    this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
+    this.uiContainer = new UiContainer(this);
+    await this.uiContainer.loadData();
 
-    try {
-      // get the container instance and load the template including all values
-      this.container = utils.getContainer(<any>runtime, this.containerAddress);
-      this.description = await this.container.getDescription();
-    } catch (ex) {
-      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
-      this.error = true;
-      this.loading = false;
-
-      return;
-    }
-
-    // set custom translation
-    const customTranslation = { _digitaltwins: { breadcrumbs: { } } };
-    customTranslation._digitaltwins.breadcrumbs[this.containerAddress] =
-      this.description.name;
-    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+    this.error = this.uiContainer.error;
+    this.description = this.uiContainer.description;
+    this.digitalTwinAddress = this.uiContainer.digitalTwinAddress;
 
     this.loading = false;
   }

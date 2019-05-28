@@ -53,6 +53,16 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   tabs: Array<any> = [ ];
 
   /**
+   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
+   */
+  hashChangeWatcher: any;
+
+  /**
+   * show loading
+   */
+  loading = false;
+
+  /**
    * Set button classes
    */
   async created() {
@@ -70,5 +80,25 @@ export default class DataSetComponent extends mixins(EvanComponent) {
         ].join('/'),
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
+
+    // watch for saving updates
+    this.hashChangeWatcher = (() => {
+      this.loading = true;
+
+      this.$nextTick(() => {
+        this.entryName = this.$route.params.entryName;
+        this.loading = false;
+      });
+    }).bind(this);
+
+    // add the hash change listener
+    window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Clear location change watchers
+   */
+  beforeDestroy() {
+    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
   }
 }

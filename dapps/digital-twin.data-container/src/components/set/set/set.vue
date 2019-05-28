@@ -30,7 +30,8 @@
     <evan-nav-tabs class="flex-shrink-0"
       :tabs="tabs">
     </evan-nav-tabs>
-    <div class="container-wide overflow-y-auto">
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="container-wide overflow-y-auto" v-else>
       <div class="d-flex mb-5 align-items-center">
         <div class="flex-truncate" style="max-width: 50%;">
           <h3 class="font-weight-bold mb-0">

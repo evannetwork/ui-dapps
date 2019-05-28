@@ -36,6 +36,7 @@ import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 
 import * as dcUtils from '../../../utils';
 import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 @Component({ })
 export default class DataSetsComponent extends mixins(EvanComponent) {
@@ -47,9 +48,9 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
   containerAddress = '';
 
   /**
-   * digitalTwin address, where the container should be created for
+   * Ui container instance
    */
-  digitalTwinAddress = '';
+  uiContainer: UiContainer = null;
 
   /**
    * Show loading symbol
@@ -87,11 +88,11 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = utils.getRuntime(this);
     this.containerAddress = this.$route.params.containerAddress;
-    this.digitalTwinAddress = dcUtils.getDtAddressFromUrl((<any>this).dapp);
+
+    this.uiContainer = new UiContainer(this);
 
     //  watch for updates and load initial data
-    this.cacheWatcher = dcUtils.watchForUpdates(runtime, this.containerAddress,
-      () => this.initialize());
+    this.cacheWatcher = this.uiContainer.watchForUpdates(() => this.initialize());
     await this.initialize();
 
     this.loading = false;
@@ -111,7 +112,7 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
 
     try {
-      let plugin = await dcUtils.getContainerOrPlugin(runtime, this.containerAddress, false);
+      let plugin = await this.uiContainer.loadData();
 
       this.template = plugin.template;
       this.properties = Object.keys(this.template.properties);

@@ -37,6 +37,7 @@ import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 import * as dispatchers from '../../../dispatchers/registry';
 import * as entryUtils from '../../../entries';
 import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 interface DbcpFormInterface extends EvanForm {
   description: EvanFormControl;
@@ -54,11 +55,6 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   @Prop() containerAddress;
 
   /**
-   * Is container opened in context to the digital twin
-   */
-  @Prop() digitalTwinAddress;
-
-  /**
    * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
    */
   @Prop() dcActions;
@@ -74,6 +70,11 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   @Prop({
     default: 'buttons'
   }) displayMode;
+
+  /**
+   * Ui container instance
+   */
+  uiContainer: UiContainer = null;
 
   /**
    * ref handlers
@@ -102,14 +103,14 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   buttonTextComp = 'evan-tooltip';
 
   /**
-   * is the current user the owner of the data container?
+   * is the current logged in user the owner?
    */
   isOwner = false;
 
   /**
-   * Containers transformed to plugin
+   * Container.toPlugin
    */
-  plugin: any = null;
+  plugin = null;
 
   /**
    * Set button classes
@@ -130,16 +131,13 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
     this.savingWatcher = dispatchers.updateDispatcher.watch(this.checkSaving);
 
     // load the owner
-    const container = utils.getContainer(<any>runtime, this.containerAddress);
-    const [ plugin, owner ] = await Promise.all([
-      container.toPlugin(false),
-      container.getOwner()
-    ]);
+    this.uiContainer = new UiContainer(this);
+    await this.uiContainer.loadData();
 
-    this.plugin = plugin;
-    this.isOwner = owner === runtime.activeAccount;
+    this.isOwner = this.uiContainer.owner === runtime.activeAccount;
+    this.plugin = this.uiContainer.plugin;
+
     this.checkSaving();
-
     this.loading = false;
   }
 
@@ -174,9 +172,9 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       .map(instance => instance.data.description);
 
     if (saving.length !== 0) {
-      this.plugin.description.description = saving[0].description;
-      this.plugin.description.imqSquare = saving[0].imqSquare;
-      this.plugin.description.name = saving[0].name;
+      this.uiContainer.plugin.description.description = saving[0].description;
+      this.uiContainer.plugin.description.imqSquare = saving[0].imqSquare;
+      this.uiContainer.plugin.description.name = saving[0].name;
     }
 
     this.$set(this.$store.state, 'saving', saving.length > 0);
@@ -199,8 +197,8 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.$store.state.saving = true;
 
       // update description backup
-      this.plugin.description.name = dbcpForm.name.value;
-      this.plugin.description.description = dbcpForm.description.value;
+      this.uiContainer.plugin.description.name = dbcpForm.name.value;
+      this.uiContainer.plugin.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
       (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
@@ -214,7 +212,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
             imgSquare: dbcpForm.imgSquare.value,
             name: dbcpForm.name.value,
           },
-          digitalTwinAddress: this.digitalTwinAddress,
+          digitalTwinAddress: this.uiContainer.digitalTwinAddress,
         });
 
         this.loading = false;
@@ -233,10 +231,10 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
 
     // update template
     newEntry.entry.isNew = true;
-    this.plugin.template.properties[newEntry.name] = newEntry.entry;
-    entryUtils.ensureValues(this.plugin.template.properties[newEntry.name]);
+    this.uiContainer.plugin.template.properties[newEntry.name] = newEntry.entry;
+    entryUtils.ensureValues(this.uiContainer.plugin.template.properties[newEntry.name]);
 
     // send event
-    containerCache.put(this.containerAddress, this.plugin);
+    containerCache.put(this.containerAddress, this.uiContainer.plugin);
   }
 }

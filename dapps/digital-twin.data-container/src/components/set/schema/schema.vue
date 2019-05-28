@@ -60,6 +60,21 @@
           :permissions="permissions"
           @init="$set(reactiveRefs, 'entryComp', $event)">
         </dc-entry>
+        
+        <div class="footer text-right"
+          v-if="reactiveRefs.entryComp">
+          <button
+            class="btn btn-rounded btn-primary"
+            id="schema-save"
+            :disabled="!reactiveRefs.entryComp.isValid() || saving"
+            @click="saveEntry()">
+            {{ `_datacontainer.ajv.save.save` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
+            <div class="spinner-border spinner-border-sm text-light mr-3"
+              v-if="saving">
+            </div>
+          </button>
+        </div>
       </div>
     </template>
   </div>

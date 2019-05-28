@@ -37,6 +37,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registry';
 import ContainerCache from '../../container-cache';
+import UiContainer from '../../UiContainer';
 
 
 interface ShareFormInterface extends EvanForm {
@@ -93,6 +94,11 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
   myProfile: any = null;
 
   /**
+   * Ui container instance
+   */
+  uiContainer: UiContainer = null;
+
+  /**
    * Permissions for the current account
    */
   permissions = null;
@@ -146,28 +152,13 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    try {
-      // get the container instance and load the template including all values
-      this.container = utils.getContainer(<any>runtime, this.containerAddress);
-      const [ plugin, permissions, isOwner ] = await Promise.all([
-        this.container.toPlugin(false),
-        this.container.getContainerShareConfigForAccount(runtime.activeAccount),
-        (await this.container.getOwner()) === runtime.activeAccount
-      ]);
+    this.uiContainer = new UiContainer(this);
+    await this.uiContainer.loadData();
 
-      this.description = plugin.description;
-      this.permissions = permissions;
-      this.permissions.isOwner = isOwner;
-      this.permissions.read = this.permissions.read || [ ];
-      this.permissions.readWrite = this.permissions.readWrite || [ ];
-      this.template = plugin.template;
-    } catch (ex) {
-      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
-      this.error = true;
-      this.loading = false;
-
-      return;
-    }
+    this.permissions = this.uiContainer.permissions;
+    this.description = this.uiContainer.description;
+    this.template = this.uiContainer.plugin.template;
+    this.permissions.isOwner = this.uiContainer.owner === runtime.activeAccount;
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();

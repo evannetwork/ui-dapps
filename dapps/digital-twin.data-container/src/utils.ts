@@ -37,7 +37,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
 /**
  * Load the digital twin address for a opened data container / plugin.
  *
- * @param      {any}  dapp    dapp routing information
+ * @param      {any}  dapp    Vue instance evan routing dapp definition
  */
 export function getDtAddressFromUrl(dapp: any) {
   const splitHash = dapp.baseHash.split('/');
@@ -48,53 +48,6 @@ export function getDtAddressFromUrl(dapp: any) {
   }
 
   return digitalTwinAddress;
-}
-
-/**
- * watch for container or plugin updates
- *
- * @param      {bccRuntime}  runtime           The runtime
- * @param      {string}      containerAddress  The container address
- */
-export function watchForUpdates(
-  runtime: bcc.Runtime,
-  containerAddress: string,
-  callback: any,
-) {
-  const containerCache = new ContainerCache(runtime.activeAccount);
-  return containerCache.watch(containerAddress, callback);
-}
-
-/**
- * Returns the plugin definition for a container or plugin.
- *
- * @param      {bccRuntime}  runtime           bcc runtime
- * @param      {string}      containerAddress  container address / plugin name
- */
-export async function getContainerOrPlugin(
-  runtime: bcc.Runtime,
-  containerAddress: string,
-  includeValue = false
-) {
-  const containerCache = new ContainerCache(runtime.activeAccount);
-  const cached = await containerCache.get(containerAddress);
-  let plugin;
-
-  // return cached template
-  if (cached) {
-    plugin = cached;
-  // if it's a contract, load the contract
-  } else if (containerAddress.startsWith('0x')) {
-    // get the container instance and load the template including all values
-    const container = utils.getContainer(<any>runtime, containerAddress);
-    plugin = await container.toPlugin(includeValue);
-  // else try to laod a plugin from profile
-  } else {
-    plugin = await bcc.Container.getContainerPlugin(runtime.profile,
-      containerAddress);
-  }
-
-  return plugin;
 }
 
 /**

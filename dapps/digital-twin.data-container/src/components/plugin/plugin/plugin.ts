@@ -37,6 +37,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../../dispatchers/registry';
 import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 
 @Component({ })
@@ -76,9 +77,10 @@ export default class PluginComponent extends mixins(EvanComponent) {
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
 
-    const runtime = utils.getRuntime(this);
-    const plugin = await bcc.Container.getContainerPlugin(runtime.profile, this.pluginName);
-    this.description = plugin.description;
+    const uiContainer = new UiContainer(this);
+    await uiContainer.loadData();
+
+    this.description = uiContainer.description;
 
     this.loading = false;
   }

@@ -109,7 +109,6 @@
             </a>
           </template>
           <template v-if="setActions">
-            <!-- :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')" -->
             <a
               id="dc-container-add"
               v-if="isOwner"

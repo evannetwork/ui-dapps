@@ -35,13 +35,14 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dcUtils from '../../utils';
+import UiContainer from '../../UiContainer';
 
 @Component({ })
 export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   /**
    * Container address / plugin name
    */
-  @Prop() address;
+  @Prop() containerAddress;
 
   /**
    * optional digital twin address
@@ -95,14 +96,15 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
 
   async created() {
     const runtime = utils.getRuntime(this);
+    const uiContainer = new UiContainer(this);
 
     //  watch for updates and load initial data
-    this.cacheWatcher = dcUtils.watchForUpdates(runtime, this.address,
-      async () => this.plugin = await dcUtils.getContainerOrPlugin(runtime, this.address, false)
+    this.cacheWatcher = uiContainer.watchForUpdates(
+      async () => this.plugin = await uiContainer.loadData(false)
     );
 
     // load the plugin
-    this.plugin = await dcUtils.getContainerOrPlugin(runtime, this.address, false);
+    this.plugin = this.plugin = await uiContainer.loadData(false);
 
     this.initializing = false;
   }

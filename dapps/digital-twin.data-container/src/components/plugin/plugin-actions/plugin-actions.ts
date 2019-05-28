@@ -36,6 +36,7 @@ import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
 import * as dispatchers from '../../../dispatchers/registry';
 import ContainerCache from '../../../container-cache';
+import UiContainer from '../../../UiContainer';
 
 
 interface ShareFormInterface extends EvanForm {
@@ -193,11 +194,11 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    const loadedPlugin = await bcc.Container.getContainerPlugin(runtime.profile,
-      this.pluginName);
+    const uiContainer = new UiContainer(this);
+    await uiContainer.loadData();
 
-    this.description = loadedPlugin.description;
-    this.template = loadedPlugin.template;
+    this.description = uiContainer.description;
+    this.template = uiContainer.plugin.template;
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();

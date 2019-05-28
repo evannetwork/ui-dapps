@@ -1,4 +1,4 @@
-111§/*
+/*
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it

@@ -34,7 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
-import { getContainerOrPlugin } from '../../../utils';
+import UiContainer from '../../../UiContainer';
 
 @Component({ })
 export default class NewDataSetComponent extends mixins(EvanComponent) {
@@ -67,7 +67,8 @@ export default class NewDataSetComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
 
     this.containerAddress = this.$route.params.containerAddress;
-    this.template = (await getContainerOrPlugin(runtime, this.containerAddress)).template;
+    const uiContainer = new UiContainer(this);
+    this.template = (await uiContainer.loadData(runtime)).template;
 
     this.loading = false;
   }

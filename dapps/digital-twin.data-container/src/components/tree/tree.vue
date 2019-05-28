@@ -62,7 +62,7 @@
       <div class="position-relative d-flex align-items-center">
         <dc-actions
           ref="dcActions"
-          :containerAddress="address"
+          :containerAddress="containerAddress"
           :digitalTwinAddress="digitalTwinAddress"
           :displayMode="'dropdownIcon'"
           :dcActions="true"
