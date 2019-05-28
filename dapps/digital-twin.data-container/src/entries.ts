@@ -107,38 +107,22 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
   resetSchema(entry);
 
   switch (type) {
-    // add an empty value list and an addValue object, the addValue object is used for new
-    case 'array': {
-      // we do not need to do anything, value save is handled by the component it self
-      vueInstance.$set(vueInstance.entry, 'mode', 'view');
-      break;
-    }
     case 'object': {
-      // in schema mode, jump to edit mode and do not reset the value
-      if (vueInstance.entry.mode === 'schema') {
-        vueInstance.$set(vueInstance.entry, 'mode', 'edit');
-      } else {
-        // in edit mode reset the value and go to view mode
-        entry.edit.value = bcc.lodash.cloneDeep(entry.value);
-        vueInstance.$set(vueInstance.entry, 'mode', 'view');
-      }
+      entry.edit.value = bcc.lodash.cloneDeep(entry.value);
       break;
     }
     case 'string': {
       entry.edit.value = entry.value;
-      vueInstance.$set(vueInstance.entry, 'mode', 'view');
       break;
     }
     case 'number': {
       entry.edit.value = entry.value;
-      vueInstance.$set(vueInstance.entry, 'mode', 'view');
       break;
     }
     case 'files': {
       entry.edit.value = {
         files: [ ].concat(entry.value.files)
       };
-      vueInstance.$set(vueInstance.entry, 'mode', 'view');
       break;
     }
   }
@@ -189,9 +173,6 @@ export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) 
       entry.edit.value = entry.value;
     }
   }
-
-  // go back to view mode
-  vueInstance.$set(vueInstance.entry, 'mode', 'view');
 
   // enable save
   utils.enableDTSave();

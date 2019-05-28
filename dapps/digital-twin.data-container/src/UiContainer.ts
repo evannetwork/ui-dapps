@@ -154,7 +154,7 @@ export default class UiContainer {
               const properties = cached.template.properties;
 
               Object.keys(properties).forEach((property) => {
-                if (properties[property].changed) {
+                if (properties[property].changed || properties[property].isNew) {
                   plugin.template.properties[property] = properties[property];
                 }
               });

@@ -77,6 +77,11 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   uiContainer: UiContainer = null;
 
   /**
+   * Is the current container opened within a twin?
+   */
+  digitalTwinAddress = '';
+
+  /**
    * ref handlers
    */
   reactiveRefs: any = { };
@@ -136,6 +141,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
 
     this.isOwner = this.uiContainer.owner === runtime.activeAccount;
     this.plugin = this.uiContainer.plugin;
+    this.digitalTwinAddress = this.uiContainer.digitalTwinAddress;
 
     this.checkSaving();
     this.loading = false;

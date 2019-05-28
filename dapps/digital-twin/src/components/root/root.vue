@@ -72,11 +72,11 @@
 
                   <dc-tree
                     v-for="(container, index) in $store.state.uiDT.containers"
-                    :containerAddress="container.address"
                     :baseUrl="twinUrl"
+                    :containerAddress="container.address"
                     :creating="container.creating"
-                    :dbcp="container.description"
                     :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
+                    :description="container.description"
                     :digitalTwinAddress="$store.state.uiDT.address"
                     :loading="container.loading">
                   </dc-tree>

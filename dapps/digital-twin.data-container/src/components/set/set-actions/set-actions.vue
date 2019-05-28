@@ -32,7 +32,7 @@
     <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
     </div>
-    <template v-else>
+    <template v-else-if="schemaActions && !saving && templateEntry.changed && !templateEntry.isNew">
       <!-- show dropdown button  -->
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"

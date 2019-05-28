@@ -33,6 +33,7 @@
       'border-left: 4px solid transparent'"
     >
     <div class="d-flex align-items-center pl-3 pr-3 py-3"
+      style="height: 60px;"
       v-if="!onlySets">
       <!-- @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()" -->
       <button class="btn mini border btn-circle border-secondary mr-3"
@@ -55,7 +56,12 @@
           style="font-size: 17px">
         </i>
         <span class="m-0 font-weight-semibold">
-          {{ plugin && plugin.description ? plugin.description.name : '' }}
+          <template v-if="description">
+            {{ description.name }}
+          </template>
+          <template v-else-if="plugin && plugin.description">
+            {{ plugin.description.name }}
+          </template>
         </span>
       </a>
       <span class="mx-auto"></span>

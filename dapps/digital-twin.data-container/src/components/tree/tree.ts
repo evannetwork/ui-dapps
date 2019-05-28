@@ -50,6 +50,11 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   @Prop() digitalTwinAddress;
 
   /**
+   * provide description for fast initial displaying
+   */
+  @Prop() description;
+
+  /**
    * Full Url to the currently selected twin
    */
   @Prop() dcUrl;

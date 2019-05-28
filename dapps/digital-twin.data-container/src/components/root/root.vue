@@ -78,6 +78,7 @@
                 <div class="border-bottom border-sm pt-3">
                   <dc-tree
                     :containerAddress="containerAddress"
+                    :description="description"
                     :dcUrl="`${ dapp.fullUrl }/${ containerAddress }`"
                     :onlySets="true">
                   </dc-tree>
