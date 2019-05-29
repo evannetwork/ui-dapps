@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 1.2.0
+### Features
 - `ui.libs`
   - add tooltip stylings
   - add `btn-tertiary` style
@@ -17,8 +22,6 @@
 - add support for using `bcc` and `smartcontracts` to run without `ui-dapp-browser`
 - `evan.bootstrap.libs`
   - fix tooltip design
-
-### Deprecations
 
 
 ## Version 1.1.0
