@@ -2,6 +2,12 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+
+## Version 3.1.0
+### Features
 - Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
   - dashboard.vue.evan
   - addressbook.vue.evan

@@ -25,7 +25,7 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface, DAppLoader, EvanIframe } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface, DAppLoaderComponent, EvanIframeComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import OverviewComponent from './components/overview/overview.vue';
@@ -46,18 +46,18 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       {
         name: 'dashboard-docs-github',
         path: 'github',
-        component: EvanIframe,
+        component: EvanIframeComponent,
         props: { src: 'https://evannetwork.github.io' }
       },
       {
         name: 'dashboard-docs-bccdocs',
         path: `bccdocs.${ dappBrowser.getDomainName() }`,
-        component: DAppLoader
+        component: DAppLoaderComponent
       },
       {
         name: 'dashboard-docs-uidocs',
         path: `uidocs.${ dappBrowser.getDomainName() }`,
-        component: DAppLoader
+        component: DAppLoaderComponent
       },
     ]
   },
