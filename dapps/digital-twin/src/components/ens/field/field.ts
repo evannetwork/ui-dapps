@@ -25,18 +25,16 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../../dispatchers/registy';
-import * as utils from '../../../utils';
 
 interface EnsFieldFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -101,7 +99,7 @@ export default class EnsFieldComponent extends mixins(EvanComponent) {
     if (this.autocomplete) {
       const runtime = utils.getRuntime(this);
       this.myTwins = Array.from(new Set([ ].concat(
-        await utils.loadFavorites(runtime),
+        await utils.loadTwinFavorites(runtime),
         utils.getLastOpenedTwins()
       )));
     } else {

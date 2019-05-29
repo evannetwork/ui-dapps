@@ -24,60 +24,66 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_digitaltwins": {
     "add": "Open",
     "add-digitaltwin": "Add Digital Twin",
-    "breadcrumbs": {
-      "add": "Add",
-      "containerlink": "Link Data Container",
-      "containers": "Data container overview",
-      "create-template": "Create Template",
-      "datacontainer.digitaltwin": "Data Container",
-      "digitaltwin": "Digital Twin",
-      "digitaltwins": "Digital Twins",
-      "dt-create": "Create Digital Twin",
-      "open": "Open",
-      "map": "Bind to domain name",
-      "overview": "Favorites & recent Digital Twins",
-      "template": "Template",
-      "templates": "Templates",
-      "verifications": "Verifications",
-      "general": "General Information"
-    },
     "containerlink": {
       "address": {
-        "desc": "Address of the data container to be linked to the digital twin.",
+        "desc": "Address of the Plugin to be linked to the digital twin.",
         "error": "Please enter an address!",
-        "title": "Data Container"
+        "title": "Plugin"
       },
       "change-twin": "Change Digital Twin",
-      "description1": "Using the input field, You can select an address of a digital twin into which You want to link a data container. If an existing instance already exists there, it is opened directly for You. If the address is not yet assigned, You can create a new digital twin and bind it to this address or link an existing one to this address.",
-      "description2": "Using the input field, You can select an address of a data container that is to be linked to the digital twin.",
+      "description1": "Using the input field, You can select an address of a digital twin into which You want to link a Plugin. If an existing instance already exists there, it is opened directly for You. If the address is not yet assigned, You can create a new digital twin and bind it to this address or link an existing one to this address.",
+      "description2": "Using the input field, You can select an address of a Plugin that is to be linked to the digital twin.",
       "digitaltwin": "Digital Twin",
       "invalid-container": {
         "desc": "The address entered appears to be incorrect or to correspond to a contract with an invalid format. Please enter the correct address",
-        "title": "Invalid Data Container"
+        "title": "Invalid Plugin"
       },
-      "linking": "Linking",
+      "linking": "Linking existing Plugin",
       "name": {
         "desc": "Alias under which the container will be stored in the digital twin.",
         "error": "Please enter an alias",
         "title": "Alias"
       },
-      "use": "Link Data Container"
+      "use": "Link Plugin"
     },
     "containers": {
-      "create": "Create",
-      "empty": "Data Container",
-      "empty-desc": "Each Digital Twin represents a collection of different data containers. Each data container can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No data container has yet been created for this digital twin. Use the \"create\" or \"link\" button on the top to create a new data container or link to an existing one.</b>",
+      "create": "Add Plugin",
+      "desc": "All Plugins associated with the Digital Twin",
+      "empty": "Plugins",
+      "empty-desc": "Each Digital Twin represents a collection of different Plugins. Each Plugin can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No Plugin has yet been created for this digital twin. Use the \"create\" or \"link\" button on the top to create a new Plugin or link to an existing Plugin instance.</b>",
       "in-creation": "in creation...",
-      "link": "Link"
+      "link": "Link Plugin",
+      "title": "Plugins"
     },
-    "context-menu": {
-      "link": "Link Data Container"
+    "createForm": {
+      "create": "Create Digital Twin",
+      "desc": "Enter the general data of your digital twin.",
+      "question": {
+        "action": "Create",
+        "desc": "Did you enter all data correctly?",
+        "title": "Create Digital Twin"
+      }
+    },
+    "detail": {
+      "add-favorite": "Add as favorite",
+      "edit": "Edit Description",
+      "error": {
+        "desc": "The selected address does not correspond to a valid Digital Twin. Please make sure that the correct address has been opened.",
+        "title": "Invalid Digital Twin"
+      },
+      "map-to-ens": "Bind to alias",
+      "my-new-twin": "New Digital Twin",
+      "remove-favorite": "Remove from favorites",
+      "save": "Save",
+      "title": "Metadata of the Digital Twin"
     },
     "digitaltwins": "Twins",
     "dispatcher": {
@@ -94,55 +100,13 @@ export default {
       "map-ens": "Bind Digital Twin to domain"
     },
     "empty-navigation": "No entries available",
-    "generalForm": {
-      "add-favorite": "Add as favorite",
-      "create": "Create",
-      "description": {
-        "desc": "Short description for the Digital Twin",
-        "title": "Description"
-      },
-      "map-to-ens": "Bind to domain name",
-      "my-new-twin": "New Digital Twin",
-      "name": {
-        "desc": "Name of the Digital Twin",
-        "error": "Please provide a name!",
-        "title": "Name"
-      },
-      "remove-favorite": "Remove from favorites",
-      "save": "Save",
-      "title": "Metadata"
-    },
     "in-creation": "Creating Digital Twin...",
-    "left-categories": {
-      "container-overview": "Data Container overview",
-      "containers": {
-        "desc": "All Data Containers associated with the Digital Twin",
-        "title": "Data Containers"
-      },
-      "digitaltwin-details": {
-        "desc": "General information about the Digital Twin.",
-        "title": "Digital Twin"
-      },
-      "digitaltwin-overview": "Favorites & recent Digital Twins",
-      "general": "General information",
-      "my-digitaltwins": {
-        "desc": "Overview of my Digital Twins",
-        "title": "Digital Twins"
-      },
-      "my-templates": {
-        "desc": "Recent templates or create new ones",
-        "title": "My Templates"
-      },
-      "open-digitaltwin": "Open Digital Twin",
-      "templates-overview": "My templates",
-      "verifications": "Verifications"
-    },
     "lookup": {
       "address": {
         "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
         "title": "Address of your Digital Twin",
-        "use-address": "Bind digital twin to ens address"
+        "use-address": "Bind digital twin to alias"
       },
       "already-registered": {
         "desc": "The specified address is not available.",
@@ -192,12 +156,16 @@ export default {
       "title": "Bind a Digital Twin to a Domain Name"
     },
     "startup": "What would you like to start with?",
-    "unlock-digitaltwin-panel": "<b>This Digital Twin is being created.</b><br><br>Please finish creation to see the page navigation.",
     "verifications": {
-      "description": "Each Digital Twin and Data Container can be automatically verified. The user interface is currently under development.",
+      "description": "Each Digital Twin and Plugin can be automatically verified. The user interface is currently under development.",
       "title": "Verifications"
     },
     "welcome": "Welcome to the Digital Twin management"
   }
 }
-/* tslint:enable */;
+/* tslint:enable */
+
+i18n._datacontainer = dataContainer.translations.en._datacontainer;
+i18n._digitaltwins.breadcrumbs = dtLib.translations.en.breadcrumbs;
+
+export default i18n;

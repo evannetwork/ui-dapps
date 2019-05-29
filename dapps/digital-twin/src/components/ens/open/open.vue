@@ -40,7 +40,7 @@
       </template>
     </evan-modal>
 
-    <div class="white-box mt-4 border rounded">
+    <div class="white-box mt-4 border-smooth rounded">
       <div class="p-0 header">
         <a class="btn large"
           :href="`${ dapp.fullUrl }`">

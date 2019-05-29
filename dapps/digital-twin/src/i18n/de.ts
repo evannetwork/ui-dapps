@@ -25,59 +25,65 @@
   https://evan.network/license/
 */
 
+import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
+import * as dtLib from '@evan.network/digitaltwin.lib';
+
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_digitaltwins": {
     "add": "Öffnen",
     "add-digitaltwin": "Neuer digitaler Zwilling",
-    "breadcrumbs": {
-      "add": "Hinzufügen",
-      "containerlink": "Daten Container verknüpfen",
-      "containers": "Daten Container Übersicht",
-      "create-template": "Vorlage erstellen",
-      "datacontainer.digitaltwin": "Daten Container",
-      "digitaltwin": "Digitaler Zwilling",
-      "digitaltwins": "Digitale Zwillinge",
-      "dt-create": "Digitalen Zwilling erstellen",
-      "open": "Öffnen",
-      "map": "An Domainnamen binden",
-      "overview": "Favoriten & letzte Zwillinge",
-      "template": "Vorlage",
-      "templates": "Vorlagen",
-      "verifications": "Verifizierungen",
-      "general": "Generelle Informationen"
-    },
     "containerlink": {
       "address": {
-        "desc": "Adresse des Daten Containers der in den digitalen Zwilling verknüpft werden soll.",
+        "desc": "Adresse des Plugins der in den digitalen Zwilling verknüpft werden soll.",
         "error": "Bitte geben Sie eine Adresse ein!",
-        "title": "Daten Container"
+        "title": "Plugin"
       },
       "change-twin": "Digitalen Zwilling ändern",
-      "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Daten Container verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
+      "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Plugin verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
       "description2": "Über das Eingabefeld können Sie eine Adresse eines Datencontainers auswählen, der in den digitalen Zwilling verknüpft werden soll.",
       "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
         "desc": "Die eingebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
-        "title": "Ungültiger Daten Container"
+        "title": "Ungültiger Plugin"
       },
-      "linking": "Wird verknüpft",
+      "linking": "Bestehendes Plugin Wird verknüpft...",
       "name": {
         "desc": "Alias, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
         "error": "Bitte geben Sie einen Alias ein!",
         "title": "Alias"
       },
-      "use": "Daten Container verknüpfen"
+      "use": "Plugin verknüpfen"
     },
     "containers": {
-      "create": "Erstellen",
-      "empty": "Daten Container",
-      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Daten Containern. Jeder Daten Container kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">Für diesen Digitalen Zwilling wurde noch kein Daten Container angelegt. Nutzen Sie den \"erstellen\" oder \"verknüpfen\" Button, um einen neuen Daten Container zu erstellen oder einen bestehenden zu verknüpfen.</b>",
+      "create": "Plugin hinzufügen",
+      "empty": "Plugins",
+      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Plugins. Jedes Plugin kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">Für diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"erstellen\" oder \"verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
       "in-creation": "wird erstellt...",
-      "link": "Verknüpfen"
+      "link": "Plugin-Instanz verknüpfen",
+      "title": "Plugins"
     },
-    "context-menu": {
-      "link": "Daten Container verknüpfen"
+    "createForm": {
+      "create": "Digitalen Zwilling erstellen",
+      "desc": "Geben Sie die generellen Daten Ihres Digitalen Zwillings an.",
+      "question": {
+        "action": "Erstellen",
+        "desc": "Haben Sie alle Daten korrekt angegeben?",
+        "title": "Digitalen Zwilling erstellen"
+      }
+    },
+    "detail": {
+      "add-favorite": "Als Favorit hinzufügen",
+      "edit": "Beschreibung anpassen",
+      "error": {
+        "desc": "Die ausgewählte Adresse entspricht keinem gültigen Digitalen Zwilling. Bitte gehen Sie sicher, dass die korrekt Adresse geöffnet wurde.",
+        "title": "Ungültiger Digitaler Zwilling"
+      },
+      "map-to-ens": "An Domainnamen binden",
+      "my-new-twin": "Neuer Digitaler Zwilling",
+      "remove-favorite": "Als Favorit entfernen",
+      "save": "Speichern",
+      "title": "Metadaten des Digitalen Zwillings"
     },
     "digitaltwins": "Digitale Zwillinge",
     "dispatcher": {
@@ -94,49 +100,7 @@ export default {
       "map-ens": "Digitalen Zwilling an Domain binden"
     },
     "empty-navigation": "Keine Einträge verfügbar",
-    "generalForm": {
-      "add-favorite": "Als Favorit hinzufügen",
-      "create": "Erstellen",
-      "description": {
-        "desc": "Kurze Beschreibung des digitalen Zwillings.",
-        "title": "Beschreibung"
-      },
-      "map-to-ens": "An Domainnamen binden",
-      "my-new-twin": "Neuer Digitaler Zwilling",
-      "name": {
-        "desc": "Name des digitalen Zwillings.",
-        "error": "Bitte geben Sie einen Namen ein!",
-        "title": "Name"
-      },
-      "remove-favorite": "Als Favorit entfernen",
-      "save": "Speichern",
-      "title": "Metadaten"
-    },
     "in-creation": "In Erstellung...",
-    "left-categories": {
-      "container-overview": "Daten Container Übersicht",
-      "containers": {
-        "desc": "Alle zugeordneten Daten Container",
-        "title": "Daten Container"
-      },
-      "digitaltwin-details": {
-        "desc": "Generelle Informationen des digitalen Zwillings",
-        "title": "Digitaler Zwilling"
-      },
-      "digitaltwin-overview": "Favoriten & letzte Zwillinge",
-      "general": "Generelle Informationen",
-      "my-digitaltwins": {
-        "desc": "Übersicht meiner digitalen Zwillinge",
-        "title": "Digitale Zwillinge"
-      },
-      "my-templates": {
-        "desc": "Letzte Vorlagen oder Neue erstellen",
-        "title": "Meine Vorlagen"
-      },
-      "open-digitaltwin": "Digitalen Zwilling öffnen",
-      "templates-overview": "Meine Vorlagen",
-      "verifications": "Verifizierungen"
-    },
     "lookup": {
       "address": {
         "desc": "Geben Sie die Adresse Ihres digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
@@ -192,12 +156,16 @@ export default {
       "title": "Digitalen Zwilling auf Domainnamen binden"
     },
     "startup": "Womit möchten Sie starten?",
-    "unlock-digitaltwin-panel": "<b>Der geöffnete digitale Zwilling befindet sich in der Erstellung.</b><br><br>Bitte schließen Sie die Erstellung ab, um die Seitennavigation freizuschalten.",
     "verifications": {
-      "description": "An jeden digitalen Zwilling und Daten Container können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
+      "description": "An jeden digitalen Zwilling und Plugin können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
       "title": "Verizifierungen"
     },
     "welcome": "Willkommen in der digitalen Zwillingsverwaltung"
   }
 }
 /* tslint:enable */
+
+i18n._datacontainer = dataContainer.translations.de._datacontainer;
+i18n._digitaltwins.breadcrumbs = dtLib.translations.de.breadcrumbs;
+
+export default i18n;

@@ -3,21 +3,45 @@
 ## Next Version
 ### Features
 - Add `.vue` namespace to core vue dapps, so vue versions and angular versions exists side by side
+  - dashboard.vue.evan
+  - addressbook.vue.evan
+  - favorites.vue.evan
+  - mailbox.vue.evan
+  - profile.vue.evan
 - `termsoufuse`
   - use latest terms of use and data protection specifications
+- `digitaltwin.lib`
+  - add global repo for shared twin sources
+  - add `dt-bread` component for ignoring breadcrumb paths
+  - add `dt-dbcp` component for editing dbcp
+  - move `UIDigitalTwin` from `digitaltwin` to `digitaltwin.lib` dapp
+  - move utils from `digitaltwin` and `datacontainer.digitaltwin` dapp to `digitaltwin.lib` dapp
+  - add `tree-root-component` for displaying dt, dc, plugin left tree top with same logic
+  - add components for displaying standalone data-sets
+  - add seperated actions components for sets, plugins and containers
 
 ### Fixes
 - `vue dapps`
   - disable left panel for standalone dapps
 - `digitaltwins`, `datacontainer.digitaltwins`
   - use correct html selector id's
+  - reorder twin overview and template overview
 - `digitaltwin`
-  - fix top left digital twin name display overflow
+  - standalone `dt-create` page
+  - overwork dt-edit page
+    - move dbcp edit to modal
+    - move ens map to modal
+    - add detail tabs for future features
+    - map containers overview to dt-edit sub navigation
+  - add `dt-actions-component`
+  - add new tree side panel
 - `datacontainer.digitaltwins`
   - `ajv-editor` use `parseFieldValue` value on save
   - increase `ajv-editor` name td size to 300px
 
 ### Deprecations
+- `digitaltwins`, `datacontainer.digitaltwins`
+  - rename `templates` to `plugins`
 
 
 ## Version 3.0.0

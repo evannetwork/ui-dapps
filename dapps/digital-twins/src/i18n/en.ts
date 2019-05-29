@@ -24,54 +24,35 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-import * as digitalTwin from '@evan.network/digitaltwin';
+import * as digitaltwin from '@evan.network/digitaltwin';
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_digitaltwins": {
-    ...digitalTwin.translations.en._digitaltwins,
-    "add": "Open",
-    "add-digitaltwin": "Add digital Twin",
-    "digitaltwins": "Twins",
-    "empty-navigation": "No entries available",
-    "in-creation": "Creating Digital Twin...",
-    "left-categories": {
-      "container-overview": "Data container overview",
-      "containers": {
-        "desc": "All data containers associated with the digital Twin",
-        "title": "Data containers"
-      },
-      "digitaltwin-details": {
-        "desc": "General information about the digital Twin.",
-        "title": "Digital Twin"
-      },
-      "digitaltwin-overview": "Favorites & recent Digital Twins",
-      "general": "Metadata",
-      "my-digitaltwins": {
-        "desc": "Overview of my Digital Twins.",
-        "title": "Digital Twins"
-      },
-      "my-templates": {
-        "desc": "Recent templates or create new ones",
-        "title": "My Templates"
-      },
-      "open-digitaltwin": "Open Digital Twin",
-      "templates-overview": "My templates",
-      "verifications": "Verifications"
-    },
-    "overview": {
-      "create-twin": "Create Digital Twin",
-      "empty": "Digital Twins",
+    "digitaltwins": {
+      "create": "Create Digital Twin",
+      "desc": "Overview of my Digital Twins.",
+      "empty": "My Digital Twins",
       "empty-desc": "Machines, cars, products, and people can all be represented with a digital twin. Digital twins mirror the asset’s or person’s attributes and status on the blockchain. Creating a twin for cars, forklifts, and other assets enables them to report their status to the network in fractions of a second and respond to requests autonomously.<br><br>A Digital Twin therefore is a unique representation of a real world object in the evan.network. It can hold attributes and any other data about the real world object, and implement operations and tasks concerning the real world object, all cryptographically secured on the blockchain.<br><br><b class=\"text-center d-block mt-3\">Use the \"Create Digital Twin\" or \"Open Digital Twin\" button to create a new one or to open an existing one.</b>",
-      "favorites": "My Favorites",
-      "lastTwins": "Last opened",
-      "title": "Overview"
+      "in-creation": "Creating Digital Twin...",
+      "open": "Open Digital Twin",
+      "title": "My Digital Twins"
     },
-    "templates": {
-      "create": "Create Template",
-      "empty": "My Templates",
-      "empty-desc": "Each data container contains all data specifications, including their format and validation. Using templates, these data definitions can be saved, extracted and used multiple times for different data containers.<br><br><b class=\"text-center d-block mt-3\">You haven't created any templates yet. Use the \"Create Templates\" button to create a new one.</b>"
-    }
+    "plugins": {
+      "create": "Create Plugin",
+      "desc": "Recent plugins or create new ones",
+      "empty": "My Plugins",
+      "empty-desc": "In each Digital Twin different plugins can be installed for different topics like <b>machine-specific metadata</b>, <b>service log</b> or a calendar. Each plugin contains information about permissions, data specifications, including their format and validation and user interfaces. <br><br><b class=\"text-center d-block mt-3\">You have not yet created any plugins. Use the \"Create a Plugin\" button to create a new one.</b>",
+      "in-creation": "Creating Plugin...",
+      "title": "My Plugins"
+    },
+    "plugins-overview": "My plugins"
   }
 }
+
+i18n._digitaltwins.breadcrumbs = dtLib.translations.en.breadcrumbs;
+i18n._digitaltwins.lookup = digitaltwin.translations.en._digitaltwins.lookup;
+
+export default i18n;
 /* tslint:enable */;

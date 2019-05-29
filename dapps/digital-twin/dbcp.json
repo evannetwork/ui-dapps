@@ -4,6 +4,7 @@
     "dapp": {
       "dependencies": {
         "datacontainer.digitaltwin": "^1.0.0",
+        "digitaltwin.lib": "^1.0.0",
         "evancore.vue.libs": "^1.1.0"
       },
       "entrypoint": "digitaltwin.js",

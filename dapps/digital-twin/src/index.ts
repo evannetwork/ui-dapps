@@ -29,22 +29,18 @@ import Vue from 'vue';
 import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
 import { System, } from '@evan.network/ui-dapp-browser';
 
-import Main from './components/root/root.vue';
-import translations from './i18n/translations';
-import routes from './routes';
-import components from './components/registry';
-import componentRegistration from './components/registry';
 import * as dispatchers from './dispatchers/registy';
-import * as utils from './utils';
-import EvanUIDigitalTwin from './digitaltwin';
+import componentRegistration from './components/registry';
+import components from './components/registry';
+import Main from './components/root/root.vue';
+import routes from './routes';
+import translations from './i18n/translations';
 
-export * from './dispatchers/registy';
-export * from './utils';
 export * from './components/registry';
-export { translations, dispatchers, utils, EvanUIDigitalTwin, componentRegistration };
+export * from './dispatchers/registy';
+export { translations, dispatchers, componentRegistration };
 
-System.map['@evan.network/digitaltwin'] =
-  `digitaltwin.${ getDomainName() }!dapp-content`;
+System.map['@evan.network/digitaltwin'] = `digitaltwin.${ getDomainName() }!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

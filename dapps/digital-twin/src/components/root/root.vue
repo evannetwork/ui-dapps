@@ -30,100 +30,60 @@
     <evan-dapp-wrapper
       :routes="[ ]"
       v-on:loggedin="initialize()">
+      <template v-slot:header
+        v-if="$route.path.indexOf(`digitaltwins.${ dapp.domainName }`) === -1">
+        <dt-breadcrumbs></dt-breadcrumbs>
+      </template>
       <template v-slot:content>
-        <evan-loading v-if="loading"></evan-loading>
+        <evan-loading v-if="loading">
+        </evan-loading>
         <template v-else>
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"
-            v-if="$store.state.uiDT">
+            v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
             <template v-slot:content>
               <div style="width: 360px">
                 <evan-loading
                   v-if="$store.state.uiDT.loading && !$store.state.uiDT.initialized">
                 </evan-loading>
 
-                <template v-else>
-                  <div
-                    class="d-flex flex-wrap align-items-center justify-content-between bg-level-1"
-                    style="height: 59px">
-                    <div class="d-flex align-items-center flex-truncate">
-                      <button class="btn large"
-                        @click="$route.path.indexOf('digitaltwins') !== -1 ?
-                          evanNavigate(`digitaltwins.${ dapp.domainName }`, `/dashboard.vue.${ dapp.domainName }`) :
-                          $router.history.go(-1)">
-                        <i class="mdi mdi-chevron-left"></i>
-                      </button>
-                      <a class="flex-truncate"
-                        :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }`">
-                        <h4 class="font-weight-semibold text-uppercase text-nowrap m-0">
-                          <template v-if="$store.state.uiDT.address === 'dt-create'">
-                            {{ '_digitaltwins.breadcrumbs.dt-create' | translate }}
-                          </template>
-                          <template v-else>
-                            {{ $store.state.uiDT.dbcp.name || $store.state.uiDT.address }}
-                          </template>
-                        </h4>
-                      </a>
-                    </div>
+                <template v-else-if="twinUrl">
+                  <dt-tree-root
+                    :url="`${ twinUrl }/dt-detail`"
+                    :topic="`_digitaltwins.breadcrumbs.digitaltwin`"
+                    :title="$store.state.uiDT.dbcp.name"
+                    :icon="`mdi mdi-fingerprint`"
+                    @rightClick="$refs.dtActions.showDropdown($event)">
+                    <template v-slot:context-menu>
+                      <dt-actions
+                        ref="dtActions"
+                        :uiDT="$store.state.uiDT"
+                        :dtActions="true"
+                        :containerActions="true"
+                        :displayMode="'dropdownIcon'">
+                      </dt-actions>
+                    </template>
+                  </dt-tree-root>
+
+                  <div class="pl-6 pr-3 pt-3">
+                    <small class="text-muted text-uppercase font-weight-semibold">
+                      {{ '_digitaltwins.breadcrumbs.dt-plugins' | translate }}
+                    </small>
                   </div>
 
-                  <template v-if="!$store.state.uiDT.validity.exists">
-                    <p class="mt-5 p-3 text-center"
-                      v-html="$t('_digitaltwins.unlock-digitaltwin-panel')">
-                    </p>
-                  </template>
-
-                  <ul class="nav font-medium in w-100 mb-3 mt-auto"
-                    v-if="$store.state.uiDT.validity.exists">
-                    <li class="w-100 p-4 clickable border-top border-sm"
-                      v-for="(category, index) in twinNavigation"
-                      :id="`evan-dt-nav-${ category.name }`"
-                      :class="{ 'active': category.active }"
-                      @click="toggleLeftCategory(twinNavigation, category)">
-                      <div class="d-flex w-100">
-                        <div>
-                          <h6 class="mb-1 font-weight-semibold">
-                            {{ `_digitaltwins.left-categories.${ category.name }.title` | translate }}
-                          </h6>
-                          <small class="text-muted font-weight-semibold">
-                            {{ `_digitaltwins.left-categories.${ category.name }.desc` | translate }}
-                          </small>
-                        </div>
-                        <span class="mx-auto"></span>
-                        <i v-if="category.active" class="mdi mdi-chevron-up"></i>
-                        <i v-if="!category.active" class="mdi mdi-chevron-down"></i>
-                      </div>
-                      <div class="mt-3" v-if="category.active">
-                        <ul class="sub-nav" v-if="category.children.length > 0">
-                          <li class="pt-2 pb-2 pl-3 pr-3 d-flex flex-truncate"
-                            v-for="(subCategory, subIndex) in category.children">
-                            <a class="font-weight-semibold"
-                              :id="`evan-dt-nav-${ subCategory.path.split('/').pop() }`"
-                              @click="$refs.level2Wrapper.hide()"
-                              :href="!subCategory.path ? null : `${ dapp.fullUrl }/${ subCategory.path }`"
-                              :class="{ 'active': $route.path.indexOf(subCategory.path) !== -1 }">
-                              {{ subCategory.i18n ? $t(`_digitaltwins.left-categories.${ subCategory.name }`) : subCategory.name }}
-                            </a>
-                            <template v-if="subCategory.loading">
-                              <span class="mx-auto"></span>
-                              <div class="spinner-border spinner-border-sm ml-3"></div>
-                            </template>
-                          </li>
-                        </ul>
-                        <b class="p-2 text-center small d-block"
-                          v-else
-                          v-html="$t(`_digitaltwins.empty-navigation`)">
-                        </b>
-                      </div>
-                    </li>
-                  </ul>
+                  <dc-tree
+                    v-for="(container, index) in $store.state.uiDT.containers"
+                    :baseUrl="twinUrl"
+                    :containerAddress="container.address"
+                    :creating="container.creating"
+                    :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
+                    :description="container.description"
+                    :digitalTwinAddress="$store.state.uiDT.address"
+                    :loading="container.loading">
+                  </dc-tree>
                 </template>
               </div>
             </template>
           </evan-dapp-wrapper-level-2>
-          <evan-breadcrumbs
-            :i18nScope="'_digitaltwins.breadcrumbs'"
-            v-if="$route.name !== 'dt-template' && $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1">
-          </evan-breadcrumbs>
 
           <transition name="fade" mode="out-in"
             v-if="!$store.state.uiDT || ($store.state.uiDT && !$store.state.uiDT.loading)">

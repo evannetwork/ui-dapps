@@ -25,25 +25,27 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registry';
-import * as utils from '../../utils';
+import * as entryUtils from '../../entries';
+import * as fieldUtils from '../../fields';
 import ContainerCache from '../../container-cache';
+import { getDtAddressFromUrl } from '../../utils';
+
 
 interface CreateInterface extends EvanForm {
   description: EvanFormControl;
-  img: EvanFormControl;
+  imgSquare: EvanFormControl;
   name: EvanFormControl;
-  template: EvanFormControl;
+  plugin: EvanFormControl;
 }
 
 @Component({ })
@@ -79,13 +81,18 @@ export default class CreateComponent extends mixins(EvanComponent) {
   activeStep = 0;
 
   /**
-   * Available templates
+   * Available plugins
    */
-  templates: Array<any> = [
+  plugins: Array<any> = [
     {
-      title: '_datacontainer.createForm.base-template',
-      type: 'metadata',
-      properties: { },
+      description: {
+        name: '_datacontainer.createForm.base-plugin',
+        description: '',
+      },
+      template: {
+        type: 'metadata',
+        properties: { },
+      }
     }
   ];
 
@@ -95,9 +102,9 @@ export default class CreateComponent extends mixins(EvanComponent) {
   creationWatcher: Function;
 
   /**
-   * Should a template be saved?
+   * Should a plugin be saved?
    */
-  templateMode = false;
+  pluginMode = false;
 
   /**
    * Should the breadcrumbs be displayed? Hidden when evan-navigation tabs are visible
@@ -114,23 +121,27 @@ export default class CreateComponent extends mixins(EvanComponent) {
   };
 
   /**
+   * Plugin that was selected from the plugin list. When set, will activate steppers.
+   */
+  activePlugin = null;
+
+  /**
+   * Map getType so it can be accessed in template
+   */
+  getEntryType = fieldUtils.getType;
+
+  /**
    * Setup the form.
    */
   async created() {
     const runtime = utils.getRuntime(this);
-    const splitHash = (<any>this).dapp.baseHash.split('/');
-    const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ (<any>this).dapp.domainName }`);
-
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
+    this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
 
-    if (twinDAppIndex !== -1) {
-      this.digitalTwinAddress = splitHash[twinDAppIndex + 1];
-    }
+    // start plugin mode!
+    this.pluginMode = this.$route.name.startsWith('plugin-create');
 
-    // start template mode!
-    this.templateMode = this.$route.name.startsWith('create-template');
-
-    // TODO: load templates
+    // TODO: load plugins
     this.createForm = (<CreateInterface>new EvanForm(this, {
       name: {
         value: '',
@@ -141,89 +152,90 @@ export default class CreateComponent extends mixins(EvanComponent) {
       description: {
         value: ''
       },
-      template: {
+      plugin: {
         value: 0
       },
-      img: {
-        value: '',
+      imgSquare: {
+        value: ''
       },
     }));
 
-    const templates = await utils.getMyTemplates(runtime);
-    Object.keys(templates).forEach((key: string) => {
-      this.templates.push({
-        title: templates[key].description.name,
-        type: templates[key].template.type,
-        properties: templates[key].template.properties,
-      });
+    const plugins = await utils.getMyPlugins(runtime);
+    Object.keys(plugins).forEach((key: string) => {
+      this.plugins.push(plugins[key]);
     });
 
     // check if a existing container should be cloned
     const cloneContainer = (<any>this).$route.params.cloneContainer;
     if (cloneContainer) {
-      let template;
-
-      // if a template is available that should used to create a container / template, load the
-      // template
-      if (templates[cloneContainer]) {
-        const loadedTemplate = await bcc.Container.getContainerTemplate(runtime.profile,
+      // if a plugin is available that should used to create a container / plugin, load the
+      // plugin
+      if (plugins[cloneContainer]) {
+        const plugin = await bcc.Container.getContainerPlugin(runtime.profile,
           cloneContainer);
 
-        // setup template and description
-        template = loadedTemplate.template;
-        this.createForm.name.value = loadedTemplate.description.name;
-        this.createForm.description.value = loadedTemplate.description.description;
+        // setup plugin and description
+        // this.createForm.name.value = plugin.description.name;
+        this.createForm.description.value = plugin.description.description;
 
-        // search for active template index
-        for (let i = 0; i < this.templates.length; i++) {
-          if (this.templates[i].title === cloneContainer) {
-            this.createForm.template.value = i;
+        // search for active plugin index
+        for (let i = 0; i < this.plugins.length; i++) {
+          if (this.plugins[i].description.name === cloneContainer) {
+            this.createForm.plugin.value = i;
 
             break;
           }
         }
       } else if (cloneContainer.startsWith('0x')) {
         const container = utils.getContainer(<any>runtime, cloneContainer);
-        const description = await container.getDescription();
-        template = await container.toTemplate(true);
+        const plugin = await container.toPlugin(true);
 
-        this.createForm.name.value = description.name;
-        this.createForm.description.value = description.description;
+        // this.createForm.name.value = plugin.description.name;
+        this.createForm.description.value = plugin.description.description;
 
         // apply the contract as template
-        this.templates.push({
-          title: description.name,
-          type: template.type,
-          properties: template.properties,
-        });
+        this.plugins.push(plugin);
 
         // set correct template index
-        this.createForm.template.value = this.templates.length - 1;
+        this.createForm.plugin.value = this.plugins.length - 1;
       }
     }
-
-    // enable the edit mode for all properties for a template
-    this.templates.forEach(template => {
-      Object.keys(template.properties).forEach((propertyName: string) => {
-        template.properties[propertyName].mode = 'edit';
-      });
-    });
-
-    // configure steps and it' titles
-    this.steps = [
-      {
-        title: '_datacontainer.createForm.general',
-        disabled: () => false
-      },
-      {
-        title: '_datacontainer.createForm.container-configuration',
-        disabled: () => !this.createForm.isValid
-      },
-    ];
 
     this.loading = false;
     this.watchForCreation();
     this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
+  }
+
+  /**
+   * Create the new container
+   */
+  async create() {
+    const runtime = utils.getRuntime(this);
+
+    if (this.pluginMode) {
+      dispatchers.pluginDispatcher.start(runtime, {
+        description: {
+          description: this.createForm.description.value,
+          imgSquare: this.createForm.imgSquare.value,
+          name: this.createForm.name.value,
+        },
+        template: this.plugins[this.createForm.plugin.value].template,
+      });
+    } else {
+      dispatchers.createDispatcher.start(runtime, {
+        digitalTwinAddress: this.digitalTwinAddress,
+        description: {
+          description: this.createForm.description.value,
+          imgSquare: this.createForm.imgSquare.value,
+          name: this.createForm.name.value,
+        },
+        plugin: this.plugins[this.createForm.plugin.value],
+      });
+    }
+
+    (<any>this.$refs.createModal).hide();
+    await (new ContainerCache(runtime.activeAccount))
+      .delete(!this.pluginMode ? 'dc-create' : 'plugin-create');
   }
 
   /**
@@ -234,65 +246,118 @@ export default class CreateComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Open the create modal, when all entries are saved.
+   * Activate a plugin and calculate the steppers.
+   *
+   * @param      {any}      plugin    plugin that should be activated
+   * @param      {boolean}  dbcpHint  hide edit dbcp hint when false
    */
-  triggerCreateDialog() {
-    const unsavedChanges = (<any>this.$refs.templateHandler).getUnsavedChanges(true);
+  activatePlugin(plugin: any, dbcpHint = true) {
+    this.saveActiveStep();
+    this.activePlugin = plugin;
 
-    if (unsavedChanges.length === 0) {
-      (<any>this.$refs.createModal).show();
+    // reset steps
+    this.$set(this, 'steps', [ ]);
+
+    // apply the new active plugin entries as new steps
+    const customTranslation = { };
+    Object.keys(plugin.template.properties).forEach((entryName: string) => {
+      // add the steps
+      const title = `_datacontainer.breadcrumbs.${ entryName }`;
+      this.steps.push({
+        title,
+        entryName,
+        disabled: () => false
+      });
+      customTranslation[title] = entryName;
+
+      /**
+       * Takes an entry and checks for type array. If it's an array, ensure, that the value array
+       * and an addValue object is added. Per default, this values are not returned by the API,
+       * templates does not support list entries export and must be load dynamically. The value
+       * array is used to handle new arrays, that will be persisted for caching to the indexeddb
+       * like the normal entries
+       */
+      entryUtils.ensureValues(plugin.template.properties[entryName]);
+    });
+    (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
+
+    if (dbcpHint) {
+      // wait for rendering the dbcp-edit button and show a tooltip hint
+      this.$nextTick(() => {
+        const tooltip = (<any>this.$refs.editDbcphint);
+
+        // show the tooltip
+        tooltip.onMouseEnter();
+
+        // hide the tooltip
+        setTimeout(() => {
+          tooltip.onMouseLeave();
+        }, 5e3);
+      });
     }
   }
 
   /**
-   * Create the new container
+   * Takes the response from the dc-new-entry and adds the new property
+   *
+   * @param      {any}  entryData  The entry data
    */
-  async create() {
-    const runtime = utils.getRuntime(this);
+  addNewEntry(entryData: any) {
+    this.activePlugin.template.properties[entryData.name] = entryData.entry;
 
-    if (this.templateMode) {
-      dispatchers.templateDispatcher.start(runtime, {
-        description: this.createForm.description.value,
-        img: this.createForm.img.value,
-        name: this.createForm.name.value,
-        template: this.templates[this.createForm.template.value],
-      });
+    // navigate to the new data set
+    // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
+
+    utils.enableDTSave();
+    this.activatePlugin(this.activePlugin, true);
+  }
+
+  /**
+   * Saves current changes and navigates to next step.
+   */
+  nextStep() {
+    this.saveActiveStep();
+
+    // if we are on the last step, ask to finish creation
+    if (this.steps.length === 0 || this.activeStep === (this.steps.length - 1)) {
+      (<any>this.$refs.createModal).show();
     } else {
-      dispatchers.createDispatcher.start(runtime, {
-        description: this.createForm.description.value,
-        digitalTwinAddress: this.digitalTwinAddress,
-        img: this.createForm.img.value,
-        name: this.createForm.name.value,
-        template: this.templates[this.createForm.template.value],
-      });
+      // navigate to next step.
+      this.steps[this.activeStep].valid = true;
+      this.activeStep = this.activeStep + 1;
     }
+  }
 
-    (<any>this.$refs.createModal).hide();
-    await (new ContainerCache(runtime.activeAccount))
-      .delete(!this.templateMode ? 'create' : 'template-create');
+  /**
+   * Save latest step entry edit values.
+   */
+  saveActiveStep() {
+    if (this.steps[this.activeStep] && this.steps[this.activeStep].entryComp) {
+      this.steps[this.activeStep].entryComp.save();
+    }
   }
 
   /**
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
-    const getDispatcher = () => this.templateMode ?
-      dispatchers.templateDispatcher : dispatchers.createDispatcher;
+    const getDispatcher = () => this.pluginMode ?
+      dispatchers.pluginDispatcher : dispatchers.createDispatcher;
 
     const watch = async ($event?: any) => {
       const beforeCreating = this.creating;
       const runtime = utils.getRuntime(this);
       let toOpen;
 
-      // when creating a template, use the templateDispatcher and check for any instances
-      if (this.templateMode) {
-        const instances = await dispatchers.templateDispatcher.getInstances(runtime);
+      // when creating a plugin, use the pluginDispatcher and check for any instances
+      if (this.pluginMode) {
+        const instances = await dispatchers.pluginDispatcher.getInstances(runtime);
         this.creating = instances.length > 0;
 
-        if ($event && $event.detail.instance.data.name) {
+        if ($event && $event.detail.instance.data.description.name) {
           // force reload
           delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-          toOpen = `template/${ $event.detail.instance.data.name }`;
+          toOpen = `${ $event.detail.instance.data.description.name }`;
         }
       } else {
         // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address
@@ -306,7 +371,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         }
       }
 
-      // if the synchronisation has finished, navigate to the new template / container
+      // if the synchronisation has finished, navigate to the new plugin / container
       if (!this.creating && beforeCreating && $event && toOpen) {
         (<any>this).evanNavigate(toOpen);
       }

@@ -25,12 +25,16 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoader } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface, UnderDevelopmentComponent } from '@evan.network/ui-vue-core';
 
+import ContainerPluginSwitchComponent from './components/container/container-plugin-switch/container-plugin-switch.vue';
 import CreateComponent from './components/create/create.vue';
-import DetailComponent from './components/detail/detail.vue';
-import TemplateComponent from './components/template/template.vue';
+import DataSetComponent from './components/set/set/set.vue';
+import DataSetsComponent from './components/set/sets/sets.vue';
+import DcListEntriesComponent from './components/set/list-entries/list-entries.vue';
+import NewDataSetComponent from './components/set/new-set/new-set.vue';
+import SetSchemaComponent from './components/set/schema/schema.vue';
+
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
@@ -39,10 +43,39 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     // root route is not used, so navigate the user back
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
-  { name: 'create-container',  path: 'create/:cloneContainer?',           component: CreateComponent },
-  { name: 'create-template',   path: 'create-template/:cloneContainer?',  component: CreateComponent },
-  {                            path: 'template/:template',                component: TemplateComponent },
-  {                            path: ':containerAddress',                 component: DetailComponent },
+  {
+    name: 'dc-create',
+    path: 'dc-create/:cloneContainer?',
+    component: CreateComponent
+  },
+  {
+    name: 'plugin-create',
+    path: 'plugin-create/:cloneContainer?',
+    component: CreateComponent
+  },
+  {
+    path: ':containerAddress',
+    component: ContainerPluginSwitchComponent,
+    children: [
+      { redirect: { path: 'dc-sets' }, path: '', },
+      { name: 'dc-changes',     component: UnderDevelopmentComponent, path: 'dc-changes', },
+      { name: 'dc-permissions', component: UnderDevelopmentComponent, path: 'dc-permissions', },
+      { name: 'dc-sets',        component: DataSetsComponent, path: 'dc-sets', },
+      { name: 'dc-sets-add',    component: NewDataSetComponent, path: 'dc-sets-add', },
+      { name: 'dc-technical',   component: UnderDevelopmentComponent, path: 'dc-technical', },
+    ]
+  },
+  {
+    path: ':containerAddress/data-set/:entryName',
+    component: DataSetComponent,
+    children: [
+      { redirect: { path: 'entry-schema' }, path: '', },
+      { name: 'entry-changes',     component: UnderDevelopmentComponent, path: 'entry-changes', },
+      { name: 'entry-permissions', component: UnderDevelopmentComponent, path: 'entry-permissions', },
+      { name: 'entry-schema',      component: SetSchemaComponent,        path: 'entry-schema', },
+      { name: 'list-entries',      component: DcListEntriesComponent,    path: 'list-entries', },
+    ]
+  },
 ];
 
 export default routeRegistration;

@@ -25,12 +25,11 @@
   https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { getRuntime } from '../utils';
-import EvanUIDigitalTwin from '../digitaltwin';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib'
 
 const dispatcher = new Dispatcher(
   `digitaltwin.${ dappBrowser.getDomainName() }`,
@@ -41,7 +40,7 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = getRuntime(instance.runtime);
+    const runtime = utils.getRuntime(instance.runtime);
     const twin = await bcc.DigitalTwin.create(
       <any>runtime,
       EvanUIDigitalTwin.getDigitalTwinConfig(runtime, data.address, data.dbcp)

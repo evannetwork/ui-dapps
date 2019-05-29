@@ -25,12 +25,12 @@
   https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
-import * as utils from '../utils';
 
 const dispatcher = new Dispatcher(
   `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
@@ -45,19 +45,24 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
 
     // apply formular data to the description
-    const description = await utils.getDataContainerBaseDbcp({
-      name: data.name,
-      description: data.description,
-      imgSquare: data.img,
+    const description = await utils.getDataContainerBaseDbcp(data.description);
+
+    // fill empty permissions
+    Object.keys(data.plugin.template.properties).forEach(entry => {
+      if (!data.plugin.template.properties[entry].permissions) {
+        data.plugin.template.properties[entry].permissions = {
+          0: ['set']
+        };
+      }
     });
 
     // create the container
     const container = await bcc.Container.create(<any>runtime, {
       accountId: runtime.activeAccount,
-      address: `${ data.name }.${ data.digitalTwinAddress }`,
+      // address: `${ data.name }.${ data.digitalTwinAddress }`,
       description: description,
       factoryAddress: utils.containerFactory,
-      template: data.template,
+      plugin: data.plugin,
     });
 
     data.contractAddress = await container.getContractAddress();
@@ -68,7 +73,7 @@ dispatcher
     const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
 
     // save the digital twin entries
-    await digitalTwin.setEntry(data.name, data.contractAddress,
+    await digitalTwin.setEntry(data.description.name, data.contractAddress,
       bcc.DigitalTwinEntryType.Container);
   });
 

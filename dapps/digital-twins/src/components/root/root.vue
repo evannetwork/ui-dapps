@@ -30,33 +30,19 @@
     <evan-dapp-wrapper
       :routes="[ ]"
       v-on:loggedin="initialize()">
-      <template v-slot:content>
-        <template v-if="
-          $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 ||
-          $route.path.indexOf(`digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }`) !== -1
+      <template v-slot:header>
+        <dt-breadcrumbs></dt-breadcrumbs>
+        <template v-if="(
+            $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 &&
+            $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1
+          ) ||
+          $route.path.indexOf(`plugin-create`) !== -1
         ">
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"></evan-dapp-wrapper-level-2>
-          <evan-breadcrumbs
-            :i18nScope="'_digitaltwins.breadcrumbs'">
-          </evan-breadcrumbs>
-          <div class="evan-navigation-tabs">
-            <a class="evan-tab bg-secondary text-white"
-              id="dt-overview"
-              :class="{ 'active': activeTab === 0 }"
-              :href="`${ dapp.fullUrl }/overview`"
-              @click="activeTab = 0">
-              {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
-            </a>
-            <a class="evan-tab bg-inverted text-white"
-              id="dt-templates"
-              :class="{ 'active': activeTab === 1 }"
-              :href="`${ dapp.fullUrl }/templates`"
-              @click="activeTab = 1">
-              {{ '_digitaltwins.left-categories.my-templates.title' | translate }}
-            </a>
-          </div>
+          <evan-nav-tabs :tabs="tabs"></evan-nav-tabs>
         </template>
-
+      </template>
+      <template v-slot:content>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>

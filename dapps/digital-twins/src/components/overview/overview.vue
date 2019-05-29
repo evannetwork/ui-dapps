@@ -29,53 +29,57 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <div class="container-wide" v-if="!loading">
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center mb-5">
         <div>
           <h3 class="font-weight-bold mb-0">
-            {{ '_digitaltwins.left-categories.my-digitaltwins.title' | translate }}
+            {{ '_digitaltwins.digitaltwins.title' | translate }}
           </h3>
-          <p class="text-muted font-weight-semibold m-t-0">
-            {{ '_digitaltwins.left-categories.my-digitaltwins.desc' | translate }}
+          <p class="text-muted font-weight-semibold m-0">
+            {{ '_digitaltwins.digitaltwins.desc' | translate }}
           </p>
         </div>
         <span class="mx-auto"></span>
         <div>
           <a
-            id="dt-create"
-            class="btn btn-rounded btn-light font-weight-normal"
-            :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/dt-create`">
-            <i class="mdi mdi-plus mr-1 m-0"></i>
-            <span>{{ '_digitaltwins.overview.create-twin' | translate }}</span>
+            id="dt-open"
+            class="btn btn-circle btn-sm btn-tertiary mr-3"
+            :href="`${ dapp.fullUrl }/open`">
+            <i class="mdi mdi-magnify"></i>
+            <evan-tooltip :placement="'bottom'">
+              {{ '_digitaltwins.digitaltwins.open' | translate }}
+            </evan-tooltip>
           </a>
           <a
-            id="dt-open"
-            class="btn btn-rounded btn-primary font-weight-semibold"
-            :href="`${ dapp.fullUrl }/open`">
-            {{ '_digitaltwins.lookup.title' | translate }}
+            id="dt-create"
+            class="btn btn-rounded btn-primary"
+            :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/dt-create`">
+            <span>{{ '_digitaltwins.digitaltwins.create' | translate }}</span>
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </a>
         </div>
       </div>
 
-      <div class="white-box border rounded mt-3"
-        v-for="(category, index) in [ 'lastTwins', 'favorites' ]"
-        v-if="categories[category].length > 0">
-        <div class="header">
+      <div class="white-box border-smooth rounded mt-3"
+        v-if="twins.length !== 0">
+        <div class="header border-0">
           <div>
             <h3 class="font-weight-semibold m-0">
-              {{ `_digitaltwins.overview.${ category }` | translate }}
+              {{ `_digitaltwins.digitaltwins.title` | translate }}
             </h3>
           </div>
           <span class="mx-auto"></span>
           <div></div>
         </div>
-        <div class="row content"
-          :id="`evan-dt-${ category }`">
-          <div class="col-md-6 col-lg-4 mb-4"
-            v-for="(ensAddress, index) in categories[category]">
-            <a class="d-flex bg-level-1 border rounded evan-highlight flex-truncate"
-              :id="`evan-dt-${ category }-${ ensAddress.replace('.', '') }`"
-              :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }/containers`">
+        <div class="row content pt-1 pb-0"
+          :id="`evan-dt-twins`">
+          <div class="col-md-6 col-lg-3 mb-4"
+            v-for="(ensAddress, index) in twins">
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
+              :id="`evan-dt-${ ensAddress.replace('.', '') }`"
+              :href="descriptions[ensAddress].creating ?
+                null :
+                `${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }`
+              ">
               <div class="row align-items-center m-0 w-100">
                 <div class="col-2">
                   <img class="img-fluid p-3"
@@ -83,21 +87,22 @@
                     :src="descriptions[ensAddress].imgSquare">
                   <i
                     class="mdi mdi-fingerprint"
-                    style="font-size:60px;">
+                    style="font-size: 50px;">
                   </i>
                 </div>
                 <div class="col-10">
-                  <small class="text-center p-1 d-block text-muted"
-                    v-if="descriptions[ensAddress].creating">
-                    {{ '_digitaltwins.containers.in-creation' | translate }}
-                  </small>
-                  <div class="d-flex p-3 flex-truncate">
+                  <div class="d-flex p-3 flex-truncate align-items-center">
                     <div>
                       <h4 class="font-weight-semibold mb-0">
                         {{ descriptions[ensAddress].name }}
                       </h4>
                       <span class="text-justify d-block font-weight-semibold text-muted">
-                        {{ descriptions[ensAddress].description }}
+                        <template v-if="descriptions[ensAddress].creating">
+                          {{ '_digitaltwins.digitaltwins.in-creation' | translate }}
+                        </template>
+                        <template v-else>
+                          {{ descriptions[ensAddress].description }}
+                        </template>
                       </span>
                     </div>
                     <template v-if="descriptions[ensAddress].loading">
@@ -111,16 +116,16 @@
           </div>
         </div>
       </div>
-      <div class="white-box border rounded mt-3 "
-        v-if="categories.favorites.length === 0 && categories.lastTwins.length === 0">
+      <div class="white-box border-smooth rounded mt-3"
+        v-else>
         <div class="header">
           <h4 class="m-0">
-            {{ `_digitaltwins.overview.empty` | translate }}
+            {{ `_digitaltwins.digitaltwins.empty` | translate }}
           </h4>
         </div>
         <div class="content">
           <p class="m-0"
-            v-html="$t('_digitaltwins.overview.empty-desc')">
+            v-html="$t('_digitaltwins.digitaltwins.empty-desc')">
           </p>
         </div>
       </div>

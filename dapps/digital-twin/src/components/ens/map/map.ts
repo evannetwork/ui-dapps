@@ -25,18 +25,16 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../../dispatchers/registy';
-import { getRuntime, getDomainName } from '../../../utils';
 
 interface LookupFormInterface extends EvanForm {
   address: EvanFormControl;
@@ -78,6 +76,8 @@ export default class MapComponent extends mixins(EvanComponent) {
    * Watch for updates
    */
   created() {
+    this.$emit('init', this);
+
     this.lookupForm = (<LookupFormInterface>new EvanForm(this, {
       address: {
         value: '',
@@ -89,7 +89,7 @@ export default class MapComponent extends mixins(EvanComponent) {
 
     const watchForBinding = async ($event?: CustomEvent) => {
       const ensAddresses = (await dispatchers.mapEnsDispatcher
-        .getInstances(getRuntime(this)))
+        .getInstances(utils.getRuntime(this)))
         .filter((inst: any) =>
           inst.data.contractAddress === this.$route.params.digitalTwinAddress
         )
@@ -159,7 +159,7 @@ export default class MapComponent extends mixins(EvanComponent) {
    * Map the twin to the specific ens address.
    */
   mapEns() {
-    dispatchers.mapEnsDispatcher.start(getRuntime(this), {
+    dispatchers.mapEnsDispatcher.start(utils.getRuntime(this), {
       ensAddress: this.ensAddress,
       contractAddress: this.$route.params.digitalTwinAddress,
     });

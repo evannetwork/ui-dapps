@@ -29,8 +29,10 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
+import { utils } from '@evan.network/digitaltwin.lib';
 
-import * as utils from '../utils';
+import ContainerCache from '../container-cache';
+import * as dcUtils from '../utils';
 
 const dispatcher = new Dispatcher(
   `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
@@ -43,8 +45,8 @@ dispatcher
   .startup(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
-    data.template = data.template || await container.toTemplate(false);
-    const entryChanges = await utils.getEntryChanges(runtime, data.address, data.template);
+    data.plugin = data.plugin || await container.toPlugin(false);
+    const entryChanges = await dcUtils.getEntryChanges(runtime, data.address, data.plugin.template);
 
     // analyse data and check, which data fields must be saved
     data.saveDescription = entryChanges.saveDescription;
@@ -57,21 +59,22 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
     const description = await container.getDescription();
+    const newDescription = data.description;
 
     // check for changed data
     if (data.saveDescription ||
-        description.name !== data.name ||
-        description.description !== data.description ||
-        description.imgSquare !== data.img) {
+        description.name !== newDescription.name ||
+        description.description !== newDescription.description ||
+        description.imgSquare !== newDescription.img) {
       // set dbcp values
-      description.name = data.name;
-      description.description = data.description;
-      description.imgSquare = data.img;
+      description.name = newDescription.name;
+      description.description = newDescription.description;
+      description.imgSquare = newDescription.imgSquare;
 
       // don't forget to update the template schema
       description.dataSchema = { };
-      Object.keys(data.template.properties).forEach(property =>
-        description.dataSchema[property] = data.template.properties[property].dataSchema
+      Object.keys(data.plugin.template.properties).forEach(property =>
+        description.dataSchema[property] = data.plugin.template.properties[property].dataSchema
       );
 
       await container.setDescription(description);
@@ -82,16 +85,24 @@ dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
+    const containerCache = new ContainerCache(runtime.activeAccount);
 
     // copy the entries to save, so the iteration will not be affected by removing entries to save
     // from the data object => entries will be removed and the data will be persisted, after the
     // synchronization of this entry was saved successfull, so the user won't do this twice
     const entriesToSave = JSON.parse(JSON.stringify(data.entriesToSave));
     await Promise.all(entriesToSave.map(async (entryKey: string, index: number) => {
-      if (data.template.properties[entryKey].type === 'list') {
-        await container.addListEntries(entryKey, data.template.properties[entryKey].value);
+      if (data.plugin.template.properties[entryKey].type === 'list') {
+        await container.addListEntries(entryKey, data.plugin.template.properties[entryKey].value);
       } else {
-        await container.setEntry(entryKey, data.template.properties[entryKey].value);
+        await container.setEntry(entryKey, data.plugin.template.properties[entryKey].value);
+      }
+
+      // delete cached entry
+      const cached = await containerCache.get(data.address);
+      if (cached) {
+        delete cached.template.properties[entryKey];
+        await containerCache.put(data.address, cached);
       }
 
       // remove the list entry and persist the state into the indexeddb

@@ -24,9 +24,10 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_datacontainer": {
     "ajv": {
       "add": "Feld hinzufügen",
@@ -58,26 +59,12 @@ export default {
         "title": "Wert"
       }
     },
-    "breadcrumbs": {
-      "add": "Hinzufügen",
-      "container-link": "Daten Container verknüpfen",
-      "containers": "Daten Container Übersicht",
-      "create": "Erstellen",
-      "create-template": "Vorlage erstellen",
-      "datacontainer.digitaltwin": "Daten Container",
-      "digitaltwins": "Digitale Zwillinge",
-      "lookup": "Öffnen",
-      "overview": "Favoriten & letzte Zwillinge",
-      "template": "Vorlage",
-      "templates": "Vorlagen",
-      "verifications": "Verifizierungen"
-    },
     "context-menu": {
       "clone": "Klonen",
       "create-container": "Daten Container erstellen",
       "link": "Container verknüpfen",
-      "share": "Teilen",
-      "template-save": "Als Vorlage speichern"
+      "plugin-save": "Als Plugin speichern",
+      "share": "Teilen"
     },
     "create-question": {
       "action": "Erstellen",
@@ -85,41 +72,45 @@ export default {
       "title": "Datencontainer Erstellen"
     },
     "createForm": {
+      "add-plugin": "Plugin hinzufügen",
       "back": "Zurück",
-      "base-template": "Basis-Vorlage",
+      "base-plugin": "Basis-Plugin",
       "container-configuration": "Daten Konfiguration",
       "continue": "Weiter",
       "create": "Erstellen",
-      "description": {
-        "desc": "Kurze Beschreibung des Daten Containers",
-        "title": "Beschreibung"
-      },
+      "create-plugin": "Alleinstehendes Plugin erstellen",
+      "edit-dbcp-hint": "Falsches Plugin ausgewählt? Ändern Sie es hier.",
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
+      "plugin": {
+        "desc": "Konfiguration des neuen Plugins",
+        "title": "Plugin-Typ"
+      },
+      "sub-title": "Allgemeine Informationen, Datenschema und Werte."
+    },
+    "dbcp": {
+      "description": {
+        "desc": "Kurze Beschreibung",
+        "title": "Beschreibung"
+      },
       "name": {
-        "desc": "Name des Daten Containers",
+        "desc": "Name",
         "error": "Bitte geben Sie einen Namen an!",
         "title": "Name"
-      },
-      "save": "Daten Container Speichern",
-      "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
-      "template": {
-        "desc": "Vorlage des Datencontainers",
-        "title": "Vorlage"
-      },
-      "title": "Daten Container erstellen"
+      }
     },
     "dispatcher": {
       "create": "Daten Container wird erstellt...",
       "link": "Daten Container wird verlinkt...",
+      "plugin": "Plugin speichern",
+      "plugin-share": "Plugin teilen",
       "share": "Daten Container wird geteilt...",
-      "template": "Vorlage speichern",
-      "template-share": "Vorlage teilen",
       "update": "Daten Container wird aktualisiert..."
     },
     "edit": "Bearbeiten",
     "edit-dbcp": "Container Beschreibung anpassen",
     "edit-schema": "Datenbereich Schema Definition",
+    "entries": "Datensets",
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig voneinander an dritte geteilt werden können.",
@@ -158,10 +149,37 @@ export default {
       "show-less": "Weniger anzeigen",
       "show-more": "Mehr anzeigen"
     },
+    "no-entries": {
+      "desc": "Dem Plugin wurden noch keine Daten-Sets hinzugefügt. Nutzen Sie den nachfolgenden Button, um Daten-Sets hinzuzufügen und zu konfigurieren.",
+      "title": "Leeres Plugin"
+    },
     "no-permissions": {
       "desc": "Sie besitzen keine Berechtigungen diesen Datencontainer einzusehen.",
       "title": "Keine Berechtigungen"
     },
+    "plugin": {
+      "bmail": {
+        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Plugin von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Daten Container Plugin"
+      },
+      "create-container": "Daten Container erzeugen",
+      "create-title": "Neue Plugin erstellen",
+      "edit-dbcp": "Beschreibung Anpassen",
+      "save": "Plugin speichern"
+    },
+    "plugin-cache": {
+      "action": "Wiederherstellen",
+      "clear": "Löschen",
+      "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
+      "title": "Ungespeicherte Änderungen"
+    },
+    "plugin-handler": {
+      "edit-modes": {
+        "desc": "Bitte schließen Sie alle Änderungen ab, um speichern zu können.",
+        "title": "Ungespeicherte Änderungen"
+      }
+    },
+    "save-dbcp": "Speichern",
     "share": {
       "action": "Teilen",
       "bmail": {
@@ -192,28 +210,6 @@ export default {
         "title": "Nutzer"
       }
     },
-    "template": {
-      "bmail": {
-        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Vorlage von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Daten Container Vorlage"
-      },
-      "create-container": "Daten Container erzeugen",
-      "create-title": "Neue Vorlage erstellen",
-      "edit-dbcp": "Beschreibung Anpassen",
-      "save": "Vorlage speichern"
-    },
-    "template-cache": {
-      "action": "Wiederherstellen",
-      "clear": "Löschen",
-      "desc": "Sie haben ungespeicherte Änderungen, möchten Sie diese wiederherstellen?",
-      "title": "Ungespeicherte Änderungen"
-    },
-    "template-handler": {
-      "edit-modes": {
-        "desc": "Bitte schließen Sie alle Änderungen ab, um speichern zu können.",
-        "title": "Ungespeicherte Änderungen"
-      }
-    },
     "types": {
       "array": "Liste",
       "files": "Dateien",
@@ -221,7 +217,17 @@ export default {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
+    },
+    "sets": {
+      "reset": {
+        "title": "Daten-Set zurücksetzen",
+        "desc": "Wollen sie die aktuellen Änderungen zurücksetzen?"
+      }
     }
   }
 }
 /* tslint:enable */;
+
+i18n._digitaltwins = { breadcrumbs: dtLib.translations.de.breadcrumbs };
+
+export default i18n;

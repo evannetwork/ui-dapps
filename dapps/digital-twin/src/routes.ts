@@ -25,39 +25,58 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import { DAppLoader } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface, UnderDevelopmentComponent } from '@evan.network/ui-vue-core';
+import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import ContainerLinkComponent from './components/container-link/container-link.vue';
-import ContainersComponent from './components/containers/containers.vue';
-import DigitalTwinGeneralComponent from './components/general/general.vue';
-import DigitalTwinVerificationsComponent from './components/verifications/verifications.vue';
+import ContainersComponent from './components/detail/containers/containers.vue';
+import DigitalTwinDetailComponent from './components/detail/detail/detail.vue';
+import DigitaTwinCreateComponent from './components/create/create.vue';
 import LookupComponent from './components/lookup/lookup.vue';
 import MapComponent from './components/ens/map/map.vue';
 import OverviewComponent from './components/overview/overview.vue';
+import PluginsComponent from './components/plugins/plugins.vue';
 import StartComponent from './components/start/start.vue';
-import TemplatesComponent from './components/templates/templates.vue';
 
 const dtPath = (path) => `:digitalTwinAddress/${ path }`;
 
-// map them to element names, so they can be used within templates
+// map them to element names, so they can be used within plugins
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
+  /********************************* disable routes ***********************************************/
   {
     path: '',
     // root route is not used, so navigate the user back
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
-  { name: 'dt-container-link',    component: ContainerLinkComponent,            path: 'containerlink/:containerAddress?' },
-  { name: 'dt-create',            component: DigitalTwinGeneralComponent,       path: `dt-create`, },
-  {                               redirect: { path: dtPath('general') },        path: `:digitalTwinAddress`, },
-  { name: 'dt-general',           component: DigitalTwinGeneralComponent,       path: dtPath('general'), },
-  { name: 'dt-map',               component: MapComponent,                      path: dtPath('map'), },
-  { name: 'dt-verifications',     component: DigitalTwinVerificationsComponent, path: dtPath('verifications'), },
-  { name: 'dt-containers',        component: ContainersComponent,               path: dtPath('containers'), },
-  { name: 'dt-container-link2',   component: ContainerLinkComponent,            path: dtPath('containerlink/:containerAddress?') },
-  { name: 'dt-container',         component: DAppLoader,                        path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
+
+  /************************************* twin details *********************************************/
+  {
+    name: 'dt-create',
+    component: DigitaTwinCreateComponent,
+    path: `dt-create`,
+  },
+
+  /**************************************** details ***********************************************/
+  {
+    redirect: { path: dtPath('dt-detail') },
+    path: `:digitalTwinAddress`,
+  },
+  {
+    name: 'dt-detail',
+    component: DigitalTwinDetailComponent,
+    path: dtPath('dt-detail'),
+    children: [
+      { redirect: { path: 'dt-plugins' }, path: '', },
+      { name: 'dt-plugins',   component: ContainersComponent, path: 'dt-plugins', },
+      { name: 'dt-technical', component: UnderDevelopmentComponent, path: 'dt-technical', },
+      { name: 'dt-changes',   component: UnderDevelopmentComponent, path: 'dt-changes', },
+    ],
+  },
+
+  /**************************************** stuff ***********************************************/
+  { name: 'dt-map',               component: MapComponent,           path: dtPath('dt-map'), },
+  { name: 'dt-container',         component: DAppLoaderComponent,    path: dtPath(`datacontainer.digitaltwin.${ dappBrowser.getDomainName() }/**`), },
 ];
 /* tslint:enable */
 

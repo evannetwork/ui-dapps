@@ -5,6 +5,7 @@
       "dependencies": {
         "datacontainer.digitaltwin": "^1.0.0",
         "digitaltwin": "^1.0.0",
+        "digitaltwin.lib": "^1.0.0",
         "evancore.vue.libs": "^1.1.0"
       },
       "entrypoint": "digitaltwins.js",
@@ -18,11 +19,11 @@
       "type": "dapp"
     },
     "dbcpVersion": 2,
-    "description": "Overview about my digital twins and templates.",
+    "description": "Overview about my digital twins and plugins.",
     "i18n": {
       "description": {
         "de": "Übersicht meiner digitalen Zwillinge und Vorlagen",
-        "en": "Overview about my digital twins and templates."
+        "en": "Overview about my digital twins and plugins."
       },
       "name": {
         "de": "Digitale Zwillinge",

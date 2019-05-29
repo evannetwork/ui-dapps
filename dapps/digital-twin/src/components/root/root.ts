@@ -25,19 +25,16 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
-import EvanUIDigitalTwin from '../../digitaltwin';
-import * as identitityUtils from '../../utils';
 import * as dispatchers from '../../dispatchers/registy';
 
 @Component({ })
@@ -58,19 +55,9 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   wasDestroyed: boolean;
 
   /**
-   * Categories of the left navigation
+   * Full reference url to the current twin
    */
-  twinNavigation: any = [ ];
-
-  /**
-   * List of available templates
-   */
-  templates: any = { };
-
-  /**
-   * Current activated tab (digital twins / templates)
-   */
-  activeTab = 0;
+  twinUrl = '';
 
   /**
    * Clear the hash change watcher
@@ -87,12 +74,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    * Initialize when the user has logged in.
    */
   async initialize() {
-    this.loading = false;
-
     // set the hash change watcher, so we can detect digitaltwin change and loading
     const that = this;
     this.hashChangeWatcher = async () => await that.loadDigitalTwin();
     await this.loadDigitalTwin();
+    this.loading = false;
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -108,8 +94,7 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
    */
   async loadDigitalTwin() {
     const $route = (<any>this).$route;
-    const digitalTwinAddress = $route.name === 'dt-create' ? 'dt-create' :
-      $route.params.digitalTwinAddress;
+    const digitalTwinAddress = $route.params.digitalTwinAddress;
     let uiDT: EvanUIDigitalTwin = this.$store.state.uiDT;
 
     // load the digitaltwin
@@ -121,19 +106,16 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         // create new instance of the evan ui digitaltwin, that wraps general ui and navigation
         // functions
         this.$set(this.$store.state, 'uiDT', new EvanUIDigitalTwin(digitalTwinAddress));
+        this.$store.state.uiDT.loading = true;
+
+        // specify twin url for left tree root
+        this.twinUrl = [
+          (<any>this).dapp.fullUrl,
+          this.$route.params.digitalTwinAddress,
+        ].join('/');
 
         // load digitaltwin specific data
-        await this.$store.state.uiDT.initialize(this, identitityUtils.getRuntime(this));
-
-        // apply the container categories every time, when the digitaltwin was load, so the containers
-        // and paths will be dynamic
-        this.twinNavigation = this.$store.state.uiDT.navigation;
-
-        // activate second navigation when a container is opened
-        if ((<any>this).$route.name.startsWith('dt-container')) {
-          this.twinNavigation[0].active = false;
-          this.twinNavigation[1].active = true;
-        }
+        await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
       }
     } else {
       // if digitaltwin was set, destroy it

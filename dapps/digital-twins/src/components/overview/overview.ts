@@ -31,13 +31,12 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import { getRuntime, getLastOpenedTwins, loadFavorites } from '@evan.network/digitaltwin';
-import { dispatchers } from '@evan.network/digitaltwin';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { dispatchers } from '@evan.network/digitaltwin';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { utils } from '@evan.network/digitaltwin.lib';
 
 @Component({ })
 export default class OverviewComponent extends mixins(EvanComponent) {
@@ -47,19 +46,9 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
-   * mapped for better iteration
+   * all favorite twins combined with latest twins
    */
-  categories: any = {
-    /**
-     * favorite digitaltwins of the current user
-     */
-    favorites: [ ],
-
-    /**
-     * dbcp description of last digitaltwins
-     */
-    lastTwins: [ ]
-  };
+  twins = [ ];
 
   /**
    * Loaded descriptions
@@ -79,7 +68,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
 
     this.dispatcherWatcher = Dispatcher.watch(
       () => this.initialize(),
-      `digitaltwins.${ (<any>this).dapp.domainName }`
+      `digitaltwin.${ (<any>this).dapp.domainName }`
     );
   }
 
@@ -94,46 +83,47 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    * Load the favorites and last twins
    */
   async initialize() {
-    const runtime = getRuntime(this);
-
+    // load favorite and last twins
+    const runtime = utils.getRuntime(this);
+    const twins = Array.from(new Set([ ].concat(
+      utils.getLastOpenedTwins(),
+      await utils.loadTwinFavorites(runtime),
+    )));
+    // all descriptions of the twins
     this.descriptions = { };
-    this.categories.favorites = await loadFavorites(runtime);
-    this.categories.lastTwins = getLastOpenedTwins();
 
-    let create = await dispatchers.digitaltwinCreateDispatcher.getInstances(runtime);
-    let save = await dispatchers.digitaltwinSaveDispatcher.getInstances(runtime);
+    let [ create, save ] = await Promise.all([
+      dispatchers.digitaltwinCreateDispatcher.getInstances(runtime),
+      dispatchers.digitaltwinSaveDispatcher.getInstances(runtime),
+    ]);
     save = save.map(instance => instance.data.address);
-
     // add create dbcp's, so we can display all cards with loading symbol
     create.map(instance => {
-      this.descriptions[instance.data.address] = JSON.parse(
-        JSON.stringify(instance.data.dbcp));
-      this.descriptions[instance.data.address].loading = true;
-      this.descriptions[instance.data.address].creating = true;
+      const createAddress = instance.data.address || Math.random();
+      this.descriptions[createAddress] = JSON.parse(JSON.stringify(instance.data.dbcp));
+      this.descriptions[createAddress].loading = true;
+      this.descriptions[createAddress].creating = true;
+
+      twins.unshift(createAddress);
     });
 
+    // load digital twin descriptions
     const loadPromises = { };
-    await Promise.all([ ]
-      .concat(this.categories.favorites, this.categories.lastTwins)
-      .map(async (ensAddress: string) => {
-        if (!this.descriptions[ensAddress]) {
-          try {
-            // load the description only once
-            loadPromises[ensAddress] = loadPromises[ensAddress] || runtime.description
-              .getDescription(ensAddress, runtime.activeAccount);
-            this.descriptions[ensAddress] = (await loadPromises[ensAddress]).public;
+    await Promise.all(twins.map(async (ensAddress: string) => {
+      if (!this.descriptions[ensAddress]) {
+        try {
+          // load the description only once
+          loadPromises[ensAddress] = loadPromises[ensAddress] || runtime.description
+            .getDescription(ensAddress, runtime.activeAccount);
+          this.descriptions[ensAddress] = (await loadPromises[ensAddress]).public;
 
-            this.descriptions.loading = save.indexOf(ensAddress) !== -1;
-          } catch (ex) { }
-        }
-      })
-    );
+          this.descriptions.loading = save.indexOf(ensAddress) !== -1;
+        } catch (ex) { }
+      }
+    }));
 
-    // filter favorites, that could not be loaded
-    this.categories.favorites = this.categories.favorites
-      .filter(ensAddress => !!this.descriptions[ensAddress]);
-    this.categories.lastTwins = this.categories.lastTwins
-      .filter(ensAddress => !!this.descriptions[ensAddress]);
+    // filter favorites, that could not be loaded and filter dupes
+    this.twins = twins.filter(ensAddress => !!this.descriptions[ensAddress]);
 
     this.loading = false;
   }

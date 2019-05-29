@@ -26,7 +26,10 @@
 */
 
 import Dexie from 'dexie';
+
 import * as bcc from '@evan.network/api-blockchain-core';
+
+import { containerCache } from './UiContainer';
 
 export default class ContainerCache {
   /**
@@ -35,19 +38,19 @@ export default class ContainerCache {
   db: Dexie;
 
   /**
-   * Users account id, so we can scope the template cache for multiple users
+   * Users account id, so we can scope the plugin cache for multiple users
    */
   activeAccount: string;
 
   /**
-   * template cache key for the current user
+   * plugin cache key for the current user
    */
   cacheKey: string;
 
   constructor(activeAccount: string) {
-    this.db = new Dexie(`evan-dt-datacontainer`);
+    this.db = new Dexie(`evan-dc-cache`);
     this.activeAccount = activeAccount;
-    this.cacheKey = `templates`;
+    this.cacheKey = `plugins`;
 
     // set the store for the user
     const stores = { };
@@ -65,35 +68,85 @@ export default class ContainerCache {
   }
 
   /**
-   * Store a template within the current indexed db, so the user won't miss any data
+   * Build the entry event id.
    *
-   * @param      {string}  id      id of the cache (e.g.: create, container address, template type,
+   * @param      {string}  id      container address
+   */
+  getEventName(id: string) {
+    return `dc-cache-${ this.getEntryId(id) }`;
+  }
+
+  /**
+   * Store a plugin within the current indexed db, so the user won't miss any data
+   *
+   * @param      {string}  id      id of the cache (e.g.: create, container address, plugin type,
    *                               ...)
    */
   async get(id: string) {
-    const result = await (<any>this.db).templates.get(this.getEntryId(id));
+    const result = await (<any>this.db).plugins.get(this.getEntryId(id));
 
     if (result) {
-      return result.template;
+      return result.plugin;
     }
   }
 
   /**
-   * Store a template within the current indexed db, so the user won't miss any data
+   * Store a plugin within the current indexed db, so the user won't miss any data
    *
-   * @param      {bccContainerTemplate}  template  template that should be saved
+   * @param      {bcc.ContainerPlugin}  plugin  plugin that should be saved
    */
-  async put(id: string, template: bcc.ContainerTemplate) {
-    await (<any>this.db).templates.put({ id: this.getEntryId(id), template });
+  async put(id: string, plugin: bcc.ContainerPlugin) {
+    containerCache[id] = plugin;
+
+    await (<any>this.db).plugins.put({ id: this.getEntryId(id), plugin });
+
+    this.sendEvent(id, 'put', plugin);
   }
 
   /**
    * Removes an entry from the cache db.
    *
-   * @param      {string}  id      id of the cache (e.g.: create, container address, template type,
+   * @param      {string}  id      id of the cache (e.g.: create, container address, plugin type,
    *                               ...)
    */
   async delete(id: string) {
-    await (<any>this.db).templates.delete(this.getEntryId(id));
+    delete containerCache[id];
+    await (<any>this.db).plugins.delete(this.getEntryId(id));
+
+    this.sendEvent(id, 'delete');
+  }
+
+  /**
+   * Send an event with an status for this instance.
+   *
+   * @param      {string}  id      affected container address
+   * @param      {string}  type    The type
+   * @param      {any}     data    custom data that should be sent
+   */
+  sendEvent(id: string, type: string, data?: any) {
+    const eventName = this.getEventName(id);
+
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent(eventName, {
+        detail: {
+          type: type,
+          data: data
+        }
+      }));
+    });
+  }
+
+  /**
+   * Watch for updates
+   *
+   * @param      {Function}  func    function that should be called on an update
+   */
+  watch(id: string, func: ($event: CustomEvent) => any) {
+    const eventName = this.getEventName(id);
+    const watch = ($event: CustomEvent) => func($event);
+    window.addEventListener(eventName, watch);
+
+    // return the watch remove function
+    return () => window.removeEventListener(eventName, watch);
   }
 }

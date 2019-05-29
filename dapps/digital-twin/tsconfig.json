@@ -11,17 +11,20 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "outDir": "./built/",
+    "paths": {
+      "@evan.network/datacontainer.digitaltwin": [
+        "../../digital-twin.data-container/dist/datacontainer.digitaltwin.js"
+      ],
+      "@evan.network/digitaltwin.lib": [
+        "../../digital-twin.lib/dist/digitaltwin.lib.js"
+      ]
+    },
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
-    "target": "es5",
-    "paths": {
-      "@evan.network/datacontainer.digitaltwin": [
-        "../../digital-twin.data-container/dist/datacontainer.digitaltwin.js"
-      ]
-    }
+    "target": "es5"
   },
   "exclude": [
     "../../../node_modules/@evan.network"

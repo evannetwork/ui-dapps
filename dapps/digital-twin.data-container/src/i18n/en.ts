@@ -25,8 +25,10 @@
   https://evan.network/license/
 */
 
+import * as dtLib from '@evan.network/digitaltwin.lib';
+
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_datacontainer": {
     "ajv": {
       "add": "Add field",
@@ -58,26 +60,12 @@ export default {
         "title": "Value"
       }
     },
-    "breadcrumbs": {
-      "add": "Add",
-      "container-link": "Link Data Container",
-      "containers": "Data Container overview",
-      "create": "Create",
-      "create-template": "Create Template",
-      "datacontainer.digitaltwin": "Data Container",
-      "digitaltwins": "Digital Twins",
-      "lookup": "Open",
-      "overview": "Favorites & recent Digital Twins",
-      "template": "Template",
-      "templates": "Templates",
-      "verifications": "Verifications"
-    },
     "context-menu": {
       "clone": "Clone",
       "create-container": "Create Data Container",
       "link": "Link to Digital Twin",
-      "share": "Share",
-      "template-save": "Save as template"
+      "plugin-save": "Save as plugin",
+      "share": "Share"
     },
     "create-question": {
       "action": "Create",
@@ -85,41 +73,45 @@ export default {
       "title": "Create Data Container"
     },
     "createForm": {
+      "add-plugin": "Add Plugin",
       "back": "Go Back",
-      "base-template": "Base Template",
+      "base-plugin": "Base Plugin",
       "container-configuration": "Data Configuration",
       "continue": "Continue",
       "create": "Create",
+      "create-plugin": "Create Standalone Plugin",
+      "edit-dbcp-hint": "Wrong plugin selected? Change it here.",
+      "finish": "Finish configuration",
+      "general": "General Information",
+      "plugin": {
+        "desc": "Configuration of the new plugin",
+        "title": "Plugin Type"
+      },
+      "sub-title": "Specify general information, data schema and values."
+    },
+    "dbcp": {
       "description": {
         "desc": "Short description for the Data Container",
         "title": "Description"
       },
-      "finish": "Finish configuration",
-      "general": "General Information",
       "name": {
         "desc": "Name of the Data Container",
         "error": "Please provide a name!",
         "title": "Name"
-      },
-      "save": "Save Data Container",
-      "sub-title": "Specify general information, data schema and values.",
-      "template": {
-        "desc": "Template of the Data Container",
-        "title": "Template"
-      },
-      "title": "Create Data Container"
+      }
     },
     "dispatcher": {
       "create": "Creating Data Container...",
       "link": "Link Data Container...",
+      "plugin": "Saving plugin...",
+      "plugin-share": "Sharing plugin...",
       "share": "Share Data Container...",
-      "template": "Saving template...",
-      "template-share": "Sharing template...",
       "update": "Updating Data Container..."
     },
     "edit": "Edit",
     "edit-dbcp": "Adjust Container Description",
     "edit-schema": "Data set schema definition",
+    "entries": "Data Sets",
     "entry": {
       "add": "Add data set",
       "add-desc": "A data set corresponds to separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
@@ -158,10 +150,37 @@ export default {
       "show-less": "Show less",
       "show-more": "Show more"
     },
+    "no-entries": {
+      "desc": "No data sets have been added to the plugin yet. Use the button below to add and configure data sets.",
+      "title": "Empty plugin"
+    },
     "no-permissions": {
       "desc": "You have no permission to view this data container.",
       "title": "No permissions"
     },
+    "plugin": {
+      "bmail": {
+        "body": "Hello,<br><br>You have received a data container plugin from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
+        "title": "Invitation to Data Container plugin"
+      },
+      "create-container": "Create Data Container",
+      "create-title": "Create new Plugin",
+      "edit-dbcp": "Adjust Description",
+      "save": "Save Plugin"
+    },
+    "plugin-cache": {
+      "action": "Restore",
+      "clear": "Delete",
+      "desc": "You have unsaved changes, do you want to restore it?",
+      "title": "Unsaved changes"
+    },
+    "plugin-handler": {
+      "edit-modes": {
+        "desc": "Please complete all changes to be able to save.",
+        "title": "Unsaved changes"
+      }
+    },
+    "save-dbcp": "Save",
     "share": {
       "action": "Share",
       "bmail": {
@@ -192,28 +211,6 @@ export default {
         "title": "User"
       }
     },
-    "template": {
-      "bmail": {
-        "body": "Hello,<br><br>You have received a data container template from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container template"
-      },
-      "create-container": "Create Data Container",
-      "create-title": "Create new Template",
-      "edit-dbcp": "Adjust Description",
-      "save": "Save Template"
-    },
-    "template-cache": {
-      "action": "Restore",
-      "clear": "Delete",
-      "desc": "You have unsaved changes, do you want to restore it?",
-      "title": "Unsaved changes"
-    },
-    "template-handler": {
-      "edit-modes": {
-        "desc": "Please complete all changes to be able to save.",
-        "title": "Unsaved changes"
-      }
-    },
     "types": {
       "array": "List",
       "files": "Files",
@@ -221,7 +218,17 @@ export default {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
+    },
+    "sets": {
+      "reset": {
+        "title": "Reset data set",
+        "desc": "Do you want to reset the current changes?"
+      }
     }
   }
 }
 /* tslint:enable */;
+
+i18n._digitaltwins = { breadcrumbs: dtLib.translations.en.breadcrumbs };
+
+export default i18n;
