@@ -9,11 +9,11 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/index.js",
-  "name": "@evan.network/smart-contracts-core",
+  "main": "dist/compiled.js",
+  "name": "@evan.network/smart-contracts-core-browserified",
   "scripts": {
     "build": "node gulp/buildContracts.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
-  "version": "2.1.1"
+  "version": "2.2.0"
 }

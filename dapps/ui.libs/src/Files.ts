@@ -78,7 +78,7 @@ export async function fileToContainerFile(
  * the evan-file-select component and transforms them into an encryption object
  *
  * @param      {Array<any>}    files    array of files
- * @return     {Promise<any>}  uploaded files transformed into an encryption object 
+ * @return     {Promise<any>}  uploaded files transformed into an encryption object
  */
 export async function readFileAsArrayBuffer(file: File): Promise<any> {
   if (file instanceof ArrayBuffer) {

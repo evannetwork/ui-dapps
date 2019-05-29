@@ -9,11 +9,11 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/index.js",
-  "name": "@evan.network/api-blockchain-core",
+  "main": "dist/bcc.js",
+  "name": "@evan.network/api-blockchain-core-browserified",
   "scripts": {
     "build": "node ./gulp/buildBcc.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
-  "version": "2.3.0"
+  "version": "2.4.0"
 }

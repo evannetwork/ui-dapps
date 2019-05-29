@@ -108,4 +108,41 @@
       text-overflow: ellipsis;
     }
   }
+
+  .batch-label {
+    font-size: 12px;
+
+    display: inline-block;
+
+    height: 32px;
+    margin: 0 5px 5px 5px;
+    padding: 8px 12px 7px;
+
+    transition: 0.3s ease-out background-color;
+
+    color: cssVar('text-color');
+    border-radius: 3px;
+    background: cssVar('gray-200');
+
+    &:hover, &.active {
+      color: cssVar('light');
+      background: cssVar('secondary');
+    }
+
+    i {
+      line-height: 18px;
+    }
+  }
+
+  a {
+    &.dark-link {
+      color: cssVar('text-color');
+
+      &:hover, &.active {
+        &, h1, h2, h3, h4, h5, span, p {
+          color: cssVar('secondary');
+        }
+      }
+    }
+  }
 }

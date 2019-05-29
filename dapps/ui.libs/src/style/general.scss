@@ -65,6 +65,10 @@
     border-right-width: 1px !important;
   }
 
+  .border-smooth {
+    border: 2px solid cssVar('border-color-2') !important;
+  }
+
   // add font-size levels
   @for $i from 0 through 10 {
     .opacity-#{ $i * 10 } {

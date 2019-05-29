@@ -25,8 +25,13 @@
   https://evan.network/license/
 */
 
-// map the original vue path to axios.vue.libs
-import { System, getDomainName } from '@evan.network/ui-dapp-browser';
-System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${ getDomainName() }!dapp-content`;
+// map the original System.path to @evan.network/smart-contracts-core
+try {
+  // tslint:disable-next-line
+  const { getDomainName, System } = require('@evan.network/ui-dapp-browser');
+  System.map['@evan.network/smart-contracts-core'] = `smartcontracts.${ getDomainName() }!dapp-content`;
+} catch (ex) {
+  // ignore this, when importing smart-contracts outside from the evan.network dapp-browser environment
+}
 
 export * from '@evan.network/smart-contracts-core/contracts/compiled.js';

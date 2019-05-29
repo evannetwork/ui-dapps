@@ -28,6 +28,31 @@
 @import './utils';
 
 .evan {
+  .tab-1 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-1') !important;
+  }
+
+  .tab-2 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-2') !important;
+  }
+
+  .tab-3 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-3') !important;
+  }
+  
+  .tab-4 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-4') !important;
+  }
+
+  .tab-5 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-5') !important;
+  }
+
   .evan-tabs, .evan-navigation-tabs {
     display: flex;
     overflow-x: auto;
@@ -44,6 +69,7 @@
       padding: 0 25px;
 
       cursor: pointer;
+      text-align: center;
     }
   }
 

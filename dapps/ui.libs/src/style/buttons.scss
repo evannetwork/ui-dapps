@@ -71,8 +71,10 @@
       border-radius: 25px;
 
       &.btn-sm {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        padding: 4px 0;
       }
     }
 
@@ -93,7 +95,14 @@
       }
     }
 
-    &.btn-light {
+    &.btn-secondary {
+      &.focus, &:focus, &:hover {
+        opacity: 0.8;
+        background: cssVar('btn-secondary-hover');
+      }
+    }
+
+    &.btn-tertiary {
       font-weight: 600 !important;
 
       transition: 0.3s ease-out background-color, 0.3s ease-out color;
@@ -102,41 +111,14 @@
       border: 2px solid cssVar('border-color') !important;
       background-color: cssVar('white') !important;
 
-      i {
-        font-size: 19px;
-        line-height: 26px;
-
-        display: inline-block;
-
-        width: 26px;
-        height: 26px;
-        margin-right: -0.625rem;
-        margin-left: 8px;
-        padding: 0;
-
-        vertical-align: middle;
-
-        border-radius: 60px;
+      &:active {
+        box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
       }
 
-      * {
-        background-color: transparent !important;
-      }
-
-      &:hover {
-        color: cssVar('bg-text-secondary') !important;
-        background-color: cssVar('secondary') !important;
-
-        * {
-          color: cssVar('bg-text-secondary') !important;
-        }
-      }
-    }
-
-    &.btn-secondary {
-      &.focus, &:focus, &:hover {
-        opacity: 0.8;
-        background: cssVar('btn-secondary-hover');
+      .tooltip-inner {
+        color: cssVar('tooltip-color') !important;
+        border-radius: 5px;
+        background-color: cssVar('tooltip-bg') !important;
       }
     }
 
@@ -146,6 +128,23 @@
       padding: 0;
 
       text-align: center;
+    }
+
+    &.mini {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 22px;
+      min-width: 22px;
+      height: 22px;
+      padding: 0;
+
+      i {
+        line-height: 20px;
+
+        width: 20px;
+      }
     }
 
     /**

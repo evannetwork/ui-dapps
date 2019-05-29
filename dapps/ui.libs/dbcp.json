@@ -12,7 +12,7 @@
         "ui.libs.js",
         "ui.libs.css"
       ],
-      "origin": "Qmdvv7G7jtohM8fKHR9KV85Y2h3jNWs6gCxs7AoysHgJZS",
+      "origin": "QmYdfVth6uWszU6FXsuVnZSjPRzZA3oTeXzMhgY4n93WTt",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -35,10 +35,11 @@
       "evan",
       "library"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "versions": {
       "1.0.0": "QmcMekTfYhhWLvnHo3YwSkw5fWo77FNHLrqgLfmcBYCerN",
-      "1.1.0": "QmRNr8ceKnNDQtWhstprrZWpaXcWpvFhDArYWFtxme2uMW"
+      "1.1.0": "QmWGG5kwUJfgoHRRbJYNNAnE32mWLvRYH3Fc288v2CJaNb",
+      "1.2.0": "QmabmMJyEWGjhokFaciotknsN2MQ78yNmm4SAZgB6xisVs"
     }
   }
 }

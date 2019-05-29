@@ -72,7 +72,7 @@ gulp.task('browserify', async function(callback) {
 
   await new Promise((resolve, reject) => {
     const buildJob = browserify(indexFile, {
-      standalone: 'bcc',
+      standalone: dbcp.public.name,
       debug: true,
     });
 

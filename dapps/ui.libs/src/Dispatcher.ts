@@ -56,12 +56,12 @@ export class Dispatcher {
   title: string;
 
   /**
-   * estimated gas price for one full steps run. 
+   * estimated gas price for one full steps run.
    */
   gas: number;
 
   /**
-   * estimated eve price for one full steps run. 
+   * estimated eve price for one full steps run.
    */
   evePrice: number;
 
@@ -138,16 +138,16 @@ export class Dispatcher {
    */
   async getInstances(runtime: bcc.Runtime, asArray = true): Promise<any> {
     // create a new queue and initialize it
-    const queue = await new EvanQueue(runtime.activeAccount);
+    const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
 
     // recover all previous running instances for this dispatcher
-    const entries = await queue.load(this.id);
+    const entries = await uiCoreQueue.load(this.id);
     const instances = { };
 
     Object.keys(entries).forEach((instanceId: string) => {
       const entry = entries[instanceId];
       const instance = new DispatcherInstance({
-        queue,
+        queue: uiCoreQueue,
         dispatcher: this,
         runtime,
         data: entry.data,
@@ -177,9 +177,18 @@ export class Dispatcher {
    * @param      {number}  stepIndex  at which step should be started?
    */
   async start(runtime: bcc.Runtime, data: any, stepIndex = 0, price?: number) {
-    const queue = await new EvanQueue(runtime.activeAccount);
+    const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
+
+    // map the original dispatcher instance to the current one => other dapps can create a
+    // dispatcher instance pointing to the original ens and can watch and start the dispatcher
+    // without implementing the original logic
+    const originalDispatcher = (await System.import(`${ this.dappEns }!dapp-content`))[this.name];
+    if (originalDispatcher) {
+      Object.keys(originalDispatcher).forEach(key => this[key] = originalDispatcher[key]);
+    }
+
     const instance = new DispatcherInstance({
-      queue,
+      queue: uiCoreQueue,
       dispatcher: this,
       runtime,
       data: data,
@@ -210,7 +219,7 @@ interface DispatcherInstanceOptions {
   data: any;
   stepIndex?: number;
   customPrice?: number,
-  id?: any, 
+  id?: any,
   error?: any
 }
 
@@ -310,7 +319,7 @@ export class DispatcherInstance {
       // calculate the price
       const defaultThreshold = 0;
       const priceThreshold = parseFloat(window.location['dispatcher-eve-treshold'] || '0.5');
-      let evePrice; 
+      let evePrice;
 
       // use default one or estimate the costs from dispatcher configuration
       if (this.customEvePrice) {
@@ -327,7 +336,7 @@ export class DispatcherInstance {
 
     // reset previous errors
     this.error = null;
-    
+
     await this.startup();
     this.status = 'running';
     await this.run();

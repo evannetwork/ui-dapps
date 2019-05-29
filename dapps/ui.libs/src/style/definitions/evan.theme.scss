@@ -166,7 +166,12 @@ $themeEvan: map-merge(
     bg-level-1: cssVar('white'),
     bg-level-2: cssVar('gray-150'),
     bg-level-3: #f5f6fa,
-    bg-inverted: cssVar('dark')
+    bg-inverted: cssVar('dark'),
+    tab-color-1: cssVar('secondary'),
+    tab-color-2: #24545e,
+    tab-color-3: #8b9a9e,
+    tab-color-4: #698a88,
+    tab-color-5: #c0d4d8,
   ),
   $themeEvan
 );
@@ -178,13 +183,16 @@ $themeEvan: map-merge(
   (
     body-bg: cssVar('bg-level-1'),
     body-color: cssVar('bg-inverted'),
-    border-color: cssVar('gray-300'),
+    border-color: #dce0e1,
+    border-color-2: #e5e9f2,
     btn-primary-hover: cssVar('primary'),
     btn-secondary-hover: #2cabe3,
     font-family-sans-serif: ('Open Sans', sans-serif),
     table-hover: cssVar('gray-200'),
     table-row-odd: cssVar('bg-level-1'),
     table-row-even: #f4f7f9,
+    tooltip-color: cssVar('white'),
+    tooltip-bg: cssVar('black')
   ),
   $themeEvan
 );

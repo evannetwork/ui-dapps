@@ -9,13 +9,13 @@ npm run build
 
 
 ## Usage
-- exclude `@evan.network/api-blockchain-core` from build job
+- exclude `@evan.network/api-blockchain-core-browserified` from build job
 
 - package.json
 ```
   ...
   "dependencies": {
-    "@evan.network/api-blockchain-core": "X.X.X"
+    "@evan.network/api-blockchain-core-browserified": "X.X.X"
   },
   ...
 ```
@@ -33,5 +33,5 @@ npm run build
 
 - typescript
 ```
-  import * as bcc from '@evan.network/api-blockchain-core';
+  import * as bcc from '@evan.network/api-blockchain-core-browserified';
 ```

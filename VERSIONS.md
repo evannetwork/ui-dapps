@@ -5,6 +5,24 @@
 ### Fixes
 ### Deprecations
 
+## Version 1.2.0
+### Features
+- `ui.libs`
+  - add tooltip stylings
+  - add `btn-tertiary` style
+  - add `dapp-wrapper-header` style
+  - add `under-construction.svg`
+  - add `tabs` colors
+  - add `mini` class to buttons
+  - add `border-smooth` class
+  - load `Dispatcher` definition from original ens address before starting
+
+### Fixes
+- rename dapp containers for `@evan.network/api-blockchain-core` and `@evan.network/smart-contracts-core` to end with `-browserfied`
+- add support for using `bcc` and `smartcontracts` to run without `ui-dapp-browser`
+- `evan.bootstrap.libs`
+  - fix tooltip design
+
 
 ## Version 1.1.0
 ### Features

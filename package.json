@@ -1,10 +1,16 @@
 {
   "dependencies": {
+    "tslint": "^5.16.0"
+  },
+  "description": "",
+  "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
+    "@evan.network/api-blockchain-core": "^2.3.0",
+    "@evan.network/ui-dapp-browser": "^2.1.3",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^3.5.95",
     "axios": "^0.18.0",
@@ -27,6 +33,7 @@
     "gulp-replace": "^0.6.1",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-typescript": "^5.0.0",
+    "husky": "^2.2.0",
     "lodash": "=4.17.11",
     "mini-css-extract-plugin": "^0.5.0",
     "moment": "2.24.0",
@@ -49,10 +56,10 @@
     "webpack": "^4.16.3",
     "webpack-cli": "^3.2.1"
   },
-  "description": "",
-  "devDependencies": {
-    "@evan.network/api-blockchain-core": "^2.3.0",
-    "@evan.network/ui-dapp-browser": "^2.1.2"
+  "husky": {
+    "hooks": {
+      "pre-commit": "tslint --config tslint.json \"./dapps/*/src/**/*.ts\""
+    }
   },
   "keywords": [
     "javascript",
@@ -74,5 +81,5 @@
     "serve-build": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
-  "version": "1.1.0"
+  "version": "1.2.0"
 }
