@@ -61,7 +61,7 @@
 
         <dc-entry
           :class="{
-            'content': templateEntry.type !== 'object' && templateEntry.type !== 'array'
+            'content': entryType !== 'object' && entryType !== 'array'
           }"
           :address="containerAddress"
           :entry="templateEntry"

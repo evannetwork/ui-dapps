@@ -34,6 +34,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
+import UiContainer from '../../../UiContainer';
+import * as fieldUtils from '../../../fields';
 
 @Component({ })
 export default class DataSetComponent extends mixins(EvanComponent) {
@@ -60,15 +62,60 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   /**
    * show loading
    */
-  loading = false;
+  loading = true;
 
   /**
    * Set button classes
    */
   async created() {
+    await this.initialize();
+
+    // watch for saving updates
+    let beforeEntry = this.entryName;
+    this.hashChangeWatcher = (async () => {
+      if (beforeEntry !== this.$route.params.entryName) {
+        beforeEntry = this.$route.params.entryName;
+        await this.initialize();
+      }
+    }).bind(this);
+
+    // add the hash change listener
+    window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Clear location change watchers
+   */
+  beforeDestroy() {
+    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Setup tabs and set the entryName
+   */
+  async initialize() {
+    this.loading = true;
+
+    const tabNames = [ 'entry-schema', 'entry-permissions', 'entry-changes' ];
+
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
-    this.tabs = [ 'entry-schema', 'entry-permissions', 'entry-changes' ]
+
+    // load basic data schema, for checking entry type
+    const uiContainer = new UiContainer(this);
+    (await uiContainer.loadData());
+
+    // only allow list entries for contracts
+    if (uiContainer.containerAddress.startsWith('0x')) {
+      // add list entries overview, when it's type of array
+      const entry = uiContainer.plugin.template.properties[this.entryName];
+      const entryType = fieldUtils.getType(entry.dataSchema);
+      if (entryType === 'array') {
+        tabNames.splice(1, 0, 'list-entries');
+      }
+    }
+
+    this.tabs = tabNames
       .map(urlKey => ({
         id: `tab-${ urlKey }`,
         href: [
@@ -81,24 +128,6 @@ export default class DataSetComponent extends mixins(EvanComponent) {
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
 
-    // watch for saving updates
-    this.hashChangeWatcher = (() => {
-      this.loading = true;
-
-      this.$nextTick(() => {
-        this.entryName = this.$route.params.entryName;
-        this.loading = false;
-      });
-    }).bind(this);
-
-    // add the hash change listener
-    window.addEventListener('hashchange', this.hashChangeWatcher);
-  }
-
-  /**
-   * Clear location change watchers
-   */
-  beforeDestroy() {
-    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
+    this.loading = false;
   }
 }

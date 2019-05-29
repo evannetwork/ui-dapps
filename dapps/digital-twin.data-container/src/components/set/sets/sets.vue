@@ -85,7 +85,8 @@
                 </div>
                 <div class="col-10">
                   <div class="d-flex p-3 flex-truncate align-items-center">
-                    <div class="overflow-visible">
+                    <div class="position-relative"
+                      style="overflow: visible;">
                       <h4 class="font-weight-semibold mb-0 position-relative">
                         {{ property }}
                       </h4>

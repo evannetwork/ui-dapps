@@ -68,7 +68,7 @@ export default class NewDataSetComponent extends mixins(EvanComponent) {
 
     this.containerAddress = this.$route.params.containerAddress;
     const uiContainer = new UiContainer(this);
-    this.template = (await uiContainer.loadData(runtime)).template;
+    this.template = (await uiContainer.loadData()).template;
 
     this.loading = false;
   }

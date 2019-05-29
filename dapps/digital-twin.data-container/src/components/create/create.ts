@@ -222,7 +222,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
           imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
-        plugin: this.plugins[this.createForm.plugin.value],
+        template: this.plugins[this.createForm.plugin.value].template,
       });
     } else {
       dispatchers.createDispatcher.start(runtime, {

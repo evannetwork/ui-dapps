@@ -47,6 +47,7 @@ import PluginActions from './plugin/plugin-actions/plugin-actions.vue';
 import PluginComponent from './plugin/plugin/plugin.vue';
 import SetActionsComponent from './set/set-actions/set-actions.vue';
 import SetSchemaComponent from './set/schema/schema.vue';
+import NewlistEntryComponent from './set/new-list-entry/new-list-entry.vue';
 
 // export them all, so other applications can access them
 export { }
@@ -71,6 +72,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-set-actions', component: SetActionsComponent },
   { name: 'dc-set-schema', component: SetSchemaComponent },
   { name: 'dc-tree', component: DataContainerTreeComponent },
+  { name: 'dc-list-entries-add', component: NewlistEntryComponent },
 ].concat(dtLib.componentRegistration);
 
 export default componentRegistration;

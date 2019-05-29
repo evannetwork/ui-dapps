@@ -35,9 +35,9 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
+import * as dcUtils from './utils';
 import * as dispatchers from './dispatchers/registry';
 import ContainerCache from './container-cache';
-import * as dcUtils from './utils';
 
 export const containerCache = { };
 export const loadingCache = { };
@@ -124,7 +124,7 @@ export default class UiContainer {
    *
    * @param      {string}      containerAddress  container address / plugin name
    */
-  async loadData(includeValue = false) {
+  async loadData() {
     this.loading = true;
 
     const containerAddress = this.containerAddress;
@@ -134,56 +134,60 @@ export default class UiContainer {
 
         try {
           // check if it was already loaded before
-          if (false && containerCache[containerAddress]) {
-            plugin = containerCache[containerAddress];
-          } else {
-            const cached = await this.containerCache.get(containerAddress);
-            const container = utils.getContainer(this.runtime, containerAddress);
+          const cached = await this.containerCache.get(containerAddress);
+          const container = utils.getContainer(this.runtime, containerAddress);
 
+          if (containerCache[containerAddress]) {
+            plugin = JSON.parse(JSON.stringify(containerCache[containerAddress]));
+          } else {
             if (containerAddress.startsWith('0x')) {
               // get the container instance and load the template including all values
-              plugin = await container.toPlugin(includeValue);
+              plugin = await container.toPlugin();
               // else try to laod a plugin from profile
             } else {
-              plugin = await bcc.Container.getContainerPlugin(this.runtime.profile,
-                containerAddress);
+              plugin = await bcc.Container.getContainerPlugin(
+                this.runtime.profile,
+                containerAddress
+              );
             }
 
-            // merged cached values with the correct loaded one
-            if (cached) {
-              const properties = cached.template.properties;
+            containerCache[containerAddress] = JSON.parse(JSON.stringify(plugin));
+          }
 
-              Object.keys(properties).forEach((property) => {
-                if (properties[property].changed || properties[property].isNew) {
-                  plugin.template.properties[property] = properties[property];
-                }
-              });
-            }
+          // merged cached values with the correct loaded one
+          if (cached) {
+            const properties = cached.template.properties;
 
-            // load the owner
-            if (!permissionsCache[containerAddress]) {
-              let permissions;
-
-              if (containerAddress.startsWith('0x')) {
-                permissions = {
-                  owner: await container.getOwner(),
-                  permissions: await container.getContainerShareConfigForAccount(
-                    this.runtime.activeAccount),
-                };
-              } else {
-                // default permissions for plugins
-                permissions = permissionsCache[containerAddress] || {
-                  owner: this.runtime.activeAccount,
-                  permissions: {
-                    readWrite: Object.keys(plugin.template.properties)
-                  },
-                };
+            Object.keys(properties).forEach((property) => {
+              if (properties[property].changed || properties[property].isNew) {
+                plugin.template.properties[property] = properties[property];
               }
+            });
+          }
 
-              permissions.read = permissions.read || [ ];
-              permissions.readWrite = permissions.readWrite || [ ];
-              permissionsCache[containerAddress] = permissions;
+          // load the owner
+          if (!permissionsCache[containerAddress]) {
+            let permissions;
+
+            if (containerAddress.startsWith('0x')) {
+              permissions = {
+                owner: await container.getOwner(),
+                permissions: await container.getContainerShareConfigForAccount(
+                  this.runtime.activeAccount),
+              };
+            } else {
+              // default permissions for plugins
+              permissions = permissionsCache[containerAddress] || {
+                owner: this.runtime.activeAccount,
+                permissions: {
+                  readWrite: Object.keys(plugin.template.properties)
+                },
+              };
             }
+
+            permissions.read = permissions.read || [ ];
+            permissions.readWrite = permissions.readWrite || [ ];
+            permissionsCache[containerAddress] = permissions;
           }
 
           // set custom translation
@@ -191,11 +195,6 @@ export default class UiContainer {
           customTranslation._digitaltwins.breadcrumbs[containerAddress] =
             plugin.description.name;
           this.vueInstance.$i18n.add(this.vueInstance.$i18n.locale(), customTranslation);
-
-          // cache the latest result
-          if (false && plugin) {
-            containerCache[containerAddress] = plugin;
-          }
         } catch (ex) {
           loadingCache[containerAddress] = null;
           return reject(ex);
@@ -209,7 +208,7 @@ export default class UiContainer {
       this.plugin = await loadingCache[containerAddress];
     } catch (ex) {
       this.runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
-      this.error = true;
+      this.error = ex.message;
       this.loading = false;
 
       return;
@@ -257,5 +256,12 @@ export default class UiContainer {
     } else {
       return dispatchers.pluginDispatcher.watch(callback);
     }
+  }
+
+  /**
+   * Clear the current element cache
+   */
+  clearCache() {
+    delete containerCache[this.containerAddress];
   }
 }

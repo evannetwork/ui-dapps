@@ -35,7 +35,7 @@
         <th>
           {{ '_datacontainer.ajv.type.title' | translate }}
         </th>
-        <th>
+        <th v-if="!disableValue">
           {{ '_datacontainer.ajv.value.title' | translate }}
         </th>
         <th class="flex-grow-0" v-if="mode === 'schema'">

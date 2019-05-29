@@ -34,6 +34,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
+import * as fieldUtils from '../../../fields';
 import ContainerCache from '../../../container-cache';
 import UiContainer from '../../../UiContainer';
 
@@ -67,6 +68,11 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   @Prop() schemaActions;
 
   /**
+   * Show add list entries action
+   */
+  @Prop() listActions;
+
+  /**
    * ref handlers
    */
   reactiveRefs: any = { };
@@ -91,6 +97,11 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    * Currents container template definition.
    */
   templateEntry: any = null;
+
+  /**
+   * Calculated entry type
+   */
+  entryType = '';
 
   /**
    * Show loading symbol
@@ -118,15 +129,16 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
 
     // load the data
     this.uiContainer = new UiContainer(this);
-    (await this.uiContainer.loadData(false));
+    await this.uiContainer.loadData();
     this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
     this.saving = await this.uiContainer.isSaving();
+    this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
 
     // watch for cache updates
     this.savingWatcher = this.uiContainer
       .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
     this.cacheWatcher = this.uiContainer.watchForUpdates(async () => {
-      (await this.uiContainer.loadData(false));
+      await this.uiContainer.loadData();
       this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
     });
 

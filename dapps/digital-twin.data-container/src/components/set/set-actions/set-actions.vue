@@ -32,7 +32,10 @@
     <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
     </div>
-    <template v-else-if="schemaActions && !saving && templateEntry.changed && !templateEntry.isNew">
+    <template v-else-if="!saving && (
+      (schemaActions && templateEntry.changed && !templateEntry.isNew) ||
+      (listActions && entryType === 'array' && containerAddress.startsWith('0x'))
+    )">
       <!-- show dropdown button  -->
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"
@@ -70,31 +73,52 @@
                 </component>
               </a>
             </template>
+            <template v-if="listActions && entryType === 'array' && containerAddress.startsWith('0x')">
+              <a
+                id="dc-add-list-entry"
+                v-if="!saving"
+                :class="buttonClasses.primary"
+                @click="reactiveRefs.dcListEntriesAdd.showModal(); closeDropdown();">
+                <i class="mdi mdi-plus"></i>
+                <component :is="buttonTextComp" :placement="'bottom'">
+                  {{ `_datacontainer.list.add-list-entry` | translate }}
+                </component>
+              </a>
+            </template>
           </template>
         </evan-dropdown>
       </div>
-    <!-------------------------- actions section -------------------------->
-    <evan-modal
-      id="dc-set-reset-modal"
-      ref="resetModal">
-      <template v-slot:header>
-        <h5 class="modal-title">
-          {{ '_datacontainer.sets.reset.title' | translate }}
-        </h5>
-      </template>
-      <template v-slot:body>
-        <div v-html="$t('_datacontainer.sets.reset.desc')"></div>
-      </template>
-      <template v-slot:footer>
-        <button type="submit"
-          id="dc-set-reset-submit"
-          class="btn btn-rounded btn-danger"
-          @click="resetEntry()">
-          {{ `_datacontainer.sets.reset.title` | translate }}
-          <i class="mdi mdi-arrow-right label ml-3"></i>
-        </button>
-      </template>
-    </evan-modal>
+      <!-------------------------- actions section -------------------------->
+      <evan-modal
+        id="dc-set-reset-modal"
+        ref="resetModal">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ '_datacontainer.sets.reset.title' | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <div v-html="$t('_datacontainer.sets.reset.desc')"></div>
+        </template>
+        <template v-slot:footer>
+          <button type="submit"
+            id="dc-set-reset-submit"
+            class="btn btn-rounded btn-danger"
+            @click="resetEntry()">
+            {{ `_datacontainer.sets.reset.title` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
+          </button>
+        </template>
+      </evan-modal>
+
+      <dc-list-entries-add
+        v-if="listActions && entryType === 'array' && containerAddress.startsWith('0x')"
+        :containerAddress="containerAddress"
+        :entryName="entryName"
+        :uiContainer="uiContainer"
+        @init="$set(reactiveRefs, 'dcListEntriesAdd', $event)"
+        @submit="addListEntry(entry)">
+      </dc-list-entries-add>
     </template>
   </div>
 </template>

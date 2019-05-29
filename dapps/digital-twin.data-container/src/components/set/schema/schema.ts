@@ -37,6 +37,7 @@ import { EvanUIDigitalTwink, utils, } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../../dispatchers/registry';
 import * as entryUtils from '../../../entries';
+import * as fieldUtils from '../../../fields';
 import ContainerCache from '../../../container-cache';
 import UiContainer from '../../../UiContainer';
 import { getEntryChanges } from '../../../utils';
@@ -96,6 +97,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   cacheWatcher = null;
 
   /**
+   * Calcucated entry type
+   */
+  entryType = '';
+
+  /**
    * Set button classes
    */
   async created() {
@@ -119,15 +125,16 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
 
     try {
-      (await this.uiContainer.loadData(false));
+      await this.uiContainer.loadData();
       this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
       this.permissions = this.uiContainer.permissions;
+      this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
 
       if (this.containerAddress.startsWith('0x')) {
         const container = utils.getContainer(<any>runtime, this.containerAddress);
 
         // load only the value, when it wasn't cached before
-        if (typeof this.templateEntry.value === 'undefined') {
+        if (this.entryType !== 'array' && typeof this.templateEntry.value === 'undefined') {
           this.templateEntry.value = await container.getEntry(this.entryName);
         }
       }
@@ -190,6 +197,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     // save changes for this entry
     this.reactiveRefs.entryComp.save();
 
+    this.uiContainer.clearCache();
     if (this.containerAddress.startsWith('0x')) {
       dispatchers.updateDispatcher.start(runtime, {
         address: this.containerAddress,
@@ -198,10 +206,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
         plugin: this.uiContainer.plugin,
       });
     } else {
-      dispatchers.pluginDispatcher.start(runtime, {
-        description: this.uiContainer.description,
-        plugin: this.uiContainer.plugin,
-      });
+      dispatchers.pluginDispatcher.start(runtime, this.uiContainer.plugin);
     }
   }
 }

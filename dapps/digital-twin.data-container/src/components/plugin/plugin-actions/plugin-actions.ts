@@ -35,6 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
 import * as dispatchers from '../../../dispatchers/registry';
+import * as entryUtils from '../../../entries';
 import ContainerCache from '../../../container-cache';
 import UiContainer from '../../../UiContainer';
 
@@ -135,9 +136,14 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   description: any;
 
   /**
-   * containers template definition
+   * Ui container instance
    */
-  template: any;
+  uiContainer: UiContainer = null;
+
+  /**
+   * containers plugin definition
+   */
+  plugin: any;
 
   /**
    * Set button classes
@@ -194,11 +200,11 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    const uiContainer = new UiContainer(this);
-    await uiContainer.loadData();
+    this.uiContainer = new UiContainer(this);
+    await this.uiContainer.loadData();
 
-    this.description = uiContainer.description;
-    this.template = uiContainer.plugin.template;
+    this.description = this.uiContainer.description;
+    this.plugin = this.uiContainer.plugin;
 
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
@@ -314,7 +320,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
               imgSquare: this.description.imgSquare.value,
               name: this.description.name.value,
             },
-            template: this.template,
+            template: this.plugin.template,
           },
         }],
       },
@@ -357,10 +363,22 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       .length > 0;
   }
 
+
   /**
    * Executed by the `dc-new-entry` components submit event.
+   *
+   * @param      {any}  newEntry  dc-new-entry result obj
    */
-  addNewEntry() {
-    
+  addNewEntry(newEntry: any) {
+    const runtime = utils.getRuntime(this);
+    const containerCache = new ContainerCache(runtime.activeAccount);
+
+    // update template
+    newEntry.entry.isNew = true;
+    this.plugin.template.properties[newEntry.name] = newEntry.entry;
+    entryUtils.ensureValues(this.plugin.template.properties[newEntry.name]);
+
+    // send event
+    containerCache.put(this.pluginName, this.uiContainer.plugin);
   }
 }

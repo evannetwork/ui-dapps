@@ -35,7 +35,14 @@
         </h3>
         <span class="mx-auto"></span>
         <div>
-          
+          <dc-set-actions
+            :containerAddress="containerAddress"
+            :entryName="entryName"
+            :displayMode="'buttons'"
+            :setActions="true"
+            :schemaActions="false"
+            :listActions="false">
+          </dc-set-actions>
         </div>
       </div>
       <div class="content">

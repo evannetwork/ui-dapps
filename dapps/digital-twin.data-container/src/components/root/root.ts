@@ -123,6 +123,16 @@ export default class RootComponent extends mixins(EvanComponent) {
       } else {
         const plugin = await bcc.Container.getContainerPlugin(runtime.profile, this.containerAddress);
         this.description = plugin.description;
+
+        // apply data schema to plugin description for displaying correct left panel tree
+        this.description.dataSchema = { };
+        for (let field of Object.keys(plugin.template.properties)) {
+          const fieldId = field.replace(/[^a-zA-Z0-9]/g, '');
+          this.description.dataSchema[field] = {
+            $id: `${fieldId}_schema`,
+            ...plugin.template.properties[field].dataSchema
+          };
+        }
       }
     }
 

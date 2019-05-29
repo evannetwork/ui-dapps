@@ -31,6 +31,7 @@ import ContainerPluginSwitchComponent from './components/container/container-plu
 import CreateComponent from './components/create/create.vue';
 import DataSetComponent from './components/set/set/set.vue';
 import DataSetsComponent from './components/set/sets/sets.vue';
+import DcListEntriesComponent from './components/set/list-entries/list-entries.vue';
 import NewDataSetComponent from './components/set/new-set/new-set.vue';
 import SetSchemaComponent from './components/set/schema/schema.vue';
 
@@ -69,10 +70,10 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     component: DataSetComponent,
     children: [
       { redirect: { path: 'entry-schema' }, path: '', },
-      { name: 'dc-sets-add',    component: NewDataSetComponent, path: 'dc-sets-add', },
       { name: 'entry-changes',     component: UnderDevelopmentComponent, path: 'entry-changes', },
       { name: 'entry-permissions', component: UnderDevelopmentComponent, path: 'entry-permissions', },
-      { name: 'entry-schema',      component: SetSchemaComponent, path: 'entry-schema', },
+      { name: 'entry-schema',      component: SetSchemaComponent,        path: 'entry-schema', },
+      { name: 'list-entries',      component: DcListEntriesComponent,    path: 'list-entries', },
     ]
   },
 ];

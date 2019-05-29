@@ -30,8 +30,7 @@
     <evan-nav-tabs class="flex-shrink-0"
       :tabs="tabs">
     </evan-nav-tabs>
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="container-wide overflow-y-auto" v-else>
+    <div class="container-wide overflow-y-auto">
       <div class="d-flex mb-5 align-items-center">
         <div class="flex-truncate" style="max-width: 50%;">
           <h3 class="font-weight-bold mb-0">
@@ -40,12 +39,15 @@
         </div>
         <span class="mx-auto"></span>
         <set-actions
+          v-if="!loading"
           :containerAddress="containerAddress"
           :entryName="entryName">
         </set-actions>
       </div>
 
-      <transition name="fade" mode="out-in">
+      <evan-loading v-if="loading"></evan-loading>
+      <transition name="fade" mode="out-in"
+        v-else>
         <router-view></router-view>
       </transition>
     </div>

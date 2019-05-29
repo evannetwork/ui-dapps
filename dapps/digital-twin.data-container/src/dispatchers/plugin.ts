@@ -46,8 +46,8 @@ dispatcher
     const profile = runtime.profile;
 
     // apply the possibility to only save the description, without touching the template.
-    data.plugin = data.plugin || (await bcc.Container
-      .getContainerPlugin(profile, data.beforeName));
+    data.template = data.template || (await bcc.Container
+      .getContainerPlugin(profile, data.beforeName)).template;
 
     // load latest contracts to be up to date
     await profile.loadForAccount(profile.treeLabels.contracts);
@@ -57,10 +57,21 @@ dispatcher
       await runtime.profile.removeBcContract(bcc.Container.profilePluginsKey, data.beforeName);
     }
 
+    // copy original template and clear runtime propert variables
+    const allowedProperties = [ 'dataSchema', 'type', '$comment', 'value' ];
+    data.template = JSON.parse(JSON.stringify(data.template));
+    Object.keys(data.template.properties).forEach(property => {
+      Object.keys(data.template.properties[property]).forEach(key => {
+        if (allowedProperties.indexOf(key) === -1) {
+          delete data.template.properties[property][key];
+        }
+      });
+    });
+
     // save the new template
     await profile.addBcContract(bcc.Container.profilePluginsKey, data.description.name, {
       description: data.description,
-      plugin: data.plugin,
+      template: data.template,
     });
 
     // save the profile

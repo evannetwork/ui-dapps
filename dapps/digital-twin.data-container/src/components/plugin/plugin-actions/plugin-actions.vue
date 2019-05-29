@@ -222,7 +222,7 @@
       </evan-modal>
       <dc-new-entry
         ref="dcNewEntry"
-        :template="template"
+        :template="plugin.template"
         @submit="addNewEntry($event)">
       </dc-new-entry>
     </template>

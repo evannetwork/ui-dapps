@@ -98,7 +98,7 @@
         <!-- @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()" -->
         <a
           class="d-flex align-items-center dark-link"
-          :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
+          :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
           :href="`${ dcUrl }/data-set/${ entry }`">
           <span class="position-relative">
             <i
@@ -120,7 +120,8 @@
             :entryName="entry"
             :displayMode="'dropdownIcon'"
             :setActions="true"
-            :schemaActions="true">
+            :schemaActions="true"
+            :listActions="true">
           </dc-set-actions>
         </div>
       </div>

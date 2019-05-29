@@ -54,7 +54,8 @@ const i18n: any = {
     "open": "Open",
     "plugin": "Plugin",
     "plugin-create": "Create Plugin",
-    "verifications": "Verifications"
+    "verifications": "Verifications",
+    "list-entries": "List-Entries"
   }
 }
 /* tslint:enable */

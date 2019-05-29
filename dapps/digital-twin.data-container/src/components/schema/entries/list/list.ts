@@ -77,31 +77,6 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   contractAddress = '';
 
   /**
-   * Show the add list entry dialog
-   */
-  addListEntry = false;
-  addListEntryForm: FieldFormInterface = null;
-
-  /**
-   * Data container instance, if an address was opened, so we can easily load entries
-   */
-  dataContainer: bcc.Container;
-
-  /**
-   * List of existing list entries, when an real container was opened
-   */
-  listEntries: Array<any> = [ ];
-  expandListEntries: any = { };
-
-  /**
-   * paging specific values
-   */
-  count = 10;
-  maxListentries = 0;
-  offset = 0;
-  reverse = true;
-
-  /**
    * ref handlers
    */
   reactiveRefs: any = { };
@@ -118,118 +93,35 @@ export default class EntryListComponent extends mixins(EvanComponent) {
     // Calculated entry schema itemType
     this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
 
-    if (this.address.startsWith('0x')) {
-      let dataContainer;
-      let contractAddress;
-
-      // try to load the contract address for the container, if it could not be loaded, it must be a
-      // template
-      try {
-        dataContainer = utils.getContainer(utils.getRuntime(this), this.address);
-        contractAddress = await dataContainer.getContractAddress();
-      } catch (ex) { }
-
-      // enable list loading and paging
-      if (contractAddress && contractAddress !== utils.nullAddress) {
-        this.contractAddress = contractAddress;
-        this.dataContainer = dataContainer;
-        await this.loadEntries();
-      }
-    }
-
-    // add form handling for field controls
-    if (this.itemType !== 'object') {
-      this.addListEntryForm = <FieldFormInterface>new EvanForm(this, {
-        value: {
-          value: this.entry.edit.value,
-          validate: function(vueInstance: EntryListComponent, form: FieldFormInterface) {
-            return fieldUtils.validateField(
-              vueInstance.itemType,
-              this,
-              vueInstance,
-              form
-            );
-          }
-        },
-      });
-    }
-
-    this.loading = false;
-  }
-
-  /**
-   * Add the current form data as a new list entry.
-   */
-  addEntry() {
-    this.addListEntry = false;
-
-    if (this.itemType === 'object') {
-      // save the current ajv values to the edit.value object and save the value into the original
-      // object
-      this.reactiveRefs.addAjv.save();
-      entryUtils.saveValue(this, this.entry);
-    } else {
-      // apply the new data to the list
-      this.entry.value.push(this.addListEntryForm.value.value);
-
-      // clear the formular value
-      this.entry.edit.value = fieldUtils.defaultValue(this.itemType);
-      this.addListEntryForm.value.value = this.entry.edit.value;
-    }
-  }
-
-  /**
-   * Load next list entries
-   */
-  async loadEntries() {
-    this.loading = true;
-
-    try {
-      const runtime = utils.getRuntime(this);
-
-      // detect maxListEntries, so we can load until the max list entries were loaded
-      this.maxListentries = await runtime.dataContract.getListEntryCount(
-        this.contractAddress,
-        this.entryName
-      );
-
-      // load the next entries
-      const newEntries = await this.dataContainer.getListEntries(
-        this.entryName,
-        this.count,
-        this.offset,
-        this.reverse
-      );
-
-      // apply the new entries to the list and increase the page params
-      this.offset += newEntries.length;
-      this.listEntries = this.listEntries.concat(newEntries);
-    } catch (ex) { }
-
     this.loading = false;
   }
 
   /**
    * Cancel the schema edit and use the original values.
    */
-  resetSchema() {
+  reset() {
     // disable value overwrite
-    this.reactiveRefs.schemaAjv.deleted = true;
+    this.reactiveRefs.ajv.deleted = true;
 
     // reset the schema
     entryUtils.resetSchema(this.entry);
-    this.$set(this.entry, 'mode', 'view');
   }
 
   /**
    * Save the current schema.
    */
-  saveSchema() {
+  save() {
     // save the current schema into the edit properties
-    this.reactiveRefs.schemaAjv.save();
+    this.reactiveRefs.ajv.save();
 
     // save the schema
     entryUtils.saveSchema(this.entry);
-    this.$set(this.entry, 'mode', 'view');
+  }
+
+  /**
+   * Determines if valid.
+   */
+  isValid() {
+    return this.reactiveRefs.ajv.isValid;
   }
 }

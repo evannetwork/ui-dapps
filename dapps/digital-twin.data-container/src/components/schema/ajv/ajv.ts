@@ -52,8 +52,6 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
   /**
    * Disable value inputs (e.g.: for list schema definition)
-   *
-   * @class      Prop (name)
    */
   @Prop() disableValue;
 
@@ -191,7 +189,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
         value: value || fieldUtils.defaultValue(type),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // only check validity when the value is enabled
-          if (!this.disableValue) {
+          if (!vueInstance.disableValue) {
             // trigger form validation
             vueInstance.checkFormValidity();
 

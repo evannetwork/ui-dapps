@@ -99,17 +99,22 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
    */
   initializing = true;
 
+  /**
+   * Map decode uri component to scope, so it can be used in template
+   */
+  decodeURIComponent = (<any>window).decodeURIComponent;
+
   async created() {
     const runtime = utils.getRuntime(this);
     const uiContainer = new UiContainer(this);
 
     //  watch for updates and load initial data
     this.cacheWatcher = uiContainer.watchForUpdates(
-      async () => this.plugin = await uiContainer.loadData(false)
+      async () => this.plugin = await uiContainer.loadData()
     );
 
     // load the plugin
-    this.plugin = this.plugin = await uiContainer.loadData(false);
+    this.plugin = await uiContainer.loadData();
 
     this.initializing = false;
   }
