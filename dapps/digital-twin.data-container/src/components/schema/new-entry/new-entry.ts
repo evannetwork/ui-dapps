@@ -137,9 +137,6 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
         // creation
         if (this.entryForm.arrayType.value === 'object') {
           entry.dataSchema.items.properties = { };
-        } else {
-         // do not enter schema mode on normal field lists
-          entry.mode = 'view';
         }
       } else {
         // set the default schema

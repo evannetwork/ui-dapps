@@ -36,6 +36,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registry';
 import * as entryUtils from '../../entries';
+import * as fieldUtils from '../../fields';
 import ContainerCache from '../../container-cache';
 import { getDtAddressFromUrl } from '../../utils';
 
@@ -125,6 +126,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
   activePlugin = null;
 
   /**
+   * Map getType so it can be accessed in template
+   */
+  getEntryType = fieldUtils.getType;
+
+  /**
    * Setup the form.
    */
   async created() {
@@ -194,15 +200,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
         this.createForm.plugin.value = this.plugins.length - 1;
       }
     }
-
-    // enable the edit mode for all properties for a template
-    this.plugins.forEach(plugin => {
-      if (plugin.template) {
-        Object.keys(plugin.template.properties).forEach((propertyName: string) => {
-          plugin.template.properties[propertyName].mode = 'edit';
-        });
-      }
-    });
 
     this.loading = false;
     this.watchForCreation();

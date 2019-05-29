@@ -44,6 +44,7 @@
         ref="entryComp"
         v-else-if="type === 'object'"
         :activeMode="activeMode"
+        :address="address"
         :entry="entry"
         :entryName="entryName">
       </dc-entry-object>
@@ -61,6 +62,7 @@
         ref="entryComp"
         v-else
         :activeMode="activeMode"
+        :address="address"
         :entry="entry"
         :entryName="entryName">
       </dc-entry-field>

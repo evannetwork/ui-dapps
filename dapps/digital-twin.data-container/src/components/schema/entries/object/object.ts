@@ -41,6 +41,11 @@ import * as entryUtils from '../../../../entries';
 @Component({ })
 export default class EntryObjectComponent extends mixins(EvanComponent) {
   /**
+   * Id for the template that is edited (e.g.: create, container address, template type, ...)
+   */
+  @Prop() address: string;
+
+  /**
    * Container property template definition
    */
   @Prop() entry: UIContainerTemplateProperty;

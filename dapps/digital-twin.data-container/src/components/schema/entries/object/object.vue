@@ -28,6 +28,7 @@
 <template>
   <div v-if="!loading">
     <dc-ajv
+      :address="address"
       :mode="activeMode"
       :properties="entry.edit.dataSchema.properties"
       :value="entry.edit.value"

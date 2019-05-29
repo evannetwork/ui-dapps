@@ -61,9 +61,9 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   @Prop() entry: UIContainerTemplateProperty;
 
   /**
-   * list of available modes (schema / edit / view)
+   * Almost highest available mode
    */
-  @Prop() modes: Array<string>;
+  @Prop() activeMode: string;
 
   /**
    * Show loading symbol, until listentries were load

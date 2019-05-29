@@ -113,7 +113,7 @@
         </tbody>
         <evan-loading v-if="loading"></evan-loading>
         <div class="text-center mt-3"
-          v-if="contractAddress && templateEntry.mode !== 'schema' && !loading">
+          v-if="contractAddress && !loading">
           <h5 class="mt-3">
             <b>
               {{ '_datacontainer.list.results' | translate }}

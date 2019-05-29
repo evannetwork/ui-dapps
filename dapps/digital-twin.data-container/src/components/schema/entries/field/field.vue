@@ -28,10 +28,11 @@
 <template>
   <div>
     <dc-field
-      :type="type"
+      :address="address"
       :control="fieldForm.value"
-      :mode="entry.mode"
-      :standalone="true">
+      :mode="activeMode"
+      :standalone="true"
+      :type="type">
     </dc-field>
   </div>
 </template>

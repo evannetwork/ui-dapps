@@ -47,10 +47,19 @@ dispatcher
     // apply formular data to the description
     const description = await utils.getDataContainerBaseDbcp(data.description);
 
+    // fill empty permissions
+    Object.keys(data.plugin.template.properties).forEach(entry => {
+      if (!data.plugin.template.properties[entry].permissions) {
+        data.plugin.template.properties[entry].permissions = {
+          0: ['set']
+        };
+      }
+    });
+
     // create the container
     const container = await bcc.Container.create(<any>runtime, {
       accountId: runtime.activeAccount,
-      address: `${ data.name }.${ data.digitalTwinAddress }`,
+      // address: `${ data.name }.${ data.digitalTwinAddress }`,
       description: description,
       factoryAddress: utils.containerFactory,
       plugin: data.plugin,

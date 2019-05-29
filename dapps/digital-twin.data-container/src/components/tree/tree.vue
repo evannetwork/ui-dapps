@@ -71,6 +71,7 @@
         </div>
         <dc-actions
           ref="dcActions"
+          v-if="containerAddress"
           :containerAddress="containerAddress"
           :digitalTwinAddress="digitalTwinAddress"
           :displayMode="'dropdownIcon'"

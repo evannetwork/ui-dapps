@@ -46,6 +46,11 @@ interface FieldFormInterface extends EvanForm {
 @Component({ })
 export default class AJVComponent extends mixins(EvanComponent) {
   /**
+   * Id for the template that is edited (e.g.: create, container address, template type, ...)
+   */
+  @Prop() address: string;
+
+  /**
    * schema / edit / read
    */
   @Prop({ default: 'schema' }) mode;
@@ -194,7 +199,12 @@ export default class AJVComponent extends mixins(EvanComponent) {
             vueInstance.checkFormValidity();
 
             // map the value top the correct dynamic type validator
-            return fieldUtils.validateField((<any>form).type.value, this, vueInstance, form);
+            return fieldUtils.validateField(
+              (<any>form).type.value,
+              this,
+              form,
+              vueInstance.address,
+            );
           } else {
             return true;
           }

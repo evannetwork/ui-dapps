@@ -85,24 +85,32 @@ export function defaultValue(type: string) {
 /**
  * Validator functions for each field type.
  *
- * @param      {string}           type         field type (string, files, ...)
- * @param      {EvanFormControl}  field        from control for the field values
- * @param      {Vue}              vueInstance  original vue component instance
- * @param      {EvanForm}         form         parent form of the field
+ * @param      {string}           type     field type (string, files, ...)
+ * @param      {EvanFormControl}  field    from control for the field values
+ * @param      {EvanForm}         form     parent form of the field
+ * @param      {string}           address  container / plugin address
  */
 export function validateField(
   type: string,
   field: EvanFormControl,
-  vueInstance: Vue,
-  form: EvanForm
+  form: EvanForm,
+  address: string
 ) {
+  // allow empty values in plugins
+  const emptyValues = address === 'plugin-create' ||
+    (!address.startsWith('0x') && address !== 'dc-create');
+
   switch (type) {
     case 'string': {
-      return field.value &&
-        field.value.trim().length !== 0;
+      return emptyValues ||
+        (field.value && field.value.trim().length !== 0);
     }
     case 'number': {
-      return !isNaN(parseFloat(field.value));
+      if (emptyValues && field.value === '') {
+        return true;
+      } else {
+        return !isNaN(parseFloat(field.value));
+      }
     }
     case 'files': {
       return true;

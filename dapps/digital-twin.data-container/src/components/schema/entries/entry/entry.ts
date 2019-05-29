@@ -78,11 +78,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
 
     // check permissions and set permitted modes
     if (!this.address.startsWith('0x')) {
-      if (this.address === 'dc-create') {
-        this.activeMode = 'edit';
-      } else {
-        this.activeMode = 'schema';
-      }
+      this.activeMode = 'schema';
     } else {
       const read = this.permissions.read || [ ];
       const write = this.permissions.readWrite || [ ];

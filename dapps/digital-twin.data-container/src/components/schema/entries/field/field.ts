@@ -45,6 +45,11 @@ interface FieldFormInterface extends EvanForm {
 @Component({ })
 export default class FieldComponent extends mixins(EvanComponent) {
   /**
+   * Id for the template that is edited (e.g.: create, container address, template type, ...)
+   */
+  @Prop() address: string;
+
+  /**
    * Container property template definition
    */
   @Prop() entry: any;
@@ -89,8 +94,8 @@ export default class FieldComponent extends mixins(EvanComponent) {
           return fieldUtils.validateField(
             vueInstance.type,
             this,
-            vueInstance,
-            form
+            form,
+            vueInstance.address,
           );
         }
       },

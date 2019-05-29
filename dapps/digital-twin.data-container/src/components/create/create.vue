@@ -158,11 +158,11 @@
                 <span>{{ step.title | translate }}</span>
               </button>
             </div>
-            <div class="pt-3"
-              v-for="(step, index) of steps">
+            <div v-for="(step, index) of steps">
               <dc-entry
+                class="content pt-0"
                 v-if="index === activeStep"
-                :address="!templateMode ? 'create' : 'create-template'"
+                :address="!templateMode ? 'dc-create' : 'plugin-create'"
                 :entry="activePlugin.template.properties[steps[activeStep].entryName]"
                 :entryName="steps[activeStep].entryName"
                 :permissions="permissions"

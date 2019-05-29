@@ -24,12 +24,12 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-import * as digitalTwin from '@evan.network/digitaltwin';
+import * as digitaltwin from '@evan.network/digitaltwin';
+import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_digitaltwins": {
-    "breadcrumbs": digitalTwin.translations.en._digitaltwins.breadcrumbs,
     "digitaltwins": {
       "create": "Digitalen Zwilling erstellen",
       "desc": "Übersicht meiner digitalen Zwillinge",
@@ -50,4 +50,9 @@ export default {
     "plugins-overview": "Meine Plugins"
   }
 }
+
+i18n._digitaltwins.breadcrumbs = dtLib.translations.de.breadcrumbs;
+i18n._digitaltwins.lookup = digitaltwin.translations.de._digitaltwins.lookup;
+
+export default i18n;
 /* tslint:enable */

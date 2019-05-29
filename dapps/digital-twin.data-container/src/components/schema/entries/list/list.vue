@@ -31,9 +31,10 @@
       id="entry-schema"
       v-if="itemType === 'object'">
       <dc-ajv
-        :mode="entry.mode"
-        :properties="entry.edit.dataSchema.items.properties"
+        :address="address"
         :disableValue="true"
+        :mode="activeMode"
+        :properties="entry.edit.dataSchema.items.properties"
         @init="$set(reactiveRefs, 'ajv', $event)">
       </dc-ajv>
     </div>

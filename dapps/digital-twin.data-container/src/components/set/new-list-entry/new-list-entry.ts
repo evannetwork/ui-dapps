@@ -113,8 +113,8 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
             return fieldUtils.validateField(
               vueInstance.itemType,
               this,
-              vueInstance,
-              form
+              form,
+              vueInstance.containerAddress,
             );
           }
         },

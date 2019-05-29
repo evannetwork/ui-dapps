@@ -192,6 +192,9 @@ export function getRuntime(runtime: any): bcc.Runtime {
   nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
   nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
 
+  // apply correct factory address
+  nameResolverConfig.domains.containerFactory = containerFactory;
+
   // copy runtime and set the nameResolver
   const runtimeCopy = Object.assign({ }, runtime);
   runtimeCopy.nameResolver = new bcc.NameResolver({
