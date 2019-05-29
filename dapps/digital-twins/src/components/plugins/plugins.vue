@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="white-box rounded border"
+      <div class="white-box border-smooth rounded mt-3"
         v-if="Object.keys(plugins).length !== 0">
         <div class="header border-0">
           <div>
@@ -102,7 +102,7 @@
           </div>
         </div>
       </div>
-      <div class="white-box rounded border"
+      <div class="white-box border-smooth rounded mt-3"
         v-else>
         <div class="header">
           <h4 class="m-0">

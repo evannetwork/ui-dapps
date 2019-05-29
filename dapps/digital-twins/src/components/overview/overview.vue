@@ -45,7 +45,6 @@
             class="btn btn-circle btn-sm btn-tertiary mr-3"
             :href="`${ dapp.fullUrl }/open`">
             <i class="mdi mdi-magnify"></i>
-
             <evan-tooltip :placement="'bottom'">
               {{ '_digitaltwins.digitaltwins.open' | translate }}
             </evan-tooltip>
@@ -117,7 +116,7 @@
           </div>
         </div>
       </div>
-      <div class="white-box border-smooth rounded mt-3 "
+      <div class="white-box border-smooth rounded mt-3"
         v-else>
         <div class="header">
           <h4 class="m-0">
