@@ -156,7 +156,9 @@ export const en = {
         "description": "0"
       },
       "input": {
-        "error": "This field is required!"
+        "error": "This field is required!",
+        "errorAmount": "At least 10 EVE must be purchased!"
+
       },
       "card": {
         "title": "Card number"

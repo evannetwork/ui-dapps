@@ -99,7 +99,9 @@ export class OnboardingService {
 
     if (this.core.getAccountId()) {
       try {
+        console.dir(this.core.getAccountId())
         isOnboarded = await bccHelper.isAccountOnboarded(this.core.getAccountId());
+        console.dir(isOnboarded)
       } catch (ex) { }
 
       if (isOnboarded) {
@@ -181,6 +183,7 @@ export class OnboardingService {
    * @param provider    current provider (identity-create, identity-import)
    */
   async checkImportedDummyVault(dummyVault: any, mnemonic: string, accountId: string, provider: string) {
+    console.dir(accountId)
     const isOnboarded = await this.onboardingService.isOnboarded(accountId);
 
     if (isOnboarded) {
@@ -218,7 +221,7 @@ export class OnboardingService {
     const signer = account.toLowerCase();
 
     const msgHex = window['web3'].fromUtf8(msg);
-   
+
     return new Promise((resolve, reject) => {
       window['web3'].currentProvider.sendAsync({
         method: 'personal_sign',
@@ -329,8 +332,8 @@ export class OnboardingService {
       const generationResult = await this.onboarding.sendProfileCreationCall(account, fileHashes, provider);
       // temporary execution of setMyProfile
       const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);
-      const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);  
-      const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);  
+      const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);
+      const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);
 
       // finished profile creation successfully
       delete window.localStorage['evan-profile-creation'];
@@ -338,7 +341,7 @@ export class OnboardingService {
 
     /**
      * accepts a bmail invitation, creates an account and the profile, and verifications the bmail funds
-     * 
+     *
      * @param account      account ID / externally owned account, string starting with 0x
      * @param invitation   invitation token from invitation URL in bmail
      */
@@ -354,14 +357,14 @@ export class OnboardingService {
      * sends a profile creation request to the smart agent, which creates a new profile
      *
      * @param accountId      account ID / externally owned account, string starting with 0x
-     * @param profileInfo  prefilled Profile details for the creation 
-     * @param provider     signing provider (defaults to internal) 
+     * @param profileInfo  prefilled Profile details for the creation
+     * @param provider     signing provider (defaults to internal)
      */
     sendProfileCreationCall: async (accountId: string, profileInfo: any, provider = 'internal') => {
       var apiURL = baseUrlFaucet + this.faucet.path + 'handout?apiVersion=1';
       const msgString = 'Gimme Gimme Gimme!';   // needs to be the same as in onboarding smartagent
       const signature = await this.signMessage(msgString, accountId, provider);
-      try { 
+      try {
         const result = await this.http.post(apiURL,
           { accountId, signature, profileInfo, captchaToken: this.captchaToken }).toPromise();
         return result.json();

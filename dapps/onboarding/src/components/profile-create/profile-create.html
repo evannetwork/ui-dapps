@@ -56,7 +56,7 @@
           <ion-input type="password" formControlName="password" (keyup.enter)="createProfile()"></ion-input>
         </ion-item>
         <div class="input-error" [@growTransition]="{ value: ':enter', params : { height : '22px' } }"
-          *ngIf="onboardingForm.controls.password?.dirty && onboardingForm.controls.password.touched && onboardingForm.controls.password.errors">
+          *ngIf="(onboardingForm.controls.password?.dirty || onboardingForm.controls.password.touched) && onboardingForm.controls.password.errors">
           {{ onboardingForm.controls.password.errors[0] | translate }}
         </div>
         <ion-item class="no-margin-top">
@@ -64,7 +64,7 @@
           <ion-input type="password" formControlName="passwordRepeat" (keyup.enter)="createProfile()"></ion-input>
         </ion-item>
         <div class="input-error" [@growTransition]="{ value: ':enter', params : { height : '22px' } }"
-          *ngIf="onboardingForm.controls.passwordRepeat?.dirty && onboardingForm.controls.passwordRepeat.touched && onboardingForm.controls.passwordRepeat.errors">
+          *ngIf="(onboardingForm.controls.passwordRepeat?.dirty || onboardingForm.controls.passwordRepeat.touched) && onboardingForm.controls.passwordRepeat.errors">
           {{ onboardingForm.controls.passwordRepeat.errors[0] | translate }}
         </div>
       </form>

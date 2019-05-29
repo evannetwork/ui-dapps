@@ -13,5 +13,4 @@ coverage
 dist
 /.package.json
 package-lock.json
-documentation/*
 yarn.lock

@@ -53,6 +53,12 @@ evan-verifications-inspect {
       top: -7px;
     }
   }
+
+  ion-select.hide-open {
+    & > button {
+      display: none;
+    }
+  }
 }
 
 .evan-callout.evan-topic-prefill {

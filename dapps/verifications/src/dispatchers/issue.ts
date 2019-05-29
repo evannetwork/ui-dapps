@@ -73,7 +73,7 @@ export const issueDispatcher = new QueueDispatcher(
               await service.bcc.verifications.createIdentity(activeAccount, entry.address);
             }
           } catch (ex) { }
-          
+
           await service.bcc.verifications.setVerification(
             service.core.activeAccount(),
             entry.address,
