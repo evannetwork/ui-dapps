@@ -3,14 +3,14 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.1.0",
+        "evancore.vue.libs": "^1.2.0",
         "recaptcha.vue.libs": "^1.1.1"
       },
       "entrypoint": "onboarding.vue.js",
       "files": [
         "onboarding.vue.js"
       ],
-      "origin": "QmTbjHw3Lwd46BNMFaghx5Wnz9skVPcsmDg8LbZUzxPsXt",
+      "origin": "QmU4oQHLqYVfGLm12cEzUpQ3ieszoBQVkwbhcXY6DCKVqk",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"
@@ -44,7 +44,7 @@
       "1.2.0": "QmRPqJqGyyji6cg6TuuDNFygov8dezLg2ndYN69RpdjFUg",
       "1.3.0": "QmYPvMeWGYqBd3toMAx3vf3zFd2Bm49wLnf6uFD942j4yL",
       "1.5.0": "QmTBKVDXnYCCm5PhbSNaWscWFFZuVjC513zqDijHkxhcsy",
-      "3.0.0": "QmRMxQCtnJsiR1ZxHmCUxuw1yp4qqFZfTAwQDPsaCvoSzU"
+      "3.0.0": "QmWuweLUUVoFUS5GNABGj18Q5xV2LrnSMqBmaJEUZYHoBW"
     }
   }
 }
