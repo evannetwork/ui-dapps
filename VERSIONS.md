@@ -3,6 +3,9 @@
 ## Next Version
 ### Features
 ### Fixes
+- `datacontainer.digitaltwins`
+  - add new `UiContainer` structure including easy data loading update watching
+
 ### Deprecations
 
 
