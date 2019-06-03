@@ -39,119 +39,176 @@ import * as dcUtils from './utils';
 import * as dispatchers from './dispatchers/registry';
 import ContainerCache from './container-cache';
 
-export const containerCache = { };
-export const loadingCache = { };
-export const permissionsCache = { };
+/**
+ * UI Container instances serated by addresses
+ */
+export const containers: any = { };
 
 /**
  * DigitalTwin Container wrapper for loading.
  */
 export default class UiContainer {
   /**
-   * Original vue isntance where the container should be loaded
-   */
-  vueInstance: any;
-
-  /**
-   * digitalTwin address, where the container should be created for
+   * digital twin and container address
    */
   digitalTwinAddress: string;
-
-  /**
-   * Current opened container address
-   */
-  containerAddress: string;
+  address: string;
 
   /**
    * Vue instance evan routing dapp definition
    */
   dapp: any;
+  $i18n: any;
 
   /**
-   * current bcc runtime
-   */
-  runtime: bcc.Runtime;
-
-  /**
-   * Current container cache
-   */
-  containerCache: ContainerCache;
-
-  /**
-   * Is currently something loading?
-   */
-  loading: boolean;
-
-  /**
-   * Loading error?
+   * Status params
    */
   error: any;
+  loading: boolean;
+  loadingPromise: any;
 
   /**
-   * Loaded plugin instance
+   * util for interaction with containers
    */
-  plugin: any;
+  runtime: bcc.Runtime;
+  containerCache: ContainerCache;
+
 
   /**
-   * Loaded plugins description
+   * container specific data
    */
   description: any;
-
-  /**
-   * Owner of the container
-   */
+  isContainer: any;
   owner: string;
-
-  /**
-   * Loaded Permissions
-   */
   permissions: any;
+  plugin: any;
+  template: any;
+  isSaving: boolean;
 
   /**
-   * Initialize
+   * Vue instances that were applied to this ui container
    */
-  constructor(vueInstance: any) {
-    this.runtime = utils.getRuntime(vueInstance);
-    this.vueInstance = vueInstance;
-    this.dapp = vueInstance.dapp;
-    this.containerCache = new ContainerCache(this.runtime.activeAccount);
-    this.digitalTwinAddress = dcUtils.getDtAddressFromUrl(this.dapp);
-    this.containerAddress = this.vueInstance.containerAddress || this.vueInstance.pluginName;
+  vueInstances: Array<any> = [ ];
+
+  /**
+   * List of functions to clear active data watching functions
+   */
+  clearWatchers: Array<any> = [ ];
+  updateWatchers: Array<any> = [ ];
+
+  /**
+   * Initialize the ui container.
+   */
+  constructor(vueInstance: any, watch?: Function) {
+    const address = vueInstance.address || vueInstance.pluginName;
+    const uiContainer = containers[this.address] || this;
+
+    // bind watchers, when no watcher was started before
+    if (this.vueInstances.length === 0) {
+      this.bindWatchers();
+    }
+
+    // apply the vue instance to the list of previous used, so data watchers can be bound and
+    // removed dynamically
+    watch && this.updateWatchers.push(watch);
+    this.vueInstances.push(vueInstance);
+
+    // bind custom beforeDestroy function, to clear all watch functions
+    const originalDestroy = vueInstance.beforeDestroy;
+    vueInstance.beforeDestroy = (() => {
+      watch && this.updateWatchers.splice(this.updateWatchers.indexOf(watch), 1);
+      this.vueInstances.splice(this.vueInstances.indexOf(vueInstance), 1);
+
+      // remove all listeners, when the ui container is not bound to a vue instance
+      if (this.vueInstances.length === 0) {
+        this.clearWatchers.forEach(watcher => watcher());
+      }
+
+      // call original beforeDestroy
+      originalDestroy();
+    }).bind(this);
+
+    if (containers[this.address]) {
+      return containers[this.address];
+    } else {
+      uiContainer.address = address;
+      uiContainer.runtime = utils.getRuntime(vueInstance);
+      uiContainer.dapp = JSON.parse(JSON.stringify(vueInstance.dapp));
+      uiContainer.containerCache = new ContainerCache(this.runtime.activeAccount);
+      uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(this.dapp);
+      uiContainer.$i18n = vueInstance.$i18n;
+      uiContainer.isContainer = this.address.startsWith('0x');
+
+      // cache it for later usage
+      containers[this.address] = this;
+
+      return this;
+    }
+  }
+
+  /**
+   * loads the latest data and calls the callback
+   *
+   * @return     {bcc.ContainerPlugin}  container plugin instance
+   */
+  async runPluginUpdate() {
+    const isSaving = await this.isDispatcherRunning();
+
+    // load plugin, trigger reload, when dispatcher is finished
+    const plugin = await this.loadPlugin(this.isSaving && !isSaving);
+
+    // update latest saving status
+    this.isSaving = isSaving;
+
+    // run all update functions
+    this.updateWatchers.forEach((updateFunc: Function) =>
+      updateFunc(plugin, isSaving)
+    );
+  };
+
+  /**
+   * Bind container and dispatcher update watchers for populating changes.
+   */
+  bindWatchers() {
+    // watch for updates
+    this.clearWatchers.push(this.containerCache.watch(this.address, () => this.runPluginUpdate()));
+    this.clearWatchers.push(this.isContainer ?
+      dispatchers.updateDispatcher.watch(() => this.runPluginUpdate()) :
+      dispatchers.pluginDispatcher.watch(() => this.runPluginUpdate())
+    );
+
+    this.runPluginUpdate();
   }
 
   /**
    * Returns the plugin definition for a container or plugin.
    *
-   * @param      {string}      containerAddress  container address / plugin name
+   * @param      {string}      address  container address / plugin name
    */
-  async loadData() {
-    this.loading = true;
+  async loadPlugin(reload = false) {
+    if (!reload && this.plugin) {
+      return this.plugin;
+    }
 
-    const containerAddress = this.containerAddress;
-    loadingCache[containerAddress] = loadingCache[containerAddress] ||
+    this.loading = true;
+    this.loadingPromise = this.loadingPromise ||
       new Promise(async (resolve, reject) => {
-        let plugin;
+        let plugin, permissions;
 
         try {
           // check if it was already loaded before
-          const cached = await this.containerCache.get(containerAddress);
-          const container = utils.getContainer(this.runtime, containerAddress);
+          const cached = await this.containerCache.get(this.address);
+          const container = utils.getContainer(this.runtime, this.address);
 
-          if (containerCache[containerAddress]) {
-            plugin = JSON.parse(JSON.stringify(containerCache[containerAddress]));
+          if (this.isContainer) {
+            // get the container instance and load the template including all values
+            plugin = await container.toPlugin();
+            // else try to laod a plugin from profile
           } else {
-            if (containerAddress.startsWith('0x')) {
-              // get the container instance and load the template including all values
-              plugin = await container.toPlugin();
-              // else try to laod a plugin from profile
-            } else {
-              plugin = await bcc.Container.getContainerPlugin(
-                this.runtime.profile,
-                containerAddress
-              );
-            }
-
-            containerCache[containerAddress] = JSON.parse(JSON.stringify(plugin));
+            plugin = await bcc.Container.getContainerPlugin(
+              this.runtime.profile,
+              this.address
+            );
           }
 
           // merged cached values with the correct loaded one
@@ -166,102 +223,75 @@ export default class UiContainer {
           }
 
           // load the owner
-          if (!permissionsCache[containerAddress]) {
-            let permissions;
-
-            if (containerAddress.startsWith('0x')) {
-              permissions = {
-                owner: await container.getOwner(),
-                permissions: await container.getContainerShareConfigForAccount(
-                  this.runtime.activeAccount),
-              };
-            } else {
-              // default permissions for plugins
-              permissions = permissionsCache[containerAddress] || {
-                owner: this.runtime.activeAccount,
-                permissions: {
-                  readWrite: Object.keys(plugin.template.properties)
-                },
-              };
-            }
-
-            permissions.read = permissions.read || [ ];
-            permissions.readWrite = permissions.readWrite || [ ];
-            permissionsCache[containerAddress] = permissions;
+          if (this.address.startsWith('0x')) {
+            permissions = {
+              owner: await container.getOwner(),
+              permissions: await container.getContainerShareConfigForAccount(
+                this.runtime.activeAccount),
+            };
+          } else {
+            // default permissions for plugins
+            permissions = {
+              owner: this.runtime.activeAccount,
+              permissions: {
+                readWrite: Object.keys(plugin.template.properties)
+              },
+            };
           }
+
+          permissions.read = permissions.read || [ ];
+          permissions.readWrite = permissions.readWrite || [ ];
 
           // set custom translation
           const customTranslation = { _digitaltwins: { breadcrumbs: { } } };
-          customTranslation._digitaltwins.breadcrumbs[containerAddress] =
+          customTranslation._digitaltwins.breadcrumbs[this.address] =
             plugin.description.name;
-          this.vueInstance.$i18n.add(this.vueInstance.$i18n.locale(), customTranslation);
+          this.$i18n.add(this.$i18n.locale(), customTranslation);
         } catch (ex) {
-          loadingCache[containerAddress] = null;
           return reject(ex);
         }
 
-        loadingCache[containerAddress] = null;
-        resolve(plugin);
+        resolve({ permissions,  plugin, });
       });
 
     try {
-      this.plugin = await loadingCache[containerAddress];
+      const { plugin, permissions } = await this.loadingPromise[this.address];
+
+      this.plugin = plugin;
+      this.permissions = permissions;
+      this.owner = permissions.owner;
+      this.description = this.plugin.description;
+      this.template = this.plugin.template;
     } catch (ex) {
       this.runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
       this.error = ex.message;
       this.loading = false;
 
+      this.plugin = null;
+      this.permissions = null;
+      this.owner = null;
+      this.description = null;
+      this.template = null;
+
       return;
     }
 
-    this.description = this.plugin.description;
-    this.owner = permissionsCache[containerAddress].owner;
-    this.permissions = permissionsCache[containerAddress].permissions;
     this.loading = false;
-
     return this.plugin;
   }
 
   /**
-   * watch for container or plugin updates
-   *
-   * @param      {bccRuntime}  runtime           The runtime
-   * @param      {string}      containerAddress  The container address
+   * Is currently a dispatcher running for this container / plugin?
    */
-  watchForUpdates(callback: any) {
-    return this.containerCache.watch(this.containerAddress, callback);
-  }
-
-  /**
-   * Is the current container / plugin in save mode?
-   */
-  async isSaving() {
-    if (this.containerAddress.startsWith('0x')) {
+  async isDispatcherRunning() {
+    if (this.address.startsWith('0x')) {
       return (await dispatchers.updateDispatcher.getInstances(this.runtime))
-        .filter(instance => instance.data.address === this.containerAddress)
+        .filter(instance => instance.data.address === this.address)
         .length !== 0
     } else {
       return (await dispatchers.pluginDispatcher.getInstances(this.runtime))
-        .filter(instance => instance.data.description.name === this.containerAddress)
+        .filter(instance => instance.data.description.name === this.address)
         .length !== 0;
     }
-  }
-
-  /**
-   * Start and return a dispatcher watcher for the current container.
-   */
-  watchSaving(callback: any) {
-    if (this.containerAddress.startsWith('0x')) {
-      return dispatchers.updateDispatcher.watch(callback);
-    } else {
-      return dispatchers.pluginDispatcher.watch(callback);
-    }
-  }
-
-  /**
-   * Clear the current element cache
-   */
-  clearCache() {
-    delete containerCache[this.containerAddress];
   }
 }

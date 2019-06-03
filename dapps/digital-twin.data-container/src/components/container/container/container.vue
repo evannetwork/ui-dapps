@@ -28,15 +28,17 @@
 <template>
   <div>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="white-box border-smooth rounded"
-      v-else-if="error">
-      <div class="header">
-        <h3 class="m-0 font-weight-semibold">
-          {{ '_datacontainer.no-permissions.title' | translate }}
-        </h3>
-      </div>
-      <div class="content"
-        v-html="$t('_datacontainer.no-permissions.desc')">
+    <div class="container-wide">
+      <div class="white-box border-smooth rounded"
+        v-else-if="error">
+        <div class="header">
+          <h3 class="m-0 font-weight-semibold">
+            {{ '_datacontainer.no-permissions.title' | translate }}
+          </h3>
+        </div>
+        <div class="content"
+          v-html="$t('_datacontainer.no-permissions.desc')">
+        </div>
       </div>
     </div>
     <template v-else>
