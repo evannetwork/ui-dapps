@@ -93,8 +93,6 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * is the current container in save mode
    */
   saving = false;
-  savingWatcher = null;
-  cacheWatcher = null;
 
   /**
    * Calcucated entry type
@@ -107,27 +105,13 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   async created() {
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
-    this.uiContainer = new UiContainer(this);
 
-    this.savingWatcher = this.uiContainer
-      .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
-    this.cacheWatcher = this.uiContainer.watchForUpdates(() => this.initialize());
+    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.saving = uiContainer.isSaving;
 
-    await this.initialize();
-  }
-
-  /**
-   * Load the entry data
-   */
-  async initialize() {
-    this.loading = true;
-
-    const runtime = utils.getRuntime(this);
-
-    try {
-      await this.uiContainer.loadData();
-      this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
-      this.permissions = this.uiContainer.permissions;
+      const runtime = utils.getRuntime(this);
+      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
+      this.permissions = uiContainer.permissions;
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
 
       if (this.containerAddress.startsWith('0x')) {
@@ -144,16 +128,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
         this.permissions.readWrite.push(this.entryName);
       }
 
-      this.saving = await this.uiContainer.isSaving();
+      this.saving = uiContainer.isSaving;
 
       // ensure edit values for schema component
       entryUtils.ensureValues(this.templateEntry);
-    } catch (ex) {
-      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
-      this.error = true;
-
-      return;
-    }
+    });
 
     this.loading = false;
   }
@@ -162,9 +141,6 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Save latest changes to cache
    */
   beforeDestroy() {
-    this.savingWatcher && this.savingWatcher();
-    this.cacheWatcher && this.cacheWatcher();
-
     this.loading = true;
     this.$nextTick(async () => {
       const runtime = utils.getRuntime(this);

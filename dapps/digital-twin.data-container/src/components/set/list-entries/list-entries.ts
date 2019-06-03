@@ -52,11 +52,6 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   entryName = '';
 
   /**
-   * Container instance
-   */
-  uiContainer: UiContainer;
-
-  /**
    * Currents container template definition.
    */
   templateEntry: any = null;
@@ -104,38 +99,28 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   async created() {
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
-    this.uiContainer = new UiContainer(this);
 
-    this.savingWatcher = this.uiContainer
-      .watchSaving(async () => {
-        this.saving = await this.uiContainer.isSaving();
-        await this.loadDispatcherEntries();
-      });
-    this.cacheWatcher = this.uiContainer.watchForUpdates(() => this.initialize());
+    let beforeSaving = false;
+    UiContainer.watch(this, async (uiContainer: UiContainer, dispatchetData: any) => {
+      this.saving = uiContainer.isSaving;
+      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
+      this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-    await this.initialize();
-  }
+      // ensure values
+      entryUtils.ensureValues(this.templateEntry);
 
-  /**
-   * Load list entry data.
-   */
-  async initialize() {
-    this.loading = true;
+      if (beforeSaving && !this.saving) {
+        // reset values
+        this.count = 10;
+        this.maxListentries = 0;
+        this.offset = 0;
+        this.listEntries = [ ];
 
-    const runtime = utils.getRuntime(this);
-    await this.loadDispatcherEntries();
-    await this.uiContainer.loadData();
-    this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
-    this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
+        await this.loadEntries();
+      }
 
-    // ensure values
-    entryUtils.ensureValues(this.templateEntry);
-
-    // reset values
-    this.count = 10;
-    this.maxListentries = 0;
-    this.offset = 0;
-    this.listEntries = [ ];
+      beforeSaving = this.saving;
+    });
 
     await this.loadEntries();
   }
@@ -173,15 +158,13 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Load all dispatcher list entries.
+   * Set dispatcher entries for displaying list entries that are currently saved.
+   *
+   * @param      {Arrayany}  dispatchetData  The dispatcher data
    */
-  async loadDispatcherEntries() {
-    const runtime = utils.getRuntime(this);
-    const instances = await dispatchers.updateDispatcher.getInstances(runtime);
-
+  async setDispatcherEntries(dispatchetData: Array<any>) {
     this.dispatcherEntries = [ ].concat(
-      ...(instances
-        .map(instance => instance.data)
+      ...(dispatchetData
         .filter(data => data.plugin && data.address === this.containerAddress &&
           data.plugin.template.properties[this.entryName].value.length > 0
         )

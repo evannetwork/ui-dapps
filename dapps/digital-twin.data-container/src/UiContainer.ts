@@ -78,12 +78,15 @@ export default class UiContainer {
    * container specific data
    */
   description: any;
+  savingData: Array<any>;
   isContainer: any;
+  isSaving: boolean;
+  isSharing: boolean;
   owner: string;
   permissions: any;
   plugin: any;
+  sharingData: Array<any>;
   template: any;
-  isSaving: boolean;
 
   /**
    * Vue instances that were applied to this ui container
@@ -97,87 +100,115 @@ export default class UiContainer {
   updateWatchers: Array<any> = [ ];
 
   /**
+   * Return new UiContainer without using new flag for using easy usable watch logic
+   *
+   * @param      {any}       vueInstance  vue instance for getting $i18n, runtime, dapp, ...
+   * @param      {Function}  watch        optional watching function, is called with the following
+   *                                      params (uiContainer, savingDispatcherData,
+   *                                      sharingDispatcherData)
+   */
+  static async watch(vueInstance: any, watch: Function) {
+    const uiContainer = new UiContainer(vueInstance, watch);
+
+    // run plugin update only for this watch function
+    watch && (await uiContainer.runPluginUpdate(false, [ watch ]));
+
+    return uiContainer;
+  }
+
+  /**
    * Initialize the ui container.
    */
   constructor(vueInstance: any, watch?: Function) {
-    const address = vueInstance.address || vueInstance.pluginName;
-    const uiContainer = containers[this.address] || this;
+    const address = vueInstance.containerAddress || vueInstance.pluginName;
+    const uiContainer = containers[address] || this;
+
+    if (!uiContainer.address) {
+      // cache it for later usage
+      containers[address] = this;
+
+      uiContainer.address = address;
+      uiContainer.runtime = utils.getRuntime(vueInstance);
+      uiContainer.dapp = JSON.parse(JSON.stringify(vueInstance.dapp));
+      uiContainer.containerCache = new ContainerCache(uiContainer.runtime.activeAccount);
+      uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(uiContainer.dapp);
+      uiContainer.$i18n = vueInstance.$i18n;
+      uiContainer.isContainer = uiContainer.address.startsWith('0x');
+    }
 
     // bind watchers, when no watcher was started before
-    if (this.vueInstances.length === 0) {
-      this.bindWatchers();
+    if (uiContainer.vueInstances.length === 0) {
+      uiContainer.bindWatchers();
     }
 
     // apply the vue instance to the list of previous used, so data watchers can be bound and
     // removed dynamically
-    watch && this.updateWatchers.push(watch);
-    this.vueInstances.push(vueInstance);
+    watch && uiContainer.updateWatchers.push(watch);
+    uiContainer.vueInstances.push(vueInstance);
 
     // bind custom beforeDestroy function, to clear all watch functions
-    const originalDestroy = vueInstance.beforeDestroy;
-    vueInstance.beforeDestroy = (() => {
-      watch && this.updateWatchers.splice(this.updateWatchers.indexOf(watch), 1);
-      this.vueInstances.splice(this.vueInstances.indexOf(vueInstance), 1);
+    vueInstance.$once('hook:beforeDestroy', () => {
+      watch && uiContainer.updateWatchers.splice(uiContainer.updateWatchers.indexOf(watch), 1);
+      uiContainer.vueInstances.splice(uiContainer.vueInstances.indexOf(vueInstance), 1);
 
       // remove all listeners, when the ui container is not bound to a vue instance
-      if (this.vueInstances.length === 0) {
-        this.clearWatchers.forEach(watcher => watcher());
+      if (uiContainer.vueInstances.length === 0) {
+        uiContainer.clearWatchers.forEach(watcher => watcher());
       }
+    });
 
-      // call original beforeDestroy
-      originalDestroy();
-    }).bind(this);
-
-    if (containers[this.address]) {
-      return containers[this.address];
-    } else {
-      uiContainer.address = address;
-      uiContainer.runtime = utils.getRuntime(vueInstance);
-      uiContainer.dapp = JSON.parse(JSON.stringify(vueInstance.dapp));
-      uiContainer.containerCache = new ContainerCache(this.runtime.activeAccount);
-      uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(this.dapp);
-      uiContainer.$i18n = vueInstance.$i18n;
-      uiContainer.isContainer = this.address.startsWith('0x');
-
-      // cache it for later usage
-      containers[this.address] = this;
-
-      return this;
-    }
+    return uiContainer;
   }
 
   /**
    * loads the latest data and calls the callback
    *
-   * @return     {bcc.ContainerPlugin}  container plugin instance
+   * @param      {boolean}          reload          force updateFunc data reload
+   * @param      {Array<Function>}  updateWatchers  update functions
    */
-  async runPluginUpdate() {
-    const isSaving = await this.isDispatcherRunning();
+  async runPluginUpdate(reload = false, updateWatchers = this.updateWatchers) {
+    const savingData = await this.getSavingData();
+    const sharingData = await this.getSharingData();
+    const isSaving = savingData.length !== 0;
+    const isSharing = sharingData.length !== 0;
 
     // load plugin, trigger reload, when dispatcher is finished
-    const plugin = await this.loadPlugin(this.isSaving && !isSaving);
+    await this.loadPlugin(
+      reload ||
+      (this.isSaving && !isSaving) ||
+      (this.isSharing && !isSharing)
+    );
 
     // update latest saving status
     this.isSaving = isSaving;
+    this.isSharing = isSharing;
+    this.savingData = savingData;
+    this.sharingData = sharingData;
 
     // run all update functions
-    this.updateWatchers.forEach((updateFunc: Function) =>
-      updateFunc(plugin, isSaving)
-    );
+    await Promise.all(updateWatchers.map((updateFunc: Function) =>
+      updateFunc(this, savingData, sharingData)
+    ));
   };
 
   /**
    * Bind container and dispatcher update watchers for populating changes.
    */
   bindWatchers() {
-    // watch for updates
-    this.clearWatchers.push(this.containerCache.watch(this.address, () => this.runPluginUpdate()));
+    // watch for cache updates
+    this.clearWatchers.push(this.containerCache.watch(this.address, () =>
+      this.runPluginUpdate(true)
+    ));
+    // watch for save updates
     this.clearWatchers.push(this.isContainer ?
       dispatchers.updateDispatcher.watch(() => this.runPluginUpdate()) :
       dispatchers.pluginDispatcher.watch(() => this.runPluginUpdate())
     );
-
-    this.runPluginUpdate();
+    // watch for sharing updates
+    this.clearWatchers.push(this.isContainer ?
+      dispatchers.shareDispatcher.watch(() => this.runPluginUpdate()) :
+      dispatchers.pluginShareDispatcher.watch(() => this.runPluginUpdate())
+    );
   }
 
   /**
@@ -197,9 +228,15 @@ export default class UiContainer {
 
         try {
           // check if it was already loaded before
-          const cached = await this.containerCache.get(this.address);
-          const container = utils.getContainer(this.runtime, this.address);
+          const savingData = await this.getSavingData();
+          const cached: any = await this.containerCache.get(this.address) || {
+            template: {
+              properties: { }
+            }
+          };
 
+          // load the original container data
+          const container = utils.getContainer(this.runtime, this.address);
           if (this.isContainer) {
             // get the container instance and load the template including all values
             plugin = await container.toPlugin();
@@ -211,16 +248,24 @@ export default class UiContainer {
             );
           }
 
-          // merged cached values with the correct loaded one
-          if (cached) {
-            const properties = cached.template.properties;
+          // merge container cache with dispatcher data
+          savingData.forEach(data => {
+            if (data.template) {
+              cached.template.properties = Object.assign(properties, data.template.properties);
+            }
 
-            Object.keys(properties).forEach((property) => {
-              if (properties[property].changed || properties[property].isNew) {
-                plugin.template.properties[property] = properties[property];
-              }
-            });
-          }
+            if (data.description) {
+              plugin.description = data.description;
+            }
+          });
+
+          // merged cached values with the correct loaded one
+          const properties = cached.template.properties;
+          Object.keys(properties).forEach((property) => {
+            if (properties[property].changed || properties[property].isNew) {
+              plugin.template.properties[property] = properties[property];
+            }
+          });
 
           // load the owner
           if (this.address.startsWith('0x')) {
@@ -251,13 +296,14 @@ export default class UiContainer {
           return reject(ex);
         }
 
-        resolve({ permissions,  plugin, });
+        resolve({ permissions, plugin, });
       });
 
     try {
-      const { plugin, permissions } = await this.loadingPromise[this.address];
+      const { plugin, permissions } = await this.loadingPromise;
 
       this.plugin = plugin;
+      this.plugin.permissions = this.permissions;
       this.permissions = permissions;
       this.owner = permissions.owner;
       this.description = this.plugin.description;
@@ -283,15 +329,30 @@ export default class UiContainer {
   /**
    * Is currently a dispatcher running for this container / plugin?
    */
-  async isDispatcherRunning() {
-    if (this.address.startsWith('0x')) {
+  async getSavingData() {
+    if (this.isContainer) {
       return (await dispatchers.updateDispatcher.getInstances(this.runtime))
         .filter(instance => instance.data.address === this.address)
-        .length !== 0
+        .map(instance => instance.data);
     } else {
       return (await dispatchers.pluginDispatcher.getInstances(this.runtime))
         .filter(instance => instance.data.description.name === this.address)
-        .length !== 0;
+        .map(instance => instance.data);
+    }
+  }
+
+  /**
+   * Is currently a dispatcher running for this container / plugin?
+   */
+  async getSharingData() {
+    if (this.address.startsWith('0x')) {
+      return (await dispatchers.shareDispatcher.getInstances(this.runtime))
+        .filter(instance => instance.data.address === this.address)
+        .map(instance => instance.data);
+    } else {
+      return (await dispatchers.pluginShareDispatcher.getInstances(this.runtime))
+        .filter(instance => instance.data.description.name === this.address)
+        .map(instance => instance.data);
     }
   }
 }

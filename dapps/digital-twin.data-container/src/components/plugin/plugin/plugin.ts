@@ -77,10 +77,9 @@ export default class PluginComponent extends mixins(EvanComponent) {
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
 
-    const uiContainer = new UiContainer(this);
-    await uiContainer.loadData();
-
-    this.description = uiContainer.description;
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.description = uiContainer.description;
+    });
 
     this.loading = false;
   }

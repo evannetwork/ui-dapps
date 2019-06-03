@@ -385,8 +385,8 @@ export default class EvanUIDigitalTwin {
     }
 
     // watch for updates
-    const addListener = dispatchers['favoriteAddDispatcher'].watch(watch);
-    const removeListener = dispatchers['favoriteRemoveDispatcher'].watch(watch);
+    const addListener = dispatchers.dt.favoriteAddDispatcher.watch(watch);
+    const removeListener = dispatchers.dt.favoriteRemoveDispatcher.watch(watch);
     this.dispatcherListeners.push(addListener);
     this.dispatcherListeners.push(removeListener);
   }

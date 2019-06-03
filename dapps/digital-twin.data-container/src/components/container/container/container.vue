@@ -28,9 +28,9 @@
 <template>
   <div>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="container-wide">
-      <div class="white-box border-smooth rounded"
-        v-else-if="error">
+    <div class="container-wide"
+      v-else-if="error">
+      <div class="white-box border-smooth rounded">
         <div class="header">
           <h3 class="m-0 font-weight-semibold">
             {{ '_datacontainer.no-permissions.title' | translate }}

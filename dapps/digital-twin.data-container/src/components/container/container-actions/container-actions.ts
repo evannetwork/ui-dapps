@@ -48,9 +48,7 @@ interface DbcpFormInterface extends EvanForm {
 @Component({ })
 export default class ContainerActionsComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
   @Prop() containerAddress;
 
@@ -72,11 +70,6 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   }) displayMode;
 
   /**
-   * Ui container instance
-   */
-  uiContainer: UiContainer = null;
-
-  /**
    * Is the current container opened within a twin?
    */
   digitalTwinAddress = '';
@@ -95,6 +88,8 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
    * Show loading symbol
    */
   loading = true;
+  saving = false;
+  sharing = false;
 
   /**
    * Used per default for normal buttons (will be overwritten within dropdown)
@@ -132,18 +127,16 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
-    // watch for saving updates
-    this.savingWatcher = dispatchers.updateDispatcher.watch(this.checkSaving);
+    // load ui container data
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.isOwner = uiContainer.owner === runtime.activeAccount;
+      this.plugin = uiContainer.plugin;
+      this.digitalTwinAddress = uiContainer.digitalTwinAddress;
 
-    // load the owner
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
+      this.saving = uiContainer.isSaving;
+      this.sharing = uiContainer.isSharing;
+    });
 
-    this.isOwner = this.uiContainer.owner === runtime.activeAccount;
-    this.plugin = this.uiContainer.plugin;
-    this.digitalTwinAddress = this.uiContainer.digitalTwinAddress;
-
-    this.checkSaving();
     this.loading = false;
   }
 
@@ -166,27 +159,6 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Check, if currently a dbcp definition gets saved.
-   */
-  async checkSaving() {
-    const runtime = utils.getRuntime(this);
-
-    const instances = await dispatchers.updateDispatcher.getInstances(runtime);
-    const beforeSaving = this.$store.state.saving;
-    const saving = instances
-      .filter(instance => instance.data.address === this.containerAddress)
-      .map(instance => instance.data.description);
-
-    if (saving.length !== 0) {
-      this.uiContainer.plugin.description.description = saving[0].description;
-      this.uiContainer.plugin.description.imqSquare = saving[0].imqSquare;
-      this.uiContainer.plugin.description.name = saving[0].name;
-    }
-
-    this.$set(this.$store.state, 'saving', saving.length > 0);
-  }
-
-  /**
    * Trigger the digital twin save
    *
    * @param      {boolean}  onlyDbcp  save only the description
@@ -203,8 +175,8 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.$store.state.saving = true;
 
       // update description backup
-      this.uiContainer.plugin.description.name = dbcpForm.name.value;
-      this.uiContainer.plugin.description.description = dbcpForm.description.value;
+      this.plugin.description.name = dbcpForm.name.value;
+      this.plugin.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
       (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
@@ -218,7 +190,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
             imgSquare: dbcpForm.imgSquare.value,
             name: dbcpForm.name.value,
           },
-          digitalTwinAddress: this.uiContainer.digitalTwinAddress,
+          digitalTwinAddress: this.digitalTwinAddress,
         });
 
         this.loading = false;
@@ -237,10 +209,10 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
 
     // update template
     newEntry.entry.isNew = true;
-    this.uiContainer.plugin.template.properties[newEntry.name] = newEntry.entry;
-    entryUtils.ensureValues(this.uiContainer.plugin.template.properties[newEntry.name]);
+    this.plugin.template.properties[newEntry.name] = newEntry.entry;
+    entryUtils.ensureValues(this.plugin.template.properties[newEntry.name]);
 
     // send event
-    containerCache.put(this.containerAddress, this.uiContainer.plugin);
+    containerCache.put(this.containerAddress, this.plugin);
   }
 }

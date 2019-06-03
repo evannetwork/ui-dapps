@@ -91,12 +91,12 @@ export default class ContainerComponent extends mixins(EvanComponent) {
         text: `_digitaltwins.breadcrumbs.${ urlKey }`
       }));
 
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
-
-    this.error = this.uiContainer.error;
-    this.description = this.uiContainer.description;
-    this.digitalTwinAddress = this.uiContainer.digitalTwinAddress;
+    // load ui container data
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.error = uiContainer.error;
+      this.description = uiContainer.description;
+      this.digitalTwinAddress = uiContainer.digitalTwinAddress;
+    });
 
     this.loading = false;
   }

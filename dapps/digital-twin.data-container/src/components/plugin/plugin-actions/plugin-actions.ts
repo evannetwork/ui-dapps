@@ -95,12 +95,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   sharing = false;
 
   /**
-   * Watch for updates and disable current save button
-   */
-  savingWatcher: Function = null;
-  sharingWatcher: Function = null;
-
-  /**
    * formular specific variables
    */
   shareForm: ShareFormInterface = null;
@@ -157,21 +151,19 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
+    const runtime = utils.getRuntime(this);
+    await this.setupAddressBook(runtime);
+    this.setupSharingForm();
+
     // watch for updates
-    this.savingWatcher = dispatchers.pluginDispatcher.watch(this.checkSaving);
-    this.sharingWatcher = dispatchers.shareDispatcher.watch(this.checkSharing);
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.description = uiContainer.description;
+      this.plugin = uiContainer.plugin;
+      this.saving = uiContainer.isSaving;
+      this.sharing = uiContainer.isSharing;
+    });
 
-    await this.checkSaving();
-    await this.checkSharing();
-    await this.initialize();
-  }
-
-  /**
-   * Clear watchers.
-   */
-  beforeDestroy() {
-    this.savingWatcher();
-    this.sharingWatcher();
+    this.loading = false;
   }
 
   /**
@@ -192,20 +184,12 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     }
   }
 
-
   /**
-   * Load the container data and setup the dbcp update form.
+   * Load runtime and map it into an array.,
+   *
+   * @param      {bccRuntime}  runtime  bcc runtime
    */
-  async initialize() {
-    const runtime = utils.getRuntime(this);
-    this.loading = true;
-
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
-
-    this.description = this.uiContainer.description;
-    this.plugin = this.uiContainer.plugin;
-
+  async setupAddressBook(runtime: bcc.Runtime) {
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
     bcc.Ipld.purgeCryptoInfo(addressBook);
@@ -224,7 +208,12 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     if (this.contacts.length > 0) {
       this.shareAccount = this.contacts[0].address;
     }
+  }
 
+  /**
+   * Initialize share form.
+   */
+  setupSharingForm() {
     // setup share form, so the user can insert a custom form
     let subject = [
       (<any>this).$t('_digitaltwins.breadcrumbs.plugin'),
@@ -240,8 +229,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
         }
       },
     }));
-
-    this.loading = false;
   }
 
   /**
@@ -335,34 +322,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
 
     (<any>this.$refs.shareModal).hide();
   }
-
-  /**
-   * Check if dbcp gets saved.
-   */
-  async checkSaving() {
-    const runtime = utils.getRuntime(this);
-    const beforeSaving = this.saving;
-
-    this.saving = (await dispatchers.pluginDispatcher.getInstances(runtime))
-      .filter(instance => instance.data.description.name === this.pluginName)
-      .length > 0;
-
-    // reload the data
-    if (!this.saving && beforeSaving) {
-      this.initialize();
-    }
-  }
-
-  /**
-   * Check if the plugin gets shared.
-   */
-  async checkSharing() {
-    const runtime = utils.getRuntime(this);
-    this.sharing = (await dispatchers.pluginDispatcher.getInstances(runtime))
-      .filter(instance => instance.data.description.name === this.pluginName)
-      .length > 0;
-  }
-
 
   /**
    * Executed by the `dc-new-entry` components submit event.

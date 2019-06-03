@@ -28,7 +28,6 @@
 <template>
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
-    v-if="!loading"
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
@@ -65,7 +64,7 @@
                 id="container-dbcp-edit"
                 @click="$refs.dbcpModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
-                  v-if="$store.state.saving">
+                  v-if="saving">
                 </div>
                 <i class="mdi mdi-pencil" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
@@ -76,9 +75,9 @@
                 id="container-share"
                 @click="reactiveRefs.dcPermissions.openShareDialog()">
                 <div class="spinner-border spinner-border-sm"
-                  v-if="$store.state.sharing">
+                  v-if="sharing">
                 </div>
-                <i class="mdi mdi-share-variant" style="width: 16px;"></i>
+                <i class="mdi mdi-share-variant" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.share` | translate }}
                 </component>
@@ -140,7 +139,7 @@
           <dt-dbcp
             ref="dbcpComp"
             :dbcp="plugin.description"
-            :disabled="$store.state.saving"
+            :disabled="saving"
             @init="$set(reactiveRefs, 'dbcpForm', $event._form)"
             @submit="saveDbcp()">
           </dt-dbcp>
@@ -150,11 +149,11 @@
             id="container-dbcp-save"
             class="btn btn-rounded btn-primary"
             v-if="reactiveRefs.dbcpForm"
-            :disabled="$store.state.saving || !reactiveRefs.dbcpForm.isValid"
+            :disabled="saving || !reactiveRefs.dbcpForm.isValid"
             @click="saveDbcp()">
             {{ `_datacontainer.save-dbcp` | translate }}
             <div class="spinner-border spinner-border-sm ml-3"
-              v-if="$store.state.saving">
+              v-if="saving">
             </div>
             <i class="mdi mdi-arrow-right label" v-else></i>
           </button>

@@ -41,16 +41,14 @@ import UiContainer from '../../../UiContainer';
 @Component({ })
 export default class DataSetsComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
   containerAddress = '';
 
   /**
-   * Ui container instance
+   * Opened didigal twin address
    */
-  uiContainer: UiContainer = null;
+  digitalTwinAddress = '';
 
   /**
    * Show loading symbol
@@ -89,38 +87,12 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.containerAddress = this.$route.params.containerAddress;
 
-    this.uiContainer = new UiContainer(this);
-
-    //  watch for updates and load initial data
-    this.cacheWatcher = this.uiContainer.watchForUpdates(() => this.initialize());
-    await this.initialize();
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.digitalTwinAddress = uiContainer.digitalTwinAddress;
+      this.template = uiContainer.plugin.template;
+      this.properties = Object.keys(this.template.properties);
+    });
 
     this.loading = false;
-  }
-
-  /**
-   * Clear container cache updates
-   */
-  beforeDestroy() {
-    this.cacheWatcher();
-  }
-
-  /**
-   * Load the plugin definition for the opened container / plugin.
-   */
-  async initialize() {
-    const runtime = utils.getRuntime(this);
-
-    try {
-      let plugin = await this.uiContainer.loadData();
-
-      this.template = plugin.template;
-      this.properties = Object.keys(this.template.properties);
-    } catch (ex) {
-      runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
-      this.error = true;
-
-      return;
-    }
   }
 }

@@ -48,7 +48,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   /**
    * Current opened set
    */
-  @Prop() entryName = '';
+  @Prop() entryName;
 
   /**
    * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
@@ -127,29 +127,13 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
-    // load the data
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
-    this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
-    this.saving = await this.uiContainer.isSaving();
-    this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
-
-    // watch for cache updates
-    this.savingWatcher = this.uiContainer
-      .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
-    this.cacheWatcher = this.uiContainer.watchForUpdates(async () => {
-      await this.uiContainer.loadData();
-      this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
+    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
+      this.saving = uiContainer.isSaving;
+      this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
     });
 
     this.loading = false;
-  }
-
-  /**
-   * Clear update watcher
-   */
-  beforeDestroy() {
-    this.cacheWatcher && this.cacheWatcher();
   }
 
   /**

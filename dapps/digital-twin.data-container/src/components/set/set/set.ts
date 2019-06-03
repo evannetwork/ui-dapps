@@ -103,10 +103,10 @@ export default class DataSetComponent extends mixins(EvanComponent) {
 
     // load basic data schema, for checking entry type
     const uiContainer = new UiContainer(this);
-    (await uiContainer.loadData());
+    (await uiContainer.loadPlugin());
 
     // only allow list entries for contracts
-    if (uiContainer.containerAddress.startsWith('0x')) {
+    if (uiContainer.isContainer) {
       // add list entries overview, when it's type of array
       const entry = uiContainer.plugin.template.properties[this.entryName];
       const entryType = fieldUtils.getType(entry.dataSchema);
