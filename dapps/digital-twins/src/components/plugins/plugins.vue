@@ -61,10 +61,11 @@
           <span class="mx-auto"></span>
           <div></div>
         </div>
-        <div class="row content pt-1 pb-0">
+        <div class="row content pt-1 pb-0"
+          :id="`evan-dt-plugins`">
           <div class="col-md-6 col-lg-3 mb-4"
             v-for="(pluginKey, index) in Object.keys(plugins)">
-            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
               :id="`evan-dt-plugin-${ pluginKey.replace('.', '') }`"
               :href="plugins[pluginKey].creating ? null : `${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ pluginKey }`">
               <div class="row align-items-center m-0 w-100">
@@ -78,17 +79,18 @@
                   </i>
                 </div>
                 <div class="col-10">
-                  <small class="text-center p-1 d-block text-muted"
-                    v-if="plugins[pluginKey].creating">
-                    {{ '_digitaltwins.plugins.in-creation' | translate }}
-                  </small>
-                  <div class="d-flex p-3 flex-truncate align-items-center">
-                    <div>
-                      <h4 class="font-weight-semibold mb-0">
+                  <div class="d-flex p-3 align-items-center">
+                    <div class="w-100">
+                      <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
                         {{ plugins[pluginKey].description.name }}
                       </h4>
-                      <span class="text-justify d-block font-weight-semibold text-muted">
-                        {{ plugins[pluginKey].description.description }}
+                      <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3">
+                        <template v-if="plugins[pluginKey].creating">
+                          {{ '_digitaltwins.plugins.in-creation' | translate }}
+                        </template>
+                        <template v-else>
+                          {{ plugins[pluginKey].description.description }}
+                        </template>
                       </span>
                     </div>
                     <template v-if="plugins[pluginKey].loading">

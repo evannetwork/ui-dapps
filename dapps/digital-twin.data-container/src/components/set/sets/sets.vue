@@ -70,7 +70,7 @@
           <div class="col-md-4 mb-4"
             v-for="(property, index) in properties"
             style="min-width: 350px;">
-            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
               :id="`evan-dc-entry-${ property }`"
               :href="`${ dapp.fullUrl }/${ containerAddress }/data-set/${ property }`">
               <div class="row align-items-center m-0 w-100">
@@ -84,10 +84,10 @@
                   </i>
                 </div>
                 <div class="col-10">
-                  <div class="d-flex p-3 flex-truncate align-items-center">
-                    <div class="position-relative"
+                  <div class="d-flex p-3 align-items-center">
+                    <div class="position-relative w-100"
                       style="overflow: visible;">
-                      <h4 class="font-weight-semibold mb-0 position-relative">
+                      <h4 class="font-weight-semibold mb-0 position-relative overflow-multiline line-1">
                         {{ property }}
                       </h4>
                       <span class="notification-dot"

@@ -151,10 +151,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
-    const runtime = utils.getRuntime(this);
-    await this.setupAddressBook(runtime);
-    this.setupSharingForm();
-
     // watch for updates
     await UiContainer.watch(this, async (uiContainer: UiContainer) => {
       this.description = uiContainer.description;
@@ -162,6 +158,9 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.saving = uiContainer.isSaving;
       this.sharing = uiContainer.isSharing;
     });
+
+    await this.setupAddressBook();
+    this.setupSharingForm();
 
     this.loading = false;
   }
@@ -189,7 +188,9 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    *
    * @param      {bccRuntime}  runtime  bcc runtime
    */
-  async setupAddressBook(runtime: bcc.Runtime) {
+  async setupAddressBook() {
+    const runtime = utils.getRuntime(this);
+
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
     bcc.Ipld.purgeCryptoInfo(addressBook);

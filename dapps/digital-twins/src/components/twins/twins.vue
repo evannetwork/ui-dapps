@@ -28,7 +28,7 @@
 <template>
   <div>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="container-wide" v-if="!loading">
+    <div class="container-wide" v-else>
       <div class="d-flex align-items-center mb-5">
         <div>
           <h3 class="font-weight-bold mb-0">
@@ -40,24 +40,31 @@
         </div>
         <span class="mx-auto"></span>
         <div>
-          <a
+          <button
             id="dt-open"
             class="btn btn-circle btn-sm btn-tertiary mr-3"
-            :href="`${ dapp.fullUrl }/open`">
+            @click="$refs.dtOpen.showModal()">
             <i class="mdi mdi-magnify"></i>
             <evan-tooltip :placement="'bottom'">
               {{ '_digitaltwins.digitaltwins.open' | translate }}
             </evan-tooltip>
-          </a>
-          <a
+          </button>
+          <button
             id="dt-create"
             class="btn btn-rounded btn-primary"
-            :href="`${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/dt-create`">
+            @click="$refs.dtCreate.showModal()">
             <span>{{ '_digitaltwins.digitaltwins.create' | translate }}</span>
             <i class="mdi mdi-arrow-right label ml-3"></i>
-          </a>
+          </button>
         </div>
       </div>
+
+      <dt-create
+        ref="dtCreate">
+      </dt-create>
+      <dt-ens-open
+        ref="dtOpen">
+      </dt-ens-open>
 
       <div class="white-box border-smooth rounded mt-3"
         v-if="twins.length !== 0">
@@ -74,7 +81,7 @@
           :id="`evan-dt-twins`">
           <div class="col-md-6 col-lg-3 mb-4"
             v-for="(ensAddress, index) in twins">
-            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
               :id="`evan-dt-${ ensAddress.replace('.', '') }`"
               :href="descriptions[ensAddress].creating ?
                 null :
@@ -91,12 +98,12 @@
                   </i>
                 </div>
                 <div class="col-10">
-                  <div class="d-flex p-3 flex-truncate align-items-center">
-                    <div>
-                      <h4 class="font-weight-semibold mb-0">
+                  <div class="d-flex p-3 align-items-center">
+                    <div class="w-100">
+                      <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
                         {{ descriptions[ensAddress].name }}
                       </h4>
-                      <span class="text-justify d-block font-weight-semibold text-muted">
+                      <span class="font-weight-semibold text-muted overflow-multiline line-3">
                         <template v-if="descriptions[ensAddress].creating">
                           {{ '_digitaltwins.digitaltwins.in-creation' | translate }}
                         </template>
@@ -134,6 +141,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './overview.ts';
+  import Component from './twins.ts';
   export default Component;
 </script>

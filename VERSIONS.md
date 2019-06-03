@@ -2,9 +2,13 @@
 
 ## Next Version
 ### Features
+- `digitaltwins`
+  - move open twin and create twin to modal dialog
+
 ### Fixes
 - `datacontainer.digitaltwins`
   - add new `UiContainer` structure including easy data loading update watching
+  - remove flex-truncate and add correct text-overflow logic
 
 ### Deprecations
 

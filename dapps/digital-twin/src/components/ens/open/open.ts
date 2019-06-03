@@ -67,4 +67,18 @@ export default class EnsOpenComponent extends mixins(EvanComponent) {
       eventResult.address
     ].join('/'));
   }
+
+  /**
+   * Shows the create modal.
+   */
+  showModal() {
+    (<any>this).$refs.twinOpen.show();
+  }
+
+  /**
+   * Hide the create modal.
+   */
+  hideModal() {
+    (<any>this).$refs.twinOpen.hide();
+  }
 }

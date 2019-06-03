@@ -32,8 +32,8 @@
     </evan-nav-tabs>
     <div class="container-wide overflow-y-auto">
       <div class="d-flex mb-5 align-items-center">
-        <div class="flex-truncate" style="max-width: 50%;">
-          <h3 class="font-weight-bold mb-0">
+        <div style="width: 50%;">
+          <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
             {{ entryName }}
           </h3>
         </div>

@@ -24,6 +24,7 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
 import * as digitaltwin from '@evan.network/digitaltwin';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
@@ -51,8 +52,11 @@ const i18n: any = {
   }
 }
 
-i18n._digitaltwins.breadcrumbs = dtLib.translations.de.breadcrumbs;
-i18n._digitaltwins.lookup = digitaltwin.translations.de._digitaltwins.lookup;
+i18n._datacontainer = dataContainer.translations.de._datacontainer;
+i18n._digitaltwins = Object.assign(
+  digitaltwin.translations.de._digitaltwins,
+  i18n._digitaltwins,
+);
 
 export default i18n;
 /* tslint:enable */
