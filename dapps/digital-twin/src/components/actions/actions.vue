@@ -106,16 +106,15 @@
                 {{ `_digitaltwins.containers.link` | translate }}
               </component>
             </button>
-            <a
+            <button
               id="dt-container-create"
               :class="buttonClasses.primary"
-              :href="`${ dapp.fullUrl }/${ $store.state.uiDT.address }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create`"
-              @click="closeDropdown();">
+              @click="reactiveRefs.dtCreate.showModal(); closeDropdown();">
               <i class="mdi mdi-plus"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_digitaltwins.containers.create` | translate }}
               </component>
-            </a>
+            </button>
           </template>
         </template>
       </evan-dropdown>
@@ -148,6 +147,9 @@
         </button>
       </template>
     </evan-modal>
+    <dc-create
+      @init="$set(reactiveRefs, 'dtCreate', $event)">
+    </dc-create>
     <dt-ens-map
       @init="$set(reactiveRefs, 'dtEnsMap', $event)">
     </dt-ens-map>

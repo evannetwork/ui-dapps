@@ -27,7 +27,9 @@
 
 <template>
   <div>
-    <form class="content" id="dbcp-form"
+    <form
+      id="dbcp-form"
+      :class="{ 'content': !disableSpacing }"
       v-on:submit.prevent="save()">
       <slot name="before-inputs"></slot>
       <div class="form-group">

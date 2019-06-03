@@ -51,6 +51,18 @@ interface CreateInterface extends EvanForm {
 @Component({ })
 export default class CreateComponent extends mixins(EvanComponent) {
   /**
+   * Address to clone the new container / plugin from
+   */
+  @Prop() cloneAddress;
+
+  /**
+   * container / plugin
+   */
+  @Prop({
+    default: 'container'
+  }) mode;
+
+  /**
    * Show loading symbol
    */
   loading = true;
@@ -102,11 +114,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
   creationWatcher: Function;
 
   /**
-   * Should a plugin be saved?
-   */
-  pluginMode = false;
-
-  /**
    * Should the breadcrumbs be displayed? Hidden when evan-navigation tabs are visible
    */
   hideBreadcrumbs = false;
@@ -138,9 +145,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
     this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
 
-    // start plugin mode!
-    this.pluginMode = this.$route.name.startsWith('plugin-create');
-
     // TODO: load plugins
     this.createForm = (<CreateInterface>new EvanForm(this, {
       name: {
@@ -166,13 +170,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
     });
 
     // check if a existing container should be cloned
-    const cloneContainer = (<any>this).$route.params.cloneContainer;
-    if (cloneContainer) {
+    if (this.cloneAddress) {
       // if a plugin is available that should used to create a container / plugin, load the
       // plugin
-      if (plugins[cloneContainer]) {
+      if (plugins[this.cloneAddress]) {
         const plugin = await bcc.Container.getContainerPlugin(runtime.profile,
-          cloneContainer);
+          this.cloneAddress);
 
         // setup plugin and description
         // this.createForm.name.value = plugin.description.name;
@@ -180,14 +183,14 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
         // search for active plugin index
         for (let i = 0; i < this.plugins.length; i++) {
-          if (this.plugins[i].description.name === cloneContainer) {
+          if (this.plugins[i].description.name === this.cloneAddress) {
             this.createForm.plugin.value = i;
 
             break;
           }
         }
-      } else if (cloneContainer.startsWith('0x')) {
-        const container = utils.getContainer(<any>runtime, cloneContainer);
+      } else if (this.cloneAddress.startsWith('0x')) {
+        const container = utils.getContainer(<any>runtime, this.cloneAddress);
         const plugin = await container.toPlugin(true);
 
         // this.createForm.name.value = plugin.description.name;
@@ -203,7 +206,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     this.loading = false;
     this.watchForCreation();
-    this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
+    this.$emit('init', this);
   }
 
   /**
@@ -212,7 +215,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async create() {
     const runtime = utils.getRuntime(this);
 
-    if (this.pluginMode) {
+    if (this.mode === 'plugin') {
       dispatchers.pluginDispatcher.start(runtime, {
         description: {
           description: this.createForm.description.value,
@@ -235,7 +238,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     (<any>this.$refs.createModal).hide();
     await (new ContainerCache(runtime.activeAccount))
-      .delete(!this.pluginMode ? 'dc-create' : 'plugin-create');
+      .delete(this.mode === 'plugin' ? 'plugin-create' : 'dc-create');
   }
 
   /**
@@ -341,7 +344,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
-    const getDispatcher = () => this.pluginMode ?
+    const getDispatcher = () => this.mode === 'plugin' ?
       dispatchers.pluginDispatcher : dispatchers.createDispatcher;
 
     const watch = async ($event?: any) => {
@@ -350,7 +353,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
       let toOpen;
 
       // when creating a plugin, use the pluginDispatcher and check for any instances
-      if (this.pluginMode) {
+      if (this.mode === 'plugin') {
         const instances = await dispatchers.pluginDispatcher.getInstances(runtime);
         this.creating = instances.length > 0;
 
@@ -381,5 +384,20 @@ export default class CreateComponent extends mixins(EvanComponent) {
     if (!this.creationWatcher) {
       this.creationWatcher = getDispatcher().watch(($event: any) => watch($event));
     }
+  }
+
+  /**
+   * Shows the create modal.
+   */
+  showModal() {
+    (<any>this).$refs.createModal.show();
+    this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
+  }
+
+  /**
+   * Hide the create modal.
+   */
+  hideModal() {
+    (<any>this).$refs.createModal.hide();
   }
 }

@@ -44,16 +44,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
   {
-    name: 'dc-create',
-    path: 'dc-create/:cloneContainer?',
-    component: CreateComponent
-  },
-  {
-    name: 'plugin-create',
-    path: 'plugin-create/:cloneContainer?',
-    component: CreateComponent
-  },
-  {
     path: ':containerAddress',
     component: ContainerPluginSwitchComponent,
     children: [

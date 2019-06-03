@@ -32,6 +32,7 @@ import * as dtLib from '@evan.network/digitaltwin.lib';
 import AJVComponent from './schema/ajv/ajv.vue';
 import ContainerActionsComponent from './container/container-actions/container-actions.vue';
 import ContainerComponent from './container/container/container.vue';
+import CreateComponent from './create/create.vue';
 import DataContainerTreeComponent from './tree/tree.vue';
 import EntryComponent from './schema/entries/entry/entry.vue';
 import EntryFieldComponent from './schema/entries/field/field.vue';
@@ -42,12 +43,12 @@ import FieldFilesComponent from './schema/fields/files/files.vue';
 import FieldNumberComponent from './schema/fields/number/number.vue';
 import FieldStringComponent from './schema/fields/string/string.vue';
 import NewEntryComponent from './schema/new-entry/new-entry.vue';
+import NewlistEntryComponent from './set/new-list-entry/new-list-entry.vue';
 import PermissionsComponent from './permissions/permissions.vue';
 import PluginActions from './plugin/plugin-actions/plugin-actions.vue';
 import PluginComponent from './plugin/plugin/plugin.vue';
 import SetActionsComponent from './set/set-actions/set-actions.vue';
 import SetSchemaComponent from './set/schema/schema.vue';
-import NewlistEntryComponent from './set/new-list-entry/new-list-entry.vue';
 
 // export them all, so other applications can access them
 export { }
@@ -56,6 +57,7 @@ export { }
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-actions', component: ContainerActionsComponent },
   { name: 'dc-ajv', component: AJVComponent },
+  { name: 'dc-create', component: CreateComponent },
   { name: 'dc-detail', component: ContainerComponent },
   { name: 'dc-entry', component: EntryComponent },
   { name: 'dc-entry-field', component: EntryFieldComponent },
@@ -65,6 +67,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-files', component: FieldFilesComponent },
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
+  { name: 'dc-list-entries-add', component: NewlistEntryComponent },
   { name: 'dc-new-entry', component: NewEntryComponent },
   { name: 'dc-permissions', component: PermissionsComponent },
   { name: 'dc-plugin', component: PluginComponent },
@@ -72,7 +75,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-set-actions', component: SetActionsComponent },
   { name: 'dc-set-schema', component: SetSchemaComponent },
   { name: 'dc-tree', component: DataContainerTreeComponent },
-  { name: 'dc-list-entries-add', component: NewlistEntryComponent },
 ].concat(dtLib.componentRegistration);
 
 export default componentRegistration;

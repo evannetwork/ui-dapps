@@ -59,6 +59,11 @@ export default class DBCPComponent extends mixins(EvanComponent) {
   @Prop() disabled;
 
   /**
+   * Do not add content spacing
+   */
+  @Prop() disableSpacing;
+
+  /**
    * Currently used dbcp form instance for getting name, imgSquare, description
    */
   _form: DBCPForm = null;
