@@ -42,7 +42,7 @@
     color: cssVar('white') !important;
     background-color: cssVar('tab-color-3') !important;
   }
-  
+
   .tab-4 {
     color: cssVar('white') !important;
     background-color: cssVar('tab-color-4') !important;
@@ -57,6 +57,8 @@
     display: flex;
     overflow-x: auto;
 
+    height: 70px;
+
     .evan-tab {
       font-size: 15px;
       font-weight: 600;
@@ -65,10 +67,11 @@
       align-items: center;
       justify-content: center;
 
-      height: 65px;
+      height: 60px;
       padding: 0 25px;
 
       cursor: pointer;
+      transition: height 0.3s ease-out, transform 0.3s ease-out, margin 0.3s ease-out;
       text-align: center;
     }
   }
@@ -85,11 +88,18 @@
   }
 
   .evan-navigation-tabs {
+    overflow: hidden;
+
     .evan-tab {
       width: 100%;
 
       &.active {
+        z-index: 10;
+
         height: 70px;
+        margin-top: 3px;
+
+        transform: scale(1.1);
       }
     }
   }

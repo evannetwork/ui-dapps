@@ -8,6 +8,7 @@
   - add correct styling to `overflow-multiline`
     - add `line-1`, `line-2`, `line-3`, `line-4` class support
     - add `bg-level-1`, `bg-level-2`, `bg-level-3` support
+  - add tabs animation design and correct height
 
 ### Fixes
 ### Deprecations
