@@ -29,22 +29,6 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <div class="white-box border-smooth rounded" v-else>
-      <div class="header">
-        <h3 class="m-0 font-weight-semibold">
-          {{ '_digitaltwins.breadcrumbs.list-entries' | translate }}
-        </h3>
-        <span class="mx-auto"></span>
-        <div>
-          <dc-set-actions
-            :containerAddress="containerAddress"
-            :entryName="entryName"
-            :displayMode="'buttons'"
-            :setActions="true"
-            :schemaActions="true"
-            :listActions="true">
-          </dc-set-actions>
-        </div>
-      </div>
       <table
         id="entry-list-table"
         class="evan-flex-table">

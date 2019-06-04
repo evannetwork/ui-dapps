@@ -98,10 +98,10 @@
             </button>
           </template>
           <template v-if="containerActions">
-            <button :class="buttonClasses.secondary"
+            <button :class="buttonClasses.tertiar"
               id="dt-container-link"
               @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show(); closeDropdown();">
-              <i class="mdi mdi-link-variant"></i>
+              <i class="mdi mdi-application-import"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_digitaltwins.containers.link` | translate }}
               </component>

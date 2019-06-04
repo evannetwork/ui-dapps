@@ -41,24 +41,6 @@
     </div>
     <template v-else>
       <div class="white-box border-smooth rounded">
-        <div class="header">
-          <h3 class="font-weight-semibold m-0">
-            <template>
-              {{ `_digitaltwins.breadcrumbs.entry-schema` | translate }}
-            </template>
-          </h3>
-          <span class="mx-auto"></span>
-          <div>
-            <dc-set-actions
-              :containerAddress="containerAddress"
-              :entryName="entryName"
-              :displayMode="'buttons'"
-              :setActions="false"
-              :schemaActions="true">
-            </dc-set-actions>
-          </div>
-        </div>
-
         <dc-entry
           :class="{
             'content': entryType !== 'object' && entryType !== 'array'

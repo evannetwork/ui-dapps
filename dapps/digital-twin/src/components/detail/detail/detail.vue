@@ -42,7 +42,8 @@
     </div>
     <template v-else>
       <evan-nav-tabs class="flex-shrink-0"
-        :tabs="tabs">
+        :tabs="tabs"
+        @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>
       <div class="container-wide overflow-y-auto">
         <div class="d-flex mb-5 align-items-center">
@@ -51,9 +52,10 @@
           </h3>
           <span class="mx-auto"></span>
           <dt-actions
+            v-if="reactiveRefs.navTabs"
             :uiDT="uiDT"
             :dtActions="true"
-            :containerActions="true"
+            :containerActions="reactiveRefs.navTabs.activeTab === 0"
             :displayMode="'buttons'">
           </dt-actions>
         </div>

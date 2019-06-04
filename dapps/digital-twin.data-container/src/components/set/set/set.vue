@@ -28,26 +28,39 @@
 <template>
   <div>
     <evan-nav-tabs class="flex-shrink-0"
-      :tabs="tabs">
+      :tabs="tabs"
+      @init="$set(reactiveRefs, 'navTabs', $event)">
     </evan-nav-tabs>
-    <div class="container-wide overflow-y-auto">
-      <div class="d-flex mb-5 align-items-center">
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="container-wide overflow-y-auto" v-else>
+      <div class="d-flex mb-5 align-items-center"
+        style="min-height: 45px">
         <div style="width: 50%;">
           <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
             {{ entryName }}
           </h3>
         </div>
         <span class="mx-auto"></span>
-        <set-actions
-          v-if="!loading"
+        <dc-set-actions
+          v-if="reactiveRefs.navTabs"
           :containerAddress="containerAddress"
-          :entryName="entryName">
-        </set-actions>
+          :entryName="entryName"
+          :displayMode="'buttons'"
+          :setActions="true"
+          :schemaActions="
+            reactiveRefs.navTabs.activeTab === 0 ||
+            reactiveRefs.navTabs.activeTab === 1
+          "
+          :listActions="
+            reactiveRefs.setActions &&
+            reactiveRefs.setActions.entryType === 'array' &&
+            reactiveRefs.navTabs.activeTab === 1
+          "
+          @init="$set(reactiveRefs, 'setActions', $event)">
+        </dc-set-actions>
       </div>
 
-      <evan-loading v-if="loading"></evan-loading>
-      <transition name="fade" mode="out-in"
-        v-else>
+      <transition name="fade" mode="out-in">
         <router-view></router-view>
       </transition>
     </div>

@@ -65,6 +65,11 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
    * Set button classes
    */
   async created() {

@@ -36,10 +36,10 @@
       style="height: 60px;"
       v-if="!onlySets">
       <!-- @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()" -->
-      <button class="btn mini border btn-circle border-secondary mr-3"
+      <button class="btn mini mr-3"
         @click="isOpen = !isOpen"
         v-if="!creating">
-        <i class="text-secondary"
+        <i
           :class="{
             'mdi mdi-chevron-up': isOpen,
             'mdi mdi-chevron-down': !isOpen,
@@ -83,15 +83,6 @@
 
     <div class="pb-3"
       v-if="!initializing && (onlySets || isOpen)">
-      <div class="pl-8 pr-3 pb-1"
-        :class="{
-          'pl-6': !onlySets,
-          'pl-8': onlySets,
-        }">
-        <small class="text-muted text-uppercase font-weight-semibold">
-          {{ '_datacontainer.entries' | translate }}
-        </small>
-      </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
         style="height: 40px;"
         v-for="(entry, index) in Object.keys(plugin.template.properties)"

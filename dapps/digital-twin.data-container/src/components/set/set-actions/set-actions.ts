@@ -134,6 +134,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
     });
 
     this.loading = false;
+    this.$emit('init', this);
   }
 
   /**
