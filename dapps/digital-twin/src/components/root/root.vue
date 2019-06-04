@@ -56,7 +56,7 @@
               <template v-slot:content>
                 <div style="width: 360px">
                   <evan-loading
-                    v-if="$store.state.uiDT.loading && !$store.state.uiDT.initialized">
+                    v-if="!$store.state.uiDT.initialized && $store.state.uiDT.loading">
                   </evan-loading>
 
                   <template v-else-if="twinUrl">
@@ -76,12 +76,6 @@
                         </dt-actions>
                       </template>
                     </dt-tree-root>
-
-                    <div class="pl-6 pr-3 pt-3">
-                      <small class="text-muted text-uppercase font-weight-semibold">
-                        {{ '_digitaltwins.breadcrumbs.dt-plugins' | translate }}
-                      </small>
-                    </div>
 
                     <dc-tree
                       v-for="(container, index) in $store.state.uiDT.containers"

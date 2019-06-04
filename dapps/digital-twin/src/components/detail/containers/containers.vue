@@ -26,26 +26,7 @@
 */
 
 <template>
-  <div class="white-box border-smooth rounded">
-    <div class="header">
-      <h3 class="font-weight-semibold m-0">
-        <template
-          v-if="$store.state.uiDT.containers.length !== 0">
-          {{ `_digitaltwins.breadcrumbs.dt-plugins` | translate }}
-        </template>
-        <template v-else>
-          {{ `_digitaltwins.containers.empty` | translate }}
-        </template>
-      </h3>
-      <span class="mx-auto"></span>
-      <dt-actions
-        v-if="$store.state.uiDT.isOwner"
-        :uiDT="uiDT"
-        :dtActions="false"
-        :containerActions="true"
-        :displayMode="'buttons'">
-      </dt-actions>
-    </div>
+  <div>
     <div class="content row pb-0" v-if="$store.state.uiDT.containers.length !== 0">
       <div class="col-md-4 mb-4"
         v-for="(container, index) in $store.state.uiDT.containers"
@@ -87,10 +68,12 @@
         </a>
       </div>
     </div>
-    <div class="content" v-else>
-      <p class="text-justify m-0"
-        v-html="$t(`_digitaltwins.containers.empty-desc`)">
-      </p>
+    <div class="white-box border-smooth rounded" v-else>
+      <div class="content">
+        <p class="text-justify m-0"
+          v-html="$t(`_digitaltwins.containers.empty-desc`)">
+        </p>
+      </div>
     </div>
   </div>
 </template>

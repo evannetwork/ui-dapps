@@ -40,67 +40,42 @@
       </div>
     </div>
     <template v-else>
-      <div class="white-box border-smooth rounded">
-        <div class="header">
-          <h3 class="font-weight-semibold m-0">
-            <template>
-              {{ `_digitaltwins.breadcrumbs.dc-sets` | translate }}
-            </template>
-          </h3>
-          <span class="mx-auto"></span>
-          <div>
-            <dc-actions
-              v-if="containerAddress.startsWith('0x')"
-              :containerAddress="containerAddress"
-              :digitalTwinAddress="digitalTwinAddress"
-              :dcActions="false"
-              :setActions="true">
-            </dc-actions>
-
-            <dc-plugin-actions
-              v-else
-              :pluginName="containerAddress"
-              :pluginActions="false"
-              :setActions="true"
-              :displayMode="'buttons'">
-            </dc-plugin-actions>
-          </div>
-        </div>
-        <div class="content row pb-0" v-if="properties.length !== 0">
-          <div class="col-md-4 mb-4"
-            v-for="(property, index) in properties"
-            style="min-width: 350px;">
-            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
-              :id="`evan-dc-entry-${ property }`"
-              :href="`${ dapp.fullUrl }/${ containerAddress }/data-set/${ property }`">
-              <div class="row align-items-center m-0 w-100">
-                <div class="col-2">
-                  <img class="img-fluid p-3"
-                    v-if="imgSquare"
-                    :src="imgSquare">
-                  <i
-                    class="mdi mdi-cube-outline"
-                    style="font-size:50px;">
-                  </i>
-                </div>
-                <div class="col-10">
-                  <div class="d-flex p-3 align-items-center">
-                    <div class="position-relative w-100"
-                      style="overflow: visible;">
-                      <h4 class="font-weight-semibold mb-0 position-relative overflow-multiline line-1">
-                        {{ property }}
-                      </h4>
-                      <span class="notification-dot"
-                        v-if="template.properties[property].changed || template.properties[property].isNew">
-                      </span>
-                    </div>
+      <div class="content row pb-0" v-if="properties.length !== 0">
+        <div class="col-md-4 mb-4"
+          v-for="(property, index) in properties"
+          style="min-width: 350px;">
+          <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
+            :id="`evan-dc-entry-${ property }`"
+            :href="`${ dapp.fullUrl }/${ containerAddress }/data-set/${ property }`">
+            <div class="row align-items-center m-0 w-100">
+              <div class="col-2">
+                <img class="img-fluid p-3"
+                  v-if="imgSquare"
+                  :src="imgSquare">
+                <i
+                  class="mdi mdi-cube-outline"
+                  style="font-size:50px;">
+                </i>
+              </div>
+              <div class="col-10">
+                <div class="d-flex p-3 align-items-center">
+                  <div class="position-relative w-100"
+                    style="overflow: visible;">
+                    <h4 class="font-weight-semibold mb-0 position-relative overflow-multiline line-1">
+                      {{ property }}
+                    </h4>
+                    <span class="notification-dot"
+                      v-if="template.properties[property].changed || template.properties[property].isNew">
+                    </span>
                   </div>
                 </div>
               </div>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
-        <div class="content text-center" v-else>
+      </div>
+      <div class="white-box border-smooth rounded" v-else>
+        <div class="content text-center">
           <h3 class="mt-4 font-weight-semibold">
             {{ '_datacontainer.no-entries.title' | translate }}
           </h3>

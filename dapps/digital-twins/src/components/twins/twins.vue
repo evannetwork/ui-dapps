@@ -66,17 +66,8 @@
         ref="dtOpen">
       </dt-ens-open>
 
-      <div class="white-box border-smooth rounded mt-3"
-        v-if="twins.length !== 0">
-        <div class="header border-0">
-          <div>
-            <h3 class="font-weight-semibold m-0">
-              {{ `_digitaltwins.digitaltwins.title` | translate }}
-            </h3>
-          </div>
-          <span class="mx-auto"></span>
-          <div></div>
-        </div>
+      <!-- class="white-box border-smooth rounded mt-3" -->
+      <div v-if="twins.length !== 0">
         <div class="row content pt-1 pb-0"
           :id="`evan-dt-twins`">
           <div class="col-md-6 col-lg-3 mb-4"
@@ -125,11 +116,6 @@
       </div>
       <div class="white-box border-smooth rounded mt-3"
         v-else>
-        <div class="header">
-          <h4 class="m-0">
-            {{ `_digitaltwins.digitaltwins.empty` | translate }}
-          </h4>
-        </div>
         <div class="content">
           <p class="m-0"
             v-html="$t('_digitaltwins.digitaltwins.empty-desc')">

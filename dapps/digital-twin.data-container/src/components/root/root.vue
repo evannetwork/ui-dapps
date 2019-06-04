@@ -48,7 +48,7 @@
                   :topic="isContainer ?
                     `_digitaltwins.breadcrumbs.datacontainer` :
                     `_digitaltwins.breadcrumbs.plugin`"
-                  :title="description ? description.name : description.name"
+                  :title="description ? description.name : ''"
                   :icon="isContainer ?
                     `mdi mdi-note-multiple-outline`:
                     `mdi mdi-note-multiple-outline`

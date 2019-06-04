@@ -46,19 +46,14 @@
       </evan-nav-tabs>
       <div class="container-wide overflow-y-auto">
         <div class="d-flex mb-5 align-items-center">
-          <div>
-            <h3 class="font-weight-bold mb-0">
-              {{ uiDT.dbcp.name }}
-            </h3>
-            <p class="text-muted font-weight-semibold m-0">
-              {{ uiDT.dbcp.description }}
-            </p>
-          </div>
+          <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3 w-100">
+            {{ uiDT.dbcp.description }}
+          </h3>
           <span class="mx-auto"></span>
           <dt-actions
             :uiDT="uiDT"
             :dtActions="true"
-            :containerActions="false"
+            :containerActions="true"
             :displayMode="'buttons'">
           </dt-actions>
         </div>

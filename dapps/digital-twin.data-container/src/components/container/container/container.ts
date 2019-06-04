@@ -80,6 +80,11 @@ export default class ContainerComponent extends mixins(EvanComponent) {
   description = null;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
    * Load the container data
    */
   async created() {

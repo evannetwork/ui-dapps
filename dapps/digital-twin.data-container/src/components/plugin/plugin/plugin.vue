@@ -30,7 +30,8 @@
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <evan-nav-tabs class="flex-shrink-0"
-        :tabs="tabs">
+        :tabs="tabs"
+        @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>
       <div class="container-wide overflow-y-auto">
         <div class="d-flex mb-3 align-items-center">
@@ -47,7 +48,7 @@
             <dc-plugin-actions
               :pluginName="pluginName"
               :pluginActions="true"
-              :setActions="false"
+              :setActions="reactiveRefs.navTabs.activeTab === 0"
               :displayMode="'buttons'">
             </dc-plugin-actions>
           </div>

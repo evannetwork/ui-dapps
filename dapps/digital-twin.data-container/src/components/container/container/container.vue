@@ -43,24 +43,23 @@
     </div>
     <template v-else>
       <evan-nav-tabs class="flex-shrink-0"
-        :tabs="tabs">
+        :tabs="tabs"
+        @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>
       <div class="container-wide overflow-y-auto">
-        <div class="d-flex mb-5 align-items-center">
+        <div class="d-flex mb-5 align-items-center" height="45px">
           <div style="width: 50%;">
             <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
-              {{ description.name }}
-            </h3>
-            <p class="text-muted font-weight-semibold mb-0 overflow-multiline line-1 bg-level-3">
               {{ description.description }}
-            </p>
+            </h3>
           </div>
           <span class="mx-auto"></span>
           <dc-actions
+            v-if="reactiveRefs.navTabs"
             :containerAddress="containerAddress"
             :digitalTwinAddress="digitalTwinAddress"
             :dcActions="true"
-            :setActions="false">
+            :setActions="reactiveRefs.navTabs.activeTab === 0">
           </dc-actions>
         </div>
 

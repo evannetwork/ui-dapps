@@ -54,17 +54,8 @@
         </div>
       </div>
 
-      <div class="white-box border-smooth rounded mt-3"
-        v-if="Object.keys(plugins).length !== 0">
-        <div class="header border-0">
-          <div>
-            <h3 class="font-weight-semibold m-0">
-              {{ `_digitaltwins.plugins.title` | translate }}
-            </h3>
-          </div>
-          <span class="mx-auto"></span>
-          <div></div>
-        </div>
+      <!-- class="white-box border-smooth rounded mt-3" -->
+      <div v-if="Object.keys(plugins).length !== 0">
         <div class="row content pt-1 pb-0"
           :id="`evan-dt-plugins`">
           <div class="col-md-6 col-lg-3 mb-4"
@@ -110,11 +101,6 @@
       </div>
       <div class="white-box border-smooth rounded mt-3"
         v-else>
-        <div class="header">
-          <h4 class="m-0">
-            {{ `_digitaltwins.plugins.empty` | translate }}
-          </h4>
-        </div>
         <div class="content">
           <p class="m-0"
             v-html="$t( `_digitaltwins.plugins.empty-desc`)">

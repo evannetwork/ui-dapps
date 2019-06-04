@@ -65,6 +65,11 @@ export default class PluginComponent extends mixins(EvanComponent) {
   tabs: Array<any> = [ ];
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
    * Load the container data
    */
   async created() {

@@ -93,7 +93,7 @@ export default class RootComponent extends mixins(EvanComponent) {
   /**
    * Remove the hash event listener
    */
-  destroyed() {
+  beforeDestroy() {
     window.removeEventListener('hashchange', this.hashChangeWatcher);
   }
 
@@ -102,8 +102,6 @@ export default class RootComponent extends mixins(EvanComponent) {
    * correct left panel tree.
    */
   async initialize() {
-    this.loading = true;
-
     // check if container / plugin is opened under a digital twin address
     const runtime = utils.getRuntime(this);
     this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
@@ -113,6 +111,7 @@ export default class RootComponent extends mixins(EvanComponent) {
       this.$route.fullPath.indexOf('plugin-create') !== -1;
     this.containerAddress = this.$route.params.containerAddress;
     if (!this.digitalTwinAddress && this.containerAddress) {
+      this.loading = true;
       this.isContainer = this.containerAddress.startsWith('0x');
 
       if (this.isContainer) {
@@ -132,8 +131,9 @@ export default class RootComponent extends mixins(EvanComponent) {
           };
         }
       }
+      this.$nextTick(() => this.loading = false);
+    } else {
+      this.loading = false
     }
-
-    this.$nextTick(() => this.loading = false);
   }
 }

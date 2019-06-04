@@ -28,7 +28,8 @@
 <template>
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
-    :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
+    :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''"
+    v-if="containerAddress">
     <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
     </div>

@@ -31,7 +31,7 @@
       :routes="[ ]"
       v-on:loggedin="initialize()">
       <template v-slot:header>
-        <dt-breadcrumbs></dt-breadcrumbs>
+<!--         <dt-breadcrumbs></dt-breadcrumbs> -->
         <template v-if="
           $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 &&
           $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1
