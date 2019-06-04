@@ -98,6 +98,10 @@
     color: cssVar('text-color-inverted') !important;
   }
 
+  .bg-gray {
+    background-color: cssVar('gray-500') !important;
+  }
+
   .gray-100 {
     color: cssVar('gray-100') !important;
   }

@@ -2,6 +2,13 @@
 
 ## Next Version
 ### Features
+- `ui.libs`
+  - add `bg-gray` class
+  - add new stepper style
+  - add correct styling to `overflow-multiline`
+    - add `line-1`, `line-2`, `line-3`, `line-4` class support
+    - add `bg-level-1`, `bg-level-2`, `bg-level-3` support
+
 ### Fixes
 ### Deprecations
 
