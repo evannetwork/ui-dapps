@@ -45,6 +45,11 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * error during twin load?
+   */
+  error: any = false;
+
+  /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
    */
   hashChangeWatcher: any;
@@ -114,8 +119,12 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
           this.$route.params.digitalTwinAddress,
         ].join('/');
 
-        // load digitaltwin specific data
-        await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
+        try {
+          // load digitaltwin specific data
+          await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
+        } catch (ex) {
+          this.error = ex;
+        }
       }
     } else {
       // if digitaltwin was set, destroy it

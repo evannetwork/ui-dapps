@@ -40,13 +40,17 @@
         </div>
         <span class="mx-auto"></span>
         <div>
-          <a
+          <dc-create
+            :mode="'plugin'"
+            @init="$set(reactiveRefs, 'dtCreate', $event)">
+          </dc-create>
+          <button
             id="dt-plugin-create"
             class="btn btn-rounded btn-primary font-weight-normal"
-            :href="`${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create`">
+            @click="reactiveRefs.dtCreate.showModal()">
             {{ '_digitaltwins.plugins.create' | translate }}
             <i class="mdi mdi-arrow-right label ml-2"></i>
-          </a>
+          </button>
         </div>
       </div>
 

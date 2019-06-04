@@ -29,10 +29,10 @@
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
-    <div class="spinner-border spinner-border-sm text-light ml-3"
+    <!-- <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
-    </div>
-    <template v-else>
+    </div> -->
+    <template v-if="!loading">
       <!-- show dropdown button  -->
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"
@@ -92,10 +92,7 @@
               </button>
               <a :class="buttonClasses.tertiar"
                 id="container-clone"
-                :href="digitalTwinAddress ?
-                  `${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/${ digitalTwinAddress }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ containerAddress }`:
-                  `${ dapp.baseUrl }/${ dapp.rootEns }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ containerAddress }`"
-                @click="closeDropdown();">
+                @click="reactiveRefs.dcClone.showModal(); closeDropdown();">
                 <i class="mdi mdi-content-copy" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.clone` | translate }}
@@ -103,8 +100,7 @@
               </a>
               <a :class="buttonClasses.tertiar"
                 id="container-plugin-create"
-                :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ containerAddress }`"
-                @click="closeDropdown();">
+                @click="reactiveRefs.saveAsPlugin.showModal(); closeDropdown();">
                 <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.plugin-save` | translate }}
@@ -172,6 +168,15 @@
         :template="plugin.template"
         @submit="addNewEntry($event)">
       </dc-new-entry>
+      <dc-create
+        :cloneAddress="containerAddress"
+        @init="$set(reactiveRefs, 'dcClone', $event)">
+      </dc-create>
+      <dc-create
+        :mode="'plugin'"
+        :cloneAddress="containerAddress"
+        @init="$set(reactiveRefs, 'saveAsPlugin', $event)">
+      </dc-create>
     </template>
   </div>
 </template>

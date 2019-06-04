@@ -111,7 +111,7 @@ export default class UiContainer {
     const uiContainer = new UiContainer(vueInstance, watch);
 
     // run plugin update only for this watch function
-    watch && (await uiContainer.runPluginUpdate(false, [ watch ]));
+    watch && uiContainer.address && (await uiContainer.runPluginUpdate(false, [ watch ]));
 
     return uiContainer;
   }
@@ -123,6 +123,10 @@ export default class UiContainer {
     const address = vueInstance.containerAddress || vueInstance.pluginName;
     const uiContainer = containers[address] || this;
 
+    if (!address) {
+      throw new Error('No container address applied!');
+    }
+
     if (!uiContainer.address) {
       // cache it for later usage
       containers[address] = this;
@@ -133,7 +137,7 @@ export default class UiContainer {
       uiContainer.containerCache = new ContainerCache(uiContainer.runtime.activeAccount);
       uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(uiContainer.dapp);
       uiContainer.$i18n = vueInstance.$i18n;
-      uiContainer.isContainer = uiContainer.address.startsWith('0x');
+      uiContainer.isContainer = uiContainer.address && uiContainer.address.startsWith('0x');
     }
 
     // bind watchers, when no watcher was started before

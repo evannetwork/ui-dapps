@@ -30,7 +30,8 @@
     <evan-modal
       id="container-create-modal"
       ref="createModal"
-      :maxWidth="'1200px'">
+      :maxWidth="'1200px'"
+      :modalClasses="[ 'modal-header', 'modal-footer', ]">
       <template v-slot:header>
         <h5 class="modal-title d-flex align-items-center">
           <template v-if="mode !== 'plugin'">
@@ -44,22 +45,6 @@
           <template v-else>
             {{ `_datacontainer.plugin.create-title` | translate }}
           </template>
-
-          <template v-if="activePlugin">
-            - {{ createForm.name.value }}
-          </template>
-
-          <button class="btn btn-circle btn-sm btn-tertiary ml-3"
-            v-if="!creating && activePlugin"
-            id="dc-edit"
-            @click="activePlugin = null">
-            <i class="mdi mdi-pencil"></i>
-            <evan-tooltip
-              ref="editDbcphint"
-              :placement="'bottom'">
-              {{ `_datacontainer.createForm.edit-dbcp-hint` | translate }}
-            </evan-tooltip>
-          </button>
         </h5>
       </template>
       <template v-slot:body>
@@ -67,43 +52,68 @@
         <template v-else>
           <template v-if="!creating">
             <!---------------------------------- dbcp metadata ---------------------------------->
-            <template v-if="!activePlugin">
-              <dt-dbcp
-                v-if="!creating"
-                :form="createForm"
-                :disableSpacing="true"
-                @submit="activatePlugin(plugins[createForm.plugin.value])">
-                <template v-slot:before-inputs
-                   v-if="plugins.length !== 0">
-                  <div class="form-group">
-                    <label for="plugin">
-                      {{ `_datacontainer.createForm.plugin.title` | translate }}
-                    </label>
-                    <select class="form-control custom-select"
-                      id="plugin" ref="plugin"
-                      :placeholder="`_datacontainer.createForm.plugin.desc` | translate"
-                      v-model="createForm.plugin.value"
-                      :class="{ 'is-invalid' : createForm.plugin.error }"
-                      @blur="createForm.plugin.setDirty()">
-                      <option
-                        v-for="(plugin, index) in plugins"
-                        :value="index">
-                        {{ plugin.description.name | translate }}
-                      </option>
-                    </select>
-                  </div>
-                </template>
-              </dt-dbcp>
-            </template>
+            <div
+              v-if="!activePlugin">
+              <div class="d-flex align-items-center bg-level-3 p-3 border-bottom border-sm"
+                style="height: 78px">
+                <h5 class="d-flex align-items-center font-weight-semibold mb-0">
+                  {{ '_datacontainer.createForm.general' | translate }}
+                </h5>
+              </div>
+              <div class="modal-body">
+                <dt-dbcp
+                  v-if="!creating"
+                  :form="createForm"
+                  :disableSpacing="true"
+                  @submit="activatePlugin(plugins[createForm.plugin.value])">
+                  <template v-slot:before-inputs
+                     v-if="plugins.length !== 0">
+                    <div class="form-group">
+                      <label for="plugin">
+                        {{ `_datacontainer.createForm.plugin.title` | translate }}
+                      </label>
+                      <select class="form-control custom-select"
+                        id="plugin" ref="plugin"
+                        :placeholder="`_datacontainer.createForm.plugin.desc` | translate"
+                        v-model="createForm.plugin.value"
+                        :class="{ 'is-invalid' : createForm.plugin.error }"
+                        @blur="createForm.plugin.setDirty()">
+                        <option
+                          v-for="(plugin, index) in plugins"
+                          :value="index">
+                          {{ plugin.description.name | translate }}
+                        </option>
+                      </select>
+                    </div>
+                  </template>
+                </dt-dbcp>
+              </div>
+            </div>
 
             <!---------------------------------- fill the schema ---------------------------------->
             <template v-else>
-              <div class="header">
+              <div class="d-flex align-items-center bg-level-3 p-3 border-bottom border-sm"
+                style="height: 78px">
+                <h5 class="d-flex align-items-center font-weight-semibold mb-0">
+                  {{ '_datacontainer.createForm.container-configuration' | translate }}: {{ createForm.name.value }}
+
+                  <button class="btn btn-circle btn-sm btn-tertiary ml-3"
+                    v-if="!creating && activePlugin"
+                    id="dc-edit"
+                    @click="activePlugin = null">
+                    <i class="mdi mdi-pencil"></i>
+                    <evan-tooltip
+                      ref="editDbcphint"
+                      :placement="'bottom'">
+                      {{ `_datacontainer.createForm.edit-dbcp-hint` | translate }}
+                    </evan-tooltip>
+                  </button>
+                </h5>
                 <span class="mx-auto"></span>
                 <div>
                   <button type="submit"
                     v-if="steps.length !== 0"
-                    class="btn btn-primary btn-circle "
+                    class="btn btn-circle btn-outline-secondary"
                     id="th-add-entry"
                     @click="$refs.dcNewEntry.showModal();">
                     <i class="mdi mdi-plus"></i>
@@ -126,7 +136,8 @@
                     <span class="stepper-circle"
                       :class="{
                         'bg-primary': activeStep === index,
-                        'bg-secondary': activeStep !== index,
+                        'bg-secondary': activeStep >= index && activeStep !== index,
+                        'bg-gray': activeStep < index && activeStep !== index,
                       }">
                       {{ index + 1}}
                     </span>
@@ -135,9 +146,11 @@
                 </div>
                 <div v-for="(step, index) of steps">
                   <dc-entry
-                    class="content pt-0"
+                    :class="{
+                      'p-5': steps[activeStep].entryType !== 'object' && steps[activeStep].itemType !== 'object',
+                    }"
                     v-if="index === activeStep"
-                    :address="!templateMode ? 'dc-create' : 'plugin-create'"
+                    :address="mode !== 'plugin' ? 'dc-create' : 'plugin-create'"
                     :entry="activePlugin.template.properties[steps[activeStep].entryName]"
                     :entryName="steps[activeStep].entryName"
                     :permissions="permissions"
@@ -169,8 +182,8 @@
               </dc-new-entry>
 
               <evan-modal
-                id="container-create-question"
-                ref="createModalQuestion">
+                id="container-create-submit"
+                ref="createModalSubmit">
                 <template v-slot:header>
                   <h5 class="modal-title" v-if="mode !== 'plugin'">
                     {{ `_datacontainer.create-question.title` | translate }}
@@ -201,7 +214,7 @@
           </div>
         </template>
       </template>
-      <template v-slot:footer>
+      <template v-slot:footer v-if="!creating">
         <template v-if="!activePlugin">
           <button type="submit"
             class="btn btn-rounded btn-primary"

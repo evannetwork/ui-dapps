@@ -148,7 +148,7 @@
           v-if="share.error === 'no-contacts'">
           <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
             id="container-go-addressbook"
-            @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }`)">
+            @click="evanNavigate(`addressbook.vue.${ dapp.domainName }`, `/${ dapp.rootEns }`)">
             {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
             <i class="mdi mdi-arrow-right label"></i>
           </button>

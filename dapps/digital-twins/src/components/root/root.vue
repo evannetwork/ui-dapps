@@ -32,11 +32,9 @@
       v-on:loggedin="initialize()">
       <template v-slot:header>
         <dt-breadcrumbs></dt-breadcrumbs>
-        <template v-if="(
-            $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 &&
-            $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1
-          ) ||
-          $route.path.indexOf(`plugin-create`) !== -1
+        <template v-if="
+          $route.path.indexOf(`digitaltwin.${ dapp.domainName }`) === -1 &&
+          $route.path.indexOf(`datacontainer.digitaltwin.${ dapp.domainName }`) === -1
         ">
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"></evan-dapp-wrapper-level-2>
           <evan-nav-tabs :tabs="tabs"></evan-nav-tabs>

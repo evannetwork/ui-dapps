@@ -128,14 +128,22 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
     }
 
     // load ui container data
-    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
-      this.isOwner = uiContainer.owner === runtime.activeAccount;
-      this.plugin = uiContainer.plugin;
-      this.digitalTwinAddress = uiContainer.digitalTwinAddress;
+    try {
+      await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+        this.isOwner = uiContainer.owner === runtime.activeAccount;
+        this.plugin = uiContainer.plugin;
+        this.digitalTwinAddress = uiContainer.digitalTwinAddress;
 
-      this.saving = uiContainer.isSaving;
-      this.sharing = uiContainer.isSharing;
-    });
+        this.saving = uiContainer.isSaving;
+        this.sharing = uiContainer.isSharing;
+      });
+    } catch (ex) {
+      if (ex.message.indexOf('No container address applied!') === -1) {
+        runtime.logger.log(ex.message, 'error');
+      }
+
+      return;
+    }
 
     this.loading = false;
   }

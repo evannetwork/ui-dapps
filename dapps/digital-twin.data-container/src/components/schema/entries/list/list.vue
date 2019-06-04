@@ -39,8 +39,10 @@
       </dc-ajv>
     </div>
     <div v-else>
-      <h5>{{ 'ajv.type.title' | translate }}</h5>:
-      {{ `_datacontainer.types.${ itemType }` | translate }}
+      <h5 class="font-weight-semibold">
+        {{ '_datacontainer.types.array' | translate }} - {{ '_datacontainer.ajv.type.title' | translate }}:
+        {{ `_datacontainer.types.${ itemType }` | translate }}
+      </h5>
     </div>
   </div>
 </template>

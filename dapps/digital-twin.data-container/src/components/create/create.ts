@@ -266,11 +266,22 @@ export default class CreateComponent extends mixins(EvanComponent) {
     Object.keys(plugin.template.properties).forEach((entryName: string) => {
       // add the steps
       const title = `_datacontainer.breadcrumbs.${ entryName }`;
-      this.steps.push({
+      const entry = plugin.template.properties[entryName];
+      const step: any = {
         title,
         entryName,
+        entryType: fieldUtils.getType(entry.dataSchema),
         disabled: () => false
-      });
+      };
+
+      if (step.entryType === 'array') {
+        step.itemType = fieldUtils.getType(entry.dataSchema.items);
+      }
+
+      // apply step to the steps array
+      this.steps.push(step);
+
+      // add custom translation
       customTranslation[title] = entryName;
 
       /**
@@ -312,7 +323,10 @@ export default class CreateComponent extends mixins(EvanComponent) {
     // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
 
     utils.enableDTSave();
-    this.activatePlugin(this.activePlugin, true);
+    this.activatePlugin(this.activePlugin, false);
+
+    this.loading = true;
+    this.$nextTick(() => this.loading = false);
   }
 
   /**
@@ -323,7 +337,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     // if we are on the last step, ask to finish creation
     if (this.steps.length === 0 || this.activeStep === (this.steps.length - 1)) {
-      (<any>this.$refs.createModal).show();
+      (<any>this.$refs.createModalSubmit).show();
     } else {
       // navigate to next step.
       this.steps[this.activeStep].valid = true;
@@ -350,7 +364,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
     const watch = async ($event?: any) => {
       const beforeCreating = this.creating;
       const runtime = utils.getRuntime(this);
-      let toOpen;
+      const dapp: any = (<any>this).dapp;
 
       // when creating a plugin, use the pluginDispatcher and check for any instances
       if (this.mode === 'plugin') {
@@ -360,7 +374,16 @@ export default class CreateComponent extends mixins(EvanComponent) {
         if ($event && $event.detail.instance.data.description.name) {
           // force reload
           delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-          toOpen = `${ $event.detail.instance.data.description.name }`;
+
+          // if the synchronisation has finished, navigate to the new plugin / container
+          if (!this.creating && beforeCreating && $event && $event.detail.instance.data.description.name) {
+            window.location.hash = [
+              dapp.rootEns,
+              `digitaltwins.${ dapp.domainName }`,
+              `datacontainer.digitaltwin.${ dapp.domainName }`,
+              $event.detail.instance.data.description.name
+            ].join('/');
+          }
         }
       } else {
         // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address
@@ -369,14 +392,31 @@ export default class CreateComponent extends mixins(EvanComponent) {
           .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)
           .length > 0;
 
-        if ($event && $event.detail.instance.data.contractAddress) {
-          toOpen = $event.detail.instance.data.contractAddress;
-        }
-      }
+        // if the synchronisation has finished, navigate to the new plugin / container
+        if (!this.creating && beforeCreating && $event && $event.detail.instance.data.contractAddress) {
+          // base navigation url
+          let urlToOpen = [
+            dapp.rootEns,
+            `digitaltwins.${ dapp.domainName }`,
+          ];
 
-      // if the synchronisation has finished, navigate to the new plugin / container
-      if (!this.creating && beforeCreating && $event && toOpen) {
-        (<any>this).evanNavigate(toOpen);
+          // navigate relative to digitaltwin address
+          if (this.digitalTwinAddress) {
+            urlToOpen = urlToOpen.concat([
+              `digitaltwin.${ dapp.domainName }`,
+              this.digitalTwinAddress
+            ]);
+          }
+
+          // open datacontainer directly
+          urlToOpen = urlToOpen.concat([
+            `datacontainer.digitaltwin.${ dapp.domainName }`,
+            $event.detail.instance.data.contractAddress
+          ]);
+
+          // open built url
+          window.location.hash = urlToOpen.join('/');
+        }
       }
     }
 

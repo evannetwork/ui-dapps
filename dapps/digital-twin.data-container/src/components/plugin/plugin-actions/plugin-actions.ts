@@ -143,6 +143,8 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Set button classes
    */
   async created() {
+    const runtime = utils.getRuntime(this);
+
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -152,14 +154,22 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     }
 
     // watch for updates
-    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
-      this.description = uiContainer.description;
-      this.plugin = uiContainer.plugin;
-      this.saving = uiContainer.isSaving;
-      this.sharing = uiContainer.isSharing;
-    });
+    try {
+      await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+        this.description = uiContainer.description;
+        this.plugin = uiContainer.plugin;
+        this.saving = uiContainer.isSaving;
+        this.sharing = uiContainer.isSharing;
+      });
+    } catch (ex) {
+      if (ex.message.indexOf('No container address applied!') === -1) {
+        runtime.logger.log(ex.message, 'error');
+      }
 
-    await this.setupAddressBook();
+      return;
+    }
+
+    await this.setupAddressBook(runtime);
     this.setupSharingForm();
 
     this.loading = false;
@@ -188,9 +198,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    *
    * @param      {bccRuntime}  runtime  bcc runtime
    */
-  async setupAddressBook() {
-    const runtime = utils.getRuntime(this);
-
+  async setupAddressBook(runtime: bcc.Runtime) {
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
     bcc.Ipld.purgeCryptoInfo(addressBook);

@@ -29,10 +29,10 @@
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
-    <div class="spinner-border spinner-border-sm text-light ml-3"
+<!--     <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
-    </div>
-    <template v-else>
+    </div> -->
+    <template v-if="!loading">
       <!-- show dropdown button  -->
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"
@@ -89,8 +89,7 @@
               </a> -->
               <a :class="buttonClasses.tertiar"
                 id="plugin-clone"
-                :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ pluginName }`"
-                @click="closeDropdown()">
+                @click="reactiveRefs.clonePlugin.showModal(); closeDropdown()">
                 <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.clone` | translate }}
@@ -98,8 +97,7 @@
               </a>
             </template>
             <template v-if="setActions">
-              <!-- :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')" -->
-              <a
+                <a
                 id="dc-container-add"
                 :class="buttonClasses.primary"
                 @click="$refs.dcNewEntry.showModal(); closeDropdown();">
@@ -225,6 +223,11 @@
         :template="plugin.template"
         @submit="addNewEntry($event)">
       </dc-new-entry>
+      <dc-create
+        :mode="'plugin'"
+        :cloneAddress="pluginName"
+        @init="$set(reactiveRefs, 'clonePlugin', $event)">
+      </dc-create>
     </template>
   </div>
 </template>

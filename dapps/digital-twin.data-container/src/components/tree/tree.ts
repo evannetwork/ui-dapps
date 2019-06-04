@@ -102,9 +102,15 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = utils.getRuntime(this);
 
-    UiContainer.watch(this, async (uiContainer: UiContainer) => {
-      this.plugin = uiContainer.plugin;
-      this.initializing = false;
-    });
+    try {
+      await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+        this.plugin = uiContainer.plugin;
+        this.initializing = false;
+      });
+    } catch (ex) {
+      if (ex.message.indexOf('No container address applied!') === -1) {
+        runtime.logger.log(ex.message, 'error');
+      }
+    }
   }
 }

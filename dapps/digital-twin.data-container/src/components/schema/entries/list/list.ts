@@ -100,28 +100,36 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    * Cancel the schema edit and use the original values.
    */
   reset() {
-    // disable value overwrite
-    this.reactiveRefs.ajv.deleted = true;
+    if (this.itemType === 'object') {
+      // disable value overwrite
+      this.reactiveRefs.ajv.deleted = true;
 
-    // reset the schema
-    entryUtils.resetSchema(this.entry);
+      // reset the schema
+      entryUtils.resetSchema(this.entry);
+    }
   }
 
   /**
    * Save the current schema.
    */
   save() {
-    // save the current schema into the edit properties
-    this.reactiveRefs.ajv.save();
+    if (this.itemType === 'object') {
+      // save the current schema into the edit properties
+      this.reactiveRefs.ajv.save();
 
-    // save the schema
-    entryUtils.saveSchema(this.entry);
+      // save the schema
+      entryUtils.saveSchema(this.entry);
+    }
   }
 
   /**
    * Determines if valid.
    */
   isValid() {
-    return this.reactiveRefs.ajv.isValid;
+    if (this.itemType === 'object') {
+      return this.reactiveRefs.ajv.isValid;
+    } else {
+      return true;
+    }
   }
 }

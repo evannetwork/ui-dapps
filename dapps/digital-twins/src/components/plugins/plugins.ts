@@ -61,6 +61,11 @@ export default class PluginsComponent extends mixins(EvanComponent) {
   shareWatcher = Function;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
    * Load my plugins
    */
   async created() {
