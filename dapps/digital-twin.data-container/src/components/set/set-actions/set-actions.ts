@@ -159,13 +159,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    * Reset the current changes and reloads the data.
    */
   async resetEntry() {
-    const runtime = utils.getRuntime(this);
-
-    delete this.uiContainer.plugin.template.properties[this.entryName];
-
-    // reset the cache
-    const containerCache = new ContainerCache(runtime.activeAccount);
-    containerCache.put(this.containerAddress, this.uiContainer.plugin);
+    this.uiContainer.resetEntry(this.entryName);
 
     // hide the modal
     (<any>this.$refs.resetModal) && (<any>this.$refs.resetModal).hide();

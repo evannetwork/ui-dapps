@@ -107,6 +107,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     this.entryName = this.$route.params.entryName;
 
     this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.loading = true;
       this.saving = uiContainer.isSaving;
 
       const runtime = utils.getRuntime(this);
@@ -124,7 +125,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       }
 
       // if it's a new value, apply full readWrite permissions
-      if (this.templateEntry.isNew) {
+      if (!uiContainer.isContainer || this.templateEntry.isNew) {
         this.permissions.readWrite.push(this.entryName);
       }
 
@@ -132,6 +133,8 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
 
       // ensure edit values for schema component
       entryUtils.ensureValues(this.templateEntry);
+
+      this.$nextTick(() => this.loading = false);
     });
 
     this.loading = false;
@@ -148,12 +151,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       const entry = this.templateEntry;
 
       const schemaChanged = !deepEqual(edit.dataSchema, entry.dataSchema);
-      let valueChanged;
-      if (entry.type !== 'list') {
-        valueChanged = !deepEqual(edit.value, entry.value);
-      } else {
-        valueChanged = entry.value && entry.value.length > 0;
-      }
+      let valueChanged = !deepEqual(edit.value, entry.value);
+      // if (entry.type !== 'list') {
+      // } else {
+      //   valueChanged = entry.value && entry.value.length > 0;
+      // }
 
       // if the current entry was changed, cache the values
       if (schemaChanged || valueChanged) {
@@ -167,22 +169,12 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   /**
    * Save the current changes.
    */
-  saveEntry() {
-    const runtime = utils.getRuntime(this);
-
+  async saveEntry() {
     // save changes for this entry
     this.reactiveRefs.entryComp.save();
-
-    this.uiContainer.clearCache();
-    if (this.containerAddress.startsWith('0x')) {
-      dispatchers.updateDispatcher.start(runtime, {
-        address: this.containerAddress,
-        description: this.uiContainer.description,
-        digitalTwinAddress: this.uiContainer.digitalTwinAddress,
-        plugin: this.uiContainer.plugin,
-      });
-    } else {
-      dispatchers.pluginDispatcher.start(runtime, this.uiContainer.plugin);
-    }
+    // save the changes
+    await this.uiContainer.save();
+    // remove the saved entry from cache
+    await this.uiContainer.resetEntry(this.entryName);
   }
 }

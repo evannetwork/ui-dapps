@@ -228,7 +228,7 @@ export default class UiContainer {
     this.loading = true;
     this.loadingPromise = this.loadingPromise ||
       new Promise(async (resolve, reject) => {
-        let plugin, permissions;
+        let plugin, permissions, error;
 
         try {
           // check if it was already loaded before
@@ -297,10 +297,18 @@ export default class UiContainer {
             plugin.description.name;
           this.$i18n.add(this.$i18n.locale(), customTranslation);
         } catch (ex) {
-          return reject(ex);
+          error = ex;
         }
 
-        resolve({ permissions, plugin, });
+        // finish the promise
+        if (error) {
+          reject(error);
+        } else {
+          resolve({ permissions, plugin, });
+        }
+
+        // reset the loading promise
+        this.loadingPromise = null;
       });
 
     try {
@@ -365,5 +373,37 @@ export default class UiContainer {
    */
   async clearCache() {
     await this.containerCache.delete(this.address);
+  }
+
+  /**
+   * Resets last changes of a property.
+   *
+   * @param      {string}  entryName  entry name that should be resetted
+   */
+  async resetEntry(entryName: string) {
+    // do not delete the original one, only clear it within a copy and set the cache
+    const pluginCopy = JSON.parse(JSON.stringify(this.plugin));
+    delete pluginCopy.template.properties[entryName];
+
+    // reset the cache
+    this.containerCache.put(this.address, pluginCopy);
+  }
+
+  /**
+   * Saves latest changes.
+   */
+  async save() {
+    // make a copy of the current plugin, so the object will not be changed within the dispatcher
+    const saveCopy = JSON.parse(JSON.stringify(this.plugin));
+    if (this.isContainer) {
+      await dispatchers.updateDispatcher.start(this.runtime, {
+        address: this.address,
+        description: this.description,
+        digitalTwinAddress: this.digitalTwinAddress,
+        plugin: saveCopy,
+      });
+    } else {
+      await dispatchers.pluginDispatcher.start(this.runtime, saveCopy);
+    }
   }
 }

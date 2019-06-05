@@ -57,13 +57,14 @@ export function getType(subSchema: any, firstLevel = true): string {
 /**
  * Get the default value for a field type.
  *
- * @param      {string}  type    field type (string, object, array, number, files)
+ * @param      {string}  type      field type (string, object, array, number, files)
+ * @param      {string}  itemType  only available for arrays, type of array items
  */
-export function defaultValue(type: string) {
+export function defaultValue(type: string, itemType?: string) {
   switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
-      return [ ];
+      return defaultValue(itemType);
     }
     case 'object': {
       return { };

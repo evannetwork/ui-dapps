@@ -35,7 +35,6 @@
     <div class="d-flex align-items-center pl-3 pr-3 py-3"
       style="height: 60px;"
       v-if="!onlySets">
-      <!-- @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()" -->
       <button class="btn mini mr-3"
         @click="isOpen = !isOpen"
         v-if="!creating">
@@ -87,7 +86,6 @@
         style="height: 40px;"
         v-for="(entry, index) in Object.keys(plugin.template.properties)"
         v-if="entry !== 'type'">
-        <!-- @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()" -->
         <a
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
