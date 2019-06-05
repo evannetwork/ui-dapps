@@ -61,6 +61,11 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   @Prop() activeMode: string;
 
   /**
+   * Do not show schema edit for properties of type object
+   */
+  @Prop() onlyValues: boolean;
+
+  /**
    * Force loading of ajv component
    */
   loading = false;

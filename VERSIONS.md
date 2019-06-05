@@ -4,11 +4,15 @@
 ### Features
 - `digitaltwins`
   - move open twin and create twin to modal dialog
-
-### Fixes
 - `datacontainer.digitaltwins`
   - add new `UiContainer` structure including easy data loading update watching
   - remove flex-truncate and add correct text-overflow logic
+  - add `dc-ajv-values` component for displaying ajv formular without schema specifications
+
+### Fixes
+- `datacontainer.digitaltwins`
+  - remove flex-truncate and add correct text-overflow logic
+  - fix plugin creation and saving
 
 ### Deprecations
 

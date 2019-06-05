@@ -26,27 +26,29 @@
 */
 
 <template>
-  <div class="form-group mb-0" v-if="mode === 'schema' || mode === 'edit'">
-    <label for="value" v-if="standalone">
-      {{ label | translate }}
-    </label>
-    <input class="form-control" required
-      id="value" ref="value" type="text"
-      :placeholder="description | translate"
-      :disabled="$store.state.saving"
-      v-model="control.value"
-      :class="{ 'is-invalid' : control.error }"
-      @blur="control.setDirty()">
-    <div class="invalid-feedback">
-      {{ `_datacontainer.ajv.value.error` | translate }}
-    </div>
+  <div>
+    <form id="ajv-values">
+      <div class="form-group"
+        v-for="(schemaKey, index) in Object.keys(properties)">
+        <dc-field
+          :address="address"
+          :control="valueForm[schemaKey]"
+          :label="schemaKey"
+          :description="`_datacontainer.types.${ types[schemaKey] }`"
+          :mode="mode"
+          :standalone="true"
+          :type="types[schemaKey]">
+        </dc-field>
+      </div>
+    </form>
   </div>
-  <span :id="id" class="text-primary" v-else>
-    {{ control.value }}
-  </span>
 </template>
 
 <script lang="ts">
-  import Component from './string.ts';
+  import Component from './ajv-values.ts';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  // @import './ajv.scss';
+</style>

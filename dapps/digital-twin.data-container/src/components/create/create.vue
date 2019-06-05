@@ -146,13 +146,11 @@
                 </div>
                 <div v-for="(step, index) of steps">
                   <dc-entry
-                    :class="{
-                      'p-5': steps[activeStep].entryType !== 'object' && steps[activeStep].itemType !== 'object',
-                    }"
                     v-if="index === activeStep"
                     :address="mode !== 'plugin' ? 'dc-create' : 'plugin-create'"
                     :entry="activePlugin.template.properties[steps[activeStep].entryName]"
                     :entryName="steps[activeStep].entryName"
+                    :onlyValues="mode !== 'plugin'"
                     :permissions="permissions"
                     @init="$set(steps[activeStep], 'entryComp', $event)">
                   </dc-entry>

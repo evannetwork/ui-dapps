@@ -51,6 +51,13 @@ export default class NumberComponent extends mixins(EvanComponent) {
    */
   @Prop() control: EvanFormControl;
 
+
+  /**
+   * Label and description that should be rendered
+   */
+  @Prop({ default: `_datacontainer.ajv.value.title` }) label: string;
+  @Prop({ default: `_datacontainer.ajv.value.desc` }) description: string;
+
   /**
    * should the control label be rendered?
    */

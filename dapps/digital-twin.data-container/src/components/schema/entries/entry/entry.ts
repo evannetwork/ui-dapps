@@ -50,6 +50,11 @@ export default class EntryComponent extends mixins(EvanComponent) {
   @Prop() permissions: any;
 
   /**
+   * Do not show schema edit for properties of type object
+   */
+  @Prop() onlyValues: boolean;
+
+  /**
    * data container entry (metadata, array, ...)
    */
   @Prop() entry: any;
@@ -68,6 +73,7 @@ export default class EntryComponent extends mixins(EvanComponent) {
    * Calculated entry type (check special type definitions)
    */
   type: string = null;
+  itemType: string = null;
 
   /**
    * Check for permitted modes
@@ -75,6 +81,10 @@ export default class EntryComponent extends mixins(EvanComponent) {
   created() {
     this.$emit('init', this);
     this.type = fieldUtils.getType(this.entry.dataSchema);
+
+    if (this.type === 'array') {
+      this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
+    }
 
     // check permissions and set permitted modes
     if (!this.address.startsWith('0x')) {

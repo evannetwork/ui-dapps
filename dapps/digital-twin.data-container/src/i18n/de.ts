@@ -54,9 +54,9 @@ const i18n: any = {
         "title": "Typ"
       },
       "value": {
-        "desc": "Wert des Feldes",
+        "desc": "vorgegebener Wert des Feldes",
         "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
-        "title": "Wert"
+        "title": "Standardwert"
       }
     },
     "context-menu": {
@@ -133,7 +133,8 @@ const i18n: any = {
         "desc": "Wert des Feldes",
         "error": "Bitte geben Sie einen korrekten Wert an!",
         "title": "Wert"
-      }
+      },
+      "entry-type": "Datebereichs-Typ"
     },
     "field": {
       "edit": "Bearbeiten"

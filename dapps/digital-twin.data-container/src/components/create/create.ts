@@ -372,21 +372,32 @@ export default class CreateComponent extends mixins(EvanComponent) {
         this.creating = instances.length > 0;
 
         if ($event && $event.detail.instance.data.description.name) {
-          // force reload
-          delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
+          const pluginName = $event.detail.instance.data.description.name;
 
           // if the synchronisation has finished, navigate to the new plugin / container
-          if (!this.creating && beforeCreating && $event && $event.detail.instance.data.description.name) {
-            window.location.hash = [
-              dapp.rootEns,
-              `digitaltwins.${ dapp.domainName }`,
-              `datacontainer.digitaltwin.${ dapp.domainName }`,
-              $event.detail.instance.data.description.name
-            ].join('/');
+          if (!this.creating && beforeCreating) {
+            try {
+              // force reload and try to load the plugin, if it could be load, navigate to the plugin
+              delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
+              const plugin = await bcc.Container.getContainerPlugin(runtime.profile, pluginName);
+
+              if (plugin) {
+                window.location.hash = [
+                  dapp.rootEns,
+                  `digitaltwins.${ dapp.domainName }`,
+                  `datacontainer.digitaltwin.${ dapp.domainName }`,
+                  pluginName
+                ].join('/');
+              }
+            } catch (ex) {
+              console.log(ex);
+              // plugin creation was cancled or failed
+            }
           }
         }
       } else {
-        // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address
+        // when creating an container, check for createDispatcher and check only for instances with
+        // the specific digitaltwin address
         const instances = await dispatchers.createDispatcher.getInstances(runtime);
         this.creating = instances
           .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)

@@ -30,6 +30,7 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
 import AJVComponent from './schema/ajv/ajv.vue';
+import AJVValuesComponent from './schema/ajv-values/ajv-values.vue';
 import ContainerActionsComponent from './container/container-actions/container-actions.vue';
 import ContainerComponent from './container/container/container.vue';
 import CreateComponent from './create/create.vue';
@@ -57,6 +58,7 @@ export { }
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-actions', component: ContainerActionsComponent },
   { name: 'dc-ajv', component: AJVComponent },
+  { name: 'dc-ajv-values', component: AJVValuesComponent },
   { name: 'dc-create', component: CreateComponent },
   { name: 'dc-detail', component: ContainerComponent },
   { name: 'dc-entry', component: EntryComponent },

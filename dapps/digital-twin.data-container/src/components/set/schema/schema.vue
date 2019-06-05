@@ -42,9 +42,6 @@
     <template v-else>
       <div class="white-box border-smooth rounded">
         <dc-entry
-          :class="{
-            'content': entryType !== 'object' && entryType !== 'array'
-          }"
           :address="containerAddress"
           :entry="templateEntry"
           :entryName="entryName"

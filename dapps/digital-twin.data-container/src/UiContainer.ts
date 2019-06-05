@@ -359,4 +359,11 @@ export default class UiContainer {
         .map(instance => instance.data);
     }
   }
+
+  /**
+   * Clear the indexedDb cache for this container.
+   */
+  async clearCache() {
+    await this.containerCache.delete(this.address);
+  }
 }

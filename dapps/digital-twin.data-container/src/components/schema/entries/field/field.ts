@@ -80,6 +80,9 @@ export default class FieldComponent extends mixins(EvanComponent) {
   created() {
     // Calculated entry schema type
     this.type = fieldUtils.getType(this.entry.dataSchema);
+    if (this.type === 'array') {
+      this.type = fieldUtils.getType(this.entry.dataSchema.items);
+    }
 
     // setup field form
     this.fieldForm = <FieldFormInterface>new EvanForm(this, {

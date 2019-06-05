@@ -155,7 +155,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
 
     // watch for updates
     try {
-      await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
         this.description = uiContainer.description;
         this.plugin = uiContainer.plugin;
         this.saving = uiContainer.isSaving;

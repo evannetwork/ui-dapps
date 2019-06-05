@@ -55,9 +55,9 @@ const i18n: any = {
         "title": "Type"
       },
       "value": {
-        "desc": "Value of the field",
+        "desc": "Default Value of the field",
         "error": "Please enter a value of the correct type!",
-        "title": "Value"
+        "title": "Default Value"
       }
     },
     "context-menu": {
@@ -134,7 +134,8 @@ const i18n: any = {
         "desc": "Value of the field",
         "error": "Please enter a correct value",
         "title": "Value"
-      }
+      },
+      "entry-type": "Data Set Type"
     },
     "field": {
       "edit": "Edit"

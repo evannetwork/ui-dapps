@@ -66,6 +66,11 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   @Prop() activeMode: string;
 
   /**
+   * Do not show schema edit for properties of type object
+   */
+  @Prop() onlyValues: boolean;
+
+  /**
    * Show loading symbol, until listentries were load
    */
   loading = true;
