@@ -55,9 +55,6 @@
 
   .evan-tabs, .evan-navigation-tabs {
     display: flex;
-    overflow-x: auto;
-
-    height: 70px;
 
     .evan-tab {
       font-size: 15px;
@@ -71,7 +68,7 @@
       padding: 0 25px;
 
       cursor: pointer;
-      transition: height 0.3s ease-out, transform 0.3s ease-out, margin 0.3s ease-out;
+      transition: height 0.3s ease-out, box-shadow 0.3s ease-out;
       text-align: center;
     }
   }
@@ -88,7 +85,7 @@
   }
 
   .evan-navigation-tabs {
-    overflow: hidden;
+    height: 70px;
 
     .evan-tab {
       width: 100%;
@@ -97,9 +94,8 @@
         z-index: 10;
 
         height: 70px;
-        margin-top: 3px;
 
-        transform: scale(1.1);
+        box-shadow: 0 0 5px 2px rgba(75, 82, 88, 0.5);
       }
     }
   }
