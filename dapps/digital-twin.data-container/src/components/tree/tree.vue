@@ -82,10 +82,41 @@
 
     <div class="pb-3"
       v-if="!initializing && (onlySets || isOpen)">
+      <div class="px-4 py-1"
+        v-if="plugin && plugin.template && Object.keys(plugin.template.properties).length === 0">
+        <dc-actions
+          ref="emptyActions"
+          v-if="containerAddress.startsWith('0x')"
+          :containerAddress="containerAddress"
+          :digitalTwinAddress="digitalTwinAddress"
+          :displayMode="'dropdownHidden'"
+          :dcActions="true"
+          :setActions="true">
+        </dc-actions>
+        <dc-plugin-actions
+          v-else
+          ref="emptyActions"
+          :pluginName="containerAddress"
+          :pluginActions="true"
+          :setActions="true"
+          :displayMode="'dropdownHidden'">
+        </dc-plugin-actions>
+
+        <button class="btn btn-link dark-link d-flex align-items-center"
+          @click="
+            $refs.emptyActions.$refs.dcNewEntry.showModal();
+            $refs.emptyActions.closeDropdown();
+          ">
+          <button class="btn mini border btn-circle border-secondary mr-3">
+            <i class="mdi mdi-plus text-secondary"></i>
+          </button>
+          {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
+        </button>
+      </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
         style="height: 40px;"
         v-for="(entry, index) in Object.keys(plugin.template.properties)"
-        v-if="entry !== 'type'">
+        v-else-if="entry !== 'type'">
         <a
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"

@@ -109,7 +109,7 @@
             <button
               id="dt-container-create"
               :class="buttonClasses.primary"
-              @click="reactiveRefs.dtCreate.showModal(); closeDropdown();">
+              @click="reactiveRefs.dcCreate.showModal(); closeDropdown();">
               <i class="mdi mdi-plus"></i>
               <component :is="buttonTextComp" :placement="'bottom'">
                 {{ `_digitaltwins.containers.create` | translate }}
@@ -148,7 +148,7 @@
       </template>
     </evan-modal>
     <dc-create
-      @init="$set(reactiveRefs, 'dtCreate', $event)">
+      @init="$set(reactiveRefs, 'dcCreate', $event)">
     </dc-create>
     <dt-ens-map
       @init="$set(reactiveRefs, 'dtEnsMap', $event)">

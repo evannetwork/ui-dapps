@@ -8,6 +8,11 @@
   - add new `UiContainer` structure including easy data loading update watching
   - remove flex-truncate and add correct text-overflow logic
   - add `dc-ajv-values` component for displaying ajv formular without schema specifications
+  - add editSchema for splitting schema mode and value view mode
+  - move plugin default values to dataSchema `default` property
+  - add plugin selection as first page on creating a new `plugin` / `container` / move dbcp edit to create steps
+  - add seperated value / schema view for `twin.container.entries`
+  - disable default values for files
 
 ### Fixes
 - `datacontainer.digitaltwins`

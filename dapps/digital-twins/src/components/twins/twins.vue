@@ -72,7 +72,7 @@
           :id="`evan-dt-twins`">
           <div class="col-md-6 col-lg-3 mb-4"
             v-for="(ensAddress, index) in twins">
-            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
+            <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
               :id="`evan-dt-${ ensAddress.replace('.', '') }`"
               :href="descriptions[ensAddress].creating ?
                 null :

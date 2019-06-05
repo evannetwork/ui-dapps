@@ -33,6 +33,7 @@ const i18n: any = {
     "ajv": {
       "add": "Add field",
       "edit-schema": "Edit schema",
+      "files-no-default": "File type fields cannot contain default values.",
       "name": {
         "desc": "Name of the field",
         "error": {
@@ -87,6 +88,7 @@ const i18n: any = {
         "desc": "Configuration of the new plugin",
         "title": "Plugin Type"
       },
+      "plugin-select": "Plugin Selection",
       "sub-title": "Specify general information, data schema and values."
     },
     "dbcp": {
@@ -118,6 +120,7 @@ const i18n: any = {
       "array-type": {
         "title": "List type"
       },
+      "entry-type": "Data Set Type",
       "name": {
         "desc": "Name of the data set",
         "error": {
@@ -134,8 +137,7 @@ const i18n: any = {
         "desc": "Value of the field",
         "error": "Please enter a correct value",
         "title": "Value"
-      },
-      "entry-type": "Data Set Type"
+      }
     },
     "field": {
       "edit": "Edit"
@@ -182,6 +184,12 @@ const i18n: any = {
       }
     },
     "save-dbcp": "Save",
+    "sets": {
+      "reset": {
+        "desc": "Do you want to reset the current changes?",
+        "title": "Reset data set"
+      }
+    },
     "share": {
       "action": "Share",
       "bmail": {
@@ -219,12 +227,6 @@ const i18n: any = {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
-    },
-    "sets": {
-      "reset": {
-        "title": "Reset data set",
-        "desc": "Do you want to reset the current changes?"
-      }
     }
   }
 }

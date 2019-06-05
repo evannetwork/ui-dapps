@@ -32,6 +32,7 @@ const i18n: any = {
     "ajv": {
       "add": "Feld hinzufügen",
       "edit-schema": "Schema bearbeiten",
+      "files-no-default": "Felder vom Typ Datei können keine Standardwerte enthalten.",
       "name": {
         "desc": "Bezeichung des Feldes",
         "error": {
@@ -86,6 +87,7 @@ const i18n: any = {
         "desc": "Konfiguration des neuen Plugins",
         "title": "Plugin-Typ"
       },
+      "plugin-select": "Plugin-Auswahl",
       "sub-title": "Allgemeine Informationen, Datenschema und Werte."
     },
     "dbcp": {
@@ -117,6 +119,7 @@ const i18n: any = {
       "array-type": {
         "title": "Listentyp"
       },
+      "entry-type": "Datebereichs-Typ",
       "name": {
         "desc": "Name des Datenbereichs",
         "error": {
@@ -133,8 +136,7 @@ const i18n: any = {
         "desc": "Wert des Feldes",
         "error": "Bitte geben Sie einen korrekten Wert an!",
         "title": "Wert"
-      },
-      "entry-type": "Datebereichs-Typ"
+      }
     },
     "field": {
       "edit": "Bearbeiten"
@@ -181,6 +183,12 @@ const i18n: any = {
       }
     },
     "save-dbcp": "Speichern",
+    "sets": {
+      "reset": {
+        "desc": "Wollen sie die aktuellen Änderungen zurücksetzen?",
+        "title": "Daten-Set zurücksetzen"
+      }
+    },
     "share": {
       "action": "Teilen",
       "bmail": {
@@ -218,12 +226,6 @@ const i18n: any = {
       "number": "Zahl",
       "object": "Metadaten",
       "string": "Text"
-    },
-    "sets": {
-      "reset": {
-        "title": "Daten-Set zurücksetzen",
-        "desc": "Wollen sie die aktuellen Änderungen zurücksetzen?"
-      }
     }
   }
 }

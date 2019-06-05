@@ -46,11 +46,18 @@
           :entry="templateEntry"
           :entryName="entryName"
           :permissions="permissions"
+          :schemaEdit="$route.name !== 'entry-values'"
+          :mode="$route.name === 'entry-schema' && containerAddress.startsWith('0x') ? 'view' : 'schema'"
           @init="$set(reactiveRefs, 'entryComp', $event)">
         </dc-entry>
         
         <div class="footer text-right"
-          v-if="reactiveRefs.entryComp && permissions.readWrite.indexOf(entryName) !== -1">
+          v-if="
+            reactiveRefs.entryComp && permissions.readWrite.indexOf(entryName) !== -1 && (
+              ($route.name === 'entry-values' && containerAddress.startsWith('0x')) ||
+              ($route.name === 'entry-schema' && !containerAddress.startsWith('0x'))
+            )
+          ">
           <button
             class="btn btn-rounded btn-primary"
             id="schema-save"

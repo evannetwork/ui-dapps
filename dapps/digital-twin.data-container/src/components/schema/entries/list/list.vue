@@ -31,7 +31,7 @@
       id="entry-schema"
       v-if="itemType === 'object'">
       <dc-ajv-values
-        v-if="onlyValues"
+        v-if="!schemaEdit"
         :address="address"
         :mode="activeMode"
         :properties="entry.edit.dataSchema.properties"
@@ -52,7 +52,8 @@
       :activeMode="activeMode"
       :address="address"
       :entry="entry"
-      :entryName="entryName">
+      :entryName="entryName"
+      @init="$set(reactiveRefs, 'ajv', $event)">
     </dc-entry-field>
 <!-- <h5 class="font-weight-semibold">
         {{ '_datacontainer.types.array' | translate }} - {{ '_datacontainer.ajv.type.title' | translate }}:

@@ -49,16 +49,17 @@
           </template>
         </h5>
         <dc-entry-object
+          :class="{ 'px-4 pb-4 pt-2': !schemaEdit }"
           ref="entryComp"
           v-if="type === 'object'"
           :activeMode="activeMode"
           :address="address"
           :entry="entry"
           :entryName="entryName"
-          :onlyValues="onlyValues">
+          :schemaEdit="schemaEdit">
         </dc-entry-object>
         <dc-entry-list
-          :class="{ 'px-4 pb-4 pt-2': itemType !== 'object' }"
+          :class="{ 'px-4 pb-4 pt-2': !schemaEdit || itemType !== 'object' }"
           ref="entryComp"
           v-else-if="type === 'array'"
           @reset="resetValue"
@@ -67,7 +68,7 @@
           :address="address"
           :entry="entry"
           :entryName="entryName"
-          :onlyValues="onlyValues">
+          :schemaEdit="schemaEdit">
         </dc-entry-list>
         <dc-entry-field
           class="px-4 pb-4 pt-2"
@@ -76,7 +77,8 @@
           :activeMode="activeMode"
           :address="address"
           :entry="entry"
-          :entryName="entryName">
+          :entryName="entryName"
+          :schemaEdit="schemaEdit">
         </dc-entry-field>
       </div>
     </template>

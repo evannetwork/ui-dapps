@@ -107,7 +107,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
       // ensure values
-      entryUtils.ensureValues(this.templateEntry);
+      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
 
       if (beforeSaving && !this.saving) {
         // reset values

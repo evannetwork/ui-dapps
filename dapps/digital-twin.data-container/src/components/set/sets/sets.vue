@@ -44,7 +44,7 @@
         <div class="col-md-4 mb-4"
           v-for="(property, index) in properties"
           style="min-width: 350px;">
-          <a class="d-flex bg-level-1 border-smooth rounded evan-highlight"
+          <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
             :id="`evan-dc-entry-${ property }`"
             :href="`${ dapp.fullUrl }/${ containerAddress }/data-set/${ property }`">
             <div class="row align-items-center m-0 w-100">

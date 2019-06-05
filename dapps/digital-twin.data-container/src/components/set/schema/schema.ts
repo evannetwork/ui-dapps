@@ -98,6 +98,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Calcucated entry type
    */
   entryType = '';
+  itemType = '';
 
   /**
    * Set button classes
@@ -114,12 +115,13 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
       this.permissions = uiContainer.permissions;
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
+      this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
       if (this.containerAddress.startsWith('0x')) {
         const container = utils.getContainer(<any>runtime, this.containerAddress);
 
         // load only the value, when it wasn't cached before
-        if (this.entryType !== 'array' && typeof this.templateEntry.value === 'undefined') {
+        if (this.entryType !== 'array') {
           this.templateEntry.value = await container.getEntry(this.entryName);
         }
       }
@@ -132,7 +134,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       this.saving = uiContainer.isSaving;
 
       // ensure edit values for schema component
-      entryUtils.ensureValues(this.templateEntry);
+      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
 
       this.$nextTick(() => this.loading = false);
     });
@@ -144,26 +146,29 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Save latest changes to cache
    */
   beforeDestroy() {
+    const runtime = utils.getRuntime(this);
     this.loading = true;
-    this.$nextTick(async () => {
-      const runtime = utils.getRuntime(this);
-      const edit = this.templateEntry.edit;
-      const entry = this.templateEntry;
 
-      const schemaChanged = !deepEqual(edit.dataSchema, entry.dataSchema);
-      let valueChanged = !deepEqual(edit.value, entry.value);
-      // if (entry.type !== 'list') {
-      // } else {
-      //   valueChanged = entry.value && entry.value.length > 0;
-      // }
+    this.reactiveRefs.entryComp.saveAsCache();
 
-      // if the current entry was changed, cache the values
-      if (schemaChanged || valueChanged) {
-        this.templateEntry.changed = true;
-        const containerCache = new ContainerCache(runtime.activeAccount);
-        containerCache.put(this.containerAddress, this.uiContainer.plugin);
-      }
-    });
+    // wait until child
+    const edit = this.templateEntry.edit;
+    const entry = this.templateEntry;
+
+    const schemaChanged = !deepEqual(edit.dataSchema, entry.dataSchema);
+    let valueChanged;
+    if (entry.type !== 'list') {
+      valueChanged = !deepEqual(edit.value, entry.value)
+    } else {
+      valueChanged = entry.value && entry.value.length > 0;
+    }
+
+    // if the current entry was changed, cache the values
+    if (schemaChanged || valueChanged) {
+      this.templateEntry.changed = true;
+      const containerCache = new ContainerCache(runtime.activeAccount);
+      containerCache.put(this.containerAddress, this.uiContainer.plugin);
+    }
   }
 
   /**

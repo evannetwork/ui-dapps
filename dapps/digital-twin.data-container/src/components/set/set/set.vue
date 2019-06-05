@@ -54,7 +54,7 @@
           :listActions="
             reactiveRefs.setActions &&
             reactiveRefs.setActions.entryType === 'array' &&
-            reactiveRefs.navTabs.activeTab === 1
+            reactiveRefs.navTabs.activeTab === 0
           "
           @init="$set(reactiveRefs, 'setActions', $event)">
         </dc-set-actions>

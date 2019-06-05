@@ -28,7 +28,7 @@
 <template>
   <div v-if="!loading">
     <dc-ajv-values
-      v-if="onlyValues"
+      v-if="!schemaEdit"
       :address="address"
       :mode="activeMode"
       :properties="entry.edit.dataSchema.properties"
@@ -40,7 +40,6 @@
       :address="address"
       :mode="activeMode"
       :properties="entry.edit.dataSchema.properties"
-      :value="entry.edit.value"
       @init="$set(reactiveRefs, 'ajv', $event)">
     </dc-ajv>
   </div>

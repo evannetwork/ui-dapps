@@ -57,36 +57,47 @@
               <div class="d-flex align-items-center bg-level-3 p-3 border-bottom border-sm"
                 style="height: 78px">
                 <h5 class="d-flex align-items-center font-weight-semibold mb-0">
-                  {{ '_datacontainer.createForm.general' | translate }}
+                  {{ '_datacontainer.createForm.plugin-select' | translate }}
                 </h5>
               </div>
-              <div class="modal-body">
-                <dt-dbcp
-                  v-if="!creating"
-                  :form="createForm"
-                  :disableSpacing="true"
-                  @submit="activatePlugin(plugins[createForm.plugin.value])">
-                  <template v-slot:before-inputs
-                     v-if="plugins.length !== 0">
-                    <div class="form-group">
-                      <label for="plugin">
-                        {{ `_datacontainer.createForm.plugin.title` | translate }}
-                      </label>
-                      <select class="form-control custom-select"
-                        id="plugin" ref="plugin"
-                        :placeholder="`_datacontainer.createForm.plugin.desc` | translate"
-                        v-model="createForm.plugin.value"
-                        :class="{ 'is-invalid' : createForm.plugin.error }"
-                        @blur="createForm.plugin.setDirty()">
-                        <option
-                          v-for="(plugin, index) in plugins"
-                          :value="index">
-                          {{ plugin.description.name | translate }}
-                        </option>
-                      </select>
+              <div class="row content p-3 m-0"
+                :id="`evan-dt-plugins`"
+                v-if="plugins.length !== 0">
+                <div class="col-md-6 col-lg-4 mb-4"
+                  v-for="(plugin, index) in plugins">
+                  <button class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
+                    :id="`evan-dt-plugin-${ plugin.description.name.replace('.', '') }`"
+                    @click="activatePlugin(plugin)">
+                    <div class="row align-items-center m-0 w-100">
+                      <div class="col-2">
+                        <img class="img-fluid p-3"
+                          v-if="plugin.imgSquare"
+                          :src="plugin.imgSquare">
+                        <i
+                          class="mdi mdi-circle-edit-outline"
+                          style="font-size:50px;">
+                        </i>
+                      </div>
+                      <div class="col-10">
+                        <div class="d-flex p-3 align-items-center">
+                          <div class="w-100">
+                            <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+                              {{ plugin.description.name }}
+                            </h4>
+                            <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3">
+                              {{ plugin.description.description }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </template>
-                </dt-dbcp>
+                  </button>
+                </div>
+              </div>
+              <div class="p-3" v-else>
+                <p class="m-0"
+                  v-html="$t( `_digitaltwins.plugins.empty-desc`)">
+                </p>
               </div>
             </div>
 
@@ -95,12 +106,12 @@
               <div class="d-flex align-items-center bg-level-3 p-3 border-bottom border-sm"
                 style="height: 78px">
                 <h5 class="d-flex align-items-center font-weight-semibold mb-0">
-                  {{ '_datacontainer.createForm.container-configuration' | translate }}: {{ createForm.name.value }}
+                  {{ '_datacontainer.createForm.container-configuration' | translate }}
 
                   <button class="btn btn-circle btn-sm btn-tertiary ml-3"
                     v-if="!creating && activePlugin"
                     id="dc-edit"
-                    @click="activePlugin = null">
+                    @click="activePlugin = null; activeStep = 0;">
                     <i class="mdi mdi-pencil"></i>
                     <evan-tooltip
                       ref="editDbcphint"
@@ -130,27 +141,36 @@
                   <button class="btn"
                     v-for="(step, index) of steps"
                     :id="`evan-container-create-step-${ index }`"
-                    :disabled="index > activeStep &&
-                      steps[activeStep].entryComp && !steps[activeStep].entryComp.isValid()"
+                    :disabled="step.disabled(index)"
                     @click="activeStep = index">
                     <span class="stepper-circle"
                       :class="{
                         'bg-primary': activeStep === index,
-                        'bg-secondary': activeStep >= index && activeStep !== index,
-                        'bg-gray': activeStep < index && activeStep !== index,
+                        'bg-secondary': !step.disabled(index) && activeStep !== index,
+                        'bg-gray': step.disabled(index),
                       }">
                       {{ index + 1}}
                     </span>
                     <span>{{ step.title | translate }}</span>
                   </button>
                 </div>
-                <div v-for="(step, index) of steps">
+                <div class="m-3 border border-sm rounded"
+                  v-for="(step, index) of steps"
+                  v-if="index === activeStep">
+                  <dt-dbcp
+                    class="p-3"
+                    v-if="index === 0"
+                    :form="createForm"
+                    :disableSpacing="true"
+                    @submit="nextStep();"
+                    @init="$set(steps[activeStep], 'entryComp', $event)">
+                  </dt-dbcp>
                   <dc-entry
-                    v-if="index === activeStep"
+                    v-else
                     :address="mode !== 'plugin' ? 'dc-create' : 'plugin-create'"
                     :entry="activePlugin.template.properties[steps[activeStep].entryName]"
                     :entryName="steps[activeStep].entryName"
-                    :onlyValues="mode !== 'plugin'"
+                    :schemaEdit="mode === 'plugin'"
                     :permissions="permissions"
                     @init="$set(steps[activeStep], 'entryComp', $event)">
                   </dc-entry>
@@ -213,38 +233,23 @@
         </template>
       </template>
       <template v-slot:footer v-if="!creating">
-        <template v-if="!activePlugin">
-          <button type="submit"
-            class="btn btn-rounded btn-primary"
-            id="container-create-step-0-finish"
-            @click="activatePlugin(plugins[createForm.plugin.value])"
-            :disabled="!createForm.isValid || checking">
+        <button
+          v-if="activePlugin && (steps.length === 0 || (steps[activeStep] && steps[activeStep].entryComp))"
+          class="btn btn-rounded btn-primary"
+          id="container-save"
+          :disabled="steps.length !== 0 && !steps[activeStep].entryComp.isValid()"
+          @click="nextStep()">
+          <template v-if="steps.length === 0 || activeStep === (steps.length - 1)">
+            {{ `_datacontainer.createForm.finish` | translate }}
+          </template>
+          <template v-else>
             {{ `_datacontainer.createForm.continue` | translate }}
-            <i class="mdi mdi-arrow-right label ml-3"></i>
-            <div class="spinner-border spinner-border-sm text-light mr-3"
-              v-if="checking">
-            </div>
-          </button>
-        </template>
-        <template
-          v-else-if="steps.length === 0 || (steps[activeStep] && steps[activeStep].entryComp)">
-          <button
-            class="btn btn-rounded btn-primary"
-            id="container-save"
-            :disabled="steps.length !== 0 && !steps[activeStep].entryComp.isValid()"
-            @click="nextStep()">
-            <template v-if="steps.length === 0 || activeStep === (steps.length - 1)">
-              {{ `_datacontainer.createForm.finish` | translate }}
-            </template>
-            <template v-else>
-              {{ `_datacontainer.createForm.continue` | translate }}
-            </template>
-            <i class="mdi mdi-arrow-right label ml-3"></i>
-            <div class="spinner-border spinner-border-sm text-light mr-3"
-              v-if="checking">
-            </div>
-          </button>
-        </template>
+          </template>
+          <i class="mdi mdi-arrow-right label ml-3"></i>
+          <div class="spinner-border spinner-border-sm text-light mr-3"
+            v-if="checking">
+          </div>
+        </button>
       </template>
     </evan-modal>
   </div>

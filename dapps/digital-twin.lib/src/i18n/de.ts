@@ -32,7 +32,7 @@ const i18n: any = {
     "create-plugin": "Plugin erstellen",
     "datacontainer": "Daten Container",
     "datacontainer.digitaltwin": "Plugin",
-    "dc-changes": "Letzte Änderungen",
+    "dc-changes": "Historie",
     "dc-create": "Plugin hinzufügen",
     "dc-permissions": "Freigaben",
     "dc-sets": "Daten-Sets",
@@ -40,22 +40,23 @@ const i18n: any = {
     "dc-technical": "Technische Details",
     "digitaltwin": "Digitaler Zwilling",
     "digitaltwins": "Digitale Zwillinge",
-    "dt-changes": "Letzte Änderungen",
+    "dt-changes": "Historie",
     "dt-create": "Digitalen Zwilling Erstellen",
     "dt-detail": "Details",
     "dt-map": "An Domainnamen binden",
     "dt-plugins": "Plugin Übersicht",
     "dt-technical": "Technische Details",
-    "entry-changes": "Letzte Änderungen",
+    "entry-changes": "Historie",
     "entry-permissions": "Freigaben",
-    "entry-schema": "Daten-Schema",
+    "entry-schema": "Schema",
+    "entry-values": "Daten",
+    "list-entries": "Listeneinträge",
     "my-plugins": "Meine Plugins",
     "my-twins": "Meine Digitalen Zwillinge",
     "open": "Öffnen",
     "plugin": "Plugin",
     "plugin-create": "Plugin Erstellen",
-    "verifications": "Verifizierungen",
-    "list-entries": "Listeneinträge"
+    "verifications": "Verifizierungen"
   }
 }
 /* tslint:enable */

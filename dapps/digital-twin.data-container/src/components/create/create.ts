@@ -95,18 +95,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
   /**
    * Available plugins
    */
-  plugins: Array<any> = [
-    {
-      description: {
-        name: '_datacontainer.createForm.base-plugin',
-        description: '',
-      },
-      template: {
-        type: 'metadata',
-        properties: { },
-      }
-    }
-  ];
+  plugins: Array<any> = [ ];
 
   /**
    * unmount dispatcher listeners
@@ -156,13 +145,23 @@ export default class CreateComponent extends mixins(EvanComponent) {
       description: {
         value: ''
       },
-      plugin: {
-        value: 0
-      },
       imgSquare: {
         value: ''
       },
     }));
+
+    if (this.mode === 'plugin') {
+      this.plugins.push({
+        description: {
+          name: (<any>this).$i18n.translate('_datacontainer.createForm.base-plugin'),
+          description: '',
+        },
+        template: {
+          type: 'metadata',
+          properties: { },
+        }
+      });
+    }
 
     const plugins = await utils.getMyPlugins(runtime);
     Object.keys(plugins).forEach((key: string) => {
@@ -184,7 +183,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         // search for active plugin index
         for (let i = 0; i < this.plugins.length; i++) {
           if (this.plugins[i].description.name === this.cloneAddress) {
-            this.createForm.plugin.value = i;
+            this.activatePlugin(this.plugins[i], false);
 
             break;
           }
@@ -200,7 +199,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         this.plugins.push(plugin);
 
         // set correct template index
-        this.createForm.plugin.value = this.plugins.length - 1;
+        this.activatePlugin(this.plugins[this.plugins.length - 1], false);
       }
     }
 
@@ -222,7 +221,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
           imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
-        template: this.plugins[this.createForm.plugin.value].template,
+        template: this.activePlugin.template,
       });
     } else {
       dispatchers.createDispatcher.start(runtime, {
@@ -232,7 +231,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
           imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
-        plugin: this.plugins[this.createForm.plugin.value],
+        plugin: this.activePlugin,
       });
     }
 
@@ -261,17 +260,39 @@ export default class CreateComponent extends mixins(EvanComponent) {
     // reset steps
     this.$set(this, 'steps', [ ]);
 
+    this.steps.push({
+      title: '_datacontainer.createForm.general',
+      disabled: (index: number) => {
+        return index > this.activeStep && this.steps[this.activeStep].entryComp &&
+          !this.steps[this.activeStep].entryComp.isValid();
+      },
+    });
+
     // apply the new active plugin entries as new steps
     const customTranslation = { };
     Object.keys(plugin.template.properties).forEach((entryName: string) => {
+      const entry = plugin.template.properties[entryName];
+      const type = fieldUtils.getType(entry.dataSchema);
+
+      // do not add list configurations to create in container mode, in container mode, only value
+      // view is editable
+      if (this.mode !== 'plugin' && type === 'array') {
+        return;
+      }
+
       // add the steps
       const title = `_datacontainer.breadcrumbs.${ entryName }`;
-      const entry = plugin.template.properties[entryName];
       const step: any = {
         title,
         entryName,
-        entryType: fieldUtils.getType(entry.dataSchema),
-        disabled: () => false
+        entryType: type,
+        disabled: (index: number) => {
+          const activeEntryComp = this.steps[this.activeStep].entryComp;
+          const isValid = this.activeStep > index ||
+            (this.activeStep === index - 1 && activeEntryComp && activeEntryComp.isValid())
+
+          return !isValid;
+        }
       };
 
       if (step.entryType === 'array') {
@@ -291,7 +312,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
        * array is used to handle new arrays, that will be persisted for caching to the indexeddb
        * like the normal entries
        */
-      entryUtils.ensureValues(plugin.template.properties[entryName]);
+      entryUtils.ensureValues('create', plugin.template.properties[entryName]);
     });
     (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
 
@@ -349,8 +370,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Save latest step entry edit values.
    */
   saveActiveStep() {
-    if (this.steps[this.activeStep] && this.steps[this.activeStep].entryComp) {
-      this.steps[this.activeStep].entryComp.save();
+    // do not trigger save for dbcp, will trigger endless loop
+    if (this.activeStep !== 0) {
+      if (this.steps[this.activeStep] && this.steps[this.activeStep].entryComp) {
+        this.steps[this.activeStep].entryComp.save();
+      }
     }
   }
 

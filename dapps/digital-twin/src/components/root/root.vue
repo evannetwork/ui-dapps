@@ -77,7 +77,21 @@
                       </template>
                     </dt-tree-root>
 
+                    <div class="py-3 px-2"
+                      v-if="$store.state.uiDT.containers.length === 0">
+                      <button class="btn btn-link dark-link d-flex align-items-center"
+                        @click="
+                          $refs.dtActions.reactiveRefs.dcCreate.showModal();
+                          $refs.dtActions.closeDropdown();
+                        ">
+                        <button class="btn mini border btn-circle border-secondary mr-3">
+                          <i class="mdi mdi-plus text-secondary"></i>
+                        </button>
+                        {{ '_digitaltwins.containers.create' | translate }}
+                      </button>
+                    </div>
                     <dc-tree
+                      v-else
                       v-for="(container, index) in $store.state.uiDT.containers"
                       :baseUrl="twinUrl"
                       :containerAddress="container.address"

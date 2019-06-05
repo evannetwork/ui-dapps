@@ -58,7 +58,7 @@ dispatcher
     }
 
     // copy original template and clear runtime propert variables
-    const allowedProperties = [ 'dataSchema', 'type', '$comment', 'value', 'permissions' ];
+    const allowedProperties = [ 'dataSchema', 'type', '$comment', 'permissions' ];
     data.template = JSON.parse(JSON.stringify(data.template));
     Object.keys(data.template.properties).forEach(property => {
       Object.keys(data.template.properties[property]).forEach(key => {

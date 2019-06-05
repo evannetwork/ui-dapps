@@ -32,7 +32,7 @@ const i18n: any = {
     "create-plugin": "Create Plugin",
     "datacontainer": "Data-Container",
     "datacontainer.digitaltwin": "Plugin",
-    "dc-changes": "Last Changes",
+    "dc-changes": "History",
     "dc-create": "Add Plugin",
     "dc-permissions": "Shares",
     "dc-sets": "Data-Sets",
@@ -40,22 +40,23 @@ const i18n: any = {
     "dc-technical": "Technical Details",
     "digitaltwin": "Digital Twin",
     "digitaltwins": "Digital Twins",
-    "dt-changes": "Last Changes",
+    "dt-changes": "History",
     "dt-create": "Create Digital Twin",
     "dt-detail": "Details",
     "dt-map": "Bind to domain name",
     "dt-plugins": "Plugin Overview",
     "dt-technical": "Technical Details",
-    "entry-changes": "Last Changes",
+    "entry-changes": "History",
     "entry-permissions": "Shares",
-    "entry-schema": "Data-Schema",
+    "entry-schema": "Schema",
+    "entry-values": "Daten",
+    "list-entries": "List-Entries",
     "my-plugins": "My Plugins",
     "my-twins": "My Digital Twins",
     "open": "Open",
     "plugin": "Plugin",
     "plugin-create": "Create Plugin",
-    "verifications": "Verifications",
-    "list-entries": "List-Entries"
+    "verifications": "Verifications"
   }
 }
 /* tslint:enable */

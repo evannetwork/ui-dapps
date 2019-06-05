@@ -66,9 +66,9 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   @Prop() activeMode: string;
 
   /**
-   * Do not show schema edit for properties of type object
+   * Disable schema edit and show only formular with input boxes
    */
-  @Prop() onlyValues: boolean;
+  @Prop({ default: true }) schemaEdit: boolean;
 
   /**
    * Show loading symbol, until listentries were load
@@ -115,6 +115,14 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Cache latest values
+   */
+  async saveAsCache() {
+    // save the current schema into the edit properties
+    this.reactiveRefs.ajv.save();
+  }
+
+  /**
    * Save the current schema.
    */
   save() {
@@ -124,6 +132,9 @@ export default class EntryListComponent extends mixins(EvanComponent) {
 
       // save the schema
       entryUtils.saveSchema(this.entry);
+    } else {
+      // save the current schema into the edit properties
+      this.reactiveRefs.ajv.save();
     }
   }
 

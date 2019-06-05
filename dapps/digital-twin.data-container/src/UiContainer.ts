@@ -228,7 +228,7 @@ export default class UiContainer {
     this.loading = true;
     this.loadingPromise = this.loadingPromise ||
       new Promise(async (resolve, reject) => {
-        let plugin, permissions, error;
+        let plugin, permissions, owner, error;
 
         try {
           // check if it was already loaded before
@@ -246,16 +246,21 @@ export default class UiContainer {
             plugin = await container.toPlugin();
             // else try to laod a plugin from profile
           } else {
-            plugin = await bcc.Container.getContainerPlugin(
+            // only work on a copy! loadForAccount is only triggered at startup, after this, the
+            // same object references will be loaded
+            plugin = JSON.parse(JSON.stringify(await bcc.Container.getContainerPlugin(
               this.runtime.profile,
               this.address
-            );
+            )));
           }
 
           // merge container cache with dispatcher data
           savingData.forEach(data => {
             if (data.template) {
-              cached.template.properties = Object.assign(properties, data.template.properties);
+              cached.template.properties = Object.assign(
+                cached.template.properties,
+                data.template.properties
+              );
             }
 
             if (data.description) {
@@ -273,19 +278,12 @@ export default class UiContainer {
 
           // load the owner
           if (this.address.startsWith('0x')) {
-            permissions = {
-              owner: await container.getOwner(),
-              permissions: await container.getContainerShareConfigForAccount(
-                this.runtime.activeAccount),
-            };
+            owner = await container.getOwner();
+            permissions = await container.getContainerShareConfigForAccount(
+                this.runtime.activeAccount);
           } else {
-            // default permissions for plugins
-            permissions = {
-              owner: this.runtime.activeAccount,
-              permissions: {
-                readWrite: Object.keys(plugin.template.properties)
-              },
-            };
+            owner = this.runtime.activeAccount;
+            permissions = Object.keys(plugin.template.properties)
           }
 
           permissions.read = permissions.read || [ ];
@@ -304,7 +302,7 @@ export default class UiContainer {
         if (error) {
           reject(error);
         } else {
-          resolve({ permissions, plugin, });
+          resolve({ permissions, plugin, owner, });
         }
 
         // reset the loading promise
@@ -312,12 +310,12 @@ export default class UiContainer {
       });
 
     try {
-      const { plugin, permissions } = await this.loadingPromise;
+      const { plugin, permissions, owner } = await this.loadingPromise;
 
       this.plugin = plugin;
       this.plugin.permissions = this.permissions;
       this.permissions = permissions;
-      this.owner = permissions.owner;
+      this.owner = owner;
       this.description = this.plugin.description;
       this.template = this.plugin.template;
     } catch (ex) {

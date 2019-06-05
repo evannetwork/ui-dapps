@@ -218,7 +218,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
     // update template
     newEntry.entry.isNew = true;
     this.plugin.template.properties[newEntry.name] = newEntry.entry;
-    entryUtils.ensureValues(this.plugin.template.properties[newEntry.name]);
+    entryUtils.ensureValues(this.containerAddress, this.plugin.template.properties[newEntry.name]);
 
     // send event
     containerCache.put(this.containerAddress, this.plugin);

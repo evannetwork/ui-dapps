@@ -114,4 +114,11 @@ export default class DBCPComponent extends mixins(EvanComponent) {
       });
     }
   }
+
+  /**
+   * Return form is valid flag.
+   */
+  isValid() {
+    return this._form.isValid;
+  }
 }

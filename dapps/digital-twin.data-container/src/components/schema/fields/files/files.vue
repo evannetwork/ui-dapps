@@ -27,7 +27,7 @@
 
 <template>
   <div>
-    <label for="value" v-if="standalone">
+    <label class="d-block" for="value" v-if="standalone">
       {{ label | translate }}
     </label>
     <evan-file-input

@@ -31,7 +31,7 @@
       <div class="col-md-4 mb-4"
         v-for="(container, index) in $store.state.uiDT.containers"
         style="min-width: 350px;">
-        <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
+        <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate w-100"
           :id="`evan-dt-container-${ container.path ? container.path.split('/').pop() : 'creating' }`"
           :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
           <div class="row align-items-center m-0 w-100">

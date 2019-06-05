@@ -27,12 +27,18 @@
 
 <template>
   <div>
+    <div v-if="schemaEdit && (itemType === 'files' || type === 'files')">
+      {{ `_datacontainer.ajv.files-no-default` | translate }}
+    </div>
     <dc-field
+      v-else
       :address="address"
       :control="fieldForm.value"
       :mode="activeMode"
       :standalone="true"
-      :type="type">
+      :description="!schemaEdit ? `_datacontainer.types.${ type }` : '_datacontainer.ajv.value.desc'"
+      :label="!schemaEdit ? `_datacontainer.entry.value.title` : '_datacontainer.ajv.value.title'"
+      :type="itemType || type">
     </dc-field>
   </div>
 </template>
