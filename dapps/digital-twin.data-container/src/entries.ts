@@ -44,17 +44,24 @@ import { UIContainerTemplateProperty } from './interfaces';
 export function ensureValues(entry: UIContainerTemplateProperty) {
   // use calculated type!
   const type = fieldUtils.getType(entry.dataSchema);
+  const itemType = type === 'array' ? fieldUtils.getType(entry.dataSchema.items) : null;
 
   entry.edit = (<any>entry.edit || {
     dataSchema: bcc.lodash.cloneDeep(entry.dataSchema)
   });
 
   // set default value
-  entry.value = entry.value || fieldUtils.defaultValue(type);
+  entry.value = entry.value || fieldUtils.defaultValue(type, itemType);
 
   switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
+      // previous versions have used and array as value, latest version will target default values
+      // in schemas, new list entries will be saved at another place
+      if (Array.isArray(entry.value)) {
+        entry.value = fieldUtils.defaultValue(type, itemType);
+      }
+
       entry.edit.value = entry.edit.value ||
         ensureValues(<any>{ dataSchema: entry.dataSchema.items }).value;
       break;

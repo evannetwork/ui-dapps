@@ -102,7 +102,11 @@ export default class AJVComponent extends mixins(EvanComponent) {
     Object
       .keys(this.properties)
       .forEach((schemaKey: string) => {
-        const type = this.types[schemaKey] = fieldUtils.getType(this.properties[schemaKey]);
+        let type = this.types[schemaKey] = fieldUtils.getType(this.properties[schemaKey]);
+        // We'll never reach that point. Or will we?
+        // if (type === 'array') {
+        //   type = fieldUtils.getType(this.properties[schemaKey].dataSchema.items);
+        // }
 
         this.valueForm.addControl(
           schemaKey,
