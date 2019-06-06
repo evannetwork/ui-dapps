@@ -56,9 +56,9 @@ const i18n: any = {
         "title": "Type"
       },
       "value": {
-        "desc": "Default Value of the field",
+        "desc": "Default value of the field",
         "error": "Please enter a value of the correct type!",
-        "title": "Default Value"
+        "title": "Default value"
       }
     },
     "context-menu": {
@@ -142,8 +142,8 @@ const i18n: any = {
     "field": {
       "edit": "Edit"
     },
-    "in-creation": "In Creation...",
-    "in-saving": "Saving...",
+    "in-creation": "A plugin is being created.<br><br><h4 class=\"text-muted\">Please wait until the process is completed...</h4>",
+    "in-saving": "Saving pluging...",
     "list": {
       "add-list-entry": "Add list entry",
       "canel-list-entry": "Cancel",
@@ -169,6 +169,7 @@ const i18n: any = {
       "create-container": "Create Data Container",
       "create-title": "Create new Plugin",
       "edit-dbcp": "Adjust Description",
+      "in-saving": "Saving Plugin<br><br><h4 class=\"text-muted\">Please wait until the process is finished...</h4>",
       "save": "Save Plugin"
     },
     "plugin-cache": {

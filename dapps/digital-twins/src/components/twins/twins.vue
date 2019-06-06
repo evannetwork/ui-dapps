@@ -84,33 +84,43 @@
                     v-if="descriptions[ensAddress].imgSquare"
                     :src="descriptions[ensAddress].imgSquare">
                   <i
-                    class="mdi mdi-fingerprint"
+                    class="mdi mdi-fingerprint text-muted"
                     style="font-size: 50px;">
                   </i>
                 </div>
-                <div class="col-10">
-                  <div class="d-flex p-3 align-items-center">
-                    <div class="w-100">
-                      <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
-                        {{ descriptions[ensAddress].name }}
-                      </h4>
-                      <span class="font-weight-semibold text-muted overflow-multiline line-3">
-                        <template v-if="descriptions[ensAddress].creating">
-                          {{ '_digitaltwins.digitaltwins.in-creation' | translate }}
-                        </template>
-                        <template v-else>
-                          {{ descriptions[ensAddress].description }}
-                        </template>
-                      </span>
-                    </div>
-                    <template v-if="descriptions[ensAddress].loading">
-                      <span class="mx-auto"></span>
-                      <div class="spinner-border spinner-border-sm ml-3"></div>
-                    </template>
+                <div class="col-10 d-flex align-items-center">
+                  <div class="w-100 p-3">
+                    <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+                      {{ descriptions[ensAddress].name }}
+                    </h4>
+                    <span class="font-weight-semibold text-muted overflow-multiline line-3">
+                      <template v-if="descriptions[ensAddress].creating">
+                        {{ '_digitaltwins.digitaltwins.in-creation' | translate }}
+                      </template>
+                      <template v-else>
+                        {{ descriptions[ensAddress].description }}
+                      </template>
+                    </span>
                   </div>
+                  <span class="mx-auto"></span>
+                  <div class="spinner-border spinner-border-sm ml-3"
+                    v-if="descriptions[ensAddress].loading">
+                  </div><!-- 
+                  <i class="mdi mdi-dots-vertical clickable text-dark"
+                    v-else
+                    @click="$refs.dtActions[index].showDropdown($event)">
+                  </i> -->
                 </div>
               </div>
             </a>
+            <dt-actions
+              v-if="!descriptions[ensAddress].loading"
+              ref="dtActions"
+              :address="ensAddress"
+              :dtActions="true"
+              :containerActions="true"
+              :displayMode="'dropdownHidden'">
+            </dt-actions>
           </div>
         </div>
       </div>

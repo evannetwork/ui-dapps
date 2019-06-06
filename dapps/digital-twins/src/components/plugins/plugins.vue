@@ -69,33 +69,43 @@
                     v-if="plugins[pluginKey].imgSquare"
                     :src="plugins[pluginKey].imgSquare">
                   <i
-                    class="mdi mdi-circle-edit-outline"
+                    class="mdi mdi-circle-edit-outline text-muted"
                     style="font-size:50px;">
                   </i>
                 </div>
-                <div class="col-10">
-                  <div class="d-flex p-3 align-items-center">
-                    <div class="w-100">
-                      <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
-                        {{ plugins[pluginKey].description.name }}
-                      </h4>
-                      <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3">
-                        <template v-if="plugins[pluginKey].creating">
-                          {{ '_digitaltwins.plugins.in-creation' | translate }}
-                        </template>
-                        <template v-else>
-                          {{ plugins[pluginKey].description.description }}
-                        </template>
-                      </span>
-                    </div>
-                    <template v-if="plugins[pluginKey].loading">
-                      <span class="mx-auto"></span>
-                      <div class="spinner-border spinner-border-sm ml-3"></div>
-                    </template>
+                <div class="col-10 d-flex align-items-center">
+                  <div class="w-100 p-3">
+                    <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+                      {{ plugins[pluginKey].description.name }}
+                    </h4>
+                    <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3">
+                      <template v-if="plugins[pluginKey].creating">
+                        {{ '_digitaltwins.plugins.in-creation' | translate }}
+                      </template>
+                      <template v-else>
+                        {{ plugins[pluginKey].description.description }}
+                      </template>
+                    </span>
                   </div>
+                  <span class="mx-auto"></span>
+                  <div class="spinner-border spinner-border-sm ml-3"
+                    v-if="plugins[pluginKey].loading">
+                  </div>
+                  <i class="mdi mdi-dots-vertical clickable text-dark"
+                    v-else
+                    @click="$refs.dcPluginActions[index].showDropdown($event)">
+                  </i>
                 </div>
               </div>
             </a>
+            <dc-plugin-actions
+              v-if="!plugins[pluginKey].loading"
+              ref="dcPluginActions"
+              :pluginName="pluginKey"
+              :pluginActions="true"
+              :setActions="true"
+              :displayMode="'dropdownHidden'">
+            </dc-plugin-actions>
           </div>
         </div>
       </div>

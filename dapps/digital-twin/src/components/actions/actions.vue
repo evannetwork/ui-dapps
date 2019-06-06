@@ -26,21 +26,21 @@
 */
 
 <template>
-  <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
+  <!-- v-if="!loading && uiDT" -->
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <!-- show dropdown button  -->
     <button class="btn btn-circle btn-sm btn-tertiary"
       v-if="displayMode === 'dropdownButton'"
       id="digitaltwin-context-menu-open"
-      @click="$refs.dtContextMenu.show();">
-      <i class="mdi mdi-dots-vertical clickable"></i>
+      @click="showDropdown($event)">
+      <i class="mdi mdi-dots-vertical clickable text-dark"></i>
     </button>
 
-    <i class="mdi mdi-dots-vertical clickable"
+    <i class="mdi mdi-dots-vertical clickable text-dark"
       id="digitaltwin-context-menu-open"
       v-if="displayMode === 'dropdownIcon'"
-      @click="$refs.dtContextMenu.show();">
+      @click="showDropdown($event)">
     </i>
 
     <!-- show dropdown or only dropdown content -->

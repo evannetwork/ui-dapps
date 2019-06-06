@@ -32,7 +32,7 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registy';
 
@@ -51,6 +51,11 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   @Prop() uiDT;
 
   /**
+   * If no uiDT was applied, load data for address.
+   */
+  @Prop() address;
+
+  /**
    * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
    */
   @Prop() dtActions;
@@ -66,6 +71,11 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   @Prop({
     default: 'buttons'
   }) displayMode;
+
+  /**
+   * Show loading symbol
+   */
+  loading = true;
 
   /**
    * ref handlers
@@ -86,7 +96,7 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   /**
    * Set button classes
    */
-  created() {
+  async created() {
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -94,6 +104,13 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
 
       this.buttonTextComp = 'span';
     }
+
+    // if (!this.uiDT) {
+    //   this.loading = true;
+    //   this.uiDT = new EvanUIDigitalTwin(this.address);
+    //   await this.uiDT.initialize(this, utils.getRuntime(this));
+    //   this.loading = false;
+    // }
   }
 
   /**

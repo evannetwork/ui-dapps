@@ -401,7 +401,10 @@ export default class UiContainer {
         plugin: saveCopy,
       });
     } else {
-      await dispatchers.pluginDispatcher.start(this.runtime, saveCopy);
+      await dispatchers.pluginDispatcher.start(this.runtime, {
+        beforeName: this.address,
+        ...saveCopy
+      });
     }
   }
 }

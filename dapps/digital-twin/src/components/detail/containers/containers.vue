@@ -40,7 +40,7 @@
                 v-if="container.imgSquare"
                 :src="container.imgSquare">
               <i
-                class="mdi mdi-note-multiple-outline"
+                class="mdi mdi-note-multiple-outline text-muted"
                 style="font-size:50px;">
               </i>
             </div>

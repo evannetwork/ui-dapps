@@ -103,10 +103,6 @@ export default class AJVComponent extends mixins(EvanComponent) {
       .keys(this.properties)
       .forEach((schemaKey: string) => {
         let type = this.types[schemaKey] = fieldUtils.getType(this.properties[schemaKey]);
-        // We'll never reach that point. Or will we?
-        // if (type === 'array') {
-        //   type = fieldUtils.getType(this.properties[schemaKey].dataSchema.items);
-        // }
 
         this.valueForm.addControl(
           schemaKey,
@@ -114,7 +110,9 @@ export default class AJVComponent extends mixins(EvanComponent) {
             value: this.value[schemaKey] || fieldUtils.defaultValue(this.properties[schemaKey]),
             validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
               // update components isValid flag so it will be reactive
-              vueInstance.$nextTick(() => vueInstance.isValid = vueInstance.valueForm.isValid);
+              vueInstance.$nextTick(() => {
+                vueInstance.isValid = vueInstance.valueForm.isValid;
+              });
 
               // map the value top the correct dynamic type validator
               return fieldUtils.validateField(
@@ -126,6 +124,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
             }
           }
         );
+
+        this.$set(this.valueForm, schemaKey, this.valueForm[schemaKey])
       });
   }
 

@@ -27,9 +27,9 @@
 
 <template>
   <div>
-    <div v-if="schemaEdit && (itemType === 'files' || type === 'files')">
+    <span v-if="schemaEdit && (itemType === 'files' || type === 'files')">
       {{ `_datacontainer.ajv.files-no-default` | translate }}
-    </div>
+    </span>
     <dc-field
       v-else
       :address="address"

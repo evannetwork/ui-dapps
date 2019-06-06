@@ -18,6 +18,8 @@
 - `datacontainer.digitaltwins`
   - remove flex-truncate and add correct text-overflow logic
   - fix plugin creation and saving
+  - fix creation steps and validity checks
+  - fix dataContainer.defaultSchema is used without copying
 
 ### Deprecations
 

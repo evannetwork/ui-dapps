@@ -130,8 +130,10 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
 
       if (this.entryForm.type.value === 'array') {
         // set the default schema for arrayType
-        entry.dataSchema = bcc.Container
-          .defaultSchemas[`${ this.entryForm.arrayType.value }${ entryType }`];
+        // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
+        entry.dataSchema =  JSON.parse(JSON.stringify(
+          bcc.Container.defaultSchemas[`${ this.entryForm.arrayType.value }${ entryType }`]
+        ));
 
         // add the items schema, including the array type, will be defined only ontime, at entry
         // creation
@@ -140,8 +142,10 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
         }
       } else {
         // set the default schema
-        entry.dataSchema = bcc.Container
-          .defaultSchemas[`${ this.entryForm.type.value }${ entryType }`];
+        // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
+        entry.dataSchema = JSON.parse(JSON.stringify(
+          bcc.Container.defaultSchemas[`${ this.entryForm.type.value }${ entryType }`]
+        ));
       }
 
       // add properties and empty value object directly, so the vue listeners will work correctly in

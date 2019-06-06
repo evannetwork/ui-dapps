@@ -80,8 +80,6 @@ export default class PluginsComponent extends mixins(EvanComponent) {
    */
   async reloadPlugins() {
     const runtime = utils.getRuntime(this);
-
-    delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
     this.plugins = await utils.getMyPlugins(runtime);
   }
 
@@ -102,7 +100,7 @@ export default class PluginsComponent extends mixins(EvanComponent) {
 
       // for reload
       if (beforeSaving < savingCount) {
-        await this.reloadPlugins();
+        setTimeout(() => this.reloadPlugins());
       }
 
       beforeSaving = savingCount;

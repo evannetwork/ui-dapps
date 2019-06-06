@@ -66,7 +66,7 @@
               <a
                 id="dc-set-reset"
                 v-if="!saving && templateEntry.changed && !templateEntry.isNew"
-                :class="buttonClasses.secondary"
+                :class="buttonClasses.tertiar"
                 @click="$refs.resetModal.show(); closeDropdown();">
                 <i class="mdi mdi-file-undo"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">

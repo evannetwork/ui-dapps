@@ -50,7 +50,9 @@ dispatcher
       .getContainerPlugin(profile, data.beforeName)).template;
 
     // load latest contracts to be up to date
-    await profile.loadForAccount(profile.treeLabels.contracts);
+    if (!profile.trees[profile.treeLabels.contracts]) {
+      await profile.loadForAccount(profile.treeLabels.contracts);
+    }
 
     // on an update and when the name has changed, remove the previous template
     if (data.beforeName && data.description.name !== data.beforeName) {

@@ -74,7 +74,7 @@
                           v-if="plugin.imgSquare"
                           :src="plugin.imgSquare">
                         <i
-                          class="mdi mdi-circle-edit-outline"
+                          class="mdi mdi-circle-edit-outline text-muted"
                           style="font-size:50px;">
                         </i>
                       </div>
@@ -111,11 +111,11 @@
                   <button class="btn btn-circle btn-sm btn-tertiary ml-3"
                     v-if="!creating && activePlugin"
                     id="dc-edit"
-                    @click="activePlugin = null; activeStep = 0;">
+                    @click="activePlugin = null; activateStep(0)">
                     <i class="mdi mdi-pencil"></i>
                     <evan-tooltip
                       ref="editDbcphint"
-                      :placement="'bottom'">
+                      :placement="'right'">
                       {{ `_datacontainer.createForm.edit-dbcp-hint` | translate }}
                     </evan-tooltip>
                   </button>
@@ -142,7 +142,7 @@
                     v-for="(step, index) of steps"
                     :id="`evan-container-create-step-${ index }`"
                     :disabled="step.disabled(index)"
-                    @click="activeStep = index">
+                    @click="activateStep(index)">
                     <span class="stepper-circle"
                       :class="{
                         'bg-primary': activeStep === index,
@@ -227,7 +227,14 @@
             </template>
           </template>
           <div class="text-center" v-else>
-            <h4 class="mt-5 mb-3">{{ '_datacontainer.in-creation' | translate }}</h4>
+            <h3 class="mt-5 mb-3"
+              v-if="mode !== 'plugin'"
+              v-html="$t('_datacontainer.in-creation')">
+            </h3>
+            <h3 class="mt-5 mb-3"
+              v-else
+              v-html="$t('_datacontainer.plugin.in-saving')">
+            </h3>
             <evan-loading></evan-loading>
           </div>
         </template>

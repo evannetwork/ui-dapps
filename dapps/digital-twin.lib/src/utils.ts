@@ -153,7 +153,9 @@ export function getLastOpenedTwins() {
  * @param      {bccRuntime}  runtime  bcc runtime
  */
 export async function getMyPlugins(runtime: bcc.Runtime) {
-  const plugins: any = await bcc.Container.getContainerPlugins(runtime.profile);
+  const plugins: any = JSON.parse(JSON.stringify(
+    await bcc.Container.getContainerPlugins(runtime.profile)
+  ));
 
   // watch for new and sharing containers
   const saving = await dispatchers.dc.pluginDispatcher.getInstances(runtime);

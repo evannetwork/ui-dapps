@@ -110,6 +110,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
       this.loading = true;
       this.saving = uiContainer.isSaving;
+      this.error = uiContainer.error;
 
       const runtime = utils.getRuntime(this);
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
@@ -117,24 +118,29 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      if (this.containerAddress.startsWith('0x')) {
-        const container = utils.getContainer(<any>runtime, this.containerAddress);
+      if (!this.error) {
+        try {
+          if (this.containerAddress.startsWith('0x')) {
+            const container = utils.getContainer(<any>runtime, this.containerAddress);
 
-        // load only the value, when it wasn't cached before
-        if (this.entryType !== 'array') {
-          this.templateEntry.value = await container.getEntry(this.entryName);
+            // load only the value, when it wasn't cached before
+            if (this.entryType !== 'array') {
+              this.templateEntry.value = await container.getEntry(this.entryName);
+            }
+          }
+
+          // if it's a new value, apply full readWrite permissions
+          if (!uiContainer.isContainer || this.templateEntry.isNew) {
+            this.permissions.readWrite.push(this.entryName);
+          }
+        } catch (ex) {
+          this.error = ex;
+          runtime.logger.log(ex.message, 'error');
         }
+
+        // ensure edit values for schema component
+        entryUtils.ensureValues(this.containerAddress, this.templateEntry);
       }
-
-      // if it's a new value, apply full readWrite permissions
-      if (!uiContainer.isContainer || this.templateEntry.isNew) {
-        this.permissions.readWrite.push(this.entryName);
-      }
-
-      this.saving = uiContainer.isSaving;
-
-      // ensure edit values for schema component
-      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
 
       this.$nextTick(() => this.loading = false);
     });
@@ -158,7 +164,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     const schemaChanged = !deepEqual(edit.dataSchema, entry.dataSchema);
     let valueChanged;
     if (entry.type !== 'list') {
-      valueChanged = !deepEqual(edit.value, entry.value)
+      valueChanged = !deepEqual(edit.value, entry.value);
     } else {
       valueChanged = entry.value && entry.value.length > 0;
     }

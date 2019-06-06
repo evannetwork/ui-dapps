@@ -37,14 +37,14 @@
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"
         id="datacontainer-context-menu-open"
-        @click="$refs.dtContextMenu.show();">
-        <i class="mdi mdi-dots-vertical clickable"></i>
+        @click="showDropdown($event)">
+        <i class="mdi mdi-dots-vertical clickable text-dark"></i>
       </button>
 
-      <i class="mdi mdi-dots-vertical clickable"
+      <i class="mdi mdi-dots-vertical clickable text-dark"
         id="datacontainer-context-menu-open"
         v-if="displayMode === 'dropdownIcon'"
-        @click="$refs.dtContextMenu.show();">
+        @click="showDropdown($event)">
       </i>
 
       <!-- show dropdown or only dropdown content -->

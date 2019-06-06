@@ -75,6 +75,12 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * Data container could not be loaded, e.g. no permissions.
+   */
+  error = false;
+
+
+  /**
    * ref handlers
    */
   reactiveRefs: any = { };
@@ -114,39 +120,44 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   async initialize() {
     this.loading = true;
 
-    const tabNames = [ 'entry-schema', 'entry-permissions', 'entry-changes' ];
+    try {
+      const tabNames = [ 'entry-schema', 'entry-permissions', 'entry-changes' ];
 
-    this.containerAddress = this.$route.params.containerAddress;
-    this.entryName = this.$route.params.entryName;
+      this.containerAddress = this.$route.params.containerAddress;
+      this.entryName = this.$route.params.entryName;
 
-    // load basic data schema, for checking entry type
-    this.uiContainer = new UiContainer(this);
-    (await this.uiContainer.loadPlugin());
+      // load basic data schema, for checking entry type
+      this.uiContainer = new UiContainer(this);
+      (await this.uiContainer.loadPlugin());
 
-    // only allow list entries for contracts
-    const entry = this.uiContainer.plugin.template.properties[this.entryName];
-    this.entryType = fieldUtils.getType(entry.dataSchema);
-    if (this.uiContainer.isContainer) {
-      // add list entries overview, when it's type of array
-      if (this.entryType === 'array') {
-        tabNames.unshift('list-entries');
-      } else {
-        tabNames.unshift('entry-values');
+      // only allow list entries for contracts
+      const entry = this.uiContainer.plugin.template.properties[this.entryName];
+      this.entryType = fieldUtils.getType(entry.dataSchema);
+      if (this.uiContainer.isContainer) {
+        // add list entries overview, when it's type of array
+        if (this.entryType === 'array') {
+          tabNames.unshift('list-entries');
+        } else {
+          tabNames.unshift('entry-values');
+        }
       }
-    }
 
-    this.tabs = tabNames
-      .map(urlKey => ({
-        id: `tab-${ urlKey }`,
-        href: [
-          (<any>this).dapp.fullUrl,
-          this.containerAddress,
-          'data-set',
-          this.entryName,
-          urlKey,
-        ].join('/'),
-        text: `_digitaltwins.breadcrumbs.${ urlKey }`
-      }));
+      this.tabs = tabNames
+        .map(urlKey => ({
+          id: `tab-${ urlKey }`,
+          href: [
+            (<any>this).dapp.fullUrl,
+            this.containerAddress,
+            'data-set',
+            this.entryName,
+            urlKey,
+          ].join('/'),
+          text: `_digitaltwins.breadcrumbs.${ urlKey }`
+        }));
+      } catch (ex) {
+        this.error = ex;
+        utils.getRuntime(this).logger.log(ex.message, 'error');
+      }
 
     this.loading = false;
   }

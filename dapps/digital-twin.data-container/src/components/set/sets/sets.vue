@@ -53,7 +53,7 @@
                   v-if="imgSquare"
                   :src="imgSquare">
                 <i
-                  class="mdi mdi-cube-outline"
+                  class="mdi mdi-cube-outline text-muted"
                   style="font-size:50px;">
                 </i>
               </div>

@@ -257,15 +257,16 @@ export default class CreateComponent extends mixins(EvanComponent) {
     this.saveActiveStep();
     this.activePlugin = plugin;
 
+    // save previous enabled states
+    const enabledStates = { };
+    this.steps.forEach(step => enabledStates[step.entryName] = step.enabled);
+
     // reset steps
     this.$set(this, 'steps', [ ]);
 
     this.steps.push({
       title: '_datacontainer.createForm.general',
-      disabled: (index: number) => {
-        return index > this.activeStep && this.steps[this.activeStep].entryComp &&
-          !this.steps[this.activeStep].entryComp.isValid();
-      },
+      disabled: () => false
     });
 
     // apply the new active plugin entries as new steps
@@ -284,14 +285,22 @@ export default class CreateComponent extends mixins(EvanComponent) {
       const title = `_datacontainer.breadcrumbs.${ entryName }`;
       const step: any = {
         title,
+        enabled: enabledStates[entryName],
         entryName,
         entryType: type,
         disabled: (index: number) => {
           const activeEntryComp = this.steps[this.activeStep].entryComp;
-          const isValid = this.activeStep > index ||
-            (this.activeStep === index - 1 && activeEntryComp && activeEntryComp.isValid())
+          const activeValid = activeEntryComp && activeEntryComp.isValid();
+          const isEnabled =
+            // active entry must be valid
+            activeValid &&
+            // and previous one is enable or previous one is the active step and active is valid
+            (
+              this.steps[index - 1].enabled ||
+              index - 1 === this.activeStep && activeValid
+            );
 
-          return !isValid;
+          return !isEnabled;
         }
       };
 
@@ -327,7 +336,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         // hide the tooltip
         setTimeout(() => {
           tooltip.onMouseLeave();
-        }, 5e3);
+        }, 3e3);
       });
     }
   }
@@ -340,9 +349,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
   addNewEntry(entryData: any) {
     this.activePlugin.template.properties[entryData.name] = entryData.entry;
 
-    // navigate to the new data set
-    // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
-
     utils.enableDTSave();
     this.activatePlugin(this.activePlugin, false);
 
@@ -351,18 +357,34 @@ export default class CreateComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Activates a specific step.
+   *
+   * @param      {number}  stepIndex  step index to activate
+   */
+  activateStep(stepIndex: number) {
+    this.saveActiveStep();
+
+    // navigate to next step.
+    const activeEntryComp = this.steps[this.activeStep].entryComp;
+    if (activeEntryComp.isValid()) {
+      this.steps[this.activeStep].enabled = true;
+    }
+
+    // reset entry components
+    this.activeStep = stepIndex;
+  }
+
+  /**
    * Saves current changes and navigates to next step.
    */
   nextStep() {
-    this.saveActiveStep();
-
     // if we are on the last step, ask to finish creation
     if (this.steps.length === 0 || this.activeStep === (this.steps.length - 1)) {
+      this.saveActiveStep();
       (<any>this.$refs.createModalSubmit).show();
     } else {
       // navigate to next step.
-      this.steps[this.activeStep].valid = true;
-      this.activeStep = this.activeStep + 1;
+      this.activateStep(this.activeStep + 1);
     }
   }
 

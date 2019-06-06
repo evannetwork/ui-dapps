@@ -141,8 +141,8 @@ const i18n: any = {
     "field": {
       "edit": "Bearbeiten"
     },
-    "in-creation": "In Erstellung...",
-    "in-saving": "Wird gespeichert...",
+    "in-creation": "Ein Plugin befindet sich in der Erstellung.<br><br><h4 class=\"text-muted\">Bitte warten Sie, bis der Vorgang abgeschlossen ist...</h4>",
+    "in-saving": "Plugin wird gespeichert...",
     "list": {
       "add-list-entry": "Listeneintrag hinzufügen",
       "canel-list-entry": "Abbrechen",
@@ -168,6 +168,7 @@ const i18n: any = {
       "create-container": "Daten Container erzeugen",
       "create-title": "Neue Plugin erstellen",
       "edit-dbcp": "Beschreibung Anpassen",
+      "in-saving": "Ein Plugin wird gespeichert<br><br><h4 class=\"text-muted\">Bitte warten Sie, bis der Vorgang abgeschlossen ist...</h4>",
       "save": "Plugin speichern"
     },
     "plugin-cache": {

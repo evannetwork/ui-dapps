@@ -31,6 +31,7 @@
       <div class="form-group"
         v-for="(schemaKey, index) in Object.keys(properties)">
         <dc-field
+          :id="`dc-field-${ schemaKey }`"
           :address="address"
           :control="valueForm[schemaKey]"
           :label="schemaKey"
