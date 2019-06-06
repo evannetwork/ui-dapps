@@ -11,6 +11,9 @@
   - add tabs animation design and correct height
 
 ### Fixes
+- `ui.libs`
+  - fix tooltip position in small containers
+
 ### Deprecations
 
 ## Version 1.2.0
