@@ -130,6 +130,8 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Setup the form.
    */
   async created() {
+    this.$emit('init', this);
+
     const runtime = utils.getRuntime(this);
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
 
@@ -204,7 +206,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
     this.loading = false;
     this.watchForCreation();
-    this.$emit('init', this);
   }
 
   /**
@@ -484,8 +485,15 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
   /**
    * Shows the create modal.
+   *
+   * @param      {any}  clonePlugin  plugin object to clone from
    */
-  showModal() {
+  showModal(clonePlugin?: any) {
+    if (clonePlugin) {
+      this.plugins.unshift(clonePlugin);
+      this.activatePlugin(clonePlugin);
+    }
+
     (<any>this).$refs.createModal.show();
     this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
   }

@@ -77,7 +77,13 @@
             *ngSwitchCase="'contract'"
             [mail]="mail"
             [attachment]="attachment">
-          </attachment-contract>            
+          </attachment-contract>
+          <attachment-url
+            *ngSwitchCase="'url'"
+            [attachment]="attachment"
+            [mail]="mail"
+            [mailId]="mailId">
+          </attachment-url>           
         </ng-container>
       </div>
     </ng-container>

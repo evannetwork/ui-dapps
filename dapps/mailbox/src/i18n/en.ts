@@ -113,7 +113,8 @@ export const en = {
     },
     "showing": "Showing",
     "to": "To",
-    "write-answer": "reply"
+    "write-answer": "reply",
+    "open-url": "Open attachment"
   },
   "mailbox": "Mailbox",
   "mailboxlist": "Mailbox",

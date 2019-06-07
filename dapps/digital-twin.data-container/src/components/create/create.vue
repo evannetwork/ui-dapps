@@ -94,10 +94,16 @@
                   </button>
                 </div>
               </div>
-              <div class="p-3" v-else>
-                <p class="m-0"
-                  v-html="$t( `_digitaltwins.plugins.empty-desc`)">
-                </p>
+              <div class="text-center p-5" v-else>
+                <h5 class="m-0"
+                  v-html="$t(`_datacontainer.createForm.empty-plugins`)">
+                </h5>
+                <a class="btn btn-primary btn-rounded font-weight-normal mt-3"
+                  id="go-to-plugins"
+                  :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/my-plugins`">
+                  {{ `_datacontainer.createForm.to-plugins` | translate }}
+                  <i class="mdi mdi-arrow-right label ml-3"></i>
+                </a>
               </div>
             </div>
 

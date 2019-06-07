@@ -58,7 +58,7 @@ const i18n: any = {
     "containers": {
       "create": "Plugin hinzufügen",
       "empty": "Plugins",
-      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Plugins. Jedes Plugin kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">Für diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"erstellen\" oder \"verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
+      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Plugins. Jedes Plugin kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">In Diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"Plugin hinzufügen\" oder \"Plugin-Instanz verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
       "in-creation": "wird erstellt...",
       "link": "Plugin-Instanz verknüpfen",
       "title": "Plugins"

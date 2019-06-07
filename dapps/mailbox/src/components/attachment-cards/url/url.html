@@ -1,4 +1,4 @@
-/*
+<!--
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it
@@ -23,37 +23,17 @@
 
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
-*/
+-->
 
-/* tslint:disable */
-export default {
-  "_mailbox": {
-    "add": "Nachricht senden",
-    "attachments": {
-      "commKey": {
-        "accepted": "Kontakt anzeigen",
-        "modal-body": "Wollen Sie diesen Kontakt wirklich hinzufügen?",
-        "new": "Kontaktanfrage akzeptieren"
-      },
-      "continue": "weiter",
-      "contract": {
-        "accepted": "Vertrag öffnen",
-        "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?",
-        "new": "Vertragseinladung akzeptieren"
-      },
-      "url": {
-        "accepted": "Anhang öffnen"
-      }
-    },
-    "detail": "Nachrichtsdetails",
-    "dispatcher": {
-      "attachment": "Kontakt/Vertrag sync"
-    },
-    "load-more": "Mehr Laden...",
-    "mailbox": "Nachrichten",
-    "received": "Empfangen",
-    "sent": "Gesendet",
-    "to": "an"
-  }
-}
-/* tslint:enable */;
+<button ion-button icon-start round  outline
+  (click)="openUrl()"
+  [disabled]="loading">
+  <ion-spinner *ngIf="loading"></ion-spinner>
+  <ion-icon name="person-add" *ngIf="!loading"></ion-icon>
+  <ng-container *ngIf="!loading">
+    {{ '_dappmailbox.accept-contract-invitation' | translate }}
+  </ng-container>
+  <ng-container *ngIf="loading">
+    {{ '_dappmailbox.accept-contract-invitation-loading' | translate }}
+  </ng-container>
+</button>

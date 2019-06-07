@@ -34,13 +34,13 @@ const i18n: any ={
     "add-digitaltwin": "Add Digital Twin",
     "containerlink": {
       "address": {
-        "desc": "Address of the Plugin to be linked to the digital twin.",
+        "desc": "Address of the Plugin to be linked to the Digital Twin.",
         "error": "Please enter an address!",
         "title": "Plugin"
       },
       "change-twin": "Change Digital Twin",
-      "description1": "Using the input field, You can select an address of a digital twin into which You want to link a Plugin. If an existing instance already exists there, it is opened directly for You. If the address is not yet assigned, You can create a new digital twin and bind it to this address or link an existing one to this address.",
-      "description2": "Using the input field, You can select an address of a Plugin that is to be linked to the digital twin.",
+      "description1": "Using the input field, You can select an address of a Digital Twin into which You want to link a Plugin. If an existing instance already exists there, it is opened directly for You. If the address is not yet assigned, You can create a new Digital Twin and bind it to this address or link an existing one to this address.",
+      "description2": "Using the input field, You can select an address of a Plugin that is to be linked to the Digital Twin.",
       "digitaltwin": "Digital Twin",
       "invalid-container": {
         "desc": "The address entered appears to be incorrect or to correspond to a contract with an invalid format. Please enter the correct address",
@@ -48,7 +48,7 @@ const i18n: any ={
       },
       "linking": "Linking existing Plugin",
       "name": {
-        "desc": "ENS Address under which the container will be stored in the digital twin.",
+        "desc": "ENS Address under which the container will be stored in the Digital Twin.",
         "error": "Please enter an ENS Address",
         "title": "ENS Address"
       },
@@ -58,14 +58,14 @@ const i18n: any ={
       "create": "Add Plugin",
       "desc": "All Plugins associated with the Digital Twin",
       "empty": "Plugins",
-      "empty-desc": "Each Digital Twin represents a collection of different Plugins. Each Plugin can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No Plugin has yet been created for this digital twin. Use the \"create\" or \"link\" button on the top to create a new Plugin or link to an existing Plugin instance.</b>",
+      "empty-desc": "Each Digital Twin represents a collection of different Plugins. Each Plugin can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No Plugin has beend added to this Digital Twin. Use the \"Add Plugin\" or \"Link Plugin\" button on the top.</b>",
       "in-creation": "in creation...",
       "link": "Link Plugin",
       "title": "Plugins"
     },
     "createForm": {
       "create": "Create Digital Twin",
-      "desc": "Enter the general data of your digital twin.",
+      "desc": "Enter the general data of your Digital Twin.",
       "question": {
         "action": "Create",
         "desc": "Did you enter all data correctly?",
@@ -89,7 +89,7 @@ const i18n: any ={
     },
     "digitaltwins": "Twins",
     "dispatcher": {
-      "binding": "Digital twin is bound to domain...",
+      "binding": "Digital Twin is bound to domain...",
       "create": "Digital Twin creation",
       "digitaltwin": {
         "create": "Creating Digital Twin",
@@ -108,7 +108,7 @@ const i18n: any ={
         "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
         "title": "Address of your Digital Twin",
-        "use-address": "Bind digital twin to ENS Address"
+        "use-address": "Bind Digital Twin to ENS Address"
       },
       "already-registered": {
         "desc": "The specified address is not available.",

@@ -73,19 +73,24 @@ export default class UiContainer {
   runtime: bcc.Runtime;
   containerCache: ContainerCache;
 
+  /**
+   * dispatcher infos
+   */
+  deletingData: Array<any>;
+  isContainer: any;
+  isDeleting: boolean;
+  isSaving: boolean;
+  isSharing: boolean;
+  savingData: Array<any>;xw
+  sharingData: Array<any>;
 
   /**
    * container specific data
    */
   description: any;
-  savingData: Array<any>;
-  isContainer: any;
-  isSaving: boolean;
-  isSharing: boolean;
   owner: string;
   permissions: any;
   plugin: any;
-  sharingData: Array<any>;
   template: any;
 
   /**
@@ -171,8 +176,12 @@ export default class UiContainer {
    * @param      {Array<Function>}  updateWatchers  update functions
    */
   async runPluginUpdate(reload = false, updateWatchers = this.updateWatchers) {
-    const savingData = await this.getSavingData();
-    const sharingData = await this.getSharingData();
+    const [ deletingData, savingData, sharingData ] = await Promise.all([
+      this.getDeleteData(),
+      this.getSavingData(),
+      this.getSharingData(),
+    ]);
+    const isDeleting = deletingData.length !== 0;
     const isSaving = savingData.length !== 0;
     const isSharing = sharingData.length !== 0;
 
@@ -186,8 +195,10 @@ export default class UiContainer {
     // update latest saving status
     this.isSaving = isSaving;
     this.isSharing = isSharing;
+    this.isDeleting = isDeleting;
     this.savingData = savingData;
     this.sharingData = sharingData;
+    this.deletingData = deletingData;
 
     // run all update functions
     await Promise.all(updateWatchers.map((updateFunc: Function) =>
@@ -362,6 +373,19 @@ export default class UiContainer {
     } else {
       return (await dispatchers.pluginShareDispatcher.getInstances(this.runtime))
         .filter(instance => instance.data.description.name === this.address)
+        .map(instance => instance.data);
+    }
+  }
+
+  /**
+   * Is currently a dispatcher running for this container / plugin?
+   */
+  async getDeleteData() {
+    if (this.address.startsWith('0x')) {
+      return [ ];
+    } else {
+      return (await dispatchers.pluginRemoveDispatcher.getInstances(this.runtime))
+        // .filter(instance => instance.data.name === this.address)
         .map(instance => instance.data);
     }
   }

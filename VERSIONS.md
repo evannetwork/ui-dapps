@@ -4,6 +4,8 @@
 ### Features
 - `digitaltwins`
   - move open twin and create twin to modal dialog
+  - add context menu to twins, plugins overview
+  - ask before toggle twin favorite
 - `datacontainer.digitaltwins`
   - add new `UiContainer` structure including easy data loading update watching
   - remove flex-truncate and add correct text-overflow logic
@@ -14,8 +16,9 @@
   - add seperated value / schema view for `twin.container.entries`
   - disable default values for files
   - add context menu to containers, sets overview
-- `digitaltwins`
-  - add context menu to twins, plugins overview
+  - add plugin delete
+- `mailbox`, `mailbox.vue`
+  - add attachments of type `url`
 
 ### Fixes
 - `datacontainer.digitaltwins`
@@ -23,6 +26,7 @@
   - fix plugin creation and saving
   - fix creation steps and validity checks
   - fix dataContainer.defaultSchema is used without copying
+  - fix plugin sharing
 
 ### Deprecations
 

@@ -61,9 +61,7 @@
               <button :class="buttonClasses.tertiar"
                 id="plugin-dbcp-edit"
                 @click="reactiveRefs.dbcpModal.show(); closeDropdown();">
-                <div class="spinner-border spinner-border-sm"
-                  v-if="saving">
-                </div>
+                <div class="spinner-border spinner-border-sm" v-if="saving"></div>
                 <i class="mdi mdi-pencil" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.plugin.edit-dbcp` | translate }}
@@ -79,17 +77,27 @@
                 </component>
               </button>
 
-              <a :class="buttonClasses.tertiar"
+              <button :class="buttonClasses.tertiar"
                 id="plugin-clone"
                 @click="reactiveRefs.clonePlugin.showModal(); closeDropdown()">
                 <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.clone` | translate }}
                 </component>
-              </a>
+              </button>
+              <button :class="buttonClasses.tertiar"
+                id="plugin-delete-open"
+                :disabled="deleting"
+                @click="reactiveRefs.deleteModal.show(); closeDropdown()">
+                <div class="spinner-border spinner-border-sm" v-if="deleting"></div>
+                <i class="mdi mdi-delete" style="width: 16px;" v-else></i>
+                <component :is="buttonTextComp" :placement="'bottom'">
+                  {{ `_datacontainer.plugin.delete` | translate }}
+                </component>
+              </button>
             </template>
             <template v-if="setActions">
-                <a
+              <a
                 id="dc-container-add"
                 :class="buttonClasses.primary"
                 @click="reactiveRefs.dcNewEntry.showModal(); closeDropdown();">
@@ -212,6 +220,27 @@
             type="button" class="btn btn-primary btn-rounded font-weight-normal"
             @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }.${ dapp.domainName }`)">
             {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
+          </button>
+        </template>
+      </evan-modal>
+      <evan-modal
+        id="plugin-delete-modal"
+        @init="$set(reactiveRefs, 'deleteModal', $event)">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ '_datacontainer.plugin.delete' | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          {{ '_datacontainer.plugin.delete-quest' | translate }}
+        </template>
+        <template v-slot:footer>
+          <button type="submit"
+            id="plugin-delete"
+            class="btn btn-rounded btn-primary"
+            @click="deletePlugin()">
+            {{ '_datacontainer.plugin.delete' | translate }}
             <i class="mdi mdi-arrow-right label"></i>
           </button>
         </template>

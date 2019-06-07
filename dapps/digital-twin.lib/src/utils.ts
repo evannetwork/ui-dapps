@@ -172,6 +172,7 @@ export async function getMyPlugins(runtime: bcc.Runtime) {
   ));
 
   // watch for new and sharing containers
+  const deleting = await dispatchers.dc.pluginRemoveDispatcher.getInstances(runtime);
   const saving = await dispatchers.dc.pluginDispatcher.getInstances(runtime);
   const sharing = await dispatchers.dc.pluginShareDispatcher.getInstances(runtime);
 
@@ -192,6 +193,10 @@ export async function getMyPlugins(runtime: bcc.Runtime) {
 
   // show loading for shared containers
   sharing.forEach(instance => plugins[instance.data.name].loading = true);
+
+  // remove deleted plugins
+  deleting.forEach(instance => delete plugins[instance.data.name]);
+
   return plugins;
 }
 

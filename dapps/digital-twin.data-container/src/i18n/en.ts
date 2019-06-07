@@ -82,6 +82,7 @@ const i18n: any = {
       "create": "Create",
       "create-plugin": "Create Standalone Plugin",
       "edit-dbcp-hint": "Wrong plugin selected? Change it here.",
+      "empty-plugins": "You have not yet created any plugins that can be added to these Digital Twin.",
       "finish": "Finish configuration",
       "general": "General Information",
       "plugin": {
@@ -89,7 +90,8 @@ const i18n: any = {
         "title": "Plugin Type"
       },
       "plugin-select": "Plugin Selection",
-      "sub-title": "Specify general information, data schema and values."
+      "sub-title": "Specify general information, data schema and values.",
+      "to-plugins": "Go to the plugins"
     },
     "dbcp": {
       "description": {
@@ -106,6 +108,7 @@ const i18n: any = {
       "create": "Creating Data Container...",
       "link": "Link Data Container...",
       "plugin": "Saving plugin...",
+      "plugin-remove": "Plugin löschen",
       "plugin-share": "Sharing plugin...",
       "share": "Share Data Container...",
       "update": "Updating Data Container..."
@@ -163,11 +166,12 @@ const i18n: any = {
     },
     "plugin": {
       "bmail": {
-        "body": "Hello,<br><br>You have received a data container plugin from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container plugin"
+        "body": "Hello,<br><br>You have been sent the plugin template <b>{subject}</b> from <b>{alias}</b>. Use the \"open attachment\" button to add it to your profile. <br><br>Sincerely,<br><br>{alias}",
+        "title": "Plugin Template"
       },
-      "create-container": "Create Data Container",
       "create-title": "Create new Plugin",
+      "delete": "Delete Plugin",
+      "delete-quest": "Do you really want to delete this plugin?",
       "edit-dbcp": "Adjust Description",
       "in-saving": "Saving Plugin<br><br><h4 class=\"text-muted\">Please wait until the process is finished...</h4>",
       "save": "Save Plugin"
@@ -194,8 +198,8 @@ const i18n: any = {
     "share": {
       "action": "Share",
       "bmail": {
-        "body": "Hello,<br><br>You have been invited by <b>{alias}</b> into a data container:<br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container"
+        "body": "Hello,<br><br>You have been invited into the Digital Twin Plugin <b>{subject}</b> by <b>{alias}</b>. Use the \"open attachment\" button to add it to your profile. <br><br>Sincerely,<br><br>{alias}",
+        "title": "Invitation to Digital Twin Plugin"
       },
       "desc": "Send this data container to people in your address book and specify their access permissions.",
       "entry": "Data set",

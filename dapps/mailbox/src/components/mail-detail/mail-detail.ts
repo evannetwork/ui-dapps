@@ -93,7 +93,7 @@ export class MailDetailComponent extends AsyncComponent {
    * The current answer.
    */
   private answer: any;
-  
+
   /**
    * { item_description }
    */

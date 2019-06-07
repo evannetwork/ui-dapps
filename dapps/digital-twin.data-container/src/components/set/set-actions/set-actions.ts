@@ -185,7 +185,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    */
   areDropdownDotsVisible() {
     return !this.saving && (
-      (this.schemaActions && this.templateEntry.changed && !this.templateEntry.isNew) ||
+      (this.schemaActions && this.templateEntry && this.templateEntry.changed && !this.templateEntry.isNew) ||
       (this.listActions && this.entryType === 'array' && this.containerAddress.startsWith('0x'))
     );
   }

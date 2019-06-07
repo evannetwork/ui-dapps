@@ -113,7 +113,8 @@ export const de = {
     },
     "showing": "Zeige",
     "to": "An",
-    "write-answer": "antworten"
+    "write-answer": "antworten",
+    "open-url": "Anhang öffnen"
   },
   "mailbox": "Mailbox-Nachrichten",
   "mailboxlist": "Mailbox-Nachrichten",

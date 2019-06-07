@@ -87,11 +87,8 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * Is a save dispatcher for this plugin running?
    */
+  deleting = false;
   saving = false;
-
-  /**
-   * is a sharing dispatcher for this plugin running?
-   */
   sharing = false;
 
   /**
@@ -165,6 +162,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     // watch for updates
     try {
       this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+        this.deleting = uiContainer.isDeleting;
         this.description = uiContainer.description;
         this.plugin = uiContainer.plugin;
         this.saving = uiContainer.isSaving;
@@ -236,7 +234,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     let subject = [
       (<any>this).$t('_digitaltwins.breadcrumbs.plugin'),
       `: ${ this.description.name }`,
-      this.pluginName ? ` - ${ this.pluginName }` : ''
     ].join('');
 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
@@ -309,21 +306,17 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
           subject: this.shareForm.subject.value,
         }),
         attachments: [{
-          address: this.pluginName,
-          bc: bcc.Container.profilePluginsKey,
           fullPath: [
             `/${ (<any>this).dapp.rootEns }`,
             `digitaltwins.${ (<any>this).dapp.domainName }`,
-            `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-            `plugin/${ this.description.name.value }`,
+            `my-plugins`,
           ].join('/'),
-          type: 'contract',
-          storeKey: this.pluginName,
+          type: 'url',
           storeValue: {
             description: {
-              description: this.description.description.value,
-              imgSquare: this.description.imgSquare.value,
-              name: this.description.name.value,
+              description: this.description.description,
+              imgSquare: this.description.imgSquare,
+              name: this.description.name,
             },
             template: this.plugin.template,
           },
@@ -332,7 +325,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     };
 
     // start the dispatcher
-    dispatchers.shareDispatcher.start(utils.getRuntime(this), {
+    dispatchers.pluginShareDispatcher.start(utils.getRuntime(this), {
       address,
       shareConfig,
       bMailContent,
@@ -357,5 +350,19 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
 
     // send event
     containerCache.put(this.pluginName, this.uiContainer.plugin);
+  }
+
+  /**
+   * Starts the delete dispatcher for this plugin.
+   */
+  deletePlugin() {
+    const dapp: any = (<any>this).dapp;
+
+    // start remove dispatcher
+    dispatchers.pluginRemoveDispatcher.start(utils.getRuntime(this), { name: this.pluginName });
+
+    // navigate back to plugin overview
+    window.location.hash = `${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/my-plugins`;
+    this.reactiveRefs.deleteModal.hide();
   }
 }

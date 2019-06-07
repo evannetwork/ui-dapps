@@ -68,9 +68,9 @@ const i18n: any = {
       "share": "Teilen"
     },
     "create-question": {
-      "action": "Erstellen",
+      "action": "Hinzufügen",
       "desc": "Haben Sie alle Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
-      "title": "Datencontainer Erstellen"
+      "title": "Plugin hinzufügen"
     },
     "createForm": {
       "add-plugin": "Plugin hinzufügen",
@@ -81,6 +81,7 @@ const i18n: any = {
       "create": "Erstellen",
       "create-plugin": "Alleinstehendes Plugin erstellen",
       "edit-dbcp-hint": "Falsches Plugin ausgewählt? Ändern Sie es hier.",
+      "empty-plugins": "Sie haben noch keine Plugins erstellt, die in diesen Digitalen Zwilling hinzugefügt werden können.",
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
       "plugin": {
@@ -88,7 +89,8 @@ const i18n: any = {
         "title": "Plugin-Typ"
       },
       "plugin-select": "Plugin-Auswahl",
-      "sub-title": "Allgemeine Informationen, Datenschema und Werte."
+      "sub-title": "Allgemeine Informationen, Datenschema und Werte.",
+      "to-plugins": "Zu den Plugins"
     },
     "dbcp": {
       "description": {
@@ -105,6 +107,7 @@ const i18n: any = {
       "create": "Daten Container wird erstellt...",
       "link": "Daten Container wird verlinkt...",
       "plugin": "Plugin speichern",
+      "plugin-remove": "Plugin löschen",
       "plugin-share": "Plugin teilen",
       "share": "Daten Container wird geteilt...",
       "update": "Daten Container wird aktualisiert..."
@@ -157,16 +160,18 @@ const i18n: any = {
       "title": "Leeres Plugin"
     },
     "no-permissions": {
-      "desc": "Sie besitzen keine Berechtigungen diesen Datencontainer einzusehen.",
+      "desc": "Sie besitzen keine Berechtigungen dieses Plugin einzusehen.",
       "title": "Keine Berechtigungen"
     },
     "plugin": {
       "bmail": {
-        "body": "Guten Tag,<br><br>Ihnen wurde eine Daten Container Plugin von <b>{alias}</b> gesendet: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Daten Container Plugin"
+        "body": "Guten Tag,<br><br>Ihnen wurde die Plugin-Vorlage <b>{subject}</b> von <b>{alias}</b> gesendet. Nutzen Sie den \"Anhang öffnen\" Button, um Sie Ihrem Profil hinzufügen. <br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Plugin-Vorlage"
       },
       "create-container": "Daten Container erzeugen",
       "create-title": "Neue Plugin erstellen",
+      "delete": "Plugin löschen",
+      "delete-quest": "Wollen Sie dies Plugin wirklich löschen?",
       "edit-dbcp": "Beschreibung Anpassen",
       "in-saving": "Ein Plugin wird gespeichert<br><br><h4 class=\"text-muted\">Bitte warten Sie, bis der Vorgang abgeschlossen ist...</h4>",
       "save": "Plugin speichern"
@@ -193,8 +198,8 @@ const i18n: any = {
     "share": {
       "action": "Teilen",
       "bmail": {
-        "body": "Guten Tag,<br><br>Sie wurden von <b>{alias}</b> in einen Daten Container eingeladen: <br><br><b>{subject}</b><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Einladung in Daten Container"
+        "body": "Guten Tag,<br><br>Sie wurden das Plugin <b>{subject}</b> von <b>{alias}</b> eingeladen: <br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Einladung in Plugin eines Digitalen Zwillings"
       },
       "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
       "entry": "Datenbereich",
