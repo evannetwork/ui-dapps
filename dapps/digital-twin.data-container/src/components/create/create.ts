@@ -63,6 +63,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
   }) mode;
 
   /**
+   * digitalTwin address, where the container should be created for
+   */
+  @Prop() digitalTwinAddress;
+
+  /**
    * Show loading symbol
    */
   loading = true;
@@ -76,11 +81,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * formular specific variables
    */
   createForm: CreateInterface = null;
-
-  /**
-   *   digitalTwin address, where the container should be created for
-   */
-  digitalTwinAddress = '';
 
   /**
    * Available steps represented by it's titles
@@ -132,7 +132,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = utils.getRuntime(this);
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
-    this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
 
     // TODO: load plugins
     this.createForm = (<CreateInterface>new EvanForm(this, {

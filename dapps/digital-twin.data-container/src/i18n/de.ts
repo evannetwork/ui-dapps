@@ -112,7 +112,7 @@ const i18n: any = {
     "edit": "Bearbeiten",
     "edit-dbcp": "Container Beschreibung anpassen",
     "edit-schema": "Datenbereich Schema Definition",
-    "entries": "Datensets",
+    "entries": "Datenbereich",
     "entry": {
       "add": "Datenbereich hinzufügen",
       "add-desc": "Ein Datenbereich entspricht einem abgetrennten Kontext, in dem verschiedenste Informationen gepflegt werden können. Sie können unabhängig voneinander an dritte geteilt werden können.",
@@ -153,7 +153,7 @@ const i18n: any = {
       "show-more": "Mehr anzeigen"
     },
     "no-entries": {
-      "desc": "Dem Plugin wurden noch keine Daten-Sets hinzugefügt. Nutzen Sie den nachfolgenden Button, um Daten-Sets hinzuzufügen und zu konfigurieren.",
+      "desc": "Dem Plugin wurden noch keine Datenbereiche hinzugefügt. Nutzen Sie den nachfolgenden Button, um Datenbereiche hinzuzufügen und zu konfigurieren.",
       "title": "Leeres Plugin"
     },
     "no-permissions": {
@@ -187,7 +187,7 @@ const i18n: any = {
     "sets": {
       "reset": {
         "desc": "Wollen sie die aktuellen Änderungen zurücksetzen?",
-        "title": "Daten-Set zurücksetzen"
+        "title": "Datenbereich zurücksetzen"
       }
     },
     "share": {

@@ -125,9 +125,6 @@ export default class EvanUIDigitalTwin {
 
   constructor(address: string) {
     this.address = address;
-
-    // apply this digitaltwin address to the last opened digitaltwins
-    utils.addLastOpenedTwin(this.address);
   }
 
   /**

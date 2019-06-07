@@ -122,6 +122,8 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
         try {
           // load digitaltwin specific data
           await this.$store.state.uiDT.initialize(this, utils.getRuntime(this));
+          // apply this digitaltwin address to the last opened digitaltwins
+          utils.addLastOpenedTwin(digitalTwinAddress);
         } catch (ex) {
           this.error = ex;
         }

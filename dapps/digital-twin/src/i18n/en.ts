@@ -28,9 +28,9 @@ import * as dataContainer from '@evan.network/datacontainer.digitaltwin';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
-const i18n: any = {
+const i18n: any ={
   "_digitaltwins": {
-    "add": "Open",
+    "add": "Search",
     "add-digitaltwin": "Add Digital Twin",
     "containerlink": {
       "address": {
@@ -48,9 +48,9 @@ const i18n: any = {
       },
       "linking": "Linking existing Plugin",
       "name": {
-        "desc": "Alias under which the container will be stored in the digital twin.",
-        "error": "Please enter an alias",
-        "title": "Alias"
+        "desc": "ENS Address under which the container will be stored in the digital twin.",
+        "error": "Please enter an ENS Address",
+        "title": "ENS Address"
       },
       "use": "Link Plugin"
     },
@@ -74,14 +74,16 @@ const i18n: any = {
     },
     "detail": {
       "add-favorite": "Add as favorite",
+      "add-favorite-quest": "Do you want to add this Digital Twin to your favorites?",
       "edit": "Edit Description",
       "error": {
         "desc": "The selected address does not correspond to a valid Digital Twin. Please make sure that the correct address has been opened.",
         "title": "Invalid Digital Twin"
       },
-      "map-to-ens": "Bind to alias",
+      "map-to-ens": "Bind to ENS Address",
       "my-new-twin": "New Digital Twin",
       "remove-favorite": "Remove from favorites",
+      "remove-favorite-quest": "Do you really want to remove this Digital Twin from your Favorites?",
       "save": "Save",
       "title": "Metadata of the Digital Twin"
     },
@@ -106,7 +108,7 @@ const i18n: any = {
         "desc": "Enter the address of your Digital Twin (e.g.: car.mycompany, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Please enter a valid address",
         "title": "Address of your Digital Twin",
-        "use-address": "Bind digital twin to alias"
+        "use-address": "Bind digital twin to ENS Address"
       },
       "already-registered": {
         "desc": "The specified address is not available.",
@@ -136,7 +138,7 @@ const i18n: any = {
         "title": "Address available"
       },
       "purchasing": "Purchasing ENS address...",
-      "title": "Open Digital Twin"
+      "title": "Search Digital Twin"
     },
     "map-ens": {
       "check-ens": "Check Domain",

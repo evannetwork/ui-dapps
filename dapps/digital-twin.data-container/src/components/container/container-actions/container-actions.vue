@@ -157,6 +157,8 @@
         </template>
       </evan-modal>
       <dc-link
+        :containerAddress="containerAddress"
+        :digitalTwinAddress="digitalTwinAddress"
         @init="$set(reactiveRefs, 'dtContainerLink', $event)">
       </dc-link>
       <dc-permissions
@@ -171,6 +173,7 @@
       </dc-new-entry>
       <dc-create
         :cloneAddress="containerAddress"
+        :digitalTwinAddress="digitalTwinAddress"
         @init="$set(reactiveRefs, 'dcClone', $event)">
       </dc-create>
       <dc-create

@@ -115,7 +115,6 @@
         </template>
         <template v-slot:body>
           <dt-dbcp
-            ref="dbcpComp"
             :dbcp="description"
             :disabled="saving"
             @init="$set(reactiveRefs, 'dbcpForm', $event._form)"

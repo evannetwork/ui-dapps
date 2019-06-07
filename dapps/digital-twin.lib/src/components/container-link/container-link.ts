@@ -49,12 +49,12 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
   /**
    * Should a container directly linked into a digital twin?
    */
-  digitalTwinAddress = '';
+  @Prop() digitalTwinAddress;
 
   /**
    * Should a specific container be linked directly into any twin?
    */
-  containerAddress = '';
+  @Prop() containerAddress = '';
 
   /**
    * Digital twin Address that exists and was created
@@ -113,9 +113,6 @@ export default class ContainerLinkComponent extends mixins(EvanComponent) {
   async created() {
     this.$emit('init', this);
     const runtime = utils.getRuntime(this);
-
-    this.digitalTwinAddress = (<any>this).$route.params.digitalTwinAddress;
-    this.containerAddress = (<any>this).$route.params.containerAddress;
 
     this.containerLinkForm = (<ContainerLinkFormInterface>new EvanForm(this, {
       name: {

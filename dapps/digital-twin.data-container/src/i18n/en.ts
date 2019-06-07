@@ -93,11 +93,11 @@ const i18n: any = {
     },
     "dbcp": {
       "description": {
-        "desc": "Short description for the Data Container",
+        "desc": "Short description",
         "title": "Description"
       },
       "name": {
-        "desc": "Name of the Data Container",
+        "desc": "Name",
         "error": "Please provide a name!",
         "title": "Name"
       }

@@ -105,11 +105,11 @@
                   <span class="mx-auto"></span>
                   <div class="spinner-border spinner-border-sm ml-3"
                     v-if="descriptions[ensAddress].loading">
-                  </div><!-- 
+                  </div>
                   <i class="mdi mdi-dots-vertical clickable text-dark"
                     v-else
                     @click="$refs.dtActions[index].showDropdown($event)">
-                  </i> -->
+                  </i>
                 </div>
               </div>
             </a>
