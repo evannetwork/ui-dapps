@@ -29,40 +29,40 @@
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
-    <!-- <div class="spinner-border spinner-border-sm text-light ml-3"
-      v-if="loading">
-    </div> -->
-    <template v-if="!loading">
-      <!-- show dropdown button  -->
-      <button class="btn btn-circle btn-sm btn-tertiary"
-        v-if="displayMode === 'dropdownButton'"
-        id="datacontainer-context-menu-open"
-        @click="showDropdown($event)">
-        <i class="mdi mdi-dots-vertical clickable text-dark"></i>
-      </button>
+    <!-- show dropdown button  -->
+    <button class="btn btn-circle btn-sm btn-tertiary"
+      v-if="displayMode === 'dropdownButton'"
+      id="datacontainer-context-menu-open"
+      @click="showDropdown($event)">
+      <i class="mdi mdi-dots-vertical clickable text-dark"></i>
+    </button>
 
-      <i class="mdi mdi-dots-vertical clickable text-dark"
-        id="datacontainer-context-menu-open"
-        v-if="displayMode === 'dropdownIcon'"
-        @click="showDropdown($event)">
-      </i>
+    <i class="mdi mdi-dots-vertical clickable text-dark"
+      id="datacontainer-context-menu-open"
+      v-if="displayMode === 'dropdownIcon'"
+      @click="showDropdown($event)">
+    </i>
 
-      <!-- show dropdown or only dropdown content -->
-      <div class="position-relative">
-        <evan-dropdown
-          id="datacontainer-context-menu"
-          ref="dtContextMenu"
-          :alignment="'right'"
-          :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
-          :width="'300px'"
-          :renderOnlyContent="displayMode === 'buttons'">
-          <template v-slot:content>
+    <!-- show dropdown or only dropdown content -->
+    <div class="position-relative">
+      <evan-dropdown
+        id="datacontainer-context-menu"
+        ref="dtContextMenu"
+        :alignment="'right'"
+        :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
+        :width="'300px'"
+        :renderOnlyContent="displayMode === 'buttons'">
+        <template v-slot:content>
+          <div class="text-center p-3" v-if="loading">
+            <div class="spinner-border spinner-border-sm text-light mr-3"></div>
+          </div>
+          <template v-else-if="plugin">
             <template v-if="dcActions">
               <button
                 :class="buttonClasses.tertiar"
                 v-if="isOwner"
                 id="container-dbcp-edit"
-                @click="$refs.dbcpModal.show(); closeDropdown();">
+                @click="reactiveRefs.dbcpModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
                   v-if="saving">
                 </div>
@@ -73,7 +73,7 @@
               </button>
               <button :class="buttonClasses.tertiar"
                 id="container-share"
-                @click="reactiveRefs.dcPermissions.openShareDialog()">
+                @click="reactiveRefs.dcPermissions.openShareDialog(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
                   v-if="sharing">
                 </div>
@@ -112,7 +112,7 @@
                 id="dc-container-add"
                 v-if="isOwner"
                 :class="buttonClasses.primary"
-                @click="$refs.dcNewEntry.showModal(); closeDropdown();">
+                @click="reactiveRefs.dcNewEntry.showModal(); closeDropdown();">
                 <i class="mdi mdi-plus"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_digitaltwins.breadcrumbs.dc-sets-add` | translate }}
@@ -120,12 +120,14 @@
               </a>
             </template>
           </template>
-        </evan-dropdown>
-      </div>
-      <!-------------------------- actions section -------------------------->
+        </template>
+      </evan-dropdown>
+    </div>
+    <!-------------------------- actions section -------------------------->
+    <template v-if="plugin && !loading">
       <evan-modal
         id="container-dbcp-modal"
-        ref="dbcpModal">
+        @init="$set(reactiveRefs, 'dbcpModal', $event)">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ '_datacontainer.edit-dbcp' | translate }}
@@ -133,7 +135,6 @@
         </template>
         <template v-slot:body>
           <dt-dbcp
-            ref="dbcpComp"
             :dbcp="plugin.description"
             :disabled="saving"
             @init="$set(reactiveRefs, 'dbcpForm', $event._form)"
@@ -159,13 +160,13 @@
         @init="$set(reactiveRefs, 'dtContainerLink', $event)">
       </dc-link>
       <dc-permissions
-        @init="$set(reactiveRefs, 'dcPermissions', $event)"
         :containerAddress="containerAddress"
-        :digitalTwinAddress="digitalTwinAddress">
+        :digitalTwinAddress="digitalTwinAddress"
+        @init="$set(reactiveRefs, 'dcPermissions', $event)">
       </dc-permissions>
       <dc-new-entry
-        ref="dcNewEntry"
         :template="plugin.template"
+        @init="$set(reactiveRefs, 'dcNewEntry', $event)"
         @submit="addNewEntry($event)">
       </dc-new-entry>
       <dc-create

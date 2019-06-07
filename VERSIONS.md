@@ -13,6 +13,9 @@
   - add plugin selection as first page on creating a new `plugin` / `container` / move dbcp edit to create steps
   - add seperated value / schema view for `twin.container.entries`
   - disable default values for files
+  - add context menu to containers, sets overview
+- `digitaltwins`
+  - add context menu to twins, plugins overview
 
 ### Fixes
 - `datacontainer.digitaltwins`

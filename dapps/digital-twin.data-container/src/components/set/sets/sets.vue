@@ -48,7 +48,7 @@
             :id="`evan-dc-entry-${ property }`"
             :href="`${ dapp.fullUrl }/${ containerAddress }/data-set/${ property }`">
             <div class="row align-items-center m-0 w-100">
-              <div class="col-2">
+              <div class="col-2" style="overflow: visible">
                 <img class="img-fluid p-3"
                   v-if="imgSquare"
                   :src="imgSquare">
@@ -57,21 +57,33 @@
                   style="font-size:50px;">
                 </i>
               </div>
-              <div class="col-10">
-                <div class="d-flex p-3 align-items-center">
-                  <div class="position-relative w-100"
-                    style="overflow: visible;">
-                    <h4 class="font-weight-semibold mb-0 position-relative overflow-multiline line-1">
-                      {{ property }}
-                    </h4>
-                    <span class="notification-dot"
-                      v-if="template.properties[property].changed || template.properties[property].isNew">
-                    </span>
-                  </div>
+              <div class="col-10 d-flex align-items-center">
+                <div class="w-100 p-3 position-relative">
+                  <h4 class="font-weight-semibold mb-0 position-relative overflow-multiline line-1">
+                    {{ property }}
+                  </h4>
+                  <span class="notification-dot"
+                    v-if="template.properties[property].changed || template.properties[property].isNew">
+                  </span>
                 </div>
+                <span class="mx-auto"></span>
+                <i class="mdi mdi-dots-vertical clickable text-dark"
+                  v-if="reactiveRefs.setActions[index] &&
+                    reactiveRefs.setActions[index].areDropdownDotsVisible()"
+                  @click="reactiveRefs.setActions[index].showDropdown($event)">
+                </i>
               </div>
             </div>
           </a>
+          <dc-set-actions
+            :containerAddress="containerAddress"
+            :entryName="property"
+            :displayMode="'dropdownHidden'"
+            :setActions="true"
+            :schemaActions="true"
+            :listActions="true"
+            @init="$set(reactiveRefs.setActions, index, $event)">
+          </dc-set-actions>
         </div>
       </div>
       <div class="white-box border-smooth rounded" v-else>

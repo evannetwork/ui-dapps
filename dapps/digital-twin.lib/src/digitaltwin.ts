@@ -356,6 +356,10 @@ export default class EvanUIDigitalTwin {
 
       // toggle favorite
       this.isFavorite = !this.isFavorite;
+      // remove from last opened twins
+      if (!this.isFavorite) {
+        utils.removeLastOpenedTwin(this.address);
+      }
 
       // only watch, when it wasn't watched before
       if (!this.isFavoriteLoading) {

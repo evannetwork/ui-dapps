@@ -69,7 +69,7 @@
                     :id="`evan-dt-plugin-${ plugin.description.name.replace('.', '') }`"
                     @click="activatePlugin(plugin)">
                     <div class="row align-items-center m-0 w-100">
-                      <div class="col-2">
+                      <div class="col-2" style="overflow: visible">
                         <img class="img-fluid p-3"
                           v-if="plugin.imgSquare"
                           :src="plugin.imgSquare">

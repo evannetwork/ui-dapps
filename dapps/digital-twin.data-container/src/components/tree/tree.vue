@@ -80,6 +80,10 @@
       </div>
     </div>
 
+    <div class="text-center p-3"
+        v-if="onlySets && (loading || initializing)">
+      <div class="spinner-border spinner-border-sm text-secondary"></div>
+    </div>
     <div class="pb-3"
       v-if="!initializing && (onlySets || isOpen)">
       <div class="px-4 py-1"

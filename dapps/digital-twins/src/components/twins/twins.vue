@@ -79,7 +79,7 @@
                 `${ dapp.fullUrl }/digitaltwin.${ dapp.domainName }/${ ensAddress }`
               ">
               <div class="row align-items-center m-0 w-100">
-                <div class="col-2">
+                <div class="col-2" style="overflow: visible">
                   <img class="img-fluid p-3"
                     v-if="descriptions[ensAddress].imgSquare"
                     :src="descriptions[ensAddress].imgSquare">

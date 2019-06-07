@@ -64,7 +64,7 @@
               :id="`evan-dt-plugin-${ pluginKey.replace('.', '') }`"
               :href="plugins[pluginKey].creating ? null : `${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ pluginKey }`">
               <div class="row align-items-center m-0 w-100">
-                <div class="col-2">
+                <div class="col-2" style="overflow: visible">
                   <img class="img-fluid p-3"
                     v-if="plugins[pluginKey].imgSquare"
                     :src="plugins[pluginKey].imgSquare">

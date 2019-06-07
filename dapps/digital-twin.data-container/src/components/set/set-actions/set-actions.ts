@@ -106,7 +106,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
+  loading = false;
 
   /**
    * Watch for cache updates
@@ -119,6 +119,8 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    * Set button classes
    */
   async created() {
+    this.$emit('init', this);
+
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -127,6 +129,18 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
+    // implement lazy dropdown loading later, currently we need the "show the dropdown icon"
+    // directly on startup, when actions for everyone are available, load specific data after
+    // opening dropdown
+    await this.initialize();
+  }
+
+  /**
+   * Load the set data.
+   */
+  async initialize() {
+    this.loading = true;
+
     this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
       this.saving = uiContainer.isSaving;
@@ -134,15 +148,16 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
     });
 
     this.loading = false;
-    this.$emit('init', this);
   }
 
   /**
    * Show the actions dropdown.
    */
   showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
+    // load data for dropdowns
+    !this.loading && !this.templateEntry && this.initialize();
 
+    (<any>this).$refs.dtContextMenu.show();
     $event && $event.preventDefault();
   }
 
@@ -163,5 +178,15 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
 
     // hide the modal
     (<any>this.$refs.resetModal) && (<any>this.$refs.resetModal).hide();
+  }
+
+  /**
+   * Should dropdown context menu be shown?
+   */
+  areDropdownDotsVisible() {
+    return !this.saving && (
+      (this.schemaActions && this.templateEntry.changed && !this.templateEntry.isNew) ||
+      (this.listActions && this.entryType === 'array' && this.containerAddress.startsWith('0x'))
+    );
   }
 }

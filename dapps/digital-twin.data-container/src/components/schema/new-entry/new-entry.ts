@@ -104,6 +104,8 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
         value: this.arrayTypes[0]
       },
     }));
+
+    this.$emit('init', this);
   }
 
   /**

@@ -1,4 +1,4 @@
-111§/*
+/*
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it
@@ -33,10 +33,7 @@
     <div class="spinner-border spinner-border-sm text-light ml-3"
       v-if="loading">
     </div>
-    <template v-else-if="!saving && (
-      (schemaActions && templateEntry.changed && !templateEntry.isNew) ||
-      (listActions && entryType === 'array' && containerAddress.startsWith('0x'))
-    )">
+    <template v-else-if="areDropdownDotsVisible()">
       <!-- show dropdown button  -->
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"

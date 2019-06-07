@@ -60,6 +60,20 @@ export function addLastOpenedTwin(address: string) {
 }
 
 /**
+ * Remove last opened twin from localStorage.
+ *
+ * @param      {string}  address  The address
+ */
+export function removeLastOpenedTwin(address: string) {
+  if (address) {
+    const lastTwins = getLastOpenedTwins();
+
+    lastTwins.splice(lastTwins.indexOf(address), 1);
+    window.localStorage[latestTwinsKey] = JSON.stringify(lastTwins.slice(0, 20));
+  }
+}
+
+/**
  * Sends the 'dt-value-changed' event.
  */
 export function enableDTSave() {

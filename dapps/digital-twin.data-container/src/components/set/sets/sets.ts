@@ -81,6 +81,13 @@ export default class DataSetsComponent extends mixins(EvanComponent) {
   cacheWatcher: any;
 
   /**
+   * ref handlers
+   */
+  reactiveRefs: any = {
+    setActions: [ ]
+  };
+
+  /**
    * Set button classes
    */
   async created() {

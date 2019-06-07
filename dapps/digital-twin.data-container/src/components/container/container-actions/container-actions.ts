@@ -87,7 +87,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
+  loading = false;
   saving = false;
   sharing = false;
 
@@ -116,8 +116,6 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
    * Set button classes
    */
   async created() {
-    const runtime = utils.getRuntime(this);
-
     // check for actions mode
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
@@ -125,7 +123,18 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       );
 
       this.buttonTextComp = 'span';
+    } else {
+      // only initialize directly on startup when button view is enabled
+      await this.initialize();
     }
+  }
+
+  /**
+   * Load the container data.
+   */
+  async initialize() {
+    this.loading = true;
+    const runtime = utils.getRuntime(this);
 
     // load ui container data
     try {
@@ -152,8 +161,10 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
    * Show the actions dropdown.
    */
   showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
+    // load data for dropdowns
+    !this.loading && !this.plugin && this.initialize();
 
+    (<any>this).$refs.dtContextMenu.show();
     $event && $event.preventDefault();
   }
 
@@ -187,7 +198,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
       this.plugin.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
-      (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
+      (<any>this.reactiveRefs.dbcpModal) && (<any>this.reactiveRefs.dbcpModal).hide();
 
       // wait for the template handler to saved all the data
       this.$nextTick(async () => {

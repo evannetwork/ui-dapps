@@ -122,7 +122,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
+  loading = false;
 
   /**
    * container description
@@ -137,21 +137,30 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * containers plugin definition
    */
-  plugin: any;
+  plugin: any = null;
 
   /**
    * Set button classes
    */
   async created() {
-    const runtime = utils.getRuntime(this);
-
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
       );
 
       this.buttonTextComp = 'span';
+    } else {
+      // only initialize directly on startup when button view is enabled
+      await this.initialize();
     }
+  }
+
+  /**
+   * Load the plugin data.
+   */
+  async initialize() {
+    this.loading = true;
+    const runtime = utils.getRuntime(this);
 
     // watch for updates
     try {
@@ -179,8 +188,10 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Show the actions dropdown.
    */
   showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
+    // load data for dropdowns
+    !this.loading && !this.plugin && this.initialize();
 
+    (<any>this).$refs.dtContextMenu.show();
     $event && $event.preventDefault();
   }
 
@@ -188,9 +199,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Close the actions dropdown.
    */
   closeDropdown() {
-    if ((<any>this).$refs.dtContextMenu) {
-      (<any>this).$refs.dtContextMenu.hide();
-    }
+    (<any>this).$refs.dtContextMenu && (<any>this).$refs.dtContextMenu.hide();
   }
 
   /**
@@ -261,7 +270,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
-      (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
+      (<any>this.reactiveRefs.dbcpModal) && (<any>this.reactiveRefs.dbcpModal).hide();
 
       // wait for the template handler to saved all the data
       this.$nextTick(async () => {
@@ -329,7 +338,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       bMailContent,
     });
 
-    (<any>this.$refs.shareModal).hide();
+    (<any>this.reactiveRefs.shareModal).hide();
   }
 
   /**
