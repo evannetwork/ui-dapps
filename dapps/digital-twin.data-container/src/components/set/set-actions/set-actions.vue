@@ -30,10 +30,7 @@
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''"
     v-if="containerAddress">
-    <div class="spinner-border spinner-border-sm text-light ml-3"
-      v-if="loading">
-    </div>
-    <template v-else-if="areDropdownDotsVisible()">
+    <template v-if="!loading && areDropdownDotsVisible()">
       <!-- show dropdown button  -->
       <button class="btn btn-circle btn-sm btn-tertiary"
         v-if="displayMode === 'dropdownButton'"
@@ -60,28 +57,30 @@
           <template v-slot:content>
             <template v-if="setActions"></template>
             <template v-if="schemaActions">
-              <a
+              <button
                 id="dc-set-reset"
-                v-if="!saving && templateEntry.changed && !templateEntry.isNew"
+                v-if="templateEntry.changed && !templateEntry.isNew"
                 :class="buttonClasses.tertiar"
                 @click="$refs.resetModal.show(); closeDropdown();">
                 <i class="mdi mdi-file-undo"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.sets.reset.title` | translate }}
                 </component>
-              </a>
+              </button>
             </template>
-            <template v-if="listActions && entryType === 'array' && containerAddress.startsWith('0x')">
-              <a
+            <template v-if="listActions && entryType === 'array' && containerAddress.startsWith('0x') && writeOperations">
+              <button
                 id="dc-add-list-entry"
-                v-if="!saving"
+                v-if="writeOperations"
                 :class="buttonClasses.primary"
+                :disabled="saving"
                 @click="reactiveRefs.dcListEntriesAdd.showModal(); closeDropdown();">
-                <i class="mdi mdi-plus"></i>
+                <div class="spinner-border spinner-border-sm text-light" v-if="saving"></div>
+                <i class="mdi mdi-plus" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.list.add-list-entry` | translate }}
                 </component>
-              </a>
+              </button>
             </template>
           </template>
         </evan-dropdown>

@@ -58,7 +58,7 @@
                 </span>
               </div>
               <span class="mx-auto"></span>
-              <div class="spinner-border spinner-border-sm ml-3"
+              <div class="spinner-border spinner-border-sm text-secondary ml-3"
                 v-if="container.loading">
               </div>
               <i class="mdi mdi-dots-vertical clickable text-dark"

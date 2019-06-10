@@ -99,11 +99,19 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
    */
   decodeURIComponent = (<any>window).decodeURIComponent;
 
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = {
+    setActions: [ ]
+  };
+
+
   async created() {
     const runtime = utils.getRuntime(this);
 
     try {
-      await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      await UiContainer.watch(this, async (uiContainer: UiContainer, dispatcherData: any) => {
         this.plugin = uiContainer.plugin;
 
         if (!this.initializing) {

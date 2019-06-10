@@ -67,6 +67,9 @@
                   </span>
                 </div>
                 <span class="mx-auto"></span>
+                <div class="spinner-border spinner-border-sm text-secondary"
+                  v-if="reactiveRefs.setActions[index] && reactiveRefs.setActions[index].saving">
+                </div>
                 <i class="mdi mdi-dots-vertical clickable text-dark"
                   v-if="reactiveRefs.setActions[index] &&
                     reactiveRefs.setActions[index].areDropdownDotsVisible()"

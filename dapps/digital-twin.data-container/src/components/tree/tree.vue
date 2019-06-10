@@ -139,14 +139,17 @@
         </a>
         <span class="mx-auto"></span>
         <div class="position-relative d-flex align-items-center">
+          <div class="spinner-border spinner-border-sm text-secondary"
+            v-if="reactiveRefs.setActions[index] && reactiveRefs.setActions[index].saving">
+          </div>
           <dc-set-actions
-            ref="dcSetActions"
             :containerAddress="containerAddress"
             :entryName="entry"
             :displayMode="'dropdownIcon'"
             :setActions="true"
             :schemaActions="true"
-            :listActions="true">
+            :listActions="true"
+            @init="$set(reactiveRefs.setActions, index, $event)">
           </dc-set-actions>
         </div>
       </div>

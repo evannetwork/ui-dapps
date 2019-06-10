@@ -197,9 +197,13 @@ const i18n: any = {
     },
     "share": {
       "action": "Teilen",
-      "bmail": {
-        "body": "Guten Tag,<br><br>Sie wurden das Plugin <b>{subject}</b> von <b>{alias}</b> eingeladen: <br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Einladung in Plugin eines Digitalen Zwillings"
+      "bmail-twin": {
+        "body": "Guten Tag,<br><br>Sie wurden in den Digitalen Zwilling <b>{subject}</b> von <b>{alias}</b> eingeladen: <br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Einladung in Digitalen Zwilling"
+      },
+      "bmail-container": {
+        "body": "Guten Tag,<br><br>Sie wurden in die Plugin-Instanz <b>{subject}</b> von <b>{alias}</b> eingeladen: <br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "title": "Einladung in Plugin-Instanz"
       },
       "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
       "entry": "Datenbereich",

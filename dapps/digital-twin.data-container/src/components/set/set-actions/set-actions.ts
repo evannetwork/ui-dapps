@@ -94,6 +94,11 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   uiContainer: any = null;
 
   /**
+   * is permitted for write operations?
+   */
+  writeOperations = false;
+
+  /**
    * Currents container template definition.
    */
   templateEntry: any = null;
@@ -114,6 +119,11 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   saving = false;
   cacheWatcher = null;
   savingWatcher = null;
+
+  /**
+   * List of entries that are currently is save process
+   */
+  entriesToSave: Array<boolean> = [ ];
 
   /**
    * Set button classes
@@ -139,12 +149,17 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    * Load the set data.
    */
   async initialize() {
+    const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+    this.uiContainer = await UiContainer.watch(this, async (
+      uiContainer: UiContainer,
+      dispatcherData: any
+    ) => {
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
-      this.saving = uiContainer.isSaving;
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
+      this.writeOperations = uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1;
+      this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
     });
 
     this.loading = false;
@@ -184,9 +199,10 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    * Should dropdown context menu be shown?
    */
   areDropdownDotsVisible() {
-    return !this.saving && (
+    return (
       (this.schemaActions && this.templateEntry && this.templateEntry.changed && !this.templateEntry.isNew) ||
-      (this.listActions && this.entryType === 'array' && this.containerAddress.startsWith('0x'))
+      (this.listActions && this.entryType === 'array' && this.containerAddress.startsWith('0x') &&
+        this.writeOperations)
     );
   }
 }

@@ -81,8 +81,9 @@ export default class UiContainer {
   isDeleting: boolean;
   isSaving: boolean;
   isSharing: boolean;
-  savingData: Array<any>;xw
+  savingData: Array<any>;
   sharingData: Array<any>;
+  savingEntries: Array<any>;
 
   /**
    * container specific data
@@ -199,6 +200,22 @@ export default class UiContainer {
     this.savingData = savingData;
     this.sharingData = sharingData;
     this.deletingData = deletingData;
+
+    if (isSaving) {
+      // in container, show saving symbol only for these entries, that are. in save process
+      if (this.isContainer) {
+        this.savingEntries = [ ].concat(
+          ...(savingData
+            .filter(data => data.plugin && data.address === this.address)
+            .map(data => data.entriesToSave)
+          ))
+      // for templates show save symbol everywhere
+      } else {
+        this.savingEntries = Object.keys(this.template.properties);
+      }
+    } else {
+      this.savingEntries = [ ];
+    }
 
     // run all update functions
     await Promise.all(updateWatchers.map((updateFunc: Function) =>

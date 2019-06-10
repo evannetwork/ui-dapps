@@ -84,9 +84,11 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * is the current container in save mode
    */
+  cacheWatcher = null;
+  error = false;
+  permitted = false;
   saving = false;
   savingWatcher = null;
-  cacheWatcher = null;
 
   /**
    * Calculated type
@@ -97,32 +99,46 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
    * Load first entries
    */
   async created() {
+    const runtime = utils.getRuntime(this);
+
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
 
     let beforeSaving = false;
-    UiContainer.watch(this, async (uiContainer: UiContainer, dispatchetData: any) => {
+    await UiContainer.watch(this, async (uiContainer: UiContainer, dispatchetData: any) => {
       this.saving = uiContainer.isSaving;
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      // ensure values
-      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+      if (uiContainer.permissions.read.indexOf(this.entryName) !== -1 ||
+          uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1) {
+        this.permitted = true;
 
-      if (beforeSaving && !this.saving) {
-        // reset values
-        this.count = 10;
-        this.maxListentries = 0;
-        this.offset = 0;
-        this.listEntries = [ ];
+        // ensure values
+        entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+        // setup dispatcher entries
+        this.setDispatcherEntries(dispatchetData);
 
-        await this.loadEntries();
+        // reload after save process has finished
+        if (beforeSaving && !this.saving) {
+          // reset values
+          this.count = 10;
+          this.maxListentries = 0;
+          this.offset = 0;
+          this.listEntries = [ ];
+
+          await this.loadEntries();
+        }
+
+        beforeSaving = this.saving;
       }
-
-      beforeSaving = this.saving;
     });
 
-    await this.loadEntries();
+    if (this.permitted) {
+     await this.loadEntries();
+    } else {
+      this.loading = false;
+    }
   }
 
   /**
@@ -152,7 +168,9 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
       // apply the new entries to the list and increase the page params
       this.offset += newEntries.length;
       this.listEntries = this.listEntries.concat(newEntries);
-    } catch (ex) { }
+    } catch (ex) {
+      this.error = true;
+    }
 
     this.loading = false;
   }

@@ -60,6 +60,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * Was data loaded before?
+   */
+  initialized = false;
+
+  /**
    * Data container could not be loaded, e.g. no permissions.
    */
   error = false;
@@ -107,9 +112,9 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
 
+    let beforeSaving = false;
     this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
-      this.loading = true;
-      this.saving = uiContainer.isSaving;
+      this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
       this.error = uiContainer.error;
 
       const runtime = utils.getRuntime(this);
@@ -118,7 +123,9 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      if (!this.error) {
+      if (!this.error && (!this.initialized || (!this.saving && beforeSaving))) {
+        this.loading = true;
+
         try {
           if (this.containerAddress.startsWith('0x')) {
             const container = utils.getContainer(<any>runtime, this.containerAddress);
@@ -138,11 +145,13 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
           runtime.logger.log(ex.message, 'error');
         }
 
+        this.initialized = true;
         // ensure edit values for schema component
         entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+        this.$nextTick(() => this.loading = false);
       }
 
-      this.$nextTick(() => this.loading = false);
+      beforeSaving = this.saving;
     });
 
     this.loading = false;
