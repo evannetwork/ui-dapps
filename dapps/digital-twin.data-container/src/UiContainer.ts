@@ -432,19 +432,17 @@ export default class UiContainer {
    * Saves latest changes.
    */
   async save() {
-    // make a copy of the current plugin, so the object will not be changed within the dispatcher
-    const saveCopy = JSON.parse(JSON.stringify(this.plugin));
     if (this.isContainer) {
       await dispatchers.updateDispatcher.start(this.runtime, {
         address: this.address,
         description: this.description,
         digitalTwinAddress: this.digitalTwinAddress,
-        plugin: saveCopy,
+        plugin: { ...this.plugin },
       });
     } else {
       await dispatchers.pluginDispatcher.start(this.runtime, {
         beforeName: this.address,
-        ...saveCopy
+        ...this.plugin
       });
     }
   }
