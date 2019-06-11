@@ -236,6 +236,8 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
         title: (<any>this).$t('_datacontainer.share.bmail.title'),
         body: (<any>this).$t('_datacontainer.share.bmail.body', {
           alias: this.myProfile.alias,
+          containerAddress: this.containerAddress,
+          digitalTwinAddress: this.digitalTwinAddress,
           subject: this.shareForm.subject.value,
         }),
         attachments: [{

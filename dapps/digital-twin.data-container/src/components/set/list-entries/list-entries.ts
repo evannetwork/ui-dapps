@@ -105,7 +105,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
     this.entryName = this.$route.params.entryName;
 
     let beforeSaving = false;
-    await UiContainer.watch(this, async (uiContainer: UiContainer, dispatchetData: any) => {
+    await UiContainer.watch(this, async (uiContainer: UiContainer, dispatcherData: any) => {
       this.saving = uiContainer.isSaving;
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
@@ -117,7 +117,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
         // ensure values
         entryUtils.ensureValues(this.containerAddress, this.templateEntry);
         // setup dispatcher entries
-        this.setDispatcherEntries(dispatchetData);
+        this.setDispatcherEntries(dispatcherData);
 
         // reload after save process has finished
         if (beforeSaving && !this.saving) {
@@ -167,7 +167,11 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
 
       // apply the new entries to the list and increase the page params
       this.offset += newEntries.length;
-      this.listEntries = this.listEntries.concat(newEntries);
+      this.listEntries = this.listEntries.concat(
+        newEntries.map(entry => ({
+          data: entry
+        }))
+      );
     } catch (ex) {
       this.error = true;
     }
@@ -178,20 +182,25 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * Set dispatcher entries for displaying list entries that are currently saved.
    *
-   * @param      {Arrayany}  dispatchetData  The dispatcher data
+   * @param      {Arrayany}  dispatcherData  The dispatcher data
    */
-  async setDispatcherEntries(dispatchetData: Array<any>) {
-    this.dispatcherEntries = [ ].concat(
-      ...(dispatchetData
-        .filter(data => data.plugin && data.address === this.containerAddress &&
-          data.plugin.template.properties[this.entryName].value.length > 0
-        )
-        .map(data => data.plugin.template.properties[this.entryName].value)
-      ))
-      .map(entry => {
-        entry.loading = true;
+  async setDispatcherEntries(dispatcherData: Array<any>) {
+    // reset previous dispatcher data
+    this.dispatcherEntries = [ ];
 
-        return entry;
+    // only get the dispatcher data, that corresponds to this entry
+    const filtered = dispatcherData
+      .filter(data => data.plugin && data.address === this.containerAddress &&
+        data.plugin.template.properties[this.entryName].value.length !== 0
+      )
+      .map(data => data.plugin.template.properties[this.entryName].value);
+
+    // will always be an array of values, so flat and push them into the dispatcherEntries
+    filtered.forEach(values => values.forEach((value: any) => {
+      this.dispatcherEntries.push({
+        data: value,
+        loading: true,
       });
+    }));
   }
 }

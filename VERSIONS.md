@@ -27,6 +27,8 @@
   - fix creation steps and validity checks
   - fix dataContainer.defaultSchema is used without copying
   - fix plugin sharing
+  - fix reactive files
+  - fix `Container` file caching and changes checks
 
 ### Deprecations
 

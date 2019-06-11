@@ -143,6 +143,7 @@ function getConfig(isDispatcher?: boolean) {
       MailboxRootComponent,
       MailDetailComponent,
       MailSendComponent,
+      UrlAttachmentComponent,
     ];
   }
 

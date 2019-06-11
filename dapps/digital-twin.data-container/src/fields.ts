@@ -154,7 +154,27 @@ export function parseFieldValue(
       return parseFloat(value);
     }
     case 'files': {
-      return value;
+      const converted = [ ];
+      const allowedFileProperties = [ 'file', 'name', 'size', ];
+
+      // remove remove blob and blobUri object from files
+      value.files.forEach((file: any) => {
+        const copy = { ...file };
+
+        // only use Uint8Array's for correct deep equal check
+        copy.file = new Uint8Array(copy.file);
+
+        // remove runtime data
+        Object.keys(copy).forEach(prop => {
+          if (allowedFileProperties.indexOf(prop) === -1) {
+            delete copy[prop];
+          }
+        });
+
+        converted.push(copy);
+      })
+
+      return { files: converted };
     }
   }
 };

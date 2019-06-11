@@ -133,18 +133,23 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
       // save the current ajv values to the edit.value object and save the value into the original
       // object
       this.reactiveRefs.addAjv.save();
+      this.entry.value.unshift(this.entry.edit.value);
     } else {
-      // apply the new data to the list
-      this.entry.value.push(this.addListEntryForm.value.value);
+      const correctValue = fieldUtils.parseFieldValue(
+        this.itemType,
+        this.addListEntryForm.value.value
+      );
 
-      // clear the formular value
-      this.entry.edit.value = fieldUtils.defaultValue(this.entry.dataSchema);
-      this.addListEntryForm.value.value = this.entry.edit.value;
+      // apply the new data to the list
+      this.entry.value.push(correctValue);
     }
 
     // apply the new value into the array, and clear the old add value
-    this.entry.value.unshift(this.entry.edit.value);
-    this.entry.edit.value = null;
+    this.entry.edit.value = fieldUtils.defaultValue(this.entry.dataSchema);
+    if (this.addListEntryForm) {
+      // clear the formular value
+      this.addListEntryForm.value.value = this.entry.edit.value;
+    }
 
     // ensure the new empty edit.value
     entryUtils.ensureValues(this.containerAddress, this.entry);

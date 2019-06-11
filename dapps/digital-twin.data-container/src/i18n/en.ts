@@ -24,7 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
@@ -197,9 +196,13 @@ const i18n: any = {
     },
     "share": {
       "action": "Share",
-      "bmail": {
-        "body": "Hello,<br><br>You have been invited into the Digital Twin Plugin <b>{subject}</b> by <b>{alias}</b>. Use the \"open attachment\" button to add it to your profile. <br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Digital Twin Plugin"
+      "bmail-container": {
+        "body": "Hello,<br><br>You have been invited to the plugin instance <b>{subject}</b> by <b>{alias}</b>.<br><br><b>Address of the plugin</b>:{containerAddress}<br><br><br>Hear regards,<br><br>{alias}",
+        "title": "Invitation in plugin instance"
+      },
+      "bmail-twin": {
+        "body": "Hello,<br><br>You have been invited to the Digital Twin <b>{subject}</b> by <b>{alias}</b>.<br><br><b>Address of the Digital Twin</b>:{digitalTwinAddress}<br><br><br>Best regards,<br><br>{alias}",
+        "title": "Invitation in Digital Twin"
       },
       "desc": "Send this data container to people in your address book and specify their access permissions.",
       "entry": "Data set",

@@ -95,7 +95,10 @@ export default class FieldComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
           // populate the value to the parents component, else the value is handled by the parents
           // form
-          vueInstance.entry.edit.value = this.value;
+          vueInstance.entry.edit.value = fieldUtils.parseFieldValue(
+            vueInstance.itemType || vueInstance.type,
+            this.value
+          );
 
           // run validation
           return fieldUtils.validateField(

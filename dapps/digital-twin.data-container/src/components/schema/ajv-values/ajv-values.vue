@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div>
+  <div v-if="!loading">
     <form id="ajv-values">
       <div class="form-group"
         v-for="(schemaKey, index) in Object.keys(properties)">

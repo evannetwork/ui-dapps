@@ -76,6 +76,11 @@ export default class AJVComponent extends mixins(EvanComponent) {
   valueForm: EvanForm = null;
 
   /**
+   * Render form after everything was added to the EvanForm object
+   */
+  loading = true;
+
+  /**
    * Do not save the properties multiple times automatically
    */
   deleted = false;
@@ -96,37 +101,33 @@ export default class AJVComponent extends mixins(EvanComponent) {
   created() {
     this.$emit('init', this);
 
-    this.valueForm = new EvanForm(this, { });
-
     // map the initial schema to formulars
-    Object
-      .keys(this.properties)
-      .forEach((schemaKey: string) => {
-        let type = this.types[schemaKey] = fieldUtils.getType(this.properties[schemaKey]);
+    const controls = { };
+    Object.keys(this.properties).forEach((schemaKey: string) => {
+      let type = this.types[schemaKey] = fieldUtils.getType(this.properties[schemaKey]);
 
-        this.valueForm.addControl(
-          schemaKey,
-          {
-            value: this.value[schemaKey] || fieldUtils.defaultValue(this.properties[schemaKey]),
-            validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
-              // update components isValid flag so it will be reactive
-              vueInstance.$nextTick(() => {
-                vueInstance.isValid = vueInstance.valueForm.isValid;
-              });
+      controls[schemaKey] = {
+        value: this.value[schemaKey] || fieldUtils.defaultValue(this.properties[schemaKey]),
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          // update components isValid flag so it will be reactive
+          vueInstance.$nextTick(() => {
+            vueInstance.isValid = vueInstance.valueForm.isValid;
+          });
 
-              // map the value top the correct dynamic type validator
-              return fieldUtils.validateField(
-                type,
-                this,
-                form,
-                vueInstance.address,
-              );
-            }
-          }
-        );
+          // map the value top the correct dynamic type validator
+          return fieldUtils.validateField(
+            type,
+            this,
+            form,
+            vueInstance.address,
+          );
+        }
+      };
+    });
 
-        this.$set(this.valueForm, schemaKey, this.valueForm[schemaKey])
-      });
+    // setup formular
+    this.valueForm = new EvanForm(this, controls);
+    this.loading = false;
   }
 
   /**

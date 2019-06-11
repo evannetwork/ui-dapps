@@ -61,7 +61,7 @@
 
         <tbody>
           <tr
-            v-for="(listEntry, index) in [ ].concat(dispatcherEntries, templateEntry.value, listEntries)">
+            v-for="(listEntry, index) in [ ].concat(dispatcherEntries, listEntries)">
             <td class="font-weight-semibold flex-grow-0">
               {{ index + 1}}
             </td>
@@ -71,7 +71,7 @@
                 <dc-field
                   :id="`list-value-${ index }`"
                   :schema="templateEntry.dataSchema.items.properties[key]"
-                  :control="{ value: listEntry[key] }"
+                  :control="{ value: listEntry.data[key] }"
                   :mode="'view'"
                   :standalone="false">
                 </dc-field>
@@ -81,7 +81,7 @@
               v-else>
               <dc-field
                 :schema="templateEntry.dataSchema.items"
-                :control="{ value: listEntry }"
+                :control="{ value: listEntry.data }"
                 :mode="'view'"
                 :standalone="false">
               </dc-field>
