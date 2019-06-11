@@ -39,229 +39,411 @@ import * as dcUtils from './utils';
 import * as dispatchers from './dispatchers/registry';
 import ContainerCache from './container-cache';
 
-export const containerCache = { };
-export const loadingCache = { };
-export const permissionsCache = { };
+/**
+ * UI Container instances serated by addresses
+ */
+export const containers: any = { };
 
 /**
  * DigitalTwin Container wrapper for loading.
  */
 export default class UiContainer {
   /**
-   * Original vue isntance where the container should be loaded
-   */
-  vueInstance: any;
-
-  /**
-   * digitalTwin address, where the container should be created for
+   * digital twin and container address
    */
   digitalTwinAddress: string;
-
-  /**
-   * Current opened container address
-   */
-  containerAddress: string;
+  address: string;
 
   /**
    * Vue instance evan routing dapp definition
    */
   dapp: any;
+  $i18n: any;
 
   /**
-   * current bcc runtime
+   * Status params
+   */
+  error: any;
+  loading: boolean;
+  loadingPromise: any;
+
+  /**
+   * util for interaction with containers
    */
   runtime: bcc.Runtime;
-
-  /**
-   * Current container cache
-   */
   containerCache: ContainerCache;
 
   /**
-   * Is currently something loading?
+   * dispatcher infos
    */
-  loading: boolean;
+  deletingData: Array<any>;
+  isContainer: any;
+  isDeleting: boolean;
+  isSaving: boolean;
+  isSharing: boolean;
+  savingData: Array<any>;
+  sharingData: Array<any>;
+  savingEntries: Array<any>;
 
   /**
-   * Loading error?
-   */
-  error: any;
-
-  /**
-   * Loaded plugin instance
-   */
-  plugin: any;
-
-  /**
-   * Loaded plugins description
+   * container specific data
    */
   description: any;
-
-  /**
-   * Owner of the container
-   */
   owner: string;
-
-  /**
-   * Loaded Permissions
-   */
   permissions: any;
+  plugin: any;
+  template: any;
 
   /**
-   * Initialize
+   * Vue instances that were applied to this ui container
    */
-  constructor(vueInstance: any) {
-    this.runtime = utils.getRuntime(vueInstance);
-    this.vueInstance = vueInstance;
-    this.dapp = vueInstance.dapp;
-    this.containerCache = new ContainerCache(this.runtime.activeAccount);
-    this.digitalTwinAddress = dcUtils.getDtAddressFromUrl(this.dapp);
-    this.containerAddress = this.vueInstance.containerAddress || this.vueInstance.pluginName;
+  vueInstances: Array<any> = [ ];
+
+  /**
+   * List of functions to clear active data watching functions
+   */
+  clearWatchers: Array<any> = [ ];
+  updateWatchers: Array<any> = [ ];
+
+  /**
+   * Return new UiContainer without using new flag for using easy usable watch logic
+   *
+   * @param      {any}       vueInstance  vue instance for getting $i18n, runtime, dapp, ...
+   * @param      {Function}  watch        optional watching function, is called with the following
+   *                                      params (uiContainer, savingDispatcherData,
+   *                                      sharingDispatcherData)
+   */
+  static async watch(vueInstance: any, watch: Function) {
+    const uiContainer = new UiContainer(vueInstance, watch);
+
+    // run plugin update only for this watch function
+    watch && uiContainer.address && (await uiContainer.runPluginUpdate(false, [ watch ]));
+
+    return uiContainer;
+  }
+
+  /**
+   * Initialize the ui container.
+   */
+  constructor(vueInstance: any, watch?: Function) {
+    const address = vueInstance.containerAddress || vueInstance.pluginName;
+    const uiContainer = containers[address] || this;
+
+    if (!address) {
+      throw new Error('No container address applied!');
+    }
+
+    if (!uiContainer.address) {
+      // cache it for later usage
+      containers[address] = this;
+
+      uiContainer.address = address;
+      uiContainer.runtime = utils.getRuntime(vueInstance);
+      uiContainer.dapp = JSON.parse(JSON.stringify(vueInstance.dapp));
+      uiContainer.containerCache = new ContainerCache(uiContainer.runtime.activeAccount);
+      uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(uiContainer.dapp);
+      uiContainer.$i18n = vueInstance.$i18n;
+      uiContainer.isContainer = uiContainer.address && uiContainer.address.startsWith('0x');
+    }
+
+    // bind watchers, when no watcher was started before
+    if (uiContainer.vueInstances.length === 0) {
+      uiContainer.bindWatchers();
+    }
+
+    // apply the vue instance to the list of previous used, so data watchers can be bound and
+    // removed dynamically
+    watch && uiContainer.updateWatchers.push(watch);
+    uiContainer.vueInstances.push(vueInstance);
+
+    // bind custom beforeDestroy function, to clear all watch functions
+    vueInstance.$once('hook:beforeDestroy', () => {
+      watch && uiContainer.updateWatchers.splice(uiContainer.updateWatchers.indexOf(watch), 1);
+      uiContainer.vueInstances.splice(uiContainer.vueInstances.indexOf(vueInstance), 1);
+
+      // remove all listeners, when the ui container is not bound to a vue instance
+      if (uiContainer.vueInstances.length === 0) {
+        uiContainer.clearWatchers.forEach(watcher => watcher());
+      }
+    });
+
+    return uiContainer;
+  }
+
+  /**
+   * loads the latest data and calls the callback
+   *
+   * @param      {boolean}          reload          force updateFunc data reload
+   * @param      {Array<Function>}  updateWatchers  update functions
+   */
+  async runPluginUpdate(reload = false, updateWatchers = this.updateWatchers) {
+    const [ deletingData, savingData, sharingData ] = await Promise.all([
+      this.getDeleteData(),
+      this.getSavingData(),
+      this.getSharingData(),
+    ]);
+    const isDeleting = deletingData.length !== 0;
+    const isSaving = savingData.length !== 0;
+    const isSharing = sharingData.length !== 0;
+
+    // load plugin, trigger reload, when dispatcher is finished
+    await this.loadPlugin(
+      reload ||
+      (this.isSaving && !isSaving) ||
+      (this.isSharing && !isSharing)
+    );
+
+    // update latest saving status
+    this.isSaving = isSaving;
+    this.isSharing = isSharing;
+    this.isDeleting = isDeleting;
+    this.savingData = savingData;
+    this.sharingData = sharingData;
+    this.deletingData = deletingData;
+
+    if (isSaving) {
+      // in container, show saving symbol only for these entries, that are. in save process
+      if (this.isContainer) {
+        this.savingEntries = [ ].concat(
+          ...(savingData
+            .filter(data => data.plugin && data.address === this.address)
+            .map(data => data.entriesToSave)
+          ))
+      // for templates show save symbol everywhere
+      } else {
+        this.savingEntries = Object.keys(this.template.properties);
+      }
+    } else {
+      this.savingEntries = [ ];
+    }
+
+    // run all update functions
+    await Promise.all(updateWatchers.map((updateFunc: Function) =>
+      updateFunc(this, savingData, sharingData)
+    ));
+  };
+
+  /**
+   * Bind container and dispatcher update watchers for populating changes.
+   */
+  bindWatchers() {
+    // watch for cache updates
+    this.clearWatchers.push(this.containerCache.watch(this.address, () =>
+      this.runPluginUpdate(true)
+    ));
+    // watch for save updates
+    this.clearWatchers.push(this.isContainer ?
+      dispatchers.updateDispatcher.watch(() => this.runPluginUpdate()) :
+      dispatchers.pluginDispatcher.watch(() => this.runPluginUpdate())
+    );
+    // watch for sharing updates
+    this.clearWatchers.push(this.isContainer ?
+      dispatchers.shareDispatcher.watch(() => this.runPluginUpdate()) :
+      dispatchers.pluginShareDispatcher.watch(() => this.runPluginUpdate())
+    );
   }
 
   /**
    * Returns the plugin definition for a container or plugin.
    *
-   * @param      {string}      containerAddress  container address / plugin name
+   * @param      {string}      address  container address / plugin name
    */
-  async loadData() {
-    this.loading = true;
+  async loadPlugin(reload = false) {
+    if (!reload && this.plugin) {
+      return this.plugin;
+    }
 
-    const containerAddress = this.containerAddress;
-    loadingCache[containerAddress] = loadingCache[containerAddress] ||
+    this.loading = true;
+    this.loadingPromise = this.loadingPromise ||
       new Promise(async (resolve, reject) => {
-        let plugin;
+        let plugin, permissions, owner, error;
 
         try {
           // check if it was already loaded before
-          const cached = await this.containerCache.get(containerAddress);
-          const container = utils.getContainer(this.runtime, containerAddress);
+          const savingData = await this.getSavingData();
+          const cached: any = await this.containerCache.get(this.address) || {
+            template: {
+              properties: { }
+            }
+          };
 
-          if (containerCache[containerAddress]) {
-            plugin = JSON.parse(JSON.stringify(containerCache[containerAddress]));
+          // load the original container data
+          const container = utils.getContainer(this.runtime, this.address);
+          if (this.isContainer) {
+            // get the container instance and load the template including all values
+            plugin = await container.toPlugin();
+            // else try to laod a plugin from profile
           } else {
-            if (containerAddress.startsWith('0x')) {
-              // get the container instance and load the template including all values
-              plugin = await container.toPlugin();
-              // else try to laod a plugin from profile
-            } else {
-              plugin = await bcc.Container.getContainerPlugin(
-                this.runtime.profile,
-                containerAddress
+            // only work on a copy! loadForAccount is only triggered at startup, after this, the
+            // same object references will be loaded
+            plugin = JSON.parse(JSON.stringify(await bcc.Container.getContainerPlugin(
+              this.runtime.profile,
+              this.address
+            )));
+          }
+
+          // merge container cache with dispatcher data
+          savingData.forEach(data => {
+            if (data.template) {
+              cached.template.properties = Object.assign(
+                cached.template.properties,
+                data.template.properties
               );
             }
 
-            containerCache[containerAddress] = JSON.parse(JSON.stringify(plugin));
-          }
+            if (data.description) {
+              plugin.description = data.description;
+            }
+          });
 
           // merged cached values with the correct loaded one
-          if (cached) {
-            const properties = cached.template.properties;
-
-            Object.keys(properties).forEach((property) => {
-              if (properties[property].changed || properties[property].isNew) {
-                plugin.template.properties[property] = properties[property];
-              }
-            });
-          }
+          const properties = cached.template.properties;
+          Object.keys(properties).forEach((property) => {
+            if (properties[property].changed || properties[property].isNew) {
+              plugin.template.properties[property] = properties[property];
+            }
+          });
 
           // load the owner
-          if (!permissionsCache[containerAddress]) {
-            let permissions;
-
-            if (containerAddress.startsWith('0x')) {
-              permissions = {
-                owner: await container.getOwner(),
-                permissions: await container.getContainerShareConfigForAccount(
-                  this.runtime.activeAccount),
-              };
-            } else {
-              // default permissions for plugins
-              permissions = permissionsCache[containerAddress] || {
-                owner: this.runtime.activeAccount,
-                permissions: {
-                  readWrite: Object.keys(plugin.template.properties)
-                },
-              };
-            }
-
-            permissions.read = permissions.read || [ ];
-            permissions.readWrite = permissions.readWrite || [ ];
-            permissionsCache[containerAddress] = permissions;
+          if (this.address.startsWith('0x')) {
+            owner = await container.getOwner();
+            permissions = await container.getContainerShareConfigForAccount(
+                this.runtime.activeAccount);
+          } else {
+            owner = this.runtime.activeAccount;
+            permissions = Object.keys(plugin.template.properties)
           }
+
+          permissions.read = permissions.read || [ ];
+          permissions.readWrite = permissions.readWrite || [ ];
 
           // set custom translation
           const customTranslation = { _digitaltwins: { breadcrumbs: { } } };
-          customTranslation._digitaltwins.breadcrumbs[containerAddress] =
+          customTranslation._digitaltwins.breadcrumbs[this.address] =
             plugin.description.name;
-          this.vueInstance.$i18n.add(this.vueInstance.$i18n.locale(), customTranslation);
+          this.$i18n.add(this.$i18n.locale(), customTranslation);
         } catch (ex) {
-          loadingCache[containerAddress] = null;
-          return reject(ex);
+          error = ex;
         }
 
-        loadingCache[containerAddress] = null;
-        resolve(plugin);
+        // finish the promise
+        if (error) {
+          reject(error);
+        } else {
+          resolve({ permissions, plugin, owner, });
+        }
+
+        // reset the loading promise
+        this.loadingPromise = null;
       });
 
     try {
-      this.plugin = await loadingCache[containerAddress];
+      const { plugin, permissions, owner } = await this.loadingPromise;
+
+      this.plugin = plugin;
+      this.plugin.permissions = this.permissions;
+      this.permissions = permissions;
+      this.owner = owner;
+      this.description = this.plugin.description;
+      this.template = this.plugin.template;
     } catch (ex) {
       this.runtime.logger.log(`Could not load DataContainer detail: ${ ex.message }`, 'error');
       this.error = ex.message;
       this.loading = false;
 
+      this.plugin = null;
+      this.permissions = null;
+      this.owner = null;
+      this.description = null;
+      this.template = null;
+
       return;
     }
 
-    this.description = this.plugin.description;
-    this.owner = permissionsCache[containerAddress].owner;
-    this.permissions = permissionsCache[containerAddress].permissions;
     this.loading = false;
-
     return this.plugin;
   }
 
   /**
-   * watch for container or plugin updates
-   *
-   * @param      {bccRuntime}  runtime           The runtime
-   * @param      {string}      containerAddress  The container address
+   * Is currently a dispatcher running for this container / plugin?
    */
-  watchForUpdates(callback: any) {
-    return this.containerCache.watch(this.containerAddress, callback);
-  }
-
-  /**
-   * Is the current container / plugin in save mode?
-   */
-  async isSaving() {
-    if (this.containerAddress.startsWith('0x')) {
+  async getSavingData() {
+    if (this.isContainer) {
       return (await dispatchers.updateDispatcher.getInstances(this.runtime))
-        .filter(instance => instance.data.address === this.containerAddress)
-        .length !== 0
+        .filter(instance => instance.data.address === this.address)
+        .map(instance => instance.data);
     } else {
       return (await dispatchers.pluginDispatcher.getInstances(this.runtime))
-        .filter(instance => instance.data.description.name === this.containerAddress)
-        .length !== 0;
+        .filter(instance => instance.data.description.name === this.address)
+        .map(instance => instance.data);
     }
   }
 
   /**
-   * Start and return a dispatcher watcher for the current container.
+   * Is currently a dispatcher running for this container / plugin?
    */
-  watchSaving(callback: any) {
-    if (this.containerAddress.startsWith('0x')) {
-      return dispatchers.updateDispatcher.watch(callback);
+  async getSharingData() {
+    if (this.address.startsWith('0x')) {
+      return (await dispatchers.shareDispatcher.getInstances(this.runtime))
+        .filter(instance => instance.data.address === this.address)
+        .map(instance => instance.data);
     } else {
-      return dispatchers.pluginDispatcher.watch(callback);
+      return (await dispatchers.pluginShareDispatcher.getInstances(this.runtime))
+        .filter(instance => instance.data.description.name === this.address)
+        .map(instance => instance.data);
     }
   }
 
   /**
-   * Clear the current element cache
+   * Is currently a dispatcher running for this container / plugin?
    */
-  clearCache() {
-    delete containerCache[this.containerAddress];
+  async getDeleteData() {
+    if (this.address.startsWith('0x')) {
+      return [ ];
+    } else {
+      return (await dispatchers.pluginRemoveDispatcher.getInstances(this.runtime))
+        // .filter(instance => instance.data.name === this.address)
+        .map(instance => instance.data);
+    }
+  }
+
+  /**
+   * Clear the indexedDb cache for this container.
+   */
+  async clearCache() {
+    await this.containerCache.delete(this.address);
+  }
+
+  /**
+   * Resets last changes of a property.
+   *
+   * @param      {string}  entryName  entry name that should be resetted
+   */
+  async resetEntry(entryName: string) {
+    // do not delete the original one, only clear it within a copy and set the cache
+    const pluginCopy = JSON.parse(JSON.stringify(this.plugin));
+    delete pluginCopy.template.properties[entryName];
+
+    // reset the cache
+    this.containerCache.put(this.address, pluginCopy);
+  }
+
+  /**
+   * Saves latest changes.
+   */
+  async save() {
+    if (this.isContainer) {
+      await dispatchers.updateDispatcher.start(this.runtime, {
+        address: this.address,
+        description: this.description,
+        digitalTwinAddress: this.digitalTwinAddress,
+        plugin: { ...this.plugin },
+      });
+    } else {
+      await dispatchers.pluginDispatcher.start(this.runtime, {
+        beforeName: this.address,
+        ...this.plugin
+      });
+    }
   }
 }

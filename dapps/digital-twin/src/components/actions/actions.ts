@@ -27,12 +27,12 @@
 
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registy';
 
@@ -48,7 +48,12 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   /**
    * UI Digital Twin instances, where the actions should be triggered.
    */
-  @Prop() uiDT;
+  @Prop() uiDT: EvanUIDigitalTwin;
+
+  /**
+   * If no uiDT was applied, load data for address.
+   */
+  @Prop() address;
 
   /**
    * Enable Digital twin Actions (edit dbcp, map to ens, favorite toggle)
@@ -68,6 +73,21 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   }) displayMode;
 
   /**
+   * Show loading symbol
+   */
+  loading = false;
+
+  /**
+   * Digital twin that should be used internally
+   */
+  selectedUiDT: EvanUIDigitalTwin = null;
+
+  /**
+   * Custom ui dt was loaded with bypassed twin address
+   */
+  loadedUiDT: EvanUIDigitalTwin = null;
+
+  /**
    * ref handlers
    */
   reactiveRefs: any = { };
@@ -84,9 +104,26 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
   buttonTextComp = 'evan-tooltip';
 
   /**
+   * Watch for ui dt changes to apply interactions to current select dt.
+   */
+  @Watch('uiDT')
+  onChildChanged(val: string, oldVal: string) {
+    if (val !== this.uiDT) {
+      this.loadedUiDT && this.loadedUiDT.destroy();
+      this.loadedUiDT = null;
+      this.selectedUiDT = this.uiDT;
+      this.reactiveRefs = { };
+
+      // force reload
+      this.loading = true;
+      this.$nextTick(() => this.loading = false);
+    }
+  }
+
+  /**
    * Set button classes
    */
-  created() {
+  async created() {
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -94,14 +131,39 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
 
       this.buttonTextComp = 'span';
     }
+
+    if (this.uiDT) {
+      this.selectedUiDT = this.uiDT;
+    } else if (this.displayMode === 'buttons' && this.address) {
+      await this.initialize();
+    }
+  }
+
+  /**
+   * Clear uiDt listeners
+   */
+  async beforeDestroy() {
+    this.loadedUiDT && this.loadedUiDT.destroy();
+  }
+
+  /**
+   * Load the plugin data.
+   */
+  async initialize() {
+    this.loading = true;
+    this.selectedUiDT = this.loadedUiDT = new EvanUIDigitalTwin(this.address);
+    await this.selectedUiDT.initialize(this, utils.getRuntime(this));
+    this.loading = false;
   }
 
   /**
    * Show the actions dropdown.
    */
   showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
+    // load data for dropdowns
+    !this.loading && !this.uiDT && this.initialize();
 
+    (<any>this).$refs.dtContextMenu.show();
     $event && $event.preventDefault();
   }
 
@@ -124,17 +186,17 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
     (<any>this.$refs.dbcpModal).hide();
 
     // save the dbcp
-    this.uiDT.dbcp.name = newDbcp.name;
-    this.uiDT.dbcp.description = newDbcp.description;
-    this.uiDT.dbcp.imgSquare = newDbcp.imgSquare;
-    this.uiDT.saveDbcp(this, utils.getRuntime(this), dispatchers.digitaltwinSaveDispatcher);
+    this.selectedUiDT.dbcp.name = newDbcp.name;
+    this.selectedUiDT.dbcp.description = newDbcp.description;
+    this.selectedUiDT.dbcp.imgSquare = newDbcp.imgSquare;
+    this.selectedUiDT.saveDbcp(this, utils.getRuntime(this), dispatchers.digitaltwinSaveDispatcher);
   }
 
   /**
    * Add / remove the twin from profile favorites.
    */
   toggleFavorite() {
-    this.uiDT.toggleFavorite(
+    this.selectedUiDT.toggleFavorite(
       utils.getRuntime(this),
       dispatchers.favoriteAddDispatcher,
       dispatchers.favoriteRemoveDispatcher

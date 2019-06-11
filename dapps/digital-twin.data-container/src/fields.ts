@@ -38,41 +38,59 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
  * @return     {string}   The type.
  */
 export function getType(subSchema: any, firstLevel = true): string {
-  // check if it's a file
-  if (subSchema.$comment) {
-    let $comment;
+  let type;
 
-    try {
-      $comment = JSON.parse(subSchema.$comment);
-    } catch (ex) { }
+  // subSchema could be empty by trying to access array items schema on object or field schema
+  if (subSchema) {
+    // check if it's a file
+    if (subSchema.$comment) {
+      let $comment;
 
-    if ($comment && $comment.isEncryptedFile) {
-      return 'files';
+      try {
+        $comment = JSON.parse(subSchema.$comment);
+      } catch (ex) { }
+
+      if ($comment && $comment.isEncryptedFile) {
+        type = 'files';
+      }
+    } else {
+      type = subSchema.type;
     }
   }
 
-  return subSchema.type;
+  return type;
 }
 
 /**
  * Get the default value for a field type.
  *
- * @param      {string}  type    field type (string, object, array, number, files)
+ * @param      {any}  subSchema  properties subSchema
+ * @param      {any}  type       field type (string, object, array, number, files)
  */
-export function defaultValue(type: string) {
+export function defaultValue(subSchema: any) {
+  const type = getType(subSchema);
+
   switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
-      return [ ];
+      return [ ]
     }
     case 'object': {
-      return { };
+      const defaultReturn = { };
+
+      Object.keys(subSchema).forEach(key => {
+        if (subSchema[key].default) {
+          defaultReturn[key] = subSchema[key].default;
+        }
+      });
+
+      return defaultReturn;
     }
     case 'string': {
-      return '';
+      return subSchema.default || '';
     }
     case 'number': {
-      return 0;
+      return subSchema.default || 0;
     }
     case 'files': {
       return {
@@ -136,7 +154,27 @@ export function parseFieldValue(
       return parseFloat(value);
     }
     case 'files': {
-      return value;
+      const converted = [ ];
+      const allowedFileProperties = [ 'file', 'name', 'size', ];
+
+      // remove remove blob and blobUri object from files
+      value.files.forEach((file: any) => {
+        const copy = { ...file };
+
+        // only use Uint8Array's for correct deep equal check
+        copy.file = new Uint8Array(copy.file);
+
+        // remove runtime data
+        Object.keys(copy).forEach(prop => {
+          if (allowedFileProperties.indexOf(prop) === -1) {
+            delete copy[prop];
+          }
+        });
+
+        converted.push(copy);
+      })
+
+      return { files: converted };
     }
   }
 };

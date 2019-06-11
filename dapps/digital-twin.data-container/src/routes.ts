@@ -44,16 +44,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
   {
-    name: 'dc-create',
-    path: 'dc-create/:cloneContainer?',
-    component: CreateComponent
-  },
-  {
-    name: 'plugin-create',
-    path: 'plugin-create/:cloneContainer?',
-    component: CreateComponent
-  },
-  {
     path: ':containerAddress',
     component: ContainerPluginSwitchComponent,
     children: [
@@ -66,13 +56,14 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     ]
   },
   {
+    name: 'entry-base',
     path: ':containerAddress/data-set/:entryName',
     component: DataSetComponent,
     children: [
-      { redirect: { path: 'entry-schema' }, path: '', },
       { name: 'entry-changes',     component: UnderDevelopmentComponent, path: 'entry-changes', },
       { name: 'entry-permissions', component: UnderDevelopmentComponent, path: 'entry-permissions', },
       { name: 'entry-schema',      component: SetSchemaComponent,        path: 'entry-schema', },
+      { name: 'entry-values',      component: SetSchemaComponent,        path: 'entry-values', },
       { name: 'list-entries',      component: DcListEntriesComponent,    path: 'list-entries', },
     ]
   },

@@ -61,6 +61,11 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   @Prop() activeMode: string;
 
   /**
+   * Disable schema edit and show only formular with input boxes
+   */
+  @Prop({ default: true }) schemaEdit: boolean;
+
+  /**
    * Force loading of ajv component
    */
   loading = false;
@@ -86,13 +91,21 @@ export default class EntryObjectComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Cache latest values
+   */
+  async saveAsCache() {
+    // trigger saving
+    this.reactiveRefs.ajv.save();
+  }
+
+  /**
    * If the mode is schema, force the edit mode, so all values matches the correct field type.
    */
   async save() {
     // trigger saving
     this.reactiveRefs.ajv.save();
     // update entry backup to the latest value
-    entryUtils.saveValue(this, this.entry);
+    entryUtils.saveValue(this.address, this.entry);
   }
 
   /**

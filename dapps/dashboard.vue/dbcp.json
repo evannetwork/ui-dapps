@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.2.0"
+        "evancore.vue.libs": "^1.2.1"
       },
       "entrypoint": "dashboard.vue.js",
       "files": [
         "dashboard.vue.js"
       ],
-      "origin": "Qmc651AyLVrjQ6QuV6FvppPNZqytMrEX79tbUXkgj2W2Xc",
+      "origin": "QmebwfjCfaXkihGfGiScrCCDZUsekmpP6MiHPr2LKtJMX2",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -19,12 +19,12 @@
     "description": "Root app for displaying dapp favourites, mailbox.",
     "i18n": {
       "description": {
-        "de": "Root app zur Darstellung der Mailbox, Favoriten, ...",
-        "en": "Root app for displaying dapp favourites, mailbox..."
+        "de": "evan.network Übersicht über Favoriten, Mails, Contacts and Digitale Zwillinge, ...",
+        "en": "evan.network overview about favorites, mails, contacts and digital twins."
       },
       "name": {
-        "de": "evan.network Dashboard",
-        "en": "evan.network Dashboard"
+        "de": "Neues helles evan.network Dashboard",
+        "en": "New light evan.network Dashboard"
       }
     },
     "imgSquare": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARsAAAEbCAIAAABlT7d2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUxNzYwQTBBMjQ2NjExRTg4RTk5Q0VBM0EzNDlCMzY4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkUzMkU0MTFDMjQ2OTExRTg4RTk5Q0VBM0EzNDlCMzY4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTE3NjBBMDgyNDY2MTFFODhFOTlDRUEzQTM0OUIzNjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTE3NjBBMDkyNDY2MTFFODhFOTlDRUEzQTM0OUIzNjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5w2cxDAAADHUlEQVR42uzcIUsDYRjA8Zu7oMzgdxiHdWgZBoOwJmgyG5dkgtW0qDAxWa0mgxgUZM3k2JoyDGKxKAanCw41GBcu3GB39/t9g3ve98896S0E1VoAJGTGCEBRoChQFKAoUBQoClAUKAoUBYoCFAWKAkUBigJFgaIARYGiQFGgKEBRoChQFKAoUBQoChQFKAoUBYoCFAWKAkUBigJFgaJAUYCiQFGgKEBRoChQFCgKUBQoChQFKAoUBYoCFAWKAkWBogBFgaJAUYCiQFGgKFAUoChQFCgKUBQoChQF/Asz9j07W5tryxXnmhY3d93js3NFTa+lxWhjdcVNTYv3j4GtD1AUKAoUBYoCFAWKAkUBigJFgaIARYGiQFGgKEBRoChQFKAoUBQoChQFKAoUBYoCFAWKggwIjSCO3aOTbv8xzxOoROVWo+4mKCoZfzm1Oz1zwNYHigJFAYoCRYGiQFGAokBRoChAUaAoUBQoClAUKAoUBSgKFAWKAhQFigJFgaIARYGiQFHAWN49j+XisPk9GuX6ohSLroGiElOamzUEbH2gKFAUoChQFCgKFAUoChQFigIUBYoCRYGiAEWBokBRgKJAUaAoQFGgKFAUKApQFCgKssUrzbEMvoY5f/d8Qj6HQ0Xl0frefrvTMwdsfaAoUBSgKFAUKAoUBSgKFAWKAhQFigJFgaIARYGiQFGAokBRoChAUaAoUBQoClAUKAoUBYzl3fNYKlHZECbh5fXt/ulZUbnTatQNYRJOL6+3mwe2PkBRoChQFCgKUBQoChQFKAoUBYoCFAWKAkWBogBFgaJAUYCiQFGgKFAUoChQFCgKUBQoCtIua++edx76C/Ml55qi88rYFxWCas25gq0PFAWKAhQFigJFAYoCRYGiQFGAokBRoChAUaAoUBQoClAUKAoUBSgKFAWKAhQFigJFgaIARYGiQFGAokBRoChAUaAoUBQoClAUKAqyITQC8unn9so/Cmx9oChAUaAoUBSgKFAUKAoUBSgKFAWKAhQFigJFAYoCRYGiQFGAokBRoChAUaAoUBQoClAUTKNfAQYAOSc78Lut9gIAAAAASUVORK5CYII=",
@@ -46,7 +46,7 @@
       "1.2.0": "QmNxWJxV4XqQj4ZsKg8fVmRx5voQrjUKNnGWEYwLvyWS82",
       "1.3.0": "QmPA3ofSY4ZwdmiZbZrw1vf1WtVRZduhT2U9dWyXtMfnR7",
       "1.5.0": "QmXwbevvyD1fcPbWwVFUQi7sX2qUzC7CXRqUtZEzYpCw9X",
-      "3.0.0": "QmfGhnGYSBvEB79G5BYTUbnaxZFVga2Tzw4tBQEBEuLiiX"
+      "3.0.0": "QmWQnopDz7qrPMZoq3NejwTen4PLaoYWa78ygdXiS25att"
     }
   }
 }

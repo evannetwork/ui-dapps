@@ -26,50 +26,54 @@
 */
 
 <template>
-  <div>
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="text-left container-wide"
-      v-else>
-      <template v-if="!uiDT.isCreating">
-        <div class="d-flex mb-5 align-items-center">
-          <div>
-            <h3 class="font-weight-bold mb-0">
-              {{ '_digitaltwins.createForm.create' | translate }}
-            </h3>
-            <p class="text-muted font-weight-semibold m-0">
-              {{ '_digitaltwins.createForm.desc' | translate }}
-            </p>
-          </div>
-        </div>
-        <evan-modal
-          id="twin-create-question"
-          ref="createModal">
-          <template v-slot:header>
-            <h5 class="modal-title">
-              {{ `_digitaltwins.createForm.question.title` | translate }}
-            </h5>
-          </template>
-          <template v-slot:body>
-            <p class="text-left m-0"
-              v-html="$t(`_digitaltwins.createForm.question.desc`, modalParams)">
-            </p>
-          </template>
-          <template v-slot:footer>
-            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-              id="container-create"
-              @click="triggerCreateDispatcher()">
-              {{ `_digitaltwins.createForm.question.action` | translate }}
-              <i class="mdi mdi-arrow-right label ml-3"></i>
-            </button>
-          </template>
-        </evan-modal>
-        <div class="white-box border-smooth rounded">
-          <div class="header">
-            <h3 class="m-0 font-weight-semibold">
-              {{ `_digitaltwins.detail.title` | translate }}
-            </h3>
-            <span class="mx-auto"></span> 
-            <div v-if="(!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing)">
+  <div v-if="!loading">
+    <evan-modal
+      id="twin-create"
+      ref="createModal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_digitaltwins.breadcrumbs.dt-create` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <template v-if="!uiDT.isCreating">
+          <evan-modal
+            id="twin-create-question"
+            ref="createModalQuestion">
+            <template v-slot:header>
+              <h5 class="modal-title">
+                {{ `_digitaltwins.createForm.question.title` | translate }}
+              </h5>
+            </template>
+            <template v-slot:body>
+              <p class="text-left m-0"
+                v-html="$t(`_digitaltwins.createForm.question.desc`, modalParams)">
+              </p>
+            </template>
+            <template v-slot:footer>
+              <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                id="container-create"
+                @click="triggerCreateDispatcher()">
+                {{ `_digitaltwins.createForm.question.action` | translate }}
+                <i class="mdi mdi-arrow-right label ml-3"></i>
+              </button>
+            </template>
+          </evan-modal>
+          <dt-ens-actions
+            :address="createForm.address.value"
+            :purchaseEnsAddress="true"
+            :disableOpen="true"
+            :askForCreate="false"
+            @init="$set(reactiveRefs, 'ensActions', $event)"
+            @create="createDigitalTwin(true)">
+          </dt-ens-actions>
+         <dt-dbcp
+            v-if="!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing"
+            :form="createForm"
+            :dbcp="uiDT.dbcp"
+            @submit="createDigitalTwin()">
+            <template v-slot:after-inputs>
               <div class="form-check my-3">
                 <input class="form-check-input"
                   id="use-address"
@@ -79,54 +83,38 @@
                   {{ '_digitaltwins.lookup.address.use-address' | translate }}
                 </label>
               </div>
-            </div>
-          </div>
-          <dt-ens-actions
-            :address="createForm.address.value"
-            :purchaseEnsAddress="true"
-            :disableOpen="true"
-            :askForCreate="false"
-            @init="$set(reactiveRefs, 'ensActions', $event)"
-            @create="createDigitalTwin(true)">
-          </dt-ens-actions>
-          <template v-if="(!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing)">
-            <dt-dbcp
-              :form="createForm"
-              :dbcp="uiDT.dbcp"
-              @submit="createDigitalTwin()">
-              <template v-slot:after-inputs>
-                <dt-ens-field
-                  class="mt-3"
-                  v-if="createForm.useAddress.value"
-                  @init="$set(reactiveRefs, 'ensField', $event)"
-                  :autocomplete="true"
-                  :form="createForm">
-                  <template slot:label>
-                    {{ '_digitaltwins.lookup.address.title' | translate }}
-                  </template>
-                </dt-ens-field>
-              </template>
-            </dt-dbcp>
-            <div class="footer">
-              <button type="submit"
-                class="btn btn-rounded btn-primary"
-                id="dt-create"
-                @click="createDigitalTwin()"
-                :disabled="!createForm.isValid">
-                {{ `_digitaltwins.createForm.create` | translate }}
-                <i class="mdi mdi-content-save label"></i>
-              </button>
-            </div>
-          </template>
+              <dt-ens-field
+                class="mt-3"
+                v-if="createForm.useAddress.value"
+                @init="$set(reactiveRefs, 'ensField', $event)"
+                :autocomplete="true"
+                :form="createForm">
+                <template slot:label>
+                  {{ '_digitaltwins.lookup.address.title' | translate }}
+                </template>
+              </dt-ens-field>
+            </template>
+          </dt-dbcp>
+        </template>
+        <div class="text-center" id="dt-creating"
+          v-else>
+          <h4 class="mt-5 mb-3">{{ '_digitaltwins.in-creation' | translate }}</h4>
+          <b> {{ createForm.name.value }} </b>
+          <evan-loading></evan-loading>
         </div>
       </template>
-      <div class="white-box border-smooth rounded text-center" id="dt-creating"
-        v-else>
-        <h4 class="mt-5 mb-3">{{ '_digitaltwins.in-creation' | translate }}</h4>
-        <b> {{ createForm.name.value }} </b>
-        <evan-loading></evan-loading>
-      </div>
-    </div>
+      <template v-slot:footer>
+        <button type="submit"
+          class="btn btn-rounded btn-primary"
+          id="dt-create"
+          v-if="!uiDT.isCreating && (!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing)"
+          @click="createDigitalTwin()"
+          :disabled="!createForm.isValid">
+          {{ `_digitaltwins.createForm.create` | translate }}
+          <i class="mdi mdi-content-save label"></i>
+        </button>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

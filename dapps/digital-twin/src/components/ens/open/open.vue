@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="container-wide">
+  <div>
     <evan-modal ref="notRegistered">
       <template v-slot:header>
         <h5 class="modal-title">
@@ -40,20 +40,18 @@
       </template>
     </evan-modal>
 
-    <div class="white-box mt-4 border-smooth rounded">
-      <div class="p-0 header">
-        <a class="btn large"
-          :href="`${ dapp.fullUrl }`">
-          <i class="mdi mdi-chevron-left"></i>
-        </a>
-        <h3 class="m-0 font-weight-semibold">
+    <evan-modal
+      id="twin-open"
+      ref="twinOpen"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
           {{ `_digitaltwins.lookup.title` | translate }}
-        </h3>
-      </div>
-
-      <div class="content">
+        </h5>
+      </template>
+      <template v-slot:body>
         <form
-          class="col-sm-9 mx-auto"
+          class="mx-5"
           v-on:submit.prevent="checkAddress">
           <dt-ens-field
             @init="$set(reactiveRefs, 'ensField', $event)"
@@ -66,32 +64,30 @@
             </p>
           </div>
         </form>
-      </div>
-
-      <template v-if="reactiveRefs.ensField">
-        <dt-ens-actions
-          :address="reactiveRefs.ensField.lookupForm.address.value"
-          @init="$set(reactiveRefs, 'ensActions', $event)"
-          @open="openTwin"
-          @create="$refs.notRegistered.show();">
-        </dt-ens-actions>
-
-        <div class="footer"
-          v-if="reactiveRefs.ensActions">
-          <button type="submit"
-            class="btn btn-rounded btn-primary"
-            id="dt-lookup"
-            @click="checkAddress()"
-            :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
-            {{ '_digitaltwins.lookup.title' | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3"
-              v-if="reactiveRefs.ensActions.loading">
-            </div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-          </button>
-        </div>
+        <template v-if="reactiveRefs.ensField">
+          <dt-ens-actions
+            :address="reactiveRefs.ensField.lookupForm.address.value"
+            @init="$set(reactiveRefs, 'ensActions', $event)"
+            @open="openTwin"
+            @create="$refs.notRegistered.show();">
+          </dt-ens-actions>
+        </template>
       </template>
-    </div>
+      <template v-slot:footer
+        v-if="reactiveRefs.ensActions">
+        <button type="submit"
+          class="btn btn-rounded btn-primary"
+          id="dt-lookup"
+          @click="checkAddress()"
+          :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
+          {{ '_digitaltwins.lookup.title' | translate }}
+          <div class="spinner-border spinner-border-sm text-light ml-3"
+            v-if="reactiveRefs.ensActions.loading">
+          </div>
+          <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+        </button>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

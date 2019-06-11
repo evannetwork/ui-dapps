@@ -71,6 +71,12 @@ export default class FieldComponent extends mixins(EvanComponent) {
   }) standalone: boolean;
 
   /**
+   * Label and description that should be rendered
+   */
+  @Prop() label: string;
+  @Prop() description: string;
+
+  /**
    * Calculated type from props type or calucated from schema
    */
   _type = null;

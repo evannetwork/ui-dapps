@@ -26,24 +26,26 @@
 */
 
 <template>
-  <div class="form-group mb-0" v-if="mode === 'schema' || mode === 'edit'">
-    <label for="value" v-if="standalone">
-      {{ `_datacontainer.ajv.value.title` | translate }}
+  <div class="form-group mb-0" >
+    <label class="d-block" for="value" v-if="standalone">
+      {{ label | translate }}
     </label>
-    <input class="form-control" required
-      id="value" ref="value" type="text"
-      :placeholder="`_datacontainer.ajv.value.desc` | translate"
-      :disabled="$store.state.saving"
-      v-model="control.value"
-      :class="{ 'is-invalid' : control.error }"
-      @blur="control.setDirty()">
-    <div class="invalid-feedback">
-      {{ `_datacontainer.ajv.value.error` | translate }}
-    </div>
+    <template v-if="mode === 'schema' || mode === 'edit'">
+      <input class="form-control" required
+        id="value" ref="value" type="text"
+        :placeholder="description | translate"
+        :disabled="$store.state.saving"
+        v-model="control.value"
+        :class="{ 'is-invalid' : control.error }"
+        @blur="control.setDirty()">
+      <div class="invalid-feedback">
+        {{ `_datacontainer.ajv.value.error` | translate }}
+      </div>
+    </template>
+    <span :id="id" class="text-primary" v-else>
+      {{ control.value }}
+    </span>
   </div>
-  <span :id="id" class="text-primary" v-else>
-    {{ control.value }}
-  </span>
 </template>
 
 <script lang="ts">

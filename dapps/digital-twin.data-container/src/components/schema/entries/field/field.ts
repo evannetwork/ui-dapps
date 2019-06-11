@@ -65,6 +65,11 @@ export default class FieldComponent extends mixins(EvanComponent) {
   @Prop() activeMode: string;
 
   /**
+   * Disable schema edit and show only formular with input boxes
+   */
+  @Prop({ default: true }) schemaEdit: boolean;
+
+  /**
    * formular specific variables
    */
   fieldForm: FieldFormInterface = null;
@@ -73,6 +78,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
    * Calculated entry schema type
    */
   type: string = null;
+  itemType: string = null;
 
   /**
    * Set the field form, if no form was applied
@@ -80,6 +86,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
   created() {
     // Calculated entry schema type
     this.type = fieldUtils.getType(this.entry.dataSchema);
+    this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
 
     // setup field form
     this.fieldForm = <FieldFormInterface>new EvanForm(this, {
@@ -88,11 +95,14 @@ export default class FieldComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
           // populate the value to the parents component, else the value is handled by the parents
           // form
-          vueInstance.entry.edit.value = this.value;
+          vueInstance.entry.edit.value = fieldUtils.parseFieldValue(
+            vueInstance.itemType || vueInstance.type,
+            this.value
+          );
 
           // run validation
           return fieldUtils.validateField(
-            vueInstance.type,
+            vueInstance.itemType || vueInstance.type,
             this,
             form,
             vueInstance.address,
@@ -100,6 +110,8 @@ export default class FieldComponent extends mixins(EvanComponent) {
         }
       },
     });
+
+    this.$emit('init', this);
   }
 
   /**
@@ -111,12 +123,34 @@ export default class FieldComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Cache latest values
+   */
+  async saveAsCache() {
+    // do nothing for fields, fields updates directly
+  }
+
+  /**
    * Save the current value and enable the save button
    */
   save() {
-    // update entry backup to the latest value
-    entryUtils.saveValue(this, this.entry);
-    this.fieldForm.value.value = this.entry.value;
+    const value = fieldUtils.parseFieldValue(this.itemType || this.type, this.entry.edit.value);
+
+    if (this.address.startsWith('0x')) {
+      if (this.type === 'array') {
+        this.fieldForm.value.value = fieldUtils.defaultValue(this.entry.dataSchema.items);
+      } else {
+        this.entry.value = value;
+        this.fieldForm.value.value = this.entry.value;
+      }
+    } else {
+      if (this.type === 'array') {
+        this.entry.dataSchema.items.default = value;
+      } else {
+        this.entry.dataSchema.default = value;
+      }
+    }
+
+    this.entry.edit.value = value;
   }
 
   /**

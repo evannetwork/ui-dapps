@@ -163,7 +163,7 @@ export class ContractComponent implements OnInit {
           toOpen = `/${ this.attachment.bc }${ toOpen }`;
         }
 
-        this.routing.navigate(toOpen); 
+        this.routing.navigate(toOpen);
       }
     } else {
       try {
@@ -222,7 +222,7 @@ export class ContractComponent implements OnInit {
             toOpen = `/${ this.attachment.bc }${ toOpen }`;
           }
 
-          this.routing.navigate(toOpen); 
+          this.routing.navigate(toOpen);
         }
 
         this.alreadyAdded = true;

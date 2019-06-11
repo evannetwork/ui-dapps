@@ -66,6 +66,11 @@ export default class EntryListComponent extends mixins(EvanComponent) {
   @Prop() activeMode: string;
 
   /**
+   * Disable schema edit and show only formular with input boxes
+   */
+  @Prop({ default: true }) schemaEdit: boolean;
+
+  /**
    * Show loading symbol, until listentries were load
    */
   loading = true;
@@ -100,28 +105,47 @@ export default class EntryListComponent extends mixins(EvanComponent) {
    * Cancel the schema edit and use the original values.
    */
   reset() {
-    // disable value overwrite
-    this.reactiveRefs.ajv.deleted = true;
+    if (this.itemType === 'object') {
+      // disable value overwrite
+      this.reactiveRefs.ajv.deleted = true;
 
-    // reset the schema
-    entryUtils.resetSchema(this.entry);
+      // reset the schema
+      entryUtils.resetSchema(this.entry);
+    }
+  }
+
+  /**
+   * Cache latest values
+   */
+  async saveAsCache() {
+    // save the current schema into the edit properties
+    this.reactiveRefs.ajv.save();
   }
 
   /**
    * Save the current schema.
    */
   save() {
-    // save the current schema into the edit properties
-    this.reactiveRefs.ajv.save();
+    if (this.itemType === 'object') {
+      // save the current schema into the edit properties
+      this.reactiveRefs.ajv.save();
 
-    // save the schema
-    entryUtils.saveSchema(this.entry);
+      // save the schema
+      entryUtils.saveSchema(this.entry);
+    } else {
+      // save the current schema into the edit properties
+      this.reactiveRefs.ajv.save();
+    }
   }
 
   /**
    * Determines if valid.
    */
   isValid() {
-    return this.reactiveRefs.ajv.isValid;
+    if (this.itemType === 'object') {
+      return this.reactiveRefs.ajv.isValid;
+    } else {
+      return true;
+    }
   }
 }

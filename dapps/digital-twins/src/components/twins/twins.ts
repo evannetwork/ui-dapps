@@ -39,7 +39,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { utils } from '@evan.network/digitaltwin.lib';
 
 @Component({ })
-export default class OverviewComponent extends mixins(EvanComponent) {
+export default class TwinsComponent extends mixins(EvanComponent) {
   /**
    * show loading symbol
    */
@@ -83,6 +83,8 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    * Load the favorites and last twins
    */
   async initialize() {
+    this.loading = true;
+
     // load favorite and last twins
     const runtime = utils.getRuntime(this);
     const twins = Array.from(new Set([ ].concat(

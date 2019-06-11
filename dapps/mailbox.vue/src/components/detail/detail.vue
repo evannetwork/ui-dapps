@@ -83,7 +83,7 @@
               </evan-modal>
               <button class="btn btn-rounded btn-primary"
                 :disabled="acceptingAttachment || attachment.disabled"
-                @click="openAttachment(attachment, $refs.attachmentModal[index])">
+                @click="openAttachment(attachment, index, $refs.attachmentModal[index])">
                 <div class="spinner-border spinner-border-sm text-light mr-3"
                   v-if="acceptingAttachment">
                 </div>

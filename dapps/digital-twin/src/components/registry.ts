@@ -30,6 +30,7 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as dataContainerAPI from '@evan.network/datacontainer.digitaltwin';
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
+import CreateComponent from './create/create.vue';
 import DetailComponent from './detail/detail/detail.vue';
 import DigitalTwinActionsComponent from './actions/actions.vue';
 import EnsActionsComponent from './ens/actions/actions.vue';
@@ -38,15 +39,17 @@ import EnsMapComponent from './ens/map/map.vue';
 import EnsOpenComponent from './ens/open/open.vue';
 
 // export them all, so other applications can access them
-export { EnsActionsComponent, EnsFieldComponent, EnsOpenComponent, }
+export { EnsActionsComponent, EnsFieldComponent, }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'dt-actions',     component: DigitalTwinActionsComponent },
+  { name: 'dt-create',      component: CreateComponent },
   { name: 'dt-detail',      component: DetailComponent },
   { name: 'dt-ens-actions', component: EnsActionsComponent },
   { name: 'dt-ens-field',   component: EnsFieldComponent },
-  { name: 'dt-actions',     component: DigitalTwinActionsComponent },
   { name: 'dt-ens-map',     component: EnsMapComponent },
+  { name: 'dt-ens-open',    component: EnsOpenComponent },
 ]
 .concat(dataContainerAPI.components)
 .concat(dtLib.componentRegistration);

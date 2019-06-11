@@ -40,7 +40,7 @@ import { utils } from '@evan.network/digitaltwin.lib';
  * @param      {any}  dapp    Vue instance evan routing dapp definition
  */
 export function getDtAddressFromUrl(dapp: any) {
-  const splitHash = dapp.baseHash.split('/');
+  const splitHash = window.location.hash.split('/');
   const twinDAppIndex = splitHash.indexOf(`digitaltwin.${ dapp.domainName }`);
   let digitalTwinAddress;
   if (twinDAppIndex !== -1) {

@@ -26,71 +26,65 @@
 */
 
 <template>
-  <div class="white-box border-smooth rounded">
-    <div class="header">
-      <h3 class="font-weight-semibold m-0">
-        <template
-          v-if="$store.state.uiDT.containers.length !== 0">
-          {{ `_digitaltwins.breadcrumbs.dt-plugins` | translate }}
-        </template>
-        <template v-else>
-          {{ `_digitaltwins.containers.empty` | translate }}
-        </template>
-      </h3>
-      <span class="mx-auto"></span>
-      <dt-actions
-        v-if="$store.state.uiDT.isOwner"
-        :uiDT="uiDT"
-        :dtActions="false"
-        :containerActions="true"
-        :displayMode="'buttons'">
-      </dt-actions>
-    </div>
-    <div class="content row pb-0" v-if="$store.state.uiDT.containers.length !== 0">
+  <div>
+    <div class="row content row pb-0" v-if="$store.state.uiDT.containers.length !== 0">
       <div class="col-md-4 mb-4"
         v-for="(container, index) in $store.state.uiDT.containers"
         style="min-width: 350px;">
-        <a class="d-flex bg-level-1 border-smooth rounded evan-highlight flex-truncate"
+        <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
           :id="`evan-dt-container-${ container.path ? container.path.split('/').pop() : 'creating' }`"
           :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
           <div class="row align-items-center m-0 w-100">
-            <div class="col-2">
+            <div class="col-2" style="overflow: visible">
               <img class="img-fluid p-3"
                 v-if="container.imgSquare"
                 :src="container.imgSquare">
               <i
-                class="mdi mdi-note-multiple-outline"
+                class="mdi mdi-note-multiple-outline text-muted"
                 style="font-size:50px;">
               </i>
             </div>
-            <div class="col-10">
-              <div class="d-flex p-3 flex-truncate align-items-center">
-                <div>
-                  <h4 class="font-weight-semibold mb-0">
-                    {{ container.description.name }}
-                  </h4>
-                  <span class="text-justify d-block font-weight-semibold text-muted"
-                    v-if="!container.creating">
-                    {{ container.description.description }}
-                  </span>
-                  <span v-else>
-                    {{ '_digitaltwins.containers.in-creation' | translate }}
-                  </span>
-                </div>
-                <template v-if="container.loading">
-                  <span class="mx-auto"></span>
-                  <div class="spinner-border spinner-border-sm ml-3"></div>
-                </template>
+            <div class="col-10 d-flex align-items-center">
+              <div class="w-100 p-3">
+                <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+                  {{ container.description.name }}
+                </h4>
+                <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3"
+                  v-if="!container.creating">
+                  {{ container.description.description }}
+                </span>
+                <span v-else>
+                  {{ '_digitaltwins.containers.in-creation' | translate }}
+                </span>
               </div>
+              <span class="mx-auto"></span>
+              <div class="spinner-border spinner-border-sm text-secondary ml-3"
+                v-if="container.loading">
+              </div>
+              <i class="mdi mdi-dots-vertical clickable text-dark"
+                v-else
+                @click="$refs.dcActions[index].showDropdown($event)">
+              </i>
             </div>
           </div>
         </a>
+        <dc-actions
+          v-if="!container.loading"
+          ref="dcActions"
+          :containerAddress="container.address"
+          :dcActions="true"
+          :digitalTwinAddress="$store.state.uiDT.contractAddress"
+          :displayMode="'dropdownHidden'"
+          :setActions="true">
+        </dc-actions>
       </div>
     </div>
-    <div class="content" v-else>
-      <p class="text-justify m-0"
-        v-html="$t(`_digitaltwins.containers.empty-desc`)">
-      </p>
+    <div class="white-box border-smooth rounded" v-else>
+      <div class="content">
+        <p class="text-justify m-0"
+          v-html="$t(`_digitaltwins.containers.empty-desc`)">
+        </p>
+      </div>
     </div>
   </div>
 </template>

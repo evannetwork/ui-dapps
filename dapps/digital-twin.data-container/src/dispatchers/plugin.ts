@@ -49,16 +49,8 @@ dispatcher
     data.template = data.template || (await bcc.Container
       .getContainerPlugin(profile, data.beforeName)).template;
 
-    // load latest contracts to be up to date
-    await profile.loadForAccount(profile.treeLabels.contracts);
-
-    // on an update and when the name has changed, remove the previous template
-    if (data.beforeName && data.description.name !== data.beforeName) {
-      await runtime.profile.removeBcContract(bcc.Container.profilePluginsKey, data.beforeName);
-    }
-
     // copy original template and clear runtime propert variables
-    const allowedProperties = [ 'dataSchema', 'type', '$comment', 'value', 'permissions' ];
+    const allowedProperties = [ 'dataSchema', 'type', '$comment', 'permissions' ];
     data.template = JSON.parse(JSON.stringify(data.template));
     Object.keys(data.template.properties).forEach(property => {
       Object.keys(data.template.properties[property]).forEach(key => {
@@ -68,14 +60,10 @@ dispatcher
       });
     });
 
-    // save the new template
-    await profile.addBcContract(bcc.Container.profilePluginsKey, data.description.name, {
+    await bcc.Container.saveContainerPlugin(profile, data.description.name, {
       description: data.description,
       template: data.template,
-    });
-
-    // save the profile
-    await profile.storeForAccount(profile.treeLabels.contracts);
+    }, data.beforeName);
   });
 
 export default dispatcher;

@@ -43,6 +43,11 @@ interface LookupFormInterface extends EvanForm {
 @Component({ })
 export default class MapComponent extends mixins(EvanComponent) {
   /**
+   * Digital twin address, that should be bound.
+   */
+  @Prop() digitalTwinAddress;
+
+  /**
    * Watch if the current contract address is binding
    */
   watchForBinding: Function;
@@ -161,7 +166,7 @@ export default class MapComponent extends mixins(EvanComponent) {
   mapEns() {
     dispatchers.mapEnsDispatcher.start(utils.getRuntime(this), {
       ensAddress: this.ensAddress,
-      contractAddress: this.$route.params.digitalTwinAddress,
+      contractAddress: this.digitalTwinAddress || this.$route.params.digitalTwinAddress,
     });
 
     (<any>this).$refs.lookupModal.hide();

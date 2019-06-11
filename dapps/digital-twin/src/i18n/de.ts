@@ -31,7 +31,7 @@ import * as dtLib from '@evan.network/digitaltwin.lib';
 /* tslint:disable */
 const i18n: any = {
   "_digitaltwins": {
-    "add": "Öffnen",
+    "add": "Suchen",
     "add-digitaltwin": "Neuer digitaler Zwilling",
     "containerlink": {
       "address": {
@@ -49,16 +49,16 @@ const i18n: any = {
       },
       "linking": "Bestehendes Plugin Wird verknüpft...",
       "name": {
-        "desc": "Alias, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
-        "error": "Bitte geben Sie einen Alias ein!",
-        "title": "Alias"
+        "desc": "ENS Adresse, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
+        "error": "Bitte geben Sie einen ENS Adresse ein!",
+        "title": "ENS Adresse"
       },
       "use": "Plugin verknüpfen"
     },
     "containers": {
       "create": "Plugin hinzufügen",
       "empty": "Plugins",
-      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Plugins. Jedes Plugin kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">Für diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"erstellen\" oder \"verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
+      "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Plugins. Jedes Plugin kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br><b class=\"text-center d-block mt-3\">In Diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"Plugin hinzufügen\" oder \"Plugin-Instanz verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
       "in-creation": "wird erstellt...",
       "link": "Plugin-Instanz verknüpfen",
       "title": "Plugins"
@@ -74,6 +74,7 @@ const i18n: any = {
     },
     "detail": {
       "add-favorite": "Als Favorit hinzufügen",
+      "add-favorite-quest": "Wollen Sie diesen Digitalen Zwilling als Favoriten hinzufügen?",
       "edit": "Beschreibung anpassen",
       "error": {
         "desc": "Die ausgewählte Adresse entspricht keinem gültigen Digitalen Zwilling. Bitte gehen Sie sicher, dass die korrekt Adresse geöffnet wurde.",
@@ -82,6 +83,7 @@ const i18n: any = {
       "map-to-ens": "An Domainnamen binden",
       "my-new-twin": "Neuer Digitaler Zwilling",
       "remove-favorite": "Als Favorit entfernen",
+      "remove-favorite-quest": "Wollen Sie diesen Digitalen Zwilling wirklich von den Favoriten entfernen?",
       "save": "Speichern",
       "title": "Metadaten des Digitalen Zwillings"
     },
@@ -136,7 +138,7 @@ const i18n: any = {
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
-      "title": "Digitalen Zwilling Öffnen"
+      "title": "Digitalen Zwilling suchen"
     },
     "map-ens": {
       "check-ens": "Domain überprüfen",

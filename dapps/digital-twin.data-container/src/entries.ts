@@ -39,9 +39,10 @@ import { UIContainerTemplateProperty } from './interfaces';
  * not support list entries export and must be load dynamically. The value array is used to handle
  * new arrays, that will be persisted for caching to the indexeddb like the normal entries
  *
- * @param      {UIContainerTemplateProperty}  entry   the entry that should be checked
+ * @param      {string}                       address  container / plugin address
+ * @param      {UIContainerTemplateProperty}  entry    the entry that should be checked
  */
-export function ensureValues(entry: UIContainerTemplateProperty) {
+export function ensureValues(address: string, entry: UIContainerTemplateProperty) {
   // use calculated type!
   const type = fieldUtils.getType(entry.dataSchema);
 
@@ -50,13 +51,13 @@ export function ensureValues(entry: UIContainerTemplateProperty) {
   });
 
   // set default value
-  entry.value = entry.value || fieldUtils.defaultValue(type);
+  entry.value = entry.value || fieldUtils.defaultValue(entry.dataSchema);
 
   switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
       entry.edit.value = entry.edit.value ||
-        ensureValues(<any>{ dataSchema: entry.dataSchema.items }).value;
+        ensureValues(address, <any>{ dataSchema: entry.dataSchema.items }).value;
       break;
     }
     case 'object': {
@@ -141,11 +142,10 @@ export function saveSchema(entry: UIContainerTemplateProperty) {
 /**
  * Use the current edit value and save it into the value.
  *
- * @param      {Vue}                          vueInstance  vue component instance
- * @param      {UIContainerTemplateProperty}  entry        entry for that the edit.value should be
- *                                                         saved
+ * @param      {string}                       address  address for the entry
+ * @param      {UIContainerTemplateProperty}  entry    entry for that the edit.value should be saved
  */
-export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) {
+export function saveValue(address: string, entry: UIContainerTemplateProperty) {
   // use calculated type!
   const type = fieldUtils.getType(entry.dataSchema);
 
@@ -160,7 +160,7 @@ export function saveValue(vueInstance: any, entry: UIContainerTemplateProperty) 
       entry.edit.value = null;
 
       // ensure the new empty edit.value
-      ensureValues(entry);
+      ensureValues(address, entry);
 
       break;
     }

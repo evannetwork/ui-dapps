@@ -28,23 +28,18 @@
 <template>
   <div>
     <evan-loading v-if="loading"></evan-loading>
-    <div class="white-box border-smooth rounded" v-else>
+    <div class="white-box border-smooth rounded"
+      v-else-if="error || !permitted">
       <div class="header">
         <h3 class="m-0 font-weight-semibold">
-          {{ '_digitaltwins.breadcrumbs.list-entries' | translate }}
+          {{ '_datacontainer.no-permissions.title' | translate }}
         </h3>
-        <span class="mx-auto"></span>
-        <div>
-          <dc-set-actions
-            :containerAddress="containerAddress"
-            :entryName="entryName"
-            :displayMode="'buttons'"
-            :setActions="true"
-            :schemaActions="true"
-            :listActions="true">
-          </dc-set-actions>
-        </div>
       </div>
+      <div class="content"
+        v-html="$t('_datacontainer.no-permissions.desc')">
+      </div>
+    </div>
+    <div class="white-box border-smooth rounded" v-else>
       <table
         id="entry-list-table"
         class="evan-flex-table">
@@ -66,7 +61,7 @@
 
         <tbody>
           <tr
-            v-for="(listEntry, index) in [ ].concat(dispatcherEntries, templateEntry.value, listEntries)">
+            v-for="(listEntry, index) in [ ].concat(dispatcherEntries, listEntries)">
             <td class="font-weight-semibold flex-grow-0">
               {{ index + 1}}
             </td>
@@ -76,7 +71,7 @@
                 <dc-field
                   :id="`list-value-${ index }`"
                   :schema="templateEntry.dataSchema.items.properties[key]"
-                  :control="{ value: listEntry[key] }"
+                  :control="{ value: listEntry.data[key] }"
                   :mode="'view'"
                   :standalone="false">
                 </dc-field>
@@ -86,7 +81,7 @@
               v-else>
               <dc-field
                 :schema="templateEntry.dataSchema.items"
-                :control="{ value: listEntry }"
+                :control="{ value: listEntry.data }"
                 :mode="'view'"
                 :standalone="false">
               </dc-field>

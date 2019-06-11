@@ -90,6 +90,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
             break;
           }
+          case 'url': {
+            accepted = true;
+
+            break;
+          }
           default: {
             attachment.unkown = true;
           }
@@ -128,22 +133,28 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * Checks if the attachment needs be accepted. If it's need to be accepted, show the accept modal,
    * else open the attachment
    */
-  openAttachment(attachment: any, modalRef: any) {
+  openAttachment(attachment: any, attachmentIndex: number, modalRef: any) {
     if (attachment.status === 'accepted') {
+      let toOpen;
+
       if (attachment.fullPath) {
-        window.location.hash = attachment.fullPath;
+        toOpen = attachment.fullPath;
       } else {
         let storeKey = attachment.storeKey || attachment.address;
         // use storeKey as default value that should be opened
-        let toOpen = `/${ storeKey }`;
+        toOpen = `/${ storeKey }`;
 
         // when a bc was addes, open it including the bc
         if (attachment.bc) {
           toOpen = `/${ attachment.bc }${ toOpen }`;
         }
-
-        window.location.hash = `${ toOpen }`;
       }
+
+      window.location.hash = [
+        `${ toOpen }?`,
+        `mailId=${ (<any>this).$route.params.mailAddress }`,
+        `attachment=${ attachmentIndex }`
+      ].join('&');
     } else {
       modalRef.show();
     }

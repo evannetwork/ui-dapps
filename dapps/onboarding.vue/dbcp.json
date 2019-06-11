@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.2.0",
+        "evancore.vue.libs": "^1.2.1",
         "recaptcha.vue.libs": "^1.1.1"
       },
       "entrypoint": "onboarding.vue.js",

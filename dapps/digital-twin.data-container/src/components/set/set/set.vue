@@ -27,30 +27,56 @@
 
 <template>
   <div>
-    <evan-nav-tabs class="flex-shrink-0"
-      :tabs="tabs">
-    </evan-nav-tabs>
-    <div class="container-wide overflow-y-auto">
-      <div class="d-flex mb-5 align-items-center">
-        <div class="flex-truncate" style="max-width: 50%;">
-          <h3 class="font-weight-bold mb-0">
-            {{ entryName }}
-          </h3>
-        </div>
-        <span class="mx-auto"></span>
-        <set-actions
-          v-if="!loading"
-          :containerAddress="containerAddress"
-          :entryName="entryName">
-        </set-actions>
+    <evan-loading v-if="loading"></evan-loading>
+    <div class="white-box border-smooth rounded"
+      v-else-if="error">
+      <div class="header">
+        <h3 class="m-0 font-weight-semibold">
+          {{ '_datacontainer.no-permissions.title' | translate }}
+        </h3>
       </div>
-
-      <evan-loading v-if="loading"></evan-loading>
-      <transition name="fade" mode="out-in"
-        v-else>
-        <router-view></router-view>
-      </transition>
+      <div class="content"
+        v-html="$t('_datacontainer.no-permissions.desc')">
+      </div>
     </div>
+    <template v-else>
+      <evan-nav-tabs class="flex-shrink-0"
+        :tabs="tabs"
+        @init="$set(reactiveRefs, 'navTabs', $event)">
+      </evan-nav-tabs>
+      <div class="container-wide overflow-y-auto">
+        <div class="d-flex mb-5 align-items-center"
+          style="min-height: 45px">
+          <div style="width: 50%;">
+            <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
+              {{ entryName }}
+            </h3>
+          </div>
+          <span class="mx-auto"></span>
+          <dc-set-actions
+            v-if="reactiveRefs.navTabs"
+            :containerAddress="containerAddress"
+            :entryName="entryName"
+            :displayMode="'buttons'"
+            :setActions="true"
+            :schemaActions="
+              reactiveRefs.navTabs.activeTab === 0 ||
+              reactiveRefs.navTabs.activeTab === 1
+            "
+            :listActions="
+              reactiveRefs.setActions &&
+              reactiveRefs.setActions.entryType === 'array' &&
+              reactiveRefs.navTabs.activeTab === 0
+            "
+            @init="$set(reactiveRefs, 'setActions', $event)">
+          </dc-set-actions>
+        </div>
+
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </div>
+    </template>
   </div>
 </template>
 

@@ -102,7 +102,7 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
     this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
 
     // ensure values
-    entryUtils.ensureValues(this.entry);
+    entryUtils.ensureValues(this.containerAddress, this.entry);
 
     // add form handling for field controls
     if (this.itemType !== 'object') {
@@ -133,15 +133,26 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
       // save the current ajv values to the edit.value object and save the value into the original
       // object
       this.reactiveRefs.addAjv.save();
-      entryUtils.saveValue(this, this.entry);
+      this.entry.value.unshift(this.entry.edit.value);
     } else {
-      // apply the new data to the list
-      this.entry.value.push(this.addListEntryForm.value.value);
+      const correctValue = fieldUtils.parseFieldValue(
+        this.itemType,
+        this.addListEntryForm.value.value
+      );
 
+      // apply the new data to the list
+      this.entry.value.push(correctValue);
+    }
+
+    // apply the new value into the array, and clear the old add value
+    this.entry.edit.value = fieldUtils.defaultValue(this.entry.dataSchema);
+    if (this.addListEntryForm) {
       // clear the formular value
-      this.entry.edit.value = fieldUtils.defaultValue(this.itemType);
       this.addListEntryForm.value.value = this.entry.edit.value;
     }
+
+    // ensure the new empty edit.value
+    entryUtils.ensureValues(this.containerAddress, this.entry);
 
     (<any>this).$refs.listEntryAddModal.hide();
 

@@ -66,13 +66,6 @@ export default class AJVComponent extends mixins(EvanComponent) {
   @Prop() properties: any;
 
   /**
-   * Value corresponding to the ajv
-   */
-  @Prop({
-    default: { }
-  }) value: any;
-
-  /**
    * Disable all fields (e.g. while saving)
    */
   @Prop() disabled: boolean;
@@ -113,7 +106,6 @@ export default class AJVComponent extends mixins(EvanComponent) {
       .forEach((schemaKey: string) => this.addProperty(
         schemaKey,
         this.properties[schemaKey],
-        this.value[schemaKey]
       ));
   }
 
@@ -131,22 +123,24 @@ export default class AJVComponent extends mixins(EvanComponent) {
   save() {
     // clear the objects to keep the original object reference
     Object.keys(this.properties).forEach(key => delete this.properties[key]);
-    Object.keys(this.value).forEach(key => delete this.value[key]);
 
     // iterate through all forms and set the correct values to the properties
     this.forms.forEach((form: FieldFormInterface) => {
-      this.properties[form.name.value] = bcc.Container.defaultSchemas[`${ form.type.value }Entry`];
-
-      if (this.value) {
-        this.value[form.name.value] = fieldUtils.parseFieldValue(form.type.value, form.value.value);
-      }
+      // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
+      this.properties[form.name.value] = JSON.parse(JSON.stringify(
+        bcc.Container.defaultSchemas[`${ form.type.value }Entry`]
+      ));
+      this.properties[form.name.value].default = fieldUtils.parseFieldValue(
+        form.type.value,
+        form.value.value
+      );
     });
   }
 
   /**
    * Creates a new evan form to handle a new entry as one row in the ui.
    */
-  addProperty(property: string, schema = { type: 'string' }, value: any) {
+  addProperty(property: string, schema: any = { type: 'string' }) {
     const type = fieldUtils.getType(schema);
 
     this.forms.push(<FieldFormInterface>new EvanForm(this, {
@@ -185,13 +179,13 @@ export default class AJVComponent extends mixins(EvanComponent) {
           vueInstance.checkFormValidity();
 
           // force value evaluation
-          form.value.value = fieldUtils.defaultValue(this.value);
+          form.value.value = fieldUtils.defaultValue({ type: this.value });
 
           return this.value.trim().length !== 0;
         }
       },
       value: {
-        value: value || fieldUtils.defaultValue(type),
+        value: fieldUtils.defaultValue(schema),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // only check validity when the value is enabled
           if (!vueInstance.disableValue) {
@@ -215,7 +209,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     // auto focus new form element
     this.$nextTick(() => {
       const nameInputs = this.$el.querySelectorAll('table tr td:first-child input');
-      const focusInput: any = nameInputs[nameInputs.length - 2];
+      const focusInput: any = nameInputs[0];
 
       focusInput && focusInput.focus();
       this.checkFormValidity();

@@ -30,18 +30,35 @@
     <div
       id="entry-schema"
       v-if="itemType === 'object'">
-      <dc-ajv
+      <dc-ajv-values
+        v-if="!schemaEdit"
         :address="address"
-        :disableValue="true"
+        :mode="activeMode"
+        :properties="entry.edit.dataSchema.properties"
+        :value="entry.edit.value"
+        @init="$set(reactiveRefs, 'ajv', $event)">
+      </dc-ajv-values>
+      <dc-ajv
+        v-else
+        :address="address"
         :mode="activeMode"
         :properties="entry.edit.dataSchema.items.properties"
         @init="$set(reactiveRefs, 'ajv', $event)">
       </dc-ajv>
     </div>
-    <div v-else>
-      <h5>{{ 'ajv.type.title' | translate }}</h5>:
-      {{ `_datacontainer.types.${ itemType }` | translate }}
-    </div>
+    <dc-entry-field
+      v-else
+      ref="entryComp"
+      :activeMode="activeMode"
+      :address="address"
+      :entry="entry"
+      :entryName="entryName"
+      @init="$set(reactiveRefs, 'ajv', $event)">
+    </dc-entry-field>
+<!-- <h5 class="font-weight-semibold">
+        {{ '_datacontainer.types.array' | translate }} - {{ '_datacontainer.ajv.type.title' | translate }}:
+        {{ `_datacontainer.types.${ itemType }` | translate }}
+      </h5> -->
   </div>
 </template>
 

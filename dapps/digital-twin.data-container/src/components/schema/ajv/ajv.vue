@@ -91,7 +91,11 @@
           :id="`ajv-value-${ index }`"
           class="fill-content"
           v-if="!disableValue">
+          <div v-if="form.type.value === 'files'">
+            {{ `_datacontainer.ajv.files-no-default` | translate }}
+          </div>
           <dc-field
+            v-else
             :id="`dc-field-${ index }`"
             :type="form.type.value"
             :control="form.value"

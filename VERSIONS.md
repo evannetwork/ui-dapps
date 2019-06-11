@@ -5,6 +5,36 @@
 ### Fixes
 ### Deprecations
 
+## Version 3.2.0
+### Features
+- `digitaltwins`
+  - move open twin and create twin to modal dialog
+  - add context menu to twins, plugins overview
+  - ask before toggle twin favorite
+- `datacontainer.digitaltwins`
+  - add new `UiContainer` structure including easy data loading update watching
+  - remove flex-truncate and add correct text-overflow logic
+  - add `dc-ajv-values` component for displaying ajv formular without schema specifications
+  - add editSchema for splitting schema mode and value view mode
+  - move plugin default values to dataSchema `default` property
+  - add plugin selection as first page on creating a new `plugin` / `container` / move dbcp edit to create steps
+  - add seperated value / schema view for `twin.container.entries`
+  - disable default values for files
+  - add context menu to containers, sets overview
+  - add plugin delete
+- `mailbox`, `mailbox.vue`
+  - add attachments of type `url`
+
+### Fixes
+- `datacontainer.digitaltwins`
+  - remove flex-truncate and add correct text-overflow logic
+  - fix plugin creation and saving
+  - fix creation steps and validity checks
+  - fix dataContainer.defaultSchema is used without copying
+  - fix plugin sharing
+  - fix reactive files
+  - fix `Container` file caching and changes checks
+
 
 ## Version 3.1.0
 ### Features

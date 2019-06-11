@@ -40,32 +40,47 @@
           {{ '_datacontainer.no-permissions.desc' | translate }}
         </h5>
       </div>
-      <dc-entry-object
-        ref="entryComp"
-        v-else-if="type === 'object'"
-        :activeMode="activeMode"
-        :address="address"
-        :entry="entry"
-        :entryName="entryName">
-      </dc-entry-object>
-      <dc-entry-list
-        ref="entryComp"
-        v-else-if="type === 'array'"
-        @reset="resetValue"
-        @save="saveValue"
-        :activeMode="activeMode"
-        :address="address"
-        :entry="entry"
-        :entryName="entryName">
-      </dc-entry-list>
-      <dc-entry-field
-        ref="entryComp"
-        v-else
-        :activeMode="activeMode"
-        :address="address"
-        :entry="entry"
-        :entryName="entryName">
-      </dc-entry-field>
+      <div v-else>
+        <h5 class="p-4 border-bottom border-sm font-weight-semibold">
+          {{ '_datacontainer.entry.entry-type' | translate }}: {{ `_datacontainer.types.${ type }` | translate }}
+
+          <template v-if="itemType">
+            ({{ `_datacontainer.types.${ itemType }` | translate }})
+          </template>
+        </h5>
+        <dc-entry-object
+          :class="{ 'px-4 pb-4 pt-2': !schemaEdit }"
+          ref="entryComp"
+          v-if="type === 'object'"
+          :activeMode="activeMode"
+          :address="address"
+          :entry="entry"
+          :entryName="entryName"
+          :schemaEdit="schemaEdit">
+        </dc-entry-object>
+        <dc-entry-list
+          :class="{ 'px-4 pb-4 pt-2': !schemaEdit || itemType !== 'object' }"
+          ref="entryComp"
+          v-else-if="type === 'array'"
+          @reset="resetValue"
+          @save="saveValue"
+          :activeMode="activeMode"
+          :address="address"
+          :entry="entry"
+          :entryName="entryName"
+          :schemaEdit="schemaEdit">
+        </dc-entry-list>
+        <dc-entry-field
+          class="px-4 pb-4 pt-2"
+          ref="entryComp"
+          v-else
+          :activeMode="activeMode"
+          :address="address"
+          :entry="entry"
+          :entryName="entryName"
+          :schemaEdit="schemaEdit">
+        </dc-entry-field>
+      </div>
     </template>
   </div>
 </template>

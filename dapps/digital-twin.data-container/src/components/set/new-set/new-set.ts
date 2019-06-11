@@ -64,11 +64,13 @@ export default class NewDataSetComponent extends mixins(EvanComponent) {
   loading = true;
 
   async created() {
-    const runtime = utils.getRuntime(this);
+    this.$emit('init', this);
 
+    const runtime = utils.getRuntime(this);
     this.containerAddress = this.$route.params.containerAddress;
-    const uiContainer = new UiContainer(this);
-    this.template = (await uiContainer.loadData()).template;
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.template = uiContainer.template;
+    });
 
     this.loading = false;
   }

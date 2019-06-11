@@ -24,7 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
 import * as dtLib from '@evan.network/digitaltwin.lib';
 
 /* tslint:disable */
@@ -33,6 +32,7 @@ const i18n: any = {
     "ajv": {
       "add": "Add field",
       "edit-schema": "Edit schema",
+      "files-no-default": "File type fields cannot contain default values.",
       "name": {
         "desc": "Name of the field",
         "error": {
@@ -55,9 +55,9 @@ const i18n: any = {
         "title": "Type"
       },
       "value": {
-        "desc": "Value of the field",
+        "desc": "Default value of the field",
         "error": "Please enter a value of the correct type!",
-        "title": "Value"
+        "title": "Default value"
       }
     },
     "context-menu": {
@@ -81,21 +81,24 @@ const i18n: any = {
       "create": "Create",
       "create-plugin": "Create Standalone Plugin",
       "edit-dbcp-hint": "Wrong plugin selected? Change it here.",
+      "empty-plugins": "You have not yet created any plugins that can be added to these Digital Twin.",
       "finish": "Finish configuration",
       "general": "General Information",
       "plugin": {
         "desc": "Configuration of the new plugin",
         "title": "Plugin Type"
       },
-      "sub-title": "Specify general information, data schema and values."
+      "plugin-select": "Plugin Selection",
+      "sub-title": "Specify general information, data schema and values.",
+      "to-plugins": "Go to the plugins"
     },
     "dbcp": {
       "description": {
-        "desc": "Short description for the Data Container",
+        "desc": "Short description",
         "title": "Description"
       },
       "name": {
-        "desc": "Name of the Data Container",
+        "desc": "Name",
         "error": "Please provide a name!",
         "title": "Name"
       }
@@ -104,6 +107,7 @@ const i18n: any = {
       "create": "Creating Data Container...",
       "link": "Link Data Container...",
       "plugin": "Saving plugin...",
+      "plugin-remove": "Plugin löschen",
       "plugin-share": "Sharing plugin...",
       "share": "Share Data Container...",
       "update": "Updating Data Container..."
@@ -118,6 +122,7 @@ const i18n: any = {
       "array-type": {
         "title": "List type"
       },
+      "entry-type": "Data Set Type",
       "name": {
         "desc": "Name of the data set",
         "error": {
@@ -139,8 +144,8 @@ const i18n: any = {
     "field": {
       "edit": "Edit"
     },
-    "in-creation": "In Creation...",
-    "in-saving": "Saving...",
+    "in-creation": "A plugin is being created.<br><br><h4 class=\"text-muted\">Please wait until the process is completed...</h4>",
+    "in-saving": "Saving pluging...",
     "list": {
       "add-list-entry": "Add list entry",
       "canel-list-entry": "Cancel",
@@ -160,12 +165,14 @@ const i18n: any = {
     },
     "plugin": {
       "bmail": {
-        "body": "Hello,<br><br>You have received a data container plugin from <b>{alias}</b>: <br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container plugin"
+        "body": "Hello,<br><br>You have been sent the plugin template <b>{subject}</b> from <b>{alias}</b>. Use the \"open attachment\" button to add it to your profile. <br><br>Sincerely,<br><br>{alias}",
+        "title": "Plugin Template"
       },
-      "create-container": "Create Data Container",
       "create-title": "Create new Plugin",
+      "delete": "Delete Plugin",
+      "delete-quest": "Do you really want to delete this plugin?",
       "edit-dbcp": "Adjust Description",
+      "in-saving": "Saving Plugin<br><br><h4 class=\"text-muted\">Please wait until the process is finished...</h4>",
       "save": "Save Plugin"
     },
     "plugin-cache": {
@@ -181,11 +188,21 @@ const i18n: any = {
       }
     },
     "save-dbcp": "Save",
+    "sets": {
+      "reset": {
+        "desc": "Do you want to reset the current changes?",
+        "title": "Reset data set"
+      }
+    },
     "share": {
       "action": "Share",
-      "bmail": {
-        "body": "Hello,<br><br>You have been invited by <b>{alias}</b> into a data container:<br><br><b>{subject}</b><br><br>Sincerely,<br><br>{alias}",
-        "title": "Invitation to Data Container"
+      "bmail-container": {
+        "body": "Hello,<br><br>You have been invited to the plugin instance <b>{subject}</b> by <b>{alias}</b>.<br><br><b>Address of the plugin</b>:{containerAddress}<br><br><br>Hear regards,<br><br>{alias}",
+        "title": "Invitation in plugin instance"
+      },
+      "bmail-twin": {
+        "body": "Hello,<br><br>You have been invited to the Digital Twin <b>{subject}</b> by <b>{alias}</b>.<br><br><b>Address of the Digital Twin</b>:{digitalTwinAddress}<br><br><br>Best regards,<br><br>{alias}",
+        "title": "Invitation in Digital Twin"
       },
       "desc": "Send this data container to people in your address book and specify their access permissions.",
       "entry": "Data set",
@@ -218,12 +235,6 @@ const i18n: any = {
       "number": "Number",
       "object": "Metadata",
       "string": "Text"
-    },
-    "sets": {
-      "reset": {
-        "title": "Reset data set",
-        "desc": "Do you want to reset the current changes?"
-      }
     }
   }
 }

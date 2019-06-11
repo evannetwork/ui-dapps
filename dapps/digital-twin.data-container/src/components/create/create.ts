@@ -51,6 +51,23 @@ interface CreateInterface extends EvanForm {
 @Component({ })
 export default class CreateComponent extends mixins(EvanComponent) {
   /**
+   * Address to clone the new container / plugin from
+   */
+  @Prop() cloneAddress;
+
+  /**
+   * container / plugin
+   */
+  @Prop({
+    default: 'container'
+  }) mode;
+
+  /**
+   * digitalTwin address, where the container should be created for
+   */
+  @Prop() digitalTwinAddress;
+
+  /**
    * Show loading symbol
    */
   loading = true;
@@ -66,11 +83,6 @@ export default class CreateComponent extends mixins(EvanComponent) {
   createForm: CreateInterface = null;
 
   /**
-   *   digitalTwin address, where the container should be created for
-   */
-  digitalTwinAddress = '';
-
-  /**
    * Available steps represented by it's titles
    */
   steps: Array<any> = [ ];
@@ -83,28 +95,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
   /**
    * Available plugins
    */
-  plugins: Array<any> = [
-    {
-      description: {
-        name: '_datacontainer.createForm.base-plugin',
-        description: '',
-      },
-      template: {
-        type: 'metadata',
-        properties: { },
-      }
-    }
-  ];
+  plugins: Array<any> = [ ];
 
   /**
    * unmount dispatcher listeners
    */
   creationWatcher: Function;
-
-  /**
-   * Should a plugin be saved?
-   */
-  pluginMode = false;
 
   /**
    * Should the breadcrumbs be displayed? Hidden when evan-navigation tabs are visible
@@ -134,12 +130,10 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Setup the form.
    */
   async created() {
+    this.$emit('init', this);
+
     const runtime = utils.getRuntime(this);
     this.hideBreadcrumbs = document.querySelectorAll('.evan-navigation-tabs').length > 0;
-    this.digitalTwinAddress = getDtAddressFromUrl((<any>this).dapp);
-
-    // start plugin mode!
-    this.pluginMode = this.$route.name.startsWith('plugin-create');
 
     // TODO: load plugins
     this.createForm = (<CreateInterface>new EvanForm(this, {
@@ -152,13 +146,23 @@ export default class CreateComponent extends mixins(EvanComponent) {
       description: {
         value: ''
       },
-      plugin: {
-        value: 0
-      },
       imgSquare: {
         value: ''
       },
     }));
+
+    if (this.mode === 'plugin') {
+      this.plugins.push({
+        description: {
+          name: (<any>this).$i18n.translate('_datacontainer.createForm.base-plugin'),
+          description: '',
+        },
+        template: {
+          type: 'metadata',
+          properties: { },
+        }
+      });
+    }
 
     const plugins = await utils.getMyPlugins(runtime);
     Object.keys(plugins).forEach((key: string) => {
@@ -166,13 +170,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
     });
 
     // check if a existing container should be cloned
-    const cloneContainer = (<any>this).$route.params.cloneContainer;
-    if (cloneContainer) {
+    if (this.cloneAddress) {
       // if a plugin is available that should used to create a container / plugin, load the
       // plugin
-      if (plugins[cloneContainer]) {
+      if (plugins[this.cloneAddress]) {
         const plugin = await bcc.Container.getContainerPlugin(runtime.profile,
-          cloneContainer);
+          this.cloneAddress);
 
         // setup plugin and description
         // this.createForm.name.value = plugin.description.name;
@@ -180,14 +183,14 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
         // search for active plugin index
         for (let i = 0; i < this.plugins.length; i++) {
-          if (this.plugins[i].description.name === cloneContainer) {
-            this.createForm.plugin.value = i;
+          if (this.plugins[i].description.name === this.cloneAddress) {
+            this.activatePlugin(this.plugins[i], false);
 
             break;
           }
         }
-      } else if (cloneContainer.startsWith('0x')) {
-        const container = utils.getContainer(<any>runtime, cloneContainer);
+      } else if (this.cloneAddress.startsWith('0x')) {
+        const container = utils.getContainer(<any>runtime, this.cloneAddress);
         const plugin = await container.toPlugin(true);
 
         // this.createForm.name.value = plugin.description.name;
@@ -197,13 +200,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
         this.plugins.push(plugin);
 
         // set correct template index
-        this.createForm.plugin.value = this.plugins.length - 1;
+        this.activatePlugin(this.plugins[this.plugins.length - 1], false);
       }
     }
 
     this.loading = false;
     this.watchForCreation();
-    this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
   }
 
   /**
@@ -212,14 +214,14 @@ export default class CreateComponent extends mixins(EvanComponent) {
   async create() {
     const runtime = utils.getRuntime(this);
 
-    if (this.pluginMode) {
+    if (this.mode === 'plugin') {
       dispatchers.pluginDispatcher.start(runtime, {
         description: {
           description: this.createForm.description.value,
           imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
-        template: this.plugins[this.createForm.plugin.value].template,
+        template: this.activePlugin.template,
       });
     } else {
       dispatchers.createDispatcher.start(runtime, {
@@ -229,13 +231,13 @@ export default class CreateComponent extends mixins(EvanComponent) {
           imgSquare: this.createForm.imgSquare.value,
           name: this.createForm.name.value,
         },
-        plugin: this.plugins[this.createForm.plugin.value],
+        plugin: this.activePlugin,
       });
     }
 
     (<any>this.$refs.createModal).hide();
     await (new ContainerCache(runtime.activeAccount))
-      .delete(!this.pluginMode ? 'dc-create' : 'plugin-create');
+      .delete(this.mode === 'plugin' ? 'plugin-create' : 'dc-create');
   }
 
   /**
@@ -255,19 +257,61 @@ export default class CreateComponent extends mixins(EvanComponent) {
     this.saveActiveStep();
     this.activePlugin = plugin;
 
+    // save previous enabled states
+    const enabledStates = { };
+    this.steps.forEach(step => enabledStates[step.entryName] = step.enabled);
+
     // reset steps
     this.$set(this, 'steps', [ ]);
+
+    this.steps.push({
+      title: '_datacontainer.createForm.general',
+      disabled: () => false
+    });
 
     // apply the new active plugin entries as new steps
     const customTranslation = { };
     Object.keys(plugin.template.properties).forEach((entryName: string) => {
+      const entry = plugin.template.properties[entryName];
+      const type = fieldUtils.getType(entry.dataSchema);
+
+      // do not add list configurations to create in container mode, in container mode, only value
+      // view is editable
+      if (this.mode !== 'plugin' && type === 'array') {
+        return;
+      }
+
       // add the steps
       const title = `_datacontainer.breadcrumbs.${ entryName }`;
-      this.steps.push({
+      const step: any = {
         title,
+        enabled: enabledStates[entryName],
         entryName,
-        disabled: () => false
-      });
+        entryType: type,
+        disabled: (index: number) => {
+          const activeEntryComp = this.steps[this.activeStep].entryComp;
+          const activeValid = activeEntryComp && activeEntryComp.isValid();
+          const isEnabled =
+            // active entry must be valid
+            activeValid &&
+            // and previous one is enable or previous one is the active step and active is valid
+            (
+              this.steps[index - 1].enabled ||
+              index - 1 === this.activeStep && activeValid
+            );
+
+          return !isEnabled;
+        }
+      };
+
+      if (step.entryType === 'array') {
+        step.itemType = fieldUtils.getType(entry.dataSchema.items);
+      }
+
+      // apply step to the steps array
+      this.steps.push(step);
+
+      // add custom translation
       customTranslation[title] = entryName;
 
       /**
@@ -277,7 +321,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
        * array is used to handle new arrays, that will be persisted for caching to the indexeddb
        * like the normal entries
        */
-      entryUtils.ensureValues(plugin.template.properties[entryName]);
+      entryUtils.ensureValues('create', plugin.template.properties[entryName]);
     });
     (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
 
@@ -292,7 +336,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         // hide the tooltip
         setTimeout(() => {
           tooltip.onMouseLeave();
-        }, 5e3);
+        }, 3e3);
       });
     }
   }
@@ -305,26 +349,42 @@ export default class CreateComponent extends mixins(EvanComponent) {
   addNewEntry(entryData: any) {
     this.activePlugin.template.properties[entryData.name] = entryData.entry;
 
-    // navigate to the new data set
-    // this.activateTab(Object.keys(this.template.properties).indexOf(trimmedName));
-
     utils.enableDTSave();
-    this.activatePlugin(this.activePlugin, true);
+    this.activatePlugin(this.activePlugin, false);
+
+    this.loading = true;
+    this.$nextTick(() => this.loading = false);
+  }
+
+  /**
+   * Activates a specific step.
+   *
+   * @param      {number}  stepIndex  step index to activate
+   */
+  activateStep(stepIndex: number) {
+    this.saveActiveStep();
+
+    // navigate to next step.
+    const activeEntryComp = this.steps[this.activeStep].entryComp;
+    if (activeEntryComp.isValid()) {
+      this.steps[this.activeStep].enabled = true;
+    }
+
+    // reset entry components
+    this.activeStep = stepIndex;
   }
 
   /**
    * Saves current changes and navigates to next step.
    */
   nextStep() {
-    this.saveActiveStep();
-
     // if we are on the last step, ask to finish creation
     if (this.steps.length === 0 || this.activeStep === (this.steps.length - 1)) {
-      (<any>this.$refs.createModal).show();
+      this.saveActiveStep();
+      (<any>this.$refs.createModalSubmit).show();
     } else {
       // navigate to next step.
-      this.steps[this.activeStep].valid = true;
-      this.activeStep = this.activeStep + 1;
+      this.activateStep(this.activeStep + 1);
     }
   }
 
@@ -332,8 +392,11 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Save latest step entry edit values.
    */
   saveActiveStep() {
-    if (this.steps[this.activeStep] && this.steps[this.activeStep].entryComp) {
-      this.steps[this.activeStep].entryComp.save();
+    // do not trigger save for dbcp, will trigger endless loop
+    if (this.activeStep !== 0) {
+      if (this.steps[this.activeStep] && this.steps[this.activeStep].entryComp) {
+        this.steps[this.activeStep].entryComp.save();
+      }
     }
   }
 
@@ -341,39 +404,76 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Start a listener to watch for creation updates
    */
   async watchForCreation() {
-    const getDispatcher = () => this.pluginMode ?
+    const getDispatcher = () => this.mode === 'plugin' ?
       dispatchers.pluginDispatcher : dispatchers.createDispatcher;
 
     const watch = async ($event?: any) => {
       const beforeCreating = this.creating;
       const runtime = utils.getRuntime(this);
-      let toOpen;
+      const dapp: any = (<any>this).dapp;
 
       // when creating a plugin, use the pluginDispatcher and check for any instances
-      if (this.pluginMode) {
+      if (this.mode === 'plugin') {
         const instances = await dispatchers.pluginDispatcher.getInstances(runtime);
         this.creating = instances.length > 0;
 
         if ($event && $event.detail.instance.data.description.name) {
-          // force reload
-          delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-          toOpen = `${ $event.detail.instance.data.description.name }`;
+          const pluginName = $event.detail.instance.data.description.name;
+
+          // if the synchronisation has finished, navigate to the new plugin / container
+          if (!this.creating && beforeCreating) {
+            try {
+              // force reload and try to load the plugin, if it could be load, navigate to the plugin
+              delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
+              const plugin = await bcc.Container.getContainerPlugin(runtime.profile, pluginName);
+
+              if (plugin) {
+                window.location.hash = [
+                  dapp.rootEns,
+                  `digitaltwins.${ dapp.domainName }`,
+                  `datacontainer.digitaltwin.${ dapp.domainName }`,
+                  pluginName
+                ].join('/');
+              }
+            } catch (ex) {
+              console.log(ex);
+              // plugin creation was cancled or failed
+            }
+          }
         }
       } else {
-        // when creating an container, check for createDispatcher and check only for instances with the specific digitaltwin address
+        // when creating an container, check for createDispatcher and check only for instances with
+        // the specific digitaltwin address
         const instances = await dispatchers.createDispatcher.getInstances(runtime);
         this.creating = instances
           .filter((instance) => instance.data.digitalTwinAddress === this.digitalTwinAddress)
           .length > 0;
 
-        if ($event && $event.detail.instance.data.contractAddress) {
-          toOpen = $event.detail.instance.data.contractAddress;
-        }
-      }
+        // if the synchronisation has finished, navigate to the new plugin / container
+        if (!this.creating && beforeCreating && $event && $event.detail.instance.data.contractAddress) {
+          // base navigation url
+          let urlToOpen = [
+            dapp.rootEns,
+            `digitaltwins.${ dapp.domainName }`,
+          ];
 
-      // if the synchronisation has finished, navigate to the new plugin / container
-      if (!this.creating && beforeCreating && $event && toOpen) {
-        (<any>this).evanNavigate(toOpen);
+          // navigate relative to digitaltwin address
+          if (this.digitalTwinAddress) {
+            urlToOpen = urlToOpen.concat([
+              `digitaltwin.${ dapp.domainName }`,
+              this.digitalTwinAddress
+            ]);
+          }
+
+          // open datacontainer directly
+          urlToOpen = urlToOpen.concat([
+            `datacontainer.digitaltwin.${ dapp.domainName }`,
+            $event.detail.instance.data.contractAddress
+          ]);
+
+          // open built url
+          window.location.hash = urlToOpen.join('/');
+        }
       }
     }
 
@@ -381,5 +481,27 @@ export default class CreateComponent extends mixins(EvanComponent) {
     if (!this.creationWatcher) {
       this.creationWatcher = getDispatcher().watch(($event: any) => watch($event));
     }
+  }
+
+  /**
+   * Shows the create modal.
+   *
+   * @param      {any}  clonePlugin  plugin object to clone from
+   */
+  showModal(clonePlugin?: any) {
+    if (clonePlugin) {
+      this.plugins.unshift(clonePlugin);
+      this.activatePlugin(clonePlugin);
+    }
+
+    (<any>this).$refs.createModal.show();
+    this.$nextTick(() => this.createForm.name.$ref && this.createForm.name.$ref.focus());
+  }
+
+  /**
+   * Hide the create modal.
+   */
+  hideModal() {
+    (<any>this).$refs.createModal.hide();
   }
 }

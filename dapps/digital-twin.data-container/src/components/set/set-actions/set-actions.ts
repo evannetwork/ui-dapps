@@ -48,7 +48,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   /**
    * Current opened set
    */
-  @Prop() entryName = '';
+  @Prop() entryName;
 
   /**
    * Dropdown mode (buttons / dropdownButton / dropdownIcon / dropdownHidden)
@@ -94,6 +94,11 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   uiContainer: any = null;
 
   /**
+   * is permitted for write operations?
+   */
+  writeOperations = false;
+
+  /**
    * Currents container template definition.
    */
   templateEntry: any = null;
@@ -106,7 +111,7 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
+  loading = false;
 
   /**
    * Watch for cache updates
@@ -116,9 +121,16 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
   savingWatcher = null;
 
   /**
+   * List of entries that are currently is save process
+   */
+  entriesToSave: Array<boolean> = [ ];
+
+  /**
    * Set button classes
    */
   async created() {
+    this.$emit('init', this);
+
     if (this.displayMode !== 'buttons') {
       Object.keys(this.buttonClasses).forEach(
         type => this.buttonClasses[type] = 'dropdown-item pt-2 pb-2 pl-3 pr-3 clickable'
@@ -127,37 +139,40 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
       this.buttonTextComp = 'span';
     }
 
-    // load the data
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
-    this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
-    this.saving = await this.uiContainer.isSaving();
-    this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
+    // implement lazy dropdown loading later, currently we need the "show the dropdown icon"
+    // directly on startup, when actions for everyone are available, load specific data after
+    // opening dropdown
+    await this.initialize();
+  }
 
-    // watch for cache updates
-    this.savingWatcher = this.uiContainer
-      .watchSaving(async () => this.saving = await this.uiContainer.isSaving());
-    this.cacheWatcher = this.uiContainer.watchForUpdates(async () => {
-      await this.uiContainer.loadData();
-      this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
+  /**
+   * Load the set data.
+   */
+  async initialize() {
+    const runtime = utils.getRuntime(this);
+    this.loading = true;
+
+    this.uiContainer = await UiContainer.watch(this, async (
+      uiContainer: UiContainer,
+      dispatcherData: any
+    ) => {
+      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
+      this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
+      this.writeOperations = uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1;
+      this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
     });
 
     this.loading = false;
   }
 
   /**
-   * Clear update watcher
-   */
-  beforeDestroy() {
-    this.cacheWatcher && this.cacheWatcher();
-  }
-
-  /**
    * Show the actions dropdown.
    */
   showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
+    // load data for dropdowns
+    !this.loading && !this.templateEntry && this.initialize();
 
+    (<any>this).$refs.dtContextMenu.show();
     $event && $event.preventDefault();
   }
 
@@ -174,15 +189,20 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
    * Reset the current changes and reloads the data.
    */
   async resetEntry() {
-    const runtime = utils.getRuntime(this);
-
-    delete this.uiContainer.plugin.template.properties[this.entryName];
-
-    // reset the cache
-    const containerCache = new ContainerCache(runtime.activeAccount);
-    containerCache.put(this.containerAddress, this.uiContainer.plugin);
+    this.uiContainer.resetEntry(this.entryName);
 
     // hide the modal
     (<any>this.$refs.resetModal) && (<any>this.$refs.resetModal).hide();
+  }
+
+  /**
+   * Should dropdown context menu be shown?
+   */
+  areDropdownDotsVisible() {
+    return (
+      (this.schemaActions && this.templateEntry && this.templateEntry.changed && !this.templateEntry.isNew) ||
+      (this.listActions && this.entryType === 'array' && this.containerAddress.startsWith('0x') &&
+        this.writeOperations)
+    );
   }
 }

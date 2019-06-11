@@ -48,7 +48,7 @@
                   :topic="isContainer ?
                     `_digitaltwins.breadcrumbs.datacontainer` :
                     `_digitaltwins.breadcrumbs.plugin`"
-                  :title="description.name"
+                  :title="description ? description.name : ''"
                   :icon="isContainer ?
                     `mdi mdi-note-multiple-outline`:
                     `mdi mdi-note-multiple-outline`
@@ -62,14 +62,14 @@
                       :digitalTwinAddress="digitalTwinAddress"
                       :displayMode="'dropdownIcon'"
                       :dcActions="true"
-                      :setActions="false">
+                      :setActions="true">
                     </dc-actions>
                     <dc-plugin-actions
                       ref="contextMenu"
                       v-else
                       :pluginName="containerAddress"
                       :pluginActions="true"
-                      :setActions="false"
+                      :setActions="true"
                       :displayMode="'dropdownIcon'">
                     </dc-plugin-actions>
                   </template>

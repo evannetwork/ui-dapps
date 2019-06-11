@@ -38,58 +38,80 @@
         <evan-loading v-if="loading">
         </evan-loading>
         <template v-else>
-          <evan-dapp-wrapper-level-2 ref="level2Wrapper"
-            v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
-            <template v-slot:content>
-              <div style="width: 360px">
-                <evan-loading
-                  v-if="$store.state.uiDT.loading && !$store.state.uiDT.initialized">
-                </evan-loading>
-
-                <template v-else-if="twinUrl">
-                  <dt-tree-root
-                    :url="`${ twinUrl }/dt-detail`"
-                    :topic="`_digitaltwins.breadcrumbs.digitaltwin`"
-                    :title="$store.state.uiDT.dbcp.name"
-                    :icon="`mdi mdi-fingerprint`"
-                    @rightClick="$refs.dtActions.showDropdown($event)">
-                    <template v-slot:context-menu>
-                      <dt-actions
-                        ref="dtActions"
-                        :uiDT="$store.state.uiDT"
-                        :dtActions="true"
-                        :containerActions="true"
-                        :displayMode="'dropdownIcon'">
-                      </dt-actions>
-                    </template>
-                  </dt-tree-root>
-
-                  <div class="pl-6 pr-3 pt-3">
-                    <small class="text-muted text-uppercase font-weight-semibold">
-                      {{ '_digitaltwins.breadcrumbs.dt-plugins' | translate }}
-                    </small>
-                  </div>
-
-                  <dc-tree
-                    v-for="(container, index) in $store.state.uiDT.containers"
-                    :baseUrl="twinUrl"
-                    :containerAddress="container.address"
-                    :creating="container.creating"
-                    :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
-                    :description="container.description"
-                    :digitalTwinAddress="$store.state.uiDT.address"
-                    :loading="container.loading">
-                  </dc-tree>
-                </template>
+          <div class="container-wide" v-if="error">
+            <div class="white-box border-smooth rounded">
+              <div class="header">
+                <h3 class="m-0 font-weight-semibold">
+                  {{ '_digitaltwins.detail.error.title' | translate }}
+                </h3>
               </div>
-            </template>
-          </evan-dapp-wrapper-level-2>
+              <div class="content"
+                v-html="$t('_digitaltwins.detail.error.desc')">
+              </div>
+            </div>
+          </div>
+          <template v-else>
+            <evan-dapp-wrapper-level-2 ref="level2Wrapper"
+              v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
+              <template v-slot:content>
+                <div style="width: 360px">
+                  <evan-loading
+                    v-if="!$store.state.uiDT.initialized && $store.state.uiDT.loading">
+                  </evan-loading>
 
-          <transition name="fade" mode="out-in"
-            v-if="!$store.state.uiDT || ($store.state.uiDT && !$store.state.uiDT.loading)">
-            <router-view></router-view>
-          </transition>
-          <evan-loading v-else></evan-loading>
+                  <template v-else-if="twinUrl">
+                    <dt-tree-root
+                      :url="`${ twinUrl }/dt-detail`"
+                      :topic="`_digitaltwins.breadcrumbs.digitaltwin`"
+                      :title="$store.state.uiDT.dbcp.name"
+                      :icon="`mdi mdi-fingerprint`"
+                      @rightClick="$refs.dtActions.showDropdown($event)">
+                      <template v-slot:context-menu>
+                        <dt-actions
+                          ref="dtActions"
+                          :uiDT="$store.state.uiDT"
+                          :dtActions="true"
+                          :containerActions="true"
+                          :displayMode="'dropdownIcon'">
+                        </dt-actions>
+                      </template>
+                    </dt-tree-root>
+
+                    <div class="py-3 px-2"
+                      v-if="$store.state.uiDT.containers.length === 0">
+                      <button class="btn btn-link dark-link d-flex align-items-center"
+                        @click="
+                          $refs.dtActions.reactiveRefs.dcCreate.showModal();
+                          $refs.dtActions.closeDropdown();
+                        ">
+                        <button class="btn mini border btn-circle border-secondary mr-3">
+                          <i class="mdi mdi-plus text-secondary"></i>
+                        </button>
+                        {{ '_digitaltwins.containers.create' | translate }}
+                      </button>
+                    </div>
+                    <dc-tree
+                      v-else
+                      v-for="(container, index) in $store.state.uiDT.containers"
+                      :baseUrl="twinUrl"
+                      :containerAddress="container.address"
+                      :creating="container.creating"
+                      :dcUrl="`${ twinUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ container.address }`"
+                      :description="container.description"
+                      :digitalTwinAddress="$store.state.uiDT.address"
+                      :loading="container.loading">
+                    </dc-tree>
+                  </template>
+                </div>
+              </template>
+            </evan-dapp-wrapper-level-2>
+
+            <transition name="fade" mode="out-in"
+              v-if="!$store.state.uiDT || ($store.state.uiDT && !$store.state.uiDT.loading)">
+              <router-view></router-view>
+            </transition>
+            <evan-loading v-else></evan-loading>
+          </template>
         </template>
       </template>
     </evan-dapp-wrapper>

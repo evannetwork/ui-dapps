@@ -29,8 +29,6 @@ import Dexie from 'dexie';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 
-import { containerCache } from './UiContainer';
-
 export default class ContainerCache {
   /**
    * Current database instance
@@ -96,8 +94,6 @@ export default class ContainerCache {
    * @param      {bcc.ContainerPlugin}  plugin  plugin that should be saved
    */
   async put(id: string, plugin: bcc.ContainerPlugin) {
-    containerCache[id] = plugin;
-
     await (<any>this.db).plugins.put({ id: this.getEntryId(id), plugin });
 
     this.sendEvent(id, 'put', plugin);
@@ -110,7 +106,6 @@ export default class ContainerCache {
    *                               ...)
    */
   async delete(id: string) {
-    delete containerCache[id];
     await (<any>this.db).plugins.delete(this.getEntryId(id));
 
     this.sendEvent(id, 'delete');

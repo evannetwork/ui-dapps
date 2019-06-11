@@ -42,23 +42,20 @@
     </div>
     <template v-else>
       <evan-nav-tabs class="flex-shrink-0"
-        :tabs="tabs">
+        :tabs="tabs"
+        @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>
-      <div class="container-wide overflow-y-auto">
+      <div class="container-wide overflow-y-auto flex-grow-1">
         <div class="d-flex mb-5 align-items-center">
-          <div>
-            <h3 class="font-weight-bold mb-0">
-              {{ uiDT.dbcp.name }}
-            </h3>
-            <p class="text-muted font-weight-semibold m-0">
-              {{ uiDT.dbcp.description }}
-            </p>
-          </div>
+          <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3 w-100">
+            {{ uiDT.dbcp.description }}
+          </h3>
           <span class="mx-auto"></span>
           <dt-actions
+            v-if="reactiveRefs.navTabs"
             :uiDT="uiDT"
             :dtActions="true"
-            :containerActions="false"
+            :containerActions="reactiveRefs.navTabs.activeTab === 0"
             :displayMode="'buttons'">
           </dt-actions>
         </div>

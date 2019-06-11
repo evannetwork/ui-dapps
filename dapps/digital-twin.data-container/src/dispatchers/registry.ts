@@ -27,16 +27,18 @@
 
 import createDispatcher from './create';
 import linkDispatcher from './link';
+import pluginDispatcher from './plugin';
+import pluginRemoveDispatcher from './plugin-remove';
+import pluginShareDispatcher from './plugin-share';
 import shareDispatcher from './share';
 import updateDispatcher from './update';
-import pluginDispatcher from './plugin';
-import pluginShareDispatcher from './plugin-share';
 
 export {
   createDispatcher,
   linkDispatcher,
-  shareDispatcher,
   pluginDispatcher,
+  pluginRemoveDispatcher,
   pluginShareDispatcher,
+  shareDispatcher,
   updateDispatcher,
 }

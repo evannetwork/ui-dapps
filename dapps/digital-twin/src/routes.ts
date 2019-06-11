@@ -50,13 +50,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     beforeEnter: (to, from, next) => window.location.hash = from.fullPath
   },
 
-  /************************************* twin details *********************************************/
-  {
-    name: 'dt-create',
-    component: DigitaTwinCreateComponent,
-    path: `dt-create`,
-  },
-
   /**************************************** details ***********************************************/
   {
     redirect: { path: dtPath('dt-detail') },

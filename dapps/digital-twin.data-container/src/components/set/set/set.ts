@@ -45,9 +45,19 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   containerAddress = '';
 
   /**
+   * Last opened ui container
+   */
+  uiContainer: UiContainer;
+
+  /**
    * selected entry name
    */
-   entryName = '';
+  entryName = '';
+
+  /**
+   * Current selected entries calculated type
+   */
+  entryType = '';
 
   /**
    * Tabs for top navigation
@@ -65,10 +75,22 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * Data container could not be loaded, e.g. no permissions.
+   */
+  error = false;
+
+
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = { };
+
+  /**
    * Set button classes
    */
   async created() {
     await this.initialize();
+    this.defaultRouting();
 
     // watch for saving updates
     let beforeEntry = this.entryName;
@@ -77,6 +99,8 @@ export default class DataSetComponent extends mixins(EvanComponent) {
         beforeEntry = this.$route.params.entryName;
         await this.initialize();
       }
+
+      this.defaultRouting();
     }).bind(this);
 
     // add the hash change listener
@@ -96,38 +120,62 @@ export default class DataSetComponent extends mixins(EvanComponent) {
   async initialize() {
     this.loading = true;
 
-    const tabNames = [ 'entry-schema', 'entry-permissions', 'entry-changes' ];
+    try {
+      const tabNames = [ 'entry-schema', 'entry-permissions', 'entry-changes' ];
 
-    this.containerAddress = this.$route.params.containerAddress;
-    this.entryName = this.$route.params.entryName;
+      this.containerAddress = this.$route.params.containerAddress;
+      this.entryName = this.$route.params.entryName;
 
-    // load basic data schema, for checking entry type
-    const uiContainer = new UiContainer(this);
-    (await uiContainer.loadData());
+      // load basic data schema, for checking entry type
+      this.uiContainer = new UiContainer(this);
+      (await this.uiContainer.loadPlugin());
 
-    // only allow list entries for contracts
-    if (uiContainer.containerAddress.startsWith('0x')) {
-      // add list entries overview, when it's type of array
-      const entry = uiContainer.plugin.template.properties[this.entryName];
-      const entryType = fieldUtils.getType(entry.dataSchema);
-      if (entryType === 'array') {
-        tabNames.splice(1, 0, 'list-entries');
+      // only allow list entries for contracts
+      const entry = this.uiContainer.plugin.template.properties[this.entryName];
+      this.entryType = fieldUtils.getType(entry.dataSchema);
+      if (this.uiContainer.isContainer) {
+        // add list entries overview, when it's type of array
+        if (this.entryType === 'array') {
+          tabNames.unshift('list-entries');
+        } else {
+          tabNames.unshift('entry-values');
+        }
       }
-    }
 
-    this.tabs = tabNames
-      .map(urlKey => ({
-        id: `tab-${ urlKey }`,
-        href: [
-          (<any>this).dapp.fullUrl,
-          this.containerAddress,
-          'data-set',
-          this.entryName,
-          urlKey,
-        ].join('/'),
-        text: `_digitaltwins.breadcrumbs.${ urlKey }`
-      }));
+      this.tabs = tabNames
+        .map(urlKey => ({
+          id: `tab-${ urlKey }`,
+          href: [
+            (<any>this).dapp.fullUrl,
+            this.containerAddress,
+            'data-set',
+            this.entryName,
+            urlKey,
+          ].join('/'),
+          text: `_digitaltwins.breadcrumbs.${ urlKey }`
+        }));
+      } catch (ex) {
+        this.error = ex;
+        utils.getRuntime(this).logger.log(ex.message, 'error');
+      }
 
     this.loading = false;
+  }
+
+  /**
+   * Check if the base route for the data set was navigated to, directly navigate to sub page.
+   */
+  defaultRouting() {
+    if (this.$route.name === 'entry-base') {
+      if (!this.containerAddress.startsWith('0x')) {
+        this.$router.push({ name: 'entry-schema' });
+      } else {
+        if (this.entryType === 'array') {
+          this.$router.push({ name: 'list-entries' });
+        } else {
+          this.$router.push({ name: 'entry-values' })
+        }
+      }
+    }
   }
 }

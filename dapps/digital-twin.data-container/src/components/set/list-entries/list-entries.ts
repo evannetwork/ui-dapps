@@ -52,11 +52,6 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   entryName = '';
 
   /**
-   * Container instance
-   */
-  uiContainer: UiContainer;
-
-  /**
    * Currents container template definition.
    */
   templateEntry: any = null;
@@ -89,9 +84,11 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * is the current container in save mode
    */
+  cacheWatcher = null;
+  error = false;
+  permitted = false;
   saving = false;
   savingWatcher = null;
-  cacheWatcher = null;
 
   /**
    * Calculated type
@@ -102,42 +99,46 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
    * Load first entries
    */
   async created() {
+    const runtime = utils.getRuntime(this);
+
     this.containerAddress = this.$route.params.containerAddress;
     this.entryName = this.$route.params.entryName;
-    this.uiContainer = new UiContainer(this);
 
-    this.savingWatcher = this.uiContainer
-      .watchSaving(async () => {
-        this.saving = await this.uiContainer.isSaving();
-        await this.loadDispatcherEntries();
-      });
-    this.cacheWatcher = this.uiContainer.watchForUpdates(() => this.initialize());
+    let beforeSaving = false;
+    await UiContainer.watch(this, async (uiContainer: UiContainer, dispatcherData: any) => {
+      this.saving = uiContainer.isSaving;
+      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
+      this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-    await this.initialize();
-  }
+      if (uiContainer.permissions.read.indexOf(this.entryName) !== -1 ||
+          uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1) {
+        this.permitted = true;
 
-  /**
-   * Load list entry data.
-   */
-  async initialize() {
-    this.loading = true;
+        // ensure values
+        entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+        // setup dispatcher entries
+        this.setDispatcherEntries(dispatcherData);
 
-    const runtime = utils.getRuntime(this);
-    await this.loadDispatcherEntries();
-    await this.uiContainer.loadData();
-    this.templateEntry = this.uiContainer.plugin.template.properties[this.entryName];
-    this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
+        // reload after save process has finished
+        if (beforeSaving && !this.saving) {
+          // reset values
+          this.count = 10;
+          this.maxListentries = 0;
+          this.offset = 0;
+          this.listEntries = [ ];
 
-    // ensure values
-    entryUtils.ensureValues(this.templateEntry);
+          await this.loadEntries();
+        }
 
-    // reset values
-    this.count = 10;
-    this.maxListentries = 0;
-    this.offset = 0;
-    this.listEntries = [ ];
+        beforeSaving = this.saving;
+      }
+    });
 
-    await this.loadEntries();
+    if (this.permitted) {
+     await this.loadEntries();
+    } else {
+      this.loading = false;
+    }
   }
 
   /**
@@ -166,31 +167,40 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
 
       // apply the new entries to the list and increase the page params
       this.offset += newEntries.length;
-      this.listEntries = this.listEntries.concat(newEntries);
-    } catch (ex) { }
+      this.listEntries = this.listEntries.concat(
+        newEntries.map(entry => ({
+          data: entry
+        }))
+      );
+    } catch (ex) {
+      this.error = true;
+    }
 
     this.loading = false;
   }
 
   /**
-   * Load all dispatcher list entries.
+   * Set dispatcher entries for displaying list entries that are currently saved.
+   *
+   * @param      {Arrayany}  dispatcherData  The dispatcher data
    */
-  async loadDispatcherEntries() {
-    const runtime = utils.getRuntime(this);
-    const instances = await dispatchers.updateDispatcher.getInstances(runtime);
+  async setDispatcherEntries(dispatcherData: Array<any>) {
+    // reset previous dispatcher data
+    this.dispatcherEntries = [ ];
 
-    this.dispatcherEntries = [ ].concat(
-      ...(instances
-        .map(instance => instance.data)
-        .filter(data => data.plugin && data.address === this.containerAddress &&
-          data.plugin.template.properties[this.entryName].value.length > 0
-        )
-        .map(data => data.plugin.template.properties[this.entryName].value)
-      ))
-      .map(entry => {
-        entry.loading = true;
+    // only get the dispatcher data, that corresponds to this entry
+    const filtered = dispatcherData
+      .filter(data => data.plugin && data.address === this.containerAddress &&
+        data.plugin.template.properties[this.entryName].value.length !== 0
+      )
+      .map(data => data.plugin.template.properties[this.entryName].value);
 
-        return entry;
+    // will always be an array of values, so flat and push them into the dispatcherEntries
+    filtered.forEach(values => values.forEach((value: any) => {
+      this.dispatcherEntries.push({
+        data: value,
+        loading: true,
       });
+    }));
   }
 }

@@ -29,41 +29,39 @@
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
-    <div class="spinner-border spinner-border-sm text-light ml-3"
-      v-if="loading">
-    </div>
-    <template v-else>
-      <!-- show dropdown button  -->
-      <button class="btn btn-circle btn-sm btn-tertiary"
-        v-if="displayMode === 'dropdownButton'"
-        id="plugin-context-menu-open"
-        @click="$refs.dtContextMenu.show();">
-        <i class="mdi mdi-dots-vertical clickable"></i>
-      </button>
+    <!-- show dropdown button  -->
+    <button class="btn btn-circle btn-sm btn-tertiary"
+      v-if="displayMode === 'dropdownButton'"
+      id="plugin-context-menu-open"
+      @click="showDropdown($event)">
+      <i class="mdi mdi-dots-vertical clickable text-dark"></i>
+    </button>
 
-      <i class="mdi mdi-dots-vertical clickable"
-        id="plugin-context-menu-open"
-        v-if="displayMode === 'dropdownIcon'"
-        @click="$refs.dtContextMenu.show();">
-      </i>
+    <i class="mdi mdi-dots-vertical clickable text-dark"
+      id="plugin-context-menu-open"
+      v-if="displayMode === 'dropdownIcon'"
+      @click="showDropdown($event)">
+    </i>
 
-      <!-- show dropdown or only dropdown content -->
-      <div class="position-relative">
-        <evan-dropdown
-          id="datacontainer-context-menu"
-          ref="dtContextMenu"
-          :alignment="'right'"
-          :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
-          :width="'300px'"
-          :renderOnlyContent="displayMode === 'buttons'">
-          <template v-slot:content>
+    <!-- show dropdown or only dropdown content -->
+    <div class="position-relative">
+      <evan-dropdown
+        id="datacontainer-context-menu"
+        ref="dtContextMenu"
+        :alignment="'right'"
+        :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
+        :width="'300px'"
+        :renderOnlyContent="displayMode === 'buttons'">
+        <template v-slot:content>
+          <div class="text-center p-3" v-if="loading">
+            <div class="spinner-border spinner-border-sm text-light mr-3"></div>
+          </div>
+          <template v-else-if="plugin">
             <template v-if="pluginActions">
               <button :class="buttonClasses.tertiar"
                 id="plugin-dbcp-edit"
-                @click="$refs.dbcpModal.show(); closeDropdown();">
-                <div class="spinner-border spinner-border-sm"
-                  v-if="saving">
-                </div>
+                @click="reactiveRefs.dbcpModal.show(); closeDropdown();">
+                <div class="spinner-border spinner-border-sm" v-if="saving"></div>
                 <i class="mdi mdi-pencil" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.plugin.edit-dbcp` | translate }}
@@ -71,38 +69,38 @@
               </button>
               <button :class="buttonClasses.tertiar"
                 id="plugin-share"
-                @click="$refs.shareModal.show(); closeDropdown();">
+                @click="reactiveRefs.shareModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm" v-if="sharing"></div>
                 <i class="mdi mdi-share-variant" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.share` | translate }}
                 </component>
               </button>
-  <!--             <a :class="buttonClasses.tertiar"
-                id="plugin-container-create"
-                :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ pluginName }`"
-                @click="closeDropdown()">
-                <i class="mdi mdi-content-copy" style="width: 16px;"></i>
-                <component :is="buttonTextComp" :placement="'bottom'">
-                  {{ `_datacontainer.context-menu.create-container` | translate }}
-                </component>
-              </a> -->
-              <a :class="buttonClasses.tertiar"
+
+              <button :class="buttonClasses.tertiar"
                 id="plugin-clone"
-                :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ pluginName }`"
-                @click="closeDropdown()">
+                @click="reactiveRefs.clonePlugin.showModal(); closeDropdown()">
                 <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.clone` | translate }}
                 </component>
-              </a>
+              </button>
+              <button :class="buttonClasses.tertiar"
+                id="plugin-delete-open"
+                :disabled="deleting"
+                @click="reactiveRefs.deleteModal.show(); closeDropdown()">
+                <div class="spinner-border spinner-border-sm" v-if="deleting"></div>
+                <i class="mdi mdi-delete" style="width: 16px;" v-else></i>
+                <component :is="buttonTextComp" :placement="'bottom'">
+                  {{ `_datacontainer.plugin.delete` | translate }}
+                </component>
+              </button>
             </template>
             <template v-if="setActions">
-              <!-- :href="(`${ dapp.baseUrl }${ $route.fullPath }`).replace('dc-sets', 'dc-sets-add')" -->
               <a
                 id="dc-container-add"
                 :class="buttonClasses.primary"
-                @click="$refs.dcNewEntry.showModal(); closeDropdown();">
+                @click="reactiveRefs.dcNewEntry.showModal(); closeDropdown();">
                 <i class="mdi mdi-plus"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_digitaltwins.breadcrumbs.dc-sets-add` | translate }}
@@ -110,12 +108,14 @@
               </a>
             </template>
           </template>
-        </evan-dropdown>
-      </div>
-      <!-------------------------- actions section -------------------------->
+        </template>
+      </evan-dropdown>
+    </div>
+    <!-------------------------- actions section -------------------------->
+    <template v-if="plugin && !loading">
       <evan-modal
         id="plugin-dbcp-modal"
-        ref="dbcpModal">
+        @init="$set(reactiveRefs, 'dbcpModal', $event)">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ '_datacontainer.edit-dbcp' | translate }}
@@ -123,7 +123,6 @@
         </template>
         <template v-slot:body>
           <dt-dbcp
-            ref="dbcpComp"
             :dbcp="description"
             :disabled="saving"
             @init="$set(reactiveRefs, 'dbcpForm', $event._form)"
@@ -145,7 +144,9 @@
           </button>
         </template>
       </evan-modal>
-      <evan-modal id="plugin-share-modal" ref="shareModal"
+      <evan-modal
+        id="plugin-share-modal"
+        @init="$set(reactiveRefs, 'shareModal', $event)"
         v-if="contacts.length !== 0">
         <template v-slot:header>
           <h5 class="modal-title">
@@ -199,7 +200,10 @@
           </button>
         </template>
       </evan-modal>
-      <evan-modal id="plugin-share-modal" ref="shareModal" v-else>
+      <evan-modal
+        id="plugin-share-modal" 
+        v-else
+        @init="$set(reactiveRefs, 'shareModal', $event)">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ `_datacontainer.share.no-contacts.title` | translate }}
@@ -220,11 +224,37 @@
           </button>
         </template>
       </evan-modal>
+      <evan-modal
+        id="plugin-delete-modal"
+        @init="$set(reactiveRefs, 'deleteModal', $event)">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ '_datacontainer.plugin.delete' | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          {{ '_datacontainer.plugin.delete-quest' | translate }}
+        </template>
+        <template v-slot:footer>
+          <button type="submit"
+            id="plugin-delete"
+            class="btn btn-rounded btn-primary"
+            @click="deletePlugin()">
+            {{ '_datacontainer.plugin.delete' | translate }}
+            <i class="mdi mdi-arrow-right label"></i>
+          </button>
+        </template>
+      </evan-modal>
       <dc-new-entry
-        ref="dcNewEntry"
         :template="plugin.template"
-        @submit="addNewEntry($event)">
+        @submit="addNewEntry($event)"
+        @init="$set(reactiveRefs, 'dcNewEntry', $event)">
       </dc-new-entry>
+      <dc-create
+        :mode="'plugin'"
+        :cloneAddress="pluginName"
+        @init="$set(reactiveRefs, 'clonePlugin', $event)">
+      </dc-create>
     </template>
   </div>
 </template>

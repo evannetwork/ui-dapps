@@ -53,21 +53,35 @@ export default class PluginsComponent extends mixins(EvanComponent) {
    * watch for plugin save opertations
    */
   saveWatcher = Function;
-
+  shareWatcher = Function;
+  deleteWatcher = Function;
 
   /**
-   * watch for plugin save opertations
+   * ref handlers
    */
-  shareWatcher = Function;
+  reactiveRefs: any = { };
 
   /**
    * Load my plugins
    */
   async created() {
     await this.reloadPlugins();
-    this.loading = false;
-
     this.bindDispatchers();
+
+    // if this page was opened with mail address, try to load the data and extract the plugin
+    if (this.$route.query && this.$route.query.mailId) {
+      const runtime = utils.getRuntime(this);
+
+      try {
+        const clonePlugin = (await runtime.mailbox.getMail(this.$route.query.mailId))
+          .content.attachments[this.$route.query.attachment || 0].storeValue;
+        setTimeout(() => this.reactiveRefs.dtCreate.showModal(clonePlugin));
+      } catch (ex) {
+        runtime.logger.log(ex.message, 'error');
+      }
+    }
+
+    this.loading = false;
   }
 
   /**
@@ -75,8 +89,6 @@ export default class PluginsComponent extends mixins(EvanComponent) {
    */
   async reloadPlugins() {
     const runtime = utils.getRuntime(this);
-
-    delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
     this.plugins = await utils.getMyPlugins(runtime);
   }
 
@@ -93,11 +105,12 @@ export default class PluginsComponent extends mixins(EvanComponent) {
     const checkPlugins = async () => {
       const saving = await dataContainerApi.pluginDispatcher.getInstances(runtime);
       const sharing = await dataContainerApi.pluginShareDispatcher.getInstances(runtime);
-      const savingCount = saving.length + sharing.length;
+      const deleting = await dataContainerApi.pluginShareDispatcher.getInstances(runtime);
+      const savingCount = saving.length + sharing.length + deleting.length;
 
       // for reload
       if (beforeSaving < savingCount) {
-        await this.reloadPlugins();
+        setTimeout(() => this.reloadPlugins());
       }
 
       beforeSaving = savingCount;
@@ -105,6 +118,7 @@ export default class PluginsComponent extends mixins(EvanComponent) {
 
     this.saveWatcher = dataContainerApi.pluginDispatcher.watch(() => checkPlugins());
     this.shareWatcher = dataContainerApi.pluginShareDispatcher.watch(() => checkPlugins());
+    this.deleteWatcher = dataContainerApi.pluginRemoveDispatcher.watch(() => checkPlugins());
   }
 
   /**

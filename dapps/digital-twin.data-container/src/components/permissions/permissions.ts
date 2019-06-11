@@ -33,7 +33,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { utils } from '@evan.network/digitaltwin.lib';
+import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
 import * as dispatchers from '../../dispatchers/registry';
 import ContainerCache from '../../container-cache';
@@ -47,9 +47,7 @@ interface ShareFormInterface extends EvanForm {
 @Component({ })
 export default class PermissionsComponent extends mixins(EvanComponent) {
   /**
-   * Current opened container address (save it from routes to this variable, so all beforeDestroy
-   * listeners for template-handlers will work correctly and do not uses a new address that is
-   * laoding)
+   * Current opened container address
    */
   @Prop() containerAddress;
 
@@ -94,11 +92,6 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
   myProfile: any = null;
 
   /**
-   * Ui container instance
-   */
-  uiContainer: UiContainer = null;
-
-  /**
    * Permissions for the current account
    */
   permissions = null;
@@ -123,43 +116,32 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
    */
   async created() {
     const runtime = utils.getRuntime(this);
-
-    // watch for sharings watcher
-    this.sharingWatcher = dispatchers.shareDispatcher.watch(async () => {
-      const instances = await dispatchers.shareDispatcher.getInstances(runtime);
-      const sharing = instances
-        .filter(instance => instance.data.address === this.containerAddress)
-        .length > 0;
-
-      this.$set(this.$store.state, 'sharing', sharing);
-    });
-
-    await this.initialize();
-    this.$emit('init', this);
-  }
-
-  /**
-   * Clear watchers
-   */
-  beforeDestroy() {
-    this.sharingWatcher();
-  }
-
-  /**
-   * Load the container data and setup the dbcp update form.
-   */
-  async initialize() {
-    const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
+    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+      this.permissions = uiContainer.permissions;
+      this.description = uiContainer.description;
+      this.template = uiContainer.plugin.template;
+      this.permissions.isOwner = uiContainer.owner === runtime.activeAccount;
 
-    this.permissions = this.uiContainer.permissions;
-    this.description = this.uiContainer.description;
-    this.template = this.uiContainer.plugin.template;
-    this.permissions.isOwner = this.uiContainer.owner === runtime.activeAccount;
+      this.$set(this.$store.state, 'sharing', uiContainer.isSharing);
+    });
 
+    await this.setupAddressBook(runtime);
+    this.setupSharingForm();
+
+    // send instance to parent vue instance
+    this.$emit('init', this);
+
+    this.loading = false;
+  }
+
+  /**
+   * Load runtime and map it into an array.,
+   *
+   * @param      {bccRuntime}  runtime  bcc runtime
+   */
+  async setupAddressBook(runtime: bcc.Runtime) {
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
     bcc.Ipld.purgeCryptoInfo(addressBook);
@@ -178,24 +160,38 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
     if (this.contacts.length > 0) {
       this.share.accountId = this.contacts[0].address;
     }
+  }
 
+  /**
+   * Initialize share form.
+   */
+  async setupSharingForm() {
     // setup share form, so the user can insert a custom form
     let subject = [
       (<any>this).$t('_digitaltwins.breadcrumbs.datacontainer.digitaltwin'),
       `: ${ this.description.name }`,
-      this.digitalTwinAddress ? ` - ${ this.digitalTwinAddress }` : ''
-    ].join('');
+    ];
+
+    // if digital twin is opened, build subject including twin dbcp
+    if (this.digitalTwinAddress) {
+      const digitaltwin = EvanUIDigitalTwin.getDigitalTwin(
+        utils.getRuntime(this),
+        this.digitalTwinAddress
+      );
+      const twinDesc = await digitaltwin.getDescription();
+
+      subject.unshift(`${ twinDesc.name }, `);
+      subject.unshift(`${ (<any>this).$t('_digitaltwins.breadcrumbs.digitaltwin') }: `);
+    }
 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
       subject: {
-        value: subject,
+        value: subject.join(''),
         validate: function(vueInstance: PermissionsComponent, form: ShareFormInterface) {
           return this.value.trim().length !== 0;
         }
       },
     }));
-
-    this.loading = false;
   }
 
   /**
@@ -212,6 +208,26 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
       read: Object.keys(perm).filter(entryKey => perm[entryKey] === 'read'),
       readWrite: Object.keys(perm).filter(entryKey => perm[entryKey] === 'write'),
     };
+
+    const domainName = (<any>this).dapp.domainName;
+    const bMailText = this.digitalTwinAddress ?
+      '_datacontainer.share.bmail-twin' :
+      '_datacontainer.share.bmail-container';
+    const fullPath = [
+       `/${ (<any>this).dapp.rootEns }`,
+       `digitaltwins.${ domainName }`
+    ];
+
+    // if digital twin was opened, open container unter twin address when it was shared
+    if (this.digitalTwinAddress) {
+      fullPath.push(`digitaltwin.${ domainName }`);
+      fullPath.push(this.digitalTwinAddress);
+    }
+
+    // apply container address
+    fullPath.push(`datacontainer.digitaltwin.${ domainName }`);
+    fullPath.push(address);
+
     // build bmail for invited user
     const bMailContent = {
       content: {
@@ -220,17 +236,13 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
         title: (<any>this).$t('_datacontainer.share.bmail.title'),
         body: (<any>this).$t('_datacontainer.share.bmail.body', {
           alias: this.myProfile.alias,
+          containerAddress: this.containerAddress,
+          digitalTwinAddress: this.digitalTwinAddress,
           subject: this.shareForm.subject.value,
         }),
         attachments: [{
-          address: address,
-          bc: `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-          type: 'contract',
-          fullPath: [
-            `/${ (<any>this).dapp.rootEns }`,
-            `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-            address,
-          ].join('/'),
+          type: 'url',
+          fullPath: fullPath.join('/'),
         }],
       },
     };

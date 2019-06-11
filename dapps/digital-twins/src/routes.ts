@@ -28,7 +28,7 @@
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import OverviewComponent from './components/overview/overview.vue';
+import TwinsComponent from './components/twins/twins.vue';
 import PluginsComponent from './components/plugins/plugins.vue';
 import ContainersComponent from './components/containers/containers.vue';
 
@@ -38,7 +38,7 @@ import { EnsOpenComponent } from '@evan.network/digitaltwin';
 /* tslint:disable */
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'my-twins' }  },
-  { name: 'base-overview', component: OverviewComponent,  path: 'my-twins', },
+  { name: 'base-twins',    component: TwinsComponent,     path: 'my-twins', },
   { name: 'base-plugins',  component: PluginsComponent,   path: 'my-plugins', },
   { name: 'dt-open',       component: EnsOpenComponent,   path: `open`, },
 ];

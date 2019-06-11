@@ -46,10 +46,11 @@ const dispatchers = {
   dc: {
     'createDispatcher': new Dispatcher(dcDomain, 'createDispatcher', 0),
     'linkDispatcher': new Dispatcher(dcDomain, 'linkDispatcher', 0),
-    'pluginShareDispatcher': new Dispatcher(dcDomain, 'pluginShareDispatcher', 0),
     'pluginDispatcher': new Dispatcher(dcDomain, 'pluginDispatcher', 0),
-    'updateDispatcher': new Dispatcher(dcDomain, 'updateDispatcher', 0),
+    'pluginRemoveDispatcher': new Dispatcher(dcDomain, 'pluginRemoveDispatcher', 0),
+    'pluginShareDispatcher': new Dispatcher(dcDomain, 'pluginShareDispatcher', 0),
     'shareDispatcher': new Dispatcher(dcDomain, 'shareDispatcher', 0),
+    'updateDispatcher': new Dispatcher(dcDomain, 'updateDispatcher', 0),
   }
 };
 

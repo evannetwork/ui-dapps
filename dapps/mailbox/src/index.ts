@@ -56,6 +56,7 @@ import { MailDetailComponent } from './components/mail-detail/mail-detail';
 import { MailDispatcherService } from './services/service';
 import { MailSendComponent } from './components/mail-send/mail-send';
 import { SendMailDispatcher, } from './dispatcher/sendMail';
+import { UrlAttachmentComponent } from './components/attachment-cards/url/url';
 
 export {
   AnswerMailDispatcher,
@@ -142,6 +143,7 @@ function getConfig(isDispatcher?: boolean) {
       MailboxRootComponent,
       MailDetailComponent,
       MailSendComponent,
+      UrlAttachmentComponent,
     ];
   }
 

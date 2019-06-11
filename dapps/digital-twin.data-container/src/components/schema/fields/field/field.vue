@@ -31,6 +31,8 @@
     :id="id"
     :is="`dc-field-${ _type }`"
     :control="control"
+    :description="description"
+    :label="label"
     :mode="mode"
     :standalone="standalone">
   </component>

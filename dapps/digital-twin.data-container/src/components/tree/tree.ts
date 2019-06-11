@@ -80,11 +80,6 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   isOpen = false;
 
   /**
-   * Watch for container template updates
-   */
-  cacheWatcher: any;
-
-  /**
    * base window url for checking for active urls
    */
   windowLocation = window.location.origin + window.location.pathname;
@@ -104,25 +99,32 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
    */
   decodeURIComponent = (<any>window).decodeURIComponent;
 
+  /**
+   * ref handlers
+   */
+  reactiveRefs: any = {
+    setActions: [ ]
+  };
+
+
   async created() {
     const runtime = utils.getRuntime(this);
-    const uiContainer = new UiContainer(this);
 
-    //  watch for updates and load initial data
-    this.cacheWatcher = uiContainer.watchForUpdates(
-      async () => this.plugin = await uiContainer.loadData()
-    );
+    try {
+      await UiContainer.watch(this, async (uiContainer: UiContainer, dispatcherData: any) => {
+        this.plugin = uiContainer.plugin;
 
-    // load the plugin
-    this.plugin = await uiContainer.loadData();
+        if (!this.initializing) {
+          this.initializing = true;
+          this.$nextTick(() => this.initializing = false);
+        }
+      });
+    } catch (ex) {
+      if (ex.message.indexOf('No container address applied!') === -1) {
+        runtime.logger.log(ex.message, 'error');
+      }
+    }
 
     this.initializing = false;
-  }
-
-  /**
-   * Clear watchers
-   */
-  beforeDestroy() {
-    this.cacheWatcher();
   }
 }

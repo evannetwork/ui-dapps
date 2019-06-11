@@ -28,44 +28,43 @@
 <template>
   <!-- pull it one em to the right, within the buttons view, the last button will have also a mr-3 -->
   <div
-    v-if="!loading"
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
-    <div class="spinner-border spinner-border-sm text-light ml-3"
-      v-if="loading">
-    </div>
-    <template v-else>
-      <!-- show dropdown button  -->
-      <button class="btn btn-circle btn-sm btn-tertiary"
-        v-if="displayMode === 'dropdownButton'"
-        id="datacontainer-context-menu-open"
-        @click="$refs.dtContextMenu.show();">
-        <i class="mdi mdi-dots-vertical clickable"></i>
-      </button>
+    <!-- show dropdown button  -->
+    <button class="btn btn-circle btn-sm btn-tertiary"
+      v-if="displayMode === 'dropdownButton'"
+      id="datacontainer-context-menu-open"
+      @click="showDropdown($event)">
+      <i class="mdi mdi-dots-vertical clickable text-dark"></i>
+    </button>
 
-      <i class="mdi mdi-dots-vertical clickable"
-        id="datacontainer-context-menu-open"
-        v-if="displayMode === 'dropdownIcon'"
-        @click="$refs.dtContextMenu.show();">
-      </i>
+    <i class="mdi mdi-dots-vertical clickable text-dark"
+      id="datacontainer-context-menu-open"
+      v-if="displayMode === 'dropdownIcon'"
+      @click="showDropdown($event)">
+    </i>
 
-      <!-- show dropdown or only dropdown content -->
-      <div class="position-relative">
-        <evan-dropdown
-          id="datacontainer-context-menu"
-          ref="dtContextMenu"
-          :alignment="'right'"
-          :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
-          :width="'300px'"
-          :renderOnlyContent="displayMode === 'buttons'">
-          <template v-slot:content>
+    <!-- show dropdown or only dropdown content -->
+    <div class="position-relative">
+      <evan-dropdown
+        id="datacontainer-context-menu"
+        ref="dtContextMenu"
+        :alignment="'right'"
+        :class="{ 'd-flex align-items-center': displayMode === 'buttons' }"
+        :width="'300px'"
+        :renderOnlyContent="displayMode === 'buttons'">
+        <template v-slot:content>
+          <div class="text-center p-3" v-if="loading">
+            <div class="spinner-border spinner-border-sm text-light mr-3"></div>
+          </div>
+          <template v-else-if="plugin">
             <template v-if="dcActions">
               <button
                 :class="buttonClasses.tertiar"
                 v-if="isOwner"
                 id="container-dbcp-edit"
-                @click="$refs.dbcpModal.show(); closeDropdown();">
+                @click="reactiveRefs.dbcpModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
-                  v-if="$store.state.saving">
+                  v-if="saving">
                 </div>
                 <i class="mdi mdi-pencil" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
@@ -74,11 +73,11 @@
               </button>
               <button :class="buttonClasses.tertiar"
                 id="container-share"
-                @click="reactiveRefs.dcPermissions.openShareDialog()">
+                @click="reactiveRefs.dcPermissions.openShareDialog(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
-                  v-if="$store.state.sharing">
+                  v-if="sharing">
                 </div>
-                <i class="mdi mdi-share-variant" style="width: 16px;"></i>
+                <i class="mdi mdi-share-variant" style="width: 16px;" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.share` | translate }}
                 </component>
@@ -93,10 +92,7 @@
               </button>
               <a :class="buttonClasses.tertiar"
                 id="container-clone"
-                :href="digitalTwinAddress ?
-                  `${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/${ digitalTwinAddress }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ containerAddress }`:
-                  `${ dapp.baseUrl }/${ dapp.rootEns }/datacontainer.digitaltwin.${ dapp.domainName }/dc-create/${ containerAddress }`"
-                @click="closeDropdown();">
+                @click="reactiveRefs.dcClone.showModal(); closeDropdown();">
                 <i class="mdi mdi-content-copy" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.clone` | translate }}
@@ -104,8 +100,7 @@
               </a>
               <a :class="buttonClasses.tertiar"
                 id="container-plugin-create"
-                :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/plugin-create/${ containerAddress }`"
-                @click="closeDropdown();">
+                @click="reactiveRefs.saveAsPlugin.showModal(); closeDropdown();">
                 <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.plugin-save` | translate }}
@@ -117,7 +112,7 @@
                 id="dc-container-add"
                 v-if="isOwner"
                 :class="buttonClasses.primary"
-                @click="$refs.dcNewEntry.showModal(); closeDropdown();">
+                @click="reactiveRefs.dcNewEntry.showModal(); closeDropdown();">
                 <i class="mdi mdi-plus"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_digitaltwins.breadcrumbs.dc-sets-add` | translate }}
@@ -125,12 +120,14 @@
               </a>
             </template>
           </template>
-        </evan-dropdown>
-      </div>
-      <!-------------------------- actions section -------------------------->
+        </template>
+      </evan-dropdown>
+    </div>
+    <!-------------------------- actions section -------------------------->
+    <template v-if="plugin && !loading">
       <evan-modal
         id="container-dbcp-modal"
-        ref="dbcpModal">
+        @init="$set(reactiveRefs, 'dbcpModal', $event)">
         <template v-slot:header>
           <h5 class="modal-title">
             {{ '_datacontainer.edit-dbcp' | translate }}
@@ -138,9 +135,8 @@
         </template>
         <template v-slot:body>
           <dt-dbcp
-            ref="dbcpComp"
             :dbcp="plugin.description"
-            :disabled="$store.state.saving"
+            :disabled="saving"
             @init="$set(reactiveRefs, 'dbcpForm', $event._form)"
             @submit="saveDbcp()">
           </dt-dbcp>
@@ -150,29 +146,41 @@
             id="container-dbcp-save"
             class="btn btn-rounded btn-primary"
             v-if="reactiveRefs.dbcpForm"
-            :disabled="$store.state.saving || !reactiveRefs.dbcpForm.isValid"
+            :disabled="saving || !reactiveRefs.dbcpForm.isValid"
             @click="saveDbcp()">
             {{ `_datacontainer.save-dbcp` | translate }}
             <div class="spinner-border spinner-border-sm ml-3"
-              v-if="$store.state.saving">
+              v-if="saving">
             </div>
             <i class="mdi mdi-arrow-right label" v-else></i>
           </button>
         </template>
       </evan-modal>
       <dc-link
+        :containerAddress="containerAddress"
+        :digitalTwinAddress="digitalTwinAddress"
         @init="$set(reactiveRefs, 'dtContainerLink', $event)">
       </dc-link>
       <dc-permissions
-        @init="$set(reactiveRefs, 'dcPermissions', $event)"
         :containerAddress="containerAddress"
-        :digitalTwinAddress="digitalTwinAddress">
+        :digitalTwinAddress="digitalTwinAddress"
+        @init="$set(reactiveRefs, 'dcPermissions', $event)">
       </dc-permissions>
       <dc-new-entry
-        ref="dcNewEntry"
         :template="plugin.template"
+        @init="$set(reactiveRefs, 'dcNewEntry', $event)"
         @submit="addNewEntry($event)">
       </dc-new-entry>
+      <dc-create
+        :cloneAddress="containerAddress"
+        :digitalTwinAddress="digitalTwinAddress"
+        @init="$set(reactiveRefs, 'dcClone', $event)">
+      </dc-create>
+      <dc-create
+        :mode="'plugin'"
+        :cloneAddress="containerAddress"
+        @init="$set(reactiveRefs, 'saveAsPlugin', $event)">
+      </dc-create>
     </template>
   </div>
 </template>

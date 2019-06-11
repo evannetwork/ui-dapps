@@ -29,28 +29,31 @@
 export default {
   "_mailbox": {
     "add": "Nachricht senden",
+    "attachments": {
+      "commKey": {
+        "accepted": "Kontakt anzeigen",
+        "modal-body": "Wollen Sie diesen Kontakt wirklich hinzufügen?",
+        "new": "Kontaktanfrage akzeptieren"
+      },
+      "continue": "weiter",
+      "contract": {
+        "accepted": "Vertrag öffnen",
+        "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?",
+        "new": "Vertragseinladung akzeptieren"
+      },
+      "url": {
+        "accepted": "Anhang öffnen"
+      }
+    },
     "detail": "Nachrichtsdetails",
+    "dispatcher": {
+      "attachment": "Kontakt/Vertrag sync"
+    },
     "load-more": "Mehr Laden...",
     "mailbox": "Nachrichten",
     "received": "Empfangen",
     "sent": "Gesendet",
-    "to": "an",
-    "dispatcher": {
-      "attachment": "Kontakt/Vertrag sync"
-    },
-    "attachments": {
-      "continue": "weiter",
-      "commKey": {
-        "new": "Kontaktanfrage akzeptieren",
-        "accepted": "Kontakt anzeigen",
-        "modal-body": "Wollen Sie diesen Kontakt wirklich hinzufügen?"
-      },
-      "contract": {
-        "new": "Vertragseinladung akzeptieren",
-        "accepted": "Vertrag öffnen",
-        "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?"
-      }
-    }
+    "to": "an"
   }
 }
 /* tslint:enable */;

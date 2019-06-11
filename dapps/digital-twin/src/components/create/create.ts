@@ -80,6 +80,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
     await this.uiDT.initialize(this, utils.getRuntime(this));
 
     this.createForm = (<CreateFormInterface>new EvanForm(this, {
+      name: {
+        value: (this.uiDT.dbcp && this.uiDT.dbcp.name) ? this.uiDT.dbcp.name : '',
+        validate: function(vueInstance: CreateComponent, form: CreateFormInterface) {
+          return this.value.trim().length !== 0;
+        }
+      },
       useAddress: {
         value: false,
         validate: function(vueInstance: CreateComponent, form: CreateFormInterface) {
@@ -104,10 +110,16 @@ export default class CreateComponent extends mixins(EvanComponent) {
 
         // when the synchronisation has finished, navigate to the correct entry
         if (instance.status === 'finished') {
-          (<any>this).evanNavigate(
+          const dapp = (<any>this).dapp;
+          window.location.hash = [
+            dapp.rootEns,
+            `digitaltwins.${ dapp.domainName }`,
+            `digitaltwin.${ dapp.domainName }`,
             (instance.data.address === 'dt-create' ? '' : instance.data.address) ||
             instance.data.contractAddress
-          );
+          ].join('/');
+
+          this.hideModal();
         }
       });
 
@@ -147,7 +159,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
       this.checkAddress();
     } else {
       // hide create modal
-      (<any>this.$refs.createModal).show();
+      (<any>this.$refs.createModalQuestion).show();
     }
   }
 
@@ -155,7 +167,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Start the create dispatcher.
    */
   triggerCreateDispatcher() {
-    (<any>this.$refs.createModal).hide();
+    (<any>this.$refs.createModalQuestion).hide();
 
     this.uiDT.dbcp.name = this.createForm.name.value;
     this.uiDT.dbcp.description = this.createForm.description.value;
@@ -166,5 +178,19 @@ export default class CreateComponent extends mixins(EvanComponent) {
       dbcp: this.uiDT.dbcp,
       isFavorite: this.uiDT.isFavorite,
     });
+  }
+
+  /**
+   * Shows the create modal.
+   */
+  showModal() {
+    (<any>this).$refs.createModal.show();
+  }
+
+  /**
+   * Hide the create modal.
+   */
+  hideModal() {
+    (<any>this).$refs.createModal.hide();
   }
 }

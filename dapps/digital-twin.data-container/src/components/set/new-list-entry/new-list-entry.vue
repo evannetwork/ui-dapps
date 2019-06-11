@@ -37,19 +37,22 @@
     </template>
     <template v-slot:body>
       <div id="entry-list-add">
-        <dc-ajv
+        <dc-ajv-values
           v-if="itemType === 'object'"
-          :mode="'edit'"
+          :address="containerAddress"
           :properties="entry.dataSchema.items.properties"
           :value="entry.edit.value"
+          :mode="'edit'"
           @init="$set(reactiveRefs, 'addAjv', $event)">
-        </dc-ajv>
+        </dc-ajv-values>
         <dc-field
           class="p-3"
           v-else
-          :schema="entry.dataSchema.items"
           :control="addListEntryForm.value"
+          :description="`_datacontainer.types.${ itemType }`"
+          :label="`_datacontainer.entry.value.title`"
           :mode="'edit'"
+          :schema="entry.dataSchema.items"
           :standalone="true">
         </dc-field>
       </div>

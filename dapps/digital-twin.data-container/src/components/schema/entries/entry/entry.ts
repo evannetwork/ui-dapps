@@ -27,7 +27,7 @@
 
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
@@ -60,6 +60,18 @@ export default class EntryComponent extends mixins(EvanComponent) {
   @Prop() entryName: string;
 
   /**
+   * Disable schema edit and show only formular with input boxes
+   */
+  @Prop({ default: true }) schemaEdit: boolean;
+
+  /**
+   * Optional try to force mode (works only, when correct permissions are set, e.g. applying mode
+   * 'view' on permission for edit, will display view, applying mode 'schema' on permissions for
+   * view, will display also view)
+   */
+  @Prop() mode: string;
+
+  /**
    * Active display mode (schema, edit, view)
    */
   activeMode = 'loading';
@@ -68,13 +80,34 @@ export default class EntryComponent extends mixins(EvanComponent) {
    * Calculated entry type (check special type definitions)
    */
   type: string = null;
+  itemType: string = null;
+
+  /**
+   * Watch if mode has changed
+   */
+  @Watch('mode')
+  onChildChanged(val: string, oldVal: string) {
+    // if type has changed and it was already rendered, force rerender
+    val !== oldVal && this.initialize();
+  }
 
   /**
    * Check for permitted modes
    */
   created() {
     this.$emit('init', this);
+    this.initialize();
+  }
+
+  /**
+   * Check permissions and active mode.
+   */
+  initialize() {
     this.type = fieldUtils.getType(this.entry.dataSchema);
+
+    if (this.type === 'array') {
+      this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
+    }
 
     // check permissions and set permitted modes
     if (!this.address.startsWith('0x')) {
@@ -98,6 +131,19 @@ export default class EntryComponent extends mixins(EvanComponent) {
         this.activeMode = '';
       }
     }
+
+    // manually force a specific mode
+    if ((this.activeMode === 'schema' && (this.mode === 'edit' || this.mode === 'view')) ||
+        (this.activeMode === 'edit' && this.mode === 'view')) {
+      this.activeMode = this.mode;
+    }
+  }
+
+  /**
+   * Cache latest values
+   */
+  async saveAsCache() {
+    return await (<any>this.$refs.entryComp).saveAsCache();
   }
 
   /**

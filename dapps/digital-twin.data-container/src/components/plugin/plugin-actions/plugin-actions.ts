@@ -87,18 +87,9 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * Is a save dispatcher for this plugin running?
    */
+  deleting = false;
   saving = false;
-
-  /**
-   * is a sharing dispatcher for this plugin running?
-   */
   sharing = false;
-
-  /**
-   * Watch for updates and disable current save button
-   */
-  savingWatcher: Function = null;
-  sharingWatcher: Function = null;
 
   /**
    * formular specific variables
@@ -128,7 +119,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
+  loading = false;
 
   /**
    * container description
@@ -143,7 +134,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
   /**
    * containers plugin definition
    */
-  plugin: any;
+  plugin: any = null;
 
   /**
    * Set button classes
@@ -155,31 +146,50 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       );
 
       this.buttonTextComp = 'span';
+    } else {
+      // only initialize directly on startup when button view is enabled
+      await this.initialize();
     }
-
-    // watch for updates
-    this.savingWatcher = dispatchers.pluginDispatcher.watch(this.checkSaving);
-    this.sharingWatcher = dispatchers.shareDispatcher.watch(this.checkSharing);
-
-    await this.checkSaving();
-    await this.checkSharing();
-    await this.initialize();
   }
 
   /**
-   * Clear watchers.
+   * Load the plugin data.
    */
-  beforeDestroy() {
-    this.savingWatcher();
-    this.sharingWatcher();
+  async initialize() {
+    this.loading = true;
+    const runtime = utils.getRuntime(this);
+
+    // watch for updates
+    try {
+      this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+        this.deleting = uiContainer.isDeleting;
+        this.description = uiContainer.description;
+        this.plugin = uiContainer.plugin;
+        this.saving = uiContainer.isSaving;
+        this.sharing = uiContainer.isSharing;
+      });
+    } catch (ex) {
+      if (ex.message.indexOf('No container address applied!') === -1) {
+        runtime.logger.log(ex.message, 'error');
+      }
+
+      return;
+    }
+
+    await this.setupAddressBook(runtime);
+    this.setupSharingForm();
+
+    this.loading = false;
   }
 
   /**
    * Show the actions dropdown.
    */
   showDropdown($event?: any) {
-    (<any>this).$refs.dtContextMenu.show();
+    // load data for dropdowns
+    !this.loading && !this.plugin && this.initialize();
 
+    (<any>this).$refs.dtContextMenu.show();
     $event && $event.preventDefault();
   }
 
@@ -187,25 +197,15 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Close the actions dropdown.
    */
   closeDropdown() {
-    if ((<any>this).$refs.dtContextMenu) {
-      (<any>this).$refs.dtContextMenu.hide();
-    }
+    (<any>this).$refs.dtContextMenu && (<any>this).$refs.dtContextMenu.hide();
   }
 
-
   /**
-   * Load the container data and setup the dbcp update form.
+   * Load runtime and map it into an array.,
+   *
+   * @param      {bccRuntime}  runtime  bcc runtime
    */
-  async initialize() {
-    const runtime = utils.getRuntime(this);
-    this.loading = true;
-
-    this.uiContainer = new UiContainer(this);
-    await this.uiContainer.loadData();
-
-    this.description = this.uiContainer.description;
-    this.plugin = this.uiContainer.plugin;
-
+  async setupAddressBook(runtime: bcc.Runtime) {
     // load contacts and transform them into an array
     const addressBook = await runtime.profile.getAddressBook();
     bcc.Ipld.purgeCryptoInfo(addressBook);
@@ -224,12 +224,16 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     if (this.contacts.length > 0) {
       this.shareAccount = this.contacts[0].address;
     }
+  }
 
+  /**
+   * Initialize share form.
+   */
+  setupSharingForm() {
     // setup share form, so the user can insert a custom form
     let subject = [
       (<any>this).$t('_digitaltwins.breadcrumbs.plugin'),
       `: ${ this.description.name }`,
-      this.pluginName ? ` - ${ this.pluginName }` : ''
     ].join('');
 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
@@ -240,8 +244,6 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
         }
       },
     }));
-
-    this.loading = false;
   }
 
   /**
@@ -265,7 +267,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       this.description.description = dbcpForm.description.value;
 
       // hide dbcp modal
-      (<any>this.$refs.dbcpModal) && (<any>this.$refs.dbcpModal).hide();
+      (<any>this.reactiveRefs.dbcpModal) && (<any>this.reactiveRefs.dbcpModal).hide();
 
       // wait for the template handler to saved all the data
       this.$nextTick(async () => {
@@ -304,21 +306,17 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
           subject: this.shareForm.subject.value,
         }),
         attachments: [{
-          address: this.pluginName,
-          bc: bcc.Container.profilePluginsKey,
           fullPath: [
             `/${ (<any>this).dapp.rootEns }`,
             `digitaltwins.${ (<any>this).dapp.domainName }`,
-            `datacontainer.digitaltwin.${ (<any>this).dapp.domainName }`,
-            `plugin/${ this.description.name.value }`,
+            `my-plugins`,
           ].join('/'),
-          type: 'contract',
-          storeKey: this.pluginName,
+          type: 'url',
           storeValue: {
             description: {
-              description: this.description.description.value,
-              imgSquare: this.description.imgSquare.value,
-              name: this.description.name.value,
+              description: this.description.description,
+              imgSquare: this.description.imgSquare,
+              name: this.description.name,
             },
             template: this.plugin.template,
           },
@@ -327,42 +325,14 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     };
 
     // start the dispatcher
-    dispatchers.shareDispatcher.start(utils.getRuntime(this), {
+    dispatchers.pluginShareDispatcher.start(utils.getRuntime(this), {
       address,
       shareConfig,
       bMailContent,
     });
 
-    (<any>this.$refs.shareModal).hide();
+    (<any>this.reactiveRefs.shareModal).hide();
   }
-
-  /**
-   * Check if dbcp gets saved.
-   */
-  async checkSaving() {
-    const runtime = utils.getRuntime(this);
-    const beforeSaving = this.saving;
-
-    this.saving = (await dispatchers.pluginDispatcher.getInstances(runtime))
-      .filter(instance => instance.data.description.name === this.pluginName)
-      .length > 0;
-
-    // reload the data
-    if (!this.saving && beforeSaving) {
-      this.initialize();
-    }
-  }
-
-  /**
-   * Check if the plugin gets shared.
-   */
-  async checkSharing() {
-    const runtime = utils.getRuntime(this);
-    this.sharing = (await dispatchers.pluginDispatcher.getInstances(runtime))
-      .filter(instance => instance.data.description.name === this.pluginName)
-      .length > 0;
-  }
-
 
   /**
    * Executed by the `dc-new-entry` components submit event.
@@ -376,9 +346,23 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     // update template
     newEntry.entry.isNew = true;
     this.plugin.template.properties[newEntry.name] = newEntry.entry;
-    entryUtils.ensureValues(this.plugin.template.properties[newEntry.name]);
+    entryUtils.ensureValues(this.pluginName, this.plugin.template.properties[newEntry.name]);
 
     // send event
     containerCache.put(this.pluginName, this.uiContainer.plugin);
+  }
+
+  /**
+   * Starts the delete dispatcher for this plugin.
+   */
+  deletePlugin() {
+    const dapp: any = (<any>this).dapp;
+
+    // start remove dispatcher
+    dispatchers.pluginRemoveDispatcher.start(utils.getRuntime(this), { name: this.pluginName });
+
+    // navigate back to plugin overview
+    window.location.hash = `${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/my-plugins`;
+    this.reactiveRefs.deleteModal.hide();
   }
 }

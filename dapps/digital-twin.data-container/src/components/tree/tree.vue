@@ -35,11 +35,10 @@
     <div class="d-flex align-items-center pl-3 pr-3 py-3"
       style="height: 60px;"
       v-if="!onlySets">
-      <!-- @contextmenu="$refs.dcActions.showDropdown(); $event.preventDefault()" -->
-      <button class="btn mini border btn-circle border-secondary mr-3"
+      <button class="btn mini mr-3"
         @click="isOpen = !isOpen"
         v-if="!creating">
-        <i class="text-secondary"
+        <i
           :class="{
             'mdi mdi-chevron-up': isOpen,
             'mdi mdi-chevron-down': !isOpen,
@@ -81,22 +80,47 @@
       </div>
     </div>
 
+    <div class="text-center p-3"
+        v-if="onlySets && (loading || initializing)">
+      <div class="spinner-border spinner-border-sm text-secondary"></div>
+    </div>
     <div class="pb-3"
       v-if="!initializing && (onlySets || isOpen)">
-      <div class="pl-8 pr-3 pb-1"
-        :class="{
-          'pl-6': !onlySets,
-          'pl-8': onlySets,
-        }">
-        <small class="text-muted text-uppercase font-weight-semibold">
-          {{ '_datacontainer.entries' | translate }}
-        </small>
+      <div class="px-4 py-1"
+        v-if="plugin && plugin.template && Object.keys(plugin.template.properties).length === 0">
+        <dc-actions
+          ref="emptyActions"
+          v-if="containerAddress.startsWith('0x')"
+          :containerAddress="containerAddress"
+          :digitalTwinAddress="digitalTwinAddress"
+          :displayMode="'dropdownHidden'"
+          :dcActions="true"
+          :setActions="true">
+        </dc-actions>
+        <dc-plugin-actions
+          v-else
+          ref="emptyActions"
+          :pluginName="containerAddress"
+          :pluginActions="true"
+          :setActions="true"
+          :displayMode="'dropdownHidden'">
+        </dc-plugin-actions>
+
+        <button class="btn btn-link dark-link d-flex align-items-center"
+          @click="
+            $refs.emptyActions.$refs.dcNewEntry.showModal();
+            $refs.emptyActions.closeDropdown();
+          ">
+          <button class="btn mini border btn-circle border-secondary mr-3">
+            <i class="mdi mdi-plus text-secondary"></i>
+          </button>
+          {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
+        </button>
       </div>
       <div class="d-flex align-items-center pl-8 pr-3 py-2"
         style="height: 40px;"
         v-for="(entry, index) in Object.keys(plugin.template.properties)"
-        v-if="entry !== 'type'">
-        <!-- @contextmenu="$refs.dcSetActions[index].showDropdown(); $event.preventDefault()" -->
+        v-else-if="entry !== 'type'">
         <a
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
@@ -115,14 +139,17 @@
         </a>
         <span class="mx-auto"></span>
         <div class="position-relative d-flex align-items-center">
+          <div class="spinner-border spinner-border-sm text-secondary"
+            v-if="reactiveRefs.setActions[index] && reactiveRefs.setActions[index].saving">
+          </div>
           <dc-set-actions
-            ref="dcSetActions"
             :containerAddress="containerAddress"
             :entryName="entry"
             :displayMode="'dropdownIcon'"
             :setActions="true"
             :schemaActions="true"
-            :listActions="true">
+            :listActions="true"
+            @init="$set(reactiveRefs.setActions, index, $event)">
           </dc-set-actions>
         </div>
       </div>
