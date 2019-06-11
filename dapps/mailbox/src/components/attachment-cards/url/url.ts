@@ -84,6 +84,9 @@ export class UrlAttachmentComponent implements OnInit {
    * Open attachment url.
    */
   async openUrl(): Promise<any> {
-    this.routing.navigate(`${ this.attachment.fullPath }?mailId=${ this.mail.id }&attachment=${ this.mail.attachments.indexOf(this.attachment) }`);
+    this.routing.navigate([
+      `${ this.attachment.fullPath }?mailId=${ this.mail.id }`,
+      `attachment=${ this.mail.content.attachments.indexOf(this.attachment) }`
+    ].join('&'));
   }
 }

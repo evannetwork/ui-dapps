@@ -3,15 +3,15 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "datacontainer.digitaltwin": "^1.4.0",
-        "digitaltwin.lib": "^1.4.0",
-        "evancore.vue.libs": "^1.2.0"
+        "datacontainer.digitaltwin": "^1.5.0",
+        "digitaltwin.lib": "^1.5.0",
+        "evancore.vue.libs": "^1.2.1"
       },
       "entrypoint": "digitaltwin.js",
       "files": [
         "digitaltwin.js"
       ],
-      "origin": "QmZ6P7jLAbUVGvsMkPkkuZzuJE6uRFPPDH1qzz4ZLTGpCB",
+      "origin": "QmaZAmWQJKtga95C4Rea8KzRcgMQDLC8PjespJzLabGg2g",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -37,11 +37,12 @@
       "evan",
       "library"
     ],
-    "version": "1.4.0",
+    "version": "1.5.0",
     "versions": {
       "1.0.0": "QmeYwDawNsTEhFWZ92zP7T4X4htYoHyEzBekchzHGyYBNn",
       "1.3.0": "QmdCydVtqvnhMRVHdSaA6AzHExEKBboxEfvsQqebx1qKCD",
-      "1.4.0": "QmYt3d54uYLW1YEWCRAoGX4L7Qta6eyHXarKR3P2DPUZqC"
+      "1.4.0": "QmYt3d54uYLW1YEWCRAoGX4L7Qta6eyHXarKR3P2DPUZqC",
+      "1.5.0": "QmRBJuU2mpdRAHdXvRW4RgfLQSXTbdNyeQzVZgNh4UGkwW"
     }
   }
 }
