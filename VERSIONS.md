@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 1.3.0
+### Features
 - `ui.libs`
   - add `bg-gray` class
   - add new stepper style
@@ -14,7 +22,6 @@
 - `ui.libs`
   - fix tooltip position in small containers
 
-### Deprecations
 
 ## Version 1.2.0
 ### Features
