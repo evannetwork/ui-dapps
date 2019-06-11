@@ -2,8 +2,26 @@
 
 ## Next Version
 ### Features
+
 ### Fixes
+
 ### Deprecations
+
+
+## Version 1.3.0
+### Features
+- `ui.libs`
+  - add `bg-gray` class
+  - add new stepper style
+  - add correct styling to `overflow-multiline`
+    - add `line-1`, `line-2`, `line-3`, `line-4` class support
+    - add `bg-level-1`, `bg-level-2`, `bg-level-3` support
+  - add tabs animation design and correct height
+
+### Fixes
+- `ui.libs`
+  - fix tooltip position in small containers
+
 
 ## Version 1.2.0
 ### Features
