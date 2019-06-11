@@ -63,6 +63,7 @@ const i18n: any = {
     "context-menu": {
       "clone": "Clone",
       "create-container": "Create Data Container",
+      "export": "Export",
       "link": "Link to Digital Twin",
       "plugin-save": "Save as plugin",
       "share": "Share"
@@ -84,6 +85,9 @@ const i18n: any = {
       "empty-plugins": "You have not yet created any plugins that can be added to these Digital Twin.",
       "finish": "Finish configuration",
       "general": "General Information",
+      "import-error": "An attempt was made to import an invalid plugin.",
+      "import-plugin-1": "Use this field to import exported plugins...",
+      "import-plugin-2": "Drag your file(s) here to start<br>or click to browse",
       "plugin": {
         "desc": "Configuration of the new plugin",
         "title": "Plugin Type"

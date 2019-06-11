@@ -127,6 +127,12 @@ export default class CreateComponent extends mixins(EvanComponent) {
   getEntryType = fieldUtils.getType;
 
   /**
+   * array for importing exported json plugins
+   */
+  importPlugins: Array<any> = [ ];
+  importPluginError = false;
+
+  /**
    * Setup the form.
    */
   async created() {
@@ -503,5 +509,32 @@ export default class CreateComponent extends mixins(EvanComponent) {
    */
   hideModal() {
     (<any>this).$refs.createModal.hide();
+  }
+
+  /**
+   * Take a exported plugin and parse the file.
+   */
+  async importPlugin() {
+    // transform result to json
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      try {
+        const plugin = JSON.parse(<string>fileReader.result);
+
+        // if invalid plugin, throw an error
+        if (!plugin || !plugin.description || !plugin.template) {
+          throw new Error('Invalid plugin!');
+        } else {
+          // else add it as valid plugin
+          this.plugins.push(plugin);
+        }
+      } catch (ex) {
+        this.importPluginError = true;
+      }
+    };
+    fileReader.readAsText(this.importPlugins[0].blob);
+
+    // reset import plugins
+    this.importPlugins = [ ];
   }
 }

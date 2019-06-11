@@ -76,7 +76,14 @@
                   {{ `_datacontainer.context-menu.share` | translate }}
                 </component>
               </button>
-
+              <button :class="buttonClasses.tertiar"
+                id="plugin-export"
+                @click="exportPlugin(); closeDropdown()">
+                <i class="mdi mdi-download" style="width: 16px;"></i>
+                <component :is="buttonTextComp" :placement="'bottom'">
+                  {{ `_datacontainer.context-menu.export` | translate }}
+                </component>
+              </button>
               <button :class="buttonClasses.tertiar"
                 id="plugin-clone"
                 @click="reactiveRefs.clonePlugin.showModal(); closeDropdown()">

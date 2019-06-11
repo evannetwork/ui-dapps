@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- `datacontainer.digitaltwins`
+  - add plugin export / import
+
 ### Fixes
 ### Deprecations
 

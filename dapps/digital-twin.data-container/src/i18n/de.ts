@@ -63,6 +63,7 @@ const i18n: any = {
     "context-menu": {
       "clone": "Klonen",
       "create-container": "Daten Container erstellen",
+      "export": "Exportieren",
       "link": "Container verknüpfen",
       "plugin-save": "Als Plugin speichern",
       "share": "Teilen"
@@ -84,6 +85,9 @@ const i18n: any = {
       "empty-plugins": "Sie haben noch keine Plugins erstellt, die in diesen Digitalen Zwilling hinzugefügt werden können.",
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
+      "import-error": "Es wurde versucht, ein ungültiges Plugin zu importieren.",
+      "import-plugin-1": "Nutzen Sie dieses Feld, um exportierte Plugins zu importieren...",
+      "import-plugin-2": "Ziehen Sie Ihre Datei(en) hierher, um zu beginnen<br>oder klicken Sie zum Durchsuchen",
       "plugin": {
         "desc": "Konfiguration des neuen Plugins",
         "title": "Plugin-Typ"

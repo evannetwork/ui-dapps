@@ -139,6 +139,9 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
   /**
    * Creates a new evan form to handle a new entry as one row in the ui.
+   *
+   * @param      {string}   property   property name
+   * @param      {any}      schema     schema definition
    */
   addProperty(property: string, schema: any = { type: 'string' }) {
     const type = fieldUtils.getType(schema);
@@ -207,13 +210,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     }));
 
     // auto focus new form element
-    this.$nextTick(() => {
-      const nameInputs = this.$el.querySelectorAll('table tr td:first-child input');
-      const focusInput: any = nameInputs[0];
-
-      focusInput && focusInput.focus();
-      this.checkFormValidity();
-    });
+    this.$nextTick(() => this.checkFormValidity());
   }
 
   /**
