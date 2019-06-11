@@ -73,5 +73,5 @@
     "deploy": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/deployment.js deploy --config <%= deploymentConfigLocation %>",
     "serve": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve"
   },
-  "version": "3.1.0"
+  "version": "3.2.0"
 }

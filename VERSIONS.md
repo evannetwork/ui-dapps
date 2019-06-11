@@ -2,6 +2,11 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+## Version 3.2.0
+### Features
 - `digitaltwins`
   - move open twin and create twin to modal dialog
   - add context menu to twins, plugins overview
@@ -29,8 +34,6 @@
   - fix plugin sharing
   - fix reactive files
   - fix `Container` file caching and changes checks
-
-### Deprecations
 
 
 ## Version 3.1.0
