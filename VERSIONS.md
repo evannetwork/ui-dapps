@@ -4,7 +4,8 @@
 ### Features
 
 ### Fixes
-- correct steps style
+- `ui.libs`
+  - correct steps style
 
 ### Deprecations
 
