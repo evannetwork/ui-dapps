@@ -25,35 +25,48 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="dc-field form-group mb-0"
-    :class="{ 'one-line': oneLine }">
-    <label for="value"
-      v-if="standalone"
-      :class="{'d-block': !oneLine, }">
-      {{ label | translate }}
-    </label>
-    <div>
-      <template v-if="mode === 'schema' || mode === 'edit'">
-        <input class="form-control" required
-          :id="id" ref="value" type="text"
-          :placeholder="description | translate"
-          :disabled="$store.state.saving"
-          v-model="control.value"
-          :class="{ 'is-invalid' : control.error }"
-          @blur="control.setDirty()">
-        <div class="invalid-feedback">
-          {{ `_datacontainer.ajv.value.error` | translate }}
-        </div>
-      </template>
-      <span :id="id" class="text-primary" v-else>
-        {{ control.value }}
-      </span>
-    </div>
-  </div>
-</template>
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import Component from './number.ts';
-  export default Component;
-</script>
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+
+
+@Component({ })
+export default class BooleanComponent extends mixins(EvanComponent) {
+  /**
+   * Dynamic html input element id
+   */
+  @Prop({ default: 'value' }) id;
+
+  /**
+   * schema / edit / vue
+   */
+  @Prop({ default: 'edit' }) mode;
+
+  /**
+   * Form control of the parent form handler (includes form and validation)
+   */
+  @Prop() control: EvanFormControl;
+
+
+  /**
+   * Label and description that should be rendered
+   */
+  @Prop({ default: `_datacontainer.ajv.value.title` }) label: string;
+  @Prop({ default: `_datacontainer.ajv.value.desc` }) description: string;
+
+  /**
+   * Show Label and input field on the same line, not stacked.
+   */
+  @Prop() oneLine: boolean;
+
+  /**
+   * should the control label be rendered?
+   */
+  @Prop({
+    default: true
+  }) standalone: boolean;
+}

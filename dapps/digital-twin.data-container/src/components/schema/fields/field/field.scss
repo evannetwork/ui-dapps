@@ -25,35 +25,29 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="dc-field form-group mb-0"
-    :class="{ 'one-line': oneLine }">
-    <label for="value"
-      v-if="standalone"
-      :class="{'d-block': !oneLine, }">
-      {{ label | translate }}
-    </label>
-    <div>
-      <template v-if="mode === 'schema' || mode === 'edit'">
-        <input class="form-control" required
-          :id="id" ref="value" type="text"
-          :placeholder="description | translate"
-          :disabled="$store.state.saving"
-          v-model="control.value"
-          :class="{ 'is-invalid' : control.error }"
-          @blur="control.setDirty()">
-        <div class="invalid-feedback">
-          {{ `_datacontainer.ajv.value.error` | translate }}
-        </div>
-      </template>
-      <span :id="id" class="text-primary" v-else>
-        {{ control.value }}
-      </span>
-    </div>
-  </div>
-</template>
+.dc-field {
+  &.one-line {
+    display: flex;
+    flex-wrap: wrap;
 
-<script lang="ts">
-  import Component from './number.ts';
-  export default Component;
-</script>
+    padding: 0.5rem 0;
+
+    label {
+      display: flex;
+      align-items: start;
+
+      min-width: 300px;
+      max-width: 300px;
+
+      word-break: break-word;
+
+      overflow-wrap: break-word;
+    }
+
+    & > div {
+      flex-grow: 1;
+
+      min-width: 300px;
+    }
+  }
+}

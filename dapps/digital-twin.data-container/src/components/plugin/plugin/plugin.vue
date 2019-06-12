@@ -33,7 +33,7 @@
         :tabs="tabs"
         @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>
-      <div class="container-wide overflow-y-auto">
+      <div class="container-wide overflow-y-auto flex-grow-1">
         <div class="d-flex mb-3 align-items-center">
           <div style="width: 50%;">
             <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">

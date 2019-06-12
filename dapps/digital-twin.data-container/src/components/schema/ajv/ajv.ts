@@ -41,6 +41,8 @@ interface FieldFormInterface extends EvanForm {
   name: EvanFormControl;
   type: EvanFormControl;
   value: EvanFormControl;
+  min: EvanFormControl;
+  max: EvanFormControl;
 }
 
 @Component({ })
@@ -82,6 +84,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     'string',
     'number',
     'files',
+    'boolean',
   ];
 
   /**
@@ -126,14 +129,34 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
     // iterate through all forms and set the correct values to the properties
     this.forms.forEach((form: FieldFormInterface) => {
+      const name = form.name.value;
+      const type = form.type.value;
+
       // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
-      this.properties[form.name.value] = JSON.parse(JSON.stringify(
-        bcc.Container.defaultSchemas[`${ form.type.value }Entry`]
+      this.properties[name] = JSON.parse(JSON.stringify(
+        bcc.Container.defaultSchemas[`${ type }Entry`]
       ));
-      this.properties[form.name.value].default = fieldUtils.parseFieldValue(
-        form.type.value,
+
+      // get the value
+      this.properties[name].default = fieldUtils.parseFieldValue(
+        type,
         form.value.value
       );
+
+      // set min and max values
+      const minPropertyName = fieldUtils.getMinPropertyName(type);
+      const maxPropertyName = fieldUtils.getMaxPropertyName(type);
+
+      if (form.min.value !== '' && !isNaN(form.min.value)) {
+        this.properties[name][minPropertyName] = parseInt(form.min.value, 10);
+      } else {
+        delete this.properties[name][minPropertyName];
+      }
+      if (form.max.value !== '' && !isNaN(form.max.value)) {
+        this.properties[name][maxPropertyName] = parseInt(form.max.value, 10);
+      } else {
+        delete this.properties[name][maxPropertyName];
+      }
     });
   }
 
@@ -195,13 +218,55 @@ export default class AJVComponent extends mixins(EvanComponent) {
             // trigger form validation
             vueInstance.checkFormValidity();
 
-            // map the value top the correct dynamic type validator
+            // check if min and max values are set and apply them into a temporary schema definition
+            const validationSchema = { };
+            if (form.min.value !== '' && !isNaN(form.min.value)) {
+              validationSchema[fieldUtils.getMinPropertyName(type)] = parseInt(form.min.value, 10);
+            }
+            if (form.max.value !== '' && !isNaN(form.max.value)) {
+              validationSchema[fieldUtils.getMaxPropertyName(type)] = parseInt(form.max.value, 10);
+            }
+
             return fieldUtils.validateField(
               (<any>form).type.value,
-              this,
-              form,
+              form.value,
+              validationSchema,
               vueInstance.address,
             );
+          } else {
+            return true;
+          }
+        },
+      },
+      min: {
+        value: schema[fieldUtils.getMinPropertyName(type)] || '',
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          // trigger form validation
+          vueInstance.checkFormValidity();
+
+          // force value evaluation
+          form.value.value = form.value.value;
+          form.max.value = form.max.value;
+
+          if (form.max.value !== '') {
+            return parseInt(form.max.value, 10) >= parseInt(form.min.value, 10);
+          } else {
+            return true;
+          }
+        }
+      },
+      max: {
+        value: schema[fieldUtils.getMaxPropertyName(type)] || '',
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          // trigger form validation
+          vueInstance.checkFormValidity();
+
+          // force value evaluation
+          form.value.value = form.value.value;
+          form.min.value = form.min.value;
+
+          if (form.min.value !== '') {
+            return parseInt(form.max.value, 10) >= parseInt(form.min.value, 10);
           } else {
             return true;
           }

@@ -129,7 +129,7 @@
         id="dt-favorite-modal"
         @init="$set(reactiveRefs, 'favoriteModal', $event)">
         <template v-slot:header>
-          <h5 class="modal-title" v-if="selectedUiDT.isFavorite">
+          <h5 class="modal-title">
             {{ 
               (selectedUiDT.isFavorite ?
                 '_digitaltwins.detail.remove-favorite' :

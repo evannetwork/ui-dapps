@@ -68,8 +68,9 @@ const i18n: any ={
       "desc": "Enter the general data of your Digital Twin.",
       "question": {
         "action": "Create",
-        "desc": "Did you enter all data correctly?",
-        "title": "Create Digital Twin"
+        "desc": "Confirming this will create the Digital Twin with the specified data, trigger transactions and consume EVE. Would you like to continue?",
+        "title": "Create Digital Twin",
+        "dont-show": "Don't show anymore"
       }
     },
     "detail": {

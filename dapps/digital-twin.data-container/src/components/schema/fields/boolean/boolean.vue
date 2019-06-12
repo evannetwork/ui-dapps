@@ -33,18 +33,13 @@
       :class="{'d-block': !oneLine, }">
       {{ label | translate }}
     </label>
-    <div>
+    <div class="px-4">
       <template v-if="mode === 'schema' || mode === 'edit'">
-        <input class="form-control" required
-          :id="id" ref="value" type="text"
-          :placeholder="description | translate"
+        <input class="form-check-input" type="checkbox"
+          :id="id" ref="value"
           :disabled="$store.state.saving"
           v-model="control.value"
-          :class="{ 'is-invalid' : control.error }"
           @blur="control.setDirty()">
-        <div class="invalid-feedback">
-          {{ `_datacontainer.ajv.value.error` | translate }}
-        </div>
       </template>
       <span :id="id" class="text-primary" v-else>
         {{ control.value }}
@@ -54,6 +49,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './number.ts';
+  import Component from './boolean.ts';
   export default Component;
 </script>

@@ -34,6 +34,7 @@
     :description="description"
     :label="label"
     :mode="mode"
+    :oneLine="oneLine"
     :standalone="standalone">
   </component>
 </template>
@@ -42,3 +43,7 @@
   import Component from './field.ts';
   export default Component;
 </script>
+
+<style lang="scss">
+  @import './field';
+</style>

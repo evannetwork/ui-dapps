@@ -142,7 +142,7 @@
                 <span class="mx-auto"></span>
                 <div>
                   <button type="submit"
-                    v-if="steps.length !== 0"
+                    v-if="steps.length !== 0 && mode === 'plugin'"
                     class="btn btn-circle btn-outline-secondary"
                     id="th-add-entry"
                     @click="$refs.dcNewEntry.showModal();">

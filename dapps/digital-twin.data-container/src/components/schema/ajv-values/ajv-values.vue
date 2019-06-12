@@ -28,19 +28,18 @@
 <template>
   <div v-if="!loading">
     <form id="ajv-values">
-      <div class="form-group"
-        v-for="(schemaKey, index) in Object.keys(properties)">
-        <dc-field
-          :id="`dc-field-${ schemaKey }`"
-          :address="address"
-          :control="valueForm[schemaKey]"
-          :label="schemaKey"
-          :description="`_datacontainer.types.${ types[schemaKey] }`"
-          :mode="mode"
-          :standalone="true"
-          :type="types[schemaKey]">
-        </dc-field>
-      </div>
+      <dc-field
+        v-for="(schemaKey, index) in Object.keys(properties)"
+        :id="`dc-field-${ schemaKey }`"
+        :address="address"
+        :control="valueForm[schemaKey]"
+        :description="`_datacontainer.types.${ types[schemaKey] }`"
+        :label="schemaKey"
+        :mode="mode"
+        :oneLine="true"
+        :standalone="true"
+        :type="types[schemaKey]">
+      </dc-field>
     </form>
   </div>
 </template>

@@ -118,7 +118,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
           return fieldUtils.validateField(
             type,
             this,
-            form,
+            this.properties[schemaKey],
             vueInstance.address,
           );
         }

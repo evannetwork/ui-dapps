@@ -46,12 +46,11 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const container = utils.getContainer(runtime, data.address);
     data.plugin = data.plugin || await container.toPlugin(false);
-    const entryChanges = await dcUtils.getEntryChanges(runtime, data.address, data.plugin.template);
 
     // analyse data and check, which data fields must be saved
-    data.saveDescription = entryChanges.saveDescription;
-    data.entriesToSave = entryChanges.entriesToSave;
-    data.toShare = entryChanges.toShare;
+    // => for perfomance optimizations this will be passed into the dispatcher
+    // data.saveDescription = data.saveDescription;
+    data.entriesToSave = data.entriesToSave || [ ];
   })
 
   // update description

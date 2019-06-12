@@ -40,6 +40,8 @@ import * as entryUtils from '../../../../entries';
 
 interface FieldFormInterface extends EvanForm {
   value: EvanFormControl;
+  min: EvanFormControl;
+  max: EvanFormControl;
 }
 
 @Component({ })
@@ -79,6 +81,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
    */
   type: string = null;
   itemType: string = null;
+  combinedType: string = null;
 
   /**
    * Set the field form, if no form was applied
@@ -87,6 +90,15 @@ export default class FieldComponent extends mixins(EvanComponent) {
     // Calculated entry schema type
     this.type = fieldUtils.getType(this.entry.dataSchema);
     this.itemType = fieldUtils.getType(this.entry.dataSchema.items);
+    this.combinedType = this.itemType || this.type;
+
+    /**
+     * Validate the current form value
+     *
+     * @param      {FieldComponent}      vueInstance  vue instance
+     * @param      {FieldFormInterface}  form         form
+     */
+    const formValueValidation = 
 
     // setup field form
     this.fieldForm = <FieldFormInterface>new EvanForm(this, {
@@ -96,17 +108,57 @@ export default class FieldComponent extends mixins(EvanComponent) {
           // populate the value to the parents component, else the value is handled by the parents
           // form
           vueInstance.entry.edit.value = fieldUtils.parseFieldValue(
-            vueInstance.itemType || vueInstance.type,
-            this.value
+            this.combinedType,
+            form.value.value
           );
+
+          // set min and max values
+          const minPropertyName = fieldUtils.getMinPropertyName(this.combinedType);
+          const maxPropertyName = fieldUtils.getMaxPropertyName(this.combinedType);
+          if (form.min.value !== '' && !isNaN(form.min.value)) {
+            this.entry.dataSchema[minPropertyName] = parseInt(form.min.value, 10);
+          } else {
+            delete this.entry.dataSchema[minPropertyName];
+          }
+          if (form.max.value !== '' && !isNaN(form.max.value)) {
+            this.entry.dataSchema[maxPropertyName] = parseInt(form.max.value, 10);
+          } else {
+            delete this.entry.dataSchema[maxPropertyName];
+          }
 
           // run validation
           return fieldUtils.validateField(
-            vueInstance.itemType || vueInstance.type,
-            this,
-            form,
+            this.combinedType,
+            form.value,
+            this.entry.dataSchema,
             vueInstance.address,
           );
+        },
+      },
+      min: {
+        value: this.entry.dataSchema[fieldUtils.getMinPropertyName(this.combinedType)] || '',
+        validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
+          // force value evaluation
+          form.value.value = form.value.value;
+
+          if (form.max.value !== '') {
+            return form.max.value >= form.min.value;
+          } else {
+            return true;
+          }
+        }
+      },
+      max: {
+        value: this.entry.dataSchema[fieldUtils.getMaxPropertyName(this.combinedType)] || '',
+        validate: function(vueInstance: FieldComponent, form: FieldFormInterface) {
+          // force value evaluation
+          form.value.value = form.value.value;
+
+          if (form.min.value !== '') {
+            return form.max.value <= form.min.value;
+          } else {
+            return true;
+          }
         }
       },
     });
@@ -133,7 +185,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
    * Save the current value and enable the save button
    */
   save() {
-    const value = fieldUtils.parseFieldValue(this.itemType || this.type, this.entry.edit.value);
+    const value = fieldUtils.parseFieldValue(this.combinedType, this.entry.edit.value);
 
     if (this.address.startsWith('0x')) {
       if (this.type === 'array') {

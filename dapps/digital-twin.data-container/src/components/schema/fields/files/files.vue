@@ -26,18 +26,23 @@
 */
 
 <template>
-  <div>
-    <label class="d-block" for="value" v-if="standalone">
+  <div class="dc-field form-group mb-0"
+    :class="{ 'one-line': oneLine }">
+    <label for="value"
+      v-if="standalone"
+      :class="{'d-block': !oneLine, }">
       {{ label | translate }}
     </label>
-    <evan-file-input
-      v-if="control.value && control.value.files"
-      :id="id" ref="value"
-      :disabled="$store.state.saving || mode === 'view'"
-      :class="{ 'is-invalid' : control.error }"
-      v-model="control.value.files"
-      @input="control.setDirty()">
-    </evan-file-input>
+    <div>
+      <evan-file-input
+        v-if="control.value && control.value.files"
+        :id="id" ref="value"
+        :disabled="$store.state.saving || mode === 'view'"
+        :class="{ 'is-invalid' : control.error }"
+        v-model="control.value.files"
+        @input="control.setDirty()">
+      </evan-file-input>
+    </div>
   </div>
 </template>
 

@@ -298,12 +298,15 @@ export default class CreateComponent extends mixins(EvanComponent) {
           const activeEntryComp = this.steps[this.activeStep].entryComp;
           const activeValid = activeEntryComp && activeEntryComp.isValid();
           const isEnabled =
-            // active entry must be valid
-            activeValid &&
-            // and previous one is enable or previous one is the active step and active is valid
+            index < this.activeStep ||
             (
-              this.steps[index - 1].enabled ||
-              index - 1 === this.activeStep && activeValid
+              // active entry must be valid
+              activeValid &&
+              // and previous one is enable or previous one is the active step and active is valid
+              (
+                this.steps[index - 1].enabled ||
+                index - 1 === this.activeStep && activeValid
+              )
             );
 
           return !isEnabled;

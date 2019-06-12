@@ -73,9 +73,17 @@ export default class CreateComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * Don't ask before creating digital twin.
+   */
+  dontShowCreateQuest = false;
+
+  /**
    * Setup the form.
    */
   async created() {
+    // check if create question should be used
+    this.dontShowCreateQuest = window.localStorage['dt-create-question-disabled'] === 'true';
+
     this.uiDT = new EvanUIDigitalTwin('dt-create');
     await this.uiDT.initialize(this, utils.getRuntime(this));
 
@@ -158,8 +166,13 @@ export default class CreateComponent extends mixins(EvanComponent) {
     if (!triggerDispatcher) {
       this.checkAddress();
     } else {
-      // hide create modal
-      (<any>this.$refs.createModalQuestion).show();
+      if (this.dontShowCreateQuest) {
+        // trigger creation directly
+        this.triggerCreateDispatcher();
+      } else {
+        // ask for creation
+        (<any>this.$refs.createModalQuestion).show();
+      }
     }
   }
 
@@ -167,11 +180,17 @@ export default class CreateComponent extends mixins(EvanComponent) {
    * Start the create dispatcher.
    */
   triggerCreateDispatcher() {
+    // persist check into localStorage
+    window.localStorage['dt-create-question-disabled'] = this.dontShowCreateQuest;
+
+    // hide modal
     (<any>this.$refs.createModalQuestion).hide();
 
+    // set latest description
     this.uiDT.dbcp.name = this.createForm.name.value;
     this.uiDT.dbcp.description = this.createForm.description.value;
 
+    // start the dispatcher
     dispatchers.digitaltwinCreateDispatcher.start(utils.getRuntime(this), {
       address: this.createForm.useAddress.value ? this.createForm.address.value :
         this.uiDT.address,

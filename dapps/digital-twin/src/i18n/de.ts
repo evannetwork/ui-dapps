@@ -68,8 +68,9 @@ const i18n: any = {
       "desc": "Geben Sie die generellen Daten Ihres Digitalen Zwillings an.",
       "question": {
         "action": "Erstellen",
-        "desc": "Haben Sie alle Daten korrekt angegeben?",
-        "title": "Digitalen Zwilling erstellen"
+        "desc": "Durch das bestätigen, wird der Digitale Zwilling mit den angegeben Daten erstellt, Transaktionen ausgelöst und EVE verbraucht. Möchten Sie fortfahren?",
+        "title": "Digitalen Zwilling erstellen",
+        "dont-show": "Nicht mehr anzeigendap"
       }
     },
     "detail": {

@@ -59,6 +59,11 @@ export default class NumberComponent extends mixins(EvanComponent) {
   @Prop({ default: `_datacontainer.ajv.value.desc` }) description: string;
 
   /**
+   * Show Label and input field on the same line, not stacked.
+   */
+  @Prop() oneLine: boolean;
+
+  /**
    * should the control label be rendered?
    */
   @Prop({

@@ -123,7 +123,9 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      if (!this.error && (!this.initialized || (!this.saving && beforeSaving))) {
+      // reload data when, no error occured, was not initialized or not loading and dispatcher has
+      // finished
+      if (!this.error && (!this.initialized || (!this.loading && (!this.saving && beforeSaving)))) {
         this.loading = true;
 
         try {
@@ -190,10 +192,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Save the current changes.
    */
   async saveEntry() {
+    const startTime = Date.now();
     // save changes for this entry
     this.reactiveRefs.entryComp.save();
     // save the changes
-    await this.uiContainer.save();
+    await this.uiContainer.save(false, [ this.entryName ]);
     // remove the saved entry from cache
     await this.uiContainer.resetEntry(this.entryName);
   }

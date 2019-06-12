@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+
 import Vue from 'vue';
 
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -97,6 +98,9 @@ export function defaultValue(subSchema: any) {
         files: [ ]
       };
     }
+    case 'boolean': {
+      return !!subSchema.default;
+    }
   }
 }
 
@@ -105,32 +109,43 @@ export function defaultValue(subSchema: any) {
  *
  * @param      {string}           type     field type (string, files, ...)
  * @param      {EvanFormControl}  field    from control for the field values
- * @param      {EvanForm}         form     parent form of the field
+ * @param      {any}              schema   schema including min and max specification
  * @param      {string}           address  container / plugin address
  */
 export function validateField(
   type: string,
   field: EvanFormControl,
-  form: EvanForm,
+  schema: any,
   address: string
 ) {
   // allow empty values in plugins
   const emptyValues = address === 'plugin-create' ||
     (!address.startsWith('0x') && address !== 'dc-create');
+  // do not use min value by using emptyValues
+  const min = emptyValues ? '' : schema[getMinPropertyName(type)];
+  const max = schema[getMaxPropertyName(type)];
 
   switch (type) {
     case 'string': {
-      return emptyValues ||
-        (field.value && field.value.trim().length !== 0);
+      const value = field.value ? field.value.trim() : '';
+
+      return (min === '' || value.length >= min) &&
+             (max === '' || value.length <= max);
     }
     case 'number': {
-      if (emptyValues && field.value === '') {
-        return true;
-      } else {
-        return !isNaN(parseFloat(field.value));
-      }
+      const value = parseFloat(field.value);
+
+      return !isNaN(value) &&
+         (min === '' || value >= min) &&
+         (max === '' || value <= max);
     }
     case 'files': {
+      const value = field.value
+
+      return (min === '' || value.length >= min) &&
+             (max === '' || value.length <= max);
+    }
+    case 'boolean': {
       return true;
     }
   }
@@ -176,6 +191,46 @@ export function parseFieldValue(
 
       return { files: converted };
     }
+    default: {
+      return value;
+    }
   }
 };
 
+/**
+ * Returns minimum property name by type.
+ *
+ * @param      {string}  type    type that should be checked
+ */
+export function getMinPropertyName(type: string) {
+  switch (type) {
+    case 'string': {
+      return 'minLength';
+    }
+    case 'number': {
+      return 'minimum';
+    }
+    case 'files': {
+      return 'minItems';
+    }
+  }
+}
+
+/**
+ * Returns minimum property name by type.
+ *
+ * @param      {string}  type    type that should be checked
+ */
+export function getMaxPropertyName(type: string) {
+  switch (type) {
+    case 'string': {
+      return 'maxLength';
+    }
+    case 'number': {
+      return 'maximum';
+    }
+    case 'files': {
+      return 'maxItems';
+    }
+  }
+}
