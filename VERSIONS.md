@@ -4,6 +4,7 @@
 ### Features
 
 ### Fixes
+- correct steps style
 
 ### Deprecations
 
