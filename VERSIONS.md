@@ -2,6 +2,13 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+## Version 3.3.0
+### Features
 - `digitaltwin`
   - add `do not ask again` to `Create Digital Twin` submit dialog
 - `datacontainer.digitaltwins`
@@ -19,7 +26,6 @@
   - fix list entries reloading
   - add `hideSidebar2` to `sidebar-level-2` tree links
 
-### Deprecations
 
 ## Version 3.2.0
 ### Features

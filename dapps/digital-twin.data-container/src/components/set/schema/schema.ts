@@ -177,7 +177,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    this.reactiveRefs.entryComp.saveAsCache();
+    this.reactiveRefs.entryComp && this.reactiveRefs.entryComp.saveAsCache();
 
     // wait until child
     const edit = this.templateEntry.edit;

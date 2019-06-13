@@ -119,7 +119,7 @@
             :id="`ajv-min-${ index }`"
             class="fill-content">
             <span class="text-primary" v-if="mode !== 'schema'">
-              {{ form.min.value !== '' ? form.min.value : ('_datacontainer.ajv.empty' | translate) }}
+              {{ getMinMaxValue(form, 'min') }}
             </span>
             <div class="form-group mb-0" v-else>
               <input class="form-control" type="number"
@@ -138,7 +138,7 @@
             :id="`ajv-max-${ index }`"
             class="fill-content">
             <span class="text-primary" v-if="mode !== 'schema'">
-              {{ form.max.value !== '' ? form.max.value : ('_datacontainer.ajv.empty' | translate) }}
+              {{ getMinMaxValue(form, 'max') }}
             </span>
             <div class="form-group mb-0" v-else>
               <input class="form-control" type="number"

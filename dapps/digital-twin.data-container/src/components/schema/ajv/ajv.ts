@@ -290,4 +290,15 @@ export default class AJVComponent extends mixins(EvanComponent) {
       this.isValid = this.forms.every((form: FieldFormInterface) => form.isValid);
     });
   }
+
+  /**
+   * Get correct value for min / max value.
+   *
+   * @param      {string}  type    The type
+   */
+  getMinMaxValue(form: FieldFormInterface, type: string) {
+    return form[type].value !== '' && !isNaN(form[type].value) ?
+      form[type].value :
+      (<any>this).$i18n.translate('_datacontainer.ajv.empty');
+  }
 }
