@@ -33,12 +33,18 @@
       position: relative;
 
       display: flex;
-      justify-content: space-between;
+      overflow-x: auto;
+      align-items: start;
+      justify-content: start;
 
-      padding: 0 20px;
+      padding: 0 20px 20px 0;
 
       button {
+        position: relative;
         z-index: 1;
+
+        min-width: 120px;
+        max-width: 120px;
 
         text-align: center;
 
@@ -50,8 +56,33 @@
           }
         }
 
+        &:before {
+          position: absolute;
+          z-index: -1;
+          top: 25px;
+          right: -2px;
+          left: 0;
+
+          height: 2px;
+          margin: auto;
+
+          content: ' ';
+
+          background-color: cssVar('border-color');
+        }
+
+        &:first-child:before {
+          left: 50px;
+        }
+
+        &:last-child:before {
+          right: 50%;
+        }
+
         span:first-child {
           line-height: 40px;
+
+          z-index: 1;
 
           display: inline-block;
 
@@ -68,23 +99,11 @@
 
           display: block;
 
+          white-space: normal;
+          word-break: break-word;
+
           color: cssVar('gray-500');
         }
-      }
-
-      &:before {
-        position: absolute;
-        z-index: 0;
-        top: 25px;
-        right: 0;
-        left: 0;
-
-        height: 2px;
-        margin: auto;
-
-        content: ' ';
-
-        background-color: cssVar('border-color');
       }
     }
   }

@@ -330,8 +330,10 @@ $sidebar-small-width: $navbar-height;
 
         background-color: cssVar('body-bg');
       }
+    }
 
-      &.show-sidebar {
+    &.show-sidebar {
+      .dapp-wrapper-body {
         .dapp-wrapper-sidebar {
           left: 0;
         }
@@ -407,11 +409,11 @@ $sidebar-small-width: $navbar-height;
           width: 100% !important;
         }
       }
+    }
 
-      &.show-sidebar.show-sidebar-2 {
-        .dapp-wrapper-sidebar-2 {
-          left: 0;
-        }
+    &.show-sidebar.show-sidebar-2 {
+      .dapp-wrapper-sidebar-2 {
+        left: 0;
       }
     }
   }
