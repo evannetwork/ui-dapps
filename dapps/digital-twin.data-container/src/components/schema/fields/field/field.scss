@@ -25,30 +25,29 @@
   https://evan.network/license/
 */
 
-<template>
-  <div v-if="!loading">
-    <form id="ajv-values">
-      <dc-field
-        v-for="(schemaKey, index) in Object.keys(properties)"
-        :id="`dc-field-${ schemaKey }`"
-        :address="address"
-        :control="valueForm[schemaKey]"
-        :description="`_datacontainer.types.${ types[schemaKey] }`"
-        :label="schemaKey"
-        :mode="mode"
-        :oneLine="true"
-        :standalone="true"
-        :type="types[schemaKey]">
-      </dc-field>
-    </form>
-  </div>
-</template>
+.dc-field {
+  &.one-line {
+    display: flex;
+    flex-wrap: wrap;
 
-<script lang="ts">
-  import Component from './ajv-values.ts';
-  export default Component;
-</script>
+    padding: 0.5rem 0;
 
-<style lang="scss" scoped>
-  // @import './ajv.scss';
-</style>
+    label {
+      display: flex;
+      align-items: start;
+
+      min-width: 300px;
+      max-width: 300px;
+
+      word-break: break-word;
+
+      overflow-wrap: break-word;
+    }
+
+    & > div {
+      flex-grow: 1;
+
+      min-width: 300px;
+    }
+  }
+}

@@ -49,7 +49,7 @@
         class="d-flex align-items-center dark-link"
         :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(dcUrl) !== -1 }"
         :href="creating ? null : dcUrl"
-        @click="isOpen = true">
+        @click="isOpen = true; hideSidebar2();">
         <i
           class="mdi mdi-note-multiple-outline text-muted mr-2"
           style="font-size: 17px">
@@ -124,7 +124,8 @@
         <a
           class="d-flex align-items-center dark-link"
           :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
-          :href="`${ dcUrl }/data-set/${ entry }`">
+          :href="`${ dcUrl }/data-set/${ entry }`"
+          @click="hideSidebar2();">
           <span class="position-relative">
             <i
               class="mdi mdi-cube-outline text-muted mr-2"

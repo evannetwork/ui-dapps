@@ -113,7 +113,8 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     this.entryName = this.$route.params.entryName;
 
     let beforeSaving = false;
-    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer, reload: boolean) => {
+      // set loading status
       this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
       this.error = uiContainer.error;
 
@@ -123,7 +124,16 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
       this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      if (!this.error && (!this.initialized || (!this.saving && beforeSaving))) {
+      // reload data when, no error occured, was not initialized or not loading and dispatcher has
+      // finished
+      if (!this.error && (
+          // force reloading of UI (e.g. after cache clear)
+          reload ||
+          // load data on initialization
+          !this.initialized ||
+          // when dispatcher has finished
+          (!this.loading && !this.saving && beforeSaving)
+        )) {
         this.loading = true;
 
         try {
@@ -147,10 +157,13 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
 
         this.initialized = true;
         // ensure edit values for schema component
-        entryUtils.ensureValues(this.containerAddress, this.templateEntry);
         this.$nextTick(() => this.loading = false);
       }
 
+      // ensure edit values for schema components
+      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+
+      // set before saving
       beforeSaving = this.saving;
     });
 
@@ -164,7 +177,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     const runtime = utils.getRuntime(this);
     this.loading = true;
 
-    this.reactiveRefs.entryComp.saveAsCache();
+    this.reactiveRefs.entryComp && this.reactiveRefs.entryComp.saveAsCache();
 
     // wait until child
     const edit = this.templateEntry.edit;
@@ -190,10 +203,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Save the current changes.
    */
   async saveEntry() {
+    const startTime = Date.now();
     // save changes for this entry
     this.reactiveRefs.entryComp.save();
     // save the changes
-    await this.uiContainer.save();
+    await this.uiContainer.save(false, [ this.entryName ]);
     // remove the saved entry from cache
     await this.uiContainer.resetEntry(this.entryName);
   }

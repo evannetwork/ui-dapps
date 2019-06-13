@@ -32,7 +32,23 @@ const i18n: any = {
     "ajv": {
       "add": "Feld hinzufügen",
       "edit-schema": "Schema bearbeiten",
+      "empty": "nicht gesetzt",
+      "errors": {
+        "missing-max": "nicht spezifiziert",
+        "missing-min": "nicht spezifiziert",
+        "text": "Der angegebene Wert muss vom Typ \"{typ}\" sein! (min: {min}, max: {max})"
+      },
       "files-no-default": "Felder vom Typ Datei können keine Standardwerte enthalten.",
+      "max": {
+        "desc": "Maximalwert",
+        "error": "Der Maximalwert muss immer größer gleich dem Minimalwert sein.",
+        "title": "Max."
+      },
+      "min": {
+        "desc": "Minimalwert (leer lassen um es als Pflichtfeld zu deaktivieren)",
+        "error": "Der Minimalwert muss immer kleiner oder gleich dem Maximalwert sein.",
+        "title": "Min."
+      },
       "name": {
         "desc": "Bezeichung des Feldes",
         "error": {
@@ -44,6 +60,9 @@ const i18n: any = {
       "not-permitted": {
         "desc": "Sie besitzen keine Berechtigung diesen Datenbereich einzusehen.",
         "title": "Ungültige Berechtigung"
+      },
+      "required": {
+        "title": "Pflichtfeld"
       },
       "reset-values": "Abbrechen",
       "save": {
@@ -63,6 +82,7 @@ const i18n: any = {
     "context-menu": {
       "clone": "Klonen",
       "create-container": "Daten Container erstellen",
+      "export": "Exportieren",
       "link": "Container verknüpfen",
       "plugin-save": "Als Plugin speichern",
       "share": "Teilen"
@@ -84,6 +104,9 @@ const i18n: any = {
       "empty-plugins": "Sie haben noch keine Plugins erstellt, die in diesen Digitalen Zwilling hinzugefügt werden können.",
       "finish": "Konfiguration abschließen",
       "general": "Generelle Informationen",
+      "import-error": "Es wurde versucht, ein ungültiges Plugin zu importieren.",
+      "import-plugin-1": "Nutzen Sie dieses Feld, um exportierte Plugins zu importieren...",
+      "import-plugin-2": "Ziehen Sie Ihre Datei(en) hierher, um zu beginnen<br>oder klicken Sie zum Durchsuchen",
       "plugin": {
         "desc": "Konfiguration des neuen Plugins",
         "title": "Plugin-Typ"
@@ -231,6 +254,7 @@ const i18n: any = {
     },
     "types": {
       "array": "Liste",
+      "boolean": "Checkbox",
       "files": "Dateien",
       "images": "Bilder",
       "number": "Zahl",

@@ -233,8 +233,8 @@ export default class PermissionsComponent extends mixins(EvanComponent) {
       content: {
         from: runtime.activeAccount,
         fromAlias: this.myProfile.alias,
-        title: (<any>this).$t('_datacontainer.share.bmail.title'),
-        body: (<any>this).$t('_datacontainer.share.bmail.body', {
+        title: (<any>this).$t(`${ bMailText }.title`),
+        body: (<any>this).$t(`${ bMailText }.body`, {
           alias: this.myProfile.alias,
           containerAddress: this.containerAddress,
           digitalTwinAddress: this.digitalTwinAddress,

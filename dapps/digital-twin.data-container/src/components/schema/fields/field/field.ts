@@ -75,6 +75,10 @@ export default class FieldComponent extends mixins(EvanComponent) {
    */
   @Prop() label: string;
   @Prop() description: string;
+  /**
+   * Show Label and input field on the same line, not stacked.
+   */
+  @Prop() oneLine: boolean;
 
   /**
    * Calculated type from props type or calucated from schema

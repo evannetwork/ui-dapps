@@ -44,7 +44,7 @@ interface FieldFormInterface extends EvanForm {
 }
 
 @Component({ })
-export default class AJVComponent extends mixins(EvanComponent) {
+export default class AJVValuesComponent extends mixins(EvanComponent) {
   /**
    * Id for the template that is edited (e.g.: create, container address, template type, ...)
    */
@@ -108,7 +108,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
       controls[schemaKey] = {
         value: this.value[schemaKey] || fieldUtils.defaultValue(this.properties[schemaKey]),
-        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+        validate: function(vueInstance: AJVValuesComponent, form: FieldFormInterface) {
           // update components isValid flag so it will be reactive
           vueInstance.$nextTick(() => {
             vueInstance.isValid = vueInstance.valueForm.isValid;
@@ -118,8 +118,9 @@ export default class AJVComponent extends mixins(EvanComponent) {
           return fieldUtils.validateField(
             type,
             this,
-            form,
+            vueInstance.properties[schemaKey],
             vueInstance.address,
+            (<any>vueInstance).$i18n,
           );
         }
       };

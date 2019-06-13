@@ -218,10 +218,20 @@ export default class UiContainer {
     }
 
     // run all update functions
-    await Promise.all(updateWatchers.map((updateFunc: Function) =>
-      updateFunc(this, savingData, sharingData)
-    ));
+    await this.triggerUpdateFunctions(updateWatchers, reload);
   };
+
+  /**
+   * Run all update functions.
+   *
+   * @param      {Array<Function>}  updateWatchers  update functions
+   * @param      {boolean}          reload          suggest reload of the component
+   */
+  async triggerUpdateFunctions(updateWatchers = this.updateWatchers, reload = false) {
+    await Promise.all(updateWatchers.map((updateFunc: Function) =>
+      updateFunc(this, this.savingData, this.sharingData, reload)
+    ));
+  }
 
   /**
    * Bind container and dispatcher update watchers for populating changes.
@@ -430,19 +440,32 @@ export default class UiContainer {
 
   /**
    * Saves latest changes.
+   *
+   * @param      {boolean}      saveDescription  should the description
+   * @param      {Arraystring}  entriesToSave    list of entries that should be saved
    */
-  async save() {
+  async save(saveDescription: boolean, entriesToSave: Array<string>) {
+    // apply it directly, so each component will be updated
+    this.isSaving = true;
+    this.savingEntries = this.savingEntries.concat(entriesToSave);
+
+    // run all update functions
+    await this.triggerUpdateFunctions();
+
     if (this.isContainer) {
       await dispatchers.updateDispatcher.start(this.runtime, {
         address: this.address,
         description: this.description,
         digitalTwinAddress: this.digitalTwinAddress,
+        entriesToSave,
         plugin: { ...this.plugin },
+        saveDescription,
       });
     } else {
       await dispatchers.pluginDispatcher.start(this.runtime, {
+        ...this.plugin,
         beforeName: this.address,
-        ...this.plugin
+        entriesToSave,
       });
     }
   }

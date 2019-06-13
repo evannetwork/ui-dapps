@@ -38,11 +38,11 @@
     </div>
 
     <div class="d-flex align-items-center px-3 py-4">
-      <!-- @contextmenu="$emit('rightClick'); $event.preventDefault()" -->
       <a
         class="d-flex align-items-center dark-link"
         :class="{ 'active': `${ windowLocation }#${ $route.path }`.indexOf(url) !== -1 }"
-        :href="url">
+        :href="url"
+        @click="hideSidebar2()">
         <i
           :class="`${ icon } text-muted mr-2`"
           style="font-size: 17px">
@@ -52,15 +52,6 @@
       <span class="mx-auto"></span>
       <div class="position-relative d-flex align-items-center">
         <slot name="context-menu"></slot>
-        <!-- <button class="btn mini border btn-circle border-secondary"
-          @click="isTreeOpen = !isTreeOpen">
-          <i class="text-secondary"
-            :class="{
-              'mdi mdi-chevron-up': isTreeOpen,
-              'mdi mdi-chevron-down': !isTreeOpen,
-            }">
-          </i>
-        </button> -->
       </div>
     </div>
   </div>

@@ -67,6 +67,7 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
     'string',
     'number',
     'files',
+    'boolean',
   ];
 
   /**
@@ -77,6 +78,7 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
     'string',
     'number',
     'files',
+    'boolean',
   ];
 
   created() {

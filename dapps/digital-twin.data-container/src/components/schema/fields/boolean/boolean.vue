@@ -26,29 +26,29 @@
 */
 
 <template>
-  <div v-if="!loading">
-    <form id="ajv-values">
-      <dc-field
-        v-for="(schemaKey, index) in Object.keys(properties)"
-        :id="`dc-field-${ schemaKey }`"
-        :address="address"
-        :control="valueForm[schemaKey]"
-        :description="`_datacontainer.types.${ types[schemaKey] }`"
-        :label="schemaKey"
-        :mode="mode"
-        :oneLine="true"
-        :standalone="true"
-        :type="types[schemaKey]">
-      </dc-field>
-    </form>
+  <div class="dc-field form-group mb-0"
+    :class="{ 'one-line': oneLine }">
+    <label for="value"
+      v-if="standalone"
+      :class="{'d-block': !oneLine, }">
+      {{ label | translate }}
+    </label>
+    <div class="px-4" v-if="mode === 'schema' || mode === 'edit'">
+      <input class="form-check-input" type="checkbox"
+        :id="id" ref="value"
+        :disabled="$store.state.saving"
+        v-model="control.value"
+        @blur="control.setDirty()">
+    </div>
+    <div v-else>
+      <span :id="id" class="text-primary">
+        {{ control.value }}
+      </span>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './ajv-values.ts';
+  import Component from './boolean.ts';
   export default Component;
 </script>
-
-<style lang="scss" scoped>
-  // @import './ajv.scss';
-</style>

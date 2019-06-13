@@ -365,4 +365,18 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
     window.location.hash = `${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/my-plugins`;
     this.reactiveRefs.deleteModal.hide();
   }
+
+  /**
+   * Export the plugin as json.
+   */
+  exportPlugin() {
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(
+      JSON.stringify(this.plugin));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute('href',     dataStr);
+    downloadAnchorNode.setAttribute('download', this.pluginName + '.json');
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
 }

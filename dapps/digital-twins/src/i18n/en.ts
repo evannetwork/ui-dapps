@@ -33,7 +33,7 @@ const i18n: any = {
   "_digitaltwins": {
     "digitaltwins": {
       "create": "Create Digital Twin",
-      "desc": "Overview of my Digital Twins.",
+      "desc": "Overview of my Digital Twins",
       "empty": "My Digital Twins",
       "empty-desc": "Machines, cars, products, and people can all be represented with a digital twin. Digital twins mirror the asset’s or person’s attributes and status on the blockchain. Creating a twin for cars, forklifts, and other assets enables them to report their status to the network in fractions of a second and respond to requests autonomously.<br><br>A Digital Twin therefore is a unique representation of a real world object in the evan.network. It can hold attributes and any other data about the real world object, and implement operations and tasks concerning the real world object, all cryptographically secured on the blockchain.<br><br><b class=\"text-center d-block mt-3\">Use the \"Create Digital Twin\" or \"Open Digital Twin\" button to create a new one or to open an existing one.</b>",
       "in-creation": "Creating Digital Twin...",

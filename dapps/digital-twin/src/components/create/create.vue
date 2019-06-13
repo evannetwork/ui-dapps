@@ -50,6 +50,15 @@
               <p class="text-left m-0"
                 v-html="$t(`_digitaltwins.createForm.question.desc`, modalParams)">
               </p>
+
+              <div class="form-check p-3">
+                <input class="form-check-input" type="checkbox"
+                  id="dontShowCreateQuest"
+                  v-model="dontShowCreateQuest">
+                <label class="form-check-label" for="dontShowCreateQuest">
+                  {{ '_digitaltwins.createForm.question.dont-show' | translate }}
+                </label>
+              </div>
             </template>
             <template v-slot:footer>
               <button type="button" class="btn btn-primary btn-rounded font-weight-normal"

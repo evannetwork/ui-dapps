@@ -32,7 +32,23 @@ const i18n: any = {
     "ajv": {
       "add": "Add field",
       "edit-schema": "Edit schema",
+      "empty": "not set",
+      "errors": {
+        "missing-max": "not specified",
+        "missing-min": "not specified",
+        "text": "The specified value must be of type \"{type}\"! (min: {min}, max: {max})"
+      },
       "files-no-default": "File type fields cannot contain default values.",
+      "max": {
+        "desc": "Maximum value",
+        "error": "The maximum value must always be greater than or equal to the minimum value.",
+        "title": "Max."
+      },
+      "min": {
+        "desc": "Minimum value (leave empty to disabled required)",
+        "error": "The minimum value must always be less than or equal to the maximum value.",
+        "title": "Min."
+      },
       "name": {
         "desc": "Name of the field",
         "error": {
@@ -44,6 +60,9 @@ const i18n: any = {
       "not-permitted": {
         "desc": "You do not have permission to view this data set.",
         "title": "Invalid authorization"
+      },
+      "required": {
+        "title": "Required"
       },
       "reset-values": "Cancel",
       "save": {
@@ -63,13 +82,14 @@ const i18n: any = {
     "context-menu": {
       "clone": "Clone",
       "create-container": "Create Data Container",
+      "export": "Export",
       "link": "Link to Digital Twin",
       "plugin-save": "Save as plugin",
       "share": "Share"
     },
     "create-question": {
       "action": "Create",
-      "desc": "Have you configured all data correctly and would you like to continue? After the creation, the configurations of the different Data Container can still be updated.",
+      "desc": "Confirming this will create the Digital Twin with the specified data, trigger transactions and consume EVE. Would you like to continue? After the creation, the configurations of the different Data Container can still be updated.",
       "title": "Create Data Container"
     },
     "createForm": {
@@ -84,6 +104,9 @@ const i18n: any = {
       "empty-plugins": "You have not yet created any plugins that can be added to these Digital Twin.",
       "finish": "Finish configuration",
       "general": "General Information",
+      "import-error": "An attempt was made to import an invalid plugin.",
+      "import-plugin-1": "Use this field to import exported plugins...",
+      "import-plugin-2": "Drag your file(s) here to start<br>or click to browse",
       "plugin": {
         "desc": "Configuration of the new plugin",
         "title": "Plugin Type"
@@ -230,6 +253,7 @@ const i18n: any = {
     },
     "types": {
       "array": "List",
+      "boolean": "Checkbox",
       "files": "Files",
       "images": "Images",
       "number": "Number",

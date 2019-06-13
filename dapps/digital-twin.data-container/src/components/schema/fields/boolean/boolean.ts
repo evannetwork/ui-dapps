@@ -25,30 +25,48 @@
   https://evan.network/license/
 */
 
-<template>
-  <div v-if="!loading">
-    <form id="ajv-values">
-      <dc-field
-        v-for="(schemaKey, index) in Object.keys(properties)"
-        :id="`dc-field-${ schemaKey }`"
-        :address="address"
-        :control="valueForm[schemaKey]"
-        :description="`_datacontainer.types.${ types[schemaKey] }`"
-        :label="schemaKey"
-        :mode="mode"
-        :oneLine="true"
-        :standalone="true"
-        :type="types[schemaKey]">
-      </dc-field>
-    </form>
-  </div>
-</template>
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import Component from './ajv-values.ts';
-  export default Component;
-</script>
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-<style lang="scss" scoped>
-  // @import './ajv.scss';
-</style>
+
+@Component({ })
+export default class BooleanComponent extends mixins(EvanComponent) {
+  /**
+   * Dynamic html input element id
+   */
+  @Prop({ default: 'value' }) id;
+
+  /**
+   * schema / edit / vue
+   */
+  @Prop({ default: 'edit' }) mode;
+
+  /**
+   * Form control of the parent form handler (includes form and validation)
+   */
+  @Prop() control: EvanFormControl;
+
+
+  /**
+   * Label and description that should be rendered
+   */
+  @Prop({ default: `_datacontainer.ajv.value.title` }) label: string;
+  @Prop({ default: `_datacontainer.ajv.value.desc` }) description: string;
+
+  /**
+   * Show Label and input field on the same line, not stacked.
+   */
+  @Prop() oneLine: boolean;
+
+  /**
+   * should the control label be rendered?
+   */
+  @Prop({
+    default: true
+  }) standalone: boolean;
+}

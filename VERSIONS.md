@@ -2,8 +2,30 @@
 
 ## Next Version
 ### Features
+
 ### Fixes
+
 ### Deprecations
+
+## Version 3.3.0
+### Features
+- `digitaltwin`
+  - add `do not ask again` to `Create Digital Twin` submit dialog
+- `datacontainer.digitaltwins`
+  - add plugin export / import
+  - min, max values for ajv schema definitions
+  - correct field validation using min max values
+  - add `dc-field-boolean` field
+
+### Fixes
+- `datacontainer.digitaltwins`
+  - `Container` save dispatcher do not load full plugin and check for changes, provide changes directly from the UI code to the dispatcher to increase load times
+  - fix create stepper disabled status
+  - multiple b-mail sharing texts
+  - `ajv-values` show labels and values in the same line
+  - fix list entries reloading
+  - add `hideSidebar2` to `sidebar-level-2` tree links
+
 
 ## Version 3.2.0
 ### Features

@@ -26,25 +26,30 @@
 */
 
 <template>
-  <div class="form-group mb-0">
-    <label class="d-block" for="value" v-if="standalone">
+  <div class="dc-field form-group mb-0"
+    :class="{ 'one-line': oneLine }">
+    <label for="value"
+      v-if="standalone"
+      :class="{'d-block': !oneLine, }">
       {{ label | translate }}
     </label>
-    <template v-if="mode === 'schema' || mode === 'edit'">
-      <input class="form-control" required
-        :id="id" ref="value" type="text"
-        :placeholder="description | translate"
-        :disabled="$store.state.saving"
-        v-model="control.value"
-        :class="{ 'is-invalid' : control.error }"
-        @blur="control.setDirty()">
-      <div class="invalid-feedback">
-        {{ `_datacontainer.ajv.value.error` | translate }}
-      </div>
-    </template>
-    <span :id="id" class="text-primary" v-else>
-      {{ control.value }}
-    </span>
+    <div>
+      <template v-if="mode === 'schema' || mode === 'edit'">
+        <input class="form-control" required
+          :id="id" ref="value" type="text"
+          :placeholder="description | translate"
+          :disabled="$store.state.saving"
+          v-model="control.value"
+          :class="{ 'is-invalid' : control._error }"
+          @blur="control.setDirty()">
+        <div class="invalid-feedback">
+          {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
+        </div>
+      </template>
+      <span :id="id" class="text-primary" v-else>
+        {{ control.value }}
+      </span>
+    </div>
   </div>
 </template>
 

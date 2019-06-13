@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.2.1"
+        "evancore.vue.libs": "^1.2.2"
       },
       "entrypoint": "digitaltwin.lib.js",
       "files": [
         "digitaltwin.lib.js"
       ],
-      "origin": "Qmahdf7oayKDnBno62s1oWfVmaXMU4mGtGv9WGpSDgDZeG",
+      "origin": "QmUbrbVvvh7G7rt6EsVdTGezrQabdkyT6Cpa341tYGm96Z",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -35,10 +35,11 @@
       "evan",
       "library"
     ],
-    "version": "1.5.0",
+    "version": "1.6.0",
     "versions": {
       "1.4.0": "QmRDmJxcR3dcCsKa7z5FdYFx4DZCGSbQKBym6Z7gserS35",
-      "1.5.0": "QmRWf1iG1osYZFnyUVAiXXY1dHB8SsfWY5QGcPoPsEdBCw"
+      "1.5.0": "QmRWf1iG1osYZFnyUVAiXXY1dHB8SsfWY5QGcPoPsEdBCw",
+      "1.6.0": "Qmf3vT47im36JzsgPiZAQK7Ah5dMmJFwwaZD4fQfrdV8iT"
     }
   }
 }

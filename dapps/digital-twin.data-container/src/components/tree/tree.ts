@@ -127,4 +127,11 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
 
     this.initializing = false;
   }
+
+  /**
+   * Sends the hide sidebar event.
+   */
+  hideSidebar2() {
+    window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-close'));
+  }
 }

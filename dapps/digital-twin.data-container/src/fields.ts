@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+
 import Vue from 'vue';
 
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -97,6 +98,9 @@ export function defaultValue(subSchema: any) {
         files: [ ]
       };
     }
+    case 'boolean': {
+      return !!subSchema.default;
+    }
   }
 }
 
@@ -105,33 +109,67 @@ export function defaultValue(subSchema: any) {
  *
  * @param      {string}           type     field type (string, files, ...)
  * @param      {EvanFormControl}  field    from control for the field values
- * @param      {EvanForm}         form     parent form of the field
+ * @param      {any}              schema   schema including min and max specification
  * @param      {string}           address  container / plugin address
+ * @param      {any}              $i18n    vue i18n object for translation error messages directly
  */
 export function validateField(
   type: string,
   field: EvanFormControl,
-  form: EvanForm,
-  address: string
+  schema: any,
+  address: string,
+  $i18n: any,
 ) {
-  // allow empty values in plugins
-  const emptyValues = address === 'plugin-create' ||
-    (!address.startsWith('0x') && address !== 'dc-create');
+  if (!schema) {
+    return true;
+  } else {
+    // allow empty values in plugins
+    const emptyValues = address === 'plugin-create' ||
+      (!address.startsWith('0x') && address !== 'dc-create');
+    // do not use min value by using emptyValues
+    const min = emptyValues ? '' : (schema[getMinPropertyName(type)] || '');
+    const max = (schema[getMaxPropertyName(type)] || '');
+    let valid;
 
-  switch (type) {
-    case 'string': {
-      return emptyValues ||
-        (field.value && field.value.trim().length !== 0);
-    }
-    case 'number': {
-      if (emptyValues && field.value === '') {
-        return true;
-      } else {
-        return !isNaN(parseFloat(field.value));
+    switch (type) {
+      case 'string': {
+        const value = field.value ? field.value.trim() : '';
+
+        valid = (min === '' || value.length >= min) &&
+                (max === '' || value.length <= max);
+        break;
+      }
+      case 'number': {
+        const value = parseFloat(field.value);
+
+        valid = (!isNaN(value) || field.value.length === 0 && min === '') &&
+                (min === '' || value >= min) &&
+                (max === '' || value <= max);
+        break;
+      }
+      case 'files': {
+        const files = field.value.files;
+
+        valid = (min === '' || files.length >= min) &&
+                (max === '' || files.length <= max);
+        break;
+      }
+      case 'boolean': {
+        valid = true;
+        break;
       }
     }
-    case 'files': {
+
+    // if valid, directly return it's valid
+    if (valid) {
       return true;
+    // else, calculate the error message
+    } else {
+      return $i18n.translate('_datacontainer.ajv.errors.text', {
+        max: max !== '' ? max : $i18n.translate('_datacontainer.ajv.errors.missing-max'),
+        min: min !== '' ? min : $i18n.translate('_datacontainer.ajv.errors.missing-min'),
+        type,
+      });
     }
   }
 };
@@ -176,6 +214,46 @@ export function parseFieldValue(
 
       return { files: converted };
     }
+    default: {
+      return value;
+    }
   }
 };
 
+/**
+ * Returns minimum property name by type.
+ *
+ * @param      {string}  type    type that should be checked
+ */
+export function getMinPropertyName(type: string) {
+  switch (type) {
+    case 'string': {
+      return 'minLength';
+    }
+    case 'number': {
+      return 'minimum';
+    }
+    case 'files': {
+      return 'minItems';
+    }
+  }
+}
+
+/**
+ * Returns minimum property name by type.
+ *
+ * @param      {string}  type    type that should be checked
+ */
+export function getMaxPropertyName(type: string) {
+  switch (type) {
+    case 'string': {
+      return 'maxLength';
+    }
+    case 'number': {
+      return 'maximum';
+    }
+    case 'files': {
+      return 'maxItems';
+    }
+  }
+}

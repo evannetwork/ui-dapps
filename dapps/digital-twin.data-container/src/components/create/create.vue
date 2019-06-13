@@ -105,6 +105,19 @@
                   <i class="mdi mdi-arrow-right label ml-3"></i>
                 </a>
               </div>
+              <div class="px-4 pb-4">
+                <evan-file-input
+                  id="plugin-import" ref="value"
+                  v-model="importPlugins"
+                  :placeholder="'_datacontainer.createForm.import-plugin-2'"
+                  :emptyText="'_datacontainer.createForm.import-plugin-1'"
+                  @input="importPlugin()">
+                </evan-file-input>
+                <div class="text-danger text-center pb-3"
+                  v-if="importPluginError">
+                  {{ '_datacontainer.createForm.import-error' | translate }}
+                </div>
+              </div>
             </div>
 
             <!---------------------------------- fill the schema ---------------------------------->
@@ -129,7 +142,7 @@
                 <span class="mx-auto"></span>
                 <div>
                   <button type="submit"
-                    v-if="steps.length !== 0"
+                    v-if="steps.length !== 0 && mode === 'plugin'"
                     class="btn btn-circle btn-outline-secondary"
                     id="th-add-entry"
                     @click="$refs.dcNewEntry.showModal();">

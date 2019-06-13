@@ -27,9 +27,14 @@
 
 <template>
   <div>
-    <span v-if="schemaEdit && (itemType === 'files' || type === 'files')">
-      {{ `_datacontainer.ajv.files-no-default` | translate }}
-    </span>
+    <div v-if="schemaEdit && (combinedType === 'files')">
+      <label class="d-block">
+        {{ !schemaEdit ? `_datacontainer.entry.value.title` : '_datacontainer.ajv.value.title' | translate }}
+      </label>
+      <span>
+        {{ `_datacontainer.ajv.files-no-default` | translate }}
+      </span>
+    </div>
     <dc-field
       v-else
       :address="address"
@@ -38,8 +43,52 @@
       :standalone="true"
       :description="!schemaEdit ? `_datacontainer.types.${ type }` : '_datacontainer.ajv.value.desc'"
       :label="!schemaEdit ? `_datacontainer.entry.value.title` : '_datacontainer.ajv.value.title'"
-      :type="itemType || type">
+      :type="combinedType">
     </dc-field>
+    <template v-if="schemaEdit && (
+      combinedType === 'files' ||
+      combinedType === 'string' ||
+      combinedType === 'number'
+    )">
+      <div class="form-group mt-3">
+        <label for="min" class="d-block">
+          {{ '_datacontainer.ajv.min.title' | translate }}
+        </label>
+        <span class="text-primary" v-if="activeMode !== 'schema'">
+          {{ getMinMaxValue('min') | translate }}
+        </span>
+        <input class="form-control" type="number"
+          v-else
+          ref="min" id="min"
+          v-model="fieldForm.min.value"
+          :class="{ 'is-invalid' : fieldForm.min.error }"
+          :disabled="$store.state.saving || activeMode !== 'schema'"
+          :placeholder="`_datacontainer.ajv.min.desc` | translate"
+          @blur="fieldForm.min.setDirty()">
+        <div class="invalid-feedback">
+          {{ `_datacontainer.ajv.max.error` | translate }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="max" class="d-block">
+          {{ '_datacontainer.ajv.max.title' | translate }}
+        </label>
+        <span class="text-primary" v-if="activeMode !== 'schema'">
+          {{ getMinMaxValue('max') | translate }}
+        </span>
+        <input class="form-control" type="number"
+          v-else
+          ref="max" id="max"
+          v-model="fieldForm.max.value"
+          :class="{ 'is-invalid' : fieldForm.max.error }"
+          :disabled="$store.state.saving || activeMode !== 'schema'"
+          :placeholder="`_datacontainer.ajv.max.desc` | translate"
+          @blur="fieldForm.max.setDirty()">
+        <div class="invalid-feedback">
+          {{ `_datacontainer.ajv.max.error` | translate }}
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

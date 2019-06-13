@@ -210,6 +210,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
             name: dbcpForm.name.value,
           },
           digitalTwinAddress: this.digitalTwinAddress,
+          saveDescription: true,
         });
 
         this.loading = false;

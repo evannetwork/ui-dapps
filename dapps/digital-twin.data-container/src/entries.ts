@@ -78,6 +78,10 @@ export function ensureValues(address: string, entry: UIContainerTemplateProperty
       };
       break;
     }
+    case 'boolean': {
+      entry.edit.value = entry.edit.value || entry.value;
+      break;
+    }
   }
 
   return entry;
@@ -124,6 +128,10 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
       entry.edit.value = {
         files: [ ].concat(entry.value.files)
       };
+      break;
+    }
+    case 'boolean': {
+      entry.edit.value = entry.value;
       break;
     }
   }

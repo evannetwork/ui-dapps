@@ -44,7 +44,7 @@
         :tabs="tabs"
         @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>
-      <div class="container-wide overflow-y-auto">
+      <div class="container-wide overflow-y-auto flex-grow-1">
         <div class="d-flex mb-5 align-items-center"
           style="min-height: 45px">
           <div style="width: 50%;">

@@ -113,8 +113,9 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
             return fieldUtils.validateField(
               vueInstance.itemType,
               this,
-              form,
+              vueInstance.entry,
               vueInstance.containerAddress,
+              (<any>vueInstance).$i18n,
             );
           }
         },
@@ -161,7 +162,9 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
         address: this.containerAddress,
         description: this.uiContainer.description,
         digitalTwinAddress: this.uiContainer.digitalTwinAddress,
+        entriesToSave: [ this.entryName ],
         plugin: this.uiContainer.plugin,
+        saveDescription: true,
       });
     } else {
       dispatchers.pluginDispatcher.start(this.uiContainer.runtime, {

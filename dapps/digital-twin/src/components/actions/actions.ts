@@ -183,7 +183,7 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
    */
   saveDbcp(newDbcp: any) {
     // hide dbcp modal
-    (<any>this.$refs.dbcpModal).hide();
+    (<any>this.reactiveRefs.dbcpModal).hide();
 
     // save the dbcp
     this.selectedUiDT.dbcp.name = newDbcp.name;
@@ -201,5 +201,7 @@ export default class DigitalTwinActionsComponent extends mixins(EvanComponent) {
       dispatchers.favoriteAddDispatcher,
       dispatchers.favoriteRemoveDispatcher
     );
+
+    this.reactiveRefs.favoriteModal && this.reactiveRefs.favoriteModal.hide();
   }
 }

@@ -41,6 +41,8 @@ interface FieldFormInterface extends EvanForm {
   name: EvanFormControl;
   type: EvanFormControl;
   value: EvanFormControl;
+  min: EvanFormControl;
+  max: EvanFormControl;
 }
 
 @Component({ })
@@ -82,6 +84,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     'string',
     'number',
     'files',
+    'boolean',
   ];
 
   /**
@@ -126,19 +129,42 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
     // iterate through all forms and set the correct values to the properties
     this.forms.forEach((form: FieldFormInterface) => {
+      const name = form.name.value;
+      const type = form.type.value;
+
       // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
-      this.properties[form.name.value] = JSON.parse(JSON.stringify(
-        bcc.Container.defaultSchemas[`${ form.type.value }Entry`]
+      this.properties[name] = JSON.parse(JSON.stringify(
+        bcc.Container.defaultSchemas[`${ type }Entry`]
       ));
-      this.properties[form.name.value].default = fieldUtils.parseFieldValue(
-        form.type.value,
+
+      // get the value
+      this.properties[name].default = fieldUtils.parseFieldValue(
+        type,
         form.value.value
       );
+
+      // set min and max values
+      const minPropertyName = fieldUtils.getMinPropertyName(type);
+      const maxPropertyName = fieldUtils.getMaxPropertyName(type);
+
+      if (form.min.value !== '' && !isNaN(form.min.value)) {
+        this.properties[name][minPropertyName] = parseInt(form.min.value, 10);
+      } else {
+        delete this.properties[name][minPropertyName];
+      }
+      if (form.max.value !== '' && !isNaN(form.max.value)) {
+        this.properties[name][maxPropertyName] = parseInt(form.max.value, 10);
+      } else {
+        delete this.properties[name][maxPropertyName];
+      }
     });
   }
 
   /**
    * Creates a new evan form to handle a new entry as one row in the ui.
+   *
+   * @param      {string}   property   property name
+   * @param      {any}      schema     schema definition
    */
   addProperty(property: string, schema: any = { type: 'string' }) {
     const type = fieldUtils.getType(schema);
@@ -179,7 +205,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
           vueInstance.checkFormValidity();
 
           // force value evaluation
-          form.value.value = fieldUtils.defaultValue({ type: this.value });
+          form.value.value = fieldUtils.defaultValue({ type: this.value, default: schema.default });
 
           return this.value.trim().length !== 0;
         }
@@ -187,18 +213,54 @@ export default class AJVComponent extends mixins(EvanComponent) {
       value: {
         value: fieldUtils.defaultValue(schema),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
-          // only check validity when the value is enabled
-          if (!vueInstance.disableValue) {
-            // trigger form validation
-            vueInstance.checkFormValidity();
+          // trigger form validation
+          vueInstance.checkFormValidity();
 
-            // map the value top the correct dynamic type validator
-            return fieldUtils.validateField(
-              (<any>form).type.value,
-              this,
-              form,
-              vueInstance.address,
-            );
+          // check if min and max values are set and apply them into a temporary schema definition
+          const validationSchema = { };
+          if (form.min.value !== '' && !isNaN(form.min.value)) {
+            validationSchema[fieldUtils.getMinPropertyName(type)] = parseInt(form.min.value, 10);
+          }
+          if (form.max.value !== '' && !isNaN(form.max.value)) {
+            validationSchema[fieldUtils.getMaxPropertyName(type)] = parseInt(form.max.value, 10);
+          }
+
+          return fieldUtils.validateField(
+            (<any>form).type.value,
+            form.value,
+            validationSchema,
+            vueInstance.address,
+            (<any>vueInstance).$i18n,
+          );
+        },
+      },
+      min: {
+        value: schema[fieldUtils.getMinPropertyName(type)] || '',
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          // trigger form validation
+          vueInstance.checkFormValidity();
+
+          // force value evaluation
+          form.value.value = form.value.value;
+
+          if (form.min.value !== '' && form.max.value !== '') {
+            return parseInt(form.max.value, 10) >= parseInt(form.min.value, 10);
+          } else {
+            return true;
+          }
+        }
+      },
+      max: {
+        value: schema[fieldUtils.getMaxPropertyName(type)] || '',
+        validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
+          // trigger form validation
+          vueInstance.checkFormValidity();
+
+          // force value evaluation
+          form.value.value = form.value.value;
+
+          if (form.min.value !== '' && form.max.value !== '') {
+            return parseInt(form.max.value, 10) >= parseInt(form.min.value, 10);
           } else {
             return true;
           }
@@ -207,13 +269,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     }));
 
     // auto focus new form element
-    this.$nextTick(() => {
-      const nameInputs = this.$el.querySelectorAll('table tr td:first-child input');
-      const focusInput: any = nameInputs[0];
-
-      focusInput && focusInput.focus();
-      this.checkFormValidity();
-    });
+    this.$nextTick(() => this.checkFormValidity());
   }
 
   /**
@@ -233,5 +289,16 @@ export default class AJVComponent extends mixins(EvanComponent) {
     this.$nextTick(() => {
       this.isValid = this.forms.every((form: FieldFormInterface) => form.isValid);
     });
+  }
+
+  /**
+   * Get correct value for min / max value.
+   *
+   * @param      {string}  type    The type
+   */
+  getMinMaxValue(form: FieldFormInterface, type: string) {
+    return form[type].value !== '' && !isNaN(form[type].value) ?
+      form[type].value :
+      (<any>this).$i18n.translate('_datacontainer.ajv.empty');
   }
 }

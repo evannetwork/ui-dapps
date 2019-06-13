@@ -27,16 +27,12 @@
 
 <template>
   <div>
-    <evan-loading v-if="loading"></evan-loading>
-    <div class="container-wide" v-if="!loading">
+    <div class="container-wide">
       <div class="d-flex align-items-center mb-5">
         <div>
           <h3 class="font-weight-bold mb-0">
-            {{ '_digitaltwins.plugins.title' | translate }}
-          </h3>
-          <p class="text-muted font-weight-semibold m-0">
             {{ '_digitaltwins.plugins.desc' | translate }}
-          </p>
+          </h3>
         </div>
         <span class="mx-auto"></span>
         <div>
@@ -55,7 +51,8 @@
       </div>
 
       <!-- class="white-box border-smooth rounded mt-3" -->
-      <div v-if="Object.keys(plugins).length !== 0">
+      <evan-loading v-if="loading"></evan-loading>
+      <div v-else-if="Object.keys(plugins).length !== 0">
         <div class="row content pt-1 pb-0"
           :id="`evan-dt-plugins`">
           <div class="col-md-6 col-lg-3 mb-4"

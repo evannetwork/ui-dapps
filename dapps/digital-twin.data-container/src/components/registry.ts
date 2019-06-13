@@ -31,6 +31,7 @@ import * as dtLib from '@evan.network/digitaltwin.lib';
 
 import AJVComponent from './schema/ajv/ajv.vue';
 import AJVValuesComponent from './schema/ajv-values/ajv-values.vue';
+import BooleanComponent from './schema/fields/boolean/boolean.vue';
 import ContainerActionsComponent from './container/container-actions/container-actions.vue';
 import ContainerComponent from './container/container/container.vue';
 import CreateComponent from './create/create.vue';
@@ -66,6 +67,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-entry-list', component: EntryListComponent },
   { name: 'dc-entry-object', component: EntryObjectComponent },
   { name: 'dc-field', component: FieldComponent },
+  { name: 'dc-field-boolean', component: BooleanComponent },
   { name: 'dc-field-files', component: FieldFilesComponent },
   { name: 'dc-field-number', component: FieldNumberComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
