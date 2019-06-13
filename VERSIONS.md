@@ -4,8 +4,15 @@
 ### Features
 
 ### Fixes
+- `datacontainer.digitaltwins`
+  - fix empty min / max values
 
 ### Deprecations
+- `dashboard.vue`
+  - disable recoveryModal
+- `digitaltwins`
+  - disable last opened twins
+  
 
 ## Version 3.3.0
 ### Features

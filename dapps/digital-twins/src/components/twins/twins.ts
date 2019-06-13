@@ -88,7 +88,7 @@ export default class TwinsComponent extends mixins(EvanComponent) {
     // load favorite and last twins
     const runtime = utils.getRuntime(this);
     const twins = Array.from(new Set([ ].concat(
-      utils.getLastOpenedTwins(),
+      // utils.getLastOpenedTwins(),
       await utils.loadTwinFavorites(runtime),
     )));
     // all descriptions of the twins
