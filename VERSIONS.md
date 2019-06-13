@@ -4,11 +4,15 @@
 ### Features
 
 ### Fixes
+
+### Deprecations
+
+
+## Version 1.3.1
+### Fixes
 - `ui.libs`
   - correct steps style
   - fix `dapp-wrapper-sidebar-2` style on small devices
-
-### Deprecations
 
 
 ## Version 1.3.0
