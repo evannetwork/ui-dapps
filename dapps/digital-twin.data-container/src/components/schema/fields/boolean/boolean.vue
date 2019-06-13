@@ -33,15 +33,15 @@
       :class="{'d-block': !oneLine, }">
       {{ label | translate }}
     </label>
-    <div class="px-4">
-      <template v-if="mode === 'schema' || mode === 'edit'">
-        <input class="form-check-input" type="checkbox"
-          :id="id" ref="value"
-          :disabled="$store.state.saving"
-          v-model="control.value"
-          @blur="control.setDirty()">
-      </template>
-      <span :id="id" class="text-primary" v-else>
+    <div class="px-4" v-if="mode === 'schema' || mode === 'edit'">
+      <input class="form-check-input" type="checkbox"
+        :id="id" ref="value"
+        :disabled="$store.state.saving"
+        v-model="control.value"
+        @blur="control.setDirty()">
+    </div>
+    <div v-else>
+      <span :id="id" class="text-primary">
         {{ control.value }}
       </span>
     </div>

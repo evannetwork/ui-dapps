@@ -111,42 +111,65 @@ export function defaultValue(subSchema: any) {
  * @param      {EvanFormControl}  field    from control for the field values
  * @param      {any}              schema   schema including min and max specification
  * @param      {string}           address  container / plugin address
+ * @param      {any}              $i18n    vue i18n object for translation error messages directly
  */
 export function validateField(
   type: string,
   field: EvanFormControl,
   schema: any,
-  address: string
+  address: string,
+  $i18n: any,
 ) {
-  // allow empty values in plugins
-  const emptyValues = address === 'plugin-create' ||
-    (!address.startsWith('0x') && address !== 'dc-create');
-  // do not use min value by using emptyValues
-  const min = emptyValues ? '' : schema[getMinPropertyName(type)];
-  const max = schema[getMaxPropertyName(type)];
+  if (!schema) {
+    return true;
+  } else {
+    // allow empty values in plugins
+    const emptyValues = address === 'plugin-create' ||
+      (!address.startsWith('0x') && address !== 'dc-create');
+    // do not use min value by using emptyValues
+    const min = emptyValues ? '' : (schema[getMinPropertyName(type)] || '');
+    const max = (schema[getMaxPropertyName(type)] || '');
+    let valid;
 
-  switch (type) {
-    case 'string': {
-      const value = field.value ? field.value.trim() : '';
+    switch (type) {
+      case 'string': {
+        const value = field.value ? field.value.trim() : '';
 
-      return (min === '' || value.length >= min) &&
-             (max === '' || value.length <= max);
+        valid = (min === '' || value.length >= min) &&
+                (max === '' || value.length <= max);
+        break;
+      }
+      case 'number': {
+        const value = parseFloat(field.value);
+
+        valid = (!isNaN(value) || field.value.length === 0 && min === '') &&
+                (min === '' || value >= min) &&
+                (max === '' || value <= max);
+        break;
+      }
+      case 'files': {
+        const files = field.value.files;
+
+        valid = (min === '' || files.length >= min) &&
+                (max === '' || files.length <= max);
+        break;
+      }
+      case 'boolean': {
+        valid = true;
+        break;
+      }
     }
-    case 'number': {
-      const value = parseFloat(field.value);
 
-      return !isNaN(value) &&
-         (min === '' || value >= min) &&
-         (max === '' || value <= max);
-    }
-    case 'files': {
-      const value = field.value
-
-      return (min === '' || value.length >= min) &&
-             (max === '' || value.length <= max);
-    }
-    case 'boolean': {
+    // if valid, directly return it's valid
+    if (valid) {
       return true;
+    // else, calculate the error message
+    } else {
+      return $i18n.translate('_datacontainer.ajv.errors.text', {
+        max: max !== '' ? max : $i18n.translate('_datacontainer.ajv.errors.missing-max'),
+        min: min !== '' ? min : $i18n.translate('_datacontainer.ajv.errors.missing-min'),
+        type,
+      });
     }
   }
 };

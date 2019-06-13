@@ -65,6 +65,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
    * Show loading symbol
    */
   loading = true;
+  initialized = false;
 
   /**
    * List of existing list entries, when an real container was opened
@@ -120,12 +121,18 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
         this.setDispatcherEntries(dispatcherData);
 
         // reload after save process has finished
-        if (beforeSaving && !this.saving) {
+        if (
+            // load initially
+            !this.initialized ||
+            // dispatcher has finished loading
+            (!this.loading && beforeSaving && !this.saving)
+          ) {
           // reset values
           this.count = 10;
           this.maxListentries = 0;
           this.offset = 0;
           this.listEntries = [ ];
+          this.initialized = true;
 
           await this.loadEntries();
         }
@@ -133,47 +140,43 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
         beforeSaving = this.saving;
       }
     });
-
-    if (this.permitted) {
-     await this.loadEntries();
-    } else {
-      this.loading = false;
-    }
   }
 
   /**
    * Load next list entries
    */
   async loadEntries() {
-    this.loading = true;
+    if (this.permitted) {
+      this.loading = true;
 
-    try {
-      const runtime = utils.getRuntime(this);
+      try {
+        const runtime = utils.getRuntime(this);
 
-      // detect maxListEntries, so we can load until the max list entries were loaded
-      this.maxListentries = await runtime.dataContract.getListEntryCount(
-        this.containerAddress,
-        this.entryName
-      );
+        // detect maxListEntries, so we can load until the max list entries were loaded
+        this.maxListentries = await runtime.dataContract.getListEntryCount(
+          this.containerAddress,
+          this.entryName
+        );
 
-      // load the next entries
-      const container = utils.getContainer(runtime, this.containerAddress);
-      const newEntries = await container.getListEntries(
-        this.entryName,
-        this.count,
-        this.offset,
-        this.reverse
-      );
+        // load the next entries
+        const container = utils.getContainer(runtime, this.containerAddress);
+        const newEntries = await container.getListEntries(
+          this.entryName,
+          this.count,
+          this.offset,
+          this.reverse
+        );
 
-      // apply the new entries to the list and increase the page params
-      this.offset += newEntries.length;
-      this.listEntries = this.listEntries.concat(
-        newEntries.map(entry => ({
-          data: entry
-        }))
-      );
-    } catch (ex) {
-      this.error = true;
+        // apply the new entries to the list and increase the page params
+        this.offset += newEntries.length;
+        this.listEntries = this.listEntries.concat(
+          newEntries.map(entry => ({
+            data: entry
+          }))
+        );
+      } catch (ex) {
+        this.error = true;
+      }
     }
 
     this.loading = false;

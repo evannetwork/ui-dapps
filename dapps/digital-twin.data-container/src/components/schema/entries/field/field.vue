@@ -27,9 +27,14 @@
 
 <template>
   <div>
-    <span v-if="schemaEdit && (combinedType === 'files')">
-      {{ `_datacontainer.ajv.files-no-default` | translate }}
-    </span>
+    <div v-if="schemaEdit && (combinedType === 'files')">
+      <label class="d-block">
+        {{ !schemaEdit ? `_datacontainer.entry.value.title` : '_datacontainer.ajv.value.title' | translate }}
+      </label>
+      <span>
+        {{ `_datacontainer.ajv.files-no-default` | translate }}
+      </span>
+    </div>
     <dc-field
       v-else
       :address="address"
@@ -49,7 +54,7 @@
         <label for="min" class="d-block">
           {{ '_datacontainer.ajv.min.title' | translate }}
         </label>
-        <span class="font-weight-semibold" v-if="activeMode !== 'schema'">
+        <span class="text-primary" v-if="activeMode !== 'schema'">
           {{ fieldForm.min.value || ('_datacontainer.ajv.empty' | translate) }}
         </span>
         <input class="form-control" type="number"
@@ -68,7 +73,7 @@
         <label for="max" class="d-block">
           {{ '_datacontainer.ajv.max.title' | translate }}
         </label>
-        <span class="font-weight-semibold" v-if="activeMode !== 'schema'">
+        <span class="text-primary" v-if="activeMode !== 'schema'">
           {{ fieldForm.max.value || ('_datacontainer.ajv.empty' | translate) }}
         </span>
         <input class="form-control" type="number"

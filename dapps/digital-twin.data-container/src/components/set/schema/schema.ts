@@ -113,7 +113,8 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     this.entryName = this.$route.params.entryName;
 
     let beforeSaving = false;
-    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer) => {
+    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer, reload: boolean) => {
+      // set loading status
       this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
       this.error = uiContainer.error;
 
@@ -125,7 +126,14 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
 
       // reload data when, no error occured, was not initialized or not loading and dispatcher has
       // finished
-      if (!this.error && (!this.initialized || (!this.loading && (!this.saving && beforeSaving)))) {
+      if (!this.error && (
+          // force reloading of UI (e.g. after cache clear)
+          reload ||
+          // load data on initialization
+          !this.initialized ||
+          // when dispatcher has finished
+          (!this.loading && !this.saving && beforeSaving)
+        )) {
         this.loading = true;
 
         try {
@@ -149,10 +157,13 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
 
         this.initialized = true;
         // ensure edit values for schema component
-        entryUtils.ensureValues(this.containerAddress, this.templateEntry);
         this.$nextTick(() => this.loading = false);
       }
 
+      // ensure edit values for schema components
+      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+
+      // set before saving
       beforeSaving = this.saving;
     });
 

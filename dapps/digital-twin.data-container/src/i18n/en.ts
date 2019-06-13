@@ -33,6 +33,11 @@ const i18n: any = {
       "add": "Add field",
       "edit-schema": "Edit schema",
       "empty": "not set",
+      "errors": {
+        "missing-max": "not specified",
+        "missing-min": "not specified",
+        "text": "The specified value must be of type \"{type}\"! (min: {min}, max: {max})"
+      },
       "files-no-default": "File type fields cannot contain default values.",
       "max": {
         "desc": "Maximum value",

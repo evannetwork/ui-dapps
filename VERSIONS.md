@@ -16,6 +16,7 @@
   - fix create stepper disabled status
   - multiple b-mail sharing texts
   - `ajv-values` show labels and values in the same line
+  - fix list entries reloading
 
 ### Deprecations
 

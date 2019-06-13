@@ -110,7 +110,7 @@
             <template v-if="setActions">
               <a
                 id="dc-container-add"
-                v-if="isOwner"
+                v-if="isOwner && !containerAddress.startsWith('0x')"
                 :class="buttonClasses.primary"
                 @click="reactiveRefs.dcNewEntry.showModal(); closeDropdown();">
                 <i class="mdi mdi-plus"></i>

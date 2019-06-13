@@ -110,7 +110,7 @@
       </evan-modal>
 
       <dc-list-entries-add
-        v-if="listActions && entryType === 'array' && containerAddress.startsWith('0x')"
+        v-if="uiContainer && listActions && entryType === 'array' && containerAddress.startsWith('0x')"
         :containerAddress="containerAddress"
         :entryName="entryName"
         :uiContainer="uiContainer"

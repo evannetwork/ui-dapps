@@ -218,17 +218,18 @@ export default class UiContainer {
     }
 
     // run all update functions
-    await this.triggerUpdateFunctions(updateWatchers);
+    await this.triggerUpdateFunctions(updateWatchers, reload);
   };
 
   /**
    * Run all update functions.
    *
    * @param      {Array<Function>}  updateWatchers  update functions
+   * @param      {boolean}          reload          suggest reload of the component
    */
-  async triggerUpdateFunctions(updateWatchers = this.updateWatchers) {
+  async triggerUpdateFunctions(updateWatchers = this.updateWatchers, reload = false) {
     await Promise.all(updateWatchers.map((updateFunc: Function) =>
-      updateFunc(this, this.savingData, this.sharingData)
+      updateFunc(this, this.savingData, this.sharingData, reload)
     ));
   }
 

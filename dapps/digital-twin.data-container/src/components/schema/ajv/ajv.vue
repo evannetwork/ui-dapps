@@ -64,7 +64,7 @@
                 v-model="form.name.value"
                 :placeholder="`_datacontainer.ajv.name.desc` | translate"
                 :disabled="$store.state.saving || mode !== 'schema'"
-                :class="{ 'is-invalid' : form.name.error }"
+                :class="{ 'is-invalid' : form.name._error }"
                 @blur="form.name.setDirty()">
               <div class="invalid-feedback">
                 {{ form.name.error | translate }}
@@ -74,7 +74,7 @@
         </td>
         <td :id="`ajv-type-${ index }`">
           <div class="form-group mb-0">
-            <span class="font-weight-semibold" v-if="mode !== 'schema'">
+            <span class="text-primary" v-if="mode !== 'schema'">
               {{ `_datacontainer.types.${ form.type.value }` | translate }}
             </span>
             <select class="form-control custom-select"
@@ -83,7 +83,7 @@
               v-model="form.type.value"
               :placeholder="`_datacontainer.ajv.type.desc` | translate"
               :disabled="$store.state.saving || mode !== 'schema'"
-              :class="{ 'is-invalid' : form.type.error }"
+              :class="{ 'is-invalid' : form.type._error }"
               @blur="form.type.setDirty()">
               <option
                 v-for="(fieldType, index) in fieldTypes"
@@ -97,7 +97,7 @@
           :id="`ajv-value-${ index }`"
           class="fill-content"
           v-if="!disableValue">
-          <div v-if="form.type.value === 'files'">
+          <div class="text-primary" v-if="form.type.value === 'files'">
             {{ `_datacontainer.ajv.files-no-default` | translate }}
           </div>
           <dc-field
@@ -118,14 +118,14 @@
           <td
             :id="`ajv-min-${ index }`"
             class="fill-content">
-            <span class="font-weight-semibold" v-if="mode !== 'schema'">
+            <span class="text-primary" v-if="mode !== 'schema'">
               {{ form.min.value !== '' ? form.min.value : ('_datacontainer.ajv.empty' | translate) }}
             </span>
-            <div class="form-group mb-0">
+            <div class="form-group mb-0" v-else>
               <input class="form-control" type="number"
                 ref="min"
                 v-model="form.min.value"
-                :class="{ 'is-invalid' : form.min.error }"
+                :class="{ 'is-invalid' : form.min._error }"
                 :disabled="$store.state.saving || mode !== 'schema'"
                 :placeholder="`_datacontainer.ajv.min.desc` | translate"
                 @blur="form.min.setDirty()">
@@ -137,10 +137,10 @@
           <td
             :id="`ajv-max-${ index }`"
             class="fill-content">
-            <span class="font-weight-semibold" v-if="mode !== 'schema'">
+            <span class="text-primary" v-if="mode !== 'schema'">
               {{ form.max.value !== '' ? form.max.value : ('_datacontainer.ajv.empty' | translate) }}
             </span>
-            <div class="form-group mb-0">
+            <div class="form-group mb-0" v-else>
               <input class="form-control" type="number"
                 ref="max"
                 v-model="form.max.value"

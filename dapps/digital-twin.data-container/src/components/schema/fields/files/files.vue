@@ -38,10 +38,13 @@
         v-if="control.value && control.value.files"
         :id="id" ref="value"
         :disabled="$store.state.saving || mode === 'view'"
-        :class="{ 'is-invalid' : control.error }"
+        :class="{ 'is-invalid' : control._error }"
         v-model="control.value.files"
-        @input="control.setDirty()">
+        @input="control.setDirty(); control.value = control.value;">
       </evan-file-input>
+      <div class="invalid-feedback d-block" v-if="control._error">
+        {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
+      </div>
     </div>
   </div>
 </template>

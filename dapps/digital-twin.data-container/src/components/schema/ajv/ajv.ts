@@ -205,7 +205,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
           vueInstance.checkFormValidity();
 
           // force value evaluation
-          form.value.value = fieldUtils.defaultValue({ type: this.value });
+          form.value.value = fieldUtils.defaultValue({ type: this.value, default: schema.default });
 
           return this.value.trim().length !== 0;
         }
@@ -213,29 +213,25 @@ export default class AJVComponent extends mixins(EvanComponent) {
       value: {
         value: fieldUtils.defaultValue(schema),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
-          // only check validity when the value is enabled
-          if (!vueInstance.disableValue) {
-            // trigger form validation
-            vueInstance.checkFormValidity();
+          // trigger form validation
+          vueInstance.checkFormValidity();
 
-            // check if min and max values are set and apply them into a temporary schema definition
-            const validationSchema = { };
-            if (form.min.value !== '' && !isNaN(form.min.value)) {
-              validationSchema[fieldUtils.getMinPropertyName(type)] = parseInt(form.min.value, 10);
-            }
-            if (form.max.value !== '' && !isNaN(form.max.value)) {
-              validationSchema[fieldUtils.getMaxPropertyName(type)] = parseInt(form.max.value, 10);
-            }
-
-            return fieldUtils.validateField(
-              (<any>form).type.value,
-              form.value,
-              validationSchema,
-              vueInstance.address,
-            );
-          } else {
-            return true;
+          // check if min and max values are set and apply them into a temporary schema definition
+          const validationSchema = { };
+          if (form.min.value !== '' && !isNaN(form.min.value)) {
+            validationSchema[fieldUtils.getMinPropertyName(type)] = parseInt(form.min.value, 10);
           }
+          if (form.max.value !== '' && !isNaN(form.max.value)) {
+            validationSchema[fieldUtils.getMaxPropertyName(type)] = parseInt(form.max.value, 10);
+          }
+
+          return fieldUtils.validateField(
+            (<any>form).type.value,
+            form.value,
+            validationSchema,
+            vueInstance.address,
+            (<any>vueInstance).$i18n,
+          );
         },
       },
       min: {
@@ -246,9 +242,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
           // force value evaluation
           form.value.value = form.value.value;
-          form.max.value = form.max.value;
 
-          if (form.max.value !== '') {
+          if (form.min.value !== '' && form.max.value !== '') {
             return parseInt(form.max.value, 10) >= parseInt(form.min.value, 10);
           } else {
             return true;
@@ -263,9 +258,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
 
           // force value evaluation
           form.value.value = form.value.value;
-          form.min.value = form.min.value;
 
-          if (form.min.value !== '') {
+          if (form.min.value !== '' && form.max.value !== '') {
             return parseInt(form.max.value, 10) >= parseInt(form.min.value, 10);
           } else {
             return true;

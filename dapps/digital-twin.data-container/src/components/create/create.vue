@@ -105,7 +105,7 @@
                   <i class="mdi mdi-arrow-right label ml-3"></i>
                 </a>
               </div>
-              <div class="px-4">
+              <div class="px-4 pb-4">
                 <evan-file-input
                   id="plugin-import" ref="value"
                   v-model="importPlugins"

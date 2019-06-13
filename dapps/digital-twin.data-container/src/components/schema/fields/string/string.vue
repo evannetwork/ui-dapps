@@ -40,10 +40,10 @@
           :placeholder="description | translate"
           :disabled="$store.state.saving"
           v-model="control.value"
-          :class="{ 'is-invalid' : control.error }"
+          :class="{ 'is-invalid' : control._error }"
           @blur="control.setDirty()">
         <div class="invalid-feedback">
-          {{ `_datacontainer.ajv.value.error` | translate }}
+          {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
       <span :id="id" class="text-primary" v-else>
