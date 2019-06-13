@@ -55,7 +55,7 @@
           {{ '_datacontainer.ajv.min.title' | translate }}
         </label>
         <span class="text-primary" v-if="activeMode !== 'schema'">
-          {{ fieldForm.min.value || ('_datacontainer.ajv.empty' | translate) }}
+          {{ getMinMaxValue('min') | translate }}
         </span>
         <input class="form-control" type="number"
           v-else
@@ -74,7 +74,7 @@
           {{ '_datacontainer.ajv.max.title' | translate }}
         </label>
         <span class="text-primary" v-if="activeMode !== 'schema'">
-          {{ fieldForm.max.value || ('_datacontainer.ajv.empty' | translate) }}
+          {{ getMinMaxValue('max') | translate }}
         </span>
         <input class="form-control" type="number"
           v-else
