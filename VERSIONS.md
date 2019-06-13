@@ -17,6 +17,7 @@
   - multiple b-mail sharing texts
   - `ajv-values` show labels and values in the same line
   - fix list entries reloading
+  - add `hideSidebar2` to `sidebar-level-2` tree links
 
 ### Deprecations
 
