@@ -169,6 +169,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
   addProperty(property: string, schema: any = { type: 'string' }) {
     const type = fieldUtils.getType(schema);
 
+    const min = schema[fieldUtils.getMinPropertyName(type)];
+    const max = schema[fieldUtils.getMaxPropertyName(type)];
     this.forms.push(<FieldFormInterface>new EvanForm(this, {
       name: {
         value: property,
@@ -235,7 +237,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
         },
       },
       min: {
-        value: schema[fieldUtils.getMinPropertyName(type)] || '',
+        value: typeof min === 'undefined' ? '' : min,
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // trigger form validation
           vueInstance.checkFormValidity();
@@ -251,7 +253,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
         }
       },
       max: {
-        value: schema[fieldUtils.getMaxPropertyName(type)] || '',
+        value: typeof max === 'undefined' ? '' : max,
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // trigger form validation
           vueInstance.checkFormValidity();

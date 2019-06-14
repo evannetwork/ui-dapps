@@ -61,10 +61,7 @@ dispatcher
     const newDescription = data.description;
 
     // check for changed data
-    if (data.saveDescription ||
-        description.name !== newDescription.name ||
-        description.description !== newDescription.description ||
-        description.imgSquare !== newDescription.img) {
+    if (data.saveDescription) {
       // set dbcp values
       description.name = newDescription.name;
       description.description = newDescription.description;

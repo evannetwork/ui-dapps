@@ -90,9 +90,10 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
   plugin: any = null;
 
   /**
-   * Initially loading
+   * Status information
    */
   initializing = true;
+  error = false;
 
   /**
    * Map decode uri component to scope, so it can be used in template
@@ -106,13 +107,13 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
     setActions: [ ]
   };
 
-
   async created() {
     const runtime = utils.getRuntime(this);
 
     try {
       await UiContainer.watch(this, async (uiContainer: UiContainer, dispatcherData: any) => {
         this.plugin = uiContainer.plugin;
+        this.error = uiContainer.error;
 
         if (!this.initializing) {
           this.initializing = true;
@@ -120,6 +121,8 @@ export default class DataContainerTreeComponent extends mixins(EvanComponent) {
         }
       });
     } catch (ex) {
+      this.error = ex;
+
       if (ex.message.indexOf('No container address applied!') === -1) {
         runtime.logger.log(ex.message, 'error');
       }

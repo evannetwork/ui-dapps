@@ -58,7 +58,9 @@ const i18n: any ={
       "create": "Add Plugin",
       "desc": "All Plugins associated with the Digital Twin",
       "empty": "Plugins",
-      "empty-desc": "Each Digital Twin represents a collection of different Plugins. Each Plugin can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br><b class=\"text-center d-block mt-3\">No Plugin has beend added to this Digital Twin. Use the \"Add Plugin\" or \"Link Plugin\" button on the top.</b>",
+      "empty-desc": "Each Digital Twin represents a collection of different Plugins. Each Plugin can contain a set of different metadata (manufacturer information, operating instructions, ...) or list entries (maintenance logs, pictures, ...).<br><br>",
+      "empty-desc-perm": "<b class=\"text-center d-block mt-3\">No Plugin has beend added to this Digital Twin. Use the \"Add Plugin\" or \"Link Plugin\" button on the top.</b>",
+      "empty-desc-noperm": "<b class=\"text-center d-block mt-3\">No Plugin has beend added to this Digital Twin.",
       "in-creation": "in creation...",
       "link": "Link Plugin",
       "title": "Plugins"
@@ -102,7 +104,7 @@ const i18n: any ={
       },
       "map-ens": "Bind Digital Twin to domain"
     },
-    "empty-navigation": "No entries available",
+    "empty-plugins": "No plugins available...",
     "in-creation": "Creating Digital Twin...",
     "lookup": {
       "address": {

@@ -54,7 +54,7 @@
             <evan-dapp-wrapper-level-2 ref="level2Wrapper"
               v-if="$store.state.uiDT && $store.state.uiDT.validity.exists">
               <template v-slot:content>
-                <div style="width: 360px">
+                <div style="width: 300px">
                   <evan-loading
                     v-if="!$store.state.uiDT.initialized && $store.state.uiDT.loading">
                   </evan-loading>
@@ -77,9 +77,9 @@
                       </template>
                     </dt-tree-root>
 
-                    <div class="py-3 px-2"
-                      v-if="$store.state.uiDT.containers.length === 0">
+                    <div class="py-3 px-2" v-if="$store.state.uiDT.containers.length === 0">
                       <button class="btn btn-link dark-link d-flex align-items-center"
+                        v-if="$store.state.uiDT.isOwner"
                         @click="
                           $refs.dtActions.reactiveRefs.dcCreate.showModal();
                           $refs.dtActions.closeDropdown();
@@ -89,6 +89,9 @@
                         </button>
                         {{ '_digitaltwins.containers.create' | translate }}
                       </button>
+                      <div class="px-4 py-2" v-else>
+                        {{ '_digitaltwins.empty-plugins' | translate }}
+                      </div>
                     </div>
                     <dc-tree
                       v-else

@@ -156,10 +156,12 @@ export default class SetActionsComponent extends mixins(EvanComponent) {
       uiContainer: UiContainer,
       dispatcherData: any
     ) => {
-      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
-      this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
-      this.writeOperations = uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1;
-      this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
+      if (this.entryName) {
+        this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
+        this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
+        this.writeOperations = uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1;
+        this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
+      }
     });
 
     this.loading = false;

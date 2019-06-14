@@ -62,7 +62,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     // restore the recovery url when it's available and the last url wasn't the dashboard
     if (window.localStorage['evan-recovery-url'] &&
         !window.localStorage['evan-recovery-url'].endsWith(`dashboard.vue.${ getDomainName() }`)) {
-      (<any>this.$refs.recoveryModal).show();
+      // (<any>this.$refs.recoveryModal).show();
     }
   }
 

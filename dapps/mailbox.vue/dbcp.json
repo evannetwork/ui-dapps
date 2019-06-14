@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.2.2"
+        "evancore.vue.libs": "^1.2.3"
       },
       "entrypoint": "mailbox.vue.js",
       "files": [

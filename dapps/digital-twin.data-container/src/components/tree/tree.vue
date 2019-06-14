@@ -86,74 +86,90 @@
     </div>
     <div class="pb-3"
       v-if="!initializing && (onlySets || isOpen)">
-      <div class="px-4 py-1"
-        v-if="plugin && plugin.template && Object.keys(plugin.template.properties).length === 0">
-        <dc-actions
-          ref="emptyActions"
-          v-if="containerAddress.startsWith('0x')"
-          :containerAddress="containerAddress"
-          :digitalTwinAddress="digitalTwinAddress"
-          :displayMode="'dropdownHidden'"
-          :dcActions="true"
-          :setActions="true">
-        </dc-actions>
-        <dc-plugin-actions
-          v-else
-          ref="emptyActions"
-          :pluginName="containerAddress"
-          :pluginActions="true"
-          :setActions="true"
-          :displayMode="'dropdownHidden'">
-        </dc-plugin-actions>
-
-        <button class="btn btn-link dark-link d-flex align-items-center"
-          @click="
-            $refs.emptyActions.$refs.dcNewEntry.showModal();
-            $refs.emptyActions.closeDropdown();
-          ">
-          <button class="btn mini border btn-circle border-secondary mr-3">
-            <i class="mdi mdi-plus text-secondary"></i>
-          </button>
-          {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
-        </button>
-      </div>
-      <div class="d-flex align-items-center pl-8 pr-3 py-2"
-        style="height: 40px;"
-        v-for="(entry, index) in Object.keys(plugin.template.properties)"
-        v-else-if="entry !== 'type'">
-        <a
-          class="d-flex align-items-center dark-link"
-          :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
-          :href="`${ dcUrl }/data-set/${ entry }`"
-          @click="hideSidebar2();">
-          <span class="position-relative">
-            <i
-              class="mdi mdi-cube-outline text-muted mr-2"
-              style="font-size: 17px">
-            </i>
-            <span class="m-0">{{ entry }}</span>
-            <span class="notification-dot"
-              v-if="plugin.template.properties[entry].changed ||
-                plugin.template.properties[entry].isNew">
-            </span>
+      <p class="text-center p-3 mb-0" v-if="error"
+        v-html="$t('_datacontainer.no-permissions.desc')">
+      </p>
+      <template v-if="containerAddress && plugin && plugin.template">
+        <div class="px-4 py-1"
+          v-if="Object.keys(plugin.template.properties).length === 0">
+          <template v-if="!containerAddress.startsWith('0x')">
+            <dc-actions
+              ref="emptyActions"
+              v-if="containerAddress.startsWith('0x')"
+              :containerAddress="containerAddress"
+              :digitalTwinAddress="digitalTwinAddress"
+              :displayMode="'dropdownHidden'"
+              :dcActions="true"
+              :setActions="true"
+              @init="$set(reactiveRefs, 'emptyActions', $event)">
+            </dc-actions>
+            <dc-plugin-actions
+              v-else
+              ref="emptyActions"
+              :pluginName="containerAddress"
+              :pluginActions="true"
+              :setActions="true"
+              :displayMode="'dropdownHidden'"
+              @init="$set(reactiveRefs, 'emptyActions', $event)">
+            </dc-plugin-actions>
+            <template v-else>
+              <button class="btn btn-link dark-link d-flex align-items-center"
+                v-if="reactiveRefs.emptyActions.writeOperations"
+                @click="
+                  reactiveRefs.emptyActions.$refs.dcNewEntry.showModal();
+                  reactiveRefs.emptyActions.closeDropdown();
+                ">
+                <button class="btn mini border btn-circle border-secondary mr-3">
+                  <i class="mdi mdi-plus text-secondary"></i>
+                </button>
+                {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
+              </button>
+            </template>
+          </template>
+          <span v-else>
+            {{ '_datacontainer.no-entries.short' | translate }}
           </span>
-        </a>
-        <span class="mx-auto"></span>
-        <div class="position-relative d-flex align-items-center">
-          <div class="spinner-border spinner-border-sm text-secondary"
-            v-if="reactiveRefs.setActions[index] && reactiveRefs.setActions[index].saving">
-          </div>
-          <dc-set-actions
-            :containerAddress="containerAddress"
-            :entryName="entry"
-            :displayMode="'dropdownIcon'"
-            :setActions="true"
-            :schemaActions="true"
-            :listActions="true"
-            @init="$set(reactiveRefs.setActions, index, $event)">
-          </dc-set-actions>
         </div>
-      </div>
+        <template v-else>
+          <div class="d-flex align-items-center pl-8 pr-3 py-2"
+            style="height: 40px;"
+            v-for="(entry, index) in Object.keys(plugin.template.properties)"
+            v-if="entry !== 'type'">
+            <a
+              class="d-flex align-items-center dark-link"
+              :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
+              :href="`${ dcUrl }/data-set/${ entry }`"
+              @click="hideSidebar2();">
+              <span class="position-relative">
+                <i
+                  class="mdi mdi-cube-outline text-muted mr-2"
+                  style="font-size: 17px">
+                </i>
+                <span class="m-0">{{ entry }}</span>
+                <span class="notification-dot"
+                  v-if="plugin.template.properties[entry].changed ||
+                    plugin.template.properties[entry].isNew">
+                </span>
+              </span>
+            </a>
+            <span class="mx-auto"></span>
+            <div class="position-relative d-flex align-items-center">
+              <div class="spinner-border spinner-border-sm text-secondary"
+                v-if="reactiveRefs.setActions[index] && reactiveRefs.setActions[index].saving">
+              </div>
+              <dc-set-actions
+                :containerAddress="containerAddress"
+                :entryName="entry"
+                :displayMode="'dropdownIcon'"
+                :setActions="true"
+                :schemaActions="true"
+                :listActions="true"
+                @init="$set(reactiveRefs.setActions, index, $event)">
+              </dc-set-actions>
+            </div>
+          </div>
+        </template>
+      </template>
     </div>
   </div>
 </template>

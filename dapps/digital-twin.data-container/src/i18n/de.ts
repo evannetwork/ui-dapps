@@ -179,8 +179,10 @@ const i18n: any = {
       "show-more": "Mehr anzeigen"
     },
     "no-entries": {
-      "desc": "Dem Plugin wurden noch keine Datenbereiche hinzugefügt. Nutzen Sie den nachfolgenden Button, um Datenbereiche hinzuzufügen und zu konfigurieren.",
-      "title": "Leeres Plugin"
+      "title": "Jedes Plugin kann verschiedene Datenbereiche wie Metadaten, Listen, Texten, Zahlen, Dateien oder einfachen Checkboxen enthalten.",
+      "desc-perm": "<b class=\"text-center d-block mt-3\">Diesem Plugin wurden keine Datenbereiche hinzugefügt. Nutzen Sie den nachfolgenden Button, um Datenbereiche hinzuzügen.</b>",
+      "desc-noperm": "<b class=\"text-center d-block mt-3\">Diesem Plugin wurden keine Datenbereiche hinzugefügt.</b>",
+      "short": "Keine Datenbereiche verfügbar..."
     },
     "no-permissions": {
       "desc": "Sie besitzen keine Berechtigungen dieses Plugin einzusehen.",

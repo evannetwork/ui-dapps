@@ -85,8 +85,9 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   savingWatcher: Function = null;
 
   /**
-   * Show loading symbol
+   * Status information
    */
+  error = false;
   loading = false;
   saving = false;
   sharing = false;
@@ -143,6 +144,7 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
         this.plugin = uiContainer.plugin;
         this.digitalTwinAddress = uiContainer.digitalTwinAddress;
 
+        this.error = uiContainer.error;
         this.saving = uiContainer.isSaving;
         this.sharing = uiContainer.isSharing;
       });

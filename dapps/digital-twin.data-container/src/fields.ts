@@ -74,7 +74,7 @@ export function defaultValue(subSchema: any) {
   switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
-      return [ ]
+      return [ ];
     }
     case 'object': {
       const defaultReturn = { };
@@ -91,7 +91,7 @@ export function defaultValue(subSchema: any) {
       return subSchema.default || '';
     }
     case 'number': {
-      return subSchema.default || 0;
+      return typeof subSchema.default === 'undefined' ? 0 : subSchema.default;
     }
     case 'files': {
       return {
@@ -189,7 +189,7 @@ export function parseFieldValue(
       return value.trim();
     }
     case 'number': {
-      return parseFloat(value);
+      return typeof value !== 'undefined' && value !== '' ? parseFloat(value) : value;
     }
     case 'files': {
       const converted = [ ];

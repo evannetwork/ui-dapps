@@ -84,6 +84,12 @@
         <p class="text-justify m-0"
           v-html="$t(`_digitaltwins.containers.empty-desc`)">
         </p>
+        <p v-if="$store.state.uiDT.isOwner"
+          v-html="$t(`_digitaltwins.containers.empty-desc-perm`)">
+        </p>
+        <p v-else
+          v-html="$t(`_digitaltwins.containers.empty-desc-noperm`)">
+        </p>
       </div>
     </div>
   </div>

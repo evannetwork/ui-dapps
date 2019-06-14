@@ -26,7 +26,7 @@
 */
 
 <template>
-  <table id="ajv-table" class="evan-flex-table">
+  <table id="ajv-table" class="evan-flex-table responsive-table">
     <thead>
       <tr class="text-muted">
         <th>
@@ -54,6 +54,7 @@
         <td
           :id="`ajv-name-${ index }`"
           class="fill-content">
+          <th>{{ '_datacontainer.ajv.name.title' | translate }}:</th>
           <span class="font-weight-semibold" v-if="mode !== 'schema'">
             {{ form.name.value }}
           </span>
@@ -73,6 +74,7 @@
           </span>
         </td>
         <td :id="`ajv-type-${ index }`">
+          <th>{{ '_datacontainer.ajv.type.title' | translate }}:</th>
           <div class="form-group mb-0">
             <span class="text-primary" v-if="mode !== 'schema'">
               {{ `_datacontainer.types.${ form.type.value }` | translate }}
@@ -97,6 +99,7 @@
           :id="`ajv-value-${ index }`"
           class="fill-content"
           v-if="!disableValue">
+          <th>{{ '_datacontainer.ajv.value.title' | translate }}:</th>
           <div class="text-primary" v-if="form.type.value === 'files'">
             {{ `_datacontainer.ajv.files-no-default` | translate }}
           </div>
@@ -118,6 +121,7 @@
           <td
             :id="`ajv-min-${ index }`"
             class="fill-content">
+            <th>{{ '_datacontainer.ajv.min.title' | translate }}:</th>
             <span class="text-primary" v-if="mode !== 'schema'">
               {{ getMinMaxValue(form, 'min') }}
             </span>
@@ -137,6 +141,7 @@
           <td
             :id="`ajv-max-${ index }`"
             class="fill-content">
+            <th>{{ '_datacontainer.ajv.max.title' | translate }}:</th>
             <span class="text-primary" v-if="mode !== 'schema'">
               {{ getMinMaxValue(form, 'max') }}
             </span>
@@ -174,6 +179,7 @@
         v-if="mode === 'schema'"
         @click="!$store.state.saving && addProperty('')">
         <td class="fill-content">
+          <th>{{ '_datacontainer.ajv.name.title' | translate }}:</th>
           <div class="ajv-add-overlay">
             <!-- <h5 class="text-muted">{{ '_datacontainer.ajv.add' | translate }}</h5> -->
           </div>
@@ -184,6 +190,7 @@
           </div>
         </td>
         <td class="fill-content">
+          <th>{{ '_datacontainer.ajv.type.title' | translate }}:</th>
           <div class="form-group mb-0">
             <select class="form-control custom-select bg-level-1" disabled
               :placeholder="`_datacontainer.ajv.type.desc` | translate">
@@ -195,16 +202,19 @@
         </td>
         <td class="fill-content"
           v-if="!disableValue">
+          <th>{{ '_datacontainer.ajv.value.title' | translate }}:</th>
           <input class="form-control bg-level-1"
             type="text" disabled
             :placeholder="`_datacontainer.ajv.value.desc` | translate">
         </td>
         <td class="fill-content">
+          <th>{{ '_datacontainer.ajv.min.title' | translate }}:</th>
           <div class="form-group mb-0">
             <input class="form-control" type="number" ref="max" disabled>
           </div>
         </td>
         <td class="fill-content">
+          <th>{{ '_datacontainer.ajv.max.title' | translate }}:</th>
           <div class="form-group mb-0">
             <input class="form-control" type="number" ref="max" disabled>
           </div>

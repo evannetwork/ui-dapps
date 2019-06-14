@@ -179,8 +179,10 @@ const i18n: any = {
       "show-more": "Show more"
     },
     "no-entries": {
-      "desc": "No data sets have been added to the plugin yet. Use the button below to add and configure data sets.",
-      "title": "Empty plugin"
+      "title": "Each plugin can contain different data sets such as metadata, lists, texts, numbers, files or simple checkboxes.",
+      "desc-perm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin. Use the button below to add data sets.</b>",
+      "desc-noperm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin.</b>",
+      "short": "No Data sets available..."
     },
     "no-permissions": {
       "desc": "You have no permission to view this data container.",
