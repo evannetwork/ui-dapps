@@ -7,6 +7,12 @@
 
 ### Deprecations
 
+## Version 1.3.2
+### Features
+- `ui.libs`
+  - add correct `dapp-wrapper-level-2` responsive style
+  - add `responsive-table` class to `evan-flex-table`
+
 
 ## Version 1.3.1
 ### Fixes
