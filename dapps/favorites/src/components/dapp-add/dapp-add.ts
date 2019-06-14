@@ -89,7 +89,7 @@ export class DAppAddComponent extends AsyncComponent {
       .onQueueFinish(this.bookmarkService.queueId, (reload) => {
         this.bookmarkService.getDAppBookmarks(reload);
       });
-    
+
     this.ref.detectChanges();
   }
 
@@ -103,6 +103,8 @@ export class DAppAddComponent extends AsyncComponent {
     // load predefine dapps that should be available as suggestion
     this.bookmarkService
       .getBookmarkDefinitions([
+        'dashboard',
+        'dashboard.vue',
         'taskboard',
         'uav',
         'explorer',

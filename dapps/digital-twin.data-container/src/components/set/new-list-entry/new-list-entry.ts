@@ -146,7 +146,7 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
     }
 
     // apply the new value into the array, and clear the old add value
-    this.entry.edit.value = fieldUtils.defaultValue(this.entry.dataSchema);
+    this.entry.edit.value = fieldUtils.defaultValue(this.entry.dataSchema.items);
     if (this.addListEntryForm) {
       // clear the formular value
       this.addListEntryForm.value.value = this.entry.edit.value;
@@ -157,6 +157,8 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
 
     (<any>this).$refs.listEntryAddModal.hide();
 
+    // use correct reference for saving
+    this.uiContainer.plugin.template.properties[this.entryName] = this.entry;
     if (this.containerAddress.startsWith('0x')) {
       dispatchers.updateDispatcher.start(this.uiContainer.runtime, {
         address: this.containerAddress,
@@ -164,7 +166,6 @@ export default class NewListEntryComponent extends mixins(EvanComponent) {
         digitalTwinAddress: this.uiContainer.digitalTwinAddress,
         entriesToSave: [ this.entryName ],
         plugin: this.uiContainer.plugin,
-        saveDescription: true,
       });
     } else {
       dispatchers.pluginDispatcher.start(this.uiContainer.runtime, {

@@ -87,6 +87,7 @@
               </button>
               <button :class="buttonClasses.tertiar"
                 id="dt-edit"
+                v-if="selectedUiDT.isOwner"
                 :disabled="selectedUiDT.isSaving"
                 @click="reactiveRefs.dbcpModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
@@ -103,6 +104,7 @@
             <template v-if="containerActions">
               <button :class="buttonClasses.tertiar"
                 id="dt-container-link"
+                v-if="selectedUiDT.isOwner"
                 @click="reactiveRefs.dtContainerLink.$refs.containerLinkModal.show(); closeDropdown();">
                 <i class="mdi mdi-application-import"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
@@ -111,6 +113,7 @@
               </button>
               <button
                 id="dt-container-create"
+                v-if="selectedUiDT.isOwner"
                 :class="buttonClasses.primary"
                 @click="reactiveRefs.dcCreate.showModal(); closeDropdown();">
                 <i class="mdi mdi-plus"></i>

@@ -2,10 +2,18 @@
 
 ## Next Version
 ### Features
+- `datacontainer.digitaltwins`
+  - add links to `datacontainer` `entries` for `string fields`
+- `favorites`
+  - add `dashboard` and `dashboard.vue` as featured dapps
 
 ### Fixes
 - `datacontainer.digitaltwins`
   - fix empty min / max values
+  - add responsive table class to `ajv` edit
+  - fix list entry default value
+  - add permission restrictions for `digitaltwins`, `context-menus`, `lists`
+  - add missing entry texts
 
 ### Deprecations
 - `dashboard.vue`

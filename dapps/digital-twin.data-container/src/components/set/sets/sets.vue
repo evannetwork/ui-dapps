@@ -40,6 +40,15 @@
       </div>
     </div>
     <template v-else>
+      <dc-set-actions
+        :containerAddress="containerAddress"
+        :entryName="property"
+        :displayMode="'dropdownHidden'"
+        :setActions="true"
+        :schemaActions="true"
+        :listActions="true"
+        @init="$set(reactiveRefs.setActions, index, $event)">
+      </dc-set-actions>
       <div class="content row pb-0" v-if="properties.length !== 0">
         <div class="col-md-4 mb-4"
           v-for="(property, index) in properties"
@@ -78,29 +87,26 @@
               </div>
             </div>
           </a>
-          <dc-set-actions
-            :containerAddress="containerAddress"
-            :entryName="property"
-            :displayMode="'dropdownHidden'"
-            :setActions="true"
-            :schemaActions="true"
-            :listActions="true"
-            @init="$set(reactiveRefs.setActions, index, $event)">
-          </dc-set-actions>
         </div>
       </div>
       <div class="white-box border-smooth rounded" v-else>
-        <div class="content text-center">
-          <h3 class="mt-4 font-weight-semibold">
-            {{ '_datacontainer.no-entries.title' | translate }}
-          </h3>
-          <h5 class="font-weight-semibold text-muted">
-            {{ '_datacontainer.no-entries.desc' | translate }}
-          </h5>
-
+        <div class="content">
+          <p class="text-justify m-0"
+            v-html="$t(`_datacontainer.no-entries.title`)">
+          </p>
+          <p v-if="!containerAddress.startsWith('0x')"
+            v-html="$t(`_datacontainer.no-entries.desc-perm`)">
+          </p>
+          <p v-else
+            v-html="$t(`_datacontainer.no-entries.desc-noperm`)">
+          </p>
           <button
             class="btn btn-rounded btn-outline-secondary mt-3"
             id="th-add-entry"
+            v-if="
+              reactiveRefs.setActions && reactiveRefs.setActions.writeOperations &&
+              !containerAddress.startsWith('0x')
+            "
             @click="$refs.dcNewEntry.showModal();">
             {{ `_datacontainer.entry.add` | translate }}
           </button>

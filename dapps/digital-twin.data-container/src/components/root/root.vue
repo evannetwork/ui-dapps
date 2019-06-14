@@ -42,7 +42,7 @@
           <evan-dapp-wrapper-level-2 ref="level2Wrapper"
             v-if="!digitalTwinAddress && !isCreate">
             <template v-slot:content>
-              <div style="width: 360px">
+              <div style="width: 300px">
                 <dt-tree-root
                   :url="`${ dapp.fullUrl }/${ containerAddress }`"
                   :topic="isContainer ?

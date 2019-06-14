@@ -74,7 +74,7 @@ export function defaultValue(subSchema: any) {
   switch (type) {
     // add an empty value list and an addValue object, the addValue object is used for new
     case 'array': {
-      return [ ]
+      return [ ];
     }
     case 'object': {
       const defaultReturn = { };

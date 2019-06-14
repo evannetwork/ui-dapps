@@ -46,6 +46,13 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
+      <a
+        class="text-primary"
+        v-else-if="control.value.startsWith('0x')"
+        :id="id"
+        :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/${ control.value }`">
+        {{ control.value }}
+      </a>
       <span :id="id" class="text-primary" v-else>
         {{ control.value }}
       </span>

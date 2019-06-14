@@ -56,6 +56,9 @@
           <div class="text-center p-3" v-if="loading">
             <div class="spinner-border spinner-border-sm text-light mr-3"></div>
           </div>
+          <p class="text-center p-3 mb-0" v-else-if="error"
+            v-html="$t('_datacontainer.no-permissions.desc')">
+          </p>
           <template v-else-if="plugin">
             <template v-if="dcActions">
               <button
