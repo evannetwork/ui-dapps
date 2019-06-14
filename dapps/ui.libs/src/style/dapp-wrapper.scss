@@ -384,8 +384,9 @@ $sidebar-small-width: $navbar-height;
           align-items: center;
           justify-content: space-between;
 
-          height: 50px;
-          padding: 0 10px 10px 26px;
+          height: 60px;
+          margin-top: -20px;
+          padding: 0 10px;
         }
 
         ul.nav.small {
@@ -396,11 +397,11 @@ $sidebar-small-width: $navbar-height;
       .dapp-wrapper-sidebar-2 {
         position: fixed;
         z-index: 1029;
-        top: 130px;
+        top: 123px;
         left: -100%;
 
         width: 100%;
-        height: calc(100% - 134px);
+        height: calc(100% - 123px);
 
         transition: 1s ease-out width;
         transition: 0.2s ease-out left;

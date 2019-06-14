@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- `ui.libs`
+  - add correct `dapp-wrapper-level-2` responsive style
+  - add `responsive-table` class to `evan-flex-table`
 
 ### Fixes
 

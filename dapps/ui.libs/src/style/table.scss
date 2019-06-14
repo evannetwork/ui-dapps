@@ -26,42 +26,6 @@
 */
 
 .evan {
-  // table.evan-table {
-  //   width: 100%;
-
-  //   border-top: 1px solid cssVar('border-color');
-  //   border-bottom: 1px solid cssVar('border-color');
-
-  //   th, td {
-  //     font-weight: 600;
-
-  //     padding: 1em 2em;
-
-  //     background-color: cssVar('bg-level-1');
-  //   }
-
-  //   th {
-  //     text-transform: uppercase;
-
-  //     border-bottom: 1px solid cssVar('border-color');
-  //     color: cssVar('text-muted');
-  //   }
-
-  //   tr {
-  //     &:nth-child(odd) {
-  //       td {
-  //         background-color: cssVar('table-row-odd');
-  //       }
-  //     }
-
-  //     &:nth-child(even) {
-  //       td {
-  //         background-color: cssVar('table-row-even');
-  //       }
-  //     }
-  //   }
-  // }
-
   table.evan-flex-table {
     display: flex;
     overflow-x: auto;
@@ -109,6 +73,7 @@
         flex-basis: 0;
         flex-grow: 1;
 
+        min-height: 50px;
         padding: 1em 1.5em;
 
         word-wrap: break-word;
@@ -142,6 +107,12 @@
       }
     }
 
+    td {
+      th {
+        display: none;
+      }
+    }
+
     tbody {
       tr:nth-child(odd) {
         td {
@@ -164,6 +135,53 @@
       tr:last-child {
         td {
           border-bottom: 1px solid cssVar('border-color');
+        }
+      }
+    }
+  }
+
+  table.evan-flex-table.responsive-table {
+    @media screen and (max-width: 992px) {
+      thead {
+        display: none;
+      }
+
+      tbody {
+        tr {
+          flex-flow: column;
+
+          margin: 20px 10px;
+
+          box-shadow: 0 0 5px 0 cssVar('gray-500');
+
+          &:first-child td, &:last-child td {
+            border-top: 0;
+            border-bottom: 0;
+          }
+
+          td {
+            display: flex;
+            flex-flow: row;
+
+            padding: 0 30px;
+
+            &.fill-content * {
+              width: auto;
+            }
+
+            th {
+              font-weight: bold;
+
+              display: flex;
+
+              padding: 0;
+            }
+
+            * {
+              display: flex;
+              align-items: center;
+            }
+          }
         }
       }
     }
