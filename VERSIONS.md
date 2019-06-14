@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+  
+
+## Version 3.3.1
+### Features
 - `datacontainer.digitaltwins`
   - add links to `datacontainer` `entries` for `string fields`
 - `favorites`
@@ -20,7 +28,6 @@
   - disable recoveryModal
 - `digitaltwins`
   - disable last opened twins
-  
 
 ## Version 3.3.0
 ### Features
