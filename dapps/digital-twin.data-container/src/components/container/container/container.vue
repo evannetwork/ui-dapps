@@ -36,9 +36,9 @@
             {{ '_datacontainer.no-permissions.title' | translate }}
           </h3>
         </div>
-        <div class="content"
+        <p class="content"
           v-html="$t('_datacontainer.no-permissions.desc')">
-        </div>
+        </p>
       </div>
     </div>
     <template v-else>

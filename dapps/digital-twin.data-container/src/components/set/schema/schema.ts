@@ -57,12 +57,12 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
+  loading = false;
 
   /**
    * Was data loaded before?
    */
-  initialized = false;
+  initializing = true;
 
   /**
    * Data container could not be loaded, e.g. no permissions.
@@ -113,32 +113,46 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     this.entryName = this.$route.params.entryName;
 
     let beforeSaving = false;
-    this.uiContainer = await UiContainer.watch(this, async (uiContainer: UiContainer, reload: boolean) => {
+    this.uiContainer = await UiContainer.watch(this, async (
+      uiContainer: UiContainer,
+      savingData: any,
+      sharingData: any,
+      reload: boolean,
+      cacheChange: boolean,
+    ) => {
       // set loading status
       this.saving = uiContainer.savingEntries.indexOf(this.entryName) !== -1;
       this.error = uiContainer.error;
 
-      const runtime = utils.getRuntime(this);
-      this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
-      this.permissions = uiContainer.permissions;
-      this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
-      this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
-
-      // reload data when, no error occured, was not initialized or not loading and dispatcher has
-      // finished
-      if (!this.error && (
+      // reload data when, no error occured, not loading and dispatcher has finished
+      if (!this.error && !this.loading && (
           // force reloading of UI (e.g. after cache clear)
-          reload ||
-          // load data on initialization
-          !this.initialized ||
+          reload || cacheChange ||
+          // data wasn't loaded before
+          this.initializing ||
           // when dispatcher has finished
-          (!this.loading && !this.saving && beforeSaving)
+          (!this.saving && beforeSaving)
         )) {
         this.loading = true;
+
+        // get initial data from uiContainer
+        const runtime = utils.getRuntime(this);
+        // !IMPORTANT!: copy the template entry, so call by reference will not break runtime
+        this.templateEntry = JSON.parse(JSON.stringify(
+          uiContainer.plugin.template.properties[this.entryName]
+        ));;
+        this.permissions = uiContainer.permissions;
+        this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
+        this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
         try {
           if (this.containerAddress.startsWith('0x')) {
             const container = utils.getContainer(<any>runtime, this.containerAddress);
+
+            // clear edit values, when cache was cleared!
+            if (reload) {
+              delete this.templateEntry.edit;
+            }
 
             // load only the value, when it wasn't cached before
             if (this.entryType !== 'array') {
@@ -155,19 +169,24 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
           runtime.logger.log(ex.message, 'error');
         }
 
-        this.initialized = true;
+        // ensure edit values for schema components
+        entryUtils.ensureValues(this.containerAddress, this.templateEntry);
+
+        // when cache has changed, force reloading of the ui
+        if (cacheChange && !this.loading) {
+          this.loading = true;
+        }
+
         // ensure edit values for schema component
         this.$nextTick(() => this.loading = false);
       }
-
-      // ensure edit values for schema components
-      entryUtils.ensureValues(this.containerAddress, this.templateEntry);
 
       // set before saving
       beforeSaving = this.saving;
     });
 
     this.loading = false;
+    this.initializing = false;
   }
 
   /**
@@ -194,6 +213,8 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
     // if the current entry was changed, cache the values
     if (schemaChanged || valueChanged) {
       this.templateEntry.changed = true;
+      // apply changes from the runtime entry to ui container plugin instance
+      this.uiContainer.plugin.template.properties[this.entryName] = this.templateEntry;
       const containerCache = new ContainerCache(runtime.activeAccount);
       containerCache.put(this.containerAddress, this.uiContainer.plugin);
     }
@@ -203,7 +224,8 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Save the current changes.
    */
   async saveEntry() {
-    const startTime = Date.now();
+    // apply changes from the runtime entry to ui container plugin instance
+    this.uiContainer.plugin.template.properties[this.entryName] = this.templateEntry;
     // save changes for this entry
     this.reactiveRefs.entryComp.save();
     // save the changes

@@ -4,6 +4,8 @@
 ### Features
 
 ### Fixes
+- `datacontainer.digitaltwins`
+  - fix `schema` / `value` caching and saving
 
 ### Deprecations
   
