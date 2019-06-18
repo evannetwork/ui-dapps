@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- `datacontainer.digitaltwins`
+  - add data container ajv object fields
 
 ### Fixes
 - `datacontainer.digitaltwins`

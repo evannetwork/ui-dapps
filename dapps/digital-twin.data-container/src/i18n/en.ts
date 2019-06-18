@@ -106,7 +106,7 @@ const i18n: any = {
       "general": "General Information",
       "import-error": "An attempt was made to import an invalid plugin.",
       "import-plugin-1": "Use this field to import exported plugins...",
-      "import-plugin-2": "Drag your file(s) here to start<br>or click to browse",
+      "import-plugin-2": "Drag your plugin(s) here <br>or click to browse",
       "plugin": {
         "desc": "Configuration of the new plugin",
         "title": "Plugin Type"

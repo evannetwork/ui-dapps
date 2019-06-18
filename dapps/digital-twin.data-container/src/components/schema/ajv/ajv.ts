@@ -85,6 +85,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     'number',
     'files',
     'boolean',
+    'object',
   ];
 
   /**
@@ -136,6 +137,12 @@ export default class AJVComponent extends mixins(EvanComponent) {
       this.properties[name] = JSON.parse(JSON.stringify(
         bcc.Container.defaultSchemas[`${ type }Entry`]
       ));
+
+      // if a nested object is used, apply the addiontalProperties parameter and apply the full
+      // schema without filtering
+      if (type === 'object') {
+        this.properties[name].additionalProperties = true;
+      }
 
       // get the value
       this.properties[name].default = fieldUtils.parseFieldValue(
@@ -207,13 +214,16 @@ export default class AJVComponent extends mixins(EvanComponent) {
           vueInstance.checkFormValidity();
 
           // force value evaluation
-          form.value.value = fieldUtils.defaultValue({ type: this.value, default: schema.default });
+          form.value.value = fieldUtils.defaultValue(
+            { type: this.value, default: schema.default },
+            'field'
+          );
 
           return this.value.trim().length !== 0;
         }
       },
       value: {
-        value: fieldUtils.defaultValue(schema),
+        value: fieldUtils.defaultValue(schema, 'field'),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // trigger form validation
           vueInstance.checkFormValidity();

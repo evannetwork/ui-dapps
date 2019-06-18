@@ -25,40 +25,38 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-const i18n: any = {
-  "breadcrumbs": {
-    "containerlink": "Link Plugin",
-    "create-plugin": "Create Plugin",
-    "datacontainer": "Data-Container",
-    "datacontainer.digitaltwin": "Plugin",
-    "dc-changes": "History",
-    "dc-create": "Add Plugin",
-    "dc-permissions": "Shares",
-    "dc-sets": "Data-Sets",
-    "dc-sets-add": "Add Data-Set",
-    "dc-technical": "Technical Details",
-    "digitaltwin": "Digital Twin",
-    "digitaltwins": "Digital Twins",
-    "dt-changes": "History",
-    "dt-create": "Create Digital Twin",
-    "dt-detail": "Details",
-    "dt-map": "Bind to domain name",
-    "dt-plugins": "Plugin Overview",
-    "dt-technical": "Technical Details",
-    "entry-changes": "History",
-    "entry-permissions": "Shares",
-    "entry-schema": "Schema",
-    "entry-values": "Data",
-    "list-entries": "List-Entries",
-    "my-plugins": "My Plugins",
-    "my-twins": "My Digital Twins",
-    "open": "Open",
-    "plugin": "Plugin",
-    "plugin-create": "Create Plugin",
-    "verifications": "Verifications"
-  }
-}
-/* tslint:enable */
+<template>
+  <div class="dc-field form-group mb-0"
+    :class="{ 'one-line': oneLine }">
+    <label for="value"
+      v-if="standalone"
+      :class="{'d-block': !oneLine, }">
+      {{ label | translate }}
+    </label>
+    <div>
+      <template v-if="mode === 'schema' || mode === 'edit'">
+        <textarea class="form-control" required
+          rows="5"
+          id="value" ref="value" type="text"
+          :placeholder="description | translate"
+          :disabled="$store.state.saving"
+          v-model="textValue"
+          :class="{ 'is-invalid' : control._error }"
+          @blur="control.setDirty()"
+          @change="onChanged();">
+        </textarea>
+        <div class="invalid-feedback">
+          {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
+        </div>
+      </template>
+      <span :id="id" class="text-primary" v-else>
+        {{ textValue }}
+      </span>
+    </div>
+  </div>
+</template>
 
-export default i18n;
+<script lang="ts">
+  import Component from './object.ts';
+  export default Component;
+</script>

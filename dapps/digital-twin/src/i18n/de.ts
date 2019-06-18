@@ -72,7 +72,7 @@ const i18n: any = {
         "action": "Erstellen",
         "desc": "Durch das bestätigen, wird der Digitale Zwilling mit den angegeben Daten erstellt, Transaktionen ausgelöst und EVE verbraucht. Möchten Sie fortfahren?",
         "title": "Digitalen Zwilling erstellen",
-        "dont-show": "Nicht mehr anzeigendap"
+        "dont-show": "Nicht mehr anzeigen"
       }
     },
     "detail": {

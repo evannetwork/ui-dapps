@@ -43,6 +43,7 @@ import EntryObjectComponent from './schema/entries/object/object.vue';
 import FieldComponent from './schema/fields/field/field.vue';
 import FieldFilesComponent from './schema/fields/files/files.vue';
 import FieldNumberComponent from './schema/fields/number/number.vue';
+import FieldObjectComponent from './schema/fields/object/object.vue';
 import FieldStringComponent from './schema/fields/string/string.vue';
 import NewEntryComponent from './schema/new-entry/new-entry.vue';
 import NewlistEntryComponent from './set/new-list-entry/new-list-entry.vue';
@@ -70,6 +71,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-boolean', component: BooleanComponent },
   { name: 'dc-field-files', component: FieldFilesComponent },
   { name: 'dc-field-number', component: FieldNumberComponent },
+  { name: 'dc-field-object', component: FieldObjectComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-list-entries-add', component: NewlistEntryComponent },
   { name: 'dc-new-entry', component: NewEntryComponent },

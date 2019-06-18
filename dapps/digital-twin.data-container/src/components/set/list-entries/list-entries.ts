@@ -111,7 +111,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      if (uiContainer.permissions.read.indexOf(this.entryName) !== -1 ||
+      if (true || uiContainer.permissions.read.indexOf(this.entryName) !== -1 ||
           uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1) {
         this.permitted = true;
 
@@ -138,6 +138,9 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
         }
 
         beforeSaving = this.saving;
+      } else {
+        this.permitted = false;
+        this.loading = false;
       }
     });
   }

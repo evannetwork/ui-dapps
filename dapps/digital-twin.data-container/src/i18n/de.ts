@@ -106,7 +106,7 @@ const i18n: any = {
       "general": "Generelle Informationen",
       "import-error": "Es wurde versucht, ein ungültiges Plugin zu importieren.",
       "import-plugin-1": "Nutzen Sie dieses Feld, um exportierte Plugins zu importieren...",
-      "import-plugin-2": "Ziehen Sie Ihre Datei(en) hierher, um zu beginnen<br>oder klicken Sie zum Durchsuchen",
+      "import-plugin-2": "Ziehen Sie Ihre exportierten Plugins hierher, <br>oder klicken Sie zum Durchsuchen",
       "plugin": {
         "desc": "Konfiguration des neuen Plugins",
         "title": "Plugin-Typ"
