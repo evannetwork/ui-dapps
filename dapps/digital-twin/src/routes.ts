@@ -31,6 +31,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import ContainersComponent from './components/detail/containers/containers.vue';
 import DigitalTwinDetailComponent from './components/detail/detail/detail.vue';
+import DigitalTwinTechnicalComponent from './components/detail/technical/technical.vue';
 import DigitaTwinCreateComponent from './components/create/create.vue';
 import LookupComponent from './components/lookup/lookup.vue';
 import MapComponent from './components/ens/map/map.vue';
@@ -62,11 +63,11 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     path: dtPath('dt-detail'),
     children: [
       { redirect: { path: 'dt-plugins' }, path: '', },
-      { name: 'dt-plugins',     component: ContainersComponent,       path: 'dt-plugins', },
-      { name: 'dt-technical',   component: UnderDevelopmentComponent, path: 'dt-technical', },
-      { name: 'dt-permissions', component: PermissionsComponent,      path: 'dt-permissions', },
-      { name: 'dt-changes',     component: UnderDevelopmentComponent, path: 'dt-changes', },
-      { name: 'dt-permissions', component: UnderDevelopmentComponent, path: 'dt-permissions', },
+      { name: 'dt-plugins',     component: ContainersComponent,           path: 'dt-plugins', },
+      { name: 'dt-technical',   component: DigitalTwinTechnicalComponent, path: 'dt-technical', },
+      { name: 'dt-permissions', component: PermissionsComponent,          path: 'dt-permissions', },
+      { name: 'dt-changes',     component: UnderDevelopmentComponent,     path: 'dt-changes', },
+      { name: 'dt-permissions', component: UnderDevelopmentComponent,     path: 'dt-permissions', },
     ],
   },
 

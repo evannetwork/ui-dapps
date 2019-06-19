@@ -95,6 +95,7 @@ export default class EvanUIDigitalTwin {
    * Is the current user owner of the digital twin?
    */
   isOwner = false;
+  owner = '';
 
   /**
    * Return the default digitaltwin config.
@@ -213,9 +214,9 @@ export default class EvanUIDigitalTwin {
       this.contractAddress = await digitaltwin.getContractAddress();
       this.dbcp = savingObj && savingObj.dbcp ? savingObj.dbcp : await digitaltwin.getDescription();
       this.isFavorite = await digitaltwin.isFavorite();
-      const owner = await runtime.executor
+      this.owner = await runtime.executor
         .executeContractCall((<any>digitaltwin).contract, 'owner');
-      this.isOwner = owner === runtime.activeAccount;
+      this.isOwner = this.owner === runtime.activeAccount;
 
       // set custom translation
       const customTranslation = { };

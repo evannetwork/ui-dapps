@@ -190,7 +190,7 @@ const i18n: any = {
     },
     "plugin": {
       "bmail": {
-        "body": "Hello,\n\you've been sent the plugin template {name} from {alias}. Use the \"open attachment\" button to add you to your profile.\n\nBest regards,\n\n{alias}",
+        "body": "Hello,\n\nyou've been sent the plugin template {name} from {alias}. Use the \"open attachment\" button to add you to your profile.\n\nBest regards,\n\n{alias}",
         "title": "Plugin Template"
       },
       "bmail-desc": "The selected user will be notified by blockchain mail. In the following formular you can customize the message.",
@@ -258,6 +258,11 @@ const i18n: any = {
         "title": "User"
       },
       "write": "write"
+    },
+    "technical": {
+      "address": "Contract-Address",
+      "in-explorer": "open in evan.network Explorer",
+      "owner": "Owner"
     },
     "types": {
       "array": "List",

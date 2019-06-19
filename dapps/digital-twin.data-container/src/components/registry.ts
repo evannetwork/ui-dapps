@@ -35,6 +35,7 @@ import BooleanComponent from './schema/fields/boolean/boolean.vue';
 import ContainerActionsComponent from './container/container-actions/container-actions.vue';
 import ContainerComponent from './container/container/container.vue';
 import ContainerPermissionsComponent from './container/permissions/permissions.vue';
+import ContainerTechnicalComponent from './container/technical/technical.vue';
 import CreateComponent from './create/create.vue';
 import DataContainerTreeComponent from './tree/tree.vue';
 import EntryComponent from './schema/entries/entry/entry.vue';
@@ -80,6 +81,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-plugin-actions', component: PluginActions },
   { name: 'dc-set-actions', component: SetActionsComponent },
   { name: 'dc-set-schema', component: SetSchemaComponent },
+  { name: 'dc-technical', component: DataContainerTreeComponent },
   { name: 'dc-tree', component: DataContainerTreeComponent },
 ].concat(dtLib.componentRegistration);
 

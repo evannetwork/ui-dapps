@@ -260,6 +260,11 @@ const i18n: any = {
       },
       "write": "schreiben"
     },
+    "technical": {
+      "address": "Vertragsadresse",
+      "in-explorer": "Im evan.network Explorer öffnen",
+      "owner": "Eigentümer"
+    },
     "types": {
       "array": "Liste",
       "boolean": "Checkbox",

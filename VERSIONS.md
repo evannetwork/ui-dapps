@@ -2,6 +2,7 @@
 
 ## Next Version
 ### Features
+- add basic `technical-detail` component to `datacontainer.digitaltwins` and `digitaltwin`
 - `datacontainer.digitaltwins`
   - add data container ajv object fields
   - add `permissions` component to `DataContainer` and `DigitalTwin`
