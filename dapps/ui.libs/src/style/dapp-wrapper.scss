@@ -33,6 +33,7 @@ $sidebar-small-width: $navbar-height;
 .evan .evan-dapp-wrapper {
   &, .dapp-wrapper-main, .dapp-wrapper-content-wrapper {
     display: flex;
+    overflow: auto;
     flex-direction: column;
 
     width: 100%;
