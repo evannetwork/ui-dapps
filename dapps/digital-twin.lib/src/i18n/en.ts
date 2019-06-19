@@ -30,11 +30,11 @@ const i18n: any = {
   "breadcrumbs": {
     "containerlink": "Link Plugin",
     "create-plugin": "Create Plugin",
-    "datacontainer": "Data-Container",
+    "datacontainer": "Plugin",
     "datacontainer.digitaltwin": "Plugin",
     "dc-changes": "History",
     "dc-create": "Add Plugin",
-    "dc-permissions": "Shares",
+    "dc-permissions": "Permissions",
     "dc-sets": "Data-Sets",
     "dc-sets-add": "Add Data-Set",
     "dc-technical": "Technical Details",
@@ -44,10 +44,11 @@ const i18n: any = {
     "dt-create": "Create Digital Twin",
     "dt-detail": "Details",
     "dt-map": "Bind to domain name",
+    "dt-permissions": "Permissions",
     "dt-plugins": "Plugin Overview",
     "dt-technical": "Technical Details",
     "entry-changes": "History",
-    "entry-permissions": "Shares",
+    "entry-permissions": "Permissions",
     "entry-schema": "Schema",
     "entry-values": "Data",
     "list-entries": "List-Entries",
@@ -56,6 +57,7 @@ const i18n: any = {
     "open": "Open",
     "plugin": "Plugin",
     "plugin-create": "Create Plugin",
+    "plugin-permissions": "Permissions",
     "verifications": "Verifications"
   }
 }

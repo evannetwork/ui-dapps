@@ -58,7 +58,7 @@
           <span class="font-weight-semibold" v-if="mode !== 'schema'">
             {{ form.name.value }}
           </span>
-          <span class="text-primary" v-else>
+          <span v-else>
             <div class="form-group mb-0">
               <input class="form-control" required
                 ref="name"
@@ -76,7 +76,7 @@
         <td :id="`ajv-type-${ index }`">
           <th>{{ '_datacontainer.ajv.type.title' | translate }}:</th>
           <div class="form-group mb-0">
-            <span class="text-primary" v-if="mode !== 'schema'">
+            <span v-if="mode !== 'schema'">
               {{ `_datacontainer.types.${ form.type.value }` | translate }}
             </span>
             <select class="form-control custom-select"
@@ -100,7 +100,7 @@
           class="fill-content"
           v-if="!disableValue">
           <th>{{ '_datacontainer.ajv.value.title' | translate }}:</th>
-          <div class="text-primary" v-if="form.type.value === 'files'">
+          <div v-if="form.type.value === 'files'">
             {{ `_datacontainer.ajv.files-no-default` | translate }}
           </div>
           <dc-field
@@ -122,7 +122,7 @@
             :id="`ajv-min-${ index }`"
             class="fill-content">
             <th>{{ '_datacontainer.ajv.min.title' | translate }}:</th>
-            <span class="text-primary" v-if="mode !== 'schema'">
+            <span v-if="mode !== 'schema'">
               {{ getMinMaxValue(form, 'min') }}
             </span>
             <div class="form-group mb-0" v-else>
@@ -142,7 +142,7 @@
             :id="`ajv-max-${ index }`"
             class="fill-content">
             <th>{{ '_datacontainer.ajv.max.title' | translate }}:</th>
-            <span class="text-primary" v-if="mode !== 'schema'">
+            <span v-if="mode !== 'schema'">
               {{ getMinMaxValue(form, 'max') }}
             </span>
             <div class="form-group mb-0" v-else>

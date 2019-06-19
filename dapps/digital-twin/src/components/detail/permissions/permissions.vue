@@ -26,37 +26,39 @@
 */
 
 <template>
-  <div class="dc-field form-group mb-0"
-    :class="{ 'one-line': oneLine }">
-    <label for="value"
-      v-if="standalone"
-      :class="{'d-block': !oneLine, }">
-      {{ label | translate }}
-    </label>
-    <div>
-      <template v-if="mode === 'schema' || mode === 'edit'">
-        <textarea class="form-control" required
-          rows="5"
-          id="value" ref="value" type="text"
-          :placeholder="description | translate"
-          :disabled="$store.state.saving"
-          v-model="textValue"
-          :class="{ 'is-invalid' : control._error }"
-          @blur="control.setDirty()"
-          @change="onChanged();">
-        </textarea>
-        <div class="invalid-feedback">
-          {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
+  <div>
+    <div class="white-box border-smooth rounded mt-3"
+      v-for="(container, index) in uiDT.containers">
+      <div class="header">
+        <div>
+          <h3 class="m-0 font-weight-semibold">
+            {{ container.name }}
+          </h3>
+          <span class="text-muted">
+            {{ container.description.description }}
+          </span>
         </div>
-      </template>
-      <span :id="id" v-else>
-        {{ textValue }}
-      </span>
+        <span class="mx-auto"></span>
+        <button class="btn"
+          @click="$set(collapsed, container.address, !collapsed[container.address])">
+          <i
+            :class="{
+              'mdi mdi-chevron-up': collapsed[container.address],
+              'mdi mdi-chevron-down': !collapsed[container.address],
+            }">
+          </i>
+        </button>
+      </div>
+      <dc-permissions
+        class="position-relative m-5"
+        v-if="collapsed[container.address]"
+        :address="container.address">
+      </dc-permissions>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './object.ts';
+  import Component from './permissions.ts';
   export default Component;
 </script>

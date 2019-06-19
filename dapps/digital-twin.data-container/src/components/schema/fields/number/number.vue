@@ -46,7 +46,7 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
-      <span :id="id" class="text-primary" v-else>
+      <span :id="id" v-else>
         {{ control.value }}
       </span>
     </div>

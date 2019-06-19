@@ -77,7 +77,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * paging specific values
    */
-  count = 10;
+  count = 50;
   maxListentries = 0;
   offset = 0;
   reverse = true;
@@ -111,7 +111,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
       this.templateEntry = uiContainer.plugin.template.properties[this.entryName];
       this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 
-      if (true || uiContainer.permissions.read.indexOf(this.entryName) !== -1 ||
+      if (uiContainer.permissions.read.indexOf(this.entryName) !== -1 ||
           uiContainer.permissions.readWrite.indexOf(this.entryName) !== -1) {
         this.permitted = true;
 
@@ -128,7 +128,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
             (!this.loading && beforeSaving && !this.saving)
           ) {
           // reset values
-          this.count = 10;
+          this.count = 50;
           this.maxListentries = 0;
           this.offset = 0;
           this.listEntries = [ ];

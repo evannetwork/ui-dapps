@@ -45,6 +45,11 @@ import ContainerCache from './container-cache';
 export const containers: any = { };
 
 /**
+ * Share configs for containers
+ */
+export const shareConfigs: any = { };
+
+/**
  * DigitalTwin Container wrapper for loading.
  */
 export default class UiContainer {
@@ -77,7 +82,7 @@ export default class UiContainer {
    * dispatcher infos
    */
   deletingData: Array<any>;
-  isContainer: any;
+  isContainer: boolean;
   isDeleting: boolean;
   isSaving: boolean;
   isSharing: boolean;
@@ -202,6 +207,11 @@ export default class UiContainer {
       (this.isSharing && !isSharing),
       cacheChange
     );
+
+    // if sharing has finished, clear the permission cache
+    if (this.isSharing && !isSharing) {
+      delete shareConfigs[this.address];
+    }
 
     // update latest saving status
     this.isSaving = isSaving;
@@ -345,7 +355,7 @@ export default class UiContainer {
           // for initial load or reload, load latest permission definitions
           if (reload) {
             // load the owner
-            if (this.address.startsWith('0x')) {
+            if (this.isContainer) {
               owner = await container.getOwner();
               permissions = await container.getContainerShareConfigForAccount(
                   this.runtime.activeAccount);
@@ -427,13 +437,13 @@ export default class UiContainer {
    * Is currently a dispatcher running for this container / plugin?
    */
   async getSharingData() {
-    if (this.address.startsWith('0x')) {
+    if (this.isContainer) {
       return (await dispatchers.shareDispatcher.getInstances(this.runtime))
         .filter(instance => instance.data.address === this.address)
         .map(instance => instance.data);
     } else {
       return (await dispatchers.pluginShareDispatcher.getInstances(this.runtime))
-        .filter(instance => instance.data.description.name === this.address)
+        .filter(instance => instance.data.address === this.address)
         .map(instance => instance.data);
     }
   }
@@ -442,7 +452,7 @@ export default class UiContainer {
    * Is currently a dispatcher running for this container / plugin?
    */
   async getDeleteData() {
-    if (this.address.startsWith('0x')) {
+    if (this.isContainer) {
       return [ ];
     } else {
       return (await dispatchers.pluginRemoveDispatcher.getInstances(this.runtime))
@@ -502,5 +512,17 @@ export default class UiContainer {
         entriesToSave,
       });
     }
+  }
+
+  /**
+   * Return cached container share configs.
+   */
+  async getContainerShareConfigs() {
+    if (!shareConfigs[this.address]) {
+      shareConfigs[this.address] = (utils.getContainer(this.runtime, this.address))
+        .getContainerShareConfigs();
+    }
+
+    return await shareConfigs[this.address];
   }
 }

@@ -41,7 +41,7 @@ const i18n: any = {
       },
       "change-twin": "Digitalen Zwilling ändern",
       "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Plugin verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
-      "description2": "Über das Eingabefeld können Sie eine Adresse eines Datencontainers auswählen, der in den digitalen Zwilling verknüpft werden soll.",
+      "description2": "Über das Eingabefeld können Sie eine Adresse eines Plugins auswählen, der in den digitalen Zwilling verknüpft werden soll.",
       "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
         "desc": "Die eingebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
@@ -49,7 +49,7 @@ const i18n: any = {
       },
       "linking": "Bestehendes Plugin Wird verknüpft...",
       "name": {
-        "desc": "ENS Adresse, unter dem der Container in dem digitalen Zwilling gespeichert werden soll.",
+        "desc": "ENS Adresse, unter dem das Plugin in dem digitalen Zwilling gespeichert werden soll.",
         "error": "Bitte geben Sie einen ENS Adresse ein!",
         "title": "ENS Adresse"
       },

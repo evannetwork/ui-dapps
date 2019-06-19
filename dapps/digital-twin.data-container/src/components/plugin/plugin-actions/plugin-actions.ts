@@ -41,7 +41,8 @@ import UiContainer from '../../../UiContainer';
 
 
 interface ShareFormInterface extends EvanForm {
-  subject: EvanFormControl;
+  title: EvanFormControl;
+  body: EvanFormControl;
 }
 
 @Component({ })
@@ -230,19 +231,26 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Initialize share form.
    */
   setupSharingForm() {
-    // setup share form, so the user can insert a custom form
-    let subject = [
-      (<any>this).$t('_digitaltwins.breadcrumbs.plugin'),
-      `: ${ this.description.name }`,
-    ].join('');
-
+    // setup share form, so the user can insert a custom b-mail title, message 
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
-      subject: {
-        value: subject,
+      title: {
+        value: [
+          (<any>this).$t('_digitaltwins.breadcrumbs.plugin'),
+          `: ${ this.description.name }`,
+        ].join(''),
         validate: function(vueInstance: PluginActionsComponent, form: ShareFormInterface) {
           return this.value.trim().length !== 0;
         }
       },
+      body: {
+        value: (<any>this).$t('_datacontainer.plugin.bmail.body', {
+          alias: this.myProfile.alias,
+          name: this.description.name,
+        }),
+        validate: function(vueInstance: PluginActionsComponent, form: ShareFormInterface) {
+          return this.value.trim().length !== 0;
+        }
+      }
     }));
   }
 
@@ -300,11 +308,8 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
       content: {
         from: runtime.activeAccount,
         fromAlias: this.myProfile.alias,
-        title: (<any>this).$t('_datacontainer.plugin.bmail.title'),
-        body: (<any>this).$t('_datacontainer.plugin.bmail.body', {
-          alias: this.myProfile.alias,
-          subject: this.shareForm.subject.value,
-        }),
+        title: this.shareForm.title.value,
+        body: this.shareForm.body.value.replace(/\n/g, '<br>'),
         attachments: [{
           fullPath: [
             `/${ (<any>this).dapp.rootEns }`,

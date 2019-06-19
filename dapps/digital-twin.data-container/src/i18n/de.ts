@@ -81,9 +81,9 @@ const i18n: any = {
     },
     "context-menu": {
       "clone": "Klonen",
-      "create-container": "Daten Container erstellen",
+      "create-container": "Plugin erstellen",
       "export": "Exportieren",
-      "link": "Container verknüpfen",
+      "link": "Plugin verknüpfen",
       "plugin-save": "Als Plugin speichern",
       "share": "Teilen"
     },
@@ -127,16 +127,16 @@ const i18n: any = {
       }
     },
     "dispatcher": {
-      "create": "Daten Container wird erstellt...",
-      "link": "Daten Container wird verlinkt...",
-      "plugin": "Plugin speichern",
-      "plugin-remove": "Plugin löschen",
-      "plugin-share": "Plugin teilen",
-      "share": "Daten Container wird geteilt...",
-      "update": "Daten Container wird aktualisiert..."
+      "create": "Plugin Instany wird erstellt...",
+      "link": "Plugin wird verlinkt...",
+      "plugin": "Plugin-Vorlage wird gespeichert...",
+      "plugin-remove": "Plugin wird gelöscht...",
+      "plugin-share": "Plugin wird geteilt...",
+      "share": "Plugin wird geteilt...",
+      "update": "Plugin wird aktualisiert..."
     },
     "edit": "Bearbeiten",
-    "edit-dbcp": "Container Beschreibung anpassen",
+    "edit-dbcp": "Beschreibung anpassen",
     "edit-schema": "Datenbereich Schema Definition",
     "entries": "Datenbereich",
     "entry": {
@@ -179,10 +179,10 @@ const i18n: any = {
       "show-more": "Mehr anzeigen"
     },
     "no-entries": {
-      "title": "Jedes Plugin kann verschiedene Datenbereiche wie Metadaten, Listen, Texten, Zahlen, Dateien oder einfachen Checkboxen enthalten.",
-      "desc-perm": "<b class=\"text-center d-block mt-3\">Diesem Plugin wurden keine Datenbereiche hinzugefügt. Nutzen Sie den nachfolgenden Button, um Datenbereiche hinzuzügen.</b>",
       "desc-noperm": "<b class=\"text-center d-block mt-3\">Diesem Plugin wurden keine Datenbereiche hinzugefügt.</b>",
-      "short": "Keine Datenbereiche verfügbar..."
+      "desc-perm": "<b class=\"text-center d-block mt-3\">Diesem Plugin wurden keine Datenbereiche hinzugefügt. Nutzen Sie den nachfolgenden Button, um Datenbereiche hinzuzügen.</b>",
+      "short": "Keine Datenbereiche verfügbar...",
+      "title": "Jedes Plugin kann verschiedene Datenbereiche wie Metadaten, Listen, Texten, Zahlen, Dateien oder einfachen Checkboxen enthalten."
     },
     "no-permissions": {
       "desc": "Sie besitzen keine Berechtigungen dieses Plugin einzusehen.",
@@ -190,10 +190,11 @@ const i18n: any = {
     },
     "plugin": {
       "bmail": {
-        "body": "Guten Tag,<br><br>Ihnen wurde die Plugin-Vorlage <b>{subject}</b> von <b>{alias}</b> gesendet. Nutzen Sie den \"Anhang öffnen\" Button, um Sie Ihrem Profil hinzufügen. <br><br>Mit freundlichen Grüßen,<br><br>{alias}",
+        "body": "Guten Tag,\n\nIhnen wurde die Plugin-Vorlage {name} von {alias} gesendet. Nutzen Sie den \"Anhang öffnen\" Button, um Sie Ihrem Profil hinzufügen.\n\nMit freundlichen Grüßen,\n\n{alias}",
         "title": "Plugin-Vorlage"
       },
-      "create-container": "Daten Container erzeugen",
+      "bmail-desc": "Der ausgewählte Benutzer wird per Blockchain-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
+      "create-container": "Plugin erzeugen",
       "create-title": "Neue Plugin erstellen",
       "delete": "Plugin löschen",
       "delete-quest": "Wollen Sie dies Plugin wirklich löschen?",
@@ -222,37 +223,42 @@ const i18n: any = {
     },
     "share": {
       "action": "Teilen",
-      "bmail-container": {
-        "body": "Guten Tag,<br><br>Sie wurden in die Plugin-Instanz <b>{subject}</b> von <b>{alias}</b> eingeladen.<br><br><b>Adresse des Plugins</b>:{containerAddress}<br><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Einladung in Plugin-Instanz"
+      "add-user": "Neuen Nutzer hinzufügen",
+      "add-user-desc": "Fügen Sie einen neuen Nutzer aus Ihren Kontakten in die Freigabe-Übersicht hinzu.",
+      "bmail-container": "Guten Tag,\n\nSie wurden in die Plugin-Instanz {name} von {alias} eingeladen.\n\nPlugin: {name} - {containerAddress}\n\nMit freundlichen Grüßen,\n\n{alias}",
+      "bmail-description": "Alle ausgwählten Berechtigungen werden an die entsprechenden Nutzer freigegeben und per Blockchain-Mail benachrichtigt. Im folgenden können Sie die Nachricht anpassen.",
+      "bmail-twin": "Guten Tag,\n\nSie wurden in den Digitalen Zwilling {name} von {alias} eingeladen.\n\nDigitaler Zwilling: {twinName} - {digitalTwinAddress}\nPlugin: {name} - {containerAddress}\n\nMit freundlichen Grüßen,\n\n{alias}",
+      "body": {
+        "desc": "Nachrichtentext",
+        "error": "Bitte geben Sie einen Nachrichtentext ein!",
+        "title": "Nachrichtentext"
       },
-      "bmail-twin": {
-        "body": "Guten Tag,<br><br>Sie wurden in den Digitalen Zwilling <b>{subject}</b> von <b>{alias}</b> eingeladen.<br><br><b>Adresse des Digitalen Zwillings</b>:{digitalTwinAddress}<br><br><br>Mit freundlichen Grüßen,<br><br>{alias}",
-        "title": "Einladung in Digitalen Zwilling"
-      },
-      "desc": "Senden Sie diesen Daten Container an Personen aus Ihrem Adressbuch und spezifizieren Sie dessen Zugriffsberechtigungen.",
+      "desc": "Senden Sie dieses Plugin an Personen aus Ihrem Adressbuch.",
       "entry": "Datenbereich",
       "no-contacts": {
-        "desc": "Daten können nur mit Kontakten und einem validen Schlüsselaustausch geteilt werden. Sie besitzen noch keine Kontakte, um Daten zu teilen.<br>Wollen sie die Kontakte öffnen?",
+        "desc": "Daten können nur mit Kontakten aus ihrem Adressbuch geteilt werden. Sie besitzen noch keine Kontakte oder all Ihre Kontakte sind bereits der aktuellen Freigabe-Übersicht hinzugefügt.<br>Wollen sie die Kontakte-Anwendung öffnen, um weitere Kontakte hinzuzufügen?",
+        "desc-plugins": "Daten können nur mit Kontakten aus ihrem Adressbuch geteilt werden. Sie besitzen noch keine Kontakte, um Daten zu teilen.<br>Wollen sie die Kontakte-Anwendung öffnen, um weitere Kontakte hinzuzufügen?",
         "open-contacts": "Kontakte öffnen",
         "title": "Keine Kontakte"
       },
       "no-permissions": {
-        "desc": "Sie haben keine Berechtigungen, diesen Daten Container zu teilen.",
+        "desc": "Sie haben keine Berechtigungen, dieses Plugin zu teilen.",
         "title": "Nicht berechtigt"
       },
+      "property": "Datenbereich",
       "read": "Lesen",
       "read-write": "Lesen und Schreiben",
-      "subject": {
-        "desc": "Geben Sie einen Betreff zu diesem Daten Container an. (z.B.: Digitaler Zwilling Zugehörigkeit, Daten Container Name)",
+      "share": "Freigeben",
+      "title": {
+        "desc": "z.B.: Digitaler Zwilling Zugehörigkeit, Plugin Name.",
         "error": "Bitte geben Sie einen Betreff ein!",
         "title": "Betreff"
       },
-      "title": "Teilen",
       "user": {
         "desc": "Nutzer dem die ausgewählten Daten geteilt werden sollen.",
         "title": "Nutzer"
-      }
+      },
+      "write": "schreiben"
     },
     "types": {
       "array": "Liste",

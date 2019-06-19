@@ -48,7 +48,7 @@ const i18n: any ={
       },
       "linking": "Linking existing Plugin",
       "name": {
-        "desc": "ENS Address under which the container will be stored in the Digital Twin.",
+        "desc": "ENS Address under which the Plugin will be stored in the Digital Twin.",
         "error": "Please enter an ENS Address",
         "title": "ENS Address"
       },

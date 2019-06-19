@@ -34,6 +34,7 @@ import AJVValuesComponent from './schema/ajv-values/ajv-values.vue';
 import BooleanComponent from './schema/fields/boolean/boolean.vue';
 import ContainerActionsComponent from './container/container-actions/container-actions.vue';
 import ContainerComponent from './container/container/container.vue';
+import ContainerPermissionsComponent from './container/permissions/permissions.vue';
 import CreateComponent from './create/create.vue';
 import DataContainerTreeComponent from './tree/tree.vue';
 import EntryComponent from './schema/entries/entry/entry.vue';
@@ -47,7 +48,6 @@ import FieldObjectComponent from './schema/fields/object/object.vue';
 import FieldStringComponent from './schema/fields/string/string.vue';
 import NewEntryComponent from './schema/new-entry/new-entry.vue';
 import NewlistEntryComponent from './set/new-list-entry/new-list-entry.vue';
-import PermissionsComponent from './permissions/permissions.vue';
 import PluginActions from './plugin/plugin-actions/plugin-actions.vue';
 import PluginComponent from './plugin/plugin/plugin.vue';
 import SetActionsComponent from './set/set-actions/set-actions.vue';
@@ -75,7 +75,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-list-entries-add', component: NewlistEntryComponent },
   { name: 'dc-new-entry', component: NewEntryComponent },
-  { name: 'dc-permissions', component: PermissionsComponent },
+  { name: 'dc-permissions', component: ContainerPermissionsComponent },
   { name: 'dc-plugin', component: PluginComponent },
   { name: 'dc-plugin-actions', component: PluginActions },
   { name: 'dc-set-actions', component: SetActionsComponent },

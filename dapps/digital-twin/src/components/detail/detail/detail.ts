@@ -68,7 +68,7 @@ export default class GeneralComponent extends mixins(EvanComponent) {
 
     // easy transform sub navigations to full href and reference id's
     const twinAddress = this.$route.params.digitalTwinAddress;
-    this.tabs = [ 'dt-plugins', 'dt-technical', 'dt-changes' ]
+    this.tabs = [ 'dt-plugins', 'dt-technical', 'dt-permissions', 'dt-changes' ]
       .map(urlKey => ({
         id: `tab-${ urlKey }`,
         href: `${ (<any>this).dapp.fullUrl }/${ twinAddress }/dt-detail/${ urlKey }`,

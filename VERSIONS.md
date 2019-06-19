@@ -4,6 +4,9 @@
 ### Features
 - `datacontainer.digitaltwins`
   - add data container ajv object fields
+  - add `permissions` component to `DataContainer` and `DigitalTwin`
+  - add advanced sharing dialog including custom `b-mail` body
+  - load dbcp title for `addresses` in text fields
 
 ### Fixes
 - `datacontainer.digitaltwins`

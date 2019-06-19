@@ -81,16 +81,16 @@ const i18n: any = {
     },
     "context-menu": {
       "clone": "Clone",
-      "create-container": "Create Data Container",
+      "create-container": "Create Plugin",
       "export": "Export",
       "link": "Link to Digital Twin",
       "plugin-save": "Save as plugin",
       "share": "Share"
     },
     "create-question": {
-      "action": "Create",
-      "desc": "Confirming this will create the Digital Twin with the specified data, trigger transactions and consume EVE. Would you like to continue? After the creation, the configurations of the different Data Container can still be updated.",
-      "title": "Create Data Container"
+      "action": "Add",
+      "desc": "Confirming this will create the Digital Twin with the specified data, trigger transactions and consume EVE. Would you like to continue? After the creation, the configurations of the different Plugins can still be updated.",
+      "title": "Add Plugin"
     },
     "createForm": {
       "add-plugin": "Add Plugin",
@@ -127,16 +127,16 @@ const i18n: any = {
       }
     },
     "dispatcher": {
-      "create": "Creating Data Container...",
-      "link": "Link Data Container...",
-      "plugin": "Saving plugin...",
-      "plugin-remove": "Plugin löschen",
+      "create": "Creating Data Plugin Instance...",
+      "link": "Linking Plugin Instance...",
+      "plugin": "Saving Plugin Instance...",
+      "plugin-remove": "Deleting Plugin...",
       "plugin-share": "Sharing plugin...",
-      "share": "Share Data Container...",
-      "update": "Updating Data Container..."
+      "share": "Sharing Plugin Instance...",
+      "update": "Updating Plugin Instance..."
     },
     "edit": "Edit",
-    "edit-dbcp": "Adjust Container Description",
+    "edit-dbcp": "Adjust Description",
     "edit-schema": "Data set schema definition",
     "entries": "Data Sets",
     "entry": {
@@ -179,20 +179,21 @@ const i18n: any = {
       "show-more": "Show more"
     },
     "no-entries": {
-      "title": "Each plugin can contain different data sets such as metadata, lists, texts, numbers, files or simple checkboxes.",
-      "desc-perm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin. Use the button below to add data sets.</b>",
       "desc-noperm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin.</b>",
-      "short": "No Data sets available..."
+      "desc-perm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin. Use the button below to add data sets.</b>",
+      "short": "No Data sets available...",
+      "title": "Each plugin can contain different data sets such as metadata, lists, texts, numbers, files or simple checkboxes."
     },
     "no-permissions": {
-      "desc": "You have no permission to view this data container.",
+      "desc": "You have no permission to view this Plugin.",
       "title": "No permissions"
     },
     "plugin": {
       "bmail": {
-        "body": "Hello,<br><br>You have been sent the plugin template <b>{subject}</b> from <b>{alias}</b>. Use the \"open attachment\" button to add it to your profile. <br><br>Sincerely,<br><br>{alias}",
+        "body": "Hello,\n\you've been sent the plugin template {name} from {alias}. Use the \"open attachment\" button to add you to your profile.\n\nBest regards,\n\n{alias}",
         "title": "Plugin Template"
       },
+      "bmail-desc": "The selected user will be notified by blockchain mail. In the following formular you can customize the message.",
       "create-title": "Create new Plugin",
       "delete": "Delete Plugin",
       "delete-quest": "Do you really want to delete this plugin?",
@@ -221,37 +222,42 @@ const i18n: any = {
     },
     "share": {
       "action": "Share",
-      "bmail-container": {
-        "body": "Hello,<br><br>You have been invited to the plugin instance <b>{subject}</b> by <b>{alias}</b>.<br><br><b>Address of the plugin</b>:{containerAddress}<br><br><br>Hear regards,<br><br>{alias}",
-        "title": "Invitation in plugin instance"
+      "add-user": "Add new user",
+      "add-user-desc": "Add a new user from your contacts to the sharing overview.",
+      "bmail-container": "Hello,\n\nYou were invited to the plugin instance {name} of {alias}.\n\nPlugin: {name} - {containerAddress}.\n\nBest Regards,\n\n{alias}",
+      "bmail-description": "All selected permissions are released to the corresponding users and notified by blockchain mail. In the following formular you can customize the message.",
+      "bmail-twin": "Hello,\n\nYou were invited to the Digital Twin {name} of {alias}.\n\nDigital Twin: {twinName} - {digitalTwinAddress}\nPlugin: {name} - {containerAddress}\n\nBest Regards,\n\n{alias}",
+      "body": {
+        "desc": "Message text",
+        "error": "Please enter a message text",
+        "title": "Message text"
       },
-      "bmail-twin": {
-        "body": "Hello,<br><br>You have been invited to the Digital Twin <b>{subject}</b> by <b>{alias}</b>.<br><br><b>Address of the Digital Twin</b>:{digitalTwinAddress}<br><br><br>Best regards,<br><br>{alias}",
-        "title": "Invitation in Digital Twin"
-      },
-      "desc": "Send this data container to people in your address book and specify their access permissions.",
+      "desc": "Send this Plugin to people from your address book.",
       "entry": "Data set",
       "no-contacts": {
-        "desc": "Data can only be shared with contacts and a valid key exchange. You do not yet have contacts to share data. <br>Do you want to open the contacts?",
+        "desc": "Data can only be shared with contacts from your address book. You don't have any contacts yet or all your contacts are already added to the current sharing overview.<br>Do you want to open the Contacts application to add more contacts?",
+        "desc-plugins": "Data can only be shared with contacts from your address book. You do not yet have contacts to share data. <br>Do you want to open the Contacts application to add more contacts?",
         "open-contacts": "Open Contacts",
         "title": "No contacts"
       },
       "no-permissions": {
-        "desc": "You do not have permissions to share this data container.",
+        "desc": "You do not have permissions to share this data plugin.",
         "title": "Not permitted"
       },
+      "property": "Data-Set",
       "read": "Read",
       "read-write": "Read and Write",
-      "subject": {
-        "desc": "Specify a subject for this data container. (e.g.: Digital Twin name, Data Container Name)",
-        "error": "Please enter a subject!",
-        "title": "Subject"
+      "share": "Share",
+      "title": {
+        "desc": "e.g.: Digital Twin Affiliation, Plugin Name.",
+        "error": "Please enter a Title",
+        "title": "Title"
       },
-      "title": "Share",
       "user": {
         "desc": "User to whom the selected data should be shared.",
         "title": "User"
-      }
+      },
+      "write": "write"
     },
     "types": {
       "array": "List",

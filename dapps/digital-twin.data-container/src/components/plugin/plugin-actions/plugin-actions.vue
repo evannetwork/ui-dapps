@@ -69,6 +69,7 @@
               </button>
               <button :class="buttonClasses.tertiar"
                 id="plugin-share"
+                :disabled="sharing"
                 @click="reactiveRefs.shareModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm" v-if="sharing"></div>
                 <i class="mdi mdi-share-variant" style="width: 16px;" v-else></i>
@@ -157,28 +158,13 @@
         v-if="contacts.length !== 0">
         <template v-slot:header>
           <h5 class="modal-title">
-            {{ `_datacontainer.share.title` | translate }}
+            {{ `_datacontainer.share.action` | translate }}
           </h5>
         </template>
         <template v-slot:body>
           <p class="text-left m-0"
             v-html="$t(`_datacontainer.share.desc`, modalParams)">
           </p>
-
-          <div class="form-group mt-3">
-            <label for="name">
-              {{ `_datacontainer.share.subject.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="subject" ref="subject"
-              :placeholder="`_datacontainer.share.subject.desc` | translate"
-              v-model="shareForm.subject.value"
-              :class="{ 'is-invalid' : shareForm.subject.error }"
-              @blur="shareForm.subject.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_datacontainer.share.subject.error` | translate }}
-            </div>
-          </div>
 
           <div class="form-group mt-3">
             <label for="shareUser">
@@ -194,6 +180,42 @@
                 {{ contact.alias }} ({{ contact.address || contact.email }})
               </option>
             </select>
+          </div>
+
+          <p class="text-left mt-3"
+            v-html="$t(`_datacontainer.plugin.bmail-desc`, modalParams)">
+          </p>
+
+          <div class="form-group mt-3">
+            <label for="name">
+              {{ `_datacontainer.share.title.title` | translate }}
+            </label>
+            <input class="form-control" required
+              id="title" ref="title"
+              :placeholder="`_datacontainer.share.title.desc` | translate"
+              v-model="shareForm.title.value"
+              :class="{ 'is-invalid' : shareForm.title.error }"
+              @blur="shareForm.title.setDirty()">
+            <div class="invalid-feedback">
+              {{ `_datacontainer.share.title.error` | translate }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="name">
+              {{ `_datacontainer.share.body.title` | translate }}
+            </label>
+            <textarea class="form-control" required
+              rows="10"
+              id="body" ref="body"
+              :placeholder="`_datacontainer.share.body.desc` | translate"
+              v-model="shareForm.body.value"
+              :class="{ 'is-invalid' : shareForm.body.error }"
+              @blur="shareForm.body.setDirty()">
+            </textarea>
+            <div class="invalid-feedback">
+              {{ `_datacontainer.share.body.error` | translate }}
+            </div>
           </div>
         </template>
         <template v-slot:footer>

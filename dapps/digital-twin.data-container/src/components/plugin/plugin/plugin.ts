@@ -75,7 +75,7 @@ export default class PluginComponent extends mixins(EvanComponent) {
   async created() {
     this.pluginName = this.$route.params.containerAddress;
 
-    this.tabs = [ 'dc-sets', 'dc-permissions', 'dc-changes' ]
+    this.tabs = [ 'dc-sets', 'plugin-permissions' ]
       .map(urlKey => ({
         id: `tab-${ urlKey }`,
         href: `${ (<any>this).dapp.fullUrl }/${ this.pluginName }/${ urlKey }`,

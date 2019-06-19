@@ -80,7 +80,8 @@
                 @click="openFavorite(favorite)">
                 <img class="img-fluid p-3"
                   style="max-width: 200px; min-height: 200px;"
-                  :src="favorite.imgSquare">
+                  :src="favorite.imgSquare"
+                  :style="favorite.address === 'lindig.evan' ? 'filter: invert(1)' : ''">
 
                 <div class="text-left p-3 border-top highlight">
                   <h5 class="font-weight-bold">{{ favorite.name }}</h5>

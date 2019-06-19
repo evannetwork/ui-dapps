@@ -25,38 +25,34 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="dc-field form-group mb-0"
-    :class="{ 'one-line': oneLine }">
-    <label for="value"
-      v-if="standalone"
-      :class="{'d-block': !oneLine, }">
-      {{ label | translate }}
-    </label>
-    <div>
-      <template v-if="mode === 'schema' || mode === 'edit'">
-        <textarea class="form-control" required
-          rows="5"
-          id="value" ref="value" type="text"
-          :placeholder="description | translate"
-          :disabled="$store.state.saving"
-          v-model="textValue"
-          :class="{ 'is-invalid' : control._error }"
-          @blur="control.setDirty()"
-          @change="onChanged();">
-        </textarea>
-        <div class="invalid-feedback">
-          {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
-        </div>
-      </template>
-      <span :id="id" v-else>
-        {{ textValue }}
-      </span>
-    </div>
-  </div>
-</template>
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import Component from './object.ts';
-  export default Component;
-</script>
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
+
+import * as dispatchers from '../../../dispatchers/registy';
+
+
+@Component({ })
+export default class GeneralComponent extends mixins(EvanComponent) {
+  /**
+   * Digital twin that should be used for edition
+   */
+  uiDT = null;
+
+  /**
+   * ref handlers
+   */
+  collapsed = { };
+
+  /**
+   * Setup the form.
+   */
+  async created() {
+    this.uiDT = this.$store.state.uiDT;
+  }
+}

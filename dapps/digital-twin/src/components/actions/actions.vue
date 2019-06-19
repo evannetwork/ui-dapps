@@ -78,6 +78,15 @@
                 </component>
               </button>
               <button :class="buttonClasses.tertiar"
+                id="twin-share"
+                v-if="displayMode !== 'buttons'"
+                @click="evanNavigate(`digitaltwins.${ dapp.domainName }/digitaltwin.${ dapp.domainName }/${ selectedUiDT.address }/dt-detail/dt-permissions`, dapp.rootEns);">
+                <i class="mdi mdi-share-variant" style="width: 16px;"></i>
+                <component :is="buttonTextComp" :placement="'bottom'">
+                  {{ `_datacontainer.context-menu.share` | translate }}
+                </component>
+              </button>
+              <button :class="buttonClasses.tertiar"
                 id="dt-map-ens"
                 @click="reactiveRefs.dtEnsMap.$refs.mapEnsModal.show(); closeDropdown();">
                 <i class="mdi mdi-link-variant"></i>
