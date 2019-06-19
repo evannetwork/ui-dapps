@@ -11,6 +11,7 @@
 ### Fixes
 - `datacontainer.digitaltwins`
   - fix `schema` / `value` caching and saving
+  - fix list entries permission checks and paging
 
 ### Deprecations
   

@@ -45,7 +45,10 @@
         class="evan-flex-table">
         <thead>
           <tr class="text-muted" v-if="itemType === 'object'">
-            <th class="flex-grow-0">#</th>
+            <th class="flex-grow-0"
+              style="white-space: nowrap;">
+              #
+            </th>
             <th class="flex-grow-1"
               v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)">
               {{ key }}
@@ -62,7 +65,8 @@
         <tbody>
           <tr
             v-for="(listEntry, index) in [ ].concat(dispatcherEntries, listEntries)">
-            <td class="font-weight-semibold flex-grow-0">
+            <td class="font-weight-semibold flex-grow-0"
+              style="white-space: nowrap;">
               {{ index + 1}}
             </td>
             <template v-if="itemType === 'object'">
@@ -106,9 +110,7 @@
             </td> -->
           </tr>
         </tbody>
-        <evan-loading v-if="loading"></evan-loading>
-        <div class="text-center mt-3"
-          v-if="contractAddress && !loading">
+        <div class="text-center mt-3">
           <h5 class="mt-3">
             <b>
               {{ '_datacontainer.list.results' | translate }}
@@ -116,10 +118,11 @@
             {{ offset + templateEntry.value.length }} / {{ maxListentries + templateEntry.value.length }}
           </h5>
 
+          <evan-loading v-if="loadingEntries"></evan-loading>
           <button
             id="entry-list-load-more"
             type="submit" class="btn btn-rounded btn-outline-secondary mt-3"
-            v-if="offset < maxListentries"
+            v-else-if="offset < maxListentries"
             @click="loadEntries()">
             {{ `_datacontainer.list.load-more` | translate }}
           </button>

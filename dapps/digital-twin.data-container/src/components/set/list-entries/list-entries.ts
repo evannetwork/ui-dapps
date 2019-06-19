@@ -64,8 +64,9 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
   initialized = false;
+  loading = true;
+  loadingEntries = false;
 
   /**
    * List of existing list entries, when an real container was opened
@@ -77,7 +78,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * paging specific values
    */
-  count = 50;
+  count = 10;
   maxListentries = 0;
   offset = 0;
   reverse = true;
@@ -128,11 +129,12 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
             (!this.loading && beforeSaving && !this.saving)
           ) {
           // reset values
-          this.count = 50;
+          this.count = 10;
+          this.initialized = true;
+          this.listEntries = [ ];
+          this.loading = true;
           this.maxListentries = 0;
           this.offset = 0;
-          this.listEntries = [ ];
-          this.initialized = true;
 
           await this.loadEntries();
         }
@@ -140,8 +142,9 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
         beforeSaving = this.saving;
       } else {
         this.permitted = false;
-        this.loading = false;
       }
+
+      this.loading = false;
     });
   }
 
@@ -150,7 +153,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
    */
   async loadEntries() {
     if (this.permitted) {
-      this.loading = true;
+      this.loadingEntries = true;
 
       try {
         const runtime = utils.getRuntime(this);
@@ -182,7 +185,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
       }
     }
 
-    this.loading = false;
+    this.loadingEntries = false;
   }
 
   /**
