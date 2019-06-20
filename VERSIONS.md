@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 3.4.0
+### Features
 - add basic `technical-detail` component to `datacontainer.digitaltwins` and `digitaltwin`
 - `datacontainer.digitaltwins`
   - add data container ajv object fields
@@ -18,8 +26,8 @@
   - fix translations
   - use horizontal scrollable tables
   - fix active tree entries
-
-### Deprecations
+- `favorites.vue`
+  - add temporary lindig icon color invert
   
 
 ## Version 3.3.1
