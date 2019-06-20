@@ -35,7 +35,7 @@ const i18n: any ={
     "containerlink": {
       "address": {
         "desc": "Address of the Plugin to be linked to the Digital Twin.",
-        "error": "Please enter an address!",
+        "error": "Please enter an address.",
         "title": "Plugin"
       },
       "change-twin": "Change Digital Twin",
@@ -48,7 +48,7 @@ const i18n: any ={
       },
       "linking": "Linking existing Plugin",
       "name": {
-        "desc": "ENS Address under which the container will be stored in the Digital Twin.",
+        "desc": "ENS Address under which the Plugin will be stored in the Digital Twin.",
         "error": "Please enter an ENS Address",
         "title": "ENS Address"
       },

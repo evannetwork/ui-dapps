@@ -47,12 +47,14 @@
           v-if="lookupModalScope === 'create'"
           @click="$refs.lookupModal.hide(); checkAddress(undefined, true);">
           {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
+          <i class="mdi mdi-arrow-right label ml-3"></i>
         </button>
         <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
           id="dt-ens-purchase"
           v-else-if="lookupModalScope === 'purchase'"
           @click="purchaseAdress();">
           {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
+          <i class="mdi mdi-arrow-right label ml-3"></i>
         </button>
       </template>
     </evan-modal>

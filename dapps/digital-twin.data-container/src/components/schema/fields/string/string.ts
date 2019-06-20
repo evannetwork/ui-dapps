@@ -32,6 +32,7 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib';
 
 
 @Component({ })
@@ -69,4 +70,28 @@ export default class StringComponent extends mixins(EvanComponent) {
   @Prop({
     default: true
   }) standalone: boolean;
+
+  /**
+   * Used when contract id is applied and read view is enabled.
+   */
+  contractTitle = null;
+  isContract = false;
+  loading = false;
+
+  async created() {
+    if (this.control.value && this.control.value.startsWith('0x')) {
+      this.loading = true;
+
+      try {
+        const runtime = utils.getRuntime(this);
+        this.contractTitle = (await runtime.description
+          .getDescription(this.control.value, runtime.activeAccount)).public.name;
+
+        // only display as contract when a correct dbcp is added
+        this.isContract = true;
+      } catch (ex) { }
+
+      this.loading = false;
+    }
+  }
 }

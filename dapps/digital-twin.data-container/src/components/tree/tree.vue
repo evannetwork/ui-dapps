@@ -137,7 +137,7 @@
             v-if="entry !== 'type'">
             <a
               class="d-flex align-items-center dark-link"
-              :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }`) !== -1 }"
+              :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }/`) !== -1 }"
               :href="`${ dcUrl }/data-set/${ entry }`"
               @click="hideSidebar2();">
               <span class="position-relative">

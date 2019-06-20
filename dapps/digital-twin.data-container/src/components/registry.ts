@@ -34,6 +34,8 @@ import AJVValuesComponent from './schema/ajv-values/ajv-values.vue';
 import BooleanComponent from './schema/fields/boolean/boolean.vue';
 import ContainerActionsComponent from './container/container-actions/container-actions.vue';
 import ContainerComponent from './container/container/container.vue';
+import ContainerPermissionsComponent from './container/permissions/permissions.vue';
+import ContainerTechnicalComponent from './container/technical/technical.vue';
 import CreateComponent from './create/create.vue';
 import DataContainerTreeComponent from './tree/tree.vue';
 import EntryComponent from './schema/entries/entry/entry.vue';
@@ -43,10 +45,10 @@ import EntryObjectComponent from './schema/entries/object/object.vue';
 import FieldComponent from './schema/fields/field/field.vue';
 import FieldFilesComponent from './schema/fields/files/files.vue';
 import FieldNumberComponent from './schema/fields/number/number.vue';
+import FieldObjectComponent from './schema/fields/object/object.vue';
 import FieldStringComponent from './schema/fields/string/string.vue';
 import NewEntryComponent from './schema/new-entry/new-entry.vue';
 import NewlistEntryComponent from './set/new-list-entry/new-list-entry.vue';
-import PermissionsComponent from './permissions/permissions.vue';
 import PluginActions from './plugin/plugin-actions/plugin-actions.vue';
 import PluginComponent from './plugin/plugin/plugin.vue';
 import SetActionsComponent from './set/set-actions/set-actions.vue';
@@ -70,14 +72,16 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dc-field-boolean', component: BooleanComponent },
   { name: 'dc-field-files', component: FieldFilesComponent },
   { name: 'dc-field-number', component: FieldNumberComponent },
+  { name: 'dc-field-object', component: FieldObjectComponent },
   { name: 'dc-field-string', component: FieldStringComponent },
   { name: 'dc-list-entries-add', component: NewlistEntryComponent },
   { name: 'dc-new-entry', component: NewEntryComponent },
-  { name: 'dc-permissions', component: PermissionsComponent },
+  { name: 'dc-permissions', component: ContainerPermissionsComponent },
   { name: 'dc-plugin', component: PluginComponent },
   { name: 'dc-plugin-actions', component: PluginActions },
   { name: 'dc-set-actions', component: SetActionsComponent },
   { name: 'dc-set-schema', component: SetSchemaComponent },
+  { name: 'dc-technical', component: DataContainerTreeComponent },
   { name: 'dc-tree', component: DataContainerTreeComponent },
 ].concat(dtLib.componentRegistration);
 

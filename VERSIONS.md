@@ -6,6 +6,28 @@
 ### Fixes
 
 ### Deprecations
+
+
+## Version 3.4.0
+### Features
+- add basic `technical-detail` component to `datacontainer.digitaltwins` and `digitaltwin`
+- `datacontainer.digitaltwins`
+  - add data container ajv object fields
+  - add `permissions` component to `DataContainer` and `DigitalTwin`
+  - add advanced sharing dialog including custom `b-mail` body
+  - load dbcp title for `addresses` in text fields
+
+### Fixes
+- `datacontainer.digitaltwins`
+  - fix `schema` / `value` caching and saving
+  - fix list entries permission checks and paging
+  - remove obsolete `under development` tabs
+  - use `deepClone` instead of `JSON.parse(JSON.stringify())` and ignore files
+  - fix translations
+  - use horizontal scrollable tables
+  - fix active tree entries
+- `favorites.vue`
+  - add temporary lindig icon color invert
   
 
 ## Version 3.3.1

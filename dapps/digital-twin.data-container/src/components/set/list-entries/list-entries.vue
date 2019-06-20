@@ -35,96 +35,92 @@
           {{ '_datacontainer.no-permissions.title' | translate }}
         </h3>
       </div>
-      <div class="content"
+      <p class="content"
         v-html="$t('_datacontainer.no-permissions.desc')">
-      </div>
+      </p>
     </div>
     <div class="white-box border-smooth rounded" v-else>
-      <table
-        id="entry-list-table"
-        class="evan-flex-table">
-        <thead>
-          <tr class="text-muted" v-if="itemType === 'object'">
-            <th class="flex-grow-0">#</th>
-            <th class="flex-grow-1"
-              v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)">
-              {{ key }}
-            </th>
-            <th class="flex-grow-0" style="min-width: 65px;"></th>
-          </tr>
-          <tr class="text-muted" v-else>
-            <th class="flex-grow-0">#</th>
-            <th class="flex-grow-1">{{ '_datacontainer.list.data' | translate }}</th>
-            <th class="flex-grow-0" style="min-width: 65px;"></th>
-          </tr>
-        </thead>
+      <div class="table-scroll-container">
+        <table
+          id="entry-list-table"
+          class="evan-table no-wrap w-100">
+          <thead>
+            <tr class="text-muted" v-if="itemType === 'object'">
+              <th
+                style="white-space: nowrap;">
+                #
+              </th>
+              <th
+                v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)"
+                style="min-width: 200px;">
+                {{ key }}
+                <evan-tooltip :placement="'bottom'">
+                  {{ key }}
+                </evan-tooltip>
+              </th>
+              <th style="min-width: 65px;"></th>
+            </tr>
+            <tr class="text-muted" v-else>
+              <th>#</th>
+              <th>{{ '_datacontainer.list.data' | translate }}</th>
+              <th style="min-width: 65px;"></th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr
-            v-for="(listEntry, index) in [ ].concat(dispatcherEntries, listEntries)">
-            <td class="font-weight-semibold flex-grow-0">
-              {{ index + 1}}
-            </td>
-            <template v-if="itemType === 'object'">
-              <td class="flex-grow-1"
-                v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)">
+          <tbody>
+            <tr
+              v-for="(listEntry, index) in [ ].concat(dispatcherEntries, listEntries)">
+              <td class="font-weight-semibold"
+                style="white-space: nowrap;">
+                <span>{{ index + 1}}</span>
+              </td>
+              <template v-if="itemType === 'object'">
+                <td
+                  v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)">
+                  <dc-field
+                    :id="`list-value-${ index }`"
+                    :schema="templateEntry.dataSchema.items.properties[key]"
+                    :control="{ value: listEntry.data[key] }"
+                    :mode="'view'"
+                    :standalone="false">
+                  </dc-field>
+                </td>
+              </template>
+              <td v-else>
                 <dc-field
-                  :id="`list-value-${ index }`"
-                  :schema="templateEntry.dataSchema.items.properties[key]"
-                  :control="{ value: listEntry.data[key] }"
+                  :schema="templateEntry.dataSchema.items"
+                  :control="{ value: listEntry.data }"
                   :mode="'view'"
                   :standalone="false">
                 </dc-field>
               </td>
-            </template>
-            <td class="flex-grow-1"
-              v-else>
-              <dc-field
-                :schema="templateEntry.dataSchema.items"
-                :control="{ value: listEntry.data }"
-                :mode="'view'"
-                :standalone="false">
-              </dc-field>
-            </td>
-            <td
-              class="flex-grow-0"
-              style="min-width: 65px;">
-              <div class="spinner-border spinner-border-sm text-secondary"
-                v-if="listEntry.loading">
-              </div>
-            </td>
-            <!-- <td class="text-primary flex-grow-0"
-              style="white-space: nowrap;">
-              <template
-                id="entry-list-remove"
-                v-if="!saving && templateEntry.value.indexOf(listEntry) !== -1">
-                <i class="mdi mdi-delete clickable"
-                  :disabled="saving"
-                  @click="templateEntry.value.splice(index, 1)">
-                </i>
-              </template>
-            </td> -->
-          </tr>
-        </tbody>
-        <evan-loading v-if="loading"></evan-loading>
-        <div class="text-center mt-3"
-          v-if="contractAddress && !loading">
-          <h5 class="mt-3">
-            <b>
-              {{ '_datacontainer.list.results' | translate }}
-            </b>:
-            {{ offset + templateEntry.value.length }} / {{ maxListentries + templateEntry.value.length }}
-          </h5>
+              <td
+                style="min-width: 65px;">
+                <div class="spinner-border spinner-border-sm text-secondary"
+                  v-if="listEntry.loading">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center my-3">
+        <h5 class="mt-3">
+          <b>
+            {{ '_datacontainer.list.results' | translate }}
+          </b>:
+          {{ offset + templateEntry.value.length }} / {{ maxListentries + templateEntry.value.length }}
+        </h5>
 
-          <button
-            id="entry-list-load-more"
-            type="submit" class="btn btn-rounded btn-outline-secondary mt-3"
-            v-if="offset < maxListentries"
-            @click="loadEntries()">
-            {{ `_datacontainer.list.load-more` | translate }}
-          </button>
-        </div>
-      </table>
+        <evan-loading v-if="loadingEntries"></evan-loading>
+        <button
+          id="entry-list-load-more"
+          type="submit" class="btn btn-rounded btn-outline-secondary mt-3"
+          v-else-if="offset < maxListentries"
+          @click="loadEntries()">
+          {{ `_datacontainer.list.load-more` | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </template>

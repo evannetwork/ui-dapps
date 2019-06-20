@@ -33,6 +33,7 @@ import * as dtLib from '@evan.network/digitaltwin.lib';
 import CreateComponent from './create/create.vue';
 import DetailComponent from './detail/detail/detail.vue';
 import DigitalTwinActionsComponent from './actions/actions.vue';
+import DigitalTwinTechnicalComponent from './detail/technical/technical.vue';
 import EnsActionsComponent from './ens/actions/actions.vue';
 import EnsFieldComponent from './ens/field/field.vue';
 import EnsMapComponent from './ens/map/map.vue';
@@ -50,6 +51,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'dt-ens-field',   component: EnsFieldComponent },
   { name: 'dt-ens-map',     component: EnsMapComponent },
   { name: 'dt-ens-open',    component: EnsOpenComponent },
+  { name: 'dt-technical',   component: DigitalTwinTechnicalComponent },
 ]
 .concat(dataContainerAPI.components)
 .concat(dtLib.componentRegistration);

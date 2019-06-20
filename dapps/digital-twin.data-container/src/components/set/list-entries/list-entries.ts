@@ -64,8 +64,9 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
   initialized = false;
+  loading = true;
+  loadingEntries = false;
 
   /**
    * List of existing list entries, when an real container was opened
@@ -129,16 +130,21 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
           ) {
           // reset values
           this.count = 10;
+          this.initialized = true;
+          this.listEntries = [ ];
+          this.loading = true;
           this.maxListentries = 0;
           this.offset = 0;
-          this.listEntries = [ ];
-          this.initialized = true;
 
           await this.loadEntries();
         }
 
         beforeSaving = this.saving;
+      } else {
+        this.permitted = false;
       }
+
+      this.loading = false;
     });
   }
 
@@ -147,7 +153,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
    */
   async loadEntries() {
     if (this.permitted) {
-      this.loading = true;
+      this.loadingEntries = true;
 
       try {
         const runtime = utils.getRuntime(this);
@@ -179,7 +185,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
       }
     }
 
-    this.loading = false;
+    this.loadingEntries = false;
   }
 
   /**

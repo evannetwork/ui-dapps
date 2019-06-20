@@ -43,15 +43,22 @@ dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     // set the digital twin instance
     const runtime = utils.getRuntime(instance.runtime);
-    const container = utils.getContainer(runtime, data.address);
 
     // share the properties and send the b-mail
-    await container.shareProperties([ data.shareConfig ]);
-    await runtime.mailbox.sendMail(
-      data.bMailContent,
-      runtime.activeAccount,
-      data.shareConfig.accountId
-    );
+    await utils
+      .getContainer(runtime, data.address)
+      .shareProperties(data.shareConfigs);
+  })
+  // send b-mails
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = utils.getRuntime(instance.runtime);
+    await Promise.all(data.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
+      await runtime.mailbox.sendMail(
+        data.bMailContent,
+        runtime.activeAccount,
+        shareConfig.accountId
+      );
+    }));
   });
 
 export default dispatcher;

@@ -41,7 +41,7 @@
         @blur="control.setDirty()">
     </div>
     <div v-else>
-      <span :id="id" class="text-primary">
+      <span :id="id">
         {{ control.value }}
       </span>
     </div>

@@ -26,6 +26,7 @@
 */
 
 import * as bcc from '@evan.network/api-blockchain-core';
+import { deepEqual, cloneDeep } from '@evan.network/ui';
 import { utils } from '@evan.network/digitaltwin.lib';
 
 import * as fieldUtils from './fields';
@@ -47,7 +48,7 @@ export function ensureValues(address: string, entry: UIContainerTemplateProperty
   const type = fieldUtils.getType(entry.dataSchema);
 
   entry.edit = (<any>entry.edit || {
-    dataSchema: bcc.lodash.cloneDeep(entry.dataSchema)
+    dataSchema: cloneDeep(bcc.lodash, entry.dataSchema, true)
   });
 
   // set default value
@@ -61,7 +62,7 @@ export function ensureValues(address: string, entry: UIContainerTemplateProperty
       break;
     }
     case 'object': {
-      entry.edit.value = entry.edit.value || bcc.lodash.cloneDeep(entry.value);
+      entry.edit.value = entry.edit.value || cloneDeep(bcc.lodash, entry.value, true);
       break;
     }
     case 'string': {
@@ -94,7 +95,7 @@ export function ensureValues(address: string, entry: UIContainerTemplateProperty
  *                                                    resetted
  */
 export function resetSchema(entry: UIContainerTemplateProperty) {
-  entry.edit.dataSchema = bcc.lodash.cloneDeep(entry.dataSchema);
+  entry.edit.dataSchema = cloneDeep(bcc.lodash, entry.dataSchema, true);
 }
 
 /**
@@ -113,7 +114,7 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
 
   switch (type) {
     case 'object': {
-      entry.edit.value = bcc.lodash.cloneDeep(entry.value);
+      entry.edit.value = cloneDeep(bcc.lodash, entry.value, true);
       break;
     }
     case 'string': {
@@ -144,7 +145,7 @@ export function resetValue(vueInstance: any, entry: UIContainerTemplateProperty)
  *                                                    should be used.
  */
 export function saveSchema(entry: UIContainerTemplateProperty) {
-  entry.dataSchema = bcc.lodash.cloneDeep(entry.edit.dataSchema);
+  entry.dataSchema = cloneDeep(bcc.lodash, entry.edit.dataSchema, true);
 }
 
 /**
@@ -173,7 +174,7 @@ export function saveValue(address: string, entry: UIContainerTemplateProperty) {
       break;
     }
     case 'object': {
-      entry.value = bcc.lodash.cloneDeep(entry.edit.value);
+      entry.value = cloneDeep(bcc.lodash, entry.edit.value, true);
       break;
     }
     default: {

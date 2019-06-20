@@ -30,13 +30,13 @@ const i18n: any = {
   "breadcrumbs": {
     "containerlink": "Plugin verknüpfen",
     "create-plugin": "Plugin erstellen",
-    "datacontainer": "Daten Container",
+    "datacontainer": "Plugin",
     "datacontainer.digitaltwin": "Plugin",
     "dc-changes": "Historie",
     "dc-create": "Plugin hinzufügen",
-    "dc-permissions": "Freigaben",
-    "dc-sets": "Daten-Sets",
-    "dc-sets-add": "Daten-Set hinzufügen",
+    "dc-permissions": "Berechtigungen",
+    "dc-sets": "Datenbereiche",
+    "dc-sets-add": "Datenbereich hinzufügen",
     "dc-technical": "Technische Details",
     "digitaltwin": "Digitaler Zwilling",
     "digitaltwins": "Digitale Zwillinge",
@@ -44,10 +44,11 @@ const i18n: any = {
     "dt-create": "Digitalen Zwilling Erstellen",
     "dt-detail": "Details",
     "dt-map": "An Domainnamen binden",
+    "dt-permissions": "Berechtigungen",
     "dt-plugins": "Plugin Übersicht",
     "dt-technical": "Technische Details",
     "entry-changes": "Historie",
-    "entry-permissions": "Freigaben",
+    "entry-permissions": "Berechtigungen",
     "entry-schema": "Schema",
     "entry-values": "Daten",
     "list-entries": "Listeneinträge",
@@ -56,6 +57,7 @@ const i18n: any = {
     "open": "Öffnen",
     "plugin": "Plugin",
     "plugin-create": "Plugin Erstellen",
+    "plugin-permissions": "Berechtigungen",
     "verifications": "Verifizierungen"
   }
 }

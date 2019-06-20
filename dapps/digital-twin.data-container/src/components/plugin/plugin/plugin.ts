@@ -75,12 +75,12 @@ export default class PluginComponent extends mixins(EvanComponent) {
   async created() {
     this.pluginName = this.$route.params.containerAddress;
 
-    this.tabs = [ 'dc-sets', 'dc-permissions', 'dc-changes' ]
-      .map(urlKey => ({
-        id: `tab-${ urlKey }`,
-        href: `${ (<any>this).dapp.fullUrl }/${ this.pluginName }/${ urlKey }`,
-        text: `_digitaltwins.breadcrumbs.${ urlKey }`
-      }));
+    // this.tabs = [ 'dc-sets', 'plugin-permissions' ]
+    //   .map(urlKey => ({
+    //     id: `tab-${ urlKey }`,
+    //     href: `${ (<any>this).dapp.fullUrl }/${ this.pluginName }/${ urlKey }`,
+    //     text: `_digitaltwins.breadcrumbs.${ urlKey }`
+    //   }));
 
     await UiContainer.watch(this, async (uiContainer: UiContainer) => {
       this.description = uiContainer.description;

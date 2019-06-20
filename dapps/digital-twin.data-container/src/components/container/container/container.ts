@@ -89,7 +89,7 @@ export default class ContainerComponent extends mixins(EvanComponent) {
    */
   async created() {
     this.containerAddress = this.$route.params.containerAddress;
-    this.tabs = [ 'dc-sets', 'dc-technical', 'dc-permissions', 'dc-changes' ]
+    this.tabs = [ 'dc-sets', 'dc-technical', 'dc-permissions', ]
       .map(urlKey => ({
         id: `tab-${ urlKey }`,
         href: `${ (<any>this).dapp.fullUrl }/${ this.containerAddress }/${ urlKey }`,

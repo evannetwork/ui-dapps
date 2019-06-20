@@ -68,7 +68,7 @@ export function getType(subSchema: any, firstLevel = true): string {
  * @param      {any}  subSchema  properties subSchema
  * @param      {any}  type       field type (string, object, array, number, files)
  */
-export function defaultValue(subSchema: any) {
+export function defaultValue(subSchema: any, schemaType = 'entry') {
   const type = getType(subSchema);
 
   switch (type) {
@@ -77,15 +77,19 @@ export function defaultValue(subSchema: any) {
       return [ ];
     }
     case 'object': {
-      const defaultReturn = { };
+      if (schemaType === 'entry') {
+        const defaultReturn = { };
 
-      Object.keys(subSchema).forEach(key => {
-        if (subSchema[key].default) {
-          defaultReturn[key] = subSchema[key].default;
-        }
-      });
+        Object.keys(subSchema).forEach(key => {
+          if (subSchema[key] && subSchema[key].default) {
+            defaultReturn[key] = subSchema[key].default;
+          }
+        });
 
-      return defaultReturn;
+        return defaultReturn;
+      } else {
+        return typeof subSchema.default === 'object' ? subSchema.default : { };
+      }
     }
     case 'string': {
       return subSchema.default || '';
@@ -158,6 +162,12 @@ export function validateField(
         valid = true;
         break;
       }
+      case 'object': {
+        if (typeof field.value === 'object') {
+          valid = true;
+        }
+        break;
+      }
     }
 
     // if valid, directly return it's valid
@@ -213,6 +223,13 @@ export function parseFieldValue(
       })
 
       return { files: converted };
+    }
+    case 'object': {
+      try {
+        return JSON.parse(value);
+      } catch (ex) {
+        return value;
+      }
     }
     default: {
       return value;

@@ -120,7 +120,7 @@
           @click="createDigitalTwin()"
           :disabled="!createForm.isValid">
           {{ `_digitaltwins.createForm.create` | translate }}
-          <i class="mdi mdi-content-save label"></i>
+          <i class="mdi mdi-arrow-right label"></i>
         </button>
       </template>
     </evan-modal>

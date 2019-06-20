@@ -76,7 +76,8 @@
               </button>
               <button :class="buttonClasses.tertiar"
                 id="container-share"
-                @click="reactiveRefs.dcPermissions.openShareDialog(); closeDropdown();">
+                v-if="displayMode !== 'buttons'"
+                @click="evanNavigate(`digitaltwins.${ dapp.domainName }${ digitalTwinAddress ? ('/digitaltwin.' + dapp.domainName + '/' + digitalTwinAddress) : '' }/datacontainer.digitaltwin.evan/${ containerAddress }/dc-permissions`, dapp.rootEns); closeDropdown();">
                 <div class="spinner-border spinner-border-sm"
                   v-if="sharing">
                 </div>
@@ -164,11 +165,6 @@
         :digitalTwinAddress="digitalTwinAddress"
         @init="$set(reactiveRefs, 'dtContainerLink', $event)">
       </dc-link>
-      <dc-permissions
-        :containerAddress="containerAddress"
-        :digitalTwinAddress="digitalTwinAddress"
-        @init="$set(reactiveRefs, 'dcPermissions', $event)">
-      </dc-permissions>
       <dc-new-entry
         :template="plugin.template"
         @init="$set(reactiveRefs, 'dcNewEntry', $event)"

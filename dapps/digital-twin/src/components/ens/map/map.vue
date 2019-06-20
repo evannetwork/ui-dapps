@@ -56,6 +56,7 @@
                 v-if="lookupModalScope === 'available'"
                 @click="mapEns()">
                 {{ `_digitaltwins.map-ens.modal.${ lookupModalScope }.action` | translate }}
+                <i class="mdi mdi-arrow-right label ml-3"></i>
               </button>
             </template>
           </evan-modal>

@@ -27,7 +27,9 @@
 // import evan libs
 import { RouteRegistrationInterface, UnderDevelopmentComponent } from '@evan.network/ui-vue-core';
 
+import ContainerPermissionsComponent from './components/container/permissions/permissions.vue';
 import ContainerPluginSwitchComponent from './components/container/container-plugin-switch/container-plugin-switch.vue';
+import ContainerTechnicalComponent from './components/container/technical/technical.vue';
 import CreateComponent from './components/create/create.vue';
 import DataSetComponent from './components/set/set/set.vue';
 import DataSetsComponent from './components/set/sets/sets.vue';
@@ -48,11 +50,12 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     component: ContainerPluginSwitchComponent,
     children: [
       { redirect: { path: 'dc-sets' }, path: '', },
-      { name: 'dc-changes',     component: UnderDevelopmentComponent, path: 'dc-changes', },
-      { name: 'dc-permissions', component: UnderDevelopmentComponent, path: 'dc-permissions', },
-      { name: 'dc-sets',        component: DataSetsComponent, path: 'dc-sets', },
-      { name: 'dc-sets-add',    component: NewDataSetComponent, path: 'dc-sets-add', },
-      { name: 'dc-technical',   component: UnderDevelopmentComponent, path: 'dc-technical', },
+      { name: 'dc-changes',         component: UnderDevelopmentComponent,     path: 'dc-changes', },
+      { name: 'dc-permissions',     component: ContainerPermissionsComponent, path: 'dc-permissions', },
+      { name: 'plugin-permissions', component: UnderDevelopmentComponent,     path: 'plugin-permissions', },
+      { name: 'dc-sets',            component: DataSetsComponent,             path: 'dc-sets', },
+      { name: 'dc-sets-add',        component: NewDataSetComponent,           path: 'dc-sets-add', },
+      { name: 'dc-technical',       component: ContainerTechnicalComponent,   path: 'dc-technical', },
     ]
   },
   {
@@ -60,11 +63,11 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     path: ':containerAddress/data-set/:entryName',
     component: DataSetComponent,
     children: [
-      { name: 'entry-changes',     component: UnderDevelopmentComponent, path: 'entry-changes', },
-      { name: 'entry-permissions', component: UnderDevelopmentComponent, path: 'entry-permissions', },
-      { name: 'entry-schema',      component: SetSchemaComponent,        path: 'entry-schema', },
-      { name: 'entry-values',      component: SetSchemaComponent,        path: 'entry-values', },
-      { name: 'list-entries',      component: DcListEntriesComponent,    path: 'list-entries', },
+      { name: 'entry-changes',     component: UnderDevelopmentComponent,     path: 'entry-changes', },
+      { name: 'entry-permissions', component: ContainerPermissionsComponent, path: 'entry-permissions', },
+      { name: 'entry-schema',      component: SetSchemaComponent,            path: 'entry-schema', },
+      { name: 'entry-values',      component: SetSchemaComponent,            path: 'entry-values', },
+      { name: 'list-entries',      component: DcListEntriesComponent,        path: 'list-entries', },
     ]
   },
 ];

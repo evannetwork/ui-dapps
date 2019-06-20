@@ -191,7 +191,7 @@ export default class FieldComponent extends mixins(EvanComponent) {
 
     if (this.address.startsWith('0x') || this.address === 'dc-create') {
       if (this.type === 'array') {
-        this.fieldForm.value.value = fieldUtils.defaultValue(this.entry.dataSchema.items);
+        this.fieldForm.value.value = fieldUtils.defaultValue(this.entry.dataSchema.items, 'field');
       } else {
         this.entry.value = value;
         this.fieldForm.value.value = this.entry.value;

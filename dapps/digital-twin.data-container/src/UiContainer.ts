@@ -31,7 +31,7 @@ import { Prop } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { Dispatcher, DispatcherInstance, cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
@@ -43,6 +43,11 @@ import ContainerCache from './container-cache';
  * UI Container instances serated by addresses
  */
 export const containers: any = { };
+
+/**
+ * Share configs for containers
+ */
+export const shareConfigs: any = { };
 
 /**
  * DigitalTwin Container wrapper for loading.
@@ -77,7 +82,7 @@ export default class UiContainer {
    * dispatcher infos
    */
   deletingData: Array<any>;
-  isContainer: any;
+  isContainer: boolean;
   isDeleting: boolean;
   isSaving: boolean;
   isSharing: boolean;
@@ -91,6 +96,9 @@ export default class UiContainer {
   description: any;
   owner: string;
   permissions: any;
+  // plugin origin, nothing was changed
+  pluginOrigin: any;
+  // plugin definition including cached and dispatcher data
   plugin: any;
   template: any;
 
@@ -117,7 +125,7 @@ export default class UiContainer {
     const uiContainer = new UiContainer(vueInstance, watch);
 
     // run plugin update only for this watch function
-    watch && uiContainer.address && (await uiContainer.runPluginUpdate(false, [ watch ]));
+    watch && uiContainer.address && (await uiContainer.runPluginUpdate(false, false, [ watch ]));
 
     return uiContainer;
   }
@@ -139,7 +147,7 @@ export default class UiContainer {
 
       uiContainer.address = address;
       uiContainer.runtime = utils.getRuntime(vueInstance);
-      uiContainer.dapp = JSON.parse(JSON.stringify(vueInstance.dapp));
+      uiContainer.dapp = cloneDeep(bcc.lodash, vueInstance.dapp, true);
       uiContainer.containerCache = new ContainerCache(uiContainer.runtime.activeAccount);
       uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(uiContainer.dapp);
       uiContainer.$i18n = vueInstance.$i18n;
@@ -174,9 +182,15 @@ export default class UiContainer {
    * loads the latest data and calls the callback
    *
    * @param      {boolean}          reload          force updateFunc data reload
+   * @param      {boolean}          cacheChange     cache has changed, so recalculate original
+   *                                                plugin with cached values
    * @param      {Array<Function>}  updateWatchers  update functions
    */
-  async runPluginUpdate(reload = false, updateWatchers = this.updateWatchers) {
+  async runPluginUpdate(
+    reload = false,
+    cacheChange = false,
+    updateWatchers = this.updateWatchers
+  ) {
     const [ deletingData, savingData, sharingData ] = await Promise.all([
       this.getDeleteData(),
       this.getSavingData(),
@@ -190,8 +204,14 @@ export default class UiContainer {
     await this.loadPlugin(
       reload ||
       (this.isSaving && !isSaving) ||
-      (this.isSharing && !isSharing)
+      (this.isSharing && !isSharing),
+      cacheChange
     );
+
+    // if sharing has finished, clear the permission cache
+    if (this.isSharing && !isSharing) {
+      delete shareConfigs[this.address];
+    }
 
     // update latest saving status
     this.isSaving = isSaving;
@@ -218,7 +238,7 @@ export default class UiContainer {
     }
 
     // run all update functions
-    await this.triggerUpdateFunctions(updateWatchers, reload);
+    await this.triggerUpdateFunctions(updateWatchers, reload, cacheChange);
   };
 
   /**
@@ -226,10 +246,15 @@ export default class UiContainer {
    *
    * @param      {Array<Function>}  updateWatchers  update functions
    * @param      {boolean}          reload          suggest reload of the component
+   * @param      {boolean}          cacheChange     chache was changed, reload ui
    */
-  async triggerUpdateFunctions(updateWatchers = this.updateWatchers, reload = false) {
+  async triggerUpdateFunctions(
+    updateWatchers = this.updateWatchers,
+    reload = false,
+    cacheChange = false
+  ) {
     await Promise.all(updateWatchers.map((updateFunc: Function) =>
-      updateFunc(this, this.savingData, this.sharingData, reload)
+      updateFunc(this, this.savingData, this.sharingData, reload, cacheChange)
     ));
   }
 
@@ -238,8 +263,8 @@ export default class UiContainer {
    */
   bindWatchers() {
     // watch for cache updates
-    this.clearWatchers.push(this.containerCache.watch(this.address, () =>
-      this.runPluginUpdate(true)
+    this.clearWatchers.push(this.containerCache.watch(this.address, async (event: any) =>
+      this.runPluginUpdate(false, true)
     ));
     // watch for save updates
     this.clearWatchers.push(this.isContainer ?
@@ -256,10 +281,14 @@ export default class UiContainer {
   /**
    * Returns the plugin definition for a container or plugin.
    *
-   * @param      {string}      address  container address / plugin name
+   * @param      {boolean}  reload      force plugin reload
+   * @param      {boolean}  resetCache  use original plugin and apply latest cached changes
    */
-  async loadPlugin(reload = false) {
-    if (!reload && this.plugin) {
+  async loadPlugin(reload = false, resetCache = false) {
+    // set reload param, so the following logic can work only on this flag
+    if (!this.plugin) {
+      reload = true;
+    } else if (!reload && !resetCache) {
       return this.plugin;
     }
 
@@ -269,7 +298,7 @@ export default class UiContainer {
         let plugin, permissions, owner, error;
 
         try {
-          // check if it was already loaded before
+          // load dispatcher and cache data, so it can be merged with the plugin definition
           const savingData = await this.getSavingData();
           const cached: any = await this.containerCache.get(this.address) || {
             template: {
@@ -279,17 +308,30 @@ export default class UiContainer {
 
           // load the original container data
           const container = utils.getContainer(this.runtime, this.address);
-          if (this.isContainer) {
-            // get the container instance and load the template including all values
-            plugin = await container.toPlugin();
-            // else try to laod a plugin from profile
+
+          // if the plugin should be reloaded, force reload, else use original plugin without hard reloading
+          if (reload) {
+            if (this.isContainer) {
+              // get the container instance and load the template including all values
+              plugin = await container.toPlugin();
+              // else try to laod a plugin from profile
+            } else {
+              // only work on a copy! loadForAccount is only triggered at startup, after this, the
+              // same object references will be loaded
+              plugin = cloneDeep(
+                bcc.lodash,
+                await bcc.Container.getContainerPlugin(
+                  this.runtime.profile,
+                  this.address
+                ),
+                true
+              );
+            }
+
+            // set plugin origin, so cache changes can be applied faster in futurer
+            this.pluginOrigin = cloneDeep(bcc.lodash, plugin, true);
           } else {
-            // only work on a copy! loadForAccount is only triggered at startup, after this, the
-            // same object references will be loaded
-            plugin = JSON.parse(JSON.stringify(await bcc.Container.getContainerPlugin(
-              this.runtime.profile,
-              this.address
-            )));
+            plugin = cloneDeep(bcc.lodash, this.pluginOrigin, true);
           }
 
           // merge container cache with dispatcher data
@@ -314,24 +356,30 @@ export default class UiContainer {
             }
           });
 
-          // load the owner
-          if (this.address.startsWith('0x')) {
-            owner = await container.getOwner();
-            permissions = await container.getContainerShareConfigForAccount(
-                this.runtime.activeAccount);
+          // for initial load or reload, load latest permission definitions
+          if (reload) {
+            // load the owner
+            if (this.isContainer) {
+              owner = await container.getOwner();
+              permissions = await container.getContainerShareConfigForAccount(
+                  this.runtime.activeAccount);
+            } else {
+              owner = this.runtime.activeAccount;
+              permissions = Object.keys(plugin.template.properties)
+            }
+
+            permissions.read = permissions.read || [ ];
+            permissions.readWrite = permissions.readWrite || [ ];
+
+            // set custom translation
+            const customTranslation = { _digitaltwins: { breadcrumbs: { } } };
+            customTranslation._digitaltwins.breadcrumbs[this.address] =
+              plugin.description.name;
+            this.$i18n.add(this.$i18n.locale(), customTranslation);
           } else {
-            owner = this.runtime.activeAccount;
-            permissions = Object.keys(plugin.template.properties)
+            owner = this.owner;
+            permissions = this.permissions;
           }
-
-          permissions.read = permissions.read || [ ];
-          permissions.readWrite = permissions.readWrite || [ ];
-
-          // set custom translation
-          const customTranslation = { _digitaltwins: { breadcrumbs: { } } };
-          customTranslation._digitaltwins.breadcrumbs[this.address] =
-            plugin.description.name;
-          this.$i18n.add(this.$i18n.locale(), customTranslation);
         } catch (ex) {
           error = ex;
         }
@@ -393,13 +441,13 @@ export default class UiContainer {
    * Is currently a dispatcher running for this container / plugin?
    */
   async getSharingData() {
-    if (this.address.startsWith('0x')) {
+    if (this.isContainer) {
       return (await dispatchers.shareDispatcher.getInstances(this.runtime))
         .filter(instance => instance.data.address === this.address)
         .map(instance => instance.data);
     } else {
       return (await dispatchers.pluginShareDispatcher.getInstances(this.runtime))
-        .filter(instance => instance.data.description.name === this.address)
+        .filter(instance => instance.data.address === this.address)
         .map(instance => instance.data);
     }
   }
@@ -408,7 +456,7 @@ export default class UiContainer {
    * Is currently a dispatcher running for this container / plugin?
    */
   async getDeleteData() {
-    if (this.address.startsWith('0x')) {
+    if (this.isContainer) {
       return [ ];
     } else {
       return (await dispatchers.pluginRemoveDispatcher.getInstances(this.runtime))
@@ -431,7 +479,7 @@ export default class UiContainer {
    */
   async resetEntry(entryName: string) {
     // do not delete the original one, only clear it within a copy and set the cache
-    const pluginCopy = JSON.parse(JSON.stringify(this.plugin));
+    const pluginCopy = cloneDeep(bcc.lodash, this.plugin, true);
     delete pluginCopy.template.properties[entryName];
 
     // reset the cache
@@ -468,5 +516,17 @@ export default class UiContainer {
         entriesToSave,
       });
     }
+  }
+
+  /**
+   * Return cached container share configs.
+   */
+  async getContainerShareConfigs() {
+    if (!shareConfigs[this.address]) {
+      shareConfigs[this.address] = (utils.getContainer(this.runtime, this.address))
+        .getContainerShareConfigs();
+    }
+
+    return await shareConfigs[this.address];
   }
 }

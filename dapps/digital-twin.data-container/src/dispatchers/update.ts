@@ -28,7 +28,7 @@
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { Dispatcher, DispatcherInstance, deepEqual } from '@evan.network/ui';
+import { Dispatcher, DispatcherInstance, deepEqual, cloneDeep } from '@evan.network/ui';
 import { utils } from '@evan.network/digitaltwin.lib';
 
 import ContainerCache from '../container-cache';
@@ -86,7 +86,7 @@ dispatcher
     // copy the entries to save, so the iteration will not be affected by removing entries to save
     // from the data object => entries will be removed and the data will be persisted, after the
     // synchronization of this entry was saved successfull, so the user won't do this twice
-    const entriesToSave = JSON.parse(JSON.stringify(data.entriesToSave));
+    const entriesToSave = cloneDeep(bcc.lodash, data.entriesToSave, true);
     await Promise.all(entriesToSave.map(async (entryKey: string, index: number) => {
       if (data.plugin.template.properties[entryKey].type === 'list') {
         await container.addListEntries(entryKey, data.plugin.template.properties[entryKey].value);

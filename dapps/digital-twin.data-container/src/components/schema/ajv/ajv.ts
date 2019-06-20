@@ -31,6 +31,7 @@ import { Prop } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
@@ -85,6 +86,7 @@ export default class AJVComponent extends mixins(EvanComponent) {
     'number',
     'files',
     'boolean',
+    'object',
   ];
 
   /**
@@ -133,9 +135,14 @@ export default class AJVComponent extends mixins(EvanComponent) {
       const type = form.type.value;
 
       // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
-      this.properties[name] = JSON.parse(JSON.stringify(
-        bcc.Container.defaultSchemas[`${ type }Entry`]
-      ));
+      this.properties[name] = cloneDeep(bcc.lodash,
+        bcc.Container.defaultSchemas[`${ type }Entry`], true);
+
+      // if a nested object is used, apply the addiontalProperties parameter and apply the full
+      // schema without filtering
+      if (type === 'object') {
+        this.properties[name].additionalProperties = true;
+      }
 
       // get the value
       this.properties[name].default = fieldUtils.parseFieldValue(
@@ -207,13 +214,16 @@ export default class AJVComponent extends mixins(EvanComponent) {
           vueInstance.checkFormValidity();
 
           // force value evaluation
-          form.value.value = fieldUtils.defaultValue({ type: this.value, default: schema.default });
+          form.value.value = fieldUtils.defaultValue(
+            { type: this.value, default: schema.default },
+            'field'
+          );
 
           return this.value.trim().length !== 0;
         }
       },
       value: {
-        value: fieldUtils.defaultValue(schema),
+        value: fieldUtils.defaultValue(schema, 'field'),
         validate: function(vueInstance: AJVComponent, form: FieldFormInterface) {
           // trigger form validation
           vueInstance.checkFormValidity();

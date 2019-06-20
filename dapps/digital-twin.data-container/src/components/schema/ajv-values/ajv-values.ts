@@ -107,7 +107,7 @@ export default class AJVValuesComponent extends mixins(EvanComponent) {
       let type = this.types[schemaKey] = fieldUtils.getType(this.properties[schemaKey]);
 
       controls[schemaKey] = {
-        value: this.value[schemaKey] || fieldUtils.defaultValue(this.properties[schemaKey]),
+        value: this.value[schemaKey] || fieldUtils.defaultValue(this.properties[schemaKey], 'field'),
         validate: function(vueInstance: AJVValuesComponent, form: FieldFormInterface) {
           // update components isValid flag so it will be reactive
           vueInstance.$nextTick(() => {

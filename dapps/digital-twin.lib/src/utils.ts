@@ -25,8 +25,9 @@
   https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { cloneDeep } from '@evan.network/ui';
 
 import dispatchers from './dispatchers';
 
@@ -167,9 +168,11 @@ export function getLastOpenedTwins() {
  * @param      {bccRuntime}  runtime  bcc runtime
  */
 export async function getMyPlugins(runtime: bcc.Runtime) {
-  const plugins: any = JSON.parse(JSON.stringify(
-    await bcc.Container.getContainerPlugins(runtime.profile)
-  ));
+  const plugins: any = cloneDeep(
+    bcc.lodash,
+    await bcc.Container.getContainerPlugins(runtime.profile),
+    true,
+  );
 
   // watch for new and sharing containers
   const deleting = await dispatchers.dc.pluginRemoveDispatcher.getInstances(runtime);
@@ -208,7 +211,7 @@ export async function getMyPlugins(runtime: bcc.Runtime) {
 export function getRuntime(runtime: any): bcc.Runtime {
   runtime = runtime.getRuntime ? runtime.getRuntime() : runtime;
 
-  const nameResolverConfig = JSON.parse(JSON.stringify(dappBrowser.config.nameResolver));
+  const nameResolverConfig = cloneDeep(bcc.lodash, dappBrowser.config.nameResolver, true);
   // set the custom ens contract address
   nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
   nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
