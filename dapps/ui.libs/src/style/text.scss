@@ -69,20 +69,10 @@
 
     text-align: justify;
 
-    &.line-1 {
-      max-height: 63px;
-    }
-
-    &.line-2 {
-      max-height: 42px;
-    }
-
-    &.line-3 {
-      max-height: 63px;
-    }
-
-    &.line-4 {
-      max-height: 84px;
+    @for $i from 1 through 20 {
+      &.line-#{$i} {
+        max-height: #{ $i * 21 }px;
+      }
     }
   }
 
