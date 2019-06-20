@@ -31,7 +31,7 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { deepEqual } from '@evan.network/ui';
+import { deepEqual, cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
@@ -135,9 +135,11 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
       if (this.entryForm.type.value === 'array') {
         // set the default schema for arrayType
         // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
-        entry.dataSchema =  JSON.parse(JSON.stringify(
-          bcc.Container.defaultSchemas[`${ this.entryForm.arrayType.value }${ entryType }`]
-        ));
+        entry.dataSchema = cloneDeep(
+          bcc.lodash,
+          bcc.Container.defaultSchemas[`${ this.entryForm.arrayType.value }${ entryType }`],
+          true
+        );
 
         // add the items schema, including the array type, will be defined only ontime, at entry
         // creation
@@ -147,9 +149,11 @@ export default class NewEntryComponent extends mixins(EvanComponent) {
       } else {
         // set the default schema
         // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
-        entry.dataSchema = JSON.parse(JSON.stringify(
-          bcc.Container.defaultSchemas[`${ this.entryForm.type.value }${ entryType }`]
-        ));
+        entry.dataSchema = cloneDeep(
+          bcc.lodash,
+          bcc.Container.defaultSchemas[`${ this.entryForm.type.value }${ entryType }`],
+          true,
+        );
       }
 
       // add properties and empty value object directly, so the vue listeners will work correctly in

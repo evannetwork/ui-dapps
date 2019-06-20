@@ -25,10 +25,11 @@
   https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { deepEqual, cloneDeep } from '@evan.network/ui';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
 
@@ -51,7 +52,7 @@ dispatcher
 
     // copy original template and clear runtime propert variables
     const allowedProperties = [ 'dataSchema', 'type', '$comment', 'permissions' ];
-    data.template = JSON.parse(JSON.stringify(data.template));
+    data.template = cloneDeep(bcc.lodash, data.template, true);
     Object.keys(data.template.properties).forEach(property => {
       Object.keys(data.template.properties[property]).forEach(key => {
         if (allowedProperties.indexOf(key) === -1) {

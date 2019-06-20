@@ -31,6 +31,7 @@ import { Prop } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
@@ -134,9 +135,8 @@ export default class AJVComponent extends mixins(EvanComponent) {
       const type = form.type.value;
 
       // !IMPORTANT!: make a copy of the defaultSchema, else we will work on cross references
-      this.properties[name] = JSON.parse(JSON.stringify(
-        bcc.Container.defaultSchemas[`${ type }Entry`]
-      ));
+      this.properties[name] = cloneDeep(bcc.lodash,
+        bcc.Container.defaultSchemas[`${ type }Entry`], true);
 
       // if a nested object is used, apply the addiontalProperties parameter and apply the full
       // schema without filtering

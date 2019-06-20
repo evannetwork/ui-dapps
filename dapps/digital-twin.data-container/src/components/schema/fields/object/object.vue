@@ -49,8 +49,11 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
-      <span :id="id" v-else>
+      <span class="overflow-multiline line-3" :id="id" v-else>
         {{ textValue }}
+        <evan-tooltip :placement="'bottom'">
+          {{ textValue }}
+        </evan-tooltip>
       </span>
     </div>
   </div>

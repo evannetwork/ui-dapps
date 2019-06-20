@@ -36,7 +36,7 @@ const i18n: any = {
       "errors": {
         "missing-max": "nicht spezifiziert",
         "missing-min": "nicht spezifiziert",
-        "text": "Der angegebene Wert muss vom Typ \"{typ}\" sein! (min: {min}, max: {max})"
+        "text": "Der angegebene Wert muss vom Typ \"{typ}\" sein. (min: {min}, max: {max})"
       },
       "files-no-default": "Felder vom Typ Datei können keine Standardwerte enthalten.",
       "max": {
@@ -45,15 +45,15 @@ const i18n: any = {
         "title": "Max."
       },
       "min": {
-        "desc": "Minimalwert (leer lassen um es als Pflichtfeld zu deaktivieren)",
+        "desc": "Minimalwert (leer lassen, um es als Pflichtfeld zu deaktivieren)",
         "error": "Der Minimalwert muss immer kleiner oder gleich dem Maximalwert sein.",
         "title": "Min."
       },
       "name": {
         "desc": "Bezeichung des Feldes",
         "error": {
-          "empty": "Bitte geben Sie einen Namen ein!",
-          "exists": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht!"
+          "empty": "Bitte geben Sie einen Namen ein.",
+          "exists": "Bitte geben Sie einen Namen an, der nicht einem bestehenden Feld entspricht."
         },
         "title": "Feldname"
       },
@@ -75,7 +75,7 @@ const i18n: any = {
       },
       "value": {
         "desc": "vorgegebener Wert des Feldes",
-        "error": "Bitte geben Sie einen Wert des korrekten Typs an!",
+        "error": "Bitte geben Sie einen Wert des korrekten Typs an.",
         "title": "Standardwert"
       }
     },
@@ -89,26 +89,26 @@ const i18n: any = {
     },
     "create-question": {
       "action": "Hinzufügen",
-      "desc": "Haben Sie alle Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Konfigurationen der verschiedenen Datenbereiche weiterhin anpassen.",
+      "desc": "Haben Sie alle Daten korrekt konfiguriert und möchten Sie fortfahren? Nach der Erstellung lassen sich die Daten-Konfiguration der verschiedenen Datenbereiche weiterhin anpassen.",
       "title": "Plugin hinzufügen"
     },
     "createForm": {
       "add-plugin": "Plugin hinzufügen",
       "back": "Zurück",
       "base-plugin": "Basis-Plugin",
-      "container-configuration": "Daten Konfiguration",
+      "container-configuration": "Daten-Konfiguration",
       "continue": "Weiter",
       "create": "Erstellen",
       "create-plugin": "Alleinstehendes Plugin erstellen",
       "edit-dbcp-hint": "Falsches Plugin ausgewählt? Ändern Sie es hier.",
       "empty-plugins": "Sie haben noch keine Plugins erstellt, die in diesen Digitalen Zwilling hinzugefügt werden können.",
-      "finish": "Konfiguration abschließen",
+      "finish": "Daten-Konfiguration abschließen",
       "general": "Generelle Informationen",
       "import-error": "Es wurde versucht, ein ungültiges Plugin zu importieren.",
       "import-plugin-1": "Nutzen Sie dieses Feld, um exportierte Plugins zu importieren...",
       "import-plugin-2": "Ziehen Sie Ihre exportierten Plugins hierher, <br>oder klicken Sie zum Durchsuchen",
       "plugin": {
-        "desc": "Konfiguration des neuen Plugins",
+        "desc": "Daten-Konfiguration des neuen Plugins",
         "title": "Plugin-Typ"
       },
       "plugin-select": "Plugin-Auswahl",
@@ -122,7 +122,7 @@ const i18n: any = {
       },
       "name": {
         "desc": "Name",
-        "error": "Bitte geben Sie einen Namen an!",
+        "error": "Bitte geben Sie einen Namen an.",
         "title": "Name"
       }
     },
@@ -160,7 +160,7 @@ const i18n: any = {
       },
       "value": {
         "desc": "Wert des Feldes",
-        "error": "Bitte geben Sie einen korrekten Wert an!",
+        "error": "Bitte geben Sie einen korrekten Wert an.",
         "title": "Wert"
       }
     },
@@ -195,9 +195,9 @@ const i18n: any = {
       },
       "bmail-desc": "Der ausgewählte Benutzer wird per Blockchain-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
       "create-container": "Plugin erzeugen",
-      "create-title": "Neue Plugin erstellen",
+      "create-title": "Neues Plugin erstellen",
       "delete": "Plugin löschen",
-      "delete-quest": "Wollen Sie dies Plugin wirklich löschen?",
+      "delete-quest": "Wollen Sie dieses Plugin wirklich löschen?",
       "edit-dbcp": "Beschreibung Anpassen",
       "in-saving": "Ein Plugin wird gespeichert<br><br><h4 class=\"text-muted\">Bitte warten Sie, bis der Vorgang abgeschlossen ist...</h4>",
       "save": "Plugin speichern"
@@ -230,7 +230,7 @@ const i18n: any = {
       "bmail-twin": "Guten Tag,\n\nSie wurden in den Digitalen Zwilling {name} von {alias} eingeladen.\n\nDigitaler Zwilling: {twinName} - {digitalTwinAddress}\nPlugin: {name} - {containerAddress}\n\nMit freundlichen Grüßen,\n\n{alias}",
       "body": {
         "desc": "Nachrichtentext",
-        "error": "Bitte geben Sie einen Nachrichtentext ein!",
+        "error": "Bitte geben Sie einen Nachrichtentext ein.",
         "title": "Nachrichtentext"
       },
       "desc": "Senden Sie dieses Plugin an Personen aus Ihrem Adressbuch.",
@@ -251,7 +251,7 @@ const i18n: any = {
       "share": "Freigeben",
       "title": {
         "desc": "z.B.: Digitaler Zwilling Zugehörigkeit, Plugin Name.",
-        "error": "Bitte geben Sie einen Betreff ein!",
+        "error": "Bitte geben Sie einen Betreff ein.",
         "title": "Betreff"
       },
       "user": {

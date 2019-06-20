@@ -42,16 +42,19 @@
     <div class="white-box border-smooth rounded" v-else>
       <table
         id="entry-list-table"
-        class="evan-flex-table">
+        class="evan-flex-table responsive-table">
         <thead>
           <tr class="text-muted" v-if="itemType === 'object'">
             <th class="flex-grow-0"
               style="white-space: nowrap;">
               #
             </th>
-            <th class="flex-grow-1"
+            <th class="flex-grow-1 force-oneline"
               v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)">
               {{ key }}
+              <evan-tooltip :placement="'bottom'">
+                {{ key }}
+              </evan-tooltip>
             </th>
             <th class="flex-grow-0" style="min-width: 65px;"></th>
           </tr>
@@ -67,11 +70,13 @@
             v-for="(listEntry, index) in [ ].concat(dispatcherEntries, listEntries)">
             <td class="font-weight-semibold flex-grow-0"
               style="white-space: nowrap;">
-              {{ index + 1}}
+              <th>#:</th>
+              <span>{{ index + 1}}</span>
             </td>
             <template v-if="itemType === 'object'">
               <td class="flex-grow-1"
                 v-for="(key, keyIndex) in Object.keys(templateEntry.dataSchema.items.properties)">
+                <th style="min-width: 150px;">{{ key }}:</th>
                 <dc-field
                   :id="`list-value-${ index }`"
                   :schema="templateEntry.dataSchema.items.properties[key]"

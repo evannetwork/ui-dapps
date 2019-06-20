@@ -42,7 +42,7 @@ const i18n: any = {
     },
     "plugins": {
       "create": "Create Plugin",
-      "desc": "Recent plugins or create new ones",
+      "desc": "Overview about my Plugin Templates",
       "empty": "My Plugins",
       "empty-desc": "In each Digital Twin different plugins can be installed for different topics like <b>machine-specific metadata</b>, <b>service log</b> or a calendar. Each plugin contains information about permissions, data specifications, including their format and validation and user interfaces. <br><br><b class=\"text-center d-block mt-3\">You have not yet created any plugins. Use the \"Create a Plugin\" button to create a new one.</b>",
       "in-creation": "Creating Plugin...",

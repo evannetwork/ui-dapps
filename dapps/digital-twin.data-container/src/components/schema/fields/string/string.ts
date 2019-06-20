@@ -79,7 +79,7 @@ export default class StringComponent extends mixins(EvanComponent) {
   loading = false;
 
   async created() {
-    if (this.control.value.startsWith('0x')) {
+    if (this.control.value && this.control.value.startsWith('0x')) {
       this.isContract = true;
       this.loading = true;
 

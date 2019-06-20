@@ -31,7 +31,7 @@ import { Prop, } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { deepEqual } from '@evan.network/ui';
+import { deepEqual, cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib';
 
@@ -150,7 +150,7 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
         });
 
         // copy permissions for integrity checks
-        this.originPermissionMap = JSON.parse(JSON.stringify(this.permissionMap));
+        this.originPermissionMap = cloneDeep(bcc.lodash, this.permissionMap, true);
         this.loading = false;
       }
 
@@ -340,9 +340,8 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
     });
 
     // add the copy
-    this.originPermissionMap[this.addAccountId] = JSON.parse(JSON.stringify(
-      this.permissionMap[this.addAccountId]
-    ));
+    this.originPermissionMap[this.addAccountId] = cloneDeep(bcc.lodash,
+      this.permissionMap[this.addAccountId], true);
 
     // remove the new added contact from the available list
     this.addableContacts.splice(this.addableContacts.indexOf(this.addAccountId), 1);

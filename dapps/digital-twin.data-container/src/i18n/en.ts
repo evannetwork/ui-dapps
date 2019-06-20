@@ -36,7 +36,7 @@ const i18n: any = {
       "errors": {
         "missing-max": "not specified",
         "missing-min": "not specified",
-        "text": "The specified value must be of type \"{type}\"! (min: {min}, max: {max})"
+        "text": "The specified value must be of type \"{type}\". (min: {min}, max: {max})"
       },
       "files-no-default": "File type fields cannot contain default values.",
       "max": {
@@ -52,13 +52,13 @@ const i18n: any = {
       "name": {
         "desc": "Name of the field",
         "error": {
-          "empty": "Please enter a name!",
-          "exists": "Please enter a name that does not correspond to an existing field!"
+          "empty": "Please enter a name.",
+          "exists": "Please enter a name that does not correspond to an existing field."
         },
         "title": "Field name"
       },
       "not-permitted": {
-        "desc": "You do not have permission to view this data set.",
+        "desc": "You do not have permission to view this Data Set.",
         "title": "Invalid authorization"
       },
       "required": {
@@ -75,7 +75,7 @@ const i18n: any = {
       },
       "value": {
         "desc": "Default value of the field",
-        "error": "Please enter a value of the correct type!",
+        "error": "Please enter a value of the correct type.",
         "title": "Default value"
       }
     },
@@ -122,7 +122,7 @@ const i18n: any = {
       },
       "name": {
         "desc": "Name",
-        "error": "Please provide a name!",
+        "error": "Please provide a name.",
         "title": "Name"
       }
     },
@@ -137,17 +137,17 @@ const i18n: any = {
     },
     "edit": "Edit",
     "edit-dbcp": "Adjust Description",
-    "edit-schema": "Data set schema definition",
+    "edit-schema": "Data Set schema definition",
     "entries": "Data Sets",
     "entry": {
-      "add": "Add data set",
-      "add-desc": "A data set corresponds to separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
+      "add": "Add Data Set",
+      "add-desc": "A Data Set corresponds to separated areas in which a wide variety of information can be maintained. They can be shared independently with third parties.",
       "array-type": {
         "title": "List type"
       },
       "entry-type": "Data Set Type",
       "name": {
-        "desc": "Name of the data set",
+        "desc": "Name of the Data Set",
         "error": {
           "already": "Please enter a name that does not yet exist",
           "length": "Please enter a valid name (no special characters, at least one letter)",
@@ -179,10 +179,10 @@ const i18n: any = {
       "show-more": "Show more"
     },
     "no-entries": {
-      "desc-noperm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin.</b>",
-      "desc-perm": "<b class=\"text-center d-block mt-3\">No data sets have been added to this plugin. Use the button below to add data sets.</b>",
-      "short": "No Data sets available...",
-      "title": "Each plugin can contain different data sets such as metadata, lists, texts, numbers, files or simple checkboxes."
+      "desc-noperm": "<b class=\"text-center d-block mt-3\">No Data Sets have been added to this plugin.</b>",
+      "desc-perm": "<b class=\"text-center d-block mt-3\">No Data Sets have been added to this plugin. Use the button below to add Data Sets.</b>",
+      "short": "No Data Sets available...",
+      "title": "Each plugin can contain different Data Sets such as metadata, lists, texts, numbers, files or simple checkboxes."
     },
     "no-permissions": {
       "desc": "You have no permission to view this Plugin.",
@@ -217,7 +217,7 @@ const i18n: any = {
     "sets": {
       "reset": {
         "desc": "Do you want to reset the current changes?",
-        "title": "Reset data set"
+        "title": "Reset Data Set"
       }
     },
     "share": {
@@ -233,7 +233,7 @@ const i18n: any = {
         "title": "Message text"
       },
       "desc": "Send this Plugin to people from your address book.",
-      "entry": "Data set",
+      "entry": "Data Set",
       "no-contacts": {
         "desc": "Data can only be shared with contacts from your address book. You don't have any contacts yet or all your contacts are already added to the current sharing overview.<br>Do you want to open the Contacts application to add more contacts?",
         "desc-plugins": "Data can only be shared with contacts from your address book. You do not yet have contacts to share data. <br>Do you want to open the Contacts application to add more contacts?",

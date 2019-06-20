@@ -36,7 +36,7 @@ const i18n: any = {
     "containerlink": {
       "address": {
         "desc": "Adresse des Plugins der in den digitalen Zwilling verknüpft werden soll.",
-        "error": "Bitte geben Sie eine Adresse ein!",
+        "error": "Bitte geben Sie eine Adresse ein.",
         "title": "Plugin"
       },
       "change-twin": "Digitalen Zwilling ändern",
@@ -50,7 +50,7 @@ const i18n: any = {
       "linking": "Bestehendes Plugin Wird verknüpft...",
       "name": {
         "desc": "ENS Adresse, unter dem das Plugin in dem digitalen Zwilling gespeichert werden soll.",
-        "error": "Bitte geben Sie einen ENS Adresse ein!",
+        "error": "Bitte geben Sie einen ENS Adresse ein.",
         "title": "ENS Adresse"
       },
       "use": "Plugin verknüpfen"
@@ -59,8 +59,8 @@ const i18n: any = {
       "create": "Plugin hinzufügen",
       "empty": "Plugins",
       "empty-desc": "Jeder Digitale Zwilling repräsentiert eine Zusammenstellung aus verschiedenen Plugins. Jedes Plugin kann eine Zusammenstellung verschiedener Metadaten (Herstellerinformationen, Bedienungsanleitungen, ...) oder Listeneinträgen (Wartungsprotokoll, Bilder, ...) enthalten.<br><br>",
-      "empty-desc-perm": "<b class=\"text-center d-block mt-3\">In Diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"Plugin hinzufügen\" oder \"Plugin-Instanz verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
-      "empty-desc-noperm": "<b class=\"text-center d-block mt-3\">In Diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt.</b>",
+      "empty-desc-perm": "<b class=\"text-center d-block mt-3\">In diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt. Nutzen Sie den \"Plugin hinzufügen\" oder \"Plugin-Instanz verknüpfen\" Button, um ein neues Plugin zu erstellen oder eine bestehende Plugin-Instanz zu verknüpfen.</b>",
+      "empty-desc-noperm": "<b class=\"text-center d-block mt-3\">In diesen Digitalen Zwilling wurde noch kein Plugin hinzugefügt.</b>",
       "in-creation": "wird erstellt...",
       "link": "Plugin-Instanz verknüpfen",
       "title": "Plugins"
@@ -109,7 +109,7 @@ const i18n: any = {
     "lookup": {
       "address": {
         "desc": "Geben Sie die Adresse Ihres digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
-        "error": "Bitte geben Sie eine gültige Adresse ein!",
+        "error": "Bitte geben Sie eine gültige Adresse ein.",
         "title": "Adresse Ihres Digitalen Zwillings",
         "use-address": "Digitalen Zwilling auf ENS Adresse binden"
       },
@@ -118,9 +118,9 @@ const i18n: any = {
         "title": "Nicht verfügbar"
       },
       "create": {
-        "action": "Digitale Zwilling erstellen",
+        "action": "Digitalen Zwilling erstellen",
         "desc": "Für diese Adresse existiert noch kein digitaler Zwilling. Möchten Sie einen neuen für diese Adresse erstellen?",
-        "title": "Digitale Zwilling erstellen"
+        "title": "Digitalen Zwilling erstellen"
       },
       "description": "Über das Eingabefeld ist es Ihnen möglich eine Adresse für einen digitalen Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
       "error": {

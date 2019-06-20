@@ -31,7 +31,7 @@ import { Prop } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { Dispatcher, DispatcherInstance, cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { utils } from '@evan.network/digitaltwin.lib';
 
@@ -147,7 +147,7 @@ export default class UiContainer {
 
       uiContainer.address = address;
       uiContainer.runtime = utils.getRuntime(vueInstance);
-      uiContainer.dapp = JSON.parse(JSON.stringify(vueInstance.dapp));
+      uiContainer.dapp = cloneDeep(bcc.lodash, vueInstance.dapp, true);
       uiContainer.containerCache = new ContainerCache(uiContainer.runtime.activeAccount);
       uiContainer.digitalTwinAddress = dcUtils.getDtAddressFromUrl(uiContainer.dapp);
       uiContainer.$i18n = vueInstance.$i18n;
@@ -318,16 +318,20 @@ export default class UiContainer {
             } else {
               // only work on a copy! loadForAccount is only triggered at startup, after this, the
               // same object references will be loaded
-              plugin = JSON.parse(JSON.stringify(await bcc.Container.getContainerPlugin(
-                this.runtime.profile,
-                this.address
-              )));
+              plugin = cloneDeep(
+                bcc.lodash,
+                await bcc.Container.getContainerPlugin(
+                  this.runtime.profile,
+                  this.address
+                ),
+                true
+              );
             }
 
             // set plugin origin, so cache changes can be applied faster in futurer
-            this.pluginOrigin = JSON.parse(JSON.stringify(plugin));
+            this.pluginOrigin = cloneDeep(bcc.lodash, plugin, true);
           } else {
-            plugin = JSON.parse(JSON.stringify(this.pluginOrigin));
+            plugin = cloneDeep(bcc.lodash, this.pluginOrigin, true);
           }
 
           // merge container cache with dispatcher data
@@ -475,7 +479,7 @@ export default class UiContainer {
    */
   async resetEntry(entryName: string) {
     // do not delete the original one, only clear it within a copy and set the cache
-    const pluginCopy = JSON.parse(JSON.stringify(this.plugin));
+    const pluginCopy = cloneDeep(bcc.lodash, this.plugin, true);
     delete pluginCopy.template.properties[entryName];
 
     // reset the cache

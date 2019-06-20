@@ -14,6 +14,8 @@
   - fix `schema` / `value` caching and saving
   - fix list entries permission checks and paging
   - remove obsolete `under development` tabs
+  - use `deepClone` instead of `JSON.parse(JSON.stringify())` and ignore files
+  - fix translations
 
 ### Deprecations
   

@@ -46,7 +46,7 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
-      <a
+      <a class="overflow-multiline line-3"
         v-else-if="isContract"
         :id="id"
         :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/${ control.value }`">
@@ -57,8 +57,11 @@
           {{ control.value }}
         </template>
       </a>
-      <span :id="id" v-else>
+      <span class="overflow-multiline line-3" :id="id" v-else>
         {{ control.value }}
+        <evan-tooltip :placement="'bottom'">
+          {{ control.value }}
+        </evan-tooltip>
       </span>
     </div>
   </div>

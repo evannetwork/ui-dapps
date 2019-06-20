@@ -46,10 +46,8 @@
           <span class="mx-auto"></span>
           <div>
             <dc-plugin-actions
-              v-if="reactiveRefs.navTabs"
               :pluginName="pluginName"
               :pluginActions="true"
-              :setActions="reactiveRefs.navTabs.activeTab === 0"
               :displayMode="'buttons'">
             </dc-plugin-actions>
           </div>

@@ -31,7 +31,7 @@ import { Prop } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { deepEqual } from '@evan.network/ui';
+import { deepEqual, cloneDeep } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils, } from '@evan.network/digitaltwin.lib';
 
@@ -138,9 +138,11 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
         // get initial data from uiContainer
         const runtime = utils.getRuntime(this);
         // !IMPORTANT!: copy the template entry, so call by reference will not break runtime
-        this.templateEntry = JSON.parse(JSON.stringify(
-          uiContainer.plugin.template.properties[this.entryName]
-        ));;
+        this.templateEntry = cloneDeep(
+          bcc.lodash,
+          uiContainer.plugin.template.properties[this.entryName],
+          true,
+        );
         this.permissions = uiContainer.permissions;
         this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
         this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);

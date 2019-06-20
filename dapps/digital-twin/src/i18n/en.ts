@@ -35,7 +35,7 @@ const i18n: any ={
     "containerlink": {
       "address": {
         "desc": "Address of the Plugin to be linked to the Digital Twin.",
-        "error": "Please enter an address!",
+        "error": "Please enter an address.",
         "title": "Plugin"
       },
       "change-twin": "Change Digital Twin",
