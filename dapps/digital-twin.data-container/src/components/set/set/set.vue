@@ -41,6 +41,7 @@
     </div>
     <template v-else>
       <evan-nav-tabs class="flex-shrink-0"
+        v-if="tabs.length > 1"
         :tabs="tabs"
         @init="$set(reactiveRefs, 'navTabs', $event)">
       </evan-nav-tabs>

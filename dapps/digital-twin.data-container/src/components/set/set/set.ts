@@ -121,10 +121,14 @@ export default class DataSetComponent extends mixins(EvanComponent) {
     this.loading = true;
 
     try {
-      const tabNames = [ 'entry-schema', 'entry-permissions', 'entry-changes' ];
+      const tabNames = [ 'entry-schema', ];
 
       this.containerAddress = this.$route.params.containerAddress;
       this.entryName = this.$route.params.entryName;
+
+      if (this.containerAddress.startsWith('0x')) {
+        tabNames.push('entry-permissions');
+      }
 
       // load basic data schema, for checking entry type
       this.uiContainer = new UiContainer(this);
