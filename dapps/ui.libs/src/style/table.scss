@@ -47,6 +47,7 @@
           min-height: 50px;
           padding: 1em 1.5em;
 
+          vertical-align: top;
           word-wrap: break-word;
           word-break: break-word;
 
@@ -66,12 +67,20 @@
         tr:nth-child(odd) {
           td {
             background-color: cssVar('table-row-odd');
+
+            .overflow-multiline:after {
+              background-color: cssVar('table-row-odd');
+            }
           }
         }
 
         tr:nth-child(even) {
           td {
             background-color: cssVar('table-row-even');
+
+            .overflow-multiline:after {
+              background-color: cssVar('table-row-even');
+            }
           }
         }
 

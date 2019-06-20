@@ -5,6 +5,8 @@
 - `ui.libs`
   - add split `evan-table` from `evan-flex-style` style
   - add `responsive-table`, `no-wrap`, `static-first` classes to `table`
+  - add `cloneDeep`
+  - exclude files from `deepEqual` checks
 
 ### Fixes
 - `ui.libs`

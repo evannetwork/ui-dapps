@@ -28,11 +28,20 @@ const isArray = Array.isArray;
 const keyList = Object.keys;
 const hasProp = Object.prototype.hasOwnProperty;
 
+// class names for file types that does not be checked for deep equal check
+const fileTypes = [
+  Uint8Array,
+  Uint16Array,
+  Uint32Array,
+  Uint8Array,
+  ArrayBuffer
+];
+
 /**
  * Deep equal for objects (https://github.com/epoberezkin/fast-deep-equal/blob/master/index.js)
  *
- * @param      {any}  a       object a
- * @param      {any}  b       object b
+ * @param      {any}     a          object a
+ * @param      {any}     b          object b
  */
 export function deepEqual(a, b) {
   if (a === b) {
@@ -40,6 +49,11 @@ export function deepEqual(a, b) {
   }
 
   if (a && b && typeof a === 'object' && typeof b === 'object') {
+    // do not check equality for files, it will cause performance issues
+    if (fileTypes.indexOf(a.constructor) !== -1) {
+      return true;
+    }
+
     let arrA = isArray(a)
       , arrB = isArray(b)
       , i
@@ -108,4 +122,24 @@ export function deepEqual(a, b) {
   }
 
   return a !== a && b !== b;
+}
+
+/**
+ * Lodash cloneDeep wrapper including ignoreFiles flag.
+ *
+ * @param      {any}  lodash       lodash instance
+ * @param      {any}  obj          object that should be cloned
+ * @param      {any}  ignoreFiles  should file entries be ignored?
+ */
+export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
+  if (ignoreFiles) {
+    return lodash.cloneDeepWith(obj, (value: any) => {
+      // value.__proto__.constructor.toString().indexOf('Buffer') !== -1
+      if (value && (value._isBuffer || fileTypes.indexOf(value.constructor) !== -1)) {
+        return value;
+      }
+    });
+  } else {
+    return lodash.cloneDeep(obj);
+  }
 }
