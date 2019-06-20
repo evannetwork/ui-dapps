@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 1.4.0
+### Features
 - `ui.libs`
   - add split `evan-table` from `evan-flex-style` style
   - add `responsive-table`, `no-wrap`, `static-first` classes to `table`
@@ -11,8 +19,6 @@
 ### Fixes
 - `ui.libs`
   - dapp-wrapper flex overflow horizontal sizing 
-
-### Deprecations
 
 
 ## Version 1.3.2
