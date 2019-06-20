@@ -16,6 +16,7 @@
   - remove obsolete `under development` tabs
   - use `deepClone` instead of `JSON.parse(JSON.stringify())` and ignore files
   - fix translations
+  - use horizontal scrollable tables
 
 ### Deprecations
   

@@ -80,13 +80,15 @@ export default class StringComponent extends mixins(EvanComponent) {
 
   async created() {
     if (this.control.value && this.control.value.startsWith('0x')) {
-      this.isContract = true;
       this.loading = true;
 
       try {
         const runtime = utils.getRuntime(this);
         this.contractTitle = (await runtime.description
           .getDescription(this.control.value, runtime.activeAccount)).public.name;
+
+        // only display as contract when a correct dbcp is added
+        this.isContract = true;
       } catch (ex) { }
 
       this.loading = false;
