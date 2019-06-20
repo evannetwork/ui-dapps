@@ -17,6 +17,7 @@
   - use `deepClone` instead of `JSON.parse(JSON.stringify())` and ignore files
   - fix translations
   - use horizontal scrollable tables
+  - fix active tree entries
 
 ### Deprecations
   

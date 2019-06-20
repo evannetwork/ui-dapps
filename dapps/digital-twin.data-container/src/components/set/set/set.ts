@@ -132,7 +132,7 @@ export default class DataSetComponent extends mixins(EvanComponent) {
 
       // load basic data schema, for checking entry type
       this.uiContainer = new UiContainer(this);
-      (await this.uiContainer.loadPlugin());
+      (await this.uiContainer.loadPlugin(false, true));
 
       // only allow list entries for contracts
       const entry = this.uiContainer.plugin.template.properties[this.entryName];

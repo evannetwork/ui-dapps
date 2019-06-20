@@ -231,7 +231,7 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Initialize share form.
    */
   setupSharingForm() {
-    // setup share form, so the user can insert a custom b-mail title, message 
+    // setup share form, so the user can insert a custom b-mail title, message
     this.shareForm = (<ShareFormInterface>new EvanForm(this, {
       title: {
         value: [
@@ -355,6 +355,16 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
 
     // send event
     containerCache.put(this.pluginName, this.uiContainer.plugin);
+
+    setTimeout(() => {
+      // navigate to new entry
+      const dapp: any = (<any>this).dapp;
+      window.location.hash = [
+        `${ dapp.rootEns }/digitaltwins.${ dapp.domainName }`,
+        `datacontainer.digitaltwin.${ dapp.domainName }`,
+        `${ this.pluginName }/data-set/${ newEntry.name }/entry-schema`
+      ].join('/');
+    });
   }
 
   /**
