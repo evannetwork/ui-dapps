@@ -4,6 +4,9 @@
 ### Features
 
 ### Fixes
+- `ui.libs`
+  - add table hover class
+  - fix steps for only a few steps
 
 ### Deprecations
 

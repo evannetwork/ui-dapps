@@ -238,6 +238,18 @@
         }
       }
     }
+
+    &.hover {
+      tbody {
+        tr:hover {
+          transition-duration: 0.3s;
+          transition-property: transform;
+          transform: scale(1.01);
+
+          box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
   }
 
   .table-scroll-container {

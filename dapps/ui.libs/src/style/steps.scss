@@ -43,8 +43,7 @@
         position: relative;
         z-index: 1;
 
-        min-width: 120px;
-        max-width: 120px;
+        flex: 1;
 
         text-align: center;
 
@@ -72,7 +71,7 @@
         }
 
         &:first-child:before {
-          left: 50px;
+          left: 50%;
         }
 
         &:last-child:before {
@@ -99,7 +98,10 @@
 
           display: block;
 
+          min-width: 100px;
+
           white-space: normal;
+          white-space: nowrap;
           word-break: break-word;
 
           color: cssVar('gray-500');
