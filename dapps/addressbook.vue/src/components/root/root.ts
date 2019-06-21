@@ -50,7 +50,7 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
   /**
    * All contacts build into an contacts array mapped to tags
    */
-  contacts: any = null;
+  categories: any = null;
 
   /**
    * Run the initialization
@@ -69,7 +69,7 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
 
     // reset the contracts
-    this.contacts = { all: [ ] };
+    this.categories = { };
 
     // force addressbook reload on clicking reloading button
     if (reload) {
@@ -95,18 +95,31 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
         }
       }
 
-      // add the contact to the "all" category
-      this.contacts.all.push(contact);
+      // categorize by starting characters
+      this.categories[contact.alias[0]] = this.categories[contact.alias[0]] || [ ];
+      this.categories[contact.alias[0]].push(contact);
+    });
 
-      // push the contact to each specific tag
-      contact.tags.forEach(tag => {
-        this.contacts[tag] = this.contacts[tag] || [ ];
-        this.contacts[tag].push(contact);
+    // sort all users by alias
+    Object.keys(this.categories).forEach((category) => {
+      this.categories[category].sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        } else if (a.title > b.title) {
+          return 1;
+        } else {
+          return 0;
+        }
       });
-
-      return contact;
     });
 
     this.loading = false;
+  }
+
+  /**
+   * Sends the hide sidebar event.
+   */
+  hideSidebar2() {
+    window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-close'));
   }
 }

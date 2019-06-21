@@ -31,85 +31,77 @@
       :routes="[ ]"
       v-on:loggedin="loadContacts()">
       <template v-slot:content>
-        <evan-dapp-wrapper-level-2>
-          <template v-slot:content>
-            <div class="w300">
-              <div class="d-flex flex-wrap pl-4 pr-4 pt-4 pb-3 align-items-center ">
-                <a :href="`${ dapp.fullUrl }`">
-                  <h5 class="font-weight-semibold text-uppercase text-nowrap">
-                    {{ '_addressbook.addressbook' | translate }}
-                  </h5>
-                </a>
-              </div>
-
-              <evan-loading v-if="loading"></evan-loading>
-
-              <ul class="nav font-medium in w-100 mb-3 mt-auto"
-                v-if="!loading">
-                <li class="w-100 p-3 clickable d-flex align-items-center"
-                  v-for="(category, key) in contacts"
-                  :class="{ 'active': key === activeCategory }"
-                  @click="evanNavigate(''); activeCategory = key">
-                  <h6 class="mb-0" v-if="key !== 'all'">{{ key }}</h6>
-                  <h6 class="mb-0" v-if="key === 'all'">{{ '_addressbook.all' | translate }}</h6>
-                  <span class="mx-auto"></span>
-                  <i class="mdi mdi-chevron-right"></i>
-                </li>
-              </ul>
+        <evan-loading v-if="loading"></evan-loading>
+        <div class="container-wide overflow-y-auto flex-grow-1"
+          v-else>
+          <contact-add
+            ref="contactAddModal">
+          </contact-add>
+          <div class="d-flex mb-5 align-items-center">
+            <div style="width: 80%;">
+              <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
+                {{ '_addressbook.addressbook-desc' | translate }}
+              </h3>
             </div>
-          </template>
-        </evan-dapp-wrapper-level-2>
-
-        <evan-breadcrumbs
-          :i18nScope="'_addressbook'"
-          :enableReload="true"
-          @reload="loadContacts(true)">
-          <template v-slot:content>
+            <span class="mx-auto"></span>
             <button type="button" class="btn btn-primary btn-circle"
-              @click="evanNavigate('add');">
+              @click="$refs.contactAddModal.show();">
               <i class="mdi mdi-plus"></i>
+              <evan-tooltip :placement="'bottom'">
+                {{ '_addressbook.contact-form.submit' | translate }}
+              </evan-tooltip>
             </button>
-          </template>
-        </evan-breadcrumbs>
+          </div>
+          <div class="white-box border-smooth rounded"
+            v-if="Object.keys(categories).length === 0">
+            <div class="header">
+              <h3 class="m-0 font-weight-semibold">
+                {{ '_addressbook.no-contacts.title' | translate }}
+              </h3>
+            </div>
+            <div class="content">
+              <p v-html="$t('_addressbook.no-contacts.desc')"></p>
 
-        <div v-if="$route.name !== 'add' && $route.name !== 'detail'">
-          <evan-loading v-if="loading"></evan-loading>
-
-          <div class="p-3" v-if="!loading">
-            <div class="bg-level-1 border">
-              <div class="d-flex p-5 border-bottom border-sm align-items-center">
-                <h3 class="m-0 font-weight-semibold">
-                  {{ '_addressbook.category' | translate }}: 
-
-                  <template v-if="activeCategory !== 'all'">{{ activeCategory }}</template>
-                  <template v-if="activeCategory === 'all'">{{ '_addressbook.all' | translate }}</template>
-                </h3>
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary btn-rounded"
+                  @click="$refs.contactAddModal.show();">
+                  {{ '_addressbook.contact-form.submit' | translate }}
+                  <i class="mdi mdi-arrow-right label ml-3"></i>
+                </button>
               </div>
-
-
-              <table class="evan-flex-table">
-                <thead>
-                  <tr>
-                    <th>{{ '_addressbook.alias' | translate }}</th>
-                    <th>{{ '_addressbook.identifier' | translate }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="clickable"
-                    v-for="(contact, index) in contacts[activeCategory]"
-                    @click="evanNavigate(`detail/${ contact.address }`);">
-                    <td class="text-primary">{{ contact.alias }}</td>
-                    <td>{{ contact.address || contact.email }}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
+          <template v-else>
+            <div class="white-box border-smooth rounded mt-3"
+              v-for="(category, index) in Object.keys(categories).sort()">
+              <div class="header">
+                <h3 class="m-0 font-weight-semibold">
+                 {{ category }}
+                </h3>
+              </div>
+              <div class="table-scroll-container">
+                <table class="evan-table w-100 no-wrap">
+                  <thead>
+                    <tr>
+                      <th style="width: 300px">{{ '_addressbook.alias' | translate }}</th>
+                      <th>{{ '_addressbook.identifier' | translate }}</th>
+                      <th>{{ '_addressbook.tags' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="clickable"
+                      v-for="(contact, index) in categories[category]"
+                      @click="evanNavigate(`detail/${ contact.address }`);">
+                      <td class="font-weight-semibold text-primary">{{ contact.alias }}</td>
+                      <td class="small text-muted">{{ contact.address || contact.email }}</td>
+                      <td class="small text-muted">{{ contact.tags.join(', ') }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </template>
         </div>
-        <transition name="fade" mode="out-in"
-          v-else>
-          <router-view></router-view>
-        </transition>
       </template>
     </evan-dapp-wrapper>
   </div>

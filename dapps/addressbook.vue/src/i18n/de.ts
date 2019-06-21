@@ -30,6 +30,7 @@ export default {
   "_addressbook": {
     "add": "Kontakt hinzufügen",
     "addressbook": "Kontakte",
+    "addressbook-desc": "Übersicht über Ihre vertrauenswürdigen Kontakte",
     "alias": "Alias",
     "all": "Alle",
     "category": "Kategorie",
@@ -44,16 +45,36 @@ export default {
         "error": "Bitte geben Sie einen Alias an!",
         "title": "Alias"
       },
+      "bmail": {
+        "desc": "Der ausgewählte Benutzer wird per Blockchain-Mail / E-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
+        "body": "Guten Tag,\n\nIch möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{fromName}",
+        "title": "Kontaktanfrage"
+      },
       "email": {
         "desc": "E-Mail Addresse zum einladen des Nutzers in das Netzwerk.",
         "error": "Bitte geben Sie eine valide E-Mail Addresse an!",
         "title": "E-Mail"
       },
+      "msgBody": {
+        "desc": "Nachrichtentext",
+        "error": "Bitte geben Sie einen Nachrichtentext ein.",
+        "title": "Nachrichtentext"
+      },
+      "msgTitle": {
+        "desc": "Titel der Nachricht",
+        "error": "Bitte geben Sie einen Betreff ein.",
+        "title": "Betreff"
+      },
       "submit": "Kontakt hinzufügen"
     },
     "detail": "Kontakinformationen",
     "identifier": "Addresse / E-Mail",
-    "overview": "Übersicht"
+    "no-contacts": {
+      "desc": "Sie haben noch keine Kontakte in ihr Adressbuch hinzugefügt. Nutzen Sie den nachfolgenden Button, um einen Neuen Kontakt hinzuzufügen.",
+      "title": "Keine Kontakte"
+    },
+    "overview": "Übersicht",
+    "tags": "Schlagworte"
   }
 }
 /* tslint:enable */;

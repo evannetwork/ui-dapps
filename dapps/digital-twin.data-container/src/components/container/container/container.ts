@@ -85,10 +85,46 @@ export default class ContainerComponent extends mixins(EvanComponent) {
   reactiveRefs: any = { };
 
   /**
+   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
+   */
+  hashChangeWatcher: any;
+
+  /**
    * Load the container data
    */
   async created() {
     this.containerAddress = this.$route.params.containerAddress;
+
+    // watch for saving updates
+    this.hashChangeWatcher = (async () => {
+      if (this.containerAddress !== this.$route.params.containerAddress) {
+        this.containerAddress = this.$route.params.containerAddress;
+
+        await this.setupContainer();
+      }
+    }).bind(this);
+
+    // add the hash change listener
+    window.addEventListener('hashchange', this.hashChangeWatcher);
+
+    await this.setupContainer();
+
+    this.loading = false;
+  }
+
+  /**
+   * Clear location change watchers
+   */
+  beforeDestroy() {
+    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Load the plugin data
+   */
+  async setupContainer() {
+    this.loading = true;
+
     this.tabs = [ 'dc-sets', 'dc-technical', 'dc-permissions', ]
       .map(urlKey => ({
         id: `tab-${ urlKey }`,
@@ -97,11 +133,13 @@ export default class ContainerComponent extends mixins(EvanComponent) {
       }));
 
     // load ui container data
-    await UiContainer.watch(this, async (uiContainer: UiContainer) => {
-      this.error = uiContainer.error;
-      this.description = uiContainer.description;
-      this.digitalTwinAddress = uiContainer.digitalTwinAddress;
-    });
+    const uiContainer = new UiContainer(this);
+    (await uiContainer.loadPlugin(false, true));
+
+    // set local data
+    this.error = uiContainer.error;
+    this.description = uiContainer.description;
+    this.digitalTwinAddress = uiContainer.digitalTwinAddress;
 
     this.loading = false;
   }

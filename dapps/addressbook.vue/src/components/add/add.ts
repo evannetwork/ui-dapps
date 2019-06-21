@@ -36,18 +36,25 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 interface ContactFormInterface extends EvanForm {
-  alias: EvanFormControl;
-  emailInvite: EvanFormControl;
   address: EvanFormControl;
+  alias: EvanFormControl;
   email: EvanFormControl;
+  emailInvite: EvanFormControl;
+  msgBody: EvanFormControl;
+  msgTitle: EvanFormControl;
 }
 
 @Component({ })
-export default class AddComponent extends mixins(EvanComponent) {
+export default class ContactAddComponent extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
   contactForm: ContactFormInterface = null;
+
+  /**
+   * status flags
+   */
+  loading = true;
 
   /**
    * Used for easier building form i18n keys
@@ -57,17 +64,21 @@ export default class AddComponent extends mixins(EvanComponent) {
   /**
    * Setup contact form.
    */
-  created() {
+  async created() {
+    const runtime = (<any>this).getRuntime();
+    const addressBook = await runtime.profile.getAddressBook();
+    const myAlias = addressBook.profile[runtime.activeAccount].alias;
+
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       alias: {
         value: '',
-        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+        validate: function(vueInstance: ContactAddComponent, form: ContactFormInterface) {
           return this.value.length !== 0;
         }
       },
       emailInvite: {
         value: false,
-        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+        validate: function(vueInstance: ContactAddComponent, form: ContactFormInterface) {
           // trigger the validation process for the address and email contorl,
           // when the email invite was changed
           form.address.validate();
@@ -78,16 +89,30 @@ export default class AddComponent extends mixins(EvanComponent) {
       },
       address: {
         value: '',
-        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+        validate: function(vueInstance: ContactAddComponent, form: ContactFormInterface) {
           return form.emailInvite.value || EvanForm.validEthAddress(this.value);
         }
       },
       email: {
         value: '',
-        validate: function(vueInstance: AddComponent, form: ContactFormInterface) {
+        validate: function(vueInstance: ContactAddComponent, form: ContactFormInterface) {
           return !form.emailInvite.value || EvanForm.validateEmail(this.value);
         }
       },
+      msgTitle: {
+        value: (<any>this).$t(`${ this.formI18nScope }.bmail.title`),
+        validate: function(vueInstance: ContactAddComponent, form: ContactFormInterface) {
+          return this.value.trim().length !== 0;
+        }
+      },
+      msgBody: {
+        value: (<any>this).$t(`${ this.formI18nScope }.bmail.body`, {
+          fromName: myAlias
+        }),
+        validate: function(vueInstance: ContactAddComponent, form: ContactFormInterface) {
+          return this.value.trim().length !== 0;
+        }
+      }
     }));
   }
 
@@ -96,5 +121,19 @@ export default class AddComponent extends mixins(EvanComponent) {
    */
   addContact() {
     (<any>this).evanNavigate('');
+  }
+
+  /**
+   * Opens the contacts modal
+   */
+  show() {
+    (<any>this.$refs.contactAddModal).show();
+  }
+
+  /**
+   * Opens the contacts modal
+   */
+  close() {
+    (<any>this.$refs.contactAddModal).hide();
   }
 }

@@ -27,11 +27,17 @@
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import ContactAddComponent from './add/add.vue';
+
 
 // export them all, so other applications can access them
-export { }
+export {
+  ContactAddComponent,
+}
 
 // map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ];
+const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'contact-add', component: ContactAddComponent },
+];
 
 export default componentRegistration;

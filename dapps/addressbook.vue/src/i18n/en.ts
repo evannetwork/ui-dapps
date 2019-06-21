@@ -30,6 +30,7 @@ export default {
   "_addressbook": {
     "add": "Add contact",
     "addressbook": "Contacts",
+    "addressbook-desc": "Overview about your trusted contacts",
     "alias": "Alias",
     "all": "All",
     "category": "Category",
@@ -44,16 +45,36 @@ export default {
         "error": "Please enter an alias!",
         "title": "Alias"
       },
+      "bmail": {
+        "desc": "The selected user is notified by blockchain mail / e-mail. In the following form you can adjust the message.",
+        "body": "Hello,\n\nI wanting to add you as a contact.\n\nBest regards,\n\n{fromName}",
+        "title": "Contact Request"
+      },
       "email": {
         "desc": "E-mail address for inviting the user to the network.",
         "error": "Please enter a valid e-mail address!",
         "title": "E-Mail"
       },
+      "msgBody": {
+        "desc": "Message text",
+        "error": "Please enter a message text.",
+        "title": "Message text"
+      },
+      "msgTitle": {
+        "desc": "Title of the message",
+        "error": "Please enter a subject.",
+        "title": "Subject"
+      },
       "submit": "Add contact"
     },
     "detail": "Contact information",
     "identifier": "Address / E-Mail",
-    "overview": "Overview"
+    "no-contacts": {
+      "desc": "You have not yet added any contacts to your address book. Use the button below to add a new contact.",
+      "title": "No contacts"
+    },
+    "overview": "Overview",
+    "tags": "Tags"
   }
 }
 /* tslint:enable */;

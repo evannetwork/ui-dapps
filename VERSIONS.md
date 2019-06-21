@@ -4,6 +4,8 @@
 ### Features
 
 ### Fixes
+- `datacontainer.digitaltwins`
+  - fix `Container` detail entry switching
 
 ### Deprecations
 
