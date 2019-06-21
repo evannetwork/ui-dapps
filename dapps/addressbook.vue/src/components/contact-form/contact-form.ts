@@ -25,23 +25,35 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import ContactAddComponent from './add/add.vue';
-import ContactDetailComponent from './detail/detail.vue';
-import ContactFormComponent from './contact-form/contact-form.vue';
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+
+// evan.network imports
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+import * as dispatchers from '../../dispatchers/registry';
 
 
-// export them all, so other applications can access them
-export {
-  ContactAddComponent,
+@Component({ })
+export default class ContactFormComponent extends mixins(EvanComponent) {
+  /**
+   * formular specific variables
+   */
+  @Prop() form;
+
+  /**
+   * Only allow metadata edit.
+   */
+  @Prop() disableAccountId;
+
+  /**
+   * Used for easier building form i18n keys
+   */
+  @Prop({
+    default: '_addressbook.contact-form'
+  }) i18nScope;
 }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'contact-add',    component: ContactAddComponent },
-  { name: 'contact-detail', component: ContactDetailComponent },
-  { name: 'contact-form',   component: ContactFormComponent },
-];
-
-export default componentRegistration;

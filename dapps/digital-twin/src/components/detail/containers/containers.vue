@@ -28,14 +28,13 @@
 <template>
   <div>
     <div class="row content row pb-0" v-if="$store.state.uiDT.containers.length !== 0">
-      <div class="col-md-4 mb-4"
-        v-for="(container, index) in $store.state.uiDT.containers"
-        style="min-width: 350px;">
+      <div class="col-xl-4 col-md-6 mb-4"
+        v-for="(container, index) in $store.state.uiDT.containers">
         <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
           :id="`evan-dt-container-${ container.path ? container.path.split('/').pop() : 'creating' }`"
           :href="!container.path ? null : `${ dapp.fullUrl }/${ container.path }`">
           <div class="row align-items-center m-0 w-100">
-            <div class="col-2" style="overflow: visible">
+<!--             <div class="col-2" style="overflow: visible">
               <img class="img-fluid p-3"
                 v-if="container.imgSquare"
                 :src="container.imgSquare">
@@ -43,13 +42,13 @@
                 class="mdi mdi-note-multiple-outline text-muted"
                 style="font-size:50px;">
               </i>
-            </div>
-            <div class="col-10 d-flex align-items-center">
-              <div class="w-100 p-3">
-                <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+            </div> -->
+            <div class="col-12 d-flex align-items-center">
+              <div class="w-100 p-3" style="height: 81px; max-width: calc(100% - 20px)">
+                <h4 class="font-weight-semibold mb-0 force-oneline">
                   {{ container.description.name }}
                 </h4>
-                <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3"
+                <span class="text-justify d-block font-weight-semibold text-muted force-oneline"
                   v-if="!container.creating">
                   {{ container.description.description }}
                 </span>

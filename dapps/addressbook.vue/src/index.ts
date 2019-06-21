@@ -33,6 +33,8 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 
+export * from './dispatchers/registry';
+
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
  * dbcp. So startup, it's evan time!

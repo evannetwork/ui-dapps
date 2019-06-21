@@ -34,6 +34,9 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+
+import * as dispatchers from '../../dispatchers/registry';
 
 @Component({ })
 export default class AddressBookComponent extends mixins(EvanComponent) {
@@ -53,9 +56,26 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
   categories: any = null;
 
   /**
+   * Original addressbook.
+   */
+  addressBook: any = null;
+
+  /**
+   * Watch for dispatcher updates.
+   */
+  dispatcherWatch = null;
+  saving = false;
+
+  /**
    * Run the initialization
    */
-  async created() {}
+  async created() {
+    this.dispatcherWatch = Dispatcher.watch(
+      ($event) => this.loadContacts($event.detail.status === 'finished'),
+      `addressbook.vue.${ (<any>this).dapp.domainName }`,
+      '*'
+    );
+  }
 
   /**
    * Load the contacts and map them to the tag categories and make it usable from the template
@@ -63,27 +83,50 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
    * @param      {boolean}  reload  was the component reloaded?
    */
   async loadContacts(reload?: boolean) {
-    this.loading = true;
+    this.loading = reload || !this.addressBook;
 
     // quick usage
     const runtime = (<any>this).getRuntime();
 
-    // reset the contracts
-    this.categories = { };
-
     // force addressbook reload on clicking reloading button
-    if (reload) {
+    if (reload || !this.addressBook) {
       delete runtime.profile.trees[runtime.profile.treeLabels.addressBook];
+      this.addressBook = JSON.parse(JSON.stringify(await runtime.profile.getAddressBook()));
     }
 
     // load the address book for the current user
-    const addressBook = await runtime.profile.getAddressBook();
-    bcc.Ipld.purgeCryptoInfo(addressBook);
+    bcc.Ipld.purgeCryptoInfo(this.addressBook);
+
+    // copy addressbook
+    const contacts = JSON.parse(JSON.stringify(this.addressBook.profile));
+
+    // checkDispatcherData
+    const dispatcherInstances = (await Promise.all([
+      dispatchers.inviteDispatcher.getInstances(runtime),
+      dispatchers.updateDispatcher.getInstances(runtime),
+      dispatchers.removeDispatcher.getInstances(runtime),
+    ]));
+
+    // iterate through all dispatcher instances and apply loading flag, and changed data
+    dispatcherInstances.forEach((instances: Array<DispatcherInstance>, index: number) =>
+      instances.forEach((instance: DispatcherInstance) => {
+        const data = instance.data;
+        contacts[data.accountId || data.email] = Object.assign(
+          contacts[data.accountId || data.email] || { },
+          {
+            loading: true,
+            remove: index === 2,
+          },
+          instance.data
+        );
+      })
+    );
 
     // map all the contacts to it's categories
-    Object.keys(addressBook.profile).forEach((address) => {
-      const contact = addressBook.profile[address];
-      contact.address = address;
+    const categories = { };
+    Object.keys(contacts).forEach((accountId) => {
+      const contact = contacts[accountId];
+      contact.accountId = accountId;
 
       // parse tags to have the correct format (move string as one entry to an new array, default
       // is an array)
@@ -96,13 +139,14 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
       }
 
       // categorize by starting characters
-      this.categories[contact.alias[0]] = this.categories[contact.alias[0]] || [ ];
-      this.categories[contact.alias[0]].push(contact);
+      const category = contact.alias[0].toLowerCase();
+      categories[category] = categories[category] || [ ];
+      categories[category].push(contact);
     });
 
     // sort all users by alias
-    Object.keys(this.categories).forEach((category) => {
-      this.categories[category].sort((a, b) => {
+    Object.keys(categories).forEach((category) => {
+      categories[category].sort((a, b) => {
         if (a.title < b.title) {
           return -1;
         } else if (a.title > b.title) {
@@ -113,6 +157,7 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
       });
     });
 
+    this.categories = categories;
     this.loading = false;
   }
 

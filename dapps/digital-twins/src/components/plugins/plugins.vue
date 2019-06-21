@@ -55,13 +55,13 @@
       <div v-else-if="Object.keys(plugins).length !== 0">
         <div class="row content pt-1 pb-0"
           :id="`evan-dt-plugins`">
-          <div class="col-md-6 col-lg-3 mb-4"
+          <div class="col-md-6 col-lg-4 mb-4"
             v-for="(pluginKey, index) in Object.keys(plugins)">
             <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
               :id="`evan-dt-plugin-${ pluginKey.replace('.', '') }`"
               :href="plugins[pluginKey].creating ? null : `${ dapp.fullUrl }/datacontainer.digitaltwin.${ dapp.domainName }/${ pluginKey }`">
               <div class="row align-items-center m-0 w-100">
-                <div class="col-2" style="overflow: visible">
+<!--                 <div class="col-2" style="overflow: visible">
                   <img class="img-fluid p-3"
                     v-if="plugins[pluginKey].imgSquare"
                     :src="plugins[pluginKey].imgSquare">
@@ -69,13 +69,13 @@
                     class="mdi mdi-circle-edit-outline text-muted"
                     style="font-size:50px;">
                   </i>
-                </div>
-                <div class="col-10 d-flex align-items-center">
-                  <div class="w-100 p-3">
-                    <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+                </div> -->
+                <div class="col-12 d-flex align-items-center">
+                  <div class="w-100 p-3" style="height: 81px; max-width: calc(100% - 20px)">
+                    <h4 class="font-weight-semibold mb-0 force-oneline">
                       {{ plugins[pluginKey].description.name }}
                     </h4>
-                    <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3">
+                    <span class="text-justify d-block font-weight-semibold text-muted force-oneline">
                       <template v-if="plugins[pluginKey].creating">
                         {{ '_digitaltwins.plugins.in-creation' | translate }}
                       </template>

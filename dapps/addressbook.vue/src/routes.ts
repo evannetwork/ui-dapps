@@ -32,10 +32,7 @@ import AddComponent from './components/add/add.vue';
 import DetailComponent from './components/detail/detail.vue';
 
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [
-  { redirect: { path: 'all' }, path: '', },
-  { name: 'overview',  path: ':category', component: OverviewComponent },
-];
+const routeRegistration: Array<RouteRegistrationInterface> = [ ];
 
 export default routeRegistration;
 

@@ -45,6 +45,10 @@ export default {
         "accepted": "Anhang öffnen"
       }
     },
+    "breadcrumbs": {
+      "received": "Eingehende Nachrichten",
+      "sent": "Ausgehende Nachrichten"
+    },
     "detail": "Nachrichtsdetails",
     "dispatcher": {
       "attachment": "Kontakt/Vertrag sync"

@@ -36,10 +36,10 @@
       <div class="container-wide overflow-y-auto flex-grow-1">
         <div class="d-flex mb-3 align-items-center">
           <div style="width: 50%;">
-            <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
+            <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
               {{ description.name }}
             </h3>
-            <p class="text-muted font-weight-semibold m-t-0 overflow-multiline line-1 bg-level-3">
+            <p class="text-muted font-weight-semibold m-t-0 force-oneline bg-level-3">
               {{ description.description }}
             </p>
           </div>

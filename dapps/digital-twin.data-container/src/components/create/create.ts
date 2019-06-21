@@ -225,7 +225,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         description: {
           description: this.createForm.description.value,
           imgSquare: this.createForm.imgSquare.value,
-          name: this.createForm.name.value,
+          name: this.createForm.name.value.trim().replace(/\s{2,}/g, ' '),
         },
         template: this.activePlugin.template,
       });
@@ -235,7 +235,7 @@ export default class CreateComponent extends mixins(EvanComponent) {
         description: {
           description: this.createForm.description.value,
           imgSquare: this.createForm.imgSquare.value,
-          name: this.createForm.name.value,
+          name: this.createForm.name.value.trim().replace(/\s{2,}/g, ' '),
         },
         plugin: this.activePlugin,
       });

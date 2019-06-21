@@ -69,46 +69,44 @@ export default class MailboxComponent extends mixins(EvanComponent) {
   addressBook: any;
 
   /**
+   * Tabs for top navigation
+   */
+  tabs: Array<any> = [ ];
+
+  /**
+   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
+   */
+  hashChangeWatcher: any;
+
+  /**
    * Mails are load after the user logged in and runtime was set up by the dapp-wrapper
    */
   async created() {
-    if (!this.activeCategory) {
-      this.activateCategory((<any>this).$route.params.category || 'received');
-    }
+    this.tabs = [ 'received', 'sent', ]
+      .map(urlKey => ({
+        id: `tab-${ urlKey }`,
+        href: `${ (<any>this).dapp.fullUrl }/${ urlKey }`,
+        text: `_mailbox.breadcrumbs.${ urlKey }`
+      }));
+
+    // watch for saving updates
+    this.hashChangeWatcher = (async () => {
+      if (this.activeCategory !== this.$route.params.category) {
+        this.activeCategory = this.$route.params.category;
+        await this.loadMails();
+      }
+    }).bind(this);
+
+    // add the hash change listener
+    window.addEventListener('hashchange', this.hashChangeWatcher);
+    await this.hashChangeWatcher();
   }
 
   /**
-   * Set the active category and checks for loading initial mails
-   *
-   * @param      {<type>}  key     The key
+   * Clear location change watchers
    */
-  async activateCategory(key) {
-    // filter not allowed categories
-    this.activeCategory = mailCategories[key] ? key : 'received';
-
-    // navigate to correct url
-    if (!(<any>this).$route.params.mailAddress) {
-      (<any>this).evanNavigate(this.activeCategory);
-    }
-
-    // check if no mails were load before, so load them, but only if the runtime was already
-    // initialized (mail object will be defined)
-    if (this.mailCategories && !this.mailCategories[key].totalResultCount) {
-      await this.loadMails();
-    }
-  }
-
-  /**
-   * Check which mode is currently selected and reload only the specific data.
-   */
-  async reloadMails() {
-    if ((<any>this).$route.name === 'mail-category') {
-      await this.loadMails(true);
-    } else {
-      this.loading = true;
-      await this.loadAddressBook();
-      this.loading = false;
-    }
+  beforeDestroy() {
+    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
   }
 
   /**
@@ -121,7 +119,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
 
     // set initial mail object or force mailbox reload on clicking reloading button
-    if (!this.mailCategories || reload) {
+    if (!this.mailCategories || reload || !this.addressBook) {
       this.mailCategories = JSON.parse(JSON.stringify(mailCategories));
 
       // load the contacts for the current user, so we can display correct contact alias
@@ -134,9 +132,10 @@ export default class MailboxComponent extends mixins(EvanComponent) {
     // load mail inbox informations
     const category = this.mailCategories[this.activeCategory];
 
+    this.$set(category, 'loading', true);
+
     // show and render the loading
     this.loading = typeof category.totalResultCount === 'undefined';
-    category.loading = true;
     await Promise.resolve((resolve) => setTimeout(resolve, 100));
 
     // load the mails

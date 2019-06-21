@@ -81,7 +81,7 @@
                       <div class="col-10">
                         <div class="d-flex p-3 align-items-center">
                           <div class="w-100">
-                            <h4 class="font-weight-semibold mb-0 overflow-multiline line-1">
+                            <h4 class="font-weight-semibold mb-0 force-oneline">
                               {{ plugin.description.name }}
                             </h4>
                             <span class="text-justify d-block font-weight-semibold text-muted overflow-multiline line-3">

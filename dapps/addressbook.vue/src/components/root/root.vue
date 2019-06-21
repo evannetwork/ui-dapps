@@ -37,19 +37,20 @@
           <contact-add
             ref="contactAddModal">
           </contact-add>
+          <contact-detail
+            ref="contactDetailModal">
+          </contact-detail>
           <div class="d-flex mb-5 align-items-center">
-            <div style="width: 80%;">
-              <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
+            <div style="width: calc(100% - 200px)">
+              <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
                 {{ '_addressbook.addressbook-desc' | translate }}
               </h3>
             </div>
             <span class="mx-auto"></span>
-            <button type="button" class="btn btn-primary btn-circle"
+            <button type="button" class="btn btn-primary btn-rounded"
               @click="$refs.contactAddModal.show();">
-              <i class="mdi mdi-plus"></i>
-              <evan-tooltip :placement="'bottom'">
-                {{ '_addressbook.contact-form.submit' | translate }}
-              </evan-tooltip>
+              {{ `_addressbook.add` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
             </button>
           </div>
           <div class="white-box border-smooth rounded"
@@ -75,26 +76,30 @@
             <div class="white-box border-smooth rounded mt-3"
               v-for="(category, index) in Object.keys(categories).sort()">
               <div class="header">
-                <h3 class="m-0 font-weight-semibold">
+                <h3 class="m-0 font-weight-semibold text-uppercase">
                  {{ category }}
                 </h3>
               </div>
               <div class="table-scroll-container">
-                <table class="evan-table w-100 no-wrap">
+                <table class="evan-table no-wrap hover w-100">
                   <thead>
                     <tr>
                       <th style="width: 300px">{{ '_addressbook.alias' | translate }}</th>
                       <th>{{ '_addressbook.identifier' | translate }}</th>
                       <th>{{ '_addressbook.tags' | translate }}</th>
+                      <th style="width: 50px;"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="clickable"
                       v-for="(contact, index) in categories[category]"
-                      @click="evanNavigate(`detail/${ contact.address }`);">
+                      @click="$refs.contactDetailModal.show(contact.accountId);">
                       <td class="font-weight-semibold text-primary">{{ contact.alias }}</td>
-                      <td class="small text-muted">{{ contact.address || contact.email }}</td>
+                      <td class="small text-muted">{{ contact.accountId || contact.email }}</td>
                       <td class="small text-muted">{{ contact.tags.join(', ') }}</td>
+                      <td class="position-relative">
+                        <div v-if="contact.loading" class="spinner-border spinner-border-sm text-secondary"></div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

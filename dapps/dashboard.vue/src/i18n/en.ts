@@ -29,7 +29,7 @@
 export default {
   "_dashboard": {
     "docs": {
-      "bcc": "Blockchain",
+      "bcc": "API",
       "github": "Wiki",
       "ui": "UI"
     },

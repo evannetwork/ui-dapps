@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+- `addressbook`
+  - add correct addressbook vue design
+  - add missing invitation logic
+  - add dispatcher logic
+- `favorites`
+  - add new design for favorites
+- `mailbox`
+  - switch to tabs
 
 ### Fixes
 - `datacontainer.digitaltwins`

@@ -25,23 +25,12 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import ContactAddComponent from './add/add.vue';
-import ContactDetailComponent from './detail/detail.vue';
-import ContactFormComponent from './contact-form/contact-form.vue';
+import inviteDispatcher from './invite';
+import updateDispatcher from './update';
+import removeDispatcher from './remove';
 
-
-// export them all, so other applications can access them
 export {
-  ContactAddComponent,
+  inviteDispatcher,
+  updateDispatcher,
+  removeDispatcher,
 }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'contact-add',    component: ContactAddComponent },
-  { name: 'contact-detail', component: ContactDetailComponent },
-  { name: 'contact-form',   component: ContactFormComponent },
-];
-
-export default componentRegistration;

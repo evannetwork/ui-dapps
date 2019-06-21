@@ -88,6 +88,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
    * Data container permission specifications
    */
   permissions: any = null;
+  isOwner = false;
 
   /**
    * ref handlers
@@ -144,6 +145,7 @@ export default class SetSchemaComponent extends mixins(EvanComponent) {
           true,
         );
         this.permissions = uiContainer.permissions;
+        this.isOwner = uiContainer.owner === runtime.activeAccount;
         this.entryType = fieldUtils.getType(this.templateEntry.dataSchema);
         this.itemType = fieldUtils.getType(this.templateEntry.dataSchema.items);
 

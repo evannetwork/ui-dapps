@@ -26,7 +26,7 @@
 */
 
 /* tslint:disable */
-export default {
+export default{
   "_addressbook": {
     "add": "Kontakt hinzufügen",
     "addressbook": "Kontakte",
@@ -35,9 +35,10 @@ export default {
     "all": "Alle",
     "category": "Kategorie",
     "contact-form": {
-      "address": {
+      "accountId": {
         "desc": "Account-ID eines bekannten und bestehenden Profils.",
-        "error": "Bitte geben Sie eine gültige Account-ID an! (e.g. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
+        "error-added": "Die angebene Account-ID haben Sie bereits zu Ihren Kontakten hinzugefügt.",
+        "error-invalid": "Bitte geben Sie eine gültige Account-ID an! (e.g. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
         "title": "Account-ID"
       },
       "alias": {
@@ -46,14 +47,30 @@ export default {
         "title": "Alias"
       },
       "bmail": {
-        "desc": "Der ausgewählte Benutzer wird per Blockchain-Mail / E-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
         "body": "Guten Tag,\n\nIch möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{fromName}",
+        "desc": "Der ausgewählte Benutzer wird per Blockchain-Mail / E-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
         "title": "Kontaktanfrage"
       },
+      "continue": "Weiter",
+      "desc": "Über dieses Formular können Sie einen Kontakt über eine bestehende evan.network Identität oder per E-Mail einladen. Sobald Sie einen Kontakt eingeladen haben, können Sie mit diesem sichere Nachrichten austauschen und ihn in Verträge einladen.",
+      "desc-email": "Sobald ein Nutzer per E-Mail eingeladen wird, können Sie diesen Kontakt nicht direkt verwenden um mit diesem Daten zu teilen. Sobald der Anmeldeprozess des eingeladenen Benutzers abgeschlossen ist, erhalten sie eine Blockchain Mail mit der Sie den Einladeprozess beenden und Kontaktdaten aktualisieren können. Weiterhin können Sie EVE als Startguthaben mit schicken.",
       "email": {
-        "desc": "E-Mail Addresse zum einladen des Nutzers in das Netzwerk.",
-        "error": "Bitte geben Sie eine valide E-Mail Addresse an!",
+        "desc": "E-Mail Adresse zum einladen des Nutzers in das Netzwerk.",
+        "error-added": "Die angebene E-Mail Adresse haben Sie bereits zu Ihren Kontakten hinzugefügt.",
+        "error-invalid": "Bitte geben Sie eine valide E-Mail Adresse an!",
         "title": "E-Mail"
+      },
+      "eve": {
+        "desc": "Menge EVE die dem Nutzer mit gesendet werden.",
+        "error-eve-missing": "Sie besitzen nicht genug EVE (Kontostand: {eve} EVE).",
+        "error-minimum": "Sie müssen mindestens 1 EVE senden.",
+        "error-number": "Bitte geben Sie eine valide Zahl ein.",
+        "title": "EVE"
+      },
+      "fromAlias": {
+        "desc": "Name des Senders",
+        "error": "Bitte geben Sie einen Namen ein.",
+        "title": "Sender"
       },
       "msgBody": {
         "desc": "Nachrichtentext",
@@ -65,15 +82,32 @@ export default {
         "error": "Bitte geben Sie einen Betreff ein.",
         "title": "Betreff"
       },
-      "submit": "Kontakt hinzufügen"
+      "save": "Speichern",
+      "step1": "Kontaktinformationen",
+      "step2": "Einladungsnachricht",
+      "submit": "Kontakt hinzufügen",
+      "tags": {
+        "desc": "Leerzeichen separierte Schlagworte",
+        "title": "Schlagworte"
+      }
     },
     "detail": "Kontakinformationen",
-    "identifier": "Addresse / E-Mail",
+    "dispatcher": {
+      "invite": "Kontakt einladen",
+      "remove": "Kontakt entfernen",
+      "update": "Kontakt aktualisieren"
+    },
+    "identifier": "Adresse / E-Mail",
     "no-contacts": {
       "desc": "Sie haben noch keine Kontakte in ihr Adressbuch hinzugefügt. Nutzen Sie den nachfolgenden Button, um einen Neuen Kontakt hinzuzufügen.",
       "title": "Keine Kontakte"
     },
     "overview": "Übersicht",
+    "remove-contact": {
+      "description": "Wollen Sie den Kontakt {alias} mit der Adresse {accountId} wirklich von Ihren Kontakten entfernen?",
+      "remove": "Kontakt entfernen",
+      "title": "Kontakt entfernen"
+    },
     "tags": "Schlagworte"
   }
 }

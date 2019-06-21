@@ -25,23 +25,37 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import ContactAddComponent from './add/add.vue';
-import ContactDetailComponent from './detail/detail.vue';
-import ContactFormComponent from './contact-form/contact-form.vue';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 
-// export them all, so other applications can access them
-export {
-  ContactAddComponent,
-}
+const dispatcher = new Dispatcher(
+  `addressbook.vue.${ dappBrowser.getDomainName() }`,
+  'updateDispatcher',
+  40 * 1000,
+  '_addressbook.dispatcher.update'
+);
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'contact-add',    component: ContactAddComponent },
-  { name: 'contact-detail', component: ContactDetailComponent },
-  { name: 'contact-form',   component: ContactFormComponent },
-];
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
 
-export default componentRegistration;
+    // ensure latest addressbook is loaded
+    await runtime.profile.loadForAccount(runtime.profile.treeLabels.contracts);
+
+    // update the contact details
+    await Promise.all([ 'alias', 'accountId', 'email', 'tags', ]
+      .map(profileKey => runtime.profile.addProfileKey(
+        data.accountId || data.email,
+        profileKey,
+        data[profileKey]
+      )
+    ));
+
+    // save the account
+    await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
+  });
+
+export default dispatcher;

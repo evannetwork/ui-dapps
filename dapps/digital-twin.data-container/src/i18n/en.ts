@@ -45,7 +45,7 @@ const i18n: any = {
         "title": "Max."
       },
       "min": {
-        "desc": "Minimum value (leave empty to disabled required)",
+        "desc": "Minimum value (is mandatory, if specified)",
         "error": "The minimum value must always be less than or equal to the maximum value.",
         "title": "Min."
       },

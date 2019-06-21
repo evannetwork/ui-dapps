@@ -50,14 +50,14 @@
         @init="$set(reactiveRefs.setActions, index, $event)">
       </dc-set-actions>
       <div class="content row pb-0" v-if="properties.length !== 0">
-        <div class="col-md-4 mb-4"
+        <div class="col-xl-4 col-md-6 mb-4"
           v-for="(property, index) in properties"
-          style="min-width: 350px;">
+          >
           <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
             :id="`evan-dc-entry-${ property }`"
             :href="`${ dapp.fullUrl }/${ containerAddress }/data-set/${ property }`">
             <div class="row align-items-center m-0 w-100">
-              <div class="col-2" style="overflow: visible">
+<!--               <div class="col-2" style="overflow: visible">
                 <img class="img-fluid p-3"
                   v-if="imgSquare"
                   :src="imgSquare">
@@ -65,10 +65,10 @@
                   class="mdi mdi-cube-outline text-muted"
                   style="font-size:50px;">
                 </i>
-              </div>
-              <div class="col-10 d-flex align-items-center">
-                <div class="w-100 p-3 position-relative">
-                  <h4 class="font-weight-semibold mb-0 position-relative overflow-multiline line-1">
+              </div> -->
+              <div class="col-12 d-flex align-items-center">
+                <div class="w-100 p-3 position-relative" style="height: 60px; max-width: calc(100% - 20px)">
+                  <h4 class="font-weight-semibold mb-0 position-relative force-oneline">
                     {{ property }}
                   </h4>
                   <span class="notification-dot"
