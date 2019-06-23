@@ -2,14 +2,16 @@
 
 ## Next Version
 ### Features
-- `addressbook`
+- `addressbook.vue`
   - add correct addressbook vue design
   - add missing invitation logic
   - add dispatcher logic
-- `favorites`
+- `favorites.vue`
   - add new design for favorites
-- `mailbox`
+- `mailbox.vue`
   - switch to tabs
+- `profile.vue`
+  - add profile details (alias, accountId balance) and application settings (language, dev-mode, dev-dapps-domain)
 
 ### Fixes
 - `datacontainer.digitaltwins`

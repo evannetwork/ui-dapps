@@ -30,17 +30,19 @@
     <evan-dapp-wrapper
       :routes="[ ]">
       <template v-slot:content>
-        <evan-under-development></evan-under-development>
+        <evan-nav-tabs class="flex-shrink-0"
+          :tabs="tabs"
+          ref="navTabs">
+        </evan-nav-tabs>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
       </template>
     </evan-dapp-wrapper>
   </div>
 </template>
 
 <script lang="ts">
-  import profileRootComponent from './root.ts';
-  export default profileRootComponent;
+  import Component from './root.ts';
+  export default Component;
 </script>
-
-<style lang="scss" scoped>
-  @import './root';
-</style>

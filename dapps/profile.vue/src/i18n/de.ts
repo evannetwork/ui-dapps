@@ -25,11 +25,41 @@
   https://evan.network/license/
 */
 
+import { translations } from '@evan.network/addressbook';
+
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_profile": {
-    "routes": {
+    "breadcrumbs": {
+      "detail": "Profil",
+      "settings": "Einstellungen"
+    },
+    "detail": {
+      "account-id": "Account-ID",
+      "alias": "Alias",
+      "balance": "Guthaben",
+      "desc": "Profilinformationen",
+      "edit": "Profil bearbeiten"
+    },
+    "settings": {
+      "desc": "Anwendungskonfigurationen",
+      "dev-domain": {
+        "desc": "Mit dieser Konfiguration wird die Endung \".evan\" durch die angegebene Adresse ersetzt. Über diese Logik ist es möglich, Applikation auf verschiedenen Domains gleichzeitig für Testzwecke zu verwenden (z.B.: myapp.test.evan).",
+        "title": "Applikation von Test-Domain"
+      },
+      "developer-mode": "Entwicklermodus",
+      "language": "Sprache",
+      "languages": {
+        "browser": "Browser-Sprache",
+        "de": "Deutsch",
+        "en": "Englisch"
+      },
+      "reload-hint": "Bitte laden sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     }
   }
 }
-/* tslint:enable */;
+/* tslint:enable */
+
+i18n._addressbook = translations.de._addressbook;
+
+export default i18n;

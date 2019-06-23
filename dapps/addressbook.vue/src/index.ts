@@ -27,13 +27,19 @@
 
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
+import { System, getDomainName, } from '@evan.network/ui-dapp-browser';
 
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 
+export * from './components/registry';
 export * from './dispatchers/registry';
+export { translations }
+
+System.map['@evan.network/addressbook'] = `addressbook.vue.${ getDomainName() }!dapp-content`;
+System.map['@evan.network/addressbook.vue'] = `addressbook.vue.${ getDomainName() }!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

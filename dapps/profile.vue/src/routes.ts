@@ -27,8 +27,15 @@
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
+import ProfileDetailComponent from './components/detail/detail.vue';
+import ProfileSettingsComponent from './components/settings/settings.vue';
+
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', redirect: { path: 'detail' } },
+  { name: 'detail', path: 'detail', component: ProfileDetailComponent },
+  { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
+];
 
 export default routeRegistration;
 

@@ -107,7 +107,7 @@ export default class ContactDetailComponent extends mixins(EvanComponent) {
         value: this.contact.email && !this.contact.accountId,
       },
       accountId: {
-        value: this.contact.accountId,
+        value: this.accountId,
       },
       email: {
         value: this.contact.email,

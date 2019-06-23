@@ -27,21 +27,6 @@
 
 <template>
   <div>
-    <div class="form-group">
-      <label for="alias">
-        {{ `${ i18nScope }.alias.title` | translate }} *
-      </label>
-      <input class="form-control" required
-        id="alias" ref="alias"
-        :placeholder="`${ i18nScope }.alias.desc` | translate"
-        v-model="form.alias.value"
-        :class="{ 'is-invalid' : form.alias.error }"
-        @blur="form.alias.setDirty()">
-      <div class="invalid-feedback">
-        {{ `${ i18nScope }.alias.error` | translate }}
-      </div>
-    </div>
-
     <div class="d-flex align-items-center">
       <div class="form-check mr-3" v-if="!disableAccountId">
         <input class="form-check-input"
@@ -89,6 +74,21 @@
         <div class="invalid-feedback">
           {{ form.email.error | translate }}
         </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="alias">
+        {{ `${ i18nScope }.alias.title` | translate }} *
+      </label>
+      <input class="form-control" required
+        id="alias" ref="alias"
+        :placeholder="`${ i18nScope }.alias.desc` | translate"
+        v-model="form.alias.value"
+        :class="{ 'is-invalid' : form.alias.error }"
+        @blur="form.alias.setDirty()">
+      <div class="invalid-feedback">
+        {{ `${ i18nScope }.alias.error` | translate }}
       </div>
     </div>
     

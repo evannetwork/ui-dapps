@@ -35,6 +35,8 @@ import ContactFormComponent from './contact-form/contact-form.vue';
 // export them all, so other applications can access them
 export {
   ContactAddComponent,
+  ContactDetailComponent,
+  ContactFormComponent,
 }
 
 // map them to element names, so they can be used within templates

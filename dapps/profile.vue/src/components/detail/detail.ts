@@ -25,4 +25,40 @@
   https://evan.network/license/
 */
 
-.test { color: red }
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+@Component({ })
+export default class ProfileDetailComponent extends mixins(EvanComponent) {
+  /**
+   * status flags
+   */
+  loading = true;
+
+  /**
+   * profile information
+   */
+  accountId = '';
+  alias = '';
+  balance = '';
+
+  /**
+   * Load the mail details
+   */
+  async created() {
+    const runtime = (<any>this).getRuntime();
+
+    this.accountId = runtime.activeAccount;
+    this.alias = (await runtime.profile.getAddressBook()).profile[this.accountId].alias;
+    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
+
+    this.loading = false;
+  }
+}

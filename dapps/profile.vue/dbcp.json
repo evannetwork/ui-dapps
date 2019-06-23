@@ -3,6 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
+        "addressbook.vue": "^3.0.0",
         "evancore.vue.libs": "^1.2.4"
       },
       "entrypoint": "profile.vue.js",

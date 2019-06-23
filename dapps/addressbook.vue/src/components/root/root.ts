@@ -160,11 +160,4 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
     this.categories = categories;
     this.loading = false;
   }
-
-  /**
-   * Sends the hide sidebar event.
-   */
-  hideSidebar2() {
-    window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-close'));
-  }
 }
