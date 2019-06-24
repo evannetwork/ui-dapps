@@ -88,6 +88,8 @@
     height: 70px;
 
     .evan-tab {
+      z-index: 9;
+
       width: 100%;
 
       &.active {

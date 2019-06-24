@@ -7,6 +7,7 @@
 - `ui.libs`
   - add table hover class
   - fix steps for only a few steps
+  - fix tabs `z-index`
 
 ### Deprecations
 
