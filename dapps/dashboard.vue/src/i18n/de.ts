@@ -29,9 +29,9 @@
 export default {
   "_dashboard": {
     "docs": {
-      "bcc": "API",
+      "bccdocs": "API",
       "github": "Wiki",
-      "ui": "UI"
+      "uidocs": "UI"
     },
     "documentation": "Dokumentation",
     "faq": "FAQ",

@@ -54,7 +54,7 @@ const i18n: any = {
         "de": "Deutsch",
         "en": "Englisch"
       },
-      "reload-hint": "Bitte laden sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+      "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     }
   }
 }

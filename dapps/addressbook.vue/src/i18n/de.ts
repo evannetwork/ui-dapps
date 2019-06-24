@@ -53,15 +53,15 @@ export default{
       },
       "continue": "Weiter",
       "desc": "Über dieses Formular können Sie einen Kontakt über eine bestehende evan.network Identität oder per E-Mail einladen. Sobald Sie einen Kontakt eingeladen haben, können Sie mit diesem sichere Nachrichten austauschen und ihn in Verträge einladen.",
-      "desc-email": "Sobald ein Nutzer per E-Mail eingeladen wird, können Sie diesen Kontakt nicht direkt verwenden um mit diesem Daten zu teilen. Sobald der Anmeldeprozess des eingeladenen Benutzers abgeschlossen ist, erhalten sie eine Blockchain Mail mit der Sie den Einladeprozess beenden und Kontaktdaten aktualisieren können. Weiterhin können Sie EVE als Startguthaben mit schicken.",
+      "desc-email": "Sobald ein Nutzer per E-Mail eingeladen wird, können Sie diesen Kontakt nicht direkt verwenden, um mit diesem Daten zu teilen. Sobald der Anmeldeprozess des eingeladenen Benutzers abgeschlossen ist, erhalten Sie eine Blockchain Mail mit der Sie den Einladeprozess beenden und Kontaktdaten aktualisieren können. Weiterhin können Sie EVE als Startguthaben mitschicken.",
       "email": {
-        "desc": "E-Mail Adresse zum einladen des Nutzers in das Netzwerk.",
+        "desc": "E-Mail Adresse zum Einladen des Nutzers in das Netzwerk.",
         "error-added": "Die angebene E-Mail Adresse haben Sie bereits zu Ihren Kontakten hinzugefügt.",
         "error-invalid": "Bitte geben Sie eine valide E-Mail Adresse an!",
         "title": "E-Mail"
       },
       "eve": {
-        "desc": "Menge EVE die dem Nutzer mit gesendet werden.",
+        "desc": "Menge EVE, die dem Nutzer mitgesendet werden",
         "error-eve-missing": "Sie besitzen nicht genug EVE (Kontostand: {eve} EVE).",
         "error-minimum": "Sie müssen mindestens 1 EVE senden.",
         "error-number": "Bitte geben Sie eine valide Zahl ein.",
