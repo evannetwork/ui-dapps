@@ -61,27 +61,27 @@
           </template>
         </evan-modal>
 
-        <form v-on:submit.prevent="checkFavorite">
-          <div class="form-group">
-            <label for="address">
-              {{ `_favorites.add-form.address.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="address" ref="address"
-              :placeholder="`_favorites.add-form.address.desc` | translate"
-              v-model="favoriteForm.address.value"
-              :class="{ 'is-invalid' : favoriteForm.address.error }"
-              @blur="favoriteForm.address.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_favorites.add-form.address.error` | translate }}
-            </div>
+        <div class="form-group">
+          <label for="address">
+            {{ `_favorites.add-form.address.title` | translate }}
+          </label>
+          <input class="form-control" required
+            id="address" ref="address"
+            :placeholder="`_favorites.add-form.address.desc` | translate"
+            v-model="favoriteForm.address.value"
+            :class="{ 'is-invalid' : favoriteForm.address.error }"
+            @blur="favoriteForm.address.setDirty()"
+            @keyup.enter="checkFavorite()">
+          <div class="invalid-feedback">
+            {{ `_favorites.add-form.address.error` | translate }}
           </div>
-        </form>
+        </div>
       </template>
       <template v-slot:footer>
         <button type="submit"
           class="btn btn-rounded btn-primary"
-          :disabled="!favoriteForm.isValid || checking">
+          :disabled="!favoriteForm.isValid || checking"
+          @click="checkFavorite()">
           <div class="spinner-border spinner-border-sm text-light mr-3"
             v-if="checking">
           </div>

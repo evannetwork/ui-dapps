@@ -81,8 +81,10 @@ export default class AddComponent extends mixins(EvanComponent) {
 
   /**
    * Check if an favorite was already added. If not, ask for accept, else, show already added.
+   *
+   * @param      {any}  $event  form event
    */
-  async checkFavorite() {
+  async checkFavorite($event?: any) {
     const runtime = (<any>this).getRuntime();
     const domainName = dappBrowser.getDomainName();
 
@@ -117,7 +119,6 @@ export default class AddComponent extends mixins(EvanComponent) {
       this.addStatus = this.description ? 'ok' : 'notFound';
     }
 
-    (<any>this.$refs.favoriteAddModal).hide();
     (<any>this.$refs.favoriteAddModalAccept).show();
   }
 

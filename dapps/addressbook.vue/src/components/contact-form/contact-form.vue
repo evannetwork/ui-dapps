@@ -34,7 +34,8 @@
           :value="false"
           v-model="form.emailInvite.value">
       </div>
-      <div class="form-group w-100">
+      <div class="form-group w-100"
+        v-if="!disableAccountId || !form.emailInvite.value">
         <label for="accountId">
           {{ `${ i18nScope }.accountId.title` | translate }} *
         </label>
@@ -52,7 +53,8 @@
       </div>
     </div>
 
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center"
+      v-if="!disableAccountId || form.emailInvite.value">
       <div class="form-check mr-3" v-if="!disableAccountId">
         <input class="form-check-input"
           id="emailInvite" type="radio"

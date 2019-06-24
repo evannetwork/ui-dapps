@@ -69,7 +69,7 @@
                     :id="`evan-dt-plugin-${ plugin.description.name.replace('.', '') }`"
                     @click="activatePlugin(plugin)">
                     <div class="row align-items-center m-0 w-100">
-                      <div class="col-2" style="overflow: visible">
+                      <!-- <div class="col-2" style="overflow: visible">
                         <img class="img-fluid p-3"
                           v-if="plugin.imgSquare"
                           :src="plugin.imgSquare">
@@ -77,10 +77,10 @@
                           class="mdi mdi-circle-edit-outline text-muted"
                           style="font-size:50px;">
                         </i>
-                      </div>
-                      <div class="col-10">
+                      </div> -->
+                      <div class="col-12">
                         <div class="d-flex p-3 align-items-center">
-                          <div class="w-100">
+                          <div class="w-100 text-left">
                             <h4 class="font-weight-semibold mb-0 force-oneline">
                               {{ plugin.description.name }}
                             </h4>

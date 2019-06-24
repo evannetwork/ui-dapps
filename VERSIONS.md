@@ -12,6 +12,9 @@
   - switch to tabs
 - `profile.vue`
   - add profile details (alias, accountId balance) and application settings (language, dev-mode, dev-dapps-domain)
+- `dashboard.vue`
+  - add tabs for docs navigation
+  - fix overview addressbook link
 
 ### Fixes
 - `datacontainer.digitaltwins`

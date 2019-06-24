@@ -38,6 +38,25 @@ const dispatcher = new Dispatcher(
   '_addressbook.dispatcher.invite'
 );
 
+/**
+ * Return a new bcc.Profile instance for a given accountId.
+ *
+ * @return     {bcc.Runtime}  profile for account
+ */
+const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => {
+  return new bcc.Profile({
+    accountId: accountId,
+    contractLoader: runtime.contractLoader,
+    dataContract: runtime.dataContract,
+    defaultCryptoAlgo: 'aes',
+    executor: runtime.executor,
+    ipld: runtime.ipld,
+    log: runtime.logger.log,
+    nameResolver: runtime.nameResolver,
+    rightsAndRoles: runtime.rightsAndRoles,
+  });
+}
+
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     // check if mail smart agent was key exchanged
@@ -53,23 +72,14 @@ dispatcher
 
       // if the user hasn't added the smart agent, add it to the contacts
       if (!smartAgentCommKey) {
-        const targetPubKey = await runtime.profile.getPublicKey();
+        const targetPubKey = await getProfileForAccount(runtime, smartAgentAccountId).getPublicKey();
         const commKey = await runtime.keyExchange.generateCommKey();
         await runtime.keyExchange.sendInvite(smartAgentAccountId, targetPubKey, commKey, {});
 
         // add key to profile
-        await runtime.profile.addContactKey(
-          smartAgentAccountId,
-          'commKey',
-          commKey
-        );
-        await runtime.profile.addProfileKey(
-          smartAgentAccountId, 'alias', 'Email Smart Agent'
-        );
-        await runtime.profile.addProfileKey(
-          smartAgentAccountId, 'tags', 'Smart Agent'
-        );
-
+        await runtime.profile.addContactKey(smartAgentAccountId, 'commKey', commKey);
+        await runtime.profile.addProfileKey(smartAgentAccountId, 'alias', 'Email Smart Agent');
+        await runtime.profile.addProfileKey(smartAgentAccountId, 'tags', 'Smart Agent');
         await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
       }
     }
@@ -97,7 +107,7 @@ dispatcher
       );
     } else {
       // generate communication keys
-      const targetPubKey = await runtime.profile.getPublicKey();
+      const targetPubKey = await getProfileForAccount(runtime, accountId).getPublicKey();
       const commKey = await runtime.keyExchange.generateCommKey();
       await runtime.keyExchange.sendInvite(accountId, targetPubKey, commKey, {
         fromAlias: data.fromAlias,

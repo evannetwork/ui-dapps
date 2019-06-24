@@ -11,7 +11,7 @@
         "favorites.css",
         "favorites.js"
       ],
-      "origin": "QmaQYRA6aeUfoR2Yurmkn4u8zCah6NY2xLrzFYhsU3uFfJ",
+      "origin": "QmShhUTtnGmhQVubHXACWVXch49ZPm7FHCjqcghRBFMzkw",
       "primaryColor": "#b66e74",
       "secondaryColor": "#edeada",
       "type": "dapp"
@@ -35,7 +35,7 @@
       "evan",
       "library"
     ],
-    "version": "3.0.1",
+    "version": "1.5.1",
     "versions": {
       "0.1.0": "QmdTjbhWMfP7YptyEgqZDkX2yXwnzk6KCwHaY32mi9CbyR",
       "0.9.0": "QmRJ3mFKaeUgiYapr3uVGFkeE1n3L71kVDW4W3ZkCrhEKS",
@@ -45,7 +45,8 @@
       "1.1.0": "QmURmMvKMwnsqVkaAwZnWRZ6JNrUA2HjDbQrzh8ccGXT2t",
       "1.2.0": "QmaRFqW48Jq8VnyBPZj5C4Uat3Qvg3uJnpmDK7RCNQm5wQ",
       "1.3.0": "QmQHkn1fsKFtga4KMMWBfAnbj9SXbdgNapNANzBke2a5xF",
-      "1.5.0": "QmYhsmFn5UNVd8mdS6WNACXBxWd9ZGsSSczJrLU69TpdL5"
+      "1.5.0": "QmYhsmFn5UNVd8mdS6WNACXBxWd9ZGsSSczJrLU69TpdL5",
+      "1.5.1": "QmY5d48L996eLb3KqMBpx3uU5w2k3ozHsVx6gmAzGig7xc"
     }
   }
 }
