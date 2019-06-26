@@ -3,11 +3,13 @@ This project include general and global, framework independent, evan.network fun
 
 The following stylings are per default included:
 - [evan bootstrap](https://github.com/evannetwork/ui-core/tree/master/dapps/evan.bootstrap.libs)
-- [fontawesome](https://github.com/evannetwork/ui-core/tree/master/dapps/fontawesome.libs)
+- [materialicons](https://github.com/evannetwork/ui-core/tree/master/dapps/materialicons.libs)
 
 The following functionalities are included:
 - configuration values for runtime environments
 - Dispatcher & Queue Logic for a batch / step data synchronization
+- File handling
+- general configurations
 
 
 ## Build

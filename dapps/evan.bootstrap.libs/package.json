@@ -10,7 +10,7 @@
     "CSS"
   ],
   "main": "dist/evan.bootstrap.libs.js",
-  "name": "@evan.network/bootstrap-them-evan",
+  "name": "@evan.network/bootstrap-theme-evan",
   "scripts": {
     "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
   },

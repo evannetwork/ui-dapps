@@ -21,3 +21,14 @@ npm run build
   }
   ...
 ```
+
+- package.json
+```
+  ...
+  "dapp": {
+    "dependencies": {
+      "@evan.network/bootstrap-theme-evan": "X.X.X"
+    },
+  }
+  ...
+```
