@@ -57,6 +57,7 @@
           {{ control.value }}
         </template>
       </a>
+      <img v-else-if="isImg" :src="control.value">
       <span class="force-oneline0" :id="id" v-else>
         {{ control.value }}
       </span>

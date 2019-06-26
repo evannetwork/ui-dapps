@@ -32,7 +32,7 @@
       <div class="header">
         <div style="width: calc(100% - 100px);">
           <h3 class="m-0 font-weight-semibold force-oneline">
-            {{ container.name }}
+            {{ container.description.name }}
           </h3>
           <span class="text-muted force-oneline">
             {{ container.description.description }}

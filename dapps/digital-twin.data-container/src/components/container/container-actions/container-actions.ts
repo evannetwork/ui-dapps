@@ -187,13 +187,13 @@ export default class ContainerActionsComponent extends mixins(EvanComponent) {
   async saveDbcp() {
     const dbcpForm = this.reactiveRefs.dbcpForm;
 
-    if (!this.$store.state.saving && dbcpForm.isValid) {
+    if (!this.saving && dbcpForm.isValid) {
       const runtime = utils.getRuntime(this);
 
       // hide current schema editor, so the beforeDestroy event is triggered and the data of the
       // opened ajv editor is saved
       this.loading = true;
-      this.$store.state.saving = true;
+      this.saving = true;
 
       // update description backup
       this.plugin.description.name = dbcpForm.name.value;

@@ -15,10 +15,15 @@
 - `dashboard.vue`
   - add tabs for docs navigation
   - fix overview addressbook link
+- `datacontainer.digitaltwins`
+  - add img display for string ajv fields
 
 ### Fixes
 - `datacontainer.digitaltwins`
   - fix `Container` detail entry switching
+  - fix sharing `loadForAccount` key
+  - fix `Container` dbcp saving flag
+  - add `containerAddress` and `twinAddress` to the share b-mail
 
 ### Deprecations
 

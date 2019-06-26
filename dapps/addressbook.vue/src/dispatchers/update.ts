@@ -43,7 +43,7 @@ dispatcher
     const runtime = instance.runtime;
 
     // ensure latest addressbook is loaded
-    await runtime.profile.loadForAccount(runtime.profile.treeLabels.contracts);
+    await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
 
     // update the contact details
     await Promise.all([ 'alias', 'accountId', 'email', 'tags', ]

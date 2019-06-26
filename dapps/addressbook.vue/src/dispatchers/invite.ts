@@ -89,7 +89,7 @@ dispatcher
     const accountId = data.accountId || data.email;
 
     // ensure latest addressbook is loaded
-    await runtime.profile.loadForAccount(runtime.profile.treeLabels.contracts);
+    await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
 
     // send email invitation
     if (data.emailInvite) {
