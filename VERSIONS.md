@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 3.5.0
+### Features
 - `addressbook.vue`
   - add correct addressbook vue design
   - add missing invitation logic
@@ -24,8 +32,6 @@
   - fix sharing `loadForAccount` key
   - fix `Container` dbcp saving flag
   - add `containerAddress` and `twinAddress` to the share b-mail
-
-### Deprecations
 
 
 ## Version 3.4.0
