@@ -27,15 +27,19 @@
 
 <template>
   <div>
-    <div class="p-3 text-left">
-      <div class="bg-level-1 border">
-        <div class="d-flex p-5 border-bottom border-sm align-items-center">
-          <h3 class="m-0 font-weight-semibold">
-            {{ `_favorites.add` | translate }}
-          </h3>
-        </div>
-
-        <evan-modal ref="favoriteAddModal">
+    <evan-modal
+      id="favorite-add-modal"
+      ref="favoriteAddModal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_favorites.add` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <evan-modal
+          id="favorite-add-modal-accept"
+          ref="favoriteAddModalAccept">
           <template v-slot:header>
             <h5 class="modal-title">
               {{ `_favorites.add-form.modal.${ addStatus }.title` | translate }}
@@ -47,43 +51,44 @@
             </p>
           </template>
           <template v-slot:footer>
-            <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
-             v-if="addStatus === 'ok'"
+            <button type="button"
+              class="btn btn-primary btn-rounded"
+              v-if="addStatus === 'ok'"
               @click="addFavorite();">
               {{ `_favorites.add` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
             </button>
           </template>
         </evan-modal>
 
-        <form class="p-4" v-on:submit.prevent="checkFavorite">
-          <div class="form-group">
-            <label for="address">
-              {{ `_favorites.add-form.address.title` | translate }}
-            </label>
-            <input class="form-control" required
-              id="address" ref="address"
-              :placeholder="`_favorites.add-form.address.desc` | translate"
-              v-model="favoriteForm.address.value"
-              :class="{ 'is-invalid' : favoriteForm.address.error }"
-              @blur="favoriteForm.address.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_favorites.add-form.address.error` | translate }}
-            </div>
+        <div class="form-group">
+          <label for="address">
+            {{ `_favorites.add-form.address.title` | translate }}
+          </label>
+          <input class="form-control" required
+            id="address" ref="address"
+            :placeholder="`_favorites.add-form.address.desc` | translate"
+            v-model="favoriteForm.address.value"
+            :class="{ 'is-invalid' : favoriteForm.address.error }"
+            @blur="favoriteForm.address.setDirty()"
+            @keyup.enter="checkFavorite()">
+          <div class="invalid-feedback">
+            {{ `_favorites.add-form.address.error` | translate }}
           </div>
-
-          <div class="text-center mt-3 w-100">
-            <button type="submit"
-              class="btn btn-rounded btn-primary"
-              :disabled="!favoriteForm.isValid || checking">
-              <div class="spinner-border spinner-border-sm text-light mr-3"
-                v-if="checking">
-              </div>
-              {{ `_favorites.add` | translate }}
-            </button>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <button type="submit"
+          class="btn btn-rounded btn-primary"
+          :disabled="!favoriteForm.isValid || checking"
+          @click="checkFavorite()">
+          <div class="spinner-border spinner-border-sm text-light mr-3"
+            v-if="checking">
           </div>
-        </form>
-      </div>
-    </div>
+          {{ `_favorites.add` | translate }}
+        </button>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

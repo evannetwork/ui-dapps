@@ -31,22 +31,44 @@
       :routes="[ ]"
       v-on:loggedin="initialize()">
       <template v-slot:content>
-        <evan-breadcrumbs
-          :i18nScope="'_favorites'"
-          :enableReload="true"
-          @reload="loadBookmarks(true)">
-          <template v-slot:content>
-            <button type="button" class="btn btn-primary btn-circle"
-              v-if="$route.name !== 'add'"
-              @click="evanNavigate('add')">
-              <i class="mdi mdi-plus"></i>
+        <evan-loading v-if="loading"></evan-loading>
+        <div class="container-wide overflow-y-auto flex-grow-1" v-else>
+          <favorite-add
+            ref="favoriteAddModal">
+          </favorite-add>
+          <div class="d-flex mb-5 align-items-center">
+            <div style="width: calc(100% - 200px)">
+              <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
+                {{ '_favorites.favorites-desc' | translate }}
+              </h3>
+            </div>
+            <span class="mx-auto"></span>
+            <button type="button" class="btn btn-primary btn-rounded"
+              @click="$refs.favoriteAddModal.show();">
+              {{ `_favorites.add` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
             </button>
-          </template>
-        </evan-breadcrumbs>
-        <template v-if="$route.name !== 'add'">
-          <evan-loading v-if="loading"></evan-loading>
-          <div class="p-3 d-md-flex flex-wrap justify-content-center"
-            v-if="!loading">
+          </div>
+          <div class="white-box border-smooth rounded"
+            v-if="favorites.length === 0">
+            <div class="header">
+              <h3 class="m-0 font-weight-semibold">
+                {{ '_favorites.no-favorites.title' | translate }}
+              </h3>
+            </div>
+            <div class="content">
+              <p v-html="$t('_favorites.no-favorites.desc')"></p>
+
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary btn-rounded"
+                  @click="$refs.favoriteAddModal.show();">
+                  {{ `_favorites.add` | translate }}
+                  <i class="mdi mdi-arrow-right label ml-3"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap" v-else>
             <template
               v-for="(favorite, index) in favorites">
               <evan-modal ref="favoriteRemoveModal">
@@ -71,60 +93,57 @@
                   </button>
                 </template>
               </evan-modal>
-              <div class="favorite position-relative
-                  col-md-4 col-lg-3 col-xl-2
-                  p-0 m-md-3 mb-3 
-                  text-center
-                  bg-level-1 border evan-highlight"
-                style="min-width: 250px"
-                @click="openFavorite(favorite)">
-                <img class="img-fluid p-3"
-                  style="max-width: 200px; min-height: 200px;"
-                  :src="favorite.imgSquare"
-                  :style="favorite.address === 'lindig.evan' ? 'filter: invert(1)' : ''">
+              <div
+                class="col-md-4 col-lg-3 p-md-3 pb-3"
+                style="min-width: 250px">
+                <div class="favorite position-relative
+                    text-center
+                    bg-level-1 border evan-highlight"
+                  @click="openFavorite(favorite)">
+                  <img class="img-fluid p-4"
+                    style="max-width: 200px; min-height: 200px; max-height: 200px;"
+                    :src="favorite.imgSquare"
+                    :style="favorite.address === 'lindig.evan' ? 'filter: invert(1)' : ''">
 
-                <div class="text-left p-3 border-top highlight">
-                  <h5 class="font-weight-bold">{{ favorite.name }}</h5>
-                  <small>{{ favorite.description }}</small>
-                </div>
-
-                <div class="top-right">
-                  <div class="pt-1 pb-1 pr-2 pl-2" v-if="favorite.loading">
-                    <div class="spinner-border spinner-border-sm text-secondary"></div>
+                  <div class="text-left p-3 border-top highlight">
+                    <h5 class="font-weight-bold">{{ favorite.name }}</h5>
+                    <small>{{ favorite.description }}</small>
                   </div>
-                  <div v-else>
-                    <div class="btn"
-                      @click="
-                        $refs.favoriteRemove[index].show();
-                        $event.stopPropagation()
-                      ">
-                      <i class="mdi mdi-dots-vertical"></i>
+
+                  <div class="top-right">
+                    <div class="pt-1 pb-1 pr-2 pl-2" v-if="favorite.loading">
+                      <div class="spinner-border spinner-border-sm text-secondary"></div>
                     </div>
-                    <evan-dropdown ref="favoriteRemove"
-                      :alignment="'right'"
-                      :width="'300px'">
-                      <template v-slot:content>
-                        <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
-                          @click="
-                            $refs.favoriteRemoveModal[index].show($event);
-                            $refs.favoriteRemove[index].hide($event);
-                            $event.stopPropagation();
-                          ">
-                          <i class="mdi mdi-delete mr-3`" style="width: 16px;"></i>
-                          {{ `_favorites.remove` | translate }}
-                        </a>
-                      </template>
-                    </evan-dropdown>
+                    <div v-else>
+                      <div class="btn"
+                        @click="
+                          $refs.favoriteRemove[index].show();
+                          $event.stopPropagation()
+                        ">
+                        <i class="mdi mdi-dots-vertical"></i>
+                      </div>
+                      <evan-dropdown ref="favoriteRemove"
+                        :alignment="'right'"
+                        :width="'300px'">
+                        <template v-slot:content>
+                          <a class="dropdown-item pt-2 pb-2 pl-3 pr-3"
+                            @click="
+                              $refs.favoriteRemoveModal[index].show($event);
+                              $refs.favoriteRemove[index].hide($event);
+                              $event.stopPropagation();
+                            ">
+                            <i class="mdi mdi-delete mr-3" style="width: 16px;"></i>
+                            {{ `_favorites.remove` | translate }}
+                          </a>
+                        </template>
+                      </evan-dropdown>
+                    </div>
                   </div>
                 </div>
               </div>
             </template>
           </div>
-        </template>
-        <transition name="fade" mode="out-in"
-          v-else>
-          <router-view></router-view>
-        </transition>
+        </div>
       </template>
     </evan-dapp-wrapper>
   </div>

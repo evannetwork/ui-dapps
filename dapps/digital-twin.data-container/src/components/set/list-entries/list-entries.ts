@@ -155,9 +155,8 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
     if (this.permitted) {
       this.loadingEntries = true;
 
+      const runtime = utils.getRuntime(this);
       try {
-        const runtime = utils.getRuntime(this);
-
         // detect maxListEntries, so we can load until the max list entries were loaded
         this.maxListentries = await runtime.dataContract.getListEntryCount(
           this.containerAddress,
@@ -181,6 +180,7 @@ export default class DcListEntriesComponent extends mixins(EvanComponent) {
           }))
         );
       } catch (ex) {
+        runtime.logger.log(ex.message, 'error');
         this.error = true;
       }
     }

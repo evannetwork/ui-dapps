@@ -8,6 +8,32 @@
 ### Deprecations
 
 
+## Version 3.5.0
+### Features
+- `addressbook.vue`
+  - add correct addressbook vue design
+  - add missing invitation logic
+  - add dispatcher logic
+- `favorites.vue`
+  - add new design for favorites
+- `mailbox.vue`
+  - switch to tabs
+- `profile.vue`
+  - add profile details (alias, accountId balance) and application settings (language, dev-mode, dev-dapps-domain)
+- `dashboard.vue`
+  - add tabs for docs navigation
+  - fix overview addressbook link
+- `datacontainer.digitaltwins`
+  - add img display for string ajv fields
+
+### Fixes
+- `datacontainer.digitaltwins`
+  - fix `Container` detail entry switching
+  - fix sharing `loadForAccount` key
+  - fix `Container` dbcp saving flag
+  - add `containerAddress` and `twinAddress` to the share b-mail
+
+
 ## Version 3.4.0
 ### Features
 - add basic `technical-detail` component to `datacontainer.digitaltwins` and `digitaltwin`

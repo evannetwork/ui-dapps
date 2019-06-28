@@ -26,14 +26,17 @@
 */
 
 // vue imports
-import Vue from 'vue';
+import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
+import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, getDomainName } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { agentUrl } from '@evan.network/ui';
+
 import { getDefaultDAppEns } from '../../utils';
 
 @Component({ })
@@ -172,6 +175,17 @@ export default class AcceptContact extends mixins(EvanComponent) {
       };
       await this.runtime.keyExchange.sendInvite(this.inviteeAddress, targetPubKey,
         commKey, mail);
+
+
+      // trigger smart agent to pay out credit eves
+      try {
+        await axios.post(`${ agentUrl }/api/smart-agents/onboarding/accept`, {
+          invitationId: this.$route.query.inviteeAddress,
+          accountId: this.runtime.activeAccount,
+        });
+      } catch (ex) {
+        this.runtime.logger.log(ex.message, 'error');
+      }
 
       // show success
       this.accepted = true;

@@ -25,4 +25,12 @@
   https://evan.network/license/
 */
 
-.test { color: red }
+import inviteDispatcher from './invite';
+import updateDispatcher from './update';
+import removeDispatcher from './remove';
+
+export {
+  inviteDispatcher,
+  updateDispatcher,
+  removeDispatcher,
+}

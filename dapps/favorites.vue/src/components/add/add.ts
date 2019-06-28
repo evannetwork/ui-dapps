@@ -81,8 +81,10 @@ export default class AddComponent extends mixins(EvanComponent) {
 
   /**
    * Check if an favorite was already added. If not, ask for accept, else, show already added.
+   *
+   * @param      {any}  $event  form event
    */
-  async checkFavorite() {
+  async checkFavorite($event?: any) {
     const runtime = (<any>this).getRuntime();
     const domainName = dappBrowser.getDomainName();
 
@@ -117,7 +119,7 @@ export default class AddComponent extends mixins(EvanComponent) {
       this.addStatus = this.description ? 'ok' : 'notFound';
     }
 
-    (<any>this.$refs.favoriteAddModal).show();
+    (<any>this.$refs.favoriteAddModalAccept).show();
   }
 
   /**
@@ -125,7 +127,7 @@ export default class AddComponent extends mixins(EvanComponent) {
    */
   async addFavorite() {
     (<any>this.$refs.favoriteAddModal).hide();
-    (<any>this).evanNavigate('');
+    (<any>this.$refs.favoriteAddModalAccept).hide();
 
     await addFavoriteDispatcher.start((<any>this).getRuntime(), {
       address: this.favoriteForm.address.value,
@@ -138,5 +140,19 @@ export default class AddComponent extends mixins(EvanComponent) {
       primaryColor: this.description.primaryColor || this.description.dapp.primaryColor,
       secondaryColor: this.description.secondaryColor || this.description.dapp.secondaryColor
     });
+  }
+
+  /**
+   * Opens the contacts modal
+   */
+  show() {
+    (<any>this.$refs.favoriteAddModal).show();
+  }
+
+  /**
+   * Opens the contacts modal
+   */
+  close() {
+    (<any>this.$refs.favoriteAddModal).hide();
   }
 }

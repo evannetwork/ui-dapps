@@ -64,6 +64,12 @@ dispatcher
       const commKey = await runtime.keyExchange.decryptCommKey(data.attachment.key, commSecret.toString('hex'));
       await runtime.profile.addContactKey(data.mail.from, 'commKey', commKey.toString('utf-8'));
       await runtime.profile.addProfileKey(data.mail.from, 'alias', data.mail.fromAlias);
+
+      // remove old account that includes fromMail
+      if (data.mail.fromMail) {
+        await runtime.profile.removeContact(data.mail.fromMail);
+      }
+
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
     } else {
       // check if a specific store value was specified, if not, use the latest dbcp description

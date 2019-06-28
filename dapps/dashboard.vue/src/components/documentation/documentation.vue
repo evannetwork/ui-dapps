@@ -29,42 +29,10 @@
   <div id="documentation" class="h-100">
     <evan-dapp-wrapper class="h-100">
       <template v-slot:content>
-        <evan-dapp-wrapper-level-2>
-          <template v-slot:content>
-            <div class="w300">
-              <div class="d-flex flex-wrap pl-4 pr-4 pt-4 pb-3 align-items-center ">
-                <a :href="`${ dapp.fullUrl }`">
-                  <h5 class="font-weight-semibold text-uppercase text-nowrap">{{ '_dashboard.documentation' | translate }}
-                  </h5>
-                </a>
-              </div>
-
-              <ul class="nav font-medium in w-100 mb-3 mt-auto">
-                <li class="w-100 p-4 clickable d-flex"
-                  :class="{ active: $route.path.endsWith('github') }"
-                    @click="$router.push({ name: 'dashboard-docs-github' })">
-                  <h6 class="mb-0">{{ '_dashboard.docs.github' | translate }}</h6>
-                  <span class="mx-auto"></span>
-                  <i class="mdi mdi-chevron-right"></i>
-                </li>
-                <li class="w-100 p-4 clickable d-flex"
-                  :class="{ active: $route.path.endsWith(`documentation/bccdocs.${ domainName }`) }"
-                  @click="evanNavigate(`documentation/bccdocs.${ domainName }`)">
-                  <h6 class="mb-0">{{ '_dashboard.docs.bcc' | translate }}</h6>
-                  <span class="mx-auto"></span>
-                  <i class="mdi mdi-chevron-right"></i>
-                </li>
-                <li class="w-100 p-4 clickable d-flex"
-                  :class="{ active: $route.path.endsWith(`documentation/uidocs.${ domainName }`) }"
-                  @click="evanNavigate(`documentation/uidocs.${ domainName }`)">
-                  <h6 class="mb-0">{{ '_dashboard.docs.ui' | translate }}</h6>
-                  <span class="mx-auto"></span>
-                  <i class="mdi mdi-chevron-right"></i>
-                </li>
-              </ul>
-            </div>
-          </template>
-        </evan-dapp-wrapper-level-2>
+        <evan-nav-tabs class="flex-shrink-0"
+          :tabs="tabs"
+          ref="navTabs">
+        </evan-nav-tabs>
 
         <transition name="fade" mode="out-in">
           <router-view></router-view>

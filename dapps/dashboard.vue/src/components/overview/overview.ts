@@ -51,7 +51,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     {
       title: 'contacts',
       img: 'contact-colored.svg',
-      path: `addressbook.${ getDomainName() }`,
+      path: `addressbook.vue.${ getDomainName() }`,
     },
   ];
 

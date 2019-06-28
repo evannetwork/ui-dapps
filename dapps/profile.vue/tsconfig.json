@@ -16,7 +16,12 @@
     "strict": false,
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
-    "target": "es5"
+    "target": "es5",
+    "paths": {
+      "@evan.network/addressbook": [
+        "../../addressbook.vue/dist/addressbook.vue.js"
+      ]
+    }
   },
   "exclude": [
     "../../../node_modules/@evan.network"

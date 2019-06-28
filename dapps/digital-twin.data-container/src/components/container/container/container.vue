@@ -49,7 +49,7 @@
       <div class="container-wide overflow-y-auto flex-grow-1">
         <div class="d-flex mb-5 align-items-center" height="45px">
           <div style="width: 50%;">
-            <h3 class="font-weight-bold mb-0 overflow-multiline line-1 bg-level-3">
+            <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
               {{ description.description }}
             </h3>
           </div>

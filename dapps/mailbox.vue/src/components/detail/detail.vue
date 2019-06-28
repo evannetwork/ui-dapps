@@ -26,8 +26,8 @@
 */
 
 <template>
-  <div class="p-3 text-left">
-    <div class="bg-level-1 border">
+  <div class="container-wide">
+    <div class="white-box border-smooth rounded">
       <evan-loading v-if="loading"></evan-loading>
       <template v-if="!loading">
         <div class="d-flex pl-3 pr-3 pt-4 pb-4 border-bottom align-items-center">

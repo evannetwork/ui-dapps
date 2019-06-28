@@ -46,7 +46,7 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
-      <a class="overflow-multiline line-10"
+      <a class="force-oneline0"
         v-else-if="isContract"
         :id="id"
         :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/datacontainer.digitaltwin.${ dapp.domainName }/${ control.value }`">
@@ -57,7 +57,8 @@
           {{ control.value }}
         </template>
       </a>
-      <span class="overflow-multiline line-10" :id="id" v-else>
+      <img v-else-if="isImg" :src="control.value">
+      <span class="force-oneline0" :id="id" v-else>
         {{ control.value }}
       </span>
     </div>

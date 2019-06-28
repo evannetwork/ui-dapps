@@ -44,20 +44,19 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
         redirect: { path: 'github' }
       },
       {
-        name: 'dashboard-docs-github',
         path: 'github',
         component: EvanIframeComponent,
         props: { src: 'https://evannetwork.github.io' }
       },
       {
-        name: 'dashboard-docs-bccdocs',
-        path: `bccdocs.${ dappBrowser.getDomainName() }`,
-        component: DAppLoaderComponent
+        path: `bccdocs`,
+        component: EvanIframeComponent,
+        props: { src: '//api-blockchain-core.readthedocs.io/en/latest/' }
       },
       {
-        name: 'dashboard-docs-uidocs',
-        path: `uidocs.${ dappBrowser.getDomainName() }`,
-        component: DAppLoaderComponent
+        path: `uidocs`,
+        component: EvanIframeComponent,
+        props: { src: '//ui-docs.readthedocs.io/en/latest/' }
       },
     ]
   },

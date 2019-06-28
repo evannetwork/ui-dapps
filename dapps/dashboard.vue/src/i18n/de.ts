@@ -29,9 +29,9 @@
 export default {
   "_dashboard": {
     "docs": {
-      "bcc": "Blockchain",
+      "bccdocs": "API",
       "github": "Wiki",
-      "ui": "UI"
+      "uidocs": "UI"
     },
     "documentation": "Dokumentation",
     "faq": "FAQ",
@@ -45,7 +45,7 @@ export default {
         "title": "Meine Digitalen Zwillinge"
       },
       "explanations": {
-        "desc": "Was ist das evan.network und was kann ich damit tun?",
+        "desc": "Was ist das evan.network und was können Sie damit tun?",
         "title": "Wie funktioniert evan"
       },
       "recovery": {
@@ -54,7 +54,7 @@ export default {
         "title": "Sitzung fortfahren"
       }
     },
-    "startup": "Womit möchtest du starten?"
+    "startup": "Womit möchten Sie starten?"
   }
 }
 /* tslint:enable */

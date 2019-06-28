@@ -307,12 +307,18 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
         from: runtime.activeAccount,
         fromAlias: this.myProfile.alias,
         title: this.shareForm.title.value,
-        body: this.shareForm.body.value
-          .replace(/\n/g, '<br>'),
-        attachments: [{
-          type: 'url',
-          fullPath: fullPath.join('/'),
-        }],
+        body: this.shareForm.body.value.replace(/\n/g, '<br>'),
+        attachments: [
+          {
+            fullPath: fullPath.join('/'),
+            type: 'url',
+          },
+          {
+            containerAddress: this.containerAddress,
+            twinAddress: this.digitalTwinAddress,
+            type: 'container',
+          }
+        ],
       },
     };
 

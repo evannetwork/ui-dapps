@@ -78,20 +78,31 @@ export default class StringComponent extends mixins(EvanComponent) {
   isContract = false;
   loading = false;
 
+  /**
+   * Is the value a img?
+   */
+  isImg = false;
+
   async created() {
-    if (this.control.value && this.control.value.startsWith('0x')) {
-      this.loading = true;
+    if (this.control.value) {
+      // check if it is a contract
+      if (this.control.value.startsWith('0x')) {
+        this.loading = true;
 
-      try {
-        const runtime = utils.getRuntime(this);
-        this.contractTitle = (await runtime.description
-          .getDescription(this.control.value, runtime.activeAccount)).public.name;
+        try {
+          const runtime = utils.getRuntime(this);
+          this.contractTitle = (await runtime.description
+            .getDescription(this.control.value, runtime.activeAccount)).public.name;
 
-        // only display as contract when a correct dbcp is added
-        this.isContract = true;
-      } catch (ex) { }
+          // only display as contract when a correct dbcp is added
+          this.isContract = true;
+        } catch (ex) { }
 
-      this.loading = false;
+        this.loading = false;
+      } else if (this.control.value.match(/\.(jpeg|jpg|gif|png)$/) !== null ||
+          this.control.value.startsWith('data:image')) {
+        this.isImg = true;
+      }
     }
   }
 }

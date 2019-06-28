@@ -49,7 +49,7 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
-      <span class="overflow-multiline line-10" :id="id" v-else>
+      <span class="force-oneline0" :id="id" v-else>
         {{ textValue }}
       </span>
     </div>

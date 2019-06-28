@@ -32,7 +32,6 @@ import AddComponent from './components/add/add.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { name: 'add', path: 'add', component: AddComponent },
 ];
 
 export default routeRegistration;

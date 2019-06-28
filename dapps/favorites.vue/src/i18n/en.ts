@@ -55,6 +55,11 @@ export default {
       "remove": "Remove Favorit"
     },
     "favorites": "Favorites",
+    "favorites-desc": "Overview about your favorites",
+    "no-favorites": {
+      "desc": "You have not yet added any favorites in. Use the button below to add a favorite.",
+      "title": "No Favorites"
+    },
     "overview": "Overview",
     "remove": "Delete Favorite",
     "remove-modal": {

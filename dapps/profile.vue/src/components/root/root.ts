@@ -36,6 +36,21 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class profileRootComponent extends mixins(EvanComponent) {
+export default class ProfileRootComponent extends mixins(EvanComponent) {
+  /**
+   * Tabs for top navigation
+   */
+  tabs: Array<any> = [ ];
 
+  /**
+   * Setup navigation structure
+   */
+  created() {
+    this.tabs = [ 'detail', 'settings', ]
+      .map(urlKey => ({
+        id: `tab-${ urlKey }`,
+        href: `${ (<any>this).dapp.fullUrl }/${ urlKey }`,
+        text: `_profile.breadcrumbs.${ urlKey }`
+      }));
+  }
 }

@@ -25,11 +25,41 @@
   https://evan.network/license/
 */
 
+import { translations } from '@evan.network/addressbook';
+
 /* tslint:disable */
-export default {
+const i18n: any = {
   "_profile": {
-    "routes": {
+    "breadcrumbs": {
+      "detail": "Profile",
+      "settings": "Settings"
+    },
+    "detail": {
+      "account-id": "Account-ID",
+      "alias": "Alias",
+      "balance": "Balance",
+      "desc": "Profile-Details",
+      "edit": "Edit Profile"
+    },
+    "settings": {
+      "desc": "Application Configuration",
+      "dev-domain": {
+        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
+        "title": "Applications from test-domain"
+      },
+      "developer-mode": "Developer Mode",
+      "language": "Language",
+      "languages": {
+        "browser": "Browser-Language",
+        "de": "German",
+        "en": "English"
+      },
+      "reload-hint": "Please reload the application if you have changed the language settings."
     }
   }
 }
-/* tslint:enable */;
+/* tslint:enable */
+
+i18n._addressbook = translations.en._addressbook;
+
+export default i18n;
