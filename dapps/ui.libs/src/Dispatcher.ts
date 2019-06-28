@@ -32,7 +32,11 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import EvanQueue from './Queue';
 
 /**
- * Handles batched data processing.
+ * The Dispatcher handles batched data processing and saves the data within the EvanQueue. Within
+ * the dispatcher, the several steps can be defined. From this, instances can be generated, that
+ * will process the provided steps.
+ *
+ * @class      Dispatcher
  */
 export class Dispatcher {
   /**
@@ -86,11 +90,12 @@ export class Dispatcher {
   queues = { };
 
   /**
-   * Dynamic watch for dispatcher updates within a dapp.
+   * Dynamic watch for dispatcher updates within a dapp. Per default, it watches for everything.
+   * Optional, other dapp ens addresses or dispatcher names can be listened.
    *
-   * @param      {string}  dappEns  Original dapp ens address
-   * @param      {string}  name     Technical exported class member of the dispatcher within the dapp.
-   * @param      {any}     func     Function that should be called
+   * @param      {any}  func    callback function that should be called
+   * @param      {string}  dappEns  ens address that should be watched
+   * @param      {string}  name     dispatcher name that should be watched
    */
   static watch(func: ($event: CustomEvent) => any, dappEns = '*', name = '*') {
     const watch = ($event: CustomEvent) => func($event);
@@ -173,8 +178,9 @@ export class Dispatcher {
    * Starts this dispatcher with an specific runtime, an data object at an specific point.
    *
    * @param      {any}     runtime    bcc runtime
-   * @param      {any}     data       data object
-   * @param      {number}  stepIndex  at which step should be started?
+   * @param      {any}     data       Any option that should passed into the steps
+   * @param      {number}  stepIndex  step index to start at
+   * @param      {number}  price      The custom calculated price
    */
   async start(runtime: bcc.Runtime, data: any, stepIndex = 0, price?: number) {
     const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
@@ -197,6 +203,8 @@ export class Dispatcher {
 
     // start the instance!
     await instance.start();
+
+    return instance;
   }
 
   /**
@@ -213,18 +221,30 @@ export class Dispatcher {
 }
 
 interface DispatcherInstanceOptions {
+  // Queue for the current runtime and dispatcher
   queue: EvanQueue;
+  // Dispatcher that should be runned.
   dispatcher: Dispatcher;
+  // A initialized bcc runtime.
   runtime: bcc.Runtime;
+  // Data that should be passed to the steps
   data: any;
+  // Active step.
   stepIndex?: number;
-  customPrice?: number,
-  id?: any,
-  error?: any
+  // If the instance must be accepted, the eve price will be estimated and saved to this instance.
+  customPrice?: number;
+  // dispatcher runtime id
+  id?: any;
+  // Error message.
+  error?: any;
 }
 
 /**
- * Instance for an dispatcher
+ * A DispatcherInstance is generated, when a Dispatcher was started. This instance runs the startup
+ * and step functions and holds the data. Also it contains several status flags, which step is
+ * currently running and it saves it's states and data into the queue.
+ *
+ * @class      DispatcherInstance
  */
 export class DispatcherInstance {
   /**
@@ -271,6 +291,10 @@ export class DispatcherInstance {
    * If the instance must be accepted, the eve price will be estimated and saved to this instance.
    */
   evePrice: number;
+
+  /**
+   * Custom applied eve price that will overwrite the dispatcher one
+   */
   customEvePrice: number;
 
   /**
@@ -307,7 +331,8 @@ export class DispatcherInstance {
   }
 
   /**
-   * Run the startup and run functions.
+   * Run the startup and run functions. If the evePrice is higher than the eve-treshold (0.5), it
+   * will send an event that this transaction must be accepted, before it can be started.
    *
    * @param      {boolean}  accept  should the dispatcher started directly?
    */
@@ -355,7 +380,7 @@ export class DispatcherInstance {
   }
 
   /**
-   * Accept the dispatcher instance and start the synchronisation.
+   * Accept the dispatcher instance and start the synchronisation. Used to accept the eve-treshold
    */
   async accept() {
     await this.start(true);
@@ -410,7 +435,7 @@ export class DispatcherInstance {
   }
 
   /**
-   * Stops the current synchronisation and deletes the instance
+   * Stops the current synchronisation and deletes the instance from the queue.
    */
   async delete() {
     // if the queue is running, wait for finished and delete in their
