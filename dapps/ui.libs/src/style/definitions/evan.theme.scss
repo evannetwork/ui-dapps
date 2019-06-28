@@ -49,7 +49,7 @@ $themeEvan: map-merge(
     green: #28a745,
     indigo: #6610f2,
     orange: #fd7e14,
-    pink: #e71096,
+    pink: #e10098,
     purple: #6f42c1,
     red: #dc3545,
     teal: #20c997,
@@ -91,7 +91,7 @@ $themeEvan: map-merge(
 );
 
 /**
- * darken color definitions
+ * lighten color definitions
  */
 $themeEvan: map-merge(
   (
@@ -248,6 +248,7 @@ $themeEvan: map-merge(
   ),
   $themeEvan
 );
+
 @mixin themeEvan() {
   .theme-evan {
     @include evanVariables($themeEvan);

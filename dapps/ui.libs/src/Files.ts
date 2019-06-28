@@ -38,8 +38,14 @@ export interface UIContainerFile extends bcc.ContainerFile {
    */
   readableSize?: string;
 
-  // downloadable url
+  /**
+   * downloadable url
+   */
   blobUri: string;
+
+  /**
+   * blob instance
+   */
   blob: Blob;
 }
 
@@ -74,10 +80,10 @@ export async function fileToContainerFile(
 }
 
 /**
- * Upload a file that were selected with an HTML 5 <input type="file"> selector or using
- * the evan-file-select component and transforms them into an encryption object
+ * Upload a file that were selected with an HTML 5 <input type="file"> selector or using the
+ * evan-file-select component and transforms them into an encryption object
  *
- * @param      {Array<any>}    files    array of files
+ * @param      {File}  file    array of files
  * @return     {Promise<any>}  uploaded files transformed into an encryption object
  */
 export async function readFileAsArrayBuffer(file: File): Promise<any> {

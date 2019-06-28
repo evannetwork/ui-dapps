@@ -30,6 +30,13 @@
  */
 let queueDB;
 
+/**
+ * Structure for handling dispatcher instances and managing data of them. It will start and register
+ * dispatchers and offers the possiblity to save the dispatchers runtime data within the browsers
+ * IndexDB.
+ *
+ * @class      EvanQueue
+ */
 export default class EvanQueue {
   /**
    * global available queue instance
@@ -57,7 +64,7 @@ export default class EvanQueue {
   }
 
   /**
-   * Open the correct index db for the current user. Checks also for upgrades
+   * Open the correct index db for the current user. Checks also for upgrades.
    *
    * @param      {number}  version  current db version
    */
@@ -99,9 +106,8 @@ export default class EvanQueue {
   }
 
   /**
-   * Creates a queueDB if missing and open all connections
-   *
-   * @param      {string}  accountId  account id to initialize the queueDB for
+   * Creates a queueDB if missing and open all connections. Is called by the Queue interaction
+   * functions itself.
    */
   async initialize(): Promise<any> {
     if (!queueDB) {
@@ -127,10 +133,10 @@ export default class EvanQueue {
   }
 
   /**
-   * Gets the "evan-queue" object store
+   * Gets the "evan-queue" IndexDB object store.
    *
-   * @param      {any}  option  additional options for transaction
-   * @return     {any}  The object store.
+   * @param      {any}  option  additional options for queueDB.transaction
+   * @return     {any}  The IDBObjectStore.
    */
   getObjectStore(option?: any) {
     const transaction = queueDB.transaction([this.storageName], option);
@@ -141,7 +147,7 @@ export default class EvanQueue {
 
   /**
    * Loads the queue db for the current user and updates all global queue entries from the index db
-   *
+   * @param      {string}  dispatcherId  The dispatcher identifier
    * @return     {Promise<Array<any>>}  global queue entry array
    */
   async load(dispatcherId: string): Promise<any> {
@@ -167,10 +173,14 @@ export default class EvanQueue {
   }
 
   /**
-   * store for the current user it scurrent global entries to the queue db
+   * Store for the current user its current global entries to the queue db.  It loads all current
+   * saved entries and checks for the provided entryId. If the entryId is empty, the entry will be
+   * deleted.
    *
-   * @param      {string}      dispatcher  dispatcher identifier (dappEns + dispatcher name)
-   * @param      {Array<any>}  entries     queue entries to save
+   * @param      {string}  dispatcherId  dispatcher identifier (dappEns + dispatcher name)
+   * @param      {string}  entryId       random id string
+   * @param      {any}     data          any data that should be saved, leave empty to remove the
+   *                                     entry
    * @return     {Promise<any>}  objectStore.put result
    */
   async save(dispatcherId: string, entryId: string, data?: any): Promise<any> {

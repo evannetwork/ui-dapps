@@ -7,6 +7,16 @@
 
 ### Deprecations
 
+## Version 1.5.0
+### Features
+- update bcc and smartcontracts version
+
+### Fixes
+- `ui.libs`
+  - add table hover class
+  - fix steps for only a few steps
+  - fix tabs `z-index`
+
 
 ## Version 1.4.0
 ### Features

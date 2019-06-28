@@ -71,7 +71,7 @@
 
     @for $i from 1 through 20 {
       &.line-#{$i} {
-        max-height: #{ $i * 21 }px;
+        max-height: #{ $i * 25 }px;
       }
     }
   }

@@ -3,6 +3,8 @@ The @evan.network/ui-core is a container for the root evan network libraries and
 
 DApp wrappers for the blockchain core, the smart contracts core, ... are constructed simply, to exclude the wanted library and map the correct original package name. E.g.: The @evan.network/api-blockchain-core library is published using the ens address `bcc.evan`. Within the DBCP of the using DApp, this lib is referenced within the dbcp.json as dependency. Within the application it self, `@evan.network/api-blockchain-core` can be imported normally using `import * as bcc from '@evan.network/api-blockchain-core'`.
 
+- [UI API Doc](https://ui-docs.readthedocs.io/en/latest/core/index.html)
+
 Available libraries:
 
 | original                           | ens address              |
