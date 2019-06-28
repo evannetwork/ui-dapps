@@ -9,7 +9,7 @@
       "files": [
         "dashboard.vue.js"
       ],
-      "origin": "QmSVVtPG2LuKokLVmJ94FFVr7eVULFQnjYQbUBLRkQW1AU",
+      "origin": "QmXfVEqvsYZKNbp9TneabRTFBKCNG7g8kJBte8VG7Ks7SG",
       "primaryColor": "#64c6c1",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -35,7 +35,7 @@
       "evan",
       "library"
     ],
-    "version": "3.0.0",
+    "version": "3.1.0",
     "versions": {
       "0.1.0": "QmRb9kLp9h2iuwuCRrJSndMAsXBnTi1ZtffBdNG9Ue8aiU",
       "0.9.0": "Qmbghjv6wRMMybvTcEcsPKKsRvQxWQjJEcLcB6oeBc1Rwo",
@@ -46,7 +46,8 @@
       "1.2.0": "QmNxWJxV4XqQj4ZsKg8fVmRx5voQrjUKNnGWEYwLvyWS82",
       "1.3.0": "QmPA3ofSY4ZwdmiZbZrw1vf1WtVRZduhT2U9dWyXtMfnR7",
       "1.5.0": "QmXwbevvyD1fcPbWwVFUQi7sX2qUzC7CXRqUtZEzYpCw9X",
-      "3.0.0": "QmXq76xeaLfXwkWTyo1KdvwzGAt5hEF2BPHVrcksXoRHpe"
+      "3.0.0": "QmXq76xeaLfXwkWTyo1KdvwzGAt5hEF2BPHVrcksXoRHpe",
+      "3.1.0": "QmZfZshF6kqpZArYB3e86rzrDxA3aWZtRbwydwQbFkPWyR"
     }
   }
 }
