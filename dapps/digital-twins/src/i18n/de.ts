@@ -42,7 +42,7 @@ const i18n: any = {
     },
     "plugins": {
       "create": "Plugin Erstellen",
-      "desc": "Übersicht der von mir verwalten Plugins",
+      "desc": "Übersicht meiner Plugins",
       "empty": "Meine Plugins",
       "empty-desc": "In jedem Digitalen Zwilling können verschiede Plugins zu verschiedenen Thematiken wie <b>Maschinespezifische Metadaten</b>, <b>Service Log</b> oder ein Kalender installiert werden. Jedes Plugin enthält Informationen zu Berechtigungen, Datenspezifikationen, inklusive deren Format und Validierung und Oberflächen. <br><br><b class=\"text-center d-block mt-3\">Sie haben noch keine Plugins erstellt. Benutzen Sie \"Plugin erstellen\", um ein neues zu erstellen.</b>",
       "in-creation": "Plugin wird erstellt...",
