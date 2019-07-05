@@ -92,9 +92,9 @@ gulp.task('browserify', async function(callback) {
         compact: true,
         // remove comments
         comments: false,
-        //parse all sub node_modules es5 to es6 
+        //parse all sub node_modules es5 to es6
         global: true,
-        //important! 
+        //important!
         ignore: [
           // underscore gets broken when we try to parse it
           /underscore/,
@@ -105,7 +105,7 @@ gulp.task('browserify', async function(callback) {
           /@babel[\/\\]runtime/,
         ],
         presets: [
-          '@babel/env',
+          '@babel/env'
         ],
         plugins: [
           '@babel/plugin-transform-runtime',
@@ -143,7 +143,7 @@ gulp.task('browserify', async function(callback) {
         resolve();
       });
   })
-  
+
   await new Promise((resolve, reject) => gulp
     .src(`${ distFolder }/${ outFileName }`)
     .pipe(gulpReplace('if (global._babelPolyfill) {', 'if (false) {'))
@@ -156,6 +156,7 @@ gulp.task('browserify', async function(callback) {
     .pipe(gulpReplace('require("babel-polyfill");', ''))
     .pipe(gulpReplace('var createBC = function () {', 'require("babel-polyfill");\nvar createBC = function () {'))
     .pipe(gulpReplace('interruptStep\ \=\ 200\;', 'interruptStep\ \=\ 2000\;'))
+    .pipe(gulpReplace('"use strict";', ''))
     .pipe(gulp.dest(`${ distFolder }`))
     .on('end', () => resolve())
   );

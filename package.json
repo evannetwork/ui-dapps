@@ -52,7 +52,7 @@
     "uglifyjs-webpack-plugin": "^1.2.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "web3": "1.0.0-beta.33",
+    "web3": "1.0.0-beta.55",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.2.1"
   },
