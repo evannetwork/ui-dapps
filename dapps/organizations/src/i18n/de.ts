@@ -34,6 +34,7 @@ const i18n: any = {
     },
     "identification": {
       "account-id": "Account-ID",
+      "learn-more": "Mehr erfahren",
       "status": {
         "accepted": "notariell identifiziert",
         "confirming": "in Prüfung",

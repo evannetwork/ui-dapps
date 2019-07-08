@@ -37,5 +37,17 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
 export default class InfoDialogComponent extends mixins(EvanComponent) {
+  /**
+   * Show the info modal.
+   */
+  show() {
+    (<any>this.$refs).infoModal.show();
+  }
 
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).infoModal.hide();
+  }
 }

@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- `organizations`
+  - add organizations dapp, including identification handling
 
 ### Fixes
 

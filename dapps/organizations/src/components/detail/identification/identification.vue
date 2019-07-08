@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="white-box border-smooth rounded p-4 d-flex">
+    <div class="white-box border-smooth rounded p-4 d-flex flex-wrap">
       <div class="d-flex px-5 text-center justify-content-center flex-column">
         <img class="img-fluid p-3"
           v-if="$store.state.organization.img"
@@ -63,8 +63,21 @@
           <h5 class="d-block mb-0 font-weight-semibold">
             {{ '_org.identification.status.title' | translate }}
 
-            <i class="mdi mdi-information-outline text-muted clickable"></i>
+            <i class="mdi mdi-information-outline text-muted clickable">
+              <evan-tooltip :placement="'right'">
+                tooltip
+
+                <div class="w-100 text-center">
+                  <u class="clickable"
+                    @click="$refs.orgInfo.show();">
+                    {{ '_org.identification.learn-more' | translate }}
+                  </u>
+                </div>
+              </evan-tooltip>
+            </i>
           </h5>
+
+          <org-info-dialog ref="orgInfo"></org-info-dialog>
 
           <p>{{ `_org.identification.status.${ status }` | translate }}</p>
 
