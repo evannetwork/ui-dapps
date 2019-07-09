@@ -66,11 +66,11 @@ async function getOrganization(runtime: bcc.Runtime, address: string) {
  */
 async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
   return {
-    status: 'unkown',
+    status: 'issued',
     pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
     verifications: [
-      '/twi/company',
-      '/twi/company/XYZ12345',
+      '/twi/company2',
+      '/twi/company2/XYZ12345',
     ]
   };
 }

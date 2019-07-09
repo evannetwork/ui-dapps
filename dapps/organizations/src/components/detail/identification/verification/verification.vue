@@ -37,32 +37,32 @@
           <p class="mt-1 mb-0">
             {{ topic }}
           </p>
-          <span class="mt-3"
+          <i class="d-block mt-3 small"
             v-if="verification.status === 'red'">
             {{ '_org.ident-notary.verification.incorrect' | translate }}
-          </span>
+          </i>
+
+          <button type="button" class="btn btn-primary btn-rounded mt-3"
+            id="ident-pin-print"
+            v-if="verification.status === 'yellow'"
+            :disabled="accepting"
+            @click="acceptVerification()">
+            {{ `_org.ident-notary.verification.accept` | translate }}
+            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="accepting"></div>
+            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+          </button>
         </div>
         <span class="mx-auto"></span>
         <div class="ml-3">
           <i class="mdi"
             style="font-size: 50px;"
             :class="{
-              'mdi-checkbox-marked-circle-outline text-danger': verification.status === 'red',
+              'mdi-alert-circle-outline text-danger': verification.status === 'red',
               'mdi-checkbox-marked-circle-outline text-warning': verification.status === 'yellow',
               'mdi-checkbox-marked-circle-outline text-success': verification.status === 'green',
             }">
           </i>
         </div>
-      </div>
-      <div class="text-right"
-        v-if="verification.status === 'yellow'">
-        <button type="button" class="btn btn-primary btn-rounded"
-          id="ident-pin-print"
-          @click="acceptVerification()">
-          {{ `_org.ident-notary.verification.accept` | translate }}
-          <div class="spinner-border spinner-border-sm text-light ml-3" v-if="accepting"></div>
-          <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-        </button>
       </div>
     </template>
   </div>

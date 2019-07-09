@@ -123,15 +123,23 @@ export default class IdentVerificationComponent extends mixins(EvanComponent) {
     const rootVerificationAccount = runtime.activeAccount || dappBrowser.config.ensRootOwner;
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
+    verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
     verificationQuery.statusComputer = (
       subVerification: bcc.VerificationsResultV2,
       queryOptions: bcc.VerificationsQueryOptions,
       status: string
     ) => {
-      // only allow evan as root issuer
-      const correctIssuer = subVerification.verifications
-        .some(verification => verification.details.issuer === rootVerificationAccount);
-      return correctIssuer ? status : bcc.VerificationsStatusV2.Red;
+      console.log(`${ subVerification.verifications[0].details.topic } => ${ subVerification.verifications[0].details.status }`)
+      if (status === bcc.VerificationsStatusV2.Red) {
+        return status;
+      } else {
+        // only allow evan as root issuer
+        const correctIssuer = subVerification.verifications
+          .some(verification => verification.details.issuer === rootVerificationAccount);
+
+        // if it's not the correct
+        return correctIssuer ? status : bcc.VerificationsStatusV2.Red;
+      }
     };
 
     // load nested verifications
