@@ -191,8 +191,11 @@ $themeEvan: map-merge(
     table-hover: cssVar('gray-200'),
     table-row-odd: cssVar('bg-level-1'),
     table-row-even: #f4f7f9,
-    tooltip-color: cssVar('white'),
-    tooltip-bg: cssVar('black')
+    tooltip-color: cssVar('text-color'),
+    tooltip-bg: cssVar('bg-level-1'),
+    tooltip-border: cssVar('border-color'),
+    tooltip-shadow: #ccc,
+    tooltip-arrow-color: cssVar('border-color')
   ),
   $themeEvan
 );

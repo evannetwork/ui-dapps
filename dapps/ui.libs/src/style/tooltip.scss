@@ -72,4 +72,8 @@
   &.bs-tooltip-right {
     left: 100%;
   }
+
+  .tooltip-inner {
+    box-shadow: 0 0 3px 0 cssVar('tooltip-shadow');
+  }
 }

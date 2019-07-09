@@ -4,6 +4,11 @@
 ### Features
 
 ### Fixes
+- `ui.libs`
+  - add correct tooltip design
+  - add more tooltip css variables
+- `evan.bootstrap.libs`
+  - add more tooltip css variables
 
 ### Deprecations
 
