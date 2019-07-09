@@ -7,6 +7,8 @@
 - `ui.libs`
   - add correct tooltip design
   - add more tooltip css variables
+  - fix link button primary text-color
+  - fix .border.border-sm
 - `evan.bootstrap.libs`
   - add more tooltip css variables
 

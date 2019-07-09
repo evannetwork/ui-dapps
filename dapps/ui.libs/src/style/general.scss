@@ -49,6 +49,10 @@
     cursor: pointer;
   }
 
+  .border.border-sm {
+    border-width: 1px !important;
+  }
+
   .border-top.border-sm {
     border-top-width: 1px !important;
   }
