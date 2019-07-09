@@ -35,6 +35,7 @@ const i18n: any = {
     "identification": {
       "account-id": "Account-ID",
       "learn-more": "Mehr erfahren",
+      "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
       "status": {
         "accepted": "notariell identifiziert",
         "confirming": "in Prüfung",

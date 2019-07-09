@@ -35,6 +35,7 @@ const i18n: any = {
     "identification": {
       "account-id": "Account-ID",
       "learn-more": "Learn more",
+      "info": "Identify your account to be a trusted evan.network member",
       "status": {
         "accepted": "notarially identified",
         "confirming": "under review",

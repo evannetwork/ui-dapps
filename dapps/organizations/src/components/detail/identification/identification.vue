@@ -64,14 +64,17 @@
             {{ '_org.identification.status.title' | translate }}
 
             <i class="mdi mdi-information-outline text-muted clickable">
-              <evan-tooltip :placement="'right'">
-                tooltip
-
-                <div class="w-100 text-center">
-                  <u class="clickable"
-                    @click="$refs.orgInfo.show();">
-                    {{ '_org.identification.learn-more' | translate }}
-                  </u>
+              <evan-tooltip
+                ref="infoTooltip"
+                :placement="'right'">
+                <div class="p-3">
+                  <span>{{ '_org.identification.info' | translate }}</span>
+                  <div class="w-100 text-center mt-3">
+                    <u class="clickable"
+                      @click="$refs.orgInfo.show(); $refs.infoTooltip.onMouseLeave();">
+                      {{ '_org.identification.learn-more' | translate }}
+                    </u>
+                  </div>
                 </div>
               </evan-tooltip>
             </i>
