@@ -27,73 +27,102 @@
 
 <template>
   <div class="container-wide">
-    <div class="d-flex align-items-center mb-5">
-      <div>
-        <h3 class="font-weight-bold mb-0">
-          {{ '_org.identification.title' | translate }}
-        </h3>
-      </div>
-      <span class="mx-auto"></span>
-      <div>
-      </div>
-    </div>
-
-    <div class="white-box border-smooth rounded p-4 d-flex flex-wrap">
-      <div class="d-flex px-5 text-center justify-content-center flex-column">
-        <img class="img-fluid p-3"
-          v-if="$store.state.organization.img"
-          :src="$store.state.organization.img">
-        <i
-          class="mdi mdi-domain text-muted"
-          style="font-size: 80px;">
-        </i>
-        <h3 class="font-weight-semibold">
-          {{ $store.state.organization.alias }}
-        </h3>
-      </div>
-      <div class="ml-5">
-        <div class="mt-3">
-          <h5 class="d-block mb-0 font-weight-semibold">
-            {{ '_org.identification.account-id' | translate }}
-          </h5>
-          <span>{{ $route.params.address }}</span>
+    <evan-loading v-if="loading"></evan-loading>
+    <template v-else>
+      <div class="d-flex align-items-center mb-5">
+        <div>
+          <h3 class="font-weight-bold mb-0">
+            {{ '_org.ident-notary.title' | translate }}
+          </h3>
         </div>
+        <span class="mx-auto"></span>
+        <div>
+        </div>
+      </div>
 
-        <div class="mt-3">
-          <h5 class="d-block mb-0 font-weight-semibold">
-            {{ '_org.identification.status.title' | translate }}
+      <div class="white-box border-smooth rounded p-4 d-flex flex-wrap">
+        <div class="d-flex px-5 text-center justify-content-center flex-column">
+          <img class="img-fluid p-3"
+            v-if="$store.state.organization.img"
+            :src="$store.state.organization.img">
+          <i
+            class="mdi mdi-domain text-muted"
+            style="font-size: 80px;">
+          </i>
+          <h3 class="font-weight-semibold">
+            {{ $store.state.organization.alias }}
+          </h3>
+        </div>
+        <div class="ml-5" style="flex: 1">
+          <div class="mt-3">
+            <h5 class="d-block mb-0 font-weight-semibold">
+              {{ '_org.ident-notary.account-id' | translate }}
+            </h5>
+            <span>{{ $route.params.address }}</span>
+          </div>
 
-            <i class="mdi mdi-information-outline text-muted clickable">
-              <evan-tooltip
-                ref="infoTooltip"
-                :placement="'right'">
-                <div class="p-3">
-                  <span>{{ '_org.identification.info' | translate }}</span>
-                  <div class="w-100 text-center mt-3">
-                    <u class="clickable"
-                      @click="$refs.orgInfo.show(); $refs.infoTooltip.onMouseLeave();">
-                      {{ '_org.identification.learn-more' | translate }}
-                    </u>
+          <div class="mt-3">
+            <h5 class="d-block mb-0 font-weight-semibold">
+              {{ '_org.ident-notary.status.title' | translate }}
+
+              <i class="mdi mdi-information-outline text-muted clickable">
+                <evan-tooltip
+                  ref="infoTooltip"
+                  :placement="'right'">
+                  <div class="p-3">
+                    <span>{{ '_org.ident-notary.info' | translate }}</span>
+                    <div class="w-100 text-center mt-3">
+                      <u class="clickable"
+                        @click="$refs.orgInfo.show(); $refs.infoTooltip.onMouseLeave();">
+                        {{ '_org.ident-notary.learn-more' | translate }}
+                      </u>
+                    </div>
                   </div>
-                </div>
-              </evan-tooltip>
-            </i>
-          </h5>
+                </evan-tooltip>
+              </i>
+            </h5>
 
-          <org-info-dialog ref="orgInfo"></org-info-dialog>
+            <org-info-dialog ref="orgInfo"></org-info-dialog>
 
-          <p>{{ `_org.identification.status.${ status }` | translate }}</p>
+            <p>{{ `_org.ident-notary.status.${ details.status }` | translate }}</p>
 
-          <button type="button" class="btn btn-primary btn-rounded"
-            v-if="statusActions.indexOf(status) !== -1"
-            :id="`identification-request-${ status }`"
-            @click="runStatusAction()">
-            {{ `_org.identification.status-actions.${ status }` | translate }}
-            <i class="mdi mdi-arrow-right label ml-3"></i>
-          </button>
+            <a class="btn btn-primary btn-rounded" target="_blank"
+              v-if="statusActions.indexOf(details.status) !== -1"
+              :id="`ident-request-${ details.status }`"
+              :href="details.pdfUrl && details.status === 'confirming' ? pdfUrl : null"
+              @click="runStatusAction()">
+              {{ `_org.ident-notary.status-actions.${ details.status }` | translate }}
+              <i class="mdi mdi-arrow-right label ml-3"></i>
+            </a>
+            <div class="row"
+              v-else-if="details.status === 'issued'">
+              <div class="col-lg-6"
+                v-for="(topic, index) in details.verifications">
+                <org-ident-verification
+                  :address="$route.params.address"
+                  :title="(
+                    topic.endsWith('company') ?
+                      '_org.ident-notary.verification.company' :
+                      '_org.ident-notary.verification.company-random'
+                    ) | translate"
+                  :topic="topic">
+                </org-ident-verification>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      <org-ident-request
+        ref="identAction"
+        v-if="details.status === 'unkown'">
+      </org-ident-request>
+
+      <org-ident-pin
+        ref="identAction"
+        v-if="details.status === 'requested'">
+      </org-ident-pin>
+    </template>
   </div>
 </template>
 

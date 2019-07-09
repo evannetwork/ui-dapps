@@ -25,62 +25,28 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-import { getIdentificationDetails } from '../../../organizations.data';
 
-@Component({ })
-export default class IdentificationComponent extends mixins(EvanComponent) {
-  /**
-   * ui status flags
-   */
-  loading = true;
+const dispatcher = new Dispatcher(
+  `organizations.${ dappBrowser.getDomainName() }`,
+  'verificationAcceptDispatcher',
+  40 * 1000,
+  '_org.dispatchers.verification-accept'
+);
 
-  /**
-   * Current identification status for the user
-   */
-  details = null;
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
 
-  /**
-   * states for that actions are available
-   */
-  statusActions = [ 'unkown', 'requested', 'confirming', ];
+    await runtime.verifications.confirmVerification(
+      runtime.activeAccount,
+      data.address,
+      data.id,
+    );
+  });
 
-  /**
-   * Load current status
-   */
-  async created() {
-    const runtime = (<any>this).getRuntime();
-
-    // TODO: add status loading
-    this.details = await getIdentificationDetails(runtime, this.$route.params.address);
-
-    this.loading = false;
-  }
-
-  /**
-   * Start the action for the current status.
-   */
-  runStatusAction() {
-    switch (this.details.status) {
-      case 'unkown':
-      case 'requested': {
-        (<any>this.$refs.identAction).show();
-        break;
-      }
-      case 'issued': {
-        console.log('accept the verification')
-
-        break;
-      }
-    }
-  }
-}
+export default dispatcher;

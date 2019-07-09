@@ -32,10 +32,29 @@ const i18n: any = {
       "identification": "Identification",
       "organizations": "Organizations"
     },
-    "identification": {
+    "dispatchers": {
+      "verification-accept": "Identifikation wird angenommen..."
+    },
+    "ident-notary": {
       "account-id": "Account-ID",
-      "learn-more": "Mehr erfahren",
       "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
+      "learn-more": "Mehr erfahren",
+      "pin": {
+        "confirmation-code": "Ihr Bestätigungscode lautet",
+        "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
+        "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode. Senden Sie dieses bitte an die unten angeführte Adresse.",
+        "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
+        "desc2": "Dieser Service kostet 150 EVE.",
+        "generate-answer": "Bestätigungscode Generieren",
+        "header": "Notarielle Identifikation",
+        "pin": {
+          "desc": "Der in dem Brief enthaltende PIN.",
+          "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
+          "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
+          "title": "PIN"
+        }
+      },
+      "print": "Drucken",
       "status": {
         "accepted": "notariell identifiziert",
         "confirming": "in Prüfung",
@@ -51,7 +70,14 @@ const i18n: any = {
         "requested": "PIN eingeben",
         "unkown": "Beantragen"
       },
-      "title": "Übersicht"
+      "title": "Übersicht",
+      "verification": {
+        "accept": "Annehmen",
+        "company": "Unternehmens-Identifizierung",
+        "company-random": "Unternehmens-ID-Identifizierung",
+        "incorrect": "Die Ihnen ausgestellten Unternehmensidentifikationen wurden nicht von der korrekten Instanz erstellt.",
+        "status": "Status"
+      }
     },
     "overview": {
       "title": "Meine Organisationen"

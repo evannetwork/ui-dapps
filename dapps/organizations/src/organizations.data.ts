@@ -56,21 +56,27 @@ async function getOrganization(runtime: bcc.Runtime, address: string) {
 }
 
 /**
- * Return the status for a specific organization.
+ * Return the status and the payload for a specific organization.
  *
  *   - nichts / unkown
  *   - beantragt / requested
  *   - vom Provider bearbeitet / forwarding (optional)
  *   - in Prüfung / confirming
  *   - erteilt / issued
- *   - akzeptiert / accepted
  */
-async function getStatus(runtime: bcc.Runtime, address: string) {
-  return 'unkown';
+async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
+  return {
+    status: 'issued',
+    pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
+    verifications: [
+      '/twi/company',
+      '/twi/company/XYZ12345',
+    ]
+  };
 }
 
 export {
+  getIdentificationDetails,
   getOrganization,
   getOrganizations,
-  getStatus,
 };

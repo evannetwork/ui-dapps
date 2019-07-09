@@ -32,10 +32,29 @@ const i18n: any = {
       "identification": "Identification",
       "organizations": "Organizations"
     },
-    "identification": {
+    "dispatchers": {
+      "verification-accept": "Accepting Identification..."
+    },
+    "ident-notary": {
       "account-id": "Account-ID",
-      "learn-more": "Learn more",
       "info": "Identify your account to be a trusted evan.network member",
+      "learn-more": "Learn more",
+      "pin": {
+        "confirmation-code": "Your confirmation code is",
+        "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
+        "desc": "Please enter the PIN that was sent to you and generate your confirmation code. Please send it to the address below.",
+        "desc-hin": "Please pay attention to upper and lower case.",
+        "desc2": "This service will cost 150 EVE.",
+        "generate-answer": "Generate confirmation code",
+        "header": "Notarial Identification",
+        "pin": {
+          "desc": "The PIN contained in the letter.",
+          "error": "Please enter a PIN to continue.",
+          "error2": "The PIN entered was not correct. Please enter the correct PIN.",
+          "title": "PIN"
+        }
+      },
+      "print": "Print",
       "status": {
         "accepted": "notarially identified",
         "confirming": "under review",
@@ -51,7 +70,14 @@ const i18n: any = {
         "requested": "Enter PIN",
         "unkown": "Request"
       },
-      "title": "Overview"
+      "title": "Overview",
+      "verification": {
+        "accept": "Accept",
+        "company": "Company-Identitfication",
+        "company-random": "Company-ID-Identification",
+        "incorrect": "The company IDs issued to you were not created by the correct instance.",
+        "status": "Status"
+      }
     },
     "overview": {
       "title": "My Organizations"

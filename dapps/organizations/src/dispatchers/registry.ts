@@ -25,23 +25,8 @@
   https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import verificationAcceptDispatcher from './acceptVerification';
 
-import IdentPinComponent from './detail/identification/pin/pin.vue';
-import IdentRequestComponent from './detail/identification/request/request.vue';
-import IdentVerificationComponent from './detail/identification/verification/verification.vue';
-import InfoDialogComponent from './detail/info/info.vue';
-
-// export them all, so other applications can access them
-export { }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'org-ident-pin', component: IdentPinComponent },
-  { name: 'org-ident-request', component: IdentRequestComponent },
-  { name: 'org-ident-verification', component: IdentVerificationComponent },
-  { name: 'org-info-dialog', component: InfoDialogComponent },
-];
-
-export default componentRegistration;
+export {
+  verificationAcceptDispatcher,
+}

@@ -35,52 +35,17 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../../../organizations.data';
+import { getOrganization } from '../../../../organizations.data';
 
 @Component({ })
-export default class IdentificationComponent extends mixins(EvanComponent) {
+export default class IdentRequestComponent extends mixins(EvanComponent) {
   /**
    * ui status flags
    */
   loading = true;
 
-  /**
-   * Current identification status for the user
-   */
-  details = null;
-
-  /**
-   * states for that actions are available
-   */
-  statusActions = [ 'unkown', 'requested', 'confirming', ];
-
-  /**
-   * Load current status
-   */
   async created() {
-    const runtime = (<any>this).getRuntime();
-
-    // TODO: add status loading
-    this.details = await getIdentificationDetails(runtime, this.$route.params.address);
 
     this.loading = false;
-  }
-
-  /**
-   * Start the action for the current status.
-   */
-  runStatusAction() {
-    switch (this.details.status) {
-      case 'unkown':
-      case 'requested': {
-        (<any>this.$refs.identAction).show();
-        break;
-      }
-      case 'issued': {
-        console.log('accept the verification')
-
-        break;
-      }
-    }
   }
 }

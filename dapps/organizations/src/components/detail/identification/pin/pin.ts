@@ -31,56 +31,74 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../../../organizations.data';
+import { getOrganization } from '../../../../organizations.data';
+
+interface PinFormInterface extends EvanForm {
+  pin: EvanFormControl;
+}
 
 @Component({ })
-export default class IdentificationComponent extends mixins(EvanComponent) {
+export default class IdentPinComponent extends mixins(EvanComponent) {
   /**
    * ui status flags
    */
-  loading = true;
+  checkingPin = false;
 
   /**
-   * Current identification status for the user
+   * pin form declaration for entering the pin
    */
-  details = null;
+  pinForm: PinFormInterface = null;
 
   /**
-   * states for that actions are available
+   * received answer for the provided pin
    */
-  statusActions = [ 'unkown', 'requested', 'confirming', ];
+  answer: string = null;
+  pdfUrl = '';
 
-  /**
-   * Load current status
-   */
   async created() {
-    const runtime = (<any>this).getRuntime();
-
-    // TODO: add status loading
-    this.details = await getIdentificationDetails(runtime, this.$route.params.address);
-
-    this.loading = false;
+    this.pinForm = (<PinFormInterface>new EvanForm(this, {
+      pin: {
+        value: '',
+        validate: function(vueInstance: IdentPinComponent, form: PinFormInterface) {
+          return this.value.trim().length === 0 ? 'error' : true;
+        }
+      }
+    }));
   }
 
   /**
-   * Start the action for the current status.
+   * Show the info modal.
    */
-  runStatusAction() {
-    switch (this.details.status) {
-      case 'unkown':
-      case 'requested': {
-        (<any>this.$refs.identAction).show();
-        break;
-      }
-      case 'issued': {
-        console.log('accept the verification')
+  show() {
+    (<any>this.$refs).pinModal.show();
+  }
 
-        break;
-      }
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).pinModal.hide();
+  }
+
+  /**
+   * Use the current pin input, check for the correct pin and try to receive the answer.
+   */
+  async generateAnswer() {
+    // TODO: add correct generate answer request
+    this.checkingPin = true;
+    await (new Promise(resolve => setTimeout(resolve, 3000)));
+
+    try {
+      this.answer = 'NICE CODE';
+      this.pdfUrl = 'http://www.africau.edu/images/default/sample.pdf';
+    } catch (ex) {
+      this.pinForm.pin.error = 'error2';
     }
+
+    this.checkingPin = false;
   }
 }
