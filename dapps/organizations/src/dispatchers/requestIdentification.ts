@@ -25,31 +25,24 @@
   https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-modal ref="requestModal"
-      :maxWidth="'600px'">
-      <template v-slot:header>
-        <h5 class="modal-title">
-          {{ '_org.ident-notary.request.header' | translate }}
-        </h5>
-      </template>
-      <template v-slot:body>
-        <div>
-          <button type="button" class="btn btn-primary btn-rounded"
-            id="ident-request"
-            @click="requestIdentification()">
-            {{ `_org.ident-notary.request.request-ident` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-          </button>
-        </div>
-      </template>
-    </evan-modal>
-  </div>
-</template>
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-<script lang="ts">
-  import Component from './request.ts';
-  export default Component;
-</script>
+
+const dispatcher = new Dispatcher(
+  `organizations.${ dappBrowser.getDomainName() }`,
+  'requestIdentificationDispatcher',
+  40 * 1000,
+  '_org.dispatchers.request-identification'
+);
+
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
+
+    console.log('request identification')
+  });
+
+export default dispatcher;

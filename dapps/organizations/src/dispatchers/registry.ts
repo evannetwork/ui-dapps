@@ -26,7 +26,9 @@
 */
 
 import verificationAcceptDispatcher from './acceptVerification';
+import requestIdentificationDispatcher from './requestIdentification';
 
 export {
+  requestIdentificationDispatcher,
   verificationAcceptDispatcher,
 }

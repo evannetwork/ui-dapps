@@ -35,7 +35,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getOrganization } from '../../../../organizations.data';
+import * as dispatchers from '../../../../dispatchers/registry';
 
 @Component({ })
 export default class IdentRequestComponent extends mixins(EvanComponent) {
@@ -47,5 +47,25 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
   async created() {
 
     this.loading = false;
+  }
+
+  /**
+   * Show the info modal.
+   */
+  show() {
+    (<any>this.$refs).requestModal.show();
+  }
+
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).requestModal.hide();
+  }
+
+  requestIdentification() {
+    dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
+
+    });
   }
 }

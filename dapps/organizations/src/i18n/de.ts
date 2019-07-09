@@ -33,6 +33,7 @@ const i18n: any = {
       "organizations": "Organizations"
     },
     "dispatchers": {
+      "request-identification": "Identifikation wird beantragt...",
       "verification-accept": "Identifikation wird angenommen..."
     },
     "ident-notary": {
@@ -77,6 +78,10 @@ const i18n: any = {
         "company-random": "Unternehmens-ID-Identifizierung",
         "incorrect": "Die Ihnen ausgestellten Unternehmensidentifikationen wurden nicht von der korrekten Instanz erstellt.",
         "status": "Status"
+      },
+      "request": {
+        "request-ident": "Beantragen",
+        "header": "Notarielle Identifikation"
       }
     },
     "overview": {

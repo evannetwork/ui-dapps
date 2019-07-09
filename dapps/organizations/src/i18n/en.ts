@@ -33,6 +33,7 @@ const i18n: any = {
       "organizations": "Organizations"
     },
     "dispatchers": {
+      "request-identification": "Requesting Identification...",
       "verification-accept": "Accepting Identification..."
     },
     "ident-notary": {
@@ -55,6 +56,10 @@ const i18n: any = {
         }
       },
       "print": "Print",
+      "request": {
+        "request-ident": "Beantragen",
+        "header": "Notarial Identification"
+      },
       "status": {
         "accepted": "notarially identified",
         "confirming": "under review",
