@@ -35,7 +35,12 @@
         </h5>
       </template>
       <template v-slot:body>
-        <div v-if="status === 0">
+        <div class="text-center"
+          v-if="sending">
+          <evan-loading></evan-loading>
+          <h5>{{ '_org.ident-notary.request.requesting' | translate }}</h5>
+        </div>
+        <div v-else-if="status === 0">
           <div class="form-group">
             <label for="company">
               {{ `_org.ident-notary.request.company.title` | translate }} *
@@ -69,15 +74,14 @@
             {{ `_org.ident-notary.request.postal-address` | translate }} *
           </label>
           <div class="form-group mb-2">
-            <input class="form-control" required
+            <select class="form-control custom-select"
               id="country" ref="country"
               :placeholder="`_org.ident-notary.request.country.desc` | translate"
-              v-model="requestForm.country.value"
-              :class="{ 'is-invalid' : requestForm.country.error }"
-              @blur="requestForm.country.setDirty()">
-            <div class="invalid-feedback">
-              {{ '_org.ident-notary.request.country.error' | translate }}
-            </div>
+              v-model="requestForm.country.value">
+              <option :value="'germany'">
+                {{ '_org.ident-notary.request.countries.germany' | translate }}
+              </option>
+            </select>
           </div>
           <div class="form-group mb-2">
             <input class="form-control" required
@@ -133,30 +137,95 @@
             </div>
           </div>
         </div>
+        <div v-else-if="status === 1">
+          <p>{{ '_org.ident-notary.request.proof.title' | translate }}</p>
+
+          <div class="my-3 p-3 border border-sm bg-level-2">
+            <div class="row">
+              <div class="col-6">
+                <span>{{ '_org.ident-notary.request.proof.you-request' | translate }}</span>
+              </div>
+              <div class="col-6">
+                <b>{{ '_org.ident-notary.request.proof.you-request-2' | translate }}</b>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <span>{{ '_org.ident-notary.request.proof.for-org' | translate }}</span>
+              </div>
+              <div class="col-6">
+                <b>{{ requestForm.company.value }}</b>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <span>{{ '_org.ident-notary.request.proof.with-reg-number' | translate }}</span>
+              </div>
+              <div class="col-6">
+                <b>{{ requestForm.regNumber.value }}</b>
+              </div>
+            </div>
+          </div>
+
+          <p>{{ '_org.ident-notary.request.proof.question-desc' | translate }}</p>
+          <div class="my-3 p-3 border border-sm bg-level-2">
+            <div class="row">
+              <div class="col-6">
+                <span>{{ '_org.ident-notary.request.proof.contact-is' | translate }}</span>
+              </div>
+
+              <div class="col-6">
+                <b class="d-block">{{ requestForm.contact.value }}</b>
+                <b class="d-block">{{ requestForm.address.value }}</b>
+                <b class="d-block">
+                  {{ requestForm.zipCode.value }}
+                  {{ requestForm.city.value }},
+                  {{ `_org.ident-notary.request.countries.${ requestForm.country.value }` | translate }}
+                </b>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 text-center">
+            <p>{{ '_org.ident-notary.request.proof.footer' | translate }}</p>
+            <h5 class="font-weight-bold">{{ '_org.ident-notary.request.proof.footer2' | translate }}</h5>
+          </div>
+        </div>
+        <div class="text-center" v-else-if="status === 2">
+          <evan-success></evan-success>
+          <div class="p-5 mt-3">
+            <h5>{{ '_org.ident-notary.request.requested1' | translate }}</h5>
+            <h5 class="mt-3">{{ '_org.ident-notary.request.requested2' | translate }}</h5>
+          </div>
+        </div>
       </template>
       <template v-slot:footer>
-        <span class="mx-auto"></span>
-        <button type="button" class="btn btn-primary btn-rounded"
-          id="ident-request"
-          v-if="status === 0"
-          :disabled="!requestForm.isValid"
-          @click="status = 1">
-          {{ `_org.ident-notary.request.next` | translate }}
-          <i class="mdi mdi-arrow-right label ml-3"></i>
-        </button>
-        <template v-else>
-          <button type="button" class="btn btn-outline-secondary btn-rounded"
-            id="ident-request"
-            @click="status = 0">
-            {{ `_org.ident-notary.request.back` | translate }}
-          </button>
+        <template v-if="!sending && status !== 2">
+          <span class="mx-auto"></span>
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-request"
-            @click="requestIdentification()">
-            {{ `_org.ident-notary.request.request-ident` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+            v-if="status === 0"
+            :disabled="!requestForm.isValid"
+            @click="status = 1">
+            {{ `_org.ident-notary.request.next` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
+          <template v-else>
+            <button type="button" class="btn btn-outline-secondary btn-rounded"
+              id="ident-request"
+              @click="status = 0">
+              {{ `_org.ident-notary.request.back` | translate }}
+            </button>
+            <button type="button" class="btn btn-primary btn-rounded"
+              id="ident-request"
+              @click="requestIdentification()">
+              {{ `_org.ident-notary.request.request-ident` | translate }}
+              <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
+              <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+            </button>
+          </template>
         </template>
       </template>
     </evan-modal>

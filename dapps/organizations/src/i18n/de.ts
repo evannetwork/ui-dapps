@@ -70,8 +70,6 @@ const i18n: any = {
       },
       "print": "Drucken",
       "request": {
-        "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Identifizierung ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
-        "postal-address": "Anschrift",
         "address": {
           "desc": "Anschrift eingeben",
           "error": "Bitte geben Sie eine Anschrift an!",
@@ -93,19 +91,38 @@ const i18n: any = {
           "error": "Bitte geben Sie einen Ansprechpartner an!",
           "title": "Ansprechpartner"
         },
+        "countries": {
+          "germany": "Deutschland"
+        },
         "country": {
           "desc": "Land eingeben",
           "error": "Bitte geben Sie ein Land an!",
           "title": "Land"
         },
+        "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Identifizierung ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
         "header": "Notarielle Identifikation",
         "next": "Weiter",
+        "postal-address": "Anschrift",
+        "proof": {
+          "contact-is": "Ansprechpartner ist",
+          "footer": "Die notarielle Verifikation ist kostenpflichtig.",
+          "footer2": "Ihr Wallet wird mit 150 EVE belastet.",
+          "for-org": "für die Organisation",
+          "question-desc": "Zur Vervollständigung der notariellen Verifikation erhalten Sie ein Kennwort, zu Händen der folgenden Person.",
+          "title": "Bitte überprüfen Sie alle Informationen.",
+          "with-reg-number": "mit der Handelsregisternummer",
+          "you-request": "Sie bantragen eine",
+          "you-request-2": "notarielle Identifikation"
+        },
         "regNumber": {
           "desc": "Handelsregisternummer eingeben",
           "error": "Bitte geben Sie eine Handelsregisternummer an!",
           "title": "Handelsregisternummer"
         },
         "request-ident": "Beantragen",
+        "requested1": "Sie haben erfolgreich eine Notarielle Identifikation für Ihr Unternehmen beantragt.",
+        "requested2": "Ihr Wallet wurde mit 150 EVE belastet.",
+        "requesting": "Notarielle Indentifikation wird beantragt...",
         "zipCode": {
           "desc": "PLZ eingeben",
           "error": "Bitte geben Sie eine gültige Postleitzahl an!",

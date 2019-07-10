@@ -70,8 +70,6 @@ const i18n: any = {
       },
       "print": "Print",
       "request": {
-        "description": "Please fill in the formlar to request a notarial identification of your organisation. This service is subject to a fee.",
-        "postal-address": "Postal Address",
         "address": {
           "desc": "Enter address",
           "error": "Please enter an address.",
@@ -93,19 +91,38 @@ const i18n: any = {
           "error": "Please enter a contact person",
           "title": "Contact"
         },
+        "countries": {
+          "germany": "Germany"
+        },
         "country": {
           "desc": "Enter country name",
           "error": "Please enter a country",
           "title": "Country"
         },
+        "description": "Please fill in the formlar to request a notarial identification of your organisation. This service is subject to a fee.",
         "header": "Notarial Identification",
         "next": "Next",
+        "postal-address": "Postal Address",
+        "proof": {
+          "contact-is": "Contact person is",
+          "footer": "Notarial verification is subject to a fee.",
+          "footer2": "Your wallet will be charged 150 EVE.",
+          "for-org": "For the organization",
+          "question-desc": "To complete the notarized verification, you will receive a password for the attention of the following person.",
+          "title": "Please check all information.",
+          "with-reg-number": "with the commercial register number",
+          "you-request": "You request one",
+          "you-request-2": "Notarial Identification"
+        },
         "regNumber": {
           "desc": "Enter Commercial Register Number",
           "error": "Please enter a commercial register number",
           "title": "Commercial Register Number"
         },
         "request-ident": "Beantragen",
+        "requested1": "You have successfully applied for a notarial identification for your company.",
+        "requested2": "Your wallet has been charged 150 EVE.",
+        "requesting": "Notarial identification is requested...",
         "zipCode": {
           "desc": "Enter Postcode",
           "error": "Please enter a valid post code",

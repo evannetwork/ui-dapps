@@ -38,12 +38,13 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as dispatchers from '../../../../dispatchers/registry';
 
 interface RequestFormIndentInterface extends EvanForm {
-  company: EvanFormControl;
-  regNumber: EvanFormControl;
   address: EvanFormControl;
-  zip: EvanFormControl;
   city: EvanFormControl;
+  company: EvanFormControl;
+  contact: EvanFormControl;
   country: EvanFormControl;
+  regNumber: EvanFormControl;
+  zipCode: EvanFormControl;
 }
 
 @Component({ })
@@ -63,6 +64,11 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
    */
   status = 0;
 
+  /**
+   * listen for dispatcher updates
+   */
+  listeners: Array<Function> = [ ];
+
   async created() {
     this.requestForm = (<RequestFormIndentInterface>new EvanForm(this, {
       company: {
@@ -74,11 +80,11 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
       regNumber: {
         value: '',
         validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
-          return this.value.lengt >= 5;
+          return this.value.lengt !== 0;
         }
       },
       country: {
-        value: '',
+        value: 'germany',
         validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
           return this.value.length !== 0;
         }
@@ -92,7 +98,7 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
       zipCode: {
         value: '',
         validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
-          return this.value.match(/^\d{5}$/);
+          return !!this.value.match(/^\d{5}$/);
         }
       },
       city: {
@@ -108,6 +114,41 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
         }
       }
     }));
+
+    this.requestForm.company.value = 'evan GmbH';
+    this.requestForm.regNumber.value = 'Handelregister XYZ';
+    this.requestForm.country.value = 'germany';
+    this.requestForm.address.value = 'Johannisplatz 16';
+    this.requestForm.zipCode.value = '99817';
+    this.requestForm.city.value = 'Eisenach';
+    this.requestForm.contact.value = 'Thomas Herbst';
+
+    this.checkSending();
+    this.listeners.push(dispatchers.requestIdentificationDispatcher
+      .watch(async ($event) => {
+        // if dispatcher has finished loading, reload the data
+        if ($event.detail.status === 'finished') {
+          this.status = 2;
+          this.sending = false;
+        }
+      }));
+  }
+
+  /**
+   * Clear listeners...
+   */
+  beforeDestroy() {
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
+   * check if currently a verification gets accepted.
+   */
+  async checkSending() {
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
+    const instances = await dispatchers.requestIdentificationDispatcher.getInstances(runtime);
+
+    this.sending = instances.length !== 0;
   }
 
   /**
@@ -124,7 +165,12 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
     (<any>this.$refs).requestModal.hide();
   }
 
+  /**
+   * Send the request identification b-mail, so the process will be triggered.
+   */
   requestIdentification() {
+    this.sending = true;
+
     dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
 
     });
