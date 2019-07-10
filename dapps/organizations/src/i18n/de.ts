@@ -70,6 +70,10 @@ const i18n: any = {
       },
       "print": "Drucken",
       "request": {
+        "mail": {
+          "title": "Beantragung einer Notariellen Bestätigung",
+          "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationHRB}</li><li>Unternehmen: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>"
+        },
         "address": {
           "desc": "Anschrift eingeben",
           "error": "Bitte geben Sie eine Anschrift an!",
@@ -87,7 +91,7 @@ const i18n: any = {
           "title": "Unternehmen"
         },
         "contact": {
-          "desc": "FAnsprechpartner eingeben",
+          "desc": "Ansprechpartner eingeben",
           "error": "Bitte geben Sie einen Ansprechpartner an!",
           "title": "Ansprechpartner"
         },

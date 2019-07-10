@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getOrganization } from '../../../../organizations.data';
+import { getOrganization } from '../../../../identification';
 
 interface PinFormInterface extends EvanForm {
   pin: EvanFormControl;

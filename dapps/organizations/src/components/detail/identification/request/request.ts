@@ -171,8 +171,25 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
   requestIdentification() {
     this.sending = true;
 
-    dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
+    // define the request data, so we can append it into the attachment and as payload in the body
+    const requestData = {
+      organizationCity: this.requestForm.city.value,
+      organizationContact: this.requestForm.contact.value,
+      organizationCountry: this.requestForm.country.value,
+      organizationEvanId: (<any>this).getRuntime().activeAccount,
+      organizationHRB: this.requestForm.regNumber.value,
+      organizationName: this.requestForm.company.value,
+      organizationStreetAddress: this.requestForm.address.value,
+      organizationZipCode: this.requestForm.zipCode.value,
+    };
 
+    // send the identification request
+    dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
+      mail: {
+        title: (<any>this).$i18n.translate('_org.ident-notary.request.mail.title'),
+        body: (<any>this).$i18n.translate('_org.ident-notary.request.mail.body', requestData),
+      },
+      requestData,
     });
   }
 }

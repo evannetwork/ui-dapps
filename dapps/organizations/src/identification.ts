@@ -28,6 +28,11 @@
 import * as bcc from '@evan.network/api-blockchain-core';
 
 /**
+ * Account id of the notary smart agent
+ */
+const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+
+/**
  * Currently no organization handling logic exists. Just return dummy data for the current user.
  *
  * @param      {bcc.Runtime}  runtime  The runtime
@@ -79,4 +84,5 @@ export {
   getIdentificationDetails,
   getOrganization,
   getOrganizations,
+  notarySmartAgentAccountId,
 };

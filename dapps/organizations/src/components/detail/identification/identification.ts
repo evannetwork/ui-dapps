@@ -35,7 +35,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../../../organizations.data';
+import { getIdentificationDetails } from '../../../identification';
 
 @Component({ })
 export default class IdentificationComponent extends mixins(EvanComponent) {

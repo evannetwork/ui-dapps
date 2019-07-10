@@ -70,6 +70,10 @@ const i18n: any = {
       },
       "print": "Print",
       "request": {
+        "mail": {
+          "title": "Request for Notarial Identification",
+          "body": "I hereby request a Notarial Identification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationHRB}</li><li>Company: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>"
+        },
         "address": {
           "desc": "Enter address",
           "error": "Please enter an address.",

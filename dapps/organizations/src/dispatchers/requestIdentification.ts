@@ -30,6 +30,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
+import { notarySmartAgentAccountId } from '../identification';
 
 const dispatcher = new Dispatcher(
   `organizations.${ dappBrowser.getDomainName() }`,
@@ -82,33 +83,26 @@ dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = instance.runtime;
 
-
     // check if key exchange with the smart agents exist
-    if (!await runtime.profile.getContactKey('0x74479766e4997F397942cc607dc59f7cE5AC70b2', 'commKey')) {
-      await doKeyExchange(runtime, '0x74479766e4997F397942cc607dc59f7cE5AC70b2', 'Notary Smart Agent')
+    if (!await runtime.profile.getContactKey(notarySmartAgentAccountId, 'commKey')) {
+      await doKeyExchange(runtime, notarySmartAgentAccountId, 'Notary Smart Agent');
     }
 
+    // create b-mail including an notaryVerificationRequest attachment
     const bmail = {
       content: {
         from: runtime.activeAccount,
-        to: '0x74479766e4997F397942cc607dc59f7cE5AC70b2',
-        title: 'Notary verification request',
-        body: 'This is a little example to demonstrate sending a bmail.',
+        to: notarySmartAgentAccountId,
+        title: data.mail.title,
+        body: data.mail.body,
         attachments: [{
           type: 'notaryVerificationRequest',
-           organizationName: 'Fleischerei Wurst',
-           organizationStreetAddress: 'Bockwurst Platz 11',
-           organizationZipCode: '01234',
-           organizationCity: 'Wursten',
-           organizationEvanId: 'LKJHGFD',
-           organizationHRB: 'DE213456789'
+          ...data.requestData
         }]
       }
     };
 
-    await runtime.mailbox.sendMail(bmail, runtime.activeAccount, '0x74479766e4997F397942cc607dc59f7cE5AC70b2');
-
-    console.log('request identification')
+    await runtime.mailbox.sendMail(bmail, runtime.activeAccount, notarySmartAgentAccountId);
   });
 
 export default dispatcher;
