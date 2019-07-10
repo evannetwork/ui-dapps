@@ -47,6 +47,12 @@ async function getOrganizations(runtime) {
     type: 'organization',
   };
 
+  orgs['0x001De828935e8c7e4cb56Fe610495cAe63fb2612'] = {
+    alias: 'Test Account 0',
+    img: '',
+    type: 'organization',
+  };
+
   return orgs;
 }
 
@@ -74,8 +80,8 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
     status: 'unkown',
     pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
     verifications: [
-      '/twi/company2',
-      '/twi/company2/XYZ12345',
+      '/evan/company',
+      '/evan/company/12345',
     ]
   };
 }

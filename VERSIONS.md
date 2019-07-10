@@ -4,6 +4,8 @@
 ### Features
 - `organizations`
   - add organizations dapp, including identification handling
+- `explorer`
+  - fix general page blockchain explorer links
 
 ### Fixes
 
