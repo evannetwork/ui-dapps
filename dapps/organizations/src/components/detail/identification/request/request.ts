@@ -31,22 +31,83 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../../../dispatchers/registry';
 
+interface RequestFormIndentInterface extends EvanForm {
+  company: EvanFormControl;
+  regNumber: EvanFormControl;
+  address: EvanFormControl;
+  zip: EvanFormControl;
+  city: EvanFormControl;
+  country: EvanFormControl;
+}
+
 @Component({ })
 export default class IdentRequestComponent extends mixins(EvanComponent) {
   /**
-   * ui status flags
+   * Formular for identification requests
    */
-  loading = true;
+  requestForm: RequestFormIndentInterface = null;
+
+  /**
+   * Show loading until the request was finished.
+   */
+  sending = false;
+
+  /**
+   * show formular or accept view
+   */
+  status = 0;
 
   async created() {
-
-    this.loading = false;
+    this.requestForm = (<RequestFormIndentInterface>new EvanForm(this, {
+      company: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.length !== 0;
+        }
+      },
+      regNumber: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.lengt >= 5;
+        }
+      },
+      country: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.length !== 0;
+        }
+      },
+      address: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.length !== 0;
+        }
+      },
+      zipCode: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.match(/^\d{5}$/);
+        }
+      },
+      city: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.length !== 0;
+        }
+      },
+      contact: {
+        value: '',
+        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.length !== 0;
+        }
+      }
+    }));
   }
 
   /**

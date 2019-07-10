@@ -70,8 +70,47 @@ const i18n: any = {
       },
       "print": "Drucken",
       "request": {
+        "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Identifizierung ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
+        "postal-address": "Anschrift",
+        "address": {
+          "desc": "Anschrift eingeben",
+          "error": "Bitte geben Sie eine Anschrift an!",
+          "title": "Anschrift"
+        },
+        "back": "Zurück",
+        "city": {
+          "desc": "Stadt eingeben",
+          "error": "Bitte geben Sie einen Stadt an!",
+          "title": "Stadt"
+        },
+        "company": {
+          "desc": "Firmenname eingeben",
+          "error": "Bitte geben Sie einen Firmenname an!",
+          "title": "Unternehmen"
+        },
+        "contact": {
+          "desc": "FAnsprechpartner eingeben",
+          "error": "Bitte geben Sie einen Ansprechpartner an!",
+          "title": "Ansprechpartner"
+        },
+        "country": {
+          "desc": "Land eingeben",
+          "error": "Bitte geben Sie ein Land an!",
+          "title": "Land"
+        },
         "header": "Notarielle Identifikation",
-        "request-ident": "Beantragen"
+        "next": "Weiter",
+        "regNumber": {
+          "desc": "Handelsregisternummer eingeben",
+          "error": "Bitte geben Sie eine Handelsregisternummer an!",
+          "title": "Handelsregisternummer"
+        },
+        "request-ident": "Beantragen",
+        "zipCode": {
+          "desc": "PLZ eingeben",
+          "error": "Bitte geben Sie eine gültige Postleitzahl an!",
+          "title": "PLZ"
+        }
       },
       "status": {
         "accepted": "notariell identifiziert",
