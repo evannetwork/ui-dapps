@@ -69,8 +69,8 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
     status: 'unkown',
     pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
     verifications: [
-      '/twi/company',
-      '/twi/company/XYZ12345',
+      '/twi/company2',
+      '/twi/company2/XYZ12345',
     ]
   };
 }

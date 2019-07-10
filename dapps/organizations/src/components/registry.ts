@@ -28,6 +28,7 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
+import IdentIssueComponent from './detail/identification/issue/issue.vue';
 import IdentPinComponent from './detail/identification/pin/pin.vue';
 import IdentRequestComponent from './detail/identification/request/request.vue';
 import IdentVerificationComponent from './detail/identification/verification/verification.vue';
@@ -38,6 +39,7 @@ export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'org-ident-issue', component: IdentIssueComponent },
   { name: 'org-ident-pin', component: IdentPinComponent },
   { name: 'org-ident-request', component: IdentRequestComponent },
   { name: 'org-ident-verification', component: IdentVerificationComponent },
