@@ -2,7 +2,7 @@ import { client } from 'nightwatch-api';
 import { Given, When, Then, setDefinitionFunctionWrapper, Tag } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/angular.js';
-import { isVue, switchToVue } from '../../test-utils/test-utils.js';
+import { isVue, } from '../../test-utils/test-utils.js';
 
 /************************************** Open organization dapp ************************************/
 When(/^I want to open the organizations dapp and open the organization card for "([^"]+)"$/, 

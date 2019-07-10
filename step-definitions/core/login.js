@@ -25,6 +25,15 @@ Given(/^I log in to evan.network( with )?(\w+)?$/, async (customPart, accountNam
     throw new Error(`no account data found for account ${accountName}`);
   }
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
+
+  client.execute(function() {
+    window.localStorage.setItem('evan-vault', '');
+    window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
+    return true;
+  }, [], function(result) {
+    this.assert.ok(result.value);
+  })
+
   if (await isVue()) {
     // vue, to define
     await client.click(selectors.vueLogin1);
