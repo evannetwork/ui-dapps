@@ -132,9 +132,9 @@ const evan = {
  * @param      {any}  customs  custom properties that should be added to the evan context
  */
 exports.setupEvan = function(browser, customs) {
-  evan.url = 'https://dashboard.test.evan.network/';
-  evan.ensRoot = 'evan';
-  const merged = Object.assign({ }, evan, customs );
+  // evan.url = 'https://dashboard.test.evan.network/';
+  // evan.ensRoot = 'evan';
+  const merged = Object.assign({ }, evan, customs);
   
   // define proxy for late binding
   // maybe we rework this later to reduce obscurity

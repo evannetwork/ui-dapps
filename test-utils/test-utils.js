@@ -34,40 +34,4 @@ module.exports = {
     console.log('/******************************************************************************/');
     return new Promise(() => {});
   },
-  switchToVue: async ({ client, evan, password }) => {
-    if (await isVue()) {
-      return;
-    }
-    await client.url(`${ evan.url }#/profile.evan`)
-    // go to settings
-    await client.waitForElementPresent(selectors.profile.settingsTab, 10 * 1000)
-    await client.pause(1000)
-    await client.click(selectors.profile.settingsTab)
-    // enable dev mode
-    await client.waitForElementPresent(selectors.profile.settings.devToggle, 10 * 1000)
-    await client.pause(1000)
-    await client.click(selectors.profile.settings.devToggle)
-    // enable custom domains (and cancel reload popup)
-    await client.waitForElementPresent(selectors.profile.settings.domainToggle, 10 * 1000)
-    await client.pause(1000)
-    await client.click(selectors.profile.settings.domainToggle)
-    await client.waitForElementPresent(selectors.profile.settings.domainPopupNo, 10 * 1000)
-    await client.pause(1000)
-    await client.click(selectors.profile.settings.domainPopupNo)
-    // enter custom domain and confirm popup
-    await client.waitForElementPresent(selectors.profile.settings.domainInput, 10 * 1000)
-    await client.pause(1000)
-    await client.setValue(selectors.profile.settings.domainInput, [backspaces(10), 'vue.evan'])
-    await client.waitForElementPresent(selectors.profile.settings.domainPopupYes, 10 * 1000)
-    await client.pause(2000)
-    await client.click(selectors.profile.settings.domainPopupYes)
-    // enter password on login screen
-    await client.waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
-    // .url('https://dashboard.test.evan.network')
-    await client.url(evan.url)
-    await client.waitForElementPresent(selectors.login.passwordInput, 30 * 1000)
-    await client.setValue(selectors.login.passwordInput, [password, client.Keys.ENTER])
-    await client.pause(2000)
-    ;
-  },
 };

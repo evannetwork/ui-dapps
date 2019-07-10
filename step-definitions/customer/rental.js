@@ -64,7 +64,7 @@ const rentalFuncs = {
    * @param      {browser instance}  browser  nightwatch instance
    * @return     {string}            root url
    */
-  getRentalRoot: (browser) => `${ evan.url }#/lindig.${ evan.ensRoot }`,
+  getRentalRoot: (browser) => `${ evan.baseUrl }#/lindig.${ evan.ensRoot }`,
 
   /**
    * Open digital twin

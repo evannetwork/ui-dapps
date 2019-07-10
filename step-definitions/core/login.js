@@ -2,7 +2,7 @@ import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/angular.js';
-import { isVue, switchToVue } from '../../test-utils/test-utils.js';
+import { isVue, } from '../../test-utils/test-utils.js';
 
 
 const selectors = {
@@ -25,8 +25,6 @@ Given(/^I log in to evan.network( with )?(\w+)?$/, async (customPart, accountNam
     throw new Error(`no account data found for account ${accountName}`);
   }
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
-
-
   if (await isVue()) {
     // vue, to define
     await client.click(selectors.vueLogin1);
@@ -52,25 +50,14 @@ Given(/^I log in to evan.network( with )?(\w+)?$/, async (customPart, accountNam
   }
 });
 
-
-
 When(/^I log out$/, async () => {
   const evan = setupEvan(client);
   await evan.logout();
 });
 
-
 Then(/^I do nothing$/, async () => {
   // as the name says: do nothing
 });
-
-
-When(/^I switch to vue$/, async () => {
-  const evan = setupEvan(client);
-  const password = evan.accounts.default.password; // no custom user support for now
-  await switchToVue({ client, evan, password });
-});
-
 
 Then(/^I can see the dashboard$/, async () => {
   console.warn('TODO: write a test for "/^I can see the dashboard$/"')

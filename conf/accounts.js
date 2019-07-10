@@ -43,5 +43,10 @@ module.exports = {
       mnemonic: process.env.USER_RENTAL_DRIVER_MNEMONIC,
       password: process.env.USER_RENTAL_DRIVER_PASSWORD
     },
+    organizationIdentification: {
+      accountId: process.env.USER_ORGANIZATION_IDENT_ACCOUNTID,
+      mnemonic: process.env.USER_ORGANIZATION_IDENT_MNEMONIC,
+      password: process.env.USER_ORGANIZATION_IDENT_PASSWORD,
+    },
   },
 };

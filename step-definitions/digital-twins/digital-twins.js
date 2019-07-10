@@ -55,8 +55,8 @@ const selectors = {
     createButton: '#dt-create',
     createContainerButton: '#dt-container-create',
     edit: {
-      description: '#dt-general-form #description',
-      name: '#dt-general-form #name',
+      description: '#dbcp-form #description',
+      name: '#dbcp-form #name',
       saveButton: '#dt-save',
       submitButton: '#dt-create',
     },
