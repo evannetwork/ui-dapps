@@ -14,6 +14,21 @@ const selectors = {
     digitalTwinsButton: '#evan-dapp-digitaltwins',
   },
   container: {
+    createModal: '#container-create-modal',
+    pluginList: '#evan-dt-plugins',
+    basePlugin: '#evan-dt-plugins button:first-child',
+    create: {
+      form: '#dbcp-form',
+      name: '#dbcp-form #name',
+      description: '#dbcp-form #description',
+      addButton: '#th-add-entry',
+      entryAddModal: '#entry-add-modal',
+      entryAddForm: '#th-entry-add-form',
+      dataAreaType: (type) => `select[id="type"] option[value="${ type }"]`,
+      dataAreaName: '#th-entry-add-form #name',
+      dataAreaSubmit: '#entry-add-modal #th-add-entry',
+      dataSetSteps: '.evan-steps button span'
+    },
     edit: {
       addDataSet: '#th-entry-add-show',
       dataSet: {
@@ -55,17 +70,23 @@ const selectors = {
     createButton: '#dt-create',
     createContainerButton: '#dt-container-create',
     edit: {
-      description: '#dt-general-form #description',
-      name: '#dt-general-form #name',
+      description: '#dbcp-form #description',
+      name: '#dbcp-form #name',
       saveButton: '#dt-save',
-      submitButton: '#dt-create',
+      submitButton: '#twin-create #dt-create',
+      submitButtonEve: '#twin-create #container-create'
     },
-    favoriteTwins: '#evan-dt-favorites > div > a h4',
-    firstTwin: '#evan-dt-favorites > div:first-child > a',
+    favoriteTwins: '#evan-dt-twins > div > a h4',
+    firstTwin: '#evan-dt-twins > div:first-child > a',
     view: {
       generalInformation: '#evan-dt-nav-general',
       twinData: '#evan-dt-nav-digitaltwin-details',
+      twinName: '.dapp-wrapper-sidebar-2 h6',
+      twinDescription: '#digitaltwin\\.evan .container-wide h3'
     },
+    pluginsTab: '#dt-plugins',
+    pluginsCreateButton: '#dt-plugin-create',
+
   },
 };
 
@@ -96,7 +117,7 @@ const waitForSyncFinished = async (preLoading = 300000, loading = 300000) => {
 
 When(/^I create a new digital twin with the name "([^"]+)" and the description "([^"]+)"$/,
   async (name, description) => {
-    await client.url(`${ evan.baseUrl }#/dashboard.evan/digitaltwins.evan/overview`);
+    await client.click(selectors.mainMenu.digitalTwinsButton);
     await client.waitForElementPresent(selectors.twins.createButton, 10000);
     await client.click(selectors.twins.createButton);
     // fill in twin data
@@ -104,15 +125,14 @@ When(/^I create a new digital twin with the name "([^"]+)" and the description "
     await client.waitForElementPresent(selectors.twins.edit.name, 10000);
     await client.setValue(selectors.twins.edit.name, [backspaces(20), name]);
     await client.setValue(selectors.twins.edit.description, description);
+    // click confirmation of eve usage
+    
     await client.click(selectors.twins.edit.submitButton);
+    await client.click(selectors.twins.edit.submitButtonEve);
     // wait for completion (first let current save button fade away)
     await client.pause(1000);
-    await client.waitForElementPresent(selectors.twins.edit.saveButton, 60000);
+    await client.waitForElementPresent(selectors.twins.view.twinName, 60000);
     await client.pause(1000);
-    // go back
-    await client.waitForElementPresent(selectors.twins.backButton, 10e3);
-    await client.click(selectors.twins.backButton);
-    await client.waitForElementPresent(selectors.twins.createButton, 10e3);
   },
 );
 
@@ -187,18 +207,13 @@ Then(/^I can open the last twin$/, async () => {
   await client.click(selectors.mainMenu.digitalTwinsButton);
   await client.waitForElementPresent(selectors.twins.favoriteTwins, 10000);
   await client.click(selectors.twins.firstTwin);
-  await client.waitForElementPresent(selectors.twins.view.twinData, 10000);
+  await client.waitForElementPresent(selectors.twins.view.twinName, 10000);
 });
 
 Then(/^I can see that the twin name is "([^"]+)" and the description is "([^"]+)"$/, async (name, description) => {
-  await client.click(selectors.twins.view.twinData);
-  await client.pause(1000);
-  await client.waitForElementPresent(selectors.twins.view.generalInformation, 10000);
-  await client.click(selectors.twins.view.generalInformation);
-
-  await client.waitForElementPresent(selectors.twins.edit.name, 10000);
-  await client.expect.element(selectors.twins.edit.name).value.to.equal(name);
-  await client.expect.element(selectors.twins.edit.description).value.to.equal(description);
+  await client.waitForElementPresent(selectors.twins.view.twinName, 10000);
+  await client.expect.element(selectors.twins.view.twinName).text.to.equal(name);
+  await client.expect.element(selectors.twins.view.twinDescription).text.to.equal(description);
 });
 
 Then(/^I can see that the first property has a key named "([^"]+)" and a value of "([^"]+)"$/, async (name, value) => {
@@ -210,4 +225,64 @@ Then(/^I can see that the first property has a key named "([^"]+)" and a value o
 Then(/^I can see that the value is "([^"]+)"$/, async (value) => {
   await client.pause(1000);
   await client.expect.element(selectors.container.edit.dataSet.view.fieldValueSingle).text.to.equal(value);
+});
+
+
+When(/^I define a new plugin with the name "([^"]+)" and the description "([^"]+)"$/, async (pluginName, pluginDescription) => {
+  // click on the left twin menu icon
+  await client.click(selectors.mainMenu.digitalTwinsButton);
+  await client.waitForElementPresent(selectors.twins.createButton, 10000);
+
+  // click on the "plugins" tab and wait for the create button
+  await client.click(selectors.twins.pluginsTab);
+  await client.waitForElementPresent(selectors.twins.pluginsCreateButton, 10000);
+  await client.click(selectors.twins.pluginsCreateButton);
+
+  // click the base plugin from the plugin list
+  await client.waitForElementPresent(selectors.container.pluginList, 10000);
+  await client.click(selectors.container.basePlugin);
+
+  // define name and description for plugin
+  await client.waitForElementPresent(selectors.container.create.form, 10000);
+  await client.setValue(selectors.container.create.name, [backspaces(20), pluginName]);
+  await client.setValue(selectors.container.create.description, [backspaces(20), pluginDescription]);
+});
+
+
+When(/^add a data set with the type "(([^"]+))" with the name "([^"]+)"$/, async (type, name) => {
+
+  // add a new data area
+  await client.click(selectors.container.create.addButton);
+  await client.waitForElementPresent(selectors.container.create.entryAddModal, 10000);
+
+  await client.click(selectors.container.create.dataAreaType('object'));
+
+  await client.setValue(selectors.container.create.dataAreaName, [backspaces(20), name]);
+  await client.click(selectors.container.create.dataAreaSubmit);
+});
+
+
+When(/^add a field to the data set "(([^"]+))" with the name "([^"]+)" with the type "([^"]+)" and the default value "([^"]+)"$/, async (dataSet, fieldName, fieldType, defaultFieldValue) => {
+
+await client.pause(1000);
+client.elements('css selector', selectors.container.create.dataSetSteps, async (buttonElements) => {
+  console.dir(buttonElements)
+  for(let buttonElement of buttonElements.value) {
+        var elementID = buttonElement.ELEMENT;
+    console.log('Checking Element - ' + elementID);
+
+    const buttonText = client.elementIdText(elementID, (result) => {
+
+    console.log(result);
+    });
+  }
+})
+  // add a new data area
+ /*await client.click(selectors.container.create.addButton);
+  await client.waitForElementPresent(selectors.container.create.entryAddModal, 10000);
+
+  await client.click(selectors.container.create.dataAreaType('object'));
+
+  await client.setValue(selectors.container.create.dataAreaName, [backspaces(20), name]);
+  await client.click(selectors.container.create.dataAreaSubmit);*/
 });

@@ -25,8 +25,8 @@
   "main": "test-utils/evan.js",
   "name": "@evan.network/ui-tests",
   "scripts": {
-    "test-testnet": "cucumber-js --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
-    "test-testnet-only": "cucumber-js -t @tag:only --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
+    "test-testnet": "env-cmd cucumber-js --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
+    "test-testnet-only": "env-cmd cucumber-js -t @tag:only --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
   },
   "version": "0.1.0"
 }
