@@ -49,12 +49,18 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    */
   organizations = null;
 
-  async created() {
-    this.loading = false;
+  /**
+   * Check for showing the "canIssue button", usually the evan identification account.
+   */
+  canIssue = false;
 
+  async created() {
     // load the organizations
     const runtime = (<any>this).getRuntime();
     this.organizations = await getOrganizations(runtime);
+
+    // TODO: add the correct account id that is able to handle verification issueing
+    this.canIssue = runtime.activeAccount === runtime.activeAccount;
 
     this.loading = false;
   }

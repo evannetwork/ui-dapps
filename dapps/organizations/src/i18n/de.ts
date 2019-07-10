@@ -39,6 +39,19 @@ const i18n: any = {
     "ident-notary": {
       "account-id": "Account-ID",
       "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
+      "issue": {
+        "accountId": {
+          "desc": "Account-ID für die die notarielle Bestätigung erstellt werden soll.",
+          "error": "Bitte geben Sie eine gültige Account ID an!",
+          "title": "Account-ID"
+        },
+        "files": {
+          "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
+          "title": "Notariell bestätige Dateien"
+        },
+        "header": "Unternehmens-Identifizierung ausstellen",
+        "issue": "Unternehmens-Identifizierung ausstellen"
+      },
       "learn-more": "Mehr erfahren",
       "pin": {
         "confirmation-code": "Ihr Bestätigungscode lautet",
@@ -56,6 +69,10 @@ const i18n: any = {
         }
       },
       "print": "Drucken",
+      "request": {
+        "header": "Notarielle Identifikation",
+        "request-ident": "Beantragen"
+      },
       "status": {
         "accepted": "notariell identifiziert",
         "confirming": "in Prüfung",
@@ -78,10 +95,6 @@ const i18n: any = {
         "company-random": "Unternehmens-ID-Identifizierung",
         "incorrect": "Die Ihnen ausgestellten Unternehmensidentifikationen wurden nicht von der korrekten Instanz erstellt.",
         "status": "Status"
-      },
-      "request": {
-        "request-ident": "Beantragen",
-        "header": "Notarielle Identifikation"
       }
     },
     "overview": {

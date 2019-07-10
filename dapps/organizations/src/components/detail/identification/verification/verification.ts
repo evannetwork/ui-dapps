@@ -80,11 +80,11 @@ export default class IdentVerificationComponent extends mixins(EvanComponent) {
    */
   async created() {
     this.listeners.push(dispatchers.verificationAcceptDispatcher
-      .watch(($event) => {
+      .watch(async ($event) => {
         // if dispatcher has finished loading, reload the data
         if ($event.detail.status === 'finished') {
+          await this.loadVerification();
           this.accepting = false;
-          this.loadVerification();
         }
       }));
 
@@ -122,14 +122,16 @@ export default class IdentVerificationComponent extends mixins(EvanComponent) {
     // TODO: add use correct ens root owner
     const rootVerificationAccount = runtime.activeAccount || dappBrowser.config.ensRootOwner;
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
-    verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
+    verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;
+    verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
     verificationQuery.statusComputer = (
       subVerification: bcc.VerificationsResultV2,
       queryOptions: bcc.VerificationsQueryOptions,
       status: string
     ) => {
-      console.log(`${ subVerification.verifications[0].details.topic } => ${ subVerification.verifications[0].details.status }`)
+      console.log(`${ subVerification.verifications[0].details.topic } - ${ subVerification.verifications[0].details.issuer }`)
+      console.log(subVerification.verifications[0].statusFlags.join(', '))
       if (status === bcc.VerificationsStatusV2.Red) {
         return status;
       } else {

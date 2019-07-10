@@ -39,6 +39,19 @@ const i18n: any = {
     "ident-notary": {
       "account-id": "Account-ID",
       "info": "Identify your account to be a trusted evan.network member",
+      "issue": {
+        "accountId": {
+          "desc": "Account ID for which the notarial confirmation should be created.",
+          "error": "Please enter a valid Account ID!",
+          "title": "Account-ID"
+        },
+        "files": {
+          "error": "You must add at least 1 notarized document to continue.",
+          "title": "Notarially certified files"
+        },
+        "header": "Issue Identification Verification",
+        "issue": "Issue Identification Verification"
+      },
       "learn-more": "Learn more",
       "pin": {
         "confirmation-code": "Your confirmation code is",
@@ -57,8 +70,8 @@ const i18n: any = {
       },
       "print": "Print",
       "request": {
-        "request-ident": "Beantragen",
-        "header": "Notarial Identification"
+        "header": "Notarial Identification",
+        "request-ident": "Beantragen"
       },
       "status": {
         "accepted": "notarially identified",
