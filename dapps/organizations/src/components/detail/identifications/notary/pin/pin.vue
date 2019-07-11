@@ -27,38 +27,40 @@
 
 <template>
   <div>
-    <evan-modal ref="pinModal"
+    <evan-modal
+      ref="pinModal"
       :maxWidth="'600px'">
       <template v-slot:header>
         <h5 class="modal-title">
-          {{ '_org.ident-notary.pin.header' | translate }}
+          {{ '_org.ident.notary.pin.header' | translate }}
         </h5>
       </template>
-      <template v-slot:body>
-        <p class="text-justify">{{ '_org.ident-notary.pin.desc' | translate }}</p>
+      <template v-slot:body
+        id="pin-identification-modal">
+        <p class="text-justify">{{ '_org.ident.notary.pin.desc' | translate }}</p>
         <p class="text-justify">
-          {{ '_org.ident-notary.pin.desc2' | translate }}
+          {{ '_org.ident.notary.pin.desc2' | translate }}
 
           <u class="clickable"
             @click="$refs.orgInfo.show();">
-            {{ '_org.ident-notary.learn-more' | translate }}
+            {{ '_org.ident.notary.learn-more' | translate }}
           </u>
 
-          <org-info-dialog ref="orgInfo"></org-info-dialog>
+          <org-ident-info-dialog ref="orgInfo"></org-ident-info-dialog>
         </p>
 
         <div class="form-group my-3">
           <label for="alias">
-            {{ `_org.ident-notary.pin.pin.title` | translate }} *
+            {{ `_org.ident.notary.pin.pin.title` | translate }} *
           </label>
           <input class="form-control" required
             id="alias" ref="alias"
-            :placeholder="`_org.ident-notary.pin.pin.desc` | translate"
+            :placeholder="`_org.ident.notary.pin.pin.desc` | translate"
             v-model="pinForm.pin.value"
             :class="{ 'is-invalid' : pinForm.pin.error }"
             @blur="pinForm.pin.setDirty()">
           <div class="invalid-feedback">
-            {{ `_org.ident-notary.pin.pin.${ pinForm.pin.error }` | translate }}
+            {{ `_org.ident.notary.pin.pin.${ pinForm.pin.error }` | translate }}
           </div>
         </div>
 
@@ -67,7 +69,7 @@
             id="ident-pin-print"
             :disabled="!pinForm.isValid || answer || checkingPin"
             @click="generateAnswer()">
-            {{ `_org.ident-notary.pin.generate-answer` | translate }}
+            {{ `_org.ident.notary.pin.generate-answer` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>
@@ -75,7 +77,7 @@
 
         <div class="mt-5 p-5 text-center border bg-level-2" v-if="answer">
           <h5>
-            {{ '_org.ident-notary.pin.confirmation-code' | translate }}
+            {{ '_org.ident.notary.pin.confirmation-code' | translate }}
           </h5>
 
           <h3 class="w-100 my-4 text-center font-weight-semibold">
@@ -83,7 +85,7 @@
           </h3>
 
           <p class="mt-3 mb-0">
-            {{ '_org.ident-notary.pin.confirmation-code-desc' | translate }}
+            {{ '_org.ident.notary.pin.confirmation-code-desc' | translate }}
           </p>
         </div>
       </template>
@@ -96,7 +98,7 @@
             'disabled': !answer
           }"
           :href="answer ? pdfUrl : null">
-          {{ `_org.ident-notary.print` | translate }}
+          {{ `_org.ident.notary.print` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </a>
       </template>

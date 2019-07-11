@@ -35,13 +35,13 @@
       </div>
       <span class="mx-auto"></span>
       <div v-if="!loading">
-        <org-ident-issue
+        <org-ident-notary-issue
           ref="orgIdentIssue">
-        </org-ident-issue>
+        </org-ident-notary-issue>
         <button type="button" class="btn btn-primary btn-rounded"
           id="ident-request"
           @click="$refs.orgIdentIssue.show()">
-          {{ `_org.ident-notary.issue.issue` | translate }}
+          {{ `_org.ident.notary.issue.issue` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </button>
       </div>

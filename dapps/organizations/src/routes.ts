@@ -27,9 +27,10 @@
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import IdentificationComponent from './components/detail/identification/identification.vue';
-import DetailComponent from './components/detail/detail.vue';
 import OverviewComponent from './components/overview/overview.vue';
+import DetailComponent from './components/detail/detail.vue';
+import IdentificationsComponent from './components/detail/identifications/identifications.vue';
+import NotaryOverviewComponent from './components/detail/identifications/notary/overview/overview.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
@@ -38,9 +39,16 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     path: ':address',
     component: DetailComponent,
     children: [
-      { path: '', redirect: { path: 'identification' }  },
-      { path: 'identification', component: IdentificationComponent },
-    ]
+      { path: '', redirect: { path: 'identifications' } },
+      {
+        path: 'identifications',
+        component: IdentificationsComponent,
+        children: [
+          { path: '', redirect: { path: 'notary' } },
+          { path: 'notary', component: NotaryOverviewComponent, },
+        ],
+      },
+    ],
   },
 ];
 

@@ -26,7 +26,8 @@
 */
 
 <template>
-  <div class="border bg-level-2 p-3 border-sm">
+  <div class="border bg-level-2 p-3 border-sm"
+    :id="`identification-verification-${ topic.replace('/') }`">
     <div class="text-center" v-if="loading">
       <div class="spinner-border spinner-border-sm"></div>
     </div>
@@ -39,7 +40,7 @@
           </p>
           <i class="d-block mt-3 small"
             v-if="verification.status === 'red'">
-            {{ '_org.ident-notary.verification.incorrect' | translate }}
+            {{ '_org.ident.notary.verification.incorrect' | translate }}
           </i>
 
           <button type="button" class="btn btn-primary btn-rounded mt-3"
@@ -47,7 +48,7 @@
             v-if="verification.status === 'yellow'"
             :disabled="accepting"
             @click="acceptVerification()">
-            {{ `_org.ident-notary.verification.accept` | translate }}
+            {{ `_org.ident.notary.verification.accept` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="accepting"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>

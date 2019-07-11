@@ -25,43 +25,46 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getOrganizations } from '../../organizations';
 
-@Component({ })
-export default class OverviewComponent extends mixins(EvanComponent) {
-  /**
-   * ui status flags
-   */
-  loading = true;
+import axios from 'axios';
 
-  /**
-   * all my assigned organizations
-   */
-  organizations = null;
+/**
+ * Currently no organization handling logic exists. Just return dummy data for the current user.
+ *
+ * @param      {bcc.Runtime}  runtime  The runtime
+ */
+async function getOrganizations(runtime) {
+  const orgs = { };
 
-  /**
-   * Check for showing the "canIssue button", usually the evan identification account.
-   */
-  canIssue = false;
+  // just setup dummy organizations for the current user.
+  orgs[runtime.activeAccount] = {
+    alias: (await runtime.profile.getAddressBook()).profile[runtime.activeAccount].alias,
+    img: '',
+    type: 'organization',
+  };
 
-  async created() {
-    // load the organizations
-    const runtime = (<any>this).getRuntime();
-    this.organizations = await getOrganizations(runtime);
+  orgs['0x001De828935e8c7e4cb56Fe610495cAe63fb2612'] = {
+    alias: 'Test Account 0',
+    img: '',
+    type: 'organization',
+  };
 
-    // TODO: add the correct account id that is able to handle verification issueing
-    this.canIssue = runtime.activeAccount === runtime.activeAccount;
-
-    this.loading = false;
-  }
+  return orgs;
 }
+
+/**
+ * Return the detail for one single
+ *
+ * @param      {bccRuntime}  runtime  bcc runtime
+ * @param      {string}      address  address that should be loaded
+ */
+async function getOrganization(runtime: bcc.Runtime, address: string) {
+  return (await getOrganizations(runtime))[address];
+}
+
+export {
+  getOrganization,
+  getOrganizations,
+};

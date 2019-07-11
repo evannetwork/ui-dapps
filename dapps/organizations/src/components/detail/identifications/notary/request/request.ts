@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../../../dispatchers/registry';
+import * as dispatchers from '../../../../../dispatchers/registry';
 
 interface RequestFormIndentInterface extends EvanForm {
   address: EvanFormControl;
@@ -48,7 +48,7 @@ interface RequestFormIndentInterface extends EvanForm {
 }
 
 @Component({ })
-export default class IdentRequestComponent extends mixins(EvanComponent) {
+export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Formular for identification requests
    */
@@ -73,55 +73,47 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
     this.requestForm = (<RequestFormIndentInterface>new EvanForm(this, {
       company: {
         value: '',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return this.value.length !== 0;
         }
       },
       regNumber: {
         value: '',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return this.value.lengt !== 0;
         }
       },
       country: {
         value: 'germany',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return this.value.length !== 0;
         }
       },
       address: {
         value: '',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return this.value.length !== 0;
         }
       },
       zipCode: {
         value: '',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return !!this.value.match(/^\d{5}$/);
         }
       },
       city: {
         value: '',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return this.value.length !== 0;
         }
       },
       contact: {
         value: '',
-        validate: function(vueInstance: IdentRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
           return this.value.length !== 0;
         }
       }
     }));
-
-    this.requestForm.company.value = 'evan GmbH';
-    this.requestForm.regNumber.value = 'Handelregister XYZ';
-    this.requestForm.country.value = 'germany';
-    this.requestForm.address.value = 'Johannisplatz 16';
-    this.requestForm.zipCode.value = '99817';
-    this.requestForm.city.value = 'Eisenach';
-    this.requestForm.contact.value = 'Thomas Herbst';
 
     this.checkSending();
     this.listeners.push(dispatchers.requestIdentificationDispatcher
@@ -186,8 +178,8 @@ export default class IdentRequestComponent extends mixins(EvanComponent) {
     // send the identification request
     dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
       mail: {
-        title: (<any>this).$i18n.translate('_org.ident-notary.request.mail.title'),
-        body: (<any>this).$i18n.translate('_org.ident-notary.request.mail.body', requestData),
+        title: (<any>this).$i18n.translate('_org.ident.notary.request.mail.title'),
+        body: (<any>this).$i18n.translate('_org.ident.notary.request.mail.body', requestData),
       },
       requestData,
     });

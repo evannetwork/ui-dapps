@@ -24,44 +24,55 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getOrganizations } from '../../organizations';
+/**
+ * Account id of the notary smart agent
+ */
+const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 
-@Component({ })
-export default class OverviewComponent extends mixins(EvanComponent) {
-  /**
-   * ui status flags
-   */
-  loading = true;
+/**
+ * Return the list of requested identifications
+ */
+async function getRequests(runtime: bcc.Runtime, address: string) {
+  return [
+    '1234567890',
+    '2234567890',
+    '3234567890',
+    '4234567890',
+  ];
+}
 
-  /**
-   * all my assigned organizations
-   */
-  organizations = null;
+/**
+ * Return the status and the payload for a specific organization.
+ *
+ *   - nichts / unkown
+ *   - beantragt / requested
+ *   - vom Provider bearbeitet / forwarding (optional)
+ *   - in Prüfung / confirming
+ *   - erteilt / issued
+ */
+async function getIdentificationDetails(runtime: bcc.Runtime, address: string, requestId: string) {
+  let status = 'unkown';
 
-  /**
-   * Check for showing the "canIssue button", usually the evan identification account.
-   */
-  canIssue = false;
-
-  async created() {
-    // load the organizations
-    const runtime = (<any>this).getRuntime();
-    this.organizations = await getOrganizations(runtime);
-
-    // TODO: add the correct account id that is able to handle verification issueing
-    this.canIssue = runtime.activeAccount === runtime.activeAccount;
-
-    this.loading = false;
+  // TODO: add status loading
+  if (requestId) {
+    status = 'unkown';
   }
+
+  return {
+    id: requestId,
+    pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
+    status: 'unkown',
+    verifications: [
+      '/twi/company',
+      '/twi/company/XYZ',
+    ]
+  };
+}
+
+export {
+  getIdentificationDetails,
+  getRequests,
+  notarySmartAgentAccountId,
 }

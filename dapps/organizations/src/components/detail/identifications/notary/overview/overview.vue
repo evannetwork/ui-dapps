@@ -25,43 +25,41 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div class="container-wide">
+    <div class="d-flex align-items-center mb-5">
+      <div>
+        <h3 class="font-weight-bold mb-0">
+          {{ '_org.ident.notary.title' | translate }}
+        </h3>
+      </div>
+      <span class="mx-auto"></span>
+      <div v-if="!loading">
+        <org-ident-notary-request
+          ref="identAction">
+        </org-ident-notary-request>
+        <a class="btn btn-primary btn-rounded" target="_blank"
+          :id="`ident-request-unkown`"
+          @click="$refs.identAction.show()">
+          {{ `_org.ident.notary.status-actions.unkown` | translate }}
+          <i class="mdi mdi-arrow-right label ml-3"></i>
+        </a>
+      </div>
+    </div>
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+    <evan-loading v-if="loading"></evan-loading>
+    <div v-else>
+      <div class="mt-3"
+        v-for="(requestId, index) in requests">
+        <org-ident-notary-detail
+          :requestId="requestId">
+        </org-ident-notary-detail>
+      </div>
+    </div>
+  </div>
+</template>
 
-import { getOrganizations } from '../../organizations';
-
-@Component({ })
-export default class OverviewComponent extends mixins(EvanComponent) {
-  /**
-   * ui status flags
-   */
-  loading = true;
-
-  /**
-   * all my assigned organizations
-   */
-  organizations = null;
-
-  /**
-   * Check for showing the "canIssue button", usually the evan identification account.
-   */
-  canIssue = false;
-
-  async created() {
-    // load the organizations
-    const runtime = (<any>this).getRuntime();
-    this.organizations = await getOrganizations(runtime);
-
-    // TODO: add the correct account id that is able to handle verification issueing
-    this.canIssue = runtime.activeAccount === runtime.activeAccount;
-
-    this.loading = false;
-  }
-}
+<script lang="ts">
+  import Component from './overview.ts';
+  export default Component;
+</script>
