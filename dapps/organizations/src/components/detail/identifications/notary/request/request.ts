@@ -37,6 +37,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../../../../dispatchers/registry';
 
+import { triggerRequestReload } from '../notary.identifications';
+
 interface RequestFormIndentInterface extends EvanForm {
   address: EvanFormControl;
   city: EvanFormControl;
@@ -130,6 +132,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         if ($event.detail.status === 'finished') {
           this.status = 2;
           this.sending = false;
+          triggerRequestReload(this.$route.params.address);
         }
       }));
   }

@@ -57,7 +57,7 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   /**
    * states for that actions are available
    */
-  statusActions = [ 'unknown', 'requested', 'confirming', ];
+  statusActions = [ 'unknown', 'requested', ];
 
   /**
    * Load current status

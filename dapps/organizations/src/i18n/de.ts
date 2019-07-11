@@ -53,6 +53,11 @@ const i18n: any = {
             "error": "Bitte geben Sie eine gültige Account ID an!",
             "title": "Account-ID"
           },
+          "requestId": {
+            "desc": "Geben Sie die Anfrage-ID an, für die die Notarielle Identifizierung abgeschlossen werden soll, ein.",
+            "error": "Bitte geben Sie eine korrekte Anfrage-ID ein!",
+            "title": "Anfrage-ID"
+          },
           "files": {
             "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
             "title": "Notariell bestätige Dateien"
@@ -63,7 +68,7 @@ const i18n: any = {
         "learn-more": "Mehr erfahren",
         "no-requests": "Sie haben noch keine notarielle Identifizierung beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
         "pin": {
-          "confirmation-code": "Ihr Bestätigungscode lautet",
+          "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
           "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",

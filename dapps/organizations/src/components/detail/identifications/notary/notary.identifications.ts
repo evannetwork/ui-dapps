@@ -33,7 +33,16 @@ import axios from 'axios';
  */
 const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 
-const agentUrl = 'http://localhost:8080'
+const agentUrl = 'http://192.168.100.66:8080'
+
+/**
+ * Trigger reload event, so the identification overview will reload the latest requests
+ *
+ * @param      {string}  orgAddress  The organization address
+ */
+function triggerRequestReload(orgAddress: string) {
+  window.dispatchEvent(new CustomEvent(`org-ident-reload-${ orgAddress }`));
+}
 
 /**
  * Return the list of requested identifications
@@ -170,9 +179,10 @@ async function signMessage(runtime: bcc.Runtime, msg: string): Promise<string> {
 }
 
 export {
+  getAnswer,
   getIdentificationDetails,
   getRequests,
+  issueVerification,
   notarySmartAgentAccountId,
-  getAnswer,
-  issueVerification
+  triggerRequestReload,
 }

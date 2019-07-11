@@ -73,10 +73,6 @@
             {{ '_org.ident.notary.pin.confirmation-code' | translate }}
           </h5>
 
-          <h3 class="w-100 my-4 text-center font-weight-semibold">
-            {{ answer }}
-          </h3>
-
           <p class="mt-3 mb-0">
             {{ '_org.ident.notary.pin.confirmation-code-desc' | translate }}
           </p>

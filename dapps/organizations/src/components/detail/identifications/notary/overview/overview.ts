@@ -43,6 +43,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
    * ui status flags
    */
   loading = true;
+  reloading = true;
 
   /**
    * all my assigned organizations
@@ -54,11 +55,41 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
    */
   canIssue = false;
 
+  /**
+   * Load request function to be able to listent on reload event
+   */
+  loadRequests: Function;
+
   async created() {
     // load the organizations
     const runtime = (<any>this).getRuntime();
-    this.requests = await getRequests(runtime, this.$route.params.address);
+
+    // set load requests function so we can use it within the event listener
+    this.loadRequests = (async () => {
+      this.reloading = true;
+      this.requests = await getRequests(runtime, this.$route.params.address);
+      this.reloading = false;
+    }).bind(this);
+
+    // load initial data
+    await this.loadRequests();
+
+    // bind reload eventr listener
+    window.addEventListener(
+      `org-ident-reload-${ this.$route.params.address }`,
+      <any>this.loadRequests
+    );
 
     this.loading = false;
+  }
+
+  /**
+   * Remove ident reload listener
+   */
+  beforeDestroy() {
+    window.removeEventListener(
+      `org-ident-reload-${ this.$route.params.address }`,
+      <any>this.loadRequests
+    );
   }
 }

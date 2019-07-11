@@ -29,6 +29,7 @@
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
+      "identification": "Identification",
       "identifications": "Identifications",
       "notary": "Notarial",
       "organization": "Organization",
@@ -52,6 +53,11 @@ const i18n: any = {
             "error": "Please enter a valid Account ID!",
             "title": "Account-ID"
           },
+          "requestId": {
+            "desc": "Enter the request ID for which the notarial identification is to be completed.",
+            "error": "Please enter a correct request ID",
+            "title": "Request ID"
+          },
           "files": {
             "error": "You must add at least 1 notarized document to continue.",
             "title": "Notarially certified files"
@@ -62,7 +68,7 @@ const i18n: any = {
         "learn-more": "Learn more",
         "no-requests": "You have not yet requested a Notarial Identification. Use the following button to request one.",
         "pin": {
-          "confirmation-code": "Your confirmation code is",
+          "confirmation-code": "Your confirmation code was successfully recognized.",
           "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
           "desc": "Please enter the PIN that was sent to you and generate your confirmation code.",
           "desc-hin": "Please pay attention to upper and lower case.",

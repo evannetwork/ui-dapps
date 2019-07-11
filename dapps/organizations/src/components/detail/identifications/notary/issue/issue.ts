@@ -106,7 +106,7 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
        await issueVerification((<any>this).getRuntime(), this.issueForm.requestId.value, this.issueForm.files.value)
     } catch (ex) {
       (<any>this).getRuntime().logger.log(ex.message);
-      this.issueForm.files._error = ex.message;
+      this.issueForm.requestId._error = ex.message;
     }
 
     this.issueing = false;
