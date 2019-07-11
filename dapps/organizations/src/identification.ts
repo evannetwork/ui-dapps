@@ -27,10 +27,15 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 
+
+import axios from 'axios';
+
 /**
  * Account id of the notary smart agent
  */
 const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+
+const agentUrl = 'http://localhost:8080'
 
 /**
  * Currently no organization handling logic exists. Just return dummy data for the current user.
@@ -76,6 +81,25 @@ async function getOrganization(runtime: bcc.Runtime, address: string) {
  *   - erteilt / issued
  */
 async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
+
+  try {
+    // TODO: Add correct api endpoint
+
+    const evanAuthHeader = await generateEvanAuthHeader(runtime);
+    const allRequests = await axios({
+      method: 'POST',
+      url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/getAll`,
+      headers: { 'Authorization': evanAuthHeader }
+    });
+
+    await axios({
+      method: 'POST',
+      url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/get`,
+      headers: { 'Authorization': evanAuthHeader }
+    });
+  } catch (ex) {
+    console.dir(ex)
+  }
   return {
     status: 'unkown',
     pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
@@ -85,6 +109,43 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
     ]
   };
 }
+
+/**
+ * Send an rest get request to the payment agent using the corresponding new build headers.
+ *
+ * @param      {string}        endPoint  endpoint that should be called using this.agentEndpoint
+ * @return     {Promise<any>}  json result of the request
+ */
+async function generateEvanAuthHeader(runtime: bcc.Runtime): Promise<any> {
+  const activeAccount = runtime.activeAccount;
+  const toSignedMessage = runtime.web3.utils
+    .soliditySha3(new Date().getTime() + activeAccount)
+    .replace('0x', '');
+  const hexMessage = runtime.web3.utils.utf8ToHex(toSignedMessage);
+  const signature = await signMessage(runtime, toSignedMessage);
+
+  return [
+    `EvanAuth ${ activeAccount }`,
+    `EvanMessage ${ hexMessage }`,
+    `EvanSignedMessage ${ signature }`
+  ].join(',');
+}
+
+/**
+ * Sign a message for a specific account
+ *
+ * @param      {string}  msg      message that should be signed
+ * @param      {string}  account  account id to sign the message with (default = activeAccount)
+ * @return     {string}  signed message signature
+ */
+async function signMessage(runtime: bcc.Runtime, msg: string): Promise<string> {
+  const signer = runtime.activeAccount;
+  const pk = await ((<any>runtime.executor.signer).accountStore.getPrivateKey(signer));
+
+
+  return runtime.web3.eth.accounts.sign(msg, '0x' + pk).signature;
+}
+
 
 export {
   getIdentificationDetails,
