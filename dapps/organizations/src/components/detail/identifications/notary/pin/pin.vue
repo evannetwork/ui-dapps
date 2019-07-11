@@ -40,13 +40,6 @@
         <p class="text-justify">{{ '_org.ident.notary.pin.desc' | translate }}</p>
         <p class="text-justify">
           {{ '_org.ident.notary.pin.desc2' | translate }}
-
-          <u class="clickable"
-            @click="$refs.orgInfo.show();">
-            {{ '_org.ident.notary.learn-more' | translate }}
-          </u>
-
-          <org-ident-info-dialog ref="orgInfo"></org-ident-info-dialog>
         </p>
 
         <div class="form-group my-3">

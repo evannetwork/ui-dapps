@@ -68,17 +68,17 @@
       </div>
 
       <template v-if="details.status === 'issued'">
-        <template v-for="(topic, index) in details.verifications">
-          <org-ident-notary-verification
-            :address="$route.params.address"
-            :title="(
-              topic.endsWith('company') ?
-                '_org.ident.notary.verification.company' :
-                '_org.ident.notary.verification.company-random'
-              ) | translate"
-            :topic="topic">
-          </org-ident-notary-verification>
-        </template>
+        <org-ident-notary-verification
+          class="mt-3 w-100"
+          v-for="(topic, index) in details.verifications"
+          :address="$route.params.address"
+          :title="(
+            topic.endsWith('company') ?
+              '_org.ident.notary.verification.company' :
+              '_org.ident.notary.verification.company-random'
+            ) | translate"
+          :topic="topic">
+        </org-ident-notary-verification>
       </template>
       <org-ident-notary-request
         ref="identAction"

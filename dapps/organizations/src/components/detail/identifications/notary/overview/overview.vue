@@ -39,6 +39,7 @@
           ref="identAction">
         </org-ident-notary-request>
         <a class="btn btn-primary btn-rounded" target="_blank"
+          v-if="requests.length !== 0"
           :id="`ident-request-unknown`"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
@@ -48,14 +49,29 @@
     </div>
 
     <evan-loading v-if="loading"></evan-loading>
-    <div class="row" v-else>
-      <div class="col-md-6 mt-3"
-        v-for="(requestId, index) in requests">
-        <org-ident-notary-detail
-          :requestId="requestId">
-        </org-ident-notary-detail>
+    <template v-else>
+      <div class="white-box border-smooth rounded w-100 text-center"
+        v-if="requests.length === 0">
+        <div class="content">
+          {{ '_org.ident.notary.no-requests' | translate }}
+
+          <a class="btn btn-primary btn-rounded mt-3" target="_blank"
+            :id="`ident-request-unknown`"
+            @click="$refs.identAction.show()">
+            {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
+          </a>
+        </div>
       </div>
-    </div>
+      <div class="row" v-else>
+        <div class="col-xl-6 mt-3"
+          v-for="(requestId, index) in requests">
+          <org-ident-notary-detail
+            :requestId="requestId">
+          </org-ident-notary-detail>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

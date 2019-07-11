@@ -61,12 +61,13 @@ const i18n: any = {
           "issue": "Unternehmens-Identifizierung ausstellen"
         },
         "learn-more": "Mehr erfahren",
+        "no-requests": "Sie haben noch keine notarielle Identifizierung beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode lautet",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
-          "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode. Senden Sie dieses bitte an die unten angeführte Adresse.",
+          "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
-          "desc2": "Dieser Service kostet 150 EVE.",
+          "desc2": "Senden Sie dieses bitte an die unten angeführte Adresse.",
           "generate-answer": "Bestätigungscode Generieren",
           "header": "Notarielle Identifikation",
           "pin": {
@@ -151,7 +152,7 @@ const i18n: any = {
           "unknown": "keine Identifizierung"
         },
         "status-actions": {
-          "confirming": "Bestätigungscode drucken",
+          "confirming": "Bestätigung drucken",
           "issued": "Annehmen",
           "requested": "PIN eingeben",
           "unknown": "Beantragen",

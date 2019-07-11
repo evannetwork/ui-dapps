@@ -115,6 +115,14 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       }
     }));
 
+    this.requestForm.company.value = 'evan GmbH';
+    this.requestForm.regNumber.value = 'Handelregister XYZ';
+    this.requestForm.country.value = 'germany';
+    this.requestForm.address.value = 'Johannisplatz 16';
+    this.requestForm.zipCode.value = '99817';
+    this.requestForm.city.value = 'Eisenach';
+    this.requestForm.contact.value = 'Test Contact';
+
     this.checkSending();
     this.listeners.push(dispatchers.requestIdentificationDispatcher
       .watch(async ($event) => {
