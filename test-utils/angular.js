@@ -25,60 +25,7 @@
   https://evan.network/license/
 */
 
-const selectors = {
-  vueSwitch: '.theme-evan',
-};
-
-let loggedIn = false;
-const evan = {
-  /**
-   * Login to the browser using an mnemonic and password.
-   *
-   * @param      {any}  browser   nightwatch browser instance
-   * @param      {string}  mnemonic  12 word mnemonic seeed
-   * @param      {string}  password  password th unlock the account
-   * @return     {any}     nightwatch browser result chain
-   */
-  login: function(browser, mnemonic, password) {
-    loggedIn = true;
-
-    return browser
-      .url(this.url)
-      .execute(function() {
-        window.localStorage['bc-dev-logs'] = 'debug';
-        window.localStorage['angular-dev-logs'] = 'debug';
-      }, [], function(result) {})
-      .waitForElementVisible('onboarding-welcome', 30 * 1000)
-      .assert.elementPresent('.slide-zoom > h3')
-      .pause(3 * 1000)
-      .click('.start-buttons > button:nth-child(2)')
-      .waitForElementVisible('mnemonic-display', 10 * 1000)
-      .click('mnemonic-display ion-toggle')
-      .setValue('.direct-input ion-textarea > textarea', [mnemonic, browser.Keys.ENTER])
-      .waitForElementVisible('.password-dialog', 10 * 1000)
-      .setValue('.password-dialog ion-input > input', [password, browser.Keys.ENTER])
-      .pause(3 * 1000);
-  },
-  /**
-   * Logout from current session
-   *
-   * @param      {any}  browser  nightwatch browser instance
-   * @return     {any}  nightwatch browser result chain
-   */
-  logout: function(browser) {
-    if (loggedIn) {
-      loggedIn = false;
-
-      return browser
-        .url(`${ this.url }#/profile.evan`)
-        .waitForElementPresent('evan-profile-detail .evan-content button.button-outline-md-alert', 10 * 1000)
-        .click('evan-profile-detail .evan-content button.button-outline-md-alert')
-        .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
-        .pause(3 * 1000)
-        .click(`ion-alert .alert-button-group button:nth-child(2)`)
-        .pause(3 * 1000);
-    }
-  },
+module.exports = {
   /**
    * Small wrapper around browser visible and set value, to be sure that a element is visbile and we
    * can directly set an value.
@@ -125,39 +72,3 @@ const evan = {
   }
 };
 
-/**
- * Sets the default evan configuration parameters for the test.
- *
- * @param      {any}  browser  the nightwatch browser instance.
- * @param      {any}  customs  custom properties that should be added to the evan context
- */
-exports.setupEvan = function(browser, customs) {
-  // evan.url = 'https://dashboard.test.evan.network/';
-  // evan.ensRoot = 'evan';
-  const merged = Object.assign({ }, evan, customs);
-  
-  // define proxy for late binding
-  // maybe we rework this later to reduce obscurity
-  var handler = {
-    get: (obj, prop) => {
-      let toReturn;
-      if (browser.options.globals[prop]) {
-        toReturn = browser.options.globals[prop];
-      } else if (customs && customs[prop]) {
-        toReturn = customs[prop];
-      } else {
-        toReturn = evan[prop];
-      }
-      return typeof toReturn === 'function' ? toReturn.bind(obj, browser) : toReturn;
-    }
-  };
-
-  var proxy = new Proxy(merged, handler);
-
-  // fix event listener maximum:
-  //    MaxListenersExceededWarning: Possible EventEmitter memory leak
-  //    detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit
-  require('events').EventEmitter.defaultMaxListeners = 100;
-
-  return proxy;
-}

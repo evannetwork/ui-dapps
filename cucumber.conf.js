@@ -1,6 +1,6 @@
 const { setDefaultTimeout, After, AfterAll, BeforeAll } = require('cucumber');
 const { client, createSession, closeSession, startWebDriver, stopWebDriver } = require('nightwatch-api');
-const { setupEvan } = require('./test-utils/angular.js');
+const { setupEvan } = require('./test-utils/test-utils.js');
 
 
 // some test take longer than 1m, so increased to 10m just to be sure
@@ -15,9 +15,18 @@ BeforeAll(async () => {
 
 After(async (scenario) => {
   const noLogout = !!scenario.pickle.tags.filter(tag => tag.name == '@tag:noLogout').length;
+
   if (!noLogout) {
     const evan = setupEvan(client);
-    await evan.logout();
+
+    await client.execute(function() {
+      window.localStorage.setItem('evan-vault', '');
+      window.localStorage.setItem('evan-account', '');
+      window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
+      return true;
+    });
+
+    await client.url(`${ evan.baseUrl }`);
   }
 });
 

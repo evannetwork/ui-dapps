@@ -1,8 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then, setDefinitionFunctionWrapper, Tag } from 'cucumber';
 
-import { setupEvan } from '../../test-utils/angular.js';
-import { isVue, } from '../../test-utils/test-utils.js';
+import { setupEvan } from '../../test-utils/test-utils.js';
 
 /************************************** Open organization dapp ************************************/
 When(/^I want to open the organizations dapp and open the organization card for "([^"]+)"$/, 
@@ -32,7 +31,7 @@ Then(/I want to see the organization identification detail for "([^"]+)"/,
 /************************************** Open request modal ****************************************/
 When(/I click on the organization identification request start button/,
   async (accountId) => {
-    client.click('#ident-request-unkown');
+    await client.click('#ident-request-unkown');
   }
 )
 Then(/I want to see the organization identification request formular/,
@@ -43,18 +42,23 @@ Then(/I want to see the organization identification request formular/,
 );
 
 /************************************** Fill the formular *****************************************/
+let identModal = '#request-identification-modal';
 When(/I fill test data into the request identification modal/,
   async (accountId) => {
-    await client.setValue('#request-identification-modal #company', 'evan GmbH');
-    await client.setValue('#request-identification-modal #regNumber', 'Handelregister XYZ');
-    await client.setValue('#request-identification-modal #country', 'germany');
-    await client.setValue('#request-identification-modal #address', 'Johannisplatz 16');
-    await client.setValue('#request-identification-modal #zipCode', '99817');
-    await client.setValue('#request-identification-modal #city', 'Eisenach');
-    await client.setValue('#request-identification-modal #contact', 'Test Contact');
+    const identForm = `${ identModal } #ident-formular`;
+
+    await client.setValue(`${ identForm } #company`, 'evan GmbH');
+    await client.setValue(`${ identForm } #regNumber`, 'Handelregister XYZ');
+    await client.setValue(`${ identForm } #country`, 'germany');
+    await client.setValue(`${ identForm } #address`, 'Johannisplatz 16');
+    await client.setValue(`${ identForm } #zipCode`, '99817');
+    await client.setValue(`${ identForm } #city`, 'Eisenach');
+    await client.setValue(`${ identForm } #contact`, 'Test Contact');
   }
 )
-Then(/The request organization identification button should be enabled/,
+Then(/the organization identification submit button should be enabled/,
   async (accountId) => {
+    await client.expect.element(`${ identModal } #ident-request`).to.not.have.attribute('disbled');
   }
 );
+

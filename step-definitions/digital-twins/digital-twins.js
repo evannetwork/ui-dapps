@@ -1,8 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../test-utils/angular.js';
-import { backspaces, pauseHere, } from '../../test-utils/test-utils.js';
+import { setupEvan, backspaces, pauseHere, } from '../../test-utils/test-utils.js';
 
 
 const evan = setupEvan(client);

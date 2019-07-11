@@ -2,16 +2,15 @@ Feature: Digital Twins
 
 
 Scenario: Creating a new twin
-  Given I log in to evan.network
+  Given I log in to evan.network using angular
   Then I switch to vue
   When I create a new digital twin with the name "Test Twin" and the description "this is a test twin"
   Then I can open the last twin
   And I can see that the twin name is "Test Twin" and the description is "this is a test twin"
 
-@tag:only
 Scenario: Creating a new twin and plugin with a Metadata field and add it to the twin
 
-  Given I log in to evan.network
+  Given I log in to evan.network using angular
   Then I switch to vue
   Then I can open the last twin
   When I define a new plugin with the name "Test Container" and the description "this is a test container"
@@ -28,7 +27,7 @@ Scenario: Creating a new twin and plugin with a Metadata field and add it to the
 
 Scenario: Creating a new twin and add a container with a Text field
 
-  Given I log in to evan.network
+  Given I log in to evan.network using angular
   Then I switch to vue
   When I create a new digital twin with the name "Test Twin" and the description "this is a test twin"
   Then I can open the last twin
@@ -39,7 +38,7 @@ Scenario: Creating a new twin and add a container with a Text field
 
 Scenario: Creating a new twin and add a container with a Number field
 
-  Given I log in to evan.network
+  Given I log in to evan.network using angular
   Then I switch to vue
   When I create a new digital twin with the name "Test Twin" and the description "this is a test twin"
   Then I can open the last twin

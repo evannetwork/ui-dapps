@@ -1,15 +1,25 @@
 Feature: evan.network login
 
+Scenario: Logging in to evan.network using angular
 
-Scenario: Logging in to evan.network
-
-  Given I log in to evan.network
-  Then I can see the dashboard
-
+  Given I log in to evan.network using angular
+  Then I can see the angular dashboard
 
 @tag:noLogout
-Scenario: Logout from of evan.network
+Scenario: Logout from of evan.network using angular
 
-  Given I log in to evan.network with default
-  When I log out
-  Then I am no longer logged in
+  Given I log in to evan.network using angular with default
+  When I log out from angular
+  Then I am no longer logged in to angular
+
+Scenario: Logging in to evan.network using vue
+
+  Given I log in to evan.network using vue
+  Then I can see the vue dashboard
+
+@tag:noLogout
+Scenario: Logout from of evan.network using vue
+
+  Given I log in to evan.network using vue with default
+  When I log out from vue
+  Then I am no longer logged in to vue
