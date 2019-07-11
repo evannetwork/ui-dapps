@@ -25,43 +25,15 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
+  </div>
+</template>
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import { getOrganizations } from '../../organizations';
-
-@Component({ })
-export default class OverviewComponent extends mixins(EvanComponent) {
-  /**
-   * ui status flags
-   */
-  loading = true;
-
-  /**
-   * all my assigned organizations
-   */
-  organizations = null;
-
-  /**
-   * Check for showing the "canIssue button", usually the evan identification account.
-   */
-  canIssue = false;
-
-  async created() {
-    // load the organizations
-    const runtime = (<any>this).getRuntime();
-    this.organizations = await getOrganizations(runtime);
-
-    // TODO: add the correct account id that is able to handle verification issueing
-    this.canIssue = runtime.activeAccount === runtime.activeAccount;
-
-    this.loading = false;
-  }
-}
+<script lang="ts">
+  import Component from './identifications.ts';
+  export default Component;
+</script>

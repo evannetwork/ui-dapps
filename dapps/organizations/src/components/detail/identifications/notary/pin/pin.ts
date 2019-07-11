@@ -27,46 +27,44 @@
 
 // vue imports
 import Vue from 'vue';
-import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { agentUrl } from '@evan.network/ui';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-import * as dispatchers from '../../../../dispatchers/registry';
+import { getIdentificationDetails } from '../notary.identifications';
 
-interface IssueFormInterface extends EvanForm {
-  files: EvanFormControl;
+interface PinFormInterface extends EvanForm {
+  pin: EvanFormControl;
 }
 
 @Component({ })
-export default class IdentIssueComponent extends mixins(EvanComponent) {
+export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   /**
-   * Forumular to insert the certified notary files.
+   * ui status flags
    */
-  issueForm: IssueFormInterface = null;
+  checkingPin = false;
 
   /**
-   * Is currently something in issueing process?
+   * pin form declaration for entering the pin
    */
-  issueing = false;
+  pinForm: PinFormInterface = null;
+
+  /**
+   * received answer for the provided pin
+   */
+  answer: string = null;
+  pdfUrl = '';
 
   async created() {
-    this.issueForm = (<IssueFormInterface>new EvanForm(this, {
-      accountId: {
+    this.pinForm = (<PinFormInterface>new EvanForm(this, {
+      pin: {
         value: '',
-        validate: function(vueInstance: IdentIssueComponent, form: IssueFormInterface) {
-          return EvanForm.validEthAddress(this.value);
-        }
-      },
-      files: {
-        value: [ ],
-        validate: function(vueInstance: IdentIssueComponent, form: IssueFormInterface) {
-          return this.value.length === 0 ? '_org.ident-notary.issue.files.error' : true;
+        validate: function(vueInstance: IdentNotaryPinComponent, form: PinFormInterface) {
+          return this.value.trim().length === 0 ? 'error' : true;
         }
       }
     }));
@@ -76,34 +74,31 @@ export default class IdentIssueComponent extends mixins(EvanComponent) {
    * Show the info modal.
    */
   show() {
-    (<any>this.$refs).issueModal.show();
+    (<any>this.$refs).pinModal.show();
   }
 
   /**
    * Hide the info modal.
    */
   hide() {
-    (<any>this.$refs).issueModal.hide();
+    (<any>this.$refs).pinModal.hide();
   }
 
   /**
-   * Trigger the identification issue request
+   * Use the current pin input, check for the correct pin and try to receive the answer.
    */
-  async issueIdentification() {
-    this.issueing = true;
+  async generateAnswer() {
+    // TODO: add correct generate answer request
+    this.checkingPin = true;
+    await (new Promise(resolve => setTimeout(resolve, 3000)));
 
     try {
-      // TODO: Add correct api endpoint
-      await axios.post(`${ agentUrl }/api/`, {
-        payload: {
-          files: this.issueForm.files.value,
-        }
-      });
+      this.answer = 'NICE CODE';
+      this.pdfUrl = 'http://www.africau.edu/images/default/sample.pdf';
     } catch (ex) {
-      (<any>this).getRuntime().logger.log(ex.message);
-      this.issueForm.files._error = ex.message;
+      this.pinForm.pin.error = 'error2';
     }
 
-    this.issueing = false;
+    this.checkingPin = false;
   }
 }

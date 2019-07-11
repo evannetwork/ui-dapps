@@ -26,7 +26,7 @@
 */
 
 import verificationAcceptDispatcher from './acceptVerification';
-import requestIdentificationDispatcher from './requestIdentification';
+import requestIdentificationDispatcher from './notary/requestIdentification';
 
 export {
   requestIdentificationDispatcher,

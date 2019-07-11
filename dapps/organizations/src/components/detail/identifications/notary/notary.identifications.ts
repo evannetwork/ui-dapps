@@ -24,7 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
 import * as bcc from '@evan.network/api-blockchain-core';
 
 /**
@@ -33,37 +32,15 @@ import * as bcc from '@evan.network/api-blockchain-core';
 const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 
 /**
- * Currently no organization handling logic exists. Just return dummy data for the current user.
- *
- * @param      {bcc.Runtime}  runtime  The runtime
+ * Return the list of requested identifications
  */
-async function getOrganizations(runtime) {
-  const orgs = { };
-
-  // just setup dummy organizations for the current user.
-  orgs[runtime.activeAccount] = {
-    alias: (await runtime.profile.getAddressBook()).profile[runtime.activeAccount].alias,
-    img: '',
-    type: 'organization',
-  };
-
-  orgs['0x001De828935e8c7e4cb56Fe610495cAe63fb2612'] = {
-    alias: 'Test Account 0',
-    img: '',
-    type: 'organization',
-  };
-
-  return orgs;
-}
-
-/**
- * Return the detail for one single
- *
- * @param      {bccRuntime}  runtime  bcc runtime
- * @param      {string}      address  address that should be loaded
- */
-async function getOrganization(runtime: bcc.Runtime, address: string) {
-  return (await getOrganizations(runtime))[address];
+async function getRequests(runtime: bcc.Runtime, address: string) {
+  return [
+    '1234567890',
+    '2234567890',
+    '3234567890',
+    '4234567890',
+  ];
 }
 
 /**
@@ -75,20 +52,27 @@ async function getOrganization(runtime: bcc.Runtime, address: string) {
  *   - in Prüfung / confirming
  *   - erteilt / issued
  */
-async function getIdentificationDetails(runtime: bcc.Runtime, address: string) {
+async function getIdentificationDetails(runtime: bcc.Runtime, address: string, requestId: string) {
+  let status = 'unkown';
+
+  // TODO: add status loading
+  if (requestId) {
+    status = 'unkown';
+  }
+
   return {
-    status: 'unkown',
+    id: requestId,
     pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
+    status: 'unkown',
     verifications: [
-      '/evan/company',
-      '/evan/company/12345',
+      '/twi/company',
+      '/twi/company/XYZ',
     ]
   };
 }
 
 export {
   getIdentificationDetails,
-  getOrganization,
-  getOrganizations,
+  getRequests,
   notarySmartAgentAccountId,
-};
+}
