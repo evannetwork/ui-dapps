@@ -44,6 +44,25 @@ export default class DetailComponent extends mixins(EvanComponent) {
    */
   loading = true;
 
+  /**
+   * all categories for the left panel
+   */
+  categories = [
+    {
+      title: '_org.ident.categories.identifications',
+      route: 'identifications',
+      icon: '',
+      isOpen: true,
+      children: [
+        {
+          title: 'notary',
+          route: 'notary',
+          icon: ''
+        }
+      ]
+    }
+  ];
+
   async created() {
     // load the organizations
     const runtime = (<any>this).getRuntime();
@@ -58,5 +77,12 @@ export default class DetailComponent extends mixins(EvanComponent) {
     (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
 
     this.loading = false;
+  }
+
+  /**
+   * Sends the hide sidebar event.
+   */
+  hideSidebar2() {
+    window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-close'));
   }
 }

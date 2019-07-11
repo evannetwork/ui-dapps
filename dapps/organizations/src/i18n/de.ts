@@ -32,6 +32,7 @@ const i18n: any = {
       "identification": "Identifikation",
       "identifications": "Identifikationen",
       "notary": "Notariell",
+      "organization": "Organisation",
       "organizations": "Organisationen"
     },
     "dispatchers": {
@@ -39,6 +40,10 @@ const i18n: any = {
       "verification-accept": "Identifikation wird angenommen..."
     },
     "ident": {
+      "categories": {
+        "identifications": "Identifications",
+        "notary": "Notarielle Identifications"
+      },
       "notary": {
         "account-id": "Account-ID",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",

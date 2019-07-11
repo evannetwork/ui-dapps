@@ -31,6 +31,7 @@ const i18n: any = {
     "breadcrumbs": {
       "identifications": "Identifications",
       "notary": "Notarial",
+      "organization": "Organization",
       "organizations": "Organizations"
     },
     "dispatchers": {
@@ -38,6 +39,10 @@ const i18n: any = {
       "verification-accept": "Accepting Identification..."
     },
     "ident": {
+      "categories": {
+        "identifications": "Identifications",
+        "notary": "Notarial Identifications"
+      },
       "notary": {
         "account-id": "Account-ID",
         "info": "Identify your account to be a trusted evan.network member",
