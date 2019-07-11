@@ -82,7 +82,7 @@
       </template>
       <org-ident-notary-request
         ref="identAction"
-        v-if="details.status === 'unkown'">
+        v-if="details.status === 'unknown'">
       </org-ident-notary-request>
 
       <org-ident-notary-pin

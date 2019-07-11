@@ -147,14 +147,14 @@ const i18n: any = {
           "issued": "notarially identified",
           "requested": "requsted",
           "title": "Identification",
-          "unkown": "no identification"
+          "unknown": "no identification"
         },
         "status-actions": {
           "confirming": "Print confirmation code",
           "issued": "Accept",
           "requested": "Enter PIN",
-          "unkown": "Request",
-          "unkown-long": "Request Notary Identification"
+          "unknown": "Request",
+          "unknown-long": "Request Notary Identification"
         },
         "title": "Overview",
         "verification": {

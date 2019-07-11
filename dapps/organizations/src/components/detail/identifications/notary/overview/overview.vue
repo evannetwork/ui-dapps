@@ -39,9 +39,9 @@
           ref="identAction">
         </org-ident-notary-request>
         <a class="btn btn-primary btn-rounded" target="_blank"
-          :id="`ident-request-unkown`"
+          :id="`ident-request-unknown`"
           @click="$refs.identAction.show()">
-          {{ `_org.ident.notary.status-actions.unkown-long` | translate }}
+          {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </a>
       </div>
