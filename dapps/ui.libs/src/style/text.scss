@@ -41,6 +41,10 @@
     font-weight: 400;
   }
 
+  b {
+    font-size: cssVar('text-font-size');
+  }
+
   label {
     font-size: cssVar('text-font-size');
     font-weight: 600;

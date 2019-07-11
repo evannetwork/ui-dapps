@@ -9,6 +9,7 @@
   - add more tooltip css variables
   - fix link button primary text-color
   - fix .border.border-sm
+  - use correct theme colors (cyan, dark)
 - `evan.bootstrap.libs`
   - add more tooltip css variables
 
