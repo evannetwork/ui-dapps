@@ -68,7 +68,7 @@
                 <a
                   class="d-flex align-items-center dark-link"
                   :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }`.indexOf(category.route) !== -1 }"
-                  :href="`${ dapp.fullUrl }/${ $route.params.address}/${ category.route }`"
+                  :href="`${ dapp.fullUrl }/${ $route.params.address }/${ category.route }`"
                   @click="category.isOpen = true; hideSidebar2();">
                   <i class="text-muted mr-2"
                     style="font-size: 17px"
@@ -88,8 +88,8 @@
                 v-for="(child, index) in category.children">
                 <a
                   class="d-flex align-items-center dark-link"
-                  :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }/${ child.orute }`.indexOf(`${ category.route }/${ child.route }`) !== -1 }"
-                  :href="`${ dapp.baseUrl }#${ $route.path }/${ child.orute }`"
+                  :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }/${ child.route }`.indexOf(`${ category.route }/${ child.route }`) !== -1 }"
+                  :href="`${ dapp.fullUrl }/${ $route.params.address }/${ category.route }/${ child.route }`"
                   @click="hideSidebar2();">
                   <span class="position-relative">
                     <i class="text-muted mr-2"

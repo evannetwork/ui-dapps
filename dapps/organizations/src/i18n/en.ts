@@ -60,12 +60,13 @@ const i18n: any = {
           "issue": "Issue Identification Verification"
         },
         "learn-more": "Learn more",
+        "no-requests": "You have not yet requested a Notarial Identification. Use the following button to request one.",
         "pin": {
           "confirmation-code": "Your confirmation code is",
           "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
-          "desc": "Please enter the PIN that was sent to you and generate your confirmation code. Please send it to the address below.",
+          "desc": "Please enter the PIN that was sent to you and generate your confirmation code.",
           "desc-hin": "Please pay attention to upper and lower case.",
-          "desc2": "This service will cost 150 EVE.",
+          "desc2": "Please send it to the address below.",
           "generate-answer": "Generate confirmation code",
           "header": "Notarial Identification",
           "pin": {
@@ -147,13 +148,14 @@ const i18n: any = {
           "issued": "notarially identified",
           "requested": "requsted",
           "title": "Identification",
-          "unkown": "no identification"
+          "unknown": "no identification"
         },
         "status-actions": {
-          "confirming": "Print confirmation code",
+          "confirming": "Print confirmation",
           "issued": "Accept",
           "requested": "Enter PIN",
-          "unkown": "Request"
+          "unknown": "Request",
+          "unknown-long": "Request Notary Identification"
         },
         "title": "Overview",
         "verification": {

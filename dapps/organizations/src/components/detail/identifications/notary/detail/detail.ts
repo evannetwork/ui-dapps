@@ -57,7 +57,7 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   /**
    * states for that actions are available
    */
-  statusActions = [ 'unkown', 'requested', 'confirming', ];
+  statusActions = [ 'unknown', 'requested', 'confirming', ];
 
   /**
    * Load current status
@@ -80,7 +80,7 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
    */
   runStatusAction() {
     switch (this.details.status) {
-      case 'unkown':
+      case 'unknown':
       case 'requested': {
         (<any>this.$refs.identAction).show();
         break;

@@ -45,12 +45,6 @@ async function getOrganizations(runtime) {
     type: 'organization',
   };
 
-  orgs['0x001De828935e8c7e4cb56Fe610495cAe63fb2612'] = {
-    alias: 'Test Account 0',
-    img: '',
-    type: 'organization',
-  };
-
   return orgs;
 }
 
