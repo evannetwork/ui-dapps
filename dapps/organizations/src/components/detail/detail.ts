@@ -51,13 +51,13 @@ export default class DetailComponent extends mixins(EvanComponent) {
     {
       title: '_org.ident.categories.identifications',
       route: 'identifications',
-      icon: '',
+      icon: 'mdi mdi-account-card-details-outline',
       isOpen: true,
       children: [
         {
-          title: 'notary',
+          title: '_org.ident.categories.notary',
           route: 'notary',
-          icon: ''
+          icon: 'mdi mdi-account-key-outline'
         }
       ]
     }

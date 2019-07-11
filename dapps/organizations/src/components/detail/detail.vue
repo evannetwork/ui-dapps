@@ -70,9 +70,9 @@
                   :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }`.indexOf(category.route) !== -1 }"
                   :href="`${ dapp.fullUrl }/${ $route.params.address}/${ category.route }`"
                   @click="category.isOpen = true; hideSidebar2();">
-                  <i
-                    class="mdi mdi-note-multiple-outline text-muted mr-2"
-                    style="font-size: 17px">
+                  <i class="text-muted mr-2"
+                    style="font-size: 17px"
+                    :class="category.icon">
                   </i>
                   <span class="m-0 font-weight-semibold">
                     {{ category.title | translate }}
@@ -83,29 +83,24 @@
                  
                 </div>
               </div>
-              <!-- <div class="d-flex align-items-center pl-8 pr-3 py-2"
+              <div class="d-flex align-items-center pl-8 pr-3 py-2"
                 style="height: 40px;"
-                v-for="(entry, index) in Object.keys(plugin.template.properties)"
-                v-if="entry !== 'type'">
+                v-for="(child, index) in category.children">
                 <a
                   class="d-flex align-items-center dark-link"
-                  :class="{ 'active': `${ windowLocation }#${ decodeURIComponent($route.path) }`.indexOf(`${ dcUrl }/data-set/${ entry }/`) !== -1 }"
-                  :href="`${ dcUrl }/data-set/${ entry }`"
+                  :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }/${ child.orute }`.indexOf(`${ category.route }/${ child.route }`) !== -1 }"
+                  :href="`${ dapp.baseUrl }#${ $route.path }/${ child.orute }`"
                   @click="hideSidebar2();">
                   <span class="position-relative">
-                    <i
-                      class="mdi mdi-cube-outline text-muted mr-2"
-                      style="font-size: 17px">
+                    <i class="text-muted mr-2"
+                      style="font-size: 17px"
+                      :class="child.icon">
                     </i>
-                    <span class="m-0">{{ entry }}</span>
-                    <span class="notification-dot"
-                      v-if="plugin.template.properties[entry].changed ||
-                        plugin.template.properties[entry].isNew">
-                    </span>
+                    <span class="m-0">{{ child.title | translate }}</span>
                   </span>
                 </a>
                 <span class="mx-auto"></span>
-              </div> -->
+              </div>
             </template>
           </div>
         </template>
