@@ -45,30 +45,30 @@ async function getRequests(runtime: bcc.Runtime, address: string) {
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/getAll`,
     headers: { 'Authorization': evanAuthHeader }
   });
-  return (<any>allRequests).result;
+  return (<any>allRequests).data.result;
 }
 
 /**
  * Return the status and the payload for a specific organization.
  *
- *   - nichts / unkown
+ *   - nichts / unknown
  *   - beantragt / requested
  *   - vom Provider bearbeitet / forwarding (optional)
  *   - in Prüfung / confirming
  *   - erteilt / issued
  */
 async function getIdentificationDetails(runtime: bcc.Runtime, address: string, requestId: string) {
-  let status = 'unkown';
+  let status = 'unknown';
 
   // TODO: add status loading
   if (requestId) {
-    status = 'unkown';
+    status = 'unknown';
   }
 
   try {
     // TODO: Add correct api endpoint
     const evanAuthHeader = await generateEvanAuthHeader(runtime);
-    await axios({
+    const requestedStatus = await axios({
       method: 'POST',
       url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/get`,
       headers: { 'Authorization': evanAuthHeader },
@@ -77,20 +77,62 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
       }
     });
 
+    const bmail = await runtime.mailbox.getMail((<any>requestedStatus).data.result.data.split('|')[1])
+    const ret = {
+      status: (<any>requestedStatus).data.result.status,
+      pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
+      verifications: [
+        '/evan/company'
+      ]
+    };
+    if (bmail.content &&
+        bmail.content.attachments &&
+        bmail.content.attachments.length) {
+      const attachments = bmail.content.attachments
+      if (attachments[0].type === 'notaryVerificationRequest') {
+        ret.verifications.push('/evan/company/' + attachments[0].registrationNumber);
+      }
+    }
+    return ret;
+
   } catch (ex) {
     console.dir(ex)
   }
-  return {
-    status: 'unkown',
-    pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
-    verifications: [
-      '/evan/company',
-      '/evan/company/12345',
-    ]
-  };
+
 
 }
 
+
+
+async function issueVerification(runtime, requestId, files) {
+  // TODO: Add correct api endpoint
+  const evanAuthHeader = await generateEvanAuthHeader(runtime);
+  await axios({
+    method: 'POST',
+    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/finalize`,
+    headers: { 'Authorization': evanAuthHeader },
+    data: {
+      requestId,
+      files,
+    }
+  });
+}
+
+async function getAnswer(runtime, question, requestId) {
+
+  const evanAuthHeader = await generateEvanAuthHeader(runtime);
+  const answerResponse = await axios({
+    method: 'POST',
+    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/solve`,
+    headers: { 'Authorization': evanAuthHeader },
+    data: {
+      question,
+      requestId
+    },
+    responseType: 'blob', // important
+  });
+  return answerResponse.data;
+}
 /**
  * Send an rest get request to the payment agent using the corresponding new build headers.
  *
@@ -131,4 +173,6 @@ export {
   getIdentificationDetails,
   getRequests,
   notarySmartAgentAccountId,
+  getAnswer,
+  issueVerification
 }

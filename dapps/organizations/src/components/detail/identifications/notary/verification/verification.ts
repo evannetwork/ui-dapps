@@ -121,8 +121,7 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
 
     // load the verification details
     // TODO: add use correct ens root owner
-    const rootVerificationAccount = runtime.activeAccount ||
-      dappBrowser.config.ensRootOwner;
+    const rootVerificationAccount = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;

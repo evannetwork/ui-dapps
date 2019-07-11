@@ -39,6 +39,20 @@
         id="issue-identification-modal">
         <div class="form-group">
           <label for="alias">
+            {{ `_org.ident.notary.issue.requestId.title` | translate }} *
+          </label>
+          <input class="form-control" required
+            id="alias" ref="alias"
+            :placeholder="`_org.ident.notary.issue.requestId.desc` | translate"
+            v-model="issueForm.requestId.value"
+            :class="{ 'is-invalid' : issueForm.requestId.error }"
+            @blur="issueForm.requestId.setDirty()">
+          <div class="invalid-feedback">
+            {{ `_org.ident.notary.issue.requestId.error` | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="alias">
             {{ `_org.ident.notary.issue.accountId.title` | translate }} *
           </label>
           <input class="form-control" required

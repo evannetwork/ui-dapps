@@ -107,7 +107,8 @@
 
       <org-ident-notary-pin
         ref="identAction"
-        v-if="details.status === 'requested'">
+        v-if="details.status === 'requested'"
+        :requestId="requestId">
       </org-ident-notary-pin>
     </template>
   </div>

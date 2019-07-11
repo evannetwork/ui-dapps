@@ -35,7 +35,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../notary.identifications';
+import { getIdentificationDetails, getAnswer } from '../notary.identifications';
 
 interface PinFormInterface extends EvanForm {
   pin: EvanFormControl;
@@ -43,6 +43,10 @@ interface PinFormInterface extends EvanForm {
 
 @Component({ })
 export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
+  /**
+   * Request id for that the detail should be displayed
+   */
+  @Prop() requestId;
   /**
    * ui status flags
    */
@@ -92,10 +96,15 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
     this.checkingPin = true;
     await (new Promise(resolve => setTimeout(resolve, 3000)));
 
+
     try {
+      const runtime: bcc.Runtime = (<any>this).getRuntime();
+      const answerResponse = await getAnswer(runtime, this.pinForm.pin.value, this.requestId)
+      const url = window.URL.createObjectURL(answerResponse);
       this.answer = 'NICE CODE';
-      this.pdfUrl = 'http://www.africau.edu/images/default/sample.pdf';
+      this.pdfUrl = url;
     } catch (ex) {
+      console.dir(ex)
       this.pinForm.pin.error = 'error2';
     }
 

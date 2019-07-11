@@ -39,8 +39,12 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 
 import * as dispatchers from '../../../../../dispatchers/registry';
 
+import { issueVerification } from '../notary.identifications';
+
+
 interface IssueFormInterface extends EvanForm {
   files: EvanFormControl;
+  requestId: EvanFormControl;
 }
 
 @Component({ })
@@ -61,6 +65,12 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
         value: '',
         validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
           return EvanForm.validEthAddress(this.value);
+        }
+      },
+      requestId: {
+        value: '',
+        validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
+          return !!this.value;
         }
       },
       files: {
@@ -93,12 +103,7 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
     this.issueing = true;
 
     try {
-      // TODO: Add correct api endpoint
-      await axios.post(`${ agentUrl }/api/`, {
-        payload: {
-          files: this.issueForm.files.value,
-        }
-      });
+       await issueVerification((<any>this).getRuntime(), this.issueForm.requestId.value, this.issueForm.files.value)
     } catch (ex) {
       (<any>this).getRuntime().logger.log(ex.message);
       this.issueForm.files._error = ex.message;
