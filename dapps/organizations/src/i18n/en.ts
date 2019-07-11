@@ -153,7 +153,8 @@ const i18n: any = {
           "confirming": "Print confirmation code",
           "issued": "Accept",
           "requested": "Enter PIN",
-          "unkown": "Request"
+          "unkown": "Request",
+          "unkown-long": "Request Notary Identification"
         },
         "title": "Overview",
         "verification": {

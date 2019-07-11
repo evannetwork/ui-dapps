@@ -154,7 +154,8 @@ const i18n: any = {
           "confirming": "Bestätigungscode drucken",
           "issued": "Annehmen",
           "requested": "PIN eingeben",
-          "unkown": "Beantragen"
+          "unkown": "Beantragen",
+          "unkown-long": "Notarielle Identifizierung beantragen"
         },
         "title": "Übersicht",
         "verification": {

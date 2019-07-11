@@ -41,15 +41,15 @@
         <a class="btn btn-primary btn-rounded" target="_blank"
           :id="`ident-request-unkown`"
           @click="$refs.identAction.show()">
-          {{ `_org.ident.notary.status-actions.unkown` | translate }}
+          {{ `_org.ident.notary.status-actions.unkown-long` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </a>
       </div>
     </div>
 
     <evan-loading v-if="loading"></evan-loading>
-    <div v-else>
-      <div class="mt-3"
+    <div class="row" v-else>
+      <div class="col-md-6 mt-3"
         v-for="(requestId, index) in requests">
         <org-ident-notary-detail
           :requestId="requestId">
