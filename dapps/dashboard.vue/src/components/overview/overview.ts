@@ -60,7 +60,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    */
   created() {
     if (window.location.href.startsWith('https://dashboard.evan.network')) {
-      this.dashboardEntries[0] = {
+      this.dashboardEntries[2] = {
         title: 'testcore',
         img: 'testcore.svg',
         fullPath: `https://dashboard.test.evan.network/#/onboarding.evan/identity-import?origin=dashboard.vue.evan`,
