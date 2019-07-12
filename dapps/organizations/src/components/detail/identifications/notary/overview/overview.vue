@@ -30,55 +30,48 @@
     <div class="d-flex align-items-center mb-5">
       <div>
         <h3 class="font-weight-bold mb-0">
-          {{ '_org.overview.title' | translate }}
+          {{ '_org.ident.notary.title' | translate }}
         </h3>
       </div>
       <span class="mx-auto"></span>
       <div v-if="!loading">
-        <org-ident-notary-issue
-          ref="orgIdentIssue">
-        </org-ident-notary-issue>
-        <button type="button" class="btn btn-primary btn-rounded"
-          id="ident-request"
-          @click="$refs.orgIdentIssue.show()">
-          {{ `_org.ident.notary.issue.issue` | translate }}
+        <org-ident-notary-request
+          ref="identAction">
+        </org-ident-notary-request>
+        <a class="btn btn-primary btn-rounded" target="_blank"
+          v-if="requests.length !== 0"
+          :id="`ident-request-unknown`"
+          @click="$refs.identAction.show()">
+          {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
-        </button>
+        </a>
       </div>
     </div>
 
     <evan-loading v-if="loading"></evan-loading>
-    <div v-else>
-      <div class="row content pt-1 pb-0"
-        :id="`evan-org-overview`">
-        <div class="col-md-12 col-lg-6 col-xl-4 mb-4"
-          v-for="(address, index) in Object.keys(organizations)">
-          <a class="d-flex bg-level-1 border-smooth rounded evan-highlight w-100"
-            :id="`evan-org-${ address }`"
-            :href="`${ dapp.fullUrl }/${ address }`">
-            <div class="px-3 py-2" style="overflow: visible">
-              <img class="img-fluid p-3"
-                v-if="organizations[address].img"
-                :src="organizations[address].img">
-              <i
-                class="mdi mdi-domain text-muted"
-                style="font-size: 50px;">
-              </i>
-            </div>
-            <div class="d-flex align-items-center w-100">
-              <div class="w-100 p-3" style="height: 81px; max-width: calc(100% - 20px)">
-                <h4 class="font-weight-semibold mb-0 force-oneline">
-                  {{ organizations[address].alias }}
-                </h4>
-                <span class="font-weight-semibold text-muted force-oneline">
-                  {{ `_org.types.${ organizations[address].type }` | translate }}
-                </span>
-              </div>
-            </div>
+    <template v-else>
+      <div class="white-box border-smooth rounded w-100 text-center"
+        v-if="requests.length === 0">
+        <div class="content">
+          {{ '_org.ident.notary.no-requests' | translate }}
+
+          <a class="btn btn-primary btn-rounded mt-3" target="_blank"
+            :id="`ident-request-unknown`"
+            @click="$refs.identAction.show()">
+            {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
           </a>
         </div>
       </div>
-    </div>
+      <div class="row" v-else>
+        <div class="col-xl-6 mt-3"
+          v-for="(requestId, index) in requests">
+          <org-ident-notary-detail
+            :requestId="requestId">
+          </org-ident-notary-detail>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 

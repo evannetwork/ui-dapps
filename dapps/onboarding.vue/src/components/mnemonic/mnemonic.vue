@@ -58,6 +58,7 @@
         </label>
         <input class="form-control" required
           ref="mnemonicInput0"
+          id="mnemonicInput0"
           :disabled="$props.disabled && !riddelStarted"
           v-model="mnemonicText"
           @keyup.enter.native="textAreaChanged(true)"

@@ -35,33 +35,62 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getOrganizations } from '../../organizations';
+import { getIdentificationDetails } from '../notary.identifications';
 
 @Component({ })
-export default class OverviewComponent extends mixins(EvanComponent) {
+export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
+  /**
+   * Request id for that the detail should be displayed
+   */
+  @Prop() requestId;
+
   /**
    * ui status flags
    */
   loading = true;
 
   /**
-   * all my assigned organizations
+   * Current identification status for the user
    */
-  organizations = null;
+  details = null;
 
   /**
-   * Check for showing the "canIssue button", usually the evan identification account.
+   * states for that actions are available
    */
-  canIssue = false;
+  statusActions = [ 'unknown', 'requested', 'confirming', ];
 
+  /**
+   * Load current status
+   */
   async created() {
-    // load the organizations
     const runtime = (<any>this).getRuntime();
-    this.organizations = await getOrganizations(runtime);
 
-    // TODO: add the correct account id that is able to handle verification issueing
-    this.canIssue = runtime.activeAccount === runtime.activeAccount;
+    // TODO: add status loading
+    this.details = await getIdentificationDetails(
+      runtime,
+      this.$route.params.address,
+      this.requestId,
+    );
 
     this.loading = false;
+  }
+
+  /**
+   * Start the action for the current status.
+   */
+  runStatusAction() {
+    switch (this.details.status) {
+      case 'unknown':
+      case 'requested':
+      case 'confirming': {
+        (<any>this.$refs.identAction).show();
+        break;
+      }
+      case 'issued': {
+        console.log('accept the verification')
+
+        break;
+      }
+    }
   }
 }

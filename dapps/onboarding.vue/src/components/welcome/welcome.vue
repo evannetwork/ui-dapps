@@ -40,7 +40,8 @@
           text-center
           bg-level-1 border evan-highlight"
         v-for="(type, index) in [ 'sign-in', 'sign-up' ]"
-        v-on:click="$router.push({ name: type, query: $route.query })">
+        :id="type"
+        @click="$router.push({ name: type, query: $route.query })">
         <img class="img-fluid col-6"
           :src="$store.state.onboardingBaseUrl + `/assets/${ type }.png`">
 

@@ -29,132 +29,148 @@
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
-      "identification": "Identification",
-      "organizations": "Organizations"
+      "identification": "Identifikation",
+      "identifications": "Identifikationen",
+      "notary": "Notariell",
+      "organization": "Organisation",
+      "organizations": "Organisationen"
     },
     "dispatchers": {
       "request-identification": "Identifikation wird beantragt...",
       "verification-accept": "Identifikation wird angenommen..."
     },
-    "ident-notary": {
-      "account-id": "Account-ID",
-      "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
-      "issue": {
-        "accountId": {
-          "desc": "Account-ID für die die notarielle Bestätigung erstellt werden soll.",
-          "error": "Bitte geben Sie eine gültige Account ID an!",
-          "title": "Account-ID"
-        },
-        "files": {
-          "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
-          "title": "Notariell bestätige Dateien"
-        },
-        "header": "Unternehmens-Identifizierung ausstellen",
-        "issue": "Unternehmens-Identifizierung ausstellen"
+    "ident": {
+      "categories": {
+        "identifications": "Identifications",
+        "notary": "Notarielle Identifications"
       },
-      "learn-more": "Mehr erfahren",
-      "pin": {
-        "confirmation-code": "Ihr Bestätigungscode lautet",
-        "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
-        "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode. Senden Sie dieses bitte an die unten angeführte Adresse.",
-        "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
-        "desc2": "Dieser Service kostet 150 EVE.",
-        "generate-answer": "Bestätigungscode Generieren",
-        "header": "Notarielle Identifikation",
+      "notary": {
+        "account-id": "Account-ID",
+        "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
+        "issue": {
+          "accountId": {
+            "desc": "Account-ID für die die notarielle Bestätigung erstellt werden soll.",
+            "error": "Bitte geben Sie eine gültige Account ID an!",
+            "title": "Account-ID"
+          },
+          "requestId": {
+            "desc": "Geben Sie die Anfrage-ID an, für die die Notarielle Identifizierung abgeschlossen werden soll, ein.",
+            "error": "Bitte geben Sie eine korrekte Anfrage-ID ein!",
+            "title": "Anfrage-ID"
+          },
+          "files": {
+            "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
+            "title": "Notariell bestätige Dateien"
+          },
+          "header": "Unternehmens-Identifizierung ausstellen",
+          "issue": "Unternehmens-Identifizierung ausstellen"
+        },
+        "learn-more": "Mehr erfahren",
+        "no-requests": "Sie haben noch keine notarielle Identifizierung beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
         "pin": {
-          "desc": "Der in dem Brief enthaltende PIN.",
-          "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
-          "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
-          "title": "PIN"
+          "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
+          "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
+          "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
+          "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
+          "desc2": "Senden Sie dieses bitte an die unten angeführte Adresse.",
+          "generate-answer": "Bestätigungscode Generieren",
+          "header": "Notarielle Identifikation",
+          "pin": {
+            "desc": "Der in dem Brief enthaltende PIN.",
+            "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
+            "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
+            "title": "PIN"
+          }
+        },
+        "print": "Drucken",
+        "request": {
+          "address": {
+            "desc": "Anschrift eingeben",
+            "error": "Bitte geben Sie eine Anschrift an!",
+            "title": "Anschrift"
+          },
+          "back": "Zurück",
+          "city": {
+            "desc": "Stadt eingeben",
+            "error": "Bitte geben Sie einen Stadt an!",
+            "title": "Stadt"
+          },
+          "company": {
+            "desc": "Firmenname eingeben",
+            "error": "Bitte geben Sie einen Firmenname an!",
+            "title": "Unternehmen"
+          },
+          "contact": {
+            "desc": "Ansprechpartner eingeben",
+            "error": "Bitte geben Sie einen Ansprechpartner an!",
+            "title": "Ansprechpartner"
+          },
+          "countries": {
+            "germany": "Deutschland"
+          },
+          "country": {
+            "desc": "Land eingeben",
+            "error": "Bitte geben Sie ein Land an!",
+            "title": "Land"
+          },
+          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Identifizierung ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
+          "header": "Notarielle Identifikation",
+          "mail": {
+            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationHRB}</li><li>Unternehmen: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "title": "Beantragung einer Notariellen Bestätigung"
+          },
+          "next": "Weiter",
+          "postal-address": "Anschrift",
+          "proof": {
+            "contact-is": "Ansprechpartner ist",
+            "footer": "Die notarielle Verifikation ist kostenpflichtig.",
+            "footer2": "Ihr Wallet wird mit 150 EVE belastet.",
+            "for-org": "für die Organisation",
+            "question-desc": "Zur Vervollständigung der notariellen Verifikation erhalten Sie ein Kennwort, zu Händen der folgenden Person.",
+            "title": "Bitte überprüfen Sie alle Informationen.",
+            "with-reg-number": "mit der Handelsregisternummer",
+            "you-request": "Sie bantragen eine",
+            "you-request-2": "notarielle Identifikation"
+          },
+          "regNumber": {
+            "desc": "Handelsregisternummer eingeben",
+            "error": "Bitte geben Sie eine Handelsregisternummer an!",
+            "title": "Handelsregisternummer"
+          },
+          "request-ident": "Beantragen",
+          "requested1": "Sie haben erfolgreich eine Notarielle Identifikation für Ihr Unternehmen beantragt.",
+          "requested2": "Ihr Wallet wurde mit 150 EVE belastet.",
+          "requesting": "Notarielle Indentifikation wird beantragt...",
+          "zipCode": {
+            "desc": "PLZ eingeben",
+            "error": "Bitte geben Sie eine gültige Postleitzahl an!",
+            "title": "PLZ"
+          }
+        },
+        "status": {
+          "accepted": "notariell identifiziert",
+          "confirming": "in Prüfung",
+          "forwarding": "wird vom Provider bearbeitet",
+          "issued": "notariell identifiziert",
+          "requested": "beantragt",
+          "title": "Identifizierung",
+          "unknown": "keine Identifizierung"
+        },
+        "status-actions": {
+          "confirming": "Bestätigung drucken",
+          "issued": "Annehmen",
+          "requested": "PIN eingeben",
+          "unknown": "Beantragen",
+          "unknown-long": "Notarielle Identifizierung beantragen"
+        },
+        "title": "Übersicht",
+        "verification": {
+          "accept": "Annehmen",
+          "company": "Unternehmens-Identifizierung",
+          "company-random": "Unternehmens-ID-Identifizierung",
+          "incorrect": "Die Ihnen ausgestellten Unternehmensidentifikationen wurden nicht von der korrekten Instanz erstellt.",
+          "status": "Status"
         }
-      },
-      "print": "Drucken",
-      "request": {
-        "mail": {
-          "title": "Beantragung einer Notariellen Bestätigung",
-          "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationHRB}</li><li>Unternehmen: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>"
-        },
-        "address": {
-          "desc": "Anschrift eingeben",
-          "error": "Bitte geben Sie eine Anschrift an!",
-          "title": "Anschrift"
-        },
-        "back": "Zurück",
-        "city": {
-          "desc": "Stadt eingeben",
-          "error": "Bitte geben Sie einen Stadt an!",
-          "title": "Stadt"
-        },
-        "company": {
-          "desc": "Firmenname eingeben",
-          "error": "Bitte geben Sie einen Firmenname an!",
-          "title": "Unternehmen"
-        },
-        "contact": {
-          "desc": "Ansprechpartner eingeben",
-          "error": "Bitte geben Sie einen Ansprechpartner an!",
-          "title": "Ansprechpartner"
-        },
-        "countries": {
-          "germany": "Deutschland"
-        },
-        "country": {
-          "desc": "Land eingeben",
-          "error": "Bitte geben Sie ein Land an!",
-          "title": "Land"
-        },
-        "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Identifizierung ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
-        "header": "Notarielle Identifikation",
-        "next": "Weiter",
-        "postal-address": "Anschrift",
-        "proof": {
-          "contact-is": "Ansprechpartner ist",
-          "footer": "Die notarielle Verifikation ist kostenpflichtig.",
-          "footer2": "Ihr Wallet wird mit 150 EVE belastet.",
-          "for-org": "für die Organisation",
-          "question-desc": "Zur Vervollständigung der notariellen Verifikation erhalten Sie ein Kennwort, zu Händen der folgenden Person.",
-          "title": "Bitte überprüfen Sie alle Informationen.",
-          "with-reg-number": "mit der Handelsregisternummer",
-          "you-request": "Sie bantragen eine",
-          "you-request-2": "notarielle Identifikation"
-        },
-        "regNumber": {
-          "desc": "Handelsregisternummer eingeben",
-          "error": "Bitte geben Sie eine Handelsregisternummer an!",
-          "title": "Handelsregisternummer"
-        },
-        "request-ident": "Beantragen",
-        "requested1": "Sie haben erfolgreich eine Notarielle Identifikation für Ihr Unternehmen beantragt.",
-        "requested2": "Ihr Wallet wurde mit 150 EVE belastet.",
-        "requesting": "Notarielle Indentifikation wird beantragt...",
-        "zipCode": {
-          "desc": "PLZ eingeben",
-          "error": "Bitte geben Sie eine gültige Postleitzahl an!",
-          "title": "PLZ"
-        }
-      },
-      "status": {
-        "accepted": "notariell identifiziert",
-        "confirming": "in Prüfung",
-        "forwarding": "wird vom Provider bearbeitet",
-        "issued": "notariell identifiziert",
-        "requested": "beantragt",
-        "title": "Identifizierung",
-        "unkown": "keine Identifizierung"
-      },
-      "status-actions": {
-        "confirming": "Bestätigungscode drucken",
-        "issued": "Annehmen",
-        "requested": "PIN eingeben",
-        "unkown": "Beantragen"
-      },
-      "title": "Übersicht",
-      "verification": {
-        "accept": "Annehmen",
-        "company": "Unternehmens-Identifizierung",
-        "company-random": "Unternehmens-ID-Identifizierung",
-        "incorrect": "Die Ihnen ausgestellten Unternehmensidentifikationen wurden nicht von der korrekten Instanz erstellt.",
-        "status": "Status"
       }
     },
     "overview": {

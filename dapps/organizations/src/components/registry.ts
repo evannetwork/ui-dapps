@@ -28,22 +28,24 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import IdentIssueComponent from './detail/identification/issue/issue.vue';
-import IdentPinComponent from './detail/identification/pin/pin.vue';
-import IdentRequestComponent from './detail/identification/request/request.vue';
-import IdentVerificationComponent from './detail/identification/verification/verification.vue';
+import IdentNotaryIssueComponent from './detail/identifications/notary/issue/issue.vue';
+import IdentNotaryPinComponent from './detail/identifications/notary/pin/pin.vue';
+import IdentNotaryRequestComponent from './detail/identifications/notary/request/request.vue';
+import IdentNotaryVerificationComponent from './detail/identifications/notary/verification/verification.vue';
 import InfoDialogComponent from './detail/info/info.vue';
+import NotaryDetailComponent from './detail/identifications/notary/detail/detail.vue';
 
 // export them all, so other applications can access them
 export { }
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'org-ident-issue', component: IdentIssueComponent },
-  { name: 'org-ident-pin', component: IdentPinComponent },
-  { name: 'org-ident-request', component: IdentRequestComponent },
-  { name: 'org-ident-verification', component: IdentVerificationComponent },
-  { name: 'org-info-dialog', component: InfoDialogComponent },
+  { name: 'org-ident-notary-detail', component: NotaryDetailComponent },
+  { name: 'org-ident-notary-issue', component: IdentNotaryIssueComponent },
+  { name: 'org-ident-notary-pin', component: IdentNotaryPinComponent },
+  { name: 'org-ident-notary-request', component: IdentNotaryRequestComponent },
+  { name: 'org-ident-notary-verification', component: IdentNotaryVerificationComponent },
+  { name: 'org-ident-info-dialog', component: InfoDialogComponent },
 ];
 
 export default componentRegistration;

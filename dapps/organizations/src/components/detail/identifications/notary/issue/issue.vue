@@ -27,31 +27,47 @@
 
 <template>
   <div>
-    <evan-modal ref="issueModal"
+    <evan-modal
+      ref="issueModal"
       :maxWidth="'600px'">
       <template v-slot:header>
         <h5 class="modal-title">
-          {{ '_org.ident-notary.issue.header' | translate }}
+          {{ '_org.ident.notary.issue.header' | translate }}
         </h5>
       </template>
-      <template v-slot:body>
+      <template v-slot:body
+        id="issue-identification-modal">
         <div class="form-group">
           <label for="alias">
-            {{ `_org.ident-notary.issue.accountId.title` | translate }} *
+            {{ `_org.ident.notary.issue.requestId.title` | translate }} *
           </label>
           <input class="form-control" required
             id="alias" ref="alias"
-            :placeholder="`_org.ident-notary.issue.accountId.desc` | translate"
+            :placeholder="`_org.ident.notary.issue.requestId.desc` | translate"
+            v-model="issueForm.requestId.value"
+            :class="{ 'is-invalid' : issueForm.requestId.error }"
+            @blur="issueForm.requestId.setDirty()">
+          <div class="invalid-feedback">
+            {{ `_org.ident.notary.issue.requestId.error` | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="alias">
+            {{ `_org.ident.notary.issue.accountId.title` | translate }} *
+          </label>
+          <input class="form-control" required
+            id="alias" ref="alias"
+            :placeholder="`_org.ident.notary.issue.accountId.desc` | translate"
             v-model="issueForm.accountId.value"
             :class="{ 'is-invalid' : issueForm.accountId.error }"
             @blur="issueForm.accountId.setDirty()">
           <div class="invalid-feedback">
-            {{ `_org.ident-notary.issue.accountId.error` | translate }}
+            {{ `_org.ident.notary.issue.accountId.error` | translate }}
           </div>
         </div>
         <div>
           <label for="files" class="d-block">
-            {{ '_org.ident-notary.issue.files.title' | translate }}
+            {{ '_org.ident.notary.issue.files.title' | translate }}
           </label>
           <div>
             <evan-file-input
@@ -72,7 +88,7 @@
             id="ident-issue"
             :disabled="!issueForm.isValid"
             @click="issueIdentification()">
-            {{ `_org.ident-notary.issue.issue` | translate }}
+            {{ `_org.ident.notary.issue.issue` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issueing"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>

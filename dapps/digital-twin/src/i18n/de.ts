@@ -32,24 +32,24 @@ import * as dtLib from '@evan.network/digitaltwin.lib';
 const i18n: any = {
   "_digitaltwins": {
     "add": "Suchen",
-    "add-digitaltwin": "Neuer digitaler Zwilling",
+    "add-digitaltwin": "Neuer Digitaler Zwilling",
     "containerlink": {
       "address": {
-        "desc": "Adresse des Plugins der in den digitalen Zwilling verknüpft werden soll.",
+        "desc": "Adresse des Plugins, welches in den Digitalen Zwilling verknüpft werden soll.",
         "error": "Bitte geben Sie eine Adresse ein.",
         "title": "Plugin"
       },
       "change-twin": "Digitalen Zwilling ändern",
-      "description1": "Über das Eingabefeld können Sie die Adresse eines digitalen Zwillings auswählen in den Sie einen Plugin verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
-      "description2": "Über das Eingabefeld können Sie eine Adresse eines Plugins auswählen, der in den digitalen Zwilling verknüpft werden soll.",
+      "description1": "Über das Eingabefeld können Sie die Adresse eines Digitalen Zwillings auswählen in den Sie ein Plugin verknüpfen wollen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen Digitalen Zwilling erstellen und an diese Adresse binden, oder einen bestehenden Zwilling mit dieser Adresse verknüpfen.",
+      "description2": "Über das Eingabefeld können Sie eine Adresse eines Plugins auswählen, das in den Digitalen Zwilling verknüpft werden soll.",
       "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
         "desc": "Die eingebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
-        "title": "Ungültiger Plugin"
+        "title": "Ungültiges Plugin"
       },
-      "linking": "Bestehendes Plugin Wird verknüpft...",
+      "linking": "Bestehendes Plugin wird verknüpft...",
       "name": {
-        "desc": "ENS Adresse, unter dem das Plugin in dem digitalen Zwilling gespeichert werden soll.",
+        "desc": "ENS Adresse, unter dem das Plugin in dem Digitalen Zwilling gespeichert werden soll.",
         "error": "Bitte geben Sie einen ENS Adresse ein.",
         "title": "ENS Adresse"
       },
@@ -70,7 +70,7 @@ const i18n: any = {
       "desc": "Geben Sie die generellen Daten Ihres Digitalen Zwillings an.",
       "question": {
         "action": "Erstellen",
-        "desc": "Durch das bestätigen, wird der Digitale Zwilling mit den angegeben Daten erstellt, Transaktionen ausgelöst und EVE verbraucht. Möchten Sie fortfahren?",
+        "desc": "Durch das Bestätigen, wird der Digitale Zwilling mit den angegeben Daten erstellt, Transaktionen ausgelöst und EVE verbraucht. Möchten Sie fortfahren?",
         "title": "Digitalen Zwilling erstellen",
         "dont-show": "Nicht mehr anzeigen"
       }
@@ -80,12 +80,12 @@ const i18n: any = {
       "add-favorite-quest": "Wollen Sie diesen Digitalen Zwilling als Favoriten hinzufügen?",
       "edit": "Beschreibung anpassen",
       "error": {
-        "desc": "Die ausgewählte Adresse entspricht keinem gültigen Digitalen Zwilling. Bitte gehen Sie sicher, dass die korrekt Adresse geöffnet wurde.",
+        "desc": "Die ausgewählte Adresse entspricht keinem gültigen Digitalen Zwilling. Bitte gehen Sie sicher, dass die korrekte Adresse geöffnet wurde.",
         "title": "Ungültiger Digitaler Zwilling"
       },
       "map-to-ens": "An Domainnamen binden",
       "my-new-twin": "Neuer Digitaler Zwilling",
-      "remove-favorite": "Als Favorit entfernen",
+      "remove-favorite": "Von den Favoriten entfernen",
       "remove-favorite-quest": "Wollen Sie diesen Digitalen Zwilling wirklich von den Favoriten entfernen?",
       "save": "Speichern",
       "title": "Metadaten des Digitalen Zwillings"
@@ -108,7 +108,7 @@ const i18n: any = {
     "in-creation": "In Erstellung...",
     "lookup": {
       "address": {
-        "desc": "Geben Sie die Adresse Ihres digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
+        "desc": "Geben Sie die Adresse Ihres Digitalen Zwillings ein (z.B.: auto.meinefirma, 0x0E50465BC6a553f9F55C17380ace4a11B893dd92).",
         "error": "Bitte geben Sie eine gültige Adresse ein.",
         "title": "Adresse Ihres Digitalen Zwillings",
         "use-address": "Digitalen Zwilling auf ENS Adresse binden"
@@ -119,16 +119,16 @@ const i18n: any = {
       },
       "create": {
         "action": "Digitalen Zwilling erstellen",
-        "desc": "Für diese Adresse existiert noch kein digitaler Zwilling. Möchten Sie einen neuen für diese Adresse erstellen?",
+        "desc": "Für diese Adresse existiert noch kein Digitaler Zwilling. Möchten Sie einen neuen für diese Adresse erstellen?",
         "title": "Digitalen Zwilling erstellen"
       },
-      "description": "Über das Eingabefeld ist es Ihnen möglich eine Adresse für einen digitalen Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen digitalen Zwilling erstellen und an diese Adresse binden, oder eine bestehende mit dieser Adresse verknüpfen.",
+      "description": "Über das Eingabefeld ist es Ihnen möglich, eine Adresse für einen Digitalen Zwilling zu überprüfen. Existiert dort bereits eine bestehende Instanz, wird diese direkt für Sie geöffnet. Ist die Adresse noch nicht vergeben, können Sie einen neuen Digitalen Zwilling erstellen und an diese Adresse binden, oder einen bestehenden Digitalen Zwilling mit dieser Adresse verknüpfen.",
       "error": {
-        "desc": "Die angeforderte Adresse enthält keinen validen digitalen Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
+        "desc": "Die angeforderte Adresse enthält keinen validen Digitalen Zwilling. Bitte überprüfen Sie Ihre Eingabe.",
         "title": "Fehler beim Laden"
       },
       "missing-balance": {
-        "desc": "Bevor Sie einen digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf um fortzufahren.",
+        "desc": "Bevor Sie einen Digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
         "title": "Adresse verfügbar"
       },
       "not-buyable": {
@@ -137,7 +137,7 @@ const i18n: any = {
       },
       "purchase": {
         "action": "Adresse kaufen",
-        "desc": "Bevor Sie einen digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice } EVE</b> kaufen?",
+        "desc": "Bevor Sie einen Digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice } EVE</b> kaufen?",
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
@@ -162,10 +162,10 @@ const i18n: any = {
     },
     "startup": "Womit möchten Sie starten?",
     "verifications": {
-      "description": "An jeden digitalen Zwilling und Plugin können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
+      "description": "An jeden Digitalen Zwilling und Plugin können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
       "title": "Verizifierungen"
     },
-    "welcome": "Willkommen in der digitalen Zwillingsverwaltung"
+    "welcome": "Willkommen in der Digitalen Zwillingsverwaltung"
   }
 }
 /* tslint:enable */

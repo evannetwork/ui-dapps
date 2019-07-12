@@ -27,6 +27,7 @@
 
 // vue imports
 import Vue from 'vue';
+import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
@@ -35,10 +36,10 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import * as dispatchers from '../../../../dispatchers/registry';
+import * as dispatchers from '../../../../../dispatchers/registry';
 
 @Component({ })
-export default class IdentVerificationComponent extends mixins(EvanComponent) {
+export default class IdentNotaryVerificationComponent extends mixins(EvanComponent) {
   /**
    * label that should be used to be displayed before the verification topic
    */
@@ -120,8 +121,7 @@ export default class IdentVerificationComponent extends mixins(EvanComponent) {
 
     // load the verification details
     // TODO: add use correct ens root owner
-    const rootVerificationAccount = '0x74479766e4997F397942cc607dc59f7cE5AC70b2' ||
-      dappBrowser.config.ensRootOwner;
+    const rootVerificationAccount = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;

@@ -35,52 +35,61 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../../../identification';
+import { getRequests } from '../notary.identifications';
 
 @Component({ })
-export default class IdentificationComponent extends mixins(EvanComponent) {
+export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) {
   /**
    * ui status flags
    */
   loading = true;
+  reloading = true;
 
   /**
-   * Current identification status for the user
+   * all my assigned organizations
    */
-  details = null;
+  requests: Array<string> = null;
 
   /**
-   * states for that actions are available
+   * Check for showing the "canIssue button", usually the evan identification account.
    */
-  statusActions = [ 'unkown', 'requested', 'confirming', ];
+  canIssue = false;
 
   /**
-   * Load current status
+   * Load request function to be able to listent on reload event
    */
+  loadRequests: Function;
+
   async created() {
+    // load the organizations
     const runtime = (<any>this).getRuntime();
 
-    // TODO: add status loading
-    this.details = await getIdentificationDetails(runtime, this.$route.params.address);
+    // set load requests function so we can use it within the event listener
+    this.loadRequests = (async () => {
+      this.reloading = true;
+      this.requests = await getRequests(runtime, this.$route.params.address);
+      this.reloading = false;
+    }).bind(this);
+
+    // load initial data
+    await this.loadRequests();
+
+    // bind reload eventr listener
+    window.addEventListener(
+      `org-ident-reload-${ this.$route.params.address }`,
+      <any>this.loadRequests
+    );
 
     this.loading = false;
   }
 
   /**
-   * Start the action for the current status.
+   * Remove ident reload listener
    */
-  runStatusAction() {
-    switch (this.details.status) {
-      case 'unkown':
-      case 'requested': {
-        (<any>this.$refs.identAction).show();
-        break;
-      }
-      case 'issued': {
-        console.log('accept the verification')
-
-        break;
-      }
-    }
+  beforeDestroy() {
+    window.removeEventListener(
+      `org-ident-reload-${ this.$route.params.address }`,
+      <any>this.loadRequests
+    );
   }
 }

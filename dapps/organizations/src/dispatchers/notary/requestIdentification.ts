@@ -30,7 +30,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-import { notarySmartAgentAccountId } from '../identification';
+import { notarySmartAgentAccountId } from '../../components/detail/identifications/notary/notary.identifications';
 
 const dispatcher = new Dispatcher(
   `organizations.${ dappBrowser.getDomainName() }`,

@@ -35,7 +35,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getOrganization } from '../../identification';
+import { getOrganization } from '../../organizations';
 
 @Component({ })
 export default class DetailComponent extends mixins(EvanComponent) {
@@ -43,6 +43,25 @@ export default class DetailComponent extends mixins(EvanComponent) {
    * ui status flags
    */
   loading = true;
+
+  /**
+   * all categories for the left panel
+   */
+  categories = [
+    {
+      title: '_org.ident.categories.identifications',
+      route: 'identifications',
+      icon: 'mdi mdi-account-card-details-outline',
+      isOpen: true,
+      children: [
+        {
+          title: '_org.ident.categories.notary',
+          route: 'notary',
+          icon: 'mdi mdi-account-key-outline'
+        }
+      ]
+    }
+  ];
 
   async created() {
     // load the organizations
@@ -58,5 +77,12 @@ export default class DetailComponent extends mixins(EvanComponent) {
     (<any>this).$i18n.add((<any>this).$i18n.locale(), customTranslation);
 
     this.loading = false;
+  }
+
+  /**
+   * Sends the hide sidebar event.
+   */
+  hideSidebar2() {
+    window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-close'));
   }
 }

@@ -30,131 +30,147 @@ const i18n: any = {
   "_org": {
     "breadcrumbs": {
       "identification": "Identification",
+      "identifications": "Identifications",
+      "notary": "Notarial",
+      "organization": "Organization",
       "organizations": "Organizations"
     },
     "dispatchers": {
       "request-identification": "Requesting Identification...",
       "verification-accept": "Accepting Identification..."
     },
-    "ident-notary": {
-      "account-id": "Account-ID",
-      "info": "Identify your account to be a trusted evan.network member",
-      "issue": {
-        "accountId": {
-          "desc": "Account ID for which the notarial confirmation should be created.",
-          "error": "Please enter a valid Account ID!",
-          "title": "Account-ID"
-        },
-        "files": {
-          "error": "You must add at least 1 notarized document to continue.",
-          "title": "Notarially certified files"
-        },
-        "header": "Issue Identification Verification",
-        "issue": "Issue Identification Verification"
+    "ident": {
+      "categories": {
+        "identifications": "Identifications",
+        "notary": "Notarial Identifications"
       },
-      "learn-more": "Learn more",
-      "pin": {
-        "confirmation-code": "Your confirmation code is",
-        "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
-        "desc": "Please enter the PIN that was sent to you and generate your confirmation code. Please send it to the address below.",
-        "desc-hin": "Please pay attention to upper and lower case.",
-        "desc2": "This service will cost 150 EVE.",
-        "generate-answer": "Generate confirmation code",
-        "header": "Notarial Identification",
+      "notary": {
+        "account-id": "Account-ID",
+        "info": "Identify your account to be a trusted evan.network member",
+        "issue": {
+          "accountId": {
+            "desc": "Account ID for which the notarial confirmation should be created.",
+            "error": "Please enter a valid Account ID!",
+            "title": "Account-ID"
+          },
+          "requestId": {
+            "desc": "Enter the request ID for which the notarial identification is to be completed.",
+            "error": "Please enter a correct request ID",
+            "title": "Request ID"
+          },
+          "files": {
+            "error": "You must add at least 1 notarized document to continue.",
+            "title": "Notarially certified files"
+          },
+          "header": "Issue Identification Verification",
+          "issue": "Issue Identification Verification"
+        },
+        "learn-more": "Learn more",
+        "no-requests": "You have not yet requested a Notarial Identification. Use the following button to request one.",
         "pin": {
-          "desc": "The PIN contained in the letter.",
-          "error": "Please enter a PIN to continue.",
-          "error2": "The PIN entered was not correct. Please enter the correct PIN.",
-          "title": "PIN"
+          "confirmation-code": "Your confirmation code was successfully recognized.",
+          "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
+          "desc": "Please enter the PIN that was sent to you and generate your confirmation code.",
+          "desc-hin": "Please pay attention to upper and lower case.",
+          "desc2": "Please send it to the address below.",
+          "generate-answer": "Generate confirmation code",
+          "header": "Notarial Identification",
+          "pin": {
+            "desc": "The PIN contained in the letter.",
+            "error": "Please enter a PIN to continue.",
+            "error2": "The PIN entered was not correct. Please enter the correct PIN.",
+            "title": "PIN"
+          }
+        },
+        "print": "Print",
+        "request": {
+          "address": {
+            "desc": "Enter address",
+            "error": "Please enter an address.",
+            "title": "Address"
+          },
+          "back": "Go back",
+          "city": {
+            "desc": "Enter city name",
+            "error": "Please enter a city.",
+            "title": "City"
+          },
+          "company": {
+            "desc": "Enter company name",
+            "error": "Please enter a company name",
+            "title": "Company"
+          },
+          "contact": {
+            "desc": "Enter contact name",
+            "error": "Please enter a contact person",
+            "title": "Contact"
+          },
+          "countries": {
+            "germany": "Germany"
+          },
+          "country": {
+            "desc": "Enter country name",
+            "error": "Please enter a country",
+            "title": "Country"
+          },
+          "description": "Please fill in the formlar to request a notarial identification of your organisation. This service is subject to a fee.",
+          "header": "Notarial Identification",
+          "mail": {
+            "body": "I hereby request a Notarial Identification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationHRB}</li><li>Company: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "title": "Request for Notarial Identification"
+          },
+          "next": "Next",
+          "postal-address": "Postal Address",
+          "proof": {
+            "contact-is": "Contact person is",
+            "footer": "Notarial verification is subject to a fee.",
+            "footer2": "Your wallet will be charged 150 EVE.",
+            "for-org": "For the organization",
+            "question-desc": "To complete the notarized verification, you will receive a password for the attention of the following person.",
+            "title": "Please check all information.",
+            "with-reg-number": "with the commercial register number",
+            "you-request": "You request one",
+            "you-request-2": "Notarial Identification"
+          },
+          "regNumber": {
+            "desc": "Enter Commercial Register Number",
+            "error": "Please enter a commercial register number",
+            "title": "Commercial Register Number"
+          },
+          "request-ident": "Beantragen",
+          "requested1": "You have successfully applied for a notarial identification for your company.",
+          "requested2": "Your wallet has been charged 150 EVE.",
+          "requesting": "Notarial identification is requested...",
+          "zipCode": {
+            "desc": "Enter Postcode",
+            "error": "Please enter a valid post code",
+            "title": "Postcode"
+          }
+        },
+        "status": {
+          "accepted": "notarially identified",
+          "confirming": "under review",
+          "forwarding": "is processed by the provider",
+          "issued": "notarially identified",
+          "requested": "requsted",
+          "title": "Identification",
+          "unknown": "no identification"
+        },
+        "status-actions": {
+          "confirming": "Print confirmation",
+          "issued": "Accept",
+          "requested": "Enter PIN",
+          "unknown": "Request",
+          "unknown-long": "Request Notary Identification"
+        },
+        "title": "Overview",
+        "verification": {
+          "accept": "Accept",
+          "company": "Company-Identitfication",
+          "company-random": "Company-ID-Identification",
+          "incorrect": "The company IDs issued to you were not created by the correct instance.",
+          "status": "Status"
         }
-      },
-      "print": "Print",
-      "request": {
-        "mail": {
-          "title": "Request for Notarial Identification",
-          "body": "I hereby request a Notarial Identification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationHRB}</li><li>Company: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>"
-        },
-        "address": {
-          "desc": "Enter address",
-          "error": "Please enter an address.",
-          "title": "Address"
-        },
-        "back": "Go back",
-        "city": {
-          "desc": "Enter city name",
-          "error": "Please enter a city.",
-          "title": "City"
-        },
-        "company": {
-          "desc": "Enter company name",
-          "error": "Please enter a company name",
-          "title": "Company"
-        },
-        "contact": {
-          "desc": "Enter contact name",
-          "error": "Please enter a contact person",
-          "title": "Contact"
-        },
-        "countries": {
-          "germany": "Germany"
-        },
-        "country": {
-          "desc": "Enter country name",
-          "error": "Please enter a country",
-          "title": "Country"
-        },
-        "description": "Please fill in the formlar to request a notarial identification of your organisation. This service is subject to a fee.",
-        "header": "Notarial Identification",
-        "next": "Next",
-        "postal-address": "Postal Address",
-        "proof": {
-          "contact-is": "Contact person is",
-          "footer": "Notarial verification is subject to a fee.",
-          "footer2": "Your wallet will be charged 150 EVE.",
-          "for-org": "For the organization",
-          "question-desc": "To complete the notarized verification, you will receive a password for the attention of the following person.",
-          "title": "Please check all information.",
-          "with-reg-number": "with the commercial register number",
-          "you-request": "You request one",
-          "you-request-2": "Notarial Identification"
-        },
-        "regNumber": {
-          "desc": "Enter Commercial Register Number",
-          "error": "Please enter a commercial register number",
-          "title": "Commercial Register Number"
-        },
-        "request-ident": "Beantragen",
-        "requested1": "You have successfully applied for a notarial identification for your company.",
-        "requested2": "Your wallet has been charged 150 EVE.",
-        "requesting": "Notarial identification is requested...",
-        "zipCode": {
-          "desc": "Enter Postcode",
-          "error": "Please enter a valid post code",
-          "title": "Postcode"
-        }
-      },
-      "status": {
-        "accepted": "notarially identified",
-        "confirming": "under review",
-        "forwarding": "is processed by the provider",
-        "issued": "notarially identified",
-        "requested": "requsted",
-        "title": "Identification",
-        "unkown": "no identification"
-      },
-      "status-actions": {
-        "confirming": "Print confirmation code",
-        "issued": "Accept",
-        "requested": "Enter PIN",
-        "unkown": "Request"
-      },
-      "title": "Overview",
-      "verification": {
-        "accept": "Accept",
-        "company": "Company-Identitfication",
-        "company-random": "Company-ID-Identification",
-        "incorrect": "The company IDs issued to you were not created by the correct instance.",
-        "status": "Status"
       }
     },
     "overview": {

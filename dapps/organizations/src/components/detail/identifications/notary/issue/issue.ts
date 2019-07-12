@@ -37,14 +37,18 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { agentUrl } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-import * as dispatchers from '../../../../dispatchers/registry';
+import * as dispatchers from '../../../../../dispatchers/registry';
+
+import { issueVerification } from '../notary.identifications';
+
 
 interface IssueFormInterface extends EvanForm {
   files: EvanFormControl;
+  requestId: EvanFormControl;
 }
 
 @Component({ })
-export default class IdentIssueComponent extends mixins(EvanComponent) {
+export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
   /**
    * Forumular to insert the certified notary files.
    */
@@ -59,14 +63,20 @@ export default class IdentIssueComponent extends mixins(EvanComponent) {
     this.issueForm = (<IssueFormInterface>new EvanForm(this, {
       accountId: {
         value: '',
-        validate: function(vueInstance: IdentIssueComponent, form: IssueFormInterface) {
+        validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
           return EvanForm.validEthAddress(this.value);
+        }
+      },
+      requestId: {
+        value: '',
+        validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
+          return !!this.value;
         }
       },
       files: {
         value: [ ],
-        validate: function(vueInstance: IdentIssueComponent, form: IssueFormInterface) {
-          return this.value.length === 0 ? '_org.ident-notary.issue.files.error' : true;
+        validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
+          return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
         }
       }
     }));
@@ -93,15 +103,10 @@ export default class IdentIssueComponent extends mixins(EvanComponent) {
     this.issueing = true;
 
     try {
-      // TODO: Add correct api endpoint
-      await axios.post(`${ agentUrl }/api/`, {
-        payload: {
-          files: this.issueForm.files.value,
-        }
-      });
+       await issueVerification((<any>this).getRuntime(), this.issueForm.requestId.value, this.issueForm.files.value)
     } catch (ex) {
       (<any>this).getRuntime().logger.log(ex.message);
-      this.issueForm.files._error = ex.message;
+      this.issueForm.requestId._error = ex.message;
     }
 
     this.issueing = false;
