@@ -85,6 +85,7 @@
 
           <div class="text-center mt-4">
             <button type="button" class="btn btn-rounded btn-primary"
+              id="sign-in"
               v-if="!checking"
               :disabled="!validMnemonic"
               @click="setMnemonic()">

@@ -52,6 +52,10 @@ export default {
         "action": "Continue session",
         "desc": "Do you want to continue with your previous session and start the last opened application?",
         "title": "Continue where you left from"
+      },
+      "testcore": {
+        "desc": "Test functionalities on the testcore with your existing identity",
+        "title": "Try for free"
       }
     },
     "startup": "What would you like to start with?"

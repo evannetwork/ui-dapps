@@ -37,7 +37,7 @@
       <ion-label class="standalone">
         <h4>{{ '_explorer.opened-address' | translate }}</h4>
       </ion-label>
-      <a target="_blank" href="https://testexplorer.evan.network/account/{{ id }}">
+      <a target="_blank" href="{{ explorerUrl }}/address/{{ id }}">
         {{ id }}
       </a>
     </ion-col>
@@ -45,7 +45,7 @@
       <ion-label class="standalone">
         <h4>{{ '_explorer.contract-address' | translate }}</h4>
       </ion-label>
-      <a target="_blank" href="https://testexplorer.evan.network/account/{{ contractAddress }}">
+      <a target="_blank" href="{{ explorerUrl }}/address/{{ contractAddress }}">
         {{ contractAddress }}
       </a>
     </ion-col>
@@ -55,7 +55,7 @@
       <ion-label class="standalone">
         <h4>{{ '_explorer.owner' | translate }}</h4>
       </ion-label>
-      <a target="_blank" href="https://testexplorer.evan.network/account/{{ owner }}">
+      <a target="_blank" href="{{ explorerUrl }}/address/{{ owner }}">
         {{ owner }}
       </a>
     </ion-col>

@@ -69,7 +69,7 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
   private dbcp: any;
 
   /**
-   * id corresponding contract id 
+   * id corresponding contract id
    */
   private contractAddress: string;
 
@@ -93,6 +93,11 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
    */
   private balance: number;
 
+  /**
+   * Explorer url for testnet / mainnet.
+   */
+  private explorerUrl: string;
+
   constructor(
     private _DomSanitizer: DomSanitizer,
     private alertService: EvanAlertService,
@@ -112,6 +117,9 @@ export class ExplorerContractGeneralComponent extends AsyncComponent {
    */
   async _ngOnInit() {
     this.id = this.routingService.getHashParam('id');
+    this.explorerUrl = window.location.href.indexOf('dashboard.evan.network') === -1 ?
+      'https://testexplorer.evan.network' :
+      'https://explorer.evan.network';
 
     if (this.id.indexOf('0x') !== 0) {
       this.contractAddress = await this.explorerService.nameResolver.getAddress(this.id);

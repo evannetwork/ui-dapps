@@ -25,7 +25,7 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface, DAppLoaderComponent, EvanIframeComponent } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface, DAppLoaderComponent, IframeComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import OverviewComponent from './components/overview/overview.vue';
@@ -45,17 +45,17 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       },
       {
         path: 'github',
-        component: EvanIframeComponent,
+        component: IframeComponent,
         props: { src: 'https://evannetwork.github.io' }
       },
       {
         path: `bccdocs`,
-        component: EvanIframeComponent,
+        component: IframeComponent,
         props: { src: '//api-blockchain-core.readthedocs.io/en/latest/' }
       },
       {
         path: `uidocs`,
-        component: EvanIframeComponent,
+        component: IframeComponent,
         props: { src: '//ui-docs.readthedocs.io/en/latest/' }
       },
     ]

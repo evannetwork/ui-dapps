@@ -74,7 +74,9 @@
           </div>
           <template v-else>
             <div class="white-box border-smooth rounded mt-3"
-              v-for="(category, index) in Object.keys(categories).sort()">
+              v-for="(category, index) in Object.keys(categories).sort()"
+              v-bind:key="index"
+            >
               <div class="header">
                 <h3 class="m-0 font-weight-semibold text-uppercase">
                  {{ category }}
@@ -93,11 +95,13 @@
                   <tbody>
                     <tr class="clickable"
                       v-for="(contact, index) in categories[category]"
-                      @click="$refs.contactDetailModal.show(contact.accountId);">
+                      @click="$refs.contactDetailModal.show(contact.accountId);"
+                      v-bind:key="index"
+                    >
                       <td class="font-weight-semibold text-primary">{{ contact.alias }}</td>
                       <td class="small text-muted">{{ contact.accountId || contact.email }}</td>
                       <td class="small text-muted">{{ contact.tags.join(', ') }}</td>
-                      <td class="position-relative">
+                      <td v-bind:class="{ positionRelative: contact.loading }">
                         <div v-if="contact.loading" class="spinner-border spinner-border-sm text-secondary"></div>
                       </td>
                     </tr>

@@ -8,6 +8,16 @@
 ### Deprecations
 
 
+## Version 3.6.0
+### Features
+- `organizations`
+  - add organizations dapp, including identification handling
+- `explorer`
+  - fix general page blockchain explorer links
+- `dashboard.vue`
+  - add testnet link for mainnet dashboard overview
+
+
 ## Version 3.5.0
 ### Features
 - `addressbook.vue`
