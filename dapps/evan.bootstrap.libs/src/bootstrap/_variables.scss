@@ -915,9 +915,9 @@ $tooltip-font-size:                 $font-size-sm !default;
 $tooltip-max-width:                 200px !default;
 $popover-header-bg:                 cssVar('tooltip-color') !default;
 $popover-header-bg-darken:          cssVar('tooltip-bg') !default;
-$tooltip-color:                     $white !default;
-$tooltip-bg:                        $black !default;
-$tooltip-border-radius:             $border-radius !default;
+$tooltip-color:                     cssVar('tooltip-color') !default;
+$tooltip-bg:                        cssVar('tooltip-bg') !default;
+$tooltip-border-radius:             cssVar('tooltip-border') !default;
 $tooltip-opacity:                   .9 !default;
 $tooltip-padding-y:                 .25rem !default;
 $tooltip-padding-x:                 .5rem !default;
@@ -925,7 +925,7 @@ $tooltip-margin:                    0 !default;
 
 $tooltip-arrow-width:               .8rem !default;
 $tooltip-arrow-height:              .4rem !default;
-$tooltip-arrow-color:               $tooltip-bg !default;
+$tooltip-arrow-color:               cssVar('tooltip-arrow-color') !default;
 
 // Form tooltips must come after regular tooltips
 $form-feedback-tooltip-padding-y:     $tooltip-padding-y !default;

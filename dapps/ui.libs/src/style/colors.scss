@@ -77,11 +77,11 @@
   }
 
   .bg-success { 
-    color: cssVar('bg-text-v');
+    color: cssVar('bg-text-secondary');
   }
   
   .bg-text-success {
-    color: cssVar('bg-text-v') !important;
+    color: cssVar('bg-text-secondary') !important;
   }
 
   .bg-warning { 

@@ -7,6 +7,22 @@
 
 ### Deprecations
 
+
+## Version 1.6.0
+### Features
+- add `testcore.svg`
+
+### Fixes
+- `ui.libs`
+  - add correct tooltip design
+  - add more tooltip css variables
+  - fix link button primary text-color
+  - fix .border.border-sm
+  - use correct theme colors (cyan, dark)
+- `evan.bootstrap.libs`
+  - add more tooltip css variables
+
+
 ## Version 1.5.0
 ### Features
 - update bcc and smartcontracts version

@@ -10,7 +10,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
     "@evan.network/api-blockchain-core": "^2.3.0",
-    "@evan.network/ui-dapp-browser": "^2.2.0",
+    "@evan.network/ui-dapp-browser": "^2.2.3",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^3.5.95",
     "axios": "^0.18.0",
@@ -52,7 +52,7 @@
     "uglifyjs-webpack-plugin": "^1.2.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "web3": "1.0.0-beta.33",
+    "web3": "1.0.0-beta.55",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.2.1"
   },
@@ -81,5 +81,5 @@
     "serve-build": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
-  "version": "1.5.0"
+  "version": "1.6.0"
 }
