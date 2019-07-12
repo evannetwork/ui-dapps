@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 1.6.0
+### Features
 - add `testcore.svg`
 
 ### Fixes
@@ -14,7 +22,6 @@
 - `evan.bootstrap.libs`
   - add more tooltip css variables
 
-### Deprecations
 
 ## Version 1.5.0
 ### Features
