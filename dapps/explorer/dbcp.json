@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^2.1.1",
+        "angular-core": "^2.1.2",
         "angular-libs": "^2.1.0",
         "verifications": "^1.5.0"
       },
@@ -37,7 +37,7 @@
       "evan",
       "library"
     ],
-    "version": "1.5.0",
+    "version": "1.5.1",
     "versions": {
       "1.0.0": "QmXNENxwGrKBGqkHYSviTfENktRmGAwsEkJ2xSHczrZRWW",
       "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt",
