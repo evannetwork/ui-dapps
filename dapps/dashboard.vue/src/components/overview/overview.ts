@@ -56,6 +56,19 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   ];
 
   /**
+   * check for mainnet and replace the contacts card.
+   */
+  created() {
+    if (window.location.href.startsWith('https://dashboard.evan.network')) {
+      this.dashboardEntries[0] = {
+        title: 'testcore',
+        img: 'testcore.svg',
+        fullPath: `https://dashboard.test.evan.network/#/onboarding.evan/identity-import?origin=dashboard.vue.evan`,
+      };
+    }
+  }
+
+  /**
    * Ask for continue latest work
    */
   mounted() {

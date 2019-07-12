@@ -6,6 +6,8 @@
   - add organizations dapp, including identification handling
 - `explorer`
   - fix general page blockchain explorer links
+- `dashboard.vue`
+  - add testnet link for mainnet dashboard overview
 
 ### Fixes
 

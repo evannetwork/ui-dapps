@@ -52,6 +52,10 @@ export default {
         "action": "Sitzung fortfahren",
         "desc": "Möchten Sie mit Ihrer vorherigen Sitzung fortfahren und die zuletzt geöffnete Anwendung starten?",
         "title": "Sitzung fortfahren"
+      },
+      "testcore": {
+        "desc": "Mit Ihrer bestehenden Identität Funktionalitäten auf dem testcore testen",
+        "title": "Kostenlos ausprobieren"
       }
     },
     "startup": "Womit möchten Sie starten?"

@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "dexie": "^2.0.4",
+        "dexie.libs": "^2.0.4",
         "digitaltwin.lib": "^1.7.1",
         "evancore.vue.libs": "^1.2.4"
       },

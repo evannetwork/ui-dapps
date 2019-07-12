@@ -36,14 +36,19 @@
     </div>
     <div class="d-md-flex flex-wrap justify-content-center p-0 p-xs-3">
       <a class="
-        d-block
+        d-block position-relative
         p-3 col-lg-12 col-xl-3
         m-md-3 mb-3 p-4
         text-center
         bg-level-1 border evan-highlight"
         v-for="(type, index) in dashboardEntries"
         style="min-width: 250px"
-        :href="`${ dapp.fullUrl }/${ type.path }`">
+        :href="type.fullPath ? type.fullPath : `${ dapp.fullUrl }/${ type.path }`">
+        <div id="evan-testnet"
+          style="position: absolute; top: 0;"
+          v-if="type.title === 'testcore'">
+          TESTCORE
+        </div>
         <img class="my-5" style="height: 120px"
           :src="`${ $store.state.uiBaseUrl }/assets/${ type.img }`">
 
