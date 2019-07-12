@@ -83,24 +83,26 @@
                  
                 </div>
               </div>
-              <div class="d-flex align-items-center pl-8 pr-3 py-2"
-                style="height: 40px;"
-                v-for="(child, index) in category.children">
-                <a
-                  class="d-flex align-items-center dark-link"
-                  :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }/${ child.route }`.indexOf(`${ category.route }/${ child.route }`) !== -1 }"
-                  :href="`${ dapp.fullUrl }/${ $route.params.address }/${ category.route }/${ child.route }`"
-                  @click="hideSidebar2();">
-                  <span class="position-relative">
-                    <i class="text-muted mr-2"
-                      style="font-size: 17px"
-                      :class="child.icon">
-                    </i>
-                    <span class="m-0">{{ child.title | translate }}</span>
-                  </span>
-                </a>
-                <span class="mx-auto"></span>
-              </div>
+              <template v-if="category.isOpen">
+                <div class="d-flex align-items-center pl-8 pr-3 py-2"
+                  style="height: 40px;"
+                  v-for="(child, index) in category.children">
+                  <a
+                    class="d-flex align-items-center dark-link"
+                    :class="{ 'active': `${ dapp.baseUrl }#${ $route.path }/${ child.route }`.indexOf(`${ category.route }/${ child.route }`) !== -1 }"
+                    :href="`${ dapp.fullUrl }/${ $route.params.address }/${ category.route }/${ child.route }`"
+                    @click="hideSidebar2();">
+                    <span class="position-relative">
+                      <i class="text-muted mr-2"
+                        style="font-size: 17px"
+                        :class="child.icon">
+                      </i>
+                      <span class="m-0">{{ child.title | translate }}</span>
+                    </span>
+                  </a>
+                  <span class="mx-auto"></span>
+                </div>
+              </template>
             </template>
           </div>
         </template>
