@@ -145,7 +145,7 @@
             v-else-if="status === 1">
             <p>{{ '_org.ident.notary.request.proof.title' | translate }}</p>
 
-            <div class="my-3 p-3 border border-sm bg-level-2">
+            <div class="my-5 px-3">
               <div class="row">
                 <div class="col-6">
                   <span>{{ '_org.ident.notary.request.proof.you-request' | translate }}</span>
@@ -175,7 +175,7 @@
             </div>
 
             <p>{{ '_org.ident.notary.request.proof.question-desc' | translate }}</p>
-            <div class="my-3 p-3 border border-sm bg-level-2">
+            <div class="my-5 px-3">
               <div class="row">
                 <div class="col-6">
                   <span>{{ '_org.ident.notary.request.proof.contact-is' | translate }}</span>

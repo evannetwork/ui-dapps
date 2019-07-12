@@ -41,8 +41,8 @@ const i18n: any = {
     },
     "ident": {
       "categories": {
-        "identifications": "Identifications",
-        "notary": "Notarielle Identifications"
+        "identifications": "Identifikationen",
+        "notary": "Notarielle Identifikation"
       },
       "notary": {
         "account-id": "Account-ID",
@@ -163,7 +163,7 @@ const i18n: any = {
           "unknown": "Beantragen",
           "unknown-long": "Notarielle Identifizierung beantragen"
         },
-        "title": "Übersicht",
+        "title": "Notarielle Identifikationen",
         "verification": {
           "accept": "Annehmen",
           "company": "Unternehmens-Identifizierung",

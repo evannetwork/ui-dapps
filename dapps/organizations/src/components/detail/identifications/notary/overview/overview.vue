@@ -39,7 +39,7 @@
           ref="identAction">
         </org-ident-notary-request>
         <a class="btn btn-primary btn-rounded" target="_blank"
-          v-if="requests.length !== 0"
+          v-if="requests.length !== 0 && dapp.fullUrl.startsWith('http://localhost:3000')"
           :id="`ident-request-unknown`"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
@@ -59,12 +59,12 @@
             :id="`ident-request-unknown`"
             @click="$refs.identAction.show()">
             {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
-            <i class="mdi mdi-arrow-right label ml-3"></i>
+            <i class="mdi mdi-plus label ml-3"></i>
           </a>
         </div>
       </div>
-      <div class="row" v-else>
-        <div class="col-xl-6 mt-3"
+      <div v-else>
+        <div class="mt-3"
           v-for="(requestId, index) in requests">
           <org-ident-notary-detail
             :requestId="requestId">

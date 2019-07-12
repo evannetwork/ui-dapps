@@ -31,7 +31,7 @@ const i18n: any = {
     "breadcrumbs": {
       "identification": "Identification",
       "identifications": "Identifications",
-      "notary": "Notarial",
+      "notary": "Notary",
       "organization": "Organization",
       "organizations": "Organizations"
     },
@@ -42,31 +42,31 @@ const i18n: any = {
     "ident": {
       "categories": {
         "identifications": "Identifications",
-        "notary": "Notarial Identifications"
+        "notary": "Notary Identification"
       },
       "notary": {
         "account-id": "Account-ID",
         "info": "Identify your account to be a trusted evan.network member",
         "issue": {
           "accountId": {
-            "desc": "Account ID for which the notarial confirmation should be created.",
+            "desc": "Account ID for which the notary confirmation should be created.",
             "error": "Please enter a valid Account ID!",
             "title": "Account-ID"
           },
           "requestId": {
-            "desc": "Enter the request ID for which the notarial identification is to be completed.",
+            "desc": "Enter the request ID for which the notary identification is to be completed.",
             "error": "Please enter a correct request ID",
             "title": "Request ID"
           },
           "files": {
             "error": "You must add at least 1 notarized document to continue.",
-            "title": "Notarially certified files"
+            "title": "Notary certified files"
           },
           "header": "Issue Identification Verification",
           "issue": "Issue Identification Verification"
         },
         "learn-more": "Learn more",
-        "no-requests": "You have not yet requested a Notarial Identification. Use the following button to request one.",
+        "no-requests": "You have not yet requested a Notary Identification. Use the following button to request one.",
         "pin": {
           "confirmation-code": "Your confirmation code was successfully recognized.",
           "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
@@ -74,7 +74,7 @@ const i18n: any = {
           "desc-hin": "Please pay attention to upper and lower case.",
           "desc2": "Please send it to the address below.",
           "generate-answer": "Generate confirmation code",
-          "header": "Notarial Identification",
+          "header": "Notary Identification",
           "pin": {
             "desc": "The PIN contained in the letter.",
             "error": "Please enter a PIN to continue.",
@@ -113,24 +113,24 @@ const i18n: any = {
             "error": "Please enter a country",
             "title": "Country"
           },
-          "description": "Please fill in the formlar to request a notarial identification of your organisation. This service is subject to a fee.",
-          "header": "Notarial Identification",
+          "description": "Please fill in the formlar to request a notary identification of your organisation. This service is subject to a fee.",
+          "header": "Notary Identification",
           "mail": {
-            "body": "I hereby request a Notarial Identification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationHRB}</li><li>Company: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
-            "title": "Request for Notarial Identification"
+            "body": "I hereby request a Notary Identification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationHRB}</li><li>Company: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "title": "Request for Notary Identification"
           },
           "next": "Next",
           "postal-address": "Postal Address",
           "proof": {
             "contact-is": "Contact person is",
-            "footer": "Notarial verification is subject to a fee.",
+            "footer": "Notary verification is subject to a fee.",
             "footer2": "Your wallet will be charged 150 EVE.",
             "for-org": "For the organization",
-            "question-desc": "To complete the notarized verification, you will receive a password for the attention of the following person.",
+            "question-desc": "To complete the notary identification, you will receive a password for the attention of the following person.",
             "title": "Please check all information.",
             "with-reg-number": "with the commercial register number",
             "you-request": "You request one",
-            "you-request-2": "Notarial Identification"
+            "you-request-2": "Notary Identification"
           },
           "regNumber": {
             "desc": "Enter Commercial Register Number",
@@ -138,9 +138,9 @@ const i18n: any = {
             "title": "Commercial Register Number"
           },
           "request-ident": "Beantragen",
-          "requested1": "You have successfully applied for a notarial identification for your company.",
+          "requested1": "You have successfully applied for a Notary Identification for your company.",
           "requested2": "Your wallet has been charged 150 EVE.",
-          "requesting": "Notarial identification is requested...",
+          "requesting": "Notary identification is requested...",
           "zipCode": {
             "desc": "Enter Postcode",
             "error": "Please enter a valid post code",
@@ -163,7 +163,7 @@ const i18n: any = {
           "unknown": "Request",
           "unknown-long": "Request Notary Identification"
         },
-        "title": "Overview",
+        "title": "Notary Identification",
         "verification": {
           "accept": "Accept",
           "company": "Company-Identitfication",

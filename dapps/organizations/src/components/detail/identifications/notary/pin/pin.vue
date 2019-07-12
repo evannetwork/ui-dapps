@@ -57,18 +57,17 @@
           </div>
         </div>
 
-        <div class="text-right">
+        <div class="text-center">
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-pin-print"
             :disabled="!pinForm.isValid || answer || checkingPin"
             @click="generateAnswer()">
             {{ `_org.ident.notary.pin.generate-answer` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>
         </div>
 
-        <div class="mt-5 p-5 text-center border bg-level-2" v-if="answer">
+        <div class="my-5 px-3" v-if="answer">
           <h5>
             {{ '_org.ident.notary.pin.confirmation-code' | translate }}
           </h5>

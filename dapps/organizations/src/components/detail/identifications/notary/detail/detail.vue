@@ -26,12 +26,17 @@
 */
 
 <template>
-  <div class="white-box border-smooth rounded p-4 d-flex flex-wrap"
+  <div class="white-box border-smooth rounded p-4 d-flex flex-wrap align-items-center"
     :id="`org-ident-detail-${ $route.params.address }`">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div>
         <h5 class="d-block mb-0 font-weight-semibold">
+          {{ '_org.ident.notary.account-id' | translate }}
+        </h5>
+        <span>{{ $route.params.address }}</span>
+
+        <h5 class="d-block mb-0 font-weight-semibold mt-3">
           {{ '_org.ident.notary.status.title' | translate }}
 
           <i class="mdi mdi-information-outline text-muted clickable">
@@ -62,7 +67,6 @@
           :id="`ident-request-${ details.status }`"
           @click="runStatusAction()">
           {{ `_org.ident.notary.status-actions.${ details.status }` | translate }}
-          <i class="mdi mdi-arrow-right label ml-3"></i>
         </button>
       </div>
 
