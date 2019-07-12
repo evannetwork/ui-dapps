@@ -5,7 +5,7 @@
       "dependencies": {
         "datacontainer.digitaltwin": "^1.7.1",
         "digitaltwin.lib": "^1.7.1",
-        "evancore.vue.libs": "^1.2.4"
+        "evancore.vue.libs": "^1.3.0"
       },
       "entrypoint": "digitaltwin.js",
       "files": [
