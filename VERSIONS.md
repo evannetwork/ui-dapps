@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- `dashboard.vue`
+  - add new dashboard cards
 
 ### Fixes
 

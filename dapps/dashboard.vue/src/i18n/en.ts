@@ -41,12 +41,12 @@ export default {
         "title": "My contacts"
       },
       "digitaltwins": {
-        "desc": "Manage and share your Digital Twins",
-        "title": "My Digital Twins"
+        "desc": "Start your digital business<br>by creating your first Digital Twin",
+        "title": "Create Digital Twin"
       },
       "explanations": {
-        "desc": "What is the evan.network and what can I do with it?",
-        "title": "How does evan work?"
+        "desc": "How to work in the evan.network?<br>Read our Wiki!",
+        "title": "Learn about evan.network"
       },
       "recovery": {
         "action": "Continue session",

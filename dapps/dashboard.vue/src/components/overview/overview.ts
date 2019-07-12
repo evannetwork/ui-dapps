@@ -45,13 +45,9 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     },
     {
       title: 'digitaltwins',
-      img: 'identity-colored.svg',
+      img: 'plus.svg',
       path: `digitaltwins.${ getDomainName() }`,
-    },
-    {
-      title: 'contacts',
-      img: 'contact-colored.svg',
-      path: `addressbook.vue.${ getDomainName() }`,
+      class: 'bg-secondary',
     },
   ];
 
@@ -60,11 +56,11 @@ export default class OverviewComponent extends mixins(EvanComponent) {
    */
   created() {
     if (window.location.href.startsWith('https://dashboard.evan.network')) {
-      this.dashboardEntries[2] = {
+      this.dashboardEntries.unshift({
         title: 'testcore',
         img: 'testcore.svg',
         fullPath: `https://dashboard.test.evan.network/#/onboarding.evan/identity-import?origin=dashboard.vue.evan`,
-      };
+      });
     }
   }
 

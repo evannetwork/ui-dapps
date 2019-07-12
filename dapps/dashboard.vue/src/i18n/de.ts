@@ -41,12 +41,12 @@ export default {
         "title": "Meine Kontakte"
       },
       "digitaltwins": {
-        "desc": "Verwalten und teilen Sie Ihre Digitalen Zwillinge",
-        "title": "Meine Digitalen Zwillinge"
+        "desc": "Starten Sie Ihr digitales Business, indem Sie Ihren ersten Digitalen Zwilling erstellen.",
+        "title": "Digitalen Zwilling erstellen"
       },
       "explanations": {
-        "desc": "Was ist das evan.network und was können Sie damit tun?",
-        "title": "Wie funktioniert evan"
+        "desc": "Wie arbeitet man mit dem evan.network?<br>Lesen Sie unser Wiki!",
+        "title": "Erfahren mehr über das evan.network"
       },
       "recovery": {
         "action": "Sitzung fortfahren",
