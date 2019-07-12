@@ -57,14 +57,13 @@
       </div>
       <span class="mx-auto"></span>
       <div>
-        <a class="btn btn-primary btn-rounded" target="_blank"
+        <button class="btn btn-primary btn-rounded" target="_blank"
           v-if="statusActions.indexOf(details.status) !== -1"
           :id="`ident-request-${ details.status }`"
-          :href="details.pdfUrl && details.status === 'confirming' ? pdfUrl : null"
           @click="runStatusAction()">
           {{ `_org.ident.notary.status-actions.${ details.status }` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
-        </a>
+        </button>
       </div>
 
       <template v-if="details.status === 'issued'">
@@ -87,7 +86,7 @@
 
       <org-ident-notary-pin
         ref="identAction"
-        v-if="details.status === 'requested'"
+        v-if="details.status === 'requested' || details.status === 'confirming'"
         :requestId="requestId">
       </org-ident-notary-pin>
     </template>
