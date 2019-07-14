@@ -180,7 +180,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.requestForm.country.value,
       organizationEvanId: (<any>this).getRuntime().activeAccount,
-      organizationRegistration: this.requestForm.regNumber.value,
+      organizationRegistrationNumber: this.requestForm.regNumber.value,
       organizationName: this.requestForm.company.value,
       organizationStreetAddress: this.requestForm.address.value,
       organizationZipCode: this.requestForm.zipCode.value,

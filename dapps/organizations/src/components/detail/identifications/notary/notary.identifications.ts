@@ -33,7 +33,8 @@ import axios from 'axios';
  */
 const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 
-const agentUrl = 'http://192.168.100.66:8080'
+// const agentUrl = 'http://192.168.100.66:8080'
+const agentUrl = 'https://agents.test.evan.network'
 
 /**
  * Trigger reload event, so the identification overview will reload the latest requests
