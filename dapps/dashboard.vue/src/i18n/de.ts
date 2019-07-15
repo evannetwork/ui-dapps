@@ -46,7 +46,7 @@ export default {
       },
       "explanations": {
         "desc": "Wie arbeitet man mit dem evan.network?<br>Lesen Sie unser Wiki!",
-        "title": "Erfahren mehr über das evan.network"
+        "title": "Erfahren Sie mehr über das evan.network"
       },
       "recovery": {
         "action": "Sitzung fortfahren",
