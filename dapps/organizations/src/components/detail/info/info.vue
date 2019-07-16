@@ -54,7 +54,7 @@
             </p>
 
             <p>
-              Notariell beurkundet wird die Tatsache, dass der vom Unternehmen erhaltene Bestätigungscode mit dem vom evan.Network automatisch generierten und an den Notar versendeten Antwortabgleich übereinstimmt.
+              Notariell beurkundet wird die Tatsache, dass der vom Unternehmen erhaltene Bestätigungscode mit dem vom evan.network automatisch generierten und an den Notar versendeten Antwortabgleich übereinstimmt.
             </p>
 
             <p>
@@ -62,7 +62,7 @@
             </p>
 
             <p>
-              Die Veröffentlichung erfolgt mittels Hinterlegung einer speziellen ID im evan.Network. Die Berechtigung zur Einsichtnahme durch einen bestimmten oder generellen Personenkreis kann nur von dem unterzeichnenden Unternehmen mittels einer Funktion im Netzwerk erteilt werden.
+              Die Veröffentlichung erfolgt mittels Hinterlegung einer speziellen ID im evan.network. Die Berechtigung zur Einsichtnahme durch einen bestimmten oder generellen Personenkreis kann nur von dem unterzeichnenden Unternehmen mittels einer Funktion im Netzwerk erteilt werden.
             </p>
 
             <p class="mt-5">
