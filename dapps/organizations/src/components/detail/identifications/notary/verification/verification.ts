@@ -120,6 +120,8 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
   async loadVerification() {
     const runtime: bcc.Runtime = (<any>this).getRuntime();
 
+    // reset loaded files
+    this.files = [];
     // load the verification details
     // TODO: add use correct ens root owner
     const rootVerificationAccount = '0x4a6723fC5a926FA150bAeAf04bfD673B056Ba83D';
