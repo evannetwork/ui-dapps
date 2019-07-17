@@ -29,7 +29,11 @@
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
+<<<<<<< HEAD
       "verification": "Verifikation",
+=======
+      "identification": "Verifikation",
+>>>>>>> 1dbaed8336208029829ef9e68d383b7dc10fe779
       "identifications": "Identifikationen",
       "notary": "Notariell",
       "organization": "Organisation",
@@ -101,7 +105,7 @@ const i18n: any = {
             "title": "Organisation"
           },
           "contact": {
-            "desc": "Kontaktperson eingeben",
+            "desc": "Kontaktperson angeben",
             "error": "Bitte geben Sie eine Kontaktperson an!",
             "title": "Kontaktperson"
           },

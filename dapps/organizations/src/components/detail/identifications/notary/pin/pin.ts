@@ -61,7 +61,16 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    * received answer for the provided pin
    */
   answer: string = null;
+
+  /**
+   * stored blob url for pdf
+   */
   pdfUrl = '';
+
+  /**
+   * private iframe for printing pdf directly
+   */
+  _printIframe;
 
   async created() {
     this.pinForm = (<PinFormInterface>new EvanForm(this, {
@@ -101,6 +110,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       const url = window.URL.createObjectURL(answerResponse);
       this.answer = 'NICE CODE';
       this.pdfUrl = url;
+
       triggerRequestReload(this.$route.params.address);
     } catch (ex) {
       console.dir(ex)
@@ -108,5 +118,24 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
     }
 
     this.checkingPin = false;
+  }
+
+  /**
+   * prints a given blob pdf url with the dialog
+   */
+  printPdf() {
+    if (!this._printIframe) {
+      this._printIframe = document.createElement('iframe');
+      document.body.appendChild(this._printIframe);
+
+      this._printIframe.style.display = 'none';
+      this._printIframe.onload = () => {
+        setTimeout(() => {
+          this._printIframe.focus();
+          this._printIframe.contentWindow.print();
+        }, 1);
+      };
+    }
+    this._printIframe.src = this.pdfUrl;
   }
 }

@@ -33,6 +33,7 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { FileHandler, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
@@ -121,28 +122,19 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
 
     // load the verification details
     // TODO: add use correct ens root owner
-    const rootVerificationAccount = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+    const rootVerificationAccount = '0x4a6723fC5a926FA150bAeAf04bfD673B056Ba83D';
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
-    verificationQuery.statusComputer = (
-      subVerification: bcc.VerificationsResultV2,
-      queryOptions: bcc.VerificationsQueryOptions,
-      status: string
-    ) => {
-      if (status === bcc.VerificationsStatusV2.Red) {
-        return status;
-      } else {
-        // only allow evan as root issuer
-        const correctIssuer = subVerification.verifications
-          .some(verification => verification.details.issuer === rootVerificationAccount);
-
-        // if it's not the correct
-        return correctIssuer ? status : bcc.VerificationsStatusV2.Red;
+    verificationQuery.validationOptions.notEnsRootOwner = (verification, pr) => {
+      // trust root verifications issued by root account
+      // subject does not need to be root account as well
+      if (verification.details.issuer === rootVerificationAccount) {
+        return bcc.VerificationsStatusV2.Green;
       }
+      return bcc.VerificationsStatusV2.Red;
     };
-
     // load nested verifications
     this.verification = await runtime.verifications.getNestedVerificationsV2(
       this.address,
@@ -160,12 +152,32 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
     this.verification.verifications
       .forEach(async (subVerification) => {
         try {
-          const retrieved = JSON.parse(<any>await runtime.dfs.get(subVerification.details.data));
-          const decrypted = await runtime.encryptionWrapper.decrypt(retrieved, { key });
 
-          if (decrypted.files) {
-            this.files = this.files.concat(decrypted.files);
+          const contentKey = 'f88922ba42628642a029922a2b8512d93f3d277ca3e129943c612d9a8bf67969'
+          const hashKey = 'bdf85cdde8854f3017a2996015fc3c326c396be4e9362827cc3641201bd7361f'
+          const fileHash = JSON.parse(subVerification.details.data);
+
+          if (fileHash !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
+            const cryptoAlgorithFiles = 'aesBlob'
+            const cryptoAlgorithHashes = 'aesEcb'
+            const encodingEncrypted = 'hex'
+            const encodingUnencryptedHash = 'hex'
+            const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
+            const dencryptedHashBuffer = await hashCryptor.decrypt(
+              Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey })
+
+            const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
+            const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles)
+            const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
+
+            if (decrypted) {
+              for (let file of decrypted) {
+                file.size = file.file.length;
+                this.files.push(await FileHandler.fileToContainerFile(file));
+              }
+            }
           }
+
         } catch (ex) {
           runtime.logger.log(`Could not decrypt verification files: ${ ex.message }`, 'error');
         }
