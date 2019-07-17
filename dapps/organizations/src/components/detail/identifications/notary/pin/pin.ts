@@ -72,6 +72,12 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    */
   _printIframe;
 
+
+  /**
+   * show formular or accept view
+   */
+  status = 0;
+
   async created() {
     this.pinForm = (<PinFormInterface>new EvanForm(this, {
       pin: {
@@ -112,6 +118,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       this.pdfUrl = url;
 
       triggerRequestReload(this.$route.params.address);
+      this.status = 1;
     } catch (ex) {
       console.dir(ex)
       this.pinForm.pin.error = 'error2';
