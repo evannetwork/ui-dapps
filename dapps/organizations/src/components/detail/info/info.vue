@@ -38,7 +38,7 @@
         <div class="text-justify">
           <div v-if="$i18n.locale() === 'de'">
             <p>
-              Eine Verifikation über eine dritte unabhängige Instanz erhöht das Vertrauen, dass hinter ihrem digitalen Unternehmensaccount eine tatsächlich existierende, juristische Person ist. Somit ist es möglich eine vertrauensvolle, geschäftliche Beziehung aufzubauen.
+              Eine Verifikation über eine dritte unabhängige Instanz erhöht das Vertrauen, dass hinter Ihrem digitalen Unternehmensaccount eine tatsächlich existierende, juristische Person ist. Somit ist es möglich eine vertrauensvolle, geschäftliche Beziehung aufzubauen.
             </p>
 
             <p class="mt-5">
