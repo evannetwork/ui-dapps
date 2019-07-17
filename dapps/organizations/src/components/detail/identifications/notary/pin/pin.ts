@@ -83,7 +83,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       pin: {
         value: '',
         validate: function(vueInstance: IdentNotaryPinComponent, form: PinFormInterface) {
-          return this.value.trim().length === 0 ? 'error' : true;
+          return /^\d{6}$/.test(this.value) ? true : 'error';
         }
       }
     }));

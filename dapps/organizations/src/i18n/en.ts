@@ -76,8 +76,8 @@ const i18n: any = {
           "generate-answer": "Generate confirmation code",
           "header": "Notary Verification",
           "pin": {
-            "desc": "The PIN contained in the letter.",
-            "error": "Please enter a PIN to continue.",
+            "desc": "The six digits PIN you received within the letter.",
+            "error": "Please enter the PIN to continue.",
             "error2": "The PIN entered was not correct. Please enter the correct PIN.",
             "title": "PIN"
           }

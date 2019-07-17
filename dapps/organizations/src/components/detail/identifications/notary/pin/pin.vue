@@ -42,20 +42,26 @@
           <p class="text-justify">
             {{ '_org.ident.notary.pin.desc2' | translate }}
           </p>
-          <div class="form-group my-3">
-            <label for="alias">
+          <div class="form-row my-3">
+            <label for="alias" class="col-md-4">
               {{ `_org.ident.notary.pin.pin.title` | translate }} *
             </label>
-            <input class="form-control" required
+            <input
+              class="form-control pin-input col-md-4"
+              type="text" pattern="^\d{6}$"  maxlength="6" size="6" autocomplete="off" required
               id="alias" ref="alias"
-              :placeholder="`_org.ident.notary.pin.pin.desc` | translate"
+              placeholder="000000"
               v-model="pinForm.pin.value"
               :class="{ 'is-invalid' : pinForm.pin.error }"
-              @blur="pinForm.pin.setDirty()">
-            <div class="invalid-feedback">
+              @blur="pinForm.pin.setDirty()"
+            >
+            <div class="invalid-feedback col-xs-12">
               {{ `_org.ident.notary.pin.pin.${ pinForm.pin.error }` | translate }}
             </div>
           </div>
+          <p class="text-center text-muted">
+            {{`_org.ident.notary.pin.pin.desc` | translate}}
+          </p>
         </div>
 
         <div id="answer-success" v-if="status === 1">
@@ -93,8 +99,6 @@
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </a>
         </div>
-
-
       </template>
     </evan-modal>
   </div>
@@ -104,3 +108,7 @@
   import Component from './pin.ts';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './pin.scss'
+</style>

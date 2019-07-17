@@ -70,13 +70,13 @@ const i18n: any = {
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
-          "desc": "Bitte geben Sie den PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
+          "desc": "Bitte geben Sie die PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
-          "desc2": "Senden Sie dieses bitte an die unten angeführte Adresse.",
-          "generate-answer": "Bestätigungscode Generieren",
+          "desc2": "Senden Sie das Dokument dann bitte an die unten angeführte Adresse.",
+          "generate-answer": "Bestätigungscode generieren",
           "header": "Notarielle Verifikation",
           "pin": {
-            "desc": "Der in dem Brief enthaltende PIN.",
+            "desc": "Die per Brief erhaltene, sechstellige PIN.",
             "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
             "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
             "title": "PIN"

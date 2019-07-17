@@ -8,7 +8,8 @@
       },
       "entrypoint": "organizations.js",
       "files": [
-        "organizations.js"
+        "organizations.js",
+        "organizations.css"
       ],
       "origin": "QmTTnCUMBnHcekqKkfd315rc8xcHgRog4XGD3noD8jxMac",
       "primaryColor": "#ac7517",
