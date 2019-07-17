@@ -122,12 +122,19 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
 
     // load the verification details
     // TODO: add use correct ens root owner
-    const rootVerificationAccount = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+    const rootVerificationAccount = '0x4a6723fC5a926FA150bAeAf04bfD673B056Ba83D';
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
-
+    verificationQuery.validationOptions.notEnsRootOwner = (verification, pr) => {
+      // trust root verifications issued by root account
+      // subject does not need to be root account as well
+      if (verification.details.issuer === rootVerificationAccount) {
+        return bcc.VerificationsStatusV2.Green;
+      }
+      return bcc.VerificationsStatusV2.Red;
+    };
     // load nested verifications
     this.verification = await runtime.verifications.getNestedVerificationsV2(
       this.address,

@@ -85,7 +85,7 @@
           :class="{
             'disabled': !answer
           }"
-          :href="answer ? pdfUrl : null">
+          @click="printPdf()">
           {{ `_org.ident.notary.print` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </a>
