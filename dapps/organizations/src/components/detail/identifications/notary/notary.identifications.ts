@@ -117,14 +117,16 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
 async function issueVerification(runtime, requestId, files) {
   // TODO: Add correct api endpoint
   const evanAuthHeader = await generateEvanAuthHeader(runtime);
+  const formData = new FormData();
+  for (let file of files) {
+    formData.append('assets', file.blob, file.name);
+  }
+  formData.append('requestId', requestId);
   await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/finalize`,
-    headers: { 'Authorization': evanAuthHeader },
-    data: {
-      requestId,
-      files,
-    }
+    headers: { 'Authorization': evanAuthHeader, 'content-type': 'multipart/form-data' },
+    data: formData
   });
 }
 
