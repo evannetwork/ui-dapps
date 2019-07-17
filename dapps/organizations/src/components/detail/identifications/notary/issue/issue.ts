@@ -97,7 +97,7 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Trigger the identification issue request
+   * Trigger the verification issue request
    */
   async issueIdentification() {
     this.issueing = true;

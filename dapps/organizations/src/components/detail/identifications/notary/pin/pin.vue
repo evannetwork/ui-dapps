@@ -36,7 +36,7 @@
         </h5>
       </template>
       <template v-slot:body
-        id="pin-identification-modal">
+        id="pin-verification-modal">
         <p class="text-justify">{{ '_org.ident.notary.pin.desc' | translate }}</p>
         <p class="text-justify">
           {{ '_org.ident.notary.pin.desc2' | translate }}

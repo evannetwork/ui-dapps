@@ -36,9 +36,9 @@
         </h5>
       </template>
       <template v-slot:body>
-        <div id="request-identification-modal">
+        <div id="request-verification-modal">
           <div class="text-center"
-            id="request-identification-loading"
+            id="request-verification-loading"
             v-if="sending">
             <evan-loading></evan-loading>
             <h5>{{ '_org.ident.notary.request.requesting' | translate }}</h5>
@@ -46,17 +46,17 @@
           <div id="ident-formular"
             v-else-if="status === 0">
             <div class="form-group">
-              <label for="company">
-                {{ `_org.ident.notary.request.company.title` | translate }} *
+              <label for="organization">
+                {{ `_org.ident.notary.request.organization.title` | translate }} *
               </label>
               <input class="form-control" required
-                id="company" ref="company"
-                :placeholder="`_org.ident.notary.request.company.desc` | translate"
-                v-model="requestForm.company.value"
-                :class="{ 'is-invalid' : requestForm.company.error }"
-                @blur="requestForm.company.setDirty()">
+                id="organization" ref="organization"
+                :placeholder="`_org.ident.notary.request.organization.desc` | translate"
+                v-model="requestForm.organization.value"
+                :class="{ 'is-invalid' : requestForm.organization.error }"
+                @blur="requestForm.organization.setDirty()">
               <div class="invalid-feedback">
-                {{ '_org.ident.notary.request.company.error' | translate }}
+                {{ '_org.ident.notary.request.organization.error' | translate }}
               </div>
             </div>
             <div class="form-group">
@@ -160,7 +160,7 @@
                   <span>{{ '_org.ident.notary.request.proof.for-org' | translate }}</span>
                 </div>
                 <div class="col-6">
-                  <b>{{ requestForm.company.value }}</b>
+                  <b>{{ requestForm.organization.value }}</b>
                 </div>
               </div>
 

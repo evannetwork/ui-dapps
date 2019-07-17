@@ -37,7 +37,7 @@ const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 const agentUrl = 'https://agents.test.evan.network'
 
 /**
- * Trigger reload event, so the identification overview will reload the latest requests
+ * Trigger reload event, so the verification overview will reload the latest requests
  *
  * @param      {string}  orgAddress  The organization address
  */

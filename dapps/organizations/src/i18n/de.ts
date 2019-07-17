@@ -29,20 +29,20 @@
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
-      "identification": "Identifikation",
+      "verification": "Verifikation",
       "identifications": "Identifikationen",
       "notary": "Notariell",
       "organization": "Organisation",
       "organizations": "Organisationen"
     },
     "dispatchers": {
-      "request-identification": "Identifikation wird beantragt...",
-      "verification-accept": "Identifikation wird angenommen..."
+      "request-verification": "Verifikation wird beantragt...",
+      "verification-accept": "Verifikation wird angenommen..."
     },
     "ident": {
       "categories": {
         "identifications": "Identifikationen",
-        "notary": "Notarielle Identifikation"
+        "notary": "Notarielle Verifikation"
       },
       "notary": {
         "account-id": "Account-ID",
@@ -54,7 +54,7 @@ const i18n: any = {
             "title": "Account-ID"
           },
           "requestId": {
-            "desc": "Geben Sie die Anfrage-ID an, für die die Notarielle Identifizierung abgeschlossen werden soll, ein.",
+            "desc": "Geben Sie die Anfrage-ID an, für die die Notarielle Verifikation abgeschlossen werden soll, ein.",
             "error": "Bitte geben Sie eine korrekte Anfrage-ID ein!",
             "title": "Anfrage-ID"
           },
@@ -62,11 +62,11 @@ const i18n: any = {
             "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
             "title": "Notariell bestätige Dateien"
           },
-          "header": "Unternehmens-Identifizierung ausstellen",
-          "issue": "Unternehmens-Identifizierung ausstellen"
+          "header": "Organisations-Verifikation ausstellen",
+          "issue": "Organisations-Verifikation ausstellen"
         },
         "learn-more": "Mehr erfahren",
-        "no-requests": "Sie haben noch keine notarielle Identifizierung beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
+        "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
@@ -74,7 +74,7 @@ const i18n: any = {
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
           "desc2": "Senden Sie dieses bitte an die unten angeführte Adresse.",
           "generate-answer": "Bestätigungscode Generieren",
-          "header": "Notarielle Identifikation",
+          "header": "Notarielle Verifikation",
           "pin": {
             "desc": "Der in dem Brief enthaltende PIN.",
             "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
@@ -95,15 +95,15 @@ const i18n: any = {
             "error": "Bitte geben Sie einen Stadt an!",
             "title": "Stadt"
           },
-          "company": {
-            "desc": "Firmenname eingeben",
+          "organization": {
+            "desc": "Organisationsname eingeben",
             "error": "Bitte geben Sie einen Firmenname an!",
-            "title": "Unternehmen"
+            "title": "Organisation"
           },
           "contact": {
-            "desc": "Ansprechpartner eingeben",
-            "error": "Bitte geben Sie einen Ansprechpartner an!",
-            "title": "Ansprechpartner"
+            "desc": "Kontaktperson eingeben",
+            "error": "Bitte geben Sie eine Kontaktperson an!",
+            "title": "Kontaktperson"
           },
           "countries": {
             "germany": "Deutschland"
@@ -113,16 +113,16 @@ const i18n: any = {
             "error": "Bitte geben Sie ein Land an!",
             "title": "Land"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Identifizierung ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
-          "header": "Notarielle Identifikation",
+          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
+          "header": "Notarielle Verifikation",
           "mail": {
-            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationHRB}</li><li>Unternehmen: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "next": "Weiter",
           "postal-address": "Anschrift",
           "proof": {
-            "contact-is": "Ansprechpartner ist",
+            "contact-is": "Kontaktperson ist",
             "footer": "Die notarielle Verifikation ist kostenpflichtig.",
             "footer2": "Ihr Wallet wird mit 200 EVE belastet.",
             "for-org": "für die Organisation",
@@ -130,7 +130,7 @@ const i18n: any = {
             "title": "Bitte überprüfen Sie alle Informationen.",
             "with-reg-number": "mit der Handelsregisternummer",
             "you-request": "Sie bantragen eine",
-            "you-request-2": "notarielle Identifikation"
+            "you-request-2": "notarielle Verifikation"
           },
           "regNumber": {
             "desc": "Handelsregisternummer eingeben",
@@ -138,7 +138,7 @@ const i18n: any = {
             "title": "Handelsregisternummer"
           },
           "request-ident": "Beantragen",
-          "requested1": "Sie haben erfolgreich eine Notarielle Identifikation für Ihr Unternehmen beantragt.",
+          "requested1": "Sie haben erfolgreich eine Notarielle Verifikation für Ihre Organisation beantragt.",
           "requested2": "Ihr Wallet wurde mit 200 EVE belastet.",
           "requesting": "Notarielle Verifikation wird beantragt...",
           "zipCode": {
@@ -153,22 +153,22 @@ const i18n: any = {
           "forwarding": "wird vom Provider bearbeitet",
           "issued": "notariell identifiziert",
           "requested": "beantragt",
-          "title": "Identifizierung",
-          "unknown": "keine Identifizierung"
+          "title": "Verifikation",
+          "unknown": "keine Verifikation"
         },
         "status-actions": {
           "confirming": "Bestätigung drucken",
           "issued": "Annehmen",
           "requested": "PIN eingeben",
           "unknown": "Beantragen",
-          "unknown-long": "Notarielle Identifizierung beantragen"
+          "unknown-long": "Notarielle Verifikation beantragen"
         },
         "title": "Notarielle Identifikationen",
         "verification": {
           "accept": "Annehmen",
-          "company": "Unternehmens-Identifizierung",
-          "company-random": "Unternehmens-ID-Identifizierung",
-          "incorrect": "Die Ihnen ausgestellten Unternehmensidentifikationen wurden nicht von der korrekten Instanz erstellt.",
+          "organization": "Organisations-Verifikation",
+          "organization-random": "Organisations-ID-Verifikation",
+          "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "status": "Status"
         }
       }

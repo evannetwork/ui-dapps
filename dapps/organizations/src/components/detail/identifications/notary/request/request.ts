@@ -39,10 +39,10 @@ import * as dispatchers from '../../../../../dispatchers/registry';
 
 import { triggerRequestReload } from '../notary.identifications';
 
-interface RequestFormIndentInterface extends EvanForm {
+interface RequestFormIdentInterface extends EvanForm {
   address: EvanFormControl;
   city: EvanFormControl;
-  company: EvanFormControl;
+  organization: EvanFormControl;
   contact: EvanFormControl;
   country: EvanFormControl;
   regNumber: EvanFormControl;
@@ -52,9 +52,9 @@ interface RequestFormIndentInterface extends EvanForm {
 @Component({ })
 export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
-   * Formular for identification requests
+   * Formular for verification requests
    */
-  requestForm: RequestFormIndentInterface = null;
+  requestForm: RequestFormIdentInterface = null;
 
   /**
    * Show loading until the request was finished.
@@ -72,22 +72,22 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   listeners: Array<Function> = [ ];
 
   async created() {
-    this.requestForm = (<RequestFormIndentInterface>new EvanForm(this, {
+    this.requestForm = (<RequestFormIdentInterface>new EvanForm(this, {
       country: {
         value: 'germany', // TODO: should we use ISO 3166-1 alpha-2 country codes system wide, to avoid any confusions?
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
-      company: {
+      organization: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
       regNumber: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           switch (form.country.value) {
             case 'germany':
               return /^HR(A|B)(\s|-)?(\d)+$/i.test(this.value)
@@ -98,31 +98,31 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       },
       address: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
       zipCode: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return !!this.value.match(/^\d{5}$/);
         }
       },
       city: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
       contact: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       }
     }));
 
-    this.requestForm.company.value = '';
+    this.requestForm.organization.value = '';
     this.requestForm.regNumber.value = '';
     this.requestForm.country.value = 'germany';
     this.requestForm.address.value = '';
@@ -174,7 +174,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Send the request identification b-mail, so the process will be triggered.
+   * Send the request verification b-mail, so the process will be triggered.
    */
   requestIdentification() {
     this.sending = true;
@@ -186,12 +186,12 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationCountry: this.requestForm.country.value,
       organizationEvanId: (<any>this).getRuntime().activeAccount,
       organizationRegistrationNumber: this.requestForm.regNumber.value,
-      organizationName: this.requestForm.company.value,
+      organizationName: this.requestForm.organization.value,
       organizationStreetAddress: this.requestForm.address.value,
       organizationZipCode: this.requestForm.zipCode.value,
     };
 
-    // send the identification request
+    // send the verification request
     dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
       mail: {
         title: (<any>this).$i18n.translate('_org.ident.notary.request.mail.title'),

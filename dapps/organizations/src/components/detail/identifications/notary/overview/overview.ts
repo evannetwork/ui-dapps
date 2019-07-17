@@ -51,7 +51,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
   requests: Array<string> = null;
 
   /**
-   * Check for showing the "canIssue button", usually the evan identification account.
+   * Check for showing the "canIssue button", usually the evan verification account.
    */
   canIssue = false;
 

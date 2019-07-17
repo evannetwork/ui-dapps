@@ -50,7 +50,7 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
-   * Current identification status for the user
+   * Current verification status for the user
    */
   details = null;
 

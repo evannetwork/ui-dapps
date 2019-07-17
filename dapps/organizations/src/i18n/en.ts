@@ -29,20 +29,20 @@
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
-      "identification": "Identification",
+      "verification": "Verification",
       "identifications": "Identifications",
       "notary": "Notary",
       "organization": "Organization",
       "organizations": "Organizations"
     },
     "dispatchers": {
-      "request-identification": "Requesting Identification...",
-      "verification-accept": "Accepting Identification..."
+      "request-verification": "Requesting Verification...",
+      "verification-accept": "Accepting Verification..."
     },
     "ident": {
       "categories": {
         "identifications": "Identifications",
-        "notary": "Notary Identification"
+        "notary": "Notary Verification"
       },
       "notary": {
         "account-id": "Account-ID",
@@ -54,7 +54,7 @@ const i18n: any = {
             "title": "Account-ID"
           },
           "requestId": {
-            "desc": "Enter the request ID for which the notary identification is to be completed.",
+            "desc": "Enter the request ID for which the notary verification is to be completed.",
             "error": "Please enter a correct request ID",
             "title": "Request ID"
           },
@@ -66,7 +66,7 @@ const i18n: any = {
           "issue": "Issue Identification Verification"
         },
         "learn-more": "Learn more",
-        "no-requests": "You have not yet requested a Notary Identification. Use the following button to request one.",
+        "no-requests": "You have not yet requested a Notary Verification. Use the following button to request one.",
         "pin": {
           "confirmation-code": "Your confirmation code was successfully recognized.",
           "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
@@ -74,7 +74,7 @@ const i18n: any = {
           "desc-hin": "Please pay attention to upper and lower case.",
           "desc2": "Please send it to the address below.",
           "generate-answer": "Generate confirmation code",
-          "header": "Notary Identification",
+          "header": "Notary Verification",
           "pin": {
             "desc": "The PIN contained in the letter.",
             "error": "Please enter a PIN to continue.",
@@ -95,10 +95,10 @@ const i18n: any = {
             "error": "Please enter a city.",
             "title": "City"
           },
-          "company": {
-            "desc": "Enter company name",
-            "error": "Please enter a company name",
-            "title": "Company"
+          "organization": {
+            "desc": "Enter organization name",
+            "error": "Please enter a organization name",
+            "title": "Organization"
           },
           "contact": {
             "desc": "Enter contact name",
@@ -113,11 +113,11 @@ const i18n: any = {
             "error": "Please enter a country",
             "title": "Country"
           },
-          "description": "Please fill in the formlar to request a notary identification of your organisation. This service is subject to a fee.",
-          "header": "Notary Identification",
+          "description": "Please fill in the formular to request a notary verification of your organisation. This service is subject to a fee.",
+          "header": "Notary Verification",
           "mail": {
-            "body": "I hereby request a Notary Identification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationHRB}</li><li>Company: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
-            "title": "Request for Notary Identification"
+            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "title": "Request for Notary Verification"
           },
           "next": "Next",
           "postal-address": "Postal Address",
@@ -126,11 +126,11 @@ const i18n: any = {
             "footer": "Notary verification is subject to a fee.",
             "footer2": "Your wallet will be charged 200 EVE.",
             "for-org": "For the organization",
-            "question-desc": "To complete the notary identification, you will receive a password for the attention of the following person.",
+            "question-desc": "To complete the notary verification, you will receive a password for the attention of the following person.",
             "title": "Please check all information.",
             "with-reg-number": "with the commercial register number",
             "you-request": "You request one",
-            "you-request-2": "Notary Identification"
+            "you-request-2": "Notary Verification"
           },
           "regNumber": {
             "desc": "Enter Commercial Register Number",
@@ -138,9 +138,9 @@ const i18n: any = {
             "title": "Commercial Register Number"
           },
           "request-ident": "Beantragen",
-          "requested1": "You have successfully applied for a Notary Identification for your company.",
+          "requested1": "You have successfully applied for a Notary Verification for your organization.",
           "requested2": "Your wallet has been charged 200 EVE.",
-          "requesting": "Notary identification is requested...",
+          "requesting": "Notary verification is requested...",
           "zipCode": {
             "desc": "Enter Postcode",
             "error": "Please enter a valid post code",
@@ -153,22 +153,22 @@ const i18n: any = {
           "forwarding": "is processed by the provider",
           "issued": "notarially identified",
           "requested": "requsted",
-          "title": "Identification",
-          "unknown": "no identification"
+          "title": "Verification",
+          "unknown": "no verification"
         },
         "status-actions": {
           "confirming": "Print confirmation",
           "issued": "Accept",
           "requested": "Enter PIN",
           "unknown": "Request",
-          "unknown-long": "Request Notary Identification"
+          "unknown-long": "Request Notary Verification"
         },
-        "title": "Notary Identification",
+        "title": "Notary Verification",
         "verification": {
           "accept": "Accept",
-          "company": "Company-Identitfication",
-          "company-random": "Company-ID-Identification",
-          "incorrect": "The company IDs issued to you were not created by the correct instance.",
+          "organization": "Organization-Identitfication",
+          "organization-random": "Organization-ID-Verification",
+          "incorrect": "The organization IDs issued to you were not created by the correct instance.",
           "status": "Status"
         }
       }
