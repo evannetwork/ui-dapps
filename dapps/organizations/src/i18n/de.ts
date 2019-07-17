@@ -29,11 +29,7 @@
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
-<<<<<<< HEAD
       "verification": "Verifikation",
-=======
-      "identification": "Verifikation",
->>>>>>> 1dbaed8336208029829ef9e68d383b7dc10fe779
       "identifications": "Identifikationen",
       "notary": "Notariell",
       "organization": "Organisation",
