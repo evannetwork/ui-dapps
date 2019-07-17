@@ -124,7 +124,7 @@ const i18n: any = {
           "proof": {
             "contact-is": "Contact person is",
             "footer": "Notary verification is subject to a fee.",
-            "footer2": "Your wallet will be charged 150 EVE.",
+            "footer2": "Your wallet will be charged 200 EVE.",
             "for-org": "For the organization",
             "question-desc": "To complete the notary identification, you will receive a password for the attention of the following person.",
             "title": "Please check all information.",
@@ -134,12 +134,12 @@ const i18n: any = {
           },
           "regNumber": {
             "desc": "Enter Commercial Register Number",
-            "error": "Please enter a commercial register number",
+            "error": "Please enter a correct commercial register number",
             "title": "Commercial Register Number"
           },
           "request-ident": "Beantragen",
           "requested1": "You have successfully applied for a Notary Identification for your company.",
-          "requested2": "Your wallet has been charged 150 EVE.",
+          "requested2": "Your wallet has been charged 200 EVE.",
           "requesting": "Notary identification is requested...",
           "zipCode": {
             "desc": "Enter Postcode",

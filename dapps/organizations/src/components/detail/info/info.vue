@@ -66,7 +66,7 @@
             </p>
 
             <p class="mt-5">
-              <b>Für diesen Service der notariellen Identifikation wird Ihr Wallet einmalig mit 150 EVE belastet.</b>
+              <b>Für diesen Service der notariellen Identifikation wird Ihr Wallet einmalig mit 200 EVE belastet.</b>
             </p>
 
             <p>
@@ -103,7 +103,7 @@
             </p>
 
             <p class="mt-5">
-              <b>For this service of notarial identification your wallet will be charged once with 150 EVE. </b>
+              <b>For this service of notarial identification your wallet will be charged once with 200 EVE. </b>
             </p>
 
             <p>

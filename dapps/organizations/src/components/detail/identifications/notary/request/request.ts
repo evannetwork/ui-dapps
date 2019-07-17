@@ -73,6 +73,12 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
 
   async created() {
     this.requestForm = (<RequestFormIndentInterface>new EvanForm(this, {
+      country: {
+        value: 'germany', // TODO: should we use ISO 3166-1 alpha-2 country codes system wide, to avoid any confusions?
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+          return this.value.length !== 0;
+        }
+      },
       company: {
         value: '',
         validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
@@ -82,13 +88,12 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       regNumber: {
         value: '',
         validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
-          return this.value.lengt !== 0;
-        }
-      },
-      country: {
-        value: 'germany',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
-          return this.value.length !== 0;
+          switch (form.country.value) {
+            case 'germany':
+              return /^HR(A|B)(\s|-)?(\d)+$/i.test(this.value)
+            default:
+              return false // foreign countries not supported yet
+          }
         }
       },
       address: {
@@ -117,13 +122,13 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       }
     }));
 
-    this.requestForm.company.value = 'evan GmbH';
-    this.requestForm.regNumber.value = 'Handelregister XYZ';
+    this.requestForm.company.value = '';
+    this.requestForm.regNumber.value = '';
     this.requestForm.country.value = 'germany';
-    this.requestForm.address.value = 'Johannisplatz 16';
-    this.requestForm.zipCode.value = '99817';
-    this.requestForm.city.value = 'Eisenach';
-    this.requestForm.contact.value = 'Test Contact';
+    this.requestForm.address.value = '';
+    this.requestForm.zipCode.value = '';
+    this.requestForm.city.value = '';
+    this.requestForm.contact.value = '';
 
     this.checkSending();
     this.listeners.push(dispatchers.requestIdentificationDispatcher

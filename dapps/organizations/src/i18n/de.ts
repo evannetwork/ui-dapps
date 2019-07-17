@@ -124,7 +124,7 @@ const i18n: any = {
           "proof": {
             "contact-is": "Ansprechpartner ist",
             "footer": "Die notarielle Verifikation ist kostenpflichtig.",
-            "footer2": "Ihr Wallet wird mit 150 EVE belastet.",
+            "footer2": "Ihr Wallet wird mit 200 EVE belastet.",
             "for-org": "für die Organisation",
             "question-desc": "Zur Vervollständigung der notariellen Verifikation erhalten Sie ein Kennwort, zu Händen der folgenden Person.",
             "title": "Bitte überprüfen Sie alle Informationen.",
@@ -139,8 +139,8 @@ const i18n: any = {
           },
           "request-ident": "Beantragen",
           "requested1": "Sie haben erfolgreich eine Notarielle Identifikation für Ihr Unternehmen beantragt.",
-          "requested2": "Ihr Wallet wurde mit 150 EVE belastet.",
-          "requesting": "Notarielle Indentifikation wird beantragt...",
+          "requested2": "Ihr Wallet wurde mit 200 EVE belastet.",
+          "requesting": "Notarielle Verifikation wird beantragt...",
           "zipCode": {
             "desc": "PLZ eingeben",
             "error": "Bitte geben Sie eine gültige Postleitzahl an!",
