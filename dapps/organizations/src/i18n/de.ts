@@ -85,13 +85,13 @@ const i18n: any = {
         "print": "Drucken",
         "request": {
           "desc": `<h4 class="text-uppercase mt-2">Warum eine Notarielle Verifikation</h4>
-          <span>Mit einer notariellen Verifikation können Ihre Geschäftspartner sicher sein, dass ...</span><br>
-          <span class="ml-4">___ ihr Account von Ihnen und nicht von einem Dritten betrieben wird.</span><br>
+          <span class="mb-4">Mit einer notariellen Verifikation können Ihre Geschäftspartner sicher sein, dass ...</span><br>
+          <span class="ml-4 mt-4">___ ihr Account von Ihnen und nicht von einem Dritten betrieben wird.</span><br>
           <span class="ml-4">___ Ihre Firma im Handelsregister eingetragen ist.</span><br>
           <span class="ml-4">___ sie mit vertrauenswürdigen Partnern arbeiten.</span><br>
           <h4 class="text-uppercase mt-4 mb-4">Wie wird Notariell Verifiziert?</h4>
           <span>Die notarielle Verifikation Ihres Accounts erfolgt durch eine notarielle Überprüfung des Handelsregisters sowie einer notariellen Zwei-Faktor-Authentifizierung. Somit bietet diese Form der Account-Verifizierung die höchste Sicherheit im evan.network.</span><br>
-          <span class="ml-4">Schritt 1: Beantragen Sie Ihre Verifikation Was brauche ich dafür?</span><br>
+          <span class="ml-4 mt-4">Schritt 1: Beantragen Sie Ihre Verifikation Was brauche ich dafür?</span><br>
           <span class="ml-4">Schritt 2: Warten Sie auf die Aufforderung des Notars  Wie lange dauert es, bis ich die Aufforderung erhalte?</span><br>
           <span class="ml-4">Schritt 3: Übersenden Sie Ihren Bestätigungscode dem Notar Wie erhalte ich meinen Bestätigungscode?</span><br>
           <span class="ml-4">Schritt 4: Erhalten und bestätigen Sie die notarielle Verifikation An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?</span><br>
@@ -109,22 +109,42 @@ const i18n: any = {
             "title": "Stadt"
           },
           "organization": {
-            "desc": "Organisationsname eingeben",
-            "error": "Bitte geben Sie einen Firmenname an!",
-            "title": "Organisation"
+            "desc": "Unternehmen eingeben",
+            "error": "Bitte geben Sie ein Unternehmen an!",
+            "title": "Unternehmen"
           },
           "contact": {
-            "desc": "Kontaktperson angeben",
+            "desc": "Ansprechpartner angeben",
             "error": "Bitte geben Sie eine Kontaktperson an!",
-            "title": "Kontaktperson"
+            "title": "Ansprechpartner"
+          },
+          "court": {
+            "title": "Registergericht",
+            "error": "Bitte geben Sie das Registergericht an!",
+            "desc": "Registergericht"
+          },
+          "department": {
+            "desc": "Abteilung",
+            "error": "Bitte geben Sie eine Abteilung an!",
+            "title": "Abteilung"
+          },
+          "register": {
+            "title": "Register",
+            "error": "Bitte geben Sie das Register an!",
+            "desc": "Register"
+          },
+          "registerNumber": {
+            "title": "Registernummer",
+            "error": "Bitte geben Sie die Registernummer an!",
+            "desc": "98765"
           },
           "countries": {
             "germany": "Deutschland"
           },
           "country": {
-            "desc": "Land eingeben",
-            "error": "Bitte geben Sie ein Land an!",
-            "title": "Land"
+            "desc": "Unternehmenssitz eingeben",
+            "error": "Bitte geben Sie einen Unternehmenssitz an!",
+            "title": "Unternehmenssitz"
           },
           "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
           "header": "Notarielle Verifikation",
@@ -144,11 +164,6 @@ const i18n: any = {
             "with-reg-number": "mit der Handelsregisternummer",
             "you-request": "Sie bantragen eine",
             "you-request-2": "notarielle Verifikation"
-          },
-          "regNumber": {
-            "desc": "Handelsregisternummer eingeben",
-            "error": "Bitte geben Sie eine Handelsregisternummer an!",
-            "title": "Handelsregisternummer"
           },
           "request-ident": "Beantragen",
           "requested1": "Sie haben erfolgreich eine Notarielle Verifikation für Ihre Organisation beantragt.",

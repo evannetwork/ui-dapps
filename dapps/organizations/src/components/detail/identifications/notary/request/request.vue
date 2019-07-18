@@ -64,25 +64,10 @@
                 {{ '_org.ident.notary.request.organization.error' | translate }}
               </div>
             </div>
-            <div class="form-group">
-              <label for="regNumber">
-                {{ `_org.ident.notary.request.regNumber.title` | translate }} *
+            <div class="form-group mb-4">
+              <label for="country">
+                {{ `_org.ident.notary.request.country.title` | translate }} *
               </label>
-              <input class="form-control" required
-                id="regNumber" ref="regNumber"
-                :placeholder="`_org.ident.notary.request.regNumber.desc` | translate"
-                v-model="requestForm.regNumber.value"
-                :class="{ 'is-invalid' : requestForm.regNumber.error }"
-                @blur="requestForm.regNumber.setDirty()">
-              <div class="invalid-feedback">
-                {{ '_org.ident.notary.request.regNumber.error' | translate }}
-              </div>
-            </div>
-
-            <label>
-              {{ `_org.ident.notary.request.postal-address` | translate }} *
-            </label>
-            <div class="form-group mb-2">
               <select class="form-control custom-select"
                 id="country" ref="country"
                 :placeholder="`_org.ident.notary.request.country.desc` | translate"
@@ -92,7 +77,59 @@
                 </option>
               </select>
             </div>
-            <div class="form-group mb-2">
+
+            <div class="row mb-4">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="court">
+                    {{ `_org.ident.notary.request.court.title` | translate }} *
+                  </label>
+                  <select class="form-control custom-select"
+                    id="court" ref="court"
+                    :placeholder="`_org.ident.notary.request.court.desc` | translate"
+                    v-model="requestForm.court.value">
+                    <option v-for="court in courts" :value="court">
+                      {{ court }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="register">
+                    {{ `_org.ident.notary.request.register.title` | translate }} *
+                  </label>
+                  <select class="form-control custom-select"
+                    id="register" ref="register"
+                    :placeholder="`_org.ident.notary.request.register.desc` | translate"
+                    v-model="requestForm.register.value">
+                    <option :value="'HRA'">
+                      HRA
+                    </option>
+                    <option :value="'HRB'">
+                      HRB
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label for="registerNumber">
+                    {{ `_org.ident.notary.request.registerNumber.title` | translate }} *
+                  </label>
+                  <input class="form-control" required
+                    id="registerNumber" ref="registerNumber"
+                    :placeholder="`_org.ident.notary.request.registerNumber.desc` | translate"
+                    v-model="requestForm.registerNumber.value"
+                    :class="{ 'is-invalid' : requestForm.registerNumber.error }"
+                    @blur="requestForm.registerNumber.setDirty()">
+                </div>
+              </div>
+            </div>
+            <label>
+              {{ `_org.ident.notary.request.postal-address` | translate }} *
+            </label>
+            <div class="form-group">
               <input class="form-control" required
                 id="address" ref="address"
                 :placeholder="`_org.ident.notary.request.address.desc` | translate"
@@ -131,20 +168,41 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="contact">
-                {{ `_org.ident.notary.request.contact.title` | translate }} *
-              </label>
-              <input class="form-control" required
-                id="contact" ref="contact"
-                :placeholder="`_org.ident.notary.request.contact.desc` | translate"
-                v-model="requestForm.contact.value"
-                :class="{ 'is-invalid' : requestForm.contact.error }"
-                @blur="requestForm.contact.setDirty()">
-              <div class="invalid-feedback">
-                {{ '_org.ident.notary.request.contact.error' | translate }}
+            <div class="row">
+              <div class="col-6">
+                 <div class="form-group">
+                  <label for="contact">
+                    {{ `_org.ident.notary.request.contact.title` | translate }} *
+                  </label>
+                  <input class="form-control" required
+                    id="contact" ref="contact"
+                    :placeholder="`_org.ident.notary.request.contact.desc` | translate"
+                    v-model="requestForm.contact.value"
+                    :class="{ 'is-invalid' : requestForm.contact.error }"
+                    @blur="requestForm.contact.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ '_org.ident.notary.request.contact.error' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                 <div class="form-group">
+                  <label for="department">
+                    {{ `_org.ident.notary.request.department.title` | translate }} *
+                  </label>
+                  <input class="form-control" required
+                    id="department" ref="department"
+                    :placeholder="`_org.ident.notary.request.department.desc` | translate"
+                    v-model="requestForm.department.value"
+                    :class="{ 'is-invalid' : requestForm.department.error }"
+                    @blur="requestForm.department.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ '_org.ident.notary.request.department.error' | translate }}
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
           <div id="ident-accept"
             v-else-if="status === 2">
