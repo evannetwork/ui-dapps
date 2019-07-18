@@ -29,7 +29,7 @@
   <div>
     <evan-modal
       ref="requestModal"
-      :maxWidth="'600px'">
+      :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_org.ident.notary.request.header' | translate }}
@@ -43,8 +43,13 @@
             <evan-loading></evan-loading>
             <h5>{{ '_org.ident.notary.request.requesting' | translate }}</h5>
           </div>
+          <div id="ident-desc"
+            v-else-if="status === 0"
+            v-html="$i18n.translate('_org.ident.notary.request.desc')">
+
+          </div>
           <div id="ident-formular"
-            v-else-if="status === 0">
+            v-else-if="status === 1">
             <div class="form-group">
               <label for="organization">
                 {{ `_org.ident.notary.request.organization.title` | translate }} *
@@ -142,7 +147,7 @@
             </div>
           </div>
           <div id="ident-accept"
-            v-else-if="status === 1">
+            v-else-if="status === 2">
             <p>{{ '_org.ident.notary.request.proof.title' | translate }}</p>
 
             <div class="my-5 px-3">
@@ -214,31 +219,39 @@
           <span class="mx-auto"></span>
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-request"
-            v-if="status === 0"
-            :disabled="!requestForm.isValid"
-            @click="status = 1">
+            v-if="status !== 2"
+            :disabled="status === 1 && !requestForm.isValid"
+            @click="status += 1">
             {{ `_org.ident.notary.request.next` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
-          <template v-else>
-            <button type="button" class="btn btn-outline-secondary btn-rounded"
-              id="ident-request"
-              @click="status = 0">
-              {{ `_org.ident.notary.request.back` | translate }}
-            </button>
-            <button type="button" class="btn btn-primary btn-rounded"
-              id="ident-request"
-              @click="requestIdentification()">
-              {{ `_org.ident.notary.request.request-ident` | translate }}
-              <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
-              <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-            </button>
-          </template>
+        </template>
+        <template v-else>
+          <span class="mx-auto"></span>
+          <button type="button" class="btn btn-outline-secondary btn-rounded"
+            id="ident-request"
+            @click="status -= 1">
+            {{ `_org.ident.notary.request.back` | translate }}
+          </button>
+          <button type="button" class="btn btn-primary btn-rounded"
+            id="ident-request"
+            @click="requestIdentification()">
+            {{ `_org.ident.notary.request.request-ident` | translate }}
+            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
+            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+          </button>
         </template>
       </template>
     </evan-modal>
   </div>
 </template>
+
+<style>
+  .evan.theme-evan .modal-body {
+    padding: 3rem;
+  }
+
+</style>
 
 <script lang="ts">
   import Component from './request.ts';

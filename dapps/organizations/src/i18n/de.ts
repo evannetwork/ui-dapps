@@ -84,6 +84,19 @@ const i18n: any = {
         },
         "print": "Drucken",
         "request": {
+          "desc": `<h4 class="text-uppercase mt-2">Warum eine Notarielle Verifikation</h4>
+          <span>Mit einer notariellen Verifikation können Ihre Geschäftspartner sicher sein, dass ...</span><br>
+          <span class="ml-4">___ ihr Account von Ihnen und nicht von einem Dritten betrieben wird.</span><br>
+          <span class="ml-4">___ Ihre Firma im Handelsregister eingetragen ist.</span><br>
+          <span class="ml-4">___ sie mit vertrauenswürdigen Partnern arbeiten.</span><br>
+          <h4 class="text-uppercase mt-4 mb-4">Wie wird Notariell Verifiziert?</h4>
+          <span>Die notarielle Verifikation Ihres Accounts erfolgt durch eine notarielle Überprüfung des Handelsregisters sowie einer notariellen Zwei-Faktor-Authentifizierung. Somit bietet diese Form der Account-Verifizierung die höchste Sicherheit im evan.network.</span><br>
+          <span class="ml-4">Schritt 1: Beantragen Sie Ihre Verifikation Was brauche ich dafür?</span><br>
+          <span class="ml-4">Schritt 2: Warten Sie auf die Aufforderung des Notars  Wie lange dauert es, bis ich die Aufforderung erhalte?</span><br>
+          <span class="ml-4">Schritt 3: Übersenden Sie Ihren Bestätigungscode dem Notar Wie erhalte ich meinen Bestätigungscode?</span><br>
+          <span class="ml-4">Schritt 4: Erhalten und bestätigen Sie die notarielle Verifikation An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?</span><br>
+          <h4 class="text-uppercase mt-4 mb-4">Was kostet eine Notarielle Verifikation?</h4>
+          <span>Für die Ausstellung einer notariellen Verifikation wird Ihr Wallet wird mit 200 EVE belastet.</span>`,
           "address": {
             "desc": "Anschrift eingeben",
             "error": "Bitte geben Sie eine Anschrift an!",
