@@ -112,7 +112,11 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
 
 }
 
-
+async function getIssuedVerifications(runtime) {
+  const verifications = await runtime.profile.getBcContract('verifications', 'notary');
+  bcc.Ipld.purgeCryptoInfo(verifications);
+  return verifications;
+}
 
 async function issueVerification(runtime, requestId, files) {
   // TODO: Add correct api endpoint
@@ -188,4 +192,5 @@ export {
   issueVerification,
   notarySmartAgentAccountId,
   triggerRequestReload,
+  getIssuedVerifications
 }

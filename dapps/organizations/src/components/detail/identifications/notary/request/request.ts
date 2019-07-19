@@ -822,7 +822,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     }));
 
     this.requestForm.organization.value = '';
-    this.requestForm.regNumber.value = '';
     this.requestForm.country.value = 'germany';
     this.requestForm.address.value = '';
     this.requestForm.zipCode.value = '';
@@ -893,8 +892,9 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.requestForm.country.value,
       organizationEvanId: (<any>this).getRuntime().activeAccount,
-      organizationRegistration: `${this.requestForm.court.value} ${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
-      registrationNumber: `${this.requestForm.court.value} ${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
+      court: this.requestForm.court.value,
+      organizationRegistration: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
+      registrationNumber: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
       organizationName: this.requestForm.organization.value,
       organizationStreetAddress: this.requestForm.address.value,
       organizationZipCode: this.requestForm.zipCode.value,

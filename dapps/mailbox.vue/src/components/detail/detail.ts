@@ -95,6 +95,11 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
             break;
           }
+          case 'keys': {
+            accepted = false;
+
+            break;
+          }
           default: {
             attachment.unkown = true;
           }

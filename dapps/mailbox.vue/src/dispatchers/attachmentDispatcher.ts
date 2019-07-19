@@ -71,6 +71,13 @@ dispatcher
       }
 
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
+    } else if (data.attachment.type === 'keys') {
+      for (let key of data.attachment.keys) {
+        let storeKey = key.storeKey;
+        let storeValue = key.storeValue;
+        await runtime.profile.addBcContract(key.context || 'contracts', storeKey, storeValue);
+      }
+      await runtime.profile.storeForAccount(runtime.profile.treeLabels.contracts);
     } else {
       // check if a specific store value was specified, if not, use the latest dbcp description
       let storeKey = data.attachment.storeKey || data.attachment.address;

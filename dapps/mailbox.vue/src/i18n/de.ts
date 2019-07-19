@@ -41,6 +41,11 @@ export default {
         "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?",
         "new": "Vertragseinladung akzeptieren"
       },
+      "keys": {
+        "accepted": "Ziel öffnen",
+        "modal-body": "Wollen Sie die Schlüssel wirklich speichern?",
+        "new": "Schlüssel im Profil speichern"
+      },
       "url": {
         "accepted": "Anhang öffnen"
       }
