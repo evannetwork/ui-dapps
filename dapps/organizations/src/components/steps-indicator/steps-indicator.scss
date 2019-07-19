@@ -25,7 +25,9 @@
   https://evan.network/license/
 */
 
-@import './utils';
+@function cssVar($name) {
+  @return var(--evan-#{$name});
+}
 
 .evan {
   .evan-steps {
@@ -105,6 +107,20 @@
           word-break: break-word;
 
           color: cssVar('gray-500');
+        }
+
+        .stepper-circle {
+          background: cssVar('gray-500');
+        }
+        &.active {
+          .stepper-circle {
+            background: cssVar('evan-dark');
+            background: var(--evan-dark);
+          }
+          span:nth-child(2) {
+            color: cssVar('evan-dark');
+            color: var(--evan-dark);
+          }
         }
       }
     }

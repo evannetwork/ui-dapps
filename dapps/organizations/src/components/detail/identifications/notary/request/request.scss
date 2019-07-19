@@ -1,0 +1,23 @@
+@function cssVar($name) {
+  @return var(--evan-#{$name});
+}
+
+.modal-content {
+  padding: 3rem;
+}
+
+.modal-content {
+  .step {
+    display: inline-block;
+    margin-top: 1em;
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  /deep/ em, .emphasized {
+    color: cssVar('dark');
+    font-style: normal;
+  }
+}

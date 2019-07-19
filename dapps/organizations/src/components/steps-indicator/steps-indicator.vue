@@ -62,5 +62,7 @@
   export default Component;
 </script>
 
-
+<style lang="scss" scoped>
+  @import './steps-indicator.scss'
+</style>
 
