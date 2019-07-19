@@ -69,6 +69,21 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    */
   status = 0;
 
+  steps = [
+    {
+      title: "Überblick",
+      disabled: false
+    },
+    {
+      title: "Ihre Daten",
+      disabled: false
+    },
+    {
+      title: "Zusammenfassung",
+      disabled: true
+    },
+  ];
+
   /**
    * listen for dispatcher updates
    */
@@ -824,6 +839,15 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
           triggerRequestReload(this.$route.params.address);
         }
       }));
+  }
+
+  /**
+   * Update status, when clicked in step component
+   *
+   * @param step
+   */
+  updatestep(step: number) {
+    this.status = step;
   }
 
   /**

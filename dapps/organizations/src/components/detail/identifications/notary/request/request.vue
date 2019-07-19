@@ -36,7 +36,12 @@
         </h5>
       </template>
       <template v-slot:body>
-        <div id="request-verification-modal">
+        <div id="request-verification-modal" >
+          <steps-indicator
+            :steps="steps"
+            :active-step="status"
+            @updatestep="updatestep"
+          ></steps-indicator>
           <div class="text-center"
             id="request-verification-loading"
             v-if="sending">
