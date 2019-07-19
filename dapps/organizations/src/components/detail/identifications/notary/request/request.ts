@@ -47,6 +47,9 @@ interface RequestFormIdentInterface extends EvanForm {
   country: EvanFormControl;
   regNumber: EvanFormControl;
   zipCode: EvanFormControl;
+  court: EvanFormControl;
+  register: EvanFormControl;
+  registerNumber: EvanFormControl;
 }
 
 @Component({ })
@@ -753,17 +756,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
           return this.value.length !== 0;
         }
       },
-      regNumber: {
-        value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
-          switch (form.country.value) {
-            case 'germany':
-              return /^HR(A|B)(\s|-)?(\d)+$/i.test(this.value)
-            default:
-              return false // foreign countries not supported yet
-          }
-        }
-      },
       address: {
         value: '',
         validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
@@ -877,8 +869,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.requestForm.country.value,
       organizationEvanId: (<any>this).getRuntime().activeAccount,
-      organizationRegistration: this.requestForm.regNumber.value,
-      registrationNumber: this.requestForm.regNumber.value,
+      organizationRegistration: `${this.requestForm.court.value} ${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
+      registrationNumber: `${this.requestForm.court.value} ${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
       organizationName: this.requestForm.organization.value,
       organizationStreetAddress: this.requestForm.address.value,
       organizationZipCode: this.requestForm.zipCode.value,

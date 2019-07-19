@@ -232,7 +232,7 @@
                   <span>{{ '_org.ident.notary.request.proof.with-reg-number' | translate }}</span>
                 </div>
                 <div class="col-6">
-                  <b>{{ requestForm.regNumber.value }}</b>
+                  <b>{{ requestForm.court.value }} {{ requestForm.register.value }} {{ requestForm.registerNumber.value }}</b>
                 </div>
               </div>
             </div>
