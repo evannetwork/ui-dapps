@@ -41,6 +41,11 @@ export default {
         "modal-body": "Do you really want to accept this contract?",
         "new": "Accept contract invitation"
       },
+      "keys": {
+        "accepted": "Open target",
+        "modal-body": "Do you really want to store the keys?",
+        "new": "Store keys in profile"
+      },
       "url": {
         "accepted": "Open Attachment"
       }

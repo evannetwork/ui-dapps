@@ -39,7 +39,7 @@
           ref="identAction">
         </org-ident-notary-request>
         <a class="btn btn-primary btn-rounded" target="_blank"
-          v-if="requests.length !== 0 && dapp.fullUrl.startsWith('http://localhost:3000')"
+
           :id="`ident-request-unknown`"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
@@ -51,7 +51,7 @@
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div class="white-box border-smooth rounded w-100 text-center"
-        v-if="requests.length === 0">
+        v-if="requests.length === 0 && verifications.length === 0">
         <div class="content">
           {{ '_org.ident.notary.no-requests' | translate }}
 
@@ -64,6 +64,13 @@
         </div>
       </div>
       <div v-else>
+        <div class="mt-3"
+          v-for="(verification) in verifications">
+          <org-ident-notary-detail
+            :verifications="verification">
+          </org-ident-notary-detail>
+        </div>
+        blubbblubb
         <div class="mt-3"
           v-for="(requestId, index) in requests">
           <org-ident-notary-detail

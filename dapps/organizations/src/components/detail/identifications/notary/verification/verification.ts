@@ -155,8 +155,14 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
       .forEach(async (subVerification) => {
         try {
 
-          const contentKey = 'f88922ba42628642a029922a2b8512d93f3d277ca3e129943c612d9a8bf67969'
-          const hashKey = 'bdf85cdde8854f3017a2996015fc3c326c396be4e9362827cc3641201bd7361f'
+          const contentKey = await runtime.profile.getBcContract(
+            'contracts',
+            runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`)
+          );
+          const hashKey = await runtime.profile.getBcContract(
+            'contracts',
+            runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},hashKey`)
+          );
           const fileHash = JSON.parse(subVerification.details.data);
 
           if (fileHash !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
