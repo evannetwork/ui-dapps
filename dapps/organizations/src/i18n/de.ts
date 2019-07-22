@@ -187,10 +187,10 @@ const i18n: any = {
           }
         },
         "status": {
-          "accepted": "notariell identifiziert",
+          "accepted": "notariell verifiziert",
           "confirming": "in Prüfung",
           "forwarding": "wird vom Provider bearbeitet",
-          "issued": "notariell identifiziert",
+          "issued": "notariell verifiziert",
           "requested": "beantragt",
           "title": "Verifikation",
           "unknown": "keine Verifikation"
@@ -202,7 +202,7 @@ const i18n: any = {
           "unknown": "Beantragen",
           "unknown-long": "Notarielle Verifikation beantragen"
         },
-        "title": "Notarielle Identifikationen",
+        "title": "Notarielle Verifikationen",
         "verification": {
           "accept": "Annehmen",
           "organization": "Organisations-Verifikation",

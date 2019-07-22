@@ -70,7 +70,6 @@
             :verifications="verification">
           </org-ident-notary-detail>
         </div>
-        blubbblubb
         <div class="mt-3"
           v-for="(requestId, index) in requests">
           <org-ident-notary-detail

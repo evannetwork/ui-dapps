@@ -143,7 +143,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         }
       },
       register: {
-        value: 'HRA',
+        value: 'HRB',
         validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
@@ -169,7 +169,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       .watch(async ($event) => {
         // if dispatcher has finished loading, reload the data
         if ($event.detail.status === 'finished') {
-          this.status = 2;
+          this.status = 3;
           this.sending = false;
           triggerRequestReload(this.$route.params.address);
         }

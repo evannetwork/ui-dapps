@@ -290,7 +290,7 @@
           </div>
           <div class="text-center"
             id="ident-requested"
-            v-else-if="status === 2">
+            v-else-if="status === 3">
             <evan-success></evan-success>
             <div class="p-5 mt-3">
               <h5>{{ '_org.ident.notary.request.requested1' | translate }}</h5>
@@ -302,7 +302,7 @@
       <template v-slot:footer>
 
         <!-- back btn -->
-        <template v-if="status > 0">
+        <template v-if="status > 0 && status <= 2">
           <span class="mx-auto"></span>
           <button
             v-if="status > 0"
@@ -315,7 +315,7 @@
         </template>
 
         <!-- next btn -->
-        <template v-if="status !== 2">
+        <template v-if="status < 2">
           <span class="mx-auto"></span>
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-request-next"

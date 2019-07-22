@@ -114,8 +114,13 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
 
 async function getIssuedVerifications(runtime) {
   const verifications = await runtime.profile.getBcContract('verifications', 'notary');
-  bcc.Ipld.purgeCryptoInfo(verifications);
-  return verifications;
+  if (verifications) {
+    bcc.Ipld.purgeCryptoInfo(verifications);
+    return verifications;
+  } else {
+    return {};
+  }
+
 }
 
 async function issueVerification(runtime, requestId, files) {
