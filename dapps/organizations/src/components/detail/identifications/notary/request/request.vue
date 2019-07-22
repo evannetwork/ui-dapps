@@ -301,10 +301,9 @@
         </div>
       </template>
       <template v-slot:footer>
-
+        <span class="mx-auto"></span>
         <!-- back btn -->
         <template v-if="status > 0 && status <= 2">
-          <span class="mx-auto"></span>
           <button
             v-if="status > 0"
             type="button" class="btn btn-outline-primary btn-rounded"
@@ -317,7 +316,6 @@
 
         <!-- next btn -->
         <template v-if="status < 2">
-          <span class="mx-auto"></span>
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-request-next"
             :disabled="(status === 1 && !requestForm.isValid) || sending"

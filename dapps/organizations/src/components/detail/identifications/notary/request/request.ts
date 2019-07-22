@@ -79,7 +79,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     },
     {
       title: "Zusammenfassung",
-      disabled: false
+      disabled: true
     },
   ];
 

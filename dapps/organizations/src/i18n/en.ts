@@ -141,6 +141,26 @@ const i18n: any = {
             "error": "Please enter a contact person",
             "title": "Contact"
           },
+          "court": {
+            "title": "Register Court",
+            "error": "Please enter the information of the registration authority!",
+            "desc": "Where is the company registered?"
+          },
+          "department": {
+            "desc": "Department",
+            "error": "Please insert the department of the company!",
+            "title": "Department of the company"
+          },
+          "register": {
+            "title": "Register",
+            "error": "Please select the rgister type!",
+            "desc": "Type of register"
+          },
+          "registerNumber": {
+            "title": "Registration number",
+            "error": "Please enter the registration number",
+            "desc": "98765"
+          },
           "countries": {
             "germany": "Germany"
           },
