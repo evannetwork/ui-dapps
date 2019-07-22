@@ -60,11 +60,12 @@
 
             <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
             <span class="mb-4">{{'_org.ident.notary.request.how.intro' | translate}}</span>
-            <p v-for="(step, idx) in $t('_org.ident.notary.request.how.steps')" :key="idx" class="step"
-            >
-              <span class="ml-4 bold emphasized">{{'_org.ident.notary.request.step' | translate}} {{idx + 1}}: </span>
-              <span class="bold" v-html="step.title"></span><br />
-              <!--<a class="ml-4" href="#">{{step.question}}</a>-->
+            <!-- <p v-for="(step, idx) in $t('_org.ident.notary.request.how.steps')" :key="idx" class="step"
+            > -->
+            <p v-for="(key) in ['1', '2', '3', '4']" :key="key" class="step">
+              <span class="ml-4 bold emphasized">{{'_org.ident.notary.request.step' | translate}} {{key}}: </span>
+              <span class="bold">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</span><br />
+              <!--<a class="ml-4" href="#">{{`_org.ident.notary.request.how.steps.${key}.question` | translate}}</a>-->
             </p>
 
             <h4 class="mt-4 mb-4">{{'_org.ident.notary.request.costs.title' | translate}}</h4>

@@ -96,12 +96,24 @@ const i18n: any = {
           "how": {
             "title": "Wie wird Notariell Verifiziert?",
             "intro": "Die notarielle Verifikation Ihres Accounts erfolgt durch eine notarielle Überprüfung des Handelsregisters sowie einer notariellen Zwei-Faktor-Authentifizierung. Somit bietet diese Form der Account-Verifizierung die höchste Sicherheit im evan.network.",
-            "steps": [
-              {"title": "Beantragen Sie Ihre Verifikation", "question": "Was brauche ich dafür?"},
-              {"title": "Warten Sie auf die Aufforderung des Notars", "question": "Wie lange dauert es, bis ich die Aufforderung erhalte?"},
-              {"title": "Übersenden Sie Ihren Bestätigungscode dem Notar", "question": "Wie erhalte ich meinen Bestätigungscode?"},
-              {"title": "Erhalten und bestätigen Sie die notarielle Verifikation", "question": " An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?"}
-            ]
+            "steps": {
+              "1": {
+                "title": "Beantragen Sie Ihre Verifikation",
+                "question": "Was brauche ich dafür?"
+              },
+              "2": {
+                "title": "Warten Sie auf die Aufforderung des Notars",
+                "question": "Wie lange dauert es, bis ich die Aufforderung erhalte?"
+              },
+              "3": {
+                "title": "Übersenden Sie Ihren Bestätigungscode dem Notar",
+                "question": "Wie erhalte ich meinen Bestätigungscode?"
+              },
+              "4": {
+                "title": "Erhalten und bestätigen Sie die notarielle Verifikation",
+                "question": " An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?"
+              }
+            }
           },
           "costs": {
             "title": "Was kostet eine Notarielle Verifikation?",

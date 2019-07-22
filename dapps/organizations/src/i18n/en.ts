@@ -84,6 +84,42 @@ const i18n: any = {
         },
         "print": "Print",
         "request": {
+          "why": {
+            "title": "TODO: Warum eine Notarielle Verifikation",
+            "intro": "TODO: Mit einer notariellen Verifikation können Ihre Geschäftspartner sicher sein, dass ...",
+            "advantages": [
+              "TODO: ihr Account von <em>Ihnen</em> und nicht von einem Dritten betrieben wird.",
+              "TODO: Ihre Firma im <em>Handelsregister</em> eingetragen ist.",
+              "TODO: sie mit <em>vertrauenswürdigen Partnern</em> arbeiten."
+            ]
+          },
+          "how": {
+            "title": "TODO: Wie wird Notariell Verifiziert?",
+            "intro": "TODO: Die notarielle Verifikation Ihres Accounts erfolgt durch eine notarielle Überprüfung des Handelsregisters sowie einer notariellen Zwei-Faktor-Authentifizierung. Somit bietet diese Form der Account-Verifizierung die höchste Sicherheit im evan.network.",
+            "steps": {
+              "1": {
+                "title": "TODO: Beantragen Sie Ihre Verifikation",
+                "question": "TODO: Was brauche ich dafür?"
+              },
+              "2": {
+                "title": "TODO: Warten Sie auf die Aufforderung des Notars",
+                "question": "TODO: Wie lange dauert es, bis ich die Aufforderung erhalte?"
+              },
+              "3": {
+                "title": "TODO: Übersenden Sie Ihren Bestätigungscode dem Notar",
+                "question": "TODO: Wie erhalte ich meinen Bestätigungscode?"
+              },
+              "4": {
+                "title": "TODO: Erhalten und bestätigen Sie die notarielle Verifikation",
+                "question": "TODO:  An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?"
+              }
+            }
+          },
+          "costs": {
+            "title": "TODO: Was kostet eine Notarielle Verifikation?",
+            "intro": "TODO: Für die Ausstellung einer notariellen Verifikation wird Ihr Wallet mit 200 EVE belastet."
+          },
+          "step": "Step",
           "address": {
             "desc": "Enter address",
             "error": "Please enter an address.",
