@@ -132,9 +132,9 @@ const i18n: any = {
             "title": "Stadt"
           },
           "organization": {
-            "desc": "Unternehmen eingeben",
-            "error": "Bitte geben Sie ein Unternehmen an!",
-            "title": "Unternehmen"
+            "desc": "Unternehmensname eingeben",
+            "error": "Bitte geben Sie den Unternehmensnahme an!",
+            "title": "Unternehmensnahme und Rechtsform"
           },
           "contact": {
             "desc": "Ansprechpartner angeben",
@@ -144,7 +144,7 @@ const i18n: any = {
           "court": {
             "title": "Registergericht",
             "error": "Bitte geben Sie das Registergericht an!",
-            "desc": "Registergericht"
+            "desc": "Ort des Amtsgerichts"
           },
           "department": {
             "desc": "Abteilung",
@@ -185,7 +185,7 @@ const i18n: any = {
             "question-desc": "Zur Vervollständigung der notariellen Verifikation erhalten Sie ein Kennwort, zu Händen der folgenden Person.",
             "title": "Bitte überprüfen Sie alle Informationen.",
             "with-reg-number": "mit der Handelsregisternummer",
-            "you-request": "Sie bantragen eine",
+            "you-request": "Sie beantragen eine",
             "you-request-2": "notarielle Verifikation"
           },
           "request-ident": "Beantragen",

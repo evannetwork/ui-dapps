@@ -151,7 +151,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       department: {
         value: '',
         validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
-          return this.value.length !== 0;
+          return true;
         }
       }
     }));

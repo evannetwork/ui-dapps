@@ -216,7 +216,7 @@
               <div class="col-6">
                  <div class="form-group">
                   <label for="department">
-                    {{ `_org.ident.notary.request.department.title` | translate }} *
+                    {{ `_org.ident.notary.request.department.title` | translate }}
                   </label>
                   <input class="form-control" required
                     id="department" ref="department"
