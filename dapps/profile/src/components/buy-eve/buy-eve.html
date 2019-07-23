@@ -253,7 +253,6 @@
                   </button>
 
                   <button ion-button icon-left clear
-                    disabled="true"
                     [class.active]="activePaymentTab === 1"
                     (click)="activatePaymentTab(1);">
                     <h3>{{ '_dappprofile.pay-eve.sepa' | translate }}</h3>
@@ -295,6 +294,11 @@
               <ion-icon name="cash"></ion-icon>
               <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
             </button>
+          </div>
+          <div [hidden]="activePaymentTab === 0">
+            <p class="text-justify">
+              {{ '_dappprofile.pay-eve.sepa-acceptance' | translate }}
+            </p>
           </div>
         </ion-col>
       </ion-row>

@@ -384,7 +384,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             name,
             email
           },
-          usage: 'single_use',
+          usage: this.activePaymentTab === 0 ? 'single_use' : 'reusable',
           mandate: {
             // Automatically send a mandate notification email to your customer
             // once the source is charged.
