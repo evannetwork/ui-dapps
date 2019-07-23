@@ -37,7 +37,7 @@ export const en = {
     "balance-updated": "EVEs were updated...",
     "buy-eve": {
       "buy-eve": "Buy EVEs",
-      "buy-eve-desc": "Buy EVEs via credit card",
+      "buy-eve-desc": "Buy EVEs via credit card or direct debit",
     },
     "cancel": "cancel",
     "color-theme": "Color Theme",

@@ -37,7 +37,7 @@ export const de = {
     "balance-updated": "EVEs wurden aktualisiert...",
     "buy-eve": {
       "buy-eve": "EVEs kaufen",
-      "buy-eve-desc": "EVEs über Kreditkarte kaufen",
+      "buy-eve-desc": "EVEs über Kreditkarte oder Bankeinzug kaufen",
     },
     "cancel": "abbrechen",
     "color-theme": "Farbschema",
