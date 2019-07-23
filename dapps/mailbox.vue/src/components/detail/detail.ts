@@ -95,7 +95,15 @@ export default class DetailComponent extends mixins(EvanComponent) {
 
             break;
           }
-          case 'keys': {
+          case 'verifications': {
+            // for(let key of attachment.keys) {
+
+            // }
+            // accepted = !!(await runtime.profile.getBcContract(
+            //   attachment.bc,
+            //   attachment.storeKey || attachment.address
+            // ));
+
             accepted = false;
 
             break;
