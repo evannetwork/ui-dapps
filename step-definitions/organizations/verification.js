@@ -4,7 +4,7 @@ import { Given, When, Then, setDefinitionFunctionWrapper, Tag } from 'cucumber';
 import { setupEvan } from '../../test-utils/test-utils.js';
 
 /************************************** Open organization dapp ************************************/
-When(/^I want to open the organizations dapp and open the organization card for "([^"]+)"$/, 
+When(/^I want to open the organizations dapp and open the organization card for "([^"]+)"$/,
   async (accountId) => {
     const evan = setupEvan(client);
     accountId = accountId === 'My Account' ?
@@ -18,7 +18,7 @@ When(/^I want to open the organizations dapp and open the organization card for 
     await client.click(`#evan-org-${ accountId }`);
   }
 );
-Then(/I want to see the organization identification detail for "([^"]+)"/,
+Then(/I want to see the organization verification detail for "([^"]+)"/,
   async (accountId) => {
     const evan = setupEvan(client);
     accountId = accountId === 'My Account' ?
@@ -29,7 +29,7 @@ Then(/I want to see the organization identification detail for "([^"]+)"/,
 );
 
 /************************************** Open request modal ****************************************/
-When(/I click on the organization identification request start button/,
+When(/I click on the organization verification request start button/,
   async (accountId) => {
     await client.click('#ident-request-unkown');
   }
@@ -43,7 +43,7 @@ Then(/I want to see the organization identification request formular/,
 
 /************************************** Fill the formular *****************************************/
 let identModal = '#request-identification-modal';
-When(/I fill test data into the request identification modal/,
+When(/I fill test data into the request verification modal/,
   async (accountId) => {
     const identForm = `${ identModal } #ident-formular`;
 
@@ -58,7 +58,6 @@ When(/I fill test data into the request identification modal/,
 )
 Then(/the organization identification submit button should be enabled/,
   async (accountId) => {
-    await client.expect.element(`${ identModal } #ident-request`).to.not.have.attribute('disbled');
+    await client.expect.element(`${ identModal } #ident-request`).to.not.have.attribute('disabled');
   }
 );
-
