@@ -174,7 +174,7 @@ export const en = {
       "payment-information": "Payment details",
       "pay": "Order at cost",
       "error-payment": "An error occurred during the payment process. <b>Your card was NOT debited!</b> Please try again later. Error code: {{ code }}",
-      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.",
+      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.<br />The amount will be credited in the next minutes to your wallet.",
       "sepa-acceptance": "By providing your IBAN and confirming this payment, you are authorizing Evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited."
     },
     "private-key": "Private Key",

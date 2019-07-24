@@ -208,7 +208,7 @@ const i18n: any = {
           "confirming": "under review",
           "forwarding": "is processed by the provider",
           "issued": "notarially identified",
-          "requested": "requsted",
+          "requested": "requested",
           "title": "Verification",
           "unknown": "no verification"
         },
