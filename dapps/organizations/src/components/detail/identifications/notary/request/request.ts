@@ -28,7 +28,7 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -70,18 +70,28 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
 
   steps = [
     {
-      title: "Überblick",
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.overview'),
       disabled: false
     },
     {
-      title: "Ihre Daten",
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.your_data'),
       disabled: false
     },
     {
-      title: "Zusammenfassung",
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.summary'),
       disabled: true
     },
   ];
+
+  /**
+   * Watch if form validity changed and update steps accordingly
+   */
+  @Watch('requestForm.isValid')
+  onValidate(valid: boolean, oldValid: boolean) {
+    if (valid !== oldValid) {
+      this.steps[2].disabled = !valid
+    }
+  }
 
   /**
    * listen for dispatcher updates

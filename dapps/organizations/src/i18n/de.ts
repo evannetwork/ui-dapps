@@ -45,6 +45,11 @@ const i18n: any = {
         "notary": "Notarielle Verifikation"
       },
       "notary": {
+        "step": {
+          "overview": "Überblick",
+          "your_data": "Ihre Daten",
+          "summary": "Zusammenfassung",
+        },
         "account-id": "Account-ID",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
         "issue": {

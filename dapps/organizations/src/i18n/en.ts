@@ -45,6 +45,11 @@ const i18n: any = {
         "notary": "Notary Verification"
       },
       "notary": {
+        "step": {
+          "overview": "overview",
+          "your_data": "your data",
+          "summary": "summary",
+        },
         "account-id": "Account-ID",
         "info": "Identify your account to be a trusted evan.network member",
         "issue": {
@@ -193,7 +198,7 @@ const i18n: any = {
             "error": "Please enter a correct commercial register number",
             "title": "Commercial Register Number"
           },
-          "request-ident": "Beantragen",
+          "request-ident": "Request",
           "requested1": "You have successfully applied for a Notary Verification for your organization.",
           "requested2": "Your wallet has been charged 200 EVE.",
           "requesting": "Notary verification is requested...",

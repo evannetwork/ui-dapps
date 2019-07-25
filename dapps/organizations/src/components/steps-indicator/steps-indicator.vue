@@ -39,8 +39,8 @@
     <div class="evan-step-header mt-3">
         <button class="btn"
         v-for="(step, index) of steps"
-        :id="`evan-container-create-step-${ index }`"
         :class="{
+          [`evan-container-create-step-${ index }`]: true,
           'active': activeStep === index,
           'disabled': step.disabled,
         }"
