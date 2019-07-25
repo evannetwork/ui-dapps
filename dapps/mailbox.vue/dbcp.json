@@ -10,7 +10,7 @@
         "mailbox.vue.css",
         "mailbox.vue.js"
       ],
-      "origin": "QmQ1mHKUGpTrJiwLm3NFcCNucf9KP8bAAbvWM8d2BtcdVj",
+      "origin": "QmSFoRZRsZNhcxmSYwZ59Z6o4dhN6592MDRDpNyPBGALHw",
       "primaryColor": "#1862ac",
       "secondaryColor": "#f9f9ff",
       "type": "dapp"
@@ -33,7 +33,7 @@
       "dapp",
       "evan"
     ],
-    "version": "3.1.0",
+    "version": "3.2.0",
     "versions": {
       "0.1.0": "QmbDdbPM52f9Xbap7qHLE3BoYUsNSKq1mR3RVRJTc92gBK",
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
@@ -46,7 +46,8 @@
       "1.4.0": "QmRLTor5Hw2Re6Kj5YnwtiJmwyW8bKcSkbBQSaSrDCi1cQ",
       "1.5.0": "QmdUsdg6ei5Prwtc1gdAodtDgVt1LaTRFp8ySSMAJfbpH6",
       "3.0.0": "QmfGHTHS1oawYk81Haa8NBXpdm3dS7wZ8vAkq3auVWcXMf",
-      "3.1.0": "QmUMtmrXLVH29h5XaDsk6MGqaC5NGkUM8AdK2EcDCmyR46"
+      "3.1.0": "QmUMtmrXLVH29h5XaDsk6MGqaC5NGkUM8AdK2EcDCmyR46",
+      "3.2.0": "QmchF3UYHdDsYX6wRhFu7cJLKVnRrWcaHwwnAo1kZhq8xW"
     }
   }
 }

@@ -5,7 +5,7 @@
       "dependencies": {
         "angular-core": "^2.1.2",
         "angular-libs": "^2.1.0",
-        "smart-contracts": "^2.4.2"
+        "smart-contracts": "^2.4.3"
       },
       "entrypoint": "demomanagement.js",
       "files": [
