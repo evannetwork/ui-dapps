@@ -5,14 +5,14 @@
       "dependencies": {
         "angular-core": "^2.1.2",
         "angular-libs": "^2.1.0",
-        "smart-contracts": "^2.4.2"
+        "smart-contracts": "^2.4.3"
       },
       "entrypoint": "verifications.js",
       "files": [
         "verifications.css",
         "verifications.js"
       ],
-      "origin": "QmPkbL3TvXd2qPnWJvBUj1Xsz4J8FBXtRYtspzpey8q69X",
+      "origin": "QmRWRTZP8y6xgiRHBB2SNv6hdP6i8tCFp6CTw9bxBHsgbf",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "type": "dapp"
@@ -40,7 +40,7 @@
     "versions": {
       "1.0.0": "QmTfPSFqtbxBAYSd1MPwyRpB4kNajwVUhsouFwXEtUHp2k",
       "1.1.0": "QmbzJtAQtpFzXSsJALDgeNvSnrMTLpHnuUP4aCSzmhuySA",
-      "1.5.0": "QmTrjmkYw5qx8aqxSbGhen3NVjRmSiF1GNtkEAyDJPT2HW"
+      "1.5.0": "QmfByK4qgVB9RsS8oGtXHRpLBXRNowjrVeVoRSbwv2doWy"
     }
   }
 }
