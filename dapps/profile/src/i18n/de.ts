@@ -92,6 +92,7 @@ export const de = {
     "notifications": "Benachrichtigungen",
     "notifictions-desc": "Aktiviert Push-Benachrichtigungen für ihr Mobiles Gerät.",
     "ok": "Ok",
+    "contact": "Kontakt",
     "payment": {
       "channel-actions": "Aktionen",
       "create-payment-channel": "Speicherguthaben einrichten",
@@ -176,7 +177,15 @@ export const de = {
       "credit": "Kreditkarte",
       "payment-information": "Zahlungsinformationen",
       "pay": "Kostenpflichtig bestellen",
-      "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. <b>Ihre Karte wurde NICHT belastet!</b> <br>Bitte versuchen Sie es später noch einmal. Fehlercode: {{ code }}",
+      "payment-error": {
+        "unknown_state": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Bitte kontaktieren Sie unseren Support.",
+        "transaction_failed": "Payment/charge was successful but transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
+        "charge_failed": "A payment cannot be completed because of a failed payment/charge attempt. <b>Your card was NOT debited!</b> Please try again later.",
+        "invalid_customer": "Customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
+        "price_not_okay": "Ether price could not be retrieved in back-end. <b>Your card was NOT debited!</b> Please try again later.",
+        "too_many_accounts": "Submitted email already has too many accounts registered for it. <b>Your card was NOT debited!</b> Please contact our customer support.",
+        "wallet_not_enough_funds": "Wallet does not have enough funds to execute payment. <b>Your card was NOT debited!</b> Please try again later."
+      },
       "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten Minuten.",
       "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie Evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden."
     },

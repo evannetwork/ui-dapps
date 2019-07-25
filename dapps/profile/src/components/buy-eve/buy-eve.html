@@ -38,7 +38,9 @@
             <ion-icon name="close-circle-outline"></ion-icon>
           </ion-col>
           <ion-col col-8>
-            <ion-label [innerHTML]="'_dappprofile.pay-eve.error-payment' | translate : paymentResponse"></ion-label>
+            <ion-label [innerHTML]="'_dappprofile.pay-eve.payment-error.' + paymentResponse.code | translate">
+            </ion-label>
+            <p>{{ '_dappprofile.contact' | translate}}: <a href="mailto:info@evan.team">info@evan.team</a></p>
           </ion-col>
         </ion-row>
       </div>
@@ -52,6 +54,14 @@
           </ion-col>
         </ion-row>
       </div>
+      <button ion-item
+        routerLink="./buy-eve">
+        <ion-avatar item-start>
+          <ion-icon name="card"></ion-icon>
+        </ion-avatar>
+        <h2>{{ '_dappprofile.buy-eve.buy-eve' | translate }}</h2>
+        <h3>{{ '_dappprofile.buy-eve.buy-eve-desc' | translate }}</h3>
+      </button>
     </div>
     <form *ngIf="!paymentResponse" novalidate [formGroup]="stripePayment">
       <ion-row>

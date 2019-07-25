@@ -422,7 +422,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               type: 'vat'
             }
           }
-          console.log('Payment successful!', source);
+          console.log('Payment initated!', source);
           const activeAccount = this.core.activeAccount();
           const toSignedMessage = this.bcc.web3.utils
             .soliditySha3(new Date().getTime() + activeAccount)
@@ -436,7 +436,14 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               `EvanSignedMessage ${ signature }`
             ].join(',')
           };
-          this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
+          try {
+            this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
+          } catch(error) {
+            this.paymentResponse = {
+              status: 'error',
+              code: this.getErrorCode(error.code)
+            }
+          };
 
           this.paymentRunning = false;
 
@@ -445,13 +452,27 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
           // Error creating the token
           this.paymentResponse = {
             status: 'error',
-            code: result.error.message
+            code: this.getErrorCode(result.error.message)
           }
 
           this.paymentRunning = false;
           this.ref.detectChanges();
         }
       });
+  }
+
+  getErrorCode(code: string) {
+    const translatedCodes = [
+      'unknown_state',
+      'transaction_failed',
+      'charge_failed',
+      'invalid_customer',
+      'price_not_okay',
+      'too_many_accounts',
+      'wallet_not_enough_funds'
+    ];
+
+    return translatedCodes.indexOf(code) !== -1 ? code : 'unknown_state';
   }
 
   /**
@@ -464,50 +485,62 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * @return     {promise}  resolved when done
    */
   public async executePayment(id, amount, customer, headers = {}) {
-    return new Promise(async (resolve, reject) => {
-      let requestId;
-      const checkStatus = async() => {
-        return (await this.http
-          .post(
-            `${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
-            {
-              token: id,
-              amount: amount,
-              customer: customer,
-              requestId
-            },
-            (<any>{
-              headers,
-            })
-          )
-          .toPromise()
-        ).json();
-      }
+    let intervalTimer = null;
+    let requestId = null;
 
-      const resolver = async() => {
-        const response = await checkStatus();
-        if (response.status === 'new') {
-          requestId = response.result;
-          setTimeout(async () => {
-            await resolver();
-          }, 5000)
-        }
-        if (response.status === 'ongoing') {
-          setTimeout(async () => {
-            await resolver();
-          }, 5000)
-        }
-        if (response.status === 'success' || response.status === 'error') {
-          clearTimeout(timeout);
-          resolve(response);
-        }
-      }
+    // Check current payment state against smart agent
+    const checkStatus = async() => {
+      return (await this.http
+        .post(
+          `${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
+          {
+            token: id,
+            amount: amount,
+            customer: customer,
+            requestId
+          },
+          (<any>{
+            headers,
+          })
+        )
+        .toPromise()
+      ).json();
+    }
 
-      const timeout = setTimeout(() => {
-        reject(new Error(`timeout for payment`))
-      }, 1000 * 60 * 10)
-      await resolver();
-    })
+    // request every 5 seconds til we got success or error response status
+    const getStatus = async () => {
+      return new Promise((resolve, reject) => {
+        intervalTimer = setInterval( async () => {
+          const response = await checkStatus();
+
+          if (response.status === 'new') {
+            requestId = response.result;
+          }
+
+          if (response.status === 'success') {
+            clearInterval(intervalTimer);
+
+            resolve(response);
+          }
+          if (response.status === 'error') {
+            clearInterval(intervalTimer);
+
+            reject(response);
+          }
+        }, 5000)
+      })
+    };
+
+    // return the first resolving promise
+    return Promise.race([
+      getStatus(),
+      new Promise((_, reject) =>
+          setTimeout(() => {
+            clearInterval(intervalTimer);
+            reject(new Error('timeout for payment'));
+          }, 1000 * 30 * 10)
+      )
+    ]);
   }
 
 
