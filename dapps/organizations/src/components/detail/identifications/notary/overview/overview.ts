@@ -35,7 +35,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getRequests } from '../notary.identifications';
+import { getRequests, getIssuedVerifications } from '../notary.identifications';
 
 @Component({ })
 export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) {
@@ -51,7 +51,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
   requests: Array<string> = null;
 
   /**
-   * Check for showing the "canIssue button", usually the evan identification account.
+   * Check for showing the "canIssue button", usually the evan verification account.
    */
   canIssue = false;
 
@@ -59,6 +59,11 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
    * Load request function to be able to listent on reload event
    */
   loadRequests: Function;
+
+  /**
+   * already verified verifications
+   */
+  verifications: any;
 
   async created() {
     // load the organizations
@@ -68,6 +73,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
     this.loadRequests = (async () => {
       this.reloading = true;
       this.requests = await getRequests(runtime, this.$route.params.address);
+      this.verifications = [await getIssuedVerifications(runtime)];
       this.reloading = false;
     }).bind(this);
 

@@ -33,10 +33,11 @@ import axios from 'axios';
  */
 const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 
-const agentUrl = 'http://192.168.100.66:8080'
+// const agentUrl = 'http://192.168.100.66:8080'
+const agentUrl = 'https://agents.test.evan.network'
 
 /**
- * Trigger reload event, so the identification overview will reload the latest requests
+ * Trigger reload event, so the verification overview will reload the latest requests
  *
  * @param      {string}  orgAddress  The organization address
  */
@@ -111,19 +112,30 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
 
 }
 
+async function getIssuedVerifications(runtime) {
+  const verifications = await runtime.profile.getBcContract('verifications', 'notary');
+  if (verifications) {
+    bcc.Ipld.purgeCryptoInfo(verifications);
+    return verifications;
+  } else {
+    return {};
+  }
 
+}
 
 async function issueVerification(runtime, requestId, files) {
   // TODO: Add correct api endpoint
   const evanAuthHeader = await generateEvanAuthHeader(runtime);
+  const formData = new FormData();
+  for (let file of files) {
+    formData.append('assets', file.blob, file.name);
+  }
+  formData.append('requestId', requestId);
   await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/finalize`,
-    headers: { 'Authorization': evanAuthHeader },
-    data: {
-      requestId,
-      files,
-    }
+    headers: { 'Authorization': evanAuthHeader, 'content-type': 'multipart/form-data' },
+    data: formData
   });
 }
 
@@ -185,4 +197,5 @@ export {
   issueVerification,
   notarySmartAgentAccountId,
   triggerRequestReload,
+  getIssuedVerifications
 }

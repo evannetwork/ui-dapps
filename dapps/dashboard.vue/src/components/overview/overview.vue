@@ -43,6 +43,7 @@
         bg-level-1 border evan-highlight"
         v-for="(type, index) in dashboardEntries"
         style="min-width: 250px"
+        :class="type.class ? type.class : ''"
         :href="type.fullPath ? type.fullPath : `${ dapp.fullUrl }/${ type.path }`">
         <div id="evan-testnet"
           style="position: absolute; top: 0;"
@@ -50,14 +51,20 @@
           TESTCORE
         </div>
         <img class="my-5" style="height: 120px"
-          :src="`${ $store.state.uiBaseUrl }/assets/${ type.img }`">
+          :src="`${ $store.state.uiBaseUrl }/assets/${ type.img }`"
+          v-if="type.img">
+        <i
+          v-else
+          :class="type.icon">
+        </i>
 
-        <h3 class="highlight font-weight-semibold mb-3">
+        <h3 class="highlight font-weight-semibold mb-3 text-dark"
+          style="color: var(--evan-dark) !important">
           {{ `_dashboard.overview.${ type.title }.title` | translate }}
         </h3>
         <span class="text-muted highlight font-weight-semibold d-inline-block"
-          style="max-width: 250px;">
-          {{ `_dashboard.overview.${ type.title }.desc` | translate }}
+          style="max-width: 250px;"
+          v-html="$t(`_dashboard.overview.${ type.title }.desc`)">
         </span>
       </a>
     </div>

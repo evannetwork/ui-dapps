@@ -6,7 +6,7 @@
         "angular-core": "^2.1.2",
         "angular-libs": "^2.1.0",
         "explorer": "^1.5.1",
-        "smart-contracts": "^2.4.2"
+        "smart-contracts": "^2.4.3"
       },
       "entrypoint": "ensmanagement.js",
       "files": [

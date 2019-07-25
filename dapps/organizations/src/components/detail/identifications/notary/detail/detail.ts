@@ -45,12 +45,17 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   @Prop() requestId;
 
   /**
+   * Direct verification if the notary flow is already done
+   */
+  @Prop() verifications;
+
+  /**
    * ui status flags
    */
   loading = true;
 
   /**
-   * Current identification status for the user
+   * Current verification status for the user
    */
   details = null;
 
@@ -66,12 +71,18 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
 
     // TODO: add status loading
-    this.details = await getIdentificationDetails(
-      runtime,
-      this.$route.params.address,
-      this.requestId,
-    );
-
+    if (this.verifications) {
+      this.details = {
+        status: 'issued',
+        verifications: this.verifications
+      };
+    } else {
+      this.details = await getIdentificationDetails(
+        runtime,
+        this.$route.params.address,
+        this.requestId,
+      );
+    }
     this.loading = false;
   }
 

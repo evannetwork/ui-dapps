@@ -30,10 +30,10 @@
     <evan-dapp-wrapper
       :routes="[ ]">
       <template v-slot:content>
-        <!-- <transition name="fade" mode="out-in">
+         <transition name="fade" mode="out-in">
           <router-view></router-view>
-        </transition> -->
-        <evan-under-development></evan-under-development>
+        </transition>
+        <!--<evan-under-development></evan-under-development>-->
       </template>
     </evan-dapp-wrapper>
   </div>

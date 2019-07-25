@@ -77,8 +77,8 @@
           :address="$route.params.address"
           :title="(
             topic.endsWith('company') ?
-              '_org.ident.notary.verification.company' :
-              '_org.ident.notary.verification.company-random'
+              '_org.ident.notary.verification.organization' :
+              '_org.ident.notary.verification.organization-random'
             ) | translate"
           :topic="topic">
         </org-ident-notary-verification>

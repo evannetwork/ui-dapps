@@ -53,6 +53,11 @@
         v-if="verification.status === 'red'">
         {{ '_org.ident.notary.verification.incorrect' | translate }}
       </i>
+      <evan-file-input
+        id="issued-files" ref="files"
+        v-model="files"
+        :disabled="true">
+      </evan-file-input>
       <button type="button" class="btn btn-primary btn-rounded mt-3"
         id="ident-pin-print"
         v-if="verification.status === 'yellow'"

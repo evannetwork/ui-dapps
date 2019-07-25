@@ -76,7 +76,8 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
       files: {
         value: [ ],
         validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
-          return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
+          return true;
+          // return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
         }
       }
     }));
@@ -97,7 +98,7 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Trigger the identification issue request
+   * Trigger the verification issue request
    */
   async issueIdentification() {
     this.issueing = true;

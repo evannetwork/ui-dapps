@@ -71,6 +71,29 @@ dispatcher
       }
 
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
+    } else if (data.attachment.type === 'verifications') {
+      for (let key of data.attachment.keys) {
+        let storeKey = key.storeKey;
+        let storeValue = key.storeValue;
+        await runtime.profile.addBcContract(key.context || 'contracts', storeKey, storeValue);
+      }
+      for (let verification of data.attachment.verifications) {
+        // load nested verifications
+        const nestedVerification = await runtime.verifications.getNestedVerificationsV2(
+          runtime.activeAccount,
+          verification,
+          false
+        );
+
+        await runtime.verifications.confirmVerification(
+          runtime.activeAccount,
+          runtime.activeAccount,
+          nestedVerification.verifications[0].details.id,
+        );
+
+      }
+
+      await runtime.profile.storeForAccount(runtime.profile.treeLabels.contracts);
     } else {
       // check if a specific store value was specified, if not, use the latest dbcp description
       let storeKey = data.attachment.storeKey || data.attachment.address;

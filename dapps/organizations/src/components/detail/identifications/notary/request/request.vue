@@ -29,55 +29,69 @@
   <div>
     <evan-modal
       ref="requestModal"
-      :maxWidth="'600px'">
+      :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_org.ident.notary.request.header' | translate }}
         </h5>
       </template>
       <template v-slot:body>
-        <div id="request-identification-modal">
+        <div id="request-verification-modal" class="modal-content">
+          <steps-indicator
+            :steps="steps"
+            :active-step="status"
+            @updatestep="updatestep"
+          ></steps-indicator>
           <div class="text-center"
-            id="request-identification-loading"
+            id="request-verification-loading"
             v-if="sending">
             <evan-loading></evan-loading>
             <h5>{{ '_org.ident.notary.request.requesting' | translate }}</h5>
           </div>
-          <div id="ident-formular"
-            v-else-if="status === 0">
-            <div class="form-group">
-              <label for="company">
-                {{ `_org.ident.notary.request.company.title` | translate }} *
-              </label>
-              <input class="form-control" required
-                id="company" ref="company"
-                :placeholder="`_org.ident.notary.request.company.desc` | translate"
-                v-model="requestForm.company.value"
-                :class="{ 'is-invalid' : requestForm.company.error }"
-                @blur="requestForm.company.setDirty()">
-              <div class="invalid-feedback">
-                {{ '_org.ident.notary.request.company.error' | translate }}
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="regNumber">
-                {{ `_org.ident.notary.request.regNumber.title` | translate }} *
-              </label>
-              <input class="form-control" required
-                id="regNumber" ref="regNumber"
-                :placeholder="`_org.ident.notary.request.regNumber.desc` | translate"
-                v-model="requestForm.regNumber.value"
-                :class="{ 'is-invalid' : requestForm.regNumber.error }"
-                @blur="requestForm.regNumber.setDirty()">
-              <div class="invalid-feedback">
-                {{ '_org.ident.notary.request.regNumber.error' | translate }}
-              </div>
-            </div>
+          <div id="ident-desc"
+            v-else-if="status === 0"
+          >
 
-            <label>
-              {{ `_org.ident.notary.request.postal-address` | translate }} *
-            </label>
-            <div class="form-group mb-2">
+            <h4>{{'_org.ident.notary.request.why.title' | translate}}</h4>
+            <span class="mb-4">{{'_org.ident.notary.request.why.intro' | translate}}</span>
+            <p v-for="(advantage, idx) in $t('_org.ident.notary.request.why.advantages')" :key="idx" class="step">
+              <span class="ml-4 bold" v-html="`__${advantage}`"></span>
+            </p>
+
+            <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
+            <span class="mb-4">{{'_org.ident.notary.request.how.intro' | translate}}</span>
+            <!-- <p v-for="(step, idx) in $t('_org.ident.notary.request.how.steps')" :key="idx" class="step"
+            > -->
+            <p v-for="(key) in ['1', '2', '3', '4']" :key="key" class="step">
+              <span class="ml-4 bold emphasized">{{'_org.ident.notary.request.step' | translate}} {{key}}: </span>
+              <span class="bold">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</span><br />
+              <!--<a class="ml-4" href="#">{{`_org.ident.notary.request.how.steps.${key}.question` | translate}}</a>-->
+            </p>
+
+            <h4 class="mt-4 mb-4">{{'_org.ident.notary.request.costs.title' | translate}}</h4>
+            <span class="mb-4">{{'_org.ident.notary.request.costs.intro' | translate}}</span>
+
+          </div>
+          <div id="ident-formular"
+            v-else-if="status === 1">
+            <div class="form-group">
+              <label for="organization">
+                {{ `_org.ident.notary.request.organization.title` | translate }} *
+              </label>
+              <input class="form-control" required
+                id="organization" ref="organization"
+                :placeholder="`_org.ident.notary.request.organization.desc` | translate"
+                v-model="requestForm.organization.value"
+                :class="{ 'is-invalid' : requestForm.organization.error }"
+                @blur="requestForm.organization.setDirty()">
+              <div class="invalid-feedback">
+                {{ '_org.ident.notary.request.organization.error' | translate }}
+              </div>
+            </div>
+            <div class="form-group mb-4">
+              <label for="country">
+                {{ `_org.ident.notary.request.country.title` | translate }} *
+              </label>
               <select class="form-control custom-select"
                 id="country" ref="country"
                 :placeholder="`_org.ident.notary.request.country.desc` | translate"
@@ -87,7 +101,63 @@
                 </option>
               </select>
             </div>
-            <div class="form-group mb-2">
+
+            <div class="row mb-4">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="court">
+                    {{ `_org.ident.notary.request.court.title` | translate }} *
+                  </label>
+                  <input class="form-control" required
+                    id="court" ref="court"
+                    :placeholder="`_org.ident.notary.request.court.desc` | translate"
+                    v-model="requestForm.court.value"
+                    :class="{ 'is-invalid' : requestForm.court.error }"
+                    @blur="requestForm.court.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ '_org.ident.notary.request.court.error' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="register">
+                    {{ `_org.ident.notary.request.register.title` | translate }} *
+                  </label>
+                  <select class="form-control custom-select"
+                    id="register" ref="register"
+                    :placeholder="`_org.ident.notary.request.register.desc` | translate"
+                    v-model="requestForm.register.value">
+                    <option :value="'HRA'">
+                      HRA
+                    </option>
+                    <option :value="'HRB'">
+                      HRB
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label for="registerNumber">
+                    {{ `_org.ident.notary.request.registerNumber.title` | translate }} *
+                  </label>
+                  <input class="form-control" required
+                    id="registerNumber" ref="registerNumber"
+                    :placeholder="`_org.ident.notary.request.registerNumber.desc` | translate"
+                    v-model="requestForm.registerNumber.value"
+                    :class="{ 'is-invalid' : requestForm.registerNumber.error }"
+                    @blur="requestForm.registerNumber.setDirty()">
+                   <div class="invalid-feedback">
+                    {{ '_org.ident.notary.request.registerNumber.error' | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label>
+              {{ `_org.ident.notary.request.postal-address` | translate }} *
+            </label>
+            <div class="form-group">
               <input class="form-control" required
                 id="address" ref="address"
                 :placeholder="`_org.ident.notary.request.address.desc` | translate"
@@ -126,23 +196,44 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="contact">
-                {{ `_org.ident.notary.request.contact.title` | translate }} *
-              </label>
-              <input class="form-control" required
-                id="contact" ref="contact"
-                :placeholder="`_org.ident.notary.request.contact.desc` | translate"
-                v-model="requestForm.contact.value"
-                :class="{ 'is-invalid' : requestForm.contact.error }"
-                @blur="requestForm.contact.setDirty()">
-              <div class="invalid-feedback">
-                {{ '_org.ident.notary.request.contact.error' | translate }}
+            <div class="row">
+              <div class="col-6">
+                 <div class="form-group">
+                  <label for="contact">
+                    {{ `_org.ident.notary.request.contact.title` | translate }} *
+                  </label>
+                  <input class="form-control" required
+                    id="contact" ref="contact"
+                    :placeholder="`_org.ident.notary.request.contact.desc` | translate"
+                    v-model="requestForm.contact.value"
+                    :class="{ 'is-invalid' : requestForm.contact.error }"
+                    @blur="requestForm.contact.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ '_org.ident.notary.request.contact.error' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                 <div class="form-group">
+                  <label for="department">
+                    {{ `_org.ident.notary.request.department.title` | translate }}
+                  </label>
+                  <input class="form-control" required
+                    id="department" ref="department"
+                    :placeholder="`_org.ident.notary.request.department.desc` | translate"
+                    v-model="requestForm.department.value"
+                    :class="{ 'is-invalid' : requestForm.department.error }"
+                    @blur="requestForm.department.setDirty()">
+                  <div class="invalid-feedback">
+                    {{ '_org.ident.notary.request.department.error' | translate }}
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
           <div id="ident-accept"
-            v-else-if="status === 1">
+            v-else-if="status === 2">
             <p>{{ '_org.ident.notary.request.proof.title' | translate }}</p>
 
             <div class="my-5 px-3">
@@ -160,7 +251,7 @@
                   <span>{{ '_org.ident.notary.request.proof.for-org' | translate }}</span>
                 </div>
                 <div class="col-6">
-                  <b>{{ requestForm.company.value }}</b>
+                  <b>{{ requestForm.organization.value }}</b>
                 </div>
               </div>
 
@@ -169,7 +260,7 @@
                   <span>{{ '_org.ident.notary.request.proof.with-reg-number' | translate }}</span>
                 </div>
                 <div class="col-6">
-                  <b>{{ requestForm.regNumber.value }}</b>
+                  <b>{{ requestForm.court.value }} {{ requestForm.register.value }} {{ requestForm.registerNumber.value }}</b>
                 </div>
               </div>
             </div>
@@ -200,7 +291,7 @@
           </div>
           <div class="text-center"
             id="ident-requested"
-            v-else-if="status === 2">
+            v-else-if="status === 3">
             <evan-success></evan-success>
             <div class="p-5 mt-3">
               <h5>{{ '_org.ident.notary.request.requested1' | translate }}</h5>
@@ -210,37 +301,52 @@
         </div>
       </template>
       <template v-slot:footer>
-        <template v-if="!sending && status !== 2">
-          <span class="mx-auto"></span>
+        <span class="mx-auto"></span>
+        <!-- back btn -->
+        <template v-if="status > 0 && status <= 2">
+          <button
+            v-if="status > 0"
+            type="button" class="btn btn-outline-primary btn-rounded"
+            id="ident-request-back"
+            @click="status -= 1">
+            <i class="mdi mdi-arrow-left label mr-3"></i>
+            {{ `_org.ident.notary.request.back` | translate }}
+          </button>
+        </template>
+
+        <!-- next btn -->
+        <template v-if="status < 2">
           <button type="button" class="btn btn-primary btn-rounded"
-            id="ident-request"
-            v-if="status === 0"
-            :disabled="!requestForm.isValid"
-            @click="status = 1">
+            id="ident-request-next"
+            :disabled="(status === 1 && !requestForm.isValid) || sending"
+            @click="status += 1">
             {{ `_org.ident.notary.request.next` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
-          <template v-else>
-            <button type="button" class="btn btn-outline-secondary btn-rounded"
-              id="ident-request"
-              @click="status = 0">
-              {{ `_org.ident.notary.request.back` | translate }}
-            </button>
-            <button type="button" class="btn btn-primary btn-rounded"
-              id="ident-request"
-              @click="requestIdentification()">
-              {{ `_org.ident.notary.request.request-ident` | translate }}
-              <div class="spinner-border spinner-border-sm text-light ml-3" v-if="checkingPin"></div>
-              <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-            </button>
-          </template>
         </template>
-      </template>
+
+        <!-- request ident btn -->
+        <template v-if="status === 2">
+          <button type="button" class="btn btn-primary btn-rounded"
+            id="ident-request"
+            @click="requestIdentification()">
+            {{ `_org.ident.notary.request.request-ident` | translate }}
+            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="sending"></div>
+            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+          </button>
+        </template>
+
+      </template><!-- eof footer -->
     </evan-modal>
   </div>
 </template>
+
 
 <script lang="ts">
   import Component from './request.ts';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './request.scss'
+</style>

@@ -270,7 +270,6 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
         });
         // create a new iban element from stripe
         this.iban = this.elements.create('iban', {
-          hidePostalCode: true,
           supportedCountries: ['SEPA'],
           style: {
             base: {
@@ -291,7 +290,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
         this.card.on('change', (ev) => {
           if (ev.error || ev.empty) {
             this.cardError = true;
-            this.cardErrorMessage  = ev.error.message;
+            this.cardErrorMessage = ev.error ? ev.error.message : '';
           } else {
             this.cardError = false;
             this.cardErrorMessage = '';
@@ -301,10 +300,10 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
         this.iban.on('change', (ev) => {
           if (ev.error || ev.empty) {
             this.ibanError = true;
-            this.ibanErrorMessage  = ev.error.message;
+            this.ibanErrorMessage = ev.error ? ev.error.message : '';
           } else {
             this.ibanError = false;
-            this.ibanErrorMessage  = '';
+            this.ibanErrorMessage = '';
           }
           this.ref.detectChanges();
         });
@@ -322,6 +321,17 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    */
   activatePaymentTab(index: number) {
     this.activePaymentTab = index;
+
+    if (this.iban && this.card) {
+      this.iban.clear();
+      this.card.clear();
+
+      this.cardError = true;
+      this.cardErrorMessage  = '';
+
+      this.ibanError = true;
+      this.ibanErrorMessage  = '';
+    }
 
     this.ref.detectChanges();
     setTimeout(() => {
@@ -384,7 +394,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             name,
             email
           },
-          usage: 'single_use',
+          usage: this.activePaymentTab === 0 ? 'single_use' : 'reusable',
           mandate: {
             // Automatically send a mandate notification email to your customer
             // once the source is charged.

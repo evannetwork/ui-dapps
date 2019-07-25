@@ -25,44 +25,44 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_mailbox": {
-    "add": "Nachricht senden",
-    "attachments": {
-      "commKey": {
-        "accepted": "Kontakt anzeigen",
-        "modal-body": "Wollen Sie diesen Kontakt wirklich hinzufügen?",
-        "new": "Kontaktanfrage akzeptieren"
-      },
-      "continue": "weiter",
-      "contract": {
-        "accepted": "Vertrag öffnen",
-        "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?",
-        "new": "Vertragseinladung akzeptieren"
-      },
-      "verifications": {
-        "accepted": "Ziel öffnen",
-        "modal-body": "Wollen Sie die Verifikationen bestätigen?",
-        "new": "Verifikation(en) bestätigen"
-      },
-      "url": {
-        "accepted": "Anhang öffnen"
-      }
-    },
-    "breadcrumbs": {
-      "received": "Eingehende Nachrichten",
-      "sent": "Ausgehende Nachrichten"
-    },
-    "detail": "Nachrichtsdetails",
-    "dispatcher": {
-      "attachment": "Kontakt/Vertrag sync"
-    },
-    "load-more": "Mehr Laden...",
-    "mailbox": "Nachrichten",
-    "received": "Empfangen",
-    "sent": "Gesendet",
-    "to": "an"
-  }
-}
-/* tslint:enable */;
+/*
+  usage:
+    <steps-indicator
+      :steps="steps"                    // steps array
+      :active-step="currentActiveStep"  // currently active step number
+      @updatestep="myupdatelistener"    // update function: myupdatelistener(nextStep)
+    ></steps-indicator>
+ */
+
+<template>
+  <div class="evan-steps" v-if="steps && steps.length !== 0">
+    <div class="evan-step-header mt-3">
+        <button class="btn"
+        v-for="(step, index) of steps"
+        :class="{
+          [`evan-container-create-step-${ index }`]: true,
+          'active': activeStep === index,
+          'disabled': step.disabled,
+        }"
+        :disabled="step.disabled"
+        @click="gotoStep(index)"
+        v-bind:key="index"
+      >
+        <span class="stepper-circle">
+          {{ index + 1}}
+        </span>
+        <span>{{ step.title | translate }}</span>
+      </button>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+  import Component from './steps-indicator';
+  export default Component;
+</script>
+
+<style lang="scss" scoped>
+  @import './steps-indicator.scss'
+</style>
+

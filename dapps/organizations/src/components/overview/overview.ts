@@ -50,7 +50,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
   organizations = null;
 
   /**
-   * Check for showing the "canIssue button", usually the evan identification account.
+   * Check for showing the "canIssue button", usually the evan verification account.
    */
   canIssue = false;
 

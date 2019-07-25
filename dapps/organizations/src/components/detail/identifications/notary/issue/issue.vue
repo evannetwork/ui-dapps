@@ -36,7 +36,7 @@
         </h5>
       </template>
       <template v-slot:body
-        id="issue-identification-modal">
+        id="issue-verification-modal">
         <div class="form-group">
           <label for="alias">
             {{ `_org.ident.notary.issue.requestId.title` | translate }} *

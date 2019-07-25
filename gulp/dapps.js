@@ -32,7 +32,42 @@ const del = require('del');
 const exec = require('child_process').exec;
 const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv } = require('./lib');
 
-const dappDirs = getDirectories(path.resolve('../dapps'));
+// fetch command line arguments
+const arg = (argList => {
+  let arg = {}, a, opt, thisOpt, curOpt;
+  for (a = 0; a < argList.length; a++) {
+    thisOpt = argList[a].trim();
+    opt = thisOpt.replace(/^\-+/, '');
+
+    if (opt === thisOpt) {
+      // argument value
+      if (curOpt) {
+        arg[curOpt] = opt;
+      }
+      curOpt = null;
+    }
+    else {
+      // argument name
+      curOpt = opt;
+      arg[curOpt] = true;
+    }
+  }
+
+  return arg;
+
+})(process.argv);
+
+// const searchpath = path.resolve(`../dapps/${? arg.folder : ''}`)
+let dappDirs = getDirectories(path.resolve('../dapps'));
+
+if (arg.folder || arg.folders) {
+  dappDirs = dappDirs.filter((item) => {
+    const basename = path.basename(item);
+
+    return basename === arg.folder
+  })
+}
+
 let longestDAppName = 0;
 
 for (let dappDir of dappDirs) {

@@ -28,7 +28,7 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -39,22 +39,24 @@ import * as dispatchers from '../../../../../dispatchers/registry';
 
 import { triggerRequestReload } from '../notary.identifications';
 
-interface RequestFormIndentInterface extends EvanForm {
+interface RequestFormIdentInterface extends EvanForm {
   address: EvanFormControl;
   city: EvanFormControl;
-  company: EvanFormControl;
+  organization: EvanFormControl;
   contact: EvanFormControl;
   country: EvanFormControl;
-  regNumber: EvanFormControl;
+  registerNumber: EvanFormControl;
   zipCode: EvanFormControl;
+  court: EvanFormControl;
+  register: EvanFormControl;
 }
 
 @Component({ })
 export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
-   * Formular for identification requests
+   * Formular for verification requests
    */
-  requestForm: RequestFormIndentInterface = null;
+  requestForm: RequestFormIdentInterface = null;
 
   /**
    * Show loading until the request was finished.
@@ -66,75 +68,131 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    */
   status = 0;
 
+  steps = [
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.overview'),
+      disabled: false
+    },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.your_data'),
+      disabled: false
+    },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.summary'),
+      disabled: true
+    },
+  ];
+
+  /**
+   * Watch if form validity changed and update steps accordingly
+   */
+  @Watch('requestForm.isValid')
+  onValidate(valid: boolean, oldValid: boolean) {
+    if (valid !== oldValid) {
+      this.steps[2].disabled = !valid
+    }
+  }
+
   /**
    * listen for dispatcher updates
    */
   listeners: Array<Function> = [ ];
 
   async created() {
-    this.requestForm = (<RequestFormIndentInterface>new EvanForm(this, {
-      company: {
-        value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+    this.requestForm = (<RequestFormIdentInterface>new EvanForm(this, {
+      country: {
+        value: 'germany', // TODO: should we use ISO 3166-1 alpha-2 country codes system wide, to avoid any confusions?
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
-      regNumber: {
+      organization: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
-          return this.value.lengt !== 0;
-        }
-      },
-      country: {
-        value: 'germany',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
       address: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
       zipCode: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return !!this.value.match(/^\d{5}$/);
         }
       },
       city: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
         }
       },
       contact: {
         value: '',
-        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIndentInterface) {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
           return this.value.length !== 0;
+        }
+      },
+      court: {
+        value: '',
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
+          return this.value.length !== 0;
+        }
+      },
+      registerNumber: {
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
+          switch (form.country.value) {
+            case 'germany':
+              return /^(\d)+$/i.test(this.value)
+            default:
+              return false // foreign countries not supported yet
+          }
+        }
+      },
+      register: {
+        value: 'HRB',
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
+          return this.value.length !== 0;
+        }
+      },
+      department: {
+        value: '',
+        validate: function(vueInstance: IdentNotaryRequestComponent, form: RequestFormIdentInterface) {
+          return true;
         }
       }
     }));
 
-    this.requestForm.company.value = 'evan GmbH';
-    this.requestForm.regNumber.value = 'Handelregister XYZ';
+    this.requestForm.organization.value = '';
+    this.requestForm.registerNumber.value = '';
     this.requestForm.country.value = 'germany';
-    this.requestForm.address.value = 'Johannisplatz 16';
-    this.requestForm.zipCode.value = '99817';
-    this.requestForm.city.value = 'Eisenach';
-    this.requestForm.contact.value = 'Test Contact';
+    this.requestForm.address.value = '';
+    this.requestForm.zipCode.value = '';
+    this.requestForm.city.value = '';
+    this.requestForm.contact.value = '';
 
     this.checkSending();
     this.listeners.push(dispatchers.requestIdentificationDispatcher
       .watch(async ($event) => {
         // if dispatcher has finished loading, reload the data
         if ($event.detail.status === 'finished') {
-          this.status = 2;
+          this.status = 3;
           this.sending = false;
           triggerRequestReload(this.$route.params.address);
         }
       }));
+  }
+
+  /**
+   * Update status, when clicked in step component
+   *
+   * @param step
+   */
+  updatestep(step: number) {
+    this.status = step;
   }
 
   /**
@@ -169,7 +227,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Send the request identification b-mail, so the process will be triggered.
+   * Send the request verification b-mail, so the process will be triggered.
    */
   requestIdentification() {
     this.sending = true;
@@ -180,13 +238,15 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.requestForm.country.value,
       organizationEvanId: (<any>this).getRuntime().activeAccount,
-      organizationRegistration: this.requestForm.regNumber.value,
-      organizationName: this.requestForm.company.value,
+      court: this.requestForm.court.value,
+      organizationRegistration: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
+      registrationNumber: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
+      organizationName: this.requestForm.organization.value,
       organizationStreetAddress: this.requestForm.address.value,
       organizationZipCode: this.requestForm.zipCode.value,
     };
 
-    // send the identification request
+    // send the verification request
     dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
       mail: {
         title: (<any>this).$i18n.translate('_org.ident.notary.request.mail.title'),

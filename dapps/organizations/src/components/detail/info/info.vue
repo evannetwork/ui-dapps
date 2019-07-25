@@ -31,30 +31,30 @@
       :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
-          {{ `_org.breadcrumbs.identification` | translate }}
+          {{ `_org.breadcrumbs.verification` | translate }}
         </h5>
       </template>
       <template v-slot:body>
         <div class="text-justify">
           <div v-if="$i18n.locale() === 'de'">
             <p>
-              Eine Identifizierung über eine dritte unabhängige Instanz erhöht das Vertrauen, dass hinter ihrem digitalen Unternehmensaccount eine tatsächlich existierende, juristische Person ist. Somit ist es möglich eine vertrauensvolle, geschäftliche Beziehung aufzubauen.
+              Eine Verifikation über eine dritte unabhängige Instanz erhöht das Vertrauen, dass hinter Ihrem digitalen Unternehmensaccount eine tatsächlich existierende, juristische Person ist. Somit ist es möglich eine vertrauensvolle, geschäftliche Beziehung aufzubauen.
             </p>
 
             <p class="mt-5">
-              <b>Schritte zur Identifikation Ihres Unternehmensaccounts:</b>
+              <b>Schritte zur Verifikation Ihres Unternehmensaccounts:</b>
             </p>
 
             <p class="ml-3">
-              1. Sie beantragen eine notarielle Identifikation, in dem Sie auf den entsprechenden Button klicken und Ihre offizielle Unternehmensadresse eingeben.
+              1. Sie beantragen eine notarielle Verifikation, in dem Sie auf den entsprechenden Button klicken und Ihre offizielle Unternehmensadresse eingeben.
             </p>
 
             <p class="ml-3">
-              2. Im Rahmen der Zwei-Faktor-Identifizierung erhalten Sie eine PIN vom zuständigen Notar und generieren ein Dokument mit einen Bestätigungscode, welches Sie an den anfragenden Notar zurücksenden.
+              2. Im Rahmen der Zwei-Faktor-Verifizierung erhalten Sie eine PIN vom zuständigen Notar und generieren ein Dokument mit einen Bestätigungscode, welches Sie an den anfragenden Notar zurücksenden.
             </p>
 
             <p>
-              Notariell beurkundet wird die Tatsache, dass der vom Unternehmen erhaltene Bestätigungscode mit dem vom evan.Network automatisch generierten und an den Notar versendeten Antwortabgleich übereinstimmt.
+              Notariell beurkundet wird die Tatsache, dass der vom Unternehmen erhaltene Bestätigungscode mit dem vom evan.network automatisch generierten und an den Notar versendeten Antwortabgleich übereinstimmt.
             </p>
 
             <p>
@@ -62,52 +62,52 @@
             </p>
 
             <p>
-              Die Veröffentlichung erfolgt mittels Hinterlegung einer speziellen ID im evan.Network. Die Berechtigung zur Einsichtnahme durch einen bestimmten oder generellen Personenkreis kann nur von dem unterzeichnenden Unternehmen mittels einer Funktion im Netzwerk erteilt werden.
+              Die Veröffentlichung erfolgt mittels Hinterlegung einer speziellen ID im evan.network. Die Berechtigung zur Einsichtnahme durch einen bestimmten oder generellen Personenkreis kann nur von dem unterzeichnenden Unternehmen mittels einer Funktion im Netzwerk erteilt werden.
             </p>
 
             <p class="mt-5">
-              <b>Für diesen Service der notariellen Identifikation wird Ihr Wallet einmalig mit 150 EVE belastet.</b>
+              <b>Für diesen Service der notariellen Verifikation wird Ihr Wallet einmalig mit 200 EVE belastet.</b>
             </p>
 
             <p>
-              Die notarielle Identifikation ist nicht an ein Ablaufdatum gebunden.
+              Die notarielle Verifikation ist nicht an ein Ablaufdatum gebunden.
             </p>
           </div>
           <div v-else>
             <p>
-              Identification through a third party independent authority increases the confidence that behind your digital corporate account is a real existing legal entity. This makes it possible to build a trusting business relationship.
+              Verification through a third party independent authority increases the confidence that behind your digital corporate account is a real existing legal entity. This makes it possible to build a trusting business relationship.
             </p>
 
             <p class="mt-5">
-              <b>Steps for the identification of your company account:</b>
+              <b>Steps for the verification of your organization account:</b>
             </p>
 
             <p class="ml-3">
-              1. you apply for a notarial identification by clicking on the corresponding button and entering your official company address.
+              1. you apply for a notarial verification by clicking on the corresponding button and entering your official organization address.
             </p>
 
             <p class="ml-3">
-              2. As part of two-factor identification, you receive a PIN from the notary responsible and generate a document with a confirmation code, which you send back to the requesting notary.
+              2. As part of two-factor verification, you receive a PIN from the notary responsible and generate a document with a confirmation code, which you send back to the requesting notary.
             </p>
 
             <p>
-              Notarized is the fact that the confirmation code received from the company is the same as the response match automatically generated by the evan.network and sent to the notary.
+              Notarized is the fact that the confirmation code received from the organization is the same as the response match automatically generated by the evan.network and sent to the notary.
             </p>
 
             <p>
-              In agreement with evan GmbH, the subscribing company declares its consent to publish the data used in the context of this verification request electronically.
+              In agreement with evan GmbH, the subscribing organization declares its consent to publish the data used in the context of this verification request electronically.
             </p>
 
             <p>
-              The publication takes place by depositing a special ID in the evan.network. The authorisation for inspection by a certain or general group of persons can only be granted by the signing company by means of a function in the network.
+              The publication takes place by depositing a special ID in the evan.network. The authorisation for inspection by a certain or general group of persons can only be granted by the signing organization by means of a function in the network.
             </p>
 
             <p class="mt-5">
-              <b>For this service of notarial identification your wallet will be charged once with 150 EVE. </b>
+              <b>For this service of notarial verification your wallet will be charged once with 200 EVE. </b>
             </p>
 
             <p>
-              The notarial identification is not bound to an expiration date.
+              The notarial verification is not bound to an expiration date.
             </p>
           </div>
         </div>

@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.3.0"
+        "evancore.vue.libs": "^1.2.4"
       },
       "entrypoint": "dashboard.vue.js",
       "files": [
         "dashboard.vue.js"
       ],
-      "origin": "QmeVGLfHwzxrgGx9cnwf2FMJxPRTNY7hpFzbBM1MwaVm45",
+      "origin": "QmR5Q1dEV5BwmiJTvgYUAPFK1ZneKK9koFkt1mNKkTnCZY",
       "primaryColor": "#64c6c1",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -35,7 +35,7 @@
       "evan",
       "library"
     ],
-    "version": "3.2.0",
+    "version": "3.1.0",
     "versions": {
       "0.1.0": "QmRb9kLp9h2iuwuCRrJSndMAsXBnTi1ZtffBdNG9Ue8aiU",
       "0.9.0": "Qmbghjv6wRMMybvTcEcsPKKsRvQxWQjJEcLcB6oeBc1Rwo",
@@ -47,8 +47,7 @@
       "1.3.0": "QmPA3ofSY4ZwdmiZbZrw1vf1WtVRZduhT2U9dWyXtMfnR7",
       "1.5.0": "QmXwbevvyD1fcPbWwVFUQi7sX2qUzC7CXRqUtZEzYpCw9X",
       "3.0.0": "QmXq76xeaLfXwkWTyo1KdvwzGAt5hEF2BPHVrcksXoRHpe",
-      "3.1.0": "QmZfZshF6kqpZArYB3e86rzrDxA3aWZtRbwydwQbFkPWyR",
-      "3.2.0": "QmU5K9HHtRttzkgxcSwxwb1NBynGtAgFPDvFLQQiAbq5eK"
+      "3.1.0": "QmXCsXgkY4kNta3QgsLb3oC3gX4QeQwoxz1awM7w1U4kF3"
     }
   }
 }

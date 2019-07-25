@@ -61,14 +61,29 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    * received answer for the provided pin
    */
   answer: string = null;
+
+  /**
+   * stored blob url for pdf
+   */
   pdfUrl = '';
+
+  /**
+   * private iframe for printing pdf directly
+   */
+  _printIframe;
+
+
+  /**
+   * show formular or accept view
+   */
+  status = 0;
 
   async created() {
     this.pinForm = (<PinFormInterface>new EvanForm(this, {
       pin: {
         value: '',
         validate: function(vueInstance: IdentNotaryPinComponent, form: PinFormInterface) {
-          return this.value.trim().length === 0 ? 'error' : true;
+          return /^\d{6}$/.test(this.value) ? true : 'error';
         }
       }
     }));
@@ -101,12 +116,33 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       const url = window.URL.createObjectURL(answerResponse);
       this.answer = 'NICE CODE';
       this.pdfUrl = url;
+
       triggerRequestReload(this.$route.params.address);
+      this.status = 1;
     } catch (ex) {
       console.dir(ex)
       this.pinForm.pin.error = 'error2';
     }
 
     this.checkingPin = false;
+  }
+
+  /**
+   * prints a given blob pdf url with the dialog
+   */
+  printPdf() {
+    if (!this._printIframe) {
+      this._printIframe = document.createElement('iframe');
+      document.body.appendChild(this._printIframe);
+
+      this._printIframe.style.display = 'none';
+      this._printIframe.onload = () => {
+        setTimeout(() => {
+          this._printIframe.focus();
+          this._printIframe.contentWindow.print();
+        }, 1);
+      };
+    }
+    this._printIframe.src = this.pdfUrl;
   }
 }

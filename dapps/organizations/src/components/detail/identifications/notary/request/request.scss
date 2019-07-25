@@ -1,0 +1,30 @@
+@function cssVar($name) {
+  @return var(--evan-#{$name});
+}
+
+.modal .modal-dialog .modal-content {
+  padding: 0 3rem;
+  max-height: calc(90vh - 140px - 32px);
+  overflow-y: auto;
+
+  .step {
+    display: inline-block;
+    margin-top: 1em;
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  /deep/ em, .emphasized {
+    color: cssVar('dark');
+    font-style: normal;
+  }
+}
+
+/* move to general styles? */
+.btn.btn-rounded i.mdi-arrow-left {
+  margin-left: -10px;
+  background: transparent;
+  border: 1px solid #fff;
+}

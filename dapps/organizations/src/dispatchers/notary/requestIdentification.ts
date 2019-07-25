@@ -36,7 +36,7 @@ const dispatcher = new Dispatcher(
   `organizations.${ dappBrowser.getDomainName() }`,
   'requestIdentificationDispatcher',
   40 * 1000,
-  '_org.dispatchers.request-identification'
+  '_org.dispatchers.request-verification'
 );
 
 /**
