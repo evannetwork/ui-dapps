@@ -4,8 +4,14 @@
 ### Features
 - `dashboard.vue`
   - add new dashboard cards
+- `terms-of-use`
+  - add updated terms of use
+- `mailbox.vue`
+  - add new entry for accepting verifications
 
 ### Fixes
+- `organizations`
+  - update UI with additional feedback
 
 ### Deprecations
 
@@ -66,7 +72,7 @@
   - fix active tree entries
 - `favorites.vue`
   - add temporary lindig icon color invert
-  
+
 
 ## Version 3.3.1
 ### Features
@@ -209,7 +215,7 @@
 ## Version 2.1.0
 ### Features
 - use correct imports for evan.network projects (e.g. replace `import * as bcc from 'bcc'` with `import * as bcc from '@evan.network/api-blockchain-core;`)
-- support `iconic` and evan.network angular dapps wrapped in `.evan-angular` class 
+- support `iconic` and evan.network angular dapps wrapped in `.evan-angular` class
 - load terms of use from external `termsofuse.evan` dapp
 - onboarding
   - add `termsofuse` dapp
@@ -227,7 +233,7 @@
 - profile
   - new profile start page
   - send eve from profile
-  
+
 ### Fixes
 - dashboard
   - fix opening of standalone dapps from sidepanel
@@ -253,7 +259,7 @@
   - is now includable as a library
 - add missing dbcpVersion to dbcp files
 - add licenses to dbcp files
-  
+
 ### Fixes
 - addressbook
   - fix add account using accountId, when e-mail address is added
@@ -358,7 +364,7 @@
 ### Fixes
 - add AsyncComponent to handle correct async OnInit and OnDestroy methods
 - use lowercased ens addresses
-- add explorer to featured dapps 
+- add explorer to featured dapps
 - rename ui-core-dapps
 
 
