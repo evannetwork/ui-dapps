@@ -27,7 +27,7 @@
   "scripts": {
     "test-testnet": "env-cmd cucumber-js --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
     "test-testnet-only": "env-cmd cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
-    "test": "env-cmd -f .env.local cucumber-js --tags '@CORE-238' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
+    "test-local": "env-cmd -f .env.local cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
   },
   "version": "0.1.0"
 }

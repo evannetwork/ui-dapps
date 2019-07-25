@@ -2,25 +2,42 @@ import { client } from 'nightwatch-api';
 import { When, Then, Given } from 'cucumber';
 
 /**
- * Assures that a certain step has a certain state, like active or disabled.
+ * Assures that a certain step has a certain state, like active, enabled or disabled.
  */
 Then('step {int} should be {string}',
   async(step, statusType) => {
     const internalStep = step -1;
 
-    if (['active', 'disabled'].indexOf(statusType) === -1) {
-      throw new Error('Step should be "active" or "disabled"!');
-    }
-
     await client.waitForElementPresent('.evan-steps', 1000)
-    await client.assert.cssClassPresent(`#evan-container-create-step-${internalStep}`, statusType);
 
-    if (statusType === 'disabled') {
-      await client.assert.attributeEquals(
-        `#evan-container-create-step-${internalStep}`,
-        'disabled',
-        'true'
-      );
+    switch (statusType) {
+      case 'active':
+        await client.assert.cssClassPresent(`.evan-container-create-step-${internalStep}`, statusType);
+
+        break;
+      case 'disabled':
+        await client.assert.cssClassPresent(`.evan-container-create-step-${internalStep}`, statusType);
+        await client.expect.element(`.evan-container-create-step-${internalStep}`).to.have.attribute('disabled');
+
+        break;
+      case 'enabled':
+        await client.expect.element(`.evan-container-create-step-${internalStep}`).to.not.have.attribute('disabled');
+
+        break;
+      default:
+        throw new Error('Step should be "active", "enabled" or "disabled"!');
     }
+  }
+)
+
+/**
+ * Click on a certain step in the steps indicator.
+ */
+When('I click on step {int}',
+  async (step) => {
+    const internalStep = step -1;
+
+    // await client.waitForElementPresent('.evan-steps', 1000)
+    await client.click(`.evan-container-create-step-${internalStep}`);
   }
 )

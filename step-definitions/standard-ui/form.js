@@ -2,29 +2,50 @@ import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
 
 /**
- * Assures that the modal is open and has a certain title set.
+ * Looks for an input field with sibling label having certain content and fills the values into the input field.
+ */
+When('I set Input field with label {string} to {string}',
+  async(label, content) => {
+    client.useXpath();
+    const xPathSelector = `//label[normalize-space(text()) = '${label}']/following-sibling::input`;
+
+    await client.expect.element(xPathSelector).to.be.visible;
+    await client.clearValue(xPathSelector);
+    await client.setValue(xPathSelector, content);
+    client.useCss();
+  }
+)
+
+/**
+ * Assures that a certain amount of input fields is visible.
  */
 Then('{int} input fields should be visible',
   async(count) => {
-    await client.waitForElementPresent('input', 1000)
+    if (count === 0) {
+      return client.expect.elements('input').count.to.equal(count);
+    }
 
+    await client.waitForElementPresent('input', 1000)
     await client.expect.elements('input').count.to.equal(count);
   }
 )
 
 /**
- * Assures that the modal is open and has a certain title set.
+ * Assures that a certain amount of select fields is visible.
  */
 Then('{int} select fields should be visible',
   async(count) => {
-    await client.waitForElementPresent('select', 1000)
+    if (count === 0) {
+      return client.expect.elements('input').count.to.equal(count);
+    }
 
+    await client.waitForElementPresent('select', 1000)
     await client.expect.elements('select').count.to.equal(count);
   }
 )
 
 /**
- * Assures that the modal is open and has a certain title set.
+ * Assures that an input field beside a certain label fields is visible.
  */
 Then('Input field with label {string} should be visible',
   async(label) => {
@@ -37,7 +58,8 @@ Then('Input field with label {string} should be visible',
 )
 
 /**
- * Assures that the modal is open and has a certain title set.
+ * Assures that many input fields beside a certain labels are visible.
+ * - labels should be seperated by pipes 'Label1|Label2'.
  */
 Then('Input fields with labels {string} should be visible',
   async(labels) => {

@@ -17,7 +17,7 @@ When('I click on button {string}',
 );
 
 /**
- * Asserts that a button with a certain content is visible witihn 10 seconds.
+ * Asserts that a button with a certain content is visible within 10 seconds.
  */
 Then('I want to see a button {string}',
   async (content) => {
@@ -34,21 +34,28 @@ Then('I want to see a button {string}',
 
 
 /**
- * Assures that the modal is open and has a certain title set.
+ * Assures that an element with .btn class has a certain state.
  */
-Then('button {string} should be {string}',
-  async(step, statusType) => {
-    const internalStep = step -1;
+Then('the button {string} should be {string}',
+  async(content, statusType) => {
+    client.useXpath();
 
-    await client.waitForElementPresent('.evan-steps', 1000)
-    await client.assert.cssClassPresent(`#evan-container-create-step-${internalStep}`, statusType);
+    const xPathSelector = `//*[contains(@class, 'btn') and normalize-space(text()) = '${content}']`;
+    await client.waitForElementPresent(xPathSelector, 10 * 1000);
+    await client.assert.visible(xPathSelector);
 
-    if (statusType === 'disabled') {
-      await client.assert.attributeEquals(
-        `#evan-container-create-step-${internalStep}`,
-        'disabled',
-        'disabled'
-      );
+    switch (statusType) {
+      case 'disabled':
+        await client.expect.element(xPathSelector).to.have.attribute('disabled');
+
+        break;
+      case 'enabled':
+      case 'clickable':
+          await client.expect.element(xPathSelector).to.not.have.attribute('disabled');
+
+        break;
+      default:
+        throw new Error(`Button can not be tested for ${statusType}`)
     }
   }
 )
