@@ -82,7 +82,6 @@ import {
   ]
 })
 
-
 /**
  * Buy eves with credit cards component
  *
@@ -93,6 +92,9 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * current used active account id
    */
   private activeAccount: string;
+
+  private PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
+  private PAYMENT_RETRY = 5000; // 5 seconds
 
   /**
    * show an loading symbol
@@ -151,6 +153,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * holds error messages for credit card errors from stripe
    */
   public cardErrorMessage: string;
+
+  /**
+   * holds the url to the sepa mandate from stripe if the user paid via sepa debit
+   */
+  public sepaMandateUrl: string;
 
   /**
    * bool value if an error exists
@@ -422,7 +429,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               type: 'vat'
             }
           }
-          console.log('Payment initated!', source);
+          console.log('Payment initiated!', source);
           const activeAccount = this.core.activeAccount();
           const toSignedMessage = this.bcc.web3.utils
             .soliditySha3(new Date().getTime() + activeAccount)
@@ -446,6 +453,10 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
           };
 
           this.paymentRunning = false;
+
+          if (source.sepa_debit && source.sepa_debit.mandate_url) {
+            this.sepaMandateUrl = source.sepa_debit.mandate_url;
+          }
 
           this.ref.detectChanges();
         } else if (result.error) {
@@ -527,7 +538,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
             reject(response);
           }
-        }, 5000)
+        }, this.PAYMENT_RETRY)
       })
     };
 
@@ -538,7 +549,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
           setTimeout(() => {
             clearInterval(intervalTimer);
             reject(new Error('timeout for payment'));
-          }, 1000 * 30 * 10)
+          }, this.PAYMENT_TIMEOUT)
       )
     ]);
   }
