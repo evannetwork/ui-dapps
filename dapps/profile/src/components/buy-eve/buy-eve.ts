@@ -454,8 +454,8 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
 
           this.paymentRunning = false;
 
-          if (source.sepa_debit && source.sepa_debit.mandate_url) {
-            this.sepaMandateUrl = source.sepa_debit.mandate_url;
+          if ((<any>source).sepa_debit && (<any>source).sepa_debit.mandate_url) {
+            this.sepaMandateUrl = (<any>source).sepa_debit.mandate_url;
           }
 
           this.ref.detectChanges();
