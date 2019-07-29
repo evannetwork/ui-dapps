@@ -232,11 +232,15 @@
                   [(ngModel)]="payEve.vat"
                   [placeholder]="'_dappprofile.pay-eve.vat.description' | translate"
                   (ionChange)="ref.detectChanges()"
-                  (focusout)="ref.detectChanges()">
+                  (focusout)="ref.detectChanges(); validateVat(payEve.vat);"
+                >
                 </ion-input>
               </ion-item>
               <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'vat')" color="danger">
                 <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
+              </ion-chip>
+              <ion-chip class="error-hint" *ngIf="payEve.vat && !isValidVat" color="danger">
+                <ion-label>{{ '_dappprofile.pay-eve.vat.invalid' | translate }}</ion-label>
               </ion-chip>
             </ion-col>
           </ion-row>

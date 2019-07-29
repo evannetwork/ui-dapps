@@ -150,7 +150,8 @@ export const en = {
       },
       "vat": {
         "title": "VAT",
-        "description": "DE99999999999"
+        "description": "DE99999999999",
+        "invalid": "The VAT number could not be validated."
       },
       "amount": {
         "title": "Amount of EVE Tokens",
@@ -159,7 +160,6 @@ export const en = {
       "input": {
         "error": "This field is required!",
         "errorAmount": "At least 10 EVE must be purchased!"
-
       },
       "card": {
         "title": "Card number"
@@ -183,9 +183,9 @@ export const en = {
         "too_many_accounts": "Submitted email already has too many accounts registered for it. <b>Your card was NOT debited!</b> Please contact our customer support.",
         "wallet_not_enough_funds": "Wallet does not have enough funds to execute payment. <b>Your card was NOT debited!</b> Please try again later."
       },
-      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.<br />The amount will be credited in the next minutes to your wallet.",
+      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.<br />The amount will be credited in the next 5 to 10 minutes to your wallet.",
       "sepa-acceptance": "By providing your IBAN and confirming this payment, you are authorizing Evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.",
-      "processing-hint": "Processing payment, this may take a few minutes",
+      "processing-hint": "Processing payment, this may take a 3 to 5 minutes",
       "review-sepa": "You can review the SEPA mandate here."
     },
     "private-key": "Private Key",

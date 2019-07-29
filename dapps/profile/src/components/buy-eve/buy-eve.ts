@@ -24,7 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
 import {
   getDomainName,
   lightwallet,
@@ -168,6 +167,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * holds error messages for sepa card errors from stripe
    */
   public ibanErrorMessage: string;
+
+  /**
+   * do we have a valid VAT Number?
+   */
+  public isValidVat: boolean = true;
 
   /**
    * stripe optiosn for card or iban elements
@@ -484,6 +488,34 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
     ];
 
     return translatedCodes.indexOf(code) !== -1 ? code : 'unknown_state';
+  }
+
+  /**
+   * Checks VAT number against backend.
+   *
+   * @param vat
+   */
+  public async checkVat(vat: string) {
+    if (!vat) {
+      return false;
+    }
+
+    const {status, result} = (await this.http
+      .get(`${ this.agentUrl }/smart-agents/payment-processor/checkVat?vat=${vat}`)
+      .toPromise()
+    ).json();
+
+    return status === 'success' && result === true;
+  }
+
+  /**
+   * Validate VAT number and update UI.
+   *
+   * @param vat
+   */
+  public async validateVat(vat: string) {
+    this.isValidVat = await this.checkVat(vat);
+    this.ref.detectChanges();
   }
 
   /**
