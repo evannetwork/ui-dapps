@@ -9,7 +9,7 @@ Scenario: Requesting Notary Verification for current user
   When I click on link to "My Account"
     Then I want to see a button "Request Notary Verification"
 
-  # Oben the notary verification modal and go to next step and fill the form
+  # Open the notary verification modal and go to next step and fill the form
   When I click on button "Request Notary Verification"
     Then I want to see a modal with the title "Notary Verification"
     And I want to see a button "Next"
