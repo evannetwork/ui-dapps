@@ -54,6 +54,7 @@
               v-model="pinForm.pin.value"
               :class="{ 'is-invalid' : pinForm.pin.error }"
               @blur="pinForm.pin.setDirty()"
+              autofocus
             >
             <div class="invalid-feedback col-xs-12">
               {{ `_org.ident.notary.pin.pin.${ pinForm.pin.error }` | translate }}
@@ -73,6 +74,9 @@
             <p class="mt-3 mb-0">
               {{ '_org.ident.notary.pin.confirmation-code-desc' | translate }}
             </p>
+            <p>
+              <a :href="pdfUrl" target="_blank" rel="noopener norefferer">Download pdf</a>
+            </p>
           </div>
         </div>
       </template>
@@ -89,12 +93,13 @@
         </div>
         <div id="answer-success-btn" v-if="status === 1">
           <a class="btn btn-primary btn-rounded"
+            :href="hasFailedPrinting ? pdfUrl : null"
             id="ident-pin-print"
             target="_blank"
             :class="{
               'disabled': !answer
             }"
-            @click="printPdf()">
+            @click="!hasFailedPrinting && printPdf()">
             {{ `_org.ident.notary.print` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </a>

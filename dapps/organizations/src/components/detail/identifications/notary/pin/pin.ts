@@ -68,6 +68,11 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   pdfUrl = '';
 
   /**
+   *  Did we get any errors trying to initiate the print dialogue?
+   */
+  hasFailedPrinting = false
+
+  /**
    * private iframe for printing pdf directly
    */
   _printIframe;
@@ -133,16 +138,33 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   printPdf() {
     if (!this._printIframe) {
       this._printIframe = document.createElement('iframe');
+      this._printIframe.src = this.pdfUrl;
+      this._printIframe.style.display = 'none';
+
       document.body.appendChild(this._printIframe);
 
-      this._printIframe.style.display = 'none';
-      this._printIframe.onload = () => {
-        setTimeout(() => {
-          this._printIframe.focus();
-          this._printIframe.contentWindow.print();
-        }, 1);
+      const print = () => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              this._printIframe.focus();
+              this._printIframe.contentWindow.print();
+
+              resolve(true);
+            } catch(e) {
+              reject(e);
+            }
+          }, 1);
+        })
+      }
+
+      this._printIframe.onload = async () => {
+        await print().catch(() => {
+          window.open(this.pdfUrl);
+
+          this.hasFailedPrinting = true;
+        })
       };
     }
-    this._printIframe.src = this.pdfUrl;
   }
 }
