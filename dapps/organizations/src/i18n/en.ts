@@ -46,9 +46,9 @@ const i18n: any = {
       },
       "notary": {
         "step": {
-          "overview": "overview",
           "your_data": "your data",
           "summary": "summary",
+          "costs": "costs",
         },
         "account-id": "Account-ID",
         "info": "Identify your account to be a trusted evan.network member",
@@ -90,39 +90,35 @@ const i18n: any = {
         "print": "Print",
         "request": {
           "why": {
-            "title": "TODO: Warum eine Notarielle Verifikation",
-            "intro": "TODO: Mit einer notariellen Verifikation können Ihre Geschäftspartner sicher sein, dass ...",
-            "advantages": [
-              "TODO: ihr Account von <em>Ihnen</em> und nicht von einem Dritten betrieben wird.",
-              "TODO: Ihre Firma im <em>Handelsregister</em> eingetragen ist.",
-              "TODO: sie mit <em>vertrauenswürdigen Partnern</em> arbeiten."
-            ]
+            "title": "Advantages",
+            "description": "The notarial verification confirms that your company has the account ID {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
+            "link": "read more"
+          },
+          "who": {
+            "title": "Prerequisites",
+            "description": "As a registered company you can request a notarial verification of your account.",
+            "link": "read more"
           },
           "how": {
-            "title": "TODO: Wie wird Notariell Verifiziert?",
-            "intro": "TODO: Die notarielle Verifikation Ihres Accounts erfolgt durch eine notarielle Überprüfung des Handelsregisters sowie einer notariellen Zwei-Faktor-Authentifizierung. Somit bietet diese Form der Account-Verifizierung die höchste Sicherheit im evan.network.",
+            "title": "Steps",
             "steps": {
               "1": {
-                "title": "TODO: Beantragen Sie Ihre Verifikation",
-                "question": "TODO: Was brauche ich dafür?"
+                "title": "1st step: Request",
+                "description": "Enter the commercial register number, register court, your address and a contact person."
               },
               "2": {
-                "title": "TODO: Warten Sie auf die Aufforderung des Notars",
-                "question": "TODO: Wie lange dauert es, bis ich die Aufforderung erhalte?"
+                "title": "2nd Step: Authenticate",
+                "description": "You will receive a PIN by letter. Use this to generate the confirmation document and send it signed to the inquiring notary."
               },
               "3": {
-                "title": "TODO: Übersenden Sie Ihren Bestätigungscode dem Notar",
-                "question": "TODO: Wie erhalte ich meinen Bestätigungscode?"
-              },
-              "4": {
-                "title": "TODO: Erhalten und bestätigen Sie die notarielle Verifikation",
-                "question": "TODO:  An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?"
+                "title": "3rd Step: Accept",
+                "description": "If the notarial verification is successful, you will be notified. Accept the verification as the last step."
               }
             }
           },
           "costs": {
-            "title": "TODO: Was kostet eine Notarielle Verifikation?",
-            "intro": "TODO: Für die Ausstellung einer notariellen Verifikation wird Ihr Wallet mit 200 EVE belastet."
+            "title": "Costs",
+            "description": "The transaction costs for notarial verification are 200 EVE. Your wallet will be debited with this amount."
           },
           "step": "Step",
           "address": {
@@ -131,13 +127,8 @@ const i18n: any = {
             "title": "Address"
           },
           "back": "Go back",
-          "city": {
-            "desc": "Enter city name",
-            "error": "Please enter a city.",
-            "title": "City"
-          },
           "organization": {
-            "desc": "Enter organization name",
+            "desc": "Organization name",
             "error": "Please enter a organization name",
             "title": "Organization"
           },
@@ -170,9 +161,9 @@ const i18n: any = {
             "germany": "Germany"
           },
           "country": {
-            "desc": "Enter country name",
-            "error": "Please enter a country",
-            "title": "Country"
+            "desc": "Company headquarters country",
+            "error": "Please select the company headquartes country",
+            "title": "Company headquarters country"
           },
           "description": "Please fill in the formular to request a notary verification of your organisation. This service is subject to a fee.",
           "header": "Notary Verification",
@@ -182,37 +173,32 @@ const i18n: any = {
           },
           "next": "Next",
           "postal-address": "Postal Address",
-          "proof": {
-            "contact-is": "Contact person is",
-            "footer": "Notary verification is subject to a fee.",
-            "footer2": "Your wallet will be charged 200 EVE.",
-            "for-org": "For the organization",
-            "question-desc": "To complete the notary verification, you will receive a password for the attention of the following person.",
-            "title": "Please check all information.",
-            "with-reg-number": "with the commercial register number",
-            "you-request": "You request one",
-            "you-request-2": "Notary Verification"
-          },
-          "regNumber": {
-            "desc": "Enter Commercial Register Number",
-            "error": "Please enter a correct commercial register number",
-            "title": "Commercial Register Number"
-          },
-          "request-ident": "Request",
-          "requested1": "You have successfully applied for a Notary Verification for your organization.",
-          "requested2": "Your wallet has been charged 200 EVE.",
-          "requesting": "Notary verification is requested...",
           "zipCode": {
-            "desc": "Enter Postcode",
+            "desc": "Postcode",
             "error": "Please enter a valid post code",
             "title": "Postcode"
-          }
+          },
+          "city": {
+            "desc": "City",
+            "error": "Please enter a city.",
+            "title": "City"
+          },
+          "proof": {
+            "description": "To complete the notary verification, you will receive a PIN via Mail from a notary to attention of the following person.",
+            "title": "Please check all information.",
+          },
+          "request-ident": "Request",
+          "request-verification": "Request notary verification",
+          "requested1": "You have successfully applied for a Notary Verification for your organization.",
+          "requested2": "Your wallet has been charged 200 EVE.",
+          "requested3": "You will receive a Mail from a notary soon.",
+          "requesting": "Notary verification is requested...",
         },
         "status": {
-          "accepted": "notarially identified",
+          "accepted": "notarially verified",
           "confirming": "under review",
           "forwarding": "is processed by the provider",
-          "issued": "notarially identified",
+          "issued": "notarially verified",
           "requested": "requested",
           "title": "Verification",
           "unknown": "no verification"
@@ -227,7 +213,7 @@ const i18n: any = {
         "title": "Notary Verification",
         "verification": {
           "accept": "Accept",
-          "organization": "Organization-Identitfication",
+          "organization": "Organization-Verification",
           "organization-random": "Organization-ID-Verification",
           "incorrect": "The organization IDs issued to you were not created by the correct instance.",
           "status": "Status"

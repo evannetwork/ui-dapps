@@ -29,6 +29,7 @@
   <div>
     <evan-modal
       ref="requestModal"
+      :hideFooterButton="status === -1"
       :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
@@ -37,43 +38,42 @@
       </template>
       <template v-slot:body>
         <div id="request-verification-modal" class="modal-content">
+          <!-- steps indicator -->
           <steps-indicator
+            v-if="status >= 0 && status < 3"
             :steps="steps"
             :active-step="status"
             @updatestep="updatestep"
           ></steps-indicator>
-          <div class="text-center"
-            id="request-verification-loading"
-            v-if="sending">
-            <evan-loading></evan-loading>
-            <h5>{{ '_org.ident.notary.request.requesting' | translate }}</h5>
-          </div>
-          <div id="ident-desc"
-            v-else-if="status === 0"
-          >
 
+          <!-- Verification start info -->
+          <div id="ident-desc" v-if="status === -1">
             <h4>{{'_org.ident.notary.request.why.title' | translate}}</h4>
-            <span class="mb-4">{{'_org.ident.notary.request.why.intro' | translate}}</span>
-            <p v-for="(advantage, idx) in $t('_org.ident.notary.request.why.advantages')" :key="idx" class="step">
-              <span class="ml-4 bold" v-html="`__${advantage}`"></span>
+            <p class="mb-4">{{ $t('_org.ident.notary.request.why.description', { accountId: $route.params.address }) }}
+              <a href="TODO:" class="text-link">{{'_org.ident.notary.request.why.link' | translate}}</a>
+            </p>
+
+            <h4>{{'_org.ident.notary.request.who.title' | translate}}</h4>
+             <p class="mb-4">{{'_org.ident.notary.request.who.description' | translate}}
+              <a href="TODO:" class="text-link">{{'_org.ident.notary.request.who.link' | translate}}</a>
             </p>
 
             <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
-            <span class="mb-4">{{'_org.ident.notary.request.how.intro' | translate}}</span>
-            <!-- <p v-for="(step, idx) in $t('_org.ident.notary.request.how.steps')" :key="idx" class="step"
-            > -->
-            <p v-for="(key) in ['1', '2', '3', '4']" :key="key" class="step">
-              <span class="ml-4 bold emphasized">{{'_org.ident.notary.request.step' | translate}} {{key}}: </span>
-              <span class="bold">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</span><br />
-              <!--<a class="ml-4" href="#">{{`_org.ident.notary.request.how.steps.${key}.question` | translate}}</a>-->
-            </p>
+            <div class="row row-eq-height">
+              <div v-for="(key) in ['1', '2', '3']" :key="key" class="step col-md-4">
+                <div>
+                  <h5 class="bold bold emphasized">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</h5>
+                  <p>{{`_org.ident.notary.request.how.steps.${key}.description` | translate}}</p>
+                </div>
+              </div>
+            </div>
 
             <h4 class="mt-4 mb-4">{{'_org.ident.notary.request.costs.title' | translate}}</h4>
-            <span class="mb-4">{{'_org.ident.notary.request.costs.intro' | translate}}</span>
-
+            <p class="mb-4">{{'_org.ident.notary.request.costs.description' | translate}}</p>
           </div>
-          <div id="ident-formular"
-            v-else-if="status === 1">
+
+          <!-- request verification form -->
+          <div id="ident-formular" v-else-if="status === 0">
             <div class="form-group">
               <label for="organization">
                 {{ `_org.ident.notary.request.organization.title` | translate }} *
@@ -230,82 +230,57 @@
                 </div>
               </div>
             </div>
-
           </div>
-          <div id="ident-accept"
-            v-else-if="status === 2">
+
+          <!-- approval screen -->
+          <div id="ident-accept" v-else-if="status === 1">
             <p>{{ '_org.ident.notary.request.proof.title' | translate }}</p>
+            <labeled-list :entries="approveData" />
+            <p>{{ '_org.ident.notary.request.proof.description' | translate }}</p>
+            <labeled-list :entries="approveAddress" hideLabel hideEmpty/>
+          </div>
 
-            <div class="my-5 px-3">
-              <div class="row">
-                <div class="col-6">
-                  <span>{{ '_org.ident.notary.request.proof.you-request' | translate }}</span>
-                </div>
-                <div class="col-6">
-                  <b>{{ '_org.ident.notary.request.proof.you-request-2' | translate }}</b>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-6">
-                  <span>{{ '_org.ident.notary.request.proof.for-org' | translate }}</span>
-                </div>
-                <div class="col-6">
-                  <b>{{ requestForm.organization.value }}</b>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-6">
-                  <span>{{ '_org.ident.notary.request.proof.with-reg-number' | translate }}</span>
-                </div>
-                <div class="col-6">
-                  <b>{{ requestForm.court.value }} {{ requestForm.register.value }} {{ requestForm.registerNumber.value }}</b>
-                </div>
-              </div>
-            </div>
-
-            <p>{{ '_org.ident.notary.request.proof.question-desc' | translate }}</p>
-            <div class="my-5 px-3">
-              <div class="row">
-                <div class="col-6">
-                  <span>{{ '_org.ident.notary.request.proof.contact-is' | translate }}</span>
-                </div>
-
-                <div class="col-6">
-                  <b class="d-block">{{ requestForm.contact.value }}</b>
-                  <b class="d-block">{{ requestForm.address.value }}</b>
-                  <b class="d-block">
-                    {{ requestForm.zipCode.value }}
-                    {{ requestForm.city.value }},
-                    {{ `_org.ident.notary.request.countries.${ requestForm.country.value }` | translate }}
-                  </b>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-3 text-center">
-              <p>{{ '_org.ident.notary.request.proof.footer' | translate }}</p>
-              <h5 class="font-weight-bold">{{ '_org.ident.notary.request.proof.footer2' | translate }}</h5>
+          <!-- approve costs screen -->
+          <div id="ident-accept" v-else-if="status === 2">
+            <p>{{ '_org.ident.notary.request.costs.hint' | translate }}</p>
+            <div class="form-check text-center m-6">
+                <input id="costs-approval" type="checkbox" v-model="approvedCosts" class="form-check-input" required />
+                <label for="costs-approval" class="form-check-label">
+                  <h4>{{ '_org.ident.notary.request.costs.approve' | translate }}</h4>
+                </label>
             </div>
           </div>
+
+           <!-- loader-->
+          <div class="text-center"
+            id="request-verification-loading"
+            v-if="sending">
+            <evan-loading></evan-loading>
+            <h4>{{ '_org.ident.notary.request.requesting' | translate }}</h4>
+          </div>
+
+          <!-- success screen -->
           <div class="text-center"
             id="ident-requested"
             v-else-if="status === 3">
             <evan-success></evan-success>
-            <div class="p-5 mt-3">
-              <h5>{{ '_org.ident.notary.request.requested1' | translate }}</h5>
-              <h5 class="mt-3">{{ '_org.ident.notary.request.requested2' | translate }}</h5>
+            <div class="p-5 mt-3 text-center">
+              <p>{{ '_org.ident.notary.request.requested1' | translate }}</p>
+              <p class="mt-3">{{ '_org.ident.notary.request.requested2' | translate }}</p>
+              <p class="mt-3"><b>{{ '_org.ident.notary.request.requested3' | translate }}</b></p>
             </div>
           </div>
+
         </div>
       </template>
+
+
+
       <template v-slot:footer>
-        <span class="mx-auto"></span>
+        <span class="mx-auto" v-if="status !== -1"></span>
         <!-- back btn -->
-        <template v-if="status > 0 && status <= 2">
+        <template v-if="status >= 0 && status <= 2">
           <button
-            v-if="status > 0"
             type="button" class="btn btn-outline-primary btn-rounded"
             id="ident-request-back"
             @click="status -= 1">
@@ -314,11 +289,21 @@
           </button>
         </template>
 
+        <!-- start button -->
+         <template v-if="status === -1">
+          <button type="button" class="btn btn-primary btn-rounded mx-auto"
+            id="ident-request-start"
+            :disabled="(status === 1 && !requestForm.isValid) || sending"
+            @click="status += 1">
+            {{ `_org.ident.notary.request.request-verification` | translate }}
+          </button>
+        </template>
+
         <!-- next btn -->
-        <template v-if="status < 2">
+        <template v-if="status < 2 && status !== -1">
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-request-next"
-            :disabled="(status === 1 && !requestForm.isValid) || sending"
+            :disabled="(status === 0 && !requestForm.isValid) || sending"
             @click="status += 1">
             {{ `_org.ident.notary.request.next` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
@@ -327,9 +312,10 @@
 
         <!-- request ident btn -->
         <template v-if="status === 2">
-          <button type="button" class="btn btn-primary btn-rounded"
-            id="ident-request"
-            @click="requestIdentification()">
+          <button type="button" class="btn btn-primary btn-rounded" id="ident-request"
+            @click="requestIdentification()"
+            :disabled="!approvedCosts"
+          >
             {{ `_org.ident.notary.request.request-ident` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="sending"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
