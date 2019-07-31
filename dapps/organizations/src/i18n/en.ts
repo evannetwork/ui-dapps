@@ -118,7 +118,9 @@ const i18n: any = {
           },
           "costs": {
             "title": "Costs",
-            "description": "The transaction costs for notarial verification are 200 EVE. Your wallet will be debited with this amount."
+            "description": "The transaction costs for notarial verification are 200 EVE. Your wallet will be debited with this amount.",
+            "approve": "Yes, I request the notarized verification of the transaction cost of 200 EVE.",
+            "hint": "The request for a notarial verification is subject to a fee."
           },
           "step": "Step",
           "address": {
@@ -184,14 +186,14 @@ const i18n: any = {
             "title": "City"
           },
           "proof": {
-            "description": "To complete the notary verification, you will receive a PIN via Mail from a notary to attention of the following person.",
+            "description": "To complete the notary verification, you will receive a PIN by letter from a notary to attention of the following person.",
             "title": "Please check all information.",
           },
           "request-ident": "Request",
           "request-verification": "Request notary verification",
           "requested1": "You have successfully applied for a Notary Verification for your organization.",
           "requested2": "Your wallet has been charged 200 EVE.",
-          "requested3": "You will receive a Mail from a notary soon.",
+          "requested3": "You will receive a letter from a notary soon.",
           "requesting": "Notary verification is requested...",
         },
         "status": {
