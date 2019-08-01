@@ -50,12 +50,18 @@
           <div id="ident-desc" v-if="status === -1">
             <h4>{{'_org.ident.notary.request.why.title' | translate}}</h4>
             <p class="mb-4">{{ $t('_org.ident.notary.request.why.description', { accountId: $route.params.address }) }}
-              <a href="TODO:" class="text-link">{{'_org.ident.notary.request.why.link' | translate}}</a>
+              <a href="https://evannetwork.github.io/docs/first_steps/power_apps/notary-verification.html"
+                class="text-link" target="_blank" rel="noreferer noopener">
+                {{'_org.ident.notary.request.why.link' | translate}}
+              </a>
             </p>
 
             <h4>{{'_org.ident.notary.request.who.title' | translate}}</h4>
              <p class="mb-4">{{'_org.ident.notary.request.who.description' | translate}}
-              <a href="TODO:" class="text-link">{{'_org.ident.notary.request.who.link' | translate}}</a>
+              <a href="https://evannetwork.github.io/docs/first_steps/power_apps/notary-verification.html"
+                class="text-link" target="_blank" rel="noreferer noopener">
+                {{'_org.ident.notary.request.who.link' | translate}}
+              </a>
             </p>
 
             <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
