@@ -36,7 +36,7 @@
 
 <template>
   <div class="evan-steps" v-if="steps && steps.length !== 0">
-    <div class="evan-step-header mt-3">
+    <div class="evan-step-header mt-3 p-0">
         <button class="btn"
         v-for="(step, index) of steps"
         :class="{

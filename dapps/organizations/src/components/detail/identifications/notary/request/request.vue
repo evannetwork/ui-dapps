@@ -29,7 +29,7 @@
   <div>
     <evan-modal
       ref="requestModal"
-      :hideFooterButton="status === -1"
+      :hideFooterButton="status === -1 || status === 3"
       :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
@@ -233,7 +233,7 @@
           </div>
 
           <!-- approval screen -->
-          <div id="ident-accept" v-else-if="status === 1">
+          <div id="ident-accept" v-else-if="status === 1" class="mt-5">
             <p>{{ '_org.ident.notary.request.proof.title' | translate }}</p>
             <labeled-list :entries="approveData" />
             <p>{{ '_org.ident.notary.request.proof.description' | translate }}</p>
@@ -241,7 +241,7 @@
           </div>
 
           <!-- approve costs screen -->
-          <div id="ident-accept" v-else-if="status === 2">
+          <div id="ident-accept" v-else-if="status === 2 && !sending" class="mt-5">
             <p>{{ '_org.ident.notary.request.costs.hint' | translate }}</p>
             <div class="form-check text-center m-6">
                 <input id="costs-approval" type="checkbox" v-model="approvedCosts" class="form-check-input" required />
@@ -285,7 +285,7 @@
             id="ident-request-back"
             @click="status -= 1">
             <i class="mdi mdi-arrow-left label mr-3"></i>
-            {{ `_org.ident.notary.request.back` | translate }}
+            {{ `_org.ident.back` | translate }}
           </button>
         </template>
 
@@ -305,7 +305,7 @@
             id="ident-request-next"
             :disabled="(status === 0 && !requestForm.isValid) || sending"
             @click="status += 1">
-            {{ `_org.ident.notary.request.next` | translate }}
+            {{ `_org.ident.next` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
         </template>
@@ -322,6 +322,14 @@
           </button>
         </template>
 
+        <!-- final close button -->
+        <template v-if="status === 3">
+          <button type="button" class="btn btn-primary btn-rounded" id="ident-request"
+            @click="$refs.requestModal.hide()"
+          >
+            {{ `_org.ident.done` | translate }}
+          </button>
+        </template>
       </template><!-- eof footer -->
     </evan-modal>
   </div>
