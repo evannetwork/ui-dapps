@@ -36,6 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { getIdentificationDetails, getAnswer, triggerRequestReload } from '../notary.identifications';
+import { stringify } from 'querystring';
 
 interface PinFormInterface extends EvanForm {
   pin: EvanFormControl;
@@ -58,30 +59,39 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   pinForm: PinFormInterface = null;
 
   /**
-   * received answer for the provided pin
-   */
-  answer: string = null;
-
-  /**
    * stored blob url for pdf
    */
   pdfUrl = '';
-
-  /**
-   *  Did we get any errors trying to initiate the print dialogue?
-   */
-  hasFailedPrinting = false
 
   /**
    * private iframe for printing pdf directly
    */
   _printIframe;
 
-
   /**
    * show formular or accept view
    */
   status = 0;
+
+  /**
+   * Keeps track of the printing state
+   */
+  printStatus = 'initial';
+
+  steps = [
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.pin'),
+      disabled: false
+    },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.print'),
+      disabled: true
+    },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.send'),
+      disabled: true
+    },
+  ];
 
   async created() {
     this.pinForm = (<PinFormInterface>new EvanForm(this, {
@@ -119,7 +129,6 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       const runtime: bcc.Runtime = (<any>this).getRuntime();
       const answerResponse = await getAnswer(runtime, this.pinForm.pin.value.trim(), this.requestId)
       const url = window.URL.createObjectURL(answerResponse);
-      this.answer = 'NICE CODE';
       this.pdfUrl = url;
 
       triggerRequestReload(this.$route.params.address);
@@ -135,7 +144,15 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   /**
    * prints a given blob pdf url with the dialog
    */
-  printPdf() {
+  printPdfOrNext() {
+    const nextStatus = 2;
+
+    if (this.printStatus === 'failed' || this.printStatus === 'success') {
+      this.status = nextStatus;
+
+      return;
+    }
+
     if (!this._printIframe) {
       this._printIframe = document.createElement('iframe');
       this._printIframe.src = this.pdfUrl;
@@ -143,27 +160,31 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
 
       document.body.appendChild(this._printIframe);
 
-      const print = () => {
+      const print = (): Promise<any> => {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
             try {
               this._printIframe.focus();
               this._printIframe.contentWindow.print();
 
-              resolve(true);
+              resolve('success');
             } catch(e) {
-              reject(e);
+              reject('failed');
             }
           }, 1);
         })
-      }
+      };
 
       this._printIframe.onload = async () => {
-        await print().catch(() => {
+        this.printStatus = await print().catch(() => {
           window.open(this.pdfUrl);
 
-          this.hasFailedPrinting = true;
+          this.printStatus = 'failed';
         })
+
+        if (this.printStatus === 'success') {
+          this.status = nextStatus;
+        }
       };
     }
   }

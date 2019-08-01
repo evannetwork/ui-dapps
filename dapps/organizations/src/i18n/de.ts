@@ -44,6 +44,9 @@ const i18n: any = {
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
       },
+      "next": "Weiter",
+      "back": "Zurück",
+      "done": "Fertig",
       "notary": {
         "step": {
           "your_data": "Ihre Daten",
@@ -73,19 +76,28 @@ const i18n: any = {
         "learn-more": "Mehr erfahren",
         "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
         "pin": {
+          "step": {
+            "pin": "PIN",
+            "print": "Bestätigungsdokument drucken",
+            "send": "Per Post senden",
+          },
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
-          "desc": "Bitte geben Sie die PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
+          "desc": "Bitte geben Sie Ihre PIN ein. Sie finden Ihre PIN in der Bestätigungsanfrage des Notars.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
-          "desc2": "Senden Sie das Dokument dann bitte an die unten angeführte Adresse.",
-          "generate-answer": "Bestätigungscode generieren",
-          "header": "Notarielle Verifikation",
+          "generate-answer": "Code generieren",
+          "header": "Authentifizierung",
           "pin": {
             "desc": "Die per Brief erhaltene, sechstellige PIN.",
-            "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
+            "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
             "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
             "title": "PIN"
-          }
+          },
+          "did-printed": "Haben Sie das Dokument gedruckt?",
+          "download": "Kein Drucker verfügbar? Download als PDF Datei",
+          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Fimenstempel und schicken Sie es per Post an den anfragenden Notar.",
+          "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihr Account verifiziert.",
+          "next-step2": "Sie werden in Ihrer Account Mailbox darüber informiert.",
         },
         "print": "Drucken",
         "request": {
@@ -128,7 +140,6 @@ const i18n: any = {
             "error": "Bitte geben Sie eine Anschrift an!",
             "title": "Anschrift"
           },
-          "back": "Zurück",
           "organization": {
             "desc": "Firmenname",
             "error": "Bitte geben Sie den Unternehmensname an!",
@@ -173,7 +184,6 @@ const i18n: any = {
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
-          "next": "Weiter",
           "postal-address": "Anschrift",
           "zipCode": {
             "desc": "Postleitzahl",

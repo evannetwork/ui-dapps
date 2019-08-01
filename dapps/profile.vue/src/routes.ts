@@ -25,7 +25,12 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
+import {
+  DAppLoaderComponent,
+  RouteRegistrationInterface
+} from '@evan.network/ui-vue-core';
+
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import ProfileDetailComponent from './components/detail/detail.vue';
 import ProfileSettingsComponent from './components/settings/settings.vue';
@@ -35,7 +40,12 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'detail' } },
   { name: 'detail', path: 'detail', component: ProfileDetailComponent },
   { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
+  {
+    name: 'organizations',
+    component: DAppLoaderComponent,
+    path: `organizations.${ dappBrowser.getDomainName() }/**`,
+  },
+
 ];
 
 export default routeRegistration;
-

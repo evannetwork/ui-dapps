@@ -44,6 +44,9 @@ const i18n: any = {
         "identifications": "Identifications",
         "notary": "Notary Verification"
       },
+      "next": "Next",
+      "back": "Go back",
+      "done": "Done",
       "notary": {
         "step": {
           "your_data": "your data",
@@ -73,19 +76,28 @@ const i18n: any = {
         "learn-more": "Learn more",
         "no-requests": "You have not yet requested a Notary Verification. Use the following button to request one.",
         "pin": {
-          "confirmation-code": "Your confirmation code was successfully recognized.",
-          "confirmation-code-desc": "Print your confirmation code and mail it to the address on the document.",
+          "step": {
+            "pin": "PIN",
+            "print": "Print Document",
+            "send": "Send via Letter",
+          },
+          "confirmation-code": "Your confirmation code was successfully generated.",
+          "confirmation-code-desc": "Print your confirmation document.",
           "desc": "Please enter the PIN that was sent to you and generate your confirmation code.",
           "desc-hin": "Please pay attention to upper and lower case.",
-          "desc2": "Please send it to the address below.",
-          "generate-answer": "Generate confirmation code",
-          "header": "Notary Verification",
+          "generate-answer": "Generate code",
+          "header": "Authentication",
           "pin": {
             "desc": "The six digits PIN you received within the letter.",
             "error": "Please enter the PIN to continue.",
             "error2": "The PIN entered was not correct. Please enter the correct PIN.",
             "title": "PIN"
-          }
+          },
+          "did-printed": "Did you printed the document?",
+          "download": "No option to print now? Download as PDF file.",
+          "do-not-forget": "Please ensure to sign and stamp the document before sending it to the requesting notary.",
+          "next-step": "After successful verification by the notary, your account will be verified.",
+          "next-step2": "You will be informed of this in your account mailbox.",
         },
         "print": "Print",
         "request": {
@@ -128,7 +140,6 @@ const i18n: any = {
             "error": "Please enter an address.",
             "title": "Address"
           },
-          "back": "Go back",
           "organization": {
             "desc": "Organization name",
             "error": "Please enter a organization name",
@@ -173,7 +184,6 @@ const i18n: any = {
             "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Request for Notary Verification"
           },
-          "next": "Next",
           "postal-address": "Postal Address",
           "zipCode": {
             "desc": "Postcode",

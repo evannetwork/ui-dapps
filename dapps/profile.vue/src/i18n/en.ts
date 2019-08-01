@@ -32,7 +32,8 @@ const i18n: any = {
   "_profile": {
     "breadcrumbs": {
       "detail": "Profile",
-      "settings": "Settings"
+      "settings": "Settings",
+      "organizations.evan": "Organisations"
     },
     "detail": {
       "account-id": "Account-ID",
