@@ -8,6 +8,8 @@
   - add updated terms of use
 - `mailbox.vue`
   - add new entry for accepting verifications
+- `digitaltwin`, `digital-twin.data-container`, `digital-twin.lib`
+  - remove defined factory contract addresses for `DigitalTwin` and `Container` creation and use default ens addresses
 
 ### Fixes
 - `organizations`

@@ -249,11 +249,15 @@ export default class ENSFieldComponent extends mixins(EvanComponent) {
     if (owner === runtime.activeAccount) {
       return owner;
     } else {
-      const splitAddress = address.split('.');
+      const domainName = utils.getDomainName();
+      const addressToCheck = address.replace(new RegExp(`.${ domainName }$`), '');
+      const splitAddress = addressToCheck.split('.');
 
-      if (splitAddress.length > 2) {
-        return this.getParentRecursive(splitAddress.splice(1, splitAddress.length).join('.'),
-          owner);
+      if (splitAddress.length > 1) {
+        return this.getParentRecursive(
+          `${ splitAddress.splice(1, splitAddress.length).join('.') }.${ domainName }`,
+          owner
+        );
       } else {
         return owner;
       }

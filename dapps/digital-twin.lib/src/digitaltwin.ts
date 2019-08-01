@@ -110,7 +110,6 @@ export default class EvanUIDigitalTwin {
       address: address === 'dt-create' ? '' : address,
       containerConfig: { accountId: runtime.activeAccount, },
       description: dbcp,
-      factoryAddress: utils.twinFactory,
     }
   }
 

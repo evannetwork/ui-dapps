@@ -61,7 +61,6 @@ dispatcher
       accountId: runtime.activeAccount,
       // address: `${ data.name }.${ data.digitalTwinAddress }`,
       description: description,
-      factoryAddress: utils.containerFactory,
       plugin: data.plugin,
     });
 

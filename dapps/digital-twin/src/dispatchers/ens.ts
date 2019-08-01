@@ -40,16 +40,25 @@ const dispatcher = new Dispatcher(
 dispatcher
   .step(async (instance, data) => {
     const runtime = utils.getRuntime(instance.runtime);
-    const splitAddr = data.ensAddress.split('.');
-    const topLevelAdress = splitAddr.slice(splitAddr.length - 2, splitAddr.length)
-      .join('.');
+    // get the root domain name for the digital twins binding
+    const domainName = utils.getDomainName();
+    // remove the domain and resolve the highest path, after the check address
+    const addressToCheck = data.ensAddress.replace(new RegExp(`.${ domainName }$`), '');
+    const splitAddr = addressToCheck.split('.');
+    const topLevelAdress = splitAddr.pop();
+
+    // try to resolve the correct price
+    let price = 0;
+    try {
+      price = await runtime.nameResolver.getPrice(`${ topLevelAdress }.${ domainName }`);
+    } catch (ex) { }
 
     // purchaser the ens address
     await runtime.nameResolver.claimAddress(
-      topLevelAdress,
+      `${ topLevelAdress }.${ domainName }`,
       instance.runtime.activeAccount,
       instance.runtime.activeAccount,
-      await runtime.nameResolver.getPrice(topLevelAdress)
+      price
     );
   })
   .step(async (instance, data) => {
