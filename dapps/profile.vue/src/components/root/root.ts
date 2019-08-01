@@ -46,7 +46,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Setup navigation structure
    */
   created() {
-    this.tabs = [ 'detail', 'settings', ]
+    this.tabs = [ 'detail', 'settings', 'organizations.evan']
       .map(urlKey => ({
         id: `tab-${ urlKey }`,
         href: `${ (<any>this).dapp.fullUrl }/${ urlKey }`,
