@@ -2,6 +2,7 @@
 
 ## Next Version
 ### Features
+- update versions of `lodash`, `ts-node`, `typescript`
 - `ui.libs`
   - add `evan-highlight` support for `bg-level-2`
   - add plus svg icon
