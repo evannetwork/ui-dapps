@@ -25,6 +25,7 @@
   https://evan.network/license/
 */
 
+import readline from 'readline';
 import { client } from 'nightwatch-api';
 import * as angularUtils from './angular';
 import * as vueUtils from './vue';
@@ -79,7 +80,17 @@ module.exports = {
   pauseHere: async () => {
     console.log('/******************************************************************************/');
     console.log('test paused, enjoy your developer tools :3');
+    console.log(' ---> press ENTER key to continue <---');
     console.log('/******************************************************************************/');
-    return new Promise(() => {});
+
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    return new Promise(resolve => rl.question('...', ans => {
+      rl.close();
+      resolve(ans);
+    }))
   },
 };
