@@ -2,6 +2,7 @@
 
 ## Next Version
 ### Features
+- update versions of `lodash`, `typescript`
 - `dashboard.vue`
   - add new dashboard cards
 - `terms-of-use`

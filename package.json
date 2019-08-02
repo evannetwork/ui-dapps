@@ -28,7 +28,7 @@
     "signature_pad": "^3.0.0-beta.3",
     "style-loader": "^0.22.0",
     "ts-loader": "^4.0.0",
-    "typescript": "2.9.1",
+    "typescript": "^3.5.3",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "vue": "^2.6.9",
     "vue-class-component": "^6.0.0",
