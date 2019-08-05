@@ -29,6 +29,10 @@ evan-buy-eve {
   .success-hint {
     border-radius: 0;
     background-color: rgba(83, 230, 157, 0.5);
+
+    a {
+      color: #FFF;
+    }
   }
   .error-hint, .success-hint {
     &.chip-md {

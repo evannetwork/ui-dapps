@@ -191,7 +191,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
               }
             }
           }
-
         } catch (ex) {
           runtime.logger.log(`Could not decrypt verification files: ${ ex.message }`, 'error');
         }
