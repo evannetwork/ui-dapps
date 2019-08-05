@@ -26,7 +26,7 @@ Then('I want to see a tab {string}',
      const xPathSelector = `//*[contains(@class, 'evan-tab') and normalize-space(text()) = '${content}']`;
 
      await client.waitForElementPresent(xPathSelector, 10 * 1000);
-     await client.assert.visible(xPathSelector);
+     await client.expect.element(xPathSelector).to.be.visible;
 
      client.useCss(); // switches back to css selector
   }

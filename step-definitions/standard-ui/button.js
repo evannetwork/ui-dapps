@@ -57,5 +57,7 @@ Then('the button {string} should be {string}',
       default:
         throw new Error(`Button can not be tested for ${statusType}`)
     }
+
+    client.useCss();
   }
 )
