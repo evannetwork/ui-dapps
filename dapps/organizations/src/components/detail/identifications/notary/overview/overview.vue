@@ -67,11 +67,11 @@
         <div class="mt-3"
           v-for="(verification) in verifications">
           <org-ident-notary-detail
-            :verifications="verification">
+            :verifications="[ verification ]">
           </org-ident-notary-detail>
         </div>
         <div class="mt-3"
-          v-for="(requestId, index) in requests">
+          v-for="(requestId) in requests">
           <org-ident-notary-detail
             :requestId="requestId">
           </org-ident-notary-detail>

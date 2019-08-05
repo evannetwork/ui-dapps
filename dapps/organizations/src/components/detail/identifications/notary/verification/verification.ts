@@ -153,7 +153,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
     this.verification.verifications
       .forEach(async (subVerification) => {
         try {
-
           const contentKey = await runtime.profile.getBcContract(
             'contracts',
             runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`)

@@ -31,7 +31,11 @@
     <evan-loading v-if="loading"></evan-loading>
     <div v-else-if="error">
       <h5 class="d-block mb-0 font-weight-semibold">
-        {{ '_org.ident.error' | translate }}
+        {{ '_org.ident.notary.account-id' | translate }}
+      </h5>
+      <span>{{ $route.params.address }}</span>
+      <h5 class="d-block mb-0 font-weight-semibold">
+        {{ '_org.ident.notary.status.title' | translate }}
       </h5>
       <span>{{ '_org.ident.notary.request-error' | translate }}</span>
     </div>
