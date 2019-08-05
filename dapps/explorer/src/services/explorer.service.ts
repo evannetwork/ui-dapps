@@ -272,14 +272,14 @@ export class ExplorerService {
       console.warn(`Could not looking up ens address: ${ ex && ex.message ? ex.message : ex } `);
     }
 
-    // if abi is available, check if a base- or data contract can be loaded 
+    // if abi is available, check if a base- or data contract can be loaded
     if (abi && contractId && contractId !== '0x0000000000000000000000000000000000000000') {
       // if we have an abi and a contract id, we can show the contract interaction
       sections.push('contractinteraction');
 
       try {
         const contract = new this.bcc.web3.eth.Contract(abi, contractId);
-        const contractMethodKeys = Object.keys(contract.methods);
+        const contractMethodKeys = abi.map((entry: any) => entry.name);
 
         // check if all base contract methods could be loaded
         const isBaseContractInterface = this.baseContractMembers

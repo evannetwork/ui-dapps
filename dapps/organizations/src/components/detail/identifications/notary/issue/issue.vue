@@ -66,18 +66,34 @@
           </div>
         </div>
         <div>
-          <label for="files" class="d-block">
-            {{ '_org.ident.notary.issue.files.title' | translate }}
+          <label for="privateFiles" class="d-block">
+            {{ '_org.ident.notary.issue.privateFiles.title' | translate }}
           </label>
           <div>
             <evan-file-input
-              id="issue-files" ref="files"
-              :class="{ 'is-invalid' : issueForm.files.error }"
-              v-model="issueForm.files.value"
-              @input="issueForm.files.setDirty();">
+              id="issue-privateFiles" ref="privateFiles"
+              :class="{ 'is-invalid' : issueForm.privateFiles.error }"
+              v-model="issueForm.privateFiles.value"
+              @input="issueForm.privateFiles.setDirty();">
             </evan-file-input>
-            <div class="invalid-feedback d-block" v-if="issueForm.files.error">
-              {{ issueForm.files.error | translate }}
+            <div class="invalid-feedback d-block" v-if="issueForm.privateFiles.error">
+              {{ issueForm.privateFiles.error | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="publicFiles" class="d-block">
+            {{ '_org.ident.notary.issue.publicFiles.title' | translate }}
+          </label>
+          <div>
+            <evan-file-input
+              id="issue-publicFiles" ref="publicFiles"
+              :class="{ 'is-invalid' : issueForm.publicFiles.error }"
+              v-model="issueForm.publicFiles.value"
+              @input="issueForm.publicFiles.setDirty();">
+            </evan-file-input>
+            <div class="invalid-feedback d-block" v-if="issueForm.publicFiles.error">
+              {{ issueForm.publicFiles.error | translate }}
             </div>
           </div>
         </div>
@@ -86,10 +102,10 @@
         <div>
           <button type="button" class="btn btn-primary btn-rounded"
             id="ident-issue"
-            :disabled="!issueForm.isValid"
+            :disabled="!issueForm.isValid || issuing"
             @click="issueIdentification()">
             {{ `_org.ident.notary.issue.issue` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issueing"></div>
+            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issuing"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>
         </div>

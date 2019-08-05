@@ -98,6 +98,11 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   approveAddress: LabeledEntry[] = [];
 
   /**
+   * listen for dispatcher updates
+   */
+  listeners: Array<Function> = [ ];
+
+  /**
    * Watch if form validity changed and update steps accordingly
    */
   @Watch('requestForm.isValid')
@@ -107,11 +112,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       this.steps[2].disabled = !valid
     }
   }
-
-  /**
-   * listen for dispatcher updates
-   */
-  listeners: Array<Function> = [ ];
 
   async created() {
     this.requestForm = (<RequestFormIdentInterface>new EvanForm(this, {

@@ -40,6 +40,7 @@ const i18n: any = {
       "verification-accept": "Verifikation wird angenommen..."
     },
     "ident": {
+      "error": "Fehler",
       "categories": {
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
@@ -48,10 +49,11 @@ const i18n: any = {
       "back": "Zurück",
       "done": "Fertig",
       "notary": {
+        "request-error": "Informationen zu dieser Anfrage konnten nicht geladen werden!",
         "step": {
           "your_data": "Ihre Daten",
           "summary": "Zusammenfassung",
-          "costs": "Kosten",
+          "costs": "Kosten"
         },
         "account-id": "Account-ID",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
@@ -66,9 +68,13 @@ const i18n: any = {
             "error": "Bitte geben Sie eine korrekte Anfrage-ID ein!",
             "title": "Anfrage-ID"
           },
-          "files": {
+          "publicFiles": {
             "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
-            "title": "Notariell bestätige Dateien"
+            "title": "Öffentliche, notariell bestätige Dateien"
+          },
+          "privateFiles": {
+            "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
+            "title": "Verschlüsselte, notariell bestätige Dateien"
           },
           "header": "Organisations-Verifikation ausstellen",
           "issue": "Organisations-Verifikation ausstellen"
@@ -79,7 +85,7 @@ const i18n: any = {
           "step": {
             "pin": "PIN",
             "print": "Bestätigungsdokument drucken",
-            "send": "Per Post senden",
+            "send": "Per Post senden"
           },
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
@@ -97,7 +103,7 @@ const i18n: any = {
           "download": "Kein Drucker verfügbar? Download als PDF Datei",
           "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Fimenstempel und schicken Sie es per Post an den anfragenden Notar.",
           "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihr Account verifiziert.",
-          "next-step2": "Sie werden in Ihrer Account Mailbox darüber informiert.",
+          "next-step2": "Sie werden in Ihrer Account Mailbox darüber informiert."
         },
         "print": "Drucken",
         "request": {
@@ -197,14 +203,14 @@ const i18n: any = {
           },
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
-            "title": "Bitte überprüfen Sie Ihre Daten.",
+            "title": "Bitte überprüfen Sie Ihre Daten."
           },
           "request-ident": "Beantragen",
           "request-verification": "Notarielle Verifikation beantragen",
           "requested1": "Sie haben erfolgreich eine notarielle Verifikation angefordert.",
           "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
           "requested3": "Sie erhalten in Kürze vom Notar Post!", // TODO: Sie erhalten in den nächsten Tagen Post von einem Notar!
-          "requesting": "Notarielle Verifikation wird angefordert...",
+          "requesting": "Notarielle Verifikation wird angefordert..."
         },
         "status": {
           "accepted": "notariell verifiziert",

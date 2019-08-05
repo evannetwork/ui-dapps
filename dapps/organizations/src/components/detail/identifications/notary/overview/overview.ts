@@ -73,7 +73,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
     this.loadRequests = (async () => {
       this.reloading = true;
       this.requests = await getRequests(runtime, this.$route.params.address);
-      this.verifications = [await getIssuedVerifications(runtime)];
+      this.verifications = await getIssuedVerifications(runtime);
       this.reloading = false;
     }).bind(this);
 

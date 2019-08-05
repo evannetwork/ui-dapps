@@ -27,7 +27,6 @@
 
 // vue imports
 import Vue from 'vue';
-import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
@@ -154,7 +153,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
     this.verification.verifications
       .forEach(async (subVerification) => {
         try {
-
           const contentKey = await runtime.profile.getBcContract(
             'contracts',
             runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`)
@@ -185,7 +183,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
               }
             }
           }
-
         } catch (ex) {
           runtime.logger.log(`Could not decrypt verification files: ${ ex.message }`, 'error');
         }

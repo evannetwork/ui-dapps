@@ -353,7 +353,7 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
       // load all details for the explorerService.abi
       await prottle(10, this.explorerService.abi.map(abiFunc => async () => {
         // only add it, when it has a signature (could be a constructor)
-        if (abiFunc.signature) {
+        if (abiFunc.signature && abiFunc.name) {
           // split abi permissions into public and into permissions that needs to be permitted
           if (abiFunc.constant) {
             this.publicAbiPermissions.push({
@@ -1029,24 +1029,29 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
    * @return     {Promise<Array<string>>}  The permitted members
    */
   async getPermittedMembers(signature: string) {
-    const roleCapability = await this.explorerService.getRoleCapability(this.baseContract, signature);
     const members = [ this.owner ];
 
-    // iterate through all members and check if any role has permissions to this function
-    Object.keys(this.members).forEach((member: string) => {
-      const roles = this.members[member].roles;
+    try {
+      const roleCapability = await this.explorerService.getRoleCapability(this.baseContract, signature);
 
-      if (members.indexOf(member) === -1) {
-        for (let i = 0; i < roles.length; i++) {
-          const hasPermissions = (parseInt(roleCapability, 16) & Math.pow(2, parseInt(roles[i]))) > 0;
+      // iterate through all members and check if any role has permissions to this function
+      Object.keys(this.members).forEach((member: string) => {
+        const roles = this.members[member].roles;
 
-          if (hasPermissions) {
-            members.push(member);
-            break;
+        if (members.indexOf(member) === -1) {
+          for (let i = 0; i < roles.length; i++) {
+            const hasPermissions = (parseInt(roleCapability, 16) & Math.pow(2, parseInt(roles[i]))) > 0;
+
+            if (hasPermissions) {
+              members.push(member);
+              break;
+            }
           }
         }
-      }
-    });
+      });
+    } catch (ex) {
+      this.core.utils.log(ex.message, 'error');
+    }
 
     return members;
   }
@@ -1058,17 +1063,22 @@ export class ExplorerBaseContractComponent extends AsyncComponent {
    * @return     {Promise<Array<string>>}  The permitted roles
    */
   async getPermittedRoles(signature: string) {
-    const roleCapability = await this.explorerService.getRoleCapability(this.baseContract, signature);
     const roles = [ ];
 
-    // iterate each role and check if its permitted
-    Object.keys(this.roles).forEach((role: string) => {
-      const hasPermissions = (parseInt(roleCapability, 16) & Math.pow(2, parseInt(role))) > 0;
+    try {
+      const roleCapability = await this.explorerService.getRoleCapability(this.baseContract, signature);
 
-      if (hasPermissions) {
-        roles.push(role);
-      }
-    });
+      // iterate each role and check if its permitted
+      Object.keys(this.roles).forEach((role: string) => {
+        const hasPermissions = (parseInt(roleCapability, 16) & Math.pow(2, parseInt(role))) > 0;
+
+        if (hasPermissions) {
+          roles.push(role);
+        }
+      });
+    } catch (ex) {
+      this.core.utils.log(ex.message, 'error');
+    }
 
     return roles;
   }

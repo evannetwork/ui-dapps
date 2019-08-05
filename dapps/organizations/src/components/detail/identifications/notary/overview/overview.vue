@@ -38,8 +38,8 @@
         <org-ident-notary-request
           ref="identAction">
         </org-ident-notary-request>
+        <!-- v-if="requests.length === 0 && verifications.length === 0" -->
         <a class="btn btn-primary btn-rounded" target="_blank"
-
           :id="`ident-request-unknown`"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
@@ -54,7 +54,7 @@
         v-if="requests.length === 0 && verifications.length === 0">
         <div class="content">
           {{ '_org.ident.notary.no-requests' | translate }}
-
+          <br>
           <a class="btn btn-primary btn-rounded mt-3" target="_blank"
             :id="`ident-request-unknown`"
             @click="$refs.identAction.show()">
@@ -64,14 +64,13 @@
         </div>
       </div>
       <div v-else>
-        <div class="mt-3"
-          v-for="(verification) in verifications">
+        <div class="mt-3">
           <org-ident-notary-detail
-            :verifications="verification">
+            :verifications="verifications">
           </org-ident-notary-detail>
         </div>
         <div class="mt-3"
-          v-for="(requestId, index) in requests">
+          v-for="(requestId) in requests">
           <org-ident-notary-detail
             :requestId="requestId">
           </org-ident-notary-detail>

@@ -11,10 +11,16 @@
   - add new entry for accepting verifications
 - `digitaltwin`, `digital-twin.data-container`, `digital-twin.lib`
   - remove defined factory contract addresses for `DigitalTwin` and `Container` creation and use default ens addresses
+- `organizations`
+  - allow private / public files for identification verification issuing
+- `explorer`
+  - fix base contract details loading for `web3 beta 55` 
 
 ### Fixes
 - `organizations`
   - update UI with additional feedback
+  - add error handling for identification overview
+  - fix typos
 
 ### Deprecations
 
