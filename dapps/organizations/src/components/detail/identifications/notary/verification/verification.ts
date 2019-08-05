@@ -27,7 +27,6 @@
 
 // vue imports
 import Vue from 'vue';
-import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 

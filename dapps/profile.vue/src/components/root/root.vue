@@ -30,13 +30,17 @@
     <evan-dapp-wrapper
       :routes="[ ]">
       <template v-slot:content>
-        <evan-nav-tabs class="flex-shrink-0"
-          :tabs="tabs"
-          ref="navTabs">
-        </evan-nav-tabs>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
+        <div class="h-100 d-flex flex-column">
+          <evan-nav-tabs class="flex-shrink-0"
+            :tabs="tabs"
+            ref="navTabs">
+          </evan-nav-tabs>
+          <div class="h-100 overflow-auto" style="flex: 1">
+            <transition name="fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </div>
+        </div>
       </template>
     </evan-dapp-wrapper>
   </div>

@@ -33,7 +33,7 @@ import axios from 'axios';
  */
 const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 
-// const agentUrl = 'http://192.168.100.66:8080'
+// const agentUrl = 'http://192.168.100.56:8080'
 const agentUrl = 'https://agents.test.evan.network'
 
 /**
@@ -42,7 +42,10 @@ const agentUrl = 'https://agents.test.evan.network'
  * @param      {string}  orgAddress  The organization address
  */
 function triggerRequestReload(orgAddress: string) {
-  window.dispatchEvent(new CustomEvent(`org-ident-reload-${ orgAddress }`));
+  setTimeout(
+    () => window.dispatchEvent(new CustomEvent(`org-ident-reload-${ orgAddress }`)),
+    1000
+  );
 }
 
 /**
@@ -104,12 +107,10 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
       }
     }
     return ret;
-
   } catch (ex) {
-    console.dir(ex)
+    runtime.logger.log(ex.message, 'error');
+    throw ex;
   }
-
-
 }
 
 async function getIssuedVerifications(runtime) {
@@ -118,19 +119,33 @@ async function getIssuedVerifications(runtime) {
     bcc.Ipld.purgeCryptoInfo(verifications);
     return verifications;
   } else {
-    return {};
+    return [ ];
   }
-
 }
 
-async function issueVerification(runtime, requestId, files) {
+/**
+ * Issue a identity verification for a identification requests. Takes optional files that should be
+ * attached to the verification.
+ *
+ * @param      {bcc.Runtime}  runtime    blockchain-core runtime
+ * @param      {string}       requestId  identification request id
+ * @param      {any}          files      object space seperated (private, public) that contains
+ *                                       files that should be attached (HTML 5 file selection)
+ */
+async function issueVerification(runtime, requestId, files = { private: [ ], public: [ ] }) {
   // TODO: Add correct api endpoint
   const evanAuthHeader = await generateEvanAuthHeader(runtime);
   const formData = new FormData();
-  for (let file of files) {
-    formData.append('assets', file.blob, file.name);
-  }
+
+  // add files to the specific assets objects
+  Object.keys(files).forEach(key => {
+    for (let file of files[key]) {
+      formData.append(key === 'private' ? 'assets' : 'publicAssets', file.blob, file.name);
+    }
+  });
+
   formData.append('requestId', requestId);
+
   await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/finalize`,
@@ -140,7 +155,6 @@ async function issueVerification(runtime, requestId, files) {
 }
 
 async function getAnswer(runtime, question, requestId) {
-
   const evanAuthHeader = await generateEvanAuthHeader(runtime);
   const answerResponse = await axios({
     method: 'POST',

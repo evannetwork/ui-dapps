@@ -276,11 +276,8 @@
               <p class="mt-3"><b>{{ '_org.ident.notary.request.requested3' | translate }}</b></p>
             </div>
           </div>
-
         </div>
       </template>
-
-
 
       <template v-slot:footer>
         <span class="mx-auto" v-if="status !== -1"></span>
@@ -320,7 +317,7 @@
         <template v-if="status === 2">
           <button type="button" class="btn btn-primary btn-rounded" id="ident-request"
             @click="requestIdentification()"
-            :disabled="!approvedCosts"
+            :disabled="!approvedCosts || sending"
           >
             {{ `_org.ident.notary.request.request-ident` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="sending"></div>
@@ -331,8 +328,7 @@
         <!-- final close button -->
         <template v-if="status === 3">
           <button type="button" class="btn btn-primary btn-rounded" id="ident-request"
-            @click="$refs.requestModal.hide()"
-          >
+            @click="$refs.requestModal.hide()">
             {{ `_org.ident.done` | translate }}
           </button>
         </template>

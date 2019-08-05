@@ -78,7 +78,6 @@ async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
   await runtime.profile.storeForAccount('addressBook');
 }
 
-
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = instance.runtime;

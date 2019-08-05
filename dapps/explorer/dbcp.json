@@ -12,7 +12,7 @@
         "explorer.css",
         "explorer.js"
       ],
-      "origin": "QmXopNaxPYz1vvwjrJEPawUZXBK2KQfXMmQJGtztFGogxq",
+      "origin": "QmVyw7BvemGZ7Ayhsr2UCpZzmPv7L1bVhyHaCguA9Bnkr6",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
       "standalone": true,
@@ -43,7 +43,8 @@
       "1.1.0": "QmWx4mXZ3C4keWkVa2r5qkJpaiqVaFk2Jcn5CqXraq36vt",
       "1.2.0": "QmXVLKMa6VWgqkeXQAQGq2XpFJ3LAQgDYLuRUiL98BJwRw",
       "1.3.0": "Qmb7kjmWD2k7rFdnuGE5i8RXoYgaPErGPwZR5fJ5SXkbte",
-      "1.5.0": "QmX4JqNR6q3bRZp95mvzkZ8fSZa3TxgvmwjbbAfaqSm825"
+      "1.5.0": "QmX4JqNR6q3bRZp95mvzkZ8fSZa3TxgvmwjbbAfaqSm825",
+      "1.5.1": "QmTUwZgC21Jc7XZ19QGgDG1RDgmNJQE6E5KB7GWugon4LV"
     }
   }
 }

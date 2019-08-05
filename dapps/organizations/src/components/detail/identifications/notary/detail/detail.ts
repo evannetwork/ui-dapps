@@ -53,6 +53,7 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
    * ui status flags
    */
   loading = true;
+  error = false;
 
   /**
    * Current verification status for the user
@@ -70,19 +71,24 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = (<any>this).getRuntime();
 
-    // TODO: add status loading
-    if (this.verifications) {
-      this.details = {
-        status: 'issued',
-        verifications: this.verifications
-      };
-    } else {
-      this.details = await getIdentificationDetails(
-        runtime,
-        this.$route.params.address,
-        this.requestId,
-      );
+    try {
+      if (this.verifications) {
+        this.details = {
+          status: 'issued',
+          verifications: this.verifications
+        };
+      } else {
+        this.details = await getIdentificationDetails(
+          runtime,
+          this.$route.params.address,
+          this.requestId,
+        );
+      }
+    } catch (ex) {
+      runtime.logger.log(ex.message, 'error');
+      this.error = true;
     }
+
     this.loading = false;
   }
 

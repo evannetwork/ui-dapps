@@ -122,11 +122,10 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    * Use the current pin input, check for the correct pin and try to receive the answer.
    */
   async generateAnswer() {
-    // TODO: add correct generate answer request
     this.checkingPin = true;
 
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
     try {
-      const runtime: bcc.Runtime = (<any>this).getRuntime();
       const answerResponse = await getAnswer(runtime, this.pinForm.pin.value.trim(), this.requestId)
       const url = window.URL.createObjectURL(answerResponse);
       this.pdfUrl = url;
@@ -134,7 +133,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       triggerRequestReload(this.$route.params.address);
       this.status = 1;
     } catch (ex) {
-      console.dir(ex)
+      runtime.logger.log(ex, 'error');
       this.pinForm.pin.error = 'error2';
     }
 
@@ -168,7 +167,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
               this._printIframe.contentWindow.print();
 
               resolve('success');
-            } catch(e) {
+            } catch (ex) {
               reject('failed');
             }
           }, 1);
