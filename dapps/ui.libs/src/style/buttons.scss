@@ -96,6 +96,15 @@
       }
     }
 
+    &.btn-outline-primary {
+      i {
+        margin: -4px -14px -2px -14px;
+
+        border: 1px solid cssVar('bg-text-primary');
+        background: transparent;
+      }
+    }
+
     &.btn-secondary {
       &.focus, &:focus, &:hover {
         opacity: 0.8;

@@ -6,6 +6,7 @@
 - `ui.libs`
   - add `evan-highlight` support for `bg-level-2`
   - add plus svg icon
+  - add styling for `btn-outline-primary`
 
 ### Fixes
 
