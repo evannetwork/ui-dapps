@@ -560,7 +560,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
             requestId = response.result;
           }
 
-          if (response.status === 'success') {
+          if (response.status === 'transferring' || response.status === 'success') {
             clearInterval(intervalTimer);
 
             resolve(response);
