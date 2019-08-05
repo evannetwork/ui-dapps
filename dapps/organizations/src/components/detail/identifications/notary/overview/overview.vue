@@ -64,10 +64,9 @@
         </div>
       </div>
       <div v-else>
-        <div class="mt-3"
-          v-for="(verification) in verifications">
+        <div class="mt-3">
           <org-ident-notary-detail
-            :verifications="[ verification ]">
+            :verifications="verifications">
           </org-ident-notary-detail>
         </div>
         <div class="mt-3"
