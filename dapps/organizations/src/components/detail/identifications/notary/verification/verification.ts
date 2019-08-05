@@ -147,9 +147,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
     // TODO: add correct file handling
     // https://api-blockchain-core.readthedocs.io/en/latest/profile/verification-usage-examples.html
     // ?highlight=verifications#encrypted-data-in-verifications
-    const unencrypted = { foo: 'bar' };
-    const cryptoInfo = await runtime.encryptionWrapper.getCryptoInfo('test', <any>'custom');
-    const key = await runtime.encryptionWrapper.generateKey(cryptoInfo);
     this.verification.verifications
       .forEach(async (subVerification) => {
         try {
@@ -164,22 +161,33 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
           const fileHash = JSON.parse(subVerification.details.data);
 
           if (fileHash !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            const cryptoAlgorithFiles = 'aesBlob'
-            const cryptoAlgorithHashes = 'aesEcb'
-            const encodingEncrypted = 'hex'
-            const encodingUnencryptedHash = 'hex'
-            const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
-            const dencryptedHashBuffer = await hashCryptor.decrypt(
-              Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey })
-
-            const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
-            const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles)
-            const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
-
-            if (decrypted) {
-              for (let file of decrypted) {
+            console.log(subVerification.details.topic)
+            if (subVerification.details.topic === '/evan/company') {
+              const hashFiles = await (<any>runtime.dfs).get(fileHash);
+              const foundFiles = JSON.parse(hashFiles)
+              for (let file of foundFiles) {
+                file.file = await (<any>runtime.dfs).get(file.file, true);
                 file.size = file.file.length;
                 this.files.push(await FileHandler.fileToContainerFile(file));
+              }
+            } else {
+              const cryptoAlgorithFiles = 'aesBlob'
+              const cryptoAlgorithHashes = 'aesEcb'
+              const encodingEncrypted = 'hex'
+              const encodingUnencryptedHash = 'hex'
+              const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
+              const dencryptedHashBuffer = await hashCryptor.decrypt(
+                Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey })
+
+              const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
+              const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles)
+              const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
+
+              if (decrypted) {
+                for (let file of decrypted) {
+                  file.size = file.file.length;
+                  this.files.push(await FileHandler.fileToContainerFile(file));
+                }
               }
             }
           }
