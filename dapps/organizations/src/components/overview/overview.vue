@@ -34,7 +34,7 @@
         </h3>
       </div>
       <span class="mx-auto"></span>
-      <div v-if="!loading">
+      <div v-if="!loading && canIssue">
         <org-ident-notary-issue
           ref="orgIdentIssue">
         </org-ident-notary-issue>

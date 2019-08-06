@@ -8,7 +8,6 @@
       },
       "entrypoint": "profile.vue.js",
       "files": [
-        "profile.vue.css",
         "profile.vue.js"
       ],
       "origin": "QmWFxPt3mFhwrW9hLASzzkaY5R9mMCMXRq8534hH6kSQq4",

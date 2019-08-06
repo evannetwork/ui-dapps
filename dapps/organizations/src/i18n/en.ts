@@ -59,6 +59,16 @@ const i18n: any = {
           },
           "header": "Issue Identification Verification",
           "issue": "Issue Identification Verification",
+          "issued": {
+            "error": {
+              "desc": "The organizational verification could not be issued. Please try again or contact your administrator.",
+              "title": "Error"
+            },
+            "success": {
+              "desc": "The organization verification was issued successfully.",
+              "title": "Finished"
+            }
+          },
           "privateFiles": {
             "error": "You must add at least 1 notarized document to continue.",
             "title": "Private, Notary certified files"
@@ -100,6 +110,7 @@ const i18n: any = {
           }
         },
         "print": "Print",
+        "reload": "Reload",
         "request": {
           "address": {
             "desc": "Enter address",
@@ -210,6 +221,7 @@ const i18n: any = {
         "status": {
           "accepted": "notarially verified",
           "confirming": "under review",
+          "finished": "notarially verified",
           "forwarding": "is processed by the provider",
           "issued": "notarially verified",
           "requested": "requested",

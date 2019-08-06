@@ -40,7 +40,7 @@
         <div id="request-verification-modal" class="modal-content">
           <!-- steps indicator -->
           <steps-indicator
-            v-if="status >= 0 && status < 3"
+            v-if="status >= 0 && status < 3 && !sending"
             :steps="steps"
             :active-step="status"
             @updatestep="updatestep"
@@ -282,7 +282,7 @@
       <template v-slot:footer>
         <span class="mx-auto" v-if="status !== -1"></span>
         <!-- back btn -->
-        <template v-if="status >= 0 && status <= 2">
+        <template v-if="status >= 0 && status <= 2 && !sending">
           <button
             type="button" class="btn btn-outline-primary btn-rounded"
             id="ident-request-back"

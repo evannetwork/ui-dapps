@@ -76,7 +76,7 @@ export class ENSManagementService {
   /**
    * ens domain that should be used for resolving the ens addresses
    */
-  public domainName = 'payable'; // getDomainName();
+  public domainName = getDomainName();
 
   /**
    * nameResolver instance initialized with the latest ens contract address to handle correct payment
@@ -97,8 +97,11 @@ export class ENSManagementService {
       const customNameResolver = this.core.utils.deepCopy(this.bcc.config.nameResolver);
 
       // set the custom ens contract address
-      customNameResolver.ensAddress = '0xE6ed5Ed9CF1a62f88866ef9cE2dF94e996685456';
-      customNameResolver.ensResolver = '0xC629135777FDC078dbbBa5b2d244a71835f4a091';
+      if (this.bcc.coreRuntime.environment === 'testcore') {
+        this.domainName = 'payable';
+        customNameResolver.ensAddress = '0xE6ed5Ed9CF1a62f88866ef9cE2dF94e996685456';
+        customNameResolver.ensResolver = '0xC629135777FDC078dbbBa5b2d244a71835f4a091';
+      }
 
       this.nameResolver = new NameResolver({
         config: customNameResolver,

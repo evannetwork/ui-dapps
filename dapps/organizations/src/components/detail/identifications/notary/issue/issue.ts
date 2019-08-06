@@ -59,6 +59,7 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
    * Is currently something in issuing process?
    */
   issuing = false;
+  status = '';
 
   async created() {
     this.issueForm = (<IssueFormInterface>new EvanForm(this, {
@@ -121,11 +122,15 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
            public: this.issueForm.publicFiles.value
          }
        );
+
+       this.status = 'success';
     } catch (ex) {
-      runtime.logger.log(ex.message);
-      this.issueForm.requestId._error = ex.message;
+      runtime.logger.log(ex.message, 'error');
+      this.status = 'error';
     }
 
+    // show success modal
+    (<any>this.$refs.statusModal).show();
     this.issuing = false;
   }
 }

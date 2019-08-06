@@ -40,7 +40,7 @@
     <b>{{ '_ensmanagement.eve-amount' | translate: { ensAddress: ensAddress, amount: ensPrice } }}</b>
 
     <span *ngIf="balance < ensPrice">
-      {{ '_ensmanagement.missing-eve' | translate: { ensAddress: ensAddress } }
+      {{ '_ensmanagement.missing-eve' | translate: { ensAddress: ensAddress } }}
     </span>
 
     <div text-center margin-top>

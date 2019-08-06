@@ -25,16 +25,40 @@
   https://evan.network/license/
 */
 import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import axios from 'axios';
 
 /**
  * Account id of the notary smart agent
  */
-const notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+let notarySmartAgentAccountId;
+const coreRuntime = dappBrowser.bccHelper.coreRuntimes[bcc.instanceId];
+if (coreRuntime.environment === 'testcore') {
+  notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+} else {
+  notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+}
 
 // const agentUrl = 'http://192.168.100.56:8080'
 const agentUrl = 'https://agents.test.evan.network'
+
+/**
+ * Requests the request/close action to clear open requests, when the identification process has
+ * finished.
+ *
+ * @param      {bccRuntime}  runtime    bcc runtime
+ * @param      {string}      requestId  identification request id
+ */
+async function closeRequest(runtime: bcc.Runtime, requestId: string) {
+  const evanAuthHeader = await generateEvanAuthHeader(runtime);
+  const allRequests = await axios({
+    method: 'POST',
+    url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/request/close`,
+    headers: { 'Authorization': evanAuthHeader },
+    data: { requestId }
+  });
+}
 
 /**
  * Trigger reload event, so the verification overview will reload the latest requests
@@ -44,7 +68,7 @@ const agentUrl = 'https://agents.test.evan.network'
 function triggerRequestReload(orgAddress: string) {
   setTimeout(
     () => window.dispatchEvent(new CustomEvent(`org-ident-reload-${ orgAddress }`)),
-    1000
+    3000
   );
 }
 
@@ -73,39 +97,26 @@ async function getRequests(runtime: bcc.Runtime, address: string) {
 async function getIdentificationDetails(runtime: bcc.Runtime, address: string, requestId: string) {
   let status = 'unknown';
 
-  // TODO: add status loading
-  if (requestId) {
-    status = 'unknown';
-  }
-
   try {
-    // TODO: Add correct api endpoint
     const evanAuthHeader = await generateEvanAuthHeader(runtime);
-    const requestedStatus = await axios({
+    const ret: any = { };
+    const requestedStatus: any = (await axios({
       method: 'POST',
       url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/get`,
       headers: { 'Authorization': evanAuthHeader },
       data: {
         question: requestId
       }
-    });
+    })).data.result;
 
-    const bmail = await runtime.mailbox.getMail((<any>requestedStatus).data.result.data.split('|')[1])
-    const ret = {
-      status: (<any>requestedStatus).data.result.status,
-      pdfUrl: 'http://www.africau.edu/images/default/sample.pdf',
-      verifications: [
-        '/evan/company'
-      ]
-    };
-    if (bmail.content &&
-        bmail.content.attachments &&
-        bmail.content.attachments.length) {
-      const attachments = bmail.content.attachments
-      if (attachments[0].type === 'notaryVerificationRequest') {
-        ret.verifications.push('/evan/company/' + attachments[0].registrationNumber);
-      }
+    ret.status = requestedStatus.status;
+
+    // check if verifications were issued by evan, so checkup for already sent bmail
+    if (requestedStatus.issuedMailId) {
+      ret.issuedMail = (await runtime.mailbox.getMail(requestedStatus.issuedMailId)).content;
+      ret.issuedMailAddress = requestedStatus.issuedMailId;
     }
+
     return ret;
   } catch (ex) {
     runtime.logger.log(ex.message, 'error');
@@ -133,7 +144,6 @@ async function getIssuedVerifications(runtime) {
  *                                       files that should be attached (HTML 5 file selection)
  */
 async function issueVerification(runtime, requestId, files = { private: [ ], public: [ ] }) {
-  // TODO: Add correct api endpoint
   const evanAuthHeader = await generateEvanAuthHeader(runtime);
   const formData = new FormData();
 
@@ -200,16 +210,16 @@ async function signMessage(runtime: bcc.Runtime, msg: string): Promise<string> {
   const signer = runtime.activeAccount;
   const pk = await ((<any>runtime.executor.signer).accountStore.getPrivateKey(signer));
 
-
   return runtime.web3.eth.accounts.sign(msg, '0x' + pk).signature;
 }
 
 export {
+  closeRequest,
   getAnswer,
   getIdentificationDetails,
+  getIssuedVerifications,
   getRequests,
   issueVerification,
   notarySmartAgentAccountId,
   triggerRequestReload,
-  getIssuedVerifications
 }

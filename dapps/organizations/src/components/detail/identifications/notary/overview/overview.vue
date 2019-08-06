@@ -28,10 +28,17 @@
 <template>
   <div class="container-wide">
     <div class="d-flex align-items-center mb-5">
-      <div>
+      <div class="d-flex align-items-center">
         <h3 class="font-weight-bold mb-0">
           {{ '_org.ident.notary.title' | translate }}
         </h3>
+
+        <button class="btn" @click="loadRequests();">
+          <i class="mdi mdi-reload"></i>
+          <evan-tooltip :placement="'bottom'">
+            {{ `_org.ident.notary.reload` | translate }}
+          </evan-tooltip>
+        </button>
       </div>
       <span class="mx-auto"></span>
       <div v-if="!loading">
@@ -39,12 +46,12 @@
           ref="identAction">
         </org-ident-notary-request>
         <!-- v-if="requests.length === 0 && verifications.length === 0" -->
-        <a class="btn btn-primary btn-rounded" target="_blank"
+        <!-- <a class="btn btn-primary btn-rounded" target="_blank"
           :id="`ident-request-unknown`"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
-        </a>
+        </a> -->
       </div>
     </div>
 
@@ -64,7 +71,7 @@
         </div>
       </div>
       <div v-else>
-        <div class="mt-3">
+        <div class="mt-3" v-if="verifications && verifications.length !== 0">
           <org-ident-notary-detail
             :verifications="verifications">
           </org-ident-notary-detail>

@@ -31,11 +31,16 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { Dispatcher } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../notary.identifications';
+import {
+  closeRequest,
+  getIdentificationDetails,
+  triggerRequestReload,
+} from '../notary.identifications';
 
 @Component({ })
 export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
@@ -63,18 +68,49 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   /**
    * states for that actions are available
    */
-  statusActions = [ 'unknown', 'requested', 'confirming', ];
+  statusActions = [ 'unknown', 'requested', 'confirming', 'issued', ];
+
+  /**
+   * Dispatcher instance for watching mailbox attachment updates.
+   */
+  attachmentDispatcher = new Dispatcher(
+    `mailbox.vue.${ dappBrowser.getDomainName() }`,
+    'attachmentDispatcher',
+    0
+  );
+
+  /**
+   * is a mailbox attachment dispatche running?
+   */
+  accepting = false;
+
+  /**
+   * watch for queue updates
+   */
+  listeners = [ ];
 
   /**
    * Load current status
    */
   async created() {
+    // load data
+    await this.loadDetails();
+
+    // watch for attachment updates
+    this.listeners.push(this.attachmentDispatcher.watch(() => this.checkAccepting()));
+  }
+
+  /**
+   * Load the details for the opened request / identification verifications.
+   */
+  async loadDetails() {
     const runtime = (<any>this).getRuntime();
 
+    this.loading = true;
     try {
       if (this.verifications) {
         this.details = {
-          status: 'issued',
+          status: 'finished',
           verifications: this.verifications
         };
       } else {
@@ -93,6 +129,33 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Check if currently a mailbox attachment dispatcher is running
+   */
+  async checkAccepting() {
+    if (this.details.status === 'issued') {
+      const runtime = (<any>this).getRuntime();
+      const instances = (await this.attachmentDispatcher.getInstances(runtime))
+        .filter(instance =>
+          instance.data.attachment.type === 'verifications' &&
+          this.details.issuedMail &&
+          this.details.issuedMailAddress === instance.data.mailAddress
+        );
+
+      // reload when synchronisation have finished and previous instance has runned
+      if (instances.length === 0 && this.accepting) {
+        await closeRequest(runtime, this.requestId);
+        // wait until reload
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        // clear profile contracts to force reload
+        delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
+        await triggerRequestReload(this.$route.params.address);
+      }
+
+      this.accepting = instances.length !== 0;
+    }
+  }
+
+  /**
    * Start the action for the current status.
    */
   runStatusAction() {
@@ -104,7 +167,11 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
         break;
       }
       case 'issued': {
-        console.log('accept the verification')
+        this.attachmentDispatcher.start((<any>this).getRuntime(), {
+          attachment: this.details.issuedMail.attachments[0],
+          mail: this.details.issuedMail,
+          mailAddress: this.details.issuedMailAddress,
+        });
 
         break;
       }

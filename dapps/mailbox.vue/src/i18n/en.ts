@@ -48,6 +48,11 @@ export default {
       },
       "url": {
         "accepted": "Open Attachment"
+      },
+      "verifications": {
+        "accepted": "Open target",
+        "modal-body": "You want to confirm the verifications?",
+        "new": "Confirm verification(s)"
       }
     },
     "breadcrumbs": {

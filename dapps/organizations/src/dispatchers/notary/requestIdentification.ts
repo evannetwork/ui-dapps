@@ -83,7 +83,8 @@ dispatcher
     const runtime = instance.runtime;
 
     // check if key exchange with the smart agents exist
-    if (!await runtime.profile.getContactKey(notarySmartAgentAccountId, 'commKey')) {
+    const hasKeyExchange = await runtime.profile.getContactKey(notarySmartAgentAccountId, 'commKey');
+    if (!hasKeyExchange) {
       await doKeyExchange(runtime, notarySmartAgentAccountId, 'Notary Smart Agent');
     }
 

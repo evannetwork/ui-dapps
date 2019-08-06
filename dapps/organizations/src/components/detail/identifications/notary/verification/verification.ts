@@ -37,6 +37,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../../../../dispatchers/registry';
+import { notarySmartAgentAccountId } from '../notary.identifications';
 
 @Component({ })
 export default class IdentNotaryVerificationComponent extends mixins(EvanComponent) {
@@ -122,8 +123,13 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
     // reset loaded files
     this.files = [];
     // load the verification details
-    // TODO: add use correct ens root owner
-    const rootVerificationAccount = '0x4a6723fC5a926FA150bAeAf04bfD673B056Ba83D';
+    // allow only ens root owner and notary smart agent
+    const allowedVerificationAccounts = [
+      // ens root owner
+      '0x4a6723fC5a926FA150bAeAf04bfD673B056Ba83D',
+      // notary smart agent
+      notarySmartAgentAccountId
+    ];
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;
@@ -131,7 +137,7 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
     verificationQuery.validationOptions.notEnsRootOwner = (verification, pr) => {
       // trust root verifications issued by root account
       // subject does not need to be root account as well
-      if (verification.details.issuer === rootVerificationAccount) {
+      if (allowedVerificationAccounts.indexOf(verification.details.issuer) !== -1) {
         return bcc.VerificationsStatusV2.Green;
       }
       return bcc.VerificationsStatusV2.Red;
@@ -144,9 +150,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
       verificationQuery,
     );
 
-    // TODO: add correct file handling
-    // https://api-blockchain-core.readthedocs.io/en/latest/profile/verification-usage-examples.html
-    // ?highlight=verifications#encrypted-data-in-verifications
     this.verification.verifications
       .forEach(async (subVerification) => {
         try {
@@ -161,7 +164,6 @@ export default class IdentNotaryVerificationComponent extends mixins(EvanCompone
           const fileHash = JSON.parse(subVerification.details.data);
 
           if (fileHash !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            console.log(subVerification.details.topic)
             if (subVerification.details.topic === '/evan/company') {
               const hashFiles = await (<any>runtime.dfs).get(fileHash);
               const foundFiles = JSON.parse(hashFiles)

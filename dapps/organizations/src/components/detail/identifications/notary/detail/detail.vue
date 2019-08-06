@@ -75,12 +75,14 @@
         <button class="btn btn-primary btn-rounded" target="_blank"
           v-if="statusActions.indexOf(details.status) !== -1"
           :id="`ident-request-${ details.status }`"
+          :disabled="details.status === 'issued' && accepting"
           @click="runStatusAction()">
           {{ `_org.ident.notary.status-actions.${ details.status }` | translate }}
+          <div class="spinner-border spinner-border-sm text-light ml-3" v-if="details.status === 'issued' && accepting"></div>
         </button>
       </div>
 
-      <template v-if="details.status === 'issued'">
+      <template v-if="details.status === 'finished'">
         <org-ident-notary-verification
           class="mt-3 w-100"
           v-for="(topic, index) in details.verifications"

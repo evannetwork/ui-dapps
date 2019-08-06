@@ -13,6 +13,7 @@
   - remove defined factory contract addresses for `DigitalTwin` and `Container` creation and use default ens addresses
 - `organizations`
   - allow private / public files for identification verification issuing
+  - split `issued` and `finished` state, so the user do not must enter his mailbox
 - `explorer`
   - fix base contract details loading for `web3 beta 55` 
 
@@ -21,6 +22,10 @@
   - update UI with additional feedback
   - add error handling for identification overview
   - fix typos
+- `ensmanagement`
+  - use `evan` as root address and default `ens resolver` for mainnet
+- `mailbox`
+  - add missing translations
 
 ### Deprecations
 

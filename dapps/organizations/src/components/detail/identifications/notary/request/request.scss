@@ -3,29 +3,16 @@
 }
 
 .modal .modal-dialog .modal-content {
-  padding: 0 3rem;
-  max-height: calc(90vh - 140px - 32px);
   overflow-y: auto;
+
   min-height: 300px;
+  max-height: calc(90vh - 140px - 32px);
+  padding: 0 3rem;
 
   .step > div {
-    background: #F5F6FA;
-    padding: 12px;
     height: 100%;
-  }
+    padding: 12px;
 
-  // TODO: make global?
-  a.text-link {
-    color: #000;
-    text-decoration: underline!important; // even more important!!!!
-  }
-
-  .bold {
-    font-weight: 700;
-  }
-
-  /deep/ em,
-  .emphasized {
-    font-style: normal;
+    background: #f5f6fa;
   }
 }

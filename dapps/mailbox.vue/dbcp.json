@@ -7,7 +7,6 @@
       },
       "entrypoint": "mailbox.vue.js",
       "files": [
-        "mailbox.vue.css",
         "mailbox.vue.js"
       ],
       "origin": "QmSFoRZRsZNhcxmSYwZ59Z6o4dhN6592MDRDpNyPBGALHw",

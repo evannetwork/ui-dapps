@@ -51,11 +51,6 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
   requests: Array<string> = null;
 
   /**
-   * Check for showing the "canIssue button", usually the evan verification account.
-   */
-  canIssue = false;
-
-  /**
    * Load request function to be able to listent on reload event
    */
   loadRequests: Function;
@@ -83,7 +78,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
     // bind reload eventr listener
     window.addEventListener(
       `org-ident-reload-${ this.$route.params.address }`,
-      <any>this.loadRequests
+      () => <any>this.loadRequests()
     );
 
     this.loading = false;

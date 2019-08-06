@@ -37,6 +37,25 @@
       </template>
       <template v-slot:body
         id="issue-verification-modal">
+        <evan-modal
+          ref="statusModal"
+          :maxWidth="'600px'">
+          <template v-slot:header>
+            <h5 class="modal-title">
+              {{ `_org.ident.notary.issue.issued.${ status }.title` | translate }}
+            </h5>
+          </template>
+          <template v-slot:body>
+            <div class="text-center">
+              <evan-success v-if="status === 'success'"></evan-success>
+              <div class="p-5 mt-3 text-center">
+                <p></p>
+                <p class="mt-3">{{ `_org.ident.notary.issue.issued.${ status }.desc` | translate }}</p>
+              </div>
+            </div>
+          </template>
+        </evan-modal>
+
         <div class="form-group">
           <label for="alias">
             {{ `_org.ident.notary.issue.requestId.title` | translate }} *

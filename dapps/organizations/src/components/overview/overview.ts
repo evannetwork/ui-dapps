@@ -59,8 +59,10 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
     this.organizations = await getOrganizations(runtime);
 
-    // TODO: add the correct account id that is able to handle verification issuing
-    this.canIssue = runtime.activeAccount === runtime.activeAccount;
+    // switch issue account
+    this.canIssue = runtime.environment === 'core' ?
+      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B' :
+      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
 
     this.loading = false;
   }
