@@ -34,7 +34,7 @@ evan-buy-eve {
       color: #FFF;
     }
   }
-  .error-hint, .success-hint {
+  .error-hint, .success-hint, .warning-hint {
     &.chip-md {
       height: auto;
     }
@@ -45,6 +45,9 @@ evan-buy-eve {
       white-space: normal;
       text-overflow: unset;
     }
+  }
+  .warning-hint {
+    background: rgba(200, 150, 0, 0.5);
   }
 
   .evan-tabs-container {

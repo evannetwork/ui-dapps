@@ -40,7 +40,7 @@
           <ion-col col-8>
             <ion-label [innerHTML]="'_dappprofile.pay-eve.payment-error.' + paymentResponse.code | translate">
             </ion-label>
-            <p>{{ '_dappprofile.contact' | translate}}: <a href="mailto:info@evan.team">info@evan.team</a></p>
+            <p>{{ '_dappprofile.contact' | translate}}: <a href="mailto:support@evan.team">support@evan.team</a></p>
           </ion-col>
         </ion-row>
       </div>
@@ -239,7 +239,7 @@
               <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'vat')" color="danger">
                 <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
               </ion-chip>
-              <ion-chip class="error-hint" *ngIf="payEve.vat && !isValidVat" color="danger">
+              <ion-chip class="warning-hint" *ngIf="payEve.vat && !isValidVat" color="warning">
                 <ion-label>{{ '_dappprofile.pay-eve.vat.invalid' | translate }}</ion-label>
               </ion-chip>
             </ion-col>
@@ -268,7 +268,6 @@
                 <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
                   <div class="evan-relative evan-content m-t-0" [hidden]="activePaymentTab === 1">
                     <div item-content #cardElement style="width:100%"></div>
-
                   </div>
                   <div class="evan-content m-t-0" [hidden]="activePaymentTab === 0">
                     <div item-content #sepaElement style="width:100%"></div>
@@ -282,6 +281,7 @@
                 </ion-chip>
               </div>
             </ion-item>
+            <p [hidden]="activePaymentTab === 0">{{'_dappprofile.pay-eve.sepa-hint' | translate}}</p>
           </ion-row>
         </ion-col>
         <ion-col col-4 class="border-left">
