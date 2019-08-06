@@ -171,6 +171,7 @@ export const en = {
       "vatPercent": "VAT",
       "to-pay": "Total amount",
       "sepa": "SEPA direct debit",
+      "sepa-hint": "SEPA is a direct debit scheme. The time of the credit to the wallet depends strongly on the the banks. The evan.network has no influence on this. This process can take up to 14 days.",
       "credit": "Credit card",
       "payment-information": "Payment details",
       "pay": "Order at cost",

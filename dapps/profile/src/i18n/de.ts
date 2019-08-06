@@ -175,6 +175,7 @@ export const de = {
       "vatPercent": "MwSt.",
       "to-pay": "Gesamtsumme",
       "sepa": "SEPA Abbuchung",
+      "sepa-hint": "SEPA ist ein Lastschriftverfahren. Der Zeitpunkt der Gutschrift auf die Wallet hängt stark von den Banken ab. Das evan.network hat darauf keinen Einfluss. Dieser Vorgang kann bis zu 14 Tage dauern.",
       "credit": "Kreditkarte",
       "payment-information": "Zahlungsinformationen",
       "pay": "Kostenpflichtig bestellen",
