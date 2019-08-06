@@ -183,10 +183,10 @@ export const de = {
         "unknown_state": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Bitte kontaktieren Sie unseren Support.",
         "transaction_failed": "Zahlung / Abbuchung war erfolgreich, aber die Transaktion in der Blockchain ist fehlgeschlagen. <b> Ihre Karte wurde belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
         "charge_failed": "Eine Zahlung kann aufgrund eines fehlgeschlagenen Zahlungs- / Abbuchungsversuchs nicht ausgeführt werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
-        "invalid_customer": "Kundendaten sind ungültig. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
-        "price_not_okay": "Der Ether-Preis konnte im Back-End nicht abgerufen werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
-        "too_many_accounts": "Für die übermittelte E-Mail sind bereits zu viele Konten registriert. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
-        "wallet_not_enough_funds": "Das Wallet verfügt nicht über genügend Guthaben, um die Zahlung auszuführen. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
+        "invalid_customer": "Kundendaten sind ungültig. <b>Ihre Karte wurde NICHT belastet!</ b> Bitte versuchen Sie es später erneut.",
+        "price_not_okay": "Es ist ein Fehler im evan.network aufgetreten. <b>Ihre Karte wurde NICHT belastet!</ b> Bitte versuchen Sie es später erneut.",
+        "too_many_accounts": "Es ist ein Fehler mit ihrem Account aufgetreten. <b>Ihre Karte wurde NICHT belastet!</ b> Bitte wenden Sie sich an unseren Kundensupport.",
+        "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
       },
       "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
       "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie Evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden.",
