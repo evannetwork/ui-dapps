@@ -27,6 +27,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
 
   client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
+    window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
     return true;
   }, [], function(result) {

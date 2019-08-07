@@ -17,6 +17,7 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
 
   await client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
+    window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
     return true;
   }, [], function(result) {
