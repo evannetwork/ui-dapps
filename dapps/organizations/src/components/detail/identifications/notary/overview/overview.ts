@@ -126,7 +126,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
     // show reloading dialog
     this.reloading = true;
 
-    // allow only 10 reloads (20 seconds)
+    // allow only 20 reloads (60 seconds)
     let reloads = 0;
     const detail = $event.detail;
     const runtime = (<any>this).getRuntime();

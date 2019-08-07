@@ -167,8 +167,11 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
         break;
       }
       case 'issued': {
+        // change attachment type to vericications, so we can use the attachment dispatcher
+        const attachment = this.details.issuedMail.attachments[0];
+        attachment.type = 'verifications';
         this.attachmentDispatcher.start((<any>this).getRuntime(), {
-          attachment: this.details.issuedMail.attachments[0],
+          attachment: attachment,
           mail: this.details.issuedMail,
           mailAddress: this.details.issuedMailAddress,
         });
