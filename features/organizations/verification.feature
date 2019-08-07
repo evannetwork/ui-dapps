@@ -1,4 +1,4 @@
-@CORE-238 @only
+@CORE-238
 Feature: Organizations - Notary Verification
 
  Scenario: Requesting Notary Verification for current user

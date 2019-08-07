@@ -249,7 +249,6 @@ When(/^I define a new plugin with the name "([^"]+)" and the description "([^"]+
 
 
 When(/^add a data set with the type "(([^"]+))" with the name "([^"]+)"$/, async (type, name) => {
-
   // add a new data area
   await client.click(selectors.container.create.addButton);
   await client.waitForElementPresent(selectors.container.create.entryAddModal, 10000);
@@ -260,22 +259,18 @@ When(/^add a data set with the type "(([^"]+))" with the name "([^"]+)"$/, async
   await client.click(selectors.container.create.dataAreaSubmit);
 });
 
-
 When(/^add a field to the data set "(([^"]+))" with the name "([^"]+)" with the type "([^"]+)" and the default value "([^"]+)"$/, async (dataSet, fieldName, fieldType, defaultFieldValue) => {
-
-await client.pause(1000);
-client.elements('css selector', selectors.container.create.dataSetSteps, async (buttonElements) => {
-  console.dir(buttonElements)
-  for(let buttonElement of buttonElements.value) {
-        var elementID = buttonElement.ELEMENT;
-    console.log('Checking Element - ' + elementID);
-
-    const buttonText = client.elementIdText(elementID, (result) => {
-
-    console.log(result);
-    });
-  }
-})
+  await client.pause(1000);
+  client.elements('css selector', selectors.container.create.dataSetSteps, async (buttonElements) => {
+    console.dir(buttonElements)
+    for(let buttonElement of buttonElements.value) {
+      var elementID = buttonElement.ELEMENT;
+      console.log('Checking Element - ' + elementID);
+      const buttonText = client.elementIdText(elementID, (result) => {
+        console.log(result);
+      });
+    }
+  })
   // add a new data area
  /*await client.click(selectors.container.create.addButton);
   await client.waitForElementPresent(selectors.container.create.entryAddModal, 10000);
@@ -284,4 +279,14 @@ client.elements('css selector', selectors.container.create.dataSetSteps, async (
 
   await client.setValue(selectors.container.create.dataAreaName, [backspaces(20), name]);
   await client.click(selectors.container.create.dataAreaSubmit);*/
+});
+
+When(/^create the plugin$/, async (type, name) => {
+  // add a new data area
+  await client.click(selectors.container.edit.dataSet.edit.finishButton);
+  await client.waitForElementPresent(selectors.container.createModal, 10000);
+
+  await client.click(selectors.container.createModal);
+
+
 });
