@@ -12,7 +12,7 @@ Then('I want to see a modal with the title {string}',
     }
 
     await client.waitForElementPresent('.modal-dialog', 500);
-    await client.assert.visible('.modal-dialog');
+    await client.expect.element('.modal-dialog').to.be.visible;
     await client.assert.containsText('.modal-dialog .modal-title', title);
   }
 )
