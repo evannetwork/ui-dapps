@@ -47,12 +47,13 @@
           @requested="checkNewRequests()">
         </org-ident-notary-request>
         <!-- v-if="requests.length === 0 && verifications.length === 0" -->
-        <!-- <a class="btn btn-primary btn-rounded" target="_blank"
+        <a class="btn btn-primary btn-rounded" target="_blank"
           :id="`ident-request-unknown`"
+          v-if="testMode"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
-        </a> -->
+        </a>
       </div>
     </div>
 
