@@ -18,6 +18,7 @@ When('I click on link to {string}',
           contained = linkPart;
     }
 
+    await client.waitForElementPresent(`a[href*="${contained}"]`, 10 * 1000);
     await client.click(`a[href*="${contained}"]`)
   }
 )
