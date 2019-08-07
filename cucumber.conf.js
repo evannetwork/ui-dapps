@@ -11,6 +11,9 @@ BeforeAll(async () => {
   const options = { env: process.env.NIGHTWATCH_ENV || 'chrome', };
   await startWebDriver(options);
   await createSession(options);
+  await client.execute(function() {
+    window.localStorage.setItem('evan-test-mode', 'true');
+  });
 });
 
 After(async (scenario) => {
