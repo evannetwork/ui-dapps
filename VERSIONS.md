@@ -14,6 +14,7 @@
 - `organizations`
   - allow private / public files for identification verification issuing
   - split `issued` and `finished` state, so the user do not must enter his mailbox
+  - add correct state management and reloading logic
 - `explorer`
   - fix base contract details loading for `web3 beta 55` 
 

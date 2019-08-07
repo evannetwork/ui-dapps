@@ -129,8 +129,6 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       const answerResponse = await getAnswer(runtime, this.pinForm.pin.value.trim(), this.requestId)
       const url = window.URL.createObjectURL(answerResponse);
       this.pdfUrl = url;
-
-      triggerRequestReload(this.$route.params.address);
       this.status = 1;
     } catch (ex) {
       runtime.logger.log(ex, 'error');
@@ -186,5 +184,15 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
         }
       };
     }
+  }
+
+  /**
+   * Trigger the request reloading.
+   */
+  triggerRequestReload() {
+    triggerRequestReload(this.$route.params.address, {
+      status: 'confirming',
+      requestId: this.requestId
+    });
   }
 }

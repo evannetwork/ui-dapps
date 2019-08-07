@@ -144,11 +144,11 @@ export default class IdentNotaryDetailComponent extends mixins(EvanComponent) {
       // reload when synchronisation have finished and previous instance has runned
       if (instances.length === 0 && this.accepting) {
         await closeRequest(runtime, this.requestId);
-        // wait until reload
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        // clear profile contracts to force reload
-        delete runtime.profile.trees[runtime.profile.treeLabels.contracts];
-        await triggerRequestReload(this.$route.params.address);
+        await runtime.profile.loadForAccount(runtime.profile.treeLabels.contracts);
+        await triggerRequestReload(this.$route.params.address, {
+          requestId: this.requestId,
+          status: 'finished',
+        });
       }
 
       this.accepting = instances.length !== 0;

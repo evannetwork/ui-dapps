@@ -62,6 +62,13 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
   status = '';
 
   async created() {
+    this.setupIssueForm();
+  }
+
+  /**
+   * Creates the issue form for gathering issue information.
+   */
+  setupIssueForm() {
     this.issueForm = (<IssueFormInterface>new EvanForm(this, {
       accountId: {
         value: '',
@@ -114,16 +121,18 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
 
     const runtime = (<any>this).getRuntime();
     try {
-       await issueVerification(
-         runtime,
-         this.issueForm.requestId.value,
-         {
-           private: this.issueForm.privateFiles.value,
-           public: this.issueForm.publicFiles.value
-         }
-       );
+      await issueVerification(
+        runtime,
+        this.issueForm.requestId.value,
+        {
+          private: this.issueForm.privateFiles.value,
+          public: this.issueForm.publicFiles.value
+        }
+      );
 
-       this.status = 'success';
+      // reset form and show success modal
+      this.setupIssueForm();
+      this.status = 'success';
     } catch (ex) {
       runtime.logger.log(ex.message, 'error');
       this.status = 'error';

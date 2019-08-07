@@ -63,13 +63,13 @@ async function closeRequest(runtime: bcc.Runtime, requestId: string) {
 /**
  * Trigger reload event, so the verification overview will reload the latest requests
  *
- * @param      {string}  orgAddress  The organization address
+ * @param      {string}  orgAddress  organization address for that the data should be reloaded
+ * @param      {string}  type        data that should be sent
  */
-function triggerRequestReload(orgAddress: string) {
-  setTimeout(
-    () => window.dispatchEvent(new CustomEvent(`org-ident-reload-${ orgAddress }`)),
-    3000
-  );
+function triggerRequestReload(orgAddress: string, detail: any) {
+  window.dispatchEvent(new CustomEvent(`org-ident-reload-${ orgAddress }`, {
+    detail
+  }));
 }
 
 /**
@@ -124,6 +124,11 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
   }
 }
 
+/**
+ * Gets the issued verifications.
+ *
+ * @param      {bcc.Runtime}  runtime  bcc runtime
+ */
 async function getIssuedVerifications(runtime) {
   const verifications = await runtime.profile.getBcContract('verifications', 'notary');
   if (verifications) {

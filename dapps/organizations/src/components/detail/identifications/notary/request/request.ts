@@ -197,7 +197,9 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         if ($event.detail.status === 'finished') {
           this.status = 3;
           this.sending = false;
-          triggerRequestReload(this.$route.params.address);
+          triggerRequestReload(this.$route.params.address, {
+            status: 'requested',
+          });
         }
       })
     );

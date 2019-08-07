@@ -111,7 +111,7 @@
           <a class="btn btn-primary btn-rounded"
             id="ident-pin-done"
             target="_blank"
-            @click="$refs.pinModal.hide()">
+            @click="$refs.pinModal.hide(); triggerRequestReload();">
             {{ `_org.ident.done` | translate }}
           </a>
         </div>

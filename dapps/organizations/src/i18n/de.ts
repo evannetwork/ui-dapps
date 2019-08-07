@@ -47,9 +47,11 @@ const i18n: any = {
       },
       "done": "Fertig",
       "error": "Fehler",
+      "error-loading": "Beim Laden der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "next": "Weiter",
       "notary": {
         "account-id": "Account-ID",
+        "check-updates": "Warte auf Aktualisierung...",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
         "issue": {
           "accountId": {
@@ -59,6 +61,7 @@ const i18n: any = {
           },
           "header": "Organisations-Verifikation ausstellen",
           "issue": "Organisations-Verifikation ausstellen",
+          "issuing": "Organisations-Verifikation wird ausgestellt",
           "issued": {
             "error": {
               "desc": "Die Organisations-Verifikation konnte nicht ausgestellt werden. Bitte versuchen Sie es erneut oder kontaktieren Sie Ihren Administrator.",

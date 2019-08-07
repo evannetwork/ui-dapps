@@ -47,9 +47,11 @@ const i18n: any = {
       },
       "done": "Done",
       "error": "Error",
+      "error-loading": "An error occurred while loading the data. Please try again.",
       "next": "Next",
       "notary": {
         "account-id": "Account-ID",
+        "check-updates": "Checking for updates...",
         "info": "Identify your account to be a trusted evan.network member",
         "issue": {
           "accountId": {
@@ -59,6 +61,7 @@ const i18n: any = {
           },
           "header": "Issue Identification Verification",
           "issue": "Issue Identification Verification",
+          "issuing": "Issuing Identification Verification",
           "issued": {
             "error": {
               "desc": "The organizational verification could not be issued. Please try again or contact your administrator.",
