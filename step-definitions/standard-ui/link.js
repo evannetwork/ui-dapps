@@ -18,6 +18,7 @@ When('I click on link to {string}',
           contained = linkPart;
     }
 
+    await client.waitForElementPresent(`a[href*="${contained}"]`, 10 * 1000);
     await client.click(`a[href*="${contained}"]`)
   }
 )
@@ -36,6 +37,6 @@ Then('I want to see a link to {string}',
     }
 
     await client.waitForElementPresent(`a[href*="${contained}"]`, 10 * 1000);
-    await client.assert.visible(`a[href*="${contained}"]`);
+    await client.expect.element(`a[href*="${contained}"]`).to.be.visible;
   }
 )
