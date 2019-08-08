@@ -11,6 +11,7 @@
   - add new entry for accepting verifications
 - `digitaltwin`, `digital-twin.data-container`, `digital-twin.lib`
   - remove defined factory contract addresses for `DigitalTwin` and `Container` creation and use default ens addresses
+  - use environment specific links for `technical` detail view
 - `organizations`
   - allow private / public files for identification verification issuing
   - split `issued` and `finished` state, so the user do not must enter his mailbox
