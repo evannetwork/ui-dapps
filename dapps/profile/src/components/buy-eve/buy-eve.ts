@@ -241,7 +241,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
       city: ['', [Validators.required]],
       zip: ['', [Validators.required, Validators.pattern(`^[0-9]*$`)]],
       country: ['', [Validators.required, Validators.minLength(2),  Validators.maxLength(2), Validators.pattern(`^[A-Z]*$`)]],
-      vat: ['', [Validators.required]],
+      vat: ['', []],
       email: ['', [Validators.required, Validators.email]],
       amount: ['', [Validators.required, Validators.min(10)]],
     });
@@ -368,6 +368,16 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * Run detectChanges directly and after and timeout again, to update select fields.
    */
   detectTimeout() {
+    const vatValidators = () => {
+      if(this.stripePayment.get('country').value !== 'DE') {
+          return [Validators.required];
+      } else {
+          return [];
+      }
+    }
+
+    this.stripePayment.get('vat').setValidators(vatValidators());
+
     this.ref.detectChanges();
 
     setTimeout(() => this.ref.detectChanges());
@@ -496,8 +506,12 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * @param vat
    */
   public async checkVat(vat: string) {
-    if (!vat) {
+    if (!vat && this.stripePayment.get('country').value !== 'DE') {
       return false;
+    }
+
+    if (!vat) {
+      return true;
     }
 
     const {status, result} = (await this.http
@@ -515,6 +529,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    */
   public async validateVat(vat: string) {
     this.isValidVat = await this.checkVat(vat);
+
     this.ref.detectChanges();
   }
 
