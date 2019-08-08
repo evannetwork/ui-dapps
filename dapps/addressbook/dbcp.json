@@ -4,7 +4,7 @@
     "dapp": {
       "dependencies": {
         "angular-core": "^2.1.2",
-        "angular-libs": "^2.1.0"
+        "angular-libs": "^2.1.1"
       },
       "entrypoint": "addressbook.js",
       "files": [

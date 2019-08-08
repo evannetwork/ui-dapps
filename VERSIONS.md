@@ -2,6 +2,12 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+
+## Version 3.7.0
+### Features
 - update versions of `lodash`, `typescript`
 - `dashboard.vue`
   - add new dashboard cards
@@ -32,8 +38,6 @@
   - use `evan` as root address and default `ens resolver` for mainnet
 - `mailbox.vue`
   - add missing translations
-
-### Deprecations
 
 
 ## Version 3.6.0
