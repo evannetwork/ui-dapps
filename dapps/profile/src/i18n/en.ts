@@ -179,9 +179,9 @@ export const en = {
       "pay": "Order at cost",
       "payment-error": {
         "unknown_state": "An unknown error occurred during the payment process. Please contact our customer support.",
-        "transaction_failed": "Payment/charge was successful but transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
+        "transaction_failed": "Your payment/charge was successful but the transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
         "charge_failed": "A payment cannot be completed because of a failed payment/charge attempt. <b>Your card was NOT debited!</b> Please try again later.",
-        "invalid_customer": "Customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
+        "invalid_customer": "Your customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
         "price_not_okay": "An unknown error occurred on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
         "too_many_accounts": "An unknown error occurred regarding your account. <b>Your card was NOT debited!</b> Please contact our customer support.",
         "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later."
