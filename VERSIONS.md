@@ -20,6 +20,8 @@
   - fix base contract details loading for `web3 beta 55`
 - `task`
   - fix contract state handling for `web3 beta 55`
+- `profile.vue`
+  - add `organizations` tab
 
 ### Fixes
 - `organizations`
@@ -28,7 +30,7 @@
   - fix typos
 - `ensmanagement`
   - use `evan` as root address and default `ens resolver` for mainnet
-- `mailbox`
+- `mailbox.vue`
   - add missing translations
 
 ### Deprecations
