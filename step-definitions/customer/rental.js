@@ -30,7 +30,6 @@ import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/test-utils.js';
 
-
 const twinAddress = 'DEV';
 
 const elements = {
@@ -64,7 +63,7 @@ const rentalFuncs = {
    * @param      {browser instance}  browser  nightwatch instance
    * @return     {string}            root url
    */
-  getRentalRoot: (browser) => `${ evan.baseUrl }#/lindig.${ evan.ensRoot }`,
+  getRentalRoot: (browser) => `${ evan.baseUrl }#/lindig.evan`,
 
   /**
    * Open digital twin
@@ -74,11 +73,11 @@ const rentalFuncs = {
    * @return     {string}            nightwatch browser result chain
    */
   openDigitalTwin: async (browser, dtAddress) => {
-    await evan.angular.waitForElementVisible('lindig-dashboard-component', wait.element)
-    await evan.angular.waitForElementVisible('digital-twin-select', wait.element)
+    await evan.waitForElementVisible('lindig-dashboard-component', wait.element)
+    await evan.waitForElementVisible('digital-twin-select', wait.element)
     await browser.setValue('digital-twin-select ion-input[type="text"] input', [twinAddress, browser.Keys.ENTER])
         // check if twin is loading
-    await evan.angular.waitForElementVisible(elements.dt.ordersContainer, wait.loading)
+    await evan.waitForElementVisible(elements.dt.ordersContainer, wait.loading)
     await browser.assert.containsText(`${ elements.dt.ordersContainer } .content-heading h3.content-header`, 'Übersicht Aufträge')
   },
 };
@@ -93,11 +92,9 @@ const evan = setupEvan(client, rentalFuncs);
 const createTransportOrder = async function (browser) {
   // use it for setting into the form and checking up the list entries
   const orderName = ` Test - ${ browser.options.desiredCapabilities.browserName } - ${ (new Date().toString()) }`;
-  const dispo = evan.accounts.rentalDispo;
-
-  await evan.login(dispo.mnemonic, dispo.password)
-    // navigate to dashboard
+  // navigate to dashboard
   await browser.url(evan.getRentalRoot())
+  await browser.waitForElementVisible('#lindig', wait.element)
     // check if the dashboard is loading and the correct dapp is started and open the dev twin
   await evan.openDigitalTwin(twinAddress)
   // start creating transport order
@@ -109,7 +106,7 @@ const createTransportOrder = async function (browser) {
   await browser.waitForElementVisible(`${ elements.order.create.form } input[placeholder="Geben Sie den Titel des Auftrags"]`, wait.element)
   await browser.setValue(`${ elements.order.create.form } input[placeholder="Geben Sie den Titel des Auftrags"]`, orderName)
   // select contract members
-  await evan.angular.selectContractMember(`${ elements.order.create.form } contract-members`, `ion-menu.member-add-menu`, 'Demo Fahrer DEV')
+  await evan.selectContractMember(`${ elements.order.create.form } contract-members`, `ion-menu.member-add-menu`, 'Demo Fahrer DEV')
   // set date and time
   await browser.click(`${ elements.order.create.form } ion-datetime button`)
   await browser.waitForElementVisible('ion-picker-cmp .picker-toolbar div:nth-child(2) button', wait.element)
@@ -128,7 +125,7 @@ const createTransportOrder = async function (browser) {
   await browser.click(`${ elements.order.create.container } button[color="transparency"]`)
 
   // wait for creation finished and check if it is available
-  await evan.angular.syncFinished()
+  await evan.syncFinished()
   // wait until the loading button is gone, and the new list was loaded
   await browser.waitForElementNotPresent(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button.loading-button`, wait.element)
   await browser.click(`.refresh-icon`)
@@ -157,59 +154,60 @@ const solveTransportOrder = async function(browser) {
   await evan.login(driver.mnemonic, driver.password)
     // navigate to dashboard
   await browser.url(evan.getRentalRoot())
+  await browser.waitForElementVisible('#lindig', wait.element)
     // check if the dashboard is loading and the correct dapp is started and open the dev twin
   await evan.openDigitalTwin(twinAddress)
 
     // check if the order can be loaded
-  await evan.angular.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`, wait.loading)
+  await evan.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`, wait.loading)
   await browser.click(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`)
-  await evan.angular.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(2)`, wait.element)
+  await evan.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(2)`, wait.element)
 
     // accept the contract
   await browser.click(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(2)`)
-  await evan.angular.syncFinished()
+  await evan.syncFinished()
 
     // finish 1. task
-  await evan.angular.waitForElementVisible(`${ elements.order.detail.todo(2) } .todo-header-container button`, wait.element)
+  await evan.waitForElementVisible(`${ elements.order.detail.todo(2) } .todo-header-container button`, wait.element)
       // activate todo
   await browser.click(`${ elements.order.detail.todo(2) } .todo-header-container button`)
       // activate todo
-  await evan.angular.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
+  await evan.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
   await browser.click(`ion-alert .alert-button-group button:nth-child(2)`)
-  await evan.angular.syncFinished()
+  await evan.syncFinished()
 
     // finish 2. task
-  await evan.angular.waitForElementVisible(`${ elements.order.detail.todo(3) } .todo-header-container button`)
+  await evan.waitForElementVisible(`${ elements.order.detail.todo(3) } .todo-header-container button`)
       // activate todo
   await browser.click(`${ elements.order.detail.todo(3) } .todo-header-container button`)
       // submit alert
-  await evan.angular.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
+  await evan.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
   await browser.click(`ion-alert .alert-button-group button:nth-child(2)`)
-  await evan.angular.syncFinished();
+  await evan.syncFinished();
 
   // do not test picture taking in other browsers than chrome
   if (browser.options.desiredCapabilities.browserName === 'chrome') {
     // finish 3. task
-    await evan.angular.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-header-container button`, wait.element)
+    await evan.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-header-container button`, wait.element)
       // open todo
     await browser.click(`${ elements.order.detail.todo(4) } .todo-header-container button`)
-    await evan.angular.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-data`, wait.element)
+    await evan.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-data`, wait.element)
       // select first radio checkbox
     await browser.click(`${ elements.order.detail.todo(4) } .todo-data button#rb-0-0`)
 
       // make pictures
     await browser.click(`${ elements.order.detail.todo(4) } .todo-data > ion-item .picture-container > button`)
-    await evan.angular.waitForElementVisible(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
+    await evan.waitForElementVisible(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
     await browser.pause(1000)
     await browser.click(`snapshot-dialog .button-container button:nth-child(2)`)
     await browser.waitForElementNotPresent(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
     await browser.click(`${ elements.order.detail.todo(4) } .todo-data > ion-item .picture-container > button`)
-    await evan.angular.waitForElementVisible(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
+    await evan.waitForElementVisible(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
     await browser.pause(1000)
     await browser.click(`snapshot-dialog .button-container button:nth-child(2)`)
     await browser.waitForElementNotPresent(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
     await browser.click(`${ elements.order.detail.todo(4) } .todo-data > ion-item .picture-container > button`)
-    await evan.angular.waitForElementVisible(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
+    await evan.waitForElementVisible(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
     await browser.pause(1000)
     await browser.click(`snapshot-dialog .button-container button:nth-child(2)`)
     await browser.waitForElementNotPresent(`snapshot-dialog .button-container button:nth-child(2)`, wait.element)
@@ -219,13 +217,13 @@ const solveTransportOrder = async function(browser) {
 
       // finish the todo
     await browser.click(`${ elements.order.detail.todo(4) } .todo-data .todo-solve-container button`)
-    await evan.angular.syncFinished()
+    await evan.syncFinished()
 
     // finish 4. task
-    await evan.angular.waitForElementVisible(`${ elements.order.detail.todo(5) } .todo-header-container button`, wait.element)
+    await evan.waitForElementVisible(`${ elements.order.detail.todo(5) } .todo-header-container button`, wait.element)
       // open todo
     await browser.click(`${ elements.order.detail.todo(5) } .todo-header-container button`)
-    await evan.angular.waitForElementVisible(`${ elements.order.detail.todo(5) } .todo-data input`, wait.element)
+    await evan.waitForElementVisible(`${ elements.order.detail.todo(5) } .todo-data input`, wait.element)
 
       // set input value
     await browser.setValue(`${ elements.order.detail.todo(5) } .todo-data input`, 'Test Schadensreport Signatur')
@@ -236,15 +234,15 @@ const solveTransportOrder = async function(browser) {
 
       // finish the todo
     await browser.click(`${ elements.order.detail.todo(5) } .todo-data .todo-solve-container button`)
-    await evan.angular.syncFinished()
+    await evan.syncFinished()
 
     // finish the task
-    await evan.angular.waitForElementVisible(`${ elements.order.detail.tasks } > div > button`, wait.element)
+    await evan.waitForElementVisible(`${ elements.order.detail.tasks } > div > button`, wait.element)
     await browser.click(`${ elements.order.detail.tasks } > div > button`)
       // accept the popup
-    await evan.angular.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
+    await evan.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
     await browser.click(`ion-alert .alert-button-group button:nth-child(2)`)
-    await evan.angular.syncFinished()
+    await evan.syncFinished()
   }
 }
 
@@ -256,20 +254,18 @@ const solveTransportOrder = async function(browser) {
 const finishTransportOrder = async function(browser) {
   // pictures were not tested within other browsers than chrome, break this tests
   if (browser.options.desiredCapabilities.browserName === 'chrome') {
-    const dispo = evan.accounts.rentalDispo;
-
-    await evan.login(dispo.mnemonic, dispo.password)
-        // navigate to dashboard
+    // navigate to dashboard
     await browser.url(evan.getRentalRoot())
-        // check if the dashboard is loading and the correct dapp is started and open the dev twin
+    await browser.waitForElementVisible('#lindig', wait.element)
+    // check if the dashboard is loading and the correct dapp is started and open the dev twin
     await evan.openDigitalTwin(twinAddress)
 
-        // check if the order can be loaded
-    await evan.angular.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder }`, wait.loading)
+    // check if the order can be loaded
+    await evan.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder }`, wait.loading)
     await browser.click(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`)
-    await evan.angular.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`, wait.element)
+    await evan.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`, wait.element)
     await browser.click(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(1)`)
-    await evan.angular.syncFinished()
+    await evan.syncFinished()
   }
 };
 

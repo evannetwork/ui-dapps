@@ -39,12 +39,13 @@ const backspaces = (n) => [...Array(n)].map(() => '\ue003').join('');
  * @param      {any}  customs  custom properties that should be added to the evan context
  */
 const setupEvan = function(browser, customs) {
-  // evan.url = 'https://dashboard.test.evan.network/';
-  // evan.ensRoot = 'evan';
+  // evan.url = 'https://dashboard.test.evan.network';
   const merged = Object.assign(
-    { },
-    { angular: angularUtils },
-    { vue: vueUtils },
+    {
+      angular: angularUtils,
+      ensRoot: 'evan',
+      vue: vueUtils,
+    },
     customs,
   );
 
