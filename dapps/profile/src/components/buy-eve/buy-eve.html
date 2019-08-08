@@ -225,10 +225,10 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.vat.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.vat.title' | translate }}<span *ngIf="payEve.country !== 'DE'">*</span>
                   </h3>
                 </ion-label>
-                <ion-input formControlName="vat" required type="text"
+                <ion-input formControlName="vat" type="text"
                   [(ngModel)]="payEve.vat"
                   [placeholder]="'_dappprofile.pay-eve.vat.description' | translate"
                   (ionChange)="ref.detectChanges()"
@@ -267,9 +267,11 @@
                 </div>
                 <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
                   <div class="evan-relative evan-content m-t-0" [hidden]="activePaymentTab === 1">
+                    <label>{{ '_dappprofile.pay-eve.card-number' | translate }}</label>
                     <div item-content #cardElement style="width:100%"></div>
                   </div>
                   <div class="evan-content m-t-0" [hidden]="activePaymentTab === 0">
+                    <label>{{ '_dappprofile.pay-eve.sepa-number' | translate }}</label>
                     <div item-content #sepaElement style="width:100%"></div>
                   </div>
                 </div>

@@ -29,10 +29,6 @@ evan-buy-eve {
   .success-hint {
     border-radius: 0;
     background-color: rgba(83, 230, 157, 0.5);
-
-    a {
-      color: #FFF;
-    }
   }
   .error-hint, .success-hint, .warning-hint {
     &.chip-md {
@@ -45,13 +41,16 @@ evan-buy-eve {
       white-space: normal;
       text-overflow: unset;
     }
+    a {
+      color: #FFF;
+    }
   }
   .warning-hint {
     background: rgba(200, 150, 0, 0.5);
   }
 
   .evan-tabs-container {
-    height: 75px;
+    height: 85px;
     margin-bottom: 20px;
   }
 
