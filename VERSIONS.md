@@ -10,6 +10,8 @@
   - add correct `a.text-link` style
   - add correct `.bold` style
   - add correct `.emphasized` style
+- `evan.bootstrap.libs`
+  - add css variable support for `input-placeholder-color`
 
 ### Fixes
 
