@@ -16,7 +16,9 @@
   - split `issued` and `finished` state, so the user do not must enter his mailbox
   - add correct state management and reloading logic
 - `explorer`
-  - fix base contract details loading for `web3 beta 55` 
+  - fix base contract details loading for `web3 beta 55`
+- `task`
+  - fix contract state handling for `web3 beta 55`
 
 ### Fixes
 - `organizations`
