@@ -27,8 +27,8 @@
 
 import readline from 'readline';
 import { client } from 'nightwatch-api';
-import * as angularUtils from './angular';
-import * as vueUtils from './vue';
+import angularUtils from './angular';
+import vueUtils from './vue';
 
 const backspaces = (n) => [...Array(n)].map(() => '\ue003').join('');
 

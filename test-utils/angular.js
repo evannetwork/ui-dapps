@@ -58,17 +58,28 @@ module.exports = {
     return browser
       .waitForElementVisible('.toast-message', 120 * 1000)
       .assert.containsText('.toast-message', 'Synchronization finished')
-      .waitForElementNotPresent('.toast-message', 10 * 1000)
+      .waitForElementNotPresent('.toast-message', 10 * 1000);
   },
   /**
    * Wait for an element to be visible and 
    *
    * @param      {<type>}  browser  The browser
    */
-  waitForElementVisible: function(browser, selector, wait) {
+  angularWaitForElementVisible: function(browser, selector, wait) {
     return browser
       .waitForElementVisible(selector, wait)
-      .waitForElementNotPresent('.click-block click-block-enabled click-block-active', 10 * 1000)
+      .waitForElementNotPresent('click-block.click-block-enabled.click-block-active', 10 * 1000)
+  },
+  /**
+   * Wait for an element to be visible and 
+   *
+   * @param      {<type>}  browser  The browser
+   */
+  angularClick: function(browser, selector) {
+    return browser
+      .waitForElementVisible(selector, 10 * 1000)
+      .waitForElementNotPresent('.click-block.click-block-enabled.click-block-active', 10 * 1000)
+      .click(selector);
   }
 };
 
