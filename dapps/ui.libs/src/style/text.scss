@@ -115,6 +115,10 @@
     }
   }
 
+  .bold {
+    font-weight: 700;
+  }
+
   .font-weight-semibold {
     font-weight: 600 !important;
   }
@@ -172,5 +176,15 @@
         }
       }
     }
+  }
+
+  a.text-link {
+    text-decoration: underline !important;
+
+    color: #000000;
+  }
+
+   /deep/ em, .emphasized {
+    font-style: normal;
   }
 }

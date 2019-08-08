@@ -2,13 +2,22 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+
+## Version 1.7.0
+### Features
+- update versions of `lodash`, `ts-node`, `typescript`
 - `ui.libs`
   - add `evan-highlight` support for `bg-level-2`
   - add plus svg icon
-
-### Fixes
-
-### Deprecations
+  - add styling for `btn-outline-primary`
+  - add correct `a.text-link` style
+  - add correct `.bold` style
+  - add correct `.emphasized` style
+- `evan.bootstrap.libs`
+  - add css variable support for `input-placeholder-color`
 
 
 ## Version 1.6.0

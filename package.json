@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "tslint": "^5.16.0"
-  },
   "description": "",
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -10,7 +7,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
     "@evan.network/api-blockchain-core": "^2.3.0",
-    "@evan.network/ui-dapp-browser": "^2.2.3",
+    "@evan.network/ui-dapp-browser": "^2.3.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^3.5.95",
     "axios": "^0.18.0",
@@ -34,7 +31,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-typescript": "^5.0.0",
     "husky": "^2.2.0",
-    "lodash": "=4.17.11",
+    "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.5.0",
     "moment": "2.24.0",
     "node-sass": "^4.11.0",
@@ -46,13 +43,14 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.0",
     "ts-loader": "^4.0.0",
-    "ts-node": "3.3.0",
+    "ts-node": "^8.3.0",
     "tsify": "^4.0.1",
-    "typescript": "^2.7.2",
+    "tslint": "^5.16.0",
+    "typescript": "^3.5.3",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "web3": "1.0.0-beta.55",
+    "web3": "2.0.0-alpha",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.2.1"
   },
