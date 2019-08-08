@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "tslint": "^5.16.0"
-  },
   "description": "",
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -10,7 +7,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
     "@evan.network/api-blockchain-core": "^2.3.0",
-    "@evan.network/ui-dapp-browser": "^2.2.3",
+    "@evan.network/ui-dapp-browser": "^2.3.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^3.5.95",
     "axios": "^0.18.0",
@@ -48,6 +45,7 @@
     "ts-loader": "^4.0.0",
     "ts-node": "^8.3.0",
     "tsify": "^4.0.1",
+    "tslint": "^5.16.0",
     "typescript": "^3.5.3",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "vinyl-buffer": "^1.0.0",
