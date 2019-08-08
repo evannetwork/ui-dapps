@@ -267,9 +267,11 @@
                 </div>
                 <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
                   <div class="evan-relative evan-content m-t-0" [hidden]="activePaymentTab === 1">
+                    <label>{{ '_dappprofile.pay-eve.card-number' | translate }}</label>
                     <div item-content #cardElement style="width:100%"></div>
                   </div>
                   <div class="evan-content m-t-0" [hidden]="activePaymentTab === 0">
+                    <label>{{ '_dappprofile.pay-eve.sepa-number' | translate }}</label>
                     <div item-content #sepaElement style="width:100%"></div>
                   </div>
                 </div>

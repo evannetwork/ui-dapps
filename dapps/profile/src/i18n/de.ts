@@ -176,7 +176,9 @@ export const de = {
       "to-pay": "Gesamtsumme",
       "sepa": "SEPA Abbuchung",
       "sepa-hint": "SEPA ist ein Lastschriftverfahren. Der Zeitpunkt der Gutschrift auf die Wallet hängt stark von den Banken ab. Das evan.network hat darauf keinen Einfluss. Dieser Vorgang kann bis zu 14 Tage dauern.",
+      "sepa-number": "IBAN",
       "credit": "Kreditkarte",
+      "card-number": "Kreditkartennummer",
       "payment-information": "Zahlungsinformationen",
       "pay": "Kostenpflichtig bestellen",
       "payment-error": {
@@ -189,7 +191,7 @@ export const de = {
         "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
       },
       "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
-      "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie Evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden.",
+      "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden.",
       "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
       "review-sepa": "Hier können Sie das SEPA-Mandat einsehen."
     },
