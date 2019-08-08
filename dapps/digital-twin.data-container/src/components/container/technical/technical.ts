@@ -59,10 +59,21 @@ export default class ContainerTechnicalComponent extends mixins(EvanComponent) {
   owner = '';
 
   /**
+   * Url of the explorer for the current environment
+   */
+  explorerUrl = '';
+
+  /**
    * Setup the form.
    */
   async created() {
+    const runtime = utils.getRuntime(this);
+
     this.containerAddress = this.address || this.$route.params.containerAddress;
+    // set environment specific variables
+    this.explorerUrl = runtime.environment === 'testcore' ?
+      'https://testexplorer.evan.network' :
+      'https://explorer.evan.network';
 
     await UiContainer.watch(this, async (uiContainer: UiContainer) => {
       this.owner = uiContainer.owner;

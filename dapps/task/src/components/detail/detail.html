@@ -39,7 +39,7 @@
         </ion-col>
         <ion-col col-4 text-right col-md>
           <ng-container *ngIf="!loading && !task.loading && !task.error && !amITheCreator() && task.states && 
-            (task.states[myAccountId] === '0' || task.states[myAccountId] === '1' || task.states[myAccountId] === '2')">
+            (task.states[myAccountId] === 0 || task.states[myAccountId] === 1 || task.states[myAccountId] === 2)">
             <button ion-button icon-end (click)="setMyState(3)" color="danger">
               {{ '_dapptaskboard.reject-task' | translate }}
               <ion-icon name="close"></ion-icon>
@@ -50,10 +50,10 @@
             </button>
           </ng-container>
           <ng-container *ngIf="amITheCreator()">
-            <button ion-button round outline (click)="setContractState(5)" *ngIf="task.contractState === '2' || task.contractState === '0'">
+            <button ion-button round outline (click)="setContractState(5)" *ngIf="task.contractState === 2 || task.contractState === 0">
               {{ '_dapptaskboard.set-active' | translate }}
             </button>
-            <button ion-button round outline *ngIf="task.contractState === '5'" (click)="setContractState(7)">
+            <button ion-button round outline *ngIf="task.contractState === 5" (click)="setContractState(7)">
               {{ '_dapptaskboard.set-contract-terminated' | translate }}
             </button>
           </ng-container>
@@ -196,7 +196,7 @@
               <contract-members
                 [(members)]="membersToAdd"
                 [origin]="task.members"
-                [readonly]="!(amITheCreator() && task.contractState == 2)"
+                [readonly]="!(amITheCreator() && task.contractState === 2)"
                 [contractMemberStates]="task.states"
                 (onChange)="ref.detectChanges()">
               </contract-members>
@@ -235,7 +235,7 @@
         </ion-col>
         <ion-col col-4 text-right col-md>
           <button ion-button round icon-only outline class="todo-toggle"
-            *ngIf="amITheCreator() && task.contractState === '2'"
+            *ngIf="amITheCreator() && task.contractState === 2"
             (click)="addMoreTodos = !addMoreTodos; ref.detectChanges()">
             <ion-icon name="add" *ngIf="!addMoreTodos"></ion-icon>
             <ion-icon name="close" *ngIf="addMoreTodos"></ion-icon>
@@ -245,7 +245,7 @@
     </ion-grid>
 
     <taskboard-todo-create
-      *ngIf="addMoreTodos && task.contractState === '2'"
+      *ngIf="addMoreTodos && task.contractState === 2"
       [(todos)]="todosToAdd"
       [initialOrder]="getNextOrder()"
       (onChange)="ref.detectChanges()">
@@ -414,13 +414,13 @@
         <div class="todo-solve-container" margin-top *ngIf="todo.showDetail">
           <ng-container *ngIf="!todo.solved">
             <ng-container *ngIf="!customDisable(task, todo)">
-              <div *ngIf="task.contractState !== '5' && task.contractState !== '7'" margin-bottom>
+              <div *ngIf="task.contractState !== 5 && task.contractState !== 7" margin-bottom>
                 {{ '_dapptaskboard.todo-finish-hint-1' | translate }}
               </div>
-              <div *ngIf="task.contractState === '5' && !isMyAccountActive()" margin-bottom>
+              <div *ngIf="task.contractState === 5 && !isMyAccountActive()" margin-bottom>
                 {{ '_dapptaskboard.todo-finish-hint-2' | translate }}
               </div>
-              <div *ngIf="task.contractState === '5' && isMyAccountActive() && !isStrictFinish(todo)" margin-bottom>
+              <div *ngIf="task.contractState === 5 && isMyAccountActive() && !isStrictFinish(todo)" margin-bottom>
                 {{ '_dapptaskboard.strict-finish-hint' | translate }}
               </div>
             </ng-container>
@@ -436,7 +436,7 @@
               {{ '_dapptaskboard.close-todo' | translate }}
             </button>
             <button ion-button icon-left round outline
-              *ngIf="todo.showDetail && !todo.solved && (isMyAccountActive() || amITheCreator()) && task.contractState === '5' && !customDisable(task, todo)"
+              *ngIf="todo.showDetail && !todo.solved && (isMyAccountActive() || amITheCreator()) && task.contractState === 5 && !customDisable(task, todo)"
               [disabled]="!isTodoValidForResolve(todo)"
               (click)="finishTodo(todo)">
               <ion-icon name="checkmark"></ion-icon>

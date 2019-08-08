@@ -34,12 +34,12 @@
             {{ '_datacontainer.technical.address' | translate }}
           </label>
           <a target="_blank"
-            :href="`https://testexplorer.evan.network/address/${ uiDT.address }/transactions`">
+            :href="`${ explorerUrl }/address/${ uiDT.address }/transactions`">
             {{ uiDT.address }}
           </a>
           <br>
           <a class="btn btn-primary btn-rounded mt-3 d-inline-block" target="_blank"
-            :href="`https://dashboard.test.evan.network/#/explorer.evan/detail/${ uiDT.address }/general`">
+            :href="`${ dapp.baseUrl }/explorer.evan/detail/${ uiDT.address }/general`">
             {{ '_datacontainer.technical.in-explorer' | translate }}
           </a>
         </div>
@@ -49,7 +49,7 @@
             {{ '_datacontainer.technical.owner' | translate }}
           </label>
           <a target="_blank"
-            :href="`https://testexplorer.evan.network/address/${ uiDT.owner }/transactions`">
+            :href="`${ explorerUrl }/address/${ uiDT.owner }/transactions`">
             {{ uiDT.owner }}
           </a>
         </div>

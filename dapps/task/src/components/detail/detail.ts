@@ -114,6 +114,7 @@ export class TaskDetailComponent extends AsyncComponent {
     this.todosToAdd = [ ];
     this.membersToAdd = [ ];
 
+    this.taskId = this.getTaskId();
     await this.loadTask();
 
     // subscribe for route change
@@ -148,7 +149,7 @@ export class TaskDetailComponent extends AsyncComponent {
   async takeSnapshot(todo) {
     try {
       const picture = await this.pictureService.takeSnapshot();
-      
+
       if (!todo.detail.pictures) {
         todo.detail.pictures = [picture];
       } else {
@@ -173,11 +174,16 @@ export class TaskDetailComponent extends AsyncComponent {
   }
 
   areTodosDisabled(task, todo) {
-    return this.task.contractState !== '5' || !this.isMyAccountActive() || this.customDisable(task, todo) || !this.isStrictFinish(todo);
+    return this.task.contractState !== 5 || !this.isMyAccountActive() || this.customDisable(task, todo) || !this.isStrictFinish(todo);
   }
 
   getTaskId() {
-    return this.routing.getHashParam('address');
+    const taskId = this.routing.getHashParam('address');
+    if (!taskId) {
+      debugger;
+    }
+
+    return taskId;
   }
 
   /**
@@ -330,7 +336,7 @@ export class TaskDetailComponent extends AsyncComponent {
           }, 500);
         }
       }
-    } else if (!todo.solved && this.task.contractState === '5') {
+    } else if (!todo.solved && this.task.contractState === 5) {
       try {
         if (!this.isTodoValidForResolve(todo)) {
           return;
@@ -409,11 +415,11 @@ export class TaskDetailComponent extends AsyncComponent {
       return this.showInvalidSolveAlert(todo, '_dapptaskboard.todo-finish-not-allowed');
     }
 
-    if (this.task.contractState !== '5' && this.task.contractState !== '7') {
+    if (this.task.contractState !== 5 && this.task.contractState !== 7) {
       return this.showInvalidSolveAlert(todo, '_dapptaskboard.todo-finish-hint-1');
     }
 
-    if (this.task.contractState === '5' && !this.isMyAccountActive()) {
+    if (this.task.contractState === 5 && !this.isMyAccountActive()) {
       return this.showInvalidSolveAlert(todo, '_dapptaskboard.todo-finish-hint-2');
     }
 
@@ -493,7 +499,7 @@ export class TaskDetailComponent extends AsyncComponent {
   }
 
   async setContractState(state) {
-    if (state === '7') {
+    if (state === 7) {
       try {
         await this
           .alertService.showSubmitAlert(
@@ -636,7 +642,7 @@ export class TaskDetailComponent extends AsyncComponent {
   }
 
   isMyAccountActive() {
-    return this.task.states[this.myAccountId] === '4';
+    return this.task.states[this.myAccountId] === 4;
   }
 
   amITheCreator() {
@@ -672,7 +678,7 @@ export class TaskDetailComponent extends AsyncComponent {
   }
 
   todoCriteriaChoiceToggle(todo) {
-    if (!todo.solved && this.task.contractState === '5') {
+    if (!todo.solved && this.task.contractState === 5) {
       todo.detail.choice = !todo.detail.choice;
     }
 
