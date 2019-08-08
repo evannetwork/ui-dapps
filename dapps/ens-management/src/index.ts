@@ -166,7 +166,7 @@ class ENSManagementModule {
 
 export async function startDApp(container, dbcpName) {
   const ionicAppEl = createIonicAppElement(container, dbcpName);
-  
+
   await startAngularApplication(ENSManagementModule, getRoutes());
 
   container.appendChild(ionicAppEl);

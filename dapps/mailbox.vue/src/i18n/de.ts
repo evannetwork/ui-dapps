@@ -41,13 +41,13 @@ export default {
         "modal-body": "Wollen Sie diesen Vertrag wirklich akzeptieren?",
         "new": "Vertragseinladung akzeptieren"
       },
+      "url": {
+        "accepted": "Anhang öffnen"
+      },
       "verifications": {
         "accepted": "Ziel öffnen",
         "modal-body": "Wollen Sie die Verifikationen bestätigen?",
         "new": "Verifikation(en) bestätigen"
-      },
-      "url": {
-        "accepted": "Anhang öffnen"
       }
     },
     "breadcrumbs": {

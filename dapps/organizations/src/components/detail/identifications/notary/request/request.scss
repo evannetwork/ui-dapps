@@ -3,28 +3,16 @@
 }
 
 .modal .modal-dialog .modal-content {
-  padding: 0 3rem;
-  max-height: calc(90vh - 140px - 32px);
   overflow-y: auto;
 
-  .step {
-    display: inline-block;
-    margin-top: 1em;
-  }
+  min-height: 300px;
+  max-height: calc(90vh - 140px - 32px);
+  padding: 0 3rem;
 
-  .bold {
-    font-weight: 700;
-  }
+  .step > div {
+    height: 100%;
+    padding: 12px;
 
-  /deep/ em, .emphasized {
-    color: cssVar('dark');
-    font-style: normal;
+    background: #f5f6fa;
   }
-}
-
-/* move to general styles? */
-.btn.btn-rounded i.mdi-arrow-left {
-  margin-left: -10px;
-  background: transparent;
-  border: 1px solid #fff;
 }

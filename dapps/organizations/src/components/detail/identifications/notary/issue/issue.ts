@@ -27,7 +27,6 @@
 
 // vue imports
 import Vue from 'vue';
-import axios from 'axios';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
@@ -44,6 +43,8 @@ import { issueVerification } from '../notary.identifications';
 
 interface IssueFormInterface extends EvanForm {
   files: EvanFormControl;
+  privateFiles: EvanFormControl;
+  publicFiles: EvanFormControl;
   requestId: EvanFormControl;
 }
 
@@ -55,11 +56,19 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
   issueForm: IssueFormInterface = null;
 
   /**
-   * Is currently something in issueing process?
+   * Is currently something in issuing process?
    */
-  issueing = false;
+  issuing = false;
+  status = '';
 
   async created() {
+    this.setupIssueForm();
+  }
+
+  /**
+   * Creates the issue form for gathering issue information.
+   */
+  setupIssueForm() {
     this.issueForm = (<IssueFormInterface>new EvanForm(this, {
       accountId: {
         value: '',
@@ -73,13 +82,20 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
           return !!this.value;
         }
       },
-      files: {
+      publicFiles: {
         value: [ ],
         validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
           return true;
           // return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
         }
-      }
+      },
+      privateFiles: {
+        value: [ ],
+        validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
+          return true;
+          // return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
+        }
+      },
     }));
   }
 
@@ -101,15 +117,29 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
    * Trigger the verification issue request
    */
   async issueIdentification() {
-    this.issueing = true;
+    this.issuing = true;
 
+    const runtime = (<any>this).getRuntime();
     try {
-       await issueVerification((<any>this).getRuntime(), this.issueForm.requestId.value, this.issueForm.files.value)
+      await issueVerification(
+        runtime,
+        this.issueForm.requestId.value,
+        {
+          private: this.issueForm.privateFiles.value,
+          public: this.issueForm.publicFiles.value
+        }
+      );
+
+      // reset form and show success modal
+      this.setupIssueForm();
+      this.status = 'success';
     } catch (ex) {
-      (<any>this).getRuntime().logger.log(ex.message);
-      this.issueForm.requestId._error = ex.message;
+      runtime.logger.log(ex.message, 'error');
+      this.status = 'error';
     }
 
-    this.issueing = false;
+    // show success modal
+    (<any>this.$refs.statusModal).show();
+    this.issuing = false;
   }
 }

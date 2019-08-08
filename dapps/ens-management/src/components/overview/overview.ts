@@ -95,7 +95,7 @@ export class ENSManagementOverviewComponent extends AsyncComponent {
   private ensAddress: string;
 
   /**
-   * if the inserted ens address is available, show the purchase popup 
+   * if the inserted ens address is available, show the purchase popup
    */
   private purchaseEns: any;
 

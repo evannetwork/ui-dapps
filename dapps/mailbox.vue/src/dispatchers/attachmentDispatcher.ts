@@ -77,6 +77,7 @@ dispatcher
         let storeValue = key.storeValue;
         await runtime.profile.addBcContract(key.context || 'contracts', storeKey, storeValue);
       }
+
       for (let verification of data.attachment.verifications) {
         // load nested verifications
         const nestedVerification = await runtime.verifications.getNestedVerificationsV2(
@@ -90,7 +91,6 @@ dispatcher
           runtime.activeAccount,
           nestedVerification.verifications[0].details.id,
         );
-
       }
 
       await runtime.profile.storeForAccount(runtime.profile.treeLabels.contracts);

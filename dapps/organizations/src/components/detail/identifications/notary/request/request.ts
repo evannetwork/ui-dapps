@@ -49,6 +49,12 @@ interface RequestFormIdentInterface extends EvanForm {
   zipCode: EvanFormControl;
   court: EvanFormControl;
   register: EvanFormControl;
+  department: EvanFormControl;
+}
+
+interface LabeledEntry {
+  label: string,
+  value: string
 }
 
 @Component({ })
@@ -66,13 +72,14 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * show formular or accept view
    */
-  status = 0;
+  status = -1;
+
+  /**
+   * Whether the user approved the costs hint.
+   */
+  approvedCosts = false;
 
   steps = [
-    {
-      title: (<any>this).$i18n.translate('_org.ident.notary.step.overview'),
-      disabled: false
-    },
     {
       title: (<any>this).$i18n.translate('_org.ident.notary.step.your_data'),
       disabled: false
@@ -81,7 +88,19 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       title: (<any>this).$i18n.translate('_org.ident.notary.step.summary'),
       disabled: true
     },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.step.costs'),
+      disabled: true
+    },
   ];
+
+  approveData: LabeledEntry[] = [];
+  approveAddress: LabeledEntry[] = [];
+
+  /**
+   * listen for dispatcher updates
+   */
+  listeners: Array<Function> = [ ];
 
   /**
    * Watch if form validity changed and update steps accordingly
@@ -89,14 +108,10 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   @Watch('requestForm.isValid')
   onValidate(valid: boolean, oldValid: boolean) {
     if (valid !== oldValid) {
+      this.steps[1].disabled = !valid
       this.steps[2].disabled = !valid
     }
   }
-
-  /**
-   * listen for dispatcher updates
-   */
-  listeners: Array<Function> = [ ];
 
   async created() {
     this.requestForm = (<RequestFormIdentInterface>new EvanForm(this, {
@@ -173,6 +188,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     this.requestForm.zipCode.value = '';
     this.requestForm.city.value = '';
     this.requestForm.contact.value = '';
+    this.requestForm.department.value = '';
 
     this.checkSending();
     this.listeners.push(dispatchers.requestIdentificationDispatcher
@@ -181,9 +197,50 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         if ($event.detail.status === 'finished') {
           this.status = 3;
           this.sending = false;
-          triggerRequestReload(this.$route.params.address);
+          triggerRequestReload(this.$route.params.address, {
+            status: 'requested',
+          });
         }
-      }));
+      })
+    );
+  }
+
+  updated () {
+    this.approveData = [
+      {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.organization.title'),
+        value: this.requestForm.organization.value
+      },
+      {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.country.title'),
+        value: (<any>this).$i18n.translate(
+          `_org.ident.notary.request.countries.${ this.requestForm.country.value }`),
+      },
+      {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.court.title'),
+        value: this.requestForm.court.value
+      },
+      {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.registerNumber.title'),
+        value: this.requestForm.registerNumber.value
+      }
+    ]
+
+    this.approveAddress = [
+      {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.contact.title'),
+        value: this.requestForm.contact.value
+      }, {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.department.title'),
+        value: this.requestForm.department.value
+      }, {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.address.title'),
+        value: this.requestForm.address.value
+      }, {
+        label: (<any>this).$i18n.translate('_org.ident.notary.request.city.title'),
+        value: this.requestForm.city.value
+      }
+    ];
   }
 
   /**

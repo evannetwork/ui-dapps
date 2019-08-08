@@ -45,9 +45,20 @@ export default class TechnicalComponent extends mixins(EvanComponent) {
   uiDT = null;
 
   /**
+   * Url of the explorer for the current environment
+   */
+  explorerUrl = '';
+
+  /**
    * Setup the form.
    */
   async created() {
+    const runtime = utils.getRuntime(this);
+
     this.uiDT = this.$store.state.uiDT;
+    // set environment specific variables
+    this.explorerUrl = runtime.environment === 'testcore' ?
+      'https://testexplorer.evan.network' :
+      'https://explorer.evan.network';
   }
 }

@@ -24,7 +24,6 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-
 import {
   getDomainName,
   lightwallet,
@@ -82,7 +81,6 @@ import {
   ]
 })
 
-
 /**
  * Buy eves with credit cards component
  *
@@ -93,6 +91,9 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * current used active account id
    */
   private activeAccount: string;
+
+  private PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
+  private PAYMENT_RETRY = 5000; // 5 seconds
 
   /**
    * show an loading symbol
@@ -153,6 +154,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   public cardErrorMessage: string;
 
   /**
+   * holds the url to the sepa mandate from stripe if the user paid via sepa debit
+   */
+  public sepaMandateUrl: string;
+
+  /**
    * bool value if an error exists
    */
   public ibanError: boolean;
@@ -161,6 +167,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * holds error messages for sepa card errors from stripe
    */
   public ibanErrorMessage: string;
+
+  /**
+   * do we have a valid VAT Number?
+   */
+  public isValidVat: boolean = true;
 
   /**
    * stripe optiosn for card or iban elements
@@ -230,7 +241,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
       city: ['', [Validators.required]],
       zip: ['', [Validators.required, Validators.pattern(`^[0-9]*$`)]],
       country: ['', [Validators.required, Validators.minLength(2),  Validators.maxLength(2), Validators.pattern(`^[A-Z]*$`)]],
-      vat: ['', [Validators.required]],
+      vat: ['', []],
       email: ['', [Validators.required, Validators.email]],
       amount: ['', [Validators.required, Validators.min(10)]],
     });
@@ -357,6 +368,16 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * Run detectChanges directly and after and timeout again, to update select fields.
    */
   detectTimeout() {
+    const vatValidators = () => {
+      if(this.stripePayment.get('country').value !== 'DE') {
+          return [Validators.required];
+      } else {
+          return [];
+      }
+    }
+
+    this.stripePayment.get('vat').setValidators(vatValidators());
+
     this.ref.detectChanges();
 
     setTimeout(() => this.ref.detectChanges());
@@ -422,7 +443,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               type: 'vat'
             }
           }
-          console.log('Payment successful!', source);
+          console.log('Payment initiated!', source);
           const activeAccount = this.core.activeAccount();
           const toSignedMessage = this.bcc.web3.utils
             .soliditySha3(new Date().getTime() + activeAccount)
@@ -436,22 +457,80 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               `EvanSignedMessage ${ signature }`
             ].join(',')
           };
-          this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
+          try {
+            this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
+          } catch(error) {
+            this.paymentResponse = {
+              status: 'error',
+              code: this.getErrorCode(error.code)
+            }
+          };
 
           this.paymentRunning = false;
+
+          if ((<any>source).sepa_debit && (<any>source).sepa_debit.mandate_url) {
+            this.sepaMandateUrl = (<any>source).sepa_debit.mandate_url;
+          }
 
           this.ref.detectChanges();
         } else if (result.error) {
           // Error creating the token
           this.paymentResponse = {
             status: 'error',
-            code: result.error.message
+            code: this.getErrorCode(result.error.message)
           }
 
           this.paymentRunning = false;
           this.ref.detectChanges();
         }
       });
+  }
+
+  getErrorCode(code: string) {
+    const translatedCodes = [
+      'unknown_state',
+      'transaction_failed',
+      'charge_failed',
+      'invalid_customer',
+      'price_not_okay',
+      'too_many_accounts',
+      'wallet_not_enough_funds'
+    ];
+
+    return translatedCodes.indexOf(code) !== -1 ? code : 'unknown_state';
+  }
+
+  /**
+   * Checks VAT number against backend.
+   *
+   * @param vat
+   */
+  public async checkVat(vat: string) {
+    if (!vat && this.stripePayment.get('country').value !== 'DE') {
+      return false;
+    }
+
+    if (!vat) {
+      return true;
+    }
+
+    const {status, result} = (await this.http
+      .get(`${ this.agentUrl }/smart-agents/payment-processor/checkVat?vat=${vat}`)
+      .toPromise()
+    ).json();
+
+    return status === 'success' && result === true;
+  }
+
+  /**
+   * Validate VAT number and update UI.
+   *
+   * @param vat
+   */
+  public async validateVat(vat: string) {
+    this.isValidVat = await this.checkVat(vat);
+
+    this.ref.detectChanges();
   }
 
   /**
@@ -464,50 +543,62 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * @return     {promise}  resolved when done
    */
   public async executePayment(id, amount, customer, headers = {}) {
-    return new Promise(async (resolve, reject) => {
-      let requestId;
-      const checkStatus = async() => {
-        return (await this.http
-          .post(
-            `${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
-            {
-              token: id,
-              amount: amount,
-              customer: customer,
-              requestId
-            },
-            (<any>{
-              headers,
-            })
-          )
-          .toPromise()
-        ).json();
-      }
+    let intervalTimer = null;
+    let requestId = null;
 
-      const resolver = async() => {
-        const response = await checkStatus();
-        if (response.status === 'new') {
-          requestId = response.result;
-          setTimeout(async () => {
-            await resolver();
-          }, 5000)
-        }
-        if (response.status === 'ongoing') {
-          setTimeout(async () => {
-            await resolver();
-          }, 5000)
-        }
-        if (response.status === 'success' || response.status === 'error') {
-          clearTimeout(timeout);
-          resolve(response);
-        }
-      }
+    // Check current payment state against smart agent
+    const checkStatus = async() => {
+      return (await this.http
+        .post(
+          `${ this.agentUrl }/smart-agents/payment-processor/executePayment`,
+          {
+            token: id,
+            amount: amount,
+            customer: customer,
+            requestId
+          },
+          (<any>{
+            headers,
+          })
+        )
+        .toPromise()
+      ).json();
+    }
 
-      const timeout = setTimeout(() => {
-        reject(new Error(`timeout for payment`))
-      }, 1000 * 60 * 10)
-      await resolver();
-    })
+    // request every 5 seconds til we got success or error response status
+    const getStatus = async () => {
+      return new Promise((resolve, reject) => {
+        intervalTimer = setInterval( async () => {
+          const response = await checkStatus();
+
+          if (response.status === 'new') {
+            requestId = response.result;
+          }
+
+          if (response.status === 'transferring' || response.status === 'success') {
+            clearInterval(intervalTimer);
+
+            resolve(response);
+          }
+          if (response.status === 'error') {
+            clearInterval(intervalTimer);
+
+            reject(response);
+          }
+        }, this.PAYMENT_RETRY)
+      })
+    };
+
+    // return the first resolving promise
+    return Promise.race([
+      getStatus(),
+      new Promise((_, reject) =>
+          setTimeout(() => {
+            clearInterval(intervalTimer);
+            reject(new Error('timeout for payment'));
+          }, this.PAYMENT_TIMEOUT)
+      )
+    ]);
   }
 
 

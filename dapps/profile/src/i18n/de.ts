@@ -92,6 +92,7 @@ export const de = {
     "notifications": "Benachrichtigungen",
     "notifictions-desc": "Aktiviert Push-Benachrichtigungen für ihr Mobiles Gerät.",
     "ok": "Ok",
+    "contact": "Kontakt",
     "payment": {
       "channel-actions": "Aktionen",
       "create-payment-channel": "Speicherguthaben einrichten",
@@ -153,7 +154,8 @@ export const de = {
       },
       "vat": {
         "title": "USt-IdNr.",
-        "description": "DE99999999999"
+        "description": "DE99999999999",
+        "invalid": "USt-IdNr. konnte nicht validiert werden."
       },
       "amount": {
         "title": "Anzahl EVE Tokens",
@@ -173,12 +175,25 @@ export const de = {
       "vatPercent": "MwSt.",
       "to-pay": "Gesamtsumme",
       "sepa": "SEPA Abbuchung",
+      "sepa-hint": "SEPA ist ein Lastschriftverfahren. Der Zeitpunkt der Gutschrift auf die Wallet hängt stark von den Banken ab. Das evan.network hat darauf keinen Einfluss. Dieser Vorgang kann bis zu 14 Tage dauern.",
+      "sepa-number": "IBAN",
       "credit": "Kreditkarte",
+      "card-number": "Kreditkartennummer",
       "payment-information": "Zahlungsinformationen",
       "pay": "Kostenpflichtig bestellen",
-      "error-payment": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. <b>Ihre Karte wurde NICHT belastet!</b> <br>Bitte versuchen Sie es später noch einmal. Fehlercode: {{ code }}",
-      "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten Minuten.",
-      "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie Evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden."
+      "payment-error": {
+        "unknown_state": "Es ist ein Fehler beim Bezahlvorgang aufgetreten. Bitte kontaktieren Sie unseren Kundensupport.",
+        "transaction_failed": "Ihre Zahlung bzw. Abbuchung war erfolgreich, aber die Transaktion ist in der Blockchain fehlgeschlagen. <b> Ihre Karte wurde belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
+        "charge_failed": "Eine Zahlung kann aufgrund eines fehlgeschlagenen Zahlungs- bzw. Abbuchungsversuchs nicht ausgeführt werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
+        "invalid_customer": "Ihre Kundendaten sind ungültig. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte überprüfen Sie Ihre Kundendaten und versuchen Sie es erneut.",
+        "price_not_okay": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es erneut.",
+        "too_many_accounts": "Es ist ein Fehler mit ihrem Account aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
+        "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
+      },
+      "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
+      "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden.",
+      "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
+      "review-sepa": "Hier können Sie das SEPA-Mandat einsehen."
     },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",

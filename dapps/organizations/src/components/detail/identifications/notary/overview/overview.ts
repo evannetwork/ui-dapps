@@ -35,25 +35,22 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getRequests, getIssuedVerifications } from '../notary.identifications';
+import { getRequests, getIssuedVerifications, getIdentificationDetails } from '../notary.identifications';
 
 @Component({ })
 export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) {
   /**
    * ui status flags
    */
+  error = false;
   loading = true;
-  reloading = true;
+  reloading = false;
+  rerender = false;
 
   /**
    * all my assigned organizations
    */
   requests: Array<string> = null;
-
-  /**
-   * Check for showing the "canIssue button", usually the evan verification account.
-   */
-  canIssue = false;
 
   /**
    * Load request function to be able to listent on reload event
@@ -65,16 +62,29 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
    */
   verifications: any;
 
+  /**
+   * Interval for reloading requests until a new request could be loaded. (will be asynchroniously
+   * and available after the agent has detected the b-mail.)
+   */
+  newRequestsInterval;
+
   async created() {
     // load the organizations
     const runtime = (<any>this).getRuntime();
 
     // set load requests function so we can use it within the event listener
-    this.loadRequests = (async () => {
-      this.reloading = true;
-      this.requests = await getRequests(runtime, this.$route.params.address);
-      this.verifications = [await getIssuedVerifications(runtime)];
-      this.reloading = false;
+    this.loadRequests = (async (rerender: boolean) => {
+      this.rerender = rerender;
+
+      try {
+        this.requests = await getRequests(runtime, this.$route.params.address);
+        this.verifications = await getIssuedVerifications(runtime);
+      } catch (ex) {
+        runtime.logger.log(ex.message, 'error');
+        this.error = true;
+      }
+
+      this.rerender = false;
     }).bind(this);
 
     // load initial data
@@ -83,7 +93,7 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
     // bind reload eventr listener
     window.addEventListener(
       `org-ident-reload-${ this.$route.params.address }`,
-      <any>this.loadRequests
+      ($event) => <any>this.checkNewRequests($event)
     );
 
     this.loading = false;
@@ -97,5 +107,74 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
       `org-ident-reload-${ this.$route.params.address }`,
       <any>this.loadRequests
     );
+  }
+
+  /**
+   * Check several times for new requests until the new status could be loaded.
+   */
+  checkNewRequests($event) {
+    // hide reloading and clear interval check
+    const finishedReloading = () => {
+      this.reloading = false;
+      delete this.newRequestsInterval;
+      clearInterval(this.newRequestsInterval);
+    }
+
+    // clear previously running intervals
+    this.newRequestsInterval && finishedReloading();
+
+    // show reloading dialog
+    this.reloading = true;
+
+    // allow only 20 reloads (60 seconds)
+    let reloads = 0;
+    const detail = $event.detail;
+    const runtime = (<any>this).getRuntime();
+    const check = async () => {
+      await this.loadRequests();
+
+      // increase reload count
+      reloads++;
+      if (reloads === 10) {
+        finishedReloading();
+      } else {
+        switch (detail.status) {
+          // check if any requests could be loaded
+          case 'requested': {
+            this.requests.length !== 0 && finishedReloading();
+            break;
+          }
+          case 'confirming' : {
+            // load request detail for the provided request id
+            const requests = await Promise.all(this.requests
+              .filter(requestId => requestId === detail.requestId)
+              .map(async (requestId: string) => {
+                return await getIdentificationDetails(
+                  runtime,
+                  this.$route.params.address,
+                  requestId,
+                );
+              })
+            );
+
+            // check if the request status has been updated
+            const hasUpdated = requests.filter(req => req.status === 'confirming');
+            hasUpdated.length !== 0 && finishedReloading();
+
+            break;
+          }
+          case 'finished': {
+            this.requests.indexOf(detail.requestId) === -1 && this.verifications.length > 0 &&
+              finishedReloading();
+
+            break;
+          }
+        }
+      }
+    };
+    // run the first check directly
+    check();
+    // check for updates each 2 seconds
+    this.newRequestsInterval = setInterval(check, 2 * 1000);
   }
 }

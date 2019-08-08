@@ -1,4 +1,4 @@
-<!--
+/*
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it
@@ -23,33 +23,29 @@
 
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
--->
+*/
 
-<div class="evan-modal ens-check-modal"
-  [class.show-modal]="!!ensAddress"
-  [class.disable-scrolling]="disableScrolling">
-  <div class="backdrop" (click)="ensAddress = null; ref.detectChanges()"></div>
+<template>
+  <dl class="row labeled-list">
+    <template v-for="(entry, idx) in entries">
+      <dt :key="`dt-${idx}`" class="col-md-4" v-show="!hideLabel">{{ entry.label }}</dt>
+      <dd
+        :key="`dd-${idx}`"
+        :class="{'col-md-8': true, 'offset-md-4': hideLabel}"
+        v-if="!hideEmpty || entry.value"
+      >
+        {{ entry.value || emptyValue }}
+      </dd>
+    </template>
+  </dl>
+</template>
 
-  <div class="evan-content evan-small-content" text-center
-    *ngIf="ensAddress">
-    <h2 class="content-header">{{ ensAddress }}</h2>
+<script lang="ts">
+  import Component from './labeled-list';
+  export default Component;
+</script>
 
-    <ion-icon name="checkmark" color="success"></ion-icon>
-    <span [innerHTML]="'_ensmanagement.available-text' | translate: { ensAddress: ensAddress }">
-    </span>
-    <b>{{ '_ensmanagement.eve-amount' | translate: { ensAddress: ensAddress, amount: ensPrice } }}</b>
+<style lang="scss" scoped>
+  @import './labeled-list.scss'
+</style>
 
-    <span *ngIf="balance < ensPrice">
-      {{ '_ensmanagement.missing-eve' | translate: { ensAddress: ensAddress } }}
-    </span>
-
-    <div text-center margin-top>
-      <button ion-button round outline icon-left
-        (click)="purchaseEnsAddress(ensAddress)"
-        [disabled]="showLoading || balance < ensPrice">
-        <ion-spinner *ngIf="showLoading"></ion-spinner>
-        {{ '_ensmanagement.buy' | translate }}
-      </button>
-    </div>
-  </div>
-</div>

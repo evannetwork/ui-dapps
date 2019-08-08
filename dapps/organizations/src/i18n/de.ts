@@ -25,32 +25,33 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
+/* tslint:disable */  
 const i18n: any = {
   "_org": {
     "breadcrumbs": {
-      "verification": "Verifikation",
       "identifications": "Identifikationen",
       "notary": "Notariell",
       "organization": "Organisation",
-      "organizations": "Organisationen"
+      "organizations": "Organisationen",
+      "verification": "Verifikation"
     },
     "dispatchers": {
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
     "ident": {
+      "back": "Zurück",
       "categories": {
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
       },
+      "done": "Fertig",
+      "error": "Fehler",
+      "error-loading": "Beim Laden der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+      "next": "Weiter",
       "notary": {
-        "step": {
-          "overview": "Überblick",
-          "your_data": "Ihre Daten",
-          "summary": "Zusammenfassung",
-        },
         "account-id": "Account-ID",
+        "check-updates": "Warte auf Aktualisierung...",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
         "issue": {
           "accountId": {
@@ -58,154 +59,172 @@ const i18n: any = {
             "error": "Bitte geben Sie eine gültige Account ID an!",
             "title": "Account-ID"
           },
+          "header": "Organisations-Verifikation ausstellen",
+          "issue": "Organisations-Verifikation ausstellen",
+          "issuing": "Organisations-Verifikation wird ausgestellt",
+          "issued": {
+            "error": {
+              "desc": "Die Organisations-Verifikation konnte nicht ausgestellt werden. Bitte versuchen Sie es erneut oder kontaktieren Sie Ihren Administrator.",
+              "title": "Fehler"
+            },
+            "success": {
+              "desc": "Die Organisations-Verifikation wurde erfolgreich ausgestellt.",
+              "title": "Abgeschlossen"
+            }
+          },
+          "privateFiles": {
+            "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
+            "title": "Verschlüsselte, notariell bestätige Dateien"
+          },
+          "publicFiles": {
+            "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
+            "title": "Öffentliche, notariell bestätige Dateien"
+          },
           "requestId": {
             "desc": "Geben Sie die Anfrage-ID an, für die die Notarielle Verifikation abgeschlossen werden soll, ein.",
             "error": "Bitte geben Sie eine korrekte Anfrage-ID ein!",
             "title": "Anfrage-ID"
-          },
-          "files": {
-            "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
-            "title": "Notariell bestätige Dateien"
-          },
-          "header": "Organisations-Verifikation ausstellen",
-          "issue": "Organisations-Verifikation ausstellen"
+          }
         },
         "learn-more": "Mehr erfahren",
         "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
-          "desc": "Bitte geben Sie die PIN ein, die Ihnen zugesendet wurde und generieren Sie ihren Bestätigungscode.",
+          "desc": "Bitte geben Sie Ihre PIN ein. Sie finden Ihre PIN in der Bestätigungsanfrage des Notars.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
-          "desc2": "Senden Sie das Dokument dann bitte an die unten angeführte Adresse.",
-          "generate-answer": "Bestätigungscode generieren",
-          "header": "Notarielle Verifikation",
+          "did-printed": "Haben Sie das Dokument gedruckt?",
+          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Fimenstempel und schicken Sie es per Post an den anfragenden Notar.",
+          "download": "Kein Drucker verfügbar? Download als PDF Datei",
+          "generate-answer": "Code generieren",
+          "header": "Authentifizierung",
+          "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihr Account verifiziert.",
+          "next-step2": "Sie werden in Ihrer Account Mailbox darüber informiert.",
           "pin": {
             "desc": "Die per Brief erhaltene, sechstellige PIN.",
-            "error": "Bitte geben Sie die PIN ein, um fortzufahren.",
+            "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
             "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
             "title": "PIN"
+          },
+          "step": {
+            "pin": "PIN",
+            "print": "Bestätigungsdokument drucken",
+            "send": "Per Post senden"
           }
         },
         "print": "Drucken",
+        "reload": "Neu-laden",
         "request": {
-          "why": {
-            "title": "Warum eine Notarielle Verifikation",
-            "intro": "Mit einer notariellen Verifikation können Ihre Geschäftspartner sicher sein, dass ...",
-            "advantages": [
-              "ihr Account von <em>Ihnen</em> und nicht von einem Dritten betrieben wird.",
-              "Ihre Firma im <em>Handelsregister</em> eingetragen ist.",
-              "sie mit <em>vertrauenswürdigen Partnern</em> arbeiten."
-            ]
-          },
-          "how": {
-            "title": "Wie wird Notariell Verifiziert?",
-            "intro": "Die notarielle Verifikation Ihres Accounts erfolgt durch eine notarielle Überprüfung des Handelsregisters sowie einer notariellen Zwei-Faktor-Authentifizierung. Somit bietet diese Form der Account-Verifizierung die höchste Sicherheit im evan.network.",
-            "steps": {
-              "1": {
-                "title": "Beantragen Sie Ihre Verifikation",
-                "question": "Was brauche ich dafür?"
-              },
-              "2": {
-                "title": "Warten Sie auf die Aufforderung des Notars",
-                "question": "Wie lange dauert es, bis ich die Aufforderung erhalte?"
-              },
-              "3": {
-                "title": "Übersenden Sie Ihren Bestätigungscode dem Notar",
-                "question": "Wie erhalte ich meinen Bestätigungscode?"
-              },
-              "4": {
-                "title": "Erhalten und bestätigen Sie die notarielle Verifikation",
-                "question": " An wen wende ich mich, wenn ich keine Bestätigung erhalten habe? Wie lange dauert der gesamte Prozess?"
-              }
-            }
-          },
-          "costs": {
-            "title": "Was kostet eine Notarielle Verifikation?",
-            "intro": "Für die Ausstellung einer notariellen Verifikation wird Ihr Wallet mit 200 EVE belastet."
-          },
-          "step": "Schritt",
           "address": {
-            "desc": "Anschrift eingeben",
+            "desc": "Straße und Hausnummer",
             "error": "Bitte geben Sie eine Anschrift an!",
             "title": "Anschrift"
           },
-          "back": "Zurück",
           "city": {
-            "desc": "Stadt eingeben",
+            "desc": "Ort",
             "error": "Bitte geben Sie einen Stadt an!",
             "title": "Stadt"
           },
-          "organization": {
-            "desc": "Unternehmensname eingeben",
-            "error": "Bitte geben Sie den Unternehmensnahme an!",
-            "title": "Unternehmensnahme und Rechtsform"
-          },
           "contact": {
-            "desc": "Ansprechpartner angeben",
+            "desc": "Vorname und Nachname",
             "error": "Bitte geben Sie eine Kontaktperson an!",
             "title": "Ansprechpartner"
           },
+          "costs": {
+            "approve": "Ja, ich fordere die notarielle Verifikation zu den Transaktionskosten von 200 EVE an.",
+            "description": "Die Transaktionskosten für die notarielle Verifikation betragen 200 EVE. Ihr Wallet wird mit diesem Betrag belastet.",
+            "hint": "Das Anfordern einer notariellen Verifikation ist kostenpflichtig.",
+            "title": "Kosten"
+          },
+          "countries": {
+            "germany": "Deutschland"
+          },
+          "country": {
+            "desc": "Firmensitz eingeben",
+            "error": "Bitte geben Sie einen Firmensitz an!",
+            "title": "Firmensitz"
+          },
           "court": {
-            "title": "Registergericht",
+            "desc": "Ort des Amtsgerichts",
             "error": "Bitte geben Sie das Registergericht an!",
-            "desc": "Ort des Amtsgerichts"
+            "title": "Registergericht"
           },
           "department": {
             "desc": "Abteilung",
             "error": "Bitte geben Sie eine Abteilung an!",
             "title": "Abteilung"
           },
-          "register": {
-            "title": "Register",
-            "error": "Bitte geben Sie das Register an!",
-            "desc": "Register"
-          },
-          "registerNumber": {
-            "title": "Registernummer",
-            "error": "Bitte geben Sie die Registernummer an!",
-            "desc": "98765"
-          },
-          "countries": {
-            "germany": "Deutschland"
-          },
-          "country": {
-            "desc": "Unternehmenssitz eingeben",
-            "error": "Bitte geben Sie einen Unternehmenssitz an!",
-            "title": "Unternehmenssitz"
-          },
           "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
           "header": "Notarielle Verifikation",
+          "how": {
+            "steps": {
+              "1": {
+                "description": "Geben Sie Handelsregisternummer, Registergericht, ihre Anschrift und einen Ansprechpartner an.",
+                "title": "Schritt 1: Anfordern"
+              },
+              "2": {
+                "description": "Sie erhalten eine PIN per Post. Generieren Sie mit dieser das Bestätigungsdokument und senden Sie es unterschrieben per Post an den anfragenden Notar.",
+                "title": "Schritt 2: Authentifizieren"
+              },
+              "3": {
+                "description": "Ist die notarielle Verifikation erfolgreich, werden Sie benachrichtigt. Akzeptieren Sie als letzten Schritt die Verifikation.",
+                "title": "Schritt 3: Akzeptieren"
+              }
+            },
+            "title": "Schritte"
+          },
           "mail": {
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
-          "next": "Weiter",
+          "organization": {
+            "desc": "Firmenname",
+            "error": "Bitte geben Sie den Unternehmensname an!",
+            "title": "Firma"
+          },
           "postal-address": "Anschrift",
           "proof": {
-            "contact-is": "Kontaktperson ist",
-            "footer": "Die notarielle Verifikation ist kostenpflichtig.",
-            "footer2": "Ihr Wallet wird mit 200 EVE belastet.",
-            "for-org": "für die Organisation",
-            "question-desc": "Zur Vervollständigung der notariellen Verifikation erhalten Sie ein Kennwort, zu Händen der folgenden Person.",
-            "title": "Bitte überprüfen Sie alle Informationen.",
-            "with-reg-number": "mit der Handelsregisternummer",
-            "you-request": "Sie beantragen eine",
-            "you-request-2": "notarielle Verifikation"
+            "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
+            "title": "Bitte überprüfen Sie Ihre Daten."
+          },
+          "register": {
+            "desc": "Register",
+            "error": "Bitte geben Sie das Register an!",
+            "title": "Register"
+          },
+          "registerNumber": {
+            "desc": "98765",
+            "error": "Bitte geben Sie die Registernummer an!",
+            "title": "Registernummer"
           },
           "request-ident": "Beantragen",
-          "requested1": "Sie haben erfolgreich eine Notarielle Verifikation für Ihre Organisation beantragt.",
-          "requested2": "Ihr Wallet wurde mit 200 EVE belastet.",
-          "requesting": "Notarielle Verifikation wird beantragt...",
+          "request-verification": "Notarielle Verifikation beantragen",
+          "requested1": "Sie haben erfolgreich eine notarielle Verifikation angefordert.",
+          "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
+          "requested3": "Sie erhalten in Kürze vom Notar Post!",
+          "requesting": "Notarielle Verifikation wird angefordert...",
+          "step": "Schritt",
+          "who": {
+            "description": "Als eingetragenes Unternehmen können sie eine notarielle Verifikation ihres Accounts anfordern.",
+            "link": "Mehr erfahren",
+            "title": "Voraussetzungen"
+          },
+          "why": {
+            "description": "Mit der notariellen Verifikation wird bestätigt, dass ihr Unternehmen im Besitz der Account-ID {{accountId}} ist. Durch diese Bestätigung können Sie sich gegenüber ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
+            "link": "Mehr erfahren",
+            "title": "Vorteile"
+          },
           "zipCode": {
-            "desc": "PLZ eingeben",
+            "desc": "Postleitzahl",
             "error": "Bitte geben Sie eine gültige Postleitzahl an!",
             "title": "PLZ"
           }
         },
+        "request-error": "Informationen zu dieser Anfrage konnten nicht geladen werden!",
         "status": {
           "accepted": "notariell verifiziert",
           "confirming": "in Prüfung",
+          "finished": "notariell verifiziert",
           "forwarding": "wird vom Provider bearbeitet",
           "issued": "notariell verifiziert",
           "requested": "beantragt",
@@ -219,12 +238,17 @@ const i18n: any = {
           "unknown": "Beantragen",
           "unknown-long": "Notarielle Verifikation beantragen"
         },
+        "step": {
+          "costs": "Kosten",
+          "summary": "Zusammenfassung",
+          "your_data": "Ihre Daten"
+        },
         "title": "Notarielle Verifikationen",
         "verification": {
           "accept": "Annehmen",
+          "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "organization": "Organisations-Verifikation",
           "organization-random": "Organisations-ID-Verifikation",
-          "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "status": "Status"
         }
       }

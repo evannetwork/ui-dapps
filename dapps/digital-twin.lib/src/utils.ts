@@ -34,10 +34,8 @@ import dispatchers from './dispatchers';
 /**
  * Global constants
  */
-export const containerFactory = '0x92DFbA8b3Fa31437dD6bd89eC0D09E30564c8D7d';
 export const latestTwinsKey = 'evan-last-digital-twins';
 export const nullAddress = '0x0000000000000000000000000000000000000000';
-export const twinFactory = '0x278e86051105c7a0ABaf7d175447D03B0c536BA6';
 
 /**
  * Add a address to the last opened twins array.
@@ -90,7 +88,6 @@ export function getContainer(runtime: bcc.Runtime, address: string): bcc.Contain
   return new bcc.Container(<any>runtime, {
     accountId: runtime.activeAccount,
     address: address,
-    factoryAddress: containerFactory
   });
 }
 
@@ -112,12 +109,19 @@ export async function getDigitalTwinBaseDbcp(): Promise<any> {
 }
 
 /**
- * Returns the active domain name (currently payable, until the nameresolve is fixed)
+ * Returns the active domain name (currently payable, until the nameresolver is fixed)
  *
  * @return     {string}  domain name (default evan)
  */
 export function getDomainName(): string {
-  return 'payable' || dappBrowser.getDomainName();
+  const coreRuntime = dappBrowser.bccHelper.coreRuntimes[bcc.instanceId];
+
+  // return custom payable for dev net, return evan for others
+  if (coreRuntime.dfs.dfsConfig.host === 'ipfs.test.evan.network') {
+    return 'fifs.registrar.test.evan';
+  } else {
+    return dappBrowser.getDomainName();
+  }
 }
 
 /**
@@ -151,7 +155,6 @@ export function getDigitalTwinConfig(
     address: address,
     containerConfig: { accountId: runtime.activeAccount, },
     description: dbcp,
-    factoryAddress: twinFactory,
   }
 }
 
@@ -212,12 +215,15 @@ export function getRuntime(runtime: any): bcc.Runtime {
   runtime = runtime.getRuntime ? runtime.getRuntime() : runtime;
 
   const nameResolverConfig = cloneDeep(bcc.lodash, dappBrowser.config.nameResolver, true);
-  // set the custom ens contract address
-  nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
-  nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
 
+  // // set the custom ens contract address for testnet, to be able to use the payable ens registrar
+  // if (runtime.dfs.dfsConfig.host === 'ipfs.test.evan.network') {
+  //   nameResolverConfig.ensAddress = '0xaeF6Cc6D8048fD1fbb443B32df8F00A07FA55224';
+  //   nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
+  // }
   // apply correct factory address
-  nameResolverConfig.domains.containerFactory = containerFactory;
+  nameResolverConfig.domains.containerFactory = `container.factory.${ dappBrowser.getDomainName() }`;
+  nameResolverConfig.domains.indexFactory = `index.factory.${ dappBrowser.getDomainName() }`;
 
   // copy runtime and set the nameResolver
   const runtimeCopy = Object.assign({ }, runtime);

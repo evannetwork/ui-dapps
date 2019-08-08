@@ -28,19 +28,28 @@
 <template>
   <div class="container-wide">
     <div class="d-flex align-items-center mb-5">
-      <div>
+      <div class="d-flex align-items-center">
         <h3 class="font-weight-bold mb-0">
           {{ '_org.ident.notary.title' | translate }}
         </h3>
+
+        <button class="btn" @click="loadRequests(true)">
+          <i class="mdi mdi-reload"></i>
+          <evan-tooltip :placement="'bottom'">
+            {{ `_org.ident.notary.reload` | translate }}
+          </evan-tooltip>
+        </button>
       </div>
       <span class="mx-auto"></span>
       <div v-if="!loading">
         <org-ident-notary-request
-          ref="identAction">
+          ref="identAction"
+          @requested="checkNewRequests()">
         </org-ident-notary-request>
+        <!-- v-if="requests.length === 0 && verifications.length === 0" -->
         <a class="btn btn-primary btn-rounded" target="_blank"
-
           :id="`ident-request-unknown`"
+          v-if="testMode"
           @click="$refs.identAction.show()">
           {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
@@ -50,11 +59,22 @@
 
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
+      <div class="white-box border-smooth rounded w-100 p-3 text-center" v-if="error">
+        <h3>{{ '_org.ident.error' | translate }}</h3>
+        <span>{{ '_org.ident.error-loading' | translate }}</span>
+      </div>
       <div class="white-box border-smooth rounded w-100 text-center"
-        v-if="requests.length === 0 && verifications.length === 0">
+        v-else-if="reloading">
+        <div class="white-box content text-center">
+          <evan-loading></evan-loading>
+          <h4>{{ '_org.ident.notary.check-updates' | translate }}</h4>
+        </div>
+      </div>
+      <div class="white-box border-smooth rounded w-100 text-center"
+        v-else-if="requests.length === 0 && verifications.length === 0">
         <div class="content">
           {{ '_org.ident.notary.no-requests' | translate }}
-
+          <br>
           <a class="btn btn-primary btn-rounded mt-3" target="_blank"
             :id="`ident-request-unknown`"
             @click="$refs.identAction.show()">
@@ -63,15 +83,14 @@
           </a>
         </div>
       </div>
-      <div v-else>
-        <div class="mt-3"
-          v-for="(verification) in verifications">
+      <div v-else-if="!rerender">
+        <div class="mt-3" v-if="verifications && verifications.length !== 0">
           <org-ident-notary-detail
-            :verifications="verification">
+            :verifications="verifications">
           </org-ident-notary-detail>
         </div>
         <div class="mt-3"
-          v-for="(requestId, index) in requests">
+          v-for="(requestId) in requests">
           <org-ident-notary-detail
             :requestId="requestId">
           </org-ident-notary-detail>

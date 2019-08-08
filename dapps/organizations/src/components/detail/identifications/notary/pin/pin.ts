@@ -36,6 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { getIdentificationDetails, getAnswer, triggerRequestReload } from '../notary.identifications';
+import { stringify } from 'querystring';
 
 interface PinFormInterface extends EvanForm {
   pin: EvanFormControl;
@@ -58,11 +59,6 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   pinForm: PinFormInterface = null;
 
   /**
-   * received answer for the provided pin
-   */
-  answer: string = null;
-
-  /**
    * stored blob url for pdf
    */
   pdfUrl = '';
@@ -72,11 +68,30 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    */
   _printIframe;
 
-
   /**
    * show formular or accept view
    */
   status = 0;
+
+  /**
+   * Keeps track of the printing state
+   */
+  printStatus = 'initial';
+
+  steps = [
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.pin'),
+      disabled: false
+    },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.print'),
+      disabled: true
+    },
+    {
+      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.send'),
+      disabled: true
+    },
+  ];
 
   async created() {
     this.pinForm = (<PinFormInterface>new EvanForm(this, {
@@ -107,20 +122,16 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
    * Use the current pin input, check for the correct pin and try to receive the answer.
    */
   async generateAnswer() {
-    // TODO: add correct generate answer request
     this.checkingPin = true;
 
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
     try {
-      const runtime: bcc.Runtime = (<any>this).getRuntime();
       const answerResponse = await getAnswer(runtime, this.pinForm.pin.value.trim(), this.requestId)
       const url = window.URL.createObjectURL(answerResponse);
-      this.answer = 'NICE CODE';
       this.pdfUrl = url;
-
-      triggerRequestReload(this.$route.params.address);
       this.status = 1;
     } catch (ex) {
-      console.dir(ex)
+      runtime.logger.log(ex, 'error');
       this.pinForm.pin.error = 'error2';
     }
 
@@ -130,19 +141,58 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   /**
    * prints a given blob pdf url with the dialog
    */
-  printPdf() {
+  printPdfOrNext() {
+    const nextStatus = 2;
+
+    if (this.printStatus === 'failed' || this.printStatus === 'success') {
+      this.status = nextStatus;
+
+      return;
+    }
+
     if (!this._printIframe) {
       this._printIframe = document.createElement('iframe');
+      this._printIframe.src = this.pdfUrl;
+      this._printIframe.style.display = 'none';
+
       document.body.appendChild(this._printIframe);
 
-      this._printIframe.style.display = 'none';
-      this._printIframe.onload = () => {
-        setTimeout(() => {
-          this._printIframe.focus();
-          this._printIframe.contentWindow.print();
-        }, 1);
+      const print = (): Promise<any> => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              this._printIframe.focus();
+              this._printIframe.contentWindow.print();
+
+              resolve('success');
+            } catch (ex) {
+              reject('failed');
+            }
+          }, 1);
+        })
+      };
+
+      this._printIframe.onload = async () => {
+        this.printStatus = await print().catch(() => {
+          window.open(this.pdfUrl);
+
+          this.printStatus = 'failed';
+        })
+
+        if (this.printStatus === 'success') {
+          this.status = nextStatus;
+        }
       };
     }
-    this._printIframe.src = this.pdfUrl;
+  }
+
+  /**
+   * Trigger the request reloading.
+   */
+  triggerRequestReload() {
+    triggerRequestReload(this.$route.params.address, {
+      status: 'confirming',
+      requestId: this.requestId
+    });
   }
 }

@@ -38,17 +38,20 @@
             <ion-icon name="close-circle-outline"></ion-icon>
           </ion-col>
           <ion-col col-8>
-            <ion-label [innerHTML]="'_dappprofile.pay-eve.error-payment' | translate : paymentResponse"></ion-label>
+            <ion-label [innerHTML]="'_dappprofile.pay-eve.payment-error.' + paymentResponse.code | translate">
+            </ion-label>
+            <p>{{ '_dappprofile.contact' | translate}}: <a href="mailto:support@evan.team">support@evan.team</a></p>
           </ion-col>
         </ion-row>
       </div>
-      <div class="success-hint w100 chip-md-success" *ngIf="paymentResponse?.status === 'success'" color="success">
+      <div class="success-hint w100 chip-md-success" *ngIf="paymentResponse?.status === 'success' || paymentResponse?.status === 'transferring'" color="success">
         <ion-row>
           <ion-col col-2 class="display-flex-justify">
             <ion-icon name="checkmark-circle-outline"></ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-label [innerHTML]="'_dappprofile.pay-eve.successful-payment' | translate"></ion-label>
+            <p *ngIf="sepaMandateUrl"><a href="{{sepaMandateUrl}}" target="_blank" rel="noopener noreferrer">{{ '_dappprofile.pay-eve.review-sepa' | translate}}</a></p>
           </ion-col>
         </ion-row>
       </div>
@@ -222,18 +225,22 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.vat.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.vat.title' | translate }}<span *ngIf="payEve.country !== 'DE'">*</span>
                   </h3>
                 </ion-label>
-                <ion-input formControlName="vat" required type="text"
+                <ion-input formControlName="vat" type="text"
                   [(ngModel)]="payEve.vat"
                   [placeholder]="'_dappprofile.pay-eve.vat.description' | translate"
                   (ionChange)="ref.detectChanges()"
-                  (focusout)="ref.detectChanges()">
+                  (focusout)="ref.detectChanges(); validateVat(payEve.vat);"
+                >
                 </ion-input>
               </ion-item>
               <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'vat')" color="danger">
                 <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
+              </ion-chip>
+              <ion-chip class="warning-hint" *ngIf="payEve.vat && !isValidVat" color="warning">
+                <ion-label>{{ '_dappprofile.pay-eve.vat.invalid' | translate }}</ion-label>
               </ion-chip>
             </ion-col>
           </ion-row>
@@ -260,10 +267,11 @@
                 </div>
                 <div class="evan-tabs-container" [@tabSlideTransition]="activePaymentTab">
                   <div class="evan-relative evan-content m-t-0" [hidden]="activePaymentTab === 1">
+                    <label>{{ '_dappprofile.pay-eve.card-number' | translate }}</label>
                     <div item-content #cardElement style="width:100%"></div>
-
                   </div>
                   <div class="evan-content m-t-0" [hidden]="activePaymentTab === 0">
+                    <label>{{ '_dappprofile.pay-eve.sepa-number' | translate }}</label>
                     <div item-content #sepaElement style="width:100%"></div>
                   </div>
                 </div>
@@ -275,6 +283,7 @@
                 </ion-chip>
               </div>
             </ion-item>
+            <p [hidden]="activePaymentTab === 0">{{'_dappprofile.pay-eve.sepa-hint' | translate}}</p>
           </ion-row>
         </ion-col>
         <ion-col col-4 class="border-left">
@@ -294,6 +303,7 @@
               <ion-icon name="cash"></ion-icon>
               <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
             </button>
+            <p *ngIf="paymentRunning">{{'_dappprofile.pay-eve.processing-hint' | translate}}...</p>
           </div>
           <div [hidden]="activePaymentTab === 0">
             <p class="text-justify">

@@ -4,14 +4,14 @@
     "dapp": {
       "dependencies": {
         "angular-core": "^2.1.2",
-        "angular-libs": "^2.1.0"
+        "angular-libs": "^2.1.1"
       },
       "entrypoint": "task.js",
       "files": [
         "task.css",
         "task.js"
       ],
-      "origin": "QmXaxwjNK4dDXs9MbijJJr98bPoyk4kyVWP5Aa98UckyPD",
+      "origin": "QmWEUQDZLkhrZDyBSEA9ZFpCTM1iZbRibGhHmFTGmBsGJY",
       "primaryColor": "#e87e23",
       "secondaryColor": "#fffaf5",
       "standalone": true,
@@ -181,7 +181,7 @@
       "dapp",
       "evan"
     ],
-    "version": "2.1.0",
+    "version": "2.1.1",
     "versions": {
       "0.1.0": "QmWKCUi4we4TBKtYHPiStMyCcXgH7SE5yfzHvja5EThhDU",
       "0.9.0": "QmdFTLweurTPpGC9riiSStnDt4Fn1aQCj4vE9hwnCps6Pe",
@@ -191,7 +191,9 @@
       "1.1.0": "QmR8ZDkEKSqiqJL8udLQ8MCr15uRGDq47CymnNddVgJqxB",
       "1.2.0": "QmacZJU4Pw9m7Qwq87tez9tk5UxX54tDGzgVkQ4jAux1mw",
       "1.3.0": "QmfQHEXX6jbYa26QMLUnMaVQXrZzTpEYy4rNMz3Wtvpq1G",
-      "2.0.0": "QmQapZssrDgyFmhxevapXaY1afgoMSKj1JPvz2PWWGUr7y"
+      "2.0.0": "QmQapZssrDgyFmhxevapXaY1afgoMSKj1JPvz2PWWGUr7y",
+      "2.1.0": "QmY7f6YTZah86utPqcVe6gkxgAVuhQAhFZhgy1Qt31soUq",
+      "2.1.1": "Qmazm8BBGasrWi8QqMtB4C8ZKGRfUQaDAWCxQiXJPoJZKo"
     }
   }
 }

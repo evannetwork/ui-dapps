@@ -2,18 +2,42 @@
 
 ## Next Version
 ### Features
+### Fixes
+### Deprecations
+
+
+## Version 3.7.0
+### Features
+- update versions of `lodash`, `typescript`
 - `dashboard.vue`
   - add new dashboard cards
 - `terms-of-use`
   - add updated terms of use
 - `mailbox.vue`
   - add new entry for accepting verifications
+- `digitaltwin`, `digital-twin.data-container`, `digital-twin.lib`
+  - remove defined factory contract addresses for `DigitalTwin` and `Container` creation and use default ens addresses
+  - use environment specific links for `technical` detail view
+- `organizations`
+  - allow private / public files for identification verification issuing
+  - split `issued` and `finished` state, so the user do not must enter his mailbox
+  - add correct state management and reloading logic
+- `explorer`
+  - fix base contract details loading for `web3 beta 55`
+- `task`
+  - fix contract state handling for `web3 beta 55`
+- `profile.vue`
+  - add `organizations` tab
 
 ### Fixes
 - `organizations`
   - update UI with additional feedback
-
-### Deprecations
+  - add error handling for identification overview
+  - fix typos
+- `ensmanagement`
+  - use `evan` as root address and default `ens resolver` for mainnet
+- `mailbox.vue`
+  - add missing translations
 
 
 ## Version 3.6.0

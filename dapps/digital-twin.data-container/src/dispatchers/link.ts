@@ -51,7 +51,6 @@ dispatcher
         accountId: runtime.activeAccount,
         address: data.digitalTwinAddress,
         containerConfig: { accountId: runtime.activeAccount, },
-        factoryAddress: utils.twinFactory,
       }
     );
 

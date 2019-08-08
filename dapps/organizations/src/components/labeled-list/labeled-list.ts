@@ -1,4 +1,4 @@
-<!--
+/*
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it
@@ -23,33 +23,54 @@
 
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
--->
+*/
 
-<div class="evan-modal ens-check-modal"
-  [class.show-modal]="!!ensAddress"
-  [class.disable-scrolling]="disableScrolling">
-  <div class="backdrop" (click)="ensAddress = null; ref.detectChanges()"></div>
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-  <div class="evan-content evan-small-content" text-center
-    *ngIf="ensAddress">
-    <h2 class="content-header">{{ ensAddress }}</h2>
+/**
+ * Shape of each step object
+ */
+interface Entry {
+  label: string;
+  value: string;
+}
 
-    <ion-icon name="checkmark" color="success"></ion-icon>
-    <span [innerHTML]="'_ensmanagement.available-text' | translate: { ensAddress: ensAddress }">
-    </span>
-    <b>{{ '_ensmanagement.eve-amount' | translate: { ensAddress: ensAddress, amount: ensPrice } }}</b>
+/**
+ * Labeled list component shows a definition list with types and data fields.
+ */
+@Component({ })
+export default class LabeledList extends mixins(EvanComponent) {
+  /**
+   * The steps array, with the shape of Step interface:
+   *  { title: String, disabled: boolean }
+   */
+  @Prop({
+    type: Array,
+    default: []
+  }) entries: Entry[]
 
-    <span *ngIf="balance < ensPrice">
-      {{ '_ensmanagement.missing-eve' | translate: { ensAddress: ensAddress } }}
-    </span>
+  @Prop({
+    type: String,
+    default: '--'
+  }) emptyValue: string
 
-    <div text-center margin-top>
-      <button ion-button round outline icon-left
-        (click)="purchaseEnsAddress(ensAddress)"
-        [disabled]="showLoading || balance < ensPrice">
-        <ion-spinner *ngIf="showLoading"></ion-spinner>
-        {{ '_ensmanagement.buy' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
+  @Prop({
+    type: Boolean,
+    default: false
+  }) hideEmpty: boolean
+
+  @Prop({
+    type: Boolean,
+    default: false
+  }) hideLabel: boolean
+
+
+  created() {
+    if (this.entries.length === 0) {
+      console.warn('no entries defined for <labeled-list> ');
+    }
+  }
+}

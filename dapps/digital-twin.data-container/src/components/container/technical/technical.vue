@@ -35,12 +35,12 @@
             {{ '_datacontainer.technical.address' | translate }}
           </label>
           <a target="_blank"
-            :href="`https://testexplorer.evan.network/address/${ containerAddress }/transactions`">
+            :href="`${ explorerUrl }/address/${ containerAddress }/transactions`">
             {{ containerAddress }}
           </a>
           <br>
           <a class="btn btn-primary btn-rounded mt-3 d-inline-block" target="_blank"
-            :href="`https://dashboard.test.evan.network/#/explorer.evan/detail/${ containerAddress }/general`">
+            :href="`${ dapp.baseUrl }/explorer.evan/detail/${ containerAddress }/general`">
             {{ '_datacontainer.technical.in-explorer' | translate }}
           </a>
         </div>
@@ -50,7 +50,7 @@
             {{ '_datacontainer.technical.owner' | translate }}
           </label>
           <a target="_blank"
-            :href="`https://testexplorer.evan.network/address/${ owner }/transactions`">
+            :href="`${ explorerUrl }/address/${ owner }/transactions`">
             {{ owner }}
           </a>
         </div>

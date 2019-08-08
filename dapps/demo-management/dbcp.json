@@ -4,15 +4,15 @@
     "dapp": {
       "dependencies": {
         "angular-core": "^2.1.2",
-        "angular-libs": "^2.1.0",
-        "smart-contracts": "^2.4.3"
+        "angular-libs": "^2.1.1",
+        "smart-contracts": "^2.5.0"
       },
       "entrypoint": "demomanagement.js",
       "files": [
         "demomanagement.css",
         "demomanagement.js"
       ],
-      "origin": "QmYQp21fDd3bmRL6W9GBoAQJPuPZrWaqzfRdSdEw1CjG19",
+      "origin": "QmSW7Xg6t6cEA1hfKEJT4DP5NtqguNfEdZ498nqSb9ybWm",
       "primaryColor": "#51afac",
       "secondaryColor": "#edeada",
       "standalone": true,
@@ -40,7 +40,8 @@
     "version": "1.5.0",
     "versions": {
       "1.0.0": "QmVpETB7n1mFuu5Dcj7yBeHXGCb5SdyTyeVN56NFCAk7QG",
-      "1.1.0": "QmPtkhZDpwyWUtgosHeNx7oLnUQ2YromTCJTtjVk9Dpo8f"
+      "1.1.0": "QmPtkhZDpwyWUtgosHeNx7oLnUQ2YromTCJTtjVk9Dpo8f",
+      "1.5.0": "Qmf7c2kXkxTRvt37zkP3DgdxDvdiuYxVYBHfMFayzu7zWP"
     }
   }
 }

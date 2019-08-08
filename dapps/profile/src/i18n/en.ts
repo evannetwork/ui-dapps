@@ -88,6 +88,7 @@ export const en = {
     "notifications": "Notifications",
     "notifictions-desc": "Enables push notifications for your mobile device.",
     "ok": "ok",
+    "contact": "Contact",
     "payment": {
       "channel-actions": "Actions",
       "create-payment-channel": "Setup storage funds",
@@ -149,7 +150,8 @@ export const en = {
       },
       "vat": {
         "title": "VAT",
-        "description": "DE99999999999"
+        "description": "DE99999999999",
+        "invalid": "The VAT number could not be validated."
       },
       "amount": {
         "title": "Amount of EVE Tokens",
@@ -158,7 +160,6 @@ export const en = {
       "input": {
         "error": "This field is required!",
         "errorAmount": "At least 10 EVE must be purchased!"
-
       },
       "card": {
         "title": "Card number"
@@ -170,12 +171,25 @@ export const en = {
       "vatPercent": "VAT",
       "to-pay": "Total amount",
       "sepa": "SEPA direct debit",
+      "sepa-hint": "SEPA is a direct debit scheme. The time of the credit to the wallet depends strongly on the the banks. The evan.network has no influence on this. This process can take up to 14 days.",
+      "sepa-number": "IBAN",
       "credit": "Credit card",
+      "card-number": "Credit Card Number",
       "payment-information": "Payment details",
       "pay": "Order at cost",
-      "error-payment": "An error occurred during the payment process. <b>Your card was NOT debited!</b> Please try again later. Error code: {{ code }}",
-      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.<br />The amount will be credited in the next minutes to your wallet.",
-      "sepa-acceptance": "By providing your IBAN and confirming this payment, you are authorizing Evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited."
+      "payment-error": {
+        "unknown_state": "An unknown error occurred during the payment process. Please contact our customer support.",
+        "transaction_failed": "Your payment/charge was successful but the transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
+        "charge_failed": "A payment cannot be completed because of a failed payment/charge attempt. <b>Your card was NOT debited!</b> Please try again later.",
+        "invalid_customer": "Your customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
+        "price_not_okay": "An unknown error occurred on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
+        "too_many_accounts": "An unknown error occurred regarding your account. <b>Your card was NOT debited!</b> Please contact our customer support.",
+        "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later."
+      },
+      "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.<br />The amount will be credited in the next 5 to 10 minutes to your wallet.",
+      "sepa-acceptance": "By providing your IBAN and confirming this payment, you are authorizing evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.",
+      "processing-hint": "Processing payment, this may take 3 to 5 minutes",
+      "review-sepa": "You can review the SEPA mandate here."
     },
     "private-key": "Private Key",
     "privatekey-desc": "The private key of your account secures access to your blockchain identity.",
