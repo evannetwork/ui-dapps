@@ -144,7 +144,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
   printPdfOrNext() {
     const nextStatus = 2;
 
-    if (this.printStatus === 'failed' || this.printStatus === 'success') {
+    if (this.printStatus !== 'initial') {
       this.status = nextStatus;
 
       return;
