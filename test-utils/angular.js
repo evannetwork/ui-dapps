@@ -68,18 +68,27 @@ module.exports = {
   angularWaitForElementVisible: function(browser, selector, wait) {
     return browser
       .waitForElementVisible(selector, wait)
-      .waitForElementNotPresent('click-block.click-block-enabled.click-block-active', 10 * 1000)
+      .waitForElementNotPresent('.click-block.click-block-enabled.click-block-active', 10 * 1000)
   },
   /**
    * Wait for an element to be visible and 
    *
    * @param      {<type>}  browser  The browser
    */
-  angularClick: function(browser, selector) {
-    return browser
-      .waitForElementVisible(selector, 10 * 1000)
-      .waitForElementNotPresent('.click-block.click-block-enabled.click-block-active', 10 * 1000)
-      .click(selector);
+  angularClick: async function(browser, selector) {
+    await browser.waitForElementVisible(selector, 10 * 1000);
+
+    // await browser.execute(function() {
+    //   try {
+    //     const clickBlocks = document.querySelectorAll('.click-block.click-block-enabled.click-block-active');
+    //     clickBlocks.forEach(clickBlock => clickBlock.parentElement.removeChild(clickBlock));
+    //   } catch (ex) { }
+
+    //   return true;
+    // });
+    await browser.waitForElementNotPresent('.click-block.click-block-enabled.click-block-active', 10 * 1000);
+    // await pause(300)
+    await browser.click(selector);
   }
 };
 

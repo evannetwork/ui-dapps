@@ -158,37 +158,34 @@ const solveTransportOrder = async function(browser) {
     // check if the order can be loaded
   await browser.waitForElementVisible(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`, wait.loading)
   await evan.angularClick(`${ elements.dt.ordersContainer } ${ elements.dt.newOrder } button`)
-  await browser.waitForElementVisible(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(2)`, wait.element)
 
-    // accept the contract
+  // accept the contract
   await evan.angularClick(`${ elements.order.detail.metadata } ion-grid ion-col:nth-child(2) button:nth-child(2)`)
   await evan.syncFinished()
 
-    // finish 1. task
-  await browser.waitForElementVisible(`${ elements.order.detail.todo(2) } .todo-header-container button`, wait.element)
+  // finish 1. task
   // activate todo
   await evan.angularClick(`${ elements.order.detail.todo(2) } .todo-header-container button`)
   // activate todo
   await browser.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
+  await browser.pause(1000)
   await evan.angularClick(`ion-alert .alert-button-group button:nth-child(2)`)
   await evan.syncFinished()
 
   // finish 2. task
-  await browser.waitForElementVisible(`${ elements.order.detail.todo(3) } .todo-header-container button`)
   // activate todo
   await evan.angularClick(`${ elements.order.detail.todo(3) } .todo-header-container button`)
   // submit alert
   await browser.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
+  await browser.pause(1000)
   await evan.angularClick(`ion-alert .alert-button-group button:nth-child(2)`)
   await evan.syncFinished();
 
   // do not test picture taking in other browsers than chrome
   if (browser.options.desiredCapabilities.browserName === 'chrome') {
     // finish 3. task
-    await browser.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-header-container button`, wait.element)
     // open todo
     await evan.angularClick(`${ elements.order.detail.todo(4) } .todo-header-container button`)
-    await browser.waitForElementVisible(`${ elements.order.detail.todo(4) } .todo-data`, wait.element)
     // select first radio checkbox
     await evan.angularClick(`${ elements.order.detail.todo(4) } .todo-data button#rb-0-0`)
 
@@ -218,18 +215,19 @@ const solveTransportOrder = async function(browser) {
 
     // finish 4. task
     await browser.waitForElementVisible(`${ elements.order.detail.todo(5) } .todo-header-container button`, wait.element)
-      // open todo
+    // open todo
     await evan.angularClick(`${ elements.order.detail.todo(5) } .todo-header-container button`)
     await browser.waitForElementVisible(`${ elements.order.detail.todo(5) } .todo-data input`, wait.element)
 
-      // set input value
+    // set input value
     await browser.setValue(`${ elements.order.detail.todo(5) } .todo-data input`, 'Test Schadensreport Signatur')
 
-      // // draw to canvas
+    // draw to canvas
+    await browser.pause(2000);
     await browser.moveToElement('canvas', 10, 10)
     await browser.mouseButtonClick(0)
 
-      // finish the todo
+    // finish the todo
     await evan.angularClick(`${ elements.order.detail.todo(5) } .todo-data .todo-solve-container button`)
     await evan.syncFinished()
 
@@ -237,8 +235,9 @@ const solveTransportOrder = async function(browser) {
     await browser.waitForElementVisible(`${ elements.order.detail.tasks } > div > button`, wait.element)
     await evan.angularClick(`${ elements.order.detail.tasks } > div > button`)
       // accept the popup
-    await browser.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element)
-    await evan.angularClick(`ion-alert .alert-button-group button:nth-child(2)`)
+    await browser.waitForElementVisible(`ion-alert .alert-button-group button:nth-child(2)`, wait.element);
+    await browser.pause(1000)
+    await evan.angularClick(`ion-alert .alert-button-group button:nth-child(2)`);
     await evan.syncFinished()
   }
 }
