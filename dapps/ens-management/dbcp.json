@@ -4,16 +4,16 @@
     "dapp": {
       "dependencies": {
         "angular-core": "^2.1.2",
-        "angular-libs": "^2.1.0",
-        "explorer": "^1.5.1",
-        "smart-contracts": "^2.4.3"
+        "angular-libs": "^2.1.1",
+        "explorer": "^1.5.2",
+        "smart-contracts": "^2.5.0"
       },
       "entrypoint": "ensmanagement.js",
       "files": [
         "ensmanagement.css",
         "ensmanagement.js"
       ],
-      "origin": "QmSPr7AD3WV3AZyrigskpxTtNJt7ArCq7pXKJcpFt9YRh3",
+      "origin": "QmfWhzKgT3suXHmBaECNMpAfiJDa8ioA5porRzX6PNskGH",
       "primaryColor": "#999d2a",
       "secondaryColor": "#f1f1d6",
       "standalone": true,
@@ -38,11 +38,12 @@
       "evan",
       "library"
     ],
-    "version": "1.5.0",
+    "version": "1.5.1",
     "versions": {
       "1.0.0": "QmTGP96Snnob9nSXCzGkWakTrzZ1UsAQ1VY7bCBEwLyivn",
       "1.1.0": "QmXh5NY2iaXzuNQ1RbrLRXbWZzB9RGJLno2gL7xsMp8aQE",
-      "1.5.0": "QmNd3RAeNBiJQro8P9XYndJGwiDmir4K3Fgfjscg6Zm9jn"
+      "1.5.0": "QmNd3RAeNBiJQro8P9XYndJGwiDmir4K3Fgfjscg6Zm9jn",
+      "1.5.1": "QmUkB4XQ6NWmdJX193xXWTYVUk8KXP1XYwyNrTqhatP9j1"
     }
   }
 }

@@ -4,15 +4,15 @@
     "dapp": {
       "dependencies": {
         "dexie.libs": "^2.0.4",
-        "digitaltwin.lib": "^1.7.1",
-        "evancore.vue.libs": "^1.3.0"
+        "digitaltwin.lib": "^1.8.0",
+        "evancore.vue.libs": "^1.4.0"
       },
       "entrypoint": "datacontainer.digitaltwin.js",
       "files": [
         "datacontainer.digitaltwin.js",
         "datacontainer.digitaltwin.css"
       ],
-      "origin": "QmQXc6K4qyBRAZkjzsfdj8EstJ614VG3t5gWEsoDoTTDKk",
+      "origin": "QmUjxpxpqdF3GL4WxJc5EQ12TvLP86XBF51CyMEen97otu",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -38,7 +38,7 @@
       "evan",
       "library"
     ],
-    "version": "1.7.1",
+    "version": "1.8.0",
     "versions": {
       "0.1.0": "QmRb9kLp9h2iuwuCRrJSndMAsXBnTi1ZtffBdNG9Ue8aiU",
       "0.9.0": "Qmbghjv6wRMMybvTcEcsPKKsRvQxWQjJEcLcB6oeBc1Rwo",
@@ -53,7 +53,8 @@
       "1.6.0": "QmUYD6nqu619kvnmPrxtqYGnBV1JZoGbdRH8pZWnFiHJA4",
       "1.6.1": "QmdjBBWk34jNPnjB9D767vVTAEyeomXURaJyLsYmGCKx65",
       "1.7.0": "Qmd3xMXbZntkB2HPmH6aW4NvErARNKnNuwPeRJtUFX3ctk",
-      "1.7.1": "QmYzovrMFw99N21ug7reFRtMGqtEqDjFTw9gwV85ZJNf6s"
+      "1.7.1": "QmYzovrMFw99N21ug7reFRtMGqtEqDjFTw9gwV85ZJNf6s",
+      "1.8.0": "QmTJpU28UxXpvVWK7LR8cvjCKLG2RL9QWWD245oB4k2he6"
     }
   }
 }

@@ -300,7 +300,7 @@ export class TaskService {
       for (let todo of todos) {
         const logEntry = logs.find(taskLog => taskLog.id === todo.id);
         let todoDetailEntry;
-        
+
         if (task && task.todos) {
           todoDetailEntry = task.todos.find(originTodo => originTodo.id === todo.id);
         }
