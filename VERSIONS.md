@@ -3,6 +3,11 @@
 ## Next Version
 ### Features
 ### Fixes
+- `digital-twin.data-container`
+  - fill empty `type` in plugin template before creating `DataContainer`
+- `addressbook.vue`
+  - do not try to display verifications for email addresses
+
 ### Deprecations
 
 

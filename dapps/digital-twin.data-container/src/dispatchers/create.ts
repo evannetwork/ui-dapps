@@ -56,6 +56,11 @@ dispatcher
       }
     });
 
+    // fill empty plugin type
+    if (!data.plugin.template.type) {
+      data.plugin.template.type = 'PLUGIN';
+    }
+
     // create the container
     const container = await bcc.Container.create(<any>runtime, {
       accountId: runtime.activeAccount,

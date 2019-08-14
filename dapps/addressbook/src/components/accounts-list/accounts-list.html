@@ -131,13 +131,15 @@
               <td>{{ account }}</td>
               <td>{{ accounts[account].email }}</td>
               <td *ngIf="verifications.length > 0">
-                <evan-verification
-                  *ngFor="let verification of verifications"
-                  [topic]="verification"
-                  [address]="account"
-                  [mode]="'icon'"
-                  [compute]="true">
-                </evan-verification>
+                <ng-container *ngIf="account.startsWith('0x')">
+                  <evan-verification
+                    *ngFor="let verification of verifications"
+                    [topic]="verification"
+                    [address]="account"
+                    [mode]="'icon'"
+                    [compute]="true">
+                  </evan-verification>
+                </ng-container>
               </td>
               <td text-right>
                 <button ion-button clear item-end>
