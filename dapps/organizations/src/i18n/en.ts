@@ -222,11 +222,11 @@ const i18n: any = {
         },
         "request-error": "Request could not be loaded!",
         "status": {
-          "accepted": "notarially verified",
+          "accepted": "verified by notary",
           "confirming": "under review",
-          "finished": "notarially verified",
+          "finished": "verified by notary",
           "forwarding": "is processed by the provider",
-          "issued": "notarially verified",
+          "issued": "verified by notary",
           "requested": "requested",
           "title": "Verification",
           "unknown": "no verification"

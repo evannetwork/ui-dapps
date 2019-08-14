@@ -69,7 +69,7 @@
               <div class="row row-eq-height">
                 <div v-for="(key) in ['1', '2', '3']" :key="key" class="step col-md-4">
                   <div>
-                    <h5 class="bold bold emphasized">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</h5>
+                    <h5 class="bold">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</h5>
                     <p>{{`_org.ident.notary.request.how.steps.${key}.description` | translate}}</p>
                   </div>
                 </div>
