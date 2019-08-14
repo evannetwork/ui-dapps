@@ -2,11 +2,13 @@
 
 ## Next Version
 ### Features
+
 ### Fixes
 - `digital-twin.data-container`
   - fill empty `type` in plugin template before creating `DataContainer`
 - `addressbook.vue`
   - do not try to display verifications for email addresses
+- add missing dependencies (`@evan.network/ui`, `@evan.network/ui-vue-core`)
 
 ### Deprecations
 
