@@ -389,9 +389,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * @return     {Promise<any>}  resolved when done
    */
   public buy() {
-
     this.paymentResponse = null;
-
     this.paymentRunning = true;
 
     this.ref.detectChanges();
@@ -425,6 +423,11 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
       )
       .subscribe(async (result) => {
         if (result.source) {
+          const tax_info = vat ? {
+            tax_id: vat,
+            type: 'vat'
+          } : undefined;
+
           const source = result.source;
           const customer = {
             email,
@@ -438,12 +441,10 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
                 postal_code: zip,
               }
             },
-            tax_info: {
-              tax_id: vat,
-              type: 'vat'
-            }
+            tax_info
           }
           console.log('Payment initiated!', source);
+
           const activeAccount = this.core.activeAccount();
           const toSignedMessage = this.bcc.web3.utils
             .soliditySha3(new Date().getTime() + activeAccount)
@@ -457,6 +458,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               `EvanSignedMessage ${ signature }`
             ].join(',')
           };
+
           try {
             this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
           } catch(error) {
