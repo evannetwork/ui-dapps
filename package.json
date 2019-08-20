@@ -5,6 +5,8 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
+    "@evan.network/ui": "^1.8.0",
+    "@evan.network/ui-vue-core": "^1.4.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.0.0",

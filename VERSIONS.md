@@ -2,6 +2,7 @@
 
 ## Next Version
 ### Features
+
 ### Fixes
 - `digital-twin.data-container`
   - fill empty `type` in plugin template before creating `DataContainer`
@@ -11,6 +12,7 @@
   - fix `popover-content` size of favorite action callouts
 - `terms-of-use`
   - fix typo of testnet terms of use
+- add missing dependencies (`@evan.network/ui`, `@evan.network/ui-vue-core`)
 
 ### Deprecations
 
