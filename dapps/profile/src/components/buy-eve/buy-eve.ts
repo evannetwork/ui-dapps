@@ -274,7 +274,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               fontFamily: '"Open Sans", sans-serif',
               fontSize: '14px',
               '::placeholder': {
-                color: '#CFD7E0'
+                color: 'rgba(255,255,255,0.5)'
               }
             }
           }
@@ -291,7 +291,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
               fontFamily: '"Open Sans", sans-serif',
               fontSize: '14px',
               '::placeholder': {
-                color: '#CFD7E0'
+                color: 'rgba(255,255,255,0.5)'
               }
             }
           }

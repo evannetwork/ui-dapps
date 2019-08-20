@@ -141,7 +141,7 @@ export const en = {
         "description": "San Francisco"
       },
       "zip": {
-        "title": "ZIP",
+        "title": "Postal Code",
         "description": "94107"
       },
       "country": {
@@ -171,7 +171,7 @@ export const en = {
       "vatPercent": "VAT",
       "to-pay": "Total amount",
       "sepa": "SEPA direct debit",
-      "sepa-hint": "SEPA is a direct debit scheme. The time of the credit to the wallet depends strongly on the the banks. The evan.network has no influence on this. This process can take up to 14 days.",
+      "sepa-hint": "SEPA is a direct debit scheme. The time of the credit to the wallet depends strongly on the banks. The evan.network has no influence on this. This process can take up to 14 days.",
       "sepa-number": "IBAN",
       "credit": "Credit card",
       "card-number": "Credit Card Number",
