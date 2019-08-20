@@ -4,4 +4,15 @@
   min-height: 300px;
   max-height: calc(90vh - 140px - 32px);
   padding: 0 3rem;
+
+  .modal-header h5 {
+    margin-left: 3rem;
+  }
+}
+
+/* Theme overwrite */
+.evan.theme-evan {
+  h4, h5, .bold {
+    font-weight: bold;
+  }
 }

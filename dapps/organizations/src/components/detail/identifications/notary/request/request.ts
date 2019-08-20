@@ -222,7 +222,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       },
       {
         label: (<any>this).$i18n.translate('_org.ident.notary.request.registerNumber.title'),
-        value: this.requestForm.registerNumber.value
+        value: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`
       }
     ]
 
@@ -297,7 +297,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationEvanId: (<any>this).getRuntime().activeAccount,
       court: this.requestForm.court.value,
       organizationRegistration: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
-      registrationNumber: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`,
       organizationName: this.requestForm.organization.value,
       organizationStreetAddress: this.requestForm.address.value,
       organizationZipCode: this.requestForm.zipCode.value,

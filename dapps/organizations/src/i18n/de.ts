@@ -25,7 +25,7 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */  
+/* tslint:disable */
 const i18n: any = {
   "_org": {
     "breadcrumbs": {

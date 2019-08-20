@@ -1,0 +1,16 @@
+@function cssVar($name) {
+  @return var(--evan-#{$name});
+}
+
+.step > div {
+  height: 100%;
+  padding: 12px;
+  background: cssVar('bg-level-3');
+}
+
+/* Theme overwrite */
+.evan.theme-evan {
+  h4, h5, .bold {
+    font-weight: bold;
+  }
+}

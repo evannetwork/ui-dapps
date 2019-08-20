@@ -49,34 +49,7 @@
 
             <!-- Verification start info -->
             <div id="ident-desc" v-if="status === -1">
-              <h4>{{'_org.ident.notary.request.why.title' | translate}}</h4>
-              <p class="mb-4">{{ $t('_org.ident.notary.request.why.description', { accountId: $route.params.address }) }}
-                <a href="https://evannetwork.github.io/docs/first_steps/power_apps/notary-verification.html"
-                  class="text-link" target="_blank" rel="noreferer noopener">
-                  {{'_org.ident.notary.request.why.link' | translate}}
-                </a>
-              </p>
-
-              <h4>{{'_org.ident.notary.request.who.title' | translate}}</h4>
-               <p class="mb-4">{{'_org.ident.notary.request.who.description' | translate}}
-                <a href="https://evannetwork.github.io/docs/first_steps/power_apps/notary-verification.html"
-                  class="text-link" target="_blank" rel="noreferer noopener">
-                  {{'_org.ident.notary.request.who.link' | translate}}
-                </a>
-              </p>
-
-              <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
-              <div class="row row-eq-height">
-                <div v-for="(key) in ['1', '2', '3']" :key="key" class="step col-md-4">
-                  <div>
-                    <h5 class="bold">{{`_org.ident.notary.request.how.steps.${key}.title` | translate}}</h5>
-                    <p>{{`_org.ident.notary.request.how.steps.${key}.description` | translate}}</p>
-                  </div>
-                </div>
-              </div>
-
-              <h4 class="mt-4 mb-4">{{'_org.ident.notary.request.costs.title' | translate}}</h4>
-              <p class="mb-4">{{'_org.ident.notary.request.costs.description' | translate}}</p>
+             <info-content />
             </div>
 
             <!-- request verification form -->

@@ -131,7 +131,7 @@ const i18n: any = {
             "title": "Contact"
           },
           "costs": {
-            "approve": "Yes, I request the notarized verification of the transaction cost of 200 EVE.",
+            "approve": "Yes, I request notarial verification, at the transaction cost of 200 EVE.",
             "description": "The transaction costs for notarial verification are 200 EVE. Your wallet will be debited with this amount.",
             "hint": "The request for a notarial verification is subject to a fee.",
             "title": "Costs"
