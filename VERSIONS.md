@@ -5,6 +5,7 @@
 ### Fixes
 - `ui.libs`
   - add correct `line-height` to `evan-dropdown` children
+  - add `scrypt` adjustments for `browserify` build
 
 ### Deprecations
 
