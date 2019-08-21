@@ -238,7 +238,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         value: this.requestForm.address.value
       }, {
         label: (<any>this).$i18n.translate('_org.ident.notary.request.city.title'),
-        value: this.requestForm.city.value
+        value: `${this.requestForm.zipCode.value} ${this.requestForm.city.value}`
       }
     ];
   }
