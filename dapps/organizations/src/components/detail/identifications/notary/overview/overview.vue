@@ -77,7 +77,7 @@
           </a>
         </div>
       </div>
-      <div if="!rerender">
+      <div v-if="!rerender">
         <div class="mt-3" v-if="verifications && verifications.length !== 0">
           <org-ident-notary-detail
             :verifications="verifications">
