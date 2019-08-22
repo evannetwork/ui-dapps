@@ -173,8 +173,12 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    */
   public isValidVat: boolean = true;
 
+
+  colorTheme: string
+
+
   /**
-   * stripe optiosn for card or iban elements
+   * stripe options for card or iban elements
    */
   elementsOptions: ElementsOptions = {
     locale: 'auto'
@@ -228,6 +232,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   async _ngOnInit() {
   // set the initial loading cricle
     this.loading = true;
+    this.colorTheme = window.localStorage ? window.localStorage.getItem('evan-color-theme') : ''
 
     this.ref.detectChanges();
     // load profile information
@@ -261,40 +266,30 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
         this.cardError = true;
 
         this.elements = elements;
+
+        const style = {
+          base: {
+            iconColor: this.colorTheme === 'light' ? '#333333' : '#FFFFFF',
+            color: this.colorTheme === 'light' ? '#333333' : '#FFFFFF',
+            lineHeight: '40px',
+            fontWeight: 300,
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: '14px',
+            '::placeholder': {
+              color: this.colorTheme === 'light' ? 'rgba(50,50,50,0.5)' : 'rgba(255,255,255,0.5)'
+            }
+          }
+        }
         // create a new credit card element
         this.card = this.elements.create('card', {
           hidePostalCode: true,
           supportedCountries: ['SEPA'],
-          style: {
-            base: {
-              iconColor: '#FFFFFF',
-              color: '#FFFFFF',
-              lineHeight: '40px',
-              fontWeight: 300,
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: '14px',
-              '::placeholder': {
-                color: '#CFD7E0'
-              }
-            }
-          }
+          style
         });
         // create a new iban element from stripe
         this.iban = this.elements.create('iban', {
           supportedCountries: ['SEPA'],
-          style: {
-            base: {
-              iconColor: '#FFFFFF',
-              color: '#FFFFFF',
-              lineHeight: '40px',
-              fontWeight: 300,
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: '14px',
-              '::placeholder': {
-                color: '#CFD7E0'
-              }
-            }
-          }
+          style
         });
 
         // listen on changes to the cards and display possible error messages
@@ -368,16 +363,13 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    * Run detectChanges directly and after and timeout again, to update select fields.
    */
   detectTimeout() {
-    const vatValidators = () => {
-      if(this.stripePayment.get('country').value !== 'DE') {
-          return [Validators.required];
-      } else {
-          return [];
-      }
+    if(this.stripePayment.get('country').value !== 'DE') {
+      this.stripePayment.get('vat').setValidators([Validators.required]);
+    } else {
+      this.stripePayment.get('vat').setValidators([]);
     }
 
-    this.stripePayment.get('vat').setValidators(vatValidators());
-
+    this.stripePayment.get('vat').updateValueAndValidity();
     this.ref.detectChanges();
 
     setTimeout(() => this.ref.detectChanges());
