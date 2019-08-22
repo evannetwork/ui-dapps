@@ -8,6 +8,10 @@
   - fill empty `type` in plugin template before creating `DataContainer`
 - `addressbook.vue`
   - do not try to display verifications for email addresses
+- `favorites`
+  - fix `popover-content` size of favorite action callouts
+- `terms-of-use`
+  - fix typo of testnet terms of use
 - add missing dependencies (`@evan.network/ui`, `@evan.network/ui-vue-core`)
 
 ### Deprecations
