@@ -39,15 +39,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import addFavoriteDispatcher from '../../dispatchers/add';
 import removeFavoriteDispatcher from '../../dispatchers/remove';
 
-@Component({
-  filters: {
-    testFilter: function() {
-      console.log(arguments);
-
-      return 'filters!!'
-    }
-  }
-})
+@Component({ })
 export default class OverviewComponent extends mixins(EvanComponent) {
   /**
    * favorites of the current user
