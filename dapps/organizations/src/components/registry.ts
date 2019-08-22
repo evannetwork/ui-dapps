@@ -36,6 +36,7 @@ import InfoDialogComponent from './detail/info/info.vue';
 import NotaryDetailComponent from './detail/identifications/notary/detail/detail.vue';
 import StepsIndicator from './steps-indicator/steps-indicator.vue';
 import LabeledList from './labeled-list/labeled-list.vue';
+import InfoContent from './detail/info/info-content.vue';
 
 // export them all, so other applications can access them
 export { }
@@ -50,6 +51,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'org-ident-info-dialog', component: InfoDialogComponent },
   { name: 'steps-indicator', component: StepsIndicator },
   { name: 'labeled-list', component: LabeledList },
+  { name: 'info-content', component: InfoContent },
 ];
 
 export default componentRegistration;

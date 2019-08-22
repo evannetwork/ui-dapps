@@ -116,8 +116,8 @@ export default class IdentNotaryOverviewComponent extends mixins(EvanComponent) 
     // hide reloading and clear interval check
     const finishedReloading = () => {
       this.reloading = false;
-      delete this.newRequestsInterval;
       clearInterval(this.newRequestsInterval);
+      delete this.newRequestsInterval;
     }
 
     // clear previously running intervals

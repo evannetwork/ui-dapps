@@ -26,7 +26,7 @@
 */
 
 <template>
-  <div class="evan theme-evan">
+  <div class="evan theme-evan organization">
     <evan-dapp-wrapper
       :routes="[ ]">
       <template v-slot:content>
