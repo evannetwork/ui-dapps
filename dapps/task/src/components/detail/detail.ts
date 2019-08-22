@@ -252,9 +252,7 @@ export class TaskDetailComponent extends AsyncComponent {
 
   async onTodoQueueFinish(queueFinish, loadStates?) {
     if (queueFinish && !this.lockTodoQueue) {
-      console.log('onTodoQueueFinish');
       this.lockTodoQueue = true;
-      await new Promise(resolve => setTimeout(resolve, 1000));
       const dataContract = await this.taskService.getDataContract();
 
       this.hideTodoDetail({ });
