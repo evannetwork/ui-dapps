@@ -35,4 +35,10 @@ dapp-list {
     background-repeat: no-repeat;
     background-size: 50px;
   }
+
+  .popover-content {
+    position: absolute !important;
+
+    width: auto !important;
+  }
 }

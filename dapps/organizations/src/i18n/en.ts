@@ -131,7 +131,7 @@ const i18n: any = {
             "title": "Contact"
           },
           "costs": {
-            "approve": "Yes, I request the notarized verification of the transaction cost of 200 EVE.",
+            "approve": "Yes, I request notarial verification, at the transaction cost of 200 EVE.",
             "description": "The transaction costs for notarial verification are 200 EVE. Your wallet will be debited with this amount.",
             "hint": "The request for a notarial verification is subject to a fee.",
             "title": "Costs"
@@ -142,7 +142,7 @@ const i18n: any = {
           "country": {
             "desc": "Company headquarters country",
             "error": "Please select the company headquartes country",
-            "title": "Company headquarters country"
+            "title": "Company HQ country"
           },
           "court": {
             "desc": "Where is the company registered?",
@@ -222,11 +222,11 @@ const i18n: any = {
         },
         "request-error": "Request could not be loaded!",
         "status": {
-          "accepted": "notarially verified",
+          "accepted": "verified by notary",
           "confirming": "under review",
-          "finished": "notarially verified",
+          "finished": "verified by notary",
           "forwarding": "is processed by the provider",
-          "issued": "notarially verified",
+          "issued": "verified by notary",
           "requested": "requested",
           "title": "Verification",
           "unknown": "no verification"

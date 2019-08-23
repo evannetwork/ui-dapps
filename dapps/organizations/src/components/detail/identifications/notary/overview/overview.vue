@@ -41,19 +41,13 @@
         </button>
       </div>
       <span class="mx-auto"></span>
+      <!-- v-if="testMode || (requests.length === 0 && verifications.length === 0)" -->
+
       <div v-if="!loading">
         <org-ident-notary-request
           ref="identAction"
           @requested="checkNewRequests()">
         </org-ident-notary-request>
-        <!-- v-if="requests.length === 0 && verifications.length === 0" -->
-        <a class="btn btn-primary btn-rounded" target="_blank"
-          :id="`ident-request-unknown`"
-          v-if="testMode"
-          @click="$refs.identAction.show()">
-          {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
-          <i class="mdi mdi-arrow-right label ml-3"></i>
-        </a>
       </div>
     </div>
 
@@ -71,7 +65,7 @@
         </div>
       </div>
       <div class="white-box border-smooth rounded w-100 text-center"
-        v-else-if="requests.length === 0 && verifications.length === 0">
+        v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
         <div class="content">
           {{ '_org.ident.notary.no-requests' | translate }}
           <br>
@@ -83,14 +77,13 @@
           </a>
         </div>
       </div>
-      <div v-else-if="!rerender">
+      <div v-if="!rerender">
         <div class="mt-3" v-if="verifications && verifications.length !== 0">
           <org-ident-notary-detail
             :verifications="verifications">
           </org-ident-notary-detail>
         </div>
-        <div class="mt-3"
-          v-for="(requestId) in requests">
+        <div class="mt-3" v-for="(requestId) in requests">
           <org-ident-notary-detail
             :requestId="requestId">
           </org-ident-notary-detail>

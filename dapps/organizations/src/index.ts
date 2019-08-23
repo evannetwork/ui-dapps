@@ -33,6 +33,8 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 
+import './index.scss';
+
 export * from './components/registry';
 export * from './dispatchers/registry';
 export { translations }

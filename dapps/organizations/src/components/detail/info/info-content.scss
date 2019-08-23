@@ -25,19 +25,10 @@
   https://evan.network/license/
 */
 
-.modal .modal-dialog .modal-content {
-  overflow-y: auto;
+@import '~@evan.network/ui/src/style/utils';
 
-  min-height: 300px;
-  max-height: calc(90vh - 140px - 32px);
-  padding: 0 3rem;
-
-  .modal-header h5 {
-    margin-left: 3rem;
-  }
-}
-
-.grouped {
-  margin-top: 28px;
-  overflow: hidden;
+.step > div {
+  height: 100%;
+  padding: 12px;
+  background: cssVar('bg-level-3');
 }

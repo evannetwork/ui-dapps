@@ -68,7 +68,7 @@
 
         <org-ident-info-dialog ref="orgInfo"></org-ident-info-dialog>
 
-        <p class="m-0">{{ `_org.ident.notary.status.${ details.status }` | translate }}</p>
+        <p class="m-0">{{ `_org.ident.notary.status.${ details.status || 'unknown' }` | translate }}</p>
       </div>
       <span class="mx-auto"></span>
       <div>
