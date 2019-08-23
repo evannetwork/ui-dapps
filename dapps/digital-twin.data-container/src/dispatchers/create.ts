@@ -61,8 +61,6 @@ dispatcher
       data.plugin.template.type = 'PLUGIN';
     }
 
-    console.time('container creation');
-
     // subscribe for contract creation event, so the container can be applied to the digital twin,
     // when the plugin apply is not finished yet
     const contractCreateP = (async () => {
@@ -77,14 +75,12 @@ dispatcher
 
         runtime.executor.eventHub.once(
           'BaseContractFactory',
-          containerFactory,
+          containerFactoryAddress,
           'ContractCreated',
           () => true,
-          ({ returnValues: { newAddress }}) => { resolve(newAddress); }  ,
+          ({ returnValues: { newAddress }}) => { resolve(newAddress); },
         );
       });
-
-      console.log(`received contract creation: ${ data.contractAddress  }`);
 
       const twinConfig = utils.getDigitalTwinConfig(runtime, data.digitalTwinAddress);
       const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
@@ -106,7 +102,6 @@ dispatcher
 
     // wait until both actions are finished
     await Promise.all([ containerP, contractCreateP ]);
-    console.timeEnd('container creation');
   });
 
 export default dispatcher;

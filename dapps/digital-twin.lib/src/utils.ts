@@ -222,8 +222,7 @@ export function getRuntime(runtime: any): bcc.Runtime {
   //   nameResolverConfig.ensResolver = '0xfC382415126EB7b78C5c600B06f7111a117948F4';
   // }
   // apply correct factory address
-  // nameResolverConfig.domains.containerFactory = `container.factory.${ dappBrowser.getDomainName() }`;
-  nameResolverConfig.domains.containerFactory = `0x5f687b87d7ded2Ab624e2CD710B06fD0e4E5C3a6`;
+  nameResolverConfig.domains.containerFactory = `container.factory.${ dappBrowser.getDomainName() }`;
   nameResolverConfig.domains.indexFactory = `index.factory.${ dappBrowser.getDomainName() }`;
 
   // copy runtime and set the nameResolver

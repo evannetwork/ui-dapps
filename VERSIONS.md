@@ -12,7 +12,13 @@
   - fix `popover-content` size of favorite action callouts
 - `terms-of-use`
   - fix typo of testnet terms of use
+- `profile`
+  - SEPA i18n and styling fixes
+- `organization`
+  - change wordings, make headlines bold, show request button also in testmode
+  - better help dialog
 - add missing dependencies (`@evan.network/ui`, `@evan.network/ui-vue-core`)
+- increase build time for dapp only apps that does not needs a d.ts file
 
 ### Deprecations
 

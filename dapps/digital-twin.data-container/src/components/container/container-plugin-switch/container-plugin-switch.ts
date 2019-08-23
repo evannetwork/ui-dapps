@@ -34,7 +34,6 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { EvanUIDigitalTwink, utils } from '@evan.network/digitaltwin.lib'
 
-
 @Component({ })
 export default class DataSetComponent extends mixins(EvanComponent) {
   /**

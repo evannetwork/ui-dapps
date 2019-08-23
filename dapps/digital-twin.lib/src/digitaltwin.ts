@@ -29,6 +29,7 @@ import Vue from 'vue';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, } from '@evan.network/ui-vue-core';
 
 import * as utils from './utils';
 import dispatchers from './dispatchers';
@@ -132,7 +133,7 @@ export default class EvanUIDigitalTwin {
    *
    * @param      {any}  vueInstance  a vue instance
    */
-  destroy(vueInstance?: Vue): void {
+  destroy(vueInstance?: EvanComponent): void {
     if (vueInstance) {
       vueInstance.$store.state.uiDT = null;
     }
@@ -191,7 +192,7 @@ export default class EvanUIDigitalTwin {
    * @param      {any}         vueInstance  a vue component instance
    * @param      {bccRuntime}  runtime      bcc runtime
    */
-  async initialize(vueInstance: any, runtime: bcc.Runtime) {
+  async initialize(vueInstance: EvanComponent, runtime: bcc.Runtime) {
     this.loading = true;
 
     // clear all previous watchers
@@ -295,7 +296,7 @@ export default class EvanUIDigitalTwin {
    * @param      {Vue}         vueInstance  a vue component instance
    * @param      {bccRuntime}  runtime      bcc runtime
    */
-  saveDbcp(vueInstance: Vue, runtime: bcc.Runtime, digitaltwinSaveDispatcher: Dispatcher) {
+  saveDbcp(vueInstance: EvanComponent, runtime: bcc.Runtime, digitaltwinSaveDispatcher: Dispatcher) {
     // lookup dirty objects and pass them into the save object
     const dataToSave = { address: this.address, dbcp: this.dbcp };
 
@@ -308,7 +309,7 @@ export default class EvanUIDigitalTwin {
   /**
    * Check if the current digitaltwin with the specific address is in creation
    */
-  async setIsCreating(vueInstance: any, runtime: bcc.Runtime): Promise<void> {
+  async setIsCreating(vueInstance: EvanComponent, runtime: bcc.Runtime): Promise<void> {
     const instances = await dispatchers.dt.digitaltwinCreateDispatcher.getInstances(runtime);
     const wasCreating = this.isCreating;
 
