@@ -32,16 +32,28 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
+const getExternals = require('./webpack.externals');
 
-module.exports = function(name, dist, externals, prodMode) {
+/**
+ * Returns the webpack configuration for the dapp to build
+ *
+ * @param      {string}         name                        dapp name
+ * @param      {string}         dist                        destination folder
+ * @param      {Array<string>}  [externals=getExternals()]  list of build externals that should be
+ *                                                          excluded from the bundle
+ * @param      {boolean}        [prodMode=false]            uglify, ...
+ * @param      {boolean}        [transpileOnly=false]       disable d.ts filling, so build speed
+ *                                                          will be increased drastically
+ * @return     {any}            webpack config
+ */
+module.exports = function(
+  name,
+  dist,
+  transpileOnly = false,
+  prodMode = false,
+  externals = getExternals(),
+) {
   const packageJson = require(path.resolve(`${ dist }/../package.json`));
-
-  externals = externals || {
-    '@evan.network/api-blockchain-core': '@evan.network/api-blockchain-core',
-    '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
-    '@evan.network/ui': '@evan.network/ui',
-    '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
-  };
 
   const webpackConfig = {
     entry: './src/index.ts',
@@ -63,6 +75,7 @@ module.exports = function(name, dist, externals, prodMode) {
           loader: 'ts-loader',
           exclude: /node_modules/,
           options: {
+            transpileOnly,
             appendTsSuffixTo: [/\.vue$/],
           }
         },

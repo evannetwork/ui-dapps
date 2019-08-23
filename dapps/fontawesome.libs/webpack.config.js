@@ -29,4 +29,6 @@
 module.exports = require('../../gulp/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
+  true,
+  true,
 );
