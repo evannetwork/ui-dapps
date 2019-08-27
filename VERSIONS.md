@@ -4,23 +4,27 @@
 ### Features
 
 ### Fixes
-- `digital-twin.data-container`
-  - fill empty `type` in plugin template before creating `DataContainer`
-- `addressbook.vue`
-  - do not try to display verifications for email addresses
-- `favorites`
-  - fix `popover-content` size of favorite action callouts
-- `terms-of-use`
-  - fix typo of testnet terms of use
-- `profile`
-  - SEPA i18n and styling fixes
-- `organization`
-  - change wordings, make headlines bold, show request button also in testmode
-  - better help dialog
-- add missing dependencies (`@evan.network/ui`, `@evan.network/ui-vue-core`)
-- increase build time for dapp only apps that does not needs a d.ts file
 
 ### Deprecations
+
+
+## Version 3.7.1
+### Fixes
+- `addressbook.vue` (3.1.1)
+  - do not try to display verifications for email addresses
+- `digital-twin.data-container` (1.8.1)
+  - fill empty `type` in plugin template before creating `DataContainer`
+- `favorites` (3.0.2)
+  - fix `popover-content` size of favorite action callouts
+- `organization` (1.2.1)
+  - change wordings, make headlines bold, show request button also in testmode
+  - better help dialog
+- `profile` (1.5.1)
+  - SEPA i18n and styling fixes
+- `terms-of-use` (1.6.1)
+  - fix typo of testnet terms of use
+- add missing dependencies (`@evan.network/ui`, `@evan.network/ui-vue-core`)
+- increase build time for dapp only apps that does not needs a d.ts file
 
 
 ## Version 3.7.0
