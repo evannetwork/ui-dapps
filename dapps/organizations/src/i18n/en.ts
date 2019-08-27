@@ -59,9 +59,9 @@ const i18n: any = {
             "error": "Please enter a valid Account ID!",
             "title": "Account-ID"
           },
-          "header": "Issue Notary Verification",
-          "issue": "Issue Notary Verification",
-          "issuing": "Issuing Notary Verification",
+          "header": "Issue Organization Verification",
+          "issue": "Issue Organization Verification",
+          "issuing": "Issuing Organization Verification",
           "issued": {
             "error": {
               "desc": "The organizational verification could not be issued. Please try again or contact your administrator.",
