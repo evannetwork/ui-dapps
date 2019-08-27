@@ -37,7 +37,7 @@ const coreRuntime = dappBrowser.bccHelper.coreRuntimes[bcc.instanceId];
 if (coreRuntime.environment === 'testcore') {
   notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
 } else {
-  notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
+  notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
 }
 
 // const agentUrl = 'http://192.168.100.56:8080'
