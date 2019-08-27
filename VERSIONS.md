@@ -2,6 +2,9 @@
 
 ## Next Version
 ### Features
+- `organizations`
+  - only allow `pdf` files for notary identification
+  - add file rename hint
 
 ### Fixes
 

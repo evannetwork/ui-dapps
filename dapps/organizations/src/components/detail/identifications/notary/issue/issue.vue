@@ -98,8 +98,9 @@
             <div>
               <evan-file-input
                 id="issue-privateFiles" ref="privateFiles"
-                :class="{ 'is-invalid' : issueForm.privateFiles.error }"
                 v-model="issueForm.privateFiles.value"
+                :class="{ 'is-invalid' : issueForm.privateFiles.error }"
+                :accept="'application/pdf'"
                 @input="issueForm.privateFiles.setDirty();">
               </evan-file-input>
               <div class="invalid-feedback d-block" v-if="issueForm.privateFiles.error">
@@ -114,15 +115,16 @@
             <div>
               <evan-file-input
                 id="issue-publicFiles" ref="publicFiles"
-                :class="{ 'is-invalid' : issueForm.publicFiles.error }"
                 v-model="issueForm.publicFiles.value"
+                :class="{ 'is-invalid' : issueForm.publicFiles.error }"
+                :accept="'application/pdf'"
                 @input="issueForm.publicFiles.setDirty();">
               </evan-file-input>
-              <div class="invalid-feedback d-block" v-if="issueForm.publicFiles.error">
-                {{ issueForm.publicFiles.error | translate }}
-              </div>
             </div>
           </div>
+          <small class="muted">
+            {{ '_org.ident.notary.issue.file-rename-hint' | translate }}
+          </small>
         </template>
       </template>
       <template v-slot:footer>
