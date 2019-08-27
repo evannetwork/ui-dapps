@@ -62,13 +62,32 @@ const parseEnsName = function(ens) {
 gulp.task('browserify', async function(callback) {
   const dbcp = require(`${ dappRelativePath }/dbcp.json`);
   const outFileName = dbcp.public.dapp.entrypoint;
-  const indexFile = `${ dappRelativePath }/dist/build/index.js`;
+  const buildFolder = `${ dappRelativePath }/dist/build`;
+  const indexFile = `${ buildFolder }/index.js`;
   const distFolder = `${ dappRelativePath }/dist`;
   const runtimeFolder = `${ rootFolder }/node_modules/@evan.network/ui-dapp-browser/runtime/external/${ dbcp.public.name }`;
 
+  // ensure dist folder exists
   checkFolder(distFolder);
 
+  // build typescript
   await runExec(`npm run tsc ${ dappRelativePath }`, rootFolder);
+
+  // replace wrong scrypt import by adding correct require("scrypt") import
+  const scryptFolderPaths = [
+    require.resolve('scrypt'),
+    `${ rootFolder }/node_modules/@evan.network/api-blockchain-core/node_modules/scrypt`
+  ];
+  Promise.all(scryptFolderPaths.map(async (scryptFolderPath) => {
+    try {
+      await new Promise((resolve, reject) => gulp
+        .src(`${ scryptFolderPath }/index.js`)
+        .pipe(gulpReplace('require("./build/Release/scrypt")', 'require("scrypt")'))
+        .pipe(gulp.dest(scryptFolderPath))
+        .on('end', () => resolve())
+      );
+    } catch (ex) { }
+  }));
 
   await new Promise((resolve, reject) => {
     const buildJob = browserify(indexFile, {
