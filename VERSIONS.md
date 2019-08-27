@@ -2,13 +2,22 @@
 
 ## Next Version
 ### Features
+
 ### Fixes
-- `ui.libs`
+
+### Deprecations
+
+
+## Version 1.7.1
+### Features
+- `@evan.network/api-blockchain-core` Version 2.11.0
+- `@evan.network/smart-contracts-core` Version 2.6.0
+
+### Fixes
+- `@evan.network/ui` Version 1.7.1
   - add correct `line-height` to `evan-dropdown` children
   - add `scrypt` adjustments for `browserify` build
 - increase build time for dapp only apps that does not needs a d.ts file
-
-### Deprecations
 
 
 ## Version 1.7.0
