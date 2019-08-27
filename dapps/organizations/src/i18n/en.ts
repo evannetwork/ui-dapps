@@ -26,7 +26,7 @@
 */
 
 /* tslint:disable */
-const i18n: any = {
+const i18n: any ={
   "_org": {
     "breadcrumbs": {
       "identifications": "Identifications",
@@ -59,12 +59,12 @@ const i18n: any = {
             "error": "Please enter a valid Account ID!",
             "title": "Account-ID"
           },
+          "file-rename-hint": "The uploaded files will be renamed to a uniform naming scheme during the organization verification process.",
           "header": "Issue Identification Verification",
           "issue": "Issue Identification Verification",
-          "issuing": "Issuing Identification Verification",
           "issued": {
             "error": {
-              "desc": "The organizational verification could not be issued. Please try again or contact your administrator.",
+              "desc": "The organization verification could not be issued. Please try again or contact your administrator.",
               "title": "Error"
             },
             "success": {
@@ -72,6 +72,7 @@ const i18n: any = {
               "title": "Finished"
             }
           },
+          "issuing": "Issuing Identification Verification",
           "privateFiles": {
             "error": "You must add at least 1 notarized document to continue.",
             "title": "Private, Notary certified files"
