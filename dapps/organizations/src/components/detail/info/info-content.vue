@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <h4 class="mt-4 mb-4">{{'_org.ident.notary.request.costs.title' | translate}}</h4>
+    <h4 class="mt-4">{{'_org.ident.notary.request.costs.title' | translate}}</h4>
     <p class="mb-4">{{'_org.ident.notary.request.costs.description' | translate}}</p>
   </div>
 </template>
