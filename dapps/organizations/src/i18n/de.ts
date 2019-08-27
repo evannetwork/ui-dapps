@@ -45,7 +45,7 @@ const i18n: any = {
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
       },
-      "done": "Fertig",
+      "done": "Schließen",
       "error": "Fehler",
       "error-loading": "Beim Laden der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "next": "Weiter",
@@ -87,7 +87,7 @@ const i18n: any = {
           }
         },
         "learn-more": "Mehr erfahren",
-        "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese zu beantragen.",
+        "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese anzufordern.",
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
@@ -154,7 +154,7 @@ const i18n: any = {
             "error": "Bitte geben Sie eine Abteilung an!",
             "title": "Abteilung"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation zu beantragen. Dieser Service ist kostenpflichtig.",
+          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "header": "Notarielle Verifikation",
           "how": {
             "steps": {
@@ -197,8 +197,8 @@ const i18n: any = {
             "error": "Bitte geben Sie die Registernummer an!",
             "title": "Registernummer"
           },
-          "request-ident": "Beantragen",
-          "request-verification": "Notarielle Verifikation beantragen",
+          "request-ident": "Anfordern",
+          "request-verification": "Notarielle Verifikation anfordern",
           "requested1": "Sie haben erfolgreich eine notarielle Verifikation angefordert.",
           "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
           "requested3": "Sie erhalten in Kürze vom Notar Post!",
@@ -235,8 +235,8 @@ const i18n: any = {
           "confirming": "Bestätigung drucken",
           "issued": "Annehmen",
           "requested": "PIN eingeben",
-          "unknown": "Beantragen",
-          "unknown-long": "Notarielle Verifikation beantragen"
+          "unknown": "Anfordern",
+          "unknown-long": "Notarielle Verifikation anfordern"
         },
         "step": {
           "costs": "Kosten",
