@@ -122,7 +122,7 @@
               </evan-file-input>
             </div>
           </div>
-          <small class="muted">
+          <small class="text-muted">
             {{ '_org.ident.notary.issue.file-rename-hint' | translate }}
           </small>
         </template>
