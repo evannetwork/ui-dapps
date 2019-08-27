@@ -4,14 +4,14 @@
     "dapp": {
       "dependencies": {
         "addressbook.vue": "^3.1.0",
-        "evancore.vue.libs": "^1.4.0"
+        "evancore.vue.libs": "^1.5.0"
       },
       "entrypoint": "organizations.js",
       "files": [
         "organizations.js",
         "organizations.css"
       ],
-      "origin": "QmYLxyibUhtMHP5weXx58H2UMa1NByKqSRfY41csZnoJkx",
+      "origin": "Qmeb7v5dT2qyMEcsepBVdq4uKCTC1VBFDHe3pt9wAfztaN",
       "primaryColor": "#ac7517",
       "secondaryColor": "#fff2dc",
       "type": "dapp"
@@ -38,7 +38,7 @@
     "versions": {
       "1.0.0": "QmPfEwthwmHYx7vtb7KDnvPVnpmZRjNHXTCSShpiK7KBt7",
       "1.1.0": "QmR2SAXTh8QAyFMYUvM51YECjv2XG2X8TbwTxQKP4suMBo",
-      "1.2.0": "QmczeQmDthN1vSEACAxTnZPFH6mRDZ8jdbcinoxMBMTa2r"
+      "1.2.0": "QmeCmaxiAsDjNUGo5U87t6qKwGaztLg3Eg1NzzNFkFw5DS"
     }
   }
 }

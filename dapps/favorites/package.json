@@ -15,5 +15,5 @@
     "build": "cd ../.. && npm run angular-build dapps/favorites"
   },
   "typings": "dist/index.d.ts",
-  "version": "3.0.1"
+  "version": "3.0.2"
 }
