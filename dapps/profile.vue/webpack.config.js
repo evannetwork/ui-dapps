@@ -30,6 +30,8 @@ const getExternals = require('../../vue/webpack.externals');
 module.exports = require('../../vue/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
+  true,
+  false,
   getExternals({
     '@evan.network/addressbook': '@evan.network/addressbook',
   })

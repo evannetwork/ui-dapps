@@ -56,24 +56,52 @@ dispatcher
       }
     });
 
+    // fill empty plugin type
+    if (!data.plugin.template.type) {
+      data.plugin.template.type = 'PLUGIN';
+    }
+
+    // subscribe for contract creation event, so the container can be applied to the digital twin,
+    // when the plugin apply is not finished yet
+    const contractCreateP = (async () => {
+      const containerFactory = runtime.nameResolver.config.domains.containerFactory;
+      const containerFactoryAddress = !containerFactory.startsWith('0x') ?
+        await runtime.nameResolver.getAddress(containerFactory) :
+        containerFactory;
+
+      data.contractAddress = await new Promise((resolve) => {
+        const contractInstance = runtime.contractLoader
+          .loadContract('BaseContractFactory', containerFactoryAddress);
+
+        runtime.executor.eventHub.once(
+          'BaseContractFactory',
+          containerFactoryAddress,
+          'ContractCreated',
+          () => true,
+          ({ returnValues: { newAddress }}) => { resolve(newAddress); },
+        );
+      });
+
+      const twinConfig = utils.getDigitalTwinConfig(runtime, data.digitalTwinAddress);
+      const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
+
+      // save the digital twin entries
+      await digitalTwin.setEntry(data.description.name, data.contractAddress,
+        bcc.DigitalTwinEntryType.Container);
+
+      return data.contractAddress;
+    })();
+
     // create the container
-    const container = await bcc.Container.create(<any>runtime, {
+    const containerP = bcc.Container.create(<any>runtime, {
       accountId: runtime.activeAccount,
       // address: `${ data.name }.${ data.digitalTwinAddress }`,
       description: description,
       plugin: data.plugin,
     });
 
-    data.contractAddress = await container.getContractAddress();
-  })
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    const twinConfig = utils.getDigitalTwinConfig(runtime, data.digitalTwinAddress);
-    const digitalTwin = new bcc.DigitalTwin(<any>runtime, twinConfig);
-
-    // save the digital twin entries
-    await digitalTwin.setEntry(data.description.name, data.contractAddress,
-      bcc.DigitalTwinEntryType.Container);
+    // wait until both actions are finished
+    await Promise.all([ containerP, contractCreateP ]);
   });
 
 export default dispatcher;

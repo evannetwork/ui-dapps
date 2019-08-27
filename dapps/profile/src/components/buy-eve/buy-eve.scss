@@ -29,6 +29,10 @@ evan-buy-eve {
   .success-hint {
     border-radius: 0;
     background-color: rgba(83, 230, 157, 0.5);
+
+    ion-label {
+      color: #4a4a4a!important;
+    }
   }
   .error-hint, .success-hint, .warning-hint {
     &.chip-md {
@@ -43,6 +47,11 @@ evan-buy-eve {
     }
     a {
       color: #FFF;
+    }
+  }
+  .success-hint {
+    a {
+      color: #000;
     }
   }
   .warning-hint {
@@ -72,5 +81,20 @@ evan-buy-eve {
   .text-justify {
     text-align: justify;
     text-align-last: left;
+  }
+
+  .StripeElement {
+    border-bottom: 1px solid rgba(255,255,255,0.5)!important;
+  }
+}
+
+.evan-light .evan-angular .evan-tabs-container {
+  & > div {
+    background: #FFF;
+    color: #4A4A44;
+  }
+
+  .StripeElement {
+    border-bottom: 1px solid rgba(50,50,50,0.5)!important;
   }
 }

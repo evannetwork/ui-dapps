@@ -9,11 +9,10 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/index.js",
+  "main": "dist/digitaltwin.lib.js",
   "name": "@evan.network/digitaltwin.lib",
   "scripts": {
     "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
   },
-  "typings": "dist/index.d.ts",
   "version": "1.8.0"
 }

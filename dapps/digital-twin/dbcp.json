@@ -3,15 +3,15 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "datacontainer.digitaltwin": "^1.8.0",
+        "datacontainer.digitaltwin": "^1.8.1",
         "digitaltwin.lib": "^1.8.0",
-        "evancore.vue.libs": "^1.4.0"
+        "evancore.vue.libs": "^1.5.0"
       },
       "entrypoint": "digitaltwin.js",
       "files": [
         "digitaltwin.js"
       ],
-      "origin": "QmYnFLF8KPh7wH12JTUZeFvpJfC2dUuZM6FHaN3Lhtbiem",
+      "origin": "QmV3z8uAjhJ8M5LKHZU336etCsCd8oQqsSkj13Q6VnJRKF",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -47,7 +47,7 @@
       "1.6.1": "QmPQYXgcTGcDcErpmVGofEhjBSb2xyLeSCyq6EqrVCqjVS",
       "1.7.0": "Qmf5nvug3AxTnp9rYtBNyQLa6LqmfJ2gEM747Jh9Gh5gqG",
       "1.7.1": "QmNaHFxBvSKa31PTA4pmQ4QfBtvxoQfR5kEhjQ2WVAUTLU",
-      "1.8.0": "QmSteXVzixmvHy6tyJAvXmh4htYH3KoRNGkZCWTYskvrNg"
+      "1.8.0": "QmYrmHidGpYyCQtKr5CEZWmQdSmP7nMsJGfqEiciU7Bysv"
     }
   }
 }

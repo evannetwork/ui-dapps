@@ -86,6 +86,7 @@ export class TaskDetailComponent extends AsyncComponent {
   private clearStateQueue: any;
   private clearTodoQueue: any;
   private clearTodoLogQueue: any;
+  private lockTodoQueue: any;
 
   @Input() todosDisabled: Function;
   @Input() customTodoValidForResolve: Function;
@@ -179,9 +180,6 @@ export class TaskDetailComponent extends AsyncComponent {
 
   getTaskId() {
     const taskId = this.routing.getHashParam('address');
-    if (!taskId) {
-      debugger;
-    }
 
     return taskId;
   }
@@ -190,6 +188,7 @@ export class TaskDetailComponent extends AsyncComponent {
    * Load the current opened task.
    */
   async loadTask(reload?: boolean) {
+    console.log('loadTask');
     this.loading = true;
     this.ref.detectChanges();
 
@@ -212,13 +211,7 @@ export class TaskDetailComponent extends AsyncComponent {
       this.clearStateQueue = await this.queueService.onQueueFinish(
         this.taskService.getStateQueueId(this.taskId),
         async (queueFinish) => {
-          if (queueFinish) {
-            this.task.contractState = await this.taskService.getContractState(this.task.address);
-
-            this.task.states = await this.taskService.loadTaskStates(this.task);
-          }
-
-          await this.onTodoQueueFinish(queueFinish);
+          await this.onTodoQueueFinish(queueFinish, true);
         }
       );
 
@@ -257,11 +250,17 @@ export class TaskDetailComponent extends AsyncComponent {
     });
   }
 
-  async onTodoQueueFinish(queueFinish) {
-    if (queueFinish) {
+  async onTodoQueueFinish(queueFinish, loadStates?) {
+    if (queueFinish && !this.lockTodoQueue) {
+      this.lockTodoQueue = true;
       const dataContract = await this.taskService.getDataContract();
 
       this.hideTodoDetail({ });
+
+      if (loadStates) {
+        this.task.contractState = await this.taskService.getContractState(this.task.address);
+        this.task.states = await this.taskService.loadTaskStates(this.task);
+      }
 
       await this.taskService.loadDetailsForTask(
         dataContract,
@@ -277,6 +276,7 @@ export class TaskDetailComponent extends AsyncComponent {
 
       this.utils.sendEvent('task-updating', this.task);
       this.ref.detectChanges();
+      this.lockTodoQueue = false;
     }
   }
 
@@ -564,13 +564,14 @@ export class TaskDetailComponent extends AsyncComponent {
     todo.loading = true;
 
     this.ref.detectChanges();
-    
+
     this.hideTodoDetail(todo);
 
-    if(todo.detail.signature) {
+    if (todo.detail.signature) {
       todo.detail.signature = todo.detail.signature.toDataURL();
     }
 
+    todo.detail.taskId = this.getTaskId();
     todo.detail.solveTime = Date.now();
     todo.detail.solver = this.myAccountId;
     todo.detail.solverAlias = await this.addressBook.activeUserName();
@@ -578,7 +579,7 @@ export class TaskDetailComponent extends AsyncComponent {
     this.task.logs.push(todo.detail);
 
     this.queueService.addQueueData(
-      this.taskService.getTodoLogQueueId(this.taskId),
+      this.taskService.getTodoLogQueueId(todo.detail.taskId),
       todo.detail
     );
 

@@ -27,6 +27,7 @@
 
 const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin');
 const fs = require('fs');
+const getExternals = require('./webpack.externals');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -34,12 +35,27 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
-const getExternals = require('./webpack.externals');
 
-module.exports = function(name, dist, externals = getExternals(), prodMode) {
+/**
+ * Returns the webpack configuration for the dapp to build
+ *
+ * @param      {string}         name                        dapp name
+ * @param      {string}         dist                        destination folder
+ * @param      {Array<string>}  [externals=getExternals()]  list of build externals that should be
+ *                                                          excluded from the bundle
+ * @param      {boolean}        [prodMode=false]            uglify, ...
+ * @param      {boolean}        [transpileOnly=false]       disable d.ts filling, so build speed
+ *                                                          will be increased drastically
+ * @return     {any}            webpack config
+ */
+module.exports = function(
+  name,
+  dist,
+  transpileOnly = false,
+  prodMode = false,
+  externals = getExternals(),
+) {
   const packageJson = require(path.resolve(`${ dist }/../package.json`));
-
-  console.log(externals)
 
   const webpackConfig = {
     entry: './src/index.ts',
@@ -61,6 +77,7 @@ module.exports = function(name, dist, externals = getExternals(), prodMode) {
           loader: 'ts-loader',
           exclude: /node_modules/,
           options: {
+            transpileOnly,
             appendTsSuffixTo: [/\.vue$/],
           }
         },
@@ -121,10 +138,6 @@ module.exports = function(name, dist, externals = getExternals(), prodMode) {
         'vue$': 'vue/dist/vue.esm.js'
       }
     },
-    devServer: {
-      historyApiFallback: true,
-      noInfo: true
-    },
     performance: {
       hints: false
     }
@@ -147,13 +160,18 @@ module.exports = function(name, dist, externals = getExternals(), prodMode) {
       }),
       new OptimizeCSSAssetsPlugin({}),
     ]);
-  } else {
+  } else if (!transpileOnly) {
     webpackConfig.plugins.push(new HardSourceWebpackPlugin({ cacheDirectory: 'build-cache', }));
   }
 
   // only rebuild d.ts files when we are running in production mode or they does not exists
-  if (process.env.NODE_ENV === 'production' || prodMode ||
-    !fs.existsSync(`${ dist }/${ name }.d.ts`)) {
+  if (!transpileOnly && 
+      (
+        process.env.NODE_ENV === 'production' ||
+        prodMode ||
+        !fs.existsSync(`${ dist }/${ name }.d.ts`)
+      )
+    ) {
     webpackConfig.plugins.push(new DeclarationBundlerPlugin({
       moduleName: `'${ packageJson.name }'`,
       out: `${ name }.d.ts`,

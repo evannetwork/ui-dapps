@@ -64,7 +64,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.amount.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.amount.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-input formControlName="amount" required type="number"
@@ -93,7 +93,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.name.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.name.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-input formControlName="name" required type="text"
@@ -111,7 +111,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.email.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.email.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-input formControlName="email" required type="text"
@@ -131,7 +131,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.company.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.company.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-input formControlName="company" required type="text"
@@ -151,7 +151,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.street.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.street.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-input formControlName="street" required type="text"
@@ -169,25 +169,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.city.title' | translate }}*
-                  </h3>
-                </ion-label>
-                <ion-input formControlName="city" required type="text"
-                  [(ngModel)]="payEve.city"
-                  [placeholder]="'_dappprofile.pay-eve.city.description' | translate"
-                  (ionChange)="ref.detectChanges()"
-                  (focusout)="ref.detectChanges()">
-                </ion-input>
-              </ion-item>
-              <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'city')" color="danger">
-                <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
-              </ion-chip>
-            </ion-col>
-            <ion-col col-3>
-              <ion-item>
-                <ion-label stacked>
-                  <h3>
-                    {{ '_dappprofile.pay-eve.zip.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.zip.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-input formControlName="zip" required type="text"
@@ -201,13 +183,31 @@
                 <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
               </ion-chip>
             </ion-col>
+            <ion-col col-3>
+              <ion-item>
+                <ion-label stacked>
+                  <h3>
+                    {{ '_dappprofile.pay-eve.city.title' | translate }} *
+                  </h3>
+                </ion-label>
+                <ion-input formControlName="city" required type="text"
+                  [(ngModel)]="payEve.city"
+                  [placeholder]="'_dappprofile.pay-eve.city.description' | translate"
+                  (ionChange)="ref.detectChanges()"
+                  (focusout)="ref.detectChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-chip class="error-hint" *ngIf="showError(stripePayment, 'city')" color="danger">
+                <ion-label>{{ '_dappprofile.pay-eve.input.error' | translate }}</ion-label>
+              </ion-chip>
+            </ion-col>
           </ion-row>
           <ion-row>
             <ion-col col-6>
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.country.title' | translate }}*
+                    {{ '_dappprofile.pay-eve.country.title' | translate }} *
                   </h3>
                 </ion-label>
                 <ion-select required formControlName="country"
@@ -225,7 +225,7 @@
               <ion-item>
                 <ion-label stacked>
                   <h3>
-                    {{ '_dappprofile.pay-eve.vat.title' | translate }}<span *ngIf="payEve.country !== 'DE'">*</span>
+                    {{ '_dappprofile.pay-eve.vat.title' | translate }}<span *ngIf="payEve.country !== 'DE'"> *</span>
                   </h3>
                 </ion-label>
                 <ion-input formControlName="vat" type="text"
@@ -248,7 +248,7 @@
             <ion-item>
               <ion-label stacked>
                 <h3>
-                  {{ '_dappprofile.pay-eve.payment.title' | translate }}*
+                  {{ '_dappprofile.pay-eve.payment.title' | translate }} *
                 </h3>
               </ion-label>
               <div item-content class="w100">

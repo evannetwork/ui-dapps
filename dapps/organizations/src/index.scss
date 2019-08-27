@@ -25,19 +25,9 @@
   https://evan.network/license/
 */
 
-.modal .modal-dialog .modal-content {
-  overflow-y: auto;
-
-  min-height: 300px;
-  max-height: calc(90vh - 140px - 32px);
-  padding: 0 3rem;
-
-  .modal-header h5 {
-    margin-left: 3rem;
+/* Theme overwrite, can be removed once the global style guide is implemented */
+.evan.theme-evan.organization {
+  h4, h5, .bold {
+    font-weight: bold;
   }
-}
-
-.grouped {
-  margin-top: 28px;
-  overflow: hidden;
 }
