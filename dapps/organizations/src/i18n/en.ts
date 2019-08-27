@@ -45,7 +45,7 @@ const i18n: any ={
         "identifications": "Identifications",
         "notary": "Notary Verification"
       },
-      "done": "Done",
+      "done": "Close",
       "error": "Error",
       "error-loading": "An error occurred while loading the data. Please try again.",
       "next": "Next",
@@ -59,9 +59,10 @@ const i18n: any ={
             "error": "Please enter a valid Account ID!",
             "title": "Account-ID"
           },
+          "header": "Issue Organization Verification",
+          "issue": "Issue Organization Verification",
+          "issuing": "Issuing Organization Verification",
           "file-rename-hint": "The uploaded files will be renamed to a uniform naming scheme during the organization verification process.",
-          "header": "Issue Identification Verification",
-          "issue": "Issue Identification Verification",
           "issued": {
             "error": {
               "desc": "The organization verification could not be issued. Please try again or contact your administrator.",
@@ -94,7 +95,7 @@ const i18n: any ={
           "confirmation-code-desc": "Print your confirmation document.",
           "desc": "Please enter the PIN that was sent to you and generate your confirmation code.",
           "desc-hin": "Please pay attention to upper and lower case.",
-          "did-printed": "Did you printed the document?",
+          "did-printed": "Did you print the document?",
           "do-not-forget": "Please ensure to sign and stamp the document before sending it to the requesting notary.",
           "download": "No option to print now? Download as PDF file.",
           "generate-answer": "Generate code",
@@ -161,7 +162,7 @@ const i18n: any ={
             "steps": {
               "1": {
                 "description": "Enter the commercial register number, register court, your address and a contact person.",
-                "title": "1st step: Request"
+                "title": "1st Step: Request"
               },
               "2": {
                 "description": "You will receive a PIN by letter. Use this to generate the confirmation document and send it signed to the inquiring notary.",
@@ -240,9 +241,9 @@ const i18n: any ={
           "unknown-long": "Request Notary Verification"
         },
         "step": {
-          "costs": "costs",
-          "summary": "summary",
-          "your_data": "your data"
+          "costs": "Costs",
+          "summary": "Summary",
+          "your_data": "Your Data"
         },
         "title": "Notary Verification",
         "verification": {
