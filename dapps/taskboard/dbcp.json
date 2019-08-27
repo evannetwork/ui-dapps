@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^2.1.2",
+        "angular-core": "^2.2.0",
         "angular-libs": "^2.1.1"
       },
       "entrypoint": "taskboard.js",

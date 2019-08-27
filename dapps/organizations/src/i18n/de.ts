@@ -59,9 +59,9 @@ const i18n: any = {
             "error": "Bitte geben Sie eine gültige Account ID an!",
             "title": "Account-ID"
           },
+          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Austellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
           "header": "Organisations-Verifikation ausstellen",
           "issue": "Organisations-Verifikation ausstellen",
-          "issuing": "Organisations-Verifikation wird ausgestellt",
           "issued": {
             "error": {
               "desc": "Die Organisations-Verifikation konnte nicht ausgestellt werden. Bitte versuchen Sie es erneut oder kontaktieren Sie Ihren Administrator.",
@@ -72,6 +72,7 @@ const i18n: any = {
               "title": "Abgeschlossen"
             }
           },
+          "issuing": "Organisations-Verifikation wird ausgestellt",
           "privateFiles": {
             "error": "Sie müssen mindestens 1 notariell bestätigtes Dokument hinzufügen, um fortzufahren.",
             "title": "Verschlüsselte, notariell bestätige Dateien"

@@ -3,9 +3,9 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "datacontainer.digitaltwin": "^1.8.0",
+        "datacontainer.digitaltwin": "^1.8.1",
         "digitaltwin.lib": "^1.8.0",
-        "evancore.vue.libs": "^1.4.0"
+        "evancore.vue.libs": "^1.5.0"
       },
       "entrypoint": "digitaltwin.js",
       "files": [
