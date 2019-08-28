@@ -178,6 +178,7 @@ const i18n: any = {
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
+          "not-enough-funds": "Sie besitzen nicht genügend EVE ({readableFunds}) ! Der Prozess kostet 200 EVE",
           "organization": {
             "desc": "Firmenname",
             "error": "Bitte geben Sie den Unternehmensname an!",
