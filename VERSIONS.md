@@ -8,6 +8,10 @@
   - add mainnet account
 
 ### Fixes
+- `organizations`
+  - use new `getSmartAgentAuthHeaders` to build `EvanAuth` header for smart-agent requests
+- `profile`
+  - use new `getSmartAgentAuthHeaders` to build `EvanAuth` header for smart-agent requests
 
 ### Deprecations
 

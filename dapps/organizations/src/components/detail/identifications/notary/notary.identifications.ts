@@ -51,11 +51,10 @@ const agentUrl = 'https://agents.test.evan.network'
  * @param      {string}      requestId  identification request id
  */
 async function closeRequest(runtime: bcc.Runtime, requestId: string) {
-  const evanAuthHeader = await generateEvanAuthHeader(runtime);
   const allRequests = await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/request/close`,
-    headers: { 'Authorization': evanAuthHeader },
+    headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
     data: { requestId }
   });
 }
@@ -76,11 +75,11 @@ function triggerRequestReload(orgAddress: string, detail: any) {
  * Return the list of requested identifications
  */
 async function getRequests(runtime: bcc.Runtime, address: string) {
-  const evanAuthHeader = await generateEvanAuthHeader(runtime);
+  const evanAuthHeader = await bcc.utils.getSmartAgentAuthHeaders(runtime);
   const allRequests = await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/getAll`,
-    headers: { 'Authorization': evanAuthHeader }
+    headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
   });
   return (<any>allRequests).data.result;
 }
@@ -98,12 +97,11 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
   let status = 'unknown';
 
   try {
-    const evanAuthHeader = await generateEvanAuthHeader(runtime);
     const ret: any = { };
     const requestedStatus: any = (await axios({
       method: 'POST',
       url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/get`,
-      headers: { 'Authorization': evanAuthHeader },
+      headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
       data: {
         question: requestId
       }
@@ -149,7 +147,6 @@ async function getIssuedVerifications(runtime) {
  *                                       files that should be attached (HTML 5 file selection)
  */
 async function issueVerification(runtime, requestId, files = { private: [ ], public: [ ] }) {
-  const evanAuthHeader = await generateEvanAuthHeader(runtime);
   const formData = new FormData();
 
   // add files to the specific assets objects
@@ -164,17 +161,19 @@ async function issueVerification(runtime, requestId, files = { private: [ ], pub
   await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/finalize`,
-    headers: { 'Authorization': evanAuthHeader, 'content-type': 'multipart/form-data' },
+    headers: {
+      'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime),
+      'content-type': 'multipart/form-data'
+    },
     data: formData
   });
 }
 
 async function getAnswer(runtime, question, requestId) {
-  const evanAuthHeader = await generateEvanAuthHeader(runtime);
   const answerResponse = await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/question/solve`,
-    headers: { 'Authorization': evanAuthHeader },
+    headers: { 'Authorization': await bcc.utils.getSmartAgentAuthHeaders(runtime), },
     data: {
       question,
       requestId
@@ -183,40 +182,7 @@ async function getAnswer(runtime, question, requestId) {
   });
   return answerResponse.data;
 }
-/**
- * Send an rest get request to the payment agent using the corresponding new build headers.
- *
- * @param      {string}        endPoint  endpoint that should be called using this.agentEndpoint
- * @return     {Promise<any>}  json result of the request
- */
-async function generateEvanAuthHeader(runtime: bcc.Runtime): Promise<any> {
-  const activeAccount = runtime.activeAccount;
-  const toSignedMessage = runtime.web3.utils
-    .soliditySha3(new Date().getTime() + activeAccount)
-    .replace('0x', '');
-  const hexMessage = runtime.web3.utils.utf8ToHex(toSignedMessage);
-  const signature = await signMessage(runtime, toSignedMessage);
 
-  return [
-    `EvanAuth ${ activeAccount }`,
-    `EvanMessage ${ hexMessage }`,
-    `EvanSignedMessage ${ signature }`
-  ].join(',');
-}
-
-/**
- * Sign a message for a specific account
- *
- * @param      {string}  msg      message that should be signed
- * @param      {string}  account  account id to sign the message with (default = activeAccount)
- * @return     {string}  signed message signature
- */
-async function signMessage(runtime: bcc.Runtime, msg: string): Promise<string> {
-  const signer = runtime.activeAccount;
-  const pk = await ((<any>runtime.executor.signer).accountStore.getPrivateKey(signer));
-
-  return runtime.web3.eth.accounts.sign(msg, '0x' + pk).signature;
-}
 
 export {
   closeRequest,
