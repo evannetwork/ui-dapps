@@ -5,6 +5,7 @@
 - `organizations`
   - only allow `pdf` files for notary identification
   - add file rename hint
+  - add mainnet account
 
 ### Fixes
 
