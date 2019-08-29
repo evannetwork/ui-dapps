@@ -45,7 +45,7 @@ $themeEvan: (
 $themeEvan: map-merge(
   (
     blue: #0080da,
-    cyan: #64ccc9,
+    cyan: #46C2BF,
     green: #28a745,
     indigo: #6610f2,
     orange: #fd7e14,
@@ -127,11 +127,11 @@ $themeEvan: map-merge(
  */
 $theme-colors: (
   danger: cssVar('red'),
-  dark: #00313C,
+  dark: #023845,
   info: cssVar('blue'),
   light: cssVar('gray-200'),
-  primary: cssVar('pink'),
-  secondary: cssVar('cyan'),
+  primary: cssVar('cyan'),
+  secondary: cssVar('pink'),
   success: cssVar('green'),
   warning: cssVar('yellow'),
 );
@@ -167,7 +167,7 @@ $themeEvan: map-merge(
     bg-level-2: cssVar('gray-150'),
     bg-level-3: #f5f6fa,
     bg-inverted: cssVar('dark'),
-    tab-color-1: cssVar('secondary'),
+    tab-color-1: cssVar('primary'),
     tab-color-2: #24545e,
     tab-color-3: #8b9a9e,
     tab-color-4: #698a88,
@@ -191,11 +191,11 @@ $themeEvan: map-merge(
     table-hover: cssVar('gray-200'),
     table-row-odd: cssVar('bg-level-1'),
     table-row-even: #f4f7f9,
-    tooltip-color: cssVar('text-color'),
-    tooltip-bg: cssVar('bg-level-1'),
-    tooltip-border: cssVar('border-color'),
-    tooltip-shadow: #ccc,
-    tooltip-arrow-color: cssVar('border-color')
+    tooltip-color: cssVar('white'),
+    tooltip-bg: cssVar('bg-inverted'),
+    tooltip-border: cssVar('bg-inverted'),
+    tooltip-shadow: transparent,
+    tooltip-arrow-color: cssVar('bg-inverted')
   ),
   $themeEvan
 );
@@ -229,8 +229,8 @@ $themeEvan: map-merge(
 $themeEvan: map-merge(
   (
     // dapp-wrapper
-    dapp-wrapper-sidepanel-icon-color: cssVar('gray-500'),
-    dapp-wrapper-sidepanel-list-hover: cssVar('gray-200'),
+    dapp-wrapper-sidepanel-icon-color: cssVar('white'),
+    dapp-wrapper-sidepanel-list-active: cssVar('white'),
     dapp-wrapper-sidepanel-shadow: 1px 0 20px rgba(0, 0, 0, 0.15),
   ),
   $themeEvan
