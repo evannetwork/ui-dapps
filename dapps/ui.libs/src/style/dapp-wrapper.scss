@@ -48,6 +48,9 @@ $sidebar-small-width: 64px;
     .dapp-wrapper-sidebar {
       z-index: 1028;
 
+      display: flex;
+      flex-direction: column;
+
       width: $sidebar-width;
       min-width: $sidebar-width;
 
@@ -94,28 +97,47 @@ $sidebar-small-width: 64px;
               color: cssVar('dapp-wrapper-sidepanel-icon-color');
             }
 
+            .spinner-border {
+              color: cssVar('dapp-wrapper-sidepanel-icon-color');
+            }
+
             &.active, &:hover {
               transition: 0.3s ease-out background-color, 0.3s ease-out color;
 
               background-color: cssVar('dapp-wrapper-sidepanel-list-active');
 
-              &, & * {
+              &, & *, .spinner-border {
                 color: cssVar('primary');
               }
             }
           }
         }
+      }
 
-        &.small {
-          li {
-            a {
-              font-weight: 400;
-              line-height: 40px;
+      .dropdown-menu {
+        left: 65px;
 
-              height: 40px;
-            }
-          }
+        overflow-y: auto;
+
+        width: 350px;
+        height: 400px;
+
+        background-color: cssVar('bg-inverted');
+
+        * {
+          color: cssVar('text-color-inverted');
         }
+
+        .spinner-grow {
+          width: 1rem;
+          height: 1rem;
+
+          background-color: cssVar('text-color-inverted');
+        }
+      }
+
+      .queue-dropdown .dropdown-menu {
+        top: calc(100% - 400px);
       }
     }
 
@@ -164,8 +186,9 @@ $sidebar-small-width: 64px;
       overflow-x: hidden;
       overflow-y: auto;
 
-      width: 100%;
+      width: calc(100% + 1px);
       height: 100%;
+      margin-left: -1px;
 
       background-color: cssVar('bg-level-3');
 
@@ -175,153 +198,61 @@ $sidebar-small-width: 64px;
     }
   }
 
-  // the toolbar toggled to a small view on large screens
-  @media (min-width: 992px) {
-    &.small-toolbar {
-      .navbar {
-        .navbar-brand {
-          width: $sidebar-small-width;
-          min-width: $sidebar-small-width;
-          padding: 9px;
-
-          img.brand-large {
-            display: none;
-          }
-
-          img.brand-small {
-            display: block;
-          }
-        }
-      }
-
-      .dapp-wrapper-sidebar {
-        width: $sidebar-small-width;
-        min-width: $sidebar-small-width;
-
-        ul.nav > li a {
-          padding: 0;
-
-          text-align: center;
-
-          i {
-            width: auto;
-            margin-right: 0;
-          }
-
-          span {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * small navbar icon on medium screens
-   */
-  @media (max-width: 992px) {
-    .navbar {
-      .navbar-brand {
-        width: $sidebar-small-width;
-        min-width: $sidebar-small-width;
-        padding: 9px;
-
-        img.brand-large {
-          display: none;
-        }
-
-        img.brand-small {
-          display: block;
-        }
-      }
-    }
-
-    /**
-     * toggle only sidebar
-     */
-    .dapp-wrapper-body {
-      .dapp-wrapper-sidebar {
-        position: fixed;
-        left: -$sidebar-width;
-
-        height: 100%;
-
-        transition: 0.2s ease-out left;
-
-        background-color: cssVar('body-bg');
-      }
-    }
-
-    &.show-sidebar {
-      .dapp-wrapper-body {
-        .dapp-wrapper-sidebar {
-          left: 0;
-        }
-
-        .dapp-wrapper-sidebar-background {
-          position: fixed;
-          z-index: 1017;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-
-          display: block;
-
-          margin: auto;
-        }
-      }
-    }
-  }
-
   /**
    * the screen is very small
    */
   @media (max-width: 768px) {
-    .navbar {
-      .dropdown-menu {
-        position: fixed;
-        top: 64px;
-        right: 0;
-
-        overflow-y: auto;
-
-        width: 100% !important;
-        height: calc(100% - 64px);
-      }
-    }
-
     .dapp-wrapper-body {
+      flex-direction: column-reverse;
+
       .dapp-wrapper-sidebar {
-        left: -100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-direction: row;
 
         width: 100%;
-        padding-top: 20px;
+        height: $sidebar-small-width;
 
-        .sidebar-header {
-          display: block;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+        ul.nav {
+          flex-direction: row;
+          flex-wrap: nowrap;
 
-          height: 60px;
-          margin-top: -20px;
-          padding: 0 10px;
+          & > li {
+            &, a {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              width: $sidebar-small-width;
+              height: $sidebar-small-width;
+
+              i {
+                font-size: 24px;
+              }
+            }
+          }
         }
 
-        ul.nav.small {
-          padding-bottom: 120px;
+        .evan-tooltip {
+          display: none !important;
+        }
+
+        .queue-dropdown .dropdown-menu {
+          top: calc(100% - 462px);
+          left: -1px;
+
+          width: calc(100% + 2px);
         }
       }
 
       .dapp-wrapper-sidebar-2 {
         position: fixed;
         z-index: 1029;
-        top: 123px;
+        top: 0;
         left: -100%;
 
         width: 100%;
-        height: calc(100% - 123px);
+        height: calc(100% - 64px);
 
         transition: 1s ease-out width;
         transition: 0.2s ease-out left;
@@ -332,7 +263,7 @@ $sidebar-small-width: 64px;
       }
     }
 
-    &.show-sidebar.show-sidebar-2 {
+    &.show-sidebar {
       .dapp-wrapper-sidebar-2 {
         left: 0;
       }
