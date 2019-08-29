@@ -37,7 +37,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
 export default class InfoContentComponent extends mixins(EvanComponent) {
-  @Prop() enoughFunds: boolean;
+  @Prop() enoughFunds = true;
 
   @Prop() readableFunds: string;
 }
