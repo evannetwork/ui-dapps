@@ -100,7 +100,7 @@ dispatcher
           ...data.requestData
         }]
       }
-    }, runtime.activeAccount, notarySmartAgentAccountId);
+    }, runtime.activeAccount, notarySmartAgentAccountId, '200000000000000000000');
   });
 
 export default dispatcher;
