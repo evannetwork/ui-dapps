@@ -49,7 +49,10 @@
 
             <!-- Verification start info -->
             <div id="ident-desc" v-if="status === -1">
-             <info-content />
+             <info-content
+              :enoughFunds="enoughFunds"
+              :readableFunds="readableFunds"
+              />
             </div>
 
             <!-- request verification form -->
@@ -276,16 +279,12 @@
         <!-- start button -->
          <template v-if="status === -1">
 
-          <button v-if="enoughFunds" type="button" class="btn btn-primary btn-rounded mx-auto"
+          <button type="button" class="btn btn-primary btn-rounded mx-auto"
             id="ident-request-start"
-            :disabled="(status === 1 && !requestForm.isValid) || sending"
+            :disabled="!enoughFunds || (status === 1 && !requestForm.isValid) || sending"
             @click="status += 1">
             {{ `_org.ident.notary.request.request-verification` | translate }}
           </button>
-
-          <p class="w-100 text-center text-danger" v-if="!enoughFunds">
-            {{ $t(`_org.ident.notary.request.not-enough-funds`,{readableFunds:readableFunds}) }}
-          </p>
         </template>
 
         <!-- next btn -->

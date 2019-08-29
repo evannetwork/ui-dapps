@@ -45,6 +45,10 @@
         </a>
     </p>
 
+    <p class="w-100" v-if="!enoughFunds" v-html="$t(`_org.ident.notary.request.not-enough-funds`,{readableFunds})">
+
+    </p>
+
     <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
     <div class="row row-eq-height">
       <div v-for="(key) in ['1', '2', '3']" :key="key" class="step col-md-4">
@@ -59,6 +63,11 @@
     <p class="mb-4">{{'_org.ident.notary.request.costs.description' | translate}}</p>
   </div>
 </template>
+
+<script lang="ts">
+  import Component from './info-content.ts';
+  export default Component;
+</script>
 
 <style lang="scss" scoped>
   @import './info-content.scss'
