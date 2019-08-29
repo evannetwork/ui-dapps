@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- `@evan.network/ui`
+  - add new dapp-wrapper design for small left panel
 
 ### Fixes
 
