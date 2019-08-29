@@ -178,6 +178,7 @@ const i18n: any = {
             "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
           "organization": {
             "desc": "Firmenname",
             "error": "Bitte geben Sie den Unternehmensname an!",
@@ -211,7 +212,7 @@ const i18n: any = {
             "title": "Voraussetzungen"
           },
           "why": {
-            "description": "Mit der notariellen Verifikation wird bestätigt, dass ihr Unternehmen im Besitz der Account-ID {{accountId}} ist. Durch diese Bestätigung können Sie sich gegenüber ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
+            "description": "Mit der notariellen Verifikation wird bestätigt, dass ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
             "link": "Mehr erfahren",
             "title": "Vorteile"
           },

@@ -179,6 +179,7 @@ const i18n: any ={
             "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Request for Notary Verification"
           },
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
           "organization": {
             "desc": "Organization name",
             "error": "Please enter a organization name",

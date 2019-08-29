@@ -59,6 +59,13 @@ interface LabeledEntry {
 
 @Component({ })
 export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
+
+  /**
+   * minimum value of the verification costs (200 EVE)
+   */
+
+  verificationCost = '200000000000000000000';
+
   /**
    * Formular for verification requests
    */
@@ -189,6 +196,13 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     this.requestForm.city.value = '';
     this.requestForm.contact.value = '';
     this.requestForm.department.value = '';
+
+
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
+    const fundsAvailable = await runtime.web3.eth.getBalance(runtime.activeAccount);
+    this.readableFunds = parseFloat(runtime.web3.utils.fromWei(fundsAvailable)).toFixed(2);
+    this.enoughFunds = runtime.web3.utils.toBN(fundsAvailable)
+      .gt(runtime.web3.utils.toBN(this.verificationCost));
 
     this.checkSending();
     this.listeners.push(dispatchers.requestIdentificationDispatcher
