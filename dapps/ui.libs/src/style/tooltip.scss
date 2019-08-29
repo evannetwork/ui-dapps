@@ -36,9 +36,18 @@
   align-items: center;
   justify-content: center;
 
-  width: 200px;
+  width: auto;
+  min-width: auto;
+
+  white-space: nowrap !important;
 
   opacity: 1 !important;
+
+  &.multiline {
+    width: 200px;
+
+    white-space: normal !important;
+  }
 
   &.show-tooltip {
     display: flex !important;

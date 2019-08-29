@@ -26,9 +26,8 @@
 */
 
 @import './utils';
-$sidebar-width: 240px;
-$navbar-height: 63px;
-$sidebar-small-width: $navbar-height;
+$sidebar-width: 64px;
+$sidebar-small-width: 64px;
 
 .evan .evan-dapp-wrapper {
   &, .dapp-wrapper-main, .dapp-wrapper-content-wrapper {
@@ -38,75 +37,6 @@ $sidebar-small-width: $navbar-height;
 
     width: 100%;
     height: 100%;
-  }
-
-  .navbar {
-    z-index: 1030;
-
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-
-    padding: 0 !important;
-
-    background-color: cssVar('bg-inverted');
-
-    &, & > * {
-      height: $navbar-height;
-    }
-
-    .navbar-brand {
-      width: $sidebar-width;
-      min-width: $sidebar-width;
-      margin-right: 0;
-      padding: 10px 20px;
-
-      background-color: cssVar('bg-level-1');
-
-      img {
-        height: 45px;
-      }
-
-      .brand-small {
-        display: none;
-      }
-    }
-
-    .nav {
-      line-height: $navbar-height;
-
-      justify-content: space-between;
-
-      width: 100%;
-
-      button {
-        font-weight: 600;
-
-        height: 100%;
-        margin: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-
-        vertical-align: top;
-
-        color: cssVar('text-color-inverted');
-        border: 0;
-        outline: none;
-        box-shadow: none;
-
-        &.btn-sm {
-          padding: 0 14px;
-        }
-
-        &.active {
-          background-color: rgba(255,255,255,0.2);
-        }
-
-        &:hover {
-          background-color: rgba(0,0,0,0.2);
-        }
-      }
-    }
   }
 
   .dapp-wrapper-body {
@@ -120,9 +50,8 @@ $sidebar-small-width: $navbar-height;
 
       width: $sidebar-width;
       min-width: $sidebar-width;
-      padding-top: 60px;
 
-      box-shadow: cssVar('dapp-wrapper-sidepanel-shadow');
+      background-color: cssVar('bg-inverted');
 
       .sidebar-header {
         display: none;
@@ -135,21 +64,18 @@ $sidebar-small-width: $navbar-height;
           a {
             font-size: 15px;
             font-weight: 600;
-            line-height: 70px;
+            line-height: 40px;
 
             display: block;
-            overflow: hidden;
 
             width: 100%;
-            height: 70px;
-            padding: 0 5px 0 20px;
+            height: 40px;
 
             cursor: pointer;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            transition: 1s ease-out background-color, 1s ease-out color;
+            text-align: center;
 
             color: cssVar('body-color');
-            border-left: 4px solid transparent;
 
             span, p {
               font-size: 15px;
@@ -162,27 +88,20 @@ $sidebar-small-width: $navbar-height;
 
               display: inline-block;
 
-              width: 20px;
-              margin-right: 12px;
-
               text-align: center;
               vertical-align: middle;
 
               color: cssVar('dapp-wrapper-sidepanel-icon-color');
             }
 
-            &.active {
+            &.active, &:hover {
+              transition: 0.3s ease-out background-color, 0.3s ease-out color;
+
+              background-color: cssVar('dapp-wrapper-sidepanel-list-active');
+
               &, & * {
                 color: cssVar('primary');
               }
-            }
-
-            &:hover {
-              background-color: cssVar('dapp-wrapper-sidepanel-list-hover');
-            }
-
-            &.active, &:hover {
-              border-left: 4px solid cssVar('primary');
             }
           }
         }
@@ -191,9 +110,9 @@ $sidebar-small-width: $navbar-height;
           li {
             a {
               font-weight: 400;
-              line-height: 50px;
+              line-height: 40px;
 
-              height: 50px;
+              height: 40px;
             }
           }
         }
