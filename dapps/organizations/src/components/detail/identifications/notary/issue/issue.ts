@@ -114,6 +114,17 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Hide the info and the status modal.
+   */
+  hideBoth() {
+    (<any>this.$refs).statusModal.hide();
+
+    if (this.status === 'success') {
+      (<any>this.$refs).issueModal.hide();
+    }
+  }
+
+  /**
    * Trigger the verification issue request
    */
   async issueIdentification() {

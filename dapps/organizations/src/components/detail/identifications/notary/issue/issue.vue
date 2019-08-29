@@ -39,7 +39,9 @@
         id="issue-verification-modal">
         <evan-modal
           ref="statusModal"
-          :maxWidth="'600px'">
+          :maxWidth="'600px'"
+          hide-footer-button="true"
+          >
           <template v-slot:header>
             <h5 class="modal-title">
               {{ `_org.ident.notary.issue.issued.${ status }.title` | translate }}
@@ -53,6 +55,12 @@
                 <p class="mt-3">{{ `_org.ident.notary.issue.issued.${ status }.desc` | translate }}</p>
               </div>
             </div>
+          </template>
+          <template v-slot:footer>
+             <button type="button" class="btn btn-outline-secondary btn-rounded"
+                @click="hideBoth();">
+                {{ '_evan.cancel' | translate }}
+              </button>
           </template>
         </evan-modal>
 
