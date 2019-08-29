@@ -7,7 +7,6 @@
       },
       "entrypoint": "explorer.vue.js",
       "files": [
-        "explorer.vue.css",
         "explorer.vue.js"
       ],
       "origin": "QmUJEUNnwkXBGbzfdYbdRUUgPSKtqjC9GHuyqqJcm6mcPs",

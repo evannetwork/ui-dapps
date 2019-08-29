@@ -28,11 +28,6 @@
 /* tslint:disable */
 export default {
   "_dashboard": {
-    "docs": {
-      "bccdocs": "API",
-      "github": "Wiki",
-      "uidocs": "UI"
-    },
     "overview": {
       "contacts": {
         "desc": "Treten Sie mit Ihren Geschäftspartnern in Kontakt",

@@ -31,7 +31,9 @@
       :routes="[ ]"
       :bottomRoutes="[ ]">
       <template v-slot:content>
-        <evan-under-development></evan-under-development>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
       </template>
     </evan-dapp-wrapper>
   </div>

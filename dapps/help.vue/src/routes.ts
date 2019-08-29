@@ -25,10 +25,40 @@
   https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
+
+import ExplanationComponent from './components/explanation/explanation.vue';
+import FaqComponent from './components/faq/faq.vue';
+import DocumentationComponent from './components/documentation/documentation.vue';
 
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [ ];
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  {
+    path: '',
+    component: DocumentationComponent,
+    children: [
+      {
+        path: '',
+        redirect: { path: 'github' }
+      },
+      {
+        path: 'github',
+        component: IframeComponent,
+        props: { src: 'https://evannetwork.github.io' }
+      },
+      {
+        path: `bccdocs`,
+        component: IframeComponent,
+        props: { src: '//api-blockchain-core.readthedocs.io/en/latest/' }
+      },
+      {
+        path: `uidocs`,
+        component: IframeComponent,
+        props: { src: '//ui-docs.readthedocs.io/en/latest/' }
+      },
+    ]
+  },
+];
 
 export default routeRegistration;
 

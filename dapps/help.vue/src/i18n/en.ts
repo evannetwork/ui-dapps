@@ -28,6 +28,11 @@
 /* tslint:disable */
 export default {
   "_help": {
+    "docs": {
+      "bccdocs": "API",
+      "github": "Wiki",
+      "uidocs": "UI"
+    },
   }
 }
 /* tslint:enable */;
