@@ -47,7 +47,6 @@
 
     <p class="w-100" v-if="!enoughFunds" v-html="$t(`_org.ident.notary.request.not-enough-funds`,{readableFunds})">
 
-    </p>
 
     <h4>{{'_org.ident.notary.request.how.title' | translate}}</h4>
     <div class="row row-eq-height">
