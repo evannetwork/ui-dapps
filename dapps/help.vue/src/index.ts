@@ -25,38 +25,34 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_dashboard": {
-    "docs": {
-      "bccdocs": "API",
-      "github": "Wiki",
-      "uidocs": "UI"
-    },
-    "overview": {
-      "contacts": {
-        "desc": "Treten Sie mit Ihren Geschäftspartnern in Kontakt",
-        "title": "Meine Kontakte"
-      },
-      "digitaltwins": {
-        "desc": "Starten Sie Ihr digitales Business, indem Sie Ihren ersten Digitalen Zwilling erstellen.",
-        "title": "Digitalen Zwilling erstellen"
-      },
-      "explanations": {
-        "desc": "Wie arbeitet man mit dem evan.network?<br>Lesen Sie unser Wiki!",
-        "title": "Erfahren Sie mehr über das evan.network"
-      },
-      "recovery": {
-        "action": "Sitzung fortfahren",
-        "desc": "Möchten Sie mit Ihrer vorherigen Sitzung fortfahren und die zuletzt geöffnete Anwendung starten?",
-        "title": "Sitzung fortfahren"
-      },
-      "testcore": {
-        "desc": "Mit Ihrer bestehenden Identität Funktionalitäten auf dem testcore testen",
-        "title": "Kostenlos ausprobieren"
-      }
-    },
-    "startup": "Womit möchten Sie starten?"
-  }
+import Vue from 'vue';
+import { initializeVue } from '@evan.network/ui-vue-core';
+
+import Main from './components/root/root.vue';
+import translations from './i18n/translations';
+import routes from './routes';
+import components from './components/registry';
+
+/**
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
+ *
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
+ */
+export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+  await initializeVue({
+    components,
+    container,
+    dappBaseUrl,
+    dappEnsOrContract,
+    dbcpName,
+    RootComponent: Main,
+    routes,
+    state: { },
+    translations: translations,
+    Vue: Vue,
+  });
 }
-/* tslint:enable */

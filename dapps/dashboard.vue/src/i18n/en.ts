@@ -33,8 +33,6 @@ export default {
       "github": "Wiki",
       "uidocs": "UI"
     },
-    "documentation": "Documentation",
-    "faq": "FAQ",
     "overview": {
       "contacts": {
         "desc": "Get in touch with your business partners",

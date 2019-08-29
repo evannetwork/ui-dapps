@@ -37,8 +37,4 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
 export default class DashboardRootComponent extends mixins(EvanComponent) {
-  bottomRoutes = [
-    { title: `_dashboard.documentation`, path: `documentation`, icon: 'mdi mdi-adjust text-secondary' },
-    { title: `_dashboard.faq`, path: `faq`, icon: 'mdi mdi-help-circle-outline text-primary' },
-  ];
 }

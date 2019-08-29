@@ -27,36 +27,7 @@
 
 /* tslint:disable */
 export default {
-  "_dashboard": {
-    "docs": {
-      "bccdocs": "API",
-      "github": "Wiki",
-      "uidocs": "UI"
-    },
-    "overview": {
-      "contacts": {
-        "desc": "Treten Sie mit Ihren Geschäftspartnern in Kontakt",
-        "title": "Meine Kontakte"
-      },
-      "digitaltwins": {
-        "desc": "Starten Sie Ihr digitales Business, indem Sie Ihren ersten Digitalen Zwilling erstellen.",
-        "title": "Digitalen Zwilling erstellen"
-      },
-      "explanations": {
-        "desc": "Wie arbeitet man mit dem evan.network?<br>Lesen Sie unser Wiki!",
-        "title": "Erfahren Sie mehr über das evan.network"
-      },
-      "recovery": {
-        "action": "Sitzung fortfahren",
-        "desc": "Möchten Sie mit Ihrer vorherigen Sitzung fortfahren und die zuletzt geöffnete Anwendung starten?",
-        "title": "Sitzung fortfahren"
-      },
-      "testcore": {
-        "desc": "Mit Ihrer bestehenden Identität Funktionalitäten auf dem testcore testen",
-        "title": "Kostenlos ausprobieren"
-      }
-    },
-    "startup": "Womit möchten Sie starten?"
+  "_verifications": {
   }
 }
-/* tslint:enable */
+/* tslint:enable */;
