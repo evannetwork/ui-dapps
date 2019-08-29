@@ -6,6 +6,9 @@
   - only allow `pdf` files for notary identification
   - add file rename hint
   - add mainnet account
+- add `explorer.vue`, `verifications.vue` and `help.vue` dapps
+- `dashboard.vue`
+  - move docs components to `help.vue`
 
 ### Fixes
 
