@@ -121,25 +121,25 @@ $themeEvan: map-merge(
   $themeEvan
 );
 
-
 /**
  * theme colors
  */
 $theme-colors: (
-  danger: cssVar('red'),
+  danger: cssVar('pink'),
   dark: #023845,
   info: cssVar('blue'),
   light: cssVar('gray-200'),
   primary: cssVar('cyan'),
-  secondary: cssVar('pink'),
+  disabled: '#CED4DA',
+  secondary: cssVar('cyan'),
   success: cssVar('green'),
   warning: cssVar('yellow'),
 );
 $themeEvan: map-merge($themeEvan, $theme-colors);
 $themeEvan: map-merge(
   (
-    danger-darken: cssVar('red-darken'),
-    danger-lighten: cssVar('red-lighten'),
+    danger-darken: cssVar('pink-darken'),
+    danger-lighten: cssVar('pink-lighten'),
     dark-darken: darken(#023845, 10%),
     dark-lighten: lighten(#023845, 10%),
     info-darken: cssVar('blue-darken'),
@@ -186,7 +186,7 @@ $themeEvan: map-merge(
     border-color: #dce0e1,
     border-color-2: #e5e9f2,
     btn-primary-hover: cssVar('primary'),
-    btn-secondary-hover: #2cabe3,
+    btn-secondary-hover: 'transparent',
     font-family-sans-serif: ('Open Sans', sans-serif),
     table-hover: cssVar('gray-200'),
     table-row-odd: cssVar('bg-level-1'),
@@ -210,7 +210,7 @@ $themeEvan: map-merge(
     bg-text-info: cssVar('white'),
     bg-text-light: cssVar('black'),
     bg-text-primary: cssVar('white'),
-    bg-text-secondary: cssVar('white'),
+    bg-text-secondary: cssVar('primary'),
     bg-text-success: cssVar('white'),
     bg-text-warning: cssVar('white'),
     input-placeholder-color: cssVar('gray-400'),
@@ -229,8 +229,8 @@ $themeEvan: map-merge(
 $themeEvan: map-merge(
   (
     // dapp-wrapper
-    dapp-wrapper-sidepanel-icon-color: cssVar('white'),
-    dapp-wrapper-sidepanel-list-active: cssVar('white'),
+    dapp-wrapper-sidepanel-icon-color: cssVar('gray-500'),
+    dapp-wrapper-sidepanel-list-active: cssVar('gray-200'),
     dapp-wrapper-sidepanel-shadow: 1px 0 20px rgba(0, 0, 0, 0.15),
   ),
   $themeEvan
@@ -245,7 +245,7 @@ $themeEvan: map-merge(
     h2-font-size:    1.750em,   // 28px / 1.750em / 1.750rem
     h3-font-size:    21px   ,   // 21px / 1.313em / 1.313rem
     h4-font-size:    18px   ,   // 18px / 1.125em / 1.125rem
-    h5-font-size:    16px   ,   // 16px / 1em     / 1rem    
+    h5-font-size:    16px   ,   // 16px / 1em     / 1rem
     h6-font-size:    15px   ,   // 15px / 0.938em / 0.938rem
     text-font-size:  14px   ,   // 14px / 0.875em
     small-font-size: 12px   ,

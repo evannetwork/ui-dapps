@@ -61,10 +61,10 @@ fieldset:disabled a.btn {
     @include button-variant(
       $value,
       $value,
-      cssVar("#{ $color }-darken"),
-      cssVar("#{ $color }-darken"),
-      cssVar("#{ $color }-darken"),
-      cssVar("#{ $color }-darken"),
+      cssVar("#{ $color }"),
+      cssVar("#{ $color }"),
+      cssVar("#{ $color }"),
+      cssVar("#{ $color }"),
       cssVar("bg-text-#{$color}")
     );
   }
