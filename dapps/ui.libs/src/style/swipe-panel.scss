@@ -25,35 +25,55 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+@import './utils';
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
+.evan {
+  .evan-swipe-panel {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
 
-/**
- * load evan specific styles
- */
-@import './style/breadcrumb';
-@import './style/buttons';
-@import './style/colors';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/dropdown';
-@import './style/forms';
-@import './style/icons';
-@import './style/loading';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/swipe-panel';
-@import './style/table';
-@import './style/tabs';
-@import './style/text';
-@import './style/tooltip';
-@import './style/transitions';
+    width: cssVar('swipe-panel-size');
+    height: 100%;
+    padding: 2em;
+
+    background-color: cssVar('bg-inverted');
+    box-shadow: 4px 0 4px rgba(0, 0, 0, 0.15);
+
+    &.alignment-right {
+      left: calc(100% + var(--evan-swipe-panel-size));
+
+      transition: 0.3s ease-out left;
+
+      &.show {
+        left: calc(100% - var(--evan-swipe-panel-size));
+      }
+    }
+
+    &.alignment-left {
+      right: calc(100% + var(--evan-swipe-panel-size));
+
+      transition: 0.3s ease-out right;
+
+      &.show {
+        right: calc(100% - var(--evan-swipe-panel-size));
+      }
+    }
+
+    * {
+      color: cssVar('text-color-inverted');
+    }
+
+    @media (max-width: 768px) {
+      & {
+        right: 100%;
+
+        width: 100%;
+
+        &.show {
+          right: 0;
+        }
+      }
+    }
+  }
+}
