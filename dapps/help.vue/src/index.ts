@@ -25,16 +25,34 @@
   https://evan.network/license/
 */
 
-// vue imports
 import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { initializeVue } from '@evan.network/ui-vue-core';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import Main from './components/root/root.vue';
+import translations from './i18n/translations';
+import routes from './routes';
+import components from './components/registry';
 
-@Component({ })
-export default class DashboardRootComponent extends mixins(EvanComponent) {
+/**
+ * StartDapp function that is called by the ui-dapp-browser, including an container and the current
+ * dbcp. So startup, it's evan time!
+ *
+ * @param      {any}     container    container element
+ * @param      {string}  dbcpName     dbcp name of the dapp
+ * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
+ * @param      {string}  dappBaseUrl  origin of the dapp
+ */
+export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+  await initializeVue({
+    components,
+    container,
+    dappBaseUrl,
+    dappEnsOrContract,
+    dbcpName,
+    RootComponent: Main,
+    routes,
+    state: { },
+    translations: translations,
+    Vue: Vue,
+  });
 }

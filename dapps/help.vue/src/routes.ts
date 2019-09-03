@@ -24,17 +24,41 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+// import evan libs
+import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import ExplanationComponent from './components/explanation/explanation.vue';
+import FaqComponent from './components/faq/faq.vue';
+import DocumentationComponent from './components/documentation/documentation.vue';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+// map them to element names, so they can be used within templates
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  {
+    path: '',
+    component: DocumentationComponent,
+    children: [
+      {
+        path: '',
+        redirect: { path: 'github' }
+      },
+      {
+        path: 'github',
+        component: IframeComponent,
+        props: { src: 'https://evannetwork.github.io' }
+      },
+      {
+        path: `bccdocs`,
+        component: IframeComponent,
+        props: { src: '//api-blockchain-core.readthedocs.io/en/latest/' }
+      },
+      {
+        path: `uidocs`,
+        component: IframeComponent,
+        props: { src: '//ui-docs.readthedocs.io/en/latest/' }
+      },
+    ]
+  },
+];
 
-@Component({ })
-export default class DashboardRootComponent extends mixins(EvanComponent) {
-}
+export default routeRegistration;
+

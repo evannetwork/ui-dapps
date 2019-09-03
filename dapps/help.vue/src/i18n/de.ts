@@ -25,39 +25,14 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-@Component({ })
-export default class DocumentationComponent extends mixins(EvanComponent) {
-  /**
-   * Current domain name
-   */
-  domainName = (<any>this).domainName;
-
-  /**
-   * Tabs for top navigation
-   */
-  tabs: Array<any> = [ ];
-
-  created() {
-    const domainName = (<any>this).dapp.domainName;
-
-    this.tabs = [
-      'github',
-      'bccdocs',
-      'uidocs',
-    ].map(urlKey => ({
-      id: `tab-${ urlKey }`,
-      href: `${ (<any>this).dapp.fullUrl }/documentation/${ urlKey }`,
-      text: `_dashboard.docs.${ urlKey }`
-    }));
+/* tslint:disable */
+export default {
+  "_help": {
+    "docs": {
+      "bccdocs": "API",
+      "github": "Wiki",
+      "uidocs": "UI"
+    },
   }
 }
+/* tslint:enable */;

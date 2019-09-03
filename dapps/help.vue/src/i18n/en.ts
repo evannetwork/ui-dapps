@@ -25,24 +25,14 @@
   https://evan.network/license/
 */
 
-<template>
-  <div id="documentation" class="h-100">
-    <evan-dapp-wrapper class="h-100">
-      <template v-slot:content>
-        <evan-nav-tabs class="flex-shrink-0"
-          :tabs="tabs"
-          ref="navTabs">
-        </evan-nav-tabs>
-
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
-  </div>
-</template>
-
-<script lang="ts">
-  import DocumentationComponent from './documentation.ts';
-  export default DocumentationComponent;
-</script>
+/* tslint:disable */
+export default {
+  "_help": {
+    "docs": {
+      "bccdocs": "API",
+      "github": "Wiki",
+      "uidocs": "UI"
+    },
+  }
+}
+/* tslint:enable */;
