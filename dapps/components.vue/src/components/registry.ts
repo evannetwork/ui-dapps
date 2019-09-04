@@ -25,8 +25,13 @@
   https://evan.network/license/
 */
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-);
+// import evan libs
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+
+// export them all, so other applications can access them
+export { }
+
+// map them to element names, so they can be used within templates
+const componentRegistration: Array<ComponentRegistrationInterface> = [ ];
+
+export default componentRegistration;

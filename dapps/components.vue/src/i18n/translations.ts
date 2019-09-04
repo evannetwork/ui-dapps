@@ -25,8 +25,8 @@
   https://evan.network/license/
 */
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-);
+import de from './de';
+import en from './en';
+
+// map all langugages
+export default { de, en };

@@ -9,6 +9,8 @@
 - add `explorer.vue`, `verifications.vue` and `help.vue` dapps
 - `dashboard.vue`
   - move docs components to `help.vue`
+- `components.vue`
+  - add dapp for displaying evan components
 
 ### Fixes
 

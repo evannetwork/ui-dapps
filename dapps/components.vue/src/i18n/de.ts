@@ -25,8 +25,11 @@
   https://evan.network/license/
 */
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-);
+/* tslint:disable */
+export default {
+  "_comp": {
+    "buttons": "Buttons",
+    "components": "evan Komponenten"
+  }
+}
+/* tslint:enable */;

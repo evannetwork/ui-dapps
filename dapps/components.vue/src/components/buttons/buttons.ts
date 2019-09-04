@@ -25,8 +25,21 @@
   https://evan.network/license/
 */
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-);
+// vue imports
+import Component, { mixins } from 'vue-class-component';
+import Vue from 'vue';
+import { Prop, Watch } from 'vue-property-decorator';
+
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+
+/**
+ * @class         ButtonsComponent
+ */
+@Component({ })
+export default class ButtonsComponent extends mixins(EvanComponent) {
+  @Prop({
+    type: Number,
+    default: 0
+  }) btnCounter: Number;
+}

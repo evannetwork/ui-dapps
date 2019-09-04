@@ -24,9 +24,16 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+// import evan libs
+import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
-module.exports = require('../../vue/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-);
+import ButtonsComponent from './components/buttons/buttons.vue';
+
+// map them to element names, so they can be used within templates
+const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', redirect: { path: 'buttons' } },
+  { path: 'buttons', component: ButtonsComponent }
+];
+
+export default routeRegistration;
+
