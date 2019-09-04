@@ -24,6 +24,9 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+
+import * as CoreBundle from 'bcc';
+
 import {
   getDomainName,
   lightwallet,
@@ -437,23 +440,13 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
           }
           console.log('Payment initiated!', source);
 
-          const activeAccount = this.core.activeAccount();
-          const toSignedMessage = this.bcc.web3.utils
-            .soliditySha3(new Date().getTime() + activeAccount)
-            .replace('0x', '');
-          const hexMessage = this.bcc.web3.utils.utf8ToHex(toSignedMessage);
-          const signature = await this.signMessage(toSignedMessage, activeAccount);
           const headers = {
-            authorization: [
-              `EvanAuth ${ activeAccount }`,
-              `EvanMessage ${ hexMessage }`,
-              `EvanSignedMessage ${ signature }`
-            ].join(',')
+            authorization: await CoreBundle.utils.getSmartAgentAuthHeaders(this.bcc.coreRuntime),
           };
 
           try {
             this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
-          } catch(error) {
+          } catch (error) {
             this.paymentResponse = {
               status: 'error',
               code: this.getErrorCode(error.code)
