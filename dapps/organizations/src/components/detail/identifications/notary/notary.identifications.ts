@@ -75,7 +75,6 @@ function triggerRequestReload(orgAddress: string, detail: any) {
  * Return the list of requested identifications
  */
 async function getRequests(runtime: bcc.Runtime, address: string) {
-  const evanAuthHeader = await bcc.utils.getSmartAgentAuthHeaders(runtime);
   const allRequests = await axios({
     method: 'POST',
     url: `${ agentUrl }/api/smart-agents/smart-agent-2fi/status/getAll`,
