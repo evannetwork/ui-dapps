@@ -195,7 +195,8 @@ $themeEvan: map-merge(
     tooltip-bg: cssVar('bg-inverted'),
     tooltip-border: cssVar('bg-inverted'),
     tooltip-shadow: transparent,
-    tooltip-arrow-color: cssVar('bg-inverted')
+    tooltip-arrow-color: cssVar('bg-inverted'),
+    swipe-panel-size: 400px
   ),
   $themeEvan
 );
