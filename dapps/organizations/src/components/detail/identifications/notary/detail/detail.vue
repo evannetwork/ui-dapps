@@ -72,7 +72,7 @@
       </div>
       <span class="mx-auto"></span>
       <div>
-        <button class="btn btn-primary btn-rounded" target="_blank"
+        <button class="btn btn-primary " target="_blank"
           v-if="statusActions.indexOf(details.status) !== -1"
           :id="`ident-request-${ details.status }`"
           :disabled="details.status === 'issued' && accepting"

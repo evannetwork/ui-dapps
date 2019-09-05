@@ -39,7 +39,7 @@
             {{ containerAddress }}
           </a>
           <br>
-          <a class="btn btn-primary btn-rounded mt-3 d-inline-block" target="_blank"
+          <a class="btn btn-primary mt-3 d-inline-block" target="_blank"
             :href="`${ dapp.baseUrl }/explorer.evan/detail/${ containerAddress }/general`">
             {{ '_datacontainer.technical.in-explorer' | translate }}
           </a>

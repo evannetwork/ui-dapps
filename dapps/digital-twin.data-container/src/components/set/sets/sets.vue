@@ -101,7 +101,7 @@
             v-html="$t(`_datacontainer.no-entries.desc-noperm`)">
           </p>
           <button
-            class="btn btn-rounded btn-outline-secondary mt-3"
+            class="btn btn-outline-primary mt-3"
             id="th-add-entry"
             v-if="
               reactiveRefs.setActions && reactiveRefs.setActions.writeOperations &&

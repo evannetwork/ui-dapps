@@ -90,7 +90,7 @@
       <template v-slot:footer>
         <span class="mx-auto"></span>
         <div id="pin-enter-btn" v-if="status === 0">
-          <button type="button" class="btn btn-primary btn-rounded"
+          <button type="button" class="btn btn-primary "
             id="ident-pin-generate"
             :disabled="!pinForm.isValid || checkingPin"
             @click="generateAnswer()">
@@ -99,7 +99,7 @@
           </button>
         </div>
         <div id="answer-success-btn" v-if="status === 1">
-          <a class="btn btn-primary btn-rounded"
+          <a class="btn btn-primary "
             id="ident-pin-print-next"
             @click="printPdfOrNext()">
             <span v-if="printStatus === 'initial'">{{ `_org.ident.notary.print` | translate }}</span>
@@ -108,7 +108,7 @@
           </a>
         </div>
         <div id="answer-success-btn" v-if="status === 2">
-          <a class="btn btn-primary btn-rounded"
+          <a class="btn btn-primary "
             id="ident-pin-done"
             target="_blank"
             @click="$refs.pinModal.hide(); triggerRequestReload();">

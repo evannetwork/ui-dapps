@@ -38,7 +38,7 @@
         <div>
           <button
             id="dt-open"
-            class="btn btn-circle btn-sm btn-tertiary mr-3"
+            class="btn btn-icon mr-3"
             @click="$refs.dtOpen.showModal()">
             <i class="mdi mdi-magnify"></i>
             <evan-tooltip :placement="'bottom'">
@@ -47,7 +47,7 @@
           </button>
           <button
             id="dt-create"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             @click="$refs.dtCreate.showModal()">
             <span>{{ '_digitaltwins.digitaltwins.create' | translate }}</span>
             <i class="mdi mdi-arrow-right label ml-3"></i>

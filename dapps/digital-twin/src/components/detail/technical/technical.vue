@@ -38,7 +38,7 @@
             {{ uiDT.address }}
           </a>
           <br>
-          <a class="btn btn-primary btn-rounded mt-3 d-inline-block" target="_blank"
+          <a class="btn btn-primary  mt-3 d-inline-block" target="_blank"
             :href="`${ dapp.baseUrl }/explorer.evan/detail/${ uiDT.address }/general`">
             {{ '_datacontainer.technical.in-explorer' | translate }}
           </a>

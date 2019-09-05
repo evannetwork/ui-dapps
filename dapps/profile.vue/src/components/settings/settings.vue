@@ -39,7 +39,7 @@
         </div>
         <span class="mx-auto"></span>
         <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-tertiary btn-circle"
+          <button type="button" class="btn btn-icon"
             @click="$refs.evanLogout.logout();">
             <i class="mdi mdi-logout"></i>
             <evan-tooltip :placement="'bottom'">

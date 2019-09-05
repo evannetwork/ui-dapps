@@ -43,7 +43,7 @@
               </h3>
             </div>
             <span class="mx-auto"></span>
-            <button type="button" class="btn btn-primary btn-rounded"
+            <button type="button" class="btn btn-primary "
               @click="$refs.favoriteAddModal.show();">
               {{ `_favorites.add` | translate }}
               <i class="mdi mdi-arrow-right label ml-3"></i>
@@ -60,7 +60,7 @@
               <p v-html="$t('_favorites.no-favorites.desc')"></p>
 
               <div class="text-center mt-3">
-                <button type="button" class="btn btn-primary btn-rounded"
+                <button type="button" class="btn btn-primary"
                   @click="$refs.favoriteAddModal.show();">
                   {{ `_favorites.add` | translate }}
                   <i class="mdi mdi-arrow-right label ml-3"></i>
@@ -83,7 +83,7 @@
                   </p>
                 </template>
                 <template v-slot:footer>
-                  <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                  <button type="button" class="btn btn-primary font-weight-normal"
                     @click="
                       removeFavorite(favorite);
                       $refs.favoriteRemoveModal[index].hide($event);

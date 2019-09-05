@@ -268,7 +268,7 @@
         <!-- back btn -->
         <template v-if="status >= 0 && status <= 2 && !sending">
           <button
-            type="button" class="btn btn-outline-primary btn-rounded"
+            type="button" class="btn btn-outline-primary "
             id="ident-request-back"
             @click="status -= 1">
             <i class="mdi mdi-arrow-left label mr-3"></i>
@@ -279,7 +279,7 @@
         <!-- start button -->
          <template v-if="status === -1">
 
-          <button type="button" class="btn btn-primary btn-rounded mx-auto"
+          <button type="button" class="btn btn-primary  mx-auto"
             id="ident-request-start"
             :disabled="!enoughFunds || (status === 1 && !requestForm.isValid) || sending"
             @click="status += 1">
@@ -289,7 +289,7 @@
 
         <!-- next btn -->
         <template v-if="status < 2 && status !== -1">
-          <button type="button" class="btn btn-primary btn-rounded"
+          <button type="button" class="btn btn-primary "
             id="ident-request-next"
             :disabled="(status === 0 && !requestForm.isValid) || sending"
             @click="status += 1">
@@ -300,7 +300,7 @@
 
         <!-- request ident btn -->
         <template v-if="status === 2">
-          <button type="button" class="btn btn-primary btn-rounded" id="ident-request"
+          <button type="button" class="btn btn-primary " id="ident-request"
             @click="requestIdentification()"
             :disabled="!approvedCosts || sending"
           >
@@ -312,7 +312,7 @@
 
         <!-- final close button -->
         <template v-if="status === 3">
-          <button type="button" class="btn btn-primary btn-rounded" id="ident-request"
+          <button type="button" class="btn btn-primary " id="ident-request"
             @click="$refs.requestModal.hide()">
             {{ `_org.ident.done` | translate }}
           </button>

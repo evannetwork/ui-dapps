@@ -51,7 +51,7 @@
               </p>
             </template>
             <template v-slot:footer>
-              <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+              <button type="button" class="btn btn-primary  font-weight-normal"
                 id="dt-map-ens"
                 v-if="lookupModalScope === 'available'"
                 @click="mapEns()">
@@ -107,7 +107,7 @@
         ">
         <button type="submit"
           id="dt-map-check-ens"
-          class="btn btn-rounded btn-primary"
+          class="btn  btn-primary"
           @click="checkAddress()"
           :disabled="!lookupForm.isValid || reactiveRefs.ensActions.loading">
           {{ '_digitaltwins.map-ens.check-ens' | translate }}

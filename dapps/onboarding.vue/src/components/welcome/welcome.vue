@@ -29,7 +29,7 @@
   <div class="p-3">
     <div class="mt-5 mb-3 text-center">
       <br>
-      <p class="text-secondary font-weight-bold">{{ '_evan.welcome-to-evan' | translate }}</p>
+      <h4 class="text-primary font-weight-bold my-3">{{ '_evan.welcome-to-evan' | translate }}</h4>
       <h3>{{ '_onboarding.please-login-signup' | translate }}</h3>
       <br>
     </div>

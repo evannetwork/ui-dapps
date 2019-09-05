@@ -48,10 +48,7 @@
             :disabled="step.disabled(this)"
             @click="activeStep = index">
             <span class="stepper-circle"
-              :class="{
-                'bg-primary': activeStep === index,
-                'bg-secondary': activeStep !== index,
-              }">
+              :class="{ 'active': activeStep === index, }">
               {{ index + 1}}
             </span>
             <span>{{ step.title | translate }}</span>
@@ -96,7 +93,7 @@
               </div>
 
               <div class="text-center">
-                <button type="submit" class="btn btn-rounded btn-primary"
+                <button type="submit" class="btn  btn-primary"
                   :disabled="!profileForm.isValid">
                   {{ '_onboarding.continue' | translate }}
                 </button>
@@ -121,12 +118,12 @@
 
             <div>
               <div class="text-center mt-4">
-                <button type="button" class="btn btn-outline-secondary btn-rounded"
+                <button type="button" class="btn btn-outline-secondary "
                   v-if="mnemonicRiddle"
                   @click="cancelRiddle()">
                   {{ '_onboarding.sign-up.cancel-riddle' | translate }}
                 </button>
-                <button type="button" class="btn btn-rounded btn-primary"
+                <button type="button" class="btn  btn-primary"
                   :disabled="!validMnemonic"
                   @click="useMnemonic()">
                   {{ '_onboarding.continue' | translate }}
@@ -187,7 +184,7 @@
 
             <div class="text-center"
               v-if="!creatingProfile">
-              <button type="button" class="btn btn-rounded btn-primary"
+              <button type="button" class="btn  btn-primary"
                 :disabled="!recaptchaToken"
                 @click="createProfile()">
                 {{ '_onboarding.sign-up.create-profile.title' | translate }}

@@ -93,7 +93,7 @@
         </form>
       </template>
       <template v-slot:footer>
-        <button class="btn btn-rounded btn-primary"
+        <button class="btn  btn-primary"
           id="th-add-entry"
           type="submit"
           @click="addEntry()"

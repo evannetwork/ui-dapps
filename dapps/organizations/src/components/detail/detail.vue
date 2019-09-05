@@ -55,7 +55,7 @@
             <template v-for="(category, index) in categories">
               <div class="d-flex align-items-center pl-3 pr-3 py-3"
                 style="height: 60px;">
-                <button class="btn mini mr-3"
+                <button class="btn btn-icon btn-sm mr-3"
                   @click="category.isOpen = !category.isOpen"
                   v-if="!creating">
                   <i

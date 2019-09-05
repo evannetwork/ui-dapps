@@ -53,7 +53,7 @@
 
           <div class="text-center mt-3 w-100">
             <button type="submit"
-              class="btn btn-rounded btn-primary"
+              class="btn  btn-primary"
               :disabled="!contactForm.isValid">
               {{ `${ formI18nScope }.submit` | translate }}
             </button>

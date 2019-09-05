@@ -30,7 +30,7 @@
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <!-- show dropdown button  -->
-    <button class="btn btn-circle btn-sm btn-tertiary"
+    <button class="btn btn-icon"
       v-if="displayMode === 'dropdownButton'"
       id="plugin-context-menu-open"
       @click="showDropdown($event)">
@@ -140,7 +140,7 @@
         <template v-slot:footer>
           <button type="submit"
             id="plugin-dbcp-save"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             v-if="reactiveRefs.dbcpForm"
             :disabled="saving || !reactiveRefs.dbcpForm.isValid"
             @click="saveDbcp()">
@@ -221,7 +221,7 @@
         <template v-slot:footer>
           <button
             id="plugin-share"
-            type="button" class="btn btn-primary btn-rounded font-weight-normal"
+            type="button" class="btn btn-primary font-weight-normal"
             :disabled="!shareForm.isValid"
             @click="shareDt()">
             {{ `_datacontainer.share.action` | translate }}
@@ -246,7 +246,7 @@
         <template v-slot:footer>
           <button
             id="plugin-go-addressbook"
-            type="button" class="btn btn-primary btn-rounded font-weight-normal"
+            type="button" class="btn btn-primary font-weight-normal"
             @click="evanNavigate(`addressbook.${ dapp.domainName }`, `/${ dapp.rootEns }.${ dapp.domainName }`)">
             {{ `_datacontainer.share.no-contacts.open-contacts` | translate }}
             <i class="mdi mdi-arrow-right label"></i>
@@ -267,7 +267,7 @@
         <template v-slot:footer>
           <button type="submit"
             id="plugin-delete"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             @click="deletePlugin()">
             {{ '_datacontainer.plugin.delete' | translate }}
             <i class="mdi mdi-arrow-right label"></i>

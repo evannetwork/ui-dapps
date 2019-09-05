@@ -32,7 +32,7 @@
     v-if="containerAddress">
     <template v-if="!loading && areDropdownDotsVisible()">
       <!-- show dropdown button  -->
-      <button class="btn btn-circle btn-sm btn-tertiary"
+      <button class="btn btn-icon"
         v-if="displayMode === 'dropdownButton'"
         id="plugin-context-menu-open"
         @click="$refs.dtContextMenu.show();">
@@ -101,7 +101,7 @@
         <template v-slot:footer>
           <button type="submit"
             id="dc-set-reset-submit"
-            class="btn btn-rounded btn-danger"
+            class="btn  btn-danger"
             @click="resetEntry()">
             {{ `_datacontainer.sets.reset.title` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>

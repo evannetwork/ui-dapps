@@ -47,7 +47,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
       title: 'digitaltwins',
       img: 'plus.svg',
       path: `digitaltwins.${ getDomainName() }`,
-      class: 'bg-secondary',
+      class: 'bg-primary',
     },
   ];
 

@@ -40,14 +40,14 @@
         </div>
         <span class="mx-auto"></span>
         <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-tertiary btn-circle mr-3"
+          <button type="button" class="btn btn-icon mr-3"
             @click="$refs.contactDetailModal.show(accountId);">
             <i class="mdi mdi-pencil-outline"></i>
             <evan-tooltip :placement="'bottom'">
               {{ `_profile.detail.edit` | translate }}
             </evan-tooltip>
           </button>
-          <button type="button" class="btn btn-tertiary btn-circle"
+          <button type="button" class="btn btn-icon"
             @click="$refs.evanLogout.logout();">
             <i class="mdi mdi-logout"></i>
             <evan-tooltip :placement="'bottom'">

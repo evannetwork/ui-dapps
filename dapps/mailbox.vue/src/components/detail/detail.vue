@@ -75,13 +75,13 @@
                   </p>
                 </template>
                 <template v-slot:footer>
-                  <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                  <button type="button" class="btn btn-primary  font-weight-normal"
                     @click="acceptAttachment(attachment, mail, index, $refs.attachmentModal[index]);">
                     {{ `_mailbox.attachments.continue` | translate }}
                   </button>
                 </template>
               </evan-modal>
-              <button class="btn btn-rounded btn-primary"
+              <button class="btn  btn-primary"
                 :disabled="acceptingAttachment || attachment.disabled"
                 @click="openAttachment(attachment, index, $refs.attachmentModal[index])">
                 <div class="spinner-border spinner-border-sm text-light mr-3"

@@ -115,7 +115,7 @@
         <evan-loading v-if="loadingEntries"></evan-loading>
         <button
           id="entry-list-load-more"
-          type="submit" class="btn btn-rounded btn-outline-secondary mt-3"
+          type="submit" class="btn btn-outline-primary mt-3"
           v-else-if="offset < maxListentries"
           @click="loadEntries()">
           {{ `_datacontainer.list.load-more` | translate }}

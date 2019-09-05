@@ -84,7 +84,7 @@
                           $refs.dtActions.reactiveRefs.dcCreate.showModal();
                           $refs.dtActions.closeDropdown();
                         ">
-                        <button class="btn mini border btn-circle border-secondary mr-3">
+                        <button class="btn btn-icon btn-sm border-secondary mr-3">
                           <i class="mdi mdi-plus text-secondary"></i>
                         </button>
                         {{ '_digitaltwins.containers.create' | translate }}

@@ -31,7 +31,7 @@
       <br>
       <h1 class="mt-4 font-weight-semibold">{{ '_dashboard.startup' | translate }}</h1>
       <h3 class="mt-4 font-weight-semibold text-muted">{{ '_evan.welcome-to-evan' | translate }}</h3>
-      <div class="bg-secondary d-inline-block" style="width: 70px; height: 5px;"></div>
+      <div class="bg-primary d-inline-block" style="width: 70px; height: 5px;"></div>
       <br>
     </div>
     <div class="d-md-flex flex-wrap justify-content-center p-0 p-xs-3">
@@ -80,7 +80,7 @@
         </p>
       </template>
       <template v-slot:footer>
-        <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+        <button type="button" class="btn btn-primary  font-weight-normal"
           @click="recoverUrl()">
           {{ `_dashboard.overview.recovery.action` | translate }}
         </button>

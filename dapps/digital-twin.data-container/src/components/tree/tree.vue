@@ -29,13 +29,13 @@
   <div
     class="border-bottom border-sm"
     :style="!onlySets && isOpen ?
-      'border-left: 4px solid var(--evan-secondary)' :
+      'border-left: 4px solid var(--evan-primary)' :
       'border-left: 4px solid transparent'"
     >
     <div class="d-flex align-items-center pl-3 pr-3 py-3"
       style="height: 60px;"
       v-if="!onlySets">
-      <button class="btn mini mr-3"
+      <button class="btn btn-icon btn-sm mr-3"
         @click="isOpen = !isOpen"
         v-if="!creating">
         <i
@@ -65,7 +65,7 @@
       </a>
       <span class="mx-auto"></span>
       <div class="position-relative d-flex align-items-center">
-        <div class="spinner-border spinner-border-sm text-secondary ml-3"
+        <div class="spinner-border spinner-border-sm text-primary ml-3"
           v-if="loading || initializing">
         </div>
         <dc-actions
@@ -82,7 +82,7 @@
 
     <div class="text-center p-3"
         v-if="onlySets && (loading || initializing)">
-      <div class="spinner-border spinner-border-sm text-secondary"></div>
+      <div class="spinner-border spinner-border-sm text-primary"></div>
     </div>
     <div class="pb-3"
       v-if="!initializing && (onlySets || isOpen)">
@@ -119,8 +119,8 @@
                   reactiveRefs.emptyActions.$refs.dcNewEntry.showModal();
                   reactiveRefs.emptyActions.closeDropdown();
                 ">
-                <button class="btn mini border btn-circle border-secondary mr-3">
-                  <i class="mdi mdi-plus text-secondary"></i>
+                <button class="btn btn-icon btn-sm border-primary mr-3">
+                  <i class="mdi mdi-plus text-primary"></i>
                 </button>
                 {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
               </button>
@@ -154,7 +154,7 @@
             </a>
             <span class="mx-auto"></span>
             <div class="position-relative d-flex align-items-center">
-              <div class="spinner-border spinner-border-sm text-secondary"
+              <div class="spinner-border spinner-border-sm text-primary"
                 v-if="reactiveRefs.setActions[index] && reactiveRefs.setActions[index].saving">
               </div>
               <dc-set-actions

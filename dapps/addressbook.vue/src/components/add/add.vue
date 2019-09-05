@@ -48,11 +48,7 @@
                 :disabled="step.disabled(index)"
                 @click="activeStep = index">
                 <span class="stepper-circle"
-                  :class="{
-                    'bg-primary': activeStep === index,
-                    'bg-secondary': !step.disabled(index) && activeStep !== index,
-                    'bg-gray': step.disabled(index),
-                  }">
+                  :class="{ 'active': activeStep === index, }">
                   {{ index + 1}}
                 </span>
                 <span>{{ step.title | translate }}</span>
@@ -142,14 +138,14 @@
         </template>
       </template>
       <template v-slot:footer v-if="!loading">
-        <button type="submit" class="btn btn-primary btn-rounded"
+        <button type="submit" class="btn btn-primary "
           v-if="activeStep === 0"
           :disabled="!contactForm.isValid"
           @click="activeStep = 1">
           {{ `${ formI18nScope }.continue` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </button>
-        <button type="submit" class="btn btn-primary btn-rounded"
+        <button type="submit" class="btn btn-primary "
           v-else
           :disabled="!mailForm.isValid"
           @click="addContact">

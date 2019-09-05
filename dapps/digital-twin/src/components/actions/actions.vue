@@ -29,7 +29,7 @@
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <!-- show dropdown button  -->
-    <button class="btn btn-circle btn-sm btn-tertiary"
+    <button class="btn btn-icon"
       v-if="displayMode === 'dropdownButton'"
       id="digitaltwin-context-menu-open"
       @click="showDropdown($event)">
@@ -161,7 +161,7 @@
         <template v-slot:footer>
           <button type="submit"
             id="container-toggle-favorite"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             @click="toggleFavorite();">
             {{ 
               (selectedUiDT.isFavorite ?
@@ -191,7 +191,7 @@
         <template v-slot:footer v-if="reactiveRefs.dbcpForm">
           <button type="submit"
             id="container-dbcp-save"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             @click="reactiveRefs.dbcpForm.save()"
             :disabled="!reactiveRefs.dbcpForm._form.isValid">
             {{ `_digitaltwins.detail.save` | translate }}

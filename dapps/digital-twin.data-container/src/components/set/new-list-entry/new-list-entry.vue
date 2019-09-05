@@ -60,7 +60,7 @@
     <template v-slot:footer>
       <button
         id="entry-save"
-        type="submit" class="btn btn-rounded btn-primary"
+        type="submit" class="btn  btn-primary"
         :disabled="itemType === 'object' ?
           (!reactiveRefs.addAjv || !reactiveRefs.addAjv.isValid) :
           !addListEntryForm.isValid"

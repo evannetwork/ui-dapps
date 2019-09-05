@@ -69,7 +69,7 @@
         <div class="content">
           {{ '_org.ident.notary.no-requests' | translate }}
           <br>
-          <a class="btn btn-primary btn-rounded mt-3" target="_blank"
+          <a class="btn btn-primary  mt-3" target="_blank"
             :id="`ident-request-unknown`"
             @click="$refs.identAction.show()">
             {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
