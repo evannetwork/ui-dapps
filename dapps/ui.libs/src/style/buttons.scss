@@ -29,77 +29,152 @@
 
 .evan.theme-evan {
   .btn {
-    @include hover-button;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+
     height: 40px;
     padding: 8px 24px;
 
-    i.mdi.left {
-      margin-right: 1ch;
-      margin-left: -4px;
-    }
-    i.mdi.right {
-      margin-left: 1ch;
-      margin-right: -4px;
-    }
-    i.mdi.centered {
-      margin: inherit auto;
-      text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    border-radius: 2px;
+
+    &.focus, &:focus, &:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 
     &, * {
       font-weight: bold;
-      vertical-align: middle;
       line-height: 20px;
-    }
 
-    &.btn-primary {
-      * {
-        color: cssVar('bg-text-primary');
-      }
-      &.disabled,
-      &:disabled {
-        background-color: cssVar('disabled');
-        border-color: cssVar('disabled');
-        opacity: 1;
+      vertical-align: middle;
+    }
+    
+    @each $color, $value in $theme-colors {
+      &[class*='-outline-#{ $color }']:hover {
+        background-color: cssVar('#{ $color }-darken');
+        border-color: cssVar('#{ $color }-darken');
       }
     }
 
-    &.btn-danger {
-      * {
-        color: cssVar('bg-text-danger');
+    // general icon specifications
+    & {
+      i {
+        font-size: 25px;
       }
-      &.disabled,
-      &:disabled {
-        background-color: cssVar('danger');
-        border-color: cssVar('danger');
-        opacity: 1;
+
+      i.left, .left[class^='spinner-'] {
+        margin-right: 12px;
+      }
+
+      i.right, .right[class^='spinner-'] {
+        margin-left: 12px;
       }
     }
 
-    &.btn-secondary,
-    &.btn-outline-secondary {
-      * {
-        color: cssVar('primary');
-      }
-      background: transparent;
+    // disabled state
+    &:disabled, &:disabled:hover {
+      border-color: cssVar('disabled');
+      background-color: cssVar('disabled');
+      box-shadow: none;
 
-      &.focus, &:focus, &:hover {
-        background: transparent;
-        * {
-          color: cssVar('primary');
+      &, * {
+        color: cssVar('white');
+      }
+
+      &[class*='-outline-'] {
+        background-color: transparent;
+
+        &, * {
+          color: cssVar('disabled');
         }
       }
+    }
 
-      &.disabled,
-      &:disabled,
-      &.disabled *,
-      &:disabled * {
-        border-color: cssVar('disabled');
+    // btn size configurations
+    &.btn-lg {
+      font-weight: normal;
+
+      height: 48px;
+      padding: 12px 24px;
+    }
+
+    &.btn-sm {
+      font-weight: normal;
+      line-height: 10px;
+
+      height: 24px;
+      padding: 0 15px;
+
+      &, * {
+        font-size: 10px;
+      }
+
+      i {
+        font-size: 20px;
+      }
+
+      i.left, .left[class^='spinner-'] {
+        margin-right: 6px;
+      }
+
+      i.right, .right[class^='spinner-'] {
+        margin-left: 6px;
+      }
+    }
+
+    // icon and text buttons
+    &[class*='btn-icon'], &[class*='btn-text'], &.btn-link {
+      height: auto;
+
+      box-shadow: none;
+
+      &:disabled {
         color: cssVar('disabled');
-        opacity: 1;
+        border: 0;
+        background-color: transparent;
+
+        i {
+          color: cssVar('disabled');
+        }
+      }
+    }
+
+    &[class*='btn-icon'], &[class*='btn-text'] {
+      &:hover {
+        background-color: cssVar('gray-300');
+
+        &:disabled {
+          background-color: transparent;
+        }
+      }
+    }
+
+    &[class*='btn-text'] {
+      padding: 5px;
+    }
+
+    &.btn-text-primary {
+      color: cssVar('primary');
+    }
+
+    &[class*='btn-icon'] {
+      padding: 10px;
+
+      border-radius: 50%;
+
+      i, [class^='spinner-'] {
+        margin: 0;
+      }
+    }
+
+    &.btn-icon-primary {
+      color: cssVar('primary');
+    }
+
+    &.btn-link {
+      &, &:hover {
+        color: cssVar('primary');
       }
     }
   }

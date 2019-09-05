@@ -9,7 +9,7 @@
       "files": [
         "bcc.js"
       ],
-      "origin": "QmWiPbjQGoGviDPsLaMtoT96F8rzx2YEkN6tX7WAzJccmY",
+      "origin": "QmNNWfhdsxCQMvgPDaj3Sn92TfY2zaYzDfqcHxkkaJoe3N",
       "type": "library"
     },
     "dbcpVersion": 2,
@@ -54,7 +54,7 @@
       "2.8.4": "Qmb6FrH2ZoN4jUbsHaSq2EE7jCJ9ME474r4wjc4FFycGik",
       "2.9.0": "QmVFqth9uHRdWfLKvgeZGTbsvmCX7KKeBvfnPT8oDa8mpd",
       "2.10.0": "QmfDz8ZnjrAYkCABJ5eyZUAsk7Tqnw8p4s1T397bxrYxPo",
-      "2.11.0": "QmQ69VfsJSLo2q1yXYH1qcDp4NsukGgmuXWj9SGdzT6fdo"
+      "2.11.0": "QmNazTyTbuxVMvGFhTnug8WKnto4CidoZPBNzwaHyETwJr"
     }
   }
 }
