@@ -39,10 +39,6 @@
 
     border-radius: 2px;
 
-    &.focus, &:focus, &:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    }
-
     &, * {
       font-weight: bold;
       line-height: 20px;
@@ -51,6 +47,10 @@
     }
     
     @each $color, $value in $theme-colors {
+      &[class*='btn-#{ $color }'] * {
+        color: cssVar('bg-text-#{ $color }');
+      }
+
       &[class*='-outline-#{ $color }']:hover {
         background-color: cssVar('#{ $color }-darken');
         border-color: cssVar('#{ $color }-darken');

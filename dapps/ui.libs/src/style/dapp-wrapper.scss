@@ -285,7 +285,7 @@ $sidebar-small-width: 64px;
       border-left: 4px solid transparent;
 
       &.active, &:hover {
-        border-left: 4px solid cssVar('secondary');
+        border-left: 4px solid cssVar('primary');
         background-color: cssVar('bg-level-1');
       }
 
@@ -300,7 +300,7 @@ $sidebar-small-width: 64px;
             color: cssVar('text-color');
 
             &.active, &:hover {
-              color: cssVar('secondary');
+              color: cssVar('primary');
             }
           }
         }

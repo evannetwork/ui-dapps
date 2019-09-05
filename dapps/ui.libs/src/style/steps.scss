@@ -39,21 +39,20 @@
 
       padding: 0 20px 20px 0;
 
-      button {
+      button.btn {
         position: relative;
         z-index: 1;
 
         flex: 1;
 
+        height: auto !important;
+
         text-align: center;
+        // reset button styles
 
-        &:disabled {
-          opacity: 1;
-
-          * {
-            opacity: 1;
-          }
-        }
+        border: 0;
+        background-color: transparent !important;
+        box-shadow: none !important;
 
         &:before {
           position: absolute;
@@ -79,7 +78,7 @@
         }
 
         span:first-child {
-          line-height: 40px;
+          line-height: 36px;
 
           z-index: 1;
 
@@ -89,7 +88,6 @@
           height: 40px;
           margin-bottom: 5px;
 
-          color: #ffffff;
           border-radius: 50%;
         }
 
@@ -101,10 +99,32 @@
           min-width: 100px;
 
           white-space: normal;
-          white-space: nowrap;
           word-break: break-word;
 
-          color: cssVar('gray-500');
+          color: cssVar('primary');
+        }
+
+        .stepper-circle {
+          color: cssVar('primary');
+          border: 2px solid cssVar('primary');
+          background-color: cssVar('white');
+
+          &.active {
+            color: cssVar('bg-text-primary');
+            background-color: cssVar('primary');
+          }
+        }
+
+        &:disabled {
+          span:nth-child(2) {
+            color: cssVar('disabled');
+          }
+
+          .stepper-circle {
+            color: cssVar('white');
+            border: 0;
+            background-color: cssVar('disabled') !important;
+          }
         }
       }
     }

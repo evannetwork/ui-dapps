@@ -152,7 +152,7 @@
 
     &:hover, &.active {
       color: cssVar('light');
-      background: cssVar('secondary');
+      background: cssVar('primary');
     }
 
     i {
@@ -176,7 +176,7 @@
         text-decoration: none;
 
         &, h1, h2, h3, h4, h5, span, p {
-          color: cssVar('secondary');
+          color: cssVar('primary');
         }
       }
     }

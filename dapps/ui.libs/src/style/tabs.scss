@@ -78,8 +78,8 @@
       background-color: cssVar('bg-level-1');
 
       &.active {
-        color: cssVar('bg-text-secondary');
-        background-color: cssVar('secondary');
+        color: cssVar('bg-text-primary');
+        background-color: cssVar('primary');
       }
     }
   }
