@@ -30,31 +30,129 @@
     <h1>{{ '_comp.buttons' | translate }}</h1>
     <p>The buttons have been clicked <b>{{ btnCounter }}</b> times.</p>
 
-    <div class="row">
-      <div class="col-md-6">
-        <evan-button label="Test label :)" @click="btnCounter += 1" type="primary" />
-        <evan-button label="primary disabled" @click="btnCounter += 1" disabled type="primary"/>
-        <br />
-        <br />
-        <evan-button label="primary icon" @click="btnCounter += 1" icon="mdi-arrow-right" type="primary" />
-        <evan-button label="primary icon left" @click="btnCounter += 1" icon="mdi-arrow-left" icon-position="left" type="primary" />
-        <br />
-        <br />
-        <evan-button @click="btnCounter += 1" icon="mdi-pencil" type="primary" />
-        <evan-button @click="btnCounter += 1" icon="mdi-delete" />
-      </div>
+    <div class="white-box border">
+      <h3 class="header">Button Status</h3>
 
-      <div class="col-md-6">
-        <evan-button label="secondary" @click="btnCounter += 1" type="secondary" />
-        <evan-button label="secondary disabled" @click="btnCounter += 1" disabled type="secondary" />
-        <br />
-        <br />
-        <evan-button label="secondary icon" @click="btnCounter += 1" icon="mdi-arrow-right" />
-        <evan-button label="secondary icon left" @click="btnCounter += 1" icon="mdi-arrow-left" icon-position="left" />
-        <evan-button label="danger" @click="btnCounter += 1" type="danger" icon="mdi-delete" icon-position="left" />
+      <div class="content">
+        <div class="row">
+          <div class="col-md-6">
+            <span>Button disabled</span>
+            <br>
+            <input type="checkbox" v-model="disabled">
+          </div>
+          <div class="form-group mb-0 col-md-6">
+            <span>Button Size</span>
+            <select class="form-control custom-select"
+              ref="type"
+              v-model="size">
+              <option value="lg">lg</option>
+              <option value="normal">normal</option>
+              <option value="sm">sm</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
+    <div class="white-box border border-sm mt-3"
+      v-for="(type) in [
+        'primary', 'secondary',
+        'text-primary', 'text-secondary',
+        'link',
+        'danger',
+      ]">
+      <h3 class="header">{{ type }}</h3>
+
+      <div class="content">
+        <evan-button
+          :size="size" :type="type" :disabled="disabled"
+          @click="btnCounter += 1">
+          {{ type }}
+        </evan-button>
+        <br><br>
+        <evan-button
+          :size="size" :type="type" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi left mdi-arrow-left"></i>
+          {{ type }} icon left
+        </evan-button>
+        <evan-button
+          :size="size" :type="type" :disabled="disabled"
+          @click="btnCounter += 1">
+          {{ type }} icon
+          <i class="mdi right mdi-arrow-right"></i>
+        </evan-button>
+        <br><br>
+        <evan-button
+          :size="size" :type="type" :disabled="disabled"
+          @click="btnCounter += 1">
+          <div class="spinner-border left spinner-border-sm"></div>
+          {{ type }} spinner left
+        </evan-button>
+        <evan-button
+          :size="size" :type="type" :disabled="disabled"
+          @click="btnCounter += 1">
+          {{ type }} spinner right
+          <div class="spinner-border right spinner-border-sm"></div>
+        </evan-button>
+      </div>
+    </div>
+
+    <div class="white-box border border-sm mt-3">
+      <h3 class="header">icon-primary</h3>
+
+      <div class="content">
+        <evan-button
+          :size="size" type="icon-primary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-plus"></i>
+        </evan-button>
+        <evan-button
+          :size="size" type="icon-primary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-delete"></i>
+        </evan-button>
+        <br><br>
+        <evan-button
+          :size="size" type="icon-primary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-plus-circle-outline"></i>
+        </evan-button>
+        <evan-button
+          :size="size" type="icon-primary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-delete-circle-outline"></i>
+        </evan-button>
+      </div>
+    </div>
+
+    <div class="white-box border border-sm mt-3">
+      <h3 class="header">icon-secondary</h3>
+
+      <div class="content">
+        <evan-button
+          :size="size" type="icon-secondary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-plus"></i>
+        </evan-button>
+        <evan-button
+          :size="size" type="icon-secondary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-delete"></i>
+        </evan-button>
+        <br><br>
+        <evan-button
+          :size="size" type="icon-secondary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-plus-circle-outline"></i>
+        </evan-button>
+        <evan-button
+          :size="size" type="icon-secondary" :disabled="disabled"
+           @click="btnCounter += 1">
+          <i class="mdi mdi-delete-circle-outline"></i>
+        </evan-button>
+      </div>
+    </div>
   </div>
 </template>
 

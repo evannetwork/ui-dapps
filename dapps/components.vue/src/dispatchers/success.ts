@@ -25,18 +25,29 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_comp": {
-    "buttons": "Buttons",
-    "components": "evan Komponenten",
-    "dispatcher": {
-      "error": "Error Dispatcher",
-      "success": "Success Dispatcher"
-    },
-    "dispatcher-status": "Dispatcher Status",
-    "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
-  }
-}
-/* tslint:enable */;
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+
+const successDispatcher = new Dispatcher(
+  `components.vue.${ dappBrowser.getDomainName() }`,
+  'successDispatcher',
+  40 * 1000,
+  '_comp.dispatcher.success'
+)
+
+successDispatcher
+  .step(async (instance, data) => {
+    await new Promise(resolve => setTimeout(resolve, 3 * 1000));
+  })
+  .step(async (instance, data) => {
+    await new Promise(resolve => setTimeout(resolve, 3 * 1000));
+  })
+  .step(async (instance, data) => {
+    await new Promise(resolve => setTimeout(resolve, 3 * 1000));
+  })
+  .step(async (instance, data) => {
+    await new Promise(resolve => setTimeout(resolve, 3 * 1000));
+  })
+
+export default successDispatcher;

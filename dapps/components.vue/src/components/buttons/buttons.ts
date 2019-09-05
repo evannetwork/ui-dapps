@@ -42,4 +42,14 @@ export default class ButtonsComponent extends mixins(EvanComponent) {
     type: Number,
     default: 0
   }) btnCounter: Number;
+
+  /**
+   * Should the buttons be disabled?
+   */
+  disabled = false;
+
+  /**
+   * Display buttons in different button sizes
+   */
+  size = 'normal';
 }

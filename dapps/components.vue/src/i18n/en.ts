@@ -29,7 +29,14 @@
 export default {
   "_comp": {
     "buttons": "Buttons",
-    "components": "evan Components"
+    "components": "evan Components",
+    "dispatcher": {
+      "error": "Error Dispatcher",
+      "success": "Success Dispatcher"
+    },
+    "dispatcher-status": "Dispatcher Status",
+    "dispatcher-test": "Dispatcher Test",
+    "text": "Text"
   }
 }
 /* tslint:enable */;

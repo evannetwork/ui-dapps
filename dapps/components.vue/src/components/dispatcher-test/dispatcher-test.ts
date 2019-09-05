@@ -25,18 +25,53 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_comp": {
-    "buttons": "Buttons",
-    "components": "evan Komponenten",
-    "dispatcher": {
-      "error": "Error Dispatcher",
-      "success": "Success Dispatcher"
-    },
-    "dispatcher-status": "Dispatcher Status",
-    "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
+// vue imports
+import Component, { mixins } from 'vue-class-component';
+import Vue from 'vue';
+import { Prop, Watch } from 'vue-property-decorator';
+
+// evan.network imports
+import { Dispatcher } from '@evan.network/ui';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as dispatchers from '../../dispatchers/registry';
+
+/**
+ * @class         ButtonsComponent
+ */
+@Component({ })
+export default class DispatcherTestComponent extends mixins(EvanComponent) {
+  /**
+   * Watch for dispatcher updates.
+   */
+  dispatcherWatcher: any;
+
+  /**
+   * Current dispatcher status
+   */
+  status = '';
+
+  /**
+   * Bind dispatcher watchers
+   */
+  created() {
+    this.dispatcherWatcher = Dispatcher.watch(($event) => {
+      this.status = $event.detail.status;
+
+      if (this.status === 'finished' || this.status === 'deleted') {
+        this.status = '';
+      }
+    }, `components.vue.${ (<any>this).dapp.domainName }`);
+  }
+
+  /**
+   * Trigger a specific components dispatcher
+   *
+   * @param      {string}  name    dispatcher name
+   */
+  triggerDispatcher(name: string) {
+    dispatchers[`${ name }Dispatcher`].start(
+      (<any>this).getRuntime(),
+      {}
+    );
   }
 }
-/* tslint:enable */;

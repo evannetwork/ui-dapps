@@ -32,6 +32,9 @@ const del = require('del');
 const exec = require('child_process').exec;
 const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv } = require('./lib');
 
+const dappDirs = getDirectories(path.resolve('../dapps'));
+let longestDAppName = 0;
+
 // fetch command line arguments
 const arg = (argList => {
   let arg = {}, a, opt, thisOpt, curOpt;
@@ -41,34 +44,20 @@ const arg = (argList => {
 
     if (opt === thisOpt) {
       // argument value
-      if (curOpt) {
-        arg[curOpt] = opt;
-      }
+      if (curOpt) arg[curOpt] = opt;
       curOpt = null;
     }
     else {
       // argument name
       curOpt = opt;
       arg[curOpt] = true;
+
     }
   }
 
   return arg;
 
 })(process.argv);
-
-// const searchpath = path.resolve(`../dapps/${? arg.folder : ''}`)
-let dappDirs = getDirectories(path.resolve('../dapps'));
-
-if (arg.folder || arg.folders) {
-  dappDirs = dappDirs.filter((item) => {
-    const basename = path.basename(item);
-
-    return basename === arg.folder
-  })
-}
-
-let longestDAppName = 0;
 
 for (let dappDir of dappDirs) {
   const dappNameLength = dappDir.split('/').pop().length;
@@ -105,7 +94,7 @@ dappDirs.forEach(dappDir => {
 /**
  * Show the current wachting status
  */
-const logServing = () => {
+const logServing = async () => {
   console.clear();
 
   console.log(`Watching DApps: ${ nodeEnv }`);
@@ -133,7 +122,6 @@ const logServing = () => {
 
   console.log('\n');
 }
-
 /**
  * Build a specific DApp and log the status.
  *
@@ -163,9 +151,18 @@ const buildDApp = async (dappDir) => {
 
       // clear timer and calculate time
       serves[dappName].lastDuration = Math.round((Date.now() - startTime) / 1000);
-
+      
+      try {
+        // show mac notification
+        await runExec(`osascript -e 'display notification "${dappName} was successfully build in ${serves[dappName].lastDuration} seconds." with title "${dappName} build"'`)
+      } catch (ex) { }
+      
       delete serves[dappName].error;
     } catch (ex) {
+      try {
+        // show mac notification
+        await runExec(`osascript -e 'display notification "Error building ${dappName}" with title "${dappName} build"'`)
+      } catch (ex) { }
       serves[dappName].error = ex;
     }
 
@@ -198,6 +195,17 @@ gulp.task('dapps-serve', () => {
 
 // Run Express, auto rebuild and restart on src changes
 gulp.task('dapps-build', async function () {
+  if (arg.folder) {
+    try {
+      // navigate to the dapp dir and run the build command
+      await buildDApp(arg.folder);
+    } catch (ex) {
+      console.error(ex);
+    }
+
+    return
+  }
+
   for (let dappDir of dappDirs) {
     try {
       // navigate to the dapp dir and run the build command

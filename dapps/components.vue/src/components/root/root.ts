@@ -41,6 +41,9 @@ export default class RootComponent extends mixins(EvanComponent) {
    * categories to display
    */
   components = [
-    { name: 'buttons', icon: 'equal-box' }
-  ];
+    { name: 'buttons', icon: 'mdi-equal-box' },
+    { name: 'text', icon: 'mdi-format-color-text' },
+  ].concat(window.localStorage['evan-test-mode'] ? [
+    { name: 'dispatcher-test', icon: 'mdi-sync', }
+  ] : [ ]);
 }

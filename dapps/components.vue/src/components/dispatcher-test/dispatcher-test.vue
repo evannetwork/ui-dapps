@@ -25,18 +25,28 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_comp": {
-    "buttons": "Buttons",
-    "components": "evan Komponenten",
-    "dispatcher": {
-      "error": "Error Dispatcher",
-      "success": "Success Dispatcher"
-    },
-    "dispatcher-status": "Dispatcher Status",
-    "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
-  }
-}
-/* tslint:enable */;
+<template>
+  <div class="container py-3">
+    <h1>{{ '_comp.dispatcher-test' | translate }}</h1>
+
+    {{ '_comp.dispatcher-status' | translate }}: {{ status }}
+    <br><br>
+
+    <evan-button type="danger"
+      :disabled="!!status"
+      @click="triggerDispatcher('error')">
+      {{ '_comp.dispatcher.error' | translate }}
+    </evan-button>
+    <br><br>
+    <evan-button type="primary"
+      :disabled="!!status"
+      @click="triggerDispatcher('success')">
+      {{ '_comp.dispatcher.error' | translate }}
+    </evan-button>
+  </div>
+</template>
+
+<script lang="ts">
+  import Component from './dispatcher-test.ts';
+  export default Component;
+</script>

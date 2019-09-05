@@ -27,11 +27,14 @@
 
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
+import VueHighlightJS from 'vue-highlightjs';
 
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
+
+export * from './dispatchers/registry';
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
@@ -43,6 +46,8 @@ import components from './components/registry';
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
 export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+  Vue.use(VueHighlightJS);
+
   await initializeVue({
     components,
     container,

@@ -25,18 +25,10 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_comp": {
-    "buttons": "Buttons",
-    "components": "evan Komponenten",
-    "dispatcher": {
-      "error": "Error Dispatcher",
-      "success": "Success Dispatcher"
-    },
-    "dispatcher-status": "Dispatcher Status",
-    "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
-  }
+import errorDispatcher from './error';
+import successDispatcher from './success';
+
+export {
+  errorDispatcher,
+  successDispatcher,
 }
-/* tslint:enable */;

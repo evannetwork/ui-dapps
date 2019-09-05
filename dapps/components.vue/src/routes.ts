@@ -28,11 +28,15 @@
 import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
 import ButtonsComponent from './components/buttons/buttons.vue';
+import TextComponent from './components/text/text.vue';
+import DispatcherTestComponent from './components/dispatcher-test/dispatcher-test.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'buttons' } },
-  { path: 'buttons', component: ButtonsComponent }
+  { path: 'buttons', component: ButtonsComponent },
+  { path: 'dispatcher-test', component: DispatcherTestComponent },
+  { path: 'text', component: TextComponent },
 ];
 
 export default routeRegistration;

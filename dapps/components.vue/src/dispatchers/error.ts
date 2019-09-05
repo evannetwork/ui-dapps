@@ -25,18 +25,20 @@
   https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_comp": {
-    "buttons": "Buttons",
-    "components": "evan Komponenten",
-    "dispatcher": {
-      "error": "Error Dispatcher",
-      "success": "Success Dispatcher"
-    },
-    "dispatcher-status": "Dispatcher Status",
-    "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
-  }
-}
-/* tslint:enable */;
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { Dispatcher, } from '@evan.network/ui';
+
+const errorDispatcher = new Dispatcher(
+  `components.vue.${ dappBrowser.getDomainName() }`,
+  'errorDispatcher',
+  40 * 1000,
+  '_comp.dispatcher.error'
+)
+
+errorDispatcher
+  .step(async (instance, data) => {
+    throw new Error('Err0r dispatcher...');
+  });
+
+export default errorDispatcher;

@@ -29,7 +29,8 @@
   <div class="evan theme-evan">
     <evan-dapp-wrapper
       :routes="[ ]"
-      :bottomRoutes="[ ]">
+      :bottomRoutes="[ ]"
+      createRuntime="false">
       <template v-slot:content>
         <evan-dapp-wrapper-level-2
           ref="level2Wrapper">
@@ -43,7 +44,7 @@
                 </div>
               </div>
 
-              <div class="d-flex align-items-center pl-3 pr-3 py-3"
+              <div class="d-flex align-items-center px-3 py-2"
                 style="height: 60px;"
                 v-for="(comp, index) in components">
                 <a class="d-flex align-items-center dark-link"
