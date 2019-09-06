@@ -25,36 +25,50 @@
   https://evan.network/license/
 */
 
-/**
- * apply default evan theme
- */
-@import './style/definitions/evan.theme';
-@include themeEvan();
+@import './utils';
 
-/**
- * load general styles at first, they will partially overwritten
- */
-@import './style/general';
+.evan {
+  .evan-nav-list {
+    height: 100%;
+    padding-bottom: 1px;
 
-/**
- * load evan specific styles
- */
-@import './style/breadcrumb';
-@import './style/buttons';
-@import './style/colors';
-@import './style/content';
-@import './style/dapp-wrapper';
-@import './style/dropdown';
-@import './style/forms';
-@import './style/icons';
-@import './style/lists';
-@import './style/loading';
-@import './style/modal';
-@import './style/open-sans';
-@import './style/steps';
-@import './style/swipe-panel';
-@import './style/table';
-@import './style/tabs';
-@import './style/text';
-@import './style/tooltip';
-@import './style/transitions';
+    &, .nav-entries {
+      display: flex;
+      flex-direction: column;
+    }
+
+    // use seperated nav-entries, so we can apply custom entries at the bottom and at the top,
+    // without using my-auto
+    .nav-entries {
+      flex: 1;
+    }
+
+    a {
+      font-size: 15px;
+      font-weight: 600;
+
+      display: flex;
+      align-items: center;
+
+      height: 70px;
+      padding-left: 22px;
+
+      cursor: pointer;
+      transition: background-color 0.5s ease-out, color 0.5s ease-out;
+      text-decoration: none !important;
+
+      &.active {
+        color: cssVar('dark') !important;
+        background-color: cssVar('bg-level-2') !important;
+      };
+
+      &:hover {
+        color: cssVar('primary') !important;
+      }
+
+      &, * {
+        color: cssVar('gray-600') !important;
+      }
+    }
+  }
+}

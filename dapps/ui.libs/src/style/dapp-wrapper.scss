@@ -133,7 +133,7 @@ $sidebar-small-width: 64px;
     .dapp-wrapper-sidebar-2 {
       z-index: 20;
 
-      background-color: cssVar('bg-level-2');
+      background-color: cssVar('bg-level-1');
 
       & > * {
         overflow-y: auto;
