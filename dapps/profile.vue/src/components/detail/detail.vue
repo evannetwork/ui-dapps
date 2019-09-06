@@ -65,10 +65,7 @@
             <label class="d-block mb-0">
               {{ '_profile.detail.account-id' | translate }}
             </label>
-            <a target="_blank"
-              :href="`https://testexplorer.evan.network/address/${ accountId }/transactions`">
-              {{ accountId }}
-            </a>
+            <evan-address :address="accountId"></evan-address>
           </div>
 
           <div class="col-md-6 mb-3">
