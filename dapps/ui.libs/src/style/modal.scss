@@ -34,7 +34,7 @@
         border-bottom: 1px solid cssVar('border-color');
         padding: 0.5rem 1rem;
 
-        &, * {
+        &, & > * {
           font-weight: bold;
         }
       }
