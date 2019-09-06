@@ -63,7 +63,7 @@
     left: 0;
     left: 50% !important;
 
-    margin-left: -100px !important;
+    transform: translateX(-100%);
   }
 
   &.bs-tooltip-left, &.bs-tooltip-right {
