@@ -74,11 +74,6 @@ When(/I log out from vue/, async () => {
   }
 });
 
-Then(/I can see the vue dashboard/, async () => {
-  await client.waitForElementPresent('#dapp-home', 30 * 1000);
-  await client.assert.visible('#dapp-home');
-});
-
 Then(/I am no longer logged in to vue/, async () => {
   await client.waitForElementPresent('#sign-in', 30 * 1000);
   await client.assert.visible('#sign-in');

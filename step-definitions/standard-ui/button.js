@@ -17,6 +17,21 @@ When('I click on button {string}',
 );
 
 /**
+ * Click on button with a certain content.
+ */
+When('I click on button before the text {string}',
+  async (content) => {
+    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
+    client.useXpath();
+    const xPathSelector = `//*[normalize-space(text()) = '${content}']/preceding::button[1]`;
+
+    await client.expect.element(xPathSelector).to.be.present;
+    await client.click(xPathSelector);
+    client.useCss(); // switches back to css selector
+  }
+);
+
+/**
  * Asserts that a button with a certain content is visible within 10 seconds.
  */
 Then('I want to see a button {string}',
@@ -31,7 +46,6 @@ Then('I want to see a button {string}',
      client.useCss(); // switches back to css selector
   }
 )
-
 
 /**
  * Assures that an element with .btn class has a certain state.

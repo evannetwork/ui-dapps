@@ -15,7 +15,7 @@ Scenario: Logout from of evan.network using angular
 Scenario: Logging in to evan.network using vue
 
   Given I log in to evan.network using vue
-  Then I can see the vue dashboard
+  Then I want to see a text including 'What would you like to start with?'
 
 @tag:noLogout
 Scenario: Logout from of evan.network using vue

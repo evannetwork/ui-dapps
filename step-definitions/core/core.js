@@ -11,3 +11,9 @@ When(/^I click the element with id "([^"]+)"$/,
     await client.pause(1000);
   }
 );
+
+Then(/^I want to wait "([^"]+)"s$/,
+  async (timeout) => {
+    await client.pause(parseInt(timeout * 1000));
+  }
+);
