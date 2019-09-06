@@ -43,6 +43,10 @@
 
   opacity: 1 !important;
 
+  &, * {
+    color: cssVar('bg-text-dark') !important;
+  }
+
   &.multiline {
     width: 200px;
     min-width: 200px;
