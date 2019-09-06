@@ -78,8 +78,8 @@ export default class PluginActionsComponent extends mixins(EvanComponent) {
    * Used per default for normal buttons (will be overwritten within dropdown)
    */
   buttonClasses = {
-    primary: 'btn btn-primary btn-circle d-flex align-items-center justify-content-center mr-1',
-    secondary: 'btn btn-circle btn-outline-secondary mr-1',
+    primary: 'btn btn-circle btn-primary d-flex align-items-center justify-content-center mr-1',
+    secondary: 'btn btn-circle btn-outline-primary mr-1',
     tertiar: 'btn btn-icon mr-1',
   }
 

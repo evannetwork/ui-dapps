@@ -62,14 +62,14 @@
           <div class="text-center m-3" v-if="!accepted">
             <evan-loading v-if="accepting"></evan-loading>
 
-            <button type="submit" class="btn btn-outline-secondary "
+            <button type="submit" class="btn btn-outline-primary"
               v-if="!accepting"
               :class="inviteeAddress ? 'evan-button evan-cancel' : ''"
               @click="navigateToEvan()">
               <span>{{ '_onboarding.signed-in.go-to-evan' | translate }}</span>
             </button>
 
-            <button type="submit" class="btn  btn-primary"
+            <button type="submit" class="btn btn-primary"
               v-if="!accepting && inviteeAddress"
               @click="acceptContact()">
               <span>{{ '_onboarding.signed-in.accept-contact' | translate }}</span>
@@ -83,7 +83,7 @@
       </div>
 
       <div class="mt-3 text-center">
-        <button type="submit" class="btn btn-outline-secondary "
+        <button type="submit" class="btn btn-outline-primary"
           v-if="!accepting"
           :class="inviteeAddress ? 'evan-button evan-cancel' : ''"
           @click="navigateToEvan()">

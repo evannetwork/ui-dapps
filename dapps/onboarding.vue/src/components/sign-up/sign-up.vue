@@ -118,7 +118,7 @@
 
             <div>
               <div class="text-center mt-4">
-                <button type="button" class="btn btn-outline-secondary "
+                <button type="button" class="btn btn-outline-primary"
                   v-if="mnemonicRiddle"
                   @click="cancelRiddle()">
                   {{ '_onboarding.sign-up.cancel-riddle' | translate }}

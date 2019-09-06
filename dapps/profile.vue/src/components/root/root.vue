@@ -31,6 +31,11 @@
       :routes="[ ]">
       <template v-slot:content>
         <div class="h-100 d-flex flex-column">
+          <evan-dapp-wrapper-level-2>
+            <div style="width: 300px;">
+              
+            </div>
+          </evan-dapp-wrapper-level-2>
           <evan-nav-tabs class="flex-shrink-0"
             :tabs="tabs"
             ref="navTabs">

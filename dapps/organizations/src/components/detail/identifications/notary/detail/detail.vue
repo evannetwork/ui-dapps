@@ -52,7 +52,8 @@
           <i class="mdi mdi-information-outline text-muted clickable">
             <evan-tooltip
               ref="infoTooltip"
-              :placement="'right'">
+              :placement="'right'"
+              multiline="true">
               <div class="p-3">
                 <span>{{ '_org.ident.notary.info' | translate }}</span>
                 <div class="w-100 text-center mt-3">

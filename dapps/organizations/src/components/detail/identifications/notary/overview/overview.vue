@@ -69,12 +69,12 @@
         <div class="content">
           {{ '_org.ident.notary.no-requests' | translate }}
           <br>
-          <a class="btn btn-primary  mt-3" target="_blank"
+          <button class="btn btn-primary  mt-3" target="_blank"
             :id="`ident-request-unknown`"
             @click="$refs.identAction.show()">
             {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
-            <i class="mdi mdi-plus label ml-3"></i>
-          </a>
+            <i class="mdi mdi-plus right"></i>
+          </button>
         </div>
       </div>
       <div v-if="!rerender">

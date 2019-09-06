@@ -143,7 +143,7 @@
                 <div>
                   <button type="submit"
                     v-if="steps.length !== 0 && mode === 'plugin'"
-                    class="btn btn-circle btn-outline-secondary"
+                    class="btn btn-icon btn-primary"
                     id="th-add-entry"
                     @click="$refs.dcNewEntry.showModal();">
                     <i class="mdi mdi-plus"></i>

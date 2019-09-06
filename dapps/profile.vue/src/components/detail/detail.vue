@@ -47,7 +47,7 @@
               {{ `_profile.detail.edit` | translate }}
             </evan-tooltip>
           </button>
-          <button type="button" class="btn btn-icon"
+          <button type="button" class="btn btn-danger btn-circle"
             @click="$refs.evanLogout.logout();">
             <i class="mdi mdi-logout"></i>
             <evan-tooltip :placement="'bottom'">

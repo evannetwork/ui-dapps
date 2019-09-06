@@ -57,10 +57,10 @@
             </div>
           </template>
           <template v-slot:footer>
-             <button type="button" class="btn btn-outline-secondary "
-                @click="hideBoth();">
-                {{ '_evan.cancel' | translate }}
-              </button>
+            <button type="button" class="btn btn-outline-primary"
+               @click="hideBoth();">
+               {{ '_evan.cancel' | translate }}
+            </button>
           </template>
         </evan-modal>
 
