@@ -1,6 +1,5 @@
 Feature: evan.network dashboard
 
-@only
 Scenario: Navigating through core DApps using the dashboard
   Given I log in to evan.network using vue
   Then I want to see a text including 'What would you like to start with?'
@@ -25,7 +24,6 @@ Scenario: Navigating through core DApps using the dashboard
     Then I want to see a text including 'Profile-Details'
 
 
-@only
 Scenario: See working synchronization status
   Given I log in to evan.network using vue
   When I am on the path '#/dashboard.vue.evan/components.vue.evan/dispatcher-test'
@@ -41,7 +39,6 @@ Scenario: See working synchronization status
     And I want to see the 'sync' icon
 
 
-@only
 Scenario: Handle errors in synchronization
   Given I log in to evan.network using vue
   When I am on the path '#/dashboard.vue.evan/components.vue.evan/dispatcher-test'
