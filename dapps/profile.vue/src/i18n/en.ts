@@ -31,9 +31,12 @@ import { translations } from '@evan.network/addressbook';
 const i18n: any = {
   "_profile": {
     "breadcrumbs": {
+      "addressbook.vue.evan": "Contacts",
       "detail": "Profile",
+      "logout": "Logout",
+      "organizations.evan": "Verifications",
       "settings": "Settings",
-      "organizations.evan": "Organizations"
+      "wallet": "Wallet"
     },
     "detail": {
       "account-id": "Account-ID",
@@ -43,7 +46,7 @@ const i18n: any = {
       "edit": "Edit Profile"
     },
     "settings": {
-      "desc": "Application Configuration",
+      "desc": "Settings",
       "dev-domain": {
         "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
         "title": "Applications from test-domain"

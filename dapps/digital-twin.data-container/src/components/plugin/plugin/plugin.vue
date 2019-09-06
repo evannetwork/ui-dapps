@@ -29,10 +29,6 @@
   <div>
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-<!--       <evan-nav-tabs class="flex-shrink-0"
-        :tabs="tabs"
-        @init="$set(reactiveRefs, 'navTabs', $event)">
-      </evan-nav-tabs> -->
       <div class="container-wide overflow-y-auto flex-grow-1">
         <div class="d-flex mb-3 align-items-center">
           <div style="width: 50%;">

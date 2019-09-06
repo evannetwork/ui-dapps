@@ -28,10 +28,9 @@
 <template>
   <div
     class="border-bottom border-sm"
-    :style="!onlySets && isOpen ?
-      'border-left: 4px solid var(--evan-primary)' :
-      'border-left: 4px solid transparent'"
-    >
+    :class="{
+      'bg-level-2': `${ windowLocation }#${ $route.path }`.indexOf(dcUrl) !== -1,
+    }">
     <div class="d-flex align-items-center pl-3 pr-3 py-3"
       style="height: 60px;"
       v-if="!onlySets">
@@ -119,9 +118,7 @@
                   reactiveRefs.emptyActions.$refs.dcNewEntry.showModal();
                   reactiveRefs.emptyActions.closeDropdown();
                 ">
-                <button class="btn btn-icon btn-sm border-primary mr-3">
-                  <i class="mdi mdi-plus text-primary"></i>
-                </button>
+                <i class="mdi mdi-plus left"></i>
                 {{ '_digitaltwins.breadcrumbs.dc-sets-add' | translate }}
               </button>
             </template>

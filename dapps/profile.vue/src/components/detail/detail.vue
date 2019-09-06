@@ -30,7 +30,6 @@
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <contact-detail ref="contactDetailModal"></contact-detail>
-      <evan-logout ref="evanLogout" :disableButton="true"></evan-logout>
 
       <div class="d-flex mb-5 align-items-center">
         <div style="width: calc(100% - 200px)">
@@ -42,16 +41,9 @@
         <div class="d-flex align-items-center">
           <button type="button" class="btn btn-icon mr-3"
             @click="$refs.contactDetailModal.show(accountId);">
-            <i class="mdi mdi-pencil-outline"></i>
+            <i class="mdi mdi-circle-edit-outline"></i>
             <evan-tooltip :placement="'bottom'">
               {{ `_profile.detail.edit` | translate }}
-            </evan-tooltip>
-          </button>
-          <button type="button" class="btn btn-danger btn-circle"
-            @click="$refs.evanLogout.logout();">
-            <i class="mdi mdi-logout"></i>
-            <evan-tooltip :placement="'bottom'">
-              {{ '_evan.logout' | translate }}
             </evan-tooltip>
           </button>
         </div>

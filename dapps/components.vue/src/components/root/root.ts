@@ -38,12 +38,23 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 @Component({ })
 export default class RootComponent extends mixins(EvanComponent) {
   /**
-   * categories to display
+   * navEntries for top navigation
    */
-  components = [
-    { name: 'buttons', icon: 'mdi-equal-box' },
-    { name: 'text', icon: 'mdi-format-color-text' },
-  ].concat(window.localStorage['evan-test-mode'] ? [
-    { name: 'dispatcher-test', icon: 'mdi-sync', }
-  ] : [ ]);
+  navEntries: Array<any> = [ ];
+
+  /**
+   * Setup navigation structure
+   */
+  created() {
+    this.navEntries = [
+      { key: 'buttons', icon: 'mdi mdi-equal' },
+      { key: 'text', icon: 'mdi mdi-format-color-text' },
+      window.localStorage['evan-test-mode'] ? { key: 'dispatcher-test', icon: 'mdi mdi-sync', } : null,
+    ].map(entry => (entry ? {
+      id: `nav-entry-${ entry.key }`,
+      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
+      text: `_comp.${ entry.key }`,
+      icon: entry.icon,
+    } : null));
+  }
 }

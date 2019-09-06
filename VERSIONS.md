@@ -2,6 +2,7 @@
 
 ## Next Version
 ### Features
+- use new color specifications
 - `organizations`
   - only allow `pdf` files for notary identification
   - add file rename hint
@@ -15,6 +16,7 @@
 ### Fixes
 - `organizations`
   - use new `getSmartAgentAuthHeaders` to build `EvanAuth` header for smart-agent requests
+  - fix steppers
 - `profile`
   - use new `getSmartAgentAuthHeaders` to build `EvanAuth` header for smart-agent requests
 

@@ -27,7 +27,8 @@
 // import evan libs
 import {
   DAppLoaderComponent,
-  RouteRegistrationInterface
+  RouteRegistrationInterface,
+  UnderDevelopmentComponent,
 } from '@evan.network/ui-vue-core';
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
@@ -40,12 +41,17 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'detail' } },
   { name: 'detail', path: 'detail', component: ProfileDetailComponent },
   { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
+  { name: 'wallet', path: 'wallet', component: UnderDevelopmentComponent },
   {
     name: 'organizations',
     component: DAppLoaderComponent,
     path: `organizations.${ dappBrowser.getDomainName() }/**`,
   },
-
+  {
+    name: 'addressbook.vue',
+    component: DAppLoaderComponent,
+    path: `addressbook.vue.${ dappBrowser.getDomainName() }/**`,
+  },
 ];
 
 export default routeRegistration;

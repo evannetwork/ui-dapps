@@ -29,10 +29,11 @@
   <div id="documentation" class="h-100">
     <evan-dapp-wrapper class="h-100">
       <template v-slot:content>
-        <evan-nav-tabs class="flex-shrink-0"
-          :tabs="tabs"
-          ref="navTabs">
-        </evan-nav-tabs>
+        <evan-dapp-wrapper-level-2>
+          <div style="width: 300px;">
+            <evan-nav-list :entries="navEntries"></evan-nav-list>
+          </div>
+        </evan-dapp-wrapper-level-2>
 
         <transition name="fade" mode="out-in">
           <router-view></router-view>

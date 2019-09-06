@@ -71,7 +71,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
   /**
    * Tabs for top navigation
    */
-  tabs: Array<any> = [ ];
+  navEntries: Array<any> = [ ];
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
@@ -82,12 +82,16 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    * Mails are load after the user logged in and runtime was set up by the dapp-wrapper
    */
   async created() {
-    this.tabs = [ 'received', 'sent', ]
-      .map(urlKey => ({
-        id: `tab-${ urlKey }`,
-        href: `${ (<any>this).dapp.fullUrl }/${ urlKey }`,
-        text: `_mailbox.breadcrumbs.${ urlKey }`
-      }));
+    this.navEntries = [
+      { key: 'received', icon: 'mdi mdi-email-outline' },
+      { key: 'sent', icon: 'mdi mdi-send' },
+    ]
+    .map(entry => (entry ? {
+      id: `nav-entry-${ entry.key }`,
+      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
+      text: `_mailbox.breadcrumbs.${ entry.key }`,
+      icon: entry.icon,
+    } : null));
 
     // watch for saving updates
     this.hashChangeWatcher = (async () => {
