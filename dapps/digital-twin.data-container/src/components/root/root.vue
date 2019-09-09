@@ -75,7 +75,7 @@
                   </template>
                 </dt-tree-root>
 
-                <div class="border-bottom border-sm pt-3">
+                <div class="border-bottom border-sm">
                   <dc-tree
                     :containerAddress="containerAddress"
                     :description="description"

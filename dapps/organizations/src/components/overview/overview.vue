@@ -38,7 +38,7 @@
         <org-ident-notary-issue
           ref="orgIdentIssue">
         </org-ident-notary-issue>
-        <button type="button" class="btn btn-primary btn-rounded"
+        <button type="button" class="btn btn-primary "
           id="ident-request"
           @click="$refs.orgIdentIssue.show()">
           {{ `_org.ident.notary.issue.issue` | translate }}

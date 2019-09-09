@@ -29,23 +29,11 @@
   <div class="container-wide">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <evan-logout ref="evanLogout" :disableButton="true"></evan-logout>
-
       <div class="d-flex mb-5 align-items-center">
         <div style="width: calc(100% - 200px)">
           <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
             {{ '_profile.settings.desc' | translate }}
           </h3>
-        </div>
-        <span class="mx-auto"></span>
-        <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-tertiary btn-circle"
-            @click="$refs.evanLogout.logout();">
-            <i class="mdi mdi-logout"></i>
-            <evan-tooltip :placement="'bottom'">
-              {{ '_evan.logout' | translate }}
-            </evan-tooltip>
-          </button>
         </div>
       </div>
 

@@ -45,19 +45,21 @@ export default class DocumentationComponent extends mixins(EvanComponent) {
   /**
    * Tabs for top navigation
    */
-  tabs: Array<any> = [ ];
+  navEntries: Array<any> = [ ];
 
   created() {
     const domainName = (<any>this).dapp.domainName;
 
-    this.tabs = [
-      'github',
-      'bccdocs',
-      'uidocs',
-    ].map(urlKey => ({
-      id: `tab-${ urlKey }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ urlKey }`,
-      text: `_help.docs.${ urlKey }`
-    }));
+    this.navEntries = [
+      { key: 'github', icon: 'mdi mdi-github-circle' },
+      { key: 'bccdocs', icon: 'mdi mdi-server-security' },
+      { key: 'uidocs', icon: 'mdi mdi-format-color-fill' },
+    ]
+    .map(entry => (entry ? {
+      id: `nav-entry-${ entry.key }`,
+      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
+      text: `_help.docs.${ entry.key }`,
+      icon: entry.icon,
+    } : null));
   }
 }

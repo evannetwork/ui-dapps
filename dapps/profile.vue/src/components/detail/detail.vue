@@ -30,7 +30,6 @@
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <contact-detail ref="contactDetailModal"></contact-detail>
-      <evan-logout ref="evanLogout" :disableButton="true"></evan-logout>
 
       <div class="d-flex mb-5 align-items-center">
         <div style="width: calc(100% - 200px)">
@@ -40,18 +39,11 @@
         </div>
         <span class="mx-auto"></span>
         <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-tertiary btn-circle mr-3"
+          <button type="button" class="btn btn-icon mr-3"
             @click="$refs.contactDetailModal.show(accountId);">
-            <i class="mdi mdi-pencil-outline"></i>
+            <i class="mdi mdi-circle-edit-outline"></i>
             <evan-tooltip :placement="'bottom'">
               {{ `_profile.detail.edit` | translate }}
-            </evan-tooltip>
-          </button>
-          <button type="button" class="btn btn-tertiary btn-circle"
-            @click="$refs.evanLogout.logout();">
-            <i class="mdi mdi-logout"></i>
-            <evan-tooltip :placement="'bottom'">
-              {{ '_evan.logout' | translate }}
             </evan-tooltip>
           </button>
         </div>
@@ -73,10 +65,7 @@
             <label class="d-block mb-0">
               {{ '_profile.detail.account-id' | translate }}
             </label>
-            <a target="_blank"
-              :href="`https://testexplorer.evan.network/address/${ accountId }/transactions`">
-              {{ accountId }}
-            </a>
+            <evan-address :address="accountId"></evan-address>
           </div>
 
           <div class="col-md-6 mb-3">

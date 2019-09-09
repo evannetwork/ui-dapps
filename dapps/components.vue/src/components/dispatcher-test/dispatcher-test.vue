@@ -41,7 +41,7 @@
     <evan-button type="primary"
       :disabled="!!status"
       @click="triggerDispatcher('success')">
-      {{ '_comp.dispatcher.error' | translate }}
+      {{ '_comp.dispatcher.success' | translate }}
     </evan-button>
   </div>
 </template>

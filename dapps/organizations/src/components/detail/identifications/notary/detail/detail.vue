@@ -52,7 +52,8 @@
           <i class="mdi mdi-information-outline text-muted clickable">
             <evan-tooltip
               ref="infoTooltip"
-              :placement="'right'">
+              :placement="'right'"
+              multiline="true">
               <div class="p-3">
                 <span>{{ '_org.ident.notary.info' | translate }}</span>
                 <div class="w-100 text-center mt-3">
@@ -72,7 +73,7 @@
       </div>
       <span class="mx-auto"></span>
       <div>
-        <button class="btn btn-primary btn-rounded" target="_blank"
+        <button class="btn btn-primary " target="_blank"
           v-if="statusActions.indexOf(details.status) !== -1"
           :id="`ident-request-${ details.status }`"
           :disabled="details.status === 'issued' && accepting"

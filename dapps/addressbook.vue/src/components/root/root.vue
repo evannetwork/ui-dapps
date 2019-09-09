@@ -47,7 +47,7 @@
               </h3>
             </div>
             <span class="mx-auto"></span>
-            <button type="button" class="btn btn-primary btn-rounded"
+            <button type="button" class="btn btn-primary "
               @click="$refs.contactAddModal.show();">
               {{ `_addressbook.add` | translate }}
               <i class="mdi mdi-arrow-right label ml-3"></i>
@@ -64,7 +64,7 @@
               <p v-html="$t('_addressbook.no-contacts.desc')"></p>
 
               <div class="text-center mt-3">
-                <button type="button" class="btn btn-primary btn-rounded"
+                <button type="button" class="btn btn-primary "
                   @click="$refs.contactAddModal.show();">
                   {{ '_addressbook.contact-form.submit' | translate }}
                   <i class="mdi mdi-arrow-right label ml-3"></i>

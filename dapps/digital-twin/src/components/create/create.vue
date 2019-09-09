@@ -61,7 +61,7 @@
               </div>
             </template>
             <template v-slot:footer>
-              <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+              <button type="button" class="btn btn-primary  font-weight-normal"
                 id="container-create"
                 @click="triggerCreateDispatcher()">
                 {{ `_digitaltwins.createForm.question.action` | translate }}
@@ -114,7 +114,7 @@
       </template>
       <template v-slot:footer>
         <button type="submit"
-          class="btn btn-rounded btn-primary"
+          class="btn  btn-primary"
           id="dt-create"
           v-if="!uiDT.isCreating && (!reactiveRefs.ensActions || !reactiveRefs.ensActions.purchasing)"
           @click="createDigitalTwin()"

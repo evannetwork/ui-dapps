@@ -34,7 +34,8 @@
           <h3 class="m-0 font-weight-semibold force-oneline">
             {{ container.description.name }}
           </h3>
-          <span class="text-muted force-oneline">
+          <span class="text-muted force-oneline"
+            v-if="container.description.description">
             {{ container.description.description }}
           </span>
         </div>

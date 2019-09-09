@@ -41,14 +41,15 @@
         v-for="(step, index) of steps"
         :class="{
           [`evan-container-create-step-${ index }`]: true,
-          'active': activeStep === index,
-          'disabled': step.disabled,
         }"
         :disabled="step.disabled"
         @click="gotoStep(index)"
         v-bind:key="index"
       >
-        <span class="stepper-circle">
+        <span class="stepper-circle"
+          :class="{
+            'active': activeStep === index,
+          }">
           {{ index + 1}}
         </span>
         <span>{{ step.title | translate }}</span>
@@ -62,7 +63,4 @@
   export default Component;
 </script>
 
-<style lang="scss" scoped>
-  @import './steps-indicator.scss'
-</style>
 

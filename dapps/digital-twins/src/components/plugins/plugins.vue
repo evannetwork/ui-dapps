@@ -42,7 +42,7 @@
           </dc-create>
           <button
             id="dt-plugin-create"
-            class="btn btn-rounded btn-primary font-weight-normal"
+            class="btn  btn-primary font-weight-normal"
             @click="reactiveRefs.dtCreate.showModal()">
             {{ '_digitaltwins.plugins.create' | translate }}
             <i class="mdi mdi-arrow-right label ml-2"></i>

@@ -59,7 +59,7 @@
             )
           ">
           <button
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             id="schema-save"
             :disabled="!reactiveRefs.entryComp.isValid() || saving"
             @click="saveEntry()">

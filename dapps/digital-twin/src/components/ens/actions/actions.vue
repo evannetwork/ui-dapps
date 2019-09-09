@@ -42,14 +42,14 @@
       </template>
       <template v-slot:footer
         v-if="lookupModalScope === 'purchase' || lookupModalScope === 'create'">
-        <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+        <button type="button" class="btn btn-primary  font-weight-normal"
           id="dt-ens-create"
           v-if="lookupModalScope === 'create'"
           @click="$refs.lookupModal.hide(); checkAddress(undefined, true);">
           {{ `_digitaltwins.lookup.${ lookupModalScope }.action` | translate }}
           <i class="mdi mdi-arrow-right label ml-3"></i>
         </button>
-        <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+        <button type="button" class="btn btn-primary  font-weight-normal"
           id="dt-ens-purchase"
           v-else-if="lookupModalScope === 'purchase'"
           @click="purchaseAdress();">

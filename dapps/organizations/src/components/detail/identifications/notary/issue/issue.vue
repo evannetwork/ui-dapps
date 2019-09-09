@@ -57,10 +57,10 @@
             </div>
           </template>
           <template v-slot:footer>
-             <button type="button" class="btn btn-outline-secondary btn-rounded"
-                @click="hideBoth();">
-                {{ '_evan.cancel' | translate }}
-              </button>
+            <button type="button" class="btn btn-outline-primary"
+               @click="hideBoth();">
+               {{ '_evan.cancel' | translate }}
+            </button>
           </template>
         </evan-modal>
 
@@ -137,7 +137,7 @@
       </template>
       <template v-slot:footer>
         <div>
-          <button type="button" class="btn btn-primary btn-rounded"
+          <button type="button" class="btn btn-primary "
             id="ident-issue"
             :disabled="!issueForm.isValid || issuing"
             @click="issueIdentification()">

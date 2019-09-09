@@ -58,7 +58,7 @@
         v-model="files"
         :disabled="true">
       </evan-file-input>
-      <button type="button" class="btn btn-primary btn-rounded mt-3"
+      <button type="button" class="btn btn-primary  mt-3"
         id="ident-pin-print"
         v-if="verification.status === 'yellow'"
         :disabled="accepting"

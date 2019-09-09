@@ -31,10 +31,11 @@
       :routes="[ ]"
       v-on:loggedin="loadMails()">
       <template v-slot:content>
-        <evan-nav-tabs class="flex-shrink-0"
-          :tabs="tabs"
-          ref="navTabs">
-        </evan-nav-tabs>
+        <evan-dapp-wrapper-level-2>
+          <div style="width: 300px;">
+            <evan-nav-list :entries="navEntries"></evan-nav-list>
+          </div>
+        </evan-dapp-wrapper-level-2>
 
         <div v-if="$route.name === 'mail-category'">
           <evan-loading v-if="loading"></evan-loading>
@@ -102,7 +103,7 @@
 
           <div class="text-center mt-3 mb-3 p-3 w-100"
             v-if="!loading && mailCategories[activeCategory].offset <= mailCategories[activeCategory].totalResultCount">
-            <button class="btn btn-rounded btn-primary"
+            <button class="btn  btn-primary"
               :disabled="mailCategories[activeCategory].loading"
               @click="loadMails()">
               <div class="spinner-border spinner-border-sm text-light mr-3"

@@ -58,22 +58,24 @@ export default class TwinsRootComponent extends mixins(EvanComponent) {
   /**
    * Tabs for top navigation
    */
-  tabs: any = [ ];
+  navEntries: any = [ ];
 
   /**
    * Initialize when the user has logged in.
    */
   async initialize() {
-    this.tabs = [
+    this.navEntries = [
       {
-        id: 'dt-overview',
         href: `${ (<any>this).dapp.fullUrl }/my-twins`,
-        text: '_digitaltwins.digitaltwins.title'
+        icon: 'mdi mdi-cube-outline',
+        id: 'dt-overview',
+        text: '_digitaltwins.digitaltwins.title',
       },
       {
-        id: 'dt-plugins',
         href: `${ (<any>this).dapp.fullUrl }/my-plugins`,
-        text: '_digitaltwins.plugins.title'
+        icon: 'mdi mdi-cube-unfolded',
+        id: 'dt-plugins',
+        text: '_digitaltwins.plugins.title',
       },
     ];
   }

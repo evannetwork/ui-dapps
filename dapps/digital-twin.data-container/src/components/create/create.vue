@@ -98,7 +98,7 @@
                 <h5 class="m-0"
                   v-html="$t(`_datacontainer.createForm.empty-plugins`)">
                 </h5>
-                <a class="btn btn-primary btn-rounded font-weight-normal mt-3"
+                <a class="btn btn-primary font-weight-normal mt-3"
                   id="go-to-plugins"
                   :href="`${ dapp.baseUrl }/${ dapp.rootEns }/digitaltwins.${ dapp.domainName }/my-plugins`">
                   {{ `_datacontainer.createForm.to-plugins` | translate }}
@@ -127,7 +127,7 @@
                 <h5 class="d-flex align-items-center font-weight-semibold mb-0">
                   {{ '_datacontainer.createForm.container-configuration' | translate }}
 
-                  <button class="btn btn-circle btn-sm btn-tertiary ml-3"
+                  <button class="btn btn-icon ml-3"
                     v-if="!creating && activePlugin"
                     id="dc-edit"
                     @click="activePlugin = null; activateStep(0)">
@@ -143,7 +143,7 @@
                 <div>
                   <button type="submit"
                     v-if="steps.length !== 0 && mode === 'plugin'"
-                    class="btn btn-circle btn-outline-secondary"
+                    class="btn btn-icon btn-primary"
                     id="th-add-entry"
                     @click="$refs.dcNewEntry.showModal();">
                     <i class="mdi mdi-plus"></i>
@@ -163,11 +163,7 @@
                     :disabled="step.disabled(index)"
                     @click="activateStep(index)">
                     <span class="stepper-circle"
-                      :class="{
-                        'bg-primary': activeStep === index,
-                        'bg-secondary': !step.disabled(index) && activeStep !== index,
-                        'bg-gray': step.disabled(index),
-                      }">
+                      :class="{ 'active': activeStep === index, }">
                       {{ index + 1}}
                     </span>
                     <span>{{ step.title | translate }}</span>
@@ -204,7 +200,7 @@
                 </h5>
 
                 <button
-                  class="btn btn-rounded btn-outline-secondary mt-3"
+                  class="btn btn-outline-primary mt-3"
                   id="th-add-entry"
                   @click="$refs.dcNewEntry.showModal();">
                   {{ `_datacontainer.entry.add` | translate }}
@@ -235,7 +231,7 @@
                   </p>
                 </template>
                 <template v-slot:footer>
-                  <button type="button" class="btn btn-primary btn-rounded font-weight-normal"
+                  <button type="button" class="btn btn-primary font-weight-normal"
                     id="container-create"
                     @click="create()">
                     {{ `_datacontainer.create-question.action` | translate }}
@@ -261,7 +257,7 @@
       <template v-slot:footer v-if="!creating">
         <button
           v-if="activePlugin && (steps.length === 0 || (steps[activeStep] && steps[activeStep].entryComp))"
-          class="btn btn-rounded btn-primary"
+          class="btn  btn-primary"
           id="container-save"
           :disabled="steps.length !== 0 && !steps[activeStep].entryComp.isValid()"
           @click="nextStep()">

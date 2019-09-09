@@ -154,7 +154,7 @@
         <template v-if="!validDTAddress">
           <button type="submit"
             id="dt-container-lookup"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             v-if="reactiveRefs.ensField && reactiveRefs.ensActions && !reactiveRefs.ensActions.purchasing"
             @click="reactiveRefs.ensActions.checkAddress(reactiveRefs.ensField.lookupForm.address.value)"
             :disabled="!reactiveRefs.ensField.lookupForm.isValid || reactiveRefs.ensActions.loading">
@@ -167,7 +167,7 @@
         </template>
         <template v-else-if="!linking">
           <button type="submit"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             id="dt-container-link"
             :disabled="!containerLinkForm.isValid || checking"
             @click="linkContainer()">

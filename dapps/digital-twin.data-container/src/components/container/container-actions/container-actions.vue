@@ -30,7 +30,7 @@
   <div
     :style="displayMode === 'buttons' ? 'margin-right: -1em' : ''">
     <!-- show dropdown button  -->
-    <button class="btn btn-circle btn-sm btn-tertiary"
+    <button class="btn btn-icon"
       v-if="displayMode === 'dropdownButton'"
       id="datacontainer-context-menu-open"
       @click="showDropdown($event)">
@@ -148,7 +148,7 @@
         <template v-slot:footer>
           <button type="submit"
             id="container-dbcp-save"
-            class="btn btn-rounded btn-primary"
+            class="btn  btn-primary"
             v-if="reactiveRefs.dbcpForm"
             :disabled="saving || !reactiveRefs.dbcpForm.isValid"
             @click="saveDbcp()">

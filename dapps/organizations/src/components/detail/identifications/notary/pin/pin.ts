@@ -130,6 +130,8 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
       const url = window.URL.createObjectURL(answerResponse);
       this.pdfUrl = url;
       this.status = 1;
+      this.steps[1].disabled = false;
+      this.steps[2].disabled = false;
     } catch (ex) {
       runtime.logger.log(ex, 'error');
       this.pinForm.pin.error = 'error2';

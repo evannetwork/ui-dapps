@@ -36,29 +36,14 @@
           ref="level2Wrapper">
           <template v-slot:content>
             <div style="width: 300px">
-              <div class="bg-level-1 border-bottom border-sm evan-triangle left">
-                <div class="p-3">
-                  <small class="text-muted text-uppercase font-weight-semibold">
+              <evan-nav-list
+                :entries="navEntries">
+                <template v-slot:header>
+                  <h6 class="text-uppercase font-weight-semibold m-4">
                     {{ '_comp.components' | translate }}
-                  </small>
-                </div>
-              </div>
-
-              <div class="d-flex align-items-center px-3 py-2"
-                style="height: 60px;"
-                v-for="(comp, index) in components">
-                <a class="d-flex align-items-center dark-link"
-                  :href="`${ dapp.fullUrl }/${ comp.name }`"
-                  :class="{ 'active': $route.path.endsWith(comp.name) }">
-                  <i class="mdi text-muted mr-2"
-                    :class="comp.icon"
-                    style="font-size: 17px;">
-                  </i>
-                  <span class="m-0 font-weight-semibold">
-                    {{ `_comp.${ comp.name }` | translate }}
-                  </span>
-                </a>
-              </div>
+                  </h6>
+                </template>
+              </evan-nav-list>
             </div>
           </template>
         </evan-dapp-wrapper-level-2>

@@ -52,7 +52,7 @@
           </template>
           <template v-slot:footer>
             <button type="button"
-              class="btn btn-primary btn-rounded"
+              class="btn btn-primary "
               v-if="addStatus === 'ok'"
               @click="addFavorite();">
               {{ `_favorites.add` | translate }}
@@ -79,7 +79,7 @@
       </template>
       <template v-slot:footer>
         <button type="submit"
-          class="btn btn-rounded btn-primary"
+          class="btn  btn-primary"
           :disabled="!favoriteForm.isValid || checking"
           @click="checkFavorite()">
           <div class="spinner-border spinner-border-sm text-light mr-3"

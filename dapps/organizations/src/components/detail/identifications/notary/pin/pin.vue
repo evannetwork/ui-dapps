@@ -37,7 +37,11 @@
       </template>
 
       <template v-slot:body id="pin-verification-modal">
-        <steps-indicator :active-step="status" :steps="steps" />
+        <steps-indicator
+          :active-step="status"
+          :steps="steps"
+          @updatestep="status = $event"
+        />
         <!-- pin enter screen -->
         <div id="pin-enter" v-if="status === 0" class="m-5">
           <p class="text-justify">{{ '_org.ident.notary.pin.desc' | translate }}</p>
@@ -90,7 +94,7 @@
       <template v-slot:footer>
         <span class="mx-auto"></span>
         <div id="pin-enter-btn" v-if="status === 0">
-          <button type="button" class="btn btn-primary btn-rounded"
+          <button type="button" class="btn btn-primary "
             id="ident-pin-generate"
             :disabled="!pinForm.isValid || checkingPin"
             @click="generateAnswer()">
@@ -99,21 +103,21 @@
           </button>
         </div>
         <div id="answer-success-btn" v-if="status === 1">
-          <a class="btn btn-primary btn-rounded"
+          <button class="btn btn-primary "
             id="ident-pin-print-next"
             @click="printPdfOrNext()">
             <span v-if="printStatus === 'initial'">{{ `_org.ident.notary.print` | translate }}</span>
             <span v-if="printStatus !== 'initial'">{{ `_org.ident.next` | translate }}</span>
             <i class="mdi mdi-arrow-right label ml-3"></i>
-          </a>
+          </button>
         </div>
         <div id="answer-success-btn" v-if="status === 2">
-          <a class="btn btn-primary btn-rounded"
+          <button class="btn btn-primary "
             id="ident-pin-done"
             target="_blank"
             @click="$refs.pinModal.hide(); triggerRequestReload();">
             {{ `_org.ident.done` | translate }}
-          </a>
+          </button>
         </div>
       </template>
     </evan-modal>

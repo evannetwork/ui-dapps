@@ -45,10 +45,7 @@
           :disabled="index !== activeStep && activeSteps.indexOf(index) === -1"
           @click="activeStep = index">
           <span class="stepper-circle"
-            :class="{
-              'bg-primary': activeStep === index,
-              'bg-secondary': activeStep !== index,
-            }">
+            :class="{ 'active': activeStep === index, }">
             {{ index + 1}}
           </span>
           <span>{{ step | translate }}</span>
@@ -76,7 +73,7 @@
               <p v-html="$t('_onboarding.sign-in.no-profile-desc')"></p>
             </template>
             <template v-slot:footer>
-              <button type="button" class="btn btn-rounded btn-primary"
+              <button type="button" class="btn  btn-primary"
                 @click="openSignupWithMnemonic()">
                 {{ '_onboarding.sign-in.title' | translate }}
               </button>
@@ -84,7 +81,7 @@
           </evan-modal>
 
           <div class="text-center mt-4">
-            <button type="button" class="btn btn-rounded btn-primary"
+            <button type="button" class="btn  btn-primary"
               id="sign-in"
               v-if="!checking"
               :disabled="!validMnemonic"
@@ -113,7 +110,7 @@
             </div>
 
             <div class="text-center">
-              <button type="submit" class="btn btn-rounded btn-primary"
+              <button type="submit" class="btn  btn-primary"
                 :disabled="form.password.value.length < 8 || checking">
                 <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"
                   v-if="checking">

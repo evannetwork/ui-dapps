@@ -66,7 +66,7 @@
             <template v-slot:footer>
               <button type="submit"
                 id="contact-remove"
-                class="btn btn-rounded btn-primary"
+                class="btn  btn-primary"
                 @click="removeContact()">
                 {{ '_addressbook.remove-contact.remove' | translate }}
                 <i class="mdi mdi-arrow-right label"></i>
@@ -85,7 +85,7 @@
         </template>
       </template>
       <template v-slot:footer v-if="!loading && accountId">
-        <button type="submit" class="btn btn-primary btn-rounded"
+        <button type="submit" class="btn btn-primary "
           :disabled="!contactForm.isValid"
           @click="saveContact()">
           {{ `${ formI18nScope }.save` | translate }}
