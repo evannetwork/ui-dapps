@@ -29,6 +29,10 @@
 
 .evan.theme-evan {
   .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     height: 40px;
     padding: 8px 24px;
 
@@ -156,27 +160,7 @@
       color: cssVar('primary');
     }
 
-    &[class*='btn-icon'] {
-      padding: 10px;
-
-      border-radius: 50%;
-
-      i, [class^='spinner-'] {
-        margin: 0;
-      }
-    }
-
-    &.btn-icon-primary {
-      color: cssVar('primary');
-    }
-
-    &.btn-link {
-      &, &:hover {
-        color: cssVar('primary');
-      }
-    }
-
-    &.btn-circle {
+    &.btn-circle, &[class*='btn-icon'] {
       width: 40px;
       height: 40px;
       padding: 0;
@@ -191,6 +175,22 @@
       &.btn-lg {
         width: 50px;
         height: 50px;
+      }
+    }
+
+    &[class*='btn-icon'] {
+      i, [class^='spinner-'] {
+        margin: 0;
+      }
+    }
+
+    &.btn-icon-primary {
+      color: cssVar('primary');
+    }
+
+    &.btn-link {
+      &, &:hover {
+        color: cssVar('primary');
       }
     }
   }

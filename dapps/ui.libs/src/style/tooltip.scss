@@ -25,69 +25,75 @@
   https://evan.network/license/
 */
 
-.evan-tooltip-parent {
-  position: relative;
-}
-
-.evan-tooltip {
-  position: absolute !important;
-
-  display: none !important;
-  align-items: center;
-  justify-content: center;
-
-  width: auto;
-  min-width: auto;
-
-  white-space: nowrap !important;
-
-  opacity: 1 !important;
-
-  &, * {
-    color: cssVar('bg-text-dark') !important;
+.evan {
+  .evan-tooltip-parent {
+    position: relative;
   }
 
-  &.multiline {
-    width: 200px;
-    min-width: 200px;
+  .evan-tooltip {
+    position: absolute !important;
 
-    white-space: normal !important;
-  }
+    display: none !important;
+    align-items: center;
+    justify-content: center;
 
-  &.show-tooltip {
-    display: flex !important;
-  }
+    width: auto;
+    min-width: auto;
 
-  &.bs-tooltip-top, &.bs-tooltip-bottom {
-    right: 0;
-    left: 0;
-    left: 50% !important;
+    white-space: nowrap !important;
 
-    transform: translateX(-100%);
-  }
+    opacity: 1 !important;
 
-  &.bs-tooltip-left, &.bs-tooltip-right {
-    top: 0;
-    bottom: 0;
-  }
+    &, * {
+      color: cssVar('bg-text-dark') !important;
+    }
 
-  &.bs-tooltip-top {
-    bottom: 100%;
-  }
+    &.multiline {
+      width: 200px;
+      min-width: 200px;
 
-  &.bs-tooltip-bottom {
-    top: 100%;
-  }
+      white-space: normal !important;
+    }
 
-  &.bs-tooltip-left {
-    right: 100%;
-  }
+    &.show-tooltip {
+      display: flex !important;
+    }
 
-  &.bs-tooltip-right {
-    left: 100%;
-  }
+    &.bs-tooltip-top, &.bs-tooltip-bottom {
+      right: 0;
+      left: 0;
+      left: 50% !important;
 
-  .tooltip-inner {
-    box-shadow: 0 0 3px 0 cssVar('tooltip-shadow');
+      transform: translateX(-100%);
+    }
+
+    &.bs-tooltip-left, &.bs-tooltip-right {
+      top: 0;
+      bottom: 0;
+    }
+
+    &.bs-tooltip-top {
+      bottom: 100%;
+    }
+
+    &.bs-tooltip-bottom {
+      top: 100%;
+    }
+
+    &.bs-tooltip-left {
+      right: 100%;
+    }
+
+    &.bs-tooltip-right {
+      left: 100%;
+    }
+
+    .tooltip-inner {
+      font-size: 10px;
+      font-weight: 600;
+
+      border-radius: 1px;
+      box-shadow: 0 0 3px 0 cssVar('tooltip-shadow') !important;
+    }
   }
 }
