@@ -6,6 +6,9 @@
   - add new dapp-wrapper design for small left panel
   - add new tooltip design
   - add `.evan-swipe-panel` class
+  - add new button designs
+  - add new `.nav-list` design
+  - add `toasted` design
 
 ### Fixes
 

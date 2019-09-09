@@ -58,15 +58,15 @@
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 
       &.border {
-        border: 2px solid cssVar('secondary') !important;
+        border: 2px solid cssVar('primary') !important;
       }
 
       *.highlight, .highlight * {
-        color: cssVar('secondary') !important;
+        color: cssVar('primary') !important;
       }
     }
 
-    &.bg-secondary {
+    &.bg-primary {
       *.highlight, .highlight * {
         color: cssVar('light') !important;
       }
@@ -95,7 +95,7 @@
       display: flex;
       align-items: center;
 
-      height: 86px;
+      height: 64px;
       padding: 0 1.5rem;
     }
 

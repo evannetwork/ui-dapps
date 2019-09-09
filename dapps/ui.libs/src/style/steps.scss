@@ -39,21 +39,20 @@
 
       padding: 0 20px 20px 0;
 
-      button {
+      button.btn {
         position: relative;
         z-index: 1;
 
         flex: 1;
 
+        height: auto !important;
+
         text-align: center;
+        // reset button styles
 
-        &:disabled {
-          opacity: 1;
-
-          * {
-            opacity: 1;
-          }
-        }
+        border: 0;
+        background-color: transparent !important;
+        box-shadow: none !important;
 
         &:before {
           position: absolute;
@@ -79,18 +78,25 @@
         }
 
         span:first-child {
-          line-height: 40px;
-
           z-index: 1;
 
-          display: inline-block;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
           width: 40px;
           height: 40px;
+          margin: auto;
           margin-bottom: 5px;
 
-          color: #ffffff;
+          color: cssVar('white');
           border-radius: 50%;
+          background-color: cssVar('gray-500');
+
+          &.active {
+            color: cssVar('bg-text-dark');
+            background-color: cssVar('dark');
+          }
         }
 
         span:nth-child(2) {
@@ -101,10 +107,20 @@
           min-width: 100px;
 
           white-space: normal;
-          white-space: nowrap;
           word-break: break-word;
 
           color: cssVar('gray-500');
+        }
+
+        &:disabled {
+          span:nth-child(2) {
+            color: cssVar('disabled');
+          }
+
+          .stepper-circle {
+            color: cssVar('white');
+            background-color: cssVar('disabled') !important;
+          }
         }
       }
     }

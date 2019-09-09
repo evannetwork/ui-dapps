@@ -25,32 +25,54 @@
   https://evan.network/license/
 */
 
+@import './utils';
+
 .evan {
-  .evan-breadcrumbs {
-    min-height: 70px;
+  .evan-nav-list {
+    height: 100%;
+    padding-bottom: 1px;
 
-    #breadcrumb-goback {
-      width: 40px;
-      min-width: 40px;
-      height: 40px;
-      padding: 0;
-
-      border: 2px solid;
+    &, .nav-entries {
+      display: flex;
+      flex-direction: column;
     }
 
-    a.evan-breadcrumb, span, i {
-      color: cssVar('gray-500');
+    // use seperated nav-entries, so we can apply custom entries at the bottom and at the top,
+    // without using my-auto
+    .nav-entries {
+      flex: 1;
     }
 
-    .evan-breadcrumb {
+    a {
+      font-size: 15px;
+      font-weight: 600;
+
+      display: flex;
+      align-items: center;
+
+      height: 70px;
+      padding-left: 22px;
+
       cursor: pointer;
+      transition: background-color 0.5s ease-out, color 0.5s ease-out;
+      text-decoration: none !important;
 
-      color: cssVar('gray-500');
+      &.active {
+        background-color: cssVar('bg-level-2') !important;
 
-      &.active, &:hover {
-        cursor: default;
+        &, * {
+          color: cssVar('dark') !important;
+        }
+      };
 
-        color: cssVar('primary');
+      &:hover {
+        &, * {
+          color: cssVar('primary') !important;
+        }
+      }
+
+      &, * {
+        color: cssVar('gray-600') !important;
       }
     }
   }

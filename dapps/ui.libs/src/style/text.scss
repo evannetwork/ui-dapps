@@ -32,10 +32,6 @@
     color: cssVar('text-color');
   }
 
-  a, a:hover {
-    text-decoration: none !important;
-  }
-
   span, p, a, th, td, li {
     font-size: cssVar('text-font-size');
     font-weight: 400;
@@ -156,7 +152,7 @@
 
     &:hover, &.active {
       color: cssVar('light');
-      background: cssVar('secondary');
+      background: cssVar('primary');
     }
 
     i {
@@ -164,7 +160,15 @@
     }
   }
 
-  a, .btn-link {
+  a {
+    text-decoration: none;
+
+    color: cssVar('primary');
+
+    &:hover {
+      text-decoration: underline;
+    }
+
     &.dark-link {
       color: cssVar('text-color');
 
@@ -172,7 +176,7 @@
         text-decoration: none;
 
         &, h1, h2, h3, h4, h5, span, p {
-          color: cssVar('secondary');
+          color: cssVar('primary');
         }
       }
     }

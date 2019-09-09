@@ -25,32 +25,24 @@
   https://evan.network/license/
 */
 
+@import './utils';
+
 .evan {
-  .evan-breadcrumbs {
-    min-height: 70px;
+  .toasted-container {
+    .toasted {
+      font-size: 12px;
+      font-weight: bold;
 
-    #breadcrumb-goback {
-      width: 40px;
-      min-width: 40px;
-      height: 40px;
-      padding: 0;
+      &, &.info {
+        background-color: cssVar('dark');
+      }
 
-      border: 2px solid;
-    }
+      &.success {
+        background-color: cssVar('success');
+      }
 
-    a.evan-breadcrumb, span, i {
-      color: cssVar('gray-500');
-    }
-
-    .evan-breadcrumb {
-      cursor: pointer;
-
-      color: cssVar('gray-500');
-
-      &.active, &:hover {
-        cursor: default;
-
-        color: cssVar('primary');
+      &.error {
+        background-color: cssVar('danger');
       }
     }
   }

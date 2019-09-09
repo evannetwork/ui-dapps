@@ -94,7 +94,7 @@ dappDirs.forEach(dappDir => {
 /**
  * Show the current wachting status
  */
-const logServing = () => {
+const logServing = async () => {
   console.clear();
 
   console.log(`Watching DApps: ${ nodeEnv }`);
@@ -122,7 +122,6 @@ const logServing = () => {
 
   console.log('\n');
 }
-
 /**
  * Build a specific DApp and log the status.
  *
@@ -152,9 +151,18 @@ const buildDApp = async (dappDir) => {
 
       // clear timer and calculate time
       serves[dappName].lastDuration = Math.round((Date.now() - startTime) / 1000);
-
+      
+      try {
+        // show mac notification
+        await runExec(`osascript -e 'display notification "${dappName} was successfully build in ${serves[dappName].lastDuration} seconds." with title "${dappName} build"'`)
+      } catch (ex) { }
+      
       delete serves[dappName].error;
     } catch (ex) {
+      try {
+        // show mac notification
+        await runExec(`osascript -e 'display notification "Error building ${dappName}" with title "${dappName} build"'`)
+      } catch (ex) { }
       serves[dappName].error = ex;
     }
 
