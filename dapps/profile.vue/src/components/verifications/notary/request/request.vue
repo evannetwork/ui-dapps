@@ -33,7 +33,7 @@
       :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
-          {{ '_org.ident.notary.request.header' | translate }}
+          {{ '_profile.ident.notary.request.header' | translate }}
         </h5>
       </template>
       <template v-slot:body>
@@ -61,28 +61,28 @@
               <div class="grouped">
                 <div class="form-group">
                   <label for="organization">
-                    {{ `_org.ident.notary.request.organization.title` | translate }} *
+                    {{ `_profile.ident.notary.request.organization.title` | translate }} *
                   </label>
                   <input class="form-control" required
                     id="organization" ref="organization"
-                    :placeholder="`_org.ident.notary.request.organization.desc` | translate"
+                    :placeholder="`_profile.ident.notary.request.organization.desc` | translate"
                     v-model="requestForm.organization.value"
                     :class="{ 'is-invalid' : requestForm.organization.error }"
                     @blur="requestForm.organization.setDirty()">
                   <div class="invalid-feedback">
-                    {{ '_org.ident.notary.request.organization.error' | translate }}
+                    {{ '_profile.ident.notary.request.organization.error' | translate }}
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="country">
-                    {{ `_org.ident.notary.request.country.title` | translate }} *
+                    {{ `_profile.ident.notary.request.country.title` | translate }} *
                   </label>
                   <select class="form-control custom-select"
                     id="country" ref="country"
-                    :placeholder="`_org.ident.notary.request.country.desc` | translate"
+                    :placeholder="`_profile.ident.notary.request.country.desc` | translate"
                     v-model="requestForm.country.value">
                     <option :value="'germany'">
-                      {{ '_org.ident.notary.request.countries.germany' | translate }}
+                      {{ '_profile.ident.notary.request.countries.germany' | translate }}
                     </option>
                   </select>
                 </div>
@@ -92,27 +92,27 @@
                 <div class="col-6">
                   <div class="form-group">
                     <label for="court">
-                      {{ `_org.ident.notary.request.court.title` | translate }} *
+                      {{ `_profile.ident.notary.request.court.title` | translate }} *
                     </label>
                     <input class="form-control" required
                       id="court" ref="court"
-                      :placeholder="`_org.ident.notary.request.court.desc` | translate"
+                      :placeholder="`_profile.ident.notary.request.court.desc` | translate"
                       v-model="requestForm.court.value"
                       :class="{ 'is-invalid' : requestForm.court.error }"
                       @blur="requestForm.court.setDirty()">
                     <div class="invalid-feedback">
-                      {{ '_org.ident.notary.request.court.error' | translate }}
+                      {{ '_profile.ident.notary.request.court.error' | translate }}
                     </div>
                   </div>
                 </div>
                 <div class="col-2">
                   <div class="form-group">
                     <label for="register">
-                      {{ `_org.ident.notary.request.register.title` | translate }} *
+                      {{ `_profile.ident.notary.request.register.title` | translate }} *
                     </label>
                     <select class="form-control custom-select"
                       id="register" ref="register"
-                      :placeholder="`_org.ident.notary.request.register.desc` | translate"
+                      :placeholder="`_profile.ident.notary.request.register.desc` | translate"
                       v-model="requestForm.register.value">
                       <option :value="'HRA'">
                         HRA
@@ -126,16 +126,16 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label for="registerNumber">
-                      {{ `_org.ident.notary.request.registerNumber.title` | translate }} *
+                      {{ `_profile.ident.notary.request.registerNumber.title` | translate }} *
                     </label>
                     <input class="form-control" required
                       id="registerNumber" ref="registerNumber"
-                      :placeholder="`_org.ident.notary.request.registerNumber.desc` | translate"
+                      :placeholder="`_profile.ident.notary.request.registerNumber.desc` | translate"
                       v-model="requestForm.registerNumber.value"
                       :class="{ 'is-invalid' : requestForm.registerNumber.error }"
                       @blur="requestForm.registerNumber.setDirty()">
                      <div class="invalid-feedback">
-                      {{ '_org.ident.notary.request.registerNumber.error' | translate }}
+                      {{ '_profile.ident.notary.request.registerNumber.error' | translate }}
                     </div>
                   </div>
                 </div>
@@ -143,17 +143,17 @@
 
               <div class="grouped">
                 <label>
-                  {{ `_org.ident.notary.request.postal-address` | translate }} *
+                  {{ `_profile.ident.notary.request.postal-address` | translate }} *
                 </label>
                 <div class="form-group">
                   <input class="form-control" required
                     id="address" ref="address"
-                    :placeholder="`_org.ident.notary.request.address.desc` | translate"
+                    :placeholder="`_profile.ident.notary.request.address.desc` | translate"
                     v-model="requestForm.address.value"
                     :class="{ 'is-invalid' : requestForm.address.error }"
                     @blur="requestForm.address.setDirty()">
                   <div class="invalid-feedback">
-                    {{ '_org.ident.notary.request.address.error' | translate }}
+                    {{ '_profile.ident.notary.request.address.error' | translate }}
                   </div>
                 </div>
                 <div class="row">
@@ -161,12 +161,12 @@
                     <div class="form-group">
                       <input class="form-control" required
                         id="zipCode" ref="zipCode"
-                        :placeholder="`_org.ident.notary.request.zipCode.desc` | translate"
+                        :placeholder="`_profile.ident.notary.request.zipCode.desc` | translate"
                         v-model="requestForm.zipCode.value"
                         :class="{ 'is-invalid' : requestForm.zipCode.error }"
                         @blur="requestForm.zipCode.setDirty()">
                       <div class="invalid-feedback">
-                        {{ '_org.ident.notary.request.zipCode.error' | translate }}
+                        {{ '_profile.ident.notary.request.zipCode.error' | translate }}
                       </div>
                     </div>
                   </div>
@@ -174,12 +174,12 @@
                     <div class="form-group">
                       <input class="form-control" required
                         id="city" ref="city"
-                        :placeholder="`_org.ident.notary.request.city.desc` | translate"
+                        :placeholder="`_profile.ident.notary.request.city.desc` | translate"
                         v-model="requestForm.city.value"
                         :class="{ 'is-invalid' : requestForm.city.error }"
                         @blur="requestForm.city.setDirty()">
                       <div class="invalid-feedback">
-                        {{ '_org.ident.notary.request.city.error' | translate }}
+                        {{ '_profile.ident.notary.request.city.error' | translate }}
                       </div>
                     </div>
                   </div>
@@ -188,32 +188,32 @@
                   <div class="col-6">
                     <div class="form-group">
                       <label for="contact">
-                        {{ `_org.ident.notary.request.contact.title` | translate }} *
+                        {{ `_profile.ident.notary.request.contact.title` | translate }} *
                       </label>
                       <input class="form-control" required
                         id="contact" ref="contact"
-                        :placeholder="`_org.ident.notary.request.contact.desc` | translate"
+                        :placeholder="`_profile.ident.notary.request.contact.desc` | translate"
                         v-model="requestForm.contact.value"
                         :class="{ 'is-invalid' : requestForm.contact.error }"
                         @blur="requestForm.contact.setDirty()">
                       <div class="invalid-feedback">
-                        {{ '_org.ident.notary.request.contact.error' | translate }}
+                        {{ '_profile.ident.notary.request.contact.error' | translate }}
                       </div>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <label for="department">
-                        {{ `_org.ident.notary.request.department.title` | translate }}
+                        {{ `_profile.ident.notary.request.department.title` | translate }}
                       </label>
                       <input class="form-control" required
                         id="department" ref="department"
-                        :placeholder="`_org.ident.notary.request.department.desc` | translate"
+                        :placeholder="`_profile.ident.notary.request.department.desc` | translate"
                         v-model="requestForm.department.value"
                         :class="{ 'is-invalid' : requestForm.department.error }"
                         @blur="requestForm.department.setDirty()">
                       <div class="invalid-feedback">
-                        {{ '_org.ident.notary.request.department.error' | translate }}
+                        {{ '_profile.ident.notary.request.department.error' | translate }}
                       </div>
                     </div>
                   </div>
@@ -223,19 +223,19 @@
 
             <!-- approval screen -->
             <div id="ident-accept" v-else-if="status === 1" class="mt-5">
-              <p>{{ '_org.ident.notary.request.proof.title' | translate }}</p>
+              <p>{{ '_profile.ident.notary.request.proof.title' | translate }}</p>
               <labeled-list :entries="approveData" />
-              <p>{{ '_org.ident.notary.request.proof.description' | translate }}</p>
+              <p>{{ '_profile.ident.notary.request.proof.description' | translate }}</p>
               <labeled-list :entries="approveAddress" hideLabel hideEmpty/>
             </div>
 
             <!-- approve costs screen -->
             <div id="ident-accept" v-else-if="status === 2 && !sending" class="mt-5">
-              <p>{{ '_org.ident.notary.request.costs.hint' | translate }}</p>
+              <p>{{ '_profile.ident.notary.request.costs.hint' | translate }}</p>
               <div class="form-check text-center m-6">
                   <input id="costs-approval" type="checkbox" v-model="approvedCosts" class="form-check-input" required />
                   <label for="costs-approval" class="form-check-label">
-                    <h4>{{ '_org.ident.notary.request.costs.approve' | translate }}</h4>
+                    <h4>{{ '_profile.ident.notary.request.costs.approve' | translate }}</h4>
                   </label>
               </div>
             </div>
@@ -246,7 +246,7 @@
             id="request-verification-loading"
             v-if="sending">
             <evan-loading></evan-loading>
-            <h4>{{ '_org.ident.notary.request.requesting' | translate }}</h4>
+            <h4>{{ '_profile.ident.notary.request.requesting' | translate }}</h4>
           </div>
 
           <!-- success screen -->
@@ -255,9 +255,9 @@
             v-else-if="status === 3">
             <evan-success></evan-success>
             <div class="p-5 mt-3 text-center">
-              <p>{{ '_org.ident.notary.request.requested1' | translate }}</p>
-              <p class="mt-3">{{ '_org.ident.notary.request.requested2' | translate }}</p>
-              <p class="mt-3"><b>{{ '_org.ident.notary.request.requested3' | translate }}</b></p>
+              <p>{{ '_profile.ident.notary.request.requested1' | translate }}</p>
+              <p class="mt-3">{{ '_profile.ident.notary.request.requested2' | translate }}</p>
+              <p class="mt-3"><b>{{ '_profile.ident.notary.request.requested3' | translate }}</b></p>
             </div>
           </div>
         </div>
@@ -272,7 +272,7 @@
             id="ident-request-back"
             @click="status -= 1">
             <i class="mdi mdi-arrow-left label mr-3"></i>
-            {{ `_org.ident.back` | translate }}
+            {{ `_profile.ident.back` | translate }}
           </button>
         </template>
 
@@ -283,7 +283,7 @@
             id="ident-request-start"
             :disabled="!enoughFunds || (status === 1 && !requestForm.isValid) || sending"
             @click="status += 1">
-            {{ `_org.ident.notary.request.request-verification` | translate }}
+            {{ `_profile.ident.notary.request.request-verification` | translate }}
           </button>
         </template>
 
@@ -293,7 +293,7 @@
             id="ident-request-next"
             :disabled="(status === 0 && !requestForm.isValid) || sending"
             @click="status += 1">
-            {{ `_org.ident.next` | translate }}
+            {{ `_profile.ident.next` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
         </template>
@@ -304,7 +304,7 @@
             @click="requestIdentification()"
             :disabled="!approvedCosts || sending"
           >
-            {{ `_org.ident.notary.request.request-ident` | translate }}
+            {{ `_profile.ident.notary.request.request-ident` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="sending"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>
@@ -314,7 +314,7 @@
         <template v-if="status === 3">
           <button type="button" class="btn btn-primary " id="ident-request"
             @click="$refs.requestModal.hide()">
-            {{ `_org.ident.done` | translate }}
+            {{ `_profile.ident.done` | translate }}
           </button>
         </template>
       </template><!-- eof footer -->

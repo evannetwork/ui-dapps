@@ -27,13 +27,22 @@
 
 /* tslint:disable */
 const i18n: any = {
-  "_org": {
+  "_profile": {
     "breadcrumbs": {
-      "identifications": "Identifications",
-      "notary": "Notary",
-      "organization": "Organization",
-      "organizations": "Organizations",
-      "verification": "Verification"
+      "addressbook.vue.evan": "Contacts",
+      "detail": "Profile",
+      "logout": "Logout",
+      "settings": "Settings",
+      "verifications": "Verifications",
+      "wallet": "Wallet"
+    },
+    "current-balance": "Current Balance",
+    "detail": {
+      "account-id": "Account-ID",
+      "alias": "Alias",
+      "balance": "Balance",
+      "desc": "Profile-Details",
+      "edit": "Edit Profile"
     },
     "dispatchers": {
       "request-verification": "Requesting Verification...",
@@ -223,6 +232,7 @@ const i18n: any = {
           }
         },
         "request-error": "Request could not be loaded!",
+        "request-notary-verification": "Request a notary verification",
         "status": {
           "accepted": "verified by notary",
           "confirming": "under review",
@@ -254,31 +264,6 @@ const i18n: any = {
           "status": "Status"
         }
       }
-    },
-    "overview": {
-      "title": "My Organizations"
-    },
-    "types": {
-      "organization": "Organization",
-      "person": "Person"
-    }
-  },
-  "_profile": {
-    "breadcrumbs": {
-      "addressbook.vue.evan": "Contacts",
-      "detail": "Profile",
-      "logout": "Logout",
-      "verifications": "Verifications",
-      "settings": "Settings",
-      "wallet": "Wallet"
-    },
-    "current-balance": "Current Balance",
-    "detail": {
-      "account-id": "Account-ID",
-      "alias": "Alias",
-      "balance": "Balance",
-      "desc": "Profile-Details",
-      "edit": "Edit Profile"
     },
     "settings": {
       "desc": "Settings",

@@ -86,14 +86,14 @@ export default class IdentNotaryIssueComponent extends mixins(EvanComponent) {
         value: [ ],
         validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
           return true;
-          // return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
+          // return this.value.length === 0 ? '_profile.ident.notary.issue.files.error' : true;
         }
       },
       privateFiles: {
         value: [ ],
         validate: function(vueInstance: IdentNotaryIssueComponent, form: IssueFormInterface) {
           return true;
-          // return this.value.length === 0 ? '_org.ident.notary.issue.files.error' : true;
+          // return this.value.length === 0 ? '_profile.ident.notary.issue.files.error' : true;
         }
       },
     }));

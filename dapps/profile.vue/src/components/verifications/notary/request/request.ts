@@ -88,15 +88,15 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
 
   steps = [
     {
-      title: (<any>this).$i18n.translate('_org.ident.notary.step.your_data'),
+      title: (<any>this).$i18n.translate('_profile.ident.notary.step.your_data'),
       disabled: false
     },
     {
-      title: (<any>this).$i18n.translate('_org.ident.notary.step.summary'),
+      title: (<any>this).$i18n.translate('_profile.ident.notary.step.summary'),
       disabled: true
     },
     {
-      title: (<any>this).$i18n.translate('_org.ident.notary.step.costs'),
+      title: (<any>this).$i18n.translate('_profile.ident.notary.step.costs'),
       disabled: true
     },
   ];
@@ -222,36 +222,36 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   updated () {
     this.approveData = [
       {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.organization.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.organization.title'),
         value: this.requestForm.organization.value
       },
       {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.country.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.country.title'),
         value: (<any>this).$i18n.translate(
-          `_org.ident.notary.request.countries.${ this.requestForm.country.value }`),
+          `_profile.ident.notary.request.countries.${ this.requestForm.country.value }`),
       },
       {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.court.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.court.title'),
         value: this.requestForm.court.value
       },
       {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.registerNumber.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.registerNumber.title'),
         value: `${this.requestForm.register.value} ${this.requestForm.registerNumber.value}`
       }
     ]
 
     this.approveAddress = [
       {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.contact.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.contact.title'),
         value: this.requestForm.contact.value
       }, {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.department.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.department.title'),
         value: this.requestForm.department.value
       }, {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.address.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.address.title'),
         value: this.requestForm.address.value
       }, {
-        label: (<any>this).$i18n.translate('_org.ident.notary.request.city.title'),
+        label: (<any>this).$i18n.translate('_profile.ident.notary.request.city.title'),
         value: `${this.requestForm.zipCode.value} ${this.requestForm.city.value}`
       }
     ];
@@ -319,8 +319,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     // send the verification request
     dispatchers.requestIdentificationDispatcher.start((<any>this).getRuntime(), {
       mail: {
-        title: (<any>this).$i18n.translate('_org.ident.notary.request.mail.title'),
-        body: (<any>this).$i18n.translate('_org.ident.notary.request.mail.body', requestData),
+        title: (<any>this).$i18n.translate('_profile.ident.notary.request.mail.title'),
+        body: (<any>this).$i18n.translate('_profile.ident.notary.request.mail.body', requestData),
       },
       requestData,
     });

@@ -80,15 +80,15 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
 
   steps = [
     {
-      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.pin'),
+      title: (<any>this).$i18n.translate('_profile.ident.notary.pin.step.pin'),
       disabled: false
     },
     {
-      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.print'),
+      title: (<any>this).$i18n.translate('_profile.ident.notary.pin.step.print'),
       disabled: true
     },
     {
-      title: (<any>this).$i18n.translate('_org.ident.notary.pin.step.send'),
+      title: (<any>this).$i18n.translate('_profile.ident.notary.pin.step.send'),
       disabled: true
     },
   ];

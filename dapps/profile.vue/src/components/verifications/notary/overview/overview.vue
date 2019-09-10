@@ -30,13 +30,13 @@
     <div class="d-flex align-items-center mb-5">
       <div class="d-flex align-items-center">
         <h3 class="font-weight-bold mb-0">
-          {{ '_org.ident.notary.title' | translate }}
+          {{ '_profile.ident.notary.title' | translate }}
         </h3>
 
         <button class="btn btn-icon ml-3" @click="loadRequests(true)">
           <i class="mdi mdi-reload"></i>
           <evan-tooltip :placement="'bottom'">
-            {{ `_org.ident.notary.reload` | translate }}
+            {{ `_profile.ident.notary.reload` | translate }}
           </evan-tooltip>
         </button>
       </div>
@@ -57,7 +57,7 @@
           <button type="button" class="btn btn-primary "
             id="ident-request"
             @click="$refs.orgIdentIssue.show()">
-            {{ `_org.ident.notary.issue.issue` | translate }}
+            {{ `_profile.ident.notary.issue.issue` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
         </template>
@@ -67,25 +67,25 @@
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div class="white-box border-smooth rounded w-100 p-3 text-center" v-if="error">
-        <h3>{{ '_org.ident.error' | translate }}</h3>
-        <span>{{ '_org.ident.error-loading' | translate }}</span>
+        <h3>{{ '_profile.ident.error' | translate }}</h3>
+        <span>{{ '_profile.ident.error-loading' | translate }}</span>
       </div>
       <div class="white-box border-smooth rounded w-100 text-center"
         v-else-if="reloading">
         <div class="white-box content text-center">
           <evan-loading></evan-loading>
-          <h4>{{ '_org.ident.notary.check-updates' | translate }}</h4>
+          <h4>{{ '_profile.ident.notary.check-updates' | translate }}</h4>
         </div>
       </div>
       <div class="white-box border-smooth rounded w-100 text-center"
         v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
         <div class="content">
-          {{ '_org.ident.notary.no-requests' | translate }}
+          {{ '_profile.ident.notary.no-requests' | translate }}
           <br>
           <button class="btn btn-primary  mt-3" target="_blank"
             :id="`ident-request-unknown`"
             @click="$refs.identAction.show()">
-            {{ `_org.ident.notary.status-actions.unknown-long` | translate }}
+            {{ `_profile.ident.notary.status-actions.unknown-long` | translate }}
             <i class="mdi mdi-plus right"></i>
           </button>
         </div>

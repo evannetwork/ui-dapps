@@ -29,6 +29,8 @@
   <div class="p-md-11 p-1">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
+      <org-ident-info-dialog ref="orgInfo"></org-ident-info-dialog>
+
       <div class="row mb-3">
         <div class="col-xl-4">
           <a class="d-block bg-inverted p-3 rounded text-decoration-none"
@@ -54,7 +56,25 @@
           
         </div>
         <div class="col-md-4">
-          
+          <div class="d-flex flex-column align-items-center p-3 evan-highlight"
+            v-if="!notaryIdentification">
+            <i class="mdi mdi-plus"
+              style="font-size: 80px;">
+            </i>
+            <h5 class="font-weight-semibold">
+              {{ '_profile.ident.notary.request-notary-verification' | translate }}
+            </h5>
+
+            <evan-button class="mt-5" type="secondary"
+              :href="`${ dapp.fullUrl }/verifications/${ address }`">
+              {{ '_profile.ident.notary.request.request-ident' | translate }}
+            </evan-button>
+            <evan-button type="link" size="sm"
+              class="d-block  mt-1 text-muted"
+              @click="$refs.orgInfo.show(); $refs.infoTooltip.onMouseLeave();">
+              {{ '_profile.ident.notary.learn-more' | translate }}
+            </evan-button>
+          </div>
         </div>
       </div>
     </template>

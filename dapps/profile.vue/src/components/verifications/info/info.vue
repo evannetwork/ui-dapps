@@ -31,7 +31,7 @@
       :maxWidth="'800px'">
       <template v-slot:header>
         <h5 class="modal-title">
-          {{ `_org.breadcrumbs.verification` | translate }}
+          {{ `_profile.breadcrumbs.verification` | translate }}
         </h5>
       </template>
       <template v-slot:body>

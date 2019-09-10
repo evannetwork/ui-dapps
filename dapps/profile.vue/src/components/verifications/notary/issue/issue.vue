@@ -32,7 +32,7 @@
       :maxWidth="'600px'">
       <template v-slot:header>
         <h5 class="modal-title">
-          {{ '_org.ident.notary.issue.header' | translate }}
+          {{ '_profile.ident.notary.issue.header' | translate }}
         </h5>
       </template>
       <template v-slot:body
@@ -44,7 +44,7 @@
           >
           <template v-slot:header>
             <h5 class="modal-title">
-              {{ `_org.ident.notary.issue.issued.${ status }.title` | translate }}
+              {{ `_profile.ident.notary.issue.issued.${ status }.title` | translate }}
             </h5>
           </template>
           <template v-slot:body>
@@ -52,7 +52,7 @@
               <evan-success v-if="status === 'success'"></evan-success>
               <div class="p-5 mt-3 text-center">
                 <p></p>
-                <p class="mt-3">{{ `_org.ident.notary.issue.issued.${ status }.desc` | translate }}</p>
+                <p class="mt-3">{{ `_profile.ident.notary.issue.issued.${ status }.desc` | translate }}</p>
               </div>
             </div>
           </template>
@@ -68,40 +68,40 @@
           id="request-verification-loading"
           v-if="issuing">
           <evan-loading></evan-loading>
-          <h4>{{ '_org.ident.notary.issue.issuing' | translate }}</h4>
+          <h4>{{ '_profile.ident.notary.issue.issuing' | translate }}</h4>
         </div>
         <template v-else>
           <div class="form-group">
             <label for="alias">
-              {{ `_org.ident.notary.issue.requestId.title` | translate }} *
+              {{ `_profile.ident.notary.issue.requestId.title` | translate }} *
             </label>
             <input class="form-control" required
               id="alias" ref="alias"
-              :placeholder="`_org.ident.notary.issue.requestId.desc` | translate"
+              :placeholder="`_profile.ident.notary.issue.requestId.desc` | translate"
               v-model="issueForm.requestId.value"
               :class="{ 'is-invalid' : issueForm.requestId.error }"
               @blur="issueForm.requestId.setDirty()">
             <div class="invalid-feedback">
-              {{ `_org.ident.notary.issue.requestId.error` | translate }}
+              {{ `_profile.ident.notary.issue.requestId.error` | translate }}
             </div>
           </div>
           <div class="form-group">
             <label for="alias">
-              {{ `_org.ident.notary.issue.accountId.title` | translate }} *
+              {{ `_profile.ident.notary.issue.accountId.title` | translate }} *
             </label>
             <input class="form-control" required
               id="alias" ref="alias"
-              :placeholder="`_org.ident.notary.issue.accountId.desc` | translate"
+              :placeholder="`_profile.ident.notary.issue.accountId.desc` | translate"
               v-model="issueForm.accountId.value"
               :class="{ 'is-invalid' : issueForm.accountId.error }"
               @blur="issueForm.accountId.setDirty()">
             <div class="invalid-feedback">
-              {{ `_org.ident.notary.issue.accountId.error` | translate }}
+              {{ `_profile.ident.notary.issue.accountId.error` | translate }}
             </div>
           </div>
           <div>
             <label for="privateFiles" class="d-block">
-              {{ '_org.ident.notary.issue.privateFiles.title' | translate }}
+              {{ '_profile.ident.notary.issue.privateFiles.title' | translate }}
             </label>
             <div>
               <evan-file-input
@@ -118,7 +118,7 @@
           </div>
           <div class="mt-3">
             <label for="publicFiles" class="d-block">
-              {{ '_org.ident.notary.issue.publicFiles.title' | translate }}
+              {{ '_profile.ident.notary.issue.publicFiles.title' | translate }}
             </label>
             <div>
               <evan-file-input
@@ -131,7 +131,7 @@
             </div>
           </div>
           <small class="text-muted">
-            {{ '_org.ident.notary.issue.file-rename-hint' | translate }}
+            {{ '_profile.ident.notary.issue.file-rename-hint' | translate }}
           </small>
         </template>
       </template>
@@ -141,7 +141,7 @@
             id="ident-issue"
             :disabled="!issueForm.isValid || issuing"
             @click="issueIdentification()">
-            {{ `_org.ident.notary.issue.issue` | translate }}
+            {{ `_profile.ident.notary.issue.issue` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issuing"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>
           </button>

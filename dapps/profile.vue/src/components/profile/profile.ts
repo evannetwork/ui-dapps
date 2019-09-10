@@ -35,6 +35,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import { getIdentificationDetails } from '../verifications/notary/notary.identifications';
+
 @Component({ })
 export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
@@ -52,6 +54,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   type = 'unspecified';
 
   /**
+   * Notary identification details.
+   */
+  notaryIdentification: any = null;
+
+  /**
    * Load the mail details
    */
   async created() {
@@ -63,6 +70,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     // load balance and parse it to 3 decimal places
     this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
     this.balance = Math.round(this.balance * 1000) / 1000;
+
+    // load verification status
+    // this.notaryIdentification = await getIdentificationDetails(runtime, this.address);
 
     this.loading = false;
   }

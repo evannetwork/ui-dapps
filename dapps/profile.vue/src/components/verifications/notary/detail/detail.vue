@@ -31,23 +31,23 @@
     <evan-loading v-if="loading"></evan-loading>
     <div v-else-if="error">
       <h5 class="d-block mb-0 font-weight-semibold">
-        {{ '_org.ident.notary.account-id' | translate }}
+        {{ '_profile.ident.notary.account-id' | translate }}
       </h5>
       <span>{{ $route.params.address }}</span>
       <h5 class="d-block mb-0 font-weight-semibold">
-        {{ '_org.ident.notary.status.title' | translate }}
+        {{ '_profile.ident.notary.status.title' | translate }}
       </h5>
-      <span>{{ '_org.ident.notary.request-error' | translate }}</span>
+      <span>{{ '_profile.ident.notary.request-error' | translate }}</span>
     </div>
     <template v-else>
       <div>
         <h5 class="d-block mb-0 font-weight-semibold">
-          {{ '_org.ident.notary.account-id' | translate }}
+          {{ '_profile.ident.notary.account-id' | translate }}
         </h5>
         <span>{{ $route.params.address }}</span>
 
         <h5 class="d-block mb-0 font-weight-semibold mt-3">
-          {{ '_org.ident.notary.status.title' | translate }}
+          {{ '_profile.ident.notary.status.title' | translate }}
 
           <i class="mdi mdi-information-outline text-muted clickable">
             <evan-tooltip
@@ -55,11 +55,11 @@
               :placement="'right'"
               multiline="true">
               <div class="p-3">
-                <span>{{ '_org.ident.notary.info' | translate }}</span>
+                <span>{{ '_profile.ident.notary.info' | translate }}</span>
                 <div class="w-100 text-center mt-3">
                   <u class="clickable"
                     @click="$refs.orgInfo.show(); $refs.infoTooltip.onMouseLeave();">
-                    {{ '_org.ident.notary.learn-more' | translate }}
+                    {{ '_profile.ident.notary.learn-more' | translate }}
                   </u>
                 </div>
               </div>
@@ -69,7 +69,7 @@
 
         <org-ident-info-dialog ref="orgInfo"></org-ident-info-dialog>
 
-        <p class="m-0">{{ `_org.ident.notary.status.${ details.status || 'unknown' }` | translate }}</p>
+        <p class="m-0">{{ `_profile.ident.notary.status.${ details.status || 'unknown' }` | translate }}</p>
       </div>
       <span class="mx-auto"></span>
       <div>
@@ -78,7 +78,7 @@
           :id="`ident-request-${ details.status }`"
           :disabled="details.status === 'issued' && accepting"
           @click="runStatusAction()">
-          {{ `_org.ident.notary.status-actions.${ details.status }` | translate }}
+          {{ `_profile.ident.notary.status-actions.${ details.status }` | translate }}
           <div class="spinner-border spinner-border-sm text-light ml-3" v-if="details.status === 'issued' && accepting"></div>
         </button>
       </div>
@@ -90,8 +90,8 @@
           :address="$route.params.address"
           :title="(
             topic.endsWith('company') ?
-              '_org.ident.notary.verification.organization' :
-              '_org.ident.notary.verification.organization-random'
+              '_profile.ident.notary.verification.organization' :
+              '_profile.ident.notary.verification.organization-random'
             ) | translate"
           :topic="topic">
         </org-ident-notary-verification>

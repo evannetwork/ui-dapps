@@ -51,7 +51,7 @@
       </div>
       <i class="d-block mt-3 small"
         v-if="verification.status === 'red'">
-        {{ '_org.ident.notary.verification.incorrect' | translate }}
+        {{ '_profile.ident.notary.verification.incorrect' | translate }}
       </i>
       <evan-file-input
         id="issued-files" ref="files"
@@ -63,7 +63,7 @@
         v-if="verification.status === 'yellow'"
         :disabled="accepting"
         @click="acceptVerification()">
-        {{ `_org.ident.notary.verification.accept` | translate }}
+        {{ `_profile.ident.notary.verification.accept` | translate }}
         <div class="spinner-border spinner-border-sm text-light ml-3" v-if="accepting"></div>
         <i class="mdi mdi-arrow-right label ml-3" v-else></i>
       </button>
