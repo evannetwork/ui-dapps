@@ -9,7 +9,7 @@
       "files": [
         "explorer.vue.js"
       ],
-      "origin": "QmUJEUNnwkXBGbzfdYbdRUUgPSKtqjC9GHuyqqJcm6mcPs",
+      "origin": "QmbTZxozWjezswddaEocWd8aNvuwNGFdABkSqsZZrWwexb",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
       "standalone": true,
@@ -36,6 +36,7 @@
     ],
     "version": "0.0.1",
     "versions": {
+      "0.0.1": "QmbTZxozWjezswddaEocWd8aNvuwNGFdABkSqsZZrWwexb"
     }
   }
 }

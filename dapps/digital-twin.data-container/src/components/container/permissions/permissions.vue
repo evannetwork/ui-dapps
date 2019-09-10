@@ -104,7 +104,7 @@
                   <td style="height: 70px">
                     <button class="btn btn-primary btn-sm btn-circle"
                       @click="$refs.addUserModal.show();">
-                      <i class="mdi mdi-plus" style="width: 16px;"></i>
+                      <i class="mdi mdi-plus"></i>
                     </button>
                   </td>
                   <td style="height: 70px"

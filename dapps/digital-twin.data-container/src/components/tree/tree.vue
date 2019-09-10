@@ -156,11 +156,11 @@
               </div>
               <dc-set-actions
                 :containerAddress="containerAddress"
-                :entryName="entry"
                 :displayMode="'dropdownIcon'"
-                :setActions="true"
-                :schemaActions="true"
+                :entryName="entry"
                 :listActions="true"
+                :schemaActions="true"
+                :setActions="true"
                 @init="$set(reactiveRefs.setActions, index, $event)">
               </dc-set-actions>
             </div>

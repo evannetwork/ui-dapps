@@ -62,7 +62,7 @@
                 id="plugin-dbcp-edit"
                 @click="reactiveRefs.dbcpModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm" v-if="saving"></div>
-                <i class="mdi mdi-pencil" style="width: 16px;" v-else></i>
+                <i class="mdi mdi-pencil" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.plugin.edit-dbcp` | translate }}
                 </component>
@@ -72,7 +72,7 @@
                 :disabled="sharing"
                 @click="reactiveRefs.shareModal.show(); closeDropdown();">
                 <div class="spinner-border spinner-border-sm" v-if="sharing"></div>
-                <i class="mdi mdi-share-variant" style="width: 16px;" v-else></i>
+                <i class="mdi mdi-share-variant" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.share` | translate }}
                 </component>
@@ -80,7 +80,7 @@
               <button :class="buttonClasses.tertiar"
                 id="plugin-export"
                 @click="exportPlugin(); closeDropdown()">
-                <i class="mdi mdi-download" style="width: 16px;"></i>
+                <i class="mdi mdi-download"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.export` | translate }}
                 </component>
@@ -88,7 +88,7 @@
               <button :class="buttonClasses.tertiar"
                 id="plugin-clone"
                 @click="reactiveRefs.clonePlugin.showModal(); closeDropdown()">
-                <i class="mdi mdi-content-duplicate" style="width: 16px;"></i>
+                <i class="mdi mdi-content-duplicate"></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.context-menu.clone` | translate }}
                 </component>
@@ -98,7 +98,7 @@
                 :disabled="deleting"
                 @click="reactiveRefs.deleteModal.show(); closeDropdown()">
                 <div class="spinner-border spinner-border-sm" v-if="deleting"></div>
-                <i class="mdi mdi-delete" style="width: 16px;" v-else></i>
+                <i class="mdi mdi-delete" v-else></i>
                 <component :is="buttonTextComp" :placement="'bottom'">
                   {{ `_datacontainer.plugin.delete` | translate }}
                 </component>

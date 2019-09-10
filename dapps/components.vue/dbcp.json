@@ -9,7 +9,7 @@
       "files": [
         "components.vue.js"
       ],
-      "origin": "QmRWRTZP8y6xgiRHBB2SNv6hdP6i8tCFp6CTw9bxBHsgbf",
+      "origin": "QmcEQv6hyGEAYUUhbLX3ABmkjSiB7CQratffpsycrZSitM",
       "primaryColor": "#5170af",
       "secondaryColor": "#dfeaff",
       "type": "dapp"
@@ -34,6 +34,8 @@
       "library"
     ],
     "version": "0.0.1",
-    "versions": {}
+    "versions": {
+      "0.0.1": "QmcEQv6hyGEAYUUhbLX3ABmkjSiB7CQratffpsycrZSitM"
+    }
   }
 }

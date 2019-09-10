@@ -11,7 +11,7 @@
         "organizations.js",
         "organizations.css"
       ],
-      "origin": "QmeBPWhnUfwmwZySv5Jg8CTfJ6Vjwy66hfA3wbr2rYJgqx",
+      "origin": "QmbBJ5b3Z7LbctR2vxELtTQk1mPDWPouxxBUkZAnuSaQd1",
       "primaryColor": "#ac7517",
       "secondaryColor": "#fff2dc",
       "type": "dapp"
@@ -38,7 +38,7 @@
     "versions": {
       "1.0.0": "QmPfEwthwmHYx7vtb7KDnvPVnpmZRjNHXTCSShpiK7KBt7",
       "1.1.0": "QmR2SAXTh8QAyFMYUvM51YECjv2XG2X8TbwTxQKP4suMBo",
-      "1.2.0": "Qmd3Yd7zue5My4vUYhyiBH4q4TbgafUx5J8EWiAQcN3v92"
+      "1.2.0": "QmZtLFmpTXH7479LAvQKMWVFVMxC2fK9r8Jvmx2nRMuNH1"
     }
   }
 }
