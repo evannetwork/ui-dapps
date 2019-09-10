@@ -63,19 +63,23 @@ export default {
       "welcome-desc": "You have received a contact request."
     },
     "sign-up": {
+      "account-type": "Account type",
       "agree": "Agree",
+      "alias": "Alias",
+      "already-signed-up": "Have an account already? Login",
       "cancel-riddle": "Cancel",
       "create-profile": {
         "creation-time": "about {creationTime} / 30 seconds",
-        "desc": "Accept terms of use and create the identity",
+        "desc": "Please confirm your humanity and accept our terms of use.",
         "long": "All data for the creation of your evan.network identity has been recorded. Please confirm the terms of use via the captcha query to complete the process.",
         "status-1": "Creating identity contract...",
         "status-2": "Encrypting user information...",
         "status-3": "Creating mailbox, address book, ...",
         "status-4": "Setting up verification management...",
         "status-5": "Identity was successfully created...",
-        "title": "Create identity"
+        "title": "Create Account"
       },
+      "create-account": "Create your account",
       "desc": "Create your evan.network Identity",
       "desc-long": "Generate your secure and independent Identity on the evan.network. With the help of this Identity, you can interact with business partners, contracts and companies. You can restore your identity on another device at any time using your generated recovery key and continue working.",
       "errors": {
@@ -89,8 +93,14 @@ export default {
       "get-mnemonic": "Recovery Key",
       "get-mnemonic-desc": "Save your Recovery Key securly.",
       "get-mnemonic-desc-long": "Using this <b>recovery key</b>, you can <b>restore your identity</b> on any device and access your data. Please <b>save these 12 words in a secure way</b> as possible (preferably offline, e.g. on a piece of paper). <br><br> If you lose these 12 words, you will <b>lose access to your business partners, contracts and profile information</b>.",
+      "headings": {
+        "header-0" : "Your gateway to digitization",
+        "desc-0": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organisations and people can be securely and trustfully processed.",
+        "header-1": "Transparency",
+        "desc-1": "Blockchain technology enables transarency of transaction by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privaty is saved by using decrypted addresses instead of plain names. To easy up",
+      },
       "password0": "Password",
-      "password1": "Repeat password",
+      "password1": "Retype password",
       "profile-create-error": {
         "desc": "An error occurred during profile creation. Please try again.",
         "ok": "ok",
@@ -98,10 +108,12 @@ export default {
       },
       "profile-informations": "User Information",
       "profile-informations-desc": "Please define a Username and a Password.",
+      "select-account-type": "Please select an account type.",
       "terms-of-use": {
         "desc": "Confirm the Terms of Use.",
         "title": "Terms of use"
       },
+      "terms-accepted": "I agree the <a href=\"https://evan.network/terms/\" target=\"_blank\">Terms of Use</a>",
       "title": "Sign up",
       "use-profile": "Continue",
       "user-name": "Username",

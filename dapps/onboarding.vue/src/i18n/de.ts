@@ -57,19 +57,23 @@ export default {
       "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
     },
     "sign-up": {
+      "account-type": "Account Typ",
       "agree": "Akzeptieren",
+      "alias": "Alias",
+      "already-signed-up": "Bereits registriert? Login",
       "cancel-riddle": "Abbrechen",
       "create-profile": {
         "creation-time": "ca. {creationTime} / 30 Sekunden",
-        "desc": "Bestätigen Sie die Nutzungsbedingen und erstellen Sie Ihr Profil.",
+        "desc": "Bitte bestätigen Sie das Captcha und die Nutzungsbedingen.",
         "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha Abfrage, um den Prozess abzuschließen.",
         "status-1": "Erstellung des Identitätsvertrages...",
         "status-2": "Verschlüsselung der Nutzerinformationen...",
         "status-3": "Erstellung Mailbox, Addressbuch, ...",
         "status-4": "Erstellung der Verifizierungsverwaltung...",
         "status-5": "Identität wurde erfolgreich erstellt...",
-        "title": "Identität erstellen"
+        "title": "Account erstellen"
       },
+      "create-account": "Erstellen Sie ihren Account",
       "desc": "Erstellen Sie Ihre evan.network Identität",
       "desc-long": "Generieren Sie ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungs-Schlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
       "errors": {
@@ -92,10 +96,12 @@ export default {
       },
       "profile-informations": "Nutzerinformationen",
       "profile-informations-desc": "Bitte wählen Sie einen Nutzernames und ein Passwortes.",
+      "select-account-type": "Bitte wählen Sie einen Account Typ",
       "terms-of-use": {
         "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie ihre reelle Interkation.",
         "title": "Nutzungsbedingungen"
       },
+      "terms-accepted": "Ich Stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
       "title": "Registrieren",
       "use-profile": "Weiter",
       "user-name": "Nutzername",
