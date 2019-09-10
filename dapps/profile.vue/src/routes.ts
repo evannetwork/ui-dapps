@@ -33,7 +33,7 @@ import {
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import ProfileDetailComponent from './components/detail/detail.vue';
+import ProfileDetailComponent from './components/profile/profile.vue';
 import ProfileSettingsComponent from './components/settings/settings.vue';
 import VerificationsComponent from './components/verifications/notary/overview/overview.vue';
 
@@ -41,9 +41,10 @@ import VerificationsComponent from './components/verifications/notary/overview/o
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'detail' } },
   { name: 'detail', path: 'detail', component: ProfileDetailComponent },
+  { name: 'detail-specific', path: 'detail/:address', component: ProfileDetailComponent },
   { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
   { name: 'wallet', path: 'wallet', component: UnderDevelopmentComponent },
-  { name: 'verifications', path: 'verifications', component: VerificationsComponent, },
+  { name: 'verifications', path: 'verifications/:address', component: VerificationsComponent, },
   {
     name: 'addressbook.vue',
     component: DAppLoaderComponent,

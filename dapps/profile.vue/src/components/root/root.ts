@@ -45,11 +45,13 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Setup navigation structure
    */
-  created() {
+  setNavEntries() {
+    const runtime = (<any>this).getRuntime();
+
     this.navEntries = [
       { key: 'detail', icon: 'mdi mdi-account-outline' },
       { key: 'wallet', icon: 'mdi mdi-wallet-outline' },
-      { key: `verifications`, icon: 'mdi mdi-check-decagram' },
+      { key: `verifications/${ runtime.activeAccount }`, icon: 'mdi mdi-check-decagram' },
       { key: `addressbook.vue.${ (<any>this).dapp.domainName }`, icon: 'mdi mdi-account-group-outline' },
       null,
       { key: 'settings', icon: 'mdi mdi-settings' },
@@ -57,7 +59,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     .map(entry => (entry ? {
       id: `nav-entry-${ entry.key }`,
       href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
-      text: `_profile.breadcrumbs.${ entry.key }`,
+      text: `_profile.breadcrumbs.${ entry.key.split('/')[0] }`,
       icon: entry.icon,
     } : null));
   }

@@ -25,19 +25,44 @@
   https://evan.network/license/
 */
 
-.modal .modal-dialog .modal-content {
-  overflow-y: auto;
+<template>
+  <div class="p-md-11 p-1">
+    <evan-loading v-if="loading"></evan-loading>
+    <template v-else>
+      <div class="row mb-3">
+        <div class="col-xl-4">
+          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
+            style="height: 166px"
+            :href="`${ dapp.fullUrl }/wallet`">
+            <h1>{{ balance }} EVE</h1>
+            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
+          </a>
+        </div>
+        <div class="col-xl-8 d-flex flex-column justify-content-center">
+          <h2 class="font-weight-semibold mb-4">
+            {{ alias }}
+          </h2>
+          <evan-address :address="address"></evan-address>
+          <b class="mt-2">
+            {{ `_evan.profile.types.${ type }` | translate }}
+          </b>
+        </div>
+      </div>
 
-  min-height: 300px;
-  max-height: calc(90vh - 140px - 32px);
-  padding: 0 3rem;
+      <div class="row">
+        <div class="col-md-8">
+          
+        </div>
+        <div class="col-md-4">
+          
+        </div>
+      </div>
+    </template>
+  </div>
+</template>
 
-  .modal-header h5 {
-    margin-left: 3rem;
-  }
-}
+<script lang="ts">
+  import Component from './profile.ts';
+  export default Component;
+</script>
 
-.grouped {
-  margin-top: 28px;
-  overflow: hidden;
-}

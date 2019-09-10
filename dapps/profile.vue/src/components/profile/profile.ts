@@ -25,19 +25,45 @@
   https://evan.network/license/
 */
 
-.modal .modal-dialog .modal-content {
-  overflow-y: auto;
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-  min-height: 300px;
-  max-height: calc(90vh - 140px - 32px);
-  padding: 0 3rem;
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-  .modal-header h5 {
-    margin-left: 3rem;
+@Component({ })
+export default class ProfileDetailComponent extends mixins(EvanComponent) {
+  /**
+   * status flags
+   */
+  loading = true;
+
+  /**
+   * Current profile information
+   */
+  address = '';
+  alias = '';
+  balance = 0;
+  currDate = Date.now();
+  type = 'unspecified';
+
+  /**
+   * Load the mail details
+   */
+  async created() {
+    const runtime = (<any>this).getRuntime();
+
+    this.address = this.$route.params.address || runtime.activeAccount;
+    this.alias = (await runtime.profile.getAddressBook()).profile[this.address].alias;
+
+    // load balance and parse it to 3 decimal places
+    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
+    this.balance = Math.round(this.balance * 1000) / 1000;
+
+    this.loading = false;
   }
-}
-
-.grouped {
-  margin-top: 28px;
-  overflow: hidden;
 }

@@ -28,9 +28,11 @@
 <template>
   <div class="evan theme-evan">
     <evan-dapp-wrapper
-      :routes="[ ]">
+      :routes="[ ]"
+      @loggedin="setNavEntries()">
       <template v-slot:content>
-        <div class="h-100 d-flex flex-column">
+        <div class="h-100 d-flex flex-column"
+          v-if="navEntries">
           <evan-dapp-wrapper-level-2>
             <div style="width: 300px;">
               <evan-nav-list :entries="navEntries"></evan-nav-list>
