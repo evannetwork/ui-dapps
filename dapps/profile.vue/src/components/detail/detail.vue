@@ -26,56 +26,35 @@
 */
 
 <template>
-  <div class="container-wide">
+  <div class="p-md-11 p-1">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <contact-detail ref="contactDetailModal"></contact-detail>
-
-      <div class="d-flex mb-5 align-items-center">
-        <div style="width: calc(100% - 200px)">
-          <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
-            {{ '_profile.detail.desc' | translate }}
-          </h3>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
+            style="height: 166px"
+            :href="`${ dapp.fullUrl }/wallet`">
+            <h1>{{ balance }} EVE</h1>
+            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
+          </a>
         </div>
-        <span class="mx-auto"></span>
-        <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-icon mr-3"
-            @click="$refs.contactDetailModal.show(accountId);">
-            <i class="mdi mdi-circle-edit-outline"></i>
-            <evan-tooltip :placement="'bottom'">
-              {{ `_profile.detail.edit` | translate }}
-            </evan-tooltip>
-          </button>
+        <div class="col-md-9 d-flex flex-column justify-content-center">
+          <h2 class="font-weight-semibold mb-4">
+            {{ alias }}
+          </h2>
+          <evan-address :address="accountId"></evan-address>
+          <b class="mt-2">
+            {{ `_evan.profile.types.${ type }` | translate }}
+          </b>
         </div>
       </div>
 
-      <div class="white-box border-smooth rounded p-4">
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="d-block mb-0">
-              {{ '_profile.detail.alias' | translate }}
-            </label>
-            <span>
-              {{ alias }}
-            </span>
-          </div>
+      <div class="row">
+        <div class="col-md-8">
+          
         </div>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="d-block mb-0">
-              {{ '_profile.detail.account-id' | translate }}
-            </label>
-            <evan-address :address="accountId"></evan-address>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label class="d-block mb-0">
-              {{ '_profile.detail.balance' | translate }}
-            </label>
-            <span>
-              {{ balance }} EVE
-            </span>
-          </div>
+        <div class="col-md-4">
+          
         </div>
       </div>
     </template>

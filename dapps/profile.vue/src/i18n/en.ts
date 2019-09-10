@@ -38,6 +38,7 @@ const i18n: any = {
       "settings": "Settings",
       "wallet": "Wallet"
     },
+    "current-balance": "Current Balance",
     "detail": {
       "account-id": "Account-ID",
       "alias": "Alias",

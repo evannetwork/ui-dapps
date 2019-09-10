@@ -47,7 +47,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   accountId = '';
   alias = '';
-  balance = '';
+  balance = 0;
+  currDate = Date.now();
+  type = 'unspecified';
 
   /**
    * Load the mail details
@@ -57,7 +59,10 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
 
     this.accountId = runtime.activeAccount;
     this.alias = (await runtime.profile.getAddressBook()).profile[this.accountId].alias;
+
+    // load balance and parse it to 3 decimal places
     this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
+    this.balance = Math.round(this.balance * 1000) / 1000;
 
     this.loading = false;
   }

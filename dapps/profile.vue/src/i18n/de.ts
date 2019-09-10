@@ -30,6 +30,7 @@ import { translations } from '@evan.network/addressbook';
 /* tslint:disable */
 const i18n: any = {
   "_profile": {
+    "current-balance": "Aktueller Kontostand",
     "breadcrumbs": {
       "addressbook.vue.evan": "Kontakte",
       "detail": "Profil",
