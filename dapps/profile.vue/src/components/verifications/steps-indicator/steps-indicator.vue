@@ -25,44 +25,42 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
+/*
+  usage:
+    <steps-indicator
+      :steps="steps"                    // steps array
+      :active-step="currentActiveStep"  // currently active step number
+      @updatestep="myupdatelistener"    // update function: myupdatelistener(nextStep)
+    ></steps-indicator>
+ */
 
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
-    </template>
+<template>
+  <div class="evan-steps" v-if="steps && steps.length !== 0">
+    <div class="evan-step-header mt-3 p-0">
+        <button class="btn"
+        v-for="(step, index) of steps"
+        :class="{
+          [`evan-container-create-step-${ index }`]: true,
+        }"
+        :disabled="step.disabled"
+        @click="gotoStep(index)"
+        v-bind:key="index"
+      >
+        <span class="stepper-circle"
+          :class="{
+            'active': activeStep === index,
+          }">
+          {{ index + 1}}
+        </span>
+        <span>{{ step.title | translate }}</span>
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
+  import Component from './steps-indicator';
   export default Component;
 </script>
+
 

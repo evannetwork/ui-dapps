@@ -35,6 +35,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import ProfileDetailComponent from './components/detail/detail.vue';
 import ProfileSettingsComponent from './components/settings/settings.vue';
+import VerificationsComponent from './components/verifications/notary/overview/overview.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
@@ -42,11 +43,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { name: 'detail', path: 'detail', component: ProfileDetailComponent },
   { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
   { name: 'wallet', path: 'wallet', component: UnderDevelopmentComponent },
-  {
-    name: 'organizations',
-    component: DAppLoaderComponent,
-    path: `organizations.${ dappBrowser.getDomainName() }/**`,
-  },
+  { name: 'verifications', path: 'verifications', component: VerificationsComponent, },
   {
     name: 'addressbook.vue',
     component: DAppLoaderComponent,

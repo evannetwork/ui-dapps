@@ -25,44 +25,10 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
+import verificationAcceptDispatcher from './acceptVerification';
+import requestIdentificationDispatcher from './notary/requestIdentification';
 
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
-    </template>
-  </div>
-</template>
-
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
-
+export {
+  requestIdentificationDispatcher,
+  verificationAcceptDispatcher,
+}

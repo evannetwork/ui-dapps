@@ -25,44 +25,28 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
-    </template>
-  </div>
-</template>
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+const dispatcher = new Dispatcher(
+  `profile.vue.${ dappBrowser.getDomainName() }`,
+  'verificationAcceptDispatcher',
+  40 * 1000,
+  '_org.dispatchers.verification-accept'
+);
 
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
+
+    await runtime.verifications.confirmVerification(
+      runtime.activeAccount,
+      data.address,
+      data.id,
+    );
+  });
+
+export default dispatcher;

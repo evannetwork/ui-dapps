@@ -25,44 +25,29 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
-    </template>
-  </div>
-</template>
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+@Component({ })
+export default class InfoDialogComponent extends mixins(EvanComponent) {
+  /**
+   * Show the info modal.
+   */
+  show() {
+    (<any>this.$refs).infoModal.show();
+  }
 
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).infoModal.hide();
+  }
+}

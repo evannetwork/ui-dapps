@@ -26,43 +26,28 @@
 */
 
 <template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
+  <div>
+    <evan-modal ref="infoModal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_org.breadcrumbs.verification` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div class="modal-content">
+          <info-content />
         </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
-    </template>
+      </template>
+    </evan-modal>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
+  import Component from './info.ts';
   export default Component;
 </script>
 
+<style lang="scss" scoped>
+  @import './info.scss'
+</style>

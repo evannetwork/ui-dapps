@@ -26,43 +26,26 @@
 */
 
 <template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
+  <dl class="row labeled-list">
+    <template v-for="(entry, idx) in entries">
+      <dt :key="`dt-${idx}`" class="col-md-4" v-show="!hideLabel">{{ entry.label }}</dt>
+      <dd
+        :key="`dd-${idx}`"
+        :class="{'col-md-8': true, 'offset-md-4': hideLabel}"
+        v-if="!hideEmpty || entry.value"
+      >
+        {{ entry.value || emptyValue }}
+      </dd>
     </template>
-  </div>
+  </dl>
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
+  import Component from './labeled-list';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './labeled-list.scss'
+</style>
 

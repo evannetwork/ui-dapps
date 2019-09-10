@@ -32,7 +32,4 @@ module.exports = require('../../vue/webpack.config')(
   require('path').resolve(__dirname, './dist'),
   true,
   false,
-  getExternals({
-    '@evan.network/addressbook': '@evan.network/addressbook',
-  })
 );

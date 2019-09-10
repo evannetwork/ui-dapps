@@ -49,7 +49,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     this.navEntries = [
       { key: 'detail', icon: 'mdi mdi-account-outline' },
       { key: 'wallet', icon: 'mdi mdi-wallet-outline' },
-      { key: `organizations.${ (<any>this).dapp.domainName }`, icon: 'mdi mdi-check-decagram' },
+      { key: `verifications`, icon: 'mdi mdi-check-decagram' },
       { key: `addressbook.vue.${ (<any>this).dapp.domainName }`, icon: 'mdi mdi-account-group-outline' },
       null,
       { key: 'settings', icon: 'mdi mdi-settings' },

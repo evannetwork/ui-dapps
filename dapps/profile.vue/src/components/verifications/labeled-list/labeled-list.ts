@@ -25,44 +25,52 @@
   https://evan.network/license/
 */
 
-<template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-md-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="accountId"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
-    </template>
-  </div>
-</template>
+/**
+ * Shape of each step object
+ */
+interface Entry {
+  label: string;
+  value: string;
+}
 
-<script lang="ts">
-  import Component from './detail.ts';
-  export default Component;
-</script>
+/**
+ * Labeled list component shows a definition list with types and data fields.
+ */
+@Component({ })
+export default class LabeledList extends mixins(EvanComponent) {
+  /**
+   * The steps array, with the shape of Step interface:
+   *  { title: String, disabled: boolean }
+   */
+  @Prop({
+    type: Array,
+    default: []
+  }) entries: Entry[]
 
+  @Prop({
+    type: String,
+    default: '--'
+  }) emptyValue: string
+
+  @Prop({
+    type: Boolean,
+    default: false
+  }) hideEmpty: boolean
+
+  @Prop({
+    type: Boolean,
+    default: false
+  }) hideLabel: boolean
+
+
+  created() {
+    if (this.entries.length === 0) {
+      console.warn('no entries defined for <labeled-list> ');
+    }
+  }
+}
