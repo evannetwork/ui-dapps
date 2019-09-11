@@ -48,7 +48,22 @@ const i18n: any = {
       "request-verification": "Requesting Verification...",
       "verification-accept": "Accepting Verification..."
     },
-    "ident": {
+    "settings": {
+      "desc": "Settings",
+      "dev-domain": {
+        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
+        "title": "Applications from test-domain"
+      },
+      "developer-mode": "Developer Mode",
+      "language": "Language",
+      "languages": {
+        "browser": "Browser-Language",
+        "de": "German",
+        "en": "English"
+      },
+      "reload-hint": "Please reload the application if you have changed the language settings."
+    },
+    "verifications": {
       "back": "Go back",
       "categories": {
         "identifications": "Identifications",
@@ -123,7 +138,6 @@ const i18n: any = {
           }
         },
         "print": "Print",
-        "reload": "Reload",
         "request": {
           "address": {
             "desc": "Enter address",
@@ -170,15 +184,15 @@ const i18n: any = {
             "steps": {
               "1": {
                 "description": "Enter the commercial register number, register court, your address and a contact person.",
-                "title": "1st Step: Request"
+                "title": "Request"
               },
               "2": {
                 "description": "You will receive a PIN by letter. Use this to generate the confirmation document and send it signed to the inquiring notary.",
-                "title": "2nd Step: Authenticate"
+                "title": "Authenticate"
               },
               "3": {
                 "description": "If the notarial verification is successful, you will be notified. Accept the verification as the last step.",
-                "title": "3rd Step: Accept"
+                "title": "Accept"
               }
             },
             "title": "Steps"
@@ -263,22 +277,9 @@ const i18n: any = {
           "organization-random": "Organization-ID-Verification",
           "status": "Status"
         }
-      }
-    },
-    "settings": {
-      "desc": "Settings",
-      "dev-domain": {
-        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
-        "title": "Applications from test-domain"
       },
-      "developer-mode": "Developer Mode",
-      "language": "Language",
-      "languages": {
-        "browser": "Browser-Language",
-        "de": "German",
-        "en": "English"
-      },
-      "reload-hint": "Please reload the application if you have changed the language settings."
+      "reload": "Reload",
+      "title": "All verifications"
     }
   }
 }

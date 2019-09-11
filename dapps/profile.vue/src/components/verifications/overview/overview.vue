@@ -26,43 +26,44 @@
 */
 
 <template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-xl-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
-        </div>
-        <div class="col-xl-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="address"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
+  <div class="p-md-11 p-1 h-100">
+    <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center">
+        <h3 class="font-weight-bold mb-0">
+          {{ '_profile.verifications.title' | translate }}
+        </h3>
 
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          <notary-verification :address="address"></notary-verification>
-        </div>
+        <button class="btn" @click="loadRequests(true)">
+          <i class="mdi mdi-reload"></i>
+          <evan-tooltip :placement="'bottom'">
+            {{ `_profile.verifications.reload` | translate }}
+          </evan-tooltip>
+        </button>
       </div>
-    </template>
+      <span class="mx-auto"></span>
+      <div v-if="canIssue">
+        <notary-action-issue
+          ref="orgIdentIssue">
+        </notary-action-issue>
+        <button type="button" class="btn btn-primary "
+          id="ident-request"
+          @click="$refs.orgIdentIssue.show()">
+          {{ `_profile.verifications.notary.issue.issue` | translate }}
+          <i class="mdi mdi-arrow-right label ml-3"></i>
+        </button>
+      </div>
+    </div>
+    <div class="w-100 row mt-5">
+      <div class="col-md-3">
+        <notary-verification :address="address"></notary-verification>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './profile.ts';
+  import Component from './overview.ts';
   export default Component;
 </script>
 
+  

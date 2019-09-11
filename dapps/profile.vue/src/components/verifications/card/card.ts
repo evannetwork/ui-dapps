@@ -35,45 +35,20 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../verifications/notary/notary.lib';
-
+/**
+ * Wrapper for profile verifications.
+ */
 @Component({ })
-export default class ProfileDetailComponent extends mixins(EvanComponent) {
+export default class VerificationCardComponent extends mixins(EvanComponent) {
   /**
-   * status flags
+   * Card type that should be used (transparent, outline, filled)
    */
-  loading = true;
-
-  /**
-   * Current profile information
-   */
-  address = '';
-  alias = '';
-  balance = 0;
-  currDate = Date.now();
-  type = 'unspecified';
+  @Prop({
+    default: ''
+  }) type;
 
   /**
-   * Notary identification details.
+   * Specify small card
    */
-  notaryIdentification: any = null;
-
-  /**
-   * Load the mail details
-   */
-  async created() {
-    const runtime = (<any>this).getRuntime();
-
-    this.address = this.$route.params.address || runtime.activeAccount;
-    this.alias = (await runtime.profile.getAddressBook()).profile[this.address].alias;
-
-    // load balance and parse it to 3 decimal places
-    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
-    this.balance = Math.round(this.balance * 1000) / 1000;
-
-    // load verification status
-    // this.notaryIdentification = await getIdentificationDetails(runtime, this.address);
-
-    this.loading = false;
-  }
+  @Prop() small;
 }

@@ -28,30 +28,45 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import IdentNotaryIssueComponent from './verifications/notary/issue/issue.vue';
-import IdentNotaryPinComponent from './verifications/notary/pin/pin.vue';
-import IdentNotaryRequestComponent from './verifications/notary/request/request.vue';
-import IdentNotaryVerificationComponent from './verifications/notary/verification/verification.vue';
-import InfoContent from './verifications/info/info-content.vue';
-import InfoDialogComponent from './verifications/info/info.vue';
-import LabeledList from './verifications/labeled-list/labeled-list.vue';
-import NotaryDetailComponent from './verifications/notary/detail/detail.vue';
-import StepsIndicator from './verifications/steps-indicator/steps-indicator.vue';
+// verification specific components
+import NotaryVerificationComponent from './verifications/notary/notary.vue';
+import VerificationCardComponent from './verifications/card/card.vue';
+import VerificationsOverviewComponent from './verifications/overview/overview.vue';
 
-// export them all, so other applications can access them
-export { }
+// import general components for the profile
+import LabeledList from './utils/labeled-list/labeled-list.vue';
+
+// verification components
+// single notary verification detail (takes a request or company verifications)
+import NotaryCardComponent from './verifications/notary/card/card.vue';
+
+// info content of the notary verification
+import NotaryInfoContentComponent from './verifications/notary/info/info-content/info-content.vue';
+import NotaryInfoModalComponent from './verifications/notary/info/info-modal/info-modal.vue';
+
+// import notary specific actions
+import NotaryIssueComponent from './verifications/notary/actions/issue/issue.vue';
+import NotaryPinComponent from './verifications/notary/actions/pin/pin.vue';
+import NotaryRequestComponent from './verifications/notary/actions/request/request.vue';
+
+// topic display (the actual verification)
+import NotaryTopicDisplayComponent from './verifications/notary/topic-display/topic-display.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'info-content', component: InfoContent },
   { name: 'labeled-list', component: LabeledList },
-  { name: 'org-ident-info-dialog', component: InfoDialogComponent },
-  { name: 'org-ident-notary-detail', component: NotaryDetailComponent },
-  { name: 'org-ident-notary-issue', component: IdentNotaryIssueComponent },
-  { name: 'org-ident-notary-pin', component: IdentNotaryPinComponent },
-  { name: 'org-ident-notary-request', component: IdentNotaryRequestComponent },
-  { name: 'org-ident-notary-verification', component: IdentNotaryVerificationComponent },
-  { name: 'steps-indicator', component: StepsIndicator },
+  { name: 'notary-verification', component: NotaryVerificationComponent, },
+  { name: 'profile-verification-card', component: VerificationCardComponent },
+  { name: 'profile-verifications', component: VerificationsOverviewComponent },
+
+  // notary verification components
+  { name: 'notary-action-issue', component: NotaryIssueComponent, },
+  { name: 'notary-action-pin', component: NotaryPinComponent, },
+  { name: 'notary-action-request', component: NotaryRequestComponent, },
+  { name: 'notary-info-content', component: NotaryInfoContentComponent, },
+  { name: 'notary-info-dialog', component: NotaryInfoModalComponent, },
+  { name: 'notary-topic-display', component: NotaryTopicDisplayComponent, },
+  { name: 'notary-verification-card', component: NotaryCardComponent, },
 ];
 
 export default componentRegistration;

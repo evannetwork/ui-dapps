@@ -35,45 +35,30 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../verifications/notary/notary.lib';
+import InfoContentComponent from '../info-content/info-content.vue';
 
-@Component({ })
-export default class ProfileDetailComponent extends mixins(EvanComponent) {
+@Component({
+  components: {
+    'notary-info-content': InfoContentComponent,
+  }
+})
+export default class InfoModalComponent extends mixins(EvanComponent) {
   /**
-   * status flags
+   * Account of the current user.
    */
-  loading = true;
-
-  /**
-   * Current profile information
-   */
-  address = '';
-  alias = '';
-  balance = 0;
-  currDate = Date.now();
-  type = 'unspecified';
+  @Prop() address: string;
 
   /**
-   * Notary identification details.
+   * Show the info modal.
    */
-  notaryIdentification: any = null;
+  show() {
+    (<any>this.$refs).infoModal.show();
+  }
 
   /**
-   * Load the mail details
+   * Hide the info modal.
    */
-  async created() {
-    const runtime = (<any>this).getRuntime();
-
-    this.address = this.$route.params.address || runtime.activeAccount;
-    this.alias = (await runtime.profile.getAddressBook()).profile[this.address].alias;
-
-    // load balance and parse it to 3 decimal places
-    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
-    this.balance = Math.round(this.balance * 1000) / 1000;
-
-    // load verification status
-    // this.notaryIdentification = await getIdentificationDetails(runtime, this.address);
-
-    this.loading = false;
+  hide() {
+    (<any>this.$refs).infoModal.hide();
   }
 }

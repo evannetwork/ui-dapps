@@ -1,26 +1,21 @@
 /*
   Copyright (C) 2018-present evan GmbH.
-
   This program is free software: you can redistribute it and/or modify it
   under the terms of the GNU Affero General Public License, version 3,
   as published by the Free Software Foundation.
-
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU Affero General Public License for more details.
-
   You should have received a copy of the GNU Affero General Public License
   along with this program. If not, see http://www.gnu.org/licenses/ or
   write to the Free Software Foundation, Inc., 51 Franklin Street,
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
-
   You can be released from the requirements of the GNU Affero General Public
   License by purchasing a commercial license.
   Buying such a license is mandatory as soon as you use this software or parts
   of it on other blockchains than evan.network.
-
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
@@ -35,45 +30,20 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../verifications/notary/notary.lib';
-
 @Component({ })
-export default class ProfileDetailComponent extends mixins(EvanComponent) {
+export default class InfoComponent extends mixins(EvanComponent) {
   /**
-   * status flags
+   * Has the user enough funds?
    */
-  loading = true;
-
-  /**
-   * Current profile information
-   */
-  address = '';
-  alias = '';
-  balance = 0;
-  currDate = Date.now();
-  type = 'unspecified';
+  @Prop() enoughFunds = true;
 
   /**
-   * Notary identification details.
+   * Current funds of the user
    */
-  notaryIdentification: any = null;
+  @Prop() readableFunds: string;
 
   /**
-   * Load the mail details
+   * Account of the current user.
    */
-  async created() {
-    const runtime = (<any>this).getRuntime();
-
-    this.address = this.$route.params.address || runtime.activeAccount;
-    this.alias = (await runtime.profile.getAddressBook()).profile[this.address].alias;
-
-    // load balance and parse it to 3 decimal places
-    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
-    this.balance = Math.round(this.balance * 1000) / 1000;
-
-    // load verification status
-    // this.notaryIdentification = await getIdentificationDetails(runtime, this.address);
-
-    this.loading = false;
-  }
+  @Prop() address: string;
 }

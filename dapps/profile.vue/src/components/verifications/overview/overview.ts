@@ -35,45 +35,35 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../verifications/notary/notary.lib';
+import IssueComponent from '../notary/actions/issue/issue.vue';
 
-@Component({ })
-export default class ProfileDetailComponent extends mixins(EvanComponent) {
+@Component({
+  components: {
+    'notary-action-issue': IssueComponent,
+  }
+})
+export default class VerificationsOverviewComponent extends mixins(EvanComponent) {
   /**
-   * status flags
+   * Address for that the notary verifications should be loaded
    */
-  loading = true;
-
-  /**
-   * Current profile information
-   */
-  address = '';
-  alias = '';
-  balance = 0;
-  currDate = Date.now();
-  type = 'unspecified';
+  @Prop() address;
 
   /**
-   * Notary identification details.
+   * Hide the verification elements to trigger reload.
    */
-  notaryIdentification: any = null;
+  rerender = false;
 
   /**
-   * Load the mail details
+   * Check for showing the "canIssue button", usually the evan verification account.
    */
-  async created() {
+  canIssue = false;
+
+  created() {
     const runtime = (<any>this).getRuntime();
 
-    this.address = this.$route.params.address || runtime.activeAccount;
-    this.alias = (await runtime.profile.getAddressBook()).profile[this.address].alias;
-
-    // load balance and parse it to 3 decimal places
-    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
-    this.balance = Math.round(this.balance * 1000) / 1000;
-
-    // load verification status
-    // this.notaryIdentification = await getIdentificationDetails(runtime, this.address);
-
-    this.loading = false;
+    // switch issue account
+    this.canIssue = runtime.environment === 'core' ?
+      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B' :
+      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
   }
 }

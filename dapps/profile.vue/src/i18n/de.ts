@@ -48,7 +48,22 @@ const i18n: any = {
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
-    "ident": {
+    "settings": {
+      "desc": "Einstellungen",
+      "dev-domain": {
+        "desc": "Mit dieser Konfiguration wird die Endung \".evan\" durch die angegebene Adresse ersetzt. Über diese Logik ist es möglich, Applikation auf verschiedenen Domains gleichzeitig für Testzwecke zu verwenden (z.B.: myapp.test.evan).",
+        "title": "Applikation von Test-Domain"
+      },
+      "developer-mode": "Entwicklermodus",
+      "language": "Sprache",
+      "languages": {
+        "browser": "Browser-Sprache",
+        "de": "Deutsch",
+        "en": "Englisch"
+      },
+      "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+    },
+    "verifications": {
       "back": "Zurück",
       "categories": {
         "identifications": "Identifikationen",
@@ -123,7 +138,6 @@ const i18n: any = {
           }
         },
         "print": "Drucken",
-        "reload": "Neu-laden",
         "request": {
           "address": {
             "desc": "Straße und Hausnummer",
@@ -170,15 +184,15 @@ const i18n: any = {
             "steps": {
               "1": {
                 "description": "Geben Sie Handelsregisternummer, Registergericht, ihre Anschrift und einen Ansprechpartner an.",
-                "title": "Schritt 1: Anfordern"
+                "title": "Anfordern"
               },
               "2": {
                 "description": "Sie erhalten eine PIN per Post. Generieren Sie mit dieser das Bestätigungsdokument und senden Sie es unterschrieben per Post an den anfragenden Notar.",
-                "title": "Schritt 2: Authentifizieren"
+                "title": "Authentifizieren"
               },
               "3": {
                 "description": "Ist die notarielle Verifikation erfolgreich, werden Sie benachrichtigt. Akzeptieren Sie als letzten Schritt die Verifikation.",
-                "title": "Schritt 3: Akzeptieren"
+                "title": "Akzeptieren"
               }
             },
             "title": "Schritte"
@@ -263,22 +277,9 @@ const i18n: any = {
           "organization-random": "Organisations-ID-Verifikation",
           "status": "Status"
         }
-      }
-    },
-    "settings": {
-      "desc": "Einstellungen",
-      "dev-domain": {
-        "desc": "Mit dieser Konfiguration wird die Endung \".evan\" durch die angegebene Adresse ersetzt. Über diese Logik ist es möglich, Applikation auf verschiedenen Domains gleichzeitig für Testzwecke zu verwenden (z.B.: myapp.test.evan).",
-        "title": "Applikation von Test-Domain"
       },
-      "developer-mode": "Entwicklermodus",
-      "language": "Sprache",
-      "languages": {
-        "browser": "Browser-Sprache",
-        "de": "Deutsch",
-        "en": "Englisch"
-      },
-      "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+      "reload": "Neu-laden",
+      "title": "Alle Verifikationen"
     }
   }
 }

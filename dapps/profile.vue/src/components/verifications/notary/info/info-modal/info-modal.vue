@@ -26,43 +26,24 @@
 */
 
 <template>
-  <div class="p-md-11 p-1">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <div class="row mb-3">
-        <div class="col-xl-4">
-          <a class="d-block bg-inverted p-3 rounded text-decoration-none"
-            style="height: 166px"
-            :href="`${ dapp.fullUrl }/wallet`">
-            <h1>{{ balance }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-          </a>
+  <div>
+    <evan-modal ref="infoModal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_profile.verifications.notary.title` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div class="modal-content">
+          <notary-info-content :address="address"></notary-info-content>
         </div>
-        <div class="col-xl-8 d-flex flex-column justify-content-center">
-          <h2 class="font-weight-semibold mb-4">
-            {{ alias }}
-          </h2>
-          <evan-address :address="address"></evan-address>
-          <b class="mt-2">
-            {{ `_evan.profile.types.${ type }` | translate }}
-          </b>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-8">
-          
-        </div>
-        <div class="col-md-4">
-          <notary-verification :address="address"></notary-verification>
-        </div>
-      </div>
-    </template>
+      </template>
+    </evan-modal>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './profile.ts';
+  import Component from './info-modal.ts';
   export default Component;
 </script>
-
