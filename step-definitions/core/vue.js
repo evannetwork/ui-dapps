@@ -29,6 +29,8 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
+    window.localStorage.setItem('evan-language', 'en');
+    window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
   }, [], function(result) {
     this.assert.ok(result.value);
@@ -57,6 +59,18 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   loggedIn = true;
 });
 
+
+Given('I go to the evan.network startpage', async () => {
+  const evan = setupEvan(client);
+
+  await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
+  await client.execute(function() {
+    window.localStorage.setItem('evan-language', 'en');
+    window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
+    return true;
+  });
+  await client.pause(5000);
+});
 
 When(/I log out from vue/, async () => {
   const evan = setupEvan(client);
