@@ -45,15 +45,15 @@
       </div>
 
       <profile-verification-card
-        v-else-if="!requests.length === 0 && verifications.length === 0 || testMode">
+        v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
         <svg viewBox="0 0 38 38" fill="none">
           <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
         </svg>
-
         <h5 class="font-weight-semibold">
           {{ '_profile.verifications.notary.request-notary-verification' | translate }}
         </h5>
-        <evan-button class="mt-5" type="secondary"
+
+        <evan-button type="secondary"
           @click="$refs.requestNotary.show();">
           {{ '_profile.verifications.notary.request.request-ident' | translate }}
         </evan-button>

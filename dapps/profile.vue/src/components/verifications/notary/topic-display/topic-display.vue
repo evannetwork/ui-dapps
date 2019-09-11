@@ -35,7 +35,7 @@
       <h5 class="font-weight-semibold">
         {{ title }}
       </h5>
-      <small class="mt-5 mb-2">
+      <small class="mb-2">
         {{ '_profile.verifications.notary.title' | translate }}
       </small>
       <small>
@@ -44,6 +44,13 @@
       <small class="text-muted">
         {{ verification.verifications[0].details.issuer }}
       </small>
+
+      <!-- <a v-for="(file, index) in files"
+        :id="`file-input-download-${ index }`"
+        :href="file.blobUri"
+        :download="file.name">
+        <i class="mdi mdi-download-outline"></i>
+      </a> -->
 
       <button type="button"
         class="btn btn-primary mt-3"
@@ -54,49 +61,6 @@
       </button>
     </template>
   </profile-verification-card>
-<!-- 
-  <div class="border bg-level-2 p-3 border-sm">
-    <div class="text-center" v-if="loading">
-      <div class="spinner-border spinner-border-sm"></div>
-    </div>
-    <div v-else>
-      <div class="d-flex align-items-center">
-        <div class="">
-          <b class="mb-0 font-weight-semibold">{{ title }}</b>
-          <p class="mt-1 mb-0">
-            {{ topic }}
-          </p>
-        </div>
-        <span class="mx-auto"></span>
-        <i class="mdi"
-          style="font-size: 30px;"
-          :class="{
-            'mdi-alert-circle-outline text-danger': verification.status === 'red',
-            'mdi-checkbox-marked-circle-outline text-warning': verification.status === 'yellow',
-            'mdi-checkbox-marked-circle-outline text-success': verification.status === 'green',
-          }">
-        </i>
-      </div>
-      <i class="d-block mt-3 small"
-        v-if="verification.status === 'red'">
-        {{ '_profile.verifications.notary.verification.incorrect' | translate }}
-      </i>
-      <evan-file-input
-        ref="files"
-        v-model="files"
-        :disabled="true">
-      </evan-file-input>
-      <button type="button"
-        class="btn btn-primary  mt-3"
-        v-if="verification.status === 'yellow'"
-        :disabled="accepting"
-        @click="acceptVerification()">
-        {{ `_profile.verifications.notary.verification.accept` | translate }}
-        <div class="spinner-border spinner-border-sm text-light ml-3" v-if="accepting"></div>
-        <i class="mdi mdi-arrow-right label ml-3" v-else></i>
-      </button>
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">

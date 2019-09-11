@@ -47,8 +47,12 @@
 
   & > svg {
     width: 55px;
-    height: 55px;
+    min-height: 55px;
     margin-bottom: 20px;
+  }
+
+  & > h5 {
+    margin-bottom: 2em;
   }
 
   small {

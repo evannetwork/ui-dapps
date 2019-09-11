@@ -36,7 +36,7 @@ const dispatcher = new Dispatcher(
   `profile.vue.${ dappBrowser.getDomainName() }`,
   'requestIdentificationDispatcher',
   40 * 1000,
-  '_org.dispatchers.request-verification'
+  '_profile.dispatchers.request-verification'
 );
 
 /**

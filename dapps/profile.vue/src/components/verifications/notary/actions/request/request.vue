@@ -56,7 +56,7 @@
             </div>
 
             <!-- request verification form -->
-            <div v-else-if="status === 0">
+            <div class="container" v-else-if="status === 0">
               <div class="grouped">
                 <div class="form-group">
                   <label for="organization">
@@ -221,7 +221,7 @@
             </div>
 
             <!-- approval screen -->
-            <div v-else-if="status === 1" class="mt-5">
+            <div v-else-if="status === 1" class="container mt-5">
               <p>{{ '_profile.verifications.notary.request.proof.title' | translate }}</p>
               <labeled-list :entries="approveData" />
               <p>{{ '_profile.verifications.notary.request.proof.description' | translate }}</p>

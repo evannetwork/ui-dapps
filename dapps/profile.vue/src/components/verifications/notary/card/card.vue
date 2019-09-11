@@ -74,7 +74,7 @@
             {{ '_profile.verifications.notary.title' | translate }}
           </h5>
 
-          <button class="btn btn-primary mt-5" target="_blank"
+          <button class="btn btn-primary" target="_blank"
             v-if="statusActions.indexOf(details.status) !== -1"
             :disabled="details.status === 'issued' && accepting"
             @click="runStatusAction()">
