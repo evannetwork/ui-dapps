@@ -28,7 +28,7 @@
 @import './utils';
 
 .evan {
-  .bg-danger { 
+  .bg-danger, .bg-danger * {
     color: cssVar('bg-text-danger');
   }
 
@@ -36,7 +36,7 @@
     color: cssVar('bg-text-danger') !important;
   }
 
-  .bg-dark { 
+  .bg-dark, .bg-dark * {
     color: cssVar('bg-text-dark');
   }
 
@@ -44,7 +44,7 @@
     color: cssVar('bg-text-dark') !important;
   }
 
-  .bg-info { 
+  .bg-info, .bg-info * {
     color: cssVar('bg-text-info');
   }
 
@@ -52,7 +52,7 @@
     color: cssVar('bg-text-info') !important;
   }
 
-  .bg-light { 
+  .bg-light, .bg-light * {
     color: cssVar('bg-text-light');
   }
 
@@ -60,7 +60,7 @@
     color: cssVar('bg-text-light') !important;
   }
 
-  .bg-primary { 
+  .bg-primary, .bg-primary * {
     color: cssVar('bg-text-primary');
   }
 
@@ -68,7 +68,7 @@
     color: cssVar('bg-text-primary') !important;
   }
 
-  .bg-secondary { 
+  .bg-secondary, .bg-secondary * {
     color: cssVar('bg-text-secondary');
   }
 
@@ -76,29 +76,30 @@
     color: cssVar('bg-text-secondary') !important;
   }
 
-  .bg-success { 
+  .bg-success, .bg-success * {
     color: cssVar('bg-text-secondary');
   }
-  
+
   .bg-text-success {
     color: cssVar('bg-text-secondary') !important;
   }
 
-  .bg-warning { 
+  .bg-warning, .bg-warning * {
     color: cssVar('bg-text-warning');
   }
   .bg-text-warning {
     color: cssVar('bg-text-warning') !important;
   }
 
-  .bg-inverted { 
+  .bg-inverted, .bg-inverted * {
     color: cssVar('text-color-inverted');
   }
+
   .bg-text-inverted {
     color: cssVar('text-color-inverted') !important;
   }
 
-  .bg-gray {
+  .bg-gray, .bg-gray * {
     background-color: cssVar('gray-500') !important;
   }
 

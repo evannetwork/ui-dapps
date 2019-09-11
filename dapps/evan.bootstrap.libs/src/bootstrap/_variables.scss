@@ -134,7 +134,7 @@ $theme-colors: map-merge(
  * elements
  */
 $body-bg: cssVar('body-bg');
-$body-color: cssVar('body-color');
+$body-color: cssVar('text-color');
 $border-color: cssVar('border-color');
 $font-family-sans-serif: cssVar('font-family-sans-serif');
 $yiq-text-dark: cssVar('yiq-text-dark');
@@ -203,7 +203,12 @@ $spacers: map-merge(
     7: ($spacer * 3),
     8: ($spacer * 3.5),
     9: ($spacer * 4),
-    1o: ($spacer * 4.5),
+    10: ($spacer * 4.5),
+    11: ($spacer * 5),
+    12: ($spacer * 6.5),
+    13: ($spacer * 7),
+    14: ($spacer * 7.5),
+    15: ($spacer * 8),
   ),
   $spacers
 );
