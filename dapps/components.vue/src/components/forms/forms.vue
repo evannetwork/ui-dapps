@@ -25,37 +25,37 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div class="container py-3">
+    <h1>{{ '_comp.forms' | translate }}</h1>
+    <label>Public ? <input type="checkbox" v-model="isPublic" /></label>
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+    <evan-form-data-wrapper
+      v-slot="content"
+      :handleSave="handleSubmit"
+      :isPublic="isPublic"
+      title="Wurstbasar"
+    >
+      <form>
+        <input @focus="content.setEditMode(true)" type="number" />
+        <input @focus="content.setEditMode(true)" placeholder="test" type="text" />
+        <input @focus="content.setEditMode(true)" :placeholder="content.placeholder" type="text" />
+        <input @focus="content.setEditMode(true)" type="text" />
+        <select @focus="content.setEditMode(true)" type="text" >
+          <option>Bockwurst</option>
+          <option>Knacker</option>
+          <option>Wienerwurst</option>
+          <option>Hanns Wurst</option>
+        </select>
+        <input @focus="content.setEditMode(true)" type="text" />
+      </form>
+    </evan-form-data-wrapper>
 
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
+  </div>
+</template>
 
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = [
-      { key: 'buttons', icon: 'mdi mdi-equal' },
-      { key: 'text', icon: 'mdi mdi-format-color-text' },
-      { key: 'forms', icon: 'mdi mdi-form' },
-      window.localStorage['evan-test-mode'] ? { key: 'dispatcher-test', icon: 'mdi mdi-sync', } : null,
-    ].map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
-      text: `_comp.${ entry.key }`,
-      icon: entry.icon,
-    } : null));
-  }
-}
+<script lang="ts">
+  import Forms from './forms';
+  export default Forms;
+</script>
+

@@ -28,6 +28,7 @@
 import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
 import ButtonsComponent from './components/buttons/buttons.vue';
+import FormsComponent from './components/forms/forms.vue';
 import TextComponent from './components/text/text.vue';
 import DispatcherTestComponent from './components/dispatcher-test/dispatcher-test.vue';
 
@@ -37,6 +38,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: 'buttons', component: ButtonsComponent },
   { path: 'dispatcher-test', component: DispatcherTestComponent },
   { path: 'text', component: TextComponent },
+  { path: 'forms', component: FormsComponent },
 ];
 
 export default routeRegistration;

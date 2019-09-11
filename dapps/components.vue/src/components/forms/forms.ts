@@ -26,36 +26,26 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import Vue from 'vue';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
+export default class Forms extends mixins(EvanComponent) {
+  isPublic = true
 
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = [
-      { key: 'buttons', icon: 'mdi mdi-equal' },
-      { key: 'text', icon: 'mdi mdi-format-color-text' },
-      { key: 'forms', icon: 'mdi mdi-form' },
-      window.localStorage['evan-test-mode'] ? { key: 'dispatcher-test', icon: 'mdi mdi-sync', } : null,
-    ].map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
-      text: `_comp.${ entry.key }`,
-      icon: entry.icon,
-    } : null));
+  handleSubmit(ev: Event): Promise<any> {
+    console.log(ev)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('resolved')
+
+        resolve('saved')
+      }, 1000)
+    })
   }
 }
