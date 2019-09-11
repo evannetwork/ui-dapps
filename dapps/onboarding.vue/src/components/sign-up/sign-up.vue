@@ -131,11 +131,9 @@
                     {{ '_onboarding.continue' | translate }}
                   </button>
                 </div>
-
-                <p class="text-center mt-5">
-                  {{ '_onboarding.sign-up.already-signed-up' | translate }}
-                </p>
               </form>
+
+              <p class="text-center mt-5" v-html="$t(`_onboarding.sign-up.already-signed-up`)"></p>
             </div>
             <div class="step" v-if="activeStep === 1">
               <template v-if="!creatingProfile">
@@ -143,10 +141,10 @@
                   {{ '_onboarding.sign-up.create-profile.desc' | translate }}
                 </p>
                 <div class="d-flex justify-content-center mb-3">
-                  <vue-recaptcha class="evan-recaptcha"
+                  <vue-recaptcha id="evan-recaptcha"
                     v-if="!initialzing"
                     ref="recaptcha"
-                    sitekey="6LfoK1IUAAAAAOK0EbTv-IqtBq2NS-bvKWcUbm8r"
+                    :sitekey="recaptchaId"
                     theme="light"
                     @verify="onCaptchaVerified"
                     @expired="onCaptchaExpired">

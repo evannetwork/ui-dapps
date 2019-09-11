@@ -60,7 +60,7 @@ export default {
       "account-type": "Account Typ",
       "agree": "Akzeptieren",
       "alias": "Alias",
-      "already-signed-up": "Bereits registriert? Login",
+      "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
       "create-profile": {
         "creation-time": "ca. {creationTime} / 30 Sekunden",

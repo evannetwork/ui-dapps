@@ -105,6 +105,11 @@ export default class SignUp extends mixins(EvanComponent) {
    */
   loading = true;
 
+  /**
+   * override custom recaptcha ID
+   */
+  recaptchaId = window.localStorage['evan-test-recaptchaId'] || '6LfoK1IUAAAAAOK0EbTv-IqtBq2NS-bvKWcUbm8r'
+
   async created() {
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {
@@ -182,7 +187,7 @@ export default class SignUp extends mixins(EvanComponent) {
     };
 
     this.loading = false;
-    setTimeout(() => this.profileForm.alias.$ref.focus());
+    //setTimeout(() => this.profileForm.alias.$ref.focus());
   }
 
   destroyed() {

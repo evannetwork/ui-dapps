@@ -66,7 +66,7 @@ export default {
       "account-type": "Account type",
       "agree": "Agree",
       "alias": "Alias",
-      "already-signed-up": "Have an account already? Login",
+      "already-signed-up": "Have an account already? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Cancel",
       "create-profile": {
         "creation-time": "about {creationTime} / 30 seconds",
