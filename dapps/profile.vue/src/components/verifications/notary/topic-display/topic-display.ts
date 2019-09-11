@@ -68,6 +68,11 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
   verification: bcc.VerificationsResultV2 = null;
 
   /**
+   * Company name that was saved within the verification
+   */
+  companyName = '';
+
+  /**
    * All files that are available for the verifications (e.g.: notary certified documents)
    */
   files: Array<any> = [ ];
@@ -184,6 +189,10 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
               const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
               const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles)
               const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
+
+              if (decrypted.companyName) {
+                this.companyName = decrypted.companyName;
+              }
 
               if (decrypted) {
                 for (let file of decrypted) {

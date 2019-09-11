@@ -26,16 +26,17 @@
 */
 
 <template>
-  <div>
+  <div style="display: contents;">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <notary-action-request
-        ref="requestNotary"
-        :address="address"
-        @requested="checkNewRequests()">
-      </notary-action-request>
-
-      <notary-info-dialog ref="orgInfo" :address="address"></notary-info-dialog>
+      <div class="position-absolute">
+        <notary-action-request
+          ref="requestNotary"
+          :address="address"
+          @requested="checkNewRequests()">
+        </notary-action-request>
+        <notary-info-dialog ref="orgInfo" :address="address"></notary-info-dialog>
+      </div>
 
       <div class="white-box border-smooth rounded w-100 p-3 text-center"
         v-if="error">
@@ -45,13 +46,13 @@
 
       <profile-verification-card
         v-else-if="!requests.length === 0 && verifications.length === 0 || testMode">
-        <i class="mdi mdi-plus"
-          style="font-size: 80px;">
-        </i>
+        <svg viewBox="0 0 38 38" fill="none">
+          <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
+        </svg>
+
         <h5 class="font-weight-semibold">
           {{ '_profile.verifications.notary.request-notary-verification' | translate }}
         </h5>
-
         <evan-button class="mt-5" type="secondary"
           @click="$refs.requestNotary.show();">
           {{ '_profile.verifications.notary.request.request-ident' | translate }}
@@ -63,20 +64,16 @@
         </evan-button>
       </profile-verification-card>
 
-      <template v-else>
-        <div class="mt-3" v-if="verifications && verifications.length !== 0">
-          <notary-verification-card
-            :address="address"
-            :verifications="verifications">
-          </notary-verification-card>
-        </div>
-        <div class="mt-3" v-for="(requestId) in requests">
-          <notary-verification-card
-            :address="address"
-            :requestId="requestId">
-          </notary-verification-card>
-        </div>
-      </template>
+      <notary-verification-card
+        v-if="verifications && verifications.length !== 0"
+        :address="address"
+        :verifications="verifications">
+      </notary-verification-card>
+      <notary-verification-card
+        v-for="(requestId) in requests"
+        :address="address"
+        :requestId="requestId">
+      </notary-verification-card>
     </template>
   </div>
 </template>

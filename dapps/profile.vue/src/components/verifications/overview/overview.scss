@@ -25,40 +25,10 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import IssueComponent from '../notary/actions/issue/issue.vue';
-
-@Component({
-  components: {
-    'notary-action-issue': IssueComponent,
-  }
-})
-export default class VerificationsOverviewComponent extends mixins(EvanComponent) {
-  /**
-   * Hide the verification elements to trigger reload.
-   */
-  rerender = false;
-
-  /**
-   * Check for showing the "canIssue button", usually the evan verification account.
-   */
-  canIssue = false;
-
-  created() {
-    const runtime = (<any>this).getRuntime();
-
-    // switch issue account
-    this.canIssue = runtime.environment === 'core' ?
-      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B' :
-      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
+.profile-verification-overview {
+  .profile-verification-card {
+    width: 220px;
+    height: 240px;
+    margin: 1em;
   }
 }

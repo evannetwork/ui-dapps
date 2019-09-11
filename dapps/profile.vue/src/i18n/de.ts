@@ -246,6 +246,7 @@ const i18n: any = {
           }
         },
         "request-error": "Informationen zu dieser Anfrage konnten nicht geladen werden!",
+        "request-error-desc": "Bitte laden Sie erneut...",
         "request-notary-verification": "Eine notarielle Bestätigung beantragen",
         "status": {
           "accepted": "notariell verifiziert",
@@ -269,13 +270,14 @@ const i18n: any = {
           "summary": "Zusammenfassung",
           "your_data": "Ihre Daten"
         },
-        "title": "Notarielle Verifikationen",
+        "title": "Notarielle Verifikation",
         "verification": {
           "accept": "Annehmen",
           "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "organization": "Organisations-Verifikation",
           "organization-random": "Organisations-ID-Verifikation",
-          "status": "Status"
+          "status": "Status",
+          "verified-by": "Verified by"
         }
       },
       "reload": "Neu-laden",

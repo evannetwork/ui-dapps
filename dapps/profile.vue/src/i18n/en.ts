@@ -246,6 +246,7 @@ const i18n: any = {
           }
         },
         "request-error": "Request could not be loaded!",
+        "request-error-desc": "Please reload...",
         "request-notary-verification": "Request a notary verification",
         "status": {
           "accepted": "verified by notary",
@@ -275,7 +276,8 @@ const i18n: any = {
           "incorrect": "The organization IDs issued to you were not created by the correct instance.",
           "organization": "Organization-Verification",
           "organization-random": "Organization-ID-Verification",
-          "status": "Status"
+          "status": "Status",
+          "verified-by": "Verifiziert durch"
         }
       },
       "reload": "Reload",

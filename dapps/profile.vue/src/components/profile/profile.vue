@@ -26,11 +26,11 @@
 */
 
 <template>
-  <div class="p-md-11 p-1">
+  <div class="profile-detail p-md-11 p-1">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div class="row mb-3">
-        <div class="col-xl-4">
+        <div class="col-xl-4 col-lg-6 mb-3">
           <a class="d-block bg-inverted p-3 rounded text-decoration-none"
             style="height: 166px"
             :href="`${ dapp.fullUrl }/wallet`">
@@ -38,7 +38,7 @@
             <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
           </a>
         </div>
-        <div class="col-xl-8 d-flex flex-column justify-content-center">
+        <div class="col-xl-8 col-lg-6 mb-3 d-flex flex-column justify-content-center">
           <h2 class="font-weight-semibold mb-4">
             {{ alias }}
           </h2>
@@ -50,10 +50,10 @@
       </div>
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-xl-8 col-lg-6">
           
         </div>
-        <div class="col-md-4">
+        <div class="col-xl-4 col-lg-6">
           <notary-verification :address="address"></notary-verification>
         </div>
       </div>
@@ -66,3 +66,6 @@
   export default Component;
 </script>
 
+<style lang="scss">
+  @import './profile.scss';
+</style>

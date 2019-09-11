@@ -26,14 +26,14 @@
 */
 
 <template>
-  <div class="p-md-11 p-1 h-100">
+  <div class="profile-verification-overview container-wide h-100">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center">
         <h3 class="font-weight-bold mb-0">
           {{ '_profile.verifications.title' | translate }}
         </h3>
 
-        <button class="btn" @click="loadRequests(true)">
+        <button class="btn" @click="rerender = true; $nextTick(() => rerender = false);">
           <i class="mdi mdi-reload"></i>
           <evan-tooltip :placement="'bottom'">
             {{ `_profile.verifications.reload` | translate }}
@@ -43,6 +43,7 @@
       <span class="mx-auto"></span>
       <div v-if="canIssue">
         <notary-action-issue
+          :address="address"
           ref="orgIdentIssue">
         </notary-action-issue>
         <button type="button" class="btn btn-primary "
@@ -53,10 +54,9 @@
         </button>
       </div>
     </div>
-    <div class="w-100 row mt-5">
-      <div class="col-md-3">
-        <notary-verification :address="address"></notary-verification>
-      </div>
+    <div class="w-100 mt-5 d-flex flex-wrap flex-row"
+      v-if="!rerender">
+      <notary-verification :address="$route.params.address"></notary-verification>
     </div>
   </div>
 </template>
@@ -66,4 +66,6 @@
   export default Component;
 </script>
 
-  
+<style lang="scss">
+  @import './overview.scss';
+</style>
