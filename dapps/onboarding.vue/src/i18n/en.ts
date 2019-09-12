@@ -68,7 +68,8 @@ export default {
     "sign-up": {
       "account-type": "Account type",
       "agree": "Agree",
-      "alias": "Alias",
+      "alias": "Account name",
+      "alias-help": "The account name is only visibile to you",
       "already-signed-up": "Have an account already? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Cancel",
       "create-profile": {
@@ -104,6 +105,7 @@ export default {
       },
       "password0": "Password",
       "password1": "Retype password",
+      "password-help": "The password must consist of at least 8 characters (upper/lower case, numbers and special characters).",
       "profile-create-error": {
         "desc": "An error occurred during profile creation. Please try again.",
         "ok": "ok",
@@ -116,10 +118,10 @@ export default {
         "desc": "Confirm the Terms of Use.",
         "title": "Terms of use"
       },
-      "terms-accepted": "I agree the <a href=\"https://evan.network/terms/\" target=\"_blank\">Terms of Use</a>",
+      "terms-accepted": "I agree the <a href=\"https://evan.network/terms/\" target=\"_blank\">Terms of Use</a>.",
       "title": "Sign up",
       "use-profile": "Continue",
-      "user-name": "Username",
+      "user-name": "Account name",
       "welcome": "Contact Request",
       "welcome-desc": "You have received a contact request."
     },

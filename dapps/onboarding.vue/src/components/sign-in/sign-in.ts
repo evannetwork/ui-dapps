@@ -31,10 +31,15 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { getDefaultDAppEns } from '../../utils';
+
+
+interface ProfileFormPasswordInterface extends EvanForm {
+  password: EvanFormControl;
+}
 
 @Component({ })
 export default class SignIn extends mixins(EvanComponent) {
@@ -50,17 +55,7 @@ export default class SignIn extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  form = {
-    /**
-     * current password input
-     */
-    password: {
-      value: window.localStorage['evan-test-password'] || '',
-      valid: false,
-      touched: false,
-      ref: null as any
-    },
-  };
+  form;
 
   // when the mnemonic is valid, set the accountId
   accountId = null as any;
@@ -92,6 +87,14 @@ export default class SignIn extends mixins(EvanComponent) {
    * Checks if the user was invited, so enable the 3 tab
    */
   created() {
+
+    this.form = (<ProfileFormPasswordInterface>new EvanForm(this, {
+      password: {
+        value: window.localStorage['evan-test-password'] || ''
+      }
+    }));
+
+
     if (this.$route.query.inviteeAlias) {
       this.steps.push('_onboarding.sign-in.welcome');
     }
@@ -119,6 +122,11 @@ export default class SignIn extends mixins(EvanComponent) {
 
       // set autofocus on password input
       this.$nextTick(() => (this.$refs['password'] as any).focus());
+
+      if (this.form.password.value) {
+        await this.checkPassword();
+      }
+
     }
 
     this.checking = false;
@@ -129,21 +137,21 @@ export default class SignIn extends mixins(EvanComponent) {
    */
   async checkPassword() {
     const password = this.form.password;
-
+    password.dirty = true;
     if (password.value.length > 7) {
       this.checking = true;
 
       // get the current account id
       try {
-        password.valid = await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
-          this.accountId, password.value);
+        password._error = !(await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
+          this.accountId, password.value));
       } catch (ex) {
-        password.valid = false;
+        password._error = true;
       }
 
       // if the password is correct, create the correct active vault in dapp-browser, so other
       // applications can access it
-      if (password.valid) {
+      if (!password._error) {
         await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
         dappBrowser.core.setCurrentProvider('internal');
 

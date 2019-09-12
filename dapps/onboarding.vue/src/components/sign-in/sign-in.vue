@@ -86,7 +86,7 @@
                     id="password" ref="password"
                     :placeholder="'_evan.password-placeholder' | translate"
                     v-model="form.password.value"
-                    :class="{ 'is-invalid' : form.password.touched && !form.password.valid }">
+                    :class="{ 'is-invalid' : form.password.error }">
                   <div class="invalid-feedback">
                     {{ '_evan.invalid-password' | translate }}
                   </div>

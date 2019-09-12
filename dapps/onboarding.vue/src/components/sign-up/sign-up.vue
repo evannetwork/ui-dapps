@@ -28,7 +28,7 @@
 <template>
   <div class="row h-100">
     <div class="col-12" v-if="creatingProfile">
-      <div class="evan-padding text-center">
+      <div class="evan-padding text-center h-100">
         <template  v-if="creatingProfile !== 5">
           <div class="mx-auto p-5 mt-5 col-md-6">
             <img class="img-fluid"
@@ -45,7 +45,9 @@
             {{ ('_onboarding.sign-up.create-profile.status-' + creatingProfile) | translate }}
           </h5>
         </template>
-        <evan-success v-if="creatingProfile === 5"></evan-success>
+        <div v-if="creatingProfile === 5" class="h-100 d-flex align-items-center justify-content-center">
+          <evan-success></evan-success>
+        </div>
       </div>
     </div>
     <div class="col col-lg-6 bg-white" v-if="!creatingProfile">
@@ -103,6 +105,9 @@
                     v-model="profileForm.alias.value"
                     :class="{ 'is-invalid' : profileForm.alias.error }"
                     @blur="profileForm.alias.setDirty()">
+                  <small class="form-text text-muted">
+                    {{ '_onboarding.sign-up.alias-help' | translate }}
+                  </small>
                   <div class="invalid-feedback">
                     {{ '_onboarding.sign-up.errors.user-name' | translate }}
                   </div>
@@ -119,6 +124,9 @@
                     v-model="profileForm[`password${ index }`].value"
                     :class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
                     @input="profileForm[`password${ index }`].setDirty()">
+                  <small class="form-text text-muted">
+                    {{ '_onboarding.sign-up.password-help' | translate }}
+                  </small>
                   <div class="invalid-feedback">
                     {{ profileForm[`password${ index }`].error | translate }}
                   </div>

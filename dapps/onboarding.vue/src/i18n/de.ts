@@ -62,7 +62,8 @@ export default {
     "sign-up": {
       "account-type": "Account Typ",
       "agree": "Akzeptieren",
-      "alias": "Alias",
+      "alias": "Account Name",
+      "alias-help": "Der Account Name ist nur für Sie sichtbar",
       "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
       "create-profile": {
@@ -92,6 +93,7 @@ export default {
       "get-mnemonic-desc-long": "Mit Hilfe dieses <b>Wiederherstellungs-Schlüssels</b> können Sie Ihre Identität auf <b>jedem beliebigen Gerät</b> wiederherstellen und auf Ihre Daten zugreifen. Bitten <b>sichern Sie sich diese 12 Wörterin einer möglichst sicheren Weise</b> (möglichst offline, z.B. auf einem Blatt Papier im Safe). <br><br> Wenn Sie diese 12 Wörter verlieren, <b>verlieren Sie für den Zugang zu Ihren Geschäftspartnern, Vertägen und Profilinformationen.</b>",
       "password0": "Passwort",
       "password1": "Passwortwiederholung",
+      "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben, Zahlen und Sonderzeichen.",
       "profile-create-error": {
         "desc": "Während der Profilerstellung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
         "ok": "ok",
@@ -107,7 +109,7 @@ export default {
       "terms-accepted": "Ich Stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
       "title": "Registrieren",
       "use-profile": "Weiter",
-      "user-name": "Nutzername",
+      "user-name": "Account Name",
       "welcome": "Kontaktanfrage",
       "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
     },
