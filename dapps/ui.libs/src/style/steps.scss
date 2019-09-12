@@ -29,6 +29,71 @@
 
 .evan {
   .evan-steps {
+    .evan-step-header-sm {
+      position: relative;
+
+      button.btn {
+        position: relative;
+
+        height: auto !important;
+
+        text-align: center;
+        // reset button styles
+
+        border: 0;
+        background-color: transparent !important;
+        box-shadow: none !important;
+
+        padding: 5px;
+
+        span:first-child {
+          z-index: 1;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 8px;
+          height: 8px;
+          margin: auto;
+          margin-bottom: 5px;
+
+          color: cssVar('white');
+          border-radius: 50%;
+          background-color: cssVar('gray-500');
+
+          &.active {
+            color: cssVar('bg-text-dark');
+            background-color: cssVar('dark');
+          }
+        }
+
+        span:nth-child(2) {
+          font-weight: 600;
+
+          display: block;
+
+          min-width: 100px;
+
+          white-space: normal;
+          word-break: break-word;
+
+          color: cssVar('gray-500');
+        }
+
+        &:disabled {
+          span:nth-child(2) {
+            color: cssVar('disabled');
+          }
+
+          .stepper-circle {
+            color: cssVar('white');
+            background-color: cssVar('disabled') !important;
+          }
+        }
+      }
+    }
+
     .evan-step-header {
       position: relative;
 
