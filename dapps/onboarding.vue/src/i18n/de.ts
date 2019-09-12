@@ -50,8 +50,11 @@ export default {
       "get-password": "Identität entschlüsseln",
       "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
       "invalid-password": "Das eingegebene Passwort ist ungültig.",
+      "next": "Weiter",
       "no-profile": "Kein Identität gefunden",
-      "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungs-Schlüssel existiert kein evan.network Identität. Bitte überprüfen Sie Ihre Eingabe oder nutzen Sie <b>Registrieren</b>, um eine Identität mit dem aktuellen Schlüssel zu erstellen.",
+      "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungs-Schlüssel existiert kein evan.network Identität.",
+      "not-signed-up": "Noch keinen Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
+      "recovery-key": "Wiederherstellungs Schlüssel",
       "title": "Einloggen",
       "welcome": "Kontaktanfrage",
       "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."

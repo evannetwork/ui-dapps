@@ -26,109 +26,96 @@
 */
 
 <template>
-  <div class="
-      container mx-auto m-5 p-0
-      border bg-level-1">
-    <div class="d-flex p-2 align-items-center">
-      <button class="btn btn-lg"
-        @click="$router.push({ name: 'welcome', query: $route.query })">
-        <i class="mdi mdi-chevron-left"></i>
-      </button>
-
-      <h4 class="m-0 ml-3">{{ '_onboarding.sign-in.title' | translate }}</h4>
+  <div class="row h-100">
+    <div class="col col-lg-6 bg-white">
+      <img class="img-fluid col-2 mb-3"
+        :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
+      <img class="img-fluid col-8 offset-2 mb-5"
+        :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
+      <h1 class="ml-5 mb-5 font-weight-bold text-dark" >{{ `_onboarding.sign-up.headings.header-${activeStep}` | translate }}</h1>
+      <h3 class="ml-5 text-dark">{{ `_onboarding.sign-up.headings.desc-${activeStep}` | translate }}</h3>
     </div>
+    <div class="col col-lg-6">
+      <div class="container">
+        <div class="evan-steps border-top p-3">
+          <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
+            {{ '_onboarding.sign-in.title' | translate }}
+          </h4>
 
-    <div class="evan-steps border-top p-3">
-      <div class="evan-step-header">
-        <button class="btn"
-          v-for="(step, index) of steps"
-          :disabled="index !== activeStep && activeSteps.indexOf(index) === -1"
-          @click="activeStep = index">
-          <span class="stepper-circle"
-            :class="{ 'active': activeStep === index, }">
-            {{ index + 1}}
-          </span>
-          <span>{{ step | translate }}</span>
-        </button>
-      </div>
-      <div class="pt-3 pb-3">
-        <div class="step" v-if="activeStep === 0">
-          <h5 class="text-center mt-4 mb-4">
-            {{ '_onboarding.sign-in.get-mnemonic-desc' | translate }}
-          </h5>
+          <div class="pt-3 pb-3 col-8 offset-2">
+            <div class="step" v-if="activeStep === 0">
+              <p class="text-center mt-3 mb-4" v-html="$t(`_onboarding.sign-in.get-mnemonic-desc`)">
+              </p>
 
-          <evan-onboarding-mnemonic
-            :mnemonic.sync="mnemonic"
-            :valid.sync="validMnemonic"
-            v-on:submit="setMnemonic()">
-          </evan-onboarding-mnemonic>
-
-          <evan-modal ref="notOnboarded">
-            <template v-slot:header>
-              <h5 class="modal-title">
-                {{ '_onboarding.sign-in.no-profile' | translate }}
+              <h5 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
+                {{ '_onboarding.sign-in.recovery-key' | translate }}
               </h5>
-            </template>
-            <template v-slot:body>
-              <p v-html="$t('_onboarding.sign-in.no-profile-desc')"></p>
-            </template>
-            <template v-slot:footer>
-              <button type="button" class="btn  btn-primary"
-                @click="openSignupWithMnemonic()">
-                {{ '_onboarding.sign-in.title' | translate }}
-              </button>
-            </template>
-          </evan-modal>
 
-          <div class="text-center mt-4">
-            <button type="button" class="btn  btn-primary"
-              id="sign-in"
-              v-if="!checking"
-              :disabled="!validMnemonic"
-              @click="setMnemonic()">
-              {{ '_onboarding.sign-in.title' | translate }}
-            </button>
-            <evan-loading v-if="checking"></evan-loading>
-          </div>
-        </div>
+              <evan-onboarding-mnemonic
+                :mnemonic.sync="mnemonic"
+                :valid.sync="validMnemonic"
+                v-on:submit="setMnemonic()">
+              </evan-onboarding-mnemonic>
 
-        <div class="step" v-if="activeStep === 1">
-          <h5 class="text-center mt-4 mb-4">
-            {{ '_onboarding.sign-in.get-password-desc' | translate }}
-          </h5>
-          <form class="p-4" v-on:submit.prevent="checkPassword">
-            <div class="form-group">
-              <label for="password">{{ '_evan.password' | translate }}</label>
-              <input class="form-control" type="password" required
-                id="password" ref="password"
-                :placeholder="'_evan.password-placeholder' | translate"
-                v-model="form.password.value"
-                :class="{ 'is-invalid' : form.password.touched && !form.password.valid }">
-              <div class="invalid-feedback">
-                {{ '_evan.invalid-password' | translate }}
+              <small class="text-danger" v-if="!profileExists">
+                {{ '_onboarding.sign-in.no-profile-desc' | translate }}
+              </small>
+
+              <div class="text-center mt-4">
+                <button type="button" class="btn btn-block btn-primary"
+                  id="sign-in"
+                  v-if="!checking"
+                  :disabled="!validMnemonic"
+                  @click="setMnemonic()">
+                  {{ '_onboarding.sign-in.next' | translate }}
+                </button>
+                <evan-loading v-if="checking"></evan-loading>
               </div>
+
+              <p class="text-center mt-5" v-html="$t(`_onboarding.sign-in.not-signed-up`)"></p>
             </div>
 
-            <div class="text-center">
-              <button type="submit" class="btn  btn-primary"
-                :disabled="form.password.value.length < 8 || checking">
-                <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"
-                  v-if="checking">
-                </span>
-                {{ '_evan.use-password' | translate }}
-              </button>
+            <div class="step" v-if="activeStep === 1">
+              <h5 class="text-center mt-4 mb-4">
+                {{ '_onboarding.sign-in.get-password-desc' | translate }}
+              </h5>
+              <form class="p-4" v-on:submit.prevent="checkPassword">
+                <div class="form-group">
+                  <label for="password">{{ '_evan.password' | translate }}</label>
+                  <input class="form-control" type="password" required
+                    id="password" ref="password"
+                    :placeholder="'_evan.password-placeholder' | translate"
+                    v-model="form.password.value"
+                    :class="{ 'is-invalid' : form.password.touched && !form.password.valid }">
+                  <div class="invalid-feedback">
+                    {{ '_evan.invalid-password' | translate }}
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-block btn-primary"
+                    :disabled="form.password.value.length < 8 || checking">
+                    <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"
+                      v-if="checking">
+                    </span>
+                    {{ '_evan.use-password' | translate }}
+                  </button>
+                </div>
+              </form>
+
+              <p class="text-center mt-5" v-html="$t(`_onboarding.sign-in.not-signed-up`)"></p>
             </div>
-          </form>
-        </div>
 
-        <div class="step" v-if="activeStep === 2">
-           <h5 class="text-center mt-4 mb-4">
-            {{ '_onboarding.sign-in.welcome-desc' | translate | translate }}
-          </h5>
+            <div class="step" v-if="activeStep === 2">
+               <h5 class="text-center mt-4 mb-4">
+                {{ '_onboarding.sign-in.welcome-desc' | translate | translate }}
+              </h5>
 
-          <evan-onboarding-accept-contact
-            :loadAlias="true">
-          </evan-onboarding-accept-contact>
+              <evan-onboarding-accept-contact
+                :loadAlias="true">
+              </evan-onboarding-accept-contact>
+            </div>
+          </div>
         </div>
       </div>
     </div>

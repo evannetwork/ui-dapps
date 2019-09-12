@@ -51,14 +51,14 @@
     <div class="col col-lg-6 bg-white" v-if="!creatingProfile">
       <img class="img-fluid col-2 mb-3"
         :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
-      <img class="img-fluid col-10 offset-1 mb-5"
+      <img class="img-fluid col-8 offset-2 mb-5"
         :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
       <h1 class="ml-5 mb-5 font-weight-bold text-dark" >{{ `_onboarding.sign-up.headings.header-${activeStep}` | translate }}</h1>
       <h3 class="ml-5 text-dark">{{ `_onboarding.sign-up.headings.desc-${activeStep}` | translate }}</h3>
     </div>
     <div class="col col-lg-6" v-if="!creatingProfile">
       <div class="container">
-        <div class="evan-steps border-top p-3">
+        <div class="evan-steps border-top p-3 col-8 offset-2">
           <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
             {{ '_onboarding.sign-up.create-account' | translate }}
           </h4>

@@ -34,7 +34,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { getDefaultDAppEns } from '../../utils'; 
+import { getDefaultDAppEns } from '../../utils';
 
 @Component({ })
 export default class SignIn extends mixins(EvanComponent) {
@@ -84,6 +84,11 @@ export default class SignIn extends mixins(EvanComponent) {
   activeSteps: Array<number> = [ 0 ];
 
   /**
+   * profile for mnemonic exists
+   */
+  profileExists = true;
+
+  /**
    * Checks if the user was invited, so enable the 3 tab
    */
   created() {
@@ -104,19 +109,16 @@ export default class SignIn extends mixins(EvanComponent) {
     const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
 
     // check if the current account is onboarded
-    const notOnboarded = !(await dappBrowser.bccHelper.isAccountOnboarded(accountId));
+    this.profileExists = await dappBrowser.bccHelper.isAccountOnboarded(accountId);
 
     // when it's onboarded, navigte to password dialog
-    if (!notOnboarded) {
+    if (this.profileExists) {
       this.activeStep = 1;
       this.activeSteps.push(1);
       this.accountId = accountId;
 
       // set autofocus on password input
       this.$nextTick(() => (this.$refs['password'] as any).focus());
-    } else {
-      // check if a profile for the entered mnemonic exists, if not, show an error
-      (this.$refs['notOnboarded'] as any).show();
     }
 
     this.checking = false;

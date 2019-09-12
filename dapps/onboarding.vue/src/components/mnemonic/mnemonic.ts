@@ -199,6 +199,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
     // update parent to handle the latest mnemonic text and send event, the the mnemonic is
     // valid or not
     this.$emit('update:mnemonic', this.mnemonicText);
+    console.log( this.allWordsCorrect && this.mnemonicIntegrity)
     this.$emit('update:valid', this.allWordsCorrect && this.mnemonicIntegrity);
   }
 
@@ -322,6 +323,29 @@ export default class Mnemonic extends mixins(EvanComponent) {
     this.updateParent();
     // set initial focus
     this.setInputFocus();
+  }
+
+  handlePaste(e) {
+    // Stop data actually being pasted into div
+    e.stopPropagation();
+    e.preventDefault();
+
+    // Get pasted data via clipboard API
+    const clipboardData = e.clipboardData || (window as any).clipboardData;
+    const pastedData = clipboardData.getData('Text');
+
+    // split mnemonic
+    if (pastedData) {
+      const splittedData = pastedData.split(' ');
+      if (splittedData.length === 12) {
+        this.words = ([ ] as Array<string>).concat(splittedData);
+
+        // update the original value
+        this.checkCorrectWords([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ]);
+        this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+        this.updateParent();
+      }
+    }
   }
 
   /**

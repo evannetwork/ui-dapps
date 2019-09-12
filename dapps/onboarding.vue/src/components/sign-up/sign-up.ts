@@ -56,12 +56,6 @@ export default class SignUp extends mixins(EvanComponent) {
   // is the current mnemonic valid?
   validMnemonic = false;
 
-  // mnemonicRiddle
-  mnemonicRiddle = false as any;
-
-  // was the riddle already solved and only the tab was switched?
-  mnemonicRiddleSolved = false;
-
   // is the current mnemonic / password is currently checking?
   checking = false;
 
@@ -94,11 +88,6 @@ export default class SignUp extends mixins(EvanComponent) {
 
   // timeout to show next profile creation img
   timeoutCreationStatus = null as any;
-
-  /**
-   * Terms of use for the current environment and the language
-   */
-  termsOfUse = '';
 
   /**
    * Is the component currently loading?
@@ -187,7 +176,6 @@ export default class SignUp extends mixins(EvanComponent) {
     };
 
     this.loading = false;
-    //setTimeout(() => this.profileForm.alias.$ref.focus());
   }
 
   destroyed() {
@@ -255,32 +243,6 @@ export default class SignUp extends mixins(EvanComponent) {
     }
   }
 
-  /**
-   * Check if the current mnemonic is valid, if yes, use it and navigate to profile create page,
-   * else start the mnemonic riddle.
-   */
-  useMnemonic() {
-    if (this.validMnemonic) {
-      // if no riddle was started before, start it!
-      if (!this.mnemonicRiddle && !this.mnemonicRiddleSolved) {
-        this.mnemonicRiddle = true;
-        (this.$refs.mnemonic as any).startRiddle(
-          parseInt(window.localStorage['evan-mnemonic-riddle'] || '3', 10));
-      } else {
-        this.mnemonicRiddle = false;
-        this.mnemonicRiddleSolved = true;
-        this.activeStep = 2;
-      }
-    }
-  }
-
-  /**
-   * Cancels the current active riddle
-   */
-  cancelRiddle() {
-    this.mnemonicRiddle = false;
-    (this.$refs.mnemonic as any).cancelRiddle();
-  }
 
   /**
    * Show the next status img and text for the profile creation.
