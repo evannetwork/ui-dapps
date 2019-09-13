@@ -176,7 +176,6 @@
                 </div>
               </template>
 
-
               <evan-modal ref="creatingProfileError">
                 <template v-slot:body>
                   <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>

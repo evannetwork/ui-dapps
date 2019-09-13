@@ -55,7 +55,7 @@ export default class SignIn extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  form;
+  form = null;
 
   // when the mnemonic is valid, set the accountId
   accountId = null as any;
