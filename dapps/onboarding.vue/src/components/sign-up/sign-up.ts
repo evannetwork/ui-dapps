@@ -248,12 +248,12 @@ export default class SignUp extends mixins(EvanComponent) {
    * Show the next status img and text for the profile creation.
    */
   nextCreationStatus() {
-    if (this.creationTime !== 30) {
+    if (this.creationTime !== 16) {
       this.creationTime++;
       this.timeoutCreationStatus = setTimeout(() => this.nextCreationStatus(), 1000);
     }
 
-    if (this.creationTime % 8 === 0) {
+    if (this.creationTime % 5 === 0) {
       this.creatingProfile += 1;
     }
   }
