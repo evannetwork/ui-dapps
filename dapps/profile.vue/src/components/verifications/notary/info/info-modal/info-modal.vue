@@ -25,34 +25,25 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+<template>
+  <div>
+    <evan-modal ref="infoModal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ `_profile.verifications.notary.title` | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div class="modal-content">
+          <notary-info-content :address="address"></notary-info-content>
+        </div>
+      </template>
+    </evan-modal>
+  </div>
+</template>
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import components from '../../components';
-
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
-
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
-  }
-}
+<script lang="ts">
+  import Component from './info-modal.ts';
+  export default Component;
+</script>

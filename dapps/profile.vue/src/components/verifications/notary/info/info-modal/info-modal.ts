@@ -35,24 +35,30 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import components from '../../components';
+import InfoContentComponent from '../info-content/info-content.vue';
 
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
+@Component({
+  components: {
+    'notary-info-content': InfoContentComponent,
+  }
+})
+export default class InfoModalComponent extends mixins(EvanComponent) {
   /**
-   * navEntries for top navigation
+   * Account of the current user.
    */
-  navEntries: Array<any> = [ ];
+  @Prop() address: string;
 
   /**
-   * Setup navigation structure
+   * Show the info modal.
    */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
+  show() {
+    (<any>this.$refs).infoModal.show();
+  }
+
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).infoModal.hide();
   }
 }

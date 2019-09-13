@@ -28,15 +28,13 @@
 /* tslint:disable */
 export default {
   "_comp": {
-    "buttons": "Buttons",
     "components": "evan Komponenten",
     "dispatcher": {
       "error": "Error Dispatcher",
       "success": "Success Dispatcher"
     },
     "dispatcher-status": "Dispatcher Status",
-    "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
+    "dispatcher-test": "Dispatcher Test"
   }
 }
 /* tslint:enable */;

@@ -24,35 +24,29 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
+// import evan libs
+import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import ButtonsComponent from './components/buttons/buttons.vue';
+import TextComponent from './components/text/text.vue';
+import CardsComponent from './components/cards/cards.vue';
+import DispatcherTestComponent from './components/dispatcher-test/dispatcher-test.vue';
+import StepsComponent from './components/steps/steps.vue';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+// map them to element names, so they can be used within templates
+const components: Array<any> = [
+  { path: 'buttons', icon: 'mdi mdi-equal', component: ButtonsComponent },
+  { path: 'cards', icon: 'mdi mdi-card-text-outline', component: CardsComponent },
+  { path: 'text', icon: 'mdi mdi-format-color-text', component: TextComponent },
+  { path: 'steps', icon: 'mdi mdi-format-list-numbered', component: StepsComponent },
+];
 
-import components from '../../components';
-
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
-
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
-  }
+// add dispatcher test entry
+if (window.localStorage['evan-test-mode']) {
+  components.push({ key: 'dispatcher-test', icon: 'mdi mdi-sync', });
 }
+
+components.forEach((comp) => comp.name = comp.path);
+
+export default components;
+

@@ -25,34 +25,21 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import components from '../../components';
-
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
-
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
-  }
-}
+<template>
+  <div>
+    <div class="p-3"
+      v-for="(type) in [ 'transparent', 'outline', 'filled' ]">
+      <div class="row">
+        <div class="col-lg-4 p-3" v-for="(highlight) in [ false, true ]">
+          <evan-card
+            :type="type"
+            :highlight="highlight">
+            <i class="mdi mdi-plus"></i>
+            <h5>type: {{ type }}</h5>
+            <span>highlight: {{ highlight }}</span>
+          </evan-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
