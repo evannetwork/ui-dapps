@@ -31,10 +31,15 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { getDefaultDAppEns } from '../../utils'; 
+import { getDefaultDAppEns } from '../../utils';
+
+
+interface ProfileFormPasswordInterface extends EvanForm {
+  password: EvanFormControl;
+}
 
 @Component({ })
 export default class SignIn extends mixins(EvanComponent) {
@@ -50,17 +55,7 @@ export default class SignIn extends mixins(EvanComponent) {
   /**
    * formular specific variables
    */
-  form = {
-    /**
-     * current password input
-     */
-    password: {
-      value: window.localStorage['evan-test-password'] || '',
-      valid: false,
-      touched: false,
-      ref: null as any
-    },
-  };
+  form = null;
 
   // when the mnemonic is valid, set the accountId
   accountId = null as any;
@@ -84,9 +79,22 @@ export default class SignIn extends mixins(EvanComponent) {
   activeSteps: Array<number> = [ 0 ];
 
   /**
+   * profile for mnemonic exists
+   */
+  profileExists = true;
+
+  /**
    * Checks if the user was invited, so enable the 3 tab
    */
   created() {
+
+    this.form = (<ProfileFormPasswordInterface>new EvanForm(this, {
+      password: {
+        value: window.localStorage['evan-test-password'] || ''
+      }
+    }));
+
+
     if (this.$route.query.inviteeAlias) {
       this.steps.push('_onboarding.sign-in.welcome');
     }
@@ -104,19 +112,21 @@ export default class SignIn extends mixins(EvanComponent) {
     const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
 
     // check if the current account is onboarded
-    const notOnboarded = !(await dappBrowser.bccHelper.isAccountOnboarded(accountId));
+    this.profileExists = await dappBrowser.bccHelper.isAccountOnboarded(accountId);
 
     // when it's onboarded, navigte to password dialog
-    if (!notOnboarded) {
+    if (this.profileExists) {
       this.activeStep = 1;
       this.activeSteps.push(1);
       this.accountId = accountId;
 
       // set autofocus on password input
       this.$nextTick(() => (this.$refs['password'] as any).focus());
-    } else {
-      // check if a profile for the entered mnemonic exists, if not, show an error
-      (this.$refs['notOnboarded'] as any).show();
+
+      if (this.form.password.value) {
+        await this.checkPassword();
+      }
+
     }
 
     this.checking = false;
@@ -127,21 +137,21 @@ export default class SignIn extends mixins(EvanComponent) {
    */
   async checkPassword() {
     const password = this.form.password;
-
+    password.dirty = true;
     if (password.value.length > 7) {
       this.checking = true;
 
       // get the current account id
       try {
-        password.valid = await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
-          this.accountId, password.value);
+        password._error = !(await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
+          this.accountId, password.value));
       } catch (ex) {
-        password.valid = false;
+        password._error = true;
       }
 
       // if the password is correct, create the correct active vault in dapp-browser, so other
       // applications can access it
-      if (password.valid) {
+      if (!password._error) {
         await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
         dappBrowser.core.setCurrentProvider('internal');
 

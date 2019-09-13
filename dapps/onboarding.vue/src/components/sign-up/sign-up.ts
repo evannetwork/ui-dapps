@@ -37,10 +37,10 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as evanUi from '@evan.network/ui';
 
-import { getDefaultDAppEns } from '../../utils'; 
+import { getDefaultDAppEns } from '../../utils';
 
 interface ProfileFormInterface extends EvanForm {
-  userName: EvanFormControl;
+  alias: EvanFormControl;
   password0: EvanFormControl;
   password1: EvanFormControl;
 }
@@ -55,12 +55,6 @@ export default class SignUp extends mixins(EvanComponent) {
 
   // is the current mnemonic valid?
   validMnemonic = false;
-
-  // mnemonicRiddle
-  mnemonicRiddle = false as any;
-
-  // was the riddle already solved and only the tab was switched?
-  mnemonicRiddleSolved = false;
 
   // is the current mnemonic / password is currently checking?
   checking = false;
@@ -87,7 +81,7 @@ export default class SignUp extends mixins(EvanComponent) {
   activeStep = 0;
 
   // currently creating the profile
-  creatingProfile = 0 as any;
+  creatingProfile = 0;
 
   // track the time that the profile took to be created
   creationTime = -1;
@@ -96,18 +90,21 @@ export default class SignUp extends mixins(EvanComponent) {
   timeoutCreationStatus = null as any;
 
   /**
-   * Terms of use for the current environment and the language
-   */
-  termsOfUse = '';
-
-  /**
    * Is the component currently loading?
    */
   loading = true;
 
+  /**
+   * override custom recaptcha ID
+   */
+  recaptchaId = window.localStorage['evan-test-recaptchaId'] || '6LfoK1IUAAAAAOK0EbTv-IqtBq2NS-bvKWcUbm8r'
+
   async created() {
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
-      userName: {
+      accountType: {
+        value: 'Unspecified',
+      },
+      alias: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return this.value.length !== 0;
@@ -125,10 +122,13 @@ export default class SignUp extends mixins(EvanComponent) {
           return vueInstance.getPasswordError(1, this.form) || true;
         }
       },
+      termsAccepted: {
+        value: false,
+      }
     }));
     // use this for debugginb
     // this.mnemonicRiddleSolved = true;
-    // this.profileForm.userName.value = 'Test';
+    // this.profileForm.alias.value = 'Test';
     // this.profileForm.password0.value = 'Evan1234';
     // this.profileForm.password1.value = 'Evan1234';
 
@@ -137,8 +137,7 @@ export default class SignUp extends mixins(EvanComponent) {
       {
         title: '_onboarding.sign-up.profile-informations',
         disabled: () => {
-          return this.mnemonicRiddle ||
-            this.creatingProfile || this.activeStep > 2;
+          return this.creatingProfile || this.activeStep > 2;
         }
       },
       {
@@ -147,14 +146,7 @@ export default class SignUp extends mixins(EvanComponent) {
           return !this.profileForm.isValid ||
             this.creatingProfile || this.activeStep > 2;
         }
-      },
-      {
-        title: '_onboarding.sign-up.create-profile.title',
-        disabled: () => {
-          return !this.mnemonicRiddleSolved || !this.profileForm.isValid ||
-            this.mnemonicRiddle || this.creatingProfile || this.activeStep > 2;
-        }
-      },
+      }
     ];
 
     // if the user was inivted, show the welcome page
@@ -183,39 +175,7 @@ export default class SignUp extends mixins(EvanComponent) {
       this.initialzing = false;
     };
 
-    // load the terms of use origin url
-    const runtime = dappBrowser.bccHelper.getCoreRuntime();
-    const termsOfUseEns = `termsofuse.${ getDomainName() }`;
-    const termsOfUseDbcp = await runtime.description.getDescription(termsOfUseEns);
-    const termsOfUseOrigin = dappBrowser.dapp.getDAppBaseUrl(
-      Object.assign(termsOfUseDbcp.public, termsOfUseDbcp.private),
-      termsOfUseEns
-    );
-    const ipfsHost = dappBrowser.ipfs.ipfsConfig.host;
-
-    // multiple url's that can be requested one after another to fallback current runtime configurations
-    const fallbacks = [
-      // load from current ipfs host the current language, else fallback to english
-      `${ termsOfUseOrigin }/${ ipfsHost }/${ (<any>this).$i18n.locale() }.html`,
-      `${ termsOfUseOrigin }/${ ipfsHost }/en.html`,
-      // if a not registered ipfs host is requested, load the current language for mainnet, else
-      // fallback to en
-      `${ termsOfUseOrigin }/storage.evan.network/${ (<any>this).$i18n.locale() }.html`,
-      `${ termsOfUseOrigin }/storage.evan.network/en.html`,
-    ];
-
-    // try to load the terms of use for the current language, if this is not available, load the
-    // next fallback
-    for (let i = 0; i < fallbacks.length; i++) {
-      try {
-        const result = await axios.get(fallbacks[i]);
-        this.termsOfUse = result.data;
-        break;
-      } catch (ex) { }
-    }
-
     this.loading = false;
-    setTimeout(() => this.profileForm.userName.$ref.focus());
   }
 
   destroyed() {
@@ -234,7 +194,6 @@ export default class SignUp extends mixins(EvanComponent) {
    * When the recaptcha token gets expired, reset it and force refresh.
    */
   onCaptchaExpired() {
-    (this.$refs.recaptcha as any).execute();
     this.recaptchaToken = null;
   }
 
@@ -284,32 +243,6 @@ export default class SignUp extends mixins(EvanComponent) {
     }
   }
 
-  /**
-   * Check if the current mnemonic is valid, if yes, use it and navigate to profile create page,
-   * else start the mnemonic riddle.
-   */
-  useMnemonic() {
-    if (this.validMnemonic) {
-      // if no riddle was started before, start it!
-      if (!this.mnemonicRiddle && !this.mnemonicRiddleSolved) {
-        this.mnemonicRiddle = true;
-        (this.$refs.mnemonic as any).startRiddle(
-          parseInt(window.localStorage['evan-mnemonic-riddle'] || '3', 10));
-      } else {
-        this.mnemonicRiddle = false;
-        this.mnemonicRiddleSolved = true;
-        this.activeStep = 2;
-      }
-    }
-  }
-
-  /**
-   * Cancels the current active riddle
-   */
-  cancelRiddle() {
-    this.mnemonicRiddle = false;
-    (this.$refs.mnemonic as any).cancelRiddle();
-  }
 
   /**
    * Show the next status img and text for the profile creation.
@@ -365,7 +298,7 @@ export default class SignUp extends mixins(EvanComponent) {
         // set my private and public keys to my addressbook
         const dhKeys = runtime.keyExchange.getDiffieHellmanKeys();
         await profile.addContactKey(accountId, 'dataKey', dhKeys.privateKey.toString('hex'));
-        await profile.addProfileKey(accountId, 'alias', this.profileForm.userName.value);
+        await profile.addProfileKey(accountId, 'alias', this.profileForm.alias.value);
         await profile.addPublicKey(dhKeys.publicKey.toString('hex'));
 
         // set initial structure by creating addressbook structure and saving it to ipfs
