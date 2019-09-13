@@ -64,12 +64,14 @@ const i18n: any = {
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
     "verifications": {
+      "add": "Add Verification",
       "back": "Go back",
       "categories": {
         "identifications": "Identifications",
         "notary": "Notary Verification"
       },
       "done": "Close",
+      "empty": "No verifications available",
       "error": "Error",
       "error-loading": "An error occurred while loading the data. Please try again.",
       "next": "Next",

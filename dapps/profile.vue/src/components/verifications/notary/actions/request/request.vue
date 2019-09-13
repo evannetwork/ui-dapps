@@ -44,8 +44,7 @@
               v-if="status >= 0 && status < 3"
               :steps="steps"
               :active-step="status"
-              @stepChange="status = step">
-            </evan-steps>
+              @stepChange="status = step" />
 
             <!-- Verification start info -->
             <div v-if="status === -1">

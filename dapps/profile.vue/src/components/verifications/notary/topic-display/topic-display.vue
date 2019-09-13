@@ -26,7 +26,7 @@
 */
 
 <template>
-  <profile-verification-card type="filled">
+  <evan-card class="mt-3" type="filled">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <svg width="60" height="56" viewBox="0 0 60 56" fill="none">
@@ -60,7 +60,7 @@
         {{ `_profile.verifications.notary.verification.accept` | translate }}
       </button>
     </template>
-  </profile-verification-card>
+  </evan-card>
 </template>
 
 <script lang="ts">

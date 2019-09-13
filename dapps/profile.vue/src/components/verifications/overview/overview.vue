@@ -67,5 +67,5 @@
 </script>
 
 <style lang="scss">
-  @import './overview.scss';
+  @import './overview.scss'
 </style>

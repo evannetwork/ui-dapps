@@ -30,7 +30,6 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 // verification specific components
 import NotaryVerificationComponent from './verifications/notary/notary.vue';
-import VerificationCardComponent from './verifications/card/card.vue';
 import VerificationsOverviewComponent from './verifications/overview/overview.vue';
 
 // import general components for the profile
@@ -56,7 +55,6 @@ import NotaryTopicDisplayComponent from './verifications/notary/topic-display/to
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'labeled-list', component: LabeledList },
   { name: 'notary-verification', component: NotaryVerificationComponent, },
-  { name: 'profile-verification-card', component: VerificationCardComponent },
   { name: 'profile-verifications', component: VerificationsOverviewComponent },
 
   // notary verification components

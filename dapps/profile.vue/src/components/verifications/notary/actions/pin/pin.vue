@@ -40,8 +40,7 @@
         <evan-steps
           :active-step="status"
           :steps="steps"
-          @updatestep="status = $event">
-        </evan-steps>
+          @updatestep="status = $event" />
         <!-- pin enter screen -->
         <div v-if="status === 0" class="m-5">
           <p class="text-justify">{{ '_profile.verifications.notary.pin.desc' | translate }}</p>

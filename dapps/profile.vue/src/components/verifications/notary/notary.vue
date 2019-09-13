@@ -44,7 +44,7 @@
         <span>{{ '_profile.verifications.error-loading' | translate }}</span>
       </div>
 
-      <profile-verification-card
+      <evan-card class="mt-3"
         v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
         <svg viewBox="0 0 38 38" fill="none">
           <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
@@ -62,7 +62,7 @@
           @click="$refs.orgInfo.show();">
           {{ '_profile.verifications.notary.learn-more' | translate }}
         </evan-button>
-      </profile-verification-card>
+      </evan-card>
 
       <notary-verification-card
         v-if="verifications && verifications.length !== 0"

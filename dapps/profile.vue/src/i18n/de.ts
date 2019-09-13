@@ -64,12 +64,14 @@ const i18n: any = {
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "verifications": {
+      "add": "Verifikation hinzufügen",
       "back": "Zurück",
       "categories": {
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
       },
       "done": "Schließen",
+      "empty": "Keine Verifikationen verfügbar",
       "error": "Fehler",
       "error-loading": "Beim Laden der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "next": "Weiter",

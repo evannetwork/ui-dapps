@@ -45,35 +45,46 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
-   * Current profile information
+   * Address of the user that should be loaded
    */
   address = '';
-  alias = '';
-  balance = 0;
-  currDate = Date.now();
+  /**
+   * Currents users type
+   */
   type = 'unspecified';
 
   /**
-   * Notary identification details.
+   * Currents users eve balances and the timestamp, when the balance was loaded
    */
-  notaryIdentification: any = null;
+  balance: { amount: number, timestamp: number } = null;
 
   /**
    * Load the mail details
    */
   async created() {
     const runtime = (<any>this).getRuntime();
-
+    // fill empty address with current logged in user
     this.address = this.$route.params.address || runtime.activeAccount;
-    this.alias = (await runtime.profile.getAddressBook()).profile[this.address].alias;
-
     // load balance and parse it to 3 decimal places
-    this.balance = await dappBrowser.core.getBalance(runtime.activeAccount);
-    this.balance = Math.round(this.balance * 1000) / 1000;
-
-    // load verification status
-    // this.notaryIdentification = await getIdentificationDetails(runtime, this.address);
+    this.balance = {
+      amount: (await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3),
+      timestamp: Date.now(),
+    };
 
     this.loading = false;
+  }
+
+  /**
+   * Return the current verification / request status count.
+   */
+  verificationCount() {
+    let count = 0;
+
+    if (this.$refs.notaryVerifications) {
+      count += (<any>this.$refs.notaryVerifications).verifications.length;
+      count += (<any>this.$refs.notaryVerifications).requests.length;
+    }
+
+    return count;
   }
 }
