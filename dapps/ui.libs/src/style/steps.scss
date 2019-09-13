@@ -36,6 +36,7 @@
         position: relative;
 
         height: auto !important;
+        padding: 5px;
 
         text-align: center;
         // reset button styles
@@ -43,8 +44,6 @@
         border: 0;
         background-color: transparent !important;
         box-shadow: none !important;
-
-        padding: 5px;
 
         span:first-child {
           z-index: 1;
@@ -143,6 +142,13 @@
           right: 50%;
         }
 
+        &.active {
+          span:first-child {
+            color: cssVar('bg-text-dark');
+            background-color: cssVar('dark');
+          }
+        }
+
         span:first-child {
           z-index: 1;
 
@@ -158,11 +164,6 @@
           color: cssVar('white');
           border-radius: 50%;
           background-color: cssVar('gray-500');
-
-          &.active {
-            color: cssVar('bg-text-dark');
-            background-color: cssVar('dark');
-          }
         }
 
         span:nth-child(2) {
