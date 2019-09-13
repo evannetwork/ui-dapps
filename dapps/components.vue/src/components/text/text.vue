@@ -26,9 +26,7 @@
 */
 
 <template>
-  <div class="container py-3">
-    <h1>{{ '_comp.text' | translate }}</h1>
-
+  <div>
     <div class="white-box border border-sm mt-3">
       <h3 class="header">Headers</h3>
 

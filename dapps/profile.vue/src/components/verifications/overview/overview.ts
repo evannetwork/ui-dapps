@@ -35,24 +35,38 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import components from '../../components';
+import IssueComponent from '../notary/actions/issue/issue.vue';
 
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
+@Component({
+  components: {
+    'notary-action-issue': IssueComponent,
+  }
+})
+export default class VerificationsOverviewComponent extends mixins(EvanComponent) {
   /**
-   * navEntries for top navigation
+   * Hide the verification elements to trigger reload.
    */
-  navEntries: Array<any> = [ ];
+  rerender = false;
 
   /**
-   * Setup navigation structure
+   * Check for showing the "canIssue button", usually the evan verification account.
    */
+  canIssue = false;
+
+  /**
+   * Current users address.
+   */
+  address = '';
+
   created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
+    const runtime = (<any>this).getRuntime();
+
+    // use url address or use runtime activeAccount as default
+    this.address = this.$route.params.address || runtime.activeAccount;
+
+    // switch issue account
+    this.canIssue = runtime.environment === 'core' ?
+      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B' :
+      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
   }
 }

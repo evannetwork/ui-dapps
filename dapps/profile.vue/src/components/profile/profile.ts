@@ -35,24 +35,59 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import components from '../../components';
+import { getIdentificationDetails } from '../verifications/notary/notary.lib';
 
 @Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
+export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
-   * navEntries for top navigation
+   * status flags
    */
-  navEntries: Array<any> = [ ];
+  loading = true;
 
   /**
-   * Setup navigation structure
+   * Address of the user that should be loaded
    */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
+  address = '';
+  /**
+   * Currents users type
+   */
+  type = 'unspecified';
+
+  /**
+   * Currents users eve balances and the timestamp, when the balance was loaded
+   */
+  balance: { amount: number, timestamp: number } = null;
+
+  /**
+   * Amount of calculated verifications and requests
+   */
+  verificationCount = 0;
+
+  /**
+   * Load the mail details
+   */
+  async created() {
+    const runtime = (<any>this).getRuntime();
+    // fill empty address with current logged in user
+    this.address = this.$route.params.address || runtime.activeAccount;
+    // load balance and parse it to 3 decimal places
+    this.balance = {
+      amount: (await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3),
+      timestamp: Date.now(),
+    };
+
+    this.loading = false;
+  }
+
+  /**
+   * Return the current verification / request status count.
+   */
+  setVerificationCount() {
+    this.verificationCount = 0;
+
+    if (this.$refs.notaryVerifications) {
+      this.verificationCount += (<any>this.$refs.notaryVerifications).verifications.length;
+      this.verificationCount += (<any>this.$refs.notaryVerifications).requests.length;
+    }
   }
 }

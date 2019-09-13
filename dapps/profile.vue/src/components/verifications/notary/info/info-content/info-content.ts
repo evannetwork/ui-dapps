@@ -35,24 +35,20 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import components from '../../components';
-
 @Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
+export default class InfoComponent extends mixins(EvanComponent) {
   /**
-   * navEntries for top navigation
+   * Has the user enough funds?
    */
-  navEntries: Array<any> = [ ];
+  @Prop() enoughFunds = true;
 
   /**
-   * Setup navigation structure
+   * Current funds of the user
    */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
-  }
+  @Prop() readableFunds: string;
+
+  /**
+   * Account of the current user.
+   */
+  @Prop() address: string;
 }
