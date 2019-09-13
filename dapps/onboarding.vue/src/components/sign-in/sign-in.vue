@@ -42,12 +42,10 @@
       <div class="evan-step-header">
         <button class="btn"
           v-for="(step, index) of steps"
+          :class="{ 'active': activeStep === index, }"
           :disabled="index !== activeStep && activeSteps.indexOf(index) === -1"
           @click="activeStep = index">
-          <span class="stepper-circle"
-            :class="{ 'active': activeStep === index, }">
-            {{ index + 1}}
-          </span>
+          <span class="stepper-circle">{{ index + 1}}</span>
           <span>{{ step | translate }}</span>
         </button>
       </div>

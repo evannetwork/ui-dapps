@@ -38,7 +38,7 @@ const components: Array<any> = [
   { path: 'buttons', icon: 'mdi mdi-equal', component: ButtonsComponent },
   { path: 'cards', icon: 'mdi mdi-card-text-outline', component: CardsComponent },
   { path: 'text', icon: 'mdi mdi-format-color-text', component: TextComponent },
-  { path: 'steps', icon: 'mdi mdi-format-color-text', component: StepsComponent },
+  { path: 'steps', icon: 'mdi mdi-format-list-numbered', component: StepsComponent },
 ];
 
 // add dispatcher test entry
