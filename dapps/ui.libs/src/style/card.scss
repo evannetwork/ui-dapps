@@ -25,28 +25,42 @@
   https://evan.network/license/
 */
 
-@mixin evanVariables($variables) {
-  @each $param, $value in $variables {
-    --evan-#{$param}: #{$value};
-  }
-}
+@import './utils';
 
-// for now, bootstrap does not support css browser variables
-@function cssVar($name) {
-  @return var(--evan-#{$name});
-}
+.evan {
+  .evan-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
-@mixin keyframes($animationName) {
-  @-webkit-keyframes $animationName {
-    @content;
-  }
-  @-moz-keyframes $animationName {
-    @content;
-  }
-  @-o-keyframes $animationName {
-    @content;
-  }
-  @keyframes $animationName {
-    @content;
+    min-width: 240px;
+    max-width: 350px;
+    height: 280px;
+    padding: 2em;
+
+    text-align: center;
+    text-decoration: none !important;
+    word-break: break-word;
+
+    @media (max-width: 992px) {
+      max-width: 100%;
+    }
+
+    & > i {
+      font-size: 5rem !important;
+
+      margin-top: -1.25rem;
+    }
+
+    & > svg {
+      width: 3.4375rem;
+      min-height: 3.4375rem;
+      margin-bottom: 1.25rem;
+    }
+
+    & > h5 {
+      margin-bottom: 2rem;
+    }
   }
 }

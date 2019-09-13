@@ -103,43 +103,22 @@
     background-color: cssVar('gray-500') !important;
   }
 
-  .gray-100 {
-    color: cssVar('gray-100') !important;
+   // add font-size levels
+  @for $i from 1 through 9 {
+    .bg-gray-#{ $i * 100 } {
+      background-color: cssVar('gray-#{ $i * 100 }') !important;
+    }
+
+    .gray-#{ $i * 100 } {
+      color: cssVar('gray-#{ $i * 100 }') !important;
+    }
+  }
+
+  .bg-gray-150 {
+    background-color: cssVar('gray-150') !important;
   }
 
   .gray-150 {
     color: cssVar('gray-150') !important;
-  }
-
-  .gray-200 {
-    color: cssVar('gray-200') !important;
-  }
-
-  .gray-300 {
-    color: cssVar('gray-300') !important;
-  }
-
-  .gray-400 {
-    color: cssVar('gray-400') !important;
-  }
-
-  .gray-500 {
-    color: cssVar('gray-500') !important;
-  }
-
-  .gray-600 {
-    color: cssVar('gray-600') !important;
-  }
-
-  .gray-700 {
-    color: cssVar('gray-700') !important;
-  }
-
-  .gray-800 {
-    color: cssVar('gray-800') !important;
-  }
-
-  .gray-900 {
-    color: cssVar('gray-900') !important;
   }
 }
