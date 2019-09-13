@@ -28,29 +28,68 @@
 <template>
   <div class="container py-3">
     <h1>{{ '_comp.forms' | translate }}</h1>
+    <h2>{{ wurstAmount1 }} - {{ wurstAmount2 }} - {{ wurstAmount3 }}- {{ wurstAmount4 }}</h2>
     <label>Public ? <input type="checkbox" v-model="isPublic" /></label>
+    <div class="row">
+      <div class="col-md-8">
+        <evan-form-data-wrapper
+          v-slot="content"
+          :handleSave="handleSubmit"
+          :isPublic="isPublic"
+          title="Wurstbasar"
+        >
+          <form>
+            <evan-form-data-input
+              id="evan-form-test-1"
+              label="Wurst description"
+              type="text"
+              placeholder="Yet another Wurst"
+              v-model="wurstAmount1"
+            />
 
-    <evan-form-data-wrapper
-      v-slot="content"
-      :handleSave="handleSubmit"
-      :isPublic="isPublic"
-      title="Wurstbasar"
-    >
-      <form>
-        <input @focus="content.setEditMode(true)" type="number" />
-        <input @focus="content.setEditMode(true)" placeholder="test" type="text" />
-        <input @focus="content.setEditMode(true)" :placeholder="content.placeholder" type="text" />
-        <input @focus="content.setEditMode(true)" type="text" />
-        <select @focus="content.setEditMode(true)" type="text" >
-          <option>Bockwurst</option>
-          <option>Knacker</option>
-          <option>Wienerwurst</option>
-          <option>Hanns Wurst</option>
-        </select>
-        <input @focus="content.setEditMode(true)" type="text" />
-      </form>
-    </evan-form-data-wrapper>
+            <evan-form-data-input
+              id="evan-form-test-2"
+              label="Wurst extras"
+              type="email"
+              v-model="wurstAmount2"
+            />
 
+            <evan-form-data-input
+              id="evan-form-test-3"
+              label="Wurst amount"
+              type="number"
+              placeholder="The amount of Wurst"
+              v-model="wurstAmount3"
+            />
+
+            <evan-form-data-select
+              id="evan-form-test-4"
+              label="Which Wurst?"
+              type="number"
+              placeholder="The amount of Wurst"
+              v-model="wurstAmount4"
+              :options="options"
+            />
+
+            <div class="form-group row">
+              <label for="custom-input" class="col-md-3 col-form-label">
+                <i class="mdi mdi-food-off" />
+                Custom Input
+              </label>
+              <div class="col-md-9">
+                <input type="checkbox"
+                  id="custom-input"
+                  class="form-control"
+                  @focus="content.setEditMode(true)"
+                  v-model="isPublic"
+                />
+              </div>
+            </div>
+          </form>
+        </evan-form-data-wrapper>
+
+      </div>
+    </div>
   </div>
 </template>
 

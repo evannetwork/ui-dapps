@@ -36,6 +36,7 @@ export default {
     },
     "dispatcher-status": "Dispatcher Status",
     "dispatcher-test": "Dispatcher Test",
+    "forms": "Forms",
     "text": "Text"
   }
 }

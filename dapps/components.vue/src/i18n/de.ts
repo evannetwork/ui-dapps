@@ -36,7 +36,8 @@ export default {
     },
     "dispatcher-status": "Dispatcher Status",
     "dispatcher-test": "Dispatcher Test",
-    "text": "Text"
+    "forms": "Formulare",
+    "text": "Text",
   }
 }
 /* tslint:enable */;

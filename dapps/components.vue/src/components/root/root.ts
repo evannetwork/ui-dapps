@@ -49,7 +49,7 @@ export default class RootComponent extends mixins(EvanComponent) {
     this.navEntries = [
       { key: 'buttons', icon: 'mdi mdi-equal' },
       { key: 'text', icon: 'mdi mdi-format-color-text' },
-      { key: 'forms', icon: 'mdi mdi-form' },
+      { key: 'forms', icon: 'mdi mdi-clipboard-outline' },
       window.localStorage['evan-test-mode'] ? { key: 'dispatcher-test', icon: 'mdi mdi-sync', } : null,
     ].map(entry => (entry ? {
       id: `nav-entry-${ entry.key }`,

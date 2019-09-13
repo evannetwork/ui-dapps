@@ -36,6 +36,18 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 @Component({ })
 export default class Forms extends mixins(EvanComponent) {
   isPublic = true
+  wurstAmount1 = ''
+  wurstAmount2 = 'a'
+  wurstAmount3 = 0
+  wurstAmount4 = 0
+
+  options = [
+    {label: 'Bockwurst', value: 'bocki'},
+    {label: 'Knacker', value: 'knacki'},
+    'Wienerwurst',
+    'Mett',
+    'Hanns Wurst'
+  ]
 
   handleSubmit(ev: Event): Promise<any> {
     console.log(ev)
