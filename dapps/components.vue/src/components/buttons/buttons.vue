@@ -26,8 +26,7 @@
 */
 
 <template>
-  <div class="container py-3">
-    <h1>{{ '_comp.buttons' | translate }}</h1>
+  <div>
     <p>The buttons have been clicked <b>{{ btnCounter }}</b> times.</p>
 
     <div class="white-box border">

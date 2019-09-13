@@ -25,34 +25,20 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-import components from '../../components';
-
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
-
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path.toUpperCase() }`,
-      icon: entry.icon,
-    } : null));
-  }
-}
+<template>
+  <div>
+    <div class="p-3 text-center"
+      v-for="(highlight) in [ false, true ]">
+      <evan-steps
+        :activeStep="0"
+        :minimal="highlight"
+        :steps="[
+          { title: 'step 1', disabled: false, },
+          { title: 'step 2', disabled: false, },
+          { title: 'step 3', disabled: false, },
+          { title: 'step 4', disabled: true, },
+          { title: 'step 5', disabled: true, },
+        ]" />
+    </div>
+  </div>
+</template>

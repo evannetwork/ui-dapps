@@ -48,7 +48,11 @@
           </template>
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
-          <router-view></router-view>
+          <div class="container py-3">
+            <h1>{{ $route.name.toUpperCase() }}</h1>
+
+            <router-view></router-view>
+          </div>
         </transition>
       </template>
     </evan-dapp-wrapper>
