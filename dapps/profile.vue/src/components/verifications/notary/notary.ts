@@ -84,6 +84,9 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
       try {
         this.requests = await notaryIdentification.getRequests(runtime, this.address);
         this.verifications = await notaryIdentification.getIssuedVerifications(runtime);
+
+        // let the parent component know, whats going on
+        this.$emit('loaded');
       } catch (ex) {
         runtime.logger.log(ex.message, 'error');
         this.error = true;

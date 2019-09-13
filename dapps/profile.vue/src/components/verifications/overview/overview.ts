@@ -53,8 +53,16 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
    */
   canIssue = false;
 
+  /**
+   * Current users address.
+   */
+  address = '';
+
   created() {
     const runtime = (<any>this).getRuntime();
+
+    // use url address or use runtime activeAccount as default
+    this.address = this.$route.params.address || runtime.activeAccount;
 
     // switch issue account
     this.canIssue = runtime.environment === 'core' ?

@@ -59,7 +59,7 @@
           
         </div>
         <div class="col-xl-4 col-lg-6">
-          <template v-if="verificationCount() === 0">
+          <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
               v-if="$store.state.isMyProfile"
               :href="`${ dapp.fullUrl }/verifications/${ address }`">
@@ -70,7 +70,7 @@
                 {{ '_profile.verifications.add' | translate }}
               </h5>
             </evan-card>
-            <div class="mt-t text-center">
+            <div class="mt-5 text-center" v-else>
               <h5 class="font-weight-semibold">
                 {{ '_profile.verifications.empty' | translate }}
               </h5>
@@ -79,11 +79,12 @@
 
           <div
             :class="{
-              'd-none': verificationCount() === 0
+              'd-none': verificationCount === 0
             }">
             <notary-verification
               ref="notaryVerifications"
-              :address="address">
+              :address="address"
+              @loaded="setVerificationCount()">
             </notary-verification>
           </div>
         </div>

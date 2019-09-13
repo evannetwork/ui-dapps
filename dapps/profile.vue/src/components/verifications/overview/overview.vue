@@ -56,7 +56,7 @@
     </div>
     <div class="w-100 mt-5 d-flex flex-wrap flex-row"
       v-if="!rerender">
-      <notary-verification :address="$route.params.address"></notary-verification>
+      <notary-verification :address="address"></notary-verification>
     </div>
   </div>
 </template>

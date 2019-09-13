@@ -59,6 +59,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   balance: { amount: number, timestamp: number } = null;
 
   /**
+   * Amount of calculated verifications and requests
+   */
+  verificationCount = 0;
+
+  /**
    * Load the mail details
    */
   async created() {
@@ -77,14 +82,12 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Return the current verification / request status count.
    */
-  verificationCount() {
-    let count = 0;
+  setVerificationCount() {
+    this.verificationCount = 0;
 
     if (this.$refs.notaryVerifications) {
-      count += (<any>this.$refs.notaryVerifications).verifications.length;
-      count += (<any>this.$refs.notaryVerifications).requests.length;
+      this.verificationCount += (<any>this.$refs.notaryVerifications).verifications.length;
+      this.verificationCount += (<any>this.$refs.notaryVerifications).requests.length;
     }
-
-    return count;
   }
 }

@@ -27,7 +27,7 @@
 
 <template>
   <div style="display: contents;">
-    <evan-loading v-if="loading"></evan-loading>
+    <evan-loading v-if="loading || reloading"></evan-loading>
     <template v-else>
       <div class="position-absolute">
         <notary-action-request
