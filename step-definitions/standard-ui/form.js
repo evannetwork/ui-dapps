@@ -28,6 +28,18 @@ When('I set Input field with label {string} to {string}',
 );
 
 /**
+ * Looks for an input field with id and fills the values into the input field.
+ */
+When('I set Input field with id {string} to {string}',
+  async(id, content) => {
+    await client.expect.element(`#${ id }`).to.be.visible;
+    await client.clearValue(`#${ id }`),
+    await client.setValue(`#${ id }`, content);
+    client.useCss();
+  }
+);
+
+/**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
 When('I click on input field with label {string}',
