@@ -199,7 +199,6 @@ export default class Mnemonic extends mixins(EvanComponent) {
     // update parent to handle the latest mnemonic text and send event, the the mnemonic is
     // valid or not
     this.$emit('update:mnemonic', this.mnemonicText);
-    console.log( this.allWordsCorrect && this.mnemonicIntegrity)
     this.$emit('update:valid', this.allWordsCorrect && this.mnemonicIntegrity);
   }
 
