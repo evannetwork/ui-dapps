@@ -26,42 +26,45 @@
 */
 
 <template>
-  <evan-card class="mt-3" type="filled">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <i class="mdi mdi-check-decagram"></i>
-      <h5 class="font-weight-semibold">
-        {{ title }}
-      </h5>
-      <small class="mb-2">
-        {{ '_profile.verifications.notary.title' | translate }}
-      </small>
-      <small>
-        {{ '_profile.verifications.notary.verification.verified-by' | translate }}
-      </small>
-      <small class="text-muted">
-        {{ verification.verifications[0].details.issuer }}
-      </small>
-
-      <!-- <a v-for="(file, index) in files"
-        :id="`file-input-download-${ index }`"
-        :href="file.blobUri"
-        :download="file.name">
-        <i class="mdi mdi-download-outline"></i>
-      </a> -->
-
-      <button type="button"
-        class="btn btn-primary mt-3"
-        v-if="verification.status === 'yellow'"
-        :disabled="accepting"
-        @click="acceptVerification()">
-        {{ `_profile.verifications.notary.verification.accept` | translate }}
-      </button>
-    </template>
-  </evan-card>
+  <div>
+    <evan-modal
+      ref="modal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_profile.type.switch' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div class="d-flex">
+          <evan-card class="clickable"
+            icon="mdi mdi-check-decagram"
+            v-for="(type, index) in types"
+            :class="{
+              'ml-3': index !== 0,
+              'evan-highlight active': profileType === type,
+            }"
+            :highlight="false"
+            :title="`_evan.profile.types.${ type }` | translate"
+            @click="profileType = type"
+          />
+        </div>
+      </template>
+      <template v-slot:footer>
+        <div>
+          <button type="button" class="btn btn-primary "
+            @click="profileType !== 'unspecified' && $emit('typeChanged', profileType)">
+            {{ `_profile.type.change` | translate }}
+            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issuing"></div>
+            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+          </button>
+        </div>
+      </template>
+    </evan-modal>
+  </div>
 </template>
 
 <script lang="ts">
-  import Component from './topic-display.ts';
+  import Component from './type.ts';
   export default Component;
 </script>

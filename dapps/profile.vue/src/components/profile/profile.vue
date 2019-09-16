@@ -34,6 +34,12 @@
           <evan-profile-preview
             size="lg"
             :address="address"
+            @typeClick="$refs.profileType.$refs.modal.show();"
+          />
+          <profile-type-switch
+            ref="profileType"
+            v-if="$store.state.isMyProfile"
+            @typeChanged="type = $event"
           />
         </div>
         <div class="col-xl-4 col-lg-6">
@@ -61,15 +67,11 @@
         <div class="col-xl-4 col-lg-6">
           <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
+              icon="mdi mdi-plus"
               v-if="$store.state.isMyProfile"
-              :href="`${ dapp.fullUrl }/verifications/${ address }`">
-              <svg viewBox="0 0 38 38" fill="none">
-                <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
-              </svg>
-              <h5 class="font-weight-semibold">
-                {{ '_profile.verifications.add' | translate }}
-              </h5>
-            </evan-card>
+              :href="`${ dapp.fullUrl }/verifications/${ address }`"
+              :title="'_profile.verifications.add' | translate"
+            />
             <div class="mt-5 text-center" v-else>
               <h5 class="font-weight-semibold">
                 {{ '_profile.verifications.empty' | translate }}
@@ -84,8 +86,8 @@
             <notary-verification
               ref="notaryVerifications"
               :address="address"
-              @loaded="setVerificationCount()">
-            </notary-verification>
+              @loaded="setVerificationCount()"
+            />
           </div>
         </div>
       </div>

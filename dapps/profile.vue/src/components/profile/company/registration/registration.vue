@@ -24,31 +24,14 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// import evan libs
-import {
-  DAppLoaderComponent,
-  RouteRegistrationInterface,
-  UnderDevelopmentComponent,
-} from '@evan.network/ui-vue-core';
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+<template>
+  <div>
 
-import ProfileDetailComponent from './components/profile/profile.vue';
-import ProfileSettingsComponent from './components/settings/settings.vue';
-import VerificationsComponent from './components/verifications/overview/overview.vue';
+  </div>
+</template>
 
-// map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', redirect: { path: 'detail' } },
-  { name: 'detail', path: 'detail/:address?', component: ProfileDetailComponent },
-  { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
-  { name: 'wallet', path: 'wallet/:address?', component: UnderDevelopmentComponent },
-  { name: 'verifications', path: 'verifications/:address?', component: VerificationsComponent, },
-  {
-    name: 'addressbook.vue',
-    component: DAppLoaderComponent,
-    path: `addressbook.vue.${ dappBrowser.getDomainName() }/**`,
-  },
-];
-
-export default routeRegistration;
+<script lang="ts">
+  import Component from './registration.ts';
+  export default Component;
+</script>

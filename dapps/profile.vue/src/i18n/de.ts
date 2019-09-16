@@ -63,6 +63,10 @@ const i18n: any = {
       },
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
+    "type": {
+      "change": "Ändern",
+      "switch": "Geben Sie Ihren Profiltyp an"
+    },
     "verifications": {
       "add": "Verifikation hinzufügen",
       "back": "Zurück",

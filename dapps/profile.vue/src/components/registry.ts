@@ -28,12 +28,15 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-// verification specific components
-import NotaryVerificationComponent from './verifications/notary/notary.vue';
-import VerificationsOverviewComponent from './verifications/overview/overview.vue';
+// profile components
+import ProfileTypeComponent from './profile/type/type.vue';
 
 // import general components for the profile
 import LabeledList from './utils/labeled-list/labeled-list.vue';
+
+// verification specific components
+import NotaryVerificationComponent from './verifications/notary/notary.vue';
+import VerificationsOverviewComponent from './verifications/overview/overview.vue';
 
 // verification components
 // single notary verification detail (takes a request or company verifications)
@@ -53,10 +56,13 @@ import NotaryTopicDisplayComponent from './verifications/notary/topic-display/to
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  // profile
+  { name: 'profile-type-switch', component: ProfileTypeComponent, },
+  // general
   { name: 'labeled-list', component: LabeledList },
+  // verification specific components
   { name: 'notary-verification', component: NotaryVerificationComponent, },
   { name: 'profile-verifications', component: VerificationsOverviewComponent },
-
   // notary verification components
   { name: 'notary-action-issue', component: NotaryIssueComponent, },
   { name: 'notary-action-pin', component: NotaryPinComponent, },

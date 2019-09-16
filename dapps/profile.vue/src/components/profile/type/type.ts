@@ -24,31 +24,45 @@
   For more information, please contact evan GmbH at this address:
   https://evan.network/license/
 */
-// import evan libs
-import {
-  DAppLoaderComponent,
-  RouteRegistrationInterface,
-  UnderDevelopmentComponent,
-} from '@evan.network/ui-vue-core';
 
+// vue imports
+import Vue from 'vue';
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import ProfileDetailComponent from './components/profile/profile.vue';
-import ProfileSettingsComponent from './components/settings/settings.vue';
-import VerificationsComponent from './components/verifications/overview/overview.vue';
+@Component({ })
+export default class ProfileTypeComponent extends mixins(EvanComponent) {
+  /**
+   * All selectable types
+   */
+  types = [
+    'company',
+    'device'
+  ];
 
-// map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', redirect: { path: 'detail' } },
-  { name: 'detail', path: 'detail/:address?', component: ProfileDetailComponent },
-  { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
-  { name: 'wallet', path: 'wallet/:address?', component: UnderDevelopmentComponent },
-  { name: 'verifications', path: 'verifications/:address?', component: VerificationsComponent, },
-  {
-    name: 'addressbook.vue',
-    component: DAppLoaderComponent,
-    path: `addressbook.vue.${ dappBrowser.getDomainName() }/**`,
-  },
-];
+  /**
+   * Currents users profile
+   */
+  profileType = '';
 
-export default routeRegistration;
+  /**
+   * Load profile type
+   */
+  created() {
+    this.profileType = 'unspecified';
+  }
+
+  /**
+   * Trigger profile type change
+   *
+   * @param      {string}  type    The type
+   */
+  typeChanged(type: string) {
+    this.profileType = type;
+  }
+}

@@ -63,6 +63,10 @@ const i18n: any = {
       },
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
+    "type": {
+      "change": "Change",
+      "switch": "Specify your Account Type"
+    },
     "verifications": {
       "add": "Add Verification",
       "back": "Go back",
