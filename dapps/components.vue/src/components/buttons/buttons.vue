@@ -80,7 +80,7 @@
           class="mb-3"
           :size="size" :type="type" :disabled="disabled" :isLoading="isLoading"
           :label="`${type} icon left`"
-          icon="mdi-arrow-left"
+          icon="mdi mdi-arrow-left"
           iconPosition="left"
           @click="btnCounter += 1"
         />
@@ -89,7 +89,7 @@
           class="mb-3"
           :size="size" :type="type" :disabled="disabled" :isLoading="isLoading"
           :label="`${type} icon right(default)`"
-          icon="mdi-arrow-right"
+          icon="mdi mdi-arrow-right"
           @click="btnCounter += 1"
         />
 
@@ -113,28 +113,26 @@
         <evan-button
           class="mb-3"
           :size="size" type="icon-primary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-plus"></i>
-        </evan-button>
-        <evan-button
-          class="mb-3"
-          :size="size" type="icon-primary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-delete"></i>
-        </evan-button>
+           @click="btnCounter += 1"
+            icon="mdi mdi-plus" />
 
         <evan-button
           class="mb-3"
           :size="size" type="icon-primary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-plus-circle-outline"></i>
-        </evan-button>
-        <evan-button
+           @click="btnCounter += 1"
+          icon="mdi mdi-delete" />
+
+         <evan-button
           class="mb-3"
           :size="size" type="icon-primary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-delete-circle-outline"></i>
-        </evan-button>
+           @click="btnCounter += 1"
+          icon="mdi mdi-plus-circle-outline" />
+
+         <evan-button
+          class="mb-3"
+          :size="size" type="icon-primary" :disabled="disabled"
+           @click="btnCounter += 1"
+          icon="mdi mdi-delete-circle-outline" />
       </div>
     </div>
 
@@ -142,31 +140,29 @@
       <h3 class="header">icon-secondary</h3>
 
       <div class="content">
-        <evan-button
+       <evan-button
           class="mb-3"
           :size="size" type="icon-secondary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-plus"></i>
-        </evan-button>
-        <evan-button
-          class="mb-3"
-          :size="size" type="icon-secondary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-delete"></i>
-        </evan-button>
+           @click="btnCounter += 1"
+            icon="mdi mdi-plus" />
 
         <evan-button
           class="mb-3"
           :size="size" type="icon-secondary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-plus-circle-outline"></i>
-        </evan-button>
-        <evan-button
+           @click="btnCounter += 1"
+          icon="mdi mdi-delete" />
+
+         <evan-button
           class="mb-3"
           :size="size" type="icon-secondary" :disabled="disabled"
-           @click="btnCounter += 1">
-          <i class="mdi mdi-delete-circle-outline"></i>
-        </evan-button>
+           @click="btnCounter += 1"
+          icon="mdi mdi-plus-circle-outline" />
+
+         <evan-button
+          class="mb-3"
+          :size="size" type="icon-secondary" :disabled="disabled"
+           @click="btnCounter += 1"
+          icon="mdi mdi-delete-circle-outline" />
       </div>
     </div>
   </div>
