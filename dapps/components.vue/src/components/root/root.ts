@@ -51,7 +51,7 @@ export default class RootComponent extends mixins(EvanComponent) {
     this.navEntries = components.map(entry => (entry ? {
       id: `nav-entry-${ entry.path }`,
       href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path && entry.path.toUpperCase() }`,
+      text: `${ entry.path.toUpperCase() }`,
       icon: entry.icon,
     } : null));
   }
