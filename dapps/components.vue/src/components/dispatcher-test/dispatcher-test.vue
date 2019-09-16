@@ -26,9 +26,7 @@
 */
 
 <template>
-  <div class="container py-3">
-    <h1>{{ '_comp.dispatcher-test' | translate }}</h1>
-
+  <div>
     {{ '_comp.dispatcher-status' | translate }}: {{ status }}
     <br><br>
 

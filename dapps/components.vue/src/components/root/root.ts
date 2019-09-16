@@ -35,6 +35,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import components from '../../components';
+
 @Component({ })
 export default class RootComponent extends mixins(EvanComponent) {
   /**
@@ -46,15 +48,10 @@ export default class RootComponent extends mixins(EvanComponent) {
    * Setup navigation structure
    */
   created() {
-    this.navEntries = [
-      { key: 'buttons', icon: 'mdi mdi-equal' },
-      { key: 'text', icon: 'mdi mdi-format-color-text' },
-      { key: 'forms', icon: 'mdi mdi-clipboard-outline' },
-      window.localStorage['evan-test-mode'] ? { key: 'dispatcher-test', icon: 'mdi mdi-sync', } : null,
-    ].map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
-      text: `_comp.${ entry.key }`,
+    this.navEntries = components.map(entry => (entry ? {
+      id: `nav-entry-${ entry.path }`,
+      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
+      text: `${ entry.path.toUpperCase() }`,
       icon: entry.icon,
     } : null));
   }

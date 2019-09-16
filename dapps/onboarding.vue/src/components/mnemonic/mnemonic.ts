@@ -324,6 +324,29 @@ export default class Mnemonic extends mixins(EvanComponent) {
     this.setInputFocus();
   }
 
+  handlePaste(e) {
+    // Stop data actually being pasted into div
+    e.stopPropagation();
+    e.preventDefault();
+
+    // Get pasted data via clipboard API
+    const clipboardData = e.clipboardData || (window as any).clipboardData;
+    const pastedData = clipboardData.getData('Text');
+
+    // split mnemonic
+    if (pastedData) {
+      const splittedData = pastedData.split(' ');
+      if (splittedData.length === 12) {
+        this.words = ([ ] as Array<string>).concat(splittedData);
+
+        // update the original value
+        this.checkCorrectWords([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ]);
+        this.mnemonicText = this.words.join(' ').replace(/\s+$/, '');
+        this.updateParent();
+      }
+    }
+  }
+
   /**
    * Stops a riddle and resets all values.
    */

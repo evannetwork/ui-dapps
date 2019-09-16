@@ -28,9 +28,10 @@
 <template>
   <div>
     <form
-      v-if="!useTextArea">
+      v-if="!useTextArea"
+      @paste="handlePaste($event)">
       <div class="form-row">
-        <div class="form-group col-md-6"
+        <div class="form-group col-md-4"
           v-for="(word, index) in words">
           <input class="form-control" required
             :id="'mnemonicInput' + index" :ref="'mnemonicInput' + index"
@@ -51,34 +52,6 @@
         </div>
       </div>
     </form>
-    <form v-if="useTextArea">
-      <div class="form-group">
-        <label for="mnemonicInput0">
-          {{ '_onboarding.sign-in.get-mnemonic' | translate }}
-        </label>
-        <input class="form-control" required
-          ref="mnemonicInput0"
-          id="mnemonicInput0"
-          :disabled="$props.disabled && !riddelStarted"
-          v-model="mnemonicText"
-          @keyup.enter.native="textAreaChanged(true)"
-          @input="textAreaChanged()">
-        <div class="invalid-feedback" v-if="allWordsCorrect && !mnemonicIntegrity">
-          {{ '_onboarding.invalid-mnemonic-word' | translate }}
-        </div>
-      </div>
-    </form>
-    <div class="text-center d-block" v-if="!riddelStarted">
-      <div class="custom-control custom-switch mt-2">
-        <input type="checkbox" id="useTextArea"
-          class="custom-control-input"
-          v-model="useTextArea"
-          @input="setInputFocus()">
-        <label class="custom-control-label text-muted" for="useTextArea">
-          {{ '_onboarding.free-input' | translate }}
-        </label>
-      </div>
-    </div>
   </div>
 </template>
 

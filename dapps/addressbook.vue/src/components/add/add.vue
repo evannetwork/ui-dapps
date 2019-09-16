@@ -44,13 +44,11 @@
               <!-- step button is disabled when a previous step was reactived and is currently invalid -->
               <button class="btn"
                 v-for="(step, index) of steps"
-                :id="`evan-container-create-step-${ index }`"
+                :class="{ 'active': activeStep === index, }"
                 :disabled="step.disabled(index)"
+                :id="`evan-container-create-step-${ index }`"
                 @click="activeStep = index">
-                <span class="stepper-circle"
-                  :class="{ 'active': activeStep === index, }">
-                  {{ index + 1}}
-                </span>
+                <span class="stepper-circle">{{ index + 1}}</span>
                 <span>{{ step.title | translate }}</span>
               </button>
             </div>

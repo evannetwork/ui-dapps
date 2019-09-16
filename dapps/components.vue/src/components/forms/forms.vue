@@ -27,7 +27,6 @@
 
 <template>
   <div class="container py-3">
-    <h1>{{ '_comp.forms' | translate }}</h1>
     <h2>{{ wurstAmount1 }} - {{ wurstAmount2 }} - {{ wurstAmount3 }}- {{ wurstAmount4 }}</h2>
     <label>Public ? <input type="checkbox" v-model="isPublic" /></label>
     <div class="row">
@@ -45,6 +44,7 @@
               type="text"
               placeholder="Yet another Wurst"
               v-model="wurstAmount1"
+              disabled
             />
 
             <evan-form-data-input
