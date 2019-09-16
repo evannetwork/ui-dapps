@@ -43,7 +43,7 @@ const components: Array<any> = [
 
 // add dispatcher test entry
 if (window.localStorage['evan-test-mode']) {
-  components.push({ key: 'dispatcher-test', icon: 'mdi mdi-sync', });
+  components.push({ path: 'dispatcher-test', icon: 'mdi mdi-sync', component: DispatcherTestComponent });
 }
 
 components.forEach((comp) => comp.name = comp.path);
