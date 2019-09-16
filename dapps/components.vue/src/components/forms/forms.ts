@@ -25,36 +25,39 @@
   https://evan.network/license/
 */
 
-// vue import
-import Component, { mixins } from 'vue-class-component'
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 import Vue from 'vue';
-import { Prop, Watch } from 'vue-property-decorator'
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core'
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-/**
- * @class         ButtonsComponent
- */
 @Component({ })
-export default class ButtonsComponent extends mixins(EvanComponent) {
-  @Prop({
-    type: Number,
-    default: 0
-  }) btnCounter: Number
+export default class Forms extends mixins(EvanComponent) {
+  isPublic = true
+  wurstAmount1 = ''
+  wurstAmount2 = 'a'
+  wurstAmount3 = 0
+  wurstAmount4 = 0
 
-  /**
-   * Should the buttons be disabled?
-   */
-  disabled = false
+  options = [
+    {label: 'Bockwurst', value: 'bocki'},
+    {label: 'Knacker', value: 'knacki'},
+    'Wienerwurst',
+    'Mett',
+    'Hanns Wurst'
+  ]
 
-  /**
-   * The isLoading state
-   */
-  isLoading = false
+  handleSubmit(ev: Event): Promise<any> {
+    console.log(ev)
 
-  /**
-   * Display buttons in different button sizes
-   */
-  size = 'normal'
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('resolved')
+
+        resolve('saved')
+      }, 1000)
+    })
+  }
 }

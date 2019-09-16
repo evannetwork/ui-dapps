@@ -27,11 +27,6 @@
 // import evan libs
 import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
-import ButtonsComponent from './components/buttons/buttons.vue';
-import TextComponent from './components/text/text.vue';
-import CardsComponent from './components/cards/cards.vue';
-import DispatcherTestComponent from './components/dispatcher-test/dispatcher-test.vue';
-
 import components from './components';
 
 // map them to element names, so they can be used within templates

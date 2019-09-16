@@ -28,10 +28,11 @@
 import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
 import ButtonsComponent from './components/buttons/buttons.vue';
-import TextComponent from './components/text/text.vue';
 import CardsComponent from './components/cards/cards.vue';
 import DispatcherTestComponent from './components/dispatcher-test/dispatcher-test.vue';
+import FormsComponent from './components/forms/forms.vue';
 import StepsComponent from './components/steps/steps.vue';
+import TextComponent from './components/text/text.vue';
 
 // map them to element names, so they can be used within templates
 const components: Array<any> = [
@@ -39,11 +40,12 @@ const components: Array<any> = [
   { path: 'cards', icon: 'mdi mdi-card-text-outline', component: CardsComponent },
   { path: 'text', icon: 'mdi mdi-format-color-text', component: TextComponent },
   { path: 'steps', icon: 'mdi mdi-format-list-numbered', component: StepsComponent },
+  { path: 'forms', icon: 'mdi mdi-format-list-numbered', component: FormsComponent },
 ];
 
 // add dispatcher test entry
 if (window.localStorage['evan-test-mode']) {
-  components.push({ key: 'dispatcher-test', icon: 'mdi mdi-sync', });
+  components.push({ path: 'dispatcher-test', icon: 'mdi mdi-sync', component: DispatcherTestComponent, });
 }
 
 components.forEach((comp) => comp.name = comp.path);
