@@ -29,82 +29,88 @@
   <div class="container py-3">
     <h2>{{ wurstAmount1 }} - {{ wurstAmount2 }} - {{ wurstAmount3 }}- {{ wurstAmount4 }}</h2>
     <label>Public ? <input type="checkbox" v-model="isPublic" /></label>
+    <label>Stacked ? <input type="checkbox" v-model="isStacked" /></label>
 
     <div class="row">
       <div class="col-md-8">
-        <evan-form-data-wrapper
-          :isPublic="isPublic"
+        <evan-form
+          ref="sampleForm"
+          :title="'Wurstbasar'"
           :form="sampleForm"
-          title="Wurstbasar"
           :i18nScope="'test.test2'"
+          :isPublic="isPublic"
+          :stacked="isStacked"
           @save="handleSubmit">
-          <template v-slot:control-files>
+          <template v-slot:form-control-files>
             <evan-file-input
               label="files"
-              v-model="sampleForm.files.value">
+              v-model="sampleForm.files.value"
+              @input="$refs.sampleForm.setEditMode(true);">
             </evan-file-input>
           </template>
-        </evan-form-data-wrapper>
+        </evan-form>
       </div>
     </div>
     <div class="row">
       <div class="col-md-8">
-        <evan-form-data-wrapper
-          v-slot="content"
+        <evan-form
+          ref="sampleForm2"
+          :title="'Wurstbasar'"
+          :i18nScope="'test.test2'"
           :isPublic="isPublic"
-          title="Wurstbasar"
           @save="handleSubmit">
-          <form>
-            <evan-form-data-input
-              id="evan-form-test-1"
-              label="Wurst description"
-              type="text"
-              placeholder="Yet another Wurst"
-              v-model="wurstAmount1"
-              disabled
-            />
+          <evan-form-control-input
+            id="evan-form-test-1"
+            label="Wurst description"
+            type="text"
+            placeholder="Yet another Wurst"
+            v-model="wurstAmount1"
+            :stacked="isStacked"
+            disabled
+          />
 
-            <evan-form-data-input
-              id="evan-form-test-2"
-              label="Wurst extras"
-              type="email"
-              v-model="wurstAmount2"
-            />
+          <evan-form-control-input
+            id="evan-form-test-2"
+            label="Wurst extras"
+            type="email"
+            v-model="wurstAmount2"
+            :stacked="isStacked"
+          />
 
-            <evan-form-data-input
-              id="evan-form-test-3"
-              label="Wurst amount"
-              type="number"
-              placeholder="The amount of Wurst"
-              v-model="wurstAmount3"
-            />
+          <evan-form-control-input
+            id="evan-form-test-3"
+            label="Wurst amount"
+            type="number"
+            placeholder="The amount of Wurst"
+            v-model="wurstAmount3"
+            :stacked="isStacked"
+          />
 
-            <evan-form-data-select
-              id="evan-form-test-4"
-              label="Which Wurst?"
-              type="number"
-              placeholder="The amount of Wurst"
-              v-model="wurstAmount4"
-              :options="options"
-            />
+          <evan-form-control-select
+            id="evan-form-test-4"
+            label="Which Wurst?"
+            type="number"
+            placeholder="The amount of Wurst"
+            v-model="wurstAmount4"
+            :options="options"
+            :stacked="isStacked"
+          />
 
-            <div class="form-group row">
-              <label for="custom-input" class="col-md-3 col-form-label">
-                <i class="mdi mdi-food-off" />
-                Custom Input
-              </label>
-              <div class="col-md-9">
-                <input type="checkbox"
-                  id="custom-input"
-                  class="form-control"
-                  @focus="content.setEditMode(true)"
-                  v-model="isPublic"
-                />
-              </div>
+          <div class="form-group" :class="{ 'row': !isStacked }">
+            <label class="col-form-label" :class="{ 'col-md-3': !isStacked }"
+              for="custom-input" >
+              Custom Input
+            </label>
+            <div :class="{ 'col-md-9': !isStacked }">
+              <input type="checkbox"
+                id="custom-input"
+                class="form-control"
+                @focus="$refs.sampleForm2.setEditMode(true)"
+                v-model="isPublic"
+              />
             </div>
-          </form>
-        </evan-form-data-wrapper>
-
+          </div>
+        </evan-form>
       </div>
     </div>
   </div>

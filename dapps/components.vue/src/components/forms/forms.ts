@@ -43,7 +43,13 @@ interface SampleFormInterface extends EvanForm {
 
 @Component({ })
 export default class Forms extends mixins(EvanComponent) {
-  isPublic = true
+  /**
+   * formular flags
+   */
+  isPublic = true;
+  isStacked = true;
+
+
   wurstAmount1 = ''
   wurstAmount2 = 'a'
   wurstAmount3 = 0
@@ -83,6 +89,7 @@ export default class Forms extends mixins(EvanComponent) {
             options: this.options,
             placeholder: 'custom placeholder',
             type: 'number',
+            size: 6
           }
         }
       },
@@ -93,7 +100,10 @@ export default class Forms extends mixins(EvanComponent) {
         },
         uiSpecs: {
           type: 'select',
-          attr: { options: this.options, }
+          attr: {
+            options: this.options,
+            size: 6,
+          }
         }
       },
       files: {
