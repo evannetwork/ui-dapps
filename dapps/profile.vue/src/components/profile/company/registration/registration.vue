@@ -27,17 +27,12 @@
 
 <template>
   <div>
-    <evan-form-data-wrapper
+    <evan-form
       :title="'_profile.company.registration.title' | translate"
       :form="registrationForm"
       :i18nScope="'_profile.company.registration'"
       @save="">
-<!--       <evan-form-data-input type="text"
-        :label="'_profile.company.registration.company.title' | translate"
-        :placeholder="'_profile.company.registration.company.desc' | translate"
-        v-model="wurstAmount1"
-      /> -->
-    </evan-form-data-wrapper>
+    </evan-form>
   </div>
 </template>
 

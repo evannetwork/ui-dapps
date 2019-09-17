@@ -31,11 +31,30 @@ import Vue from 'vue';
 import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+
+interface SampleFormInterface extends EvanForm {
+  field1: string;
+  field2: string;
+  field3: number;
+  select: string;
+  files: any;
+}
 
 @Component({ })
 export default class Forms extends mixins(EvanComponent) {
-  isPublic = true
+  /**
+   * formular flags
+   */
+  isPublic = true;
+  stacked = false;
+  onlyForm = false;
+
+  /**
+   * Rerender everything
+   */
+  showForms = true;
+
   wurstAmount1 = ''
   wurstAmount2 = 'a'
   wurstAmount3 = 0
@@ -48,6 +67,57 @@ export default class Forms extends mixins(EvanComponent) {
     'Mett',
     'Hanns Wurst'
   ]
+
+  sampleForm: SampleFormInterface = null;
+
+  created() {
+    this.sampleForm = new EvanForm(this, {
+      field1: {
+        value: '',
+      },
+      field2: {
+        value: '',
+        validate: function(vueInstance: Forms, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        },
+      },
+      field3: {
+        value: '',
+        validate: function(vueInstance: Forms, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          type: 'input',
+          attr: {
+            error: 'custom error',
+            label: 'custom label',
+            placeholder: 'custom placeholder',
+            type: 'number',
+            size: 6
+          }
+        }
+      },
+      select: {
+        value: '',
+        validate: function(vueInstance: Forms, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          type: 'select',
+          attr: {
+            options: this.options,
+            size: 6,
+          }
+        }
+      },
+      files: {
+        value: [ ],
+        validate: function(vueInstance: Forms, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        }
+      },
+    }) as SampleFormInterface;
+  }
 
   handleSubmit(ev: Event): Promise<any> {
     console.log(ev)
