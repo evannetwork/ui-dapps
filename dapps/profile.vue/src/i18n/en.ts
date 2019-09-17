@@ -44,6 +44,16 @@ const i18n: any = {
       "desc": "Profile-Details",
       "edit": "Edit Profile"
     },
+    "company": {
+      "registration": {
+        "title": "Registration",
+        "company": {
+          "placeholder": "Insert your Company Name...",
+          "error": "Please insert a company name!",
+          "label": "Company"
+        }
+      }
+    },
     "dispatchers": {
       "request-verification": "Requesting Verification...",
       "verification-accept": "Accepting Verification..."

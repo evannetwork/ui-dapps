@@ -63,6 +63,9 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
    * @param      {string}  type    The type
    */
   typeChanged(type: string) {
-    this.profileType = type;
+    if (this.profileType !== 'unspecified') {
+      this.$emit('typeChanged', this.profileType);
+      (this.$refs.modal as any).hide();
+    }
   }
 }

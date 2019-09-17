@@ -53,7 +53,7 @@
       <template v-slot:footer>
         <div>
           <button type="button" class="btn btn-primary "
-            @click="profileType !== 'unspecified' && $emit('typeChanged', profileType)">
+            @click="typeChanged();">
             {{ `_profile.type.change` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issuing"></div>
             <i class="mdi mdi-arrow-right label ml-3" v-else></i>

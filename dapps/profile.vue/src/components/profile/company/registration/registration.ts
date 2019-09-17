@@ -31,9 +31,13 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+
+interface RegistrationFormInterface extends EvanForm {
+  company: EvanFormControl;
+}
 
 @Component({ })
 export default class CompanyRegistrationForm extends mixins(EvanComponent) {
@@ -43,9 +47,24 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   @Prop() address;
 
   /**
+   * Evan form instance for registration data.
+   */
+  registrationForm: RegistrationFormInterface = null;
+
+  /**
    * Load the mail details
    */
   async created() {
     const runtime = (<any>this).getRuntime();
+
+    // setup registration form
+    this.registrationForm = (<RegistrationFormInterface>new EvanForm(this, {
+      company: {
+        value: '',
+        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+          return this.value.length !== 0;
+        },
+      },
+    }));
   }
 }

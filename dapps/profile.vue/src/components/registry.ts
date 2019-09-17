@@ -30,6 +30,7 @@ import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 // profile components
 import ProfileTypeComponent from './profile/type/type.vue';
+import CompanyRegistrationForm from './profile/company/registration/registration.vue';
 
 // import general components for the profile
 import LabeledList from './utils/labeled-list/labeled-list.vue';
@@ -58,6 +59,7 @@ import NotaryTopicDisplayComponent from './verifications/notary/topic-display/to
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   // profile
   { name: 'profile-type-switch', component: ProfileTypeComponent, },
+  { name: 'profile-company-registration', component: CompanyRegistrationForm, },
   // general
   { name: 'labeled-list', component: LabeledList },
   // verification specific components

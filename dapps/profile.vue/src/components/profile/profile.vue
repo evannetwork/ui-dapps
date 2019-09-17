@@ -62,7 +62,9 @@
 
       <div class="row">
         <div class="col-xl-8 col-lg-6">
-          
+          <template v-if="type === 'company'">
+            <profile-company-registration :address="address"></profile-company-registration>
+          </template>
         </div>
         <div class="col-xl-4 col-lg-6">
           <template v-if="verificationCount === 0">

@@ -33,7 +33,7 @@
       <div class="col-md-8">
         <evan-form-data-wrapper
           v-slot="content"
-          :handleSave="handleSubmit"
+          @save="handleSubmit"
           :isPublic="isPublic"
           title="Wurstbasar"
         >
