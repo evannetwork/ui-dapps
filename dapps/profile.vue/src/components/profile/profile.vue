@@ -64,6 +64,10 @@
         <div class="col-xl-8 col-lg-6">
           <template v-if="type === 'company'">
             <profile-company-registration :address="address"></profile-company-registration>
+            <profile-company-contact :address="address"></profile-company-contact>
+          </template>
+          <template v-else-if="type === 'device'">
+            <profile-device-detail :address="address"></profile-device-detail>
           </template>
         </div>
         <div class="col-xl-4 col-lg-6">

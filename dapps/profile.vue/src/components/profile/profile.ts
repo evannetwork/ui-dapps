@@ -51,7 +51,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Currents users type
    */
-  type = 'company';
+  type = 'unspecified';
 
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded

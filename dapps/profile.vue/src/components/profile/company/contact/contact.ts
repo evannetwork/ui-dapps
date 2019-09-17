@@ -35,12 +35,11 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-interface RegistrationFormInterface extends EvanForm {
-  company: EvanFormControl;
-  court: EvanFormControl;
-  register: EvanFormControl;
-  registerNumber: EvanFormControl;
-  salesTaxID: EvanFormControl;
+interface ContactFormInterface extends EvanForm {
+  city: EvanFormControl;
+  homepage: EvanFormControl;
+  postalCode: EvanFormControl;
+  streetAndNumber: EvanFormControl;
 }
 
 @Component({ })
@@ -53,7 +52,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   /**
    * Evan form instance for registration data.
    */
-  registrationForm: RegistrationFormInterface = null;
+  contactForm: ContactFormInterface = null;
 
   /**
    * Load the mail details
@@ -62,43 +61,29 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
 
     // setup registration form
-    this.registrationForm = (<RegistrationFormInterface>new EvanForm(this, {
-      company: {
+    this.contactForm = (<ContactFormInterface>new EvanForm(this, {
+      streetAndNumber: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
       },
-      court: {
+      postalCode: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+          return !!this.value.match(/^\d{5}$/);
+        },
+      },
+      city: {
+        value: '',
+        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
       },
-      register: {
+      homepage: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          type: 'select',
-          attr: {
-            options: [
-              { value: 'germany', label: '_profile.company.registration.countries.germany', }
-            ],
-          }
-        }
-      },
-      registerNumber: {
-        value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
-      },
-      salesTaxID: {
-        value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
+        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+          return !!this.value.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
         },
       },
     }));
