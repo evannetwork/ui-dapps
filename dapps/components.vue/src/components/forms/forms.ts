@@ -47,8 +47,13 @@ export default class Forms extends mixins(EvanComponent) {
    * formular flags
    */
   isPublic = true;
-  isStacked = true;
+  stacked = false;
+  onlyForm = false;
 
+  /**
+   * Rerender everything
+   */
+  showForms = true;
 
   wurstAmount1 = ''
   wurstAmount2 = 'a'
@@ -86,7 +91,6 @@ export default class Forms extends mixins(EvanComponent) {
           attr: {
             error: 'custom error',
             label: 'custom label',
-            options: this.options,
             placeholder: 'custom placeholder',
             type: 'number',
             size: 6
