@@ -52,7 +52,7 @@
       transition: 0.8s ease-out color;
     }
 
-    &:hover {
+    &:hover, &.active {
       transform: translateY(-3px);
 
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);

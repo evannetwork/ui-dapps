@@ -9,6 +9,7 @@
   - add new button designs
   - add new `.nav-list` design
   - add `toasted` design
+  - add `.evan-card` design
 
 ### Fixes
 
