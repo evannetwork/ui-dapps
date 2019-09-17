@@ -29,14 +29,31 @@
   <div class="container py-3">
     <h2>{{ wurstAmount1 }} - {{ wurstAmount2 }} - {{ wurstAmount3 }}- {{ wurstAmount4 }}</h2>
     <label>Public ? <input type="checkbox" v-model="isPublic" /></label>
+
+    <div class="row">
+      <div class="col-md-8">
+        <evan-form-data-wrapper
+          :isPublic="isPublic"
+          :form="sampleForm"
+          title="Wurstbasar"
+          :i18nScope="'test.test2'"
+          @save="handleSubmit">
+          <template v-slot:control-files>
+            <evan-file-input
+              label="files"
+              v-model="sampleForm.files.value">
+            </evan-file-input>
+          </template>
+        </evan-form-data-wrapper>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-8">
         <evan-form-data-wrapper
           v-slot="content"
-          :handleSave="handleSubmit"
           :isPublic="isPublic"
           title="Wurstbasar"
-        >
+          @save="handleSubmit">
           <form>
             <evan-form-data-input
               id="evan-form-test-1"
