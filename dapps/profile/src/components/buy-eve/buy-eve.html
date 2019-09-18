@@ -299,7 +299,7 @@
             </ion-chip>
           </div>
           <div *ngIf="!vatError && payEve.amount >= 10" text-center padding-top>
-            <h1>{{ ((payEve.amount || 0) * (1 + tax / 100)).toFixed(2) }}€</h1>
+            <h1>{{ ((payEve.amount || 0) * (1 + tax / 100)).toFixed(2) }} €</h1>
           </div>
           <div *ngIf="!vatError && payEve.amount >= 10" text-center padding-top>
             <h5>{{ '_dappprofile.pay-eve.incl' | translate }} {{ (tax)}} % {{ '_dappprofile.pay-eve.vatPercent' | translate }}</h5>
