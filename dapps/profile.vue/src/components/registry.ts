@@ -29,8 +29,10 @@
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 // profile components
-import ProfileTypeComponent from './profile/type/type.vue';
+import CompanyContactForm from './profile/company/contact/contact.vue';
 import CompanyRegistrationForm from './profile/company/registration/registration.vue';
+import DeviceDetailForm from './profile/device/detail/detail.vue';
+import ProfileTypeComponent from './profile/type/type.vue';
 
 // import general components for the profile
 import LabeledList from './utils/labeled-list/labeled-list.vue';
@@ -58,8 +60,10 @@ import NotaryTopicDisplayComponent from './verifications/notary/topic-display/to
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   // profile
-  { name: 'profile-type-switch', component: ProfileTypeComponent, },
+  { name: 'profile-company-contact', component: CompanyContactForm, },
   { name: 'profile-company-registration', component: CompanyRegistrationForm, },
+  { name: 'profile-device-detail', component: DeviceDetailForm, },
+  { name: 'profile-type-switch', component: ProfileTypeComponent, },
   // general
   { name: 'labeled-list', component: LabeledList },
   // verification specific components

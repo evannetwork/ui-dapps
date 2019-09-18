@@ -36,6 +36,62 @@ const i18n: any = {
       "verifications": "Verifications",
       "wallet": "Wallet"
     },
+    "company": {
+      "contact": {
+        "city": {
+          "error": "Please insert city name!",
+          "label": "City *",
+          "placeholder": "type in your city"
+        },
+        "homepage": {
+          "error": "Please insert a valid url!",
+          "label": "Homepage *",
+          "placeholder": "https://homepage.com"
+        },
+        "postalCode": {
+          "error": "Please insert a valid postal code!",
+          "label": "Postal Code *",
+          "placeholder": "Type in your postal code"
+        },
+        "streetAndNumber": {
+          "error": "Please insert a street and a number!",
+          "label": "Street and Number *",
+          "placeholder": "Type in your street and number"
+        },
+        "title": "Contact"
+      },
+      "registration": {
+        "company": {
+          "error": "Please insert a company name!",
+          "label": "Company *",
+          "placeholder": "Insert your Company Name..."
+        },
+        "countries": {
+          "germany": "Germany"
+        },
+        "court": {
+          "error": "Please enter the information of the registration authority!",
+          "label": "Register Court *",
+          "placeholder": "Where is the company registered?"
+        },
+        "register": {
+          "error": "Please select the register type!",
+          "label": "Register *",
+          "placeholder": "Type of register"
+        },
+        "registerNumber": {
+          "error": "Please enter the registration number",
+          "label": "Registration number *",
+          "placeholder": "Choose..."
+        },
+        "salesTaxID": {
+          "error": "Please enter the registration number",
+          "label": "Registration number *",
+          "placeholder": "Insert your sales tax ID..."
+        },
+        "title": "Registration"
+      }
+    },
     "current-balance": "Current Balance",
     "detail": {
       "account-id": "Account-ID",
@@ -44,14 +100,44 @@ const i18n: any = {
       "desc": "Profile-Details",
       "edit": "Edit Profile"
     },
-    "company": {
-      "registration": {
-        "title": "Registration",
-        "company": {
-          "placeholder": "Insert your Company Name...",
-          "error": "Please insert a company name!",
-          "label": "Company"
-        }
+    "device": {
+      "detail": {
+        "dataStreamSettings": {
+          "error": "Please insert data stream settings files!",
+          "label": "Data Stream Settings *",
+          "placeholder": "Add data stream files"
+        },
+        "location": {
+          "error": "Please insert a location!",
+          "label": "Location *",
+          "placeholder": "Type in the device location coords"
+        },
+        "manufacturer": {
+          "error": "Please insert a device manufacturer!",
+          "label": "Manufacturer *",
+          "placeholder": "Type in the device manufacturer"
+        },
+        "owner": {
+          "error": "Please insert a valid account address!",
+          "label": "Owner *",
+          "placeholder": "Type in the owners account address"
+        },
+        "serialNumber": {
+          "error": "Please insert a Serial Number!",
+          "label": "Serial Number *",
+          "placeholder": "Type in the device Serial Number"
+        },
+        "settings": {
+          "error": "Please insert settings files!",
+          "label": "Settings *",
+          "placeholder": "Add device settings files."
+        },
+        "type": {
+          "error": "Please insert a device type!",
+          "label": "Type *",
+          "placeholder": "Type in the device type"
+        },
+        "title": "Device details"
       }
     },
     "dispatchers": {
@@ -230,7 +316,7 @@ const i18n: any = {
           },
           "register": {
             "desc": "Type of register",
-            "error": "Please select the rgister type!",
+            "error": "Please select the register type!",
             "title": "Register"
           },
           "registerNumber": {

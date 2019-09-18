@@ -36,6 +36,62 @@ const i18n: any = {
       "verifications": "Verifizierungen",
       "wallet": "Wallet"
     },
+    "company": {
+      "contact": {
+        "city": {
+          "error": "Bitte geben Sie den Städtenamen ein!",
+          "label": "Stadt *",
+          "placeholder": "Geben Sie Ihre Stadt ein"
+        },
+        "homepage": {
+          "error": "Bitte geben Sie eine gültige URL ein!",
+          "label": "Homepage *",
+          "placeholder": "https://homepage.com"
+        },
+        "postalCode": {
+          "error": "Bitte geben Sie eine gültige Postleitzahl ein!",
+          "label": "Postleitzahl *",
+          "placeholder": "Geben Sie Ihre Postleitzahl ein"
+        },
+        "streetAndNumber": {
+          "error": "Bitte geben Sie eine Straße und eine Nummer ein!",
+          "label": "Straße und Hausnummer *",
+          "placeholder": "Geben Sie Ihre Straße und Nummer ein"
+        },
+        "title": "Contact"
+      },
+      "registration": {
+        "company": {
+          "error": "Bitte geben Sie einen Firmennamen ein!",
+          "label": "Unternehmen *",
+          "placeholder": "Geben Sie Ihren Firmennamen ein....."
+        },
+        "countries": {
+          "germany": "Germany"
+        },
+        "court": {
+          "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
+          "label": "Registergericht *",
+          "placeholder": "Wo ist der Firmensitz?"
+        },
+        "register": {
+          "error": "Bitte wählen Sie den Registertyp aus!",
+          "label": "Registrieren *",
+          "placeholder": "Art des Registers"
+        },
+        "registerNumber": {
+          "error": "Bitte geben Sie die Registernummer ein.",
+          "label": "Registernummer *",
+          "placeholder": "Wählen Sie..."
+        },
+        "salesTaxID": {
+          "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
+          "label": "Umsatzsteuer-ID *",
+          "placeholder": "Geben Sie Ihre Umsatzsteuer-ID ein..."
+        },
+        "title": "Registrierung"
+      }
+    },
     "current-balance": "Aktueller Kontostand",
     "detail": {
       "account-id": "Account-ID",
@@ -43,6 +99,46 @@ const i18n: any = {
       "balance": "Guthaben",
       "desc": "Profilinformationen",
       "edit": "Profil bearbeiten"
+    },
+    "device": {
+      "detail": {
+        "dataStreamSettings": {
+          "error": "Bitte fügen Sie Datenstrom-Einstellungsdateien ein!",
+          "label": "Datenstromeinstellungen *",
+          "placeholder": "Hinzufügen von Datenstrom-Dateien"
+        },
+        "location": {
+          "error": "Bitte geben Sie einen Standort an!",
+          "label": "Ort *",
+          "placeholder": "Geben Sie die Geräteplatzkoordinaten ein."
+        },
+        "manufacturer": {
+          "error": "Bitte geben Sie einen Gerätehersteller an!",
+          "label": "Hersteller *",
+          "placeholder": "Geben Sie den Gerätehersteller ein"
+        },
+        "owner": {
+          "error": "Bitte geben Sie eine korrekte Account Adresse an!",
+          "label": "Eigentümer *",
+          "placeholder": "Geben Sie die Adresse des Besitzerkontos ein."
+        },
+        "serialNumber": {
+          "error": "Bitte geben Sie eine Seriennummer ein!",
+          "label": "Seriennummer *",
+          "placeholder": "Geben Sie die Seriennummer des Geräts ein."
+        },
+        "settings": {
+          "error": "Bitte Einstellungsdateien einfügen!",
+          "label": "Einstellungen *",
+          "placeholder": "Hinzufügen von Geräteeinstellungsdateien."
+        },
+        "type": {
+          "error": "Bitte geben Sie einen Gerätetyp an!",
+          "label": "Typ *",
+          "placeholder": "Geben Sie den Gerätetyp ein"
+        },
+        "title": "Geräteinformationen"
+      }
     },
     "dispatchers": {
       "request-verification": "Verifikation wird beantragt...",

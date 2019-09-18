@@ -35,19 +35,18 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-// internal
-import * as dispatchers from '../../../../dispatchers/registry';
-
-interface RegistrationFormInterface extends EvanForm {
-  company: EvanFormControl;
-  court: EvanFormControl;
-  register: EvanFormControl;
-  registerNumber: EvanFormControl;
-  salesTaxID: EvanFormControl;
+interface DeviceDetailFormInterface extends EvanForm {
+  dataStreamSettings: EvanFormControl;
+  location: EvanFormControl;
+  manufacturer: EvanFormControl;
+  owner: EvanFormControl;
+  serialNumber: EvanFormControl;
+  settings: EvanFormControl;
+  type: EvanFormControl;
 }
 
 @Component({ })
-export default class CompanyRegistrationForm extends mixins(EvanComponent) {
+export default class DeviceDetailForm extends mixins(EvanComponent) {
   /**
    * Address for that the data should be loaded
    */
@@ -56,7 +55,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   /**
    * Evan form instance for registration data.
    */
-  registrationForm: RegistrationFormInterface = null;
+  deviceDetailForm: DeviceDetailFormInterface = null;
 
   /**
    * Load the mail details
@@ -65,53 +64,51 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
 
     // setup registration form
-    this.registrationForm = (<RegistrationFormInterface>new EvanForm(this, {
-      company: {
+    this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
+      dataStreamSettings: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
-      court: {
+      location: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
-      register: {
+      manufacturer: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          type: 'select',
-          attr: {
-            options: [
-              { value: 'germany', label: '_profile.company.registration.countries.germany', }
-            ],
-          }
-        }
-      },
-      registerNumber: {
-        value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
-      salesTaxID: {
+      owner: {
         value: '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
+          return this.value.length === 0 || EvanForm.validEthAddress(this.value);
+        },
+      },
+      serialNumber: {
+        value: '',
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
+      },
+      settings: {
+        value: [ ],
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: { type: 'files' }
+      },
+      type: {
+        value: [ ],
+        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: { type: 'files' }
       },
     }));
-  }
-
-  async changeProfileData() {
-    // send the verification request
-    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.registrationForm.toObject(),
-      type: 'registration'
-    });
   }
 }
