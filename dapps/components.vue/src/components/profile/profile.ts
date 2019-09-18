@@ -42,6 +42,7 @@ class ProfileComponent extends mixins(EvanComponent) {
    */
   size = 'default';
   verified = true;
+  editable = true;
 }
 
 export default ProfileComponent

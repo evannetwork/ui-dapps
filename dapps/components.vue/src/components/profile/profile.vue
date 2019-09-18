@@ -42,11 +42,19 @@ https://evan.network/license/
               </select>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3">
             <div class="form-group">
               <label>
                 isVerified ({{verified}})
                 <input class="form-control" type="checkbox" v-model="verified">
+              </label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>
+                isEditable ({{editable}})
+                <input class="form-control" type="checkbox" v-model="editable">
               </label>
             </div>
           </div>
@@ -56,19 +64,19 @@ https://evan.network/license/
         <div class="row">
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Device</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="device" :size="size" :isVerified="verified" />
+            <evan-profile-picture src="https://placehold.it/150" type="device" :size="size" :isVerified="verified" :isEditable="editable" />
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>User</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="user" :size="size" :isVerified="verified" />
+            <evan-profile-picture src="https://placehold.it/150" type="user" :size="size" :isVerified="verified" :isEditable="editable" />
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Company</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="company" :size="size" :isVerified="verified" />
+            <evan-profile-picture src="https://placehold.it/150" type="company" :size="size" :isVerified="verified" :isEditable="editable" />
           </div>
            <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Unknown</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="unknown" :size="size" :isVerified="verified" />
+            <evan-profile-picture src="https://placehold.it/150" type="unknown" :size="size" :isVerified="verified" :isEditable="editable" />
           </div>
         </div>
       </div>
