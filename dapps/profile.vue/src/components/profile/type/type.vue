@@ -37,7 +37,7 @@
       </template>
       <template v-slot:body>
         <div class="d-flex">
-          <evan-card class="clickable"
+          <evan-card class="clickable fixed-size"
             icon="mdi mdi-check-decagram"
             v-for="(type, index) in types"
             :class="{

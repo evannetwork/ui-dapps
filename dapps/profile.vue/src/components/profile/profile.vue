@@ -26,11 +26,11 @@
 */
 
 <template>
-  <div class="profile-detail p-md-11 p-1">
+  <div class="profile-detail p-xxl-11 p-xl-6 p-3">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div class="row">
-        <div class="col-xl-8 col-lg-6 mb-3">
+        <div class="col-xl-8 mb-3">
           <evan-profile-preview
             size="lg"
             :address="address"
@@ -42,7 +42,7 @@
             @typeChanged="type = $event"
           />
         </div>
-        <div class="col-xl-4 col-lg-6">
+        <div class="col-xl-4">
           <a class="
             d-block p-3 position-relative
             bg-inverted rounded text-decoration-none"
@@ -61,7 +61,7 @@
       </div>
 
       <div class="row">
-        <div class="col-xl-8 col-lg-6">
+        <div class="col-xl-8">
           <template v-if="type === 'company'">
             <profile-company-registration :address="address"></profile-company-registration>
             <profile-company-contact :address="address"></profile-company-contact>
@@ -70,7 +70,7 @@
             <profile-device-detail :address="address"></profile-device-detail>
           </template>
         </div>
-        <div class="col-xl-4 col-lg-6">
+        <div class="col-xl-4">
           <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
               icon="mdi mdi-plus"
