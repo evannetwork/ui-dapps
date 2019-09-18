@@ -25,6 +25,14 @@
   https://evan.network/license/
 */
 
+
+$controlSelectors: (
+  '.evan-file-input .batch-label',
+  '.evan-file-input .dropzone',
+  'input.form-control',
+  'select.form-control'
+);
+
 .evan {
   .form-control.is-invalid, .form-control.is-valid, .was-validated .form-control:invalid {
     background-image: none !important;
@@ -49,6 +57,74 @@
 
     &.form-control {
       border-radius: 4px;
+    }
+  }
+
+  .evan-form {
+    &.transparent {
+       > div:first-of-type {
+        border-bottom: 1px solid transparent;
+      }
+
+      @each $control in $controlSelectors {
+         /deep/ #{ $control } {
+          background: transparent;
+        }
+      }
+    }
+
+    &.edit-mode {
+       > div:first-of-type {
+        border-bottom: 1px solid cssVar('primary');
+
+        h5 {
+          color: cssVar('primary');
+        }
+      }
+
+      @each $control in $controlSelectors {
+         /deep/ #{ $control } {
+          background: cssVar('bg-level-1');
+        }
+      }
+    }
+
+    form {
+      margin: 0 -0.5em;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-wrap: wrap;
+
+        padding-right: 0.5em;
+        padding-left: 0.5em;
+
+        .input-wrapper {
+          width: 100%;
+          min-width: 300px;
+        }
+
+        &.inline {
+          flex-direction: row;
+
+          & > label {
+            flex-grow: 1;
+
+            width: 200px;
+            padding-right: 30px;
+
+            white-space: nowrap;
+          }
+
+          & > .input-wrapper {
+            flex-grow: 1;
+
+            width: calc(100% - 200px);
+          }
+        }
+      }
     }
   }
 }
