@@ -25,12 +25,26 @@
   https://evan.network/license/
 */
 
-import verificationAcceptDispatcher from './acceptVerification';
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import updateProfileDispatcher from './profile/updateProfile';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import ProfileMigrationLibrary from '../../lib/profileMigration';
 
-export {
-  requestIdentificationDispatcher,
-  verificationAcceptDispatcher,
-  updateProfileDispatcher,
-}
+const dispatcher = new Dispatcher(
+  `profile.vue.${ dappBrowser.getDomainName() }`,
+  'updateProfileDispatcher',
+  40 * 1000,
+  '_profile.dispatchers.profile-update'
+);
+
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
+
+    console.dir(runtime)
+
+    await ProfileMigrationLibrary.checkMigrationNeeded(runtime)
+  });
+
+export default dispatcher;

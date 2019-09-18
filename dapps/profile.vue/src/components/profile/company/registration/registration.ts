@@ -35,6 +35,9 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+// internal
+import * as dispatchers from '../../../../dispatchers/registry';
+
 interface RegistrationFormInterface extends EvanForm {
   company: EvanFormControl;
 }
@@ -66,5 +69,13 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         },
       },
     }));
+  }
+
+  async changeProfileData() {
+    // send the verification request
+    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      formData: this.registrationForm.toObject(),
+      type: 'registration'
+    });
   }
 }

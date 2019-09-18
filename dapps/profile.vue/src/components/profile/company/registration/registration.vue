@@ -31,7 +31,7 @@
       :title="'_profile.company.registration.title' | translate"
       :form="registrationForm"
       :i18nScope="'_profile.company.registration'"
-      @save="">
+      @save="changeProfileData()">
     </evan-form>
   </div>
 </template>
