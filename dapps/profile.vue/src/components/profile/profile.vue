@@ -34,7 +34,7 @@
           <evan-profile-preview
             size="lg"
             :address="address"
-            @typeClick="$refs.profileType.$refs.modal.show();"
+            @typeClick="type === 'unspecified' && $refs.profileType.$refs.modal.show();"
           />
           <profile-type-switch
             ref="profileType"

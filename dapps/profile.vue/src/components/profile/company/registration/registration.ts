@@ -35,6 +35,9 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+// internal
+import * as dispatchers from '../../../../dispatchers/registry';
+
 interface RegistrationFormInterface extends EvanForm {
   company: EvanFormControl;
   court: EvanFormControl;
@@ -61,22 +64,29 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   async created() {
     const runtime = (<any>this).getRuntime();
 
+    const profileContract = runtime.profile.profileContract;
+    const registrationData = await runtime.dataContract.getEntry(
+      profileContract,
+      'registration',
+      runtime.activeAccount
+    );
+
     // setup registration form
     this.registrationForm = (<RegistrationFormInterface>new EvanForm(this, {
       company: {
-        value: '',
+        value: registrationData.company || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
           return this.value.length !== 0;
         },
       },
       court: {
-        value: '',
+        value: registrationData.court || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
           return this.value.length !== 0;
         },
       },
       register: {
-        value: '',
+        value: registrationData.register || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
           return this.value.length !== 0;
         },
@@ -90,17 +100,24 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         }
       },
       registerNumber: {
-        value: '',
+        value: registrationData.registerNumber || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
           return this.value.length !== 0;
         },
       },
       salesTaxID: {
-        value: '',
+        value: registrationData.salesTaxID || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
           return this.value.length !== 0;
         },
       },
     }));
+  }
+
+  async changeProfileData() {
+    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      formData: this.registrationForm.toObject(),
+      type: 'registration'
+    });
   }
 }

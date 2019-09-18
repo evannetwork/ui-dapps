@@ -25,56 +25,39 @@
   https://evan.network/license/
 */
 
-// vue imports
-import Vue from 'vue';
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import ProfileMigrationLibrary from '../../lib/profileMigration';
 
-// internal
-import * as dispatchers from '../../../dispatchers/registry';
+const dispatcher = new Dispatcher(
+  `profile.vue.${ dappBrowser.getDomainName() }`,
+  'updateProfileDispatcher',
+  60000,
+  '_profile.dispatchers.profile-update'
+);
 
-@Component({ })
-export default class ProfileTypeComponent extends mixins(EvanComponent) {
-  /**
-   * All selectable types
-   */
-  types = [
-    'company',
-    'device'
-  ];
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
 
-  /**
-   * Currents users profile
-   */
-  profileType = '';
+    await ProfileMigrationLibrary.checkOrMigrateProfile(runtime);
 
-  /**
-   * Load profile type
-   */
-  async created() {
-    this.profileType = 'unspecified';
-  }
+    const profileContract = runtime.profile.profileContract;
 
-  /**
-   * Trigger profile type change
-   *
-   * @param      {string}  type    The type
-   */
-  typeChanged(type: string) {
-    if (this.profileType !== 'unspecified') {
-      this.$emit('typeChanged', this.profileType);
-      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-        formData: {
-          profileType: this.profileType
-        },
-        type: 'accountDetails'
-      });
-      (this.$refs.modal as any).hide();
-    }
-  }
-}
+    const previousValue = await runtime.dataContract.getEntry(
+      profileContract,
+      data.type,
+      runtime.activeAccount
+    );
+
+    await runtime.dataContract.setEntry(
+      profileContract,
+      data.type,
+      Object.assign({}, previousValue || {}, data.formData),
+      runtime.activeAccount
+    );
+  });
+
+export default dispatcher;

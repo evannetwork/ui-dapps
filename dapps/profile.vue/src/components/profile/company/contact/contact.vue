@@ -31,7 +31,7 @@
       :title="'_profile.company.contact.title' | translate"
       :form="contactForm"
       :i18nScope="'_profile.company.contact'"
-      @save="">
+      @save="changeProfileData()">
     </evan-form>
   </div>
 </template>

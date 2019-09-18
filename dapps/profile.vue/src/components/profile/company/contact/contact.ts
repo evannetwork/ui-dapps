@@ -35,6 +35,9 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+// internal
+import * as dispatchers from '../../../../dispatchers/registry';
+
 interface ContactFormInterface extends EvanForm {
   city: EvanFormControl;
   homepage: EvanFormControl;
@@ -60,32 +63,46 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   async created() {
     const runtime = (<any>this).getRuntime();
 
+    const profileContract = runtime.profile.profileContract;
+    const contactData = await runtime.dataContract.getEntry(
+      profileContract,
+      'contact',
+      runtime.activeAccount
+    );
+
     // setup registration form
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       streetAndNumber: {
-        value: '',
+        value: contactData.streetAndNumber || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
       },
       postalCode: {
-        value: '',
+        value: contactData.postalCode || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return !!this.value.match(/^\d{5}$/);
         },
       },
       city: {
-        value: '',
+        value: contactData.city || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
       },
       homepage: {
-        value: '',
+        value: contactData.homepage || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return !!this.value.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
         },
       },
     }));
+  }
+
+  async changeProfileData() {
+    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      formData: this.contactForm.toObject(),
+      type: 'contact'
+    });
   }
 }

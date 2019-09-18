@@ -27,8 +27,10 @@
 
 import verificationAcceptDispatcher from './acceptVerification';
 import requestIdentificationDispatcher from './notary/requestIdentification';
+import updateProfileDispatcher from './profile/updateProfile';
 
 export {
   requestIdentificationDispatcher,
   verificationAcceptDispatcher,
+  updateProfileDispatcher,
 }
