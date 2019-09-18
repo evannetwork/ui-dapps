@@ -68,6 +68,17 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   async created() {
     const runtime = (<any>this).getRuntime();
+
+    const profileContract = runtime.profile.profileContract;
+
+    const accountDetails = await runtime.dataContract.getEntry(
+      profileContract,
+      'accountDetails',
+      runtime.activeAccount
+    );
+    this.type = accountDetails.profileType || 'unspecified';
+
+    this.$emit('typeChanged', this.profileType);
     // fill empty address with current logged in user
     this.address = this.$route.params.address || runtime.activeAccount;
     // load balance and parse it to 3 decimal places

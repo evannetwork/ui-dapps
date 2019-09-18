@@ -31,25 +31,30 @@ import * as bcc from '@evan.network/api-blockchain-core';
 export default class ProfileMigrationLibrary {
 
 
-  static async checkMigrationNeeded(runtime) {
-
-    // create unique
-    console.dir(await runtime.sharing.getSharings(runtime.profile.profileContract.options.address))
-
+  static async checkOrMigrateProfile(runtime) {
+    let description;
     try {
-      console.dir(await runtime.description.getDescription(runtime.profile.profileContract.options.address));
-      await runtime.description.getDescription(runtime.profile.profileContract.options.address);
+      // try to load the description, if this errors, create a new profile
+      description = await runtime.description.getDescription(
+        runtime.profile.profileContract.options.address
+      );
     } catch (e) {
-      console.dir(e)
-      // old profile migrate first
+      // when the description errors, create a new profile
       await this.migrateProfile(runtime);
     }
 
-    await this.setNewFields(runtime);
-
+    // check if the initial description exists, if not. create new fields and set initial description
+    if (!description) {
+      await this.setNewFields(runtime);
+    }
   }
 
-  static async setNewFields(runtime) {
+  /**
+   * Sets the new profile fields to the current account
+   *
+   * @param      {any}  runtime  runtime object
+   */
+  static async setNewFieldsToProfile(runtime) {
 
     const profileAddress = runtime.profile.profileContract.options.address;
     const currentAccount = runtime.activeAccount;
@@ -94,23 +99,28 @@ export default class ProfileMigrationLibrary {
     await runtime.sharing.saveSharingsToContract(profileAddress, sharings, currentAccount);
 
     const sharingsNew = await runtime.sharing.getSharings(profileAddress);
-    console.dir(sharingsNew)
-
-    // set the owner of the new fields to the current user
-
-    // set the sharing to the contract
 
     // set the description to the contract
     await runtime.description.setDescription(profileAddress, description, runtime.activeAccount);
   }
 
+  /**
+   * creates a new profile from the factory and migrates the old one
+   *
+   * @param      {any}  runtime  The runtime
+   */
   static async migrateProfile(runtime) {
 
     const profileAddress = runtime.profile.profileContract.options.address;
     const currentAccount = runtime.activeAccount;
 
+    // get the profile factory
     const factoryAddress = await runtime.nameResolver.getAddress('profile.factory.evan');
-    const factory = runtime.contractLoader.loadContract('BaseContractFactoryInterface', factoryAddress);
+    const factory = runtime.contractLoader.loadContract(
+      'BaseContractFactoryInterface',
+      factoryAddress
+    );
+    // create a new profile contract from the factory
     const contractId = await runtime.executor.executeContractTransaction(
       factory,
       'createContract', {
@@ -126,28 +136,21 @@ export default class ProfileMigrationLibrary {
     );
 
     const oldDataFields = ['addressBook', 'bookmarkedDapps', 'contracts', 'contacts', 'profileOptions', 'publicKey', 'templates'];
-
-
-
+    // migrate the old fields from the profile
     await Promise.all(oldDataFields.map(async (oldDataField) => {
       const oldHash = await runtime.dataContract.getEntry(profileAddress, oldDataField, currentAccount, false, false);
       if (oldHash !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
         await runtime.dataContract.setEntry(contractId, oldDataField, oldHash, currentAccount, false, false);
-        console.log(oldDataField + ' ' + oldHash);
       }
-
     }));
-    // get the sharings hash
+
+    // get and migrate the sharings hash
     const shared = runtime.contractLoader.loadContract('Shared', profileAddress);
     const sharedNew = runtime.contractLoader.loadContract('Shared', contractId);
     const sharingHash = await runtime.executor.executeContractCall(shared, 'sharing');
     await runtime.executor.executeContractTransaction(
             sharedNew, 'setSharing', { from: currentAccount, autoGas: 1.1, }, sharingHash);
 
-    await Promise.all(oldDataFields.map(async (oldDataField) => {
-      const oldHash = await runtime.dataContract.getEntry(contractId, oldDataField, currentAccount, false, false);
-      console.log(oldDataField + ' ' + oldHash);
-    }));
     // register profile for user
     const profileIndexDomain = runtime.nameResolver.getDomainName(
       runtime.nameResolver.config.domains.profile);

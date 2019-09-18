@@ -35,6 +35,9 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+// internal
+import * as dispatchers from '../../../dispatchers/registry';
+
 @Component({ })
 export default class ProfileTypeComponent extends mixins(EvanComponent) {
   /**
@@ -53,7 +56,7 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
   /**
    * Load profile type
    */
-  created() {
+  async created() {
     this.profileType = 'unspecified';
   }
 
@@ -65,6 +68,12 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
   typeChanged(type: string) {
     if (this.profileType !== 'unspecified') {
       this.$emit('typeChanged', this.profileType);
+      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+        formData: {
+          profileType: this.profileType
+        },
+        type: 'accountDetails'
+      });
       (this.$refs.modal as any).hide();
     }
   }

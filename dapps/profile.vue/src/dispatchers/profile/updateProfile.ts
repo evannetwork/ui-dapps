@@ -34,7 +34,7 @@ import ProfileMigrationLibrary from '../../lib/profileMigration';
 const dispatcher = new Dispatcher(
   `profile.vue.${ dappBrowser.getDomainName() }`,
   'updateProfileDispatcher',
-  40 * 1000,
+  60000,
   '_profile.dispatchers.profile-update'
 );
 
@@ -42,9 +42,22 @@ dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = instance.runtime;
 
-    console.dir(runtime)
+    await ProfileMigrationLibrary.checkOrMigrateProfile(runtime);
 
-    await ProfileMigrationLibrary.checkMigrationNeeded(runtime)
+    const profileContract = runtime.profile.profileContract;
+
+    const previousValue = await runtime.dataContract.getEntry(
+      profileContract,
+      data.type,
+      runtime.activeAccount
+    );
+
+    await runtime.dataContract.setEntry(
+      profileContract,
+      data.type,
+      Object.assign({}, previousValue || {}, data.formData),
+      runtime.activeAccount
+    );
   });
 
 export default dispatcher;
