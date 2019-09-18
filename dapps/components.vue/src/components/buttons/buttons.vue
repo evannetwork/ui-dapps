@@ -168,6 +168,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './buttons';
+  import Component from './buttons.ts';
   export default Component;
 </script>
