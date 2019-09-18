@@ -184,7 +184,11 @@ export const en = {
         "invalid_customer": "Your customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
         "price_not_okay": "An unknown error occurred on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
         "too_many_accounts": "An unknown error occurred regarding your account. <b>Your card was NOT debited!</b> Please contact our customer support.",
-        "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later."
+        "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
+        "billing_country_and_vat_missmatch": "Provided VAT number does not match given country code.",
+        "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT number is required.",
+        "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
+        "vat_number_invalid": "VAT number seems to be invalid.",
       },
       "successful-payment": "Your order was successfully placed. You will receive an invoice by email. <br> The process is completed as soon as you receive the invoice.<br />The amount will be credited in the next 5 to 10 minutes to your wallet.",
       "sepa-acceptance": "By providing your IBAN and confirming this payment, you are authorizing evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.",
