@@ -25,5 +25,53 @@ https://evan.network/license/
 */
 
 <template>
-    <evan-profile-picture src="https://place-hold.it/140" alt="" type="device">Ich bin ein Text von der Instanz</evan-profile-picture>
+  <div>
+    <div class="white-box border">
+      <h3 class="header">Profile pictures</h3>
+      <div class="content">
+        <div class="row">
+          <div class="form-group col-xs-6">
+            <span>Picture Size</span>
+            <select class="form-control custom-select"
+              ref="type"
+              v-model="size">
+              <option value="default">default</option>
+              <option value="lg">large (lg)</option>
+              <option value="sm">small (sm)</option>
+            </select>
+          </div>
+          <div class="form-group col-xs-6">
+            <label>
+              verified
+              <input class="form-control" type="checkbox" v-model="verified">
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-xs-12">
+            <h2>Device</h2>
+            <evan-profile-picture src="https://placehold.it/150" type="device" :size="size" :isVerified="verified" />
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12">
+            <h2>User</h2>
+            <evan-profile-picture src="https://placehold.it/150" type="user" :size="size" :isVerified="verified" />
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12">
+            <h2>Company</h2>
+            <evan-profile-picture src="https://placehold.it/150" type="company" :size="size" :isVerified="verified" />
+          </div>
+           <div class="col-lg-3 col-md-6 col-xs-12">
+            <h2>Unknown</h2>
+            <evan-profile-picture src="https://placehold.it/150" type="unknown" :size="size" :isVerified="verified" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </template>
+
+<script lang="ts">
+  import Component from './profile';
+  export default Component;
+</script>
