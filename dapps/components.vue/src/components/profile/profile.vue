@@ -30,22 +30,28 @@ https://evan.network/license/
       <h3 class="header">Profile pictures</h3>
       <div class="content">
         <div class="row">
-          <div class="form-group col-xs-6">
-            <span>Picture Size</span>
-            <select class="form-control custom-select"
-              ref="type"
-              v-model="size">
-              <option value="default">default</option>
-              <option value="lg">large (lg)</option>
-              <option value="sm">small (sm)</option>
-            </select>
+          <div class="col-md-6">
+            <div class="form-group">
+              <span>Picture Size</span>
+              <select class="form-control custom-select"
+                ref="type"
+                v-model="size">
+                <option value="default">default</option>
+                <option value="lg">large (lg)</option>
+                <option value="sm">small (sm)</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group col-xs-6">
-            <label>
-              verified
-              <input class="form-control" type="checkbox" v-model="verified">
-            </label>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>
+                isVerified ({{verified}})
+                <input class="form-control" type="checkbox" v-model="verified">
+              </label>
+            </div>
           </div>
+
+
         </div>
         <div class="row">
           <div class="col-lg-3 col-md-6 col-xs-12">
