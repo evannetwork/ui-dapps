@@ -33,9 +33,7 @@ https://evan.network/license/
           <div class="col-md-6">
             <div class="form-group">
               <span>Picture Size</span>
-              <select class="form-control custom-select"
-                ref="type"
-                v-model="size">
+              <select class="form-control custom-select" ref="type" v-model="size">
                 <option value="default">default</option>
                 <option value="lg">large (lg)</option>
                 <option value="sm">small (sm)</option>
@@ -46,7 +44,11 @@ https://evan.network/license/
             <div class="form-group">
               <label>
                 isVerified ({{verified}})
-                <input class="form-control" type="checkbox" v-model="verified">
+                <input
+                  class="form-control"
+                  type="checkbox"
+                  v-model="verified"
+                />
               </label>
             </div>
           </div>
@@ -54,38 +56,63 @@ https://evan.network/license/
             <div class="form-group">
               <label>
                 isEditable ({{editable}})
-                <input class="form-control" type="checkbox" v-model="editable">
+                <input
+                  class="form-control"
+                  type="checkbox"
+                  v-model="editable"
+                />
               </label>
             </div>
           </div>
-
-
         </div>
-        <div class="row">
+        <div class="row" style>
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Device</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="device" :size="size" :isVerified="verified" :isEditable="editable" />
+            <evan-profile-picture
+              src="https://placehold.it/150"
+              type="device"
+              :size="size"
+              :isVerified="verified"
+              :isEditable="editable"
+            />
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>User</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="user" :size="size" :isVerified="verified" :isEditable="editable" />
+            <evan-profile-picture
+              src="https://placehold.it/150"
+              type="user"
+              :size="size"
+              :isVerified="verified"
+              :isEditable="editable"
+            />
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Company</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="company" :size="size" :isVerified="verified" :isEditable="editable" />
+            <evan-profile-picture
+              src="https://placehold.it/150"
+              type="company"
+              :size="size"
+              :isVerified="verified"
+              :isEditable="editable"
+            />
           </div>
-           <div class="col-lg-3 col-md-6 col-xs-12">
+          <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Unknown</h2>
-            <evan-profile-picture src="https://placehold.it/150" type="unknown" :size="size" :isVerified="verified" :isEditable="editable" />
+            <evan-profile-picture
+              src="https://placehold.it/150"
+              type="unknown"
+              :size="size"
+              :isVerified="verified"
+              :isEditable="editable"
+            />
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './profile';
+  import Component from "./profile";
   export default Component;
 </script>
