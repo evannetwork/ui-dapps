@@ -13,7 +13,8 @@
   - move docs components to `help.vue`
 - `components.vue`
   - add dapp for displaying evan components
-- add updates for customer country based vat checks
+- `profile`
+  - add updates for customer country based vat checks
 
 ### Fixes
 - `organizations`
