@@ -10,6 +10,7 @@
   - add new `.nav-list` design
   - add `toasted` design
   - add `.evan-card` design
+  - add `xxl` and `xxxl` breakpoint for bootstrap
 
 ### Fixes
 
