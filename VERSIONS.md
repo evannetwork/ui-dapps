@@ -2,30 +2,35 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+## Version 3.9.0
+### Features
 - use new color specifications
-- `organizations`
+- `organizations` (moved to profile.vue)
   - only allow `pdf` files for notary identification
   - add file rename hint
   - add mainnet account
   - move organizations dapp to `profile.vue.evan`
-- add `explorer.vue`, `verifications.vue` and `help.vue` dapps
-- `dashboard.vue`
+- add `explorer.vue`, `verifications.vue` and `help.vue` dapps (v0.0.1)
+- `dashboard.vue` (v3.2.0)
   - move docs components to `help.vue`
-- `components.vue`
+- `components.vue` (v0.0.1)
   - add dapp for displaying evan components
-- `profile`
+- `profile` (v1.6.0)
   - add updates for customer country based vat checks
-- `onboarding.vue`
+- `onboarding.vue` (v3.1.0)
   - add new onboarding design
 
 ### Fixes
-- `organizations`
+- `organizations` (moved to profile.vue)
   - use new `getSmartAgentAuthHeaders` to build `EvanAuth` header for smart-agent requests
   - fix steppers
-- `profile`
+- `profile` (v1.6.0)
   - use new `getSmartAgentAuthHeaders` to build `EvanAuth` header for smart-agent requests
-
-### Deprecations
 
 
 ## Version 3.7.1

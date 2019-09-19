@@ -3,9 +3,9 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "angular-core": "^2.2.0",
+        "angular-core": "^2.2.1",
         "angular-libs": "^2.1.1",
-        "smart-contracts": "^2.6.0"
+        "smart-contracts": "^2.6.1"
       },
       "entrypoint": "demomanagement.js",
       "files": [
