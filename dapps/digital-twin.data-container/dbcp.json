@@ -12,7 +12,7 @@
         "datacontainer.digitaltwin.js",
         "datacontainer.digitaltwin.css"
       ],
-      "origin": "QmcaFSmuirSk8bhgpTwRoMqrmW8NXdRU5FBv9udvmeFuBg",
+      "origin": "QmNy4B7VxjahTxgtNTs3PUBzMnB6kXuw69FxwfYqPqBNHu",
       "primaryColor": "#004f7d",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -38,7 +38,7 @@
       "evan",
       "library"
     ],
-    "version": "1.8.1",
+    "version": "1.8.2",
     "versions": {
       "0.1.0": "QmRb9kLp9h2iuwuCRrJSndMAsXBnTi1ZtffBdNG9Ue8aiU",
       "0.9.0": "Qmbghjv6wRMMybvTcEcsPKKsRvQxWQjJEcLcB6oeBc1Rwo",
@@ -55,7 +55,8 @@
       "1.7.0": "Qmd3xMXbZntkB2HPmH6aW4NvErARNKnNuwPeRJtUFX3ctk",
       "1.7.1": "QmYzovrMFw99N21ug7reFRtMGqtEqDjFTw9gwV85ZJNf6s",
       "1.8.0": "QmcJVdX2bGoUy2r5M5usULqf28AED56mboxUbV7thXR2nA",
-      "1.8.1": "QmR1gj8opYxFPHAzwNW8kzyMYNLLsGEh2TM5dCdntj2Zpi"
+      "1.8.1": "QmYvQn3vchYjZGEULxixGJcRjHkNg8cEGEN5wHuwheA5AR",
+      "1.8.2": "QmQ4XvTFmz6ZsTiUR1frNV4PKmnLMiYwYkM7HQejBUNGYj"
     }
   }
 }

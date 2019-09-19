@@ -18,6 +18,8 @@
 - add `explorer.vue`, `verifications.vue` and `help.vue` dapps (v0.0.1)
 - `dashboard.vue` (v3.2.0)
   - move docs components to `help.vue`
+- `digital-twin.data-container` (v1.8.2)
+  - use correct step active class
 - `components.vue` (v0.0.1)
   - add dapp for displaying evan components
 - `profile` (v1.6.0)
