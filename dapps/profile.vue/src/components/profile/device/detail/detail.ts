@@ -34,6 +34,10 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { FileHandler, } from '@evan.network/ui';
+
+// internal
+import * as dispatchers from '../../../../dispatchers/registry';
 
 interface DeviceDetailFormInterface extends EvanForm {
   dataStreamSettings: EvanFormControl;
@@ -53,62 +57,111 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
   @Prop() address;
 
   /**
-   * Evan form instance for registration data.
+   * Evan form instance for device details data.
    */
   deviceDetailForm: DeviceDetailFormInterface = null;
 
   /**
-   * Load the mail details
+   * Load the device details
    */
   async created() {
     const runtime = (<any>this).getRuntime();
 
+    const profileContract = runtime.profile.profileContract;
+    const deviceData = await runtime.dataContract.getEntry(
+      profileContract,
+      'deviceDetails',
+      runtime.activeAccount
+    );
+
+    const fileFields = ['settings', 'type'];
+
+    await Promise.all(fileFields.map(async (field) => {
+      const blobs = []
+      if (deviceData[field]) {
+        // generate new keys
+        const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob')
+        const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
+
+
+        const hashKey = await runtime.sharing.getHashKey(
+          profileContract.options.address,
+          runtime.activeAccount
+        );
+        const contentKey = await runtime.sharing.getKey(
+          profileContract.options.address,
+          runtime.activeAccount,
+          'deviceDetails'
+        );
+
+
+        const dencryptedHashBuffer = await hashCryptor.decrypt(
+          Buffer.from(deviceData[field].substr(2), 'hex'), { key: hashKey })
+
+        const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
+        const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
+        deviceData[field] = [];
+        for (let file of decrypted) {
+          file.size = file.file.length;
+          deviceData[field].push(await FileHandler.fileToContainerFile(file));
+        }
+      }
+    }));
+
+
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
       dataStreamSettings: {
-        value: '',
+        value: deviceData.dataStreamSettings || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
       location: {
-        value: '',
+        value: deviceData.location || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
       manufacturer: {
-        value: '',
+        value: deviceData.manufacturer || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
       owner: {
-        value: '',
+        value: deviceData.owner || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length === 0 || EvanForm.validEthAddress(this.value);
         },
       },
       serialNumber: {
-        value: '',
+        value: deviceData.serialNumber || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
       },
       settings: {
-        value: [ ],
+        value: deviceData.settings || [ ],
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
         uiSpecs: { type: 'files' }
       },
       type: {
-        value: [ ],
+        value: deviceData.type || [ ],
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
         uiSpecs: { type: 'files' }
       },
     }));
+  }
+
+  async changeProfileData() {
+    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      formData: this.deviceDetailForm.toObject(),
+      type: 'deviceDetails'
+    });
   }
 }

@@ -31,7 +31,7 @@
       :title="'_profile.device.detail.title' | translate"
       :form="deviceDetailForm"
       :i18nScope="'_profile.device.detail'"
-      @save="">
+      @save="changeProfileData()">
     </evan-form>
   </div>
 </template>
