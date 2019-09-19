@@ -45,7 +45,7 @@ export default class ProfileMigrationLibrary {
 
     // check if the initial description exists, if not. create new fields and set initial description
     if (!description) {
-      await this.setNewFields(runtime);
+      await this.setNewFieldsToProfile(runtime);
     }
   }
 
