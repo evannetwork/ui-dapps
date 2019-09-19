@@ -11,6 +11,7 @@
   - add `toasted` design
   - add `.evan-card` design
   - add `xxl` and `xxxl` breakpoint for bootstrap
+  - add `evan-form` style
 
 ### Fixes
 
