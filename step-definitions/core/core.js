@@ -8,7 +8,7 @@ When(/^I click the element with id "([^"]+)"$/,
     const evan = setupEvan(client);
 
     await client.waitForElementPresent(`#${ id }`, 10 * 1000);
-    await client.pause(1000);
+    await client.click(`#${ id }`);
   }
 );
 
