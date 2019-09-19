@@ -67,10 +67,10 @@
           <div class="evan-step-header-sm text-center">
             <button class="btn"
               v-for="(step, index) of steps"
+              :class="{ 'active': activeStep === index, }"
               :disabled="step.disabled(this)"
               @click="activeStep = index">
-              <span class="stepper-circle"
-                :class="{ 'active': activeStep === index, }">
+              <span class="stepper-circle">
               </span>
             </button>
           </div>

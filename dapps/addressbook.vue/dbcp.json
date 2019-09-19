@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.5.0"
+        "evancore.vue.libs": "^1.6.0"
       },
       "entrypoint": "addressbook.vue.js",
       "files": [
         "addressbook.vue.js"
       ],
-      "origin": "QmSZ7s4RBAzuEaxBWnkGYdtDhVjvdhrg4E8JLc9AgvkWue",
+      "origin": "QmagoShvPbUpjXHRyUbPvtZZXDEWNygD9n68bvxaCzS4Aq",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"
@@ -44,7 +44,7 @@
       "1.3.0": "QmQoxDpCom98qJtAtwSSrG3H5sehCDWdTZhmCTtZ6Jhac9",
       "1.5.0": "QmX5SksGr8C8fYDiKrNPzVxFDJpmzKJFT2inLPhjmFCQdW",
       "3.0.0": "QmTgP2xvke2o5VEXCDho6bnkEi7er49iLYM8PotGbac8ce",
-      "3.1.0": "QmTBP46AL8DDSTLVuZUeQH9JtojdgBDHbqx8Lax4PRPgZR"
+      "3.1.0": "QmV5z4JHRDqq3iyFso44pxu95xurDLpFnzMC8T3YW9L2Wn"
     }
   }
 }
