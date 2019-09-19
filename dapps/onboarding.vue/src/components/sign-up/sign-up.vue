@@ -176,12 +176,6 @@
                 </div>
               </template>
 
-              <evan-modal ref="creatingProfileError">
-                <template v-slot:body>
-                  <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>
-                </template>
-              </evan-modal>
-
               <div class="text-center"
                 v-if="!creatingProfile">
                 <button type="button" class="btn  btn-primary btn-block"
@@ -204,6 +198,41 @@
         </div>
       </div>
     </div>
+    <evan-modal
+      ref="modal"
+      :hideFooterButton="true"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_onboarding.sign-up.get-mnemonic' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div>
+          <p v-html="$t('_onboarding.sign-up.get-mnemonic-desc-long')">
+          </p>
+          <h3 class="text-danger text-center">{{ mnemonic }}</h3>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <evan-button type="secondary"
+          id="modal-cancel"
+          @click="navigateToEvan();">
+          {{ '_evan.view-profile' | translate }}
+        </evan-button>
+      </template>
+    </evan-modal>
+    <evan-modal
+      ref="creatingProfileError">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_onboarding.sign-up.profile-create-error.title' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>
+      </template>
+    </evan-modal>
   </div>
 </template>
 
