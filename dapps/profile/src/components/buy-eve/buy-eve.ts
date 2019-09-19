@@ -225,7 +225,7 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
   /**
    * timeout after key press for edge server vat checks
    */
-  private waitingForKeypressTimeout: number;
+  private waitingForKeypressTimeout: any;
 
   constructor(
     private _DomSanitizer: DomSanitizer,
@@ -509,22 +509,23 @@ export class EvanBuyEveComponent extends AsyncComponent implements AfterViewInit
    */
   public async validateVat(vat: string) {
     const timeout = 500;
-    this.waitingForKeypressTimeout = Date.now();
 
-    setTimeout(async () => {
-      if (this.waitingForKeypressTimeout + timeout < Date.now()) {
-        const country = this.stripePayment.get('country').value;
-        const { result } = (await this.http
-          .get(`${ this.agentUrl }/smart-agents/payment-processor/checkVat?country=${country}${vat ? '&vat=' + vat : ''}`)
-          .toPromise()
-        ).json();
+    if (this.waitingForKeypressTimeout) {
+      clearTimeout(this.waitingForKeypressTimeout);
+    }
+    this.waitingForKeypressTimeout = setTimeout(async () => {
+      delete this.waitingForKeypressTimeout;
+      const country = this.stripePayment.get('country').value;
+      const { result } = (await this.http
+        .get(`${ this.agentUrl }/smart-agents/payment-processor/checkVat?country=${country}${vat ? '&vat=' + vat : ''}`)
+        .toPromise()
+      ).json();
 
-        this.isValidVat = !result.error;
-        this.tax = result.tax;
-        this.vatError = result.error;
+      this.isValidVat = !result.error;
+      this.tax = result.tax;
+      this.vatError = result.error;
 
-        this.ref.detectChanges();
-      }
+      this.ref.detectChanges();
     }, timeout);
   }
 
