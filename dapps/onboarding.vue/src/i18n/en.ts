@@ -101,7 +101,7 @@ export default {
         "header-0" : "Your gateway to digitization",
         "desc-0": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organisations and people can be securely and trustfully processed.",
         "header-1": "Transparency",
-        "desc-1": "Blockchain technology enables transarency of transaction by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privaty is saved by using decrypted addresses instead of plain names. To easy up",
+        "desc-1": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
       },
       "password0": "Password",
       "password1": "Retype password",
