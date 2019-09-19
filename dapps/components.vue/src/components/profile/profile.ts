@@ -30,7 +30,11 @@ import Component, { mixins } from 'vue-class-component';
 import Vue from 'vue';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+
+interface SampleFormInterface extends EvanForm {
+  files: any;
+}
 
 /**
  * @class ProfileComponent
@@ -41,8 +45,36 @@ class ProfileComponent extends mixins(EvanComponent) {
    * UI settings
    */
   size = 'default';
+  name = 'Hanns Wurst';
   verified = true;
   editable = true;
+  imgSrc = 'https://i.pravatar.cc/150';
+
+  sampleForm: SampleFormInterface = null;
+
+  created() {
+    this.sampleForm = new EvanForm(this, {
+      files: {
+        value: [],
+        validate: function(vueInstance: ProfileComponent, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        }
+      },
+    }) as SampleFormInterface;
+  }
+
+  handleSubmitMock(ev: Event): Promise<any> {
+    console.log(ev)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('resolved')
+
+        resolve('saved')
+      }, 1000)
+    })
+  }
+
 }
 
 export default ProfileComponent

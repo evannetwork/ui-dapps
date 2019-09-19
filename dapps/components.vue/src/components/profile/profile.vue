@@ -29,15 +29,26 @@ https://evan.network/license/
     <div class="white-box border">
       <h3 class="header">Profile pictures</h3>
       <div class="content">
+        <!-- settings section -->
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <span>Picture Size</span>
+              <span>Picture Size (size)</span>
               <select class="form-control custom-select" ref="type" v-model="size">
                 <option value="default">default</option>
                 <option value="lg">large (lg)</option>
                 <option value="sm">small (sm)</option>
               </select>
+            </div>
+             <div class="form-group">
+              <label>
+                Image source (src)
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="imgSrc"
+                />
+              </label>
             </div>
           </div>
           <div class="col-md-3">
@@ -63,15 +74,28 @@ https://evan.network/license/
                 />
               </label>
             </div>
+             <div class="form-group">
+              <label>
+                Name (name)
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="name"
+                />
+              </label>
+            </div>
           </div>
         </div>
+        <!-- profile pictures -->
         <div class="row" style>
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Device</h2>
             <evan-profile-picture
-              src="https://placehold.it/150"
+              :src="sampleForm.files.value[0] || imgSrc"
+              :fileForm="sampleForm.files"
               type="device"
               :size="size"
+              :name="name"
               :isVerified="verified"
               :isEditable="editable"
             />
@@ -79,9 +103,10 @@ https://evan.network/license/
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>User</h2>
             <evan-profile-picture
-              src="https://placehold.it/150"
+             :src="sampleForm.files.value[0] || imgSrc"
               type="user"
               :size="size"
+              :name="name"
               :isVerified="verified"
               :isEditable="editable"
             />
@@ -89,9 +114,10 @@ https://evan.network/license/
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Company</h2>
             <evan-profile-picture
-              src="https://placehold.it/150"
+             :src="sampleForm.files.value[0] || imgSrc"
               type="company"
               :size="size"
+              :name="name"
               :isVerified="verified"
               :isEditable="editable"
             />
@@ -99,12 +125,12 @@ https://evan.network/license/
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h2>Unknown</h2>
             <evan-profile-picture
-              src="https://placehold.it/150"
               type="unknown"
               :size="size"
-              :isVerified="verified"
-              :isEditable="editable"
+              :isVerified="false"
+              :isEditable="false"
             />
+            <p class="text-muted">Has usually no avatar, no name and verification.</p>
           </div>
         </div>
       </div>
