@@ -10,10 +10,10 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
 
   await client.url(evan.baseUrl);
   await client.pause(5000);
-  if (customPart && !evan.accounts[accountName]) {
-    throw new Error(`no account data found for account ${accountName}`);
-  }
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
+  if (!user || !user.mnemonic) {
+    throw new Error(`no account data found for account ${accountName || 'default'}`);
+  }
 
   await client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
@@ -67,4 +67,51 @@ Then(/^I can see the angular dashboard$/, async () => {
 Then(/^I am no longer logged in to angular$/, async () => {
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
   await client.assert.visible('onboarding-root');
+});
+
+When(/I go to EVE payments tab/, async () => {
+  const evan = setupEvan(client);
+
+  await client.url(`${ evan.baseUrl }#/dashboard.evan/profile.evan/buy-eve`);
+  await client.waitForElementPresent('.buy-eve', 10 * 1000);
+});
+
+When('I select the country {string}', async (country) => {
+  client.useXpath();
+
+  const countryDropdown = '//ion-label/*[normalize-space(text()) = \'Country *\']/parent::*/following-sibling::ion-select'
+  await client.expect.element(countryDropdown).to.be.visible;
+  await client.click(countryDropdown);
+
+  await client.waitForElementPresent('//h2[normalize-space(text()) = \'Country *\']', 20e3);
+  client.pause(1e3);
+  
+  const selectedCountry = `//button[@ion-button='alert-radio-button']/*/*[normalize-space(text()) = '${country}']/parent::*/parent::*`;
+  const radioButton = await client.element('xpath', selectedCountry);
+
+  await client.execute(function (country) {
+    const radioButtons = Array.from(document.querySelectorAll('ion-alert button.alert-radio-button'));
+    const matches = radioButtons.filter(function (radioButton) {
+      return radioButton.querySelector('.alert-radio-label').innerText === country });
+    if (matches.length) {
+      matches[0].scrollIntoView();
+    }
+  }, [ country ]);
+
+  client.pause(1e3);
+  await client.click(selectedCountry);
+  
+  const okButton = '//button[@ion-button=\'alert-button\']/*[normalize-space(text()) = \'OK\']/parent::*';
+  await client.click(okButton);
+
+  client.useCss();
+});
+
+Then('amount to pay is shown as {string}', async (amount) => {
+  client.useXpath();
+
+  const selector = `//h1[normalize-space(text()) = \'Total amount\']/parent::*/following-sibling::div/h1[normalize-space(text()) = \'${amount}\']`;
+  await client.waitForElementPresent(selector, 30 * 1000);
+
+  client.useCss();
 });
