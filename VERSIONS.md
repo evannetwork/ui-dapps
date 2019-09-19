@@ -15,6 +15,8 @@
   - add dapp for displaying evan components
 - `profile`
   - add updates for customer country based vat checks
+- `onboarding.vue`
+  - add new onboarding design
 
 ### Fixes
 - `organizations`
