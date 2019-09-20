@@ -45,7 +45,7 @@ class ProfileComponent extends mixins(EvanComponent) {
    * UI settings
    */
   size = 'default';
-  name = 'Hanns Wurst';
+  accountName = 'Hanns Wurst';
   verified = true;
   editable = true;
   imgSrc = 'https://i.pravatar.cc/150';
