@@ -26,33 +26,55 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import Vue from 'vue';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 
-import components from '../../components';
-
-@Component({ })
-export default class RootComponent extends mixins(EvanComponent) {
-  /**
-   * navEntries for top navigation
-   */
-  navEntries: Array<any> = [ ];
-
-  /**
-   * Setup navigation structure
-   */
-  created() {
-    this.navEntries = components.map(entry => (entry ? {
-      id: `nav-entry-${ entry.path }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.path }`,
-      text: `${ entry.path }`,
-      icon: entry.icon,
-    } : null));
-  }
+interface SampleFormInterface extends EvanForm {
+  files: any;
 }
+
+/**
+ * @class ProfileComponent
+ */
+@Component({ })
+class ProfileComponent extends mixins(EvanComponent) {
+  /**
+   * UI settings
+   */
+  size = 'default';
+  accountName = 'Hanns Wurst';
+  verified = true;
+  editable = true;
+  imgSrc = 'https://i.pravatar.cc/150';
+
+  sampleForm: SampleFormInterface = null;
+
+  created() {
+    this.sampleForm = new EvanForm(this, {
+      files: {
+        value: [],
+        validate: function(vueInstance: ProfileComponent, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        }
+      },
+    }) as SampleFormInterface;
+  }
+
+  handleSubmitMock(ev: Event): Promise<any> {
+    console.log(ev)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('resolved')
+
+        resolve('saved')
+      }, 1000)
+    })
+  }
+
+}
+
+export default ProfileComponent

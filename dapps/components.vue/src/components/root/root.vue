@@ -49,7 +49,7 @@
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
           <div class="container py-3">
-            <h1>{{ $route.name.toUpperCase() }}</h1>
+            <h1 class="text-uppercase">{{ $route.name }}</h1>
 
             <router-view></router-view>
           </div>
@@ -60,7 +60,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './root.ts';
+  import Component from './root';
   export default Component;
 </script>
-
