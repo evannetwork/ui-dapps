@@ -55,17 +55,20 @@ export default class Forms extends mixins(EvanComponent) {
    */
   showForms = true;
 
-  wurstAmount1 = ''
-  wurstAmount2 = 'a'
-  wurstAmount3 = 0
-  wurstAmount4 = 0
+  /**
+   * Custom field value handling
+   */
+  field1 = '';
+  field2 = 'a';
+  field3 = 0;
+  field4 = 0;
 
   options = [
-    {label: 'Bockwurst', value: 'bocki'},
-    {label: 'Knacker', value: 'knacki'},
-    'Wienerwurst',
-    'Mett',
-    'Hanns Wurst'
+    {label: 'Option 1', value: 'option1'},
+    {label: 'Option 2', value: 'option2'},
+    'Option 3',
+    'Option 4',
+    'Option 5'
   ]
 
   sampleForm: SampleFormInterface = null;
