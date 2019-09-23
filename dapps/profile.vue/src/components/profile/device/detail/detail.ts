@@ -38,6 +38,7 @@ import { FileHandler, } from '@evan.network/ui';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
+import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface DeviceDetailFormInterface extends EvanForm {
   dataStreamSettings: EvanFormControl;
@@ -62,18 +63,39 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
   deviceDetailForm: DeviceDetailFormInterface = null;
 
   /**
-   * Load the device details
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [ ];
+
+  /**
+   * Load the mail details
    */
   async created() {
+    // watch for save updates
+    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        this.loadProfileData();
+      }
+    }));
+
+    // load profile data
+    await this.loadProfileData();
+  }
+
+  /**
+   * Clear dispatcher listeners
+   */
+  beforeDestroy() {
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
+   * Load the profile data an specify the registration form.
+   */
+  async loadProfileData() {
     const runtime = (<any>this).getRuntime();
-
     const profileContract = runtime.profile.profileContract;
-    const deviceData = await runtime.dataContract.getEntry(
-      profileContract,
-      'deviceDetails',
-      runtime.activeAccount
-    );
-
+    const deviceData = await ProfileMigrationLibrary.loadProfileData(runtime, 'deviceDetails');
     const fileFields = ['settings', 'type'];
 
     await Promise.all(fileFields.map(async (field) => {
@@ -82,7 +104,6 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
         // generate new keys
         const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob')
         const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
-
 
         const hashKey = await runtime.sharing.getHashKey(
           profileContract.options.address,
@@ -93,7 +114,6 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
           runtime.activeAccount,
           'deviceDetails'
         );
-
 
         const dencryptedHashBuffer = await hashCryptor.decrypt(
           Buffer.from(deviceData[field].substr(2), 'hex'), { key: hashKey })
@@ -107,7 +127,6 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
         }
       }
     }));
-
 
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {

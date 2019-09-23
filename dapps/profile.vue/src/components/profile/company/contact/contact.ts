@@ -37,6 +37,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
+import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface ContactFormInterface extends EvanForm {
   city: EvanFormControl;
@@ -58,17 +59,38 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   contactForm: ContactFormInterface = null;
 
   /**
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [ ];
+
+  /**
    * Load the mail details
    */
   async created() {
-    const runtime = (<any>this).getRuntime();
+    // watch for save updates
+    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        this.loadProfileData();
+      }
+    }));
 
-    const profileContract = runtime.profile.profileContract;
-    const contactData = await runtime.dataContract.getEntry(
-      profileContract,
-      'contact',
-      runtime.activeAccount
-    );
+    // load profile data
+    await this.loadProfileData();
+  }
+
+  /**
+   * Clear dispatcher listeners
+   */
+  beforeDestroy() {
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
+   * Load the mail details
+   */
+  async loadProfileData() {
+    const runtime = (<any>this).getRuntime();
+    let contactData = await ProfileMigrationLibrary.loadProfileData(runtime, 'contact');
 
     // setup registration form
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {

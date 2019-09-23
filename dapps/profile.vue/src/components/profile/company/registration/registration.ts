@@ -37,6 +37,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
+import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface RegistrationFormInterface extends EvanForm {
   company: EvanFormControl;
@@ -59,17 +60,38 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   registrationForm: RegistrationFormInterface = null;
 
   /**
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [ ];
+
+  /**
    * Load the mail details
    */
   async created() {
-    const runtime = (<any>this).getRuntime();
+    // watch for save updates
+    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        this.loadProfileData();
+      }
+    }));
 
-    const profileContract = runtime.profile.profileContract;
-    const registrationData = await runtime.dataContract.getEntry(
-      profileContract,
-      'registration',
-      runtime.activeAccount
-    );
+    // load profile data
+    await this.loadProfileData();
+  }
+
+  /**
+   * Clear dispatcher listeners
+   */
+  beforeDestroy() {
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
+   * Load the profile data an specify the registration form.
+   */
+  async loadProfileData() {
+    const runtime = (<any>this).getRuntime();
+    const registrationData = await ProfileMigrationLibrary.loadProfileData(runtime, 'registration');
 
     // setup registration form
     this.registrationForm = (<RegistrationFormInterface>new EvanForm(this, {

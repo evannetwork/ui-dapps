@@ -28,9 +28,10 @@
 <template>
   <div>
     <evan-form
-      :title="'_profile.device.detail.title' | translate"
       :form="deviceDetailForm"
       :i18nScope="'_profile.device.detail'"
+      :isLoading="dispatcher.curr.running.updateProfileDispatcher"
+      :title="'_profile.device.detail.title' | translate"
       @save="changeProfileData()">
     </evan-form>
   </div>

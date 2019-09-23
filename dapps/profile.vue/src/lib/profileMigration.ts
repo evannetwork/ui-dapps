@@ -27,10 +27,9 @@
 
 
 import * as bcc from '@evan.network/api-blockchain-core';
+import * as dispatchers from '../dispatchers/registry';
 
 export default class ProfileMigrationLibrary {
-
-
   static async checkOrMigrateProfile(runtime) {
     let description;
     try {
@@ -47,6 +46,37 @@ export default class ProfileMigrationLibrary {
     if (!description) {
       await this.setNewFieldsToProfile(runtime);
     }
+  }
+
+  /**
+   * Load a new profile data scope from a migrated profile.
+   *
+   * @param      {bcc.Runtime}  runtime  blockchain-core runtime
+   * @param      {string}       type     the scope type
+   */
+  static async loadProfileData(runtime, type) {
+    const instances = await dispatchers.updateProfileDispatcher.getInstances(runtime, true);
+    let scopeData;
+
+    // if dispatcher is running, use this data
+    if (instances && instances.length !== 0) {
+      const filtered = instances.filter(instance => instance.data.type === type);
+      if (filtered.length !== 0) {
+        scopeData = filtered[filtered.length - 1].data.formData;
+      }
+    }
+
+    // if not dispatcher entry was found for this scope, load it!
+    if (!scopeData) {
+      const profileContract = runtime.profile.profileContract;
+      scopeData = await runtime.dataContract.getEntry(
+        profileContract,
+        type,
+        runtime.activeAccount
+      );
+    }
+
+    return scopeData;
   }
 
   /**
@@ -110,7 +140,6 @@ export default class ProfileMigrationLibrary {
    * @param      {any}  runtime  The runtime
    */
   static async migrateProfile(runtime) {
-
     const profileAddress = runtime.profile.profileContract.options.address;
     const currentAccount = runtime.activeAccount;
 
@@ -165,6 +194,5 @@ export default class ProfileMigrationLibrary {
     );
 
     runtime.profile.profileContract.options.address = contractId;
-
   }
 }

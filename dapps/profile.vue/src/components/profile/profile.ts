@@ -36,6 +36,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { getIdentificationDetails } from '../verifications/notary/notary.lib';
+import * as dispatchers from '../../dispatchers/registry';
 
 @Component({ })
 export default class ProfileDetailComponent extends mixins(EvanComponent) {
@@ -64,21 +65,15 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   verificationCount = 0;
 
   /**
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [ ];
+
+  /**
    * Load the mail details
    */
   async created() {
     const runtime = (<any>this).getRuntime();
-
-    const profileContract = runtime.profile.profileContract;
-
-    const accountDetails = await runtime.dataContract.getEntry(
-      profileContract,
-      'accountDetails',
-      runtime.activeAccount
-    );
-    this.type = accountDetails.profileType || 'unspecified';
-
-    this.$emit('typeChanged', this.profileType);
     // fill empty address with current logged in user
     this.address = this.$route.params.address || runtime.activeAccount;
     // load balance and parse it to 3 decimal places
@@ -86,8 +81,39 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       amount: (await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3),
       timestamp: Date.now(),
     };
+    // load the currents users profile type, alias, ...
+    await this.loadAccountDetails();
+
+    // watch for save updates
+    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        this.loadAccountDetails();
+      }
+    }));
 
     this.loading = false;
+  }
+
+  /**
+   * Clear dispatcher listeners
+   */
+  beforeDestroy() {
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
+   * Load the users account type
+   */
+  async loadAccountDetails() {
+    const runtime = (<any>this).getRuntime();
+
+    const profileContract = runtime.profile.profileContract;
+    const accountDetails = await runtime.dataContract.getEntry(
+      profileContract,
+      'accountDetails',
+      runtime.activeAccount
+    );
+    this.type = accountDetails.profileType || 'unspecified';
   }
 
   /**
@@ -99,6 +125,16 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     if (this.$refs.notaryVerifications) {
       this.verificationCount += (<any>this.$refs.notaryVerifications).verifications.length;
       this.verificationCount += (<any>this.$refs.notaryVerifications).requests.length;
+    }
+  }
+
+  /**
+   * Open the type switch modal
+   */
+  typeSwitchModal() {
+    if (this.type === 'unspecified' &&
+        !(this as any).dispatcher.curr.running.updateProfileDispatcher) {
+      (this as any).$refs.profileType.$refs.modal.show();
     }
   }
 }

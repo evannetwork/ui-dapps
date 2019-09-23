@@ -85,8 +85,8 @@ const i18n: any = {
           "placeholder": "Choose..."
         },
         "salesTaxID": {
-          "error": "Please enter the registration number",
-          "label": "Registration number *",
+          "error": "Please enter the Sales tax ID",
+          "label": "Sales tax ID *",
           "placeholder": "Insert your sales tax ID..."
         },
         "title": "Registration"
@@ -132,15 +132,17 @@ const i18n: any = {
           "label": "Settings *",
           "placeholder": "Add device settings files."
         },
+        "title": "Device details",
         "type": {
           "error": "Please insert a device type!",
           "label": "Type *",
           "placeholder": "Type in the device type"
-        },
-        "title": "Device details"
+        }
       }
     },
     "dispatchers": {
+      "profile-type": "Changing profile type...",
+      "profile-update": "Updating profile information...",
       "request-verification": "Requesting Verification...",
       "verification-accept": "Accepting Verification..."
     },
@@ -161,6 +163,8 @@ const i18n: any = {
     },
     "type": {
       "change": "Change",
+      "choose": "Specify Account Type",
+      "missing-type": "You have not yet selected a profile type. Use the interaction area below to specify your profile more precisely.",
       "switch": "Specify your Account Type"
     },
     "verifications": {

@@ -28,9 +28,10 @@
 <template>
   <div>
     <evan-form
-      :title="'_profile.company.registration.title' | translate"
       :form="registrationForm"
       :i18nScope="'_profile.company.registration'"
+      :isLoading="dispatcher.curr.running.updateProfileDispatcher"
+      :title="'_profile.company.registration.title' | translate"
       @save="changeProfileData()">
     </evan-form>
   </div>

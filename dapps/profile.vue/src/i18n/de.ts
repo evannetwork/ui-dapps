@@ -132,15 +132,17 @@ const i18n: any = {
           "label": "Einstellungen *",
           "placeholder": "Hinzufügen von Geräteeinstellungsdateien."
         },
+        "title": "Geräteinformationen",
         "type": {
           "error": "Bitte geben Sie einen Gerätetyp an!",
           "label": "Typ *",
           "placeholder": "Geben Sie den Gerätetyp ein"
-        },
-        "title": "Geräteinformationen"
+        }
       }
     },
     "dispatchers": {
+      "profile-type": "Profiltyp wird geändert...",
+      "profile-update": "Profilinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
@@ -161,6 +163,8 @@ const i18n: any = {
     },
     "type": {
       "change": "Ändern",
+      "choose": "Profiltyp spezifieren",
+      "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
       "switch": "Geben Sie Ihren Profiltyp an"
     },
     "verifications": {

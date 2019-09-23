@@ -34,12 +34,11 @@
           <evan-profile-preview
             size="lg"
             :address="address"
-            @typeClick="type === 'unspecified' && $refs.profileType.$refs.modal.show();"
+            @typeClick="typeSwitchModal()"
           />
           <profile-type-switch
             ref="profileType"
             v-if="$store.state.isMyProfile"
-            @typeChanged="type = $event"
           />
         </div>
         <div class="col-xl-4">
@@ -61,7 +60,22 @@
       </div>
 
       <div class="row">
-        <div class="col-xl-8">
+        <div class="col-xl-8 mt-3">
+          <div class="text-center" v-if="type === 'unspecified'">
+            <template v-if="dispatcher.curr.running.updateProfileDispatcher">
+              <evan-loading></evan-loading>
+              <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
+            </template>
+            <template v-else>
+              <h5>{{ '_profile.type.missing-type' | translate }}</h5>
+              <evan-button
+                class="mt-3"
+                type="primary"
+                :label="'_profile.type.choose' | translate"
+                @click="typeSwitchModal()">
+              </evan-button>
+            </template>
+          </div>
           <template v-if="type === 'company'">
             <profile-company-registration :address="address"></profile-company-registration>
             <profile-company-contact :address="address"></profile-company-contact>
