@@ -78,7 +78,7 @@ Then('{int} input fields of type {string} should be visible',
 Then('{int} select fields should be visible',
   async(count) => {
     if (count === 0) {
-      return client.expect.elements('input').count.to.equal(count);
+      return client.expect.elements('select').count.to.equal(count);
     }
 
     await client.waitForElementPresent('select', 1000)

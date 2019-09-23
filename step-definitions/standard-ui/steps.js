@@ -6,22 +6,21 @@ import { When, Then, Given } from 'cucumber';
  */
 Then('step {int} should be {string}',
   async(step, statusType) => {
-    const internalStep = step -1;
+    const internalStep = step - 1;
 
     await client.waitForElementPresent('.evan-steps', 1000)
 
     switch (statusType) {
       case 'active':
-        await client.assert.cssClassPresent(`.evan-container-create-step-${internalStep}`, statusType);
+        await client.assert.cssClassPresent(`.evan-step-${internalStep}`, statusType);
 
         break;
       case 'disabled':
-        await client.assert.cssClassPresent(`.evan-container-create-step-${internalStep}`, statusType);
-        await client.expect.element(`.evan-container-create-step-${internalStep}`).to.have.attribute('disabled');
+        await client.expect.element(`.evan-step-${internalStep}`).to.have.attribute('disabled');
 
         break;
       case 'enabled':
-        await client.expect.element(`.evan-container-create-step-${internalStep}`).to.not.have.attribute('disabled');
+        await client.expect.element(`.evan-step-${internalStep}`).to.not.have.attribute('disabled');
 
         break;
       default:
@@ -38,6 +37,6 @@ When('I click on step {int}',
     const internalStep = step -1;
 
     // await client.waitForElementPresent('.evan-steps', 1000)
-    await client.click(`.evan-container-create-step-${internalStep}`);
+    await client.click(`.evan-step-${internalStep}`);
   }
 )
