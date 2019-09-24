@@ -102,7 +102,7 @@ export default class SignUp extends mixins(EvanComponent) {
   async created() {
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {
-        value: 'Unspecified',
+        value: 'unspecified',
       },
       alias: {
         value: '',
