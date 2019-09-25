@@ -52,7 +52,7 @@ export default {
       "decrypt": "Entschlüsseln",
       "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
       "get-mnemonic": "Wiederherstellungs-Schlüssel",
-      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.",
+      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein oder fügen Sie diese aus der Zwischenablage ein.",
       "get-password": "Identität entschlüsseln",
       "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
       "invalid-password": "Das eingegebene Passwort ist ungültig.",

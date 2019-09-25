@@ -52,7 +52,7 @@ export default {
       "decrypt": "Decrypt",
       "desc": "Restore an existing evan.network Identity on this device",
       "get-mnemonic": "Recovery Key",
-      "get-mnemonic-desc": "Insert your recovery key to restore your evan.network identity.<br>Not sure what to do? Get help",
+      "get-mnemonic-desc": "Insert your recovery key to restore your evan.network identity or paste it from your clipboard.",
       "get-password": "Decrypt Identity",
       "get-password-desc": "Enter your password to access the data of your Identity.",
       "invalid-password": "The provided password is invalid.",
