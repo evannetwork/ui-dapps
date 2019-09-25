@@ -3,12 +3,18 @@ import { When, Then } from 'cucumber';
 
 const getSelector = (label, angular) => {
   if (!angular) {
-    return [
-      `//label[normalize-space(text()) = '${label}']/preceding-sibling::input`,
-      `//label[normalize-space(text()) = '${label}']/following-sibling::input`,
-      `//label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::input`,
-      `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::input`
-    ].join('|');
+    // support also the .input-wrapper element around the input
+    const inputSelectors = [
+      'input', 'div/input',
+      'select', 'div/select',
+    ];
+
+    return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
+      `//label[normalize-space(text()) = '${label}']/preceding-sibling::${ inputSelector }`,
+      `//label[normalize-space(text()) = '${label}']/following-sibling::${ inputSelector }`,
+      `//label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::${ inputSelector }`,
+      `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::${ inputSelector }`
+    ])).join('|');
   } else {
     return [
       `//ion-label[normalize-space(text()) = '${label}']/preceding-sibling::ion-input/input`,
@@ -31,8 +37,22 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
   await client.expect.element(selector).to.be.visible;
   await client.clearValue(selector),
   await client.setValue(selector, content);
+
   client.useCss();
 });
+
+/**
+ * Looks for an input field with sibling label having certain content and fills the values into the input field.
+ */
+Then('The value of the Input field with label {string} should be {string}',
+  async(label, content) => {
+    client.useXpath();
+    // select following or preceding input with label having text or having text in any tag inside label tag
+    const selector = getSelector(label);
+    await client.assert.value(selector, content);
+    client.useCss();
+  }
+);
 
 /**
  * Looks for an input field with id and fills the values into the input field.
@@ -55,7 +75,6 @@ When('I click on input field with label {string}',
 
     // select following or preceding input with label having text or having text in any tag inside label tag
     const selector = getSelector(label);
-
     await client.expect.element(selector).to.be.visible;
     await client.click(selector);
 
@@ -111,9 +130,7 @@ Then('{int} select fields should be visible',
 Then('Input field with label {string} should be visible',
   async(label) => {
     client.useXpath();
-    const xPathSelector = `//label[normalize-space(text()) = '${label}']/following-sibling::input`;
-
-    await client.expect.element(xPathSelector).to.be.visible;
+    await client.expect.element(getSelector(label)).to.be.visible;
     client.useCss();
   }
 )
@@ -127,9 +144,7 @@ Then('Input fields with labels {string} should be visible',
     client.useXpath();
 
     for( const label of labels.split('|') ) {
-      const xPathSelector = `//label[normalize-space(text()) = '${label}']/following-sibling::input`;
-
-      await client.expect.element(xPathSelector).to.be.visible;
+      await client.expect.element(getSelector(label)).to.be.visible;
     }
 
     client.useCss();
