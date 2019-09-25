@@ -93,7 +93,6 @@ Scenario: Switching from unspecified account to company account and fill the pro
           And The value of the Input field with label "City" should be "Test City"
           And The value of the Input field with label "Homepage" should be "https://evan.network"
 
-@only
 Scenario: Switching from unspecified account to iot device account and fill the profile information
   When I click on button "Specify Account Type"
     Then I want to see a text including "Specify your Account Type"
