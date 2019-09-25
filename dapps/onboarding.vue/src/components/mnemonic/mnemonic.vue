@@ -44,14 +44,16 @@
             v-model="words[index]"
             @keyup.enter.native="onSubmit()"
             @input="wordInputChanged(index)"
-            @focus="wordInputChanged(index);"
             @blur="setDirty(index)">
-          <div class="invalid-feedback" v-if="dirtyWords[index] && !correctWords[index]">
-            {{ '_onboarding.invalid-mnemonic-word' | translate }}
-          </div>
         </div>
       </div>
     </form>
+    <div class="text-danger" v-if="anyWordDirty && !mnemonicIntegrity">
+      {{ (allWordsCorrect ?
+          '_onboarding.invalid-mnemonic-integrity' :
+          '_onboarding.invalid-mnemonic-words-incorrect'
+         ) | translate }}
+    </div>
   </div>
 </template>
 

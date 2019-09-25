@@ -31,8 +31,8 @@ export default {
     "close": "Schließen",
     "continue": "Fortfahren",
     "free-input": "Freie Eingabe",
-    "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungsschlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
-    "invalid-mnemonic-word": "Dies ist kein korrektes Wort für einen Wiederherstellungsschlüssel!",
+    "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungs-Schlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
+    "invalid-mnemonic-words-incorrect": "Eines oder mehrere der angegebenen Wörter ist nicht erlaubt in Wiederherstellungsschlüsseln. Bitte überprüfen Sie Ihre Eingabe.",
     "mail-invitation-accepted": {
       "body": "Guten Tag, <br>der Benutzer mit der Email Adresse {userEmail} hat Ihre Einladung in das evan.network angenommen und ist nun verfügbar unter dem Namen: {{ userAlias }}.<br><br> Ihr evan.network Team",
       "subject": "Nutzer hat Ihre Anfrage angenommen",
@@ -50,9 +50,9 @@ export default {
     "please-login-signup": "Nutzen Sie eine bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
     "sign-in": {
       "decrypt": "Entschlüsseln",
-      "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerät wieder her",
-      "get-mnemonic": "Wiederherstellungsschlüssel",
-      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.",
+      "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
+      "get-mnemonic": "Wiederherstellungs-Schlüssel",
+      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein oder fügen Sie diese aus der Zwischenablage ein.",
       "get-password": "Identität entschlüsseln",
       "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
       "invalid-password": "Das eingegebene Passwort ist ungültig.",
