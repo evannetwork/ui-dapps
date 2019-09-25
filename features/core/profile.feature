@@ -1,6 +1,6 @@
 Feature: evan.network profile
 
-Scenario: Switching from unspecified account to company account and fill the profile information
+Background: Creating a new unspecified account and navigate to the profile detail page
   # create new profile
   Given I go to the evan.network startpage
   Then I want to see a text including "Please select an account type."
@@ -28,6 +28,8 @@ Scenario: Switching from unspecified account to company account and fill the pro
     Then I want to see a text including "Verifications"
     Then I want to see a text including "Contacts"
     Then I want to see a text including "Specify Account Type"
+
+Scenario: Switching from unspecified account to company account and fill the profile information
   When I click on button "Specify Account Type"
     Then I want to see a text including "Specify your Account Type"
     And the button "Change" should be "disabled"
@@ -36,7 +38,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
   When I click on button "Change"
     Then I want to see a text including "Updating profile information..."
     And I wait for 20 seconds
-  # Company data filling  
+  # Company data filling
   Then I want to see a text including "Registration"
     And Input field with label "Company" should be visible
     And Input field with label "Register Court" should be visible
@@ -90,3 +92,43 @@ Scenario: Switching from unspecified account to company account and fill the pro
           And The value of the Input field with label "Postal Code" should be "99817"
           And The value of the Input field with label "City" should be "Test City"
           And The value of the Input field with label "Homepage" should be "https://evan.network"
+
+@only
+Scenario: Switching from unspecified account to iot device account and fill the profile information
+  When I click on button "Specify Account Type"
+    Then I want to see a text including "Specify your Account Type"
+    And the button "Change" should be "disabled"
+  When I click on card with text "Device"
+    Then the button "Change" should be "enabled"
+  When I click on button "Change"
+    Then I want to see a text including "Updating profile information..."
+    And I wait for 20 seconds
+  # Device data filling
+  Then I want to see a text including "Device details"
+    And Input field with label "Data Stream Settings" should be visible
+    And Input field with label "Location" should be visible
+    And Input field with label "Manufacturer" should be visible
+    And Input field with label "Owner" should be visible
+    And Input field with label "Serial Number" should be visible
+  When I click on input field with label "Data Stream Settings"
+    Then I want to see a button "Save"
+    Then I want to see a button "Cancel"
+    Then the button "Save" should be "disabled"
+    Then the button "Cancel" should be "enabled"
+    When I set Input field with label "Data Stream Settings" to "Test"
+      And I set Input field with label "Location" to "Test Location"
+      And I set Input field with label "Manufacturer" to "Test Manufacturer"
+      And I set Input field with label "Owner" to "0x0968b6167B5D19f19F407A63f7B6202204c9330f"
+      And I set Input field with label "Serial Number" to "Test Serial Number"
+      Then the button "Save" should be "enabled"
+      When I click on button "Save"
+        Then the button "Save" should be "disabled"
+        And I want to see a element with class "spinner-border"
+        And I wait for 5 seconds
+      When I click the element with id "nav-entry-wallet"
+        And I click the element with id "nav-entry-detail"
+        Then The value of the Input field with label "Data Stream Settings" should be "Test"
+        And The value of the Input field with label "Location" should be "Test Location"
+        And The value of the Input field with label "Manufacturer" should be "Test Manufacturer"
+        And The value of the Input field with label "Owner" should be "0x0968b6167B5D19f19F407A63f7B6202204c9330f"
+        And The value of the Input field with label "Serial Number" should be "Test Serial Number"
