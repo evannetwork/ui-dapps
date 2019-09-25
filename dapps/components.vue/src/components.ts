@@ -31,6 +31,7 @@ import ButtonsComponent from './components/buttons/buttons.vue';
 import CardsComponent from './components/cards/cards.vue';
 import DispatcherTestComponent from './components/dispatcher-test/dispatcher-test.vue';
 import FormsComponent from './components/forms/forms.vue';
+import ProfileComponent from './components/profile/profile.vue';
 import StepsComponent from './components/steps/steps.vue';
 import TextComponent from './components/text/text.vue';
 
@@ -38,9 +39,10 @@ import TextComponent from './components/text/text.vue';
 const components: Array<any> = [
   { path: 'buttons', icon: 'mdi mdi-equal', component: ButtonsComponent },
   { path: 'cards', icon: 'mdi mdi-card-text-outline', component: CardsComponent },
-  { path: 'text', icon: 'mdi mdi-format-color-text', component: TextComponent },
-  { path: 'steps', icon: 'mdi mdi-format-list-numbered', component: StepsComponent },
   { path: 'forms', icon: 'mdi mdi-format-list-numbered', component: FormsComponent },
+  { path: 'profile', icon: 'mdi mdi-account-box', component: ProfileComponent },
+  { path: 'steps', icon: 'mdi mdi-ray-start-arrow', component: StepsComponent },
+  { path: 'text', icon: 'mdi mdi-format-color-text', component: TextComponent },
 ];
 
 // add dispatcher test entry

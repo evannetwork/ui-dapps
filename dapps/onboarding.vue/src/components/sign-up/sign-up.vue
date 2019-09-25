@@ -67,10 +67,10 @@
           <div class="evan-step-header-sm text-center">
             <button class="btn"
               v-for="(step, index) of steps"
+              :class="{ 'active': activeStep === index, }"
               :disabled="step.disabled(this)"
               @click="activeStep = index">
-              <span class="stepper-circle"
-                :class="{ 'active': activeStep === index, }">
+              <span class="stepper-circle">
               </span>
             </button>
           </div>
@@ -91,7 +91,7 @@
                     v-model="profileForm.accountType.value"
                     :class="{ 'is-invalid' : profileForm.accountType.error }"
                     @blur="profileForm.accountType.setDirty()">
-                    <option>Unspecified</option>
+                    <option value="unspecified">{{ '_onboarding.sign-up.account-types.unspecified' | translate }}</option>
                   </select>
                 </div>
 
@@ -120,7 +120,6 @@
                   </label>
                   <input class="form-control" type="password" required
                     :id="`password${ index }`" :ref="`password${ index }`"
-                    :placeholder="('_onboarding.sign-up.password' + index) | translate"
                     v-model="profileForm[`password${ index }`].value"
                     :class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
                     @input="profileForm[`password${ index }`].setDirty()">
@@ -176,12 +175,6 @@
                 </div>
               </template>
 
-              <evan-modal ref="creatingProfileError">
-                <template v-slot:body>
-                  <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>
-                </template>
-              </evan-modal>
-
               <div class="text-center"
                 v-if="!creatingProfile">
                 <button type="button" class="btn  btn-primary btn-block"
@@ -204,6 +197,41 @@
         </div>
       </div>
     </div>
+    <evan-modal
+      ref="modal"
+      :hideFooterButton="true"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_onboarding.sign-up.get-mnemonic' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div>
+          <p v-html="$t('_onboarding.sign-up.get-mnemonic-desc-long')">
+          </p>
+          <h3 class="text-danger text-center">{{ mnemonic }}</h3>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <evan-button type="secondary"
+          id="modal-cancel"
+          @click="navigateToEvan();">
+          {{ '_evan.view-profile' | translate }}
+        </evan-button>
+      </template>
+    </evan-modal>
+    <evan-modal
+      ref="creatingProfileError">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_onboarding.sign-up.profile-create-error.title' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

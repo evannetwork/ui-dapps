@@ -28,101 +28,42 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import Vue from 'vue';
-import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 
 interface SampleFormInterface extends EvanForm {
-  field1: string;
-  field2: string;
-  field3: number;
-  select: string;
   files: any;
 }
 
+/**
+ * @class ProfileComponent
+ */
 @Component({ })
-export default class Forms extends mixins(EvanComponent) {
+class ProfileComponent extends mixins(EvanComponent) {
   /**
-   * formular flags
+   * UI settings
    */
-  isPublic = true;
-  stacked = false;
-  onlyForm = false;
-
-  /**
-   * Rerender everything
-   */
-  showForms = true;
-
-  /**
-   * Custom field value handling
-   */
-  field1 = '';
-  field2 = 'a';
-  field3 = 0;
-  field4 = 0;
-
-  options = [
-    {label: 'Option 1', value: 'option1'},
-    {label: 'Option 2', value: 'option2'},
-    'Option 3',
-    'Option 4',
-    'Option 5'
-  ]
+  size = 'default';
+  accountName = 'Hanns Wurst';
+  verified = true;
+  editable = true;
+  imgSrc = 'https://i.pravatar.cc/150';
 
   sampleForm: SampleFormInterface = null;
 
   created() {
     this.sampleForm = new EvanForm(this, {
-      field1: {
-        value: '',
-      },
-      field2: {
-        value: '',
-        validate: function(vueInstance: Forms, form: SampleFormInterface) {
-          return this.value.length !== 0;
-        },
-      },
-      field3: {
-        value: '',
-        validate: function(vueInstance: Forms, form: SampleFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          type: 'input',
-          attr: {
-            error: 'custom error',
-            label: 'custom label',
-            placeholder: 'custom placeholder',
-            type: 'number',
-            size: 6
-          }
-        }
-      },
-      select: {
-        value: '',
-        validate: function(vueInstance: Forms, form: SampleFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          type: 'select',
-          attr: {
-            options: this.options,
-            size: 6,
-          }
-        }
-      },
       files: {
-        value: [ ],
-        validate: function(vueInstance: Forms, form: SampleFormInterface) {
+        value: [],
+        validate: function(vueInstance: ProfileComponent, form: SampleFormInterface) {
           return this.value.length !== 0;
         }
       },
     }) as SampleFormInterface;
   }
 
-  handleSubmit(ev: Event): Promise<any> {
+  handleSubmitMock(ev: Event): Promise<any> {
     console.log(ev)
 
     return new Promise((resolve, reject) => {
@@ -133,4 +74,7 @@ export default class Forms extends mixins(EvanComponent) {
       }, 1000)
     })
   }
+
 }
+
+export default ProfileComponent

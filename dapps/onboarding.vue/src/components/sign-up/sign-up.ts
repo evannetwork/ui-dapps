@@ -102,7 +102,7 @@ export default class SignUp extends mixins(EvanComponent) {
   async created() {
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {
-        value: 'Unspecified',
+        value: 'unspecified',
       },
       alias: {
         value: '',
@@ -283,6 +283,9 @@ export default class SignUp extends mixins(EvanComponent) {
           bcc, accountId, vault.encryptionKey, privateKey);
         const profile = runtime.profile;
 
+        // disable pinning
+        runtime.dfs.disablePin = true;
+
         // use the frontend keyProvider and apply it to every runtime instance
         runtime.keyProvider = new dappBrowser.KeyProvider({ }, accountId);
         for (let key of Object.keys(runtime)) {
@@ -320,6 +323,9 @@ export default class SignUp extends mixins(EvanComponent) {
         const signer = accountId.toLowerCase();
         const pk = '0x' + vault.exportPrivateKey(signer, vault.pwDerivedKey);
         const signature = await runtime.web3.eth.accounts.sign(msgString, pk).signature;
+
+        // reenable pinning
+        runtime.dfs.disablePin = false;
 
         // trigger the profile creation using an maximum timeout of 60 seconds
         const result = await new Promise(async (resolve, reject) => {
@@ -370,7 +376,7 @@ export default class SignUp extends mixins(EvanComponent) {
           // if the user were invited, show the sign in step, else navigate directly to the root
           // page.
           if (!this.$route.query.inviteeAlias) {
-            this.navigateToEvan();
+            this.showMnemnonicModal();
           } else {
             this.activeStep = 3;
           }
@@ -381,7 +387,7 @@ export default class SignUp extends mixins(EvanComponent) {
         this.creatingProfile = 0;
         this.creationTime = -1;
         this.recaptchaToken = null;
-        (<any>this.$refs.creatingProfileError).show();
+        (this.$refs.creatingProfileError as any).show();
       }
 
       // stop ui status updates
@@ -389,6 +395,9 @@ export default class SignUp extends mixins(EvanComponent) {
     }
   }
 
+  showMnemnonicModal() {
+    (this.$refs.modal as any).show();
+  }
   /**
    * Navigates to the previous opened application or use the default dapp ens.
    */
