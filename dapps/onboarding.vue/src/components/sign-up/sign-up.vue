@@ -200,7 +200,8 @@
     <evan-modal
       ref="modal"
       :hideFooterButton="true"
-      :maxWidth="'800px'">
+      :maxWidth="'800px'"
+      @close="navigateToEvan();">
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_onboarding.sign-up.get-mnemonic' | translate }}
