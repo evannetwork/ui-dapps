@@ -63,19 +63,6 @@ class ProfileComponent extends mixins(EvanComponent) {
       },
     }) as SampleFormInterface;
   }
-
-  handleSubmitMock(ev: Event): Promise<any> {
-    console.log(ev)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log('resolved')
-
-        resolve('saved')
-      }, 1000)
-    })
-  }
-
 }
 
 export default ProfileComponent
