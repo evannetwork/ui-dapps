@@ -62,6 +62,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './topic-display.ts';
+  import Component from './topic-display';
   export default Component;
 </script>

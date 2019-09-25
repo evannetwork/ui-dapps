@@ -38,6 +38,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './registration.ts';
+  import Component from './registration';
   export default Component;
 </script>

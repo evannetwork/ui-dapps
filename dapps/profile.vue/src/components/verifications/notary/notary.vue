@@ -95,6 +95,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './notary.ts';
+  import Component from './notary';
   export default Component;
 </script>

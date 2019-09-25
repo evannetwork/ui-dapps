@@ -66,6 +66,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './type.ts';
+  import Component from './type';
   export default Component;
 </script>

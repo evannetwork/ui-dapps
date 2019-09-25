@@ -117,7 +117,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './profile.ts';
+  import Component from './profile';
   export default Component;
 </script>
 

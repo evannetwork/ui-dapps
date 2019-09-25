@@ -315,7 +315,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './request.ts';
+  import Component from './request';
   export default Component;
 </script>
 

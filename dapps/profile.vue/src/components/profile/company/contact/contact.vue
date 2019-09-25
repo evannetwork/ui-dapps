@@ -38,6 +38,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './contact.ts';
+  import Component from './contact';
   export default Component;
 </script>

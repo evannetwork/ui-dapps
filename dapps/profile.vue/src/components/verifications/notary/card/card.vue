@@ -79,6 +79,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './card.ts';
+  import Component from './card';
   export default Component;
 </script>

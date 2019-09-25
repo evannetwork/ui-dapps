@@ -38,6 +38,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './detail.ts';
+  import Component from './detail';
   export default Component;
 </script>

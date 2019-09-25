@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './overview.ts';
+  import Component from './overview';
   export default Component;
 </script>
 
