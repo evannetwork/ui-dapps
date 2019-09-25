@@ -35,37 +35,65 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+// internal
+import * as dispatchers from '../../../dispatchers/registry';
+
 @Component({ })
-export default class ProfileRootComponent extends mixins(EvanComponent) {
+export default class ProfileTypeComponent extends mixins(EvanComponent) {
   /**
-   * navEntries for top navigation
+   * Current profile type
    */
-  navEntries: Array<any> = [ ];
+  @Prop() type;
 
   /**
-   * Setup navigation structure
+   * All selectable types
    */
-  setNavEntries() {
-    const address = this.$route.params.address;
-    const runtime = (<any>this).getRuntime();
+  types = [
+    'company',
+    'device'
+  ];
 
-    // is currently my profile opened?
-    this.$store.state.isMyProfile = !this.$route.params.address ||
-      this.$route.params.address === this.$store.state.runtime.activeAccount;
+  /**
+   * Initially passed type, to check if another one was selected
+   */
+  initialType = '';
 
-    this.navEntries = [
-      { key: 'detail', icon: 'mdi mdi-account-outline' },
-      { key: 'wallet', icon: 'mdi mdi-wallet-outline' },
-      { key: `verifications`, icon: 'mdi mdi-check-decagram' },
-      { key: `addressbook.vue.${ (<any>this).dapp.domainName }`, icon: 'mdi mdi-account-group-outline' },
-      null,
-      { key: 'settings', icon: 'mdi mdi-settings' },
-    ]
-    .map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }${ address ? '/' + address : '' }`,
-      text: `_profile.breadcrumbs.${ entry.key.split('/')[0] }`,
-      icon: entry.icon,
-    } : null));
+  /**
+   * Load profile type
+   */
+  async created() {
+    this.initialType = this.type;
+  }
+
+  /**
+   * Trigger profile type change
+   *
+   * @param      {string}  type    The type
+   */
+  typeChanged(type: string) {
+    if (this.type !== 'unspecified') {
+      this.$emit('typeChanged', this.type);
+      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+        formData: {
+          profileType: this.type
+        },
+        type: 'accountDetails'
+      });
+      (this.$refs.modal as any).hide();
+    }
+  }
+
+  /**
+   * Show the info modal.
+   */
+  show() {
+    (<any>this.$refs).modal.show();
+  }
+
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).modal.hide();
   }
 }

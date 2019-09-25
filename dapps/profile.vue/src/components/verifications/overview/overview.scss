@@ -27,6 +27,15 @@
 
 .profile-verification-overview {
   .evan-card {
+    flex-grow: 0;
+
+    width: 350px;
+    height: 280px;
     margin-right: 1.5em;
+
+    @media (max-width: 992px) {
+      width: 100%;
+      margin-right: 0;
+    }
   }
 }

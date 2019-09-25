@@ -25,13 +25,19 @@
   https://evan.network/license/
 */
 
-import de from './de';
-import en from './en';
-import * as countries from '@evan.network/ui-countries';
-import { translations } from '@evan.network/ui-countries';
+<template>
+  <div>
+    <evan-form
+      :form="contactForm"
+      :i18nScope="'_profile.company.contact'"
+      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
+      :title="'_profile.company.contact.title' | translate"
+      @save="changeProfileData()">
+    </evan-form>
+  </div>
+</template>
 
-// map all langugages
-export default {
-  de: { ...de, ...translations.de },
-  en: { ...en, ...translations.en },
-};
+<script lang="ts">
+  import Component from './contact';
+  export default Component;
+</script>

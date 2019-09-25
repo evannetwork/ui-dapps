@@ -82,6 +82,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './info-content.ts';
+  import Component from './info-content';
   export default Component;
 </script>

@@ -38,16 +38,16 @@ export default {
       "subject": "Nutzer hat Ihre Anfrage angenommen",
       "title": "Einladung angenommen"
     },
-    "mnemonic-word": "{index}. Word",
+    "mnemonic-word": "{index}. Wort",
     "mnemonic-words": "12 Wörter",
     "password": "Passwort",
     "password-match-repeat": "Die Passwörter müssen übereinstimmen.",
-    "password-min-characters": "Das Passwort muss mindestens 8 Zeichen enthalten",
-    "password-one-character": "Das Passwort muss mindestens ein Zeichen enthalten",
-    "password-one-digest-needed": "Das Passwort muss mindestens eine Zahl enthalten",
-    "password-one-uppercase-character": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+    "password-min-characters": "Das Passwort muss mindestens 8 Zeichen enthalten.",
+    "password-one-character": "Das Passwort muss mindestens ein Zeichen enthalten.",
+    "password-one-digest-needed": "Das Passwort muss mindestens eine Zahl enthalten.",
+    "password-one-uppercase-character": "Das Passwort muss mindestens einen Großbuchstaben enthalten.",
     "password-repeat": "Passwort wiederholen",
-    "please-login-signup": "Nutzen Sie ein bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
+    "please-login-signup": "Nutzen Sie eine bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
     "sign-in": {
       "decrypt": "Entschlüsseln",
       "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
@@ -57,25 +57,28 @@ export default {
       "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
       "invalid-password": "Das eingegebene Passwort ist ungültig.",
       "next": "Weiter",
-      "no-profile": "Kein Identität gefunden",
-      "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungs-Schlüssel existiert kein evan.network Identität.",
+      "no-profile": "Keine Identität gefunden",
+      "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungsschlüssel existiert keine evan.network Identität.",
       "not-signed-up": "Noch keinen Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
-      "recovery-key": "Wiederherstellungs Schlüssel",
+      "recovery-key": "Wiederherstellungsschlüssel",
       "title": "Einloggen",
       "welcome": "Kontaktanfrage",
       "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
     },
     "sign-up": {
-      "account-type": "Account Typ",
+      "account-type": "Account-Typ",
+      "account-types": {
+        "unspecified": "Unspezifiziert"
+      },
       "agree": "Akzeptieren",
-      "alias": "Account Name",
-      "alias-help": "Der Account Name ist nur für Sie sichtbar",
+      "alias": "Account-Name",
+      "alias-help": "Der Account-Name ist nur für Sie sichtbar.",
       "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
       "create-profile": {
         "creation-time": "ca. {creationTime} / 30 Sekunden",
-        "desc": "Bitte bestätigen Sie das Captcha und die Nutzungsbedingen.",
-        "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha Abfrage, um den Prozess abzuschließen.",
+        "desc": "Bitte bestätigen Sie das Captcha und die Nutzungsbedingungen.",
+        "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha-Abfrage, um den Prozess abzuschließen.",
         "status-1": "Erstellung des Identitätsvertrages...",
         "status-2": "Verschlüsselung der Nutzerinformationen...",
         "status-3": "Erstellung Mailbox, Addressbuch, ...",
@@ -83,9 +86,9 @@ export default {
         "status-5": "Identität wurde erfolgreich erstellt...",
         "title": "Account erstellen"
       },
-      "create-account": "Erstellen Sie ihren Account",
+      "create-account": "Erstellen Sie Ihren Account",
       "desc": "Erstellen Sie Ihre evan.network Identität",
-      "desc-long": "Generieren Sie ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungs-Schlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
+      "desc-long": "Generieren Sie Ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungsschlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
       "errors": {
         "password-match-repeat": "Ihr Passwort muss mit der vorherigen Eingabe übereinstimmen.",
         "password-min-characters": "Ihr Passwort muss mindestens 8 Zeichen lang sein.",
@@ -94,9 +97,9 @@ export default {
         "password-one-uppercase-character": "Ihr Passwort muss mindestens einen Großbuchstaben enthalten.",
         "user-name": "Bitte geben Sie einen Nutzernamen an!"
       },
-      "get-mnemonic": "Wiederherstellungs-Schlüssel",
-      "get-mnemonic-desc": "Sichern Sie Ihren Wiederherstellungs-Schlüssel.",
-      "get-mnemonic-desc-long": "Mit Hilfe dieses <b>Wiederherstellungs-Schlüssels</b> können Sie Ihre Identität auf <b>jedem beliebigen Gerät</b> wiederherstellen und auf Ihre Daten zugreifen. Bitten <b>sichern Sie sich diese 12 Wörterin einer möglichst sicheren Weise</b> (möglichst offline, z.B. auf einem Blatt Papier im Safe). <br><br> Wenn Sie diese 12 Wörter verlieren, <b>verlieren Sie für den Zugang zu Ihren Geschäftspartnern, Vertägen und Profilinformationen.</b>",
+      "get-mnemonic": "Wiederherstellungsschlüssel",
+      "get-mnemonic-desc": "Sichern Sie Ihren Wiederherstellungsschlüssel.",
+      "get-mnemonic-desc-long": "Mit Hilfe dieses <b>Wiederherstellungsschlüssels</b> können Sie Ihre Identität auf <b>jedem beliebigen Gerät</b> wiederherstellen und auf Ihre Daten zugreifen. Bitte <b>sichern Sie sich diese 12 Wörter in einer möglichst sicheren Weise</b> (möglichst offline, z.B. auf einem Blatt Papier im Safe). <br><br> Wenn Sie diese 12 Wörter verlieren, <b>verlieren Sie den Zugang zu Ihren Geschäftspartnern, Verträgen und Profilinformationen.</b>",
       "headings": {
         "header-0" : "Ihr Tor zur Digitalisierung",
         "desc-0": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
@@ -105,23 +108,23 @@ export default {
       },
       "password0": "Passwort",
       "password1": "Passwortwiederholung",
-      "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben, Zahlen und Sonderzeichen.",
+      "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
       "profile-create-error": {
         "desc": "Während der Profilerstellung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
         "ok": "ok",
         "title": "Fehler"
       },
       "profile-informations": "Nutzerinformationen",
-      "profile-informations-desc": "Bitte wählen Sie einen Nutzernames und ein Passwortes.",
-      "select-account-type": "Bitte wählen Sie einen Account Typ",
+      "profile-informations-desc": "Bitte wählen Sie einen Nutzernamen und ein Passwort.",
+      "select-account-type": "Bitte wählen Sie einen Account-Typ",
       "terms-of-use": {
-        "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie ihre reelle Interkation.",
+        "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie Ihre reelle Interaktion.",
         "title": "Nutzungsbedingungen"
       },
-      "terms-accepted": "Ich Stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
+      "terms-accepted": "Ich stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
       "title": "Registrieren",
       "use-profile": "Weiter",
-      "user-name": "Account Name",
+      "user-name": "Max Mustermann | Beispielfirma GmbH",
       "welcome": "Kontaktanfrage",
       "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
     },
@@ -130,8 +133,8 @@ export default {
       "go-to-evan": "Weiter zum evan.network",
       "invited-info": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen. Wenn Sie diesen Kontakt zu Ihrem Adressbuch hinzufügen, erhalten Sie <b>{eveAmount} EVE</b> als Einladungsgeschenk.",
       "title": "evan.network Anmeldung",
-      "unlock-for-accept": "Sie sind bereits im evan.network angemeldet.<br><br>Sie haben eine Kontaktanfrage von <b>{inviteeAlias}</b> erhalten. Entsperren Sie Ihr Profil um fortzufahren oder nutzen Sie den zurück Button, um Sich mit einer andere Identität anzumelden.",
-      "welcome-signed-in": "Sie sind bereits im evan.network angemeldet <b>({accountId})</b>.<br><br>Nutzen Sie den nachfolgenden Button, um mit Ihrer Arbeit fortzufahren oder nutzen Sie den zurück Button, um Sich mit einer andere Identität anzumelden.",
+      "unlock-for-accept": "Sie sind bereits im evan.network angemeldet.<br><br>Sie haben eine Kontaktanfrage von <b>{inviteeAlias}</b> erhalten. Entsperren Sie Ihr Profil, um fortzufahren oder nutzen Sie den \"zurück\" Button, um sich mit einer anderen Identität anzumelden.",
+      "welcome-signed-in": "Sie sind bereits im evan.network angemeldet <b>({accountId})</b>.<br><br>Nutzen Sie den nachfolgenden Button, um mit Ihrer Arbeit fortzufahren.",
       "welcome-unlocked": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie können nun mit Ihrer Arbeit starten."
     }
   }

@@ -121,7 +121,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './pin.ts';
+  import Component from './pin';
   export default Component;
 </script>
 

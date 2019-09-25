@@ -46,6 +46,7 @@ class ProfileComponent extends mixins(EvanComponent) {
    */
   size = 'default';
   accountName = 'Hanns Wurst';
+  accountAddress = null;
   verified = true;
   editable = true;
   imgSrc = 'https://i.pravatar.cc/150';
@@ -62,19 +63,6 @@ class ProfileComponent extends mixins(EvanComponent) {
       },
     }) as SampleFormInterface;
   }
-
-  handleSubmitMock(ev: Event): Promise<any> {
-    console.log(ev)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log('resolved')
-
-        resolve('saved')
-      }, 1000)
-    })
-  }
-
 }
 
 export default ProfileComponent
