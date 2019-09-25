@@ -36,6 +36,62 @@ const i18n: any = {
       "verifications": "Verifizierungen",
       "wallet": "Wallet"
     },
+    "company": {
+      "contact": {
+        "city": {
+          "error": "Bitte geben Sie einen Ort ein!",
+          "label": "Ort",
+          "placeholder": "Geben Sie Ihre Stadt ein"
+        },
+        "website": {
+          "error": "Bitte geben Sie eine gültige URL ein!",
+          "label": "Website",
+          "placeholder": "https://website.com"
+        },
+        "postalCode": {
+          "error": "Bitte geben Sie eine gültige Postleitzahl ein!",
+          "label": "Postleitzahl",
+          "placeholder": "Geben Sie Ihre Postleitzahl ein"
+        },
+        "streetAndNumber": {
+          "error": "Bitte geben Sie eine Straße und eine Hausnummer ein!",
+          "label": "Straße und Hausnummer",
+          "placeholder": "Geben Sie Ihre Straße und Hausnummer ein"
+        },
+        "title": "Contact"
+      },
+      "registration": {
+        "company": {
+          "error": "Bitte geben Sie einen Firmennamen ein!",
+          "label": "Unternehmen",
+          "placeholder": "Geben Sie Ihren Firmennamen ein..."
+        },
+        "countries": {
+          "germany": "Germany"
+        },
+        "court": {
+          "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
+          "label": "Registergericht",
+          "placeholder": "Wo ist der Firmensitz?"
+        },
+        "register": {
+          "error": "Bitte wählen Sie den Registertyp aus!",
+          "label": "Registrieren",
+          "placeholder": "Art des Registers"
+        },
+        "registerNumber": {
+          "error": "Bitte geben Sie die Registernummer ein.",
+          "label": "Registernummer",
+          "placeholder": "Registernummer des Unternehmens"
+        },
+        "salesTaxID": {
+          "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
+          "label": "Umsatzsteuer-ID",
+          "placeholder": "Geben Sie Ihre Umsatzsteuer-ID ein..."
+        },
+        "title": "Registrierung"
+      }
+    },
     "current-balance": "Aktueller Kontostand",
     "detail": {
       "account-id": "Account-ID",
@@ -44,7 +100,49 @@ const i18n: any = {
       "desc": "Profilinformationen",
       "edit": "Profil bearbeiten"
     },
+    "device": {
+      "detail": {
+        "dataStreamSettings": {
+          "error": "Bitte fügen Sie IoT-Einstellungsdateien ein!",
+          "label": "IoT-Einstellungen",
+          "placeholder": "Hinzufügen von IoT-Einstellungsdateien"
+        },
+        "location": {
+          "error": "Bitte geben Sie einen Standort an!",
+          "label": "Standort",
+          "placeholder": "Geben Sie die Standort Koordinaten ein."
+        },
+        "manufacturer": {
+          "error": "Bitte geben Sie einen Gerätehersteller an!",
+          "label": "Hersteller",
+          "placeholder": "Geben Sie den Gerätehersteller ein"
+        },
+        "owner": {
+          "error": "Bitte geben Sie eine korrekte Account-Adresse an!",
+          "label": "Eigentümer",
+          "placeholder": "Geben Sie die Adresse des Besitzerkontos ein."
+        },
+        "serialNumber": {
+          "error": "Bitte geben Sie eine Seriennummer ein!",
+          "label": "Seriennummer",
+          "placeholder": "Geben Sie die Seriennummer des Geräts ein."
+        },
+        "settings": {
+          "error": "Bitte Einstellungsdateien einfügen!",
+          "label": "Einstellungen",
+          "placeholder": "Hinzufügen von Geräteeinstellungsdateien."
+        },
+        "title": "Geräteinformationen",
+        "type": {
+          "error": "Bitte geben Sie einen Gerätetyp an!",
+          "label": "Typ",
+          "placeholder": "Geben Sie den Gerätetyp ein"
+        }
+      }
+    },
     "dispatchers": {
+      "profile-type": "Profiltyp wird geändert...",
+      "profile-update": "Profilinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
@@ -62,6 +160,12 @@ const i18n: any = {
         "en": "Englisch"
       },
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+    },
+    "type": {
+      "change": "Ändern",
+      "choose": "Profiltyp spezifieren",
+      "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "switch": "Geben Sie Ihren Profiltyp an"
     },
     "verifications": {
       "add": "Verifikation hinzufügen",
@@ -148,8 +252,8 @@ const i18n: any = {
           },
           "city": {
             "desc": "Ort",
-            "error": "Bitte geben Sie einen Stadt an!",
-            "title": "Stadt"
+            "error": "Bitte geben Sie einen Ort an!",
+            "title": "Ort"
           },
           "contact": {
             "desc": "Vorname und Nachname",

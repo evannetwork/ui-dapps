@@ -51,6 +51,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './root.ts';
+  import Component from './root';
   export default Component;
 </script>

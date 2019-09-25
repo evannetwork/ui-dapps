@@ -55,25 +55,12 @@
           :requestId="requestId">
         </notary-action-pin>
       </div>
-      <evan-card class="mt-3" type="outline">
-        <svg width="60" height="56" viewBox="0 0 60 56" fill="none">
-          <path d="M59.3333 28L52.8267 20.5867L53.7333 10.7733L44.1067 8.58666L39.0667 0.106659L30 3.99999L20.9333 0.106659L15.8933 8.58666L6.26666 10.7467L7.17332 20.56L0.666656 28L7.17332 35.4133L6.26666 45.2533L15.8933 47.44L20.9333 55.92L30 52L39.0667 55.8933L44.1067 47.4133L53.7333 45.2267L52.8267 35.4133L59.3333 28ZM32.6667 41.3333H27.3333V36H32.6667V41.3333ZM32.6667 30.6667H27.3333V14.6667H32.6667V30.6667Z" fill="black"/>
-        </svg>
-
-        <template v-if="error">
-          <h5 class="font-weight-semibold">
-            {{ '_profile.verifications.notary.request-error' | translate }}
-          </h5>
-
-          <small class="text-muted mt-3">
-            {{ '_profile.verifications.notary.request-error-desc' | translate }}
-          </small>
-        </template>
-        <template v-else>
-          <h5 class="font-weight-semibold">
-            {{ '_profile.verifications.notary.title' | translate }}
-          </h5>
-
+      <evan-card class="mt-3" type="outline"
+        icon="mdi mdi-alert-circle-outline"
+        highlight="true"
+        :title="(error ? '_profile.verifications.notary.request-error' : '_profile.verifications.notary.title') | translate"
+        :description="error ? ('_profile.verifications.notary.request-error-desc' | translate) : ''">
+        <template v-slot:actions v-if="!error">
           <button class="btn btn-primary" target="_blank"
             v-if="statusActions.indexOf(details.status) !== -1"
             :disabled="details.status === 'issued' && accepting"
@@ -93,6 +80,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './card.ts';
+  import Component from './card';
   export default Component;
 </script>

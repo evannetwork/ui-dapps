@@ -49,6 +49,7 @@
     "@evan.network/api-blockchain-core": "^2.3.0",
     "@evan.network/smart-contracts-core": "^2.1.1",
     "@evan.network/ui": "^1.7.1",
+    "@evan.network/ui-countries": "^1.0.0",
     "@evan.network/ui-angular-core": "^2.2.1",
     "@evan.network/ui-angular-libs": "^2.1.1",
     "@evan.network/ui-angular-sass": "^2.1.0",

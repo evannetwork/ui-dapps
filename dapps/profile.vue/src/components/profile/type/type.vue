@@ -26,42 +26,46 @@
 */
 
 <template>
-  <evan-card class="mt-3" type="filled" highlight="true">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
-      <h5 class="font-weight-semibold">
-        {{ title }}
-      </h5>
-      <small class="mb-2">
-        {{ '_profile.verifications.notary.title' | translate }}
-      </small>
-      <small>
-        {{ '_profile.verifications.notary.verification.verified-by' | translate }}
-      </small>
-      <small class="text-muted">
-        {{ verification.verifications[0].details.issuer }}
-      </small>
-
-      <!-- <a v-for="(file, index) in files"
-        :id="`file-input-download-${ index }`"
-        :href="file.blobUri"
-        :download="file.name">
-        <i class="mdi mdi-download-outline"></i>
-      </a> -->
-
-      <button type="button"
-        class="btn btn-primary mt-3"
-        v-if="verification.status === 'yellow'"
-        :disabled="accepting"
-        @click="acceptVerification()">
-        {{ `_profile.verifications.notary.verification.accept` | translate }}
-      </button>
-    </template>
-  </evan-card>
+  <div>
+    <evan-modal
+      ref="modal"
+      :maxWidth="'800px'">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_profile.type.switch' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <div class="d-flex">
+          <evan-card class="clickable fixed-size"
+            v-for="(newType, index) in types"
+            :class="{
+              'ml-3': index !== 0,
+              'evan-highlight active': type === newType,
+            }"
+            :title="`_evan.profile.types.${ newType }` | translate"
+            @click="type = newType">
+            <template v-slot:icon>
+              <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
+            </template>
+          </evan-card>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <div>
+          <button type="button" class="btn btn-primary"
+            :disabled="type === initialType"
+            @click="typeChanged();">
+            {{ `_profile.type.change` | translate }}
+            <i class="mdi mdi-arrow-right label ml-3"></i>
+          </button>
+        </div>
+      </template>
+    </evan-modal>
+  </div>
 </template>
 
 <script lang="ts">
-  import Component from './topic-display';
+  import Component from './type';
   export default Component;
 </script>

@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './settings.ts';
+  import Component from './settings';
   export default Component;
 </script>
 

@@ -44,6 +44,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './info-modal.ts';
+  import Component from './info-modal';
   export default Component;
 </script>
