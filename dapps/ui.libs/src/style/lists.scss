@@ -41,38 +41,38 @@
     // without using my-auto
     .nav-entries {
       flex: 1;
-    }
 
-    a {
-      font-size: 15px;
-      font-weight: 600;
+      a {
+        font-size: 15px;
+        font-weight: 600;
 
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
 
-      height: 70px;
-      padding-left: 22px;
+        height: 70px;
+        padding-left: 22px;
 
-      cursor: pointer;
-      transition: background-color 0.5s ease-out, color 0.5s ease-out;
-      text-decoration: none !important;
+        cursor: pointer;
+        transition: background-color 0.5s ease-out, color 0.5s ease-out;
+        text-decoration: none !important;
 
-      &.active {
-        background-color: cssVar('bg-level-2') !important;
+        &.active {
+          background-color: cssVar('bg-level-2') !important;
+
+          &, * {
+            color: cssVar('dark') !important;
+          }
+        };
+
+        &:hover {
+          &, * {
+            color: cssVar('primary') !important;
+          }
+        }
 
         &, * {
-          color: cssVar('dark') !important;
+          color: cssVar('gray-600') !important;
         }
-      };
-
-      &:hover {
-        &, * {
-          color: cssVar('primary') !important;
-        }
-      }
-
-      &, * {
-        color: cssVar('gray-600') !important;
       }
     }
   }
