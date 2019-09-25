@@ -41,7 +41,7 @@ import VerificationsComponent from './components/verifications/overview/overview
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'detail' } },
   { name: 'detail', path: 'detail/:address?', component: ProfileDetailComponent },
-  { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
+  { name: 'settings', path: 'settings/:address?', component: ProfileSettingsComponent },
   { name: 'wallet', path: 'wallet/:address?', component: UnderDevelopmentComponent },
   { name: 'verifications', path: 'verifications/:address?', component: VerificationsComponent, },
   {
