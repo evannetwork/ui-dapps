@@ -91,7 +91,7 @@
                     v-model="profileForm.accountType.value"
                     :class="{ 'is-invalid' : profileForm.accountType.error }"
                     @blur="profileForm.accountType.setDirty()">
-                    <option>Unspecified</option>
+                    <option value="unspecified">{{ '_onboarding.sign-up.account-types.unspecified' | translate }}</option>
                   </select>
                 </div>
 
@@ -120,7 +120,6 @@
                   </label>
                   <input class="form-control" type="password" required
                     :id="`password${ index }`" :ref="`password${ index }`"
-                    :placeholder="('_onboarding.sign-up.password' + index) | translate"
                     v-model="profileForm[`password${ index }`].value"
                     :class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
                     @input="profileForm[`password${ index }`].setDirty()">
