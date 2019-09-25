@@ -132,10 +132,12 @@ https://evan.network/license/
           <div class="col-lg-3 col-md-6 col-xs-12">
             <h4>Unspecified</h4>
             <evan-profile-picture
+              :src="sampleForm.files.value[0] || imgSrc"
+              :isVerified="verified"
               type="unspecified"
               :size="size"
-              :isVerified="false"
               :isEditable="false"
+              :accountName="accountName"
             />
             <p class="text-muted">Has usually no avatar, no name and verification.</p>
           </div>
@@ -148,6 +150,19 @@ https://evan.network/license/
       <h3 class="header">Profile Preview</h3>
       <div class="content">
         <div class="row" style>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="d-block">
+                Account Address (address)
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="accountAddress"
+                  placeholder="0x123456..."
+                />
+              </label>
+            </div>
+          </div>
           <div class="col-lg-6 col-md-12">
             <h4>Device</h4>
             <evan-profile-preview
@@ -157,6 +172,7 @@ https://evan.network/license/
               :accountName="accountName"
               :isVerified="verified"
               :isEditable="editable"
+              :address="accountAddress"
             />
           </div>
           <div class="col-lg-6 col-md-12">
@@ -168,6 +184,7 @@ https://evan.network/license/
               :accountName="accountName"
               :isVerified="verified"
               :isEditable="editable"
+              :address="accountAddress"
             />
           </div>
           <div class="col-lg-6 col-md-12">
@@ -179,16 +196,19 @@ https://evan.network/license/
               :accountName="accountName"
               :isVerified="verified"
               :isEditable="editable"
+              :address="accountAddress"
             />
           </div>
           <div class="col-lg-6 col-md-12">
             <h4>Unspecified</h4>
             <evan-profile-preview
               type="unspecified"
+              :src="sampleForm.files.value[0] || imgSrc"
               :size="size"
               :accountName="accountName"
-              :isVerified="false"
+              :isVerified="verified"
               :isEditable="false"
+              :address="accountAddress"
             />
           </div>
         </div>
