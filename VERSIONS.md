@@ -2,6 +2,8 @@
 
 ## Next Version
 ### Features
+- `@evan.network/ui-countries` (v1.0.0)
+  - add countries dapp that includes all iso countries and it's translations
 
 ### Fixes
 
