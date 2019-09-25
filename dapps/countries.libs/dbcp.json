@@ -1,0 +1,38 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "countries.libs.js",
+      "files": [
+        "countries.libs.js"
+      ],
+      "origin": "QmVEni9QykaRMnDyRXXfNuKe5LKFoKecShjxLLjHhjReGF",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "countries.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "countries.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "1.0.0",
+    "versions": {
+      "1.0.0": "QmZJ3NX7dsz94Fi5J73559GgVG5uswDM6svaGKJcZz4Tbt"
+    }
+  }
+}
