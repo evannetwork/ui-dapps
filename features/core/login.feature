@@ -15,14 +15,14 @@ Scenario: Logout from of evan.network using angular
 Scenario: Logging in to evan.network using vue
 
   Given I log in to evan.network using vue
-  Then I want to see a text including 'What would you like to start with?'
+  Then I want to see a text including "What would you like to start with?"
 
 Scenario: Logging in to evan.network using vue with a wrong password
 
   Given I go to the evan.network startpage
-  Then I want to see a text including 'Please select an account type.'
+  Then I want to see a text including "Please select an account type."
   When I click on link to "sign-in"
-  Then I want to see a text including 'Recovery Key'
+  Then I want to see a text including "Recovery Key"
   When I set Input field with id "mnemonicInput0" to "shove"
     And I set Input field with id "mnemonicInput1" to "cherry"
     And I set Input field with id "mnemonicInput2" to "yard"
@@ -39,16 +39,16 @@ Scenario: Logging in to evan.network using vue with a wrong password
   When I click on button "Next"
     And I wait for 3 seconds
     Then I want to see a text including "Password"
-  When I set Input field with label 'Password' to 'Test12345'
+  When I set Input field with label "Password" to "Test12345"
     And I click on button "Unlock"
     Then I want to see a text including "The provided password is invalid."
 
 Scenario: Logging in to evan.network using vue with a right password
 
   Given I go to the evan.network startpage
-  Then I want to see a text including 'Please select an account type.'
+  Then I want to see a text including "Please select an account type."
   When I click on link to "sign-in"
-  Then I want to see a text including 'Recovery Key'
+  Then I want to see a text including "Recovery Key"
   When I set Input field with id "mnemonicInput0" to "shove"
     And I set Input field with id "mnemonicInput1" to "cherry"
     And I set Input field with id "mnemonicInput2" to "yard"
@@ -65,7 +65,7 @@ Scenario: Logging in to evan.network using vue with a right password
   When I click on button "Next"
     And I wait for 3 seconds
     Then I want to see a text including "Password"
-  When I set Input field with label 'Password' to 'Test1234'
+  When I set Input field with label "Password" to "Test1234"
     And I click on button "Unlock"
     And I wait for 3 seconds
     Then I want to see a text including "Welcome to the evan.network"
@@ -73,9 +73,9 @@ Scenario: Logging in to evan.network using vue with a right password
 Scenario: Logging in to evan.network using vue with a not registered mnemnonic
 
   Given I go to the evan.network startpage
-  Then I want to see a text including 'Please select an account type.'
+  Then I want to see a text including "Please select an account type."
   When I click on link to "sign-in"
-  Then I want to see a text including 'Recovery Key'
+  Then I want to see a text including "Recovery Key"
   When I set Input field with id "mnemonicInput0" to "lesson"
     And I set Input field with id "mnemonicInput1" to "wing"
     And I set Input field with id "mnemonicInput2" to "miracle"
