@@ -1,31 +1,38 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
 
-const getSelector = (label) => {
-  return [
-    `//label[normalize-space(text()) = '${label}']/preceding-sibling::input`,
-    `//label[normalize-space(text()) = '${label}']/following-sibling::input`,
-    `//label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::input`,
-    `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::input`
-  ].join('|');
+const getSelector = (label, angular) => {
+  if (!angular) {
+    return [
+      `//label[normalize-space(text()) = '${label}']/preceding-sibling::input`,
+      `//label[normalize-space(text()) = '${label}']/following-sibling::input`,
+      `//label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::input`,
+      `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::input`
+    ].join('|');
+  } else {
+    return [
+      `//ion-label[normalize-space(text()) = '${label}']/preceding-sibling::ion-input/input`,
+      `//ion-label[normalize-space(text()) = '${label}']/following-sibling::ion-input/input`,
+      `//ion-label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::ion-input/input`,
+      `//ion-label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::ion-input/input`
+    ].join('|');
+  }
 }
 
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
-When('I set Input field with label {string} to {string}',
-  async(label, content) => {
-    client.useXpath();
+When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, async(angular, label, content) => {
+  client.useXpath();
 
-    // select following or preceding input with label having text or having text in any tag inside label tag
-    const selector = getSelector(label);
+  // select following or preceding input with label having text or having text in any tag inside label tag
+  const selector = getSelector(label, !!angular);
 
-    await client.expect.element(selector).to.be.visible;
-    await client.clearValue(selector),
-    await client.setValue(selector, content);
-    client.useCss();
-  }
-);
+  await client.expect.element(selector).to.be.visible;
+  await client.clearValue(selector),
+  await client.setValue(selector, content);
+  client.useCss();
+});
 
 /**
  * Looks for an input field with id and fills the values into the input field.

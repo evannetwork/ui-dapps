@@ -10,10 +10,10 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
 
   await client.url(evan.baseUrl);
   await client.pause(5000);
-  if (customPart && !evan.accounts[accountName]) {
-    throw new Error(`no account data found for account ${accountName}`);
-  }
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
+  if (!user || !user.mnemonic) {
+    throw new Error(`no account data found for account ${accountName || 'default'}`);
+  }
 
   await client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
@@ -68,3 +68,4 @@ Then(/^I am no longer logged in to angular$/, async () => {
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
   await client.assert.visible('onboarding-root');
 });
+ 
