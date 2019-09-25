@@ -41,6 +41,11 @@ import * as dispatchers from '../../../dispatchers/registry';
 @Component({ })
 export default class ProfileTypeComponent extends mixins(EvanComponent) {
   /**
+   * Current profile type
+   */
+  @Prop() type;
+
+  /**
    * All selectable types
    */
   types = [
@@ -49,15 +54,15 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
   ];
 
   /**
-   * Currents users profile
+   * Initially passed type, to check if another one was selected
    */
-  profileType = '';
+  initialType = '';
 
   /**
    * Load profile type
    */
   async created() {
-    this.profileType = 'unspecified';
+    this.initialType = this.type;
   }
 
   /**
@@ -66,11 +71,11 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
    * @param      {string}  type    The type
    */
   typeChanged(type: string) {
-    if (this.profileType !== 'unspecified') {
-      this.$emit('typeChanged', this.profileType);
+    if (this.type !== 'unspecified') {
+      this.$emit('typeChanged', this.type);
       dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
         formData: {
-          profileType: this.profileType
+          profileType: this.type
         },
         type: 'accountDetails'
       });

@@ -39,20 +39,21 @@
         <div class="d-flex">
           <evan-card class="clickable fixed-size"
             icon="mdi mdi-check-decagram"
-            v-for="(type, index) in types"
+            v-for="(newType, index) in types"
             :class="{
               'ml-3': index !== 0,
-              'evan-highlight active': profileType === type,
+              'evan-highlight active': type === newType,
             }"
             :highlight="false"
-            :title="`_evan.profile.types.${ type }` | translate"
-            @click="profileType = type"
+            :title="`_evan.profile.types.${ newType }` | translate"
+            @click="type = newType"
           />
         </div>
       </template>
       <template v-slot:footer>
         <div>
-          <button type="button" class="btn btn-primary "
+          <button type="button" class="btn btn-primary"
+            :disabled="type === initialType"
             @click="typeChanged();">
             {{ `_profile.type.change` | translate }}
             <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issuing"></div>

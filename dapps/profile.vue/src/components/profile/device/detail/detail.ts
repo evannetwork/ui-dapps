@@ -95,30 +95,24 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
   async loadProfileData() {
     const runtime = (<any>this).getRuntime();
     const profileContract = runtime.profile.profileContract;
+    const profileAddress = profileContract.options.address;
     const deviceData = await ProfileMigrationLibrary.loadProfileData(runtime, 'deviceDetails');
     const fileFields = ['settings', 'type'];
 
     await Promise.all(fileFields.map(async (field) => {
       const blobs = []
-      if (deviceData[field]) {
+      if (deviceData[field] && typeof deviceData[field] === 'string') {
         // generate new keys
-        const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob')
-        const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
+        const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob');
+        const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
 
-        const hashKey = await runtime.sharing.getHashKey(
-          profileContract.options.address,
-          runtime.activeAccount
-        );
-        const contentKey = await runtime.sharing.getKey(
-          profileContract.options.address,
-          runtime.activeAccount,
-          'deviceDetails'
-        );
-
+        const hashKey = await runtime.sharing.getHashKey(profileAddress, runtime.activeAccount);
+        const contentKey = await runtime.sharing.getKey(profileAddress, runtime.activeAccount,
+          'deviceDetails');
         const dencryptedHashBuffer = await hashCryptor.decrypt(
           Buffer.from(deviceData[field].substr(2), 'hex'), { key: hashKey })
-
-        const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
+        const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'),
+          true);
         const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
         deviceData[field] = [];
         for (let file of decrypted) {
@@ -162,16 +156,10 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
       },
       settings: {
         value: deviceData.settings || [ ],
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length !== 0;
-        },
         uiSpecs: { type: 'files' }
       },
       type: {
         value: deviceData.type || [ ],
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length !== 0;
-        },
         uiSpecs: { type: 'files' }
       },
     }));

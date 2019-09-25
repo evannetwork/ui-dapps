@@ -40,22 +40,22 @@ const i18n: any = {
       "contact": {
         "city": {
           "error": "Please insert city name!",
-          "label": "City *",
+          "label": "City",
           "placeholder": "type in your city"
         },
         "homepage": {
           "error": "Please insert a valid url!",
-          "label": "Homepage *",
+          "label": "Homepage",
           "placeholder": "https://homepage.com"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
-          "label": "Postal Code *",
+          "label": "Postal Code",
           "placeholder": "Type in your postal code"
         },
         "streetAndNumber": {
           "error": "Please insert a street and a number!",
-          "label": "Street and Number *",
+          "label": "Street and Number",
           "placeholder": "Type in your street and number"
         },
         "title": "Contact"
@@ -63,7 +63,7 @@ const i18n: any = {
       "registration": {
         "company": {
           "error": "Please insert a company name!",
-          "label": "Company *",
+          "label": "Company",
           "placeholder": "Insert your Company Name..."
         },
         "countries": {
@@ -71,22 +71,22 @@ const i18n: any = {
         },
         "court": {
           "error": "Please enter the information of the registration authority!",
-          "label": "Register Court *",
+          "label": "Register Court",
           "placeholder": "Where is the company registered?"
         },
         "register": {
           "error": "Please select the register type!",
-          "label": "Register *",
+          "label": "Register",
           "placeholder": "Type of register"
         },
         "registerNumber": {
           "error": "Please enter the registration number",
-          "label": "Registration number *",
+          "label": "Registration number",
           "placeholder": "Choose..."
         },
         "salesTaxID": {
           "error": "Please enter the Sales tax ID",
-          "label": "Sales tax ID *",
+          "label": "Sales tax ID",
           "placeholder": "Insert your sales tax ID..."
         },
         "title": "Registration"
@@ -104,38 +104,38 @@ const i18n: any = {
       "detail": {
         "dataStreamSettings": {
           "error": "Please insert data stream settings files!",
-          "label": "Data Stream Settings *",
+          "label": "Data Stream Settings",
           "placeholder": "Add data stream files"
         },
         "location": {
           "error": "Please insert a location!",
-          "label": "Location *",
+          "label": "Location",
           "placeholder": "Type in the device location coords"
         },
         "manufacturer": {
           "error": "Please insert a device manufacturer!",
-          "label": "Manufacturer *",
+          "label": "Manufacturer",
           "placeholder": "Type in the device manufacturer"
         },
         "owner": {
           "error": "Please insert a valid account address!",
-          "label": "Owner *",
+          "label": "Owner",
           "placeholder": "Type in the owners account address"
         },
         "serialNumber": {
           "error": "Please insert a Serial Number!",
-          "label": "Serial Number *",
+          "label": "Serial Number",
           "placeholder": "Type in the device Serial Number"
         },
         "settings": {
           "error": "Please insert settings files!",
-          "label": "Settings *",
+          "label": "Settings",
           "placeholder": "Add device settings files."
         },
         "title": "Device details",
         "type": {
           "error": "Please insert a device type!",
-          "label": "Type *",
+          "label": "Type",
           "placeholder": "Type in the device type"
         }
       }

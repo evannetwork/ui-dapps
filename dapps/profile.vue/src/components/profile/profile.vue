@@ -38,6 +38,7 @@
           />
           <profile-type-switch
             ref="profileType"
+            :type="type"
             v-if="$store.state.isMyProfile"
           />
         </div>
@@ -46,7 +47,7 @@
             d-block p-3 position-relative
             bg-inverted rounded text-decoration-none"
             style="height: 166px"
-            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/wallet` : null"
+            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/wallet/${ $store.state.runtime.activeAccount }` : null"
             :class="{
               'evan-highlight': $store.state.isMyProfile
             }">

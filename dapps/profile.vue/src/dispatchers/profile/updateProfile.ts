@@ -41,10 +41,12 @@ const dispatcher = new Dispatcher(
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = instance.runtime;
-
-    await ProfileMigrationLibrary.checkOrMigrateProfile(runtime);
-
     const profileContract = runtime.profile.profileContract;
+    const profileAddress = profileContract.options.address;
+    const fileFields = ['settings', 'type'];
+
+    // check, if profile was migrated before, else migrate it
+    await ProfileMigrationLibrary.checkOrMigrateProfile(runtime);
 
     const previousValue = await runtime.dataContract.getEntry(
       profileContract,
@@ -52,12 +54,9 @@ dispatcher
       runtime.activeAccount
     );
 
-    const fileFields = ['settings', 'type'];
-
-
     await Promise.all(fileFields.map(async (field) => {
-      const blobs = []
-      if (data.formData[field]) {
+      const blobs = [];
+      if (data.formData[field] && data.formData[field].length) {
         for (let i = 0; i < data.formData[field].length; i++) {
           blobs.push({
             // apply correct streamlined name for files
@@ -69,17 +68,9 @@ dispatcher
         // generate new keys
         const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob')
         const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
-
-
-        const hashKey = await runtime.sharing.getHashKey(
-          profileContract.options.address,
-          runtime.activeAccount
-        );
-        const contentKey = await runtime.sharing.getKey(
-          profileContract.options.address,
-          runtime.activeAccount,
-          data.type
-        );
+        const hashKey = await runtime.sharing.getHashKey(profileAddress, runtime.activeAccount);
+        const contentKey = await runtime.sharing.getKey(profileAddress, runtime.activeAccount,
+          data.type);
 
         const encryptedFileBuffer = await cryptor.encrypt(blobs, { key: contentKey })
         const stateMd5 = bcc.crypto.createHash('md5').update(encryptedFileBuffer).digest('hex')

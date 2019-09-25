@@ -330,12 +330,18 @@ export default class SignUp extends mixins(EvanComponent) {
 
           // trigger smart agent to create the profile
           try {
-            await axios.post(`${ baseUrlFaucet }handout?apiVersion=1`, {
+            const handoutPayload: any = {
               accountId: accountId,
               signature: signature,
               profileInfo: fileHashes,
-              captchaToken: this.recaptchaToken
-            });
+            };
+
+            // if no evan-test-mode is enable, ask for valid captchaToken
+            if (!window.localStorage['evan-test-mode']) {
+              handoutPayload.captchaToken = this.recaptchaToken;
+            }
+
+            await axios.post(`${ baseUrlFaucet }handout?apiVersion=1`, handoutPayload);
 
             if (!rejected) {
               resolve();
