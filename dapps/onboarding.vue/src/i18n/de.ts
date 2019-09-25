@@ -115,7 +115,7 @@ export default {
         "title": "Fehler"
       },
       "profile-informations": "Nutzerinformationen",
-      "profile-informations-desc": "Bitte wählen Sie einen Nutzernames und ein Passwort.",
+      "profile-informations-desc": "Bitte wählen Sie einen Nutzernamen und ein Passwort.",
       "select-account-type": "Bitte wählen Sie einen Account-Typ",
       "terms-of-use": {
         "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie Ihre reelle Interaktion.",
