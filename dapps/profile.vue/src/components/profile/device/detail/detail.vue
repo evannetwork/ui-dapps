@@ -30,7 +30,7 @@
     <evan-form
       :form="deviceDetailForm"
       :i18nScope="'_profile.device.detail'"
-      :isLoading="dispatcher.curr.running.updateProfileDispatcher"
+      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
       :title="'_profile.device.detail.title' | translate"
       @save="changeProfileData()">
     </evan-form>

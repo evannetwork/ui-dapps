@@ -30,7 +30,7 @@
     <evan-form
       :form="registrationForm"
       :i18nScope="'_profile.company.registration'"
-      :isLoading="dispatcher.curr.running.updateProfileDispatcher"
+      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
       :title="'_profile.company.registration.title' | translate"
       @save="changeProfileData()">
     </evan-form>

@@ -132,7 +132,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Return the update dispatcher running state.
    */
   isLoading() {
-    return (this as any).dispatcher.curr.running.updateProfileDispatcher;
+    return (this as any).$store.state.dispatcher.curr.running.updateProfileDispatcher;
   }
 
   /**

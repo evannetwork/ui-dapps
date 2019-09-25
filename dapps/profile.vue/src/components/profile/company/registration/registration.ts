@@ -139,7 +139,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
 
   async changeProfileData() {
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.registrationForm.toObject(),
+      formData: this.registrationForm.getFormData(),
       type: 'registration'
     });
   }

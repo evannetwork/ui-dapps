@@ -103,7 +103,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       postalCode: {
         value: contactData.postalCode || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return !!this.value.match(/^\d{5}$/);
+          return /^\d{5}$/.test(this.value);
         },
       },
       city: {
@@ -115,7 +115,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       website: {
         value: contactData.website || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return !!this.value.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+          return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(this.value);
         },
       },
     }));
@@ -123,7 +123,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
 
   async changeProfileData() {
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.contactForm.toObject(),
+      formData: this.contactForm.getFormData(),
       type: 'contact'
     });
   }

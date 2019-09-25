@@ -164,7 +164,7 @@ const i18n: any = {
     "type": {
       "change": "Change",
       "choose": "Specify Account Type",
-      "missing-type": "You have not yet selected a profile type. Use the interaction area below to specify your profile more precisely.",
+      "missing-type": "No type was selected for your profile. Use the interaction area below to specify your profile more precisely.",
       "switch": "Specify your Account Type"
     },
     "verifications": {
