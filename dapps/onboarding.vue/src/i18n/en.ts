@@ -32,7 +32,7 @@ export default {
     "continue": "Continue",
     "free-input": "Free input",
     "invalid-mnemonic-integrity": "The composition of the words in your recovery key is incorrect. Please check your input.",
-    "invalid-mnemonic-word": "This is not a correct word for a recovery key!",
+    "invalid-mnemonic-words-incorrect": "One or more of the given words is not allowed in recovery keys. Please check your input.",
     "mail-invitation-accepted": {
       "body": "Hello, <br>the user with the email address {userEmail} accepted your invitation to the evan.network and is now available under that name: {userAlias}.<br><br> Your evan.network Team",
       "subject": "User has accepted your request",

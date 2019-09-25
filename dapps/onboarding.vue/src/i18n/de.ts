@@ -32,7 +32,7 @@ export default {
     "continue": "Fortfahren",
     "free-input": "Freie Eingabe",
     "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungs-Schlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
-    "invalid-mnemonic-word": "Dies ist kein korrektes Wort für einen Wiederherstellungschlüssel!",
+    "invalid-mnemonic-words-incorrect": "Eines oder mehrere der angegebenen Wörter ist nicht erlaubt in Wiederherstellungsschlüsseln. Bitte überprüfen Sie Ihre Eingabe.",
     "mail-invitation-accepted": {
       "body": "Guten Tag, <br>der Benutzer mit der Email Adresse {userEmail} hat Ihre Einladung in das evan.network angenommen und ist nun verfügbar unter dem Namen: {{ userAlias }}.<br><br> Ihr evan.network Team",
       "subject": "Nutzer hat Ihre Anfrage angenommen",
