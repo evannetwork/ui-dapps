@@ -38,16 +38,17 @@
       <template v-slot:body>
         <div class="d-flex">
           <evan-card class="clickable fixed-size"
-            icon="mdi mdi-check-decagram"
             v-for="(newType, index) in types"
             :class="{
               'ml-3': index !== 0,
               'evan-highlight active': type === newType,
             }"
-            :highlight="false"
             :title="`_evan.profile.types.${ newType }` | translate"
-            @click="type = newType"
-          />
+            @click="type = newType">
+            <template v-slot:icon>
+              <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
+            </template>
+          </evan-card>
         </div>
       </template>
       <template v-slot:footer>
@@ -56,8 +57,7 @@
             :disabled="type === initialType"
             @click="typeChanged();">
             {{ `_profile.type.change` | translate }}
-            <div class="spinner-border spinner-border-sm text-light ml-3" v-if="issuing"></div>
-            <i class="mdi mdi-arrow-right label ml-3" v-else></i>
+            <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>
         </div>
       </template>

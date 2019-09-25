@@ -82,4 +82,18 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
       (this.$refs.modal as any).hide();
     }
   }
+
+  /**
+   * Show the info modal.
+   */
+  show() {
+    (<any>this.$refs).modal.show();
+  }
+
+  /**
+   * Hide the info modal.
+   */
+  hide() {
+    (<any>this.$refs).modal.hide();
+  }
 }

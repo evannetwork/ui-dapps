@@ -129,12 +129,18 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Return the update dispatcher running state.
+   */
+  isLoading() {
+    return (this as any).dispatcher.curr.running.updateProfileDispatcher;
+  }
+
+  /**
    * Open the type switch modal
    */
   typeSwitchModal() {
-    if (this.type === 'unspecified' &&
-        !(this as any).dispatcher.curr.running.updateProfileDispatcher) {
-      (this as any).$refs.profileType.$refs.modal.show();
+    if (this.type === 'unspecified' && !this.isLoading()) {
+      (this as any).$refs.profileType.show();
     }
   }
 }

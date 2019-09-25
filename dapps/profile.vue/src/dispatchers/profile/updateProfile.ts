@@ -57,14 +57,14 @@ dispatcher
     await Promise.all(fileFields.map(async (field) => {
       const blobs = [];
       if (data.formData[field] && data.formData[field].length) {
-        for (let i = 0; i < data.formData[field].length; i++) {
+        data.formData[field].forEach((control: any) =>
           blobs.push({
             // apply correct streamlined name for files
-            name: data.formData[field][i].name,
-            fileType: data.formData[field][i].fileType,
-            file: data.formData[field][i].file
+            name: control.name,
+            fileType: control.fileType,
+            file: control.file
           })
-        }
+        );
         // generate new keys
         const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob')
         const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')

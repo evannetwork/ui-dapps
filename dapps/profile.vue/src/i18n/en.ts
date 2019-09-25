@@ -43,10 +43,10 @@ const i18n: any = {
           "label": "City",
           "placeholder": "type in your city"
         },
-        "homepage": {
+        "website": {
           "error": "Please insert a valid url!",
-          "label": "Homepage",
-          "placeholder": "https://homepage.com"
+          "label": "Website",
+          "placeholder": "https://website.com"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
@@ -85,8 +85,8 @@ const i18n: any = {
           "placeholder": "Choose..."
         },
         "salesTaxID": {
-          "error": "Please enter the Sales tax ID",
-          "label": "Sales tax ID",
+          "error": "Please enter the sales tax ID",
+          "label": "sales tax ID",
           "placeholder": "Insert your sales tax ID..."
         },
         "title": "Registration"

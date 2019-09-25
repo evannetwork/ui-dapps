@@ -31,9 +31,10 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { countries } from '@evan.network/ui-countries';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
@@ -115,9 +116,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         uiSpecs: {
           type: 'select',
           attr: {
-            options: [
-              { value: 'germany', label: '_profile.company.registration.countries.germany', }
-            ],
+            options: countries.map(isoCode => {
+              return { value: isoCode, label: `_countries.${ isoCode }`, }
+            }),
           }
         }
       },

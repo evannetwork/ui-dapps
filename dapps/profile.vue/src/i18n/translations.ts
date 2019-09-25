@@ -27,6 +27,11 @@
 
 import de from './de';
 import en from './en';
+import * as countries from '@evan.network/ui-countries';
+import { translations } from '@evan.network/ui-countries';
 
 // map all langugages
-export default { de, en };
+export default {
+  de: { ...de, ...translations.de },
+  en: { ...en, ...translations.en },
+};

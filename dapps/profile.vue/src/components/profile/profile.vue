@@ -63,7 +63,7 @@
       <div class="row">
         <div class="col-xl-8 mt-3">
           <div class="text-center" v-if="type === 'unspecified'">
-            <template v-if="dispatcher.curr.running.updateProfileDispatcher">
+            <template v-if="this.isLoading()">
               <evan-loading></evan-loading>
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
             </template>
@@ -89,6 +89,7 @@
           <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
               icon="mdi mdi-plus"
+              highlight="true"
               v-if="$store.state.isMyProfile"
               :href="`${ dapp.fullUrl }/verifications/${ address }`"
               :title="'_profile.verifications.add' | translate"

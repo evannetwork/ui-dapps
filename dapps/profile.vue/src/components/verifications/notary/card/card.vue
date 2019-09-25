@@ -57,6 +57,7 @@
       </div>
       <evan-card class="mt-3" type="outline"
         icon="mdi mdi-alert-circle-outline"
+        highlight="true"
         :title="(error ? '_profile.verifications.notary.request-error' : '_profile.verifications.notary.title') | translate"
         :description="error ? ('_profile.verifications.notary.request-error-desc' | translate) : ''">
         <template v-slot:actions v-if="!error">

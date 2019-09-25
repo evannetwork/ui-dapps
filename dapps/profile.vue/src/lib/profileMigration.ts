@@ -68,9 +68,8 @@ export default class ProfileMigrationLibrary {
 
     // if not dispatcher entry was found for this scope, load it!
     if (!scopeData) {
-      const profileContract = runtime.profile.profileContract;
       scopeData = await runtime.dataContract.getEntry(
-        profileContract,
+        runtime.profile.profileContract,
         type,
         runtime.activeAccount
       );
@@ -85,7 +84,6 @@ export default class ProfileMigrationLibrary {
    * @param      {any}  runtime  runtime object
    */
   static async setNewFieldsToProfile(runtime) {
-
     const profileAddress = runtime.profile.profileContract.options.address;
     const currentAccount = runtime.activeAccount;
 

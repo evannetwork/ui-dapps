@@ -26,10 +26,10 @@
 */
 
 <template>
-  <evan-card class="mt-3" type="filled">
+  <evan-card class="mt-3" type="filled" highlight="true">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <i class="mdi mdi-check-decagram"></i>
+      <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
       <h5 class="font-weight-semibold">
         {{ title }}
       </h5>

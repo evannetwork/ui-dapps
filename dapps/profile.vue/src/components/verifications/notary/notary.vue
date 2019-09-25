@@ -46,6 +46,7 @@
 
       <evan-card class="mt-3"
         icon="mdi mdi-plus"
+        highlight="true"
         v-else-if="requests.length === 0 && verifications.length === 0 || testMode"
         :title="'_profile.verifications.notary.request-notary-verification' | translate">
         <template v-slot:actions>
@@ -61,6 +62,7 @@
         </template>
       </evan-card>
       <evan-card class="mt-3"
+        highlight="true"
         v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
         <svg viewBox="0 0 38 38" fill="none">
           <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
@@ -74,7 +76,7 @@
           {{ '_profile.verifications.notary.request.request-ident' | translate }}
         </evan-button>
         <evan-button type="link" size="sm"
-          class="d-block  mt-1 text-muted"
+          class="d-block mt-1 text-muted"
           @click="$refs.orgInfo.show();">
           {{ '_profile.verifications.notary.learn-more' | translate }}
         </evan-button>

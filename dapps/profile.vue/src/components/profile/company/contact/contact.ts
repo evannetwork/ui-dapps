@@ -41,7 +41,7 @@ import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface ContactFormInterface extends EvanForm {
   city: EvanFormControl;
-  homepage: EvanFormControl;
+  website: EvanFormControl;
   postalCode: EvanFormControl;
   streetAndNumber: EvanFormControl;
 }
@@ -112,8 +112,8 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
           return this.value.length !== 0;
         },
       },
-      homepage: {
-        value: contactData.homepage || '',
+      website: {
+        value: contactData.website || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return !!this.value.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
         },

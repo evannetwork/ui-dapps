@@ -39,14 +39,14 @@ const i18n: any = {
     "company": {
       "contact": {
         "city": {
-          "error": "Bitte geben Sie den Städtenamen ein!",
-          "label": "Stadt",
+          "error": "Bitte geben Sie einen Ort ein!",
+          "label": "Ort",
           "placeholder": "Geben Sie Ihre Stadt ein"
         },
-        "homepage": {
+        "website": {
           "error": "Bitte geben Sie eine gültige URL ein!",
-          "label": "Homepage",
-          "placeholder": "https://homepage.com"
+          "label": "Website",
+          "placeholder": "https://website.com"
         },
         "postalCode": {
           "error": "Bitte geben Sie eine gültige Postleitzahl ein!",
@@ -54,9 +54,9 @@ const i18n: any = {
           "placeholder": "Geben Sie Ihre Postleitzahl ein"
         },
         "streetAndNumber": {
-          "error": "Bitte geben Sie eine Straße und eine Nummer ein!",
+          "error": "Bitte geben Sie eine Straße und eine Hausnummer ein!",
           "label": "Straße und Hausnummer",
-          "placeholder": "Geben Sie Ihre Straße und Nummer ein"
+          "placeholder": "Geben Sie Ihre Straße und Hausnummer ein"
         },
         "title": "Contact"
       },
@@ -64,7 +64,7 @@ const i18n: any = {
         "company": {
           "error": "Bitte geben Sie einen Firmennamen ein!",
           "label": "Unternehmen",
-          "placeholder": "Geben Sie Ihren Firmennamen ein....."
+          "placeholder": "Geben Sie Ihren Firmennamen ein..."
         },
         "countries": {
           "germany": "Germany"
@@ -82,7 +82,7 @@ const i18n: any = {
         "registerNumber": {
           "error": "Bitte geben Sie die Registernummer ein.",
           "label": "Registernummer",
-          "placeholder": "Wählen Sie..."
+          "placeholder": "Registernummer des Unternehmens"
         },
         "salesTaxID": {
           "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
@@ -103,14 +103,14 @@ const i18n: any = {
     "device": {
       "detail": {
         "dataStreamSettings": {
-          "error": "Bitte fügen Sie Datenstrom-Einstellungsdateien ein!",
-          "label": "Datenstromeinstellungen",
-          "placeholder": "Hinzufügen von Datenstrom-Dateien"
+          "error": "Bitte fügen Sie IoT-Einstellungsdateien ein!",
+          "label": "IoT-Einstellungen",
+          "placeholder": "Hinzufügen von IoT-Einstellungsdateien"
         },
         "location": {
           "error": "Bitte geben Sie einen Standort an!",
-          "label": "Ort",
-          "placeholder": "Geben Sie die Geräteplatzkoordinaten ein."
+          "label": "Standort",
+          "placeholder": "Geben Sie die Standort Koordinaten ein."
         },
         "manufacturer": {
           "error": "Bitte geben Sie einen Gerätehersteller an!",
@@ -118,7 +118,7 @@ const i18n: any = {
           "placeholder": "Geben Sie den Gerätehersteller ein"
         },
         "owner": {
-          "error": "Bitte geben Sie eine korrekte Account Adresse an!",
+          "error": "Bitte geben Sie eine korrekte Account-Adresse an!",
           "label": "Eigentümer",
           "placeholder": "Geben Sie die Adresse des Besitzerkontos ein."
         },
@@ -252,8 +252,8 @@ const i18n: any = {
           },
           "city": {
             "desc": "Ort",
-            "error": "Bitte geben Sie einen Stadt an!",
-            "title": "Stadt"
+            "error": "Bitte geben Sie einen Ort an!",
+            "title": "Ort"
           },
           "contact": {
             "desc": "Vorname und Nachname",
