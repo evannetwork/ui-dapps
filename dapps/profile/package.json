@@ -15,5 +15,5 @@
     "build": "cd ../.. && npm run angular-build dapps/profile"
   },
   "typings": "dist/index.d.ts",
-  "version": "1.5.1"
+  "version": "1.6.0"
 }

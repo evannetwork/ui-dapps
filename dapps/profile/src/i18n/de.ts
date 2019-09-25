@@ -188,12 +188,17 @@ export const de = {
         "invalid_customer": "Ihre Kundendaten sind ungültig. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte überprüfen Sie Ihre Kundendaten und versuchen Sie es erneut.",
         "price_not_okay": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es erneut.",
         "too_many_accounts": "Es ist ein Fehler mit ihrem Account aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte wenden Sie sich an unseren Kundensupport.",
-        "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut"
+        "wallet_not_enough_funds": "Es ist ein Fehler im evan.network aufgetreten. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut",
+        "billing_country_and_vat_missmatch": "Die angegebene USt-IdNr. passt nicht zu dem angegebenen Land.",
+        "eu_billing_vat_not_given": "Bei Kaufvorgängen außerhalb Deutschlands und innerhalb der EU muss eine valide USt-IdNr. angegeben werden.",
+        "not_eu_billing_not_possible": "EVEs können aktuell nur innerhalb der EU gekauft werden.",
+        "vat_number_invalid": "Die angegebene USt-IdNr. scheint ungültig zu sein.",
       },
       "successful-payment": "Ihre Bestellung wurde erfolgreich ausgelöst. <br> Sie erhalten eine Rechnung an die angegebene Email Adresse. <br> Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
       "sepa-acceptance": "Indem Sie Ihre IBAN angeben und diese Zahlung bestätigen, ermächtigen Sie evan GmbH und Stripe, unseren Zahlungsdienstleister, Anweisungen an Ihre Bank zu senden, um Ihr Konto zu belasten, und Ihre Bank, um Ihr Konto gemäß diesen Anweisungen zu belasten. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum, an dem Ihr Konto belastet wurde, beantragt werden.",
       "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
-      "review-sepa": "Hier können Sie das SEPA-Mandat einsehen."
+      "review-sepa": "Hier können Sie das SEPA-Mandat einsehen.",
+      "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen."
     },
     "private-key": "Private Key",
     "privatekey-desc": "Der Private Key Ihres Accounts sichert den Zugriff auf Ihre Blockchain Identität.",

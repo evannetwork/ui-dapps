@@ -22,7 +22,7 @@
 
 <evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
 
-<div *ngIf="!loading">
+<div *ngIf="!loading" class="buy-eve">
   <div class="evan-relative evan-content">
     <h3 class="content-header m-b-0 m-t-0">
       {{ '_dappprofile.buy-eve.buy-eve' | translate }}
@@ -212,8 +212,8 @@
                 </ion-label>
                 <ion-select required formControlName="country"
                   [(ngModel)]="payEve.country"
-                  (ionChange)="detectTimeout()"
-                  (focusout)="detectTimeout()">
+                  (ionChange)="detectTimeout(); validateVat(payEve.vat);"
+                  (focusout)="detectTimeout(); validateVat(payEve.vat);">
                   <ion-option *ngFor="let country of isoCountries" [value]="country.Code">{{ country.Name }}</ion-option>
                 </ion-select>
               </ion-item>
@@ -231,7 +231,7 @@
                 <ion-input formControlName="vat" type="text"
                   [(ngModel)]="payEve.vat"
                   [placeholder]="'_dappprofile.pay-eve.vat.description' | translate"
-                  (ionChange)="ref.detectChanges()"
+                  (ionChange)="ref.detectChanges(); validateVat(payEve.vat);"
                   (focusout)="ref.detectChanges(); validateVat(payEve.vat);"
                 >
                 </ion-input>
@@ -290,13 +290,21 @@
           <div text-center padding-top>
             <h1>{{ '_dappprofile.pay-eve.to-pay' | translate }}</h1>
           </div>
-          <div text-center padding-top>
-            <h1>{{ (payEve.country == 'DE' ? ((payEve.amount || 0)*1.19).toFixed(2) : payEve.amount || 0)}}€</h1>
+          <div *ngIf="vatError || !payEve.amount || payEve.amount < 10" text-center padding-top>
+            <h1>-</h1>
           </div>
-          <div text-center padding-top>
-            <h5>{{ '_dappprofile.pay-eve.incl' | translate }} {{ (payEve.country == 'DE' ? '19' : '0')}} % {{ '_dappprofile.pay-eve.vatPercent' | translate }}</h5>
+          <div *ngIf="vatError" text-center padding-top>
+            <ion-chip padding class="warning-hint" *ngIf="payEve.vat && !isValidVat" color="warning">
+              <h5 no-margin>{{ ('_dappprofile.pay-eve.payment-error.' + vatError) | translate }}</h5>
+            </ion-chip>
           </div>
-          <div text-center padding-top>
+          <div *ngIf="!vatError && payEve.amount >= 10" text-center padding-top>
+            <h1>{{ ((payEve.amount || 0) * (1 + tax / 100)).toFixed(2) }} €</h1>
+          </div>
+          <div *ngIf="!vatError && payEve.amount >= 10  && tax" text-center padding-top>
+            <h5>{{ '_dappprofile.pay-eve.incl' | translate }} {{ (tax)}} % {{ '_dappprofile.pay-eve.vatPercent' | translate }}</h5>
+          </div>
+          <div *ngIf="!vatError && payEve.amount >= 10" text-center padding-top>
             <button (click)="buy()" ion-button icon-left round outline color="alert"
               [disabled]="(activePaymentTab == 1 && ibanError) || (activePaymentTab == 0 && cardError) || stripePayment.invalid || paymentRunning">
               <ion-spinner *ngIf="paymentRunning"></ion-spinner>
@@ -304,6 +312,9 @@
               <span color="light">{{ '_dappprofile.pay-eve.pay' | translate }}</span>
             </button>
             <p *ngIf="paymentRunning">{{'_dappprofile.pay-eve.processing-hint' | translate}}...</p>
+          </div>
+          <div *ngIf="!vatError && payEve.amount >= 10 && !tax" text-center padding-top>
+            <p [innerHTML]="'_dappprofile.pay-eve.reverse-charge' | translate"></p>
           </div>
           <div [hidden]="activePaymentTab === 0">
             <p class="text-justify">

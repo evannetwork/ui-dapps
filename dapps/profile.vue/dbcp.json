@@ -3,8 +3,8 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.5.0",
-        "countries.libs": "^1.0.0"
+        "countries.libs": "^1.0.0",
+        "evancore.vue.libs": "^1.6.0"
       },
       "entrypoint": "profile.vue.js",
       "files": [
