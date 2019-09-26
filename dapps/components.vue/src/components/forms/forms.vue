@@ -111,7 +111,7 @@
           <label class="col-form-label" for="select-input">
             Select Input
           </label>
-          <evan-v-select id="select-input" :options="['wer','wie','was']"/>
+          <evan-v-select id="select-input" label="alias" :options="contacts"/>
         </div>
 
       </evan-form>
