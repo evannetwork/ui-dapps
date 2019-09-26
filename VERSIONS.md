@@ -10,6 +10,7 @@
 - `profile.vue`
   - profile type handling
   - profile data management
+- remove custom agpl appendix
 
 ### Deprecations
 
