@@ -4,6 +4,12 @@
 ### Features
 
 ### Fixes
+- `onboarding.vue`
+  - new login paste logic
+  - style optimizations
+- `profile.vue`
+  - profile type handling
+  - profile data management
 
 ### Deprecations
 
