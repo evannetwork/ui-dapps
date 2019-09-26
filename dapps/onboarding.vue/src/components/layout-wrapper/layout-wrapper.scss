@@ -25,27 +25,49 @@
   https://evan.network/license/
 */
 
-import VueRecaptcha from 'vue-recaptcha';
-import MnemonicComponent from './mnemonic/mnemonic.vue';
-import AcceptContactComponent from './accept-contact/accept-contact.vue';
-import LayoutWrapperComponent from './layout-wrapper/layout-wrapper.vue';
+@import '~@evan.network/ui/src/style/utils';
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+.layout-wrapper {
+  display: contents;
 
-// export them all, so other applications can access them
-export {
-  AcceptContactComponent,
-  MnemonicComponent,
-  VueRecaptcha,
+  img.evan-logo {
+    position: fixed;
+    z-index: 1;
+    top: 10px;
+    left: 10px;
+
+    width: 120px;
+  }
+
+  img.desc-banner {
+    max-width: 500px;
+  }
+
+  .left-panel {
+    display: none;
+    flex-direction: row;
+
+    background-color: cssVar('white');
+  }
+
+  .content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    padding: 3rem;
+
+    & > * {
+      width: 100%;
+
+      @media (min-width: 1200px) {
+        max-width: 500px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+  }
 }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
-  { name: 'evan-onboarding-layout-wrapper', component: LayoutWrapperComponent },
-  { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
-  { name: 'vue-recaptcha', component: VueRecaptcha },
-];
-
-export default componentRegistration;

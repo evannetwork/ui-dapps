@@ -25,27 +25,32 @@
   https://evan.network/license/
 */
 
-import VueRecaptcha from 'vue-recaptcha';
-import MnemonicComponent from './mnemonic/mnemonic.vue';
-import AcceptContactComponent from './accept-contact/accept-contact.vue';
-import LayoutWrapperComponent from './layout-wrapper/layout-wrapper.vue';
+<template>
+  <div class="layout-wrapper">
+    <div class="col col-lg-6 left-panel d-lg-block">
+      <img class="evan-logo"
+        :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
+      <div class="d-flex h-100 align-items-center justify-content-center">
+        <div>
+          <div class="text-center">
+            <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
+          </div>
+          <h1 class="ml-5 mb-5 font-weight-bold text-dark" >{{ `_onboarding.sign-up.headings.header-${step}` | translate }}</h1>
+          <h3 class="ml-5 text-dark">{{ `_onboarding.sign-up.headings.desc-${step}` | translate }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col col-lg-6 content-wrapper">
+      <slot></slot>
+    </div>
+  </div>
+</template>
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+<script lang="ts">
+  import Component from './layout-wrapper';
+  export default Component;
+</script>
 
-// export them all, so other applications can access them
-export {
-  AcceptContactComponent,
-  MnemonicComponent,
-  VueRecaptcha,
-}
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
-  { name: 'evan-onboarding-layout-wrapper', component: LayoutWrapperComponent },
-  { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
-  { name: 'vue-recaptcha', component: VueRecaptcha },
-];
-
-export default componentRegistration;
+<style lang="scss" scoped>
+  @import './layout-wrapper.scss';
+</style>

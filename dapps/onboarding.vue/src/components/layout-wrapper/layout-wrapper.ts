@@ -25,27 +25,22 @@
   https://evan.network/license/
 */
 
-import VueRecaptcha from 'vue-recaptcha';
-import MnemonicComponent from './mnemonic/mnemonic.vue';
-import AcceptContactComponent from './accept-contact/accept-contact.vue';
-import LayoutWrapperComponent from './layout-wrapper/layout-wrapper.vue';
+// vue imports
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-// export them all, so other applications can access them
-export {
-  AcceptContactComponent,
-  MnemonicComponent,
-  VueRecaptcha,
+@Component({ })
+export default class LayoutWrapperComponent extends mixins(EvanComponent) {
+  /**
+   * Step for translation the left panel text
+   */
+  @Prop({
+    type: String,
+    default: function() {
+      return '';
+    }
+  }) step;
 }
-
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
-  { name: 'evan-onboarding-layout-wrapper', component: LayoutWrapperComponent },
-  { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
-  { name: 'vue-recaptcha', component: VueRecaptcha },
-];
-
-export default componentRegistration;
