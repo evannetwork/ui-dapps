@@ -71,7 +71,7 @@ export default class Forms extends mixins(EvanComponent) {
   /**
    * Mapped Object from original addressbook
    */
-  contacts: any = null;
+  contacts: any = [];
 
   /**
    * Watch for dispatcher updates.
@@ -157,7 +157,5 @@ export default class Forms extends mixins(EvanComponent) {
         'alias': addressBook[key].alias
       }
     })
-
-    console.log(this.contacts);
   }
 }
