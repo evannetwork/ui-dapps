@@ -321,7 +321,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
       .getData('Text')
       .toLowerCase()
       .replace(/[^a-z ]/g, '')
-      .replace(/ {2,}/, ' ')
+      .replace(/ {2,}/g, ' ')
       .trim()
     ;
 
