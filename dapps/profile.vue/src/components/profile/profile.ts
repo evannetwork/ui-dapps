@@ -52,7 +52,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Currents users type
    */
-  type = 'unspecified';
+  type = '';
 
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded
@@ -63,11 +63,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Amount of calculated verifications and requests
    */
   verificationCount = 0;
-
-  /**
-   * Watch for dispatcher updates
-   */
-  listeners: Array<any> = [ ];
 
   /**
    * Load the mail details
@@ -81,39 +76,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       amount: (await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3),
       timestamp: Date.now(),
     };
-    // load the currents users profile type, alias, ...
-    await this.loadAccountDetails();
-
-    // watch for save updates
-    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        this.loadAccountDetails();
-      }
-    }));
-
     this.loading = false;
-  }
-
-  /**
-   * Clear dispatcher listeners
-   */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
-  }
-
-  /**
-   * Load the users account type
-   */
-  async loadAccountDetails() {
-    const runtime = (<any>this).getRuntime();
-
-    const profileContract = runtime.profile.profileContract;
-    const accountDetails = await runtime.dataContract.getEntry(
-      profileContract,
-      'accountDetails',
-      runtime.activeAccount
-    );
-    this.type = accountDetails.profileType || 'unspecified';
   }
 
   /**

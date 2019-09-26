@@ -32,9 +32,11 @@
       <div class="row">
         <div class="col-xl-8 mb-3">
           <evan-profile-preview
+            ref="profilePreview"
             size="lg"
             :address="address"
             @typeClick="typeSwitchModal()"
+            @update="type = $event.type"
           />
           <profile-type-switch
             ref="profileType"
@@ -60,7 +62,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="type">
         <div class="col-xl-8 mt-3">
           <div class="text-center" v-if="type === 'unspecified'">
             <template v-if="this.isLoading()">
