@@ -5,6 +5,7 @@
 - `@evan.network/ui-countries` (v1.0.0)
   - add countries dapp that includes all iso countries and it's translations
   - adjust `text-muted` to `#a2b0b4`
+  - fix `Dispatcher` and `Queue` logic for Microsoft `Edge browser`
 - update `@mdi/font` to version 4.4.0
 
 ### Fixes
