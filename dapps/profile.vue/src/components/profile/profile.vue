@@ -56,7 +56,7 @@
             <h1>{{ balance.amount }} EVE</h1>
             <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
             <small class="position-absolute bottom-right p-2" style="opacity: 0.6">
-              {{ balance.timestamp | moment('MMMM Do YYYY, h:mm:ss a') }}
+              {{ balance.timestamp | moment('LLL') }}
             </small>
           </a>
         </div>

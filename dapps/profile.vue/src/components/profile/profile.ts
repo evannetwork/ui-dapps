@@ -57,7 +57,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded
    */
-  balance: { amount: number, timestamp: number } = null;
+  balance: { amount: string, timestamp: number } = null;
 
   /**
    * Amount of calculated verifications and requests
@@ -72,8 +72,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     // fill empty address with current logged in user
     this.address = this.$route.params.address || runtime.activeAccount;
     // load balance and parse it to 3 decimal places
+    const amount = parseFloat((await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3));
     this.balance = {
-      amount: (await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3),
+      amount: amount.toLocaleString(this.$i18n.locale()),
       timestamp: Date.now(),
     };
     this.loading = false;

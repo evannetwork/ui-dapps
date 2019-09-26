@@ -44,6 +44,11 @@ import IssueComponent from '../notary/actions/issue/issue.vue';
 })
 export default class VerificationsOverviewComponent extends mixins(EvanComponent) {
   /**
+   * Loading currents users type
+   */
+  loading = true;
+
+  /**
    * Hide the verification elements to trigger reload.
    */
   rerender = false;
@@ -58,7 +63,12 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
    */
   address = '';
 
-  created() {
+  /**
+   * Currents users type.
+   */
+  type = '';
+
+  async created() {
     const runtime = (<any>this).getRuntime();
 
     // use url address or use runtime activeAccount as default
@@ -68,5 +78,13 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
     this.canIssue = runtime.environment === 'core' ?
       runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B' :
       runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
+    // load users type
+    this.type = (await runtime.dataContract.getEntry(
+      runtime.profile.profileContract,
+      'accountDetails',
+      runtime.activeAccount
+    )).profileType;
+
+    this.loading = false;
   }
 }

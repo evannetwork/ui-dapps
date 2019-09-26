@@ -41,33 +41,35 @@ const i18n: any = {
         "city": {
           "error": "Please insert city name!",
           "label": "City",
-          "placeholder": "type in your city"
+          "placeholder": "Berlin, London, Paris"
         },
-        "website": {
-          "error": "Please insert a valid url!",
-          "label": "Website",
-          "placeholder": "https://website.com"
+        "country": {
+          "desc": "Company headquarters country",
+          "error": "Please select the company headquartes country",
+          "label": "Company HQ country"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
           "label": "Postal Code",
-          "placeholder": "Type in your postal code"
+          "placeholder": "12345"
         },
         "streetAndNumber": {
           "error": "Please insert a street and a number!",
           "label": "Street and Number",
-          "placeholder": "Type in your street and number"
+          "placeholder": "My street 15"
         },
-        "title": "Contact"
+        "title": "Contact",
+        "website": {
+          "error": "Please insert a valid url!",
+          "label": "Website",
+          "placeholder": "https://website.com"
+        }
       },
       "registration": {
         "company": {
           "error": "Please insert a company name!",
           "label": "Company",
-          "placeholder": "Insert your Company Name..."
-        },
-        "countries": {
-          "germany": "Germany"
+          "placeholder": "My Company"
         },
         "court": {
           "error": "Please enter the information of the registration authority!",
@@ -77,7 +79,11 @@ const i18n: any = {
         "register": {
           "error": "Please select the register type!",
           "label": "Register",
-          "placeholder": "Type of register"
+          "placeholder": "Type of register",
+          "types": {
+            "hra": "HRA",
+            "hrb": "HRB"
+          }
         },
         "registerNumber": {
           "error": "Please enter the registration number",
@@ -165,6 +171,7 @@ const i18n: any = {
       "change": "Change",
       "choose": "Specify Account Type",
       "missing-type": "No type was selected for your profile. Use the interaction area below to specify your profile more precisely.",
+      "no-verifications-avaiable": "There are currently no verifications available for your profile type.",
       "switch": "Specify your Account Type"
     },
     "verifications": {
@@ -321,7 +328,11 @@ const i18n: any = {
           "register": {
             "desc": "Type of register",
             "error": "Please select the register type!",
-            "title": "Register"
+            "title": "Register",
+            "types": {
+              "hra": "HRA",
+              "hrb": "HRB"
+            }
           },
           "registerNumber": {
             "desc": "98765",
