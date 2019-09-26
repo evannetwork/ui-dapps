@@ -28,7 +28,8 @@
 @import '~@evan.network/ui/src/style/utils';
 
 .layout-wrapper {
-  display: contents;
+  height: 100%;
+  display: flex;
 
   img.evan-logo {
     position: fixed;
