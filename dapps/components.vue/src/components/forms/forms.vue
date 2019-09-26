@@ -105,6 +105,15 @@
             />
           </div>
         </div>
+
+        <div class="form-group"
+          :class="{ 'inline': stacked }">
+          <label class="col-form-label" for="select-input">
+            Select Input
+          </label>
+          <evan-v-select id="select-input" :options="['wer','wie','was']"/>
+        </div>
+
       </evan-form>
     </template>
   </div>
