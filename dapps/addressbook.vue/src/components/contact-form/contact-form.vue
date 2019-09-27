@@ -104,7 +104,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './contact-form.ts';
+  import Component from './contact-form';
   export default Component;
 </script>
 

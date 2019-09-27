@@ -24,6 +24,9 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import * as dispatchers from '../../dispatchers/registry';
 
 interface SampleFormInterface extends EvanForm {
   field1: string;
@@ -65,7 +68,19 @@ export default class Forms extends mixins(EvanComponent) {
 
   sampleForm: SampleFormInterface = null;
 
+  /**
+   * Mapped Object from original addressbook
+   */
+  contacts: any = [];
+
+  /**
+   * Watch for dispatcher updates.
+   */
+  dispatcherWatch = null;
+
   created() {
+    this.loadAddressBook()
+
     this.sampleForm = new EvanForm(this, {
       field1: {
         value: '',
@@ -123,6 +138,24 @@ export default class Forms extends mixins(EvanComponent) {
 
         resolve('saved')
       }, 1000)
+    })
+  }
+
+  /**
+   * load the addressbook for the current user
+   */
+  async loadAddressBook() {
+    const runtime = (<any>this).getRuntime();
+
+    // load the contacts for the current user, so we can display correct contact alias
+    delete runtime.profile.trees[runtime.profile.treeLabels.addressBook];
+    let addressBook = (await runtime.profile.getAddressBook()).profile;
+
+    this.contacts = Object.keys(addressBook).map(key => {
+      return {
+        'hash': key,
+        'alias': addressBook[key].alias
+      }
     })
   }
 }
