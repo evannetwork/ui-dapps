@@ -8,9 +8,10 @@
       },
       "entrypoint": "onboarding.vue.js",
       "files": [
-        "onboarding.vue.js"
+        "onboarding.vue.js",
+        "onboarding.vue.css"
       ],
-      "origin": "QmTxR7Pbmbhm6dpq3QDvqugv8Hn3hFmN2ZSAFWwdrKvodp",
+      "origin": "QmbbJ2mNNG6NhhxAAtWQw1QSPXsxSjZwjvXXanXF6jZLvn",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "dapp"
@@ -45,7 +46,7 @@
       "1.3.0": "QmYPvMeWGYqBd3toMAx3vf3zFd2Bm49wLnf6uFD942j4yL",
       "1.5.0": "QmTBKVDXnYCCm5PhbSNaWscWFFZuVjC513zqDijHkxhcsy",
       "3.0.0": "QmYypiEFCkTcmbnrAuFa3rfR1EdgoN89xc27wLLgVXUbNg",
-      "3.1.0": "QmXFYV9F6GrddN5aeCiRWiAqHZg953VWrtBxRJBiBo5VEj"
+      "3.1.0": "QmTVq3teuFda8e6Sf1andKuH8TiVYME4S5fbNSXE1mkoWw"
     }
   }
 }

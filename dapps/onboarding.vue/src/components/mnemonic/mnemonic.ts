@@ -307,9 +307,15 @@ export default class Mnemonic extends mixins(EvanComponent) {
     e.stopPropagation();
     e.preventDefault();
 
-    // Get pasted data via clipboard API
+    // Get pasted data via clipboard API and perform basic cleanup steps
     const clipboardData = e.clipboardData || (window as any).clipboardData;
-    const pastedData = clipboardData.getData('Text');
+    const pastedData = clipboardData
+      .getData('Text')
+      .toLowerCase()
+      .replace(/[^a-z ]/g, '')
+      .replace(/ {2,}/g, ' ')
+      .trim()
+    ;
 
     // split mnemonic
     if (pastedData) {
