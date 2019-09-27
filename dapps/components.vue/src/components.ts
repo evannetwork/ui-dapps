@@ -25,6 +25,7 @@ import DispatcherTestComponent from './components/dispatcher-test/dispatcher-tes
 import FormsComponent from './components/forms/forms.vue';
 import ProfileComponent from './components/profile/profile.vue';
 import StepsComponent from './components/steps/steps.vue';
+import LayoutComponent from './components/layout/layout.vue';
 import TextComponent from './components/text/text.vue';
 
 // map them to element names, so they can be used within templates
@@ -35,6 +36,7 @@ const components: Array<any> = [
   { path: 'profile', icon: 'mdi mdi-account-box', component: ProfileComponent },
   { path: 'steps', icon: 'mdi mdi-ray-start-arrow', component: StepsComponent },
   { path: 'text', icon: 'mdi mdi-format-color-text', component: TextComponent },
+  { path: 'layout', icon: 'mdi mdi-palette-advanced', component: LayoutComponent },
 ];
 
 // add dispatcher test entry
