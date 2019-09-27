@@ -193,7 +193,8 @@
       ref="modal"
       :hideFooterButton="true"
       :maxWidth="'800px'"
-      @close="navigateToEvan();">
+      @close="navigateToEvan();"
+      disableBackdrop="true">
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_onboarding.sign-up.get-mnemonic' | translate }}
