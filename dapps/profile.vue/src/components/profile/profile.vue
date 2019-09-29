@@ -34,14 +34,16 @@
           <evan-profile-preview
             ref="profilePreview"
             size="lg"
+            editable="true"
             :address="address"
             @typeClick="typeSwitchModal()"
-            @update="type = $event.type"
+            @update="userInfo = $event"
+            @save="saveUserInfo"
           />
           <profile-type-switch
             ref="profileType"
-            :type="type"
-            v-if="$store.state.isMyProfile"
+            :type="userInfo.profileType"
+            v-if="$store.state.isMyProfile && userInfo"
           />
         </div>
         <div class="col-xl-4">
@@ -62,9 +64,9 @@
         </div>
       </div>
 
-      <div class="row" v-if="type">
+      <div class="row" v-if="userInfo">
         <div class="col-xl-8 mt-3">
-          <div class="text-center" v-if="type === 'unspecified'">
+          <div class="text-center" v-if="userInfo.profileType === 'unspecified'">
             <template v-if="this.isLoading()">
               <evan-loading></evan-loading>
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
@@ -79,11 +81,11 @@
               </evan-button>
             </template>
           </div>
-          <template v-if="type === 'company'">
+          <template v-if="userInfo.profileType === 'company'">
             <profile-company-registration :address="address"></profile-company-registration>
             <profile-company-contact :address="address"></profile-company-contact>
           </template>
-          <template v-else-if="type === 'device'">
+          <template v-else-if="userInfo.profileType === 'device'">
             <profile-device-detail :address="address"></profile-device-detail>
           </template>
         </div>

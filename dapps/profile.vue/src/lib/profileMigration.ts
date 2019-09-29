@@ -127,5 +127,11 @@ export default class ProfileMigrationLibrary {
       { from: currentAccount, autoGas: 1.1, },
       contractId
     );
+
+    // reset previous loaded profile contract to be sure to load corrcet profile data after
+    // migration
+    delete runtime.profile.profileContract;
+    await runtime.profile.loadForAccount();
+    runtime.profile.profileContract.options.address = contractId;
   }
 }

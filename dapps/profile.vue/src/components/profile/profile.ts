@@ -50,9 +50,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   address = '';
   /**
-   * Currents users type
+   * Currents users account information
    */
-  type = '';
+  userInfo = null;
 
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded
@@ -103,8 +103,22 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Open the type switch modal
    */
   typeSwitchModal() {
-    if (this.type === 'unspecified' && !this.isLoading()) {
+    if (this.userInfo.profileType === 'unspecified' && !this.isLoading()) {
       (this as any).$refs.profileType.show();
     }
+  }
+
+  /**
+   * Save changed user information
+   *
+   * @param      {any}  userInfo  latest user informatione
+   */
+  saveUserInfo(userInfo: any) {
+    this.userInfo = userInfo;
+
+    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      formData: userInfo,
+      type: 'accountDetails'
+    });
   }
 }
