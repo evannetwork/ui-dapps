@@ -34,12 +34,24 @@ the following URL: https://evan.network/license/
             <evan-button @click="$refs.swipePanelRight.show()" icon="mdi mdi-arrow-left" />
           </div>
 
-          <evan-swipe-panel ref="swipePanelLeft" alignment="left" type="default" class="text-center">
+          <evan-swipe-panel
+            ref="swipePanelLeft"
+            alignment="left"
+            type="default"
+            class="text-center"
+            mountId="dapp-wrapper-sidebar-left"
+          >
             <p>click to close</p>
             <evan-button @click="$refs.swipePanelLeft.hide()" icon="mdi mdi-arrow-left" />
           </evan-swipe-panel>
 
-          <evan-swipe-panel ref="swipePanelRight" alignment="right" type="default" class="light text-center">
+           <evan-swipe-panel
+            ref="swipePanelRight"
+            alignment="right"
+            type="default"
+            class="text-center light"
+            mountId="dapp-wrapper-sidebar-right"
+          >
             <p>click to close</p>
             <evan-button @click="$refs.swipePanelRight.hide()" icon="mdi mdi-arrow-right" />
           </evan-swipe-panel>
