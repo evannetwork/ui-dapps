@@ -70,16 +70,29 @@ export default class EvanQueue {
    */
   async openDB(version?: number) {
     return new Promise((resolve, reject) => {
-      const indexDB = window['indexedDB'] ||
+      const availableDB = window['indexedDB'] ||
         window['mozIndexedDB'] ||
         window['webkitIndexedDB'] ||
         window['msIndexedDB'] ||
         window['shimIndexedDB'];
 
-      const openRequest = indexedDB.open('EvanNetworkQueueV2', version);
+      const openParams: any = [ 'EvanNetworkQueueV2' ];
+      // directly pass previous version
+      if (version) {
+        openParams.push(version);
+      }
+
+      const openRequest = availableDB.open.apply(availableDB, openParams);
       const storageName = this.storageName;
 
-      openRequest.onerror = () => reject(openRequest.error);
+      openRequest.onerror = () => {
+        // if the browser could not detect initial so start with one
+        if (!version) {
+          this.openDB(1);
+        } else {
+          reject(openRequest.error);
+        }
+      };
       openRequest.onsuccess = async (event) => {
         const storeExists = Object
           .keys(openRequest.result.objectStoreNames)
@@ -158,8 +171,23 @@ export default class EvanQueue {
       let request;
 
       if (dispatcherId === '*') {
-        request = objectStore.getAll();
-        request.onsuccess = (event) => resolve(request.result);
+        if (objectStore.getAll) {
+          request = objectStore.getAll();
+          request.onsuccess = (event) => resolve(request.result);
+        } else {
+          // polyfill getAll for edge / ie
+          const results = [ ];
+          request = objectStore.openCursor();
+          request.onsuccess = function(event) {
+            const cursor = event.target.result;
+            if (cursor) {
+              results.push(cursor.value);
+              cursor.continue();
+            } else {
+              resolve(results);
+            }
+          };
+        }
       } else {
         request = objectStore.get(dispatcherId);
         request.onsuccess = (event) =>

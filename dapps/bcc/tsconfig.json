@@ -9,6 +9,7 @@
     ],
     "module": "commonjs",
     "outDir": "./dist/build",
+    "resolveJsonModule": true,
     "rootDir": "./src",
     "target": "es5"
   },
