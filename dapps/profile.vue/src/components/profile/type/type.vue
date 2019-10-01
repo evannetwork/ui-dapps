@@ -43,11 +43,15 @@
               'ml-3': index !== 0,
               'evan-highlight active': type === newType,
             }"
-            :title="`_evan.profile.types.${ newType }` | translate"
             @click="type = newType">
-            <template v-slot:icon>
-              <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
-            </template>
+            <evan-profile-picture
+              class="mb-3"
+              :src="`${ $store.state.profileBaseUrl }/assets/${ newType }.svg`"
+              :type="newType"
+              :size="'lg'"
+            />
+            <h5 class="mb-3">{{ `_evan.profile.types.${ newType }` | translate }}</h5>
+            <small class="text-muted">{{ `_evan.profile.types.${ newType }-desc` | translate }}</small>
           </evan-card>
         </div>
       </template>

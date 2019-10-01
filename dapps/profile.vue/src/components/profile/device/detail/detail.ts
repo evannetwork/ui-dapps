@@ -142,8 +142,13 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
   }
 
   async changeProfileData() {
+    const formData = this.deviceDetailForm.getFormData();
+    // set correct file format
+    formData.settings = { files: formData.settings };
+    formData.type = { files: formData.type };
+
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.deviceDetailForm.getFormData(),
+      formData: formData,
       type: 'deviceDetails'
     });
   }

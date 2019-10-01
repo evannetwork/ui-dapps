@@ -34,7 +34,7 @@
           <evan-profile-preview
             ref="profilePreview"
             size="lg"
-            editable="true"
+            :editable="userInfo && userInfo.profileType !== 'unspecified'"
             :address="address"
             @typeClick="typeSwitchModal()"
             @update="userInfo = $event"
