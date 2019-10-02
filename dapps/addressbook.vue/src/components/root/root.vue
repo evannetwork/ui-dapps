@@ -109,7 +109,6 @@
 </template>
 
 <script lang="ts">
-  import addressbookRootComponent from './root.ts';
+  import addressbookRootComponent from './root';
   export default addressbookRootComponent;
 </script>
-

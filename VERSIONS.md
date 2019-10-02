@@ -2,6 +2,7 @@
 
 ## Next Version
 ### Features
+- add v-select form control for inputs and options selection as well
 
 ### Fixes
 - `onboarding.vue`

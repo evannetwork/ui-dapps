@@ -100,19 +100,20 @@
             <input type="checkbox"
               id="custom-input"
               class="form-control"
-              @focus="$refs.sampleForm2.setEditMode(true)"
+              @change="$refs.sampleForm2.setEditMode(true)"
               v-model="isPublic"
             />
           </div>
         </div>
 
-        <div class="form-group"
-          :class="{ 'inline': stacked }">
-          <label class="col-form-label" for="select-input">
-            Select Input
-          </label>
-          <evan-v-select id="select-input" label="alias" :options="contacts" :disabled="contacts.length === 0"/>
-        </div>
+        <evan-form-control-v-select
+          id="evan-form-test-5"
+          label="Field 5 - V-Select"
+          v-model="field5"
+          :options="contacts"
+          :disabled="contacts.length === 0"
+          :taggable="true"
+        />
 
       </evan-form>
     </template>

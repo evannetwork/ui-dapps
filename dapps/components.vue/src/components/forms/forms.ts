@@ -57,6 +57,7 @@ export default class Forms extends mixins(EvanComponent) {
   field2 = 'a';
   field3 = 0;
   field4 = 0;
+  field5 = null;
 
   options = [
     {label: 'Option 1', value: 'option1'},
@@ -78,8 +79,8 @@ export default class Forms extends mixins(EvanComponent) {
    */
   dispatcherWatch = null;
 
-  created() {
-    this.loadAddressBook()
+  async created() {
+    await this.loadAddressBook()
 
     this.sampleForm = new EvanForm(this, {
       field1: {
@@ -120,6 +121,19 @@ export default class Forms extends mixins(EvanComponent) {
           }
         }
       },
+      vSelect: {
+        value: '',
+        validate: function(vueInstance: Forms, form: SampleFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          type: 'v-select',
+          attr: {
+           options: this.contacts,
+           taggable: true
+          }
+        }
+      },
       files: {
         value: [ ],
         validate: function(vueInstance: Forms, form: SampleFormInterface) {
@@ -153,8 +167,8 @@ export default class Forms extends mixins(EvanComponent) {
 
     this.contacts = Object.keys(addressBook).map(key => {
       return {
-        'hash': key,
-        'alias': addressBook[key].alias
+        'label': addressBook[key].alias,
+        'value': key
       }
     })
   }
