@@ -28,7 +28,6 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -75,9 +74,8 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
     this.address = this.$route.params.address || runtime.activeAccount;
 
     // switch issue account
-    this.canIssue = runtime.environment === 'core' ?
-      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B' :
-      runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
+    this.canIssue = runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
+
     // load users type
     this.type = (await runtime.dataContract.getEntry(
       runtime.profile.profileContract,

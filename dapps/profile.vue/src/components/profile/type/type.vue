@@ -48,7 +48,7 @@
               class="mb-3"
               :src="`${ $store.state.profileBaseUrl }/assets/${ newType }.svg`"
               :type="newType"
-              :size="'lg'"
+              size="lg"
             />
             <h5 class="mb-3">{{ `_evan.profile.types.${ newType }` | translate }}</h5>
             <small class="text-muted">{{ `_evan.profile.types.${ newType }-desc` | translate }}</small>

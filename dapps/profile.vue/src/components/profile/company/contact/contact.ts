@@ -141,7 +141,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       website: {
         value: contactData.website || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
+          return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
         },
       },
     }));
