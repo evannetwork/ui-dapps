@@ -23,9 +23,10 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { countries } from '@evan.network/ui-countries';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
@@ -33,9 +34,10 @@ import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface ContactFormInterface extends EvanForm {
   city: EvanFormControl;
-  website: EvanFormControl;
+  country: EvanFormControl;
   postalCode: EvanFormControl;
   streetAndNumber: EvanFormControl;
+  website: EvanFormControl;
 }
 
 @Component({ })
@@ -86,8 +88,32 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
 
     // setup registration form
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
-      streetAndNumber: {
-        value: contactData.streetAndNumber || '',
+      country: {
+        value: contactData.country || '',
+        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          type: 'select',
+          attr: {
+            options: countries
+              .map(isoCode => {
+                return { value: isoCode, label: (this as any).$t(`_countries.${ isoCode }`), }
+              })
+              .sort((countryA, countryB) => {
+                if (countryA.label < countryB.label) {
+                  return -1;
+                } else if (countryA.label > countryB.label) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              }),
+          }
+        }
+      },
+      city: {
+        value: contactData.city || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
@@ -98,8 +124,8 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
           return /^\d{5}$/.test(this.value);
         },
       },
-      city: {
-        value: contactData.city || '',
+      streetAndNumber: {
+        value: contactData.streetAndNumber || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
@@ -107,7 +133,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       website: {
         value: contactData.website || '',
         validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(this.value);
+          return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
         },
       },
     }));

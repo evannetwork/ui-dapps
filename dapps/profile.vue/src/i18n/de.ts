@@ -33,33 +33,35 @@ const i18n: any = {
         "city": {
           "error": "Bitte geben Sie einen Ort ein!",
           "label": "Ort",
-          "placeholder": "Geben Sie Ihre Stadt ein"
+          "placeholder": "Berlin, London, Paris"
         },
-        "website": {
-          "error": "Bitte geben Sie eine gültige URL ein!",
-          "label": "Website",
-          "placeholder": "https://website.com"
+        "country": {
+          "desc": "Firmensitz eingeben",
+          "error": "Bitte geben Sie einen Firmensitz an!",
+          "label": "Firmensitz"
         },
         "postalCode": {
           "error": "Bitte geben Sie eine gültige Postleitzahl ein!",
           "label": "Postleitzahl",
-          "placeholder": "Geben Sie Ihre Postleitzahl ein"
+          "placeholder": "12345"
         },
         "streetAndNumber": {
           "error": "Bitte geben Sie eine Straße und eine Hausnummer ein!",
           "label": "Straße und Hausnummer",
-          "placeholder": "Geben Sie Ihre Straße und Hausnummer ein"
+          "placeholder": "Meine Straße 15"
         },
-        "title": "Contact"
+        "title": "Contact",
+        "website": {
+          "error": "Bitte geben Sie eine gültige URL ein!",
+          "label": "Website",
+          "placeholder": "https://website.com"
+        }
       },
       "registration": {
         "company": {
           "error": "Bitte geben Sie einen Firmennamen ein!",
           "label": "Unternehmen",
-          "placeholder": "Geben Sie Ihren Firmennamen ein..."
-        },
-        "countries": {
-          "germany": "Germany"
+          "placeholder": "Mein Unternehmen"
         },
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
@@ -68,8 +70,12 @@ const i18n: any = {
         },
         "register": {
           "error": "Bitte wählen Sie den Registertyp aus!",
-          "label": "Registrieren",
-          "placeholder": "Art des Registers"
+          "label": "Register",
+          "placeholder": "Art des Registers",
+          "types": {
+            "hra": "HRA",
+            "hrb": "HRB"
+          }
         },
         "registerNumber": {
           "error": "Bitte geben Sie die Registernummer ein.",
@@ -157,6 +163,7 @@ const i18n: any = {
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
       "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "no-verifications-avaiable": "Für ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an"
     },
     "verifications": {

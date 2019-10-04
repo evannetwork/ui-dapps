@@ -42,24 +42,19 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   address = '';
   /**
-   * Currents users type
+   * Currents users account information
    */
-  type = 'unspecified';
+  userInfo = null;
 
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded
    */
-  balance: { amount: number, timestamp: number } = null;
+  balance: { amount: string, timestamp: number } = null;
 
   /**
    * Amount of calculated verifications and requests
    */
   verificationCount = 0;
-
-  /**
-   * Watch for dispatcher updates
-   */
-  listeners: Array<any> = [ ];
 
   /**
    * Load the mail details
@@ -69,43 +64,12 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     // fill empty address with current logged in user
     this.address = this.$route.params.address || runtime.activeAccount;
     // load balance and parse it to 3 decimal places
+    const amount = parseFloat((await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3));
     this.balance = {
-      amount: (await dappBrowser.core.getBalance(runtime.activeAccount)).toFixed(3),
+      amount: amount.toLocaleString(this.$i18n.locale()),
       timestamp: Date.now(),
     };
-    // load the currents users profile type, alias, ...
-    await this.loadAccountDetails();
-
-    // watch for save updates
-    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        this.loadAccountDetails();
-      }
-    }));
-
     this.loading = false;
-  }
-
-  /**
-   * Clear dispatcher listeners
-   */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
-  }
-
-  /**
-   * Load the users account type
-   */
-  async loadAccountDetails() {
-    const runtime = (<any>this).getRuntime();
-
-    const profileContract = runtime.profile.profileContract;
-    const accountDetails = await runtime.dataContract.getEntry(
-      profileContract,
-      'accountDetails',
-      runtime.activeAccount
-    );
-    this.type = accountDetails.profileType || 'unspecified';
   }
 
   /**
@@ -131,8 +95,22 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Open the type switch modal
    */
   typeSwitchModal() {
-    if (this.type === 'unspecified' && !this.isLoading()) {
+    if (this.userInfo.profileType === 'unspecified' && !this.isLoading()) {
       (this as any).$refs.profileType.show();
     }
+  }
+
+  /**
+   * Save changed user information
+   *
+   * @param      {any}  userInfo  latest user informatione
+   */
+  saveUserInfo(userInfo: any) {
+    this.userInfo = userInfo;
+
+    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      formData: userInfo,
+      type: 'accountDetails'
+    });
   }
 }

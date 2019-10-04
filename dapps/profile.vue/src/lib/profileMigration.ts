@@ -33,11 +33,6 @@ export default class ProfileMigrationLibrary {
       // when the description errors, create a new profile
       await this.migrateProfile(runtime);
     }
-
-    // check if the initial description exists, if not. create new fields and set initial description
-    if (!description) {
-      await this.setNewFieldsToProfile(runtime);
-    }
   }
 
   /**
@@ -60,68 +55,10 @@ export default class ProfileMigrationLibrary {
 
     // if not dispatcher entry was found for this scope, load it!
     if (!scopeData) {
-      scopeData = await runtime.dataContract.getEntry(
-        runtime.profile.profileContract,
-        type,
-        runtime.activeAccount
-      );
+      scopeData = (await runtime.profile.getProfileProperties([ type ]))[type];
     }
 
     return scopeData;
-  }
-
-  /**
-   * Sets the new profile fields to the current account
-   *
-   * @param      {any}  runtime  runtime object
-   */
-  static async setNewFieldsToProfile(runtime) {
-    const profileAddress = runtime.profile.profileContract.options.address;
-    const currentAccount = runtime.activeAccount;
-
-    const newDataFields = ['accountDetails', 'registration', 'contact', 'deviceDetails'];
-    // create a new description for the profile
-    const description = {
-      'public': {
-        'name': 'Profile Contract',
-        'description': 'Profile Contract',
-        'author': 'evan.network',
-        'tags': [
-          'profile'
-        ],
-        'version': '1.0.0',
-        'dbcpVersion': 2
-      }
-    };
-
-    const shared = runtime.contractLoader.loadContract('Shared', profileAddress);
-    const sharings = await runtime.sharing.getSharingsFromContract(shared);
-
-    // create unique keys for the new fields
-    await Promise.all(newDataFields.map(async (key) => {
-      const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aes');
-      const [contentKey, blockNr] = await Promise.all(
-        [cryptor.generateKey(), runtime.web3.eth.getBlockNumber()])
-      await runtime.sharing.extendSharings(sharings, currentAccount, currentAccount, key, blockNr, contentKey);
-
-      await runtime.rightsAndRoles.setOperationPermission(
-        profileAddress,                 // contract to be updated
-        currentAccount,           // account, that can change permissions
-        0,                           // role id, uint8 value
-        key,                  // name of the object
-        bcc.PropertyType.Entry,          // what type of element is modified
-        bcc.ModificationType.Set,        // type of the modification
-        true,                        // grant this capability
-      );
-
-    }));
-
-    await runtime.sharing.saveSharingsToContract(profileAddress, sharings, currentAccount);
-
-    const sharingsNew = await runtime.sharing.getSharings(profileAddress);
-
-    // set the description to the contract
-    await runtime.description.setDescription(profileAddress, description, runtime.activeAccount);
   }
 
   /**
@@ -183,6 +120,10 @@ export default class ProfileMigrationLibrary {
       contractId
     );
 
+    // reset previous loaded profile contract to be sure to load corrcet profile data after
+    // migration
+    delete runtime.profile.profileContract;
+    await runtime.profile.loadForAccount();
     runtime.profile.profileContract.options.address = contractId;
   }
 }

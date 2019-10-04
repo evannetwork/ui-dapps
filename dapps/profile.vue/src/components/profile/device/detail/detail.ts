@@ -89,30 +89,6 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
     const profileContract = runtime.profile.profileContract;
     const profileAddress = profileContract.options.address;
     const deviceData = await ProfileMigrationLibrary.loadProfileData(runtime, 'deviceDetails');
-    const fileFields = ['settings', 'type'];
-
-    await Promise.all(fileFields.map(async (field) => {
-      const blobs = []
-      if (deviceData[field] && typeof deviceData[field] === 'string') {
-        // generate new keys
-        const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob');
-        const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
-
-        const hashKey = await runtime.sharing.getHashKey(profileAddress, runtime.activeAccount);
-        const contentKey = await runtime.sharing.getKey(profileAddress, runtime.activeAccount,
-          'deviceDetails');
-        const dencryptedHashBuffer = await hashCryptor.decrypt(
-          Buffer.from(deviceData[field].substr(2), 'hex'), { key: hashKey })
-        const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'),
-          true);
-        const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
-        deviceData[field] = [];
-        for (let file of decrypted) {
-          file.size = file.file.length;
-          deviceData[field].push(await FileHandler.fileToContainerFile(file));
-        }
-      }
-    }));
 
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
@@ -147,19 +123,24 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
         },
       },
       settings: {
-        value: deviceData.settings || [ ],
+        value: deviceData.settings ? deviceData.settings.files || deviceData.settings : [ ],
         uiSpecs: { type: 'files' }
       },
       type: {
-        value: deviceData.type || [ ],
+        value: deviceData.type ? deviceData.type.files || deviceData.type : [ ],
         uiSpecs: { type: 'files' }
       },
     }));
   }
 
   async changeProfileData() {
+    const formData = this.deviceDetailForm.getFormData();
+    // set correct file format
+    formData.settings = { files: formData.settings };
+    formData.type = { files: formData.type };
+
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.deviceDetailForm.getFormData(),
+      formData: formData,
       type: 'deviceDetails'
     });
   }

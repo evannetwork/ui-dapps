@@ -39,47 +39,9 @@ dispatcher
 
     // check, if profile was migrated before, else migrate it
     await ProfileMigrationLibrary.checkOrMigrateProfile(runtime);
-
-    const previousValue = await runtime.dataContract.getEntry(
-      profileContract,
-      data.type,
-      runtime.activeAccount
-    );
-
-    await Promise.all(fileFields.map(async (field) => {
-      const blobs = [];
-      if (data.formData[field] && data.formData[field].length) {
-        data.formData[field].forEach((control: any) =>
-          blobs.push({
-            // apply correct streamlined name for files
-            name: control.name,
-            fileType: control.fileType,
-            file: control.file
-          })
-        );
-        // generate new keys
-        const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesBlob')
-        const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
-        const hashKey = await runtime.sharing.getHashKey(profileAddress, runtime.activeAccount);
-        const contentKey = await runtime.sharing.getKey(profileAddress, runtime.activeAccount,
-          data.type);
-
-        const encryptedFileBuffer = await cryptor.encrypt(blobs, { key: contentKey })
-        const stateMd5 = bcc.crypto.createHash('md5').update(encryptedFileBuffer).digest('hex')
-        const fileHash = await runtime.dfs.add(stateMd5, encryptedFileBuffer)
-        const encryptedHashBuffer = await hashCryptor.encrypt(
-          Buffer.from(fileHash.substr(2), 'hex'), { key: hashKey })
-        const encryptedHashString = `0x${encryptedHashBuffer.toString('hex')}`
-        data.formData[field] = encryptedHashString;
-      }
-    }));
-
-    await runtime.dataContract.setEntry(
-      profileContract,
-      data.type,
-      Object.assign({}, previousValue || {}, data.formData),
-      runtime.activeAccount
-    );
+    await runtime.profile.setProfileProperties({
+      [ data.type ]: data.formData,
+    });
   });
 
 export default dispatcher;

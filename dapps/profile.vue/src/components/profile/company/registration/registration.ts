@@ -96,35 +96,24 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       },
       court: {
         value: registrationData.court || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
       },
       register: {
         value: registrationData.register || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
         uiSpecs: {
           type: 'select',
           attr: {
-            options: countries.map(isoCode => {
-              return { value: isoCode, label: `_countries.${ isoCode }`, }
-            }),
+            options: [
+              { value: 'hra', label: '_profile.company.registration.register.types.hra', },
+              { value: 'hrb', label: '_profile.company.registration.register.types.hrb', },
+            ],
           }
         }
       },
       registerNumber: {
         value: registrationData.registerNumber || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
       },
       salesTaxID: {
         value: registrationData.salesTaxID || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: RegistrationFormInterface) {
-          return this.value.length !== 0;
-        },
       },
     }));
   }
