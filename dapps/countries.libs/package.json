@@ -15,5 +15,5 @@
     "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
   },
   "typings": "dist/countries.libs.d.ts",
-  "version": "1.7.1"
+  "version": "1.0.0"
 }
