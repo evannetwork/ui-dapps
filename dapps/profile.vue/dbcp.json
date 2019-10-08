@@ -4,7 +4,7 @@
     "dapp": {
       "dependencies": {
         "countries.libs": "^1.0.0",
-        "evancore.vue.libs": "^1.6.0"
+        "evancore.vue.libs": "^1.7.0"
       },
       "entrypoint": "profile.vue.js",
       "files": [
@@ -34,7 +34,7 @@
       "dapp",
       "evan"
     ],
-    "version": "3.2.0",
+    "version": "3.3.0",
     "versions": {
       "0.1.0": "QmPMvAHoL7MuG5pebHj1E1jn1RzZAuv6sWAkdxXxCpQ671",
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",

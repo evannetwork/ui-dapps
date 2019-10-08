@@ -6,7 +6,7 @@
         "datacontainer.digitaltwin": "^1.8.1",
         "digitaltwin": "^1.8.0",
         "digitaltwin.lib": "^1.8.0",
-        "evancore.vue.libs": "^1.6.0"
+        "evancore.vue.libs": "^1.7.0"
       },
       "entrypoint": "digitaltwins.js",
       "files": [

@@ -5,12 +5,16 @@
 - add v-select form control for inputs and options selection as well
 
 ### Fixes
-- `onboarding.vue`
+- `onboarding.vue` (v3.1.1)
   - new login paste logic
   - style optimizations
-- `profile.vue`
+- `profile.vue` (v3.3.0)
   - profile type handling
   - profile data management
+  - profile img handling
+- `components.vue` (v0.0.2)
+  - add swipe panel sample
+  - add v-select sample
 - remove custom agpl appendix
 
 ### Deprecations
