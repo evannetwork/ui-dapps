@@ -5,7 +5,7 @@
       "dependencies": {
         "dexie.libs": "2.0.4",
         "evan.bootstrap.libs": "^4.3.1",
-        "materialicons.libs": "1.8.36"
+        "materialicons.libs": "^4.4.0"
       },
       "entrypoint": "ui.libs.js",
       "files": [
@@ -35,7 +35,7 @@
       "evan",
       "library"
     ],
-    "version": "1.7.1",
+    "version": "1.7.2",
     "versions": {
       "1.0.0": "QmcMekTfYhhWLvnHo3YwSkw5fWo77FNHLrqgLfmcBYCerN",
       "1.1.0": "QmWGG5kwUJfgoHRRbJYNNAnE32mWLvRYH3Fc288v2CJaNb",
