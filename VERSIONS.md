@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 3.10.0
+### Features
 - add v-select form control for inputs and options selection as well
 
 ### Fixes
@@ -17,7 +25,6 @@
   - add v-select sample
 - remove custom agpl appendix
 
-### Deprecations
 
 ## Version 3.9.0
 ### Features
