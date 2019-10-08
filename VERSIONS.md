@@ -2,6 +2,13 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+## Version (v1.9.0)
+### Features
 - `@evan.network/ui-countries` (v1.0.0)
   - add countries dapp that includes all iso countries and it's translations
   - adjust `text-muted` to `#a2b0b4`
@@ -13,8 +20,6 @@
 
 ### Fixes
 - remove custom agpl appendix
-
-### Deprecations
 
 
 ## Version 1.8.0

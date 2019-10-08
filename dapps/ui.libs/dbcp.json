@@ -5,14 +5,14 @@
       "dependencies": {
         "dexie.libs": "2.0.4",
         "evan.bootstrap.libs": "^4.3.1",
-        "materialicons.libs": "^4.4.0"
+        "materialicons.libs": "^1.8.36"
       },
       "entrypoint": "ui.libs.js",
       "files": [
         "ui.libs.js",
         "ui.libs.css"
       ],
-      "origin": "QmeGKnAZQiph4G9gzXsDhntx3Mj54ZCgvo2sDCKeWNYnqS",
+      "origin": "QmTvSE59HaNB7CyUvnqPoK38wZaqpVfx4NJrSFoGb4gcgi",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -47,7 +47,8 @@
       "1.5.0": "QmdfmnU7H7CgXTbr6hmg8MBj6SvMB3vVtNaNpqvqga3dxP",
       "1.6.0": "QmNuHifSNx2NyyPWP9UkW2caYNQYZP6NbpNMy5qLXj81uu",
       "1.7.0": "QmTiKfLfiVxBQZGzCy8GtFriaXW3D4gzH7ztGBCSzaPXYf",
-      "1.7.1": "Qma2wvhCZeHbjdfw6R4CvECeuECoRW9SfuPG7Mn7Rm6b38"
+      "1.7.1": "Qma2wvhCZeHbjdfw6R4CvECeuECoRW9SfuPG7Mn7Rm6b38",
+      "1.7.2": "QmZVM5U1dCycg6t5xexpJ4jxdsS3wBMQKdE4oSchr4x8Qs"
     }
   }
 }

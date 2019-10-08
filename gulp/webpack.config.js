@@ -42,7 +42,7 @@ module.exports = function(
   name,
   dist,
   transpileOnly = false,
-  prodMode = false,
+  prodMode = process.env.NODE_ENV === 'production',
   externals = getExternals(),
 ) {
   const packageJson = require(path.resolve(`${ dist }/../package.json`));
@@ -51,7 +51,7 @@ module.exports = function(
     entry: './src/index.ts',
     externals: externals,
     devtool: '#eval-source-map',
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    mode: prodMode ? 'production' : 'development',
     output: {
       path: dist,
       publicPath: '/dist/',
@@ -133,7 +133,7 @@ module.exports = function(
     }
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (prodMode) {
     webpackConfig.devtool = '#source-map';
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
       new webpack.DefinePlugin({
@@ -152,8 +152,7 @@ module.exports = function(
   }
 
   // only rebuild d.ts files when we are running in production mode or they does not exists
-  if (process.env.NODE_ENV === 'production' || prodMode ||
-    !fs.existsSync(`${ dist }/${ name }.d.ts`)) {
+  if (prodMode && !fs.existsSync(`${ dist }/${ name }.d.ts`)) {
     webpackConfig.plugins.push(new DeclarationBundlerPlugin({
       moduleName: `'${ packageJson.name }'`,
       out: `${ name }.d.ts`,
