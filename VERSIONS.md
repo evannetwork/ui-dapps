@@ -7,9 +7,12 @@
   - adjust `text-muted` to `#a2b0b4`
   - fix `Dispatcher` and `Queue` logic for Microsoft `Edge browser`
   - add `resizeImage` to `FileHandler`
-- update `@mdi/font` to version 4.4.0
+- `meterialicons.libs` (v4.4.0)
+  - update `@mdi/font` to version 4.4.0
+- `@evan.networtk/api-blockchain-core-browserified` (v2.13.0)
 
 ### Fixes
+- remove custom agpl appendix
 
 ### Deprecations
 
