@@ -33,7 +33,7 @@ export default class OverviewComponent extends mixins(EvanComponent) {
     {
       title: 'explanations',
       img: 'performance-colored.svg',
-      path: 'explanations',
+      path: `help.vue.${ getDomainName() }`,
     },
     {
       title: 'digitaltwins',
