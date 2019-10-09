@@ -38,7 +38,7 @@ const i18n: any = {
         "country": {
           "desc": "Company headquarters country",
           "error": "Please select the company headquartes country",
-          "label": "Company HQ country"
+          "label": "Company HQ Country"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
