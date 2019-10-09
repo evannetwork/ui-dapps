@@ -271,7 +271,7 @@ const i18n: any = {
           "country": {
             "desc": "Company headquarters country",
             "error": "Please select the company headquartes country",
-            "title": "Company HQ country"
+            "title": "Company HQ Country"
           },
           "court": {
             "desc": "Where is the company registered?",
