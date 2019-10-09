@@ -163,7 +163,7 @@ const i18n: any = {
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
       "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
-      "no-verifications-avaiable": "Für ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
+      "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an."
     },
     "verifications": {
@@ -283,12 +283,12 @@ const i18n: any = {
             "error": "Bitte geben Sie eine Abteilung an!",
             "title": "Abteilung"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "header": "Notarielle Verifikation",
           "how": {
             "steps": {
               "1": {
-                "description": "Geben Sie Handelsregisternummer, Registergericht, ihre Anschrift und einen Ansprechpartner an.",
+                "description": "Geben Sie Handelsregisternummer, Registergericht, Ihre Anschrift und einen Ansprechpartner an.",
                 "title": "Anfordern"
               },
               "2": {
@@ -335,12 +335,12 @@ const i18n: any = {
           "requesting": "Notarielle Verifikation wird angefordert...",
           "step": "Schritt",
           "who": {
-            "description": "Als eingetragenes Unternehmen können sie eine notarielle Verifikation ihres Accounts anfordern.",
+            "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihres Accounts anfordern.",
             "link": "Mehr erfahren",
             "title": "Voraussetzungen"
           },
           "why": {
-            "description": "Mit der notariellen Verifikation wird bestätigt, dass ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
+            "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
             "link": "Mehr erfahren",
             "title": "Vorteile"
           },
