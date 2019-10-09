@@ -94,7 +94,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
           return this.value.length !== 0;
         },
         uiSpecs: {
-          type: 'select',
+          type: 'v-select',
           attr: {
             options: countries
               .map(isoCode => {
