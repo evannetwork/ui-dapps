@@ -79,12 +79,12 @@ const i18n: any = {
         },
         "registerNumber": {
           "error": "Please enter the registration number",
-          "label": "Registration number",
+          "label": "Registration Number",
           "placeholder": "Choose..."
         },
         "salesTaxID": {
           "error": "Please enter the sales tax ID",
-          "label": "sales tax ID",
+          "label": "Sales Tax ID",
           "placeholder": "Insert your sales tax ID..."
         },
         "title": "Registration"
