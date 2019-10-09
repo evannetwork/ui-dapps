@@ -103,7 +103,7 @@ const i18n: any = {
         "dataStreamSettings": {
           "error": "Bitte fügen Sie IoT-Einstellungsdateien ein!",
           "label": "IoT-Einstellungen",
-          "placeholder": "Hinzufügen von IoT-Einstellungsdateien"
+          "placeholder": "Fügen Sie IoT-Einstellungsdateien hinzu."
         },
         "location": {
           "error": "Bitte geben Sie einen Standort an!",
@@ -113,7 +113,7 @@ const i18n: any = {
         "manufacturer": {
           "error": "Bitte geben Sie einen Gerätehersteller an!",
           "label": "Hersteller",
-          "placeholder": "Geben Sie den Gerätehersteller ein"
+          "placeholder": "Geben Sie den Gerätehersteller ein."
         },
         "owner": {
           "error": "Bitte geben Sie eine korrekte Account-Adresse an!",
@@ -128,13 +128,13 @@ const i18n: any = {
         "settings": {
           "error": "Bitte Einstellungsdateien einfügen!",
           "label": "Einstellungen",
-          "placeholder": "Hinzufügen von Geräteeinstellungsdateien."
+          "placeholder": "Fügen Sie Geräteeinstellungsdateien hinzu."
         },
         "title": "Geräteinformationen",
         "type": {
           "error": "Bitte geben Sie einen Gerätetyp an!",
           "label": "Typ",
-          "placeholder": "Geben Sie den Gerätetyp ein"
+          "placeholder": "Geben Sie den Gerätetyp ein."
         }
       }
     },
@@ -164,7 +164,7 @@ const i18n: any = {
       "choose": "Profiltyp spezifieren",
       "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
       "no-verifications-avaiable": "Für ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
-      "switch": "Geben Sie Ihren Profiltyp an"
+      "switch": "Geben Sie Ihren Profiltyp an."
     },
     "verifications": {
       "add": "Verifikation hinzufügen",
