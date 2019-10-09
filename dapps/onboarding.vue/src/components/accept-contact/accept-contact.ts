@@ -128,6 +128,14 @@ export default class AcceptContact extends mixins(EvanComponent) {
     this.accepting = true;
 
     try {
+
+      // trigger smart agent to pay out credit eves
+      await axios.post(`${ agentUrl }/api/smart-agents/onboarding/accept`, {
+        invitationId: this.$route.query.onboardingID,
+        accountId: this.runtime.activeAccount,
+      });
+
+
       // load my address book
       await this.runtime.profile.loadForAccount(this.accountId,
         this.runtime.profile.treeLabels.addressBook);
@@ -167,17 +175,6 @@ export default class AcceptContact extends mixins(EvanComponent) {
       };
       await this.runtime.keyExchange.sendInvite(this.inviteeAddress, targetPubKey,
         commKey, mail);
-
-
-      // trigger smart agent to pay out credit eves
-      try {
-        await axios.post(`${ agentUrl }/api/smart-agents/onboarding/accept`, {
-          invitationId: this.$route.query.inviteeAddress,
-          accountId: this.runtime.activeAccount,
-        });
-      } catch (ex) {
-        this.runtime.logger.log(ex.message, 'error');
-      }
 
       // show success
       this.accepted = true;

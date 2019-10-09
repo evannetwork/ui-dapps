@@ -123,7 +123,7 @@ export default {
     "signed-in": {
       "accept-contact": "Kontaktanfrage akzeptieren",
       "go-to-evan": "Weiter zum evan.network",
-      "invited-info": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen. Wenn Sie diesen Kontakt zu Ihrem Adressbuch hinzufügen, erhalten Sie <b>{eveAmount} EVE</b> als Einladungsgeschenk.",
+      "invited": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen. Wenn Sie diesen Kontakt zu Ihrem Adressbuch hinzufügen, erhalten Sie <b>{eveAmount} EVE</b> als Einladungsgeschenk.",
       "title": "evan.network Anmeldung",
       "unlock-for-accept": "Sie sind bereits im evan.network angemeldet.<br><br>Sie haben eine Kontaktanfrage von <b>{inviteeAlias}</b> erhalten. Entsperren Sie Ihr Profil, um fortzufahren oder nutzen Sie den \"zurück\" Button, um sich mit einer anderen Identität anzumelden.",
       "welcome-signed-in": "Sie sind bereits im evan.network angemeldet <b>({accountId})</b>.<br><br>Nutzen Sie den nachfolgenden Button, um mit Ihrer Arbeit fortzufahren.",
