@@ -18,12 +18,12 @@
 */
 
 <template>
-  <div class="layout-wrapper">
+  <div class="layout-wrapper w-100">
     <div class="col col-lg-6 left-panel d-lg-block">
       <img class="evan-logo"
         :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
       <div class="d-flex h-100 align-items-center justify-content-center">
-        <div>
+        <div class="w-100">
           <div class="text-center">
             <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
           </div>

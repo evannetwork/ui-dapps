@@ -370,6 +370,7 @@ export default class SignUp extends mixins(EvanComponent) {
           if (!this.$route.query.inviteeAlias) {
             this.showMnemnonicModal();
           } else {
+            this.creatingProfile = 0;
             this.activeStep = 3;
           }
         }, 2000);

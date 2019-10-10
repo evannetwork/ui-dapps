@@ -109,6 +109,8 @@ export class OnboardingService {
     const queryParams = this.routingService.getQueryparams();
 
     if (queryParams.onboardingID) {
+      await this.onboarding.accept(this.activeAccount, queryParams.onboardingID);
+
       await this.bcc.profile.loadForAccount(accountId, this.bcc.profile.treeLabels.addressBook);
       let profile = this.bcc.getProfileForAccount(queryParams.inviteeAddress);
       const targetPubKey = await profile.getPublicKey();
