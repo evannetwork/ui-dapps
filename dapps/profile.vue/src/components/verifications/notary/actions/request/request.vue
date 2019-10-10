@@ -22,111 +22,110 @@
     <evan-modal
       ref="requestModal"
       :hideFooterButton="status === -1 || status === 3"
-      :maxWidth="'800px'">
+      :maxWidth="'800px'"
+      @close="modalClosed()">
       <template v-slot:header>
         <h5 class="modal-title">
           {{ '_profile.verifications.notary.request.header' | translate }}
         </h5>
       </template>
       <template v-slot:body>
-        <div class="modal-content">
-          <template v-if="!sending">
-            <!-- steps indicator -->
-            <evan-steps
-              v-if="status >= 0 && status < 3"
-              :steps="steps"
-              :active-step="status"
-              @stepChange="status = $event" />
+        <template v-if="!sending">
+          <!-- steps indicator -->
+          <evan-steps
+            v-if="status >= 0 && status < 3"
+            :steps="steps"
+            :active-step="status"
+            @stepChange="status = $event" />
 
-            <!-- Verification start info -->
-            <div v-if="status === -1">
-              <notary-info-content
-                :address="activeAccount"
-                :enoughFunds="enoughFunds"
-                :readableFunds="readableFunds">
-              </notary-info-content>
-            </div>
-
-            <!-- request verification form -->
-            <div class="container" v-else-if="status === 0">
-              <p class="mt-0 mb-3">
-                {{ '_profile.verifications.notary.request.requesting-account' | translate }}
-              </p>
-
-              <evan-profile-preview
-                size="default"
-                :editable="false"
-                :address="activeAccount"
-              />
-
-              <template v-if="missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
-                <p class="mt-8 mb-3">
-                  {{ '_profile.verifications.notary.request.fill-missing' | translate }}
-                </p>
-                <b v-if="companyData.contact.country && companyData.contact.country !== 'DE'">
-                  {{ '_profile.verifications.notary.request.only-de' | translate }}
-                </b>
-
-                <profile-company-registration
-                  v-if="missingCompanyFields.registration.length !== 0"
-                  :address="address"
-                  :onlyEdit="true"
-                  :required="requiredCompanyFields.registration">
-                </profile-company-registration>
-                <profile-company-contact
-                  v-if="missingCompanyFields.contact.length !== 0"
-                  :address="address"
-                  :onlyEdit="true"
-                  :required="requiredCompanyFields.contact"
-                  :restrictCountries="['DE']">
-                </profile-company-contact>
-              </template>
-
-              <evan-form class="mb-0 mt-5"
-                v-else
-                :form="requestForm"
-                :i18nScope="'_profile.verifications.notary.request'"
-                onlyForm="true"
-                stacked="true">
-              </evan-form>
-            </div>
-
-            <!-- approval screen -->
-            <div v-else-if="status === 1" class="container mt-5">
-              <p>{{ '_profile.verifications.notary.request.proof.title' | translate }}</p>
-              <labeled-list :entries="approveData" />
-              <p>{{ '_profile.verifications.notary.request.proof.description' | translate }}</p>
-              <labeled-list :entries="approveAddress" hideLabel hideEmpty/>
-            </div>
-
-            <!-- approve costs screen -->
-            <div v-else-if="status === 2 && !sending" class="mt-5">
-              <p>{{ '_profile.verifications.notary.request.costs.hint' | translate }}</p>
-              <div class="form-check text-center m-6">
-                <input type="checkbox" v-model="approvedCosts" class="form-check-input" required />
-                <label for="costs-approval" class="form-check-label">
-                  <h4>{{ '_profile.verifications.notary.request.costs.approve' | translate }}</h4>
-                </label>
-              </div>
-            </div>
-          </template>
-
-           <!-- loader-->
-          <div class="text-center"
-            v-if="sending">
-            <evan-loading></evan-loading>
-            <h4>{{ '_profile.verifications.notary.request.requesting' | translate }}</h4>
+          <!-- Verification start info -->
+          <div v-if="status === -1">
+            <notary-info-content
+              :address="activeAccount"
+              :enoughFunds="enoughFunds"
+              :readableFunds="readableFunds">
+            </notary-info-content>
           </div>
 
-          <!-- success screen -->
-          <div class="text-center"
-            v-else-if="status === 3">
-            <evan-success></evan-success>
-            <div class="p-5 mt-3 text-center">
-              <p>{{ '_profile.verifications.notary.request.requested1' | translate }}</p>
-              <p class="mt-3">{{ '_profile.verifications.notary.request.requested2' | translate }}</p>
-              <p class="mt-3"><b>{{ '_profile.verifications.notary.request.requested3' | translate }}</b></p>
+          <!-- request verification form -->
+          <div class="container" v-else-if="status === 0">
+            <p class="mt-0 mb-3">
+              {{ '_profile.verifications.notary.request.requesting-account' | translate }}
+            </p>
+
+            <evan-profile-preview
+              size="default"
+              :editable="false"
+              :address="activeAccount"
+            />
+
+            <template v-if="missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
+              <p class="mt-8 mb-3">
+                {{ '_profile.verifications.notary.request.fill-missing' | translate }}
+              </p>
+              <b v-if="companyData.contact.country && companyData.contact.country !== 'DE'">
+                {{ '_profile.verifications.notary.request.only-de' | translate }}
+              </b>
+
+              <profile-company-registration
+                v-if="missingCompanyFields.registration.length !== 0"
+                :address="address"
+                :onlyEdit="true"
+                :required="requiredCompanyFields.registration">
+              </profile-company-registration>
+              <profile-company-contact
+                v-if="missingCompanyFields.contact.length !== 0"
+                :address="address"
+                :onlyEdit="true"
+                :required="requiredCompanyFields.contact"
+                :restrictCountries="['DE']">
+              </profile-company-contact>
+            </template>
+
+            <evan-form class="mb-0 mt-5"
+              v-else
+              :form="requestForm"
+              :i18nScope="'_profile.verifications.notary.request'"
+              onlyForm="true"
+              stacked="true">
+            </evan-form>
+          </div>
+
+          <!-- approval screen -->
+          <div v-else-if="status === 1" class="container mt-5">
+            <p>{{ '_profile.verifications.notary.request.proof.title' | translate }}</p>
+            <labeled-list :entries="approveData" />
+            <p>{{ '_profile.verifications.notary.request.proof.description' | translate }}</p>
+            <labeled-list :entries="approveAddress" hideLabel hideEmpty/>
+          </div>
+
+          <!-- approve costs screen -->
+          <div v-else-if="status === 2 && !sending" class="mt-5">
+            <p>{{ '_profile.verifications.notary.request.costs.hint' | translate }}</p>
+            <div class="form-check text-center m-6">
+              <input type="checkbox" v-model="approvedCosts" class="form-check-input" required />
+              <label for="costs-approval" class="form-check-label">
+                <h4>{{ '_profile.verifications.notary.request.costs.approve' | translate }}</h4>
+              </label>
             </div>
+          </div>
+        </template>
+
+         <!-- loader-->
+        <div class="text-center"
+          v-if="sending">
+          <evan-loading></evan-loading>
+          <h4>{{ '_profile.verifications.notary.request.requesting' | translate }}</h4>
+        </div>
+
+        <!-- success screen -->
+        <div class="text-center"
+          v-else-if="status === 3">
+          <evan-success></evan-success>
+          <div class="p-5 mt-3 text-center">
+            <p>{{ '_profile.verifications.notary.request.requested1' | translate }}</p>
+            <p class="mt-3">{{ '_profile.verifications.notary.request.requested2' | translate }}</p>
+            <p class="mt-3"><b>{{ '_profile.verifications.notary.request.requested3' | translate }}</b></p>
           </div>
         </div>
       </template>

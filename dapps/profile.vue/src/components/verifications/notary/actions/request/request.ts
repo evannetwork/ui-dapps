@@ -184,9 +184,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         if ($event.detail.status === 'finished') {
           this.status = 3;
           this.sending = false;
-          notaryLib.triggerRequestReload(this.address, {
-            status: 'requested',
-          });
         }
       })
     );
@@ -353,5 +350,16 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       },
       requestData,
     });
+  }
+
+  /**
+   * Trigger reloading of verification requests, when a new one was successfully requested.
+   */
+  modalClosed() {
+    if (this.status === 3) {
+      notaryLib.triggerRequestReload(this.address, {
+        status: 'requested',
+      });
+    }
   }
 }
