@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="row h-100">
+  <div class="row h-100" style="min-height:700px">
     <evan-onboarding-layout-wrapper :step="activeStep">
       <div class="evan-steps">
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">

@@ -103,7 +103,7 @@ const i18n: any = {
         "dataStreamSettings": {
           "error": "Bitte fügen Sie IoT-Einstellungsdateien ein!",
           "label": "IoT-Einstellungen",
-          "placeholder": "Hinzufügen von IoT-Einstellungsdateien"
+          "placeholder": "Fügen Sie IoT-Einstellungsdateien hinzu."
         },
         "location": {
           "error": "Bitte geben Sie einen Standort an!",
@@ -113,7 +113,7 @@ const i18n: any = {
         "manufacturer": {
           "error": "Bitte geben Sie einen Gerätehersteller an!",
           "label": "Hersteller",
-          "placeholder": "Geben Sie den Gerätehersteller ein"
+          "placeholder": "Geben Sie den Gerätehersteller ein."
         },
         "owner": {
           "error": "Bitte geben Sie eine korrekte Account-Adresse an!",
@@ -128,13 +128,13 @@ const i18n: any = {
         "settings": {
           "error": "Bitte Einstellungsdateien einfügen!",
           "label": "Einstellungen",
-          "placeholder": "Hinzufügen von Geräteeinstellungsdateien."
+          "placeholder": "Fügen Sie Geräteeinstellungsdateien hinzu."
         },
         "title": "Geräteinformationen",
         "type": {
           "error": "Bitte geben Sie einen Gerätetyp an!",
           "label": "Typ",
-          "placeholder": "Geben Sie den Gerätetyp ein"
+          "placeholder": "Geben Sie den Gerätetyp ein."
         }
       }
     },
@@ -163,8 +163,8 @@ const i18n: any = {
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
       "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
-      "no-verifications-avaiable": "Für ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
-      "switch": "Geben Sie Ihren Profiltyp an"
+      "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
+      "switch": "Geben Sie Ihren Profiltyp an."
     },
     "verifications": {
       "add": "Verifikation hinzufügen",
@@ -283,12 +283,12 @@ const i18n: any = {
             "error": "Bitte geben Sie eine Abteilung an!",
             "title": "Abteilung"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "header": "Notarielle Verifikation",
           "how": {
             "steps": {
               "1": {
-                "description": "Geben Sie Handelsregisternummer, Registergericht, ihre Anschrift und einen Ansprechpartner an.",
+                "description": "Geben Sie Handelsregisternummer, Registergericht, Ihre Anschrift und einen Ansprechpartner an.",
                 "title": "Anfordern"
               },
               "2": {
@@ -335,12 +335,12 @@ const i18n: any = {
           "requesting": "Notarielle Verifikation wird angefordert...",
           "step": "Schritt",
           "who": {
-            "description": "Als eingetragenes Unternehmen können sie eine notarielle Verifikation ihres Accounts anfordern.",
+            "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihres Accounts anfordern.",
             "link": "Mehr erfahren",
             "title": "Voraussetzungen"
           },
           "why": {
-            "description": "Mit der notariellen Verifikation wird bestätigt, dass ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
+            "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
             "link": "Mehr erfahren",
             "title": "Vorteile"
           },

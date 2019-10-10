@@ -38,7 +38,7 @@ const i18n: any = {
         "country": {
           "desc": "Company headquarters country",
           "error": "Please select the company headquartes country",
-          "label": "Company HQ country"
+          "label": "Company HQ Country"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
@@ -79,12 +79,12 @@ const i18n: any = {
         },
         "registerNumber": {
           "error": "Please enter the registration number",
-          "label": "Registration number",
+          "label": "Registration Number",
           "placeholder": "Choose..."
         },
         "salesTaxID": {
           "error": "Please enter the sales tax ID",
-          "label": "sales tax ID",
+          "label": "Sales Tax ID",
           "placeholder": "Insert your sales tax ID..."
         },
         "title": "Registration"
@@ -108,22 +108,22 @@ const i18n: any = {
         "location": {
           "error": "Please insert a location!",
           "label": "Location",
-          "placeholder": "Type in the device location coords"
+          "placeholder": "Type in the device location coords."
         },
         "manufacturer": {
           "error": "Please insert a device manufacturer!",
           "label": "Manufacturer",
-          "placeholder": "Type in the device manufacturer"
+          "placeholder": "Type in the device manufacturer."
         },
         "owner": {
           "error": "Please insert a valid account address!",
           "label": "Owner",
-          "placeholder": "Type in the owners account address"
+          "placeholder": "Type in the owners account address."
         },
         "serialNumber": {
           "error": "Please insert a Serial Number!",
           "label": "Serial Number",
-          "placeholder": "Type in the device Serial Number"
+          "placeholder": "Type in the device Serial Number."
         },
         "settings": {
           "error": "Please insert settings files!",
@@ -134,7 +134,7 @@ const i18n: any = {
         "type": {
           "error": "Please insert a device type!",
           "label": "Type",
-          "placeholder": "Type in the device type"
+          "placeholder": "Type in the device type."
         }
       }
     },
@@ -246,17 +246,17 @@ const i18n: any = {
         "request": {
           "address": {
             "desc": "Enter address",
-            "error": "Please enter an address.",
+            "error": "Please enter an address!",
             "title": "Address"
           },
           "city": {
             "desc": "City",
-            "error": "Please enter a city.",
+            "error": "Please enter a city!",
             "title": "City"
           },
           "contact": {
             "desc": "Enter contact name",
-            "error": "Please enter a contact person",
+            "error": "Please enter a contact person!",
             "title": "Contact"
           },
           "costs": {
@@ -270,8 +270,8 @@ const i18n: any = {
           },
           "country": {
             "desc": "Company headquarters country",
-            "error": "Please select the company headquartes country",
-            "title": "Company HQ country"
+            "error": "Please select the company headquartes country!",
+            "title": "Company HQ Country"
           },
           "court": {
             "desc": "Where is the company registered?",
@@ -309,7 +309,7 @@ const i18n: any = {
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
           "organization": {
             "desc": "Organization name",
-            "error": "Please enter a organization name",
+            "error": "Please enter a organization name!",
             "title": "Organization"
           },
           "postal-address": "Postal Address",
@@ -328,7 +328,7 @@ const i18n: any = {
           },
           "registerNumber": {
             "desc": "98765",
-            "error": "Please enter the registration number",
+            "error": "Please enter the registration number!",
             "title": "Registration number"
           },
           "request-ident": "Request",
@@ -350,7 +350,7 @@ const i18n: any = {
           },
           "zipCode": {
             "desc": "Postcode",
-            "error": "Please enter a valid post code",
+            "error": "Please enter a valid post code!",
             "title": "Postcode"
           }
         },

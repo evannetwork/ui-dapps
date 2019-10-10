@@ -98,7 +98,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         value: registrationData.court || '',
       },
       register: {
-        value: registrationData.register || '',
+        value: registrationData.register || 'hrb',
         uiSpecs: {
           type: 'select',
           attr: {

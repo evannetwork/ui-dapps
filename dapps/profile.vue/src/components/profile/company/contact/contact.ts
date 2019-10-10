@@ -40,7 +40,12 @@ interface ContactFormInterface extends EvanForm {
   website: EvanFormControl;
 }
 
-@Component({ })
+interface OptionInterface {
+  value: string,
+  label: string
+}
+
+@Component({})
 export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   /**
    * Address for that the data should be loaded
@@ -55,7 +60,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   /**
    * Watch for dispatcher updates
    */
-  listeners: Array<any> = [ ];
+  listeners: Array<any> = [];
+
+  countryOptions: OptionInterface[];
 
   /**
    * Load the mail details
@@ -67,6 +74,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         this.loadProfileData();
       }
     }));
+
+    // load country options
+    this.countryOptions = this.getCountriesOption();
 
     // load profile data
     await this.loadProfileData();
@@ -89,50 +99,38 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
     // setup registration form
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       country: {
-        value: contactData.country || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return this.value.length !== 0;
+        value: contactData.country || this.countryOptions.filter(({ value }) => value === 'DE'),
+        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+          return this.value && this.value.length !== 0;
         },
         uiSpecs: {
-          type: 'select',
+          type: 'v-select',
           attr: {
-            options: countries
-              .map(isoCode => {
-                return { value: isoCode, label: (this as any).$t(`_countries.${ isoCode }`), }
-              })
-              .sort((countryA, countryB) => {
-                if (countryA.label < countryB.label) {
-                  return -1;
-                } else if (countryA.label > countryB.label) {
-                  return 1;
-                } else {
-                  return 0;
-                }
-              }),
+            options: this.countryOptions,
           }
         }
       },
       city: {
         value: contactData.city || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
       },
       postalCode: {
         value: contactData.postalCode || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return /^\d{5}$/.test(this.value);
         },
       },
       streetAndNumber: {
         value: contactData.streetAndNumber || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return this.value.length !== 0;
         },
       },
       website: {
         value: contactData.website || '',
-        validate: function(vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
           return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
         },
       },
@@ -144,5 +142,15 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       formData: this.contactForm.getFormData(),
       type: 'contact'
     });
+  }
+
+  getCountriesOption(): OptionInterface[] {
+    return countries
+      .map(isoCode => {
+        return { value: isoCode, label: (this as any).$t(`_countries.${isoCode}`), }
+      })
+      .sort((countryA, countryB) => {
+          return countryA.label - countryB.label
+      })
   }
 }
