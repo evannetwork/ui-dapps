@@ -20,6 +20,9 @@
 <template>
   <div>
     <evan-form
+      class="mt-2 mb-8"
+      ref="form"
+      :enableCancel="onlyEdit ? false : true"
       :form="contactForm"
       :i18nScope="'_profile.company.contact'"
       :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"

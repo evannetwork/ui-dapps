@@ -244,20 +244,12 @@ const i18n: any = {
         },
         "print": "Drucken",
         "request": {
-          "address": {
-            "desc": "Straße und Hausnummer",
-            "error": "Bitte geben Sie eine Anschrift an!",
-            "title": "Anschrift"
-          },
-          "city": {
-            "desc": "Ort",
-            "error": "Bitte geben Sie einen Ort an!",
-            "title": "Ort"
-          },
+          "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
+          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
           "contact": {
-            "desc": "Vorname und Nachname",
             "error": "Bitte geben Sie eine Kontaktperson an!",
-            "title": "Ansprechpartner"
+            "label": "Ansprechpartner",
+            "placeholder": "Vorname und Nachname"
           },
           "costs": {
             "approve": "Ja, ich fordere die notarielle Verifikation zu den Transaktionskosten von 200 EVE an.",
@@ -265,23 +257,10 @@ const i18n: any = {
             "hint": "Das Anfordern einer notariellen Verifikation ist kostenpflichtig.",
             "title": "Kosten"
           },
-          "countries": {
-            "germany": "Deutschland"
-          },
-          "country": {
-            "desc": "Firmensitz eingeben",
-            "error": "Bitte geben Sie einen Firmensitz an!",
-            "title": "Firmensitz"
-          },
-          "court": {
-            "desc": "Ort des Amtsgerichts",
-            "error": "Bitte geben Sie das Registergericht an!",
-            "title": "Registergericht"
-          },
           "department": {
-            "desc": "Abteilung",
             "error": "Bitte geben Sie eine Abteilung an!",
-            "title": "Abteilung"
+            "label": "Abteilung",
+            "placeholder": "Abteilung"
           },
           "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "header": "Notarielle Verifikation",
@@ -307,25 +286,10 @@ const i18n: any = {
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
-          "organization": {
-            "desc": "Firmenname",
-            "error": "Bitte geben Sie den Unternehmensname an!",
-            "title": "Firma"
-          },
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
             "title": "Bitte überprüfen Sie Ihre Daten."
-          },
-          "register": {
-            "desc": "Register",
-            "error": "Bitte geben Sie das Register an!",
-            "title": "Register"
-          },
-          "registerNumber": {
-            "desc": "98765",
-            "error": "Bitte geben Sie die Registernummer an!",
-            "title": "Registernummer"
           },
           "request-ident": "Anfordern",
           "request-verification": "Notarielle Verifikation anfordern",
@@ -333,6 +297,7 @@ const i18n: any = {
           "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
           "requested3": "Sie erhalten in Kürze vom Notar Post!",
           "requesting": "Notarielle Verifikation wird angefordert...",
+          "requesting-account": "Anfragender Account",
           "step": "Schritt",
           "who": {
             "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihres Accounts anfordern.",
@@ -343,11 +308,6 @@ const i18n: any = {
             "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
             "link": "Mehr erfahren",
             "title": "Vorteile"
-          },
-          "zipCode": {
-            "desc": "Postleitzahl",
-            "error": "Bitte geben Sie eine gültige Postleitzahl an!",
-            "title": "PLZ"
           }
         },
         "request-error": "Informationen zu dieser Anfrage konnten nicht geladen werden!",

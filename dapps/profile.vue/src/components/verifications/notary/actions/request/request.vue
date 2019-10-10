@@ -41,6 +41,7 @@
             <!-- Verification start info -->
             <div v-if="status === -1">
               <notary-info-content
+                :address="activeAccount"
                 :enoughFunds="enoughFunds"
                 :readableFunds="readableFunds">
               </notary-info-content>
@@ -48,167 +49,46 @@
 
             <!-- request verification form -->
             <div class="container" v-else-if="status === 0">
-              <div class="grouped">
-                <div class="form-group">
-                  <label for="organization">
-                    {{ `_profile.verifications.notary.request.organization.title` | translate }} *
-                  </label>
-                  <input class="form-control" required
-                    ref="organization"
-                    :placeholder="`_profile.verifications.notary.request.organization.desc` | translate"
-                    v-model="requestForm.organization.value"
-                    :class="{ 'is-invalid' : requestForm.organization.error }"
-                    @blur="requestForm.organization.setDirty()">
-                  <div class="invalid-feedback">
-                    {{ '_profile.verifications.notary.request.organization.error' | translate }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="country">
-                    {{ `_profile.verifications.notary.request.country.title` | translate }} *
-                  </label>
-                  <select class="form-control custom-select"
-                    ref="country"
-                    :placeholder="`_profile.verifications.notary.request.country.desc` | translate"
-                    v-model="requestForm.country.value">
-                    <option :value="'germany'">
-                      {{ '_profile.verifications.notary.request.countries.germany' | translate }}
-                    </option>
-                  </select>
-                </div>
-              </div>
+              <p class="mt-0 mb-3">
+                {{ '_profile.verifications.notary.request.requesting-account' | translate }}
+              </p>
 
-              <div class="row grouped">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="court">
-                      {{ `_profile.verifications.notary.request.court.title` | translate }} *
-                    </label>
-                    <input class="form-control" required
-                      ref="court"
-                      :placeholder="`_profile.verifications.notary.request.court.desc` | translate"
-                      v-model="requestForm.court.value"
-                      :class="{ 'is-invalid' : requestForm.court.error }"
-                      @blur="requestForm.court.setDirty()">
-                    <div class="invalid-feedback">
-                      {{ '_profile.verifications.notary.request.court.error' | translate }}
-                    </div>
-                  </div>
-                </div>
-                <div class="col-2">
-                  <div class="form-group">
-                    <label for="register">
-                      {{ `_profile.verifications.notary.request.register.title` | translate }} *
-                    </label>
-                    <select class="form-control custom-select"
-                      ref="register"
-                      :placeholder="`_profile.verifications.notary.request.register.desc` | translate"
-                      v-model="requestForm.register.value">
-                      <option :value="'HRA'">
-                        HRA
-                      </option>
-                      <option :value="'HRB'">
-                        HRB
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="form-group">
-                    <label for="registerNumber">
-                      {{ `_profile.verifications.notary.request.registerNumber.title` | translate }} *
-                    </label>
-                    <input class="form-control" required
-                      ref="registerNumber"
-                      :placeholder="`_profile.verifications.notary.request.registerNumber.desc` | translate"
-                      v-model="requestForm.registerNumber.value"
-                      :class="{ 'is-invalid' : requestForm.registerNumber.error }"
-                      @blur="requestForm.registerNumber.setDirty()">
-                     <div class="invalid-feedback">
-                      {{ '_profile.verifications.notary.request.registerNumber.error' | translate }}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <evan-profile-preview
+                size="default"
+                :editable="false"
+                :address="activeAccount"
+              />
 
-              <div class="grouped">
-                <label>
-                  {{ `_profile.verifications.notary.request.postal-address` | translate }} *
-                </label>
-                <div class="form-group">
-                  <input class="form-control" required
-                    ref="address"
-                    :placeholder="`_profile.verifications.notary.request.address.desc` | translate"
-                    v-model="requestForm.address.value"
-                    :class="{ 'is-invalid' : requestForm.address.error }"
-                    @blur="requestForm.address.setDirty()">
-                  <div class="invalid-feedback">
-                    {{ '_profile.verifications.notary.request.address.error' | translate }}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4 pr-0">
-                    <div class="form-group">
-                      <input class="form-control" required
-                        ref="zipCode"
-                        :placeholder="`_profile.verifications.notary.request.zipCode.desc` | translate"
-                        v-model="requestForm.zipCode.value"
-                        :class="{ 'is-invalid' : requestForm.zipCode.error }"
-                        @blur="requestForm.zipCode.setDirty()">
-                      <div class="invalid-feedback">
-                        {{ '_profile.verifications.notary.request.zipCode.error' | translate }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 pl-1">
-                    <div class="form-group">
-                      <input class="form-control" required
-                        ref="city"
-                        :placeholder="`_profile.verifications.notary.request.city.desc` | translate"
-                        v-model="requestForm.city.value"
-                        :class="{ 'is-invalid' : requestForm.city.error }"
-                        @blur="requestForm.city.setDirty()">
-                      <div class="invalid-feedback">
-                        {{ '_profile.verifications.notary.request.city.error' | translate }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="contact">
-                        {{ `_profile.verifications.notary.request.contact.title` | translate }} *
-                      </label>
-                      <input class="form-control" required
-                        ref="contact"
-                        :placeholder="`_profile.verifications.notary.request.contact.desc` | translate"
-                        v-model="requestForm.contact.value"
-                        :class="{ 'is-invalid' : requestForm.contact.error }"
-                        @blur="requestForm.contact.setDirty()">
-                      <div class="invalid-feedback">
-                        {{ '_profile.verifications.notary.request.contact.error' | translate }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="department">
-                        {{ `_profile.verifications.notary.request.department.title` | translate }}
-                      </label>
-                      <input class="form-control" required
-                        ref="department"
-                        :placeholder="`_profile.verifications.notary.request.department.desc` | translate"
-                        v-model="requestForm.department.value"
-                        :class="{ 'is-invalid' : requestForm.department.error }"
-                        @blur="requestForm.department.setDirty()">
-                      <div class="invalid-feedback">
-                        {{ '_profile.verifications.notary.request.department.error' | translate }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <template v-if="missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
+                <p class="mt-8 mb-3">
+                  {{ '_profile.verifications.notary.request.fill-missing' | translate }}
+                </p>
+                <b v-if="companyData.contact.country && companyData.contact.country !== 'DE'">
+                  {{ '_profile.verifications.notary.request.only-de' | translate }}
+                </b>
+
+                <profile-company-registration
+                  v-if="missingCompanyFields.registration.length !== 0"
+                  :address="address"
+                  :onlyEdit="true"
+                  :required="requiredCompanyFields.registration">
+                </profile-company-registration>
+                <profile-company-contact
+                  v-if="missingCompanyFields.contact.length !== 0"
+                  :address="address"
+                  :onlyEdit="true"
+                  :required="requiredCompanyFields.contact"
+                  :restrictCountries="['DE']">
+                </profile-company-contact>
+              </template>
+
+              <evan-form class="mb-0 mt-5"
+                v-else
+                :form="requestForm"
+                :i18nScope="'_profile.verifications.notary.request'"
+                onlyForm="true"
+                stacked="true">
+              </evan-form>
             </div>
 
             <!-- approval screen -->
@@ -267,7 +147,7 @@
          <template v-if="status === -1">
           <button type="button" class="btn btn-primary mx-auto"
             :disabled="!enoughFunds || (status === 1 && !requestForm.isValid) || sending"
-            @click="status += 1">
+            @click="nextStatus()">
             {{ `_profile.verifications.notary.request.request-verification` | translate }}
           </button>
         </template>
@@ -276,7 +156,7 @@
         <template v-if="status < 2 && status !== -1">
           <button type="button" class="btn btn-primary"
             :disabled="(status === 0 && !requestForm.isValid) || sending"
-            @click="status += 1">
+            @click="nextStatus()">
             {{ `_profile.verifications.next` | translate }}
             <i class="mdi mdi-arrow-right label ml-3"></i>
           </button>

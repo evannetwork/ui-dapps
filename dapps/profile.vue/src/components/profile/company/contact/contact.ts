@@ -46,11 +46,21 @@ interface OptionInterface {
 }
 
 @Component({})
-export default class CompanyRegistrationForm extends mixins(EvanComponent) {
+export default class CompanyContactForm extends mixins(EvanComponent) {
   /**
    * Address for that the data should be loaded
    */
   @Prop() address;
+
+  /**
+   * Only allow the following countries
+   */
+  @Prop({ default: countries, }) restrictCountries: Array<string>;
+
+  /**
+   * hides the cancel button and directly jumps into formular edit mode
+   */
+  @Prop() onlyEdit;
 
   /**
    * Evan form instance for registration data.
@@ -83,6 +93,13 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   }
 
   /**
+   * Directly open the formular edit mode.
+   */
+  mounted() {
+    this.onlyEdit && (this.$refs.form as any).setEditMode(true);
+  }
+
+  /**
    * Clear dispatcher listeners
    */
   beforeDestroy() {
@@ -100,8 +117,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       country: {
         value: contactData.country || this.countryOptions.filter(({ value }) => value === 'DE'),
-        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return this.value && this.value.length !== 0;
+        validate: function(vueInstance: CompanyContactForm) {
+          const value = this.value && this.value.value ? this.value.value : this.value;
+          return value && value.length !== 0 && vueInstance.restrictCountries.indexOf(value) !== -1;
         },
         uiSpecs: {
           type: 'v-select',
@@ -112,34 +130,40 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       },
       city: {
         value: contactData.city || '',
-        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function(vueInstance: CompanyContactForm) {
           return this.value.length !== 0;
         },
       },
       postalCode: {
         value: contactData.postalCode || '',
-        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function(vueInstance: CompanyContactForm) {
           return /^\d{5}$/.test(this.value);
         },
       },
       streetAndNumber: {
         value: contactData.streetAndNumber || '',
-        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
+        validate: function(vueInstance: CompanyContactForm) {
           return this.value.length !== 0;
         },
       },
       website: {
         value: contactData.website || '',
-        validate: function (vueInstance: CompanyRegistrationForm, form: ContactFormInterface) {
-          return /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
+        validate: function(vueInstance: CompanyContactForm) {
+          return this.value.length === 0 ||
+            /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
         },
       },
     }));
   }
 
   async changeProfileData() {
+    const formData = this.contactForm.getFormData();
+
+    // parse v-select value to correct resulting one
+    formData.country = formData.country.value ? formData.country.value : formData.country;
+
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.contactForm.getFormData(),
+      formData,
       type: 'contact'
     });
   }
