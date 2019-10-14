@@ -38,6 +38,9 @@
           {{ control._error === true ? (`_datacontainer.ajv.value.error` | translate) : control._error }}
         </div>
       </template>
+      <span class="force-oneline0" :id="id" v-else-if="isTimestamp">
+        {{ control.value | moment('LLL')}}
+      </span>
       <span :id="id" v-else>
         {{ control.value }}
       </span>

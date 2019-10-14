@@ -61,4 +61,21 @@ export default class NumberComponent extends mixins(EvanComponent) {
   @Prop({
     default: true
   }) standalone: boolean;
+
+  /**
+   * is the value a timestamp?
+  */
+  isTimestamp = false;
+
+  async created() {
+    if (this.control.value) {
+      if (!isNaN(this.control.value) &&
+        new Date(this.control.value).getFullYear() >= 2000) {
+        this.isTimestamp = true;
+      } else if (new Date(this.control.value * 1000).getFullYear() >= 2000) {
+        this.control.value = this.control.value * 1000;
+        this.isTimestamp = true;
+      }
+    }
+  }
 }

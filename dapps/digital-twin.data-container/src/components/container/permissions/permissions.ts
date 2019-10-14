@@ -80,6 +80,7 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
    * ui container list properties
    */
   properties: Array<string> = null;
+  plugin: any = null;
 
   /**
    * Permission map, users mapped to it's permissions within an object. Also create a copy to check
@@ -121,6 +122,7 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
 
         // all available properties
         this.properties = Object.keys(uiContainer.plugin.template.properties);
+        this.plugin = uiContainer.plugin;
 
         // load share config
         this.shareConfig = await uiContainer.getContainerShareConfigs();
@@ -274,6 +276,7 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
           accountId: accountId,
           read: [ ],
           readWrite: [ ],
+          removeListEntries: [ ],
         };
 
         // iterate through properties and get new read / readWrite permissions
@@ -285,6 +288,10 @@ export default class ContainerPermissionsComponent extends mixins(EvanComponent)
           if (this.permissionMap[accountId][property].readWrite &&
               !this.originPermissionMap[accountId][property].readWrite) {
             shareConfig.readWrite.push(property);
+
+            if (this.plugin.template.properties[property].type === 'list') {
+              shareConfig.removeListEntries.push(property);
+            }
           }
         });
 
