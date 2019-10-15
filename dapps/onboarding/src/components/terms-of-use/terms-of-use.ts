@@ -118,7 +118,7 @@ export class TermsOfUseComponent extends AsyncComponent {
     // We need to handle the terms-of-use captcha within an iframe, to be able to use iframes on
     // android devices. Captcha does not allow //:file domain, so we use the within the onboarding
     // dapp deployed captcha.html, that is opened using the current url.
-    // 
+    //
     // create listener function to handle captcha result
     const onCaptchaResponse = (event) => {
       try {
@@ -146,7 +146,7 @@ export class TermsOfUseComponent extends AsyncComponent {
             break;
           }
         }
-        
+
         this.ref.detectChanges();
       } catch (ex) {
         console.dir(ex);
@@ -154,7 +154,7 @@ export class TermsOfUseComponent extends AsyncComponent {
       }
     };
 
-    // add eventListener for captcha iframe and remove 
+    // add eventListener for captcha iframe and remove
     window.addEventListener('message', onCaptchaResponse);
     this.clearCaptchaResponse = () => {
       window.removeEventListener('message', onCaptchaResponse);
@@ -164,7 +164,7 @@ export class TermsOfUseComponent extends AsyncComponent {
   async _ngOnDestroy() {
     this.clearCaptchaResponse();
   }
-  
+
   /**
    * Load the terms of for the current chain the current language.
    */
@@ -187,12 +187,17 @@ export class TermsOfUseComponent extends AsyncComponent {
 
     // try to load the terms of use for the current language, if this is not available, load the
     // next fallback
-    for (let i = 0; i < fallbacks.length; i++) {
+    for (let fallback of fallbacks) {
       try {
-        return (<any>await this.http
-          .get(fallbacks[i]))
+        const terms = await (<any> this.http
+          .get(fallback))
+          .catch((err) => {})
           .map((res) => res.text())
           .toPromise();
+        if (terms) {
+          return terms;
+        }
+
       } catch (ex) { }
     }
   }
