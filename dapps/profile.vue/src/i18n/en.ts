@@ -26,7 +26,8 @@ const i18n: any = {
       "logout": "Logout",
       "settings": "Settings",
       "verifications": "Verifications",
-      "wallet": "Wallet"
+      "wallet": "Wallet",
+      "sharings": "Sharings"
     },
     "company": {
       "contact": {
@@ -158,6 +159,10 @@ const i18n: any = {
         "en": "English"
       },
       "reload-hint": "Please reload the application if you have changed the language settings."
+    },
+    "sharings": {
+      "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.", 
+      "title": "Your Profile Data Sharings"
     },
     "type": {
       "change": "Change",

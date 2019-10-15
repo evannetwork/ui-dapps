@@ -26,7 +26,8 @@ const i18n: any = {
       "logout": "Ausloggen",
       "settings": "Einstellungen",
       "verifications": "Verifizierungen",
-      "wallet": "Wallet"
+      "wallet": "Wallet",
+      "sharings": "Freigaben"
     },
     "company": {
       "contact": {
@@ -158,6 +159,10 @@ const i18n: any = {
         "en": "Englisch"
       },
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
+    },
+    "sharings": {
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.", 
+      "title": "Freigaben für deine Profildaten"
     },
     "type": {
       "change": "Ändern",

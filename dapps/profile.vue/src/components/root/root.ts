@@ -50,6 +50,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       { key: 'wallet', icon: 'mdi mdi-wallet-outline' },
       { key: `verifications`, icon: 'mdi mdi-check-decagram' },
       { key: `addressbook.vue.${ (<any>this).dapp.domainName }`, icon: 'mdi mdi-account-group-outline' },
+      { key: `sharings`, icon: 'mdi mdi-share-variant'},
       null,
       { key: 'settings', icon: 'mdi mdi-settings' },
     ]
