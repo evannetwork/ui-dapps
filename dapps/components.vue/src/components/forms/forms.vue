@@ -19,8 +19,6 @@
 
 <template>
   <div class="container py-3">
-    <label>Public ? <input type="checkbox" v-model="isPublic" /></label><br>
-    <label>Stacked ? <input type="checkbox" v-model="stacked" /></label><br>
     <label>
       Only Form ?
       <input type="checkbox"
@@ -54,6 +52,18 @@
         :onlyForm="onlyForm"
         :title="'Evan form controls'"
         @save="handleSubmit">
+
+        <evan-form-control-checkbox id="isPublicCheckbox"
+          v-model="isPublic"
+          label="Public ?"
+          :stacked="stacked"
+        />
+        <evan-form-control-checkbox id="isStackedCheckbox"
+          v-model="stacked"
+          label="Stacked ?"
+          :stacked="stacked"
+        />
+
         <evan-form-control-input
           id="evan-form-test-1"
           label="Field1"
@@ -117,6 +127,11 @@
 
       </evan-form>
     </template>
+
+    <div class="container white-box p-3">
+      <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
+    </div>
+
   </div>
 </template>
 
