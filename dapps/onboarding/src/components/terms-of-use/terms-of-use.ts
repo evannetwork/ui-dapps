@@ -197,7 +197,6 @@ export class TermsOfUseComponent extends AsyncComponent {
         if (terms) {
           return terms;
         }
-
       } catch (ex) { }
     }
   }
