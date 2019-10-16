@@ -70,15 +70,20 @@ gulp.task('browserify', async function(callback) {
     require.resolve('scrypt'),
     `${ rootFolder }/node_modules/@evan.network/api-blockchain-core/node_modules/scrypt`
   ];
-  Promise.all(scryptFolderPaths.map(async (scryptFolderPath) => {
+  await Promise.all(scryptFolderPaths.map(async (scryptFolderPath) => {
     try {
+      // ensure index.js is not included in the folder path:
+      scryptFolderPath = scryptFolderPath.replace('/index.js', '');
+
       await new Promise((resolve, reject) => gulp
         .src(`${ scryptFolderPath }/index.js`)
         .pipe(gulpReplace('require("./build/Release/scrypt")', 'require("scrypt")'))
         .pipe(gulp.dest(scryptFolderPath))
         .on('end', () => resolve())
       );
-    } catch (ex) { }
+    } catch (ex) {
+      console.error('Browserify: Problem replacing scrypt import path in: ', scryptFolderPath);
+    }
   }));
 
   await new Promise((resolve, reject) => {
