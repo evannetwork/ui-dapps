@@ -255,10 +255,6 @@ export default class SignUp extends mixins(EvanComponent) {
    */
   async createProfile() {
     if (this.recaptchaToken) {
-      const baseHost = evanUi.agentUrl;
-      const baseUrlFaucet = baseHost + '/api/smart-agents/faucet/';
-      const baseUrlOnboarding = baseHost + '/api/smart-agents/onboarding/';
-
       // start profile creation animation and status display
       this.nextCreationStatus();
 
@@ -270,88 +266,17 @@ export default class SignUp extends mixins(EvanComponent) {
         const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
         const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
 
-        // create runtime for blockchain interaction
+
         const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
           bcc, accountId, vault.encryptionKey, privateKey);
-        const profile = runtime.profile;
 
-        // disable pinning
-        runtime.dfs.disablePin = true;
-
-        // use the frontend keyProvider and apply it to every runtime instance
-        runtime.keyProvider = new dappBrowser.KeyProvider({ }, accountId);
-        for (let key of Object.keys(runtime)) {
-          if (runtime[key].keyProvider) {
-            runtime[key].keyProvider = runtime.keyProvider;
-          } else if (runtime[key].options && runtime[key].options.keyProvider) {
-            runtime[key].options.keyProvider = runtime.keyProvider;
-          }
-        }
-
-        // set current keys within the keyProvider
-        runtime.keyProvider.setKeysForAccount(accountId, vault.encryptionKey);
-        // set my private and public keys to my addressbook
-        const dhKeys = runtime.keyExchange.getDiffieHellmanKeys();
-        await profile.addContactKey(accountId, 'dataKey', dhKeys.privateKey.toString('hex'));
-        await profile.addProfileKey(accountId, 'alias', this.profileForm.alias.value);
-        await profile.addPublicKey(dhKeys.publicKey.toString('hex'));
-
-        // set initial structure by creating addressbook structure and saving it to ipfs
-        const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
-        const fileHashes = <any>{};
-        const sharing = await runtime.dataContract.createSharing(accountId);
-        const treeLabels = profile.treeLabels;
-        fileHashes.sharingsHash = sharing.sharingsHash;
-        fileHashes[treeLabels.addressBook] = await profile.storeToIpld(treeLabels.addressBook);
-        fileHashes[treeLabels.publicKey] = await profile.storeToIpld(treeLabels.publicKey);
-        fileHashes[treeLabels.addressBook] = await cryptor.encrypt(
-          bcc.buffer.from(fileHashes[treeLabels.addressBook].substr(2), 'hex'),
-          { key: sharing.hashKey, });
-        fileHashes[treeLabels.addressBook] = `0x${ fileHashes[treeLabels.addressBook]
-          .toString('hex') }`;
-
-        // construct profile creation call values
-        const msgString = 'Gimme Gimme Gimme!';
-        const signer = accountId.toLowerCase();
-        const pk = '0x' + vault.exportPrivateKey(signer, vault.pwDerivedKey);
-        const signature = await runtime.web3.eth.accounts.sign(msgString, pk).signature;
-
-        // reenable pinning
-        runtime.dfs.disablePin = false;
-
-        // trigger the profile creation using an maximum timeout of 60 seconds
-        const result = await new Promise(async (resolve, reject) => {
-          let rejected;
-          const creationTimeout = setTimeout(() => {
-            reject(new Error('Profile creation took longer than 60 seconds, request was canceld.'));
-          }, 60 * 1000);
-
-          // trigger smart agent to create the profile
-          try {
-            const handoutPayload: any = {
-              accountId: accountId,
-              signature: signature,
-              profileInfo: fileHashes,
-            };
-
-            // if no evan-test-mode is enable, ask for valid captchaToken
-            if (!window.localStorage['evan-test-mode']) {
-              handoutPayload.captchaToken = this.recaptchaToken;
-            }
-
-            await axios.post(`${ baseUrlFaucet }handout?apiVersion=1`, handoutPayload);
-
-            if (!rejected) {
-              resolve();
-            }
-          } catch (ex) {
-            if (!rejected) {
-              reject(ex);
-            }
-          }
-        });
-
-        dappBrowser.utils.log(result, 'info');
+        await bcc.Onboarding.createOfflineProfile(
+          runtime,
+          this.profileForm.alias.value,
+          accountId,
+          privateKey,
+          runtime.environment
+        );
 
         // check if onboarded, else throw it!
         if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {

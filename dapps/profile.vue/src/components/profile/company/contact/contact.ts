@@ -94,7 +94,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
    */
   async loadProfileData() {
     const runtime = (<any>this).getRuntime();
-    let contactData = await ProfileMigrationLibrary.loadProfileData(runtime, 'contact');
+    let contactData = await ProfileMigrationLibrary.loadProfileData(runtime, 'contact') || {};
 
     // setup registration form
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
