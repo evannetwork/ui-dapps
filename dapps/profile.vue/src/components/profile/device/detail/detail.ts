@@ -88,7 +88,8 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
     const runtime = (<any>this).getRuntime();
     const profileContract = runtime.profile.profileContract;
     const profileAddress = profileContract.options.address;
-    const deviceData = await ProfileMigrationLibrary.loadProfileData(runtime, 'deviceDetails');
+    const deviceData = await ProfileMigrationLibrary.loadProfileData(runtime, 'deviceDetails') || {};
+
 
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {

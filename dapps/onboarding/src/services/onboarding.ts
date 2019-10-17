@@ -26,9 +26,7 @@ import {
   utils,
 } from '@evan.network/ui-dapp-browser';
 
-import {
-  Profile
-} from '@evan.network/api-blockchain-core';
+import * as bcc from '@evan.network/api-blockchain-core';
 
 import {
   Router,             // '@angular/router';
@@ -62,7 +60,7 @@ export class OnboardingService {
   constructor(
     private addressBookService: EvanAddressBookService,
     private alertService: EvanAlertService,
-    private bcc: EvanBCCService,
+    private bccService: EvanBCCService,
     private core: EvanCoreService,
     private http: Http,
     private onboardingService: EvanOnboardingService,
@@ -111,26 +109,26 @@ export class OnboardingService {
     if (queryParams.onboardingID) {
       await this.onboarding.accept(this.activeAccount, queryParams.onboardingID);
 
-      await this.bcc.profile.loadForAccount(accountId, this.bcc.profile.treeLabels.addressBook);
-      let profile = this.bcc.getProfileForAccount(queryParams.inviteeAddress);
+      await this.bccService.profile.loadForAccount(accountId, this.bccService.profile.treeLabels.addressBook);
+      let profile = this.bccService.getProfileForAccount(queryParams.inviteeAddress);
       const targetPubKey = await profile.getPublicKey();
 
       if (!targetPubKey) {
         throw new Error(`No public key found for account ${queryParams.inviteeAddress}`);
       }
-      const commKey = await this.bcc.keyExchange.generateCommKey();
+      const commKey = await this.bccService.keyExchange.generateCommKey();
       // add key to profile
-      await this.bcc.profile.addContactKey(
+      await this.bccService.profile.addContactKey(
         queryParams.inviteeAddress,
         'commKey',
         commKey
       );
 
-      await this.bcc.profile.addProfileKey(
+      await this.bccService.profile.addProfileKey(
         queryParams.inviteeAddress, 'alias', queryParams.inviteeAlias
       );
 
-      await this.bcc.profile.storeForAccount(this.bcc.profile.treeLabels.addressBook);
+      await this.bccService.profile.storeForAccount(this.bccService.profile.treeLabels.addressBook);
 
       const alias = await this.addressBookService.activeUserName();
       const mail = {
@@ -142,7 +140,7 @@ export class OnboardingService {
         fromAlias: alias,
         fromMail: queryParams.email
       }
-      await this.bcc.keyExchange.sendInvite(queryParams.inviteeAddress, targetPubKey, commKey, mail);
+      await this.bccService.keyExchange.sendInvite(queryParams.inviteeAddress, targetPubKey, commKey, mail);
     }
   }
 
@@ -188,8 +186,8 @@ export class OnboardingService {
 
       // send communication key back to the onboarding account
       this.core.setCurrentProvider('internal');
-      await this.bcc.updateBCC(accountId, 'internal');
-      await this.bcc.updateTermsOfUse(accountId);
+      await this.bccService.updateBCC(accountId, 'internal');
+      await this.bccService.updateTermsOfUse(accountId);
 
       if (queryParams && queryParams.onboardingID) {
         return this.routingService.navigate(`./onboarded`, true,
@@ -208,7 +206,7 @@ export class OnboardingService {
   signMessageBCC(msg: string, account: string) {
     const signer = account.toLowerCase();
     const pk = '0x' + this.activeVault.exportPrivateKey(signer, this.activeVault.pwDerivedKey);
-    return this.bcc.web3.eth.accounts.sign(msg, pk).signature;
+    return this.bccService.web3.eth.accounts.sign(msg, pk).signature;
   }
 
   async signMessageMetamask(msg: string, account: string) {
@@ -279,55 +277,30 @@ export class OnboardingService {
     create: async (account: string, alias: string, password: string, provider: string) => {
       // set flag to check for profile creation interruption
       window.localStorage['evan-profile-creation'] = true;
-
+      let mnemonic;
       if (provider === 'metamask') {
         this.core.setAccountId(account || this.activeAccount);
       } else {
         this.core.setAccountId(account || this.activeAccount);
-        const mnemonic = this.activeVault.getSeed(this.activeVault.pwDerivedKey);
+        mnemonic = this.activeVault.getSeed(this.activeVault.pwDerivedKey);
         await lightwallet.createVaultAndSetActive(mnemonic, password);
       }
 
-      await this.bcc.updateBCC(account, provider);
+      await this.bccService.updateBCC(account, provider);
 
-      const profile = this.bcc.profile;
+      const profile = this.bccService.profile;
+      const vault = await lightwallet.getNewVault(mnemonic, password);
+      const privateKey = this.activeVault.exportPrivateKey((account || this.activeAccount).toLowerCase(), this.activeVault.pwDerivedKey);
+      const runtime = await bccHelper.createDefaultRuntime(
+        bcc, account || this.activeAccount, vault.encryptionKey, privateKey);
 
-      // disable pinning while profile files are being created
-      profile.ipld.ipfs.disablePin = true;
-      // clear hash log
-      profile.ipld.hashLog = [];
-      const dhKeys = this.bcc.keyExchange.getDiffieHellmanKeys();
-      await profile.addContactKey(account, 'dataKey', dhKeys.privateKey.toString('hex'));
-      await profile.addProfileKey(account, 'alias', alias);
-      this.alias = alias;
-      await profile.addPublicKey(dhKeys.publicKey.toString('hex'));
-      const sharing = await this.bcc.dataContract.createSharing(account);
-      const fileHashes = <any>{};
-      fileHashes[profile.treeLabels.addressBook] = await profile.storeToIpld(profile.treeLabels.addressBook);
-      fileHashes[profile.treeLabels.publicKey] = await profile.storeToIpld(profile.treeLabels.publicKey);
-      fileHashes.sharingsHash = sharing.sharingsHash;
-      const cryptor = this.bcc.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
-      fileHashes[profile.treeLabels.addressBook] = await cryptor.encrypt(
-        this.bcc.CoreBundle.buffer.from(fileHashes[profile.treeLabels.addressBook].substr(2), 'hex'),
-        { key: sharing.hashKey, }
-      )
-      fileHashes[profile.treeLabels.addressBook] = `0x${fileHashes[profile.treeLabels.addressBook].toString('hex')}`;
-      // keep only unique values, ignore addressbook (encrypted hash)
-      const addressBookHash = fileHashes[profile.treeLabels.addressBook];
-      fileHashes.ipfsHashes = [...profile.ipld.hashLog, ...Object.keys(fileHashes).map(key => fileHashes[key])];
-      fileHashes.ipfsHashes = (
-        (arrArg) => arrArg.filter(
-          (elem, pos, arr) => arr.indexOf(elem) === pos && elem !== addressBookHash)
-        )(fileHashes.ipfsHashes);
-      // clear hash log
-      profile.ipld.hashLog = [];
-      // re-enable pinning
-      profile.ipld.ipfs.disablePin = false;
-      const generationResult = await this.onboarding.sendProfileCreationCall(account, fileHashes, provider);
-      // temporary execution of setMyProfile
-      const profileIndexDomain = this.bcc.nameResolver.getDomainName(this.bcc.nameResolver.config.domains.profile);
-      const address = await this.bcc.nameResolver.getAddress(profileIndexDomain);
-      const contract = this.bcc.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);
+      await bcc.Onboarding.createOfflineProfile(
+        runtime,
+        alias,
+        account || this.activeAccount,
+        privateKey,
+        runtime.environment
+      );
 
       // finished profile creation successfully
       delete window.localStorage['evan-profile-creation'];
@@ -340,7 +313,7 @@ export class OnboardingService {
      * @param invitation   invitation token from invitation URL in bmail
      */
     accept: async (account: string, invitation: string) => {
-      var apiURL = baseUrlOnboarding + this.onboarding.path + `accept?accountId=${account}&invitationId=${invitation}`;
+      const apiURL = baseUrlOnboarding + this.onboarding.path + `accept?accountId=${account}&invitationId=${invitation}`;
 
       try { const result = await this.http.get(apiURL).toPromise(); }
       catch (ex) { return false; }
@@ -355,7 +328,7 @@ export class OnboardingService {
      * @param provider     signing provider (defaults to internal)
      */
     sendProfileCreationCall: async (accountId: string, profileInfo: any, provider = 'internal') => {
-      var apiURL = baseUrlFaucet + this.faucet.path + 'handout?apiVersion=1';
+      const apiURL = baseUrlFaucet + this.faucet.path + 'handout?apiVersion=1';
       const msgString = 'Gimme Gimme Gimme!';   // needs to be the same as in onboarding smartagent
       const signature = await this.signMessage(msgString, accountId, provider);
       try {

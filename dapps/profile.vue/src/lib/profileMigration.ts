@@ -55,7 +55,7 @@ export default class ProfileMigrationLibrary {
 
     // if not dispatcher entry was found for this scope, load it!
     if (!scopeData) {
-      scopeData = (await runtime.profile.getProfileProperties([ type ]))[type];
+      scopeData = (await runtime.profile.getProfileProperty(type));
     }
 
     return scopeData;
