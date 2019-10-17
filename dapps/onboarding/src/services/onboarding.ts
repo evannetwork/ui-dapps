@@ -299,6 +299,7 @@ export class OnboardingService {
         alias,
         account || this.activeAccount,
         privateKey,
+        this.captchaToken,
         runtime.environment
       );
 
