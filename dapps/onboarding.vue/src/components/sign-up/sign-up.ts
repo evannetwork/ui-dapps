@@ -275,6 +275,7 @@ export default class SignUp extends mixins(EvanComponent) {
           this.profileForm.alias.value,
           accountId,
           privateKey,
+          this.recaptchaToken,
           runtime.environment
         );
 
