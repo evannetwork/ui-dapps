@@ -35,7 +35,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'detail' } },
   { name: 'detail', path: 'detail/:address?', component: ProfileDetailComponent },
   { name: 'settings', path: 'settings/:address?', component: ProfileSettingsComponent },
-  { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
+  { name: 'sharings', path: 'sharings/', component: ProfileSharingsComponent },
   { name: 'wallet', path: 'wallet/:address?', component: UnderDevelopmentComponent },
   { name: 'verifications', path: 'verifications/:address?', component: VerificationsComponent, },
   {

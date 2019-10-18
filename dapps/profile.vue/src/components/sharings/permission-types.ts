@@ -17,19 +17,8 @@ Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
 the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
-
-.profile-sharings {
-  max-width: 780px;
-  margin: auto;
-
-  .hint-no-sharings {
-    background-color: white;
-    display: block;
-    width: 100%;
-    padding: 12px;
-    line-height: 40px;
-    margin-top: 32px;
-    font-size: cssVar('small-font-size');
-  }
-}
+export const FULL_ACCESS = 'fullAccess';
+export const FULL_READ = 'fullRead';
+export const READ_WRITE = 'readWrite';
+export const READ = 'read';
+export const NONE = 'none';

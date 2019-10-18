@@ -27,6 +27,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
+import { getProfilePermissions } from './utils';
+
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
     /**
@@ -35,10 +37,17 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     loading = true;
 
     /**
+     * contacts who share the profile data with
+     */
+    sharedContacts = [];
+
+    /**
     * Load the mail details
     */
     async created() {
         const runtime = (<any>this).getRuntime();
+
+        this.sharedContacts = await getProfilePermissions(runtime);
 
         this.loading = false;
     }

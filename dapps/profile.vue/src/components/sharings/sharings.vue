@@ -25,12 +25,20 @@ the following URL: https://evan.network/license/
         <h3 class="font-weight-bold">{{ '_profile.sharings.title' | translate }}</h3>
         <p>{{ '_profile.sharings.desc' | translate }}</p>
 
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
+        <template v-if="sharedContacts && sharedContacts.length > 0">
+            
+            <evan-base-list v-bind:data="sharedContacts" class="mt-5">
+                <template v-slot:item="{item}">
+                    <evan-shared-contact :item="item"/>
+                </template>
+            </evan-base-list>
 
+        </template>
+        <template v-else>
+            
+            <div class="hint-no-sharings text-muted text-center">{{ '_profile.sharings.no-data' | translate }}</div>
+
+        </template>
       </template>
   </div>
 </template>

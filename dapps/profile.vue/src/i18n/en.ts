@@ -162,7 +162,8 @@ const i18n: any = {
     },
     "sharings": {
       "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.", 
-      "title": "Your Profile Data Sharings"
+      "title": "Your Profile Data Sharings",
+      "no-data": "No profile data has been shared yet."
     },
     "type": {
       "change": "Change",

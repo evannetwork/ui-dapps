@@ -162,7 +162,8 @@ const i18n: any = {
     },
     "sharings": {
       "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.", 
-      "title": "Freigaben für deine Profildaten"
+      "title": "Freigaben für Ihre Profildaten",
+      "no-data": "Bisher wurden keine Profildaten freigegeben"
     },
     "type": {
       "change": "Ändern",
