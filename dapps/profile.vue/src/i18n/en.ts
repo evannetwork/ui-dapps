@@ -250,44 +250,23 @@ const i18n: any = {
         },
         "print": "Print",
         "request": {
-          "address": {
-            "desc": "Enter address",
-            "error": "Please enter an address!",
-            "title": "Address"
-          },
-          "city": {
-            "desc": "City",
-            "error": "Please enter a city!",
-            "title": "City"
-          },
+          "fill-missing": "Please fill in all required company information and save it.",
+          "only-de": "Currently, notary verification is only supported for companies in Germany. Please select Germany as your company headquarters.",
           "contact": {
-            "desc": "Enter contact name",
+            "placeholder": "Enter contact name",
             "error": "Please enter a contact person!",
-            "title": "Contact"
+            "label": "Contact Person *"
           },
           "costs": {
             "approve": "Yes, I request notarial verification, at the transaction cost of 200 EVE.",
-            "description": "The transaction costs for notarial verification are 200 EVE. Your wallet will be debited with this amount.",
+            "description": "The transaction fees for notarial verification are 200 EVE. Your wallet will be debited with this amount.",
             "hint": "The request for a notarial verification is subject to a fee.",
-            "title": "Costs"
-          },
-          "countries": {
-            "germany": "Germany"
-          },
-          "country": {
-            "desc": "Company headquarters country",
-            "error": "Please select the company headquartes country!",
-            "title": "Company HQ Country"
-          },
-          "court": {
-            "desc": "Where is the company registered?",
-            "error": "Please enter the information of the registration authority!",
-            "title": "Register Court"
+            "title": "Fees"
           },
           "department": {
-            "desc": "Department",
+            "placeholder": "Department",
             "error": "Please insert the department of the company!",
-            "title": "Department of the company"
+            "label": "Department"
           },
           "description": "Please fill in the formular to request a notary verification of your organisation. This service is subject to a fee.",
           "header": "Notary Verification",
@@ -299,7 +278,7 @@ const i18n: any = {
               },
               "2": {
                 "description": "You will receive a PIN by letter. Use this to generate the confirmation document and send it signed to the inquiring notary.",
-                "title": "Authenticate"
+                "title": "Authentification"
               },
               "3": {
                 "description": "If the notarial verification is successful, you will be notified. Accept the verification as the last step.",
@@ -313,51 +292,28 @@ const i18n: any = {
             "title": "Request for Notary Verification"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
-          "organization": {
-            "desc": "Organization name",
-            "error": "Please enter a organization name!",
-            "title": "Organization"
-          },
           "postal-address": "Postal Address",
           "proof": {
             "description": "To complete the notary verification, you will receive a PIN by letter from a notary to attention of the following person.",
             "title": "Please check all information."
           },
-          "register": {
-            "desc": "Type of register",
-            "error": "Please select the register type!",
-            "title": "Register",
-            "types": {
-              "hra": "HRA",
-              "hrb": "HRB"
-            }
-          },
-          "registerNumber": {
-            "desc": "98765",
-            "error": "Please enter the registration number!",
-            "title": "Registration number"
-          },
           "request-ident": "Request",
-          "request-verification": "Request notary verification",
+          "request-verification": "Start request",
           "requested1": "You have successfully applied for a Notary Verification for your organization.",
           "requested2": "Your wallet has been charged 200 EVE.",
           "requested3": "You will receive a letter from a notary soon.",
           "requesting": "Notary verification is requested...",
+          "requesting-account": "Requesting account",
           "step": "Step",
           "who": {
             "description": "As a registered company you can request a notarial verification of your account.",
-            "link": "read more",
+            "link": "Learn More",
             "title": "Prerequisites"
           },
           "why": {
             "description": "The notarial verification confirms that your company has the account ID {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
-            "link": "read more",
+            "link": "Learn More",
             "title": "Advantages"
-          },
-          "zipCode": {
-            "desc": "Postcode",
-            "error": "Please enter a valid post code!",
-            "title": "Postcode"
           }
         },
         "request-error": "Request could not be loaded!",
@@ -381,9 +337,9 @@ const i18n: any = {
           "unknown-long": "Request Notary Verification"
         },
         "step": {
-          "costs": "Costs",
+          "costs": "Transaction fee",
           "summary": "Summary",
-          "your_data": "Your Data"
+          "your_data": "Request data"
         },
         "title": "Notary Verification",
         "verification": {
