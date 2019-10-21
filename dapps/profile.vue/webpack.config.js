@@ -24,4 +24,7 @@ module.exports = require('../../vue/webpack.config')(
   require('path').resolve(__dirname, './dist'),
   true,
   false,
+  getExternals({
+    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin'
+  })
 );

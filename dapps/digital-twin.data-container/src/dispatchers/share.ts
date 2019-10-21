@@ -31,26 +31,47 @@ const dispatcher = new Dispatcher(
   '_datacontainer.dispatcher.share'
 );
 
+/**
+ * share the properties for single container
+ *
+ * @param runtime
+ * @param data
+ */
+const updateSharings = (runtime, data) => {
+  return utils
+    .getContainer(runtime, data.address)
+    .shareProperties(data.shareConfigs);
+};
+
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     // set the digital twin instance
     const runtime = utils.getRuntime(instance.runtime);
 
-    // share the properties and send the b-mail
-    await utils
-      .getContainer(runtime, data.address)
-      .shareProperties(data.shareConfigs);
+    if (Array.isArray(data)) {
+      await Promise.all(data.map(async (shareData: any) => {
+        await updateSharings(runtime, shareData);
+      }));
+
+      return;
+    }
+
+    await updateSharings(runtime, data);
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    await Promise.all(data.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
-      await runtime.mailbox.sendMail(
-        data.bMailContent,
-        runtime.activeAccount,
-        shareConfig.accountId
-      );
-    }));
+    // do not sent bMail for multi container sharing
+    if (data.bMailContent) {
+      const runtime = utils.getRuntime(instance.runtime);
+
+      await Promise.all(data.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
+        await runtime.mailbox.sendMail(
+          data.bMailContent,
+          runtime.activeAccount,
+          shareConfig.accountId
+        );
+      }));
+    }
   });
 
 export default dispatcher;

@@ -24,5 +24,5 @@ import updateProfileDispatcher from './profile/updateProfile';
 export {
   requestIdentificationDispatcher,
   verificationAcceptDispatcher,
-  updateProfileDispatcher,
-}
+  updateProfileDispatcher
+};

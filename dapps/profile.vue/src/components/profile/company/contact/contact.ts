@@ -151,6 +151,6 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
       })
       .sort((countryA, countryB) => {
           return countryA.label - countryB.label
-      })
+      });
   }
 }

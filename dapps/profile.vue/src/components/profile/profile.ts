@@ -30,6 +30,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { getIdentificationDetails } from '../verifications/notary/notary.lib';
 import * as dispatchers from '../../dispatchers/registry';
 
+import { getProfilePermissionDetails, updatePermissions } from './permissionsUtils';
+
 @Component({ })
 export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
@@ -113,4 +115,27 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       type: 'accountDetails'
     });
   }
+
+  /**
+   * Returns the permissions mapping for certain user. If nothing is shared with the user, copy from own and set all to
+   * denied.
+   *
+   * @param user: string - the user id.
+   */
+  async loadPermissions(user: string) {
+    const runtime = (<any>this).getRuntime();
+    const allPermissions = await getProfilePermissionDetails(runtime);
+
+    if (!allPermissions[user]) {
+      return allPermissions['new'];
+    }
+
+    return allPermissions[user];
+  }
+
+
+  /**
+   * Mock: will be replaced by permissions update function. TODO
+   */
+  updatePermissions = updatePermissions;
 }

@@ -33,4 +33,4 @@ export {
   pluginShareDispatcher,
   shareDispatcher,
   updateDispatcher,
-}
+};

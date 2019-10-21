@@ -18,6 +18,7 @@
 */
 
 <template>
+
   <div class="profile-detail p-xxl-11 p-xl-6 p-3">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
@@ -110,6 +111,16 @@
         </div>
       </div>
     </template>
+    <evan-swipe-panel
+      ref="shareSidebar"
+      alignment="right"
+      type="default"
+      class="light"
+      :isOpen="$store.state.uiState.swipePanel.right"
+    >
+      <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
+    </evan-swipe-panel>
+
   </div>
 </template>
 

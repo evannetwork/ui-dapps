@@ -24,6 +24,7 @@
       :i18nScope="'_profile.company.contact'"
       :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
       :title="'_profile.company.contact.title' | translate"
+      :handleShare="() => $store.commit('toggleSidePanel', 'right')"
       @save="changeProfileData()">
     </evan-form>
   </div>

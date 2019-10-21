@@ -20,6 +20,9 @@
     "paths": {
       "@evan.network/addressbook": [
         "../../addressbook.vue/dist/addressbook.vue.js"
+      ],
+      "@evan.network/datacontainer.digitaltwin": [
+        "../../digital-twin.data-container/dist/datacontainer.digitaltwin.js"
       ]
     }
   },

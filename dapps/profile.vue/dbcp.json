@@ -4,7 +4,8 @@
     "dapp": {
       "dependencies": {
         "countries.libs": "^1.0.0",
-        "evancore.vue.libs": "^1.7.0"
+        "evancore.vue.libs": "^1.7.0",
+        "datacontainer.digitaltwin": "^1.8.2"
       },
       "entrypoint": "profile.vue.js",
       "files": [

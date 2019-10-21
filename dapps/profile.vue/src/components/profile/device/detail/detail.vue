@@ -24,6 +24,7 @@
       :i18nScope="'_profile.device.detail'"
       :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
       :title="'_profile.device.detail.title' | translate"
+      :handleShare="() => $store.commit('toggleSidePanel', 'right')"
       @save="changeProfileData()">
     </evan-form>
   </div>
