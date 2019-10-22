@@ -19,18 +19,6 @@
 
 <template>
   <div>
-    <evan-form
-      :form="deviceDetailForm"
-      :i18nScope="'_profile.device.detail'"
-      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :title="'_profile.device.detail.title' | translate"
-      :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
-      @save="changeProfileData()">
-    </evan-form>
+    <router-view></router-view>
   </div>
 </template>
-
-<script lang="ts">
-  import Component from './detail';
-  export default Component;
-</script>

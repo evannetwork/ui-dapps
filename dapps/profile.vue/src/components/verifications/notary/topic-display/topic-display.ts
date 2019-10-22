@@ -18,7 +18,6 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
@@ -29,6 +28,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../../../dispatchers/registry';
+import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 import { notarySmartAgentAccountId } from '../notary.lib';
 
 @Component({ })
@@ -163,23 +163,23 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
           if (fileHash !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
             if (subVerification.details.topic === '/evan/company') {
               const hashFiles = await (<any>runtime.dfs).get(fileHash);
-              const foundFiles = JSON.parse(hashFiles)
+              const foundFiles = JSON.parse(hashFiles);
               for (let file of foundFiles) {
                 file.file = await (<any>runtime.dfs).get(file.file, true);
                 file.size = file.file.length;
                 this.files.push(await FileHandler.fileToContainerFile(file));
               }
             } else {
-              const cryptoAlgorithFiles = 'aesBlob'
-              const cryptoAlgorithHashes = 'aesEcb'
-              const encodingEncrypted = 'hex'
-              const encodingUnencryptedHash = 'hex'
-              const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb')
+              const cryptoAlgorithFiles = 'aesBlob';
+              const cryptoAlgorithHashes = 'aesEcb';
+              const encodingEncrypted = 'hex';
+              const encodingUnencryptedHash = 'hex';
+              const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
               const dencryptedHashBuffer = await hashCryptor.decrypt(
-                Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey })
+                Buffer.from(fileHash.substr(2), encodingUnencryptedHash), { key: hashKey });
 
               const retrieved = await (<any>runtime.dfs).get('0x' + dencryptedHashBuffer.toString('hex'), true);
-              const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles)
+              const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(cryptoAlgorithFiles);
               const decrypted = await cryptor.decrypt(retrieved, { key: contentKey });
 
               if (decrypted.companyName) {
@@ -215,5 +215,21 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
         topic: this.topic,
       }
     );
+  }
+
+  /**
+   * Open the detail swipe panel for the current topic.
+   */
+  async showDetail() {
+    // try to load company name from profile registration container
+    if (!this.companyName) {
+      const runtime: bcc.Runtime = (<any>this).getRuntime();
+
+      this.companyName = (
+        await ProfileMigrationLibrary.loadProfileData(runtime, 'registration') || {}
+      ).company || runtime.activeAccount;
+    }
+
+    (this as any).$store.commit('toggleSidePanel', this.topic);
   }
 }

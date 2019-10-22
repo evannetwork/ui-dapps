@@ -44,7 +44,7 @@
             d-block p-3 position-relative
             bg-inverted rounded text-decoration-none"
             style="height: 166px"
-            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/wallet/${ $store.state.runtime.activeAccount }` : null"
+            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/${ $store.state.runtime.activeAccount }/wallet` : null"
             :class="{
               'evan-highlight': $store.state.isMyProfile
             }">
@@ -112,15 +112,15 @@
       </div>
     </template>
     <evan-swipe-panel
-      ref="shareSidebar"
-      alignment="right"
-      type="default"
       class="light"
-      :isOpen="$store.state.uiState.swipePanel.right"
+      alignment="right"
+      ref="shareSidebar"
+      showBackdrop="true"
+      type="default"
+      :isOpen="$store.state.uiState.swipePanel === 'sharing'"
     >
       <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
     </evan-swipe-panel>
-
   </div>
 </template>
 

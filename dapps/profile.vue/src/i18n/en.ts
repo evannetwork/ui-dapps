@@ -25,9 +25,9 @@ const i18n: any = {
       "detail": "Profile",
       "logout": "Logout",
       "settings": "Settings",
+      "sharings": "Sharings",
       "verifications": "Verifications",
-      "wallet": "Wallet",
-      "sharings": "Sharings"
+      "wallet": "Wallet"
     },
     "company": {
       "contact": {
@@ -161,9 +161,9 @@ const i18n: any = {
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
     "sharings": {
-      "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.", 
-      "title": "Your Profile Data Sharings",
-      "no-data": "No profile data has been shared yet."
+      "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.",
+      "no-data": "No profile data has been shared yet.",
+      "title": "Your Profile Data Sharings"
     },
     "type": {
       "change": "Change",
@@ -250,12 +250,10 @@ const i18n: any = {
         },
         "print": "Print",
         "request": {
-          "fill-missing": "Please fill in all required company information and save it.",
-          "only-de": "Currently, notary verification is only supported for companies in Germany. Please select Germany as your company headquarters.",
           "contact": {
-            "placeholder": "Enter contact name",
             "error": "Please enter a contact person!",
-            "label": "Contact Person *"
+            "label": "Contact Person *",
+            "placeholder": "Enter contact name"
           },
           "costs": {
             "approve": "Yes, I request notarial verification, at the transaction cost of 200 EVE.",
@@ -264,11 +262,12 @@ const i18n: any = {
             "title": "Fees"
           },
           "department": {
-            "placeholder": "Department",
             "error": "Please insert the department of the company!",
-            "label": "Department"
+            "label": "Department",
+            "placeholder": "Department"
           },
           "description": "Please fill in the formular to request a notary verification of your organisation. This service is subject to a fee.",
+          "fill-missing": "Please fill in all required company information and save it.",
           "header": "Notary Verification",
           "how": {
             "steps": {
@@ -292,6 +291,7 @@ const i18n: any = {
             "title": "Request for Notary Verification"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
+          "only-de": "Currently, notary verification is only supported for companies in Germany. Please select Germany as your company headquarters.",
           "postal-address": "Postal Address",
           "proof": {
             "description": "To complete the notary verification, you will receive a PIN by letter from a notary to attention of the following person.",
@@ -344,10 +344,15 @@ const i18n: any = {
         "title": "Notary Verification",
         "verification": {
           "accept": "Accept",
+          "attachments": "Attachments",
+          "close-detail": "Done",
+          "created": "Created",
           "incorrect": "The organization IDs issued to you were not created by the correct instance.",
           "organization": "Organization-Verification",
           "organization-random": "Organization-ID-Verification",
           "status": "Status",
+          "topic": "Path",
+          "topic-desc": "This account of the company {companyName} was notarially verified. This certified the authenticity of the company and the assignment to this account.",
           "verified-by": "Verifiziert durch"
         }
       },

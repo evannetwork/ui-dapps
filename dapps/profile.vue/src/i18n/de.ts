@@ -25,9 +25,9 @@ const i18n: any = {
       "detail": "Profil",
       "logout": "Ausloggen",
       "settings": "Einstellungen",
+      "sharings": "Freigaben",
       "verifications": "Verifizierungen",
-      "wallet": "Wallet",
-      "sharings": "Freigaben"
+      "wallet": "Wallet"
     },
     "company": {
       "contact": {
@@ -161,9 +161,9 @@ const i18n: any = {
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.", 
-      "title": "Freigaben für Ihre Profildaten",
-      "no-data": "Bisher wurden keine Profildaten freigegeben"
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
+      "no-data": "Bisher wurden keine Profildaten freigegeben",
+      "title": "Freigaben für Ihre Profildaten"
     },
     "type": {
       "change": "Ändern",
@@ -250,8 +250,6 @@ const i18n: any = {
         },
         "print": "Drucken",
         "request": {
-          "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
-          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
           "contact": {
             "error": "Bitte geben Sie eine Kontaktperson an!",
             "label": "Ansprechpartner",
@@ -269,6 +267,7 @@ const i18n: any = {
             "placeholder": "Abteilung"
           },
           "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
           "header": "Notarielle Verifikation",
           "how": {
             "steps": {
@@ -292,6 +291,7 @@ const i18n: any = {
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
+          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
@@ -344,11 +344,16 @@ const i18n: any = {
         "title": "Notarielle Verifikation",
         "verification": {
           "accept": "Annehmen",
+          "attachments": "Anhang",
+          "close-detail": "Schließen",
+          "created": "Erstellt",
           "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "organization": "Organisations-Verifikation",
           "organization-random": "Organisations-ID-Verifikation",
           "status": "Status",
-          "verified-by": "Verified by"
+          "topic": "Pfad",
+          "topic-desc": "Dieses Konto der Firma {companyName} wurde notariell beglaubigt. Damit wurde die Authentizität des Unternehmens und die Zuordnung zu diesem Konto bescheinigt.",
+          "verified-by": "Verifiziert durch"
         }
       },
       "reload": "Neu-laden",

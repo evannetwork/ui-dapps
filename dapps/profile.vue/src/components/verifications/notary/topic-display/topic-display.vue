@@ -18,39 +18,104 @@
 */
 
 <template>
-  <evan-card class="mt-3" type="filled" highlight="true">
-    <evan-loading v-if="loading"></evan-loading>
-    <template v-else>
-      <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
-      <h5 class="font-weight-semibold">
-        {{ title }}
-      </h5>
-      <small class="mb-2">
-        {{ '_profile.verifications.notary.title' | translate }}
-      </small>
-      <small>
-        {{ '_profile.verifications.notary.verification.verified-by' | translate }}
-      </small>
-      <small class="text-muted">
-        {{ verification.verifications[0].details.issuer }}
-      </small>
+  <div>
+    <evan-card class="mt-3" type="filled" highlight="true"
+      @click="showDetail()">
+      <evan-loading v-if="loading"></evan-loading>
+      <template v-else>
+        <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
+        <h5 class="font-weight-semibold">
+          {{ title }}
+        </h5>
+        <small class="mb-2">
+          {{ '_profile.verifications.notary.title' | translate }}
+        </small>
+        <small>
+          {{ '_profile.verifications.notary.verification.verified-by' | translate }}
+        </small>
+        <small class="text-muted">
+          {{ verification.verifications[0].details.issuer }}
+        </small>
 
-      <!-- <a v-for="(file, index) in files"
-        :id="`file-input-download-${ index }`"
-        :href="file.blobUri"
-        :download="file.name">
-        <i class="mdi mdi-download-outline"></i>
-      </a> -->
+        <button type="button"
+          class="btn btn-primary mt-3"
+          v-if="verification.status === 'yellow'"
+          :disabled="accepting"
+          @click="acceptVerification()">
+          {{ `_profile.verifications.notary.verification.accept` | translate }}
+        </button>
+      </template>
+    </evan-card>
+    <evan-swipe-panel class="light"
+      v-if="!loading"
+      :isOpen="$store.state.uiState.swipePanel === topic"
+      alignment="right"
+      ref="verificationDetail"
+      showBackdrop="true"
+      type="default">
+      <div class="h-100 d-flex flex-column">
+        <div>
+          <div class="text-center">
+            <img
+              style="width: 100px;"
+              :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`"
+            />
+            <h3 class="font-weight-semibold mt-3">
+              {{ title }}
+            </h3>
+          </div>
+          <small class="d-block text-justify text-muted">
+            {{ $t('_profile.verifications.notary.verification.topic-desc', { companyName: companyName }) }}
+          </small>
+          <div class="mt-5">
+            <div class="mt-2">
+              <b>{{ '_profile.verifications.notary.verification.created' | translate }}:</b>
+              <span>{{ verification.verifications[0].details.creationDate | moment('LLL') }}</span>
+            </div>
+            <div class="mt-2">
+              <b>{{ '_profile.verifications.notary.verification.verified-by' | translate }}:</b>
+              <span>{{ verification.verifications[0].details.issuer }}</span>
+            </div>
+            <div class="mt-2">
+              <b>{{ '_profile.verifications.notary.verification.topic' | translate }}:</b>
+              <span>{{ topic }} </span>
+            </div>
+          </div>
 
-      <button type="button"
-        class="btn btn-primary mt-3"
-        v-if="verification.status === 'yellow'"
-        :disabled="accepting"
-        @click="acceptVerification()">
-        {{ `_profile.verifications.notary.verification.accept` | translate }}
-      </button>
-    </template>
-  </evan-card>
+          <div class="mt-5">
+            <h5 class="font-weight-semibold text-uppercase">
+              {{ '_profile.verifications.notary.verification.attachments' | translate }}
+            </h5>
+
+            <a class="d-flex align-items-center p-3 border border-sm bg-level-3 dark-link"
+              v-for="(file, index) in files"
+              :id="`file-input-download-${ index }`"
+              :href="file.blobUri"
+              :download="file.name">
+              <span class="force-oneline">{{ file.name }}</span>
+              <i class="mdi mdi-file-document-box-outline"></i>
+            </a>
+          </div>
+
+          <button type="button"
+            class="btn btn-primary mt-5"
+            v-if="verification.status === 'yellow'"
+            :disabled="accepting"
+            @click="acceptVerification()">
+            {{ `_profile.verifications.notary.verification.accept` | translate }}
+          </button>
+        </div>
+
+        <span class="my-auto"></span>
+
+        <button type="button"
+          class="btn btn-primary mt-5 w-100"
+          @click="$store.commit('toggleSidePanel', topic)">
+          {{ `_profile.verifications.notary.verification.close-detail` | translate }}
+        </button>
+      </div>
+    </evan-swipe-panel>
+  </div>
 </template>
 
 <script lang="ts">

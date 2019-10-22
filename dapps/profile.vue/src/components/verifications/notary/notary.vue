@@ -74,11 +74,12 @@
         </evan-button>
       </evan-card>
 
-      <notary-verification-card
-        v-if="verifications && verifications.length !== 0"
-        :address="address"
-        :verifications="verifications">
-      </notary-verification-card>
+      <template v-if="verifications && verifications.length !== 0">
+        <notary-verification-card
+          :address="address"
+          :verifications="verifications">
+        </notary-verification-card>
+      </template>
       <notary-verification-card
         v-for="(requestId) in requests"
         :address="address"

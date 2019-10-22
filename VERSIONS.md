@@ -2,6 +2,10 @@
 
 ## Next Version
 ### Features
+- `profile.vue` (v3.4.0)
+  - add sharing for profile categories
+  - use correct route handling
+  - add verification detail side panel
 
 ### Fixes
 
