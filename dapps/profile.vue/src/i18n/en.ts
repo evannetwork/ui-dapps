@@ -185,14 +185,14 @@ const i18n: any = {
       "error-loading": "An error occurred while loading the data. Please try again.",
       "next": "Next",
       "notary": {
-        "account-id": "Account-ID",
+        "account-id": "Identity",
         "check-updates": "Checking for updates...",
-        "info": "Identify your account to be a trusted evan.network member",
+        "info": "Confirm your Identity to be a trusted evan.network member",
         "issue": {
           "accountId": {
-            "desc": "Account ID for which the notary confirmation should be created.",
-            "error": "Please enter a valid Account ID!",
-            "title": "Account-ID"
+            "desc": "Identity for which the notary confirmation should be created.",
+            "error": "Please enter a valid address!",
+            "title": "Identity"
           },
           "file-rename-hint": "The uploaded files will be renamed to a uniform naming scheme during the organization verification process.",
           "header": "Issue Organization Verification",
@@ -234,8 +234,8 @@ const i18n: any = {
           "download": "No option to print now? Download as PDF file.",
           "generate-answer": "Generate code",
           "header": "Authentication",
-          "next-step": "After successful verification by the notary, your account will be verified.",
-          "next-step2": "You will be informed of this in your account mailbox.",
+          "next-step": "After successful verification by the notary, your Identity will be verified.",
+          "next-step2": "You will be informed of this in your mailbox.",
           "pin": {
             "desc": "The six digits PIN you received within the letter.",
             "error": "Please enter the PIN to continue.",
@@ -287,7 +287,7 @@ const i18n: any = {
             "title": "Steps"
           },
           "mail": {
-            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Identity: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Request for Notary Verification"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
@@ -303,15 +303,15 @@ const i18n: any = {
           "requested2": "Your wallet has been charged 200 EVE.",
           "requested3": "You will receive a letter from a notary soon.",
           "requesting": "Notary verification is requested...",
-          "requesting-account": "Requesting account",
+          "requesting-account": "Requesting Identity",
           "step": "Step",
           "who": {
-            "description": "As a registered company you can request a notarial verification of your account.",
+            "description": "As a registered company you can request a notarial verification of your Identity.",
             "link": "Learn More",
             "title": "Prerequisites"
           },
           "why": {
-            "description": "The notarial verification confirms that your company has the account ID {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
+            "description": "The notarial verification confirms that your company has the Identity {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
             "link": "Learn More",
             "title": "Advantages"
           }
@@ -352,7 +352,7 @@ const i18n: any = {
           "organization-random": "Organization-ID-Verification",
           "status": "Status",
           "topic": "Path",
-          "topic-desc": "This account of the company {companyName} was notarially verified. This certified the authenticity of the company and the assignment to this account.",
+          "topic-desc": "This Identity of the company {companyName} was notarially verified. This certified the authenticity of the company and the assignment to this account.",
           "verified-by": "Verifiziert durch"
         }
       },

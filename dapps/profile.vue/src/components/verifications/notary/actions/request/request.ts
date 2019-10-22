@@ -39,8 +39,8 @@ interface RequestFormIdentInterface extends EvanForm {
 }
 
 interface LabeledEntry {
-  label: string,
-  value: string
+  label: string;
+  value: string;
 }
 
 interface CompanyData {
@@ -50,14 +50,14 @@ interface CompanyData {
     register: string,
     registerNumber: string,
     salesTaxID: string,
-  },
+  };
   contact: {
     city: string,
     country: string,
     postalCode: number,
     streetAndNumber: string,
     website: string,
-  }
+  };
 }
 
 @Component({ })
@@ -71,6 +71,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Currents user active account that must be passed into the info-content component
    */
   activeAccount = '';
+  identity = '';
 
   /**
    * Whether the user approved the costs hint.
@@ -153,8 +154,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   @Watch('requestForm.isValid')
   onValidate(valid: boolean, oldValid: boolean) {
     if (valid !== oldValid) {
-      this.steps[1].disabled = !valid
-      this.steps[2].disabled = !valid
+      this.steps[1].disabled = !valid;
+      this.steps[2].disabled = !valid;
     }
   }
 
@@ -226,7 +227,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         label: (<any>this).$i18n.translate('_profile.company.registration.registerNumber.label'),
         value: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`
       }
-    ]
+    ];
 
     this.approveAddress = [
       {
@@ -277,6 +278,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     const runtime: bcc.Runtime = (<any>this).getRuntime();
     const fundsAvailable = await runtime.web3.eth.getBalance(runtime.activeAccount);
     this.activeAccount = runtime.activeAccount;
+    this.identity = await runtime.verifications.getIdentityForAccount(this.activeAccount, true);
     this.readableFunds = parseFloat(runtime.web3.utils.fromWei(fundsAvailable)).toFixed(2);
     this.enoughFunds = runtime.web3.utils
       .toBN(fundsAvailable)
@@ -302,8 +304,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         if (!this.companyData[category][field]) {
           this.missingCompanyFields[category].push(field);
         }
-      })
-    })
+      });
+    });
 
     // ensure that germany is selected
     if (this.companyData.contact.country && this.companyData.contact.country !== 'DE') {

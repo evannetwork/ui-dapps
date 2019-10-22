@@ -48,7 +48,7 @@
     </evan-card>
     <evan-swipe-panel class="light"
       v-if="!loading"
-      :isOpen="$store.state.uiState.swipePanel === topic"
+      :id="topic"
       alignment="right"
       ref="verificationDetail"
       showBackdrop="true"

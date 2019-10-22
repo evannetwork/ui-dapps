@@ -41,7 +41,7 @@
           <!-- Verification start info -->
           <div v-if="status === -1">
             <notary-info-content
-              :address="activeAccount"
+              :address="identity"
               :enoughFunds="enoughFunds"
               :readableFunds="readableFunds">
             </notary-info-content>
@@ -102,10 +102,15 @@
           <!-- approve costs screen -->
           <div v-else-if="status === 2 && !sending" class="mt-5">
             <p>{{ '_profile.verifications.notary.request.costs.hint' | translate }}</p>
-            <div class="form-check text-center m-6">
-              <input type="checkbox" v-model="approvedCosts" class="form-check-input" required />
+            <div class="d-flex p-3 align-items-center justify-content-center">
+              <evan-form-control-checkbox
+                class="mr-3 mb-0" style="min-width: 0;"
+                id="approvedCosts"
+                v-model="approvedCosts"
+                required
+              />
               <label for="costs-approval" class="form-check-label">
-                <h4>{{ '_profile.verifications.notary.request.costs.approve' | translate }}</h4>
+                <h4 class="mb-0">{{ '_profile.verifications.notary.request.costs.approve' | translate }}</h4>
               </label>
             </div>
           </div>

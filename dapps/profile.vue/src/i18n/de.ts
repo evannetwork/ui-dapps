@@ -185,14 +185,14 @@ const i18n: any = {
       "error-loading": "Beim Laden der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "next": "Weiter",
       "notary": {
-        "account-id": "Account-ID",
+        "account-id": "Identität",
         "check-updates": "Warte auf Aktualisierung...",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
         "issue": {
           "accountId": {
-            "desc": "Account-ID für die die notarielle Bestätigung erstellt werden soll.",
-            "error": "Bitte geben Sie eine gültige Account ID an!",
-            "title": "Account-ID"
+            "desc": "Identität für die die notarielle Bestätigung erstellt werden soll.",
+            "error": "Bitte geben Sie eine gültige Addresse an!",
+            "title": "Identität"
           },
           "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Austellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
           "header": "Organisations-Verifikation ausstellen",
@@ -234,8 +234,8 @@ const i18n: any = {
           "download": "Kein Drucker verfügbar? Download als PDF Datei",
           "generate-answer": "Code generieren",
           "header": "Authentifizierung",
-          "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihr Account verifiziert.",
-          "next-step2": "Sie werden in Ihrer Account Mailbox darüber informiert.",
+          "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihre Identität verifiziert.",
+          "next-step2": "Sie werden in Ihrer Mailbox darüber informiert.",
           "pin": {
             "desc": "Die per Brief erhaltene, sechstellige PIN.",
             "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
@@ -287,7 +287,7 @@ const i18n: any = {
             "title": "Schritte"
           },
           "mail": {
-            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Identität: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
@@ -303,15 +303,15 @@ const i18n: any = {
           "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
           "requested3": "Sie erhalten in Kürze vom Notar Post!",
           "requesting": "Notarielle Verifikation wird angefordert...",
-          "requesting-account": "Anfragender Account",
+          "requesting-account": "Anfragende Identität",
           "step": "Schritt",
           "who": {
-            "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihres Accounts anfordern.",
+            "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihrer Identität anfordern.",
             "link": "Mehr erfahren",
             "title": "Voraussetzungen"
           },
           "why": {
-            "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
+            "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Identität {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
             "link": "Mehr erfahren",
             "title": "Vorteile"
           }
