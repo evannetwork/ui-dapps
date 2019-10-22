@@ -20,8 +20,16 @@ the following URL: https://evan.network/license/
 @import '~@evan.network/ui/src/style/utils';
 
 .profile-sharings {
-  max-width: 780px;
-  margin: auto;
+  .container {
+    padding: 32px;
+    max-width: 780px;
+  }
+
+  .button-wrapper {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+  }
 
   .hint-no-sharings {
     background-color: white;
