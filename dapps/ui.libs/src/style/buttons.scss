@@ -177,7 +177,13 @@
     }
 
     &.btn-icon-primary {
-      color: cssVar('primary');
+      background-color: cssVar('primary');
+      color: white;
+      box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.18);
+
+      &:hover {
+        background-color: cssVar('primary-darken');
+      }
     }
 
     &.btn-link {
