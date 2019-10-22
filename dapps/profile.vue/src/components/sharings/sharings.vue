@@ -21,17 +21,32 @@ the following URL: https://evan.network/license/
   <div class="profile-sharings">
     <evan-loading v-if="loading" />
     <template v-else>
-      <div class="d-flex">
-        <div class="container">
+      <div class="container">
+
+        <evan-button
+          size="lg"
+          type="icon-primary"
+          icon="mdi mdi-plus"
+          @click="windowWidth < 1200 && $store.commit('toggleSidePanel', 'right')"
+        />
+
+        <evan-swipe-panel
+          ref="shareSidebar"
+          alignment="right"
+          type="default"
+          class="light"
+          :isOpen="$store.state.uiState.swipePanel.right || windowWidth >= 1200"
+          :showBackdrop="windowWidth < 1200"
+        >
+          <evan-permissions-editor
+            :loadPermissions="loadPermissions"
+            :updatePermissions="updatePermissions"
+          />
+        </evan-swipe-panel>
+
+        <div class="content">
           <h3 class="font-weight-bold">{{ '_profile.sharings.title' | translate }}</h3>
           <p>{{ '_profile.sharings.desc' | translate }}</p>
-
-          <evan-button
-            class="d-xl-none"
-            size="lg"
-            type="icon-primary"
-            icon="mdi mdi-plus"
-          />
 
           <template v-if="sharedContacts && sharedContacts.length > 0">
             <evan-base-list v-bind:data="sharedContacts" class="mt-5">
@@ -40,23 +55,23 @@ the following URL: https://evan.network/license/
               </template>
             </evan-base-list>
           </template>
+
           <template v-else>
-            <div
-              class="hint-no-sharings text-muted text-center"
-            >{{ '_profile.sharings.no-data' | translate }}</div>
+            <div class="hint-no-sharings text-muted text-center">
+              {{ '_profile.sharings.no-data' | translate }}
+            </div>
           </template>
         </div>
-        <div class="d-none d-xl-block" style="width:540px;height:800px; background-color: red;"></div>
       </div>
     </template>
   </div>
 </template>
 
 <style lang="scss" scoped>
-    @import "./sharings.scss";
+  @import "./sharings.scss";
 </style>
 
 <script lang="ts">
-    import Component from "./sharings";
-    export default Component;
+  import Component from "./sharings";
+  export default Component;
 </script>

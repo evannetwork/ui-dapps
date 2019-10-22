@@ -31,6 +31,12 @@ import { getProfilePermissions } from './utils';
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
+
+    /**
+     * current window width
+     */
+    windowWidth = 0;
+
     /**
     * status flags
     */
@@ -41,15 +47,23 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
      */
     sharedContacts = [];
 
-    /**
-    * Load the mail details
-    */
+    handleWindowResize() {
+        this.windowWidth = window.innerWidth;
+    }
+
     async created() {
+        window.addEventListener('resize', this.handleWindowResize);
+        this.handleWindowResize();
+
         const runtime = (<any>this).getRuntime();
 
         this.sharedContacts = await getProfilePermissions(runtime);
 
         this.loading = false;
+    }
+
+    beforeDestroy() {
+        window.removeEventListener('resize', this.handleWindowResize);
     }
 }
 
