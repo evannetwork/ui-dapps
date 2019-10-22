@@ -302,7 +302,7 @@ export class DispatcherInstance {
    */
   get status() {
     return this._status;
-  };
+  }
 
   constructor(options: DispatcherInstanceOptions) {
     this.data = options.data;

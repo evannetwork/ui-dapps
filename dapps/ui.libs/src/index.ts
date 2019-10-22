@@ -46,7 +46,7 @@ export async function startDApp(container, dbcpName, dappEns, dappBaseUrl) {
       // remove the loading screen
       dappBrowser.loading.finishDAppLoading();
     }
-  }
+  };
 
   xmlhttp.open('GET', `${ dappBaseUrl }/index.html`, false);
   xmlhttp.send();

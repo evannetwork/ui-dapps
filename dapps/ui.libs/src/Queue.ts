@@ -95,7 +95,7 @@ export default class EvanQueue {
           openRequest.result.close();
           resolve(await this.openDB(openRequest.result.version + 1));
         } else {
-          resolve(openRequest.result)
+          resolve(openRequest.result);
         }
       };
 
