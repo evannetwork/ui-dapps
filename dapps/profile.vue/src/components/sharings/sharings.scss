@@ -24,12 +24,15 @@ the following URL: https://evan.network/license/
   margin: auto;
 
   .hint-no-sharings {
-    background-color: white;
-    display: block;
-    width: 100%;
-    padding: 12px;
-    line-height: 40px;
-    margin-top: 32px;
     font-size: cssVar('small-font-size');
+    line-height: 40px;
+
+    display: block;
+
+    width: 100%;
+    margin-top: 32px;
+    padding: 12px;
+
+    background-color: white;
   }
 }

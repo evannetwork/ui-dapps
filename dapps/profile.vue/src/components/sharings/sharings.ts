@@ -31,26 +31,26 @@ import { getProfilePermissions } from './utils';
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
-    /**
-    * status flags
-    */
-    loading = true;
+  /**
+  * status flags
+  */
+  loading = true;
 
-    /**
-     * contacts who share the profile data with
-     */
-    sharedContacts = [];
+  /**
+   * contacts who share the profile data with
+   */
+  sharedContacts = [];
 
-    /**
-    * Load the mail details
-    */
-    async created() {
-        const runtime = (<any>this).getRuntime();
+  /**
+  * Load the mail details
+  */
+  async created() {
+    const runtime = (<any>this).getRuntime();
 
-        this.sharedContacts = await getProfilePermissions(runtime);
+    this.sharedContacts = await getProfilePermissions(runtime);
 
-        this.loading = false;
-    }
+    this.loading = false;
+  }
 }
 
 export default ProfileSharingsComponent;

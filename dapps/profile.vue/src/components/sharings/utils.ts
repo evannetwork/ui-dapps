@@ -28,32 +28,32 @@ import * as PermissionTypes from './permission-types';
  * @param properties
  */
 const getPermissionsType = (sharing, properties) => {
-    const propertiesKeys = Object.keys(properties);
+  const propertiesKeys = Object.keys(properties);
 
-    // check write permissions
-    if (sharing.readWrite) {
-        // check full access
-        if (sharing.readWrite.every(item => propertiesKeys.includes(item))) {
-            return PermissionTypes.FULL_ACCESS;
-        }
-        // check read and write permissions
-        if (sharing.readWrite.some(read => propertiesKeys.includes(read))) {
-            return PermissionTypes.READ_WRITE;
-        }
+  // check write permissions
+  if (sharing.readWrite) {
+    // check full access
+    if (sharing.readWrite.every(item => propertiesKeys.includes(item))) {
+      return PermissionTypes.FULL_ACCESS;
     }
-
-    if (sharing.read) {
-        // check full read
-        if (sharing.read && sharing.read.every(item => propertiesKeys.includes(item))) {
-            return PermissionTypes.FULL_READ;
-        }
-        // check read permissions
-        if (sharing.read.some(read => propertiesKeys.includes(read))) {
-            return PermissionTypes.READ;
-        }
+    // check read and write permissions
+    if (sharing.readWrite.some(read => propertiesKeys.includes(read))) {
+      return PermissionTypes.READ_WRITE;
     }
+  }
 
-    return PermissionTypes.NONE;
+  if (sharing.read) {
+    // check full read
+    if (sharing.read && sharing.read.every(item => propertiesKeys.includes(item))) {
+      return PermissionTypes.FULL_READ;
+    }
+    // check read permissions
+    if (sharing.read.some(read => propertiesKeys.includes(read))) {
+      return PermissionTypes.READ;
+    }
+  }
+
+  return PermissionTypes.NONE;
 };
 
 /**
@@ -63,13 +63,13 @@ const getPermissionsType = (sharing, properties) => {
  * @param accountId
  */
 export const getContainer = (runtime, containerAddress, accountId) => {
-    return new Container(
-        runtime,
-        {
-            accountId,
-            address: containerAddress,
-        },
-    );
+  return new Container(
+    runtime,
+    {
+      accountId,
+      address: containerAddress,
+    },
+  );
 };
 
 /**
@@ -77,9 +77,9 @@ export const getContainer = (runtime, containerAddress, accountId) => {
  * @param Container container
  */
 export const getContainerProperties = async (container: Container) => {
-    const plugin = await container.toPlugin();
+  const plugin = await container.toPlugin();
 
-    return plugin.template.properties;
+  return plugin.template.properties;
 };
 
 /**
@@ -87,15 +87,15 @@ export const getContainerProperties = async (container: Container) => {
  * @param runtime current runtime
  */
 export const getContacts = async (runtime): Promise<ContactInterface[]> => {
-    delete runtime.profile.trees[runtime.profile.treeLabels.addressBook]; // why?
-    let addressBook = (await runtime.profile.getAddressBook()).profile;
+  delete runtime.profile.trees[runtime.profile.treeLabels.addressBook]; // why?
+  let addressBook = (await runtime.profile.getAddressBook()).profile;
 
-    return Object.keys(addressBook).map(key => {
-        return {
-            'label': addressBook[key].alias,
-            'value': key
-        };
-    });
+  return Object.keys(addressBook).map(key => {
+    return {
+      'label': addressBook[key].alias,
+      'value': key
+    };
+  });
 };
 
 
@@ -106,23 +106,23 @@ export const getContacts = async (runtime): Promise<ContactInterface[]> => {
  * @param accountId
  */
 export const getPermissions = async (runtime, containerAddress, accountId = runtime.activeAccount) => {
-    const container = getContainer(runtime, containerAddress, accountId);
-    const properties = await getContainerProperties(container);
-    const shareConfigs = await container.getContainerShareConfigs();
+  const container = getContainer(runtime, containerAddress, accountId);
+  const properties = await getContainerProperties(container);
+  const shareConfigs = await container.getContainerShareConfigs();
 
-    let configs =  shareConfigs.map(config => {
-        // the own account should not take into consideration
-        if (config.accountId === accountId) {
-             return null;
-        }
+  let configs =  shareConfigs.map(config => {
+    // the own account should not take into consideration
+    if (config.accountId === accountId) {
+       return null;
+    }
 
-        return {
-            accountId: config.accountId,
-            permissionType: getPermissionsType(config, properties)
-        };
-    });
+    return {
+      accountId: config.accountId,
+      permissionType: getPermissionsType(config, properties)
+    };
+  });
 
-    return configs.filter(config => config !== null);
+  return configs.filter(config => config !== null);
 };
 
 /**
@@ -130,7 +130,7 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
  * @param runtime
  */
 export const getProfilePermissions = async (runtime) => {
-    const profileAddress = runtime.profile.profileContract.options.address;
+  const profileAddress = runtime.profile.profileContract.options.address;
 
-    return getPermissions(runtime, profileAddress);
+  return getPermissions(runtime, profileAddress);
 };
