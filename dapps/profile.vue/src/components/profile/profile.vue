@@ -98,10 +98,7 @@
             </div>
           </template>
 
-          <div
-            :class="{
-              'd-none': verificationCount === 0
-            }">
+          <div :class="{ 'd-none': verificationCount === 0 }">
             <notary-verification
               ref="notaryVerifications"
               :address="address"
@@ -117,6 +114,7 @@
       type="default"
       class="light"
       :isOpen="$store.state.uiState.swipePanel.right"
+      :showBackdrop="true"
     >
       <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
     </evan-swipe-panel>
