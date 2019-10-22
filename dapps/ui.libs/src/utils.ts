@@ -74,8 +74,8 @@ export function deepEqual(a, b) {
     let dateA = a instanceof Date
       , dateB = b instanceof Date;
     if (dateA !== dateB) {
-      return false
-    };
+      return false;
+    }
 
     if (dateA && dateB) {
       return a.getTime() === b.getTime();

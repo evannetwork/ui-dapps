@@ -149,6 +149,6 @@ export async function resizeImage(dataUri: string, dimensions = { max_width: 100
         0, 0, canvas.width, canvas.height
       );
       canvas.toBlob((blob) => resolve(blob));
-    }
-  })
+    };
+  });
 }

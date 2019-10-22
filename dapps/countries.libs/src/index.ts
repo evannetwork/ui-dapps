@@ -21,6 +21,6 @@ import { System, getDomainName } from '@evan.network/ui-dapp-browser';
 
 import translations from './i18n/translations';
 import countries from './countries';
-export { countries, translations, }
+export { countries, translations, };
 
 System.map['@evan.network/ui-countries'] = `countries.libs.${ getDomainName() }!dapp-content`;
