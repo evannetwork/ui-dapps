@@ -67,8 +67,27 @@ const setupEvan = function(browser, customs) {
   return proxy;
 }
 
+/**
+ * A better `clearValue` for inputs having a more complex interaction.
+ * 
+ * @export
+ * @param {string} selector 
+ * @returns 
+ */
+function betterClearValue(selector) {
+  const { RIGHT_ARROW, BACK_SPACE } = client.Keys;
+  return client.getValue(selector, result => {
+    const chars = result.value.split('');
+    // Make sure we are at the end of the input
+    chars.forEach(() => client.setValue(selector, RIGHT_ARROW));
+    // Delete all the existing characters
+    chars.forEach(() => client.setValue(selector, BACK_SPACE));
+  });
+}
+
 module.exports = {
   backspaces,
+  betterClearValue,
   setupEvan,
   pauseHere: async () => {
     console.log('/******************************************************************************/');

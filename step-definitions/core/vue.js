@@ -2,18 +2,9 @@ import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/test-utils.js';
+import { buttonSelector } from '../../step-definitions/standard-ui/button';
 
 let loggedIn = false;
-const selectors = {
-  vueContinueNo: 'div.modal.fade.show > div > div > div.modal-footer > button.btn.btn-outline-secondary.btn-rounded',
-  vueFreeInput: '#useTextArea ~ label',
-  vueLogin1: '#sign-in',
-  vueLogin2: '#sign-in',
-  vuePassword: '#password',
-  vueRecoveryKey: '#mnemonicInput0',
-  vueSwitch: '.theme-evan',
-  vueUnlock: 'div.evan-steps.border-top.p-3 > div.pt-3.pb-3 > div > form > div.text-center > button',
-};
 
 Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
   const evan = setupEvan(client);
@@ -37,24 +28,20 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   });
 
   // vue, to define
-  await client.click(selectors.vueLogin1);
-  await client.waitForElementVisible(selectors.vueFreeInput, 10 * 1000);
-  await client.click(selectors.vueFreeInput);
-  await client.waitForElementVisible(selectors.vueRecoveryKey);
-  await client.setValue(selectors.vueRecoveryKey, [user.mnemonic]);
-  await client.waitForElementVisible(selectors.vueLogin2);
-  await client.click(selectors.vueLogin2);
-  await client.waitForElementVisible(selectors.vuePassword);
-  await client.setValue(selectors.vuePassword, [user.password]);
-  await client.pause(1000);
-  await client.click(selectors.vueUnlock);
-  await client.pause(3000);
-  const hasContinue = await new Promise((resolve) => {
-    client.elements('css selector', selectors.vueContinueNo, result => resolve(!!result.value.length) ); } );
-  if (hasContinue) {
-    await client.click(selectors.vueContinueNo);
+  const split = user.mnemonic.split(' ');
+  await client.click(`a[href*="#/dashboard.vue.evan/onboarding.vue.evan/sign-in"]`)
+  await client.waitForElementVisible('#mnemonicInput0', 10 * 1000);
+  for (let i = 0; i < split.length; i++) {
+    await client.setValue(`#mnemonicInput${ i }`, [ split[i] ]);
   }
+  await client.click('#sign-in');
+  await client.waitForElementVisible('#password');
+  await client.setValue('#password', [user.password]);
   await client.pause(1000);
+  client.useXpath();
+  await client.click(buttonSelector('Unlock'));
+  client.useCss();
+  await client.pause(3000);
 
   loggedIn = true;
 });

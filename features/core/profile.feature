@@ -43,8 +43,8 @@ Scenario: Switching from unspecified account to company account and fill the pro
     And Input field with label "Company" should be visible
     And Input field with label "Register Court" should be visible
     And Input field with label "Register" should be visible
-    And Input field with label "Registration number" should be visible
-    And Input field with label "Sales tax ID" should be visible
+    And Input field with label "Registration Number" should be visible
+    And Input field with label "Sales Tax ID" should be visible
   Then I want to see a text including "Contact"
     And Input field with label "Street and Number" should be visible
     And Input field with label "Postal Code" should be visible
@@ -58,8 +58,8 @@ Scenario: Switching from unspecified account to company account and fill the pro
     When I set Input field with label "Company" to "Test Company"
       And I set Input field with label "Register Court" to "Test Register Court"
       And I set Input field with label "Register" to "DE"
-      And I set Input field with label "Registration number" to "Test Registration number"
-      And I set Input field with label "Sales tax ID" to "Test Sales tax ID"
+      And I set Input field with label "Registration Number" to "Test Registration Number"
+      And I set Input field with label "Sales Tax ID" to "Test Sales Tax ID"
       Then the button "Save" should be "enabled"
       When I click on button "Save"
         Then the button "Save" should be "disabled"
@@ -70,8 +70,8 @@ Scenario: Switching from unspecified account to company account and fill the pro
         Then The value of the Input field with label "Company" should be "Test Company"
         And The value of the Input field with label "Register Court" should be "Test Register Court"
         And The value of the Input field with label "Register" should be "DE"
-        And The value of the Input field with label "Registration number" should be "Test Registration number"
-        And The value of the Input field with label "Sales tax ID" should be "Test Sales tax ID"
+        And The value of the Input field with label "Registration Number" should be "Test Registration Number"
+        And The value of the Input field with label "Sales Tax ID" should be "Test Sales Tax ID"
   When I click on input field with label "Street and Number"
     Then I want to see a button "Save"
     Then I want to see a button "Cancel"

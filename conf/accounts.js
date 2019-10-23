@@ -40,5 +40,9 @@ module.exports = {
       mnemonic: process.env.USER_ORGANIZATION_IDENT_MNEMONIC,
       password: process.env.USER_ORGANIZATION_IDENT_PASSWORD,
     },
+    organizationIdentificationNonCompany: {
+      mnemonic: process.env.USER_ORGANIZATION_IDENT_NON_COMPANY_MNEMONIC,
+      password: process.env.USER_ORGANIZATION_IDENT_NON_COMPANY_PASSWORD,
+    },
   },
 };

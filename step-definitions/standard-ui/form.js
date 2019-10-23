@@ -1,5 +1,6 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
+import { betterClearValue } from '../../test-utils/test-utils';
 
 const getSelector = (label, angular) => {
   if (!angular) {
@@ -35,7 +36,7 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
   const selector = getSelector(label, !!angular);
 
   await client.expect.element(selector).to.be.visible;
-  await client.clearValue(selector),
+  await betterClearValue(selector),
   await client.setValue(selector, content);
 
   client.useCss();
@@ -59,10 +60,21 @@ Then('The value of the Input field with label {string} should be {string}',
  */
 When('I set Input field with id {string} to {string}',
   async(id, content) => {
-    await client.expect.element(`#${ id }`).to.be.visible;
-    await client.clearValue(`#${ id }`),
-    await client.setValue(`#${ id }`, content);
     client.useCss();
+    await client.expect.element(`#${ id }`).to.be.visible;
+    await betterClearValue(`#${ id }`);
+    await client.setValue(`#${ id }`, content);
+  }
+);
+
+/**
+ * Looks for an input field with id and fills the values into the input field.
+ */
+When('I clear Input field with id {string}',
+  async(id) => {
+    client.useCss();
+    await client.expect.element(`#${ id }`).to.be.visible;
+    await betterClearValue(`#${ id }`);
   }
 );
 
@@ -77,6 +89,23 @@ When('I click on input field with label {string}',
     const selector = getSelector(label);
     await client.expect.element(selector).to.be.visible;
     await client.click(selector);
+
+    client.useCss();
+  }
+);
+
+
+/**
+ * Looks for an input field with sibling label having certain content and fills the values into the input field.
+ */
+When('I clear input field with label {string}',
+  async(label) => {
+    client.useXpath();
+
+    // select following or preceding input with label having text or having text in any tag inside label tag
+    const selector = getSelector(label);
+    await client.expect.element(selector).to.be.visible;
+    await betterClearValue(selector);
 
     client.useCss();
   }

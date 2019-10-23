@@ -82,3 +82,5 @@ Then('the button {string} should be {string}',
     client.useCss();
   }
 )
+
+module.exports = { buttonSelector, }
