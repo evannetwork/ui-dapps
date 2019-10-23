@@ -266,7 +266,6 @@ export default class SignUp extends mixins(EvanComponent) {
         const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
         const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
 
-
         const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
           bcc, accountId, vault.encryptionKey, privateKey);
 

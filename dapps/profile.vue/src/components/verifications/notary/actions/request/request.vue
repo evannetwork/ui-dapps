@@ -36,7 +36,7 @@
             v-if="status >= 0 && status < 3"
             :steps="steps"
             :active-step="status"
-            @stepChange="status = $event" />
+            @stepChange="status = $event; setupSummary()" />
 
           <!-- Verification start info -->
           <div v-if="status === -1">

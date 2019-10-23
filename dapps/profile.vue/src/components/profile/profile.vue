@@ -88,7 +88,7 @@
               icon="mdi mdi-plus"
               highlight="true"
               v-if="$store.state.isMyProfile"
-              :href="`${ dapp.fullUrl }/verifications/${ address }`"
+              :href="`${ dapp.fullUrl }/${ address }/verifications`"
               :title="'_profile.verifications.add' | translate"
             />
             <div class="mt-5 text-center" v-else>
