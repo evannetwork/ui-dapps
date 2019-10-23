@@ -33,7 +33,7 @@ if (coreRuntime.environment === 'testcore') {
 }
 
 // const agentUrl = 'http://192.168.100.56:8080'
-const agentUrl = 'https://agents.test.evan.network'
+const agentUrl = 'https://agents.test.evan.network';
 
 /**
  * Requests the request/close action to clear open requests, when the identification process has
@@ -184,4 +184,4 @@ export {
   issueVerification,
   notarySmartAgentAccountId,
   triggerRequestReload,
-}
+};

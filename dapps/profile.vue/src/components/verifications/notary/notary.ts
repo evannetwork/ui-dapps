@@ -118,7 +118,7 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
       this.reloading = false;
       clearInterval(this.newRequestsInterval);
       delete this.newRequestsInterval;
-    }
+    };
 
     // clear previously running intervals
     this.newRequestsInterval && finishedReloading();

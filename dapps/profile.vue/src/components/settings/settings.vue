@@ -47,10 +47,13 @@
       </div>
 
       <div class="white-box border-smooth rounded p-4 mt-3">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="devMode"
+        <div class="d-flex">
+          <evan-form-control-checkbox
+            class="mr-3" style="min-width: 0;"
+            id="devMode"
             v-model="devMode"
-            @change="devModeChanged()">
+            @input="devModeChanged()"
+          />
           <label class="form-check-label" for="devMode">
             {{  '_profile.settings.developer-mode' | translate }}
           </label>
@@ -58,11 +61,12 @@
 
         <template v-if="devMode">
           <div class="d-flex align-items-center mt-3">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="devDomainEnabled"
-                v-model="devDomainEnabled"
-                @change="devDomainChanged()">
-            </div>
+            <evan-form-control-checkbox
+              class="mr-3" style="min-width: 0;"
+              id="devDomainEnabled"
+              v-model="devDomainEnabled"
+              @input="devDomainChanged()"
+            />
             <div class="form-group w-100">
               <label for="devDomain">
                 {{ `_profile.settings.dev-domain.title` | translate }}

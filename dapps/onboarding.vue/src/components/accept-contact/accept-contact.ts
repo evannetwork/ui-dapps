@@ -116,7 +116,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
     window.location.hash = `/${ this.$route.query.origin || getDefaultDAppEns() }`;
-  };
+  }
 
   /**
    * Accept the contact invitation.

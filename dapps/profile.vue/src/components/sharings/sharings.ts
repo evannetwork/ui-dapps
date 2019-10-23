@@ -24,7 +24,6 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-
 import { getProfilePermissions } from './utils';
 
 interface SharedContactInterface {
@@ -34,7 +33,6 @@ interface SharedContactInterface {
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
-
     /**
      * current window width
      */
@@ -77,9 +75,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
         // toggle open state of swipe panel if neccessary
         const shouldClose = index > -1;
-        if (this.$store.state.uiState.swipePanel.right === shouldClose ) {
+        if (this.$store.state.uiState.swipePanel.right === shouldClose) {
             this.$store.commit('toggleSidePanel', 'right');
         }
+
+        // this.$refs.shareSidebar.show();
     }
 
     handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
@@ -92,9 +92,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
         window.addEventListener('resize', this.handleWindowResize);
         this.handleWindowResize();
 
-        const runtime = (<any>this).getRuntime();
-
-        this.sharedContacts = await getProfilePermissions(runtime);
+        this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
 
         this.loading = false;
     }

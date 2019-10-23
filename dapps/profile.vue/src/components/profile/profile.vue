@@ -44,7 +44,7 @@
             d-block p-3 position-relative
             bg-inverted rounded text-decoration-none"
             style="height: 166px"
-            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/wallet/${ $store.state.runtime.activeAccount }` : null"
+            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/${ $store.state.runtime.activeAccount }/wallet` : null"
             :class="{
               'evan-highlight': $store.state.isMyProfile
             }">
@@ -88,7 +88,7 @@
               icon="mdi mdi-plus"
               highlight="true"
               v-if="$store.state.isMyProfile"
-              :href="`${ dapp.fullUrl }/verifications/${ address }`"
+              :href="`${ dapp.fullUrl }/${ address }/verifications`"
               :title="'_profile.verifications.add' | translate"
             />
             <div class="mt-5 text-center" v-else>
@@ -109,16 +109,17 @@
       </div>
     </template>
     <evan-swipe-panel
-      ref="shareSidebar"
-      alignment="right"
-      type="default"
       class="light"
+      alignment="right"
+      id="sharing"
+      ref="shareSidebar"
+      showBackdrop="true"
+      type="default"
       :isOpen="$store.state.uiState.swipePanel.right"
       :showBackdrop="true"
     >
       <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
     </evan-swipe-panel>
-
   </div>
 </template>
 

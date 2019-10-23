@@ -25,9 +25,9 @@ const i18n: any = {
       "detail": "Profil",
       "logout": "Ausloggen",
       "settings": "Einstellungen",
+      "sharings": "Freigaben",
       "verifications": "Verifizierungen",
-      "wallet": "Wallet",
-      "sharings": "Freigaben"
+      "wallet": "Wallet"
     },
     "company": {
       "contact": {
@@ -161,9 +161,9 @@ const i18n: any = {
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.", 
-      "title": "Freigaben für Ihre Profildaten",
-      "no-data": "Bisher wurden keine Profildaten freigegeben"
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
+      "no-data": "Bisher wurden keine Profildaten freigegeben",
+      "title": "Freigaben für Ihre Profildaten"
     },
     "type": {
       "change": "Ändern",
@@ -185,14 +185,14 @@ const i18n: any = {
       "error-loading": "Beim Laden der Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "next": "Weiter",
       "notary": {
-        "account-id": "Account-ID",
+        "account-id": "Identität",
         "check-updates": "Warte auf Aktualisierung...",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
         "issue": {
           "accountId": {
-            "desc": "Account-ID für die die notarielle Bestätigung erstellt werden soll.",
-            "error": "Bitte geben Sie eine gültige Account ID an!",
-            "title": "Account-ID"
+            "desc": "Identität für die die notarielle Bestätigung erstellt werden soll.",
+            "error": "Bitte geben Sie eine gültige Addresse an!",
+            "title": "Identität"
           },
           "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Austellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
           "header": "Organisations-Verifikation ausstellen",
@@ -234,8 +234,8 @@ const i18n: any = {
           "download": "Kein Drucker verfügbar? Download als PDF Datei",
           "generate-answer": "Code generieren",
           "header": "Authentifizierung",
-          "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihr Account verifiziert.",
-          "next-step2": "Sie werden in Ihrer Account Mailbox darüber informiert.",
+          "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihre Identität verifiziert.",
+          "next-step2": "Sie werden in Ihrer Mailbox darüber informiert.",
           "pin": {
             "desc": "Die per Brief erhaltene, sechstellige PIN.",
             "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
@@ -250,8 +250,6 @@ const i18n: any = {
         },
         "print": "Drucken",
         "request": {
-          "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
-          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
           "contact": {
             "error": "Bitte geben Sie eine Kontaktperson an!",
             "label": "Ansprechpartner",
@@ -269,6 +267,7 @@ const i18n: any = {
             "placeholder": "Abteilung"
           },
           "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
           "header": "Notarielle Verifikation",
           "how": {
             "steps": {
@@ -288,10 +287,11 @@ const i18n: any = {
             "title": "Schritte"
           },
           "mail": {
-            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Evan-AccountID: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "body": "Hiermit beantrage Ich eine Notarielle Bestätigung für die folgenden Informationen: <ul><li>Identität: {organizationEvanId}</li><li>Handelsregisternummer: {organizationRegistrationNumber}</li><li>Organisation: {organizationName}</li><li>Kontakt: {organizationContact}</li><li>Anschrift: {organizationStreetAddress}</li><li>Stadt: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
+          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
@@ -303,15 +303,15 @@ const i18n: any = {
           "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
           "requested3": "Sie erhalten in Kürze vom Notar Post!",
           "requesting": "Notarielle Verifikation wird angefordert...",
-          "requesting-account": "Anfragender Account",
+          "requesting-account": "Anfragende Identität",
           "step": "Schritt",
           "who": {
-            "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihres Accounts anfordern.",
+            "description": "Als eingetragenes Unternehmen können Sie eine notarielle Verifikation Ihrer Identität anfordern.",
             "link": "Mehr erfahren",
             "title": "Voraussetzungen"
           },
           "why": {
-            "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Account-ID {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
+            "description": "Mit der notariellen Verifikation wird bestätigt, dass Ihr Unternehmen im Besitz der Identität {accountId} ist. Durch diese Bestätigung können Sie sich gegenüber Ihren Geschäftspartnern ausweisen und verifizieren, dass Transaktionen, Digitale Zwillinge und Smart Contracts von Ihnen stammen.",
             "link": "Mehr erfahren",
             "title": "Vorteile"
           }
@@ -344,11 +344,16 @@ const i18n: any = {
         "title": "Notarielle Verifikation",
         "verification": {
           "accept": "Annehmen",
+          "attachments": "Anhang",
+          "close-detail": "Schließen",
+          "created": "Erstellt",
           "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "organization": "Organisations-Verifikation",
           "organization-random": "Organisations-ID-Verifikation",
           "status": "Status",
-          "verified-by": "Verified by"
+          "topic": "Pfad",
+          "topic-desc": "Dieses Konto der Firma {companyName} wurde notariell beglaubigt. Damit wurde die Authentizität des Unternehmens und die Zuordnung zu diesem Konto bescheinigt.",
+          "verified-by": "Verifiziert durch"
         }
       },
       "reload": "Neu-laden",

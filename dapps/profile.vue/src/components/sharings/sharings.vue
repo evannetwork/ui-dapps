@@ -27,17 +27,16 @@ the following URL: https://evan.network/license/
           size="lg"
           type="icon-primary"
           icon="mdi mdi-plus"
-          @click="$store.commit('toggleSidePanel', 'right')"
+          @click="$store.commit('toggleSidePanel', 'shareSidebar')"
         />
 
         <evan-swipe-panel
-          ref="shareSidebar"
-          alignment="right"
-          type="default"
           class="light"
-          :isOpen="$store.state.uiState.swipePanel.right || windowWidth >= 1200"
-          @close="() => {$store.state.uiState.swipePanel.right && $store.commit('toggleSidePanel', 'right'); }"
+          alignment="right"
+          ref="shareSidebar"
+          id="shareSidebar"
           :showBackdrop="windowWidth < 1200"
+          :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
         >
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
