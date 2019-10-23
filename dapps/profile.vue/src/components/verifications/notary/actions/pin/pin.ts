@@ -168,7 +168,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
               reject('failed');
             }
           }, 1);
-        })
+        });
       };
 
       this._printIframe.onload = async () => {
@@ -176,7 +176,7 @@ export default class IdentNotaryPinComponent extends mixins(EvanComponent) {
           window.open(this.pdfUrl);
 
           this.printStatus = 'failed';
-        })
+        });
 
         if (this.printStatus === 'success') {
           this.status = nextStatus;

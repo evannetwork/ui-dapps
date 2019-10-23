@@ -29,59 +29,53 @@ import { getProfilePermissions } from './utils';
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
+  /**
+   * current window width
+   */
+  windowWidth = 0;
 
-    /**
-     * current window width
-     */
-    windowWidth = 0;
+  /**
+  * status flags
+  */
+  loading = true;
 
-    /**
-    * status flags
-    */
-    loading = true;
+  /**
+   * contacts who share the profile data with
+   */
+  sharedContacts = [];
 
-    /**
-     * contacts who share the profile data with
-     */
-    sharedContacts = [];
+  /**
+   * currently selected contact
+   */
+  selectedContact = null;
 
-    /**
-     * currently selected contact
-     */
-    selectedContact = null;
+  async created() {
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
 
-    handleWindowResize() {
-        this.windowWidth = window.innerWidth;
-    }
+    this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
 
-    handleSharedContactClick(item: Object, event: MouseEvent) {
-        event.stopPropagation();
-        this.selectedContact = this.selectedContact === item ? null : item;
+    this.loading = false;
+  }
 
-        // toggle open state of swipe panel if neccessary
-        if (this.$store.state.uiState.swipePanel.right === !this.selectedContact) {
-            this.$store.commit('toggleSidePanel', 'right');
-        }
-    }
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
 
-    handleRemoveSharedContact(item: Object) {
-        console.log('remove item from shared contacts', item);
-    }
+  handleWindowResize() {
+    this.windowWidth = window.innerWidth;
+  }
 
-    async created() {
-        window.addEventListener('resize', this.handleWindowResize);
-        this.handleWindowResize();
+  handleSharedContactClick(item: Object, event: MouseEvent) {
+    event.stopPropagation();
+    this.selectedContact = this.selectedContact === item ? null : item;
 
-        const runtime = (<any>this).getRuntime();
+    this.$refs.shareSidebar.show();
+  }
 
-        this.sharedContacts = await getProfilePermissions(runtime);
-
-        this.loading = false;
-    }
-
-    beforeDestroy() {
-        window.removeEventListener('resize', this.handleWindowResize);
-    }
+  handleRemoveSharedContact(item: Object) {
+    console.log('remove item from shared contacts', item);
+  }
 }
 
 export default ProfileSharingsComponent;

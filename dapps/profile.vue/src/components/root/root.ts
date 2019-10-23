@@ -38,7 +38,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Setup navigation structure
    */
   setNavEntries() {
-    const address = this.$route.params.address;
+    const address = this.$route.params.address || this.$store.state.runtime.activeAccount;
     const runtime = (<any>this).getRuntime();
 
     // is currently my profile opened?
@@ -56,7 +56,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     ]
     .map(entry => (entry ? {
       id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }${ address ? '/' + address : '' }`,
+      href: `${ (<any>this).dapp.fullUrl }/${ address }/${ entry.key }`,
       text: `_profile.breadcrumbs.${ entry.key.split('/')[0] }`,
       icon: entry.icon,
     } : null));

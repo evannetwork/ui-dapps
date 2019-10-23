@@ -27,7 +27,7 @@
       :i18nScope="'_profile.company.registration'"
       :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
       :title="'_profile.company.registration.title' | translate"
-      :handleShare="() => $store.commit('toggleSidePanel', 'right')"
+      :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
       @save="changeProfileData()">
     </evan-form>
   </div>

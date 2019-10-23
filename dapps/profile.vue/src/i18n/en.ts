@@ -25,9 +25,9 @@ const i18n: any = {
       "detail": "Profile",
       "logout": "Logout",
       "settings": "Settings",
+      "sharings": "Sharings",
       "verifications": "Verifications",
-      "wallet": "Wallet",
-      "sharings": "Sharings"
+      "wallet": "Wallet"
     },
     "company": {
       "contact": {
@@ -161,9 +161,9 @@ const i18n: any = {
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
     "sharings": {
-      "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.", 
-      "title": "Your Profile Data Sharings",
-      "no-data": "No profile data has been shared yet."
+      "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.",
+      "no-data": "No profile data has been shared yet.",
+      "title": "Your Profile Data Sharings"
     },
     "type": {
       "change": "Change",
@@ -185,14 +185,14 @@ const i18n: any = {
       "error-loading": "An error occurred while loading the data. Please try again.",
       "next": "Next",
       "notary": {
-        "account-id": "Account-ID",
+        "account-id": "Identity",
         "check-updates": "Checking for updates...",
-        "info": "Identify your account to be a trusted evan.network member",
+        "info": "Confirm your Identity to be a trusted evan.network member",
         "issue": {
           "accountId": {
-            "desc": "Account ID for which the notary confirmation should be created.",
-            "error": "Please enter a valid Account ID!",
-            "title": "Account-ID"
+            "desc": "Identity for which the notary confirmation should be created.",
+            "error": "Please enter a valid address!",
+            "title": "Identity"
           },
           "file-rename-hint": "The uploaded files will be renamed to a uniform naming scheme during the organization verification process.",
           "header": "Issue Organization Verification",
@@ -234,8 +234,8 @@ const i18n: any = {
           "download": "No option to print now? Download as PDF file.",
           "generate-answer": "Generate code",
           "header": "Authentication",
-          "next-step": "After successful verification by the notary, your account will be verified.",
-          "next-step2": "You will be informed of this in your account mailbox.",
+          "next-step": "After successful verification by the notary, your Identity will be verified.",
+          "next-step2": "You will be informed of this in your mailbox.",
           "pin": {
             "desc": "The six digits PIN you received within the letter.",
             "error": "Please enter the PIN to continue.",
@@ -250,12 +250,10 @@ const i18n: any = {
         },
         "print": "Print",
         "request": {
-          "fill-missing": "Please fill in all required company information and save it.",
-          "only-de": "Currently, notary verification is only supported for companies in Germany. Please select Germany as your company headquarters.",
           "contact": {
-            "placeholder": "Enter contact name",
             "error": "Please enter a contact person!",
-            "label": "Contact Person *"
+            "label": "Contact Person *",
+            "placeholder": "Enter contact name"
           },
           "costs": {
             "approve": "Yes, I request notarial verification, at the transaction cost of 200 EVE.",
@@ -264,11 +262,12 @@ const i18n: any = {
             "title": "Fees"
           },
           "department": {
-            "placeholder": "Department",
             "error": "Please insert the department of the company!",
-            "label": "Department"
+            "label": "Department",
+            "placeholder": "Department"
           },
           "description": "Please fill in the formular to request a notary verification of your organisation. This service is subject to a fee.",
+          "fill-missing": "Please fill in all required company information and save it.",
           "header": "Notary Verification",
           "how": {
             "steps": {
@@ -288,10 +287,11 @@ const i18n: any = {
             "title": "Steps"
           },
           "mail": {
-            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Evan-AccountID: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Identity: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Request for Notary Verification"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
+          "only-de": "Currently, notary verification is only supported for companies in Germany. Please select Germany as your company headquarters.",
           "postal-address": "Postal Address",
           "proof": {
             "description": "To complete the notary verification, you will receive a PIN by letter from a notary to attention of the following person.",
@@ -303,15 +303,15 @@ const i18n: any = {
           "requested2": "Your wallet has been charged 200 EVE.",
           "requested3": "You will receive a letter from a notary soon.",
           "requesting": "Notary verification is requested...",
-          "requesting-account": "Requesting account",
+          "requesting-account": "Requesting Identity",
           "step": "Step",
           "who": {
-            "description": "As a registered company you can request a notarial verification of your account.",
+            "description": "As a registered company you can request a notarial verification of your Identity.",
             "link": "Learn More",
             "title": "Prerequisites"
           },
           "why": {
-            "description": "The notarial verification confirms that your company has the account ID {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
+            "description": "The notarial verification confirms that your company has the Identity {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
             "link": "Learn More",
             "title": "Advantages"
           }
@@ -344,10 +344,15 @@ const i18n: any = {
         "title": "Notary Verification",
         "verification": {
           "accept": "Accept",
+          "attachments": "Attachments",
+          "close-detail": "Done",
+          "created": "Created",
           "incorrect": "The organization IDs issued to you were not created by the correct instance.",
           "organization": "Organization-Verification",
           "organization-random": "Organization-ID-Verification",
           "status": "Status",
+          "topic": "Path",
+          "topic-desc": "This Identity of the company {companyName} was notarially verified. This certified the authenticity of the company and the assignment to this account.",
           "verified-by": "Verifiziert durch"
         }
       },
