@@ -18,36 +18,66 @@ the following URL: https://evan.network/license/
 */
 
 <template>
-  <div class="profile-sharings container-wide">
-      <evan-loading v-if="loading" />
-      <template v-else>
-          
-        <h3 class="font-weight-bold">{{ '_profile.sharings.title' | translate }}</h3>
-        <p>{{ '_profile.sharings.desc' | translate }}</p>
+  <div class="profile-sharings">
+    <evan-loading v-if="loading" />
+    <template v-else>
+      <div class="container">
 
-        <template v-if="sharedContacts && sharedContacts.length > 0">
-            
-            <evan-base-list v-bind:data="sharedContacts" class="mt-5">
-                <template v-slot:item="{item}">
-                    <evan-shared-contact :item="item"/>
-                </template>
+        <evan-button
+          size="lg"
+          type="icon-primary"
+          icon="mdi mdi-plus"
+          @click="$store.commit('toggleSidePanel', 'right')"
+        />
+
+        <evan-swipe-panel
+          ref="shareSidebar"
+          alignment="right"
+          type="default"
+          class="light"
+          :isOpen="$store.state.uiState.swipePanel.right || windowWidth >= 1200"
+          @close="() => {$store.state.uiState.swipePanel.right && $store.commit('toggleSidePanel', 'right'); }"
+          :showBackdrop="windowWidth < 1200"
+        >
+          <evan-permissions-editor
+            :loadPermissions="loadPermissions"
+            :updatePermissions="updatePermissions"
+            :selectedContact="selectedContact ? selectedContact.accountId : null"
+          />
+        </evan-swipe-panel>
+
+        <div class="content">
+          <h3 class="font-weight-bold">{{ '_profile.sharings.title' | translate }}</h3>
+          <p>{{ '_profile.sharings.desc' | translate }}</p>
+
+          <template v-if="sharedContacts && sharedContacts.length > 0">
+            <evan-base-list :data="sharedContacts" :selectedItem="selectedContact" class="mt-5">
+              <template v-slot:item="{item}">
+                <evan-shared-contact 
+                :item="item" 
+                :handleRemove="() => handleRemoveSharedContact(item)"
+                @click.native="($event) => handleSharedContactClick(item, $event)" 
+                />
+              </template>
             </evan-base-list>
+          </template>
 
-        </template>
-        <template v-else>
-            
-            <div class="hint-no-sharings text-muted text-center">{{ '_profile.sharings.no-data' | translate }}</div>
-
-        </template>
-      </template>
+          <template v-else>
+            <div class="hint-no-sharings text-muted text-center">
+              {{ '_profile.sharings.no-data' | translate }}
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <style lang="scss" scoped>
-    @import "./sharings.scss";
+  @import "./sharings.scss";
 </style>
 
 <script lang="ts">
-    import Component from "./sharings";
-    export default Component;
+  import Component from "./sharings";
+  export default Component;
 </script>
