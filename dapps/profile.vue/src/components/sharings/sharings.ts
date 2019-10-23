@@ -24,13 +24,17 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import { getProfilePermissions } from './utils';
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
+
+    /**
+     * current window width
+     */
+    windowWidth = 0;
+
     /**
     * status flags
     */
@@ -42,14 +46,41 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     sharedContacts = [];
 
     /**
-    * Load the mail details
-    */
+     * currently selected contact
+     */
+    selectedContact = null;
+
+    handleWindowResize() {
+        this.windowWidth = window.innerWidth;
+    }
+
+    handleSharedContactClick(item: Object, event: MouseEvent) {
+        event.stopPropagation();
+        this.selectedContact = this.selectedContact === item ? null : item;
+
+        // toggle open state of swipe panel if neccessary
+        if (this.$store.state.uiState.swipePanel.right === !this.selectedContact) {
+            this.$store.commit('toggleSidePanel', 'right');
+        }
+    }
+
+    handleRemoveSharedContact(item: Object) {
+        console.log('remove item from shared contacts', item);
+    }
+
     async created() {
+        window.addEventListener('resize', this.handleWindowResize);
+        this.handleWindowResize();
+
         const runtime = (<any>this).getRuntime();
 
         this.sharedContacts = await getProfilePermissions(runtime);
 
         this.loading = false;
+    }
+
+    beforeDestroy() {
+        window.removeEventListener('resize', this.handleWindowResize);
     }
 }
 
