@@ -130,9 +130,8 @@ $sidebar-small-width: 64px;
 
       & > * {
         overflow-y: auto;
-
-        width: 360px;
-        min-width: 360px;
+        
+        min-width: 240px;
         height: 100%;
 
         &.w150 {
