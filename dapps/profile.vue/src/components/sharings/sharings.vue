@@ -27,7 +27,7 @@ the following URL: https://evan.network/license/
           size="lg"
           type="icon-primary"
           icon="mdi mdi-plus"
-          @click="windowWidth < 1200 && $store.commit('toggleSidePanel', 'right')"
+          @click="$store.commit('toggleSidePanel', 'right')"
         />
 
         <evan-swipe-panel
@@ -36,11 +36,13 @@ the following URL: https://evan.network/license/
           type="default"
           class="light"
           :isOpen="$store.state.uiState.swipePanel.right || windowWidth >= 1200"
+          @close="() => {$store.state.uiState.swipePanel.right && $store.commit('toggleSidePanel', 'right'); }"
           :showBackdrop="windowWidth < 1200"
         >
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
             :updatePermissions="updatePermissions"
+            :selectedContact="selectedContact ? selectedContact.accountId : null"
           />
         </evan-swipe-panel>
 
@@ -49,9 +51,13 @@ the following URL: https://evan.network/license/
           <p>{{ '_profile.sharings.desc' | translate }}</p>
 
           <template v-if="sharedContacts && sharedContacts.length > 0">
-            <evan-base-list v-bind:data="sharedContacts" class="mt-5">
+            <evan-base-list :data="sharedContacts" :selectedItem="selectedContact" class="mt-5">
               <template v-slot:item="{item}">
-                <evan-shared-contact :item="item" />
+                <evan-shared-contact 
+                :item="item" 
+                :handleRemove="() => handleRemoveSharedContact(item)"
+                @click.native="($event) => handleSharedContactClick(item, $event)" 
+                />
               </template>
             </evan-base-list>
           </template>
