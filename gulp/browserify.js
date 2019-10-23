@@ -167,4 +167,4 @@ gulp.task('browserify', async function(callback) {
   });
 });
 
-gulp.task('default', gulp.series([], ['browserify']));
+gulp.task('default', gulp.series([ 'browserify' ]));
