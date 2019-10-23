@@ -51,12 +51,16 @@ the following URL: https://evan.network/license/
           <p>{{ '_profile.sharings.desc' | translate }}</p>
 
           <template v-if="sharedContacts && sharedContacts.length > 0">
-            <evan-base-list :data="sharedContacts" :selectedItem="selectedContact" class="mt-5">
+            <evan-base-list 
+              class="mt-5"
+              :data="sharedContacts" 
+              :isSelectedCallback="(item) => this.selectedSharedContacts.includes(item.accountId)"
+              :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
+            >
               <template v-slot:item="{item}">
-                <evan-shared-contact 
-                :item="item" 
-                :handleRemove="() => handleRemoveSharedContact(item)"
-                @click.native="($event) => handleSharedContactClick(item, $event)" 
+                <evan-shared-contact
+                  :item="item" 
+                  :handleRemove="(event) => handleRemoveSharedContact(item, event)"
                 />
               </template>
             </evan-base-list>

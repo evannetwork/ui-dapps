@@ -27,6 +27,11 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import { getProfilePermissions } from './utils';
 
+interface SharedContactInterface {
+    accountId: String;
+    permissionType: String;
+}
+
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
 
@@ -46,25 +51,40 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     sharedContacts = [];
 
     /**
-     * currently selected contact
+     * selected shared contacts from vuex store
      */
-    selectedContact = null;
+    selectedSharedContacts = this.$store.state.uiState.profile.selectedSharedContacts;
 
     handleWindowResize() {
         this.windowWidth = window.innerWidth;
     }
 
-    handleSharedContactClick(item: Object, event: MouseEvent) {
+    handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
         event.stopPropagation();
-        this.selectedContact = this.selectedContact === item ? null : item;
+
+        let newSharedContacts = this.selectedSharedContacts;
+        const index = this.selectedSharedContacts.indexOf(item.accountId);
+
+        if (index > -1) {
+            // remove from array
+            newSharedContacts.splice(index, 1);
+        } else {
+            // push to array
+            newSharedContacts.push(item.accountId);
+        }
+
+        this.$store.commit('setSelectedSharedContacts', newSharedContacts);
 
         // toggle open state of swipe panel if neccessary
-        if (this.$store.state.uiState.swipePanel.right === !this.selectedContact) {
+        const shouldClose = index > -1;
+        if (this.$store.state.uiState.swipePanel.right === shouldClose ) {
             this.$store.commit('toggleSidePanel', 'right');
         }
     }
 
-    handleRemoveSharedContact(item: Object) {
+    handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
+        event.stopPropagation();
+
         console.log('remove item from shared contacts', item);
     }
 
