@@ -63,7 +63,7 @@ export default class ProfileTypeComponent extends mixins(EvanComponent) {
    * @param      {string}  type    The type
    */
   typeChanged(type: string) {
-    if (this.type !== 'unspecified') {
+    if (this.type !== 'user') {
       this.$emit('typeChanged', this.type);
       dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
         formData: {
