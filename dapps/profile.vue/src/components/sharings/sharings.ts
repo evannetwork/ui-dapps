@@ -47,7 +47,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   /**
    * currently selected contact
    */
-  selectedContact = null;
+  selectedSharedContacts = this.$store.uiState.profile.selectedSharedContacts;
 
   async created() {
     window.addEventListener('resize', this.handleWindowResize);
@@ -68,12 +68,29 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   handleSharedContactClick(item: Object, event: MouseEvent) {
     event.stopPropagation();
-    this.selectedContact = this.selectedContact === item ? null : item;
 
-    this.$refs.shareSidebar.show();
+    let newSharedContacts = this.selectedSharedContacts;
+    const index = newSharedContacts.indexOf(item.accountId);
+
+    if (index > -1) {
+        // remove from array
+        newSharedContacts.splice(index, 1);
+        this.$refs.shareSidebar.hide();
+    } else {
+        // push to array
+        newSharedContacts.push(item.accountId);
+        this.$refs.shareSidebar.show();
+    }
+
+    // toggle open state of swipe panel if neccessary
+    // const shouldClose = index > -1;
+    // if (this.$store.state.uiState.swipePanel.right === shouldClose) {
+    //     this.$store.commit('toggleSidePanel', 'right');
+    // }
   }
 
-  handleRemoveSharedContact(item: Object) {
+  handleRemoveSharedContact(item: Object, event: MouseEvent) {
+    event.stopPropagation();
     console.log('remove item from shared contacts', item);
   }
 }

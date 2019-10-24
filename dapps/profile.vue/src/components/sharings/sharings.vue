@@ -27,7 +27,7 @@ the following URL: https://evan.network/license/
           size="lg"
           type="icon-primary"
           icon="mdi mdi-plus"
-          @click="$store.commit('toggleSidePanel', 'shareSidebar')"
+          @click="$refs.shareSidebar.show();"
         />
 
         <evan-swipe-panel
@@ -37,11 +37,12 @@ the following URL: https://evan.network/license/
           id="shareSidebar"
           :showBackdrop="windowWidth < 1200"
           :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+          :isOpen="windowWidth >= 1200 || selectedSharedContacts.length > 0"
         >
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
             :updatePermissions="updatePermissions"
-            :selectedContact="selectedContact ? selectedContact.accountId : null"
+            :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
           />
         </evan-swipe-panel>
 
