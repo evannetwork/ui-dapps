@@ -66,20 +66,14 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
         if (index > -1) {
             // remove from array
             newSharedContacts.splice(index, 1);
+            this.$refs.shareSidebar.hide();
         } else {
             // push to array
             newSharedContacts.push(item.accountId);
+            this.$refs.shareSidebar.show();
         }
 
         this.$store.commit('setSelectedSharedContacts', newSharedContacts);
-
-        // toggle open state of swipe panel if neccessary
-        const shouldClose = index > -1;
-        if (this.$store.state.uiState.swipePanel.right === shouldClose) {
-            this.$store.commit('toggleSidePanel', 'right');
-        }
-
-        // this.$refs.shareSidebar.show();
     }
 
     handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
