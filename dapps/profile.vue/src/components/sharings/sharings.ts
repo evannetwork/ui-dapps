@@ -33,72 +33,53 @@ interface SharedContactInterface {
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
-    /**
-     * current window width
-     */
-    windowWidth = 0;
+  /**
+	 * current window width
+	 */
+  windowWidth = 0;
 
-    /**
-    * status flags
-    */
-    loading = true;
+  /**
+	* status flags
+	*/
+  loading = true;
 
-    /**
-     * contacts who share the profile data with
-     */
-    sharedContacts = [];
+  /**
+	 * contacts who share the profile data with
+	 */
+  sharedContacts = [];
 
-    /**
-     * computed property
-     * selected shared contacts from vuex store
-     */
-    get selectedSharedContacts() {
-        return (this as any).$store.state.uiState.profile.selectedSharedContacts;
-    }
+  /**
+	 * currently selected contact
+	 */
+  selectedContact = null;
 
-    set selectedSharedContacts(contacts) {
-        (this as any).$store.commit('setSelectedSharedContacts', contacts);
-    }
+  async created() {
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
 
-    handleWindowResize() {
-        this.windowWidth = window.innerWidth;
-    }
+    this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
 
-    handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
-        event.stopPropagation();
+    this.loading = false;
+  }
 
-        let newSharedContacts = this.selectedSharedContacts;
-        const index = newSharedContacts.indexOf(item.accountId);
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
 
-        if (index > -1) {
-            // remove from array
-            newSharedContacts.splice(index, 1);
-        } else {
-            // push to array
-            newSharedContacts.push(item.accountId);
-        }
+  handleWindowResize() {
+    this.windowWidth = window.innerWidth;
+  }
 
-        this.selectedSharedContacts = newSharedContacts;
-    }
+  handleSharedContactClick(item: Object, event: MouseEvent) {
+    event.stopPropagation();
+    this.selectedContact = this.selectedContact === item ? null : item;
 
-    handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
-        event.stopPropagation();
+    this.$refs.shareSidebar.show();
+  }
 
-        console.log('remove item from shared contacts', item);
-    }
-
-    async created() {
-        window.addEventListener('resize', this.handleWindowResize);
-        this.handleWindowResize();
-
-        this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
-
-        this.loading = false;
-    }
-
-    beforeDestroy() {
-        window.removeEventListener('resize', this.handleWindowResize);
-    }
+  handleRemoveSharedContact(item: Object) {
+    console.log('remove item from shared contacts', item);
+  }
 }
 
 export default ProfileSharingsComponent;
