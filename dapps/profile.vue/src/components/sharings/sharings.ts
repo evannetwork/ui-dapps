@@ -27,30 +27,30 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { getProfilePermissions } from './utils';
 
 interface SharedContactInterface {
-    accountId: String;
-    permissionType: String;
+  accountId: String;
+  permissionType: String;
 }
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
   /**
-	 * current window width
-	 */
+   * current window width
+   */
   windowWidth = 0;
 
   /**
-	* status flags
-	*/
+   * status flags
+   */
   loading = true;
 
   /**
-	 * contacts who share the profile data with
-	 */
+   * contacts who share the profile data with
+   */
   sharedContacts = [];
 
   /**
-	 * currently selected contact
-	 */
+   * currently selected contact
+   */
   selectedContact = null;
 
   async created() {
