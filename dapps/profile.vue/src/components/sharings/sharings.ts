@@ -27,8 +27,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { getProfilePermissions } from './utils';
 
 interface SharedContactInterface {
-    accountId: String;
-    permissionType: String;
+  accountId: String;
+  permissionType: String;
 }
 
 @Component({})
