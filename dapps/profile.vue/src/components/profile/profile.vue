@@ -27,7 +27,7 @@
           <evan-profile-preview
             ref="profilePreview"
             size="lg"
-            :editable="userInfo && userInfo.profileType !== 'unspecified'"
+            :editable="true"
             :address="address"
             @typeClick="typeSwitchModal()"
             @update="userInfo = $event"
@@ -59,7 +59,7 @@
 
       <div class="row" v-if="userInfo">
         <div class="col-xl-8 mt-3">
-          <div class="text-center" v-if="userInfo.profileType === 'unspecified'">
+          <div class="text-center" v-if="userInfo.profileType === 'user'">
             <template v-if="this.isLoading()">
               <evan-loading></evan-loading>
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
