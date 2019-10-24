@@ -27,7 +27,7 @@
           v-if="navEntries">
           <evan-dapp-wrapper-level-2
             v-if="$store.state.isMyProfile">
-              <evan-nav-list :entries="navEntries"></evan-nav-list>
+            <evan-nav-list :entries="navEntries"></evan-nav-list>
           </evan-dapp-wrapper-level-2>
           <div class="h-100 overflow-auto" style="flex: 1">
             <transition name="fade" mode="out-in">

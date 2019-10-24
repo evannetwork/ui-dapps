@@ -41,8 +41,8 @@ interface ContactFormInterface extends EvanForm {
 }
 
 interface OptionInterface {
-  value: string,
-  label: string
+  value: string;
+  label: string;
 }
 
 @Component({})
@@ -116,10 +116,11 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
     // setup registration form
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       country: {
-        value: contactData.country || this.countryOptions.filter(({ value }) => value === 'DE'),
+        value: contactData.country || this.countryOptions.filter(({ value }) => value === 'DE')[0],
         validate: function(vueInstance: CompanyContactForm) {
-          const value = this.value && this.value.value ? this.value.value : this.value;
-          return value && value.length !== 0 && vueInstance.restrictCountries.indexOf(value) !== -1;
+          // resubmit postalCode validation
+          vueInstance.contactForm.postalCode.value = vueInstance.contactForm.postalCode.value;
+          return this.value && this.value.length !== 0 && vueInstance.restrictCountries.indexOf(this.value) !== -1;
         },
         uiSpecs: {
           type: 'v-select',
@@ -137,7 +138,10 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
       postalCode: {
         value: contactData.postalCode || '',
         validate: function(vueInstance: CompanyContactForm) {
-          return /^\d{5}$/.test(this.value);
+          // check postcode validity only in germany
+          return vueInstance.contactForm.country.value === 'DE' ?
+            /^\d{5}$/.test(this.value) :
+            true;
         },
       },
       streetAndNumber: {
@@ -159,9 +163,6 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   async changeProfileData() {
     const formData = this.contactForm.getFormData();
 
-    // parse v-select value to correct resulting one
-    formData.country = formData.country.value ? formData.country.value : formData.country;
-
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
       formData,
       type: 'contact'
@@ -171,10 +172,10 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   getCountriesOption(): OptionInterface[] {
     return countries
       .map(isoCode => {
-        return { value: isoCode, label: (this as any).$t(`_countries.${isoCode}`), }
+        return { value: isoCode, label: (this as any).$t(`_countries.${isoCode}`), };
       })
       .sort((countryA, countryB) => {
-          return countryA.label - countryB.label
+          return countryA.label - countryB.label;
       });
   }
 }
