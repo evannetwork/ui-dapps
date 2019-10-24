@@ -24,8 +24,12 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-
 import { getProfilePermissions } from './utils';
+
+interface SharedContactInterface {
+  accountId: String;
+  permissionType: String;
+}
 
 @Component({})
 class ProfileSharingsComponent extends mixins(EvanComponent) {
@@ -35,8 +39,8 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   windowWidth = 0;
 
   /**
-  * status flags
-  */
+   * status flags
+   */
   loading = true;
 
   /**

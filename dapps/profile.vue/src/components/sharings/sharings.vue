@@ -27,7 +27,7 @@ the following URL: https://evan.network/license/
           size="lg"
           type="icon-primary"
           icon="mdi mdi-plus"
-          @click="$store.commit('toggleSidePanel', 'shareSidebar')"
+          @click="$refs.shareSidebar.show();"
         />
 
         <evan-swipe-panel
@@ -37,11 +37,13 @@ the following URL: https://evan.network/license/
           panelId="shareSidebar"
           :showBackdrop="windowWidth < 1200"
           :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+          :isOpen="windowWidth >= 1200 || selectedSharedContacts.length > 0"
+          @close="() => {selectedSharedContacts = []}"
         >
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
             :updatePermissions="updatePermissions"
-            :selectedContact="selectedContact ? selectedContact.accountId : null"
+            :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
           />
         </evan-swipe-panel>
 
@@ -50,12 +52,16 @@ the following URL: https://evan.network/license/
           <p>{{ '_profile.sharings.desc' | translate }}</p>
 
           <template v-if="sharedContacts && sharedContacts.length > 0">
-            <evan-base-list :data="sharedContacts" :selectedItem="selectedContact" class="mt-5">
+            <evan-base-list 
+              class="mt-5"
+              :data="sharedContacts" 
+              :isSelectedCallback="(item) => this.selectedSharedContacts.includes(item.accountId)"
+              :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
+            >
               <template v-slot:item="{item}">
                 <evan-shared-contact
-                  :item="item"
-                  :handleRemove="() => handleRemoveSharedContact(item)"
-                  @click.native="($event) => handleSharedContactClick(item, $event)" 
+                  :item="item" 
+                  :handleRemove="(event) => handleRemoveSharedContact(item, event)"
                 />
               </template>
             </evan-base-list>
