@@ -34,7 +34,7 @@ the following URL: https://evan.network/license/
           class="light"
           alignment="right"
           ref="shareSidebar"
-          id="shareSidebar"
+          panelId="shareSidebar"
           :showBackdrop="windowWidth < 1200"
           :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
           :isOpen="windowWidth >= 1200 || selectedSharedContacts.length > 0"
