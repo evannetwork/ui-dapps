@@ -97,7 +97,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Open the type switch modal
    */
   typeSwitchModal() {
-    if (this.userInfo.profileType === 'unspecified' && !this.isLoading()) {
+    if (this.userInfo.profileType === 'user' && !this.isLoading()) {
       (this as any).$refs.profileType.show();
     }
   }
