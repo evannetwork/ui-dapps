@@ -117,7 +117,11 @@
       type="default"
       :isOpen="$store.state.uiState.swipePanel.right"
     >
-      <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
+      <evan-permissions-editor
+        :loadPermissions="loadPermissions"
+        :updatePermissions="updatePermissions"
+        i18nScope="_profile.sharing"
+      />
     </evan-swipe-panel>
   </div>
 </template>
