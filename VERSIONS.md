@@ -4,6 +4,7 @@
 ### Features
 
 ### Fixes
+- update gulp build scripts to be compatible node 12
 
 ### Deprecations
 
