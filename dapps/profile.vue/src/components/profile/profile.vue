@@ -111,12 +111,11 @@
     <evan-swipe-panel
       class="light"
       alignment="right"
-      id="sharing"
+      panelId="sharing"
       ref="shareSidebar"
       showBackdrop="true"
       type="default"
       :isOpen="$store.state.uiState.swipePanel.right"
-      :showBackdrop="true"
     >
       <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
     </evan-swipe-panel>

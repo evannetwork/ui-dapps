@@ -48,7 +48,7 @@
     </evan-card>
     <evan-swipe-panel class="light"
       v-if="!loading"
-      :id="topic"
+      :panelId="topic"
       alignment="right"
       ref="verificationDetail"
       showBackdrop="true"
