@@ -112,9 +112,9 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
 
   let configs =  shareConfigs.map(config => {
     // the own account should not take into consideration
-    // if (config.accountId === accountId) {
-    //    return null;
-    // }
+    if (config.accountId === accountId) {
+       return null;
+    }
 
     return {
       accountId: config.accountId,

@@ -49,9 +49,16 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     sharedContacts = [];
 
     /**
+     * computed property
      * selected shared contacts from vuex store
      */
-    selectedSharedContacts = this.$store.state.uiState.profile.selectedSharedContacts;
+    get selectedSharedContacts() {
+        return (this as any).$store.state.uiState.profile.selectedSharedContacts;
+    }
+
+    set selectedSharedContacts(contacts) {
+        (this as any).$store.commit('setSelectedSharedContacts', contacts);
+    }
 
     handleWindowResize() {
         this.windowWidth = window.innerWidth;
@@ -61,19 +68,17 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
         event.stopPropagation();
 
         let newSharedContacts = this.selectedSharedContacts;
-        const index = this.selectedSharedContacts.indexOf(item.accountId);
+        const index = newSharedContacts.indexOf(item.accountId);
 
         if (index > -1) {
             // remove from array
             newSharedContacts.splice(index, 1);
-            this.$refs.shareSidebar.hide();
         } else {
             // push to array
             newSharedContacts.push(item.accountId);
-            this.$refs.shareSidebar.show();
         }
 
-        this.$store.commit('setSelectedSharedContacts', newSharedContacts);
+        this.selectedSharedContacts = newSharedContacts;
     }
 
     handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
