@@ -1,24 +1,4 @@
-/*
-  Copyright (C) 2018-present evan GmbH.
-
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Affero General Public License, version 3,
-  as published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Affero General Public License for more details.
-
-  You should have received a copy of the GNU Affero General Public License
-  along with this program. If not, see http://www.gnu.org/licenses/ or
-  write to the Free Software Foundation, Inc., 51 Franklin Street,
-  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
-  the following URL: https://evan.network/license/
-*/
-
-/* tslint:disable */
-const i18n: any = {
+{
   "_profile": {
     "breadcrumbs": {
       "addressbook.vue.evan": "Contacts",
@@ -159,6 +139,26 @@ const i18n: any = {
         "en": "English"
       },
       "reload-hint": "Please reload the application if you have changed the language settings."
+    },
+    "sharing": {
+      "permissionsTitle": "Update Profile Permissions",
+      "description": "To share your profile information with another contact, fill out the form below and click on “Update Sharing Options”",
+      "accountDetails": "Profil Details",
+      "contact": "Contact",
+      "registration": "Registration Data",
+      "accountName": "Name",
+      "picture": "Picture",
+      "profileType": "Profiltype",
+      "city": "City",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "streetAndNumber": "Street",
+      "website": "Website",
+      "company": "Company",
+      "court": "Court",
+      "register": "Register",
+      "registerNumber": "Registernumber",
+      "salesTaxID": "Sales-Tax ID"
     },
     "sharings": {
       "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.",
@@ -361,6 +361,3 @@ const i18n: any = {
     }
   }
 }
-/* tslint:enable */
-
-export default i18n;
