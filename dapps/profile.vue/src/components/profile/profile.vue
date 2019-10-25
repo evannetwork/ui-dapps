@@ -121,6 +121,7 @@
         :loadPermissions="loadPermissions"
         :updatePermissions="updatePermissions"
         i18nScope="_profile.sharing"
+        :sortFilters="['accountDetails', 'registration', 'contact']"
       />
     </evan-swipe-panel>
   </div>
