@@ -42,11 +42,13 @@ module.exports = function(
   name,
   dist,
   transpileOnly = false,
-  prodMode = process.env.NODE_ENV === 'production',
+  prodMode = false,
   externals = getExternals(),
 ) {
-  const packageJson = require(path.resolve(`${ dist }/../package.json`));
+  // enable prodMode, when node_env was set
+  prodMode = prodMode || process.env.NODE_ENV === 'production';
 
+  const packageJson = require(path.resolve(`${ dist }/../package.json`));
   const webpackConfig = {
     entry: './src/index.ts',
     externals: externals,
