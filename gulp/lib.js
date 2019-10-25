@@ -25,7 +25,7 @@ const scriptsFolder = process.cwd();
 const isDirectory = source => lstatSync(source).isDirectory();
 const getDirectories = source =>
   readdirSync(source).map(name => path.join(source, name)).filter(isDirectory);
-const nodeEnv = process.argv.indexOf('--prod') !== -1 ?'production' :
+const nodeEnv = process.argv.indexOf('--prod') !== -1 ? 'production' :
   process.env.NODE_ENV || 'development';
 
 /**
@@ -38,13 +38,17 @@ const nodeEnv = process.argv.indexOf('--prod') !== -1 ?'production' :
  */
 async function runExec(command, runtimeFolder, result = 'stdout') {
   return new Promise((resolve, reject) => {
-    exec(command, { cwd: runtimeFolder, NODE_ENV: nodeEnv }, async (err, stdout, stderr) => {
-      if (err) {
-        reject(result === 'stdout' ? stdout : stderr);
-      } else {
-        resolve(stdout);
+    exec(
+      `NODE_ENV=${ nodeEnv } ${ command }`,
+      { cwd: runtimeFolder, NODE_ENV: nodeEnv },
+      async (err, stdout, stderr) => {
+        if (err) {
+          reject(result === 'stdout' ? stdout : stderr);
+        } else {
+          resolve(stdout);
+        }
       }
-    });
+    );
   });
 }
 
