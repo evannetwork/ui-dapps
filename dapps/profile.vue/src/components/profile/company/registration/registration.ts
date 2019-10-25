@@ -58,9 +58,26 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   @Prop() onlyEdit;
 
   /**
+   * Display inputs with labels in oneline or stacked.
+   */
+  @Prop({
+    default: false,
+  }) stacked: boolean;
+
+  /**
+   * Render only the formular without adding the formular wrapper.
+   */
+  @Prop() onlyForm: boolean;
+
+  /**
+   * Data that should be passed into the component, so it should not be loaded from api.
+   */
+  @Prop() data: RegistrationFormInterface;
+
+  /**
    * Evan form instance for registration data.
    */
-  registrationForm: RegistrationFormInterface = null;
+  form: RegistrationFormInterface = null;
 
   /**
    * Watch for dispatcher updates
@@ -101,10 +118,11 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
    */
   async loadProfileData() {
     const runtime = (<any>this).getRuntime();
-    const registrationData = await ProfileMigrationLibrary.loadProfileData(runtime, 'registration') || {};
+    const registrationData = this.data ||
+      await ProfileMigrationLibrary.loadProfileData(runtime, 'registration') || {};
 
     // setup registration form
-    this.registrationForm = (<RegistrationFormInterface>new EvanForm(this, {
+    this.form = (<RegistrationFormInterface>new EvanForm(this, {
       company: {
         value: registrationData.company || '',
         validate: function(vueInstance: CompanyRegistrationForm) {
@@ -149,7 +167,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
 
   async changeProfileData() {
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      formData: this.registrationForm.getFormData(),
+      formData: this.form.getFormData(),
       type: 'registration'
     });
   }

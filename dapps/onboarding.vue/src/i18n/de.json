@@ -1,24 +1,4 @@
-/*
-  Copyright (C) 2018-present evan GmbH.
-
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Affero General Public License, version 3,
-  as published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Affero General Public License for more details.
-
-  You should have received a copy of the GNU Affero General Public License
-  along with this program. If not, see http://www.gnu.org/licenses/ or
-  write to the Free Software Foundation, Inc., 51 Franklin Street,
-  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
-  the following URL: https://evan.network/license/
-*/
-
-/* tslint:disable */
-export default {
+{
   "_onboarding": {
     "close": "Schließen",
     "continue": "Fortfahren",
@@ -60,16 +40,17 @@ export default {
     "sign-up": {
       "account-type": "Account-Typ",
       "account-types": {
-        "unspecified": "Unspezifiziert"
+        "company": "Unternehmen",
+        "user": "Nutzer"
       },
       "agree": "Akzeptieren",
       "alias": "Account-Name",
       "alias-help": "Der Account-Name ist nur für Sie sichtbar.",
       "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
+      "create-account": "Erstellen Sie Ihren Account",
       "create-profile": {
         "creation-time": "ca. {creationTime} / 30 Sekunden",
-        "desc": "Bitte bestätigen Sie das Captcha und die Nutzungsbedingungen.",
         "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha-Abfrage, um den Prozess abzuschließen.",
         "status-1": "Erstellung des Identitätsvertrages...",
         "status-2": "Verschlüsselung der Nutzerinformationen...",
@@ -78,7 +59,6 @@ export default {
         "status-5": "Identität wurde erfolgreich erstellt...",
         "title": "Account erstellen"
       },
-      "create-account": "Erstellen Sie Ihren Account",
       "desc": "Erstellen Sie Ihre evan.network Identität",
       "desc-long": "Generieren Sie Ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungsschlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
       "errors": {
@@ -93,27 +73,46 @@ export default {
       "get-mnemonic-desc": "Sichern Sie Ihren Wiederherstellungsschlüssel.",
       "get-mnemonic-desc-long": "Mit Hilfe dieses <b>Wiederherstellungsschlüssels</b> können Sie Ihre Identität auf <b>jedem beliebigen Gerät</b> wiederherstellen und auf Ihre Daten zugreifen. Bitte <b>sichern Sie sich diese 12 Wörter in einer möglichst sicheren Weise</b> (möglichst offline, z.B. auf einem Blatt Papier im Safe). <br><br> Wenn Sie diese 12 Wörter verlieren, <b>verlieren Sie den Zugang zu Ihren Geschäftspartnern, Verträgen und Profilinformationen.</b>",
       "headings": {
-        "header-0" : "Ihr Tor zur Digitalisierung",
         "desc-0": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-        "header-1": "Transparenz",
         "desc-1": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
+        "header-0": "Ihr Tor zur Digitalisierung",
+        "header-1": "Transparenz"
       },
+      "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
       "password0": "Passwort",
       "password1": "Passwortwiederholung",
-      "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
       "profile-create-error": {
         "desc": "Während der Profilerstellung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
         "ok": "ok",
         "title": "Fehler"
       },
-      "profile-informations": "Nutzerinformationen",
-      "profile-informations-desc": "Bitte wählen Sie einen Nutzernamen und ein Passwort.",
-      "select-account-type": "Bitte wählen Sie einen Account-Typ",
+      "profile-information": "Nutzerinformationen",
+      "profile-information-desc": "Bitte wählen Sie einen Nutzernamen und ein Passwort.",
+      "steps": {
+        "base": {
+          "desc": "Wählen Sie den Benutzertyp und geben Sie Ihren Kontonamen und Ihr Passwort an.",
+          "title": "Nutzerinformationen"
+        },
+        "company": {
+          "contact": {
+            "desc": "Geben Sie den Sitz Ihres Unternehmens an.",
+            "title": "Kontaktinformationen"
+          },
+          "registration": {
+            "desc": "Geben Sie die Unternehmens spezifischen Daten an. Wenn Sie nicht alle Daten direkt haben, können Sie sie auch später ausfüllen.",
+            "title": "Unternehmensdaten"
+          }
+        },
+        "captcha": {
+          "desc": "Bestätigen Sie das Captcha und die Nutzungsbedingungen.",
+          "title": "Nutzungsbedingungen"
+        }
+      },
+      "terms-accepted": "Ich stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
       "terms-of-use": {
         "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie Ihre reelle Interaktion.",
         "title": "Nutzungsbedingungen"
       },
-      "terms-accepted": "Ich stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
       "title": "Registrieren",
       "use-profile": "Weiter",
       "user-name": "Max Mustermann | Beispielfirma GmbH",
@@ -131,4 +130,3 @@ export default {
     }
   }
 }
-/* tslint:enable */

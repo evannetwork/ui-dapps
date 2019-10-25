@@ -4,6 +4,7 @@
     "dapp": {
       "dependencies": {
         "evancore.vue.libs": "^1.7.0",
+        "profile.vue": "^3.3.0",
         "recaptcha.vue.libs": "^1.1.1"
       },
       "entrypoint": "onboarding.vue.js",

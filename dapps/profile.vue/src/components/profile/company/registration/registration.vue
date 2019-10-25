@@ -23,11 +23,13 @@
       class="mt-2 mb-8"
       ref="form"
       :enableCancel="onlyEdit ? false : true"
-      :form="registrationForm"
-      :i18nScope="'_profile.company.registration'"
-      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :title="'_profile.company.registration.title' | translate"
+      :form="form"
       :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
+      :i18nScope="'_profile.company.registration'"
+      :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
+      :onlyForm="onlyForm"
+      :stacked="stacked"
+      :title="'_profile.company.registration.title' | translate"
       @save="changeProfileData()">
     </evan-form>
   </div>

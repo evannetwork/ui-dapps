@@ -21,6 +21,7 @@ import VueRecaptcha from 'vue-recaptcha';
 import MnemonicComponent from './mnemonic/mnemonic.vue';
 import AcceptContactComponent from './accept-contact/accept-contact.vue';
 import LayoutWrapperComponent from './layout-wrapper/layout-wrapper.vue';
+import * as profileDApp from '@evan.network/profile.vue';
 
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
@@ -37,6 +38,8 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
   { name: 'evan-onboarding-layout-wrapper', component: LayoutWrapperComponent },
   { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
+  { name: 'profile-company-contact', component: (profileDApp as any).CompanyContactForm, },
+  { name: 'profile-company-registration', component: (profileDApp as any).CompanyRegistrationForm, },
   { name: 'vue-recaptcha', component: VueRecaptcha },
 ];
 
