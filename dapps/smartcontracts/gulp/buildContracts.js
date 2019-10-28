@@ -17,6 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
+// reset to testcore, so the contracts will be build correctly
+process.env.NODE_ENV = 'testcore';
+
 const smartContractsCore = require('@evan.network/smart-contracts-core');
 const solc = new smartContractsCore.Solc({
   config: { compileContracts: false, },
