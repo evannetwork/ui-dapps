@@ -51,7 +51,6 @@ Scenario: Requesting Notary Verification for current user
   # When I click on close button of modal
   #   Then no modal should be visible
 
-@only
 Scenario: Requesting Notary Verification for current user with missing info
   Given I log in to evan.network using vue with organizationIdentification
   When I click on "Profile" in main menu
