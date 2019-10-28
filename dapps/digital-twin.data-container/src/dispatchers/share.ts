@@ -43,20 +43,54 @@ const updateSharings = (runtime, data) => {
     .shareProperties(data.shareConfigs);
 };
 
+/**
+ * unshare the properties for single container
+ *
+ * @param runtime
+ * @param data
+ */
+const updateUnsharings = (runtime, data) => {
+  return utils
+    .getContainer(runtime, data.address)
+    .unshareProperties(data.unshareConfigs);
+};
+
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
+    if (!data.unshareConfigs) {
+      return;
+    }
+
     // set the digital twin instance
     const runtime = utils.getRuntime(instance.runtime);
 
-    if (Array.isArray(data)) {
-      await Promise.all(data.map(async (shareData: any) => {
+    if (Array.isArray(data.unshareConfigs)) {
+      await Promise.all(data.unshareConfigs.map(async (unshareData: any) => {
+        await updateUnsharings(runtime, unshareData);
+      }));
+
+      return;
+    }
+
+    await updateUnsharings(runtime, data.unshareConfigs);
+  })
+  .step(async (instance: DispatcherInstance, data: any) => {
+    if (!data.shareConfigs) {
+      return;
+    }
+
+    // set the digital twin instance
+    const runtime = utils.getRuntime(instance.runtime);
+
+    if (Array.isArray(data.shareConfigs)) {
+      await Promise.all(data.shareConfigs.map(async (shareData: any) => {
         await updateSharings(runtime, shareData);
       }));
 
       return;
     }
 
-    await updateSharings(runtime, data);
+    await updateSharings(runtime, data.shareConfigs);
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {
