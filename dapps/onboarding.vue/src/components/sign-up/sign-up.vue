@@ -46,6 +46,9 @@
     </div>
     <evan-onboarding-layout-wrapper v-else :step="activeStep">
       <div>
+        <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
+          {{ '_onboarding.sign-up.create-account' | translate }}
+        </h4>
         <evan-steps class="text-center"
           minimal="true"
           :activeStep="activeStep"
