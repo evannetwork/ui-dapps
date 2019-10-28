@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="row h-100" style="display: grid">
+  <div class="row h-100">
     <div class="col-12 d-flex justify-content-center align-items-center"
       v-if="creatingProfile">
       <div>
