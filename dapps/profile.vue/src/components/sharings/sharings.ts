@@ -25,9 +25,12 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { getProfilePermissions } from './utils';
+import { updatePermissions } from './../profile/permissionsUtils';
+import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 
 interface SharedContactInterface {
-  accountId: String;
+  accountId: string;
+  sharedConfig: ContainerShareConfig[];
   permissionType: String;
 }
 
@@ -81,10 +84,18 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     this.selectedSharedContacts = newSharedContacts;
   }
 
-  handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
-    event.stopPropagation();
-
+  async handleRemoveSharedContact(item: SharedContactInterface) {
     console.log('remove item from shared contacts', item);
+    const runtime = (<any>this).getRuntime();
+
+    await updatePermissions(runtime, item.accountId, [], item.sharedConfig)
+      .then(() => {
+        // remove item from list
+        this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
+      })
+      .catch((e: Error) => {
+        console.log('Error writing permissions', e.message);
+      });
   }
 
   async created() {

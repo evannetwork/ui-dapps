@@ -118,10 +118,12 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
 
     return {
       accountId: config.accountId,
+      sharedConfig: config,
       permissionType: getPermissionsType(config, properties)
     };
   });
 
+  // return cleared array
   return configs.filter(config => config !== null);
 };
 
