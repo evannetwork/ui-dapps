@@ -306,11 +306,6 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
         }
       });
     });
-
-    // ensure that germany is selected
-    if (this.companyData.contact.country && this.companyData.contact.country !== 'DE') {
-      this.missingCompanyFields.contact.push('country');
-    }
   }
 
   /**

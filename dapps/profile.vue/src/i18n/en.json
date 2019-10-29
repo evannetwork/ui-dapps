@@ -42,7 +42,7 @@
         "company": {
           "error": "Please insert a company name!",
           "label": "Company",
-          "placeholder": "My Company"
+          "placeholder": "Evan GmbH"
         },
         "court": {
           "error": "Please enter the information of the registration authority!",
@@ -66,7 +66,7 @@
         "salesTaxID": {
           "error": "Please enter the sales tax ID",
           "label": "Sales Tax ID",
-          "placeholder": "Insert your sales tax ID..."
+          "placeholder": "DE999999999"
         },
         "title": "Registration"
       }

@@ -73,10 +73,46 @@
       "get-mnemonic-desc": "Save your Recovery Key securely.",
       "get-mnemonic-desc-long": "Using this <b>recovery key</b>, you can <b>restore your identity</b> on any device and access your data. Please <b>save these 12 words in a secure way</b> (preferably offline, e.g. on a piece of paper). <br><br> If you lose these 12 words, you will <b>lose access to your business partners, contracts and profile information</b>.",
       "headings": {
-        "desc-0": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-        "desc-1": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-        "header-0": "Your gateway to digitization",
-        "header-1": "Transparency"
+        "sign-in": {
+          "0": {
+            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+            "title": "Your gateway to digitization"
+          },
+          "1": {
+            "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+            "title": "Transparency"
+          }
+        },
+        "sign-up": {
+          "company": {
+            "0": {
+              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+              "title": "Your gateway to digitization"
+            },
+            "1": {
+              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+              "title": "Your gateway to digitization"
+            },
+            "2": {
+              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+              "title": "Your gateway to digitization"
+            },
+            "3": {
+              "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+              "title": "Transparency"
+            }
+          },
+          "user": {
+            "0": {
+              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+              "title": "Your gateway to digitization"
+            },
+            "1": {
+              "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+              "title": "Transparency"
+            }
+          }
+        }
       },
       "password-help": "The password must consist of at least 8 characters (upper/lower case and numbers).",
       "password0": "Password",
@@ -93,6 +129,10 @@
           "desc": "Select user type and specify your account name and password.",
           "title": "User information"
         },
+        "captcha": {
+          "desc": "Please confirm that you are not acting as automatic software and accept our terms of use.",
+          "title": "Terms of use"
+        },
         "company": {
           "contact": {
             "desc": "Specify organization location and contact information.",
@@ -102,10 +142,6 @@
             "desc": "Specify company name and registration information. If you have not all the data directly, you can also fill it later.",
             "title": "Company information"
           }
-        },
-        "captcha": {
-          "desc": "Please confirm that you are not acting as automatic software and accept our terms of use.",
-          "title": "Terms of use"
         }
       },
       "terms-accepted": "I agree with the <a href=\"https://evan.network/terms/\" target=\"_blank\" rel=\"noopener noreferrer\">Terms of Use</a>.",

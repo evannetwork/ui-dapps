@@ -31,7 +31,7 @@
           "label": "Straße und Hausnummer",
           "placeholder": "Meine Straße 15"
         },
-        "title": "Contact",
+        "title": "Kontaktdaten",
         "website": {
           "error": "Bitte geben Sie eine gültige URL ein!",
           "label": "Website",
@@ -42,7 +42,7 @@
         "company": {
           "error": "Bitte geben Sie einen Firmennamen ein!",
           "label": "Unternehmen",
-          "placeholder": "Mein Unternehmen"
+          "placeholder": "Evan GmbH"
         },
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
@@ -66,9 +66,9 @@
         "salesTaxID": {
           "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
           "label": "Umsatzsteuer-ID",
-          "placeholder": "Geben Sie Ihre Umsatzsteuer-ID ein..."
+          "placeholder": "DE999999999"
         },
-        "title": "Registrierung"
+        "title": "Registrierungsdaten"
       }
     },
     "current-balance": "Aktueller Kontostand",
