@@ -153,10 +153,6 @@ export default class SignUp extends mixins(EvanComponent) {
         value: false,
       }
     }));
-    // use this for debugging
-    // this.profileForm.alias.value = 'Test';
-    // this.profileForm.password0.value = 'Evan1234';
-    // this.profileForm.password1.value = 'Evan1234';
 
     // update onboarding progress steps
     this.setSteps();
