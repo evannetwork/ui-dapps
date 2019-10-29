@@ -24,11 +24,18 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 import routes from './routes';
+// import components
 import components from './components/registry';
+import CompanyContactForm from './components/profile/company/contact/contact.vue';
+import CompanyRegistrationForm from './components/profile/company/registration/registration.vue';
 
 export * from './components/registry';
 export * from './dispatchers/registry';
-export { translations };
+export { translations, CompanyContactForm, CompanyRegistrationForm };
+
+
+dappBrowser.System.map['@evan.network/profile.vue'] =
+  `profile.vue.${ getDomainName() }!dapp-content`;
  
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

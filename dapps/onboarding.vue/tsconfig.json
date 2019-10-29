@@ -10,6 +10,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "outDir": "./built/",
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,

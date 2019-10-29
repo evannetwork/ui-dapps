@@ -17,8 +17,15 @@
   the following URL: https://evan.network/license/
 */
 
-import de from './de';
-import en from './en';
+import de from './de.json';
+import en from './en.json';
+
+// add profile translations for profile specific forms
+import * as profileDApp from '@evan.network/profile.vue';
+import * as countriesDApp from '@evan.network/ui-countries';
 
 // map all langugages
-export default { de, en };
+export default {
+  de: { ...de, ...(profileDApp as any).translations.de, ...countriesDApp.translations.de },
+  en: { ...en, ...(profileDApp as any).translations.en, ...countriesDApp.translations.en },
+};

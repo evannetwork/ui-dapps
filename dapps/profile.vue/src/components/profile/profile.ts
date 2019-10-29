@@ -133,7 +133,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     return allPermissions[user];
   }
 
-
   /**
    * Mock: will be replaced by permissions update function. TODO
    */

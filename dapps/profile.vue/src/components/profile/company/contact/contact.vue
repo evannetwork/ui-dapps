@@ -23,11 +23,13 @@
       class="mt-2 mb-8"
       ref="form"
       :enableCancel="onlyEdit ? false : true"
-      :form="contactForm"
-      :i18nScope="'_profile.company.contact'"
-      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :title="'_profile.company.contact.title' | translate"
+      :form="form"
       :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
+      :i18nScope="'_profile.company.contact'"
+      :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
+      :onlyForm="onlyForm"
+      :stacked="stacked"
+      :title="'_profile.company.contact.title' | translate"
       @save="changeProfileData()">
     </evan-form>
   </div>
