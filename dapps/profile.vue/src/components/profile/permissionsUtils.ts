@@ -282,28 +282,35 @@ export const updatePermissions = (runtime, accountId: string, containerPermissio
           accountId
         );
 
+        const dataSharing = {
+          address: containerAddress,
+          shareConfigs,
+          bMailContent: false
+        };
+
+        containerConfigs.push(dataSharing);
+      });
+
+      Object.keys(oldContainerPermissions).forEach( (containerAddress: string) => {
         const unshareConfigs = createUnshareConfig(
-          containerPermissions[containerAddress].permissinos,
-          oldContainerPermissions[containerAddress].permissinos,
+          containerPermissions[containerAddress].permissions,
+          oldContainerPermissions[containerAddress].permissions,
           accountId
         );
 
         const dataSharing = {
           address: containerAddress,
-          shareConfigs,
           unshareConfigs,
           bMailContent: false
         };
 
-
         containerConfigs.push(dataSharing);
-
       });
-    } catch (e) {
-      reject (e);
-    }
 
-    shareDispatcher.start(runtime, containerConfigs);
+      shareDispatcher.start(runtime, containerConfigs);
+    } catch (e) {
+      reject(e);
+    }
 
     resolve();
   });

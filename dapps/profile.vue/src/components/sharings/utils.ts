@@ -19,36 +19,38 @@ the following URL: https://evan.network/license/
 
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 import { Container } from '@evan.network/api-blockchain-core';
+import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 import * as PermissionTypes from './permission-types';
+import { async } from 'q';
 
 /**
  * return generell types of permissions
  *
- * @param sharing
+ * @param permissions
  * @param properties
  */
-const getPermissionsType = (sharing, properties) => {
+const getPermissionsType = (permissions, properties) => {
   const propertiesKeys = Object.keys(properties);
 
   // check write permissions
-  if (sharing.readWrite) {
+  if (permissions.readWrite) {
     // check full access
-    if (sharing.readWrite.every(item => propertiesKeys.includes(item))) {
+    if (propertiesKeys.every(item => permissions.readWrite.includes(item))) {
       return PermissionTypes.FULL_ACCESS;
     }
     // check read and write permissions
-    if (sharing.readWrite.some(read => propertiesKeys.includes(read))) {
+    if (propertiesKeys.some(read => permissions.readWrite.includes(read))) {
       return PermissionTypes.READ_WRITE;
     }
   }
 
-  if (sharing.read) {
+  if (permissions.read) {
     // check full read
-    if (sharing.read && sharing.read.every(item => propertiesKeys.includes(item))) {
+    if (propertiesKeys.every(item => permissions.read.includes(item))) {
       return PermissionTypes.FULL_READ;
     }
     // check read permissions
-    if (sharing.read.some(read => propertiesKeys.includes(read))) {
+    if (propertiesKeys.some(read => permissions.read.includes(read))) {
       return PermissionTypes.READ;
     }
   }
@@ -135,4 +137,28 @@ export const getProfilePermissions = async (runtime) => {
   const profileAddress = runtime.profile.profileContract.options.address;
 
   return getPermissions(runtime, profileAddress);
+};
+
+/**
+ * remove all permissions of share configs containers.
+ *
+ * @param runtime: bcc.runtime
+ * @param shareConfigs: any - the permissions object
+ */
+export const removeAllPermissions = (runtime, shareConfigs) => {
+  return new Promise((resolve, reject) => {
+    try {
+        const dataSharing = {
+          address: runtime.profile.profileContract.options.address,
+          unshareConfigs: [shareConfigs],
+          bMailContent: false
+        };
+
+        shareDispatcher.start(runtime, [dataSharing]);
+    } catch (e) {
+      reject(e);
+    }
+
+    resolve();
+  });
 };

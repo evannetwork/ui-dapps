@@ -42,6 +42,7 @@ the following URL: https://evan.network/license/
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
             :updatePermissions="updatePermissions"
+            :sortFilters="['accountDetails', 'registration', 'contact']"
             :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
           />
         </evan-swipe-panel>
@@ -60,7 +61,7 @@ the following URL: https://evan.network/license/
               <template v-slot:item="{item}">
                 <evan-shared-contact
                   :item="item" 
-                  :handleRemove="(event) => handleRemoveSharedContact(item, event)"
+                  :removeCallback="() => handleRemoveSharedContact(item)"
                 />
               </template>
             </evan-base-list>

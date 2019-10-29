@@ -103,6 +103,18 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * computed property
+   * selected shared contacts from vuex store
+   */
+  get selectedSharedContacts() {
+    return (this as any).$store.state.uiState.profile.selectedSharedContacts;
+  }
+
+  set selectedSharedContacts(contacts) {
+    (this as any).$store.commit('setSelectedSharedContacts', contacts);
+  }
+
+  /**
    * Save changed user information
    *
    * @param      {any}  userInfo  latest user informatione

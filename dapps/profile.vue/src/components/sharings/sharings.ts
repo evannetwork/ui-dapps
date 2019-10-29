@@ -24,8 +24,8 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { getProfilePermissions } from './utils';
-import { updatePermissions } from './../profile/permissionsUtils';
+import { getProfilePermissions, removeAllPermissions } from './utils';
+import { getProfilePermissionDetails, updatePermissions } from './../profile/permissionsUtils';
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 
 interface SharedContactInterface {
@@ -70,28 +70,35 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
     event.stopPropagation();
 
-    let newSharedContacts = this.selectedSharedContacts;
-    const index = newSharedContacts.indexOf(item.accountId);
+    const index = this.selectedSharedContacts.indexOf(item.accountId);
 
-    if (index > -1) {
-      // remove from array
-      newSharedContacts.splice(index, 1);
-    } else {
-      // push to array
-      newSharedContacts.push(item.accountId);
-    }
+    // at first allow one selection only
+    this.selectedSharedContacts = index > -1 ? [] : [item.accountId];
 
-    this.selectedSharedContacts = newSharedContacts;
+    // let newSharedContacts = this.selectedSharedContacts;
+    // if (index > -1) {
+    //   // remove from array
+    //   newSharedContacts.splice(index, 1);
+    // } else {
+    //   // push to array
+    //   newSharedContacts.push(item.accountId);
+    // }
+
+    // this.selectedSharedContacts = newSharedContacts;
   }
 
   async handleRemoveSharedContact(item: SharedContactInterface) {
-    console.log('remove item from shared contacts', item);
     const runtime = (<any>this).getRuntime();
 
-    await updatePermissions(runtime, item.accountId, [], item.sharedConfig)
+    await removeAllPermissions(runtime, item.sharedConfig)
       .then(() => {
         // remove item from list
-        this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
+        this.sharedContacts = this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
+        // remove from selected shared contacts
+        const index = this.selectedSharedContacts.indexOf(item.accountId);
+        if (index > -1) {
+          this.selectedSharedContacts.splice(index, 1);
+        }
       })
       .catch((e: Error) => {
         console.log('Error writing permissions', e.message);
@@ -127,6 +134,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
     return allPermissions[user];
   }
+
+  /**
+   * Mock: will be replaced by permissions update function. TODO
+   */
+  updatePermissions = updatePermissions;
 }
 
 export default ProfileSharingsComponent;
