@@ -49,7 +49,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
     And Input field with label "Street and Number" should be visible
     And Input field with label "Postal Code" should be visible
     And Input field with label "City" should be visible
-    And Input field with label "Homepage" should be visible
+    And Input field with label "Website" should be visible
   When I click on input field with label "Company"
     Then I want to see a button "Save"
     Then I want to see a button "Cancel"
@@ -80,7 +80,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
     When I set Input field with label "Street and Number" to "Test Street 16"
       And I set Input field with label "Postal Code" to "99817"
       And I set Input field with label "City" to "Test City"
-      And I set Input field with label "Homepage" to "https://evan.network"
+      And I set Input field with label "Website" to "https://evan.network"
       Then the button "Save" should be "enabled"
       When I click on button "Save"
         Then the button "Save" should be "disabled"
@@ -91,7 +91,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
         Then The value of the Input field with label "Street and Number" should be "Test Street 16"
           And The value of the Input field with label "Postal Code" should be "99817"
           And The value of the Input field with label "City" should be "Test City"
-          And The value of the Input field with label "Homepage" should be "https://evan.network"
+          And The value of the Input field with label "Website" should be "https://evan.network"
 
 Scenario: Switching from unspecified account to iot device account and fill the profile information
   When I click on button "Specify Account Type"
