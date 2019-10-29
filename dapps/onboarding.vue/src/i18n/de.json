@@ -75,7 +75,7 @@
       "headings": {
         "desc-0": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
         "desc-1": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-        "header-0": "Ihr Tor zur Digitalisierung",
+        "header-0": "Ihr Digitalisierungsgateway",
         "header-1": "Transparenz"
       },
       "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
@@ -99,7 +99,7 @@
             "title": "Kontaktinformationen"
           },
           "registration": {
-            "desc": "Geben Sie die Unternehmens spezifischen Daten an. Wenn Sie nicht alle Daten direkt haben, können Sie sie auch später ausfüllen.",
+            "desc": "Geben Sie die unternehmensspezifischen Daten an. Wenn Sie nicht alle Daten direkt zur Hand haben, können Sie diese auch später ausfüllen.",
             "title": "Unternehmensdaten"
           }
         },
