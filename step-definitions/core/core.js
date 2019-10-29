@@ -21,6 +21,15 @@ When(/^I click the element with class "([^"]+)"$/,
   }
 );
 
+When('I click the element with role {string}',
+  async (role) => {
+    const evan = setupEvan(client);
+
+    await client.waitForElementPresent(`[role]="${role}"`, 10 * 1000);
+    await client.click(`[role="${value}"]`);
+  }
+);
+
 Then(/^I want to wait "([^"]+)"s$/,
   async (timeout) => {
     await client.pause(parseInt(timeout * 1000));
