@@ -90,7 +90,7 @@
       "profile-information-desc": "Bitte wählen Sie einen Nutzernamen und ein Passwort.",
       "steps": {
         "base": {
-          "desc": "Wählen Sie den Benutzertyp und geben Sie Ihren Kontonamen und Ihr Passwort an.",
+          "desc": "Wählen Sie den Benutzertyp und geben Sie Ihren Account-Namen und Ihr Passwort an.",
           "title": "Nutzerinformationen"
         },
         "company": {
