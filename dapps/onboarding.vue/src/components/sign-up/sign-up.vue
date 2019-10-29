@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="row h-100" style="min-height:700px">
+  <div class="row h-100">
     <div class="col-12 d-flex justify-content-center align-items-center"
       v-if="creatingProfile">
       <div>
@@ -45,23 +45,19 @@
       </div>
     </div>
     <evan-onboarding-layout-wrapper v-else :step="activeStep">
-      <div class="evan-steps">
+      <div>
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.create-account' | translate }}
         </h4>
-        <div class="evan-step-header-sm text-center">
-          <button class="btn"
-            v-for="(step, index) of steps"
-            :class="{ 'active': activeStep === index, }"
-            :disabled="step.disabled(this)"
-            @click="activeStep = index">
-            <span class="stepper-circle">
-            </span>
-          </button>
-        </div>
-        <div class="step" v-if="activeStep === 0">
+        <evan-steps class="text-center"
+          minimal="true"
+          :activeStep="activeStep"
+          :steps="steps"
+          @stepChange="activeStep = $event"
+        />
+        <div v-if="activeStep === 0">
           <p class="text-center mt-3 mb-4">
-            {{ '_onboarding.sign-up.select-account-type' | translate }}
+            {{ '_onboarding.sign-up.steps.base.desc' | translate }}
           </p>
 
           <form v-on:submit.prevent="useProfile">
@@ -74,8 +70,10 @@
                 :placeholder="'_onboarding.sign-up.account-type' | translate"
                 v-model="profileForm.accountType.value"
                 :class="{ 'is-invalid' : profileForm.accountType.error }"
-                @blur="profileForm.accountType.setDirty()">
-                <option value="unspecified">{{ '_onboarding.sign-up.account-types.unspecified' | translate }}</option>
+                @blur="profileForm.accountType.setDirty()"
+                @change="setSteps()">
+                <option value="user">{{ '_onboarding.sign-up.account-types.user' | translate }}</option>
+                <option value="company">{{ '_onboarding.sign-up.account-types.company' | translate }}</option>
               </select>
             </div>
 
@@ -114,53 +112,66 @@
                 {{ profileForm[`password${ index }`].error | translate }}
               </div>
             </div>
-
-            <div class="text-center mt-5">
-              <button type="submit" class="btn  btn-primary btn-block"
-                :disabled="!profileForm.isValid"
-                @click="activeStep = 1">
-                {{ '_onboarding.continue' | translate }}
-              </button>
-            </div>
           </form>
-
-          <p class="text-center mt-5" v-html="$t(`_onboarding.sign-up.already-signed-up`)"></p>
         </div>
-        <div class="step" v-if="activeStep === 1">
-          <template v-if="!creatingProfile">
-            <p class="text-center mt-4 mb-4">
-              {{ '_onboarding.sign-up.create-profile.desc' | translate }}
-            </p>
-            <div class="d-flex justify-content-center mb-3">
-              <vue-recaptcha id="evan-recaptcha"
-                v-if="!initialzing"
-                ref="recaptcha"
-                :sitekey="recaptchaId"
-                theme="light"
-                @verify="onCaptchaVerified"
-                @expired="onCaptchaExpired">
-              </vue-recaptcha>
-            </div>
+        <div v-if="profileForm.accountType.value === 'company'">
+          <p class="text-center mt-3 mb-4" v-if="activeStep === 1">
+            {{ '_onboarding.sign-up.steps.company.registration.desc' | translate }}
+          </p>
+          <p class="text-center mt-3 mb-4" v-if="activeStep === 2">
+            {{ '_onboarding.sign-up.steps.company.contact.desc' | translate }}
+          </p>
 
-            <div class="form-group text-center">
-              <input type="checkbox" required
-                id="termsAccepted" ref="termsAccepted"
-                v-model="profileForm.termsAccepted.value"
-                :class="{ 'is-invalid' : profileForm.termsAccepted.error }"
-                @blur="profileForm.termsAccepted.setDirty()">
-              <label
-                for="termsAccepted"
-                class="ml-3"
-                v-html="$t(`_onboarding.sign-up.terms-accepted`)">
-              </label>
-              <div class="invalid-feedback">
-                {{ '_onboarding.sign-up.errors.terms-accepted' | translate }}
-              </div>
-            </div>
-          </template>
+          <!-- don't hide them, so formular validity checks will be done correctly -->
+          <profile-company-registration
+            ref="companyRegistration"
+            onlyForm="true"
+            stacked="true"
+            :address="address"
+            :class="{ 'd-none': activeStep !== 1 }"
+            :data="userData.registration || { }">
+          </profile-company-registration>
+          <profile-company-contact
+            ref="companyContact"
+            onlyForm="true"
+            stacked="true"
+            :address="address"
+            :class="{ 'd-none': activeStep !== 2 }"
+            :data="userData.contact || { }">
+          </profile-company-contact>
+        </div>
+        <div v-if="activeStep === (steps.length - 1)">
+          <p class="text-center mt-4 mb-4">
+            {{ '_onboarding.sign-up.steps.captcha.desc' | translate }}
+          </p>
+          <div class="d-flex justify-content-center mb-3">
+            <vue-recaptcha id="evan-recaptcha"
+              v-if="!initialzing"
+              ref="recaptcha"
+              :sitekey="recaptchaId"
+              theme="light"
+              @verify="onCaptchaVerified"
+              @expired="onCaptchaExpired">
+            </vue-recaptcha>
+          </div>
 
-          <div class="text-center"
-            v-if="!creatingProfile">
+          <div class="form-group text-center">
+            <input type="checkbox" required
+              id="termsAccepted" ref="termsAccepted"
+              v-model="profileForm.termsAccepted.value"
+              :class="{ 'is-invalid' : profileForm.termsAccepted.error }"
+              @blur="profileForm.termsAccepted.setDirty()">
+            <label
+              for="termsAccepted"
+              class="ml-3"
+              v-html="$t(`_onboarding.sign-up.terms-accepted`)">
+            </label>
+            <div class="invalid-feedback">
+              {{ '_onboarding.sign-up.errors.terms-accepted' | translate }}
+            </div>
+          </div>
+
+          <div class="text-center">
             <button type="button" class="btn  btn-primary btn-block"
               :disabled="!recaptchaToken || !profileForm.termsAccepted.value"
               @click="createProfile()">
@@ -168,7 +179,17 @@
             </button>
           </div>
         </div>
-        <div class="step" v-if="activeStep === 3">
+        <div class="text-center mt-5" v-else>
+          <button type="submit" class="btn  btn-primary btn-block"
+            :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
+            @click="activeStep++">
+            {{ '_onboarding.continue' | translate }}
+          </button>
+
+          <p class="text-center mt-5" v-html="$t(`_onboarding.sign-up.already-signed-up`)"></p>
+        </div>
+
+        <div v-if="onboardedDialog">
           <h5 class="text-center mt-4 mb-4">
             {{ '_onboarding.sign-up.welcome-desc' | translate }}
           </h5>

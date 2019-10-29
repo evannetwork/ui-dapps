@@ -19,7 +19,6 @@
 
 import de from './de';
 import en from './en';
-import * as countries from '@evan.network/ui-countries';
 import { translations } from '@evan.network/ui-countries';
 
 // map all langugages

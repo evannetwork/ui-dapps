@@ -6,6 +6,9 @@
   - add sharing for profile categories
   - use correct route handling
   - add verification detail side panel
+  - make company form data components usable from extern
+- `onboarding.vue` (v3.2.0)
+  - add company account type creation
 
 ### Fixes
 - update gulp build scripts to be compatible node 12

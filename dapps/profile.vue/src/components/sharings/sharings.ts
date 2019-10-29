@@ -110,6 +110,23 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
   }
+
+  /**
+   * Returns the permissions mapping for certain user. If nothing is shared with the user, copy from own and set all to
+   * denied.
+   *
+   * @param user: string - the user id.
+   */
+  async loadPermissions(user: string) {
+    const runtime = (<any>this).getRuntime();
+    const allPermissions = await getProfilePermissionDetails(runtime);
+
+    if (!allPermissions[user]) {
+      return allPermissions['new'];
+    }
+
+    return allPermissions[user];
+  }
 }
 
 export default ProfileSharingsComponent;

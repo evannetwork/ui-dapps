@@ -30,9 +30,9 @@
 
       <template v-slot:body>
         <evan-steps
-          :active-step="status"
+          :activeStep="status"
           :steps="steps"
-          @updatestep="status = $event" />
+          @stepChange="status = $event" />
         <!-- pin enter screen -->
         <div v-if="status === 0" class="m-5">
           <p class="text-justify">{{ '_profile.verifications.notary.pin.desc' | translate }}</p>

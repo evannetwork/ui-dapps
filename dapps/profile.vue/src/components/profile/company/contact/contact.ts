@@ -63,15 +63,35 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   @Prop() onlyEdit;
 
   /**
+   * Display inputs with labels in oneline or stacked.
+   */
+  @Prop({
+    default: false,
+  }) stacked: boolean;
+
+  /**
+   * Render only the formular without adding the formular wrapper.
+   */
+  @Prop() onlyForm: boolean;
+
+  /**
+   * Data that should be passed into the component, so it should not be loaded from api.
+   */
+  @Prop() data: ContactFormInterface;
+
+  /**
    * Evan form instance for registration data.
    */
-  contactForm: ContactFormInterface = null;
+  form: ContactFormInterface = null;
 
   /**
    * Watch for dispatcher updates
    */
   listeners: Array<any> = [];
 
+  /**
+   * All available countries
+   */
   countryOptions: OptionInterface[];
 
   /**
@@ -111,15 +131,16 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
    */
   async loadProfileData() {
     const runtime = (<any>this).getRuntime();
-    let contactData = await ProfileMigrationLibrary.loadProfileData(runtime, 'contact') || {};
+    let contactData = this.data || await ProfileMigrationLibrary.loadProfileData(runtime, 'contact')
+      || {};
 
     // setup registration form
-    this.contactForm = (<ContactFormInterface>new EvanForm(this, {
+    this.form = (<ContactFormInterface>new EvanForm(this, {
       country: {
-        value: contactData.country || this.countryOptions.filter(({ value }) => value === 'DE')[0],
-        validate: function(vueInstance: CompanyContactForm) {
+        value: contactData.country || 'DE',
+        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
           // resubmit postalCode validation
-          vueInstance.contactForm.postalCode.value = vueInstance.contactForm.postalCode.value;
+          form.postalCode.value = form.postalCode.value;
           return this.value && this.value.length !== 0 && vueInstance.restrictCountries.indexOf(this.value) !== -1;
         },
         uiSpecs: {
@@ -137,9 +158,9 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
       },
       postalCode: {
         value: contactData.postalCode || '',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
           // check postcode validity only in germany
-          return vueInstance.contactForm.country.value === 'DE' ?
+          return form.country.value === 'DE' ?
             /^\d{5}$/.test(this.value) :
             true;
         },
@@ -153,7 +174,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
       website: {
         value: contactData.website || '',
         validate: function(vueInstance: CompanyContactForm) {
-          return this.value.length === 0 ||
+          return !this.value ||
             /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
         },
       },
@@ -161,7 +182,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   }
 
   async changeProfileData() {
-    const formData = this.contactForm.getFormData();
+    const formData = this.form.getFormData();
 
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
       formData,

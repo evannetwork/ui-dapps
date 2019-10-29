@@ -35,7 +35,7 @@
           <evan-steps
             v-if="status >= 0 && status < 3"
             :steps="steps"
-            :active-step="status"
+            :activeStep="status"
             @stepChange="status = $event; setupSummary()" />
 
           <!-- Verification start info -->

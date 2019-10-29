@@ -45,7 +45,7 @@ the following URL: https://evan.network/license/
             <evan-button @click="$refs.swipePanelLeft.hide()" icon="mdi mdi-arrow-left" />
           </evan-swipe-panel>
 
-           <evan-swipe-panel
+          <evan-swipe-panel
             ref="swipePanelRight"
             alignment="right"
             type="default"
