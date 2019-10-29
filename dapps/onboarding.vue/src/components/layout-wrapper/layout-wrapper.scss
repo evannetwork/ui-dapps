@@ -42,6 +42,10 @@
     flex-direction: row;
 
     background-color: cssVar('white');
+
+    @media (min-width: 992px) {
+      display: grid;
+    }
   }
 
   .content-wrapper {
