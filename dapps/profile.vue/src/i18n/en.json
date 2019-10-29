@@ -357,7 +357,7 @@
           "status": "Status",
           "topic": "Path",
           "topic-desc": "This Identity of the company {companyName} was notarially verified. This certified the authenticity of the company and the assignment to this account.",
-          "verified-by": "Verifiziert durch"
+          "verified-by": "Verified by"
         }
       },
       "reload": "Reload",
