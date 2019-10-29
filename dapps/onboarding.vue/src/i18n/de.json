@@ -108,7 +108,7 @@
           "title": "Nutzungsbedingungen"
         }
       },
-      "terms-accepted": "Ich stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\">Nutzungsbedingungen</a> zu.",
+      "terms-accepted": "Ich stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\" rel=\"noopener noreferrer\">Nutzungsbedingungen</a> zu.",
       "terms-of-use": {
         "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie Ihre reelle Interaktion.",
         "title": "Nutzungsbedingungen"

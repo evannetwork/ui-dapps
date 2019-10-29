@@ -108,7 +108,7 @@
           "title": "Terms of use"
         }
       },
-      "terms-accepted": "I agree with the <a href=\"https://evan.network/terms/\" target=\"_blank\">Terms of Use</a>.",
+      "terms-accepted": "I agree with the <a href=\"https://evan.network/terms/\" target=\"_blank\" rel=\"noopener noreferrer\">Terms of Use</a>.",
       "terms-of-use": {
         "desc": "Confirm the Terms of Use.",
         "title": "Terms of use"
