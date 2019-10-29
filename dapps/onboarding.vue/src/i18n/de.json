@@ -99,7 +99,7 @@
             "title": "Kontaktinformationen"
           },
           "registration": {
-            "desc": "Geben Sie die Unternehmens spezifischen Daten an. Wenn Sie nicht alle Daten direkt haben, können Sie sie auch später ausfüllen.",
+            "desc": "Geben Sie die unternehmensspezifischen Daten an. Wenn Sie nicht alle Daten direkt zur Hand haben, können Sie diese auch später ausfüllen.",
             "title": "Unternehmensdaten"
           }
         },
