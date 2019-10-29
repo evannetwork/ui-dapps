@@ -36,6 +36,7 @@ the following URL: https://evan.network/license/
           ref="shareSidebar"
           :showBackdrop="windowWidth < 1200"
           :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+          :isOpen="windowWidth >= 1200 || selectedSharedContacts.length > 0"
           @hide="selectedSharedContacts = []"
         >
           <evan-permissions-editor
