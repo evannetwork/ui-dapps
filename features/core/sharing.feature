@@ -15,7 +15,13 @@ Scenario: Log into test account and navigate to the profile detail page
     Then I want to see a text including "Select contact to share with"
   When I click the element with id "shareContactSelect"
     Then I want to see a element with class "vs__dropdown-menu"
-  When I click the element with role "option"
+  When I click the element with selector "#shareContactSelect > ul > li"
+    Then I want to see a text including "Profile Data"
+    Then the button "Update Sharing Options" should be "disabled"
+  When I click the element with selector ".input-wrapper > label"
+    Then the button "Update Sharing Options" should be "enabled"
+  When I click on button "Update Sharing Options"
+
 
   
 
@@ -23,3 +29,5 @@ Scenario: Log into test account and navigate to the profile detail page
   # <ul role="listbox" class="vs__dropdown-menu"><li role="option" class="vs__dropdown-option vs__dropdown-option--selected vs__dropdown-option--highlight">
   #         dtrinh44
   #       </li> <!----></ul>
+  #shareContactSelect > ul > li
+  # //*[@id="shareContactSelect"]/ul/li

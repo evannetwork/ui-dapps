@@ -3,11 +3,13 @@ import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/test-utils.js';
 
+export const WAIT_TIME = 15 * 1000;
+
 When(/^I click the element with id "([^"]+)"$/,
   async (id) => {
     const evan = setupEvan(client);
 
-    await client.waitForElementPresent(`#${ id }`, 10 * 1000);
+    await client.waitForElementPresent(`#${ id }`, WAIT_TIME);
     await client.click(`#${ id }`);
   }
 );
@@ -16,17 +18,17 @@ When(/^I click the element with class "([^"]+)"$/,
   async (className) => {
     const evan = setupEvan(client);
 
-    await client.waitForElementPresent(`.${ className }`, 10 * 1000);
+    await client.waitForElementPresent(`.${ className }`, WAIT_TIME);
     await client.click(`.${ className }`);
   }
 );
 
-When('I click the element with role {string}',
-  async (role) => {
+When('I click the element with selector {string}',
+  async (selector) => {
     const evan = setupEvan(client);
 
-    await client.waitForElementPresent(`[role]="${role}"`, 10 * 1000);
-    await client.click(`[role="${value}"]`);
+    await client.waitForElementPresent(`${selector}`, WAIT_TIME);
+    await client.click(`${selector}`);
   }
 );
 
@@ -40,7 +42,7 @@ Then(/^I want to see a element with id "([^"]+)"$/,
   async (id) => {
     const evan = setupEvan(client);
 
-    await client.waitForElementPresent(`.${ id }`, 10 * 1000);
+    await client.waitForElementPresent(`.${ id }`, WAIT_TIME);
   }
 );
 
@@ -48,6 +50,6 @@ Then(/^I want to see a element with class "([^"]+)"$/,
   async (className) => {
     const evan = setupEvan(client);
 
-    await client.waitForElementPresent(`.${ className }`, 10 * 1000);
+    await client.waitForElementPresent(`.${ className }`, WAIT_TIME);
   }
 );
