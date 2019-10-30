@@ -7,6 +7,7 @@
   - use correct route handling
   - add verification detail side panel
   - make company form data components usable from extern
+  - support that external profiles can opened 
 - `onboarding.vue` (v3.2.0)
   - add company account type creation
 

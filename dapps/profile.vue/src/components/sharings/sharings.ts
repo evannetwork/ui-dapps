@@ -27,7 +27,7 @@ import { Prop } from 'vue-property-decorator';
 import { containerDispatchers as dispatchers } from '@evan.network/datacontainer.digitaltwin';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
-import { getProfilePermissionDetails, updatePermissions } from './../profile/permissionsUtils';
+import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 
 interface SharedContactInterface {
@@ -140,7 +140,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
-    this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
+    this.sharedContacts = await getProfilePermissions(this);
 
     this.loading = false;
   }
@@ -160,7 +160,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    */
   async loadPermissions(user: string) {
     const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime);
+    const allPermissions = await getProfilePermissionDetails(runtime, this.$route.params.address);
 
     if (!allPermissions[user]) {
       return allPermissions['new'];

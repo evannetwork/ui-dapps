@@ -138,7 +138,8 @@ export default class NotaryVerificationCardComponent extends mixins(EvanComponen
       // reload when synchronisation have finished and previous instance has runned
       if (instances.length === 0 && this.accepting) {
         await notaryLib.closeRequest(runtime, this.requestId);
-        await runtime.profile.loadForAccount(runtime.profile.treeLabels.contracts);
+        await this.$store.state.profileDApp.profile.loadForAccount(
+          this.$store.state.profileDApp.profile.treeLabels.contracts);
         await notaryLib.triggerRequestReload(this.address, {
           requestId: this.requestId,
           status: 'finished',

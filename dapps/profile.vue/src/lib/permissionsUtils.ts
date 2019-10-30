@@ -17,7 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import { Container, ContainerShareConfig, ContainerUnshareConfig } from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig, Profile } from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig, Profile, ContainerUnshareConfig } from '@evan.network/api-blockchain-core';
 import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 
 /*
@@ -182,10 +183,21 @@ const createContainerPermissions = async (runtime, {containerAddress, label}, ac
  * get permissions for own profile
  * @param runtime
  */
-export const getProfilePermissionDetails = (runtime, label = 'Profile Data') => {
-  const profileAddress = runtime.profile.profileContract.options.address;
+export const getProfilePermissionDetails = async (runtime, accountId, label = 'Profile Data') => {
+  let profileAddress = runtime.profile.profileContract.options.address;
 
-  return createContainerPermissions(runtime, { containerAddress: profileAddress, label});
+  if (runtime.activeAccount !== accountId) {
+    const profile = new Profile({
+      accountId: runtime.activeAccount,
+      profileOwner: accountId,
+      ...runtime,
+    });
+
+    await profile.loadForAccount();
+    profileAddress = profile.profileContract.options.address;
+  }
+
+  return createContainerPermissions(runtime, { containerAddress: profileAddress, label }, accountId);
 };
 
 /**

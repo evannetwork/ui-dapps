@@ -125,6 +125,14 @@
       "request-verification": "Requesting Verification...",
       "verification-accept": "Accepting Verification..."
     },
+    "not-permitted": {
+      "accountDetails": "Profile information",
+      "contact": "Contact details",
+      "desc": "You have no authorization to view this data.",
+      "deviceDetails": "Device information",
+      "registration": "Registration data"
+    },
+    "not-permitted-view": "You do not have permission to view this data for the selected profile.",
     "settings": {
       "desc": "Settings",
       "dev-domain": {
@@ -169,6 +177,7 @@
       "change": "Change",
       "choose": "Specify Account Type",
       "missing-type": "No type was selected for your profile. Use the interaction area below to specify your profile more precisely.",
+      "missing-type-foreign": "No profile type has yet been selected for this profile.",
       "no-verifications-avaiable": "There are currently no verifications available for your profile type.",
       "switch": "Specify your Account Type"
     },

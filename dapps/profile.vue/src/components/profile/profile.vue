@@ -24,29 +24,32 @@
     <template v-else>
       <div class="row">
         <div class="col-xl-8 mb-3">
-          <evan-profile-preview
-            ref="profilePreview"
-            size="lg"
-            :editable="true"
-            :address="address"
-            @typeClick="typeSwitchModal()"
-            @update="userInfo = $event"
-            @save="saveUserInfo"
-          />
-          <profile-type-switch
-            ref="profileType"
-            :type="userInfo.profileType"
-            v-if="$store.state.isMyProfile && userInfo"
-          />
+          <profile-permission-wrapper entryName="accountDetails">
+            <evan-profile-preview
+              ref="profilePreview"
+              size="lg"
+              :accountDetails="userInfo"
+              :address="address"
+              :editable="true"
+              @typeClick="typeSwitchModal()"
+              @update="userInfo = $event"
+              @save="saveUserInfo"
+            />
+            <profile-type-switch
+              ref="profileType"
+              :type="userInfo.profileType"
+              v-if="$store.state.profileDApp.isMyProfile && userInfo"
+            />
+          </profile-permission-wrapper>
         </div>
         <div class="col-xl-4">
           <a class="
             d-block p-3 position-relative
             bg-inverted rounded text-decoration-none"
             style="height: 166px"
-            :href="$store.state.isMyProfile ? `${ dapp.fullUrl }/${ $store.state.runtime.activeAccount }/wallet` : null"
+            :href="$store.state.profileDApp.isMyProfile ? `${ dapp.fullUrl }/${ $store.state.runtime.activeAccount }/wallet` : null"
             :class="{
-              'evan-highlight': $store.state.isMyProfile
+              'evan-highlight': $store.state.profileDApp.isMyProfile
             }">
             <h1>{{ balance.amount }} EVE</h1>
             <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
@@ -64,7 +67,7 @@
               <evan-loading></evan-loading>
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
             </template>
-            <template v-else>
+            <template v-else-if="$store.state.profileDApp.isMyProfile">
               <h5>{{ '_profile.type.missing-type' | translate }}</h5>
               <evan-button
                 class="mt-3"
@@ -73,21 +76,29 @@
                 @click="typeSwitchModal()">
               </evan-button>
             </template>
+            <template v-else>
+              <h5>{{ '_profile.type.missing-type-foreign' | translate }}</h5>
+            </template>
           </div>
           <template v-if="userInfo.profileType === 'company'">
-            <profile-company-registration :address="address"></profile-company-registration>
-            <profile-company-contact :address="address"></profile-company-contact>
+            <profile-permission-wrapper entryName="registration">
+              <profile-company-registration :address="address"></profile-company-registration>
+            </profile-permission-wrapper>
+            <profile-permission-wrapper entryName="contact">
+              <profile-company-contact :address="address"></profile-company-contact>
+            </profile-permission-wrapper>
           </template>
-          <template v-else-if="userInfo.profileType === 'device'">
+          <profile-permission-wrapper entryName="deviceDetails"
+            v-else-if="userInfo.profileType === 'device'">
             <profile-device-detail :address="address"></profile-device-detail>
-          </template>
+          </profile-permission-wrapper>
         </div>
         <div class="col-xl-4">
           <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
               icon="mdi mdi-plus"
               highlight="true"
-              v-if="$store.state.isMyProfile"
+              v-if="$store.state.profileDApp.isMyProfile"
               :href="`${ dapp.fullUrl }/${ address }/verifications`"
               :title="'_profile.verifications.add' | translate"
             />

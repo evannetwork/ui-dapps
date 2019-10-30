@@ -133,10 +133,11 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
  * get permissions from own profile
  * @param runtime
  */
-export const getProfilePermissions = async (runtime) => {
-  const profileAddress = runtime.profile.profileContract.options.address;
-
-  return getPermissions(runtime, profileAddress);
+export const getProfilePermissions = async (vueInstance) => {
+  return getPermissions(
+    vueInstance.getRuntime(), 
+    vueInstance.$store.state.profileDApp.profile.profileContract.options.address
+  );
 };
 
 /**

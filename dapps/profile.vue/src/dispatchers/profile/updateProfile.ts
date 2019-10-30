@@ -32,14 +32,27 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = instance.runtime;
-    const profileContract = runtime.profile.profileContract;
-    const profileAddress = profileContract.options.address;
-    const fileFields = ['settings', 'type'];
+    const profile = new bcc.Profile({
+      accountId: instance.runtime.activeAccount,
+      profileOwner: data.address,
+      ...instance.runtime,
+    });
 
-    // check, if profile was migrated before, else migrate it
-    await ProfileMigrationLibrary.checkOrMigrateProfile(runtime);
-    await runtime.profile.setProfileProperties({
+    try {
+      await profile.loadForAccount();
+    } catch (ex) { }
+
+    // do not allow profile migration for foreign profiles
+    if (data.address && instance.runtime.activeAccount !== data.address) {
+      if (!profile.profileContainer) {
+        throw new Error('Cannot migrate the profile for an other account!');
+      }
+    } else {
+      // check, if profile was migrated before, else migrate it
+      await ProfileMigrationLibrary.checkOrMigrateProfile(instance.runtime);
+    }
+
+    await profile.setProfileProperties({
       [ data.type ]: data.formData,
     });
   });

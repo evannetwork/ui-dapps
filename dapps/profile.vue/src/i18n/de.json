@@ -125,6 +125,14 @@
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
+    "not-permitted": {
+      "accountDetails": "Profil-Informationen",
+      "contact": "Kontaktdaten",
+      "desc": "Sie haben keine Berechtigungen, diese Daten einzusehen.",
+      "deviceDetails": "Geräteinformationen",
+      "registration": "Registrierungsdaten"
+    },
+    "not-permitted-view": "Sie haben keine Rechte, diese Daten für das ausgewählte Profil anzusehen.",
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {
@@ -169,6 +177,7 @@
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
       "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
       "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an."
     },
