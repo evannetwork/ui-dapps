@@ -76,7 +76,7 @@ dispatcher
 
     await updateSharings(runtime, data.shareConfigs);
   })
-  // set unsharings
+  // remove "un-shared" fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
 
