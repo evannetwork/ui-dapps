@@ -27,8 +27,12 @@
           <div class="text-center">
             <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
           </div>
-          <h1 class="ml-5 mb-5 font-weight-bold text-dark" >{{ `_onboarding.sign-up.headings.header-${step}` | translate }}</h1>
-          <h3 class="ml-5 text-dark">{{ `_onboarding.sign-up.headings.desc-${step}` | translate }}</h3>
+          <h1 class="ml-5 mb-5 font-weight-bold text-dark" >
+            {{ `_onboarding.sign-up.headings.${ type }.${ step }.title` | translate }}
+          </h1>
+          <h3 class="ml-5 text-dark">
+            {{ `_onboarding.sign-up.headings.${ type }.${ step }.desc` | translate }}
+          </h3>
         </div>
       </div>
     </div>

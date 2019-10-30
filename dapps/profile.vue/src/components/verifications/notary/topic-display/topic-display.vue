@@ -34,7 +34,7 @@
           {{ '_profile.verifications.notary.verification.verified-by' | translate }}
         </small>
         <small class="text-muted">
-          {{ verification.verifications[0].details.issuer }}
+          {{ issuerName }}
         </small>
 
         <button type="button"
@@ -75,11 +75,7 @@
             </div>
             <div class="mt-2">
               <b>{{ '_profile.verifications.notary.verification.verified-by' | translate }}:</b>
-              <span>{{ verification.verifications[0].details.issuer }}</span>
-            </div>
-            <div class="mt-2">
-              <b>{{ '_profile.verifications.notary.verification.topic' | translate }}:</b>
-              <span>{{ topic }} </span>
+              <span>{{ issuerName }}</span>
             </div>
           </div>
 
@@ -96,6 +92,29 @@
               <span class="force-oneline">{{ file.name }}</span>
               <i class="mdi mdi-file-document-box-outline"></i>
             </a>
+          </div>
+
+          <div class="mt-5">
+            <div class="mt-5" v-if="showTechnicalDetail">
+              <div class="mt-2">
+                <b>{{ '_profile.verifications.notary.verification.topic' | translate }}:</b>
+                <span>{{ topic }} </span>
+              </div>
+              <div class="mt-2">
+                <b>{{ '_profile.verifications.notary.verification.issuer' | translate }}:</b>
+                <span>{{ issuer }} </span>
+              </div>
+            </div>
+
+            <div class="text-center mt-5">
+              <evan-button
+                class="mb-3"
+                :type="'text-secondary'"
+                :label="$t(`_profile.verifications.notary.verification.${ showTechnicalDetail ? 'hide-technical' : 'show-technical' }`)"
+                :icon="`mdi ${ showTechnicalDetail ? 'mdi-arrow-up' : 'mdi-arrow-down' }`"
+                @click="showTechnicalDetail = !showTechnicalDetail"
+              />
+            </div>
           </div>
 
           <button type="button"
