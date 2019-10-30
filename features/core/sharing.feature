@@ -22,3 +22,4 @@ Scenario: Log into test account and navigate to the profile detail page
     Then the button "Update Sharing Options" should be "enabled"
   When I click on button "Update Sharing Options"
     Then the button "Update Sharing Options" should be "disabled"
+    
