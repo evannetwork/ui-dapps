@@ -44,7 +44,9 @@
         </div>
       </div>
     </div>
-    <evan-onboarding-layout-wrapper v-else :step="activeStep">
+    <evan-onboarding-layout-wrapper v-else
+      :type="`sign-up.${ profileForm.accountType.value }`"
+      :step="activeStep">
       <div>
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.create-account' | translate }}
@@ -155,15 +157,18 @@
             </vue-recaptcha>
           </div>
 
-          <div class="form-group text-center">
-            <input type="checkbox" required
-              id="termsAccepted" ref="termsAccepted"
+          <div class="d-flex justify-content-center">
+            <evan-form-control-checkbox
+              class="mr-3" style="min-width: 0"
+              id="termsAccepted"
               v-model="profileForm.termsAccepted.value"
               :class="{ 'is-invalid' : profileForm.termsAccepted.error }"
-              @blur="profileForm.termsAccepted.setDirty()">
+              @input="profileForm.termsAccepted.setDirty()"
+              @click="profileForm.termsAccepted.value = !profileForm.termsAccepted.value"
+            />
             <label
               for="termsAccepted"
-              class="ml-3"
+              class="form-check-label"
               v-html="$t(`_onboarding.sign-up.terms-accepted`)">
             </label>
             <div class="invalid-feedback">

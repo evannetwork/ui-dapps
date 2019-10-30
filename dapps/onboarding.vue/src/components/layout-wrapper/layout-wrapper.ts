@@ -35,4 +35,14 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
       return '';
     }
   }) step;
+
+  /**
+   * Type of the ui, for that the layout wrapper will be used (e.g. sign-up.company)
+   */
+  @Prop({
+    type: String,
+    default: function() {
+      return '';
+    }
+  }) type;
 }

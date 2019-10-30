@@ -19,7 +19,9 @@
 
 <template>
   <div class="row h-100" style="display: grid">
-    <evan-onboarding-layout-wrapper :step="activeStep">
+    <evan-onboarding-layout-wrapper 
+      type="sign-in"
+      :step="activeStep">
       <div class="evan-steps">
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
           {{ '_onboarding.sign-in.title' | translate }}
