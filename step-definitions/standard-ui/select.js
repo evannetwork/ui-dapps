@@ -16,8 +16,3 @@ When('I click on the Vue Select with label {string}',
     await client.click("css selector", `#${elementId}`);
   }
 );
-
-/**
- * Select a specific item from Vue Select list
- */
-// When('I select the item ')

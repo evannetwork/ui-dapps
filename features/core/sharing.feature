@@ -14,16 +14,11 @@ Scenario: Log into test account and navigate to the profile detail page
   When I click on button "Share"
     Then I want to see a text including "Select contact to share with"
   When I click on the Vue Select with label "Select contact to share with"
+    And I press the "DOWN_ARROW" key
     And I press the "ENTER" key
     Then I want to see a text including "Profile Data"
     But the button "Update Sharing Options" should be "disabled"
-  When I click the element with selector ".input-wrapper > label"
+  When I click on a custom checkbox at position "3"
     Then the button "Update Sharing Options" should be "enabled"
   When I click on button "Update Sharing Options"
-
-  Given I wait for enter
-  # <ul role="listbox" class="vs__dropdown-menu"><li role="option" class="vs__dropdown-option vs__dropdown-option--selected vs__dropdown-option--highlight">
-  #         dtrinh44
-  #       </li> <!----></ul>
-  #shareContactSelect > ul > li
-  # //*[@id="shareContactSelect"]/ul/li
+    Then the button "Update Sharing Options" should be "disabled"
