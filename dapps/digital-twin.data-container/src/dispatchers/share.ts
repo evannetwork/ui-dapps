@@ -62,7 +62,7 @@ const updateUnsharings = (runtime, data) => {
 };
 
 dispatcher
-  // set sharings
+  // set new shared fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
 
@@ -76,7 +76,7 @@ dispatcher
 
     await updateSharings(runtime, data.shareConfigs);
   })
-  // set unsharings
+  // remove "un-shared" fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
 
