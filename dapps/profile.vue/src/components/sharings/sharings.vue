@@ -44,6 +44,7 @@ the following URL: https://evan.network/license/
             :updatePermissions="updatePermissions"
             :sortFilters="['accountDetails', 'registration', 'contact']"
             :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
+            :onSelect="(accountId) => {this.selectedSharedContacts = [accountId]}"
           />
         </evan-swipe-panel>
 
