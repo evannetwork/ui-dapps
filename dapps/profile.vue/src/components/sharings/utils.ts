@@ -29,7 +29,7 @@ import { async } from 'q';
  * @param permissions
  * @param properties
  */
-const getPermissionsType = (permissions, properties) => {
+export const getPermissionsType = (permissions, properties) => {
   const propertiesKeys = Object.keys(properties);
 
   // check write permissions
@@ -161,4 +161,14 @@ export const removeAllPermissions = (runtime, shareConfigs) => {
 
     resolve();
   });
+};
+
+export const findAllByKey = (obj, keyToFind) => {
+  return Object.entries(obj)
+    .reduce((acc, [key, value]) => (key === keyToFind)
+      ? acc.concat(value)
+      : (typeof value === 'object')
+      ? acc.concat(findAllByKey(value, keyToFind))
+      : acc
+    , []);
 };

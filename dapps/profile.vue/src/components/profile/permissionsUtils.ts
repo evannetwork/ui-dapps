@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { Container, ContainerShareConfig } from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig, ContainerUnshareConfig } from '@evan.network/api-blockchain-core';
 import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 
 /*
@@ -234,9 +234,9 @@ const createShareConfig = (permissions, oldPermissions, accountId: string) => {
  */
 const createUnshareConfig = (permissions, oldPermissions, accountId: string) => {
   const unshareConfigs = [ ];
-  const unshareConfig: ContainerShareConfig = {
+  const unshareConfig: ContainerUnshareConfig = {
     accountId,
-    read: [ ],
+    write: [ ],
     readWrite: [ ],
     removeListEntries: [ ],
   };
@@ -244,10 +244,10 @@ const createUnshareConfig = (permissions, oldPermissions, accountId: string) => 
   // iterate through properties and get removing read / readWrite permissions
   Object.keys(oldPermissions).forEach(property => {
     if (oldPermissions[property].read && !permissions[property].read) {
-      unshareConfig.read.push(property);
+      unshareConfig.readWrite.push(property);
     }
     if (oldPermissions[property].readWrite && !permissions[property].readWrite) {
-      unshareConfig.readWrite.push(property);
+      unshareConfig.write.push(property);
 
       // TODO: handle remove permission on lists
       // if (this.plugin.template.properties[property].type === 'list') {

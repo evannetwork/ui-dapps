@@ -19,10 +19,8 @@
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { utils } from '@evan.network/digitaltwin.lib';
-
 
 const dispatcher = new Dispatcher(
   `datacontainer.digitaltwin.${dappBrowser.getDomainName()}`,
@@ -98,7 +96,11 @@ dispatcher
     if (data.bMailContent) {
       const runtime = utils.getRuntime(instance.runtime);
 
-      await Promise.all(data.map(async (shareConfig: bcc.ContainerShareConfig) => {
+      if (Array.isArray(data)) {
+        return;
+      }
+
+      await Promise.all(data.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
         await runtime.mailbox.sendMail(
           data.bMailContent,
           runtime.activeAccount,

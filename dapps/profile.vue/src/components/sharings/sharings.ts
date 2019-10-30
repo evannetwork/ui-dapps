@@ -23,8 +23,10 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+// internal
+import { containerDispatchers as dispatchers } from '@evan.network/datacontainer.digitaltwin';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { getProfilePermissions, removeAllPermissions } from './utils';
+import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
 import { getProfilePermissionDetails, updatePermissions } from './../profile/permissionsUtils';
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 
@@ -52,6 +54,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   sharedContacts = [];
 
   /**
+   * a list of contact IDs currently being loaded
+   */
+  isLoadingContacts = new Set<string>();
+
+  /**
    * computed property
    * selected shared contacts from vuex store
    */
@@ -62,6 +69,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   set selectedSharedContacts(contacts) {
     (this as any).$store.commit('setSelectedSharedContacts', contacts);
   }
+
+  /**
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [];
 
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
@@ -106,6 +118,25 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   }
 
   async created() {
+    // watch for permission updates
+    this.listeners.push(dispatchers.shareDispatcher.watch(async ($event: any) => {
+      // set isLoading state to corresponding list elements 
+      if ($event.detail.status === 'starting') {
+        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
+        accountIds.forEach(item => this.isLoadingContacts.add(item));
+
+        // deselect list elements
+        this.selectedSharedContacts = this.selectedSharedContacts.filter(item => accountIds.includes(item));
+      }
+
+      // canceling isLoading state from corresponding list elements
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
+        accountIds.forEach(item => this.isLoadingContacts.delete(item));
+        this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
+      }
+    }));
+
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
@@ -116,6 +147,9 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
+
+    // clear dispatcher listeners
+    this.listeners.forEach(listener => listener());
   }
 
   /**

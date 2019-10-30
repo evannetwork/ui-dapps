@@ -62,6 +62,7 @@ the following URL: https://evan.network/license/
                 <evan-shared-contact
                   :item="item" 
                   :removeCallback="() => handleRemoveSharedContact(item)"
+                  :isLoading="!!isLoadingContacts && isLoadingContacts.has(item.accountId)"
                 />
               </template>
             </evan-base-list>
