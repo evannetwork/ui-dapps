@@ -60,7 +60,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
       { name: 'wallet', path: 'wallet', component: UnderDevelopmentComponent },
       { name: 'verifications', path: 'verifications', component: VerificationsComponent, },
-      { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${ dappBrowser.getDomainName() }/**`, },
+      { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${ dappBrowser.getDomainName() }`, },
     ]
   },
   // { path: '*', redirect: to => redirectToDefault(to), },

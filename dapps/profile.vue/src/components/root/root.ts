@@ -144,6 +144,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Load the profile container entry data and return them.
    */
   async loadProfileEntries() {
+    const runtime = (<any>this).getRuntime();
     const data = { };
     const profileDApp = this.$store.state.profileDApp;
     const entryKeys = Object.keys(profileDApp.description.dataSchema);

@@ -133,7 +133,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
         accountIds.forEach(item => this.isLoadingContacts.delete(item));
-        this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
+        this.sharedContacts = await getProfilePermissions((<any>this));
       }
     }));
 
