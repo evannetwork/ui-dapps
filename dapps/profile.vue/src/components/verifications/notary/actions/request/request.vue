@@ -59,27 +59,30 @@
               :address="activeAccount"
             />
 
-            <template v-if="missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
-              <p class="mt-8 mb-3">
-                {{ '_profile.verifications.notary.request.fill-missing' | translate }}
-              </p>
-              <b v-if="companyData.contact.country && companyData.contact.country !== 'DE'">
+            <template v-if="companyData.contact.country !== 'DE' || missingCompanyFields.registration.length !== 0 || missingCompanyFields.contact.length !== 0">
+              <b class="d-block border p-3 mt-3"
+                v-if="companyData.contact.country && companyData.contact.country !== 'DE'">
                 {{ '_profile.verifications.notary.request.only-de' | translate }}
               </b>
+              <template v-else>
+                <p class="mt-8 mb-3">
+                  {{ '_profile.verifications.notary.request.fill-missing' | translate }}
+                </p>
 
-              <profile-company-registration
-                v-if="missingCompanyFields.registration.length !== 0"
-                :address="address"
-                :onlyEdit="true"
-                :required="requiredCompanyFields.registration">
-              </profile-company-registration>
-              <profile-company-contact
-                v-if="missingCompanyFields.contact.length !== 0"
-                :address="address"
-                :onlyEdit="true"
-                :required="requiredCompanyFields.contact"
-                :restrictCountries="['DE']">
-              </profile-company-contact>
+                <profile-company-registration
+                  v-if="missingCompanyFields.registration.length !== 0"
+                  :address="address"
+                  :onlyEdit="true"
+                  :required="requiredCompanyFields.registration">
+                </profile-company-registration>
+                <profile-company-contact
+                  v-if="missingCompanyFields.contact.length !== 0"
+                  :address="address"
+                  :onlyEdit="true"
+                  :required="requiredCompanyFields.contact"
+                  :restrictCountries="['DE']">
+                </profile-company-contact>
+              </template>
             </template>
 
             <evan-form class="mb-0 mt-5"
