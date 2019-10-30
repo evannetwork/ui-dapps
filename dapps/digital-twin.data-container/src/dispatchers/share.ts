@@ -62,7 +62,7 @@ const updateUnsharings = (runtime, data) => {
 };
 
 dispatcher
-  // set sharings
+  // set new shared fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
 
