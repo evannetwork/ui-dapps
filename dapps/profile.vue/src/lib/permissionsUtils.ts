@@ -18,6 +18,7 @@
 */
 
 import { Container, ContainerShareConfig, Profile } from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig, Profile, ContainerUnshareConfig } from '@evan.network/api-blockchain-core';
 import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 
 /*
@@ -237,6 +238,43 @@ const createShareConfig = (permissions, oldPermissions, accountId: string) => {
 };
 
 /**
+ * Creates an unshareConfig object containing only the permissions to be removed.
+ *
+ * @param permissions
+ * @param oldPermissions
+ * @param accountId
+ */
+const createUnshareConfig = (permissions, oldPermissions, accountId: string) => {
+  const unshareConfigs = [ ];
+  const unshareConfig: ContainerUnshareConfig = {
+    accountId,
+    write: [ ],
+    readWrite: [ ],
+    removeListEntries: [ ],
+  };
+
+  // iterate through properties and get removing read / readWrite permissions
+  Object.keys(oldPermissions).forEach(property => {
+    if (oldPermissions[property].read && !permissions[property].read) {
+      unshareConfig.readWrite.push(property);
+    }
+    if (oldPermissions[property].readWrite && !permissions[property].readWrite) {
+      unshareConfig.write.push(property);
+
+      // TODO: handle remove permission on lists
+      // if (this.plugin.template.properties[property].type === 'list') {
+      //   shareConfig.removeListEntries.push(property);
+      // }
+    }
+  });
+
+  // push the new share config into the share configs array
+  unshareConfigs.push(unshareConfig);
+
+  return unshareConfigs;
+};
+
+/**
  * Update all permissions of containers for user with accountId.
  *
  * @param runtime: bcc.runtime
@@ -245,7 +283,7 @@ const createShareConfig = (permissions, oldPermissions, accountId: string) => {
  * @param oldContainerPermissions: any - the old permissions object
  */
 export const updatePermissions = (runtime, accountId: string, containerPermissions, oldContainerPermissions) => {
-  const containerShareConfigs = [];
+  const containerConfigs = [];
 
   return new Promise((resolve, reject) => {
     try {
@@ -256,19 +294,35 @@ export const updatePermissions = (runtime, accountId: string, containerPermissio
           accountId
         );
 
-        const data = {
+        const dataSharing = {
           address: containerAddress,
           shareConfigs,
           bMailContent: false
         };
 
-        containerShareConfigs.push(data);
+        containerConfigs.push(dataSharing);
       });
-    } catch (e) {
-      reject (e);
-    }
 
-    shareDispatcher.start(runtime, containerShareConfigs);
+      Object.keys(oldContainerPermissions).forEach( (containerAddress: string) => {
+        const unshareConfigs = createUnshareConfig(
+          containerPermissions[containerAddress].permissions,
+          oldContainerPermissions[containerAddress].permissions,
+          accountId
+        );
+
+        const dataSharing = {
+          address: containerAddress,
+          unshareConfigs,
+          bMailContent: false
+        };
+
+        containerConfigs.push(dataSharing);
+      });
+
+      shareDispatcher.start(runtime, containerConfigs);
+    } catch (e) {
+      reject(e);
+    }
 
     resolve();
   });

@@ -50,7 +50,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   @Watch('$route')
   onRouteChange(to, from) {
     if (to.params.address !== this.$store.state.profileDApp.address) {
-      this.initialize();
+      this.initialize(true);
     }
   }
 
@@ -76,9 +76,9 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Setup navigation structure
    */
-  async initialize() {
+  async initialize(forceReload?: boolean) {
     // only show loading on detail page
-    if (this.$route.name === 'detail') {
+    if (forceReload || this.$route.name === 'detail') {
       this.loading = true;
     }
 

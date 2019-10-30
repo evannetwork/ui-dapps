@@ -19,13 +19,11 @@
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { utils } from '@evan.network/digitaltwin.lib';
 
-
 const dispatcher = new Dispatcher(
-  `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+  `datacontainer.digitaltwin.${dappBrowser.getDomainName()}`,
   'shareDispatcher',
   40 * 1000,
   '_datacontainer.dispatcher.share'
@@ -38,14 +36,34 @@ const dispatcher = new Dispatcher(
  * @param data
  */
 const updateSharings = (runtime, data) => {
+  if (!data.shareConfigs) {
+    return;
+  }
+
   return utils
     .getContainer(runtime, data.address)
     .shareProperties(data.shareConfigs);
 };
 
+/**
+ * unshare the properties for single container
+ *
+ * @param runtime
+ * @param data
+ */
+const updateUnsharings = (runtime, data) => {
+  if (!data.unshareConfigs) {
+    return;
+  }
+
+  return utils
+    .getContainer(runtime, data.address)
+    .unshareProperties(data.unshareConfigs);
+};
+
 dispatcher
+  // set new shared fields
   .step(async (instance: DispatcherInstance, data: any) => {
-    // set the digital twin instance
     const runtime = utils.getRuntime(instance.runtime);
 
     if (Array.isArray(data)) {
@@ -56,13 +74,31 @@ dispatcher
       return;
     }
 
-    await updateSharings(runtime, data);
+    await updateSharings(runtime, data.shareConfigs);
+  })
+  // remove "un-shared" fields
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = utils.getRuntime(instance.runtime);
+
+    if (Array.isArray(data)) {
+      await Promise.all(data.map(async (shareData: any) => {
+        await updateUnsharings(runtime, shareData);
+      }));
+
+      return;
+    }
+
+    await updateUnsharings(runtime, data.unshareConfigs);
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {
     // do not sent bMail for multi container sharing
     if (data.bMailContent) {
       const runtime = utils.getRuntime(instance.runtime);
+
+      if (Array.isArray(data)) {
+        return;
+      }
 
       await Promise.all(data.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
         await runtime.mailbox.sendMail(
