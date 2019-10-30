@@ -85,11 +85,6 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   form: ContactFormInterface = null;
 
   /**
-   * Watch for dispatcher updates
-   */
-  listeners: Array<any> = [];
-
-  /**
    * All available countries
    */
   countryOptions: OptionInterface[];
@@ -98,12 +93,6 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
    * Load the mail details
    */
   async created() {
-    // watch for save updates
-    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        this.loadProfileData();
-      }
-    }));
 
     // load country options
     this.countryOptions = this.getCountriesOption();
@@ -120,19 +109,10 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   }
 
   /**
-   * Clear dispatcher listeners
-   */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
-  }
-
-  /**
    * Load the mail details
    */
   async loadProfileData() {
-    const runtime = (<any>this).getRuntime();
-    let contactData = this.data || await ProfileMigrationLibrary.loadProfileData(runtime, 'contact')
-      || {};
+    let contactData = this.data || this.$store.state.profileDApp.data.contact || { };
 
     // setup registration form
     this.form = (<ContactFormInterface>new EvanForm(this, {
@@ -185,6 +165,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
     const formData = this.form.getFormData();
 
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      address: this.$store.state.profileDApp.address,
       formData,
       type: 'contact'
     });

@@ -19,20 +19,23 @@
 
 <template>
   <div>
-    <evan-form
-      :editable="onlyForm || $store.state.profileDApp.permissions.readWrite.indexOf('deviceDetails') !== -1"
-      :form="deviceDetailForm"
-      :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
-      :i18nScope="'_profile.device.detail'"
-      :isLoading="$store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :shareable="$route.params.address === $store.state.runtime.activeAccount"
-      :title="'_profile.device.detail.title' | translate"
-      @save="changeProfileData()">
-    </evan-form>
+    <div class="mt-2 mb-8"
+      v-if="!entryName || $store.state.profileDApp.permissions.read.indexOf(entryName) === -1">
+      <div class="d-flex justify-content-between align-items-center pb-1" v-if="!onlyForm">
+        <h5 class="my-0 py-0 text-uppercase font-weight-bold">
+          <i class="mdi mdi-lock mr-2" />
+          {{ `_profile.not-permitted.${ entryName }` | translate }}
+        </h5>
+      </div>
+      <p class="mt-3">
+        {{ '_profile.not-permitted.desc' | translate }}
+      </p>
+    </div>
+    <slot v-else></slot>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './detail';
+  import Component from './permission-wrapper';
   export default Component;
 </script>

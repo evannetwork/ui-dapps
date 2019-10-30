@@ -55,41 +55,18 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
   deviceDetailForm: DeviceDetailFormInterface = null;
 
   /**
-   * Watch for dispatcher updates
-   */
-  listeners: Array<any> = [ ];
-
-  /**
    * Load the mail details
    */
   async created() {
-    // watch for save updates
-    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        this.loadProfileData();
-      }
-    }));
-
     // load profile data
     await this.loadProfileData();
-  }
-
-  /**
-   * Clear dispatcher listeners
-   */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
   }
 
   /**
    * Load the profile data an specify the registration form.
    */
   async loadProfileData() {
-    const runtime = (<any>this).getRuntime();
-    const profileContract = runtime.profile.profileContract;
-    const profileAddress = profileContract.options.address;
-    const deviceData = await ProfileMigrationLibrary.loadProfileData(runtime, 'deviceDetails') || {};
-
+    const deviceData = this.$store.state.profileDApp.data.registration || {};
 
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
@@ -141,6 +118,7 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
     formData.type = { files: formData.type };
 
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      address: this.$store.state.profileDApp.address,
       formData: formData,
       type: 'deviceDetails'
     });

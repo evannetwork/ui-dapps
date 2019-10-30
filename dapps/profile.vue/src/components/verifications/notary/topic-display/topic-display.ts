@@ -160,11 +160,11 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
 
     await Promise.all(this.verification.verifications.map(async (subVerification) => {
       try {
-        const contentKey = await runtime.profile.getBcContract(
+        const contentKey = await this.$store.state.profileDApp.profile.getBcContract(
           'contracts',
           runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`)
         );
-        const hashKey = await runtime.profile.getBcContract(
+        const hashKey = await this.$store.state.profileDApp.profile.getBcContract(
           'contracts',
           runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},hashKey`)
         );
@@ -217,7 +217,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
       this.issuerName = this.$t('_profile.verifications.notary.notary');
     } else {
       // load from addressbook
-      const addressbook = await runtime.profile.getAddressBook();
+      const addressbook = await this.$store.state.profileDApp.profile.getAddressBook();
       if (addressbook[this.issuer] && addressbook[this.issuer].alias) {
         this.issuerName = addressbook[this.issuer];
       } else {
@@ -252,7 +252,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
       const runtime: bcc.Runtime = (<any>this).getRuntime();
 
       this.companyName = (
-        await ProfileMigrationLibrary.loadProfileData(runtime, 'registration') || {}
+        await ProfileMigrationLibrary.loadProfileData(this, 'registration') || {}
       ).company || runtime.activeAccount;
     }
 

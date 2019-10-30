@@ -80,21 +80,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   form: RegistrationFormInterface = null;
 
   /**
-   * Watch for dispatcher updates
-   */
-  listeners: Array<any> = [ ];
-
-  /**
    * Load the mail details
    */
   async created() {
-    // watch for save updates
-    this.listeners.push(dispatchers.updateProfileDispatcher.watch(($event: any) => {
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        this.loadProfileData();
-      }
-    }));
-
     // load profile data
     await this.loadProfileData();
   }
@@ -107,19 +95,10 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   }
 
   /**
-   * Clear dispatcher listeners
-   */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
-  }
-
-  /**
    * Load the profile data an specify the registration form.
    */
   async loadProfileData() {
-    const runtime = (<any>this).getRuntime();
-    const registrationData = this.data ||
-      await ProfileMigrationLibrary.loadProfileData(runtime, 'registration') || {};
+    const registrationData = this.data || this.$store.state.profileDApp.data.registration || {};
 
     // setup registration form
     this.form = (<RegistrationFormInterface>new EvanForm(this, {
@@ -167,8 +146,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
 
   async changeProfileData() {
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      address: this.$store.state.profileDApp.address,
       formData: this.form.getFormData(),
-      type: 'registration'
+      type: 'registration',
     });
   }
 }

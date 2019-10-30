@@ -36,43 +36,48 @@
         <span>{{ '_profile.verifications.error-loading' | translate }}</span>
       </div>
 
-      <evan-card class="mt-3"
-        icon="mdi mdi-plus"
-        highlight="true"
-        v-else-if="requests.length === 0 && verifications.length === 0 || testMode"
-        :title="'_profile.verifications.notary.request-notary-verification' | translate">
-        <template v-slot:actions>
+      <template v-else-if="$store.state.profileDApp.isMyProfile">
+        <evan-card class="mt-3"
+          icon="mdi mdi-plus"
+          highlight="true"
+          v-if="requests.length === 0 && verifications.length === 0 || testMode"
+          :title="'_profile.verifications.notary.request-notary-verification' | translate">
+          <template v-slot:actions>
+            <evan-button type="secondary"
+              @click="$refs.requestNotary.show();">
+              {{ '_profile.verifications.notary.request.request-ident' | translate }}
+            </evan-button>
+            <evan-button type="link" size="sm"
+              class="d-block  mt-1 text-muted"
+              @click="$refs.orgInfo.show();">
+              {{ '_profile.verifications.notary.learn-more' | translate }}
+            </evan-button>
+          </template>
+        </evan-card>
+        <evan-card class="mt-3"
+          highlight="true"
+          v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
+          <svg viewBox="0 0 38 38" fill="none">
+            <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
+          </svg>
+          <h5 class="font-weight-semibold">
+            {{ '_profile.verifications.notary.request-notary-verification' | translate }}
+          </h5>
+
           <evan-button type="secondary"
             @click="$refs.requestNotary.show();">
             {{ '_profile.verifications.notary.request.request-ident' | translate }}
           </evan-button>
           <evan-button type="link" size="sm"
-            class="d-block  mt-1 text-muted"
+            class="d-block mt-1 text-muted"
             @click="$refs.orgInfo.show();">
             {{ '_profile.verifications.notary.learn-more' | translate }}
           </evan-button>
-        </template>
-      </evan-card>
-      <evan-card class="mt-3"
-        highlight="true"
-        v-else-if="requests.length === 0 && verifications.length === 0 || testMode">
-        <svg viewBox="0 0 38 38" fill="none">
-          <path d="M37.6666 21.6667H21.6666V37.6667H16.3333V21.6667H0.333252V16.3333H16.3333V0.333328H21.6666V16.3333H37.6666V21.6667Z" fill="black"/>
-        </svg>
-        <h5 class="font-weight-semibold">
-          {{ '_profile.verifications.notary.request-notary-verification' | translate }}
-        </h5>
-
-        <evan-button type="secondary"
-          @click="$refs.requestNotary.show();">
-          {{ '_profile.verifications.notary.request.request-ident' | translate }}
-        </evan-button>
-        <evan-button type="link" size="sm"
-          class="d-block mt-1 text-muted"
-          @click="$refs.orgInfo.show();">
-          {{ '_profile.verifications.notary.learn-more' | translate }}
-        </evan-button>
-      </evan-card>
+        </evan-card>
+      </template>
+      <template v-else-if="!verifications || verifications.length !== 0">
+        {{ '_profile.verifications.no-verifications' | translate }}
+      </template>
 
       <template v-if="verifications && verifications.length !== 0">
         <notary-verification-card

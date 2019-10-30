@@ -114,12 +114,13 @@ async function getIdentificationDetails(runtime: bcc.Runtime, address: string, r
 }
 
 /**
- * Gets the issued verifications.
+ * Get the verifications for the current opened account.
  *
- * @param      {bcc.Runtime}  runtime  bcc runtime
+ * @param      {EvanComponent}  vueInstance  vue instance, where the profileDApp vuex was loaded for
+ *                                           a opened account.
  */
-async function getIssuedVerifications(runtime) {
-  const verifications = await runtime.profile.getBcContract('verifications', 'notary');
+async function getIssuedVerifications(vueInstance) {
+  const verifications = await vueInstance.$store.state.profileDApp.profile.getBcContract('verifications', 'notary');
   if (verifications) {
     bcc.Ipld.purgeCryptoInfo(verifications);
     return verifications;

@@ -91,7 +91,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
-    this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
+    this.sharedContacts = await getProfilePermissions(this);
 
     this.loading = false;
   }
@@ -108,7 +108,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    */
   async loadPermissions(user: string) {
     const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime);
+    const allPermissions = await getProfilePermissionDetails(runtime, this.$route.params.address);
 
     if (!allPermissions[user]) {
       return allPermissions['new'];

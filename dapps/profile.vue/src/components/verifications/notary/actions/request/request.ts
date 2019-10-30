@@ -289,10 +289,9 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Load currents users company data and checks, if some information are missing.
    */
   async loadCompanyData() {
-    const runtime: bcc.Runtime = (<any>this).getRuntime();
     const [ registration, contact, ] = await Promise.all([
-      ProfileMigrationLibrary.loadProfileData(runtime, 'registration'),
-      ProfileMigrationLibrary.loadProfileData(runtime, 'contact'),
+      ProfileMigrationLibrary.loadProfileData(this, 'registration'),
+      ProfileMigrationLibrary.loadProfileData(this, 'contact'),
     ]);
 
     this.companyData = { registration, contact, };
