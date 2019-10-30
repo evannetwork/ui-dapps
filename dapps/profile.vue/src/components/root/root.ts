@@ -20,7 +20,7 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -46,6 +46,13 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * Watch for dispatcher updates
    */
   listeners: Array<any> = [];
+
+  @Watch('$route')
+  onRouteChange(to, from) {
+    if (to.params.address !== this.$store.state.profileDApp.address) {
+      this.initialize();
+    }
+  }
 
   /**
    * Watch for dispatcher updates§
@@ -106,12 +113,12 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       profile,
     };
 
-    // try {
-    //   // load general profile information
-    //   await profile.loadForAccount();
-    // } catch (ex) {
-    //   runtime.logger.log(`Could not description for ${ address }: ${ ex.message }`, 'error');
-    // }
+    try {
+      // load general profile information
+      await profile.loadForAccount();
+    } catch (ex) {
+      runtime.logger.log(`Could not description for ${ address }: ${ ex.message }`, 'error');
+    }
 
     // load container data
     if (profile.profileContainer) {
@@ -126,7 +133,10 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       profileDApp.description = await profile.profileContainer.getDescription();
       profileDApp.data = await this.loadProfileEntries();
     } else {
-      profileDApp.permissions.read = [ 'accountDetails' ];
+      if (profileDApp.isMyProfile) {
+        profileDApp.permissions.read = [ 'accountDetails' ];
+      }
+
       profileDApp.old = true;
     }
   }

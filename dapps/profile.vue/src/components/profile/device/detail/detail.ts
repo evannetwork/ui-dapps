@@ -66,7 +66,7 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
    * Load the profile data an specify the registration form.
    */
   async loadProfileData() {
-    const deviceData = this.$store.state.profileDApp.data.registration || {};
+    const deviceData = this.$store.state.profileDApp.data.deviceDetails || {};
 
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
