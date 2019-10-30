@@ -19,14 +19,9 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import Vue from 'vue';
-import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import * as dispatchers from '../../dispatchers/registry';
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 
 import dataSetExamples from './dummydata.json';
 
@@ -39,8 +34,7 @@ interface SampleFormInterface extends EvanForm {
 }
 
 
-// TODO: replace interfaces by import from modules:
-// import { DataSetPermissionsInterface } from '@evan.network/ui-vue-core/src/interfaces';
+import { ContainerPermissionsInterface } from '@evan.network/ui-vue-core/src/interfaces';
 /**
  * Interface for multiple dataset permissions object.
  */
@@ -52,19 +46,6 @@ export interface PermissionsInterface {
   };
 }
 
-/**
- * Defines an object of permission interfaces representing all permission attributes of a data set.
- */
-export interface DataSetPermissionsInterface {
-  label: string;
-  key: string;
-  permissions: PermissionsInterface;
-}
-
-interface DataSetExamplesInterface {
-  [datasetkey: string]: DataSetPermissionsInterface;
-}
-
 @Component({ })
 export default class Forms extends mixins(EvanComponent) {
   /**
@@ -73,6 +54,10 @@ export default class Forms extends mixins(EvanComponent) {
   isPublic = true;
   stacked = false;
   onlyForm = false;
+  sortFilters = JSON.stringify({
+    containerId123: ['Number of Seats', 'Manufactorer', 'Flight Log', 'Parts'],
+    containerId456: ['Marke', 'Anzahl Räder', 'Farbe', 'Sitzplätze', 'Kofferraum', 'Nutzung', 'Kilometerstände', 'Fahrtenbuch']
+  }, undefined, 2);
 
   /**
    * Rerender everything
@@ -175,7 +160,7 @@ export default class Forms extends mixins(EvanComponent) {
   handleSubmit(ev: Event): Promise<any> {
     console.log(ev);
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
       setTimeout(() => {
         console.log('resolved');
 
@@ -208,14 +193,13 @@ export default class Forms extends mixins(EvanComponent) {
    * @param userId user hash
    */
   loadPermissions(userId: string) {
-    return new Promise( (resolve, reject) => {
+    return new Promise( (resolve, _) => {
       setTimeout(() => {
         if (dataSetExamples[userId]) {
           resolve(dataSetExamples[userId]);
         } else {
           // for test cases take always first from dummy data
           resolve(Object.values(dataSetExamples)[0]);
-          // reject(new Error(`No dummy data for this user id: ${userId}`));
         }
       }, 2000);
     });
@@ -224,9 +208,20 @@ export default class Forms extends mixins(EvanComponent) {
   /**
    * Mock: will be replaced by permissions update function.
    */
-  updatePermissions(permissions) {
+  updatePermissions(permissions: ContainerPermissionsInterface) {
     console.log('permissions to upodate:', JSON.stringify(permissions));
 
     return new Promise((r, _) => { r(true); });
+  }
+
+  isJsonString(str: string) {
+    try {
+      const json = JSON.parse(str);
+
+      return (typeof json === 'object');
+    } catch (e) {
+
+      return false;
+    }
   }
 }
