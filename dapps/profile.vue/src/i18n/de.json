@@ -132,7 +132,7 @@
       "deviceDetails": "Geräteinformationen",
       "registration": "Registrierungsdaten"
     },
-    "not-permitted-view": "Sie haben keine Rechte diese Daten für das ausgewählte Profil auszusehen.",
+    "not-permitted-view": "Sie haben keine Rechte, diese Daten für das ausgewählte Profil anzusehen.",
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {

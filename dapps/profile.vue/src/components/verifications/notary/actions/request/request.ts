@@ -30,7 +30,6 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 // internal
 import * as dispatchers from '../../../../../dispatchers/registry';
 import * as notaryLib from '../../notary.lib';
-import ProfileMigrationLibrary from '../../../../../lib/profileMigration';
 
 
 interface RequestFormIdentInterface extends EvanForm {

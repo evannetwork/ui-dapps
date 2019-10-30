@@ -62,7 +62,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Load the mail details
    */
   async created() {
-    const runtime = (<any>this).getRuntime();
     // fill empty address with current logged in user
     this.address = this.$store.state.profileDApp.address;
     this.userInfo = this.$store.state.profileDApp.data.accountDetails;

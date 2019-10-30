@@ -30,7 +30,6 @@ import { FileHandler, } from '@evan.network/ui';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
-import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface DeviceDetailFormInterface extends EvanForm {
   dataStreamSettings: EvanFormControl;

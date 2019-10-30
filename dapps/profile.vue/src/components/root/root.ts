@@ -20,7 +20,7 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
+import { Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -28,7 +28,6 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registry';
-import { getProfilePermissionDetails, } from '../../lib/permissionsUtils';
 
 @Component({ })
 export default class ProfileRootComponent extends mixins(EvanComponent) {
@@ -146,7 +145,6 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    */
   async loadProfileEntries() {
     const data = { };
-    const runtime = (<any>this).getRuntime();
     const profileDApp = this.$store.state.profileDApp;
     const entryKeys = Object.keys(profileDApp.description.dataSchema);
 

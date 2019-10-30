@@ -30,7 +30,6 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
-import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 
 interface ContactFormInterface extends EvanForm {
   city: EvanFormControl;
