@@ -129,7 +129,18 @@
     </template>
 
     <div class="container white-box p-3">
-      <evan-permissions-editor :loadPermissions="loadPermissions" :updatePermissions="updatePermissions" />
+      <evan-permissions-editor
+        :loadPermissions="loadPermissions"
+        :updatePermissions="updatePermissions"
+        :relative="true"
+        :sortFilters="isJsonString(sortFilters) ? JSON.parse(sortFilters) : null"
+      />
+
+      <h4>sortFilters JSON</h4>
+      <textarea v-model="sortFilters" style="width: 100%;" rows="20" cols="50" wrap="soft" />
+      <p class="text-danger" v-if="!isJsonString(sortFilters)">
+        <i class="mdi mdi-alert" /> Invalid JSON
+      </p>
     </div>
 
   </div>
