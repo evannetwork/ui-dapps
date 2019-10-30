@@ -8,22 +8,18 @@ Scenario: Log into test account and navigate to the profile detail page
   
   When I click on "Profile" in main menu
     Then I want to see a text including "Profile"
-    Then I want to see a text including "Wallet"
-    Then I want to see a text including "Verifications"
-    Then I want to see a text including "Contacts"
+    And I want to see a text including "Wallet"
+    And I want to see a text including "Verifications"
+    And I want to see a text including "Contacts"
   When I click on button "Share"
     Then I want to see a text including "Select contact to share with"
-  When I click the element with id "shareContactSelect"
-    Then I want to see a element with class "vs__dropdown-menu"
-  When I click the element with selector "#shareContactSelect > ul > li"
+  When I click on the Vue Select with label "Select contact to share with"
+    And I press the "ENTER" key
     Then I want to see a text including "Profile Data"
-    Then the button "Update Sharing Options" should be "disabled"
+    But the button "Update Sharing Options" should be "disabled"
   When I click the element with selector ".input-wrapper > label"
     Then the button "Update Sharing Options" should be "enabled"
   When I click on button "Update Sharing Options"
-
-
-  
 
   Given I wait for enter
   # <ul role="listbox" class="vs__dropdown-menu"><li role="option" class="vs__dropdown-option vs__dropdown-option--selected vs__dropdown-option--highlight">
