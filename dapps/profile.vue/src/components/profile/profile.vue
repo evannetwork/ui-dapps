@@ -132,7 +132,7 @@
         :loadPermissions="loadPermissions"
         :updatePermissions="updatePermissions"
         i18nScope="_profile.sharing"
-        :sortFilters="['accountDetails', 'registration', 'contact']"
+        :sortFilters="sortFilters[userInfo.profileType]"
         :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
       />
     </evan-swipe-panel>
