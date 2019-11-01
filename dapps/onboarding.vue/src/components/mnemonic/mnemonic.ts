@@ -18,13 +18,11 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 @Component({ })
@@ -93,7 +91,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
   allWordsCorrect = false;
 
   // is currently a riddle started?
-  riddelStarted = false;
+  riddleStarted = false;
 
   // any mnemonic word has been modified
   anyWordDirty = false;
@@ -274,7 +272,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
    * @param      {number}  amount  amount of words that should be asked
    */
   startRiddle(amount) {
-    this.riddelStarted = true;
+    this.riddleStarted = true;
     this.useTextArea = false;
 
     // remove words until the amount is reached
@@ -312,6 +310,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
     const pastedData = clipboardData
       .getData('Text')
       .toLowerCase()
+      .replace(/[\r\n]+/, ' ')
       .replace(/[^a-z ]/g, '')
       .replace(/ {2,}/g, ' ')
       .trim()
@@ -338,7 +337,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
   cancelRiddle() {
     this.words = this.initial;
     this.mnemonicText = this.initial.join(' ');
-    this.riddelStarted = false;
+    this.riddleStarted = false;
   }
 
   setDirty(index) {

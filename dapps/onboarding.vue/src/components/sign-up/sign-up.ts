@@ -303,6 +303,9 @@ export default class SignUp extends mixins(EvanComponent) {
         await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
         dappBrowser.core.setCurrentProvider('internal');
 
+        // set encrypted mnemonic for temporary usage
+        this.persistMnemonic(runtime, vault);
+
         // show done animation and navigate to signed in page
         this.creatingProfile = 5;
         setTimeout(() => {
@@ -327,6 +330,20 @@ export default class SignUp extends mixins(EvanComponent) {
       // stop ui status updates
       window.clearTimeout(this.timeoutCreationStatus);
     }
+  }
+
+  /**
+   * Writes encrypted mnemonic to local storage.
+   *
+   * @param runtime
+   * @param { encryptionKey }
+   */
+  async persistMnemonic(runtime, {encryptionKey}): Promise<void> {
+    const cryptor = runtime.sharing.options.cryptoProvider
+      .getCryptorByCryptoAlgo(runtime.sharing.options.defaultCryptoAlgo);
+    const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey, });
+
+    window.localStorage['evan-mnemonic'] = encryptedMnemonic.toString('hex');
   }
 
   showMnemnonicModal() {
