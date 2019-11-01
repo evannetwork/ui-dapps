@@ -9,13 +9,11 @@ let loggedIn = false;
 Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
   const evan = setupEvan(client);
 
-  await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
-  await client.pause(5000);
   if (customPart && !evan.accounts[accountName]) {
     throw new Error(`no account data found for account ${accountName}`);
   }
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
-
+  await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
   client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
@@ -26,6 +24,9 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   }, [], function(result) {
     this.assert.ok(result.value);
   });
+
+  await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`).refresh();
+  await client.pause(5000);
 
   // vue, to define
   const split = user.mnemonic.split(' ');

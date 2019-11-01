@@ -1,5 +1,6 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
+import { WAIT_TIME } from '../core/core';
 
 /**
  * Click on menu tab with a certain content.
@@ -10,7 +11,7 @@ When('I want to see a text including {string}',
     client.useXpath();
     const xPathSelector = `//*[normalize-space(text()) = '${content}']`;
 
-    await client.waitForElementPresent(xPathSelector, 10 * 1000);
+    await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.be.present;
     client.useCss(); // switches back to css selector
   }
@@ -25,7 +26,7 @@ When('I want to see not a text including {string}',
     client.useXpath();
     const xPathSelector = `//*[normalize-space(text()) = '${content}']`;
 
-    await client.waitForElementNotPresent(xPathSelector, 10 * 1000);
+    await client.waitForElementNotPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.not.be.present;
     client.useCss(); // switches back to css selector
   }

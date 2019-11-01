@@ -8,6 +8,8 @@ const buttonSelector = (content) => {
   ].join('|');
 }
 
+const WAIT_TIME = 15 * 1000;
+
 /**
  * Click on button with a certain content.
  */
@@ -47,7 +49,7 @@ Then('I want to see a button {string}',
      client.useXpath();
      const xPathSelector = buttonSelector(content);
 
-     await client.waitForElementPresent(xPathSelector, 10 * 1000);
+     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
      await client.expect.element(xPathSelector).to.be.visible;
 
      client.useCss(); // switches back to css selector
@@ -62,7 +64,7 @@ Then('the button {string} should be {string}',
     client.useXpath();
 
     const xPathSelector = buttonSelector(content);
-    await client.waitForElementPresent(xPathSelector, 10 * 1000);
+    await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.be.visible;
 
     switch (statusType) {
