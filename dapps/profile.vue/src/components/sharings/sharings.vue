@@ -41,10 +41,11 @@ the following URL: https://evan.network/license/
         >
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
-            :updatePermissions="updatePermissions"
-            :sortFilters="['accountDetails', 'registration', 'contact']"
-            :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
             :onSelect="(accountId) => {this.selectedSharedContacts = [accountId]}"
+            :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
+            :sortFilters="sortFilters[userInfo.profileType]"
+            :updatePermissions="updatePermissions"
+            i18nScope="_profile.sharing"
           />
         </evan-swipe-panel>
 
@@ -53,15 +54,15 @@ the following URL: https://evan.network/license/
           <p>{{ '_profile.sharings.desc' | translate }}</p>
 
           <template v-if="sharedContacts && sharedContacts.length > 0">
-            <evan-base-list 
+            <evan-base-list
               class="mt-5"
-              :data="sharedContacts" 
+              :data="sharedContacts"
               :isSelectedCallback="(item) => this.selectedSharedContacts.includes(item.accountId)"
               :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
             >
               <template v-slot:item="{item}">
                 <evan-shared-contact
-                  :item="item" 
+                  :item="item"
                   :removeCallback="() => handleRemoveSharedContact(item)"
                   :isLoading="!!isLoadingContacts && isLoadingContacts.has(item.accountId)"
                 />

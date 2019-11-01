@@ -25,6 +25,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registry';
+import { sortFilters } from '../utils/shareSortFilters';
 
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 
@@ -39,6 +40,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Address of the user that should be loaded
    */
   address = '';
+
   /**
    * Currents users account information
    */
@@ -54,11 +56,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   verificationCount = 0;
 
-  sortFilters = {
-    user: null,
-    company: ['accountDetails', 'registration', 'contact'],
-    device: ['accountDetails', 'deviceDetails']
-  }
+  sortFilters = sortFilters;
 
   /**
    * Load the mail details
