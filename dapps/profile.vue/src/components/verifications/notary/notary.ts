@@ -47,7 +47,7 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
   /**
    * all my assigned organizations
    */
-  requests: Array<string> = null;
+  requests: Array<string> = [ ];
 
   /**
    * Load request function to be able to listent on reload event
@@ -74,8 +74,11 @@ export default class NotaryVerificationComponent extends mixins(EvanComponent) {
       this.rerender = rerender;
 
       try {
-        this.requests = await notaryIdentification.getRequests(runtime, this.address);
-        this.verifications = await notaryIdentification.getIssuedVerifications(runtime);
+        // only load requests for me
+        if (this.$store.state.profileDApp.isMyProfile) {
+          this.requests = await notaryIdentification.getRequests(runtime, this.address);
+        }
+        this.verifications = await notaryIdentification.getIssuedVerifications(this);
 
         // let the parent component know, whats going on
         this.$emit('loaded');

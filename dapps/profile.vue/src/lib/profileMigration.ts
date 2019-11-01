@@ -38,10 +38,13 @@ export default class ProfileMigrationLibrary {
   /**
    * Load a new profile data scope from a migrated profile.
    *
-   * @param      {bcc.Runtime}  runtime  blockchain-core runtime
-   * @param      {string}       type     the scope type
+   * @param      {bcc.Profile}  profile  profile to load the data from
+   * @param      {bcc.Runtime}  vueInstance  profile component vue instance
    */
-  static async loadProfileData(runtime, type) {
+  static async loadProfileData(vueInstance, type) {
+    const runtime = vueInstance.getRuntime();
+    const profile = vueInstance.$store.state.profileDApp.profile;
+
     const instances = await dispatchers.updateProfileDispatcher.getInstances(runtime, true);
     let scopeData;
 
@@ -55,7 +58,7 @@ export default class ProfileMigrationLibrary {
 
     // if not dispatcher entry was found for this scope, load it!
     if (!scopeData) {
-      scopeData = (await runtime.profile.getProfileProperty(type));
+      scopeData = (await profile.getProfileProperty(type));
     }
 
     return scopeData;

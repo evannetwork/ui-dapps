@@ -125,6 +125,14 @@
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
+    "not-permitted": {
+      "accountDetails": "Profil-Informationen",
+      "contact": "Kontaktdaten",
+      "desc": "Sie haben keine Berechtigungen, diese Daten einzusehen.",
+      "deviceDetails": "Geräteinformationen",
+      "registration": "Registrierungsdaten"
+    },
+    "not-permitted-view": "Sie haben keine Rechte, diese Daten für das ausgewählte Profil anzusehen.",
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {
@@ -141,23 +149,32 @@
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharing": {
-      "accountDetails": "Profil Details",
+      "accountDetails": "Profildetails",
       "accountName": "Name",
       "city": "Ort",
-      "company": "Firmenname",
+      "company": "Unternehmen",
       "contact": "Kontaktdaten",
-      "country": "Land",
+      "country": "Firmensitz",
       "court": "Registergericht",
+      "dataStreamSettings": "IoT-Einstellungen",
       "description": "Um Ihre Profildaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
+      "deviceDetails": "Geräteinformationen",
+      "location": "Standort",
+      "manufacturer": "Hersteller",
+      "owner": "Eigentümer",
       "permissionsTitle": "Profilzugriffsrechte",
       "picture": "Bild",
-      "postalCode": "PLZ",
+      "postalCode": "Postleitzahl",
+      "Profile Data": "Profildaten",
       "profileType": "Profiltyp",
       "register": "Register",
       "registerNumber": "Registernummer",
       "registration": "Registrierungsdaten",
-      "salesTaxID": "Steuer ID",
+      "salesTaxID": "Umsatzsteuer-ID",
+      "serialNumber":"Seriennummer",
+      "settings": "Einstellungen",
       "streetAndNumber": "Straße",
+      "type": "Typ",
       "website": "Website"
     },
     "sharings": {
@@ -169,6 +186,7 @@
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
       "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
       "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an."
     },

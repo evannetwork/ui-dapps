@@ -1,6 +1,6 @@
 {
   "0x933F8B2C639e82109468Fca14695435A1Ff62457": {
-    "$datasetKey": {
+    "containerId123": {
       "label": "Airforce 1",
       "permissions": {
         "Number of Seats": {
@@ -44,7 +44,7 @@
         }
       }
     },
-    "$datasetKeyCommon": {
+    "containerId456": {
       "label": "Common Data",
       "permissions": {
         "Marke": {

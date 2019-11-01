@@ -23,11 +23,16 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+// internal
+import { containerDispatchers as dispatchers } from '@evan.network/datacontainer.digitaltwin';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { getProfilePermissions } from './utils';
+import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
+import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
+import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 
 interface SharedContactInterface {
-  accountId: String;
+  accountId: string;
+  sharedConfig: ContainerShareConfig[];
   permissionType: String;
 }
 
@@ -49,6 +54,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   sharedContacts = [];
 
   /**
+   * a list of contact IDs currently being loaded
+   */
+  isLoadingContacts = new Set<string>();
+
+  /**
    * computed property
    * selected shared contacts from vuex store
    */
@@ -60,6 +70,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     (this as any).$store.commit('setSelectedSharedContacts', contacts);
   }
 
+  /**
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [];
+
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
   }
@@ -67,37 +82,74 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
     event.stopPropagation();
 
-    let newSharedContacts = this.selectedSharedContacts;
-    const index = newSharedContacts.indexOf(item.accountId);
+    const index = this.selectedSharedContacts.indexOf(item.accountId);
 
-    if (index > -1) {
-      // remove from array
-      newSharedContacts.splice(index, 1);
-    } else {
-      // push to array
-      newSharedContacts.push(item.accountId);
-    }
+    // at first allow one selection only
+    this.selectedSharedContacts = index > -1 ? [] : [item.accountId];
 
-    this.selectedSharedContacts = newSharedContacts;
+    // let newSharedContacts = this.selectedSharedContacts;
+    // if (index > -1) {
+    //   // remove from array
+    //   newSharedContacts.splice(index, 1);
+    // } else {
+    //   // push to array
+    //   newSharedContacts.push(item.accountId);
+    // }
+
+    // this.selectedSharedContacts = newSharedContacts;
   }
 
-  handleRemoveSharedContact(item: SharedContactInterface, event: MouseEvent) {
-    event.stopPropagation();
+  async handleRemoveSharedContact(item: SharedContactInterface) {
+    const runtime = (<any>this).getRuntime();
 
-    console.log('remove item from shared contacts', item);
+    await removeAllPermissions(runtime, item.sharedConfig)
+      .then(() => {
+        // remove item from list
+        this.sharedContacts = this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
+        // remove from selected shared contacts
+        const index = this.selectedSharedContacts.indexOf(item.accountId);
+        if (index > -1) {
+          this.selectedSharedContacts.splice(index, 1);
+        }
+      })
+      .catch((e: Error) => {
+        console.log('Error writing permissions', e.message);
+      });
   }
 
   async created() {
+    // watch for permission updates
+    this.listeners.push(dispatchers.shareDispatcher.watch(async ($event: any) => {
+      // set isLoading state to corresponding list elements 
+      if ($event.detail.status === 'starting') {
+        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
+        accountIds.forEach(item => this.isLoadingContacts.add(item));
+
+        // deselect list elements
+        this.selectedSharedContacts = this.selectedSharedContacts.filter(item => accountIds.includes(item));
+      }
+
+      // canceling isLoading state from corresponding list elements
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
+        accountIds.forEach(item => this.isLoadingContacts.delete(item));
+        this.sharedContacts = await getProfilePermissions((<any>this));
+      }
+    }));
+
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
-    this.sharedContacts = await getProfilePermissions((<any>this).getRuntime());
+    this.sharedContacts = await getProfilePermissions(this);
 
     this.loading = false;
   }
 
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
+
+    // clear dispatcher listeners
+    this.listeners.forEach(listener => listener());
   }
 
   /**
@@ -108,7 +160,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    */
   async loadPermissions(user: string) {
     const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime);
+    const allPermissions = await getProfilePermissionDetails(runtime, this.$route.params.address);
 
     if (!allPermissions[user]) {
       return allPermissions['new'];
@@ -116,6 +168,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
     return allPermissions[user];
   }
+
+  /**
+   * Mock: will be replaced by permissions update function. TODO
+   */
+  updatePermissions = updatePermissions;
 }
 
 export default ProfileSharingsComponent;

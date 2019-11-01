@@ -30,7 +30,6 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 // internal
 import * as dispatchers from '../../../../../dispatchers/registry';
 import * as notaryLib from '../../notary.lib';
-import ProfileMigrationLibrary from '../../../../../lib/profileMigration';
 
 
 interface RequestFormIdentInterface extends EvanForm {
@@ -289,19 +288,16 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Load currents users company data and checks, if some information are missing.
    */
   async loadCompanyData() {
-    const runtime: bcc.Runtime = (<any>this).getRuntime();
-    const [ registration, contact, ] = await Promise.all([
-      ProfileMigrationLibrary.loadProfileData(runtime, 'registration'),
-      ProfileMigrationLibrary.loadProfileData(runtime, 'contact'),
-    ]);
-
-    this.companyData = { registration, contact, };
+    this.companyData = {
+      contact: this.$store.state.profileDApp.data.contact,
+      registration: this.$store.state.profileDApp.data.registration,
+    };
 
     // detect empty values, that are required
     Object.keys(this.requiredCompanyFields).forEach(category => {
       this.missingCompanyFields[category] = [ ];
       this.requiredCompanyFields[category].forEach((field: string) => {
-        if (!this.companyData[category][field]) {
+        if (this.companyData[category] && !this.companyData[category][field]) {
           this.missingCompanyFields[category].push(field);
         }
       });

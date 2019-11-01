@@ -70,7 +70,7 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
 
     // load users type
     this.type = (await runtime.dataContract.getEntry(
-      runtime.profile.profileContract,
+      this.$store.state.profileDApp.profile.profileContract,
       'accountDetails',
       runtime.activeAccount
     )).profileType;

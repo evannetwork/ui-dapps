@@ -22,12 +22,14 @@
     <evan-form
       class="mt-2 mb-8"
       ref="form"
+      :editable="onlyForm || $store.state.profileDApp.permissions.readWrite.indexOf('contact') !== -1"
       :enableCancel="onlyEdit ? false : true"
       :form="form"
       :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
       :i18nScope="'_profile.company.contact'"
       :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
       :onlyForm="onlyForm"
+      :shareable="$route.params.address === $store.state.runtime.activeAccount"
       :stacked="stacked"
       :title="'_profile.company.contact.title' | translate"
       @save="changeProfileData()">
