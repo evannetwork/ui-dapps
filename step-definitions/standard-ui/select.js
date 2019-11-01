@@ -14,6 +14,6 @@ When('I click on the Vue Select with label {string}',
         elementId = attr.value;
     });
 
-    await client.click("css selector", `#${elementId}`);
+    await client.click(`#${elementId}`);
   }
 );
