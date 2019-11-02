@@ -17,7 +17,6 @@
   the following URL: https://evan.network/license/
 */
 
-import { Container, ContainerShareConfig, Profile } from '@evan.network/api-blockchain-core';
 import { Container, ContainerShareConfig, Profile, ContainerUnshareConfig } from '@evan.network/api-blockchain-core';
 import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 
