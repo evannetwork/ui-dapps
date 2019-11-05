@@ -31,14 +31,8 @@
               :accountDetails="userInfo"
               :address="address"
               :editable="true"
-              @typeClick="typeSwitchModal()"
               @update="userInfo = $event"
               @save="saveUserInfo"
-            />
-            <profile-type-switch
-              ref="profileType"
-              :type="userInfo.profileType"
-              v-if="$store.state.profileDApp.isMyProfile && userInfo"
             />
           </profile-permission-wrapper>
         </div>
@@ -69,12 +63,33 @@
             </template>
             <template v-else-if="$store.state.profileDApp.isMyProfile">
               <h5>{{ '_profile.type.missing-type' | translate }}</h5>
-              <evan-button
-                class="mt-3"
-                type="primary"
-                :label="'_profile.type.choose' | translate"
-                @click="typeSwitchModal()">
-              </evan-button>
+
+              <div class="d-flex justify-content-center my-5">
+                <evan-card class="clickable fixed-size"
+                  v-for="(type, index) in profileTypes"
+                  :class="{
+                    'ml-3': index !== 0,
+                    'evan-highlight active': newType === type,
+                  }"
+                  @click="newType = type">
+                  <evan-profile-picture
+                    class="mb-3"
+                    :src="`${ $store.state.profileBaseUrl }/assets/${ type }.svg`"
+                    :type="type"
+                    size="lg"
+                  />
+                  <h5 class="mb-3">{{ `_evan.profile.types.${ type }` | translate }}</h5>
+                  <small class="text-muted">{{ `_evan.profile.types.${ type }-desc` | translate }}</small>
+                </evan-card>
+              </div>
+
+              <div class="text-center mt-3">
+                <evan-button type="primary"
+                  :disabled="!newType"
+                  :label="'_profile.type.choose' | translate"
+                  @click="changeType()">
+                </evan-button>
+              </div>
             </template>
             <template v-else>
               <h5>{{ '_profile.type.missing-type-foreign' | translate }}</h5>
@@ -118,25 +133,25 @@
           </div>
         </div>
       </div>
+      <evan-swipe-panel
+        class="light"
+        alignment="right"
+        ref="shareSidebar"
+        showBackdrop="true"
+        type="default"
+        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+        @hide="$store.state.uiState.swipePanel = ''"
+        v-if="userInfo"
+      >
+        <evan-permissions-editor
+          :loadPermissions="loadPermissions"
+          :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
+          :sortFilters="sortFilters[userInfo.profileType]"
+          :updatePermissions="updatePermissions"
+          i18nScope="_profile.sharing"
+        />
+      </evan-swipe-panel>
     </template>
-    <evan-swipe-panel
-      class="light"
-      alignment="right"
-      ref="shareSidebar"
-      showBackdrop="true"
-      type="default"
-      :isOpen="$store.state.uiState.swipePanel === 'sharing'"
-      @hide="$store.state.uiState.swipePanel = ''"
-      v-if="userInfo"
-    >
-      <evan-permissions-editor
-        :loadPermissions="loadPermissions"
-        :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-        :sortFilters="sortFilters[userInfo.profileType]"
-        :updatePermissions="updatePermissions"
-        i18nScope="_profile.sharing"
-      />
-    </evan-swipe-panel>
   </div>
 </template>
 

@@ -56,6 +56,19 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   verificationCount = 0;
 
+  /**
+   * Available profile types, that are selectable by the user
+   */
+  profileTypes = [ 'company', 'device' ];
+
+  /**
+   * New type, that was selected by the user
+   */
+  newType = null;
+
+  /**
+   * Sorting for permission sidepanel
+   */
   sortFilters = sortFilters;
 
   /**
@@ -72,6 +85,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       timestamp: Date.now(),
     };
     this.loading = false;
+
+    this.$nextTick(() => this.$refs.reactive = true);
   }
 
   /**
@@ -91,15 +106,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   isLoading() {
     return (this as any).$store.state.dispatcher.curr.running.updateProfileDispatcher;
-  }
-
-  /**
-   * Open the type switch modal
-   */
-  typeSwitchModal() {
-    if (this.userInfo.profileType === 'user' && !this.isLoading()) {
-      (this as any).$refs.profileType.show();
-    }
   }
 
   /**
@@ -144,6 +150,22 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     }
 
     return allPermissions[user];
+  }
+
+  /**
+   * Trigger profile type change
+   *
+   * @param      {string}  type    The type
+   */
+  changeType(type: string) {
+    if (this.newType !== 'user') {
+      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+        formData: {
+          profileType: this.newType
+        },
+        type: 'accountDetails'
+      });
+    }
   }
 
   /**

@@ -185,7 +185,7 @@
     "type": {
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
-      "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
       "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
       "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an."

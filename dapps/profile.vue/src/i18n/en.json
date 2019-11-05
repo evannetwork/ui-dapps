@@ -185,7 +185,7 @@
     "type": {
       "change": "Change",
       "choose": "Specify Account Type",
-      "missing-type": "No type was selected for your profile. Use the interaction area below to specify your profile more precisely.",
+      "missing-type": "Use the interaction area below to specify your profile more precisely.",
       "missing-type-foreign": "No profile type has yet been selected for this profile.",
       "no-verifications-avaiable": "There are currently no verifications available for your profile type.",
       "switch": "Specify your Account Type"
