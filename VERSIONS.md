@@ -2,12 +2,13 @@
 
 ## Next Version
 ### Features
+- use `user` profile instead of `unspecified`
 - `profile.vue` (v3.4.0)
   - add sharing for profile categories
   - use correct route handling
   - add verification detail side panel
   - make company form data components usable from extern
-  - support that external profiles can opened 
+  - support that external profiles can opened
 - `onboarding.vue` (v3.2.0)
   - add company account type creation
 
