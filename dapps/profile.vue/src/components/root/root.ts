@@ -115,12 +115,14 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     try {
       // load general profile information
       await profile.loadForAccount();
+      // load profile container data
+      profileDApp.description = await profile.profileContainer.getDescription();
     } catch (ex) {
       runtime.logger.log(`Could not description for ${ address }: ${ ex.message }`, 'error');
     }
 
     // load container data
-    if (profile.profileContainer) {
+    if (profile.profileContainer && profileDApp.description) {
       // load permissions
       const { readWrite, read } = await profile.profileContainer.getContainerShareConfigForAccount(
         activeAccount);
@@ -128,8 +130,6 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         read: (read || [ ]).concat(readWrite || [ ]),
         readWrite: readWrite || [ ],
       };
-      // load profile container data
-      profileDApp.description = await profile.profileContainer.getDescription();
       profileDApp.data = await this.loadProfileEntries();
     } else {
       if (profileDApp.isMyProfile) {
