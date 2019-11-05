@@ -81,8 +81,8 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       this.loading = true;
     }
 
-    this.setNavEntries();
     await this.setupProfile();
+    this.setNavEntries();
 
     if (this.$store.state.profileDApp.isMyProfile) {
       this.allowedRoutes = [ ];
@@ -209,5 +209,11 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       text: `_profile.breadcrumbs.${ entry.key.split('/')[0] }`,
       icon: entry.icon,
     } : null));
+
+    // remove sharings from old profiles
+    if (!this.$store.state.profileDApp.profile.profileContainer ||
+        !this.$store.state.profileDApp.description) {
+      this.navEntries.splice(4, 1);
+    }
   }
 }

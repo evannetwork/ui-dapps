@@ -127,6 +127,7 @@
       type="default"
       :isOpen="$store.state.uiState.swipePanel === 'sharing'"
       @hide="$store.state.uiState.swipePanel = ''"
+      v-if="userInfo"
     >
       <evan-permissions-editor
         :loadPermissions="loadPermissions"
