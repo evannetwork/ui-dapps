@@ -2,6 +2,14 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 3.11.0
+### Features
 - use `user` profile instead of `unspecified`
 - `profile.vue` (v3.4.0)
   - add sharing for profile categories
@@ -11,11 +19,11 @@
   - support that external profiles can opened
 - `onboarding.vue` (v3.2.0)
   - add company account type creation
+- `addressbook.vue` (v3.1.1)
+  - fix empty alias contact loading
 
 ### Fixes
 - update gulp build scripts to be compatible node 12
-
-### Deprecations
 
 
 ## Version 3.10.0
