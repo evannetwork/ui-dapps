@@ -18,17 +18,14 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getIdentificationDetails } from '../verifications/notary/notary.lib';
 import * as dispatchers from '../../dispatchers/registry';
+import { sortFilters } from '../utils/shareSortFilters';
 
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 
@@ -43,6 +40,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Address of the user that should be loaded
    */
   address = '';
+
   /**
    * Currents users account information
    */
@@ -57,6 +55,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * Amount of calculated verifications and requests
    */
   verificationCount = 0;
+
+  sortFilters = sortFilters;
 
   /**
    * Load the mail details
