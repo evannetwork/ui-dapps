@@ -4,6 +4,11 @@
 ### Features
 
 ### Fixes
+- `profile.vue` (v3.5.1)
+  - fix company contact control order
+  - i18n fixes
+- `onboarding.vue` (v3.2.1)
+  - change terms of use and captcha checkbox
 
 ### Deprecations
 

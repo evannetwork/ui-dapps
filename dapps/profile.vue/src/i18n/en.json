@@ -47,7 +47,7 @@
         "court": {
           "error": "Please enter the information of the registration authority!",
           "label": "Register Court",
-          "placeholder": "Where is the company registered?"
+          "placeholder": "Berlin"
         },
         "register": {
           "error": "Please select the register type!",

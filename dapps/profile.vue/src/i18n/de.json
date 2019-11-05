@@ -47,7 +47,7 @@
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
           "label": "Registergericht",
-          "placeholder": "Wo ist der Firmensitz?"
+          "placeholder": "Berlin"
         },
         "register": {
           "error": "Bitte wählen Sie den Registertyp aus!",
