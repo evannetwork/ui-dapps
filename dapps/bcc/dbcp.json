@@ -9,7 +9,7 @@
       "files": [
         "bcc.js"
       ],
-      "origin": "Qmcd3aoynM8MFy3DVhYqQS3ypY7u2rEwUEJ35MEmFjowZX",
+      "origin": "QmfMHCGvPadVcgGxZGETgVX5t82qCawKojbRWyEfebCaLZ",
       "type": "library"
     },
     "dbcpVersion": 2,
@@ -24,7 +24,7 @@
       "dapp",
       "library"
     ],
-    "version": "2.13.0",
+    "version": "2.14.0",
     "versions": {
       "0.1.0": "QmTsY7ASbvxATLnEemHZQ8oQha64ujYe9VXbDCouDk7Xtp",
       "0.9.0": "Qmbw3yX82TVN9WhsRyeaRpd89M9XXL1pds9GgqJL29ohar",
@@ -56,7 +56,8 @@
       "2.10.0": "QmfDz8ZnjrAYkCABJ5eyZUAsk7Tqnw8p4s1T397bxrYxPo",
       "2.11.0": "QmNazTyTbuxVMvGFhTnug8WKnto4CidoZPBNzwaHyETwJr",
       "2.12.0": "QmQjLXgTtmoEW5BVgbkMUaZNA49Zk31xBcZjyHmzQxuoU2",
-      "2.13.0": "QmUe28YGGJk4rnqiPwMJESY7q4PCG5QWW7pfJxsJxNRHQx"
+      "2.13.0": "QmUe28YGGJk4rnqiPwMJESY7q4PCG5QWW7pfJxsJxNRHQx",
+      "2.14.0": "QmdUzHAuzaNuNDvrGbLADCnGgHz82iDbVAVwnD2yyvDuum"
     }
   }
 }
