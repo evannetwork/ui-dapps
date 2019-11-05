@@ -7,7 +7,7 @@
       "files": [
         "countries.libs.js"
       ],
-      "origin": "QmXpgMZmNUQbH9ZUz4x4QU5kpw3YmwRb8o4SVDUpGzybpy",
+      "origin": "QmRLdndFBMuuV7XirtFvrFmcsV1wqA4VcpcuavMr2UV6sj",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -30,9 +30,10 @@
       "evan",
       "library"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "versions": {
-      "1.0.0": "QmXmzcmMC536XBtKcLYYHib7aY6GCsXgqdc6NTt84MVmjn"
+      "1.0.0": "QmXmzcmMC536XBtKcLYYHib7aY6GCsXgqdc6NTt84MVmjn",
+      "1.1.0": "QmXYohomRfjQdSgXMPLQtWhVten2F6hFCyVjv2XEJ3Kx7a"
     }
   }
 }

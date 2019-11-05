@@ -12,7 +12,7 @@
         "ui.libs.js",
         "ui.libs.css"
       ],
-      "origin": "QmUoJdjvDzhoPrQMBXyS9opcMZvbQrnwBqP6Vw9BWLsYmu",
+      "origin": "QmcdV4ARrWLA47bQsNk8fcdJbyiVg6jr5tkpgCVfv1dhNn",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -35,7 +35,7 @@
       "evan",
       "library"
     ],
-    "version": "1.7.2",
+    "version": "1.7.3",
     "versions": {
       "1.0.0": "QmcMekTfYhhWLvnHo3YwSkw5fWo77FNHLrqgLfmcBYCerN",
       "1.1.0": "QmWGG5kwUJfgoHRRbJYNNAnE32mWLvRYH3Fc288v2CJaNb",
@@ -48,7 +48,8 @@
       "1.6.0": "QmNuHifSNx2NyyPWP9UkW2caYNQYZP6NbpNMy5qLXj81uu",
       "1.7.0": "QmTiKfLfiVxBQZGzCy8GtFriaXW3D4gzH7ztGBCSzaPXYf",
       "1.7.1": "Qma2wvhCZeHbjdfw6R4CvECeuECoRW9SfuPG7Mn7Rm6b38",
-      "1.7.2": "QmYLrqjVhPUKY2RvE8qSu5HeNTvm5A5u7GXHamQhuFNSAL"
+      "1.7.2": "QmYLrqjVhPUKY2RvE8qSu5HeNTvm5A5u7GXHamQhuFNSAL",
+      "1.7.3": "QmUBx2s9F83yE3SEFdFf89KsFn43YvJq7NWSF6Efjsc45A"
     }
   }
 }
