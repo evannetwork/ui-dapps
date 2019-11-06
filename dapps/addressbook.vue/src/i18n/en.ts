@@ -79,7 +79,7 @@ export default {
       "step2": "Invitation Message",
       "submit": "Add contact",
       "tags": {
-        "desc": "Tags seperated by spaces",
+        "desc": "Tags separated by spaces",
         "title": "Tags"
       }
     },
@@ -87,7 +87,7 @@ export default {
     "dispatcher": {
       "invite": "Inviting Contact...",
       "remove": "Removing Contact...",
-      "update": "Updateing Contact"
+      "update": "Updating Contact"
     },
     "identifier": "Address / EMail",
     "no-contacts": {

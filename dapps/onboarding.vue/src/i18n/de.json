@@ -22,7 +22,7 @@
     "please-login-signup": "Nutzen Sie eine bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
     "sign-in": {
       "decrypt": "Entschlüsseln",
-      "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerärt wieder her",
+      "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerät wieder her",
       "get-mnemonic": "Wiederherstellungs-Schlüssel",
       "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein oder fügen Sie diese aus der Zwischenablage ein.",
       "get-password": "Identität entschlüsseln",
@@ -54,7 +54,7 @@
         "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha-Abfrage, um den Prozess abzuschließen.",
         "status-1": "Erstellung des Identitätsvertrages...",
         "status-2": "Verschlüsselung der Nutzerinformationen...",
-        "status-3": "Erstellung Mailbox, Addressbuch, ...",
+        "status-3": "Erstellung Mailbox, Adressbuch, ...",
         "status-4": "Erstellung der Verifizierungsverwaltung...",
         "status-5": "Identität wurde erfolgreich erstellt...",
         "title": "Account erstellen"
