@@ -30,7 +30,6 @@ the following URL: https://evan.network/license/
           @click="$refs.shareSidebar.show();"
         />
 
-{{selectedSharedContacts}}
         <evan-swipe-panel
           class="light"
           alignment="right"
