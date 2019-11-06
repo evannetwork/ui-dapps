@@ -23,7 +23,7 @@
       v-if="!useTextArea"
       @paste="handlePaste($event)">
       <div class="form-row">
-        <div class="form-group col-md-4" v-for="(word, index) in words" :key="word">
+        <div class="form-group col-md-4" v-for="(word, index) in words" :key="index">
           <input class="form-control" required
             :id="'mnemonicInput' + index" :ref="'mnemonicInput' + index"
             :placeholder="$t('_onboarding.mnemonic-word', {'index': index + 1})"
