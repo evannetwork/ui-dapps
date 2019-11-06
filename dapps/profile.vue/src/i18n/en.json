@@ -1,5 +1,11 @@
 {
   "_profile": {
+    "bmail": {
+      "share": {
+        "body": "Hello,\n\nprofile information from {alias} has been shared with you. Use the \"open attachment\" button to view the profile.\n\nBest regards,\n\n{alias}",
+        "title": "Profile information"
+      }
+    },
     "breadcrumbs": {
       "addressbook.vue.evan": "Contacts",
       "detail": "Profile",
@@ -120,6 +126,7 @@
       }
     },
     "dispatchers": {
+      "profile-share": "Share profile information...",
       "profile-type": "Changing profile type...",
       "profile-update": "Updating profile information...",
       "request-verification": "Requesting Verification...",

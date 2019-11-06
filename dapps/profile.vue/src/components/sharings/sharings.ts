@@ -60,6 +60,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   sortFilters = sortFilters;
 
   /**
+   * Permission update function that is called by permission-editor.
+   */
+  updatePermissions: Function;
+
+  /**
    * computed property
    * selected shared contacts from vuex store
    */
@@ -108,7 +113,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   async handleRemoveSharedContact(item: SharedContactInterface) {
     const runtime = (<any>this).getRuntime();
 
-    await removeAllPermissions(runtime, item.sharedConfig)
+    await removeAllPermissions(this, item.sharedConfig)
       .then(() => {
         // remove item from list
         this.sharedContacts = this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
@@ -125,7 +130,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   async created() {
     // watch for permission updates
-    this.listeners.push(dispatchers.shareDispatcher.watch(async ($event: any) => {
+    this.listeners.push(dispatchers.shareProfileDispatcher.watch(async ($event: any) => {
       // set isLoading state to corresponding list elements
       if ($event.detail.status === 'starting') {
         const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
@@ -141,6 +146,10 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
         accountIds.forEach(item => this.isLoadingContacts.delete(item));
         this.sharedContacts = await getProfilePermissions((<any>this));
       }
+
+      // set the update permission and always pass the current vue context into it, so it can use the
+      // vuex translate service
+      this.updatePermissions = updatePermissions.bind(null, this);
     }));
 
     window.addEventListener('resize', this.handleWindowResize);
@@ -174,11 +183,6 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
     return allPermissions[user];
   }
-
-  /**
-   * Mock: will be replaced by permissions update function. TODO
-   */
-  updatePermissions = updatePermissions;
 }
 
 export default ProfileSharingsComponent;

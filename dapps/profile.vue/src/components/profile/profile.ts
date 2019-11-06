@@ -72,6 +72,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   sortFilters = sortFilters;
 
   /**
+   * Permission update function that is called by permission-editor.
+   */
+  updatePermissions: Function;
+
+  /**
    * Load the mail details
    */
   async created() {
@@ -84,9 +89,10 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       amount: amount.toLocaleString(this.$i18n.locale()),
       timestamp: Date.now(),
     };
+    // set the update permission and always pass the current vue context into it, so it can use the
+    // vuex translate service
+    this.updatePermissions = updatePermissions.bind(null, this);
     this.loading = false;
-
-    this.$nextTick(() => this.$refs.reactive = true);
   }
 
   /**
@@ -167,9 +173,4 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       });
     }
   }
-
-  /**
-   * Mock: will be replaced by permissions update function. TODO
-   */
-  updatePermissions = updatePermissions;
 }

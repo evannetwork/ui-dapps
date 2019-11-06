@@ -1,5 +1,11 @@
 {
   "_profile": {
+    "bmail": {
+      "share": {
+        "body": "Guten Tag,\n\nIhnen wurden Profilinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich das Profil anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
+        "title": "Profilinformationen"
+      }
+    },
     "breadcrumbs": {
       "addressbook.vue.evan": "Kontakte",
       "detail": "Profil",
@@ -120,6 +126,7 @@
       }
     },
     "dispatchers": {
+      "profile-share": "Profilinformationen teilen...",
       "profile-type": "Profiltyp wird geändert...",
       "profile-update": "Profilinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
