@@ -79,7 +79,7 @@ export default {
       "step2": "Invitation Message",
       "submit": "Add contact",
       "tags": {
-        "desc": "Tags seperated using spaces",
+        "desc": "Tags seperated by spaces",
         "title": "Tags"
       }
     },

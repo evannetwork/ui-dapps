@@ -30,7 +30,7 @@ export default{
       "accountId": {
         "desc": "Account-ID eines bekannten und bestehenden Profils.",
         "error-added": "Die angebene Account-ID haben Sie bereits zu Ihren Kontakten hinzugefügt.",
-        "error-invalid": "Bitte geben Sie eine gültige Account-ID an! (e.g. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
+        "error-invalid": "Bitte geben Sie eine gültige Account-ID an! (z.B. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
         "title": "Account-ID"
       },
       "alias": {
@@ -79,7 +79,7 @@ export default{
       "step2": "Einladungsnachricht",
       "submit": "Kontakt hinzufügen",
       "tags": {
-        "desc": "Leerzeichen separierte Schlagworte",
+        "desc": "Schlagworte getrennt durch Leerzeichen",
         "title": "Schlagworte"
       }
     },
@@ -96,7 +96,7 @@ export default{
     },
     "overview": "Übersicht",
     "remove-contact": {
-      "description": "Wollen Sie den Kontakt {alias} mit der Adresse {accountId} wirklich von Ihren Kontakten entfernen?",
+      "description": "Wollen Sie den Kontakt {alias} mit der Adresse {accountId} wirklich aus Ihren Kontakten entfernen?",
       "remove": "Kontakt entfernen",
       "title": "Kontakt entfernen"
     },
