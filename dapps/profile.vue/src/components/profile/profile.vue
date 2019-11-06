@@ -25,15 +25,26 @@
       <div class="row">
         <div class="col-xl-8 mb-3">
           <profile-permission-wrapper entryName="accountDetails">
-            <evan-profile-preview
-              ref="profilePreview"
-              size="lg"
-              :accountDetails="userInfo"
-              :address="address"
-              :editable="true"
-              @update="userInfo = $event"
-              @save="saveUserInfo"
-            />
+            <div class="d-flex align-items-center">
+              <evan-profile-preview
+                ref="profilePreview"
+                size="lg"
+                :accountDetails="userInfo"
+                :address="address"
+                :editable="true"
+                @update="userInfo = $event"
+                @save="saveUserInfo"
+              />
+              <div class="mx-auto"></div>
+              <evan-button
+                v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
+                type="secondary"
+                size="sm"
+                @click="() => $store.commit('toggleSidePanel', 'sharing')"
+              >
+                {{ '_evan.share' | translate }}
+              </evan-button>
+            </div>
           </profile-permission-wrapper>
         </div>
         <div class="col-xl-4">
