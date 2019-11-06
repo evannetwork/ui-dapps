@@ -30,19 +30,21 @@ the following URL: https://evan.network/license/
           @click="$refs.shareSidebar.show();"
         />
 
+{{selectedSharedContacts}}
         <evan-swipe-panel
           class="light"
           alignment="right"
           ref="shareSidebar"
           :showBackdrop="windowWidth < 1200"
+          :hideCloseButton="windowWidth >= 1200"
           :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
-          :isOpen="windowWidth >= 1200 || selectedSharedContacts.length > 0"
-          @hide="selectedSharedContacts = []"
+          :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+          @hide="selectedSharedContacts = null"
         >
           <evan-permissions-editor
             :loadPermissions="loadPermissions"
-            :onSelect="(accountId) => {this.selectedSharedContacts = [accountId]}"
-            :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
+            :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
+            :selectedContact="selectedSharedContacts !== null && selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
             :sortFilters="sortFilters[userInfo.profileType]"
             :updatePermissions="updatePermissions"
             i18nScope="_profile.sharing"
@@ -57,7 +59,7 @@ the following URL: https://evan.network/license/
             <evan-base-list
               class="mt-5"
               :data="sharedContacts"
-              :isSelectedCallback="(item) => this.selectedSharedContacts.includes(item.accountId)"
+              :isSelectedCallback="(item) => selectedSharedContacts !== null && selectedSharedContacts.includes(item.accountId)"
               :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
             >
               <template v-slot:item="{item}">
