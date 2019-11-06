@@ -25,10 +25,11 @@ import EvanQueue from './Queue';
 import { Dispatcher, DispatcherInstance } from './Dispatcher';
 import './index.scss';
 import * as FileHandler from './Files';
+import * as bccUtils from './bccUtils';
 
 export * from './config';
 export * from './utils';
-export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler };
+export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler, bccUtils, };
 
 /**
  * if the ui.evan dapp is loaded as an normal dapp, show the style preview.
