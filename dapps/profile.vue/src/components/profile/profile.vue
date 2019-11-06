@@ -127,13 +127,14 @@
       type="default"
       :isOpen="$store.state.uiState.swipePanel === 'sharing'"
       @hide="$store.state.uiState.swipePanel = ''"
+      v-if="userInfo"
     >
       <evan-permissions-editor
         :loadPermissions="loadPermissions"
+        :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
+        :sortFilters="sortFilters[userInfo.profileType]"
         :updatePermissions="updatePermissions"
         i18nScope="_profile.sharing"
-        :sortFilters="sortFilters[userInfo.profileType]"
-        :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
       />
     </evan-swipe-panel>
   </div>

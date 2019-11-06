@@ -21,7 +21,6 @@ import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 import { Container } from '@evan.network/api-blockchain-core';
 import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 import * as PermissionTypes from './permission-types';
-import { async } from 'q';
 
 /**
  * return generell types of permissions
@@ -135,7 +134,7 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
  */
 export const getProfilePermissions = async (vueInstance) => {
   return getPermissions(
-    vueInstance.getRuntime(), 
+    vueInstance.getRuntime(),
     vueInstance.$store.state.profileDApp.profile.profileContract.options.address
   );
 };
@@ -147,11 +146,22 @@ export const getProfilePermissions = async (vueInstance) => {
  * @param shareConfigs: any - the permissions object
  */
 export const removeAllPermissions = (runtime, shareConfigs) => {
+
+  // push all permissions to remove into the readWrite object
+  if (!shareConfigs.readWrite) {
+    shareConfigs.readWrite = [];
+  }
+
+  if (shareConfigs.read) {
+    shareConfigs.readWrite.push(...shareConfigs.read);
+    delete shareConfigs.read;
+  }
+
   return new Promise((resolve, reject) => {
     try {
         const dataSharing = {
           address: runtime.profile.profileContract.options.address,
-          unshareConfigs: [shareConfigs],
+          unshareConfigs: [shareConfigs], // TODO: convert to unshare configs havin only write and readWrite properties
           bMailContent: false
         };
 
