@@ -131,9 +131,13 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
       }
 
       // categorize by starting characters
-      const category = contact.alias[0].toLowerCase();
-      categories[category] = categories[category] || [ ];
-      categories[category].push(contact);
+      if (contact.alias) {
+        const category = contact.alias[0].toLowerCase();
+        categories[category] = categories[category] || [ ];
+        categories[category].push(contact);
+      } else {
+        console.dir(contact)
+      }
     });
 
     // sort all users by alias

@@ -18,17 +18,16 @@ the following URL: https://evan.network/license/
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 // internal
 import { containerDispatchers as dispatchers } from '@evan.network/datacontainer.digitaltwin';
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
-import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
+import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
+import { sortFilters } from '../utils/shareSortFilters';
 
 interface SharedContactInterface {
   accountId: string;
@@ -58,6 +57,8 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    */
   isLoadingContacts = new Set<string>();
 
+  sortFilters = sortFilters;
+
   /**
    * computed property
    * selected shared contacts from vuex store
@@ -68,6 +69,10 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   set selectedSharedContacts(contacts) {
     (this as any).$store.commit('setSelectedSharedContacts', contacts);
+  }
+
+  get userInfo () {
+    return this.$store.state.profileDApp.data.accountDetails;
   }
 
   /**
@@ -81,6 +86,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
     event.stopPropagation();
+    event.preventDefault();
 
     const index = this.selectedSharedContacts.indexOf(item.accountId);
 
@@ -120,7 +126,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   async created() {
     // watch for permission updates
     this.listeners.push(dispatchers.shareDispatcher.watch(async ($event: any) => {
-      // set isLoading state to corresponding list elements 
+      // set isLoading state to corresponding list elements
       if ($event.detail.status === 'starting') {
         const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
         accountIds.forEach(item => this.isLoadingContacts.add(item));

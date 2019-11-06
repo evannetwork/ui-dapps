@@ -29,7 +29,7 @@
       :i18nScope="'_profile.company.registration'"
       :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
       :onlyForm="onlyForm"
-      :shareable="$route.params.address === $store.state.runtime.activeAccount"
+      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
       :stacked="stacked"
       :title="'_profile.company.registration.title' | translate"
       @save="changeProfileData()">
