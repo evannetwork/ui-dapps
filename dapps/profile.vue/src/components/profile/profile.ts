@@ -63,12 +63,12 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   async created() {
     // fill empty address with current logged in user
-    this.address = this.$store.state.profileDApp.address;
-    this.userInfo = this.$store.state.profileDApp.data.accountDetails;
+    this.address = (<any>this).$store.state.profileDApp.address;
+    this.userInfo = (<any>this).$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
     const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
     this.balance = {
-      amount: amount.toLocaleString(this.$i18n.locale()),
+      amount: amount.toLocaleString((<any>this).$i18n.locale()),
       timestamp: Date.now(),
     };
     this.loading = false;
@@ -123,7 +123,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.userInfo = userInfo;
 
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      address: this.$store.state.profileDApp.address,
+      address: (<any>this).$store.state.profileDApp.address,
       formData: userInfo,
       type: 'accountDetails'
     });
@@ -137,7 +137,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   async loadPermissions(user: string) {
     const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, this.$route.params.address);
+    const allPermissions = await getProfilePermissionDetails(runtime, (<any>this).$route.params.address);
 
     if (!allPermissions[user]) {
       return allPermissions['new'];

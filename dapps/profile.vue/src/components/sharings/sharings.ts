@@ -71,8 +71,8 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     (this as any).$store.commit('setSelectedSharedContacts', contacts);
   }
 
-  get userInfo () {
-    return this.$store.state.profileDApp.data.accountDetails;
+  get userInfo() {
+    return (this as any).$store.state.profileDApp.data.accountDetails;
   }
 
   /**
@@ -146,7 +146,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
-    this.sharedContacts = await getProfilePermissions(this);
+    this.sharedContacts = await getProfilePermissions((<any>this));
 
     this.loading = false;
   }
