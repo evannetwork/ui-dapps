@@ -48,20 +48,11 @@
           </profile-permission-wrapper>
         </div>
         <div class="col-xl-4">
-          <a class="
-            d-block p-3 position-relative
-            bg-inverted rounded text-decoration-none"
-            style="height: 166px"
+          <evan-wallet
+            :accountDetails="userInfo"
+            :address="$route.params.address"
             :href="$store.state.profileDApp.isMyProfile ? `${ dapp.fullUrl }/${ $store.state.runtime.activeAccount }/wallet` : null"
-            :class="{
-              'evan-highlight': $store.state.profileDApp.isMyProfile
-            }">
-            <h1>{{ balance.amount }} EVE</h1>
-            <small class="font-weight-semibold">{{ '_profile.current-balance' | translate }}</small>
-            <small class="position-absolute bottom-right p-2" style="opacity: 0.6">
-              {{ balance.timestamp | moment('LLL') }}
-            </small>
-          </a>
+          />
         </div>
       </div>
 

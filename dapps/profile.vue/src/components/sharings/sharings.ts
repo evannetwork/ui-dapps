@@ -22,9 +22,10 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 // internal
-import { containerDispatchers as dispatchers } from '@evan.network/datacontainer.digitaltwin';
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+
+import * as dispatchers from '../../dispatchers/registry';
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
 import { sortFilters } from '../utils/shareSortFilters';
