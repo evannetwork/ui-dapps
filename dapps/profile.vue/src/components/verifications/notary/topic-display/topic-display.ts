@@ -23,7 +23,7 @@ import { Prop } from 'vue-property-decorator';
 import moment from 'moment';
 
 // evan.network imports
-import { EvanComponent, ModalComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import { FileHandler, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
