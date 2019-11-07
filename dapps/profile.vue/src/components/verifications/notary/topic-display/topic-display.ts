@@ -20,6 +20,7 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import moment from 'moment';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -65,6 +66,21 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
   companyName = '';
 
   /**
+   * Expiration date of the verification
+   */
+  expirationDate: number;
+
+  /**
+   * flag is verification is expired
+   */
+  isExpired = true;
+
+  /**
+   * translate text for expiration state of verification
+   */
+  expiredTranslationString = '';
+
+  /**
    * All files that are available for the verifications (e.g.: notary certified documents)
    */
   files: Array<any> = [ ];
@@ -79,11 +95,6 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
    */
   issuerName = '';
   issuer = '';
-
-  /**
-   * Show more technical specific information behind the verification information
-   */
-  showTechnicalDetail = false;
 
   /**
    * Load verification details.
@@ -140,6 +151,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     ];
     const verificationQuery = JSON.parse(JSON.stringify(runtime.verifications.defaultQueryOptions));
     verificationQuery.validationOptions.issued = bcc.VerificationsStatusV2.Yellow;
+    verificationQuery.validationOptions.expired = bcc.VerificationsStatusV2.Red;
     verificationQuery.validationOptions.parentUntrusted = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.selfIssued = bcc.VerificationsStatusV2.Green;
     verificationQuery.validationOptions.notEnsRootOwner = (verification, pr) => {
@@ -160,11 +172,11 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
 
     await Promise.all(this.verification.verifications.map(async (subVerification) => {
       try {
-        const contentKey = await this.$store.state.profileDApp.profile.getBcContract(
+        const contentKey = await (<any>this).$store.state.profileDApp.profile.getBcContract(
           'contracts',
           runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},contentKey`)
         );
-        const hashKey = await this.$store.state.profileDApp.profile.getBcContract(
+        const hashKey = await (<any>this).$store.state.profileDApp.profile.getBcContract(
           'contracts',
           runtime.web3.utils.soliditySha3(`verifications,${subVerification.details.id},hashKey`)
         );
@@ -212,16 +224,29 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     // get the issuer info, so it can be displayed
     this.issuer = this.verification.verifications[0].details.issuer;
 
+    // get expiration date and set options depending on it
+    this.expirationDate = this.verification.verifications[0].details.expirationDate || undefined;
+    this.isExpired = !!this.verification.verifications[0].statusFlags && this.verification.verifications[0].statusFlags.includes('expired');
+    if (this.isExpired) {
+      this.expiredTranslationString = this.expirationDate
+        ? (<any>this).$t('_profile.verifications.notary.verification.expired-on')
+        : (<any>this).$t('_profile.verifications.notary.verification.expired');
+    } else {
+      this.expiredTranslationString = this.expirationDate
+        ? (<any>this).$t('_profile.verifications.notary.verification.valid-until')
+        : (<any>this).$t('_profile.verifications.notary.verification.valid-indefinitely');
+    }
+
     // check for predefined instances
     if (this.issuer === notarySmartAgentAccountId) {
-      this.issuerName = this.$t('_profile.verifications.notary.notary');
+      this.issuerName = (<any>this).$t('_profile.verifications.notary.notary');
     } else {
       // load from addressbook
-      const addressbook = await this.$store.state.profileDApp.profile.getAddressBook();
+      const addressbook = await (<any>this).$store.state.profileDApp.profile.getAddressBook();
       if (addressbook[this.issuer] && addressbook[this.issuer].alias) {
         this.issuerName = addressbook[this.issuer];
       } else {
-        this.issuerName = this.issuer
+        this.issuerName = this.issuer;
       }
     }
   }
