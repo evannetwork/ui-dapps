@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/qrcodejs.js",
+  "name": "@evan.network/qrcodejs",
+  "scripts": {
+    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+  },
+  "typings": "dist/qrcodejs.d.ts",
+  "version": "2.0.4"
+}
