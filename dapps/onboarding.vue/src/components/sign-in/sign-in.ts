@@ -20,7 +20,7 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import 'vue-router/types/vue';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -45,7 +45,7 @@ export default class SignIn extends mixins(EvanComponent) {
   checking = false;
 
   /**
-   * formular specific variables
+   * form specific variables
    */
   form = null;
 
