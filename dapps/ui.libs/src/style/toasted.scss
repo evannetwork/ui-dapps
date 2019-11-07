@@ -21,6 +21,12 @@
 
 .evan {
   .toasted-container {
+    &.bottom-left {
+      position: fixed;
+      bottom: 15px;
+      left: 80px;
+    }
+
     .toasted {
       font-size: 12px;
       font-weight: bold;
@@ -35,6 +41,12 @@
 
       &.error {
         background-color: cssVar('danger');
+      }
+
+      a, i {
+        &:first-child {
+          margin-left: auto;
+        }
       }
     }
   }

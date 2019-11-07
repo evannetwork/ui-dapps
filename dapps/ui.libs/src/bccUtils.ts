@@ -31,25 +31,32 @@ import { cloneDeep } from './utils';
  *                                           loading
  */
 export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, registration?: any) {
-  accountDetails = cloneDeep(
-    bcc.lodash,
-    accountDetails || await profile.getProfileProperty('accountDetails') || { }
-  );
+  try {
+    accountDetails = cloneDeep(
+      bcc.lodash,
+      accountDetails || await profile.getProfileProperty('accountDetails') || { }
+    );
 
-  // for companies load directly the company name and disable edit mode
-  if (accountDetails.profileType === 'company') {
-    registration = registration || (await profile.getProfileProperty('registration'));
-    accountDetails.accountName = registration.company;
-  }
+    // for companies load directly the company name and disable edit mode
+    if (accountDetails.profileType === 'company') {
+      registration = registration || (await profile.getProfileProperty('registration'));
+      accountDetails.accountName = registration.company;
+    }
+  } catch (ex) { }
 
   // load alias from addressbook, when it's not available
-  if (!accountDetails.accountName) {
+  if (!accountDetails || !accountDetails.accountName) {
     // load addressbook info
-    const addressBook = await profile.getAddressBook();
-    const contact = addressBook.profile[profile.profileOwner];
+    const myProfile = new bcc.Profile({
+      ...profile.options,
+      profileOwner: profile.activeAccount,
+      accountId: profile.activeAccount,
+    });
+    const addressBook = await myProfile.getAddressBook();
+    const contact = addressBook.profile[myProfile.profileOwner];
 
-    accountDetails.accountName = contact ? contact.alias : profile.profileOwner;
+    return contact ? contact.alias : myProfile.profileOwner;
+  } else {
+    return accountDetails.accountName;
   }
-
-  return accountDetails.accountName;
 }
