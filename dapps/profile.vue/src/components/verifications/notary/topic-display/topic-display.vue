@@ -23,7 +23,7 @@
       @click="showDetail()">
       <evan-loading v-if="loading"></evan-loading>
       <template v-else>
-        <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" />
+        <img :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`" width="80" />
         <h5 class="font-weight-semibold">
           {{ title }}
         </h5>
@@ -58,24 +58,32 @@
         <div>
           <div class="text-center">
             <img
-              style="width: 100px;"
+              width="80"
               :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`"
             />
             <h3 class="font-weight-semibold mt-3">
               {{ title }}
             </h3>
+            <p :class="{ 'text-primary': !isExpired, 'text-warning': isExpired }">
+                {{ expiredTranslationString }}
+                {{ expirationDate | moment('LLL') }}
+            </p>
           </div>
           <small class="d-block text-justify text-muted">
             {{ $t('_profile.verifications.notary.verification.topic-desc', { companyName: companyName }) }}
           </small>
-          <div class="mt-5">
-            <div class="mt-2">
-              <b>{{ '_profile.verifications.notary.verification.created' | translate }}:</b>
-              <span>{{ verification.verifications[0].details.creationDate | moment('LLL') }}</span>
+          <div class="mt-5 d-table">
+            <div class="d-table-row">
+              <b class="d-table-cell pr-1">{{ '_profile.verifications.notary.verification.created' | translate }}:</b>
+              <span class="d-table-cell">{{ verification.verifications[0].details.creationDate | moment('LLL') }}</span>
             </div>
-            <div class="mt-2">
-              <b>{{ '_profile.verifications.notary.verification.verified-by' | translate }}:</b>
-              <span>{{ issuerName }}</span>
+            <div class="d-table-row pt-2 text-break">
+              <b class="d-table-cell pr-1 pt-2">{{ '_profile.verifications.notary.verification.verified-by' | translate }}:</b>
+              <div class="d-table-cell pt-2">
+                <span class="d-block">{{ issuerName }}</span>
+                <small class="d-block text-muted">{{ issuer }}</small>
+                <small class="d-block text-muted"> <strong>Verification Path:</strong> {{ topic }}</small>
+              </div>
             </div>
           </div>
 
@@ -84,37 +92,14 @@
               {{ '_profile.verifications.notary.verification.attachments' | translate }}
             </h5>
 
-            <a class="d-flex align-items-center p-3 border border-sm bg-level-3 dark-link"
+            <a class="d-flex align-items-center p-2 pl-3 border border-sm bg-level-3 dark-link"
               v-for="(file, index) in files"
               :id="`file-input-download-${ index }`"
               :href="file.blobUri"
-              :download="file.name">
-              <span class="force-oneline">{{ file.name }}</span>
-              <i class="mdi mdi-file-document-box-outline"></i>
+              :download="file.name" :key="index">
+              <small class="force-oneline font-weight-semibold pr-2">{{ file.name }}</small>
+              <i class="mdi mdi-file-document-box-outline text-dark" style="font-size: 24px"></i>
             </a>
-          </div>
-
-          <div class="mt-5">
-            <div class="mt-5" v-if="showTechnicalDetail">
-              <div class="mt-2">
-                <b>{{ '_profile.verifications.notary.verification.topic' | translate }}:</b>
-                <span>{{ topic }} </span>
-              </div>
-              <div class="mt-2">
-                <b>{{ '_profile.verifications.notary.verification.issuer' | translate }}:</b>
-                <span>{{ issuer }} </span>
-              </div>
-            </div>
-
-            <div class="text-center mt-5">
-              <evan-button
-                class="mb-3"
-                :type="'text-secondary'"
-                :label="$t(`_profile.verifications.notary.verification.${ showTechnicalDetail ? 'hide-technical' : 'show-technical' }`)"
-                :icon="`mdi ${ showTechnicalDetail ? 'mdi-arrow-up' : 'mdi-arrow-down' }`"
-                @click="showTechnicalDetail = !showTechnicalDetail"
-              />
-            </div>
           </div>
 
           <button type="button"

@@ -242,7 +242,7 @@
         },
         "learn-more": "Mehr erfahren",
         "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese anzufordern.",
-        "notary": "Notar",
+        "notary": "Notar Knobloch",
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
@@ -310,7 +310,7 @@
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
-          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
+          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
@@ -366,15 +366,16 @@
           "attachments": "Anhang",
           "close-detail": "Schließen",
           "created": "Erstellt",
-          "hide-technical": "Teschnische Details ausblenden",
+          "expired": "abgelaufen",
+          "expired-on": "abgelaufen am",
           "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
-          "issuer": "Issuer-ID",
           "organization": "Organisations-Verifikation",
           "organization-random": "Organisations-ID-Verifikation",
-          "show-technical": "Technische Details anzeigen",
           "status": "Status",
-          "topic": "Pfad",
+          "topic": "Verifizierungspfad",
           "topic-desc": "Dieses Konto der Firma {companyName} wurde notariell beglaubigt. Damit wurde die Authentizität des Unternehmens und die Zuordnung zu diesem Konto bescheinigt.",
+          "valid-indefinitely": "unbegrenzt gültig",
+          "valid-until": "gültig bis",
           "verified-by": "Verifiziert durch"
         }
       },
