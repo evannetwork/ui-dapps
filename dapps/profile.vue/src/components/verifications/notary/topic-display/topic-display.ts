@@ -225,7 +225,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     this.issuer = this.verification.verifications[0].details.issuer;
 
     // get expiration date and set options depending on it
-    this.expirationDate = this.verification.verifications[0].expirationDate || undefined;
+    this.expirationDate = this.verification.verifications[0].details.expirationDate || undefined;
     this.isExpired = !!this.verification.verifications[0].statusFlags && this.verification.verifications[0].statusFlags.includes('expired');
     if (this.isExpired) {
       this.expiredTranslationString = this.expirationDate
