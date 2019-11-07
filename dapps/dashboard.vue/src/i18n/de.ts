@@ -39,7 +39,7 @@ export default {
         "title": "Sitzung fortfahren"
       },
       "testcore": {
-        "desc": "Mit Ihrer bestehenden Identität Funktionalitäten auf dem testcore testen",
+        "desc": "Mit Ihrer bestehenden Identität Funktionalitäten auf dem Testcore testen",
         "title": "Kostenlos ausprobieren"
       }
     },

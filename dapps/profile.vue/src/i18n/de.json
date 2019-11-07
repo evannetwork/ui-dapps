@@ -209,10 +209,10 @@
         "issue": {
           "accountId": {
             "desc": "Identität für die die notarielle Bestätigung erstellt werden soll.",
-            "error": "Bitte geben Sie eine gültige Addresse an!",
+            "error": "Bitte geben Sie eine gültige Adresse an!",
             "title": "Identität"
           },
-          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Austellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
+          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Ausstellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
           "header": "Organisations-Verifikation ausstellen",
           "issue": "Organisations-Verifikation ausstellen",
           "issued": {
@@ -249,14 +249,14 @@
           "desc": "Bitte geben Sie Ihre PIN ein. Sie finden Ihre PIN in der Bestätigungsanfrage des Notars.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
           "did-printed": "Haben Sie das Dokument gedruckt?",
-          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Fimenstempel und schicken Sie es per Post an den anfragenden Notar.",
+          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Firmenstempel und schicken Sie es per Post an den anfragenden Notar.",
           "download": "Kein Drucker verfügbar? Download als PDF Datei",
           "generate-answer": "Code generieren",
           "header": "Authentifizierung",
           "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihre Identität verifiziert.",
           "next-step2": "Sie werden in Ihrer Mailbox darüber informiert.",
           "pin": {
-            "desc": "Die per Brief erhaltene, sechstellige PIN.",
+            "desc": "Die per Brief erhaltene, sechsstellige PIN.",
             "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
             "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
             "title": "PIN"
@@ -285,7 +285,7 @@
             "label": "Abteilung",
             "placeholder": "Abteilung"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "description": "Bitte füllen Sie das Formular aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
           "header": "Notarielle Verifikation",
           "how": {
@@ -366,7 +366,7 @@
           "attachments": "Anhang",
           "close-detail": "Schließen",
           "created": "Erstellt",
-          "hide-technical": "Teschnische Details ausblenden",
+          "hide-technical": "Technische Details ausblenden",
           "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
           "issuer": "Issuer-ID",
           "organization": "Organisations-Verifikation",

@@ -46,7 +46,7 @@ export default {
       "received": "Eingehende Nachrichten",
       "sent": "Ausgehende Nachrichten"
     },
-    "detail": "Nachrichtsdetails",
+    "detail": "Nachrichtendetails",
     "dispatcher": {
       "attachment": "Kontakt/Vertrag sync"
     },

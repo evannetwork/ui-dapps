@@ -36,7 +36,7 @@ const i18n: any = {
       "description2": "Über das Eingabefeld können Sie eine Adresse eines Plugins auswählen, das in den Digitalen Zwilling verknüpft werden soll.",
       "digitaltwin": "Digitaler Zwilling",
       "invalid-container": {
-        "desc": "Die eingebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
+        "desc": "Die eingegebene Adresse ist falsch oder entspricht einem Vertrag mit ungültigem Format. Bitte geben Sie eine korrekte Adresse ein.",
         "title": "Ungültiges Plugin"
       },
       "linking": "Bestehendes Plugin wird verknüpft...",
@@ -120,7 +120,7 @@ const i18n: any = {
         "title": "Fehler beim Laden"
       },
       "missing-balance": {
-        "desc": "Bevor Sie einen Digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
+        "desc": "Bevor Sie einen Digitalen Zwilling erstellen können, müssen Sie die angegebene Adresse besitzen. Sie können diese Adresse für <b>{ ensPrice }EVE</b> kaufen, besitzen allerdings nur { balance } EVE. Bitte stocken Sie Ihr Konto auf, um fortzufahren.",
         "title": "Adresse verfügbar"
       },
       "not-buyable": {
@@ -129,7 +129,7 @@ const i18n: any = {
       },
       "purchase": {
         "action": "Adresse kaufen",
-        "desc": "Bevor Sie einen Digitalen Zwilling erstellen können, müssen Sie die angegebe Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice } EVE</b> kaufen?",
+        "desc": "Bevor Sie einen Digitalen Zwilling erstellen können, müssen Sie die angegebene Adresse besitzen. Möchten Sie diese Adresse für <b>{ ensPrice } EVE</b> kaufen?",
         "title": "Adresse verfügbar"
       },
       "purchasing": "ENS Adresse erwerben...",
@@ -154,8 +154,8 @@ const i18n: any = {
     },
     "startup": "Womit möchten Sie starten?",
     "verifications": {
-      "description": "An jeden Digitalen Zwilling und Plugin können automatisiert Verizifierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
-      "title": "Verizifierungen"
+      "description": "An jeden Digitalen Zwilling und Plugin können automatisiert Verifizierungen vergeben werden. Die Darstellung der Oberfläche befindet sich momentan in der Entwicklung.",
+      "title": "Verifizierungen"
     },
     "welcome": "Willkommen in der Digitalen Zwillingsverwaltung"
   }

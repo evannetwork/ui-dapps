@@ -137,13 +137,13 @@ const i18n: any = {
       "array-type": {
         "title": "Listentyp"
       },
-      "entry-type": "Datebereichs-Typ",
+      "entry-type": "Datenbereichs-Typ",
       "name": {
         "desc": "Name des Datenbereichs",
         "error": {
           "already": "Bitte geben Sie einen Namen an, der noch nicht existiert.",
           "length": "Bitte geben Sie einen gültigen Namen (keine Sonderzeichen, mindestens ein Buchstabe).",
-          "reserved": "Der eingebene Name ist reserviert und kann nicht verwendet werden."
+          "reserved": "Der eingegebene Name ist reserviert und kann nicht verwendet werden."
         },
         "title": "Name"
       },
@@ -218,7 +218,7 @@ const i18n: any = {
       "add-user": "Neuen Nutzer hinzufügen",
       "add-user-desc": "Fügen Sie einen neuen Nutzer aus Ihren Kontakten in die Freigabe-Übersicht hinzu.",
       "bmail-container": "Guten Tag,\n\nSie wurden in die Plugin-Instanz {name} von {alias} eingeladen.\n\nPlugin: {name} - {containerAddress}\n\nMit freundlichen Grüßen,\n\n{alias}",
-      "bmail-description": "Alle ausgwählten Berechtigungen werden an die entsprechenden Nutzer freigegeben und per Blockchain-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
+      "bmail-description": "Alle ausgewählten Berechtigungen werden an die entsprechenden Nutzer freigegeben und per Blockchain-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
       "bmail-twin": "Guten Tag,\n\nSie wurden in den Digitalen Zwilling {name} von {alias} eingeladen.\n\nDigitaler Zwilling: {twinName} - {digitalTwinAddress}\nPlugin: {name} - {containerAddress}\n\nMit freundlichen Grüßen,\n\n{alias}",
       "body": {
         "desc": "Nachrichtentext",

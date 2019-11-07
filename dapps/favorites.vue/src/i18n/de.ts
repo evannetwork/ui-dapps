@@ -29,7 +29,7 @@ export default {
       },
       "modal": {
         "added": {
-          "desc": "Diese Anwedung ist bereits zu Ihren Favoriten hinzugefügt worden.",
+          "desc": "Diese Anwendung ist bereits zu Ihren Favoriten hinzugefügt worden.",
           "title": "Favorit hinzufügen"
         },
         "notFound": {

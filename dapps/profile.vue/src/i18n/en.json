@@ -18,7 +18,7 @@
         },
         "country": {
           "desc": "Company headquarters country",
-          "error": "Please select the company headquartes country",
+          "error": "Please select the company headquarters country",
           "label": "Company HQ Country"
         },
         "postalCode": {
@@ -296,7 +296,7 @@
               },
               "2": {
                 "description": "You will receive a PIN by letter. Use this to generate the confirmation document and send it signed to the inquiring notary.",
-                "title": "Authentification"
+                "title": "Authentication"
               },
               "3": {
                 "description": "If the notarial verification is successful, you will be notified. Accept the verification as the last step.",
