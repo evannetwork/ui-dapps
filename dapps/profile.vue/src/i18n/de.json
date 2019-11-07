@@ -178,7 +178,7 @@
       "website": "Website"
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Profilinformationen teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
       "no-data": "Bisher wurden keine Profildaten freigegeben",
       "title": "Freigaben für Ihre Profildaten"
     },
