@@ -10,6 +10,8 @@
   - move profile switch to profile detail page
 - `onboarding.vue` (v3.2.1)
   - change terms of use and captcha checkbox
+- `addressbook.vue` (v3.1.2)
+  - contact click redirects to profile detail
 
 ### Deprecations
 

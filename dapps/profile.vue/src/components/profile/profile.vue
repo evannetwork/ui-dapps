@@ -51,7 +51,6 @@
           <evan-wallet
             :accountDetails="userInfo"
             :address="$route.params.address"
-            :href="$store.state.profileDApp.isMyProfile ? `${ dapp.fullUrl }/${ $store.state.runtime.activeAccount }/wallet` : null"
           />
         </div>
       </div>

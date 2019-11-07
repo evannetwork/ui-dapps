@@ -59,6 +59,11 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
   saving = false;
 
   /**
+   * currently hovered contact address
+   */
+  contactHover = '';
+
+  /**
    * Run the initialization
    */
   async created() {
@@ -155,5 +160,17 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
 
     this.categories = categories;
     this.loading = false;
+  }
+
+  /**
+   * Open contact clicked.
+   *
+   * @param      {any}  contact  contact object, that wa clicked.
+   */
+  contactClicked(contact: any) {
+    if (contact.accountId) {
+      window.location.hash = `/${ this.dapp.rootEns }/profile.vue.${ this.dapp.domainName }/${
+        contact.accountId }/detail`;
+    }
   }
 }
