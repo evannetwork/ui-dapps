@@ -1,0 +1,38 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "qrcodejs.libs.js",
+      "files": [
+        "qrcodejs.libs.js"
+      ],
+      "origin": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "qrcodejs.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "qrcodejs.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "1.0.0",
+    "versions": {
+      "1.0.0": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu"
+    }
+  }
+}

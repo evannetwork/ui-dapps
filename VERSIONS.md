@@ -4,6 +4,12 @@
 ### Features
 
 ### Fixes
+- `@evan.network/ui-libs` (v1.8.0)
+  - hide optional text from formulars, when transparent mode is enabled
+  - add `bccUtils` and `getUserAlias` function
+  - update toast design
+- `qrcodejs.libs` (v1.0.0)
+  - add qrcodejs lib
 
 ### Deprecations
 

@@ -17,37 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-@import './utils';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+dappBrowser.System.map['qrcodejs'] = `qrcodejs.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
-.evan {
-  .toasted-container {
-    &.bottom-left {
-      position: fixed;
-      bottom: 15px;
-      left: 80px;
-    }
+// map the original ui path to ui.libs
+import * as QRCode from './qrcode.js';
 
-    .toasted {
-      font-size: 12px;
-      font-weight: bold;
-
-      &, &.info {
-        background-color: cssVar('dark');
-      }
-
-      &.success {
-        background-color: cssVar('success');
-      }
-
-      &.error {
-        background-color: cssVar('danger');
-      }
-
-      a, i {
-        &:first-child {
-          margin-left: auto;
-        }
-      }
-    }
-  }
-}
+export default QRCode;
