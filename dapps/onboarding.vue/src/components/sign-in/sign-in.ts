@@ -20,7 +20,6 @@
 // vue imports
 import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import 'vue-router/types/vue';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -74,6 +73,10 @@ export default class SignIn extends mixins(EvanComponent) {
    * profile for mnemonic exists
    */
   profileExists = true;
+
+  // TODO: until proper type definitions are in place
+  $route: any;
+  $router: any;
 
   /**
    * Checks if the user was invited, so enable the 3 tab
