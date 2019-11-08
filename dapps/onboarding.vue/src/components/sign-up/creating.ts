@@ -29,6 +29,6 @@ export default class ProfileCreatingComponent extends mixins(EvanComponent) {
   /**
    * Creating status that should be displayed
    */
-  @Prop() creating: any;
+  @Prop() creatingProfile: any;
 }
 

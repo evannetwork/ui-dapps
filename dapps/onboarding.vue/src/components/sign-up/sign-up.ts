@@ -143,7 +143,11 @@ export default class SignUp extends mixins(EvanComponent) {
               { label: '_onboarding.sign-up.account-types.company', value: 'company', },
             ],
           },
-          type: 'select',
+          type: 'select'
+        },
+        validate: () => {
+          this.setSteps();
+          return true;
         },
       },
       alias: {
@@ -371,7 +375,7 @@ export default class SignUp extends mixins(EvanComponent) {
       },
     ];
 
-    if (this.profileForm.accountType.value === 'company') {
+    if (this.profileForm && this.profileForm.accountType.value === 'company') {
       // data company specific steps
       steps.push({
         title: '_onboarding.sign-up.steps.company.registration.title',
