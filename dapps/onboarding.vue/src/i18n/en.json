@@ -195,6 +195,8 @@
           }
         },
         "list": {
+          "container-title": "History",
+          "date": "Date",
           "date0": {
             "error": "Please choose a date!",
             "placeholder": "01.02.2019 09:01"
@@ -215,6 +217,7 @@
             "error": "Please choose a date!",
             "placeholder": "07.02.2019 12:15"
           },
+          "description": "Description",
           "description0": {
             "error": "Please insert a description!",
             "placeholder": "e.g. service start"
@@ -235,6 +238,7 @@
             "error": "Please insert a description!",
             "placeholder": "e.g. cleaning start"
           },
+          "value": "Value",
           "value0": {
             "error": "Please insert a value!",
             "placeholder": "authorized repair shop"
@@ -254,12 +258,10 @@
           "value4": {
             "error": "Please insert a value!",
             "placeholder": "Mr. Max Johnson"
-          },
-          "date": "Date",
-          "description": "Description",
-          "value": "Value"
+          }
         },
         "metadata": {
+          "container-title": "Specifications",
           "key0": {
             "error": "Please insert a field name!",
             "placeholder": "e.g. Serial-Nr."

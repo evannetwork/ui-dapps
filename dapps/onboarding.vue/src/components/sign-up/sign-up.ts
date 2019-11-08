@@ -285,6 +285,23 @@ export default class SignUp extends mixins(EvanComponent) {
   }
 
   /**
+   * Return the profile creation information.
+   */
+  async getProfileCreationData() {
+    const password = this.profileForm.password0.value;
+    // load the vault using the current inputs and create a bcc profile runtime
+    const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
+    const provider = 'internal';
+    const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
+    const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
+
+    const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
+      bcc, accountId, vault.encryptionKey, privateKey);
+
+    return { password, vault, provider, accountId, privateKey, runtime, };
+  }
+
+  /**
    * Starts the profile creation.
    */
   async createProfile() {
@@ -296,16 +313,7 @@ export default class SignUp extends mixins(EvanComponent) {
       this.nextCreationStatus();
 
       try {
-        const password = this.profileForm.password0.value;
-        // load the vault using the current inputs and create a bcc profile runtime
-        const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
-        const provider = 'internal';
-        const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
-        const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
-
-        const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
-          bcc, accountId, vault.encryptionKey, privateKey);
-
+        const { password, accountId, privateKey, runtime, } = await this.getProfileCreationData();
         await bcc.Onboarding.createOfflineProfile(
           runtime,
           this.userData,

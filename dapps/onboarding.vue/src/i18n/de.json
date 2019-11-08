@@ -195,6 +195,8 @@
           }
         },
         "list": {
+          "container-title": "Historie",
+          "date": "Datum",
           "date0": {
             "error": "Bitte wählen Sie ein Datum!",
             "placeholder": "01.02.2019 09:01"
@@ -215,6 +217,7 @@
             "error": "Bitte wählen Sie ein Datum!",
             "placeholder": "07.02.2019 12:15"
           },
+          "description": "Beschreibung",
           "description0": {
             "error": "Bitte geben Sie eine Beschreibung an!",
             "placeholder": "e.g. service start"
@@ -235,6 +238,7 @@
             "error": "Bitte geben Sie eine Beschreibung an!",
             "placeholder": "e.g. cleaning start"
           },
+          "value": "Wert",
           "value0": {
             "error": "Bitte geben Sie einen Wert an!",
             "placeholder": "Vertragswerkstatt"
@@ -254,12 +258,10 @@
           "value4": {
             "error": "Bitte geben Sie einen Wert an!",
             "placeholder": "Mr. Max Johnson"
-          },
-          "date": "Datum",
-          "description": "Beschreibung",
-          "value": "Wert"
+          }
         },
         "metadata": {
+          "container-title": "Spezifikationen",
           "key0": {
             "error": "Bitte geben Sie einen Feldnamen an!",
             "placeholder": "e.g. Serien-Nummer"
