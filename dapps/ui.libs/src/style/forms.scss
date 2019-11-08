@@ -44,7 +44,9 @@ $controlSelectors: (
   }
 
   .custom-select {
-    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
 
     &.form-control {
       border-radius: 4px;
