@@ -22,7 +22,7 @@ import { cloneDeep } from './utils';
 
 /**
  * Returns the users alias, depending on it's profile type. If it's an old profile, resolve alias
- * from
+ * from address book.
  *
  * @param      {bccProfile}  profile         profile to load the data for
  * @param      {any}         accountDetails  already laoded accountDetails, to prevent duplicated
