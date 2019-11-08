@@ -36,7 +36,6 @@ interface ProfileFormInterface extends EvanForm {
   alias: EvanFormControl;
   password0: EvanFormControl;
   password1: EvanFormControl;
-  termsAccepted: EvanFormControl;
 }
 
 @Component({ })
@@ -126,33 +125,51 @@ export default class SignUp extends mixins(EvanComponent) {
     }
   };
 
+  /**
+   * has the user accepted the terms of use?
+   */
+  termsAccepted = null;
+
   async created() {
+    const uiSpecs = { attr: { required: true, } };
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {
         value: 'user',
+        uiSpecs: {
+          attr: {
+            required: true,
+            options: [
+              { label: '_onboarding.sign-up.account-types.user', value: 'user', },
+              { label: '_onboarding.sign-up.account-types.company', value: 'company', },
+            ],
+          },
+          type: 'select',
+        },
       },
       alias: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return this.value.length !== 0;
-        }
+        },
+        uiSpecs: { attr: { hint: true, required: true, } },
       },
       password0: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return vueInstance.getPasswordError(0, this.form) || true;
-        }
+        },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password'  } },
       },
       password1: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return vueInstance.getPasswordError(1, this.form) || true;
-        }
+        },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
       },
-      termsAccepted: {
-        value: false,
-      }
     }));
+
+    this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
 
     // update onboarding progress steps
     this.setSteps();

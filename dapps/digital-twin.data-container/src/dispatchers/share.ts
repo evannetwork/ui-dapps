@@ -70,11 +70,9 @@ dispatcher
       await Promise.all(data.map(async (shareData: any) => {
         await updateSharings(runtime, shareData);
       }));
-
-      return;
+    } else {
+      await updateSharings(runtime, data);
     }
-
-    await updateSharings(runtime, data.shareConfigs);
   })
   // remove "un-shared" fields
   .step(async (instance: DispatcherInstance, data: any) => {
@@ -84,11 +82,9 @@ dispatcher
       await Promise.all(data.map(async (shareData: any) => {
         await updateUnsharings(runtime, shareData);
       }));
-
-      return;
+    } else {
+      await updateUnsharings(runtime, data);
     }
-
-    await updateUnsharings(runtime, data.unshareConfigs);
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {

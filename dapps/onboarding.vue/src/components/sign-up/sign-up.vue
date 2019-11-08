@@ -19,31 +19,7 @@
 
 <template>
   <div class="row h-100">
-    <div class="col-12 d-flex justify-content-center align-items-center"
-      v-if="creatingProfile">
-      <div>
-        <template v-if="creatingProfile !== 5">
-          <div>
-            <img class="img-fluid"
-              style="height: 526px;"
-              :src="$store.state.onboardingBaseUrl + '/assets/creating_' + creatingProfile + '.png'">
-          </div>
-          <div style="height: 10px" class="mx-auto progress my-3 bg-white">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              :style="{width: `${(creatingProfile * 20)}%`}"
-            ></div>
-          </div>
-          <h5 class="font-weight-bold mt-5 text-center">
-            {{ ('_onboarding.sign-up.create-profile.status-' + creatingProfile) | translate }}
-          </h5>
-        </template>
-        <div v-if="creatingProfile === 5" class="h-100 d-flex align-items-center justify-content-center">
-          <evan-success></evan-success>
-        </div>
-      </div>
-    </div>
+    <evan-profile-creating :creatingProfile="creatingProfile" v-if="creatingProfile" />
     <evan-onboarding-layout-wrapper v-else
       :type="`sign-up.${ profileForm.accountType.value }`"
       :step="activeStep">
@@ -62,59 +38,12 @@
             {{ '_onboarding.sign-up.steps.base.desc' | translate }}
           </p>
 
-          <form v-on:submit.prevent="useProfile">
-            <div class="form-group">
-              <label for="accountType">
-                {{ '_onboarding.sign-up.account-type' | translate }}
-              </label>
-              <select class="form-control custom-select" required
-                id="accountType" ref="accountType"
-                :placeholder="'_onboarding.sign-up.account-type' | translate"
-                v-model="profileForm.accountType.value"
-                :class="{ 'is-invalid' : profileForm.accountType.error }"
-                @blur="profileForm.accountType.setDirty()"
-                @change="setSteps()">
-                <option value="user">{{ '_onboarding.sign-up.account-types.user' | translate }}</option>
-                <option value="company">{{ '_onboarding.sign-up.account-types.company' | translate }}</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="alias text-black">
-                {{ '_onboarding.sign-up.alias' | translate }}
-              </label>
-              <input class="form-control" required
-                id="alias" ref="alias"
-                :placeholder="'_onboarding.sign-up.user-name' | translate"
-                v-model="profileForm.alias.value"
-                :class="{ 'is-invalid' : profileForm.alias.error }"
-                @blur="profileForm.alias.setDirty()">
-              <small class="form-text text-muted">
-                {{ '_onboarding.sign-up.alias-help' | translate }}
-              </small>
-              <div class="invalid-feedback">
-                {{ '_onboarding.sign-up.errors.user-name' | translate }}
-              </div>
-            </div>
-
-            <div class="form-group"
-              v-for="(_, index) in [ '', '' ]">
-              <label for="password">
-                {{ ('_onboarding.sign-up.password' + index) | translate }}
-              </label>
-              <input class="form-control" type="password" required
-                :id="`password${ index }`" :ref="`password${ index }`"
-                v-model="profileForm[`password${ index }`].value"
-                :class="{ 'is-invalid' : profileForm[`password${ index }`].error }"
-                @input="profileForm[`password${ index }`].setDirty()">
-              <small class="form-text text-muted">
-                {{ '_onboarding.sign-up.password-help' | translate }}
-              </small>
-              <div class="invalid-feedback">
-                {{ profileForm[`password${ index }`].error | translate }}
-              </div>
-            </div>
-          </form>
+          <evan-form
+            :i18nScope="'_onboarding.sign-up'"
+            :onlyForm="true"
+            :stacked="true"
+            :form="profileForm"
+          />
         </div>
         <div v-if="profileForm.accountType.value === 'company'">
           <p class="text-center mt-3 mb-4" v-if="activeStep === 1">
@@ -146,39 +75,12 @@
           <p class="text-center mt-4 mb-4">
             {{ '_onboarding.sign-up.steps.captcha.desc' | translate }}
           </p>
-          <div class="d-flex justify-content-center mb-3">
-            <vue-recaptcha id="evan-recaptcha"
-              v-if="!initialzing"
-              ref="recaptcha"
-              :sitekey="recaptchaId"
-              theme="light"
-              @verify="onCaptchaVerified"
-              @expired="onCaptchaExpired">
-            </vue-recaptcha>
-          </div>
 
-          <div class="d-flex justify-content-center">
-            <evan-form-control-checkbox
-              class="mr-3" style="min-width: 0"
-              id="termsAccepted"
-              v-model="profileForm.termsAccepted.value"
-              :class="{ 'is-invalid' : profileForm.termsAccepted.error }"
-              @input="profileForm.termsAccepted.setDirty()"
-              @click="profileForm.termsAccepted.value = !profileForm.termsAccepted.value"
-            />
-            <label
-              for="termsAccepted"
-              class="form-check-label"
-              v-html="$t(`_onboarding.sign-up.terms-accepted`)">
-            </label>
-            <div class="invalid-feedback">
-              {{ '_onboarding.sign-up.errors.terms-accepted' | translate }}
-            </div>
-          </div>
+          <profile-captcha-terms :signUpComp="this" />
 
           <div class="text-center">
             <button type="button" class="btn  btn-primary btn-block"
-              :disabled="!recaptchaToken || !profileForm.termsAccepted.value"
+              :disabled="!recaptchaToken || !termsAccepted.value"
               @click="createProfile()">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
             </button>
@@ -199,9 +101,7 @@
             {{ '_onboarding.sign-up.welcome-desc' | translate }}
           </h5>
 
-          <evan-onboarding-accept-contact
-            :loadAlias="true">
-          </evan-onboarding-accept-contact>
+          <evan-onboarding-accept-contact :loadAlias="true" />
         </div>
       </div>
     </evan-onboarding-layout-wrapper>

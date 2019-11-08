@@ -17,14 +17,16 @@
   the following URL: https://evan.network/license/
 */
 
+// import evan libs
+import * as profileDApp from '@evan.network/profile.vue';
 import VueRecaptcha from 'vue-recaptcha';
-import MnemonicComponent from './mnemonic/mnemonic.vue';
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+
 import AcceptContactComponent from './accept-contact/accept-contact.vue';
 import LayoutWrapperComponent from './layout-wrapper/layout-wrapper.vue';
-import * as profileDApp from '@evan.network/profile.vue';
-
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+import MnemonicComponent from './mnemonic/mnemonic.vue';
+import ProfileCreatingComponent from './sign-up/creating.vue';
+import CaptchaTermsOfUse from './sign-up/captcha-terms.vue';
 
 // export them all, so other applications can access them
 export {
@@ -35,9 +37,11 @@ export {
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { name: 'profile-captcha-terms', component: CaptchaTermsOfUse, },
   { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
   { name: 'evan-onboarding-layout-wrapper', component: LayoutWrapperComponent },
   { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
+  { name: 'evan-profile-creating', component: ProfileCreatingComponent },
   { name: 'profile-company-contact', component: (profileDApp as any).CompanyContactForm, },
   { name: 'profile-company-registration', component: (profileDApp as any).CompanyRegistrationForm, },
   { name: 'vue-recaptcha', component: VueRecaptcha },
