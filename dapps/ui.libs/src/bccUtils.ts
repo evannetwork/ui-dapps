@@ -45,7 +45,9 @@ export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, r
   } catch (ex) { }
 
   // load alias from addressbook, when it's not available
-  if (!accountDetails || !accountDetails.accountName) {
+  if (accountDetails && accountDetails.accountName) {
+    return accountDetails.accountName;
+  } else {
     // load addressbook info
     const myProfile = new bcc.Profile({
       ...profile.options,
@@ -56,7 +58,5 @@ export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, r
     const contact = addressBook.profile[myProfile.profileOwner];
 
     return contact ? contact.alias : myProfile.profileOwner;
-  } else {
-    return accountDetails.accountName;
   }
 }
