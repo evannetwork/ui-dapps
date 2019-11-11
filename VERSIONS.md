@@ -4,6 +4,14 @@
 ### Features
 
 ### Fixes
+- `profile.vue` (v3.5.1)
+  - fix company contact control order
+  - i18n fixes
+  - move profile switch to profile detail page
+- `onboarding.vue` (v3.2.1)
+  - change terms of use and captcha checkbox
+- `addressbook.vue` (v3.1.2)
+  - contact click redirects to profile detail
 
 ### Deprecations
 

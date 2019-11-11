@@ -29,8 +29,8 @@ export default{
     "contact-form": {
       "accountId": {
         "desc": "Account-ID eines bekannten und bestehenden Profils.",
-        "error-added": "Die angebene Account-ID haben Sie bereits zu Ihren Kontakten hinzugefügt.",
-        "error-invalid": "Bitte geben Sie eine gültige Account-ID an! (e.g. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
+        "error-added": "Die angegebene Account-ID haben Sie bereits zu Ihren Kontakten hinzugefügt.",
+        "error-invalid": "Bitte geben Sie eine gültige Account-ID an! (z.B. 0x1637Fa43D44a1Fb415D858a3cf4F7F8596A4048F)",
         "title": "Account-ID"
       },
       "alias": {
@@ -39,7 +39,7 @@ export default{
         "title": "Alias"
       },
       "bmail": {
-        "body": "Guten Tag,\n\nIch möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{fromName}",
+        "body": "Guten Tag,\n\nich möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{fromName}",
         "desc": "Der ausgewählte Benutzer wird per Blockchain-Mail / E-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
         "title": "Kontaktanfrage"
       },
@@ -48,7 +48,7 @@ export default{
       "desc-email": "Sobald ein Nutzer per E-Mail eingeladen wird, können Sie diesen Kontakt nicht direkt verwenden, um mit diesem Daten zu teilen. Sobald der Anmeldeprozess des eingeladenen Benutzers abgeschlossen ist, erhalten Sie eine Blockchain Mail mit der Sie den Einladeprozess beenden und Kontaktdaten aktualisieren können. Weiterhin können Sie EVE als Startguthaben mitschicken.",
       "email": {
         "desc": "E-Mail Adresse zum Einladen des Nutzers in das Netzwerk.",
-        "error-added": "Die angebene E-Mail Adresse haben Sie bereits zu Ihren Kontakten hinzugefügt.",
+        "error-added": "Die angegebene E-Mail Adresse haben Sie bereits zu Ihren Kontakten hinzugefügt.",
         "error-invalid": "Bitte geben Sie eine valide E-Mail Adresse an!",
         "title": "E-Mail"
       },
@@ -79,11 +79,11 @@ export default{
       "step2": "Einladungsnachricht",
       "submit": "Kontakt hinzufügen",
       "tags": {
-        "desc": "Leerzeichen separierte Schlagworte",
+        "desc": "Schlagworte getrennt durch Leerzeichen",
         "title": "Schlagworte"
       }
     },
-    "detail": "Kontakinformationen",
+    "detail": "Kontaktinformationen",
     "dispatcher": {
       "invite": "Kontakt einladen",
       "remove": "Kontakt entfernen",
@@ -96,7 +96,7 @@ export default{
     },
     "overview": "Übersicht",
     "remove-contact": {
-      "description": "Wollen Sie den Kontakt {alias} mit der Adresse {accountId} wirklich von Ihren Kontakten entfernen?",
+      "description": "Wollen Sie den Kontakt {alias} mit der Adresse {accountId} wirklich aus Ihren Kontakten entfernen?",
       "remove": "Kontakt entfernen",
       "title": "Kontakt entfernen"
     },

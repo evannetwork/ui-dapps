@@ -1,5 +1,11 @@
 {
   "_profile": {
+    "bmail": {
+      "share": {
+        "body": "Guten Tag,\n\nIhnen wurden Profilinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich das Profil anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
+        "title": "Profilinformationen"
+      }
+    },
     "breadcrumbs": {
       "addressbook.vue.evan": "Kontakte",
       "detail": "Profil",
@@ -47,7 +53,7 @@
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
           "label": "Registergericht",
-          "placeholder": "Wo ist der Firmensitz?"
+          "placeholder": "Berlin"
         },
         "register": {
           "error": "Bitte wählen Sie den Registertyp aus!",
@@ -120,6 +126,7 @@
       }
     },
     "dispatchers": {
+      "profile-share": "Profilinformationen teilen...",
       "profile-type": "Profiltyp wird geändert...",
       "profile-update": "Profilinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
@@ -149,6 +156,7 @@
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharing": {
+      "Profile Data": "Profildaten",
       "accountDetails": "Profildetails",
       "accountName": "Name",
       "city": "Ort",
@@ -158,6 +166,7 @@
       "court": "Registergericht",
       "dataStreamSettings": "IoT-Einstellungen",
       "description": "Um Ihre Profildaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
+      "description-no-contacts": "Profilinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Profil aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identität ein.",
       "deviceDetails": "Geräteinformationen",
       "location": "Standort",
       "manufacturer": "Hersteller",
@@ -165,27 +174,26 @@
       "permissionsTitle": "Profilzugriffsrechte",
       "picture": "Bild",
       "postalCode": "Postleitzahl",
-      "Profile Data": "Profildaten",
       "profileType": "Profiltyp",
       "register": "Register",
       "registerNumber": "Registernummer",
       "registration": "Registrierungsdaten",
       "salesTaxID": "Umsatzsteuer-ID",
-      "serialNumber":"Seriennummer",
+      "serialNumber": "Seriennummer",
       "settings": "Einstellungen",
       "streetAndNumber": "Straße",
       "type": "Typ",
       "website": "Website"
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Profilinformationen teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
       "no-data": "Bisher wurden keine Profildaten freigegeben",
       "title": "Freigaben für Ihre Profildaten"
     },
     "type": {
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
-      "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
       "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
       "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an."
@@ -209,10 +217,10 @@
         "issue": {
           "accountId": {
             "desc": "Identität für die die notarielle Bestätigung erstellt werden soll.",
-            "error": "Bitte geben Sie eine gültige Addresse an!",
+            "error": "Bitte geben Sie eine gültige Adresse an!",
             "title": "Identität"
           },
-          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Austellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
+          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Ausstellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
           "header": "Organisations-Verifikation ausstellen",
           "issue": "Organisations-Verifikation ausstellen",
           "issued": {
@@ -249,14 +257,14 @@
           "desc": "Bitte geben Sie Ihre PIN ein. Sie finden Ihre PIN in der Bestätigungsanfrage des Notars.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
           "did-printed": "Haben Sie das Dokument gedruckt?",
-          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Fimenstempel und schicken Sie es per Post an den anfragenden Notar.",
+          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Firmenstempel und schicken Sie es per Post an den anfragenden Notar.",
           "download": "Kein Drucker verfügbar? Download als PDF Datei",
           "generate-answer": "Code generieren",
           "header": "Authentifizierung",
           "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihre Identität verifiziert.",
           "next-step2": "Sie werden in Ihrer Mailbox darüber informiert.",
           "pin": {
-            "desc": "Die per Brief erhaltene, sechstellige PIN.",
+            "desc": "Die per Brief erhaltene, sechsstellige PIN.",
             "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
             "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
             "title": "PIN"
@@ -285,7 +293,7 @@
             "label": "Abteilung",
             "placeholder": "Abteilung"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "description": "Bitte füllen Sie das Formular aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
           "header": "Notarielle Verifikation",
           "how": {

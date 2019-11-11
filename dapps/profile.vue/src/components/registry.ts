@@ -25,7 +25,6 @@ import CompanyContactForm from './profile/company/contact/contact.vue';
 import CompanyRegistrationForm from './profile/company/registration/registration.vue';
 import DeviceDetailForm from './profile/device/detail/detail.vue';
 import PermissionWrapperComponent from './permission-wrapper/permission-wrapper.vue';
-import ProfileTypeComponent from './profile/type/type.vue';
 
 // import general components for the profile
 import LabeledList from './utils/labeled-list/labeled-list.vue';
@@ -56,7 +55,6 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'profile-company-contact', component: CompanyContactForm, },
   { name: 'profile-company-registration', component: CompanyRegistrationForm, },
   { name: 'profile-device-detail', component: DeviceDetailForm, },
-  { name: 'profile-type-switch', component: ProfileTypeComponent, },
   { name: 'profile-permission-wrapper', component: PermissionWrapperComponent, },
   // general
   { name: 'labeled-list', component: LabeledList },

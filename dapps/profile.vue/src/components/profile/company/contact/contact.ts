@@ -126,14 +126,20 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
           type: 'v-select',
           attr: {
             options: this.countryOptions,
+            required: true,
           }
         }
       },
-      city: {
-        value: contactData.city || '',
+      streetAndNumber: {
+        value: contactData.streetAndNumber || '',
         validate: function(vueInstance: CompanyContactForm) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       postalCode: {
         value: contactData.postalCode || '',
@@ -143,12 +149,22 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
             /^\d{5}$/.test(this.value) :
             true;
         },
+        uiSpecs: {
+          attr: {
+            required: () => this.form.country.value === 'DE',
+          }
+        }
       },
-      streetAndNumber: {
-        value: contactData.streetAndNumber || '',
+      city: {
+        value: contactData.city || '',
         validate: function(vueInstance: CompanyContactForm) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       website: {
         value: contactData.website || '',
@@ -175,8 +191,6 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
       .map(isoCode => {
         return { value: isoCode, label: (this as any).$t(`_countries.${isoCode}`), };
       })
-      .sort((countryA, countryB) => {
-          return countryA.label - countryB.label;
-      });
+      .sort((a, b) => (a.label > b.label ? 1 : (b.label > a.label ? -1 : 0)));
   }
 }

@@ -56,21 +56,42 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   verificationCount = 0;
 
+  /**
+   * Available profile types, that are selectable by the user
+   */
+  profileTypes = [ 'company', 'device' ];
+
+  /**
+   * New type, that was selected by the user
+   */
+  newType = null;
+
+  /**
+   * Sorting for permission sidepanel
+   */
   sortFilters = sortFilters;
+
+  /**
+   * Permission update function that is called by permission-editor.
+   */
+  updatePermissions: Function;
 
   /**
    * Load the mail details
    */
   async created() {
     // fill empty address with current logged in user
-    this.address = this.$store.state.profileDApp.address;
-    this.userInfo = this.$store.state.profileDApp.data.accountDetails;
+    this.address = (<any>this).$store.state.profileDApp.address;
+    this.userInfo = (<any>this).$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
     const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
     this.balance = {
-      amount: amount.toLocaleString(this.$i18n.locale()),
+      amount: amount.toLocaleString((<any>this).$i18n.locale()),
       timestamp: Date.now(),
     };
+    // set the update permission and always pass the current vue context into it, so it can use the
+    // vuex translate service
+    this.updatePermissions = updatePermissions.bind(null, this);
     this.loading = false;
   }
 
@@ -94,15 +115,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Open the type switch modal
-   */
-  typeSwitchModal() {
-    if (this.userInfo.profileType === 'user' && !this.isLoading()) {
-      (this as any).$refs.profileType.show();
-    }
-  }
-
-  /**
    * computed property
    * selected shared contacts from vuex store
    */
@@ -123,7 +135,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.userInfo = userInfo;
 
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      address: this.$store.state.profileDApp.address,
+      address: (<any>this).$store.state.profileDApp.address,
       formData: userInfo,
       type: 'accountDetails'
     });
@@ -137,7 +149,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   async loadPermissions(user: string) {
     const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, this.$route.params.address);
+    const allPermissions = await getProfilePermissionDetails(runtime, (<any>this).$route.params.address);
 
     if (!allPermissions[user]) {
       return allPermissions['new'];
@@ -147,7 +159,18 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Mock: will be replaced by permissions update function. TODO
+   * Trigger profile type change
+   *
+   * @param      {string}  type    The type
    */
-  updatePermissions = updatePermissions;
+  changeType(type: string) {
+    if (this.newType !== 'user') {
+      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+        formData: {
+          profileType: this.newType
+        },
+        type: 'accountDetails'
+      });
+    }
+  }
 }
