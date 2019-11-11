@@ -75,10 +75,18 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   set selectedSharedContacts(contacts) {
     (this as any).$store.commit('setSelectedSharedContacts', contacts);
+
+    const sharedContact = this.selectedSharedContacts;
+    // hide or show sidepanel
+    if (!sharedContact || sharedContact === null || sharedContact.length === 0) {
+      (<any>this).$store.state.uiState.swipePanel = '';
+    } else {
+      (<any>this).$store.state.uiState.swipePanel = 'sharing';
+    }
   }
 
-  get userInfo () {
-    return this.$store.state.profileDApp.data.accountDetails;
+  get userInfo() {
+    return (this as any).$store.state.profileDApp.data.accountDetails;
   }
 
   /**
@@ -88,6 +96,9 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
+    if (this.windowWidth >= 1200) {
+      (<any>this).$store.state.uiState.swipePanel = 'sharing';
+    }
   }
 
   handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
@@ -154,7 +165,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
-    this.sharedContacts = await getProfilePermissions(this);
+    this.sharedContacts = await getProfilePermissions((<any>this));
 
     this.loading = false;
   }

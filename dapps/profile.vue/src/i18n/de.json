@@ -186,7 +186,7 @@
       "website": "Website"
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie diese Profilinformationen derzeit teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Profilinformationen teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
       "no-data": "Bisher wurden keine Profildaten freigegeben",
       "title": "Freigaben für Ihre Profildaten"
     },
@@ -217,10 +217,10 @@
         "issue": {
           "accountId": {
             "desc": "Identität für die die notarielle Bestätigung erstellt werden soll.",
-            "error": "Bitte geben Sie eine gültige Addresse an!",
+            "error": "Bitte geben Sie eine gültige Adresse an!",
             "title": "Identität"
           },
-          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Austellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
+          "file-rename-hint": "Die hochgeladenen Dateien werden bei während der Ausstellung der Organisations-Verifikation in ein einheitliches Namensschema umbenannt.",
           "header": "Organisations-Verifikation ausstellen",
           "issue": "Organisations-Verifikation ausstellen",
           "issued": {
@@ -250,21 +250,21 @@
         },
         "learn-more": "Mehr erfahren",
         "no-requests": "Sie haben noch keine notarielle Verifikation beantragt. Nutzen Sie die folgende Schaltfläche um diese anzufordern.",
-        "notary": "Notar",
+        "notary": "Notar Knobloch",
         "pin": {
           "confirmation-code": "Ihr Bestätigungscode wurde erfolgreich erkannt.",
           "confirmation-code-desc": "Drucken Sie Ihren Bestätigungscode und senden Sie ihn per Post an die auf dem Dokument angegebene Adresse.",
           "desc": "Bitte geben Sie Ihre PIN ein. Sie finden Ihre PIN in der Bestätigungsanfrage des Notars.",
           "desc-hin": "Bitte achten Sie bei der Eingabe auf Groß- und Kleinschreibung.",
           "did-printed": "Haben Sie das Dokument gedruckt?",
-          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Fimenstempel und schicken Sie es per Post an den anfragenden Notar.",
+          "do-not-forget": "Bitte vergessen Sie nicht Ihre Unterschrift und den Firmenstempel und schicken Sie es per Post an den anfragenden Notar.",
           "download": "Kein Drucker verfügbar? Download als PDF Datei",
           "generate-answer": "Code generieren",
           "header": "Authentifizierung",
           "next-step": "Nach erfolgreicher Prüfung durch den Notar wird Ihre Identität verifiziert.",
           "next-step2": "Sie werden in Ihrer Mailbox darüber informiert.",
           "pin": {
-            "desc": "Die per Brief erhaltene, sechstellige PIN.",
+            "desc": "Die per Brief erhaltene, sechsstellige PIN.",
             "error": "Bitte geben Sie Ihre PIN ein, um fortzufahren.",
             "error2": "Die eingegebene PIN war nicht korrekt. Bitte geben Sie die korrekte PIN ein.",
             "title": "PIN"
@@ -293,7 +293,7 @@
             "label": "Abteilung",
             "placeholder": "Abteilung"
           },
-          "description": "Bitte füllen Sie das Forumlar aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
+          "description": "Bitte füllen Sie das Formular aus, um eine notarielle Verifikation Ihrer Organisation anzufordern. Dieser Service ist kostenpflichtig.",
           "fill-missing": "Bitte füllen Sie alle erforderlichen Unternehmensinformationen und speichern Sie diese ab.",
           "header": "Notarielle Verifikation",
           "how": {
@@ -318,7 +318,7 @@
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
-          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt. Bitte wählen Sie Deutschland als Unternehmenssitz aus.",
+          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
@@ -374,15 +374,16 @@
           "attachments": "Anhang",
           "close-detail": "Schließen",
           "created": "Erstellt",
-          "hide-technical": "Teschnische Details ausblenden",
+          "expired": "abgelaufen",
+          "expired-on": "abgelaufen am",
           "incorrect": "Die Ihnen ausgestellten Organisationsidentifikationen wurden nicht von der korrekten Instanz erstellt.",
-          "issuer": "Issuer-ID",
           "organization": "Organisations-Verifikation",
           "organization-random": "Organisations-ID-Verifikation",
-          "show-technical": "Technische Details anzeigen",
           "status": "Status",
-          "topic": "Pfad",
+          "topic": "Verifizierungspfad",
           "topic-desc": "Dieses Konto der Firma {companyName} wurde notariell beglaubigt. Damit wurde die Authentizität des Unternehmens und die Zuordnung zu diesem Konto bescheinigt.",
+          "valid-indefinitely": "unbegrenzt gültig",
+          "valid-until": "gültig bis",
           "verified-by": "Verifiziert durch"
         }
       },

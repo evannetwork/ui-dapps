@@ -132,7 +132,7 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
 
 /**
  * get permissions from own profile
- * @param runtime
+ * @param vueInstance
  */
 export const getProfilePermissions = async (vueInstance) => {
   return getPermissions(
