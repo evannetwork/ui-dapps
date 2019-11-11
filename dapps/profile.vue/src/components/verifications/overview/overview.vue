@@ -24,14 +24,13 @@
         <h3 class="font-weight-bold mb-0">
           {{ '_profile.verifications.title' | translate }}
         </h3>
-
         <button class="btn" @click="rerender = true; $nextTick(() => rerender = false);">
           <i class="mdi mdi-reload"></i>
           <evan-tooltip :placement="'bottom'">
             {{ `_profile.verifications.reload` | translate }}
           </evan-tooltip>
         </button>
-      </div>
+      </div>  
       <span class="mx-auto"></span>
       <div v-if="canIssue">
         <notary-action-issue
@@ -46,6 +45,7 @@
         </button>
       </div>
     </div>
+    <p>{{ '_profile.verifications.description' | translate }}</p>
     <div class="w-100 mt-5 d-flex flex-wrap flex-row"
       v-if="!rerender">
       <evan-loading v-if="loading"></evan-loading>
