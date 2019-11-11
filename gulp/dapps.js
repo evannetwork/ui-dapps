@@ -147,7 +147,6 @@ const buildDApp = async (dappDir) => {
       try {
         // show mac notification
         await runExec(`osascript -e 'display notification "${dappName} was successfully build in ${serves[dappName].lastDuration} seconds." with title "${dappName} build"'`)
-        await runExec(`say -v Cellos "${dappName} was successfully build in ${serves[dappName].lastDuration} seconds."`)
       } catch (ex) { }
       
       delete serves[dappName].error;
@@ -155,7 +154,6 @@ const buildDApp = async (dappDir) => {
       try {
         // show mac notification
         await runExec(`osascript -e 'display notification "Error building ${dappName}" with title "${dappName} build"'`)
-        await runExec(`say -v Bad "Error building dapp with title ${dappName}"`)
       } catch (ex) { }
       serves[dappName].error = ex;
     }

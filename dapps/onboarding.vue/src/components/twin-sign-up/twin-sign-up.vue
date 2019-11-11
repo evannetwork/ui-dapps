@@ -98,7 +98,7 @@
           <div class="text-center">
             <button type="button" class="btn btn-primary btn-block"
               :disabled="!recaptchaToken || !termsAccepted.value"
-              @click="createProfile()">
+              @click="createOfflineTwin()">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
             </button>
           </div>

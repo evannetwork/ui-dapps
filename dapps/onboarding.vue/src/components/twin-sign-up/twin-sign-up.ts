@@ -94,6 +94,15 @@ export default class TwinSignUp extends mixins(SignUp) {
     this.metadataForm = new EvanForm(this, metadataControls);
     this.listForm = new EvanForm(this, listControls);
 
+    for (let i = 0; i < 5; i++) {
+      this.metadataForm[`key${ i }`].value = `key${ i }`
+      this.metadataForm[`value${ i }`].value = `value${ i }`
+      // add list controls
+      this.listForm[`date${ i }`].value = `date${ i }`
+      this.listForm[`description${ i }`].value = `description${ i }`
+      this.listForm[`value${ i }`].value = `value${ i }`
+    }
+
     // setup twin dbcp formular
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
       name: {
@@ -187,13 +196,13 @@ export default class TwinSignUp extends mixins(SignUp) {
     for (let i = 0; i < 5; i++) {
       // add metadata containerData
       const metadataKey = this.metadataForm[`key${ i }`].value;
-      containerData.metadataForm[metadataKey] = this.metadataForm[`value${ i }`].value;
+      containerData[metadataName][metadataKey] = this.metadataForm[`value${ i }`].value;
 
       // add list containerData
       containerData[listName].push({
-        date: this.listForm[`date${ i }`],
-        description: this.listForm[`description${ i }`],
-        value: this.listForm[`value${ i }`],
+        date: this.listForm[`date${ i }`].value,
+        description: this.listForm[`description${ i }`].value,
+        value: this.listForm[`value${ i }`].value,
       });
 
       // add metadata schema
@@ -211,6 +220,11 @@ export default class TwinSignUp extends mixins(SignUp) {
     const { description, containerData, } = this.buildContainerData();
     const network = runtime.environment;
     const profile = runtime.profile;
+
+    console.log({ password, accountId, privateKey, runtime, })
+    console.log({ description, containerData, })
+
+    return;
 
     // disable pinning while profile files are being created
     profile.ipld.ipfs.disablePin = true;
