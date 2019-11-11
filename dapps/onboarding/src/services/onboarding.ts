@@ -296,7 +296,7 @@ export class OnboardingService {
 
       await bcc.Onboarding.createOfflineProfile(
         runtime,
-        alias,
+        { accountDetails: { accountName: alias }},
         account || this.activeAccount,
         privateKey,
         this.captchaToken,
