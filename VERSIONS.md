@@ -4,9 +4,28 @@
 ### Features
 
 ### Fixes
-- update gulp build scripts to be compatible node 12
+- `@evan.network/ui-libs` (v1.8.0)
+  - hide optional text from formulars, when transparent mode is enabled
+  - add `bccUtils` and `getUserAlias` function
+  - update toast design
+- `qrcodejs.libs` (v1.0.0)
+  - add qrcodejs lib
 
 ### Deprecations
+
+
+## Version v1.10.0
+### Features
+- `@evan.networtk/api-blockchain-core-browserified` (v2.14.0)
+- `@evan.network/ui-countries` (v1.1.0)
+  - restrict countries to only eu countries
+- `@evan.network/ui-libs` (v1.7.3)
+  - style btn-icon-primary
+
+### Fixes
+- update gulp build scripts to be compatible node 12
+- fix smart-contracts-browserified compilation
+
 
 ## Version (v1.9.0)
 ### Features

@@ -3,15 +3,15 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {},
-      "entrypoint": "countries.libs.js",
+      "entrypoint": "qrcodejs.libs.js",
       "files": [
-        "countries.libs.js"
+        "qrcodejs.libs.js"
       ],
-      "origin": "QmRLdndFBMuuV7XirtFvrFmcsV1wqA4VcpcuavMr2UV6sj",
+      "origin": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "",
@@ -20,20 +20,19 @@
         "en": ""
       },
       "name": {
-        "en": "countries.libs"
+        "en": "qrcodejs.libs"
       }
     },
     "imgSquare": "",
-    "name": "countries.libs",
+    "name": "qrcodejs.libs",
     "tags": [
       "dapp",
       "evan",
       "library"
     ],
-    "version": "1.1.0",
+    "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmXmzcmMC536XBtKcLYYHib7aY6GCsXgqdc6NTt84MVmjn",
-      "1.1.0": "QmXYohomRfjQdSgXMPLQtWhVten2F6hFCyVjv2XEJ3Kx7a"
+      "1.0.0": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu"
     }
   }
 }

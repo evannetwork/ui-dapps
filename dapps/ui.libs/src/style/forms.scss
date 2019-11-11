@@ -18,17 +18,15 @@
 */
 
 $controlSelectors: (
-  ".evan-file-input .batch-label",
-  ".evan-file-input .dropzone",
-  "input.form-control",
-  "select.form-control",
-  ".v-select"
+  '.evan-file-input .batch-label',
+  '.evan-file-input .dropzone',
+  'input.form-control',
+  'select.form-control',
+  '.v-select'
 );
 
 .evan {
-  .form-control.is-invalid,
-  .form-control.is-valid,
-  .was-validated .form-control:invalid {
+  .form-control.is-invalid, .form-control.is-valid, .was-validated .form-control:invalid {
     background-image: none !important;
   }
 
@@ -47,7 +45,8 @@ $controlSelectors: (
 
   .custom-select {
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
 
     &.form-control {
       border-radius: 4px;
@@ -55,7 +54,6 @@ $controlSelectors: (
   }
 
   .evan-form {
-
     &.transparent {
       > div:first-of-type {
         border-bottom: 1px solid transparent;
@@ -64,6 +62,12 @@ $controlSelectors: (
       @each $control in $controlSelectors {
         #{ $control } {
           background-color: transparent;
+        }
+      }
+
+      .col-form-label {
+        small {
+          display: none;
         }
       }
     }

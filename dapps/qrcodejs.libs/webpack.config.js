@@ -17,37 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-@import './utils';
-
-.evan {
-  .toasted-container {
-    &.bottom-left {
-      position: fixed;
-      bottom: 15px;
-      left: 80px;
-    }
-
-    .toasted {
-      font-size: 12px;
-      font-weight: bold;
-
-      &, &.info {
-        background-color: cssVar('dark');
-      }
-
-      &.success {
-        background-color: cssVar('success');
-      }
-
-      &.error {
-        background-color: cssVar('danger');
-      }
-
-      a, i {
-        &:first-child {
-          margin-left: auto;
-        }
-      }
-    }
-  }
-}
+// load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
+module.exports = require('../../gulp/webpack.config')(
+  require('./dbcp.json').public.name,
+  require('path').resolve(__dirname, './dist'),
+  true,
+  true,
+);
