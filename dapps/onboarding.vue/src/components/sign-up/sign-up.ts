@@ -18,16 +18,12 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import axios from 'axios';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl, getDomainName } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import * as evanUi from '@evan.network/ui';
 
 import { getDefaultDAppEns } from '../../utils';
 
@@ -37,6 +33,7 @@ interface ProfileFormInterface extends EvanForm {
   password0: EvanFormControl;
   password1: EvanFormControl;
   termsAccepted: EvanFormControl;
+  isValid?: boolean;
 }
 
 @Component({ })
@@ -278,7 +275,6 @@ export default class SignUp extends mixins(EvanComponent) {
         const password = this.profileForm.password0.value;
         // load the vault using the current inputs and create a bcc profile runtime
         const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
-        const provider = 'internal';
         const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
         const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
 
@@ -312,7 +308,7 @@ export default class SignUp extends mixins(EvanComponent) {
           // if the user were invited, show the sign in step, else navigate directly to the root
           // page.
           if (!this.$route.query.inviteeAlias) {
-            this.showMnemnonicModal();
+            this.navigateToEvan();
           } else {
             this.creatingProfile = 0;
             this.onboardedDialog = true;
@@ -344,17 +340,15 @@ export default class SignUp extends mixins(EvanComponent) {
     const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey, });
 
     window.localStorage['evan-mnemonic'] = encryptedMnemonic.toString('hex');
+    this.navigateToEvan();
   }
 
-  showMnemnonicModal() {
-    (this.$refs.modal as any).show();
-  }
   /**
    * Navigates to the previous opened application or use the default dapp ens.
    */
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
-    window.location.hash = `/${ this.$route.query.origin || getDefaultDAppEns() }`;
+    window.location.hash = `/${ (this as any).$route.query.origin || getDefaultDAppEns() }`;
   }
 
   /**
@@ -401,7 +395,7 @@ export default class SignUp extends mixins(EvanComponent) {
           }
         }
       },
-    })
+    });
 
     // update final steps
     this.steps = steps;
