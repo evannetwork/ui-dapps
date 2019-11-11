@@ -64,7 +64,7 @@
         <div class="step" v-if="activeStep === 2">
           <h5
             class="text-center mt-4 mb-4"
-          >{{ '_onboarding.sign-in.welcome-desc' | translate | translate }}</h5>
+          >{{ '_onboarding.sign-in.welcome-desc' | translate }}</h5>
 
           <evan-onboarding-accept-contact :loadAlias="true"></evan-onboarding-accept-contact>
         </div>
