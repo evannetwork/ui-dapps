@@ -8,7 +8,7 @@
         "materialicons.libs.css",
         "materialicons.libs.js"
       ],
-      "origin": "QmWrLFb4swcHMgpv8FzNFNjMtWvVNSfLfESBQJ1hmXGQ96",
+      "origin": "Qme1u5avK4igsL376afu1avRGwNJL87cz76LFq48CoJ7Ph",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -31,10 +31,11 @@
       "evan",
       "library"
     ],
-    "version": "4.4.0",
+    "version": "4.5.0",
     "versions": {
       "1.8.36": "QmdocVBKgt9zDeNU2CBP6m9gR8vWtPH9ehNuQkEEUeW8AN",
-      "4.4.0": "QmWadpx9RE982ZosokU3KVmEZWc7DyCmGNSh97SxbNMnwc"
+      "4.4.0": "QmWadpx9RE982ZosokU3KVmEZWc7DyCmGNSh97SxbNMnwc",
+      "4.5.0": "QmQBBeuzJ4TDbgzR5GFopx5rctN7do34pFA5bpGfpT4BqJ"
     }
   }
 }
