@@ -112,8 +112,6 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   }
 
   async handleRemoveSharedContact(item: SharedContactInterface) {
-    const runtime = (<any>this).getRuntime();
-
     await removeAllPermissions(this, item.sharedConfig)
       .then(() => {
         // remove item from list
