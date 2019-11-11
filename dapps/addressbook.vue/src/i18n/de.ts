@@ -39,7 +39,7 @@ export default{
         "title": "Alias"
       },
       "bmail": {
-        "body": "Guten Tag,\n\nIch möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{fromName}",
+        "body": "Guten Tag,\n\nich möchte Sie als Kontakt hinzufügen.\n\nMit freundlichen Grüßen,\n\n{fromName}",
         "desc": "Der ausgewählte Benutzer wird per Blockchain-Mail / E-Mail benachrichtigt. Im folgenden Formular können Sie die Nachricht anpassen.",
         "title": "Kontaktanfrage"
       },

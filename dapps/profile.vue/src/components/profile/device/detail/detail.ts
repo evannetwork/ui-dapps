@@ -74,30 +74,55 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       location: {
         value: deviceData.location || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       manufacturer: {
         value: deviceData.manufacturer || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       owner: {
         value: deviceData.owner || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length === 0 || EvanForm.validEthAddress(this.value);
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       serialNumber: {
         value: deviceData.serialNumber || '',
         validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       settings: {
         value: deviceData.settings ? deviceData.settings.files || deviceData.settings : [ ],

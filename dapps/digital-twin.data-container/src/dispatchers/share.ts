@@ -65,6 +65,7 @@ dispatcher
   // set new shared fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
+    const sharingArr = Array.isArray(data) ? data : [ data ];
 
     if (Array.isArray(data)) {
       await Promise.all(data.map(async (shareData: any) => {
@@ -77,6 +78,7 @@ dispatcher
   // remove "un-shared" fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
+    const sharingArr = Array.isArray(data) ? data : [ data ];
 
     if (Array.isArray(data)) {
       await Promise.all(data.map(async (shareData: any) => {
@@ -88,22 +90,20 @@ dispatcher
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {
-    // do not sent bMail for multi container sharing
-    if (data.bMailContent) {
-      const runtime = utils.getRuntime(instance.runtime);
+    const runtime = utils.getRuntime(instance.runtime);
+    const sharingArr = Array.isArray(data) ? data : [ data ];
 
-      if (Array.isArray(data)) {
-        return;
+    await Promise.all(sharingArr.map(async (sharingData: any) => {
+      if (sharingData.bMailContent || data.bMailContent) {
+        await Promise.all(sharingData.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
+          await runtime.mailbox.sendMail(
+            sharingData.bMailContent || data.bMailContent,
+            runtime.activeAccount,
+            shareConfig.accountId
+          );
+        }));
       }
-
-      await Promise.all(data.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
-        await runtime.mailbox.sendMail(
-          data.bMailContent,
-          runtime.activeAccount,
-          shareConfig.accountId
-        );
-      }));
-    }
+    }));
   });
 
 export default dispatcher;

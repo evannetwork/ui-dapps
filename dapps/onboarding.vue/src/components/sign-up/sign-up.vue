@@ -72,13 +72,23 @@
           </profile-company-contact>
         </div>
         <div v-if="activeStep === (steps.length - 1)">
-          <p class="text-center mt-4 mb-4">
+          <p class="text-center mb-8">
             {{ '_onboarding.sign-up.steps.captcha.desc' | translate }}
           </p>
 
           <profile-captcha-terms :signUpComp="this" />
 
-          <div class="text-center">
+          <div class="d-flex justify-content-center mt-3">
+            <vue-recaptcha id="evan-recaptcha"
+              v-if="!initialzing"
+              ref="recaptcha"
+              :sitekey="recaptchaId"
+              theme="light"
+              @verify="onCaptchaVerified"
+              @expired="onCaptchaExpired">
+            </vue-recaptcha>
+          </div>
+          <div class="text-center mt-8">
             <button type="button" class="btn  btn-primary btn-block"
               :disabled="!recaptchaToken || !termsAccepted.value"
               @click="createProfile()">
@@ -86,7 +96,7 @@
             </button>
           </div>
         </div>
-        <div class="text-center mt-5" v-else>
+        <div class="text-center" v-else>
           <button type="submit" class="btn  btn-primary btn-block"
             :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
             @click="activeStep++">
