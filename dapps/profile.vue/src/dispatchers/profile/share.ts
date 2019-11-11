@@ -17,14 +17,17 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, } from '@evan.network/ui';
+import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
 
-export {
-  requestIdentificationDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+const dispatcher = new Dispatcher(
+  `profile.vue.${ dappBrowser.getDomainName() }`,
+  'shareProfileDispatcher',
+  60000,
+  '_profile.dispatchers.profile-share'
+);
+
+dispatcher.steps = shareDispatcher.steps;
+
+export default dispatcher;

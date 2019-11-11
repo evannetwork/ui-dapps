@@ -56,7 +56,25 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   verificationCount = 0;
 
+  /**
+   * Available profile types, that are selectable by the user
+   */
+  profileTypes = [ 'company', 'device' ];
+
+  /**
+   * New type, that was selected by the user
+   */
+  newType = null;
+
+  /**
+   * Sorting for permission sidepanel
+   */
   sortFilters = sortFilters;
+
+  /**
+   * Permission update function that is called by permission-editor.
+   */
+  updatePermissions: Function;
 
   /**
    * Load the mail details
@@ -71,6 +89,9 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
       amount: amount.toLocaleString((<any>this).$i18n.locale()),
       timestamp: Date.now(),
     };
+    // set the update permission and always pass the current vue context into it, so it can use the
+    // vuex translate service
+    this.updatePermissions = updatePermissions.bind(null, this);
     this.loading = false;
   }
 
@@ -91,15 +112,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   isLoading() {
     return (this as any).$store.state.dispatcher.curr.running.updateProfileDispatcher;
-  }
-
-  /**
-   * Open the type switch modal
-   */
-  typeSwitchModal() {
-    if (this.userInfo.profileType === 'user' && !this.isLoading()) {
-      (this as any).$refs.profileType.show();
-    }
   }
 
   /**
@@ -147,7 +159,18 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Mock: will be replaced by permissions update function. TODO
+   * Trigger profile type change
+   *
+   * @param      {string}  type    The type
    */
-  updatePermissions = updatePermissions;
+  changeType(type: string) {
+    if (this.newType !== 'user') {
+      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+        formData: {
+          profileType: this.newType
+        },
+        type: 'accountDetails'
+      });
+    }
+  }
 }

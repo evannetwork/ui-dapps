@@ -106,6 +106,11 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         validate: function(vueInstance: CompanyRegistrationForm) {
           return this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
       },
       court: {
         value: registrationData.court || '',

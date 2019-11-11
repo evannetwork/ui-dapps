@@ -17,8 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-import { Container, ContainerShareConfig, Profile, ContainerUnshareConfig } from '@evan.network/api-blockchain-core';
-import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
+import { Container, ContainerShareConfig, Profile, ContainerUnshareConfig, Runtime } from '@evan.network/api-blockchain-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+
+import { getProfileShareBMail } from '../components/sharings/utils';
+import * as dispatchers from '../dispatchers/registry'; 
 
 /*
   Helper functions for permission handling.
@@ -281,48 +284,41 @@ const createUnshareConfig = (permissions, oldPermissions, accountId: string) => 
  * @param containerPermissions: any - the new permissions object
  * @param oldContainerPermissions: any - the old permissions object
  */
-export const updatePermissions = (runtime, accountId: string, containerPermissions, oldContainerPermissions) => {
+export const updatePermissions = async (vueInstance: EvanComponent, runtime: Runtime, accountId: string, containerPermissions, oldContainerPermissions) => {
   const containerConfigs = [];
+  const bMailContent = await getProfileShareBMail(vueInstance);
 
-  return new Promise((resolve, reject) => {
-    try {
-      Object.keys(containerPermissions).forEach( (containerAddress: string) => {
-        const shareConfigs = createShareConfig(
-          containerPermissions[containerAddress].permissions,
-          oldContainerPermissions[containerAddress].permissions,
-          accountId
-        );
+  Object.keys(containerPermissions).forEach( (containerAddress: string) => {
+    const shareConfigs = createShareConfig(
+      containerPermissions[containerAddress].permissions,
+      oldContainerPermissions[containerAddress].permissions,
+      accountId
+    );
 
-        const dataSharing = {
-          address: containerAddress,
-          shareConfigs,
-          bMailContent: false
-        };
+    const dataSharing = {
+      address: containerAddress,
+      shareConfigs,
+      bMailContent,
+    };
 
-        containerConfigs.push(dataSharing);
-      });
-
-      Object.keys(oldContainerPermissions).forEach( (containerAddress: string) => {
-        const unshareConfigs = createUnshareConfig(
-          containerPermissions[containerAddress].permissions,
-          oldContainerPermissions[containerAddress].permissions,
-          accountId
-        );
-
-        const dataSharing = {
-          address: containerAddress,
-          unshareConfigs,
-          bMailContent: false
-        };
-
-        containerConfigs.push(dataSharing);
-      });
-
-      shareDispatcher.start(runtime, containerConfigs);
-    } catch (e) {
-      reject(e);
-    }
-
-    resolve();
+    containerConfigs.push(dataSharing);
   });
+
+  Object.keys(oldContainerPermissions).forEach( (containerAddress: string) => {
+    const unshareConfigs = createUnshareConfig(
+      containerPermissions[containerAddress].permissions,
+      oldContainerPermissions[containerAddress].permissions,
+      accountId
+    );
+
+    const dataSharing = {
+      address: containerAddress,
+      unshareConfigs,
+      bMailContent: false
+    };
+
+    containerConfigs.push(dataSharing);
+  });
+
+  await dispatchers.shareProfileDispatcher.start(runtime, containerConfigs);
 };

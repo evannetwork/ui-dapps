@@ -1,5 +1,11 @@
 {
   "_profile": {
+    "bmail": {
+      "share": {
+        "body": "Guten Tag,\n\nIhnen wurden Profilinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich das Profil anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
+        "title": "Profilinformationen"
+      }
+    },
     "breadcrumbs": {
       "addressbook.vue.evan": "Kontakte",
       "detail": "Profil",
@@ -47,7 +53,7 @@
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
           "label": "Registergericht",
-          "placeholder": "Wo ist der Firmensitz?"
+          "placeholder": "Berlin"
         },
         "register": {
           "error": "Bitte wählen Sie den Registertyp aus!",
@@ -120,6 +126,7 @@
       }
     },
     "dispatchers": {
+      "profile-share": "Profilinformationen teilen...",
       "profile-type": "Profiltyp wird geändert...",
       "profile-update": "Profilinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
@@ -149,6 +156,7 @@
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharing": {
+      "Profile Data": "Profildaten",
       "accountDetails": "Profildetails",
       "accountName": "Name",
       "city": "Ort",
@@ -158,6 +166,7 @@
       "court": "Registergericht",
       "dataStreamSettings": "IoT-Einstellungen",
       "description": "Um Ihre Profildaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
+      "description-no-contacts": "Profilinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Profil aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identität ein.",
       "deviceDetails": "Geräteinformationen",
       "location": "Standort",
       "manufacturer": "Hersteller",
@@ -165,13 +174,12 @@
       "permissionsTitle": "Profilzugriffsrechte",
       "picture": "Bild",
       "postalCode": "Postleitzahl",
-      "Profile Data": "Profildaten",
       "profileType": "Profiltyp",
       "register": "Register",
       "registerNumber": "Registernummer",
       "registration": "Registrierungsdaten",
       "salesTaxID": "Umsatzsteuer-ID",
-      "serialNumber":"Seriennummer",
+      "serialNumber": "Seriennummer",
       "settings": "Einstellungen",
       "streetAndNumber": "Straße",
       "type": "Typ",
@@ -185,7 +193,7 @@
     "type": {
       "change": "Ändern",
       "choose": "Profiltyp spezifieren",
-      "missing-type": "Sie haben noch keinen Profiltypen ausgewählt. Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
+      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
       "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
       "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
       "switch": "Geben Sie Ihren Profiltyp an."
