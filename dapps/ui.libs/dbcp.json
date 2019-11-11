@@ -5,7 +5,7 @@
       "dependencies": {
         "dexie.libs": "2.0.4",
         "evan.bootstrap.libs": "^4.3.1",
-        "materialicons.libs": "^1.8.36"
+        "materialicons.libs": "^4.5.0"
       },
       "entrypoint": "ui.libs.js",
       "files": [
