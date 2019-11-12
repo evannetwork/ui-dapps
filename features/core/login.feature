@@ -1,4 +1,3 @@
-@only
 Feature: evan.network login
 
 Scenario: Logging in to evan.network using angular
