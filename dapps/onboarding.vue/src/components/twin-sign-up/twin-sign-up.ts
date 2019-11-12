@@ -94,14 +94,14 @@ export default class TwinSignUp extends mixins(SignUp) {
     this.metadataForm = new EvanForm(this, metadataControls);
     this.listForm = new EvanForm(this, listControls);
 
-    // for (let i = 0; i < 5; i++) {
-    //   this.metadataForm[`key${ i }`].value = `key${ i }`
-    //   this.metadataForm[`value${ i }`].value = `value${ i }`
-    //   // add list controls
-    //   this.listForm[`date${ i }`].value = `date${ i }`
-    //   this.listForm[`description${ i }`].value = `description${ i }`
-    //   this.listForm[`value${ i }`].value = `value${ i }`
-    // }
+    for (let i = 0; i < 5; i++) {
+      this.metadataForm[`key${ i }`].value = `key${ i }`
+      this.metadataForm[`value${ i }`].value = `value${ i }`
+      // add list controls
+      this.listForm[`date${ i }`].value = `date${ i }`
+      this.listForm[`description${ i }`].value = `description${ i }`
+      this.listForm[`value${ i }`].value = `value${ i }`
+    }
 
     // setup twin dbcp formular
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
@@ -158,33 +158,34 @@ export default class TwinSignUp extends mixins(SignUp) {
     const description = {
       description: this.twinDbcpForm.name.value,
       name: this.twinDbcpForm.name.value,
-      dataSchema: { }
-    };
-    description.dataSchema[metadataName] = {
-      "$id": "specifications_schema",
-      "properties": { },
-      "type": "object"
-    };
-    description.dataSchema[listName] = {
-      "$id": "history_schema",
-      "items": {
-        "properties": {
-          "date": {
-            "default": "",
-            "type": "string"
-          },
-          "description": {
-            "default": "",
-            "type": "string"
-          },
-          "value": {
-            "default": "",
-            "type": "string"
-          }
+      dataSchema: {
+        [ metadataName ]: {
+          "$id": "specifications_schema",
+          "properties": { },
+          "type": "object"
         },
-        "type": "object"
-      },
-      "type": "array"
+        [ listName ]: {
+          "$id": "history_schema",
+          "items": {
+            "properties": {
+              "date": {
+                "default": "",
+                "type": "string"
+              },
+              "description": {
+                "default": "",
+                "type": "string"
+              },
+              "value": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      }
     };
 
     // setup data object
@@ -212,17 +213,34 @@ export default class TwinSignUp extends mixins(SignUp) {
       };
     }
 
-    return { containerData, description, };
+    // setup template definition
+    const template = {
+      permissions: [ metadataName, listName, ],
+      properties: {
+        [ metadataName ]: {
+          dataSchema: description.dataSchema[metadataName],
+          permissions: { '0': [ 'set' ] },
+          type: 'entry',
+        },
+        [ listName ]: {
+          dataSchema: description.dataSchema[listName],
+          permissions: { '0': [ 'set' ] },
+          type: 'list',
+        },
+      },
+    };
+
+    return { containerData, description, template, };
   }
 
   async createOfflineTwin() {
     const { password, accountId, privateKey, runtime, } = await this.getProfileCreationData();
-    const { description, containerData, } = this.buildContainerData();
+    const { description, containerData, template, } = this.buildContainerData();
     const network = runtime.environment;
     const profile = runtime.profile;
 
     console.log({ password, accountId, privateKey, runtime, })
-    console.log({ description, containerData, })
+    console.log({ description, containerData, template, })
 
     return;
 
