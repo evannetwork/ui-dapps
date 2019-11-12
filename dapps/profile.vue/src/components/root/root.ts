@@ -81,7 +81,8 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       this.loading = true;
     }
 
-    await this.setupProfile();
+    this.$store.state.loadingProfile = this.setupProfile();
+    await this.$store.state.loadingProfile;
     this.setNavEntries();
 
     if (this.$store.state.profileDApp.isMyProfile) {
@@ -157,6 +158,11 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
           data[key] = await this.loadProfileEntry(runtime, profileDApp.profile, key);
         } catch (ex) {
           profileDApp.profile.log(`Could nor load accountDetails for ${ profileDApp.address }: ${ ex.message }`, 'error');
+        }
+
+        // fill empty values
+        if (!data[key]) {
+          data[key] = { };
         }
       }
     }));

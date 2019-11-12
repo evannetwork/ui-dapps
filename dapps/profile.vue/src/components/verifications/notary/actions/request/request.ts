@@ -288,6 +288,9 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Load currents users company data and checks, if some information are missing.
    */
   async loadCompanyData() {
+    // wait until profile was reloaded
+    await this.$store.state.loadingProfile;
+
     this.companyData = {
       contact: this.$store.state.profileDApp.data.contact,
       registration: this.$store.state.profileDApp.data.registration,
