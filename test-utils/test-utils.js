@@ -85,10 +85,22 @@ function betterClearValue(selector) {
   });
 }
 
+async function getElementIdByLabel(value) {
+  let elementId;
+  const xPathSelector = `//*/text()[normalize-space(.) = '${value}']/parent::*`;
+
+  // Get id of select box from "for" attribute of the label
+  await client.getAttribute('xpath', xPathSelector, 'for', function(attr) {
+      elementId = attr.value;
+  });
+  return elementId;
+}
+
 module.exports = {
   backspaces,
   betterClearValue,
   setupEvan,
+  getElementIdByLabel,
   pauseHere: async () => {
     console.log('/******************************************************************************/');
     console.log('test paused, enjoy your developer tools :3');

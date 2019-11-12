@@ -1,6 +1,6 @@
 import { client } from 'nightwatch-api';
-import { When, Then } from 'cucumber';
-import { betterClearValue } from '../../test-utils/test-utils';
+import { When, Then } from 'cucumber';     
+import { betterClearValue, getElementIdByLabel } from '../../test-utils/test-utils';
 
 const getSelector = (label, angular) => {
   if (!angular) {
@@ -26,20 +26,10 @@ const getSelector = (label, angular) => {
   }
 }
 
-/**
- * Looks for an input field with sibling label having certain content and fills the values into the input field.
- */
 When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, async(angular, label, content) => {
-  client.useXpath();
-
-  // select following or preceding input with label having text or having text in any tag inside label tag
-  const selector = getSelector(label, !!angular);
-
-  await client.expect.element(selector).to.be.visible;
-  await betterClearValue(selector),
-  await client.setValue(selector, content);
-
-  client.useCss();
+  const elementId = await getElementIdByLabel(label);
+  await client.expect.element(`#${elementId}`).to.be.visible;
+  await client.setValue(`#${elementId}`, content);
 });
 
 /**

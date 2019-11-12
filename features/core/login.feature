@@ -60,13 +60,20 @@ Scenario: Logging in to evan.network using vue with a not registered mnemnonic
     And I wait for 3 seconds
     Then I want to see a text including "There is no evan.network identity associated with this recovery key."
 
+@only
 Scenario: Refreshing the page and re-entering password
 
   Given I log in to evan.network using vue
   Then I want to see a text including "What would you like to start with?"
 
   When I refresh the page
-    
+    And I wait for 3 seconds
+    Then I want to see a text including "Alias"
+    And I want to see a text including "Password"
+  When I set Input field with label "Password" to "Test1234"
+    And I click on button "Log in"
+    And I wait for 3 seconds
+    Then I want to see a text including "Welcome to the evan.network"
 
 @tag:noLogout
 Scenario: Logout from of evan.network using vue
