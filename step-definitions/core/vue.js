@@ -40,7 +40,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   await client.setValue('#password', [user.password]);
   await client.pause(1000);
   client.useXpath();
-  await client.click(buttonSelector('Unlock'));
+  await client.click(buttonSelector('Log in'));
   client.useCss();
   await client.pause(3000);
 
