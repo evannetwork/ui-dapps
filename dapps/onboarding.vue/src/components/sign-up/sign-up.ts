@@ -311,7 +311,7 @@ export default class SignUp extends mixins(EvanComponent) {
       this.nextCreationStatus();
 
       try {
-        const { password, accountId, privateKey, runtime, } = await this.getProfileCreationData();
+        const { password, accountId, privateKey, runtime, vault, } = await this.getProfileCreationData();
 
         await bcc.Onboarding.createOfflineProfile(
           runtime,

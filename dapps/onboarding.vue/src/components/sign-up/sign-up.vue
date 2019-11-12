@@ -78,16 +78,6 @@
 
           <profile-captcha-terms :signUpComp="this" />
 
-          <div class="d-flex justify-content-center mt-3">
-            <vue-recaptcha id="evan-recaptcha"
-              v-if="!initialzing"
-              ref="recaptcha"
-              :sitekey="recaptchaId"
-              theme="light"
-              @verify="onCaptchaVerified"
-              @expired="onCaptchaExpired">
-            </vue-recaptcha>
-          </div>
           <div class="text-center mt-8">
             <button type="button" class="btn  btn-primary btn-block"
               :disabled="!recaptchaToken || !termsAccepted.value"
