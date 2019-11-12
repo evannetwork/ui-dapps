@@ -158,6 +158,9 @@ export default class TwinSignUp extends mixins(SignUp) {
     const description = {
       description: this.twinDbcpForm.name.value,
       name: this.twinDbcpForm.name.value,
+      author: 'evan',
+      version: '1.0.0',
+      dbcpVersion: 2,
       dataSchema: {
         [ metadataName ]: {
           "$id": "specifications_schema",
@@ -189,7 +192,7 @@ export default class TwinSignUp extends mixins(SignUp) {
     };
 
     // setup data object
-    const containerData = { };
+    const containerData = { type: 'Signup Twin' };
     containerData[metadataName] = { };
     containerData[listName] = [ ];
 
@@ -228,6 +231,7 @@ export default class TwinSignUp extends mixins(SignUp) {
           type: 'list',
         },
       },
+      type: 'Signup Twin'
     };
 
     return { containerData, description, template, };
@@ -238,11 +242,10 @@ export default class TwinSignUp extends mixins(SignUp) {
     const { description, containerData, template, } = this.buildContainerData();
     const network = runtime.environment;
     const profile = runtime.profile;
+    const agentUrl = 'http://localhost:8080'
 
-    console.log({ password, accountId, privateKey, runtime, })
+    console.log({ password, accountId, privateKey, runtime, mnemonic: this.mnemonic })
     console.log({ description, containerData, template, })
-
-    return;
 
     // disable pinning while profile files are being created
     profile.ipld.ipfs.disablePin = true;
@@ -252,23 +255,32 @@ export default class TwinSignUp extends mixins(SignUp) {
     const pk = '0x' + privateKey;
     const signature = runtime.web3.eth.accounts.sign('Gimme Gimme Gimme!', pk).signature;
     // trigger smart agent to create a new twin
-    const requestedTwin = await axios.post(`${ agentUrl }/api/smart-agents/twin/create`, {
+    const requestedTwinP = axios.post(`${ agentUrl }/api/smart-agents/twin/create`, {
       accountId,
       signature,
       captchaToken: this.recaptchaToken,
       twinDescription: {
         description: this.twinDbcpForm.name.value,
         name: this.twinDbcpForm.name.value,
+        author: 'evan',
+        version: '1.0.0',
+        dbcpVersion: 2,
       },
       containerDescription: description,
       containerData,
+      containerTemplate: template
     });
 
-    const dhKeys = runtime.keyExchange.getDiffieHellmanKeys();
-    await profile.addContactKey(
-      runtime.activeAccount, 'dataKey', dhKeys.privateKey.toString('hex'));
-    await profile.addPublicKey(dhKeys.publicKey.toString('hex'));
+    const createdProfileP = bcc.Onboarding.createOfflineProfile(
+      runtime,
+      this.getUserData(),
+      accountId,
+      privateKey,
+      this.recaptchaToken,
+      runtime.environment
+    );
 
+    const [requestedTwin] = await Promise.all([requestedTwinP, createdProfileP])
     // set initial structure by creating addressbook structure and saving it to ipfs
     const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
     const fileHashes: any = {};
@@ -301,32 +313,60 @@ export default class TwinSignUp extends mixins(SignUp) {
     // used to exclude encrypted hashes from fileHashes.ipfsHashes
     const ipfsExcludeHashes = [ ];
     // encrypt containerData
-    fileHashes.properties = { entries: { } };
+    fileHashes.properties = { entries: { type: '' }, lists: {} };
     await Promise.all(Object.keys(containerData).map(async (key: string, index: number) => {
-      const encrypted = await cryptorAes.encrypt(
-        containerData[key],
-        { key: dataContentKeys[index] }
-      );
-      const envelope = {
-        private: encrypted.toString('hex'),
-        cryptoInfo: cryptorAes.getCryptoInfo(
-          runtime.nameResolver.soliditySha3((requestedTwin as any).contractId)),
-      };
-      let ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
-      profile.ipld.hashLog.push(`${ ipfsHash.toString('hex') }`);
 
-      fileHashes.properties.entries[key] = await cryptor.encrypt(
-        Buffer.from(ipfsHash.substr(2), 'hex'),
-        { key: hashKey, }
-      );
+      if (Array.isArray(containerData[key])) {
+        fileHashes.properties.lists[key] = [];
 
-      fileHashes.properties.entries[key] = `0x${ fileHashes.properties.entries[key]
-        .toString('hex') }`;
-      ipfsExcludeHashes.push(fileHashes.properties.entries[key]);
+        await Promise.all(containerData[key].map(async(element, elemIdx) => {
+          const encrypted = await cryptorAes.encrypt(
+            element,
+            { key: dataContentKeys[index] }
+          );
+          const envelope = {
+            private: encrypted.toString('hex'),
+            cryptoInfo: cryptorAes.getCryptoInfo(
+              runtime.nameResolver.soliditySha3((requestedTwin as any).data.containerAddress)),
+          };
+          let ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
+          profile.ipld.hashLog.push(`${ ipfsHash.toString('hex') }`);
+
+          fileHashes.properties.lists[key][elemIdx] = await cryptor.encrypt(
+            Buffer.from(ipfsHash.substr(2), 'hex'),
+            { key: hashKey, }
+          );
+
+          fileHashes.properties.lists[key][elemIdx] = `0x${ fileHashes.properties.lists[key][elemIdx]
+            .toString('hex') }`;
+          ipfsExcludeHashes.push(fileHashes.properties.lists[key][elemIdx]);
+        }));
+
+      } else {
+        const encrypted = await cryptorAes.encrypt(
+          containerData[key],
+          { key: dataContentKeys[index] }
+        );
+        const envelope = {
+          private: encrypted.toString('hex'),
+          cryptoInfo: cryptorAes.getCryptoInfo(
+            runtime.nameResolver.soliditySha3((requestedTwin as any).data.containerAddress)),
+        };
+        let ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
+        profile.ipld.hashLog.push(`${ ipfsHash.toString('hex') }`);
+
+        fileHashes.properties.entries[key] = await cryptor.encrypt(
+          Buffer.from(ipfsHash.substr(2), 'hex'),
+          { key: hashKey, }
+        );
+
+        fileHashes.properties.entries[key] = `0x${ fileHashes.properties.entries[key]
+          .toString('hex') }`;
+        ipfsExcludeHashes.push(fileHashes.properties.entries[key]);
+      }
+
     }));
 
-    fileHashes.properties.entries[profile.treeLabels.publicKey] =
-      await profile.storeToIpld(profile.treeLabels.publicKey);
     fileHashes.sharingsHash = sharingsHash;
     // keep only unique values, ignore addressbook (encrypted hash)
     fileHashes.ipfsHashes = [
@@ -339,17 +379,16 @@ export default class TwinSignUp extends mixins(SignUp) {
         (elem, pos, arr) => arr.indexOf(elem) === pos && ipfsExcludeHashes.indexOf(elem) === -1
       )
     )(fileHashes.ipfsHashes);
-    // clear hash log
-    profile.ipld.hashLog = [];
+
     // re-enable pinning
     profile.ipld.ipfs.disablePin = false;
 
-    await axios.post(`${ agentUrl }/api/smart-agents/twin/fill`, {
+    const twinFillP = await axios.post(`${ agentUrl }/api/smart-agents/twin/fill`, {
       accountId: accountId,
       signature: signature,
       twinInfo: fileHashes,
-      accessToken: (requestedTwin as any).accessToken,
-      contractId: (requestedTwin as any).contractId,
+      accessToken: (requestedTwin as any).data.accessToken,
+      containerId: (requestedTwin as any).data.containerAddress,
     });
   }
 }

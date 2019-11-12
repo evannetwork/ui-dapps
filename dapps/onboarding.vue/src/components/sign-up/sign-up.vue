@@ -19,7 +19,7 @@
 
 <template>
   <div class="row h-100">
-    <evan-profile-creating :creatingProfile="creatingProfile" v-if="creatingProfile" />
+    <evan-profile-creating :maximumSteps="5" :creatingProfile="creatingProfile" v-if="creatingProfile" />
     <evan-onboarding-layout-wrapper v-else
       :type="`sign-up.${ profileForm.accountType.value }`"
       :step="activeStep">
