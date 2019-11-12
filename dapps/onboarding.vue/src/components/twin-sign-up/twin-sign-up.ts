@@ -94,14 +94,14 @@ export default class TwinSignUp extends mixins(SignUp) {
     this.metadataForm = new EvanForm(this, metadataControls);
     this.listForm = new EvanForm(this, listControls);
 
-    for (let i = 0; i < 5; i++) {
-      this.metadataForm[`key${ i }`].value = `key${ i }`
-      this.metadataForm[`value${ i }`].value = `value${ i }`
-      // add list controls
-      this.listForm[`date${ i }`].value = `date${ i }`
-      this.listForm[`description${ i }`].value = `description${ i }`
-      this.listForm[`value${ i }`].value = `value${ i }`
-    }
+    // for (let i = 0; i < 5; i++) {
+    //   this.metadataForm[`key${ i }`].value = `key${ i }`
+    //   this.metadataForm[`value${ i }`].value = `value${ i }`
+    //   // add list controls
+    //   this.listForm[`date${ i }`].value = `date${ i }`
+    //   this.listForm[`description${ i }`].value = `description${ i }`
+    //   this.listForm[`value${ i }`].value = `value${ i }`
+    // }
 
     // setup twin dbcp formular
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
