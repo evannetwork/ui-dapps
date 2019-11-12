@@ -1,6 +1,6 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
-import { betterClearValue } from '../../test-utils/test-utils';
+import { betterClearValue, getElementIdByLabel } from '../../test-utils/test-utils';
 
 const getSelector = (label, angular) => {
   if (!angular) {
