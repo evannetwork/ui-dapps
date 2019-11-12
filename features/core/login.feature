@@ -1,3 +1,4 @@
+@only
 Feature: evan.network login
 
 Scenario: Logging in to evan.network using angular
@@ -28,7 +29,7 @@ Scenario: Logging in to evan.network using vue with a wrong password
   When I click on button "Next"
     And I wait for 3 seconds
     Then I want to see a text including "Password"
-  When I set Input field with label "Password" to "Test12345"
+  When I type "Test12345" into the input field with label "Password"
     And I click on button "Log in"
     Then I want to see a text including "The provided password is invalid."
 
@@ -43,7 +44,7 @@ Scenario: Logging in to evan.network using vue with a right password
   When I click on button "Next"
     And I wait for 1 seconds
     Then I want to see a text including "Password"
-  When I set Input field with label "Password" to "Test1234"
+  When I type "Test1234" into the input field with label "Password"
     And I click on button "Log in"
     And I wait for 3 seconds
     Then I want to see a text including "Welcome to the evan.network"
@@ -69,7 +70,7 @@ Scenario: Refreshing the page and re-entering password
     And I wait for 3 seconds
     Then I want to see a text including "Alias"
     And I want to see a text including "Password"
-  When I set Input field with label "Password" to "Test1234"
+  When I type "Test1234" into the input field with label "Password"
     And I click on button "Log in"
     And I wait for 3 seconds
     Then I want to see a text including "Welcome to the evan.network"

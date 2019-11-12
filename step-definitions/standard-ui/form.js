@@ -43,6 +43,16 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
 });
 
 /**
+ * Same semantic like "When I set Input field with label".
+ * Created separate function for backwards compatibility.
+ */
+When('I type {string} into the input field with label {string}', async(content, label) => {
+  const elementId = await getElementIdByLabel(label);
+  await client.expect.element(`#${elementId}`).to.be.visible;
+  await client.setValue(`#${elementId}`, content);
+});
+
+/**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
 Then('The value of the Input field with label {string} should be {string}',
