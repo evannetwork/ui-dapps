@@ -388,7 +388,8 @@
         }
       },
       "reload": "Reload",
-      "title": "All verifications"
+      "title": "All verifications",
+      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network."
     }
   }
 }

@@ -116,32 +116,6 @@
       </div>
     </evan-onboarding-layout-wrapper>
     <evan-modal
-      ref="modal"
-      :hideFooterButton="true"
-      :maxWidth="'800px'"
-      @close="navigateToEvan();"
-      disableBackdrop="true">
-      <template v-slot:header>
-        <h5 class="modal-title">
-          {{ '_onboarding.sign-up.get-mnemonic' | translate }}
-        </h5>
-      </template>
-      <template v-slot:body>
-        <div>
-          <p v-html="$t('_onboarding.sign-up.get-mnemonic-desc-long')">
-          </p>
-          <h3 class="text-danger text-center">{{ mnemonic }}</h3>
-        </div>
-      </template>
-      <template v-slot:footer>
-        <evan-button type="secondary"
-          id="modal-cancel"
-          @click="navigateToEvan();">
-          {{ '_evan.view-profile' | translate }}
-        </evan-button>
-      </template>
-    </evan-modal>
-    <evan-modal
       ref="creatingProfileError">
       <template v-slot:header>
         <h5 class="modal-title">

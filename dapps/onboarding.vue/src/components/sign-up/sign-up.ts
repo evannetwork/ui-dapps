@@ -18,24 +18,22 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import axios from 'axios';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl, getDomainName } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import * as evanUi from '@evan.network/ui';
 
 import { getDefaultDAppEns } from '../../utils';
 
 interface ProfileFormInterface extends EvanForm {
   accountType: EvanFormControl;
   alias: EvanFormControl;
+  isValid?: boolean;
   password0: EvanFormControl;
   password1: EvanFormControl;
+  termsAccepted: EvanFormControl;
 }
 
 @Component({ })
@@ -314,6 +312,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
       try {
         const { password, accountId, privateKey, runtime, } = await this.getProfileCreationData();
+
         await bcc.Onboarding.createOfflineProfile(
           runtime,
           this.userData,
@@ -332,13 +331,16 @@ export default class SignUp extends mixins(EvanComponent) {
         await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
         dappBrowser.core.setCurrentProvider('internal');
 
+        // set encrypted mnemonic for temporary usage
+        this.persistMnemonic(runtime, vault);
+
         // show done animation and navigate to signed in page
         this.creatingProfile = 5;
         setTimeout(() => {
           // if the user were invited, show the sign in step, else navigate directly to the root
           // page.
           if (!this.$route.query.inviteeAlias) {
-            this.showMnemnonicModal();
+            this.navigateToEvan();
           } else {
             this.creatingProfile = 0;
             this.onboardedDialog = true;
@@ -358,15 +360,27 @@ export default class SignUp extends mixins(EvanComponent) {
     }
   }
 
-  showMnemnonicModal() {
-    (this.$refs.modal as any).show();
+  /**
+   * Writes encrypted mnemonic to local storage.
+   *
+   * @param runtime
+   * @param { encryptionKey }
+   */
+  async persistMnemonic(runtime, {encryptionKey}): Promise<void> {
+    const cryptor = runtime.sharing.options.cryptoProvider
+      .getCryptorByCryptoAlgo(runtime.sharing.options.defaultCryptoAlgo);
+    const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey, });
+
+    window.localStorage['evan-mnemonic'] = encryptedMnemonic.toString('hex');
+    this.navigateToEvan();
   }
+
   /**
    * Navigates to the previous opened application or use the default dapp ens.
    */
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
-    window.location.hash = `/${ this.$route.query.origin || getDefaultDAppEns() }`;
+    window.location.hash = `/${ (this as any).$route.query.origin || getDefaultDAppEns() }`;
   }
 
   /**
@@ -413,7 +427,7 @@ export default class SignUp extends mixins(EvanComponent) {
           }
         }
       },
-    })
+    });
 
     // update final steps
     this.steps = steps;

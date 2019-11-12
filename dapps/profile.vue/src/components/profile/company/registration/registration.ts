@@ -49,7 +49,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   /**
    * Apply required fiels from outside.
    */
-  @Prop({ default: [ ] }) required;
+  @Prop({ default: [ 'company' ] }) required;
 
   /**
    * hides the cancel button and directly jumps into formular edit mode
@@ -108,7 +108,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: true,
+            required: this.required.indexOf('company') !== -1,
           }
         }
       },
@@ -116,6 +116,11 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         value: registrationData.court || '',
         validate: function(vueInstance: CompanyRegistrationForm) {
           return vueInstance.required.indexOf('court') === -1 || this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: this.required.indexOf('court') !== -1,
+          }
         },
       },
       register: {
@@ -127,6 +132,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
               { value: 'hra', label: '_profile.company.registration.register.types.hra', },
               { value: 'hrb', label: '_profile.company.registration.register.types.hrb', },
             ],
+            required: this.required.indexOf('register') !== -1,
           }
         },
         validate: function(vueInstance: CompanyRegistrationForm) {
@@ -138,12 +144,22 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         validate: function(vueInstance: CompanyRegistrationForm) {
           return vueInstance.required.indexOf('registerNumber') === -1 || this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: this.required.indexOf('registerNumber') !== -1,
+          }
+        }
       },
       salesTaxID: {
         value: registrationData.salesTaxID || '',
         validate: function(vueInstance: CompanyRegistrationForm) {
           return vueInstance.required.indexOf('salesTaxID') === -1 || this.value.length !== 0;
         },
+        uiSpecs: {
+          attr: {
+            required: this.required.indexOf('salesTaxID') !== -1,
+          }
+        }
       },
     }));
   }
