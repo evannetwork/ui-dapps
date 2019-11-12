@@ -126,7 +126,6 @@ Scenario: Registering a new company account on evan
   #   And The value of the Input field with label "City" should be "Test City"
   #   And The value of the Input field with label "Website" should be "https://evan.network"
 
-@only
 Scenario: Creating a new twin using onboarding
 
   Given I go to the evan.network startpage
@@ -193,3 +192,44 @@ Scenario: Creating a new twin using onboarding
     And I want to click on vue checkbox control with id "termsAccepted"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
+
+  # TODO: wait until profile was created
+@only
+Scenario: Creating a new twin using onboarding
+
+  Given I log in to evan.network using vue
+    And I click on "Digital Twins" in main menu
+    Then I want to see a text including "Onboarding Automated Twin"
+  When I click a element with text including "Onboarding Automated Twin"
+    Then I want to see a text including "Digital Twin"
+    And I want to see a text including "Onboarding Automated Twin"
+    And I want to see a text including "Plugin Overview"
+    And I want to see a text including "Technical Details"
+    And I want to see a text including "Permissions"
+    And I want to see a text including "TestContainer"
+  When I click a element with text including "TestContainer"
+    Then I want to see a text including "History"
+    And I want to see a text including "Specifications"
+  When I click a element with text including "Specifications"
+    Then I want to see a text including "Data Set Type: Metadata"
+    Then The value of the Input field with label "Fuel" should be "Petrol"
+    Then The value of the Input field with label "Manufacturer" should be "BMW"
+    Then The value of the Input field with label "Owner" should be "Company AG"
+    Then The value of the Input field with label "Serial-Nr" should be "12XY3456ABC"
+    Then The value of the Input field with label "Type" should be "Vehicle"
+  When I click a element with text including "History"
+    And I want to see a text including "1111-11-11"
+    And I want to see a text including "2222-22-22"
+    And I want to see a text including "3333-33-33"
+    And I want to see a text including "4444-44-44"
+    And I want to see a text including "5555-55-55"
+    And I want to see a text including "service start"
+    And I want to see a text including "service end"
+    And I want to see a text including "rent start"
+    And I want to see a text including "rent end"
+    And I want to see a text including "cleaning start"
+    And I want to see a text including "authorized repair shop"
+    And I want to see a text including "543.21 €"
+    And I want to see a text including "Mr. John Doe"
+    And I want to see a text including "123.45 Miles"
+    And I want to see a text including "Mr. Max Johnson"
