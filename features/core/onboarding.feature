@@ -194,7 +194,6 @@ Scenario: Creating a new twin using onboarding
     Then the button "Create Account" should be "enabled"
 
   # TODO: wait until profile was created
-@only
 Scenario: Creating a new twin using onboarding
 
   Given I log in to evan.network using vue
