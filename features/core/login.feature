@@ -60,7 +60,6 @@ Scenario: Logging in to evan.network using vue with a not registered mnemnonic
     And I wait for 3 seconds
     Then I want to see a text including "There is no evan.network identity associated with this recovery key."
 
-@only
 Scenario: Refreshing the page and re-entering password
 
   Given I log in to evan.network using vue
