@@ -29,11 +29,16 @@ export default class ProfileCreatingComponent extends mixins(EvanComponent) {
   /**
    * Creating status that should be displayed
    */
-  @Prop() creatingProfile: any;
+  @Prop() activeStep: any;
 
   /**
    * amount of steps that should be displayed
    */
   @Prop() maximumSteps: any;
+
+  /**
+   * Custom steps that should overwrite the default ones
+   */
+  @Prop({ default: { } }) customSteps: any;
 }
 

@@ -19,7 +19,17 @@
 
 <template>
   <div class="row h-100">
-    <evan-profile-creating :creatingProfile="creatingProfile" v-if="creatingProfile" />
+    <evan-profile-creating
+      :activeStep="creatingProfile"
+      :maximumSteps="6"
+      :customSteps="{
+        5: {
+          picture: $store.state.onboardingBaseUrl + '/assets/creating_twin.png',
+          text: $t('_onboarding.sign-up.twin.creating'),
+        },
+      }"
+      v-if="creatingProfile"
+    />
     <evan-onboarding-layout-wrapper v-else
       type="twin-sign-up"
       :step="activeStep">
@@ -113,6 +123,17 @@
         </div>
       </div>
     </evan-onboarding-layout-wrapper>
+    <evan-modal
+      ref="creatingProfileError">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_onboarding.sign-up.profile-create-error.title' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p>{{ '_onboarding.sign-up.profile-create-error.desc' | translate }}</p>
+      </template>
+    </evan-modal>
   </div>
 </template>
 

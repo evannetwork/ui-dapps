@@ -183,6 +183,7 @@
       "title": "Sign up",
       "twin": {
         "create": "Create your Digital Twin",
+        "creating": "Creating Digital Twin...",
         "dbcp": {
           "description": {
             "label": "Description",

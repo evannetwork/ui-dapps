@@ -183,6 +183,7 @@
       "title": "Registrieren",
       "twin": {
         "create": "Erstellen Sie Ihren Digitalen Zwilling",
+        "creating": "Digitaler Zwilling wird erstellt...",
         "dbcp": {
           "description": {
             "label": "Beschreibung",

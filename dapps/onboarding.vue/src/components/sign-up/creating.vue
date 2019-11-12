@@ -19,26 +19,30 @@
 
 <template>
   <div class="col-12 d-flex justify-content-center align-items-center"
-    v-if="creatingProfile">
+    v-if="activeStep">
     <div>
-      <template v-if="creatingProfile !== 5">
+      <template v-if="activeStep !== maximumSteps">
         <div>
           <img class="img-fluid"
-            style="height: 526px;"
-            :src="$store.state.onboardingBaseUrl + '/assets/creating_' + creatingProfile + '.png'">
+            style="max-width: 390px"
+            :src="customSteps[activeStep] ?
+              customSteps[activeStep].picture :
+              $store.state.onboardingBaseUrl + '/assets/creating_' + activeStep + '.png'
+            ">
         </div>
         <div style="height: 10px" class="mx-auto progress my-3 bg-white">
           <div
             class="progress-bar"
             role="progressbar"
-            :style="{width: `${(creatingProfile * 20)}%`}"
+            :style="{width: `${(activeStep * (100 / maximumSteps))}%`}"
           ></div>
         </div>
         <h5 class="font-weight-bold mt-5 text-center">
-          {{ ('_onboarding.sign-up.create-profile.status-' + creatingProfile) | translate }}
+          {{ (customSteps[activeStep] ? customSteps[activeStep].text :
+              '_onboarding.sign-up.create-profile.status-' + activeStep) | translate }}
         </h5>
       </template>
-      <div v-if="creatingProfile === 5" class="h-100 d-flex align-items-center justify-content-center">
+      <div v-if="activeStep === maximumSteps" class="h-100 d-flex align-items-center justify-content-center">
         <evan-success></evan-success>
       </div>
     </div>

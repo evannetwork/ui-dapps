@@ -353,6 +353,7 @@ export default class SignUp extends mixins(EvanComponent) {
         this.creationTime = -1;
         this.recaptchaToken = null;
         (this.$refs.creatingProfileError as any).show();
+        window.clearTimeout(this.timeoutCreationStatus);
       }
 
       // stop ui status updates
