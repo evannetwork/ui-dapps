@@ -26,6 +26,14 @@ import * as countriesDApp from '@evan.network/ui-countries';
 
 // map all langugages
 export default {
-  de: { ...de, ...(profileDApp as any).translations.de, ...countriesDApp.translations.de },
-  en: { ...en, ...(profileDApp as any).translations.en, ...countriesDApp.translations.en },
+  de: {
+    ...de,
+    ...(profileDApp as any).translations.de,
+    ...countriesDApp.translations.de
+  },
+  en: {
+    ...en,
+    ...(profileDApp as any).translations.en,
+    ...countriesDApp.translations.en
+  },
 };

@@ -23,8 +23,7 @@
       v-if="!useTextArea"
       @paste="handlePaste($event)">
       <div class="form-row">
-        <div class="form-group col-md-4"
-          v-for="(word, index) in words">
+        <div class="form-group col-md-4" v-for="(word, index) in words" :key="index">
           <input class="form-control" required
             :id="'mnemonicInput' + index" :ref="'mnemonicInput' + index"
             :placeholder="$t('_onboarding.mnemonic-word', {'index': index + 1})"
@@ -32,7 +31,7 @@
               'is-invalid': dirtyWords[index] && !correctWords[index],
               'is-valid': dirtyWords[index] && correctWords[index]
             }"
-            :disabled="$props.disabled && !riddelStarted"
+            :disabled="$props.disabled && !riddleStarted"
             v-model="words[index]"
             @keyup.enter.native="onSubmit()"
             @input="wordInputChanged(index)"
@@ -50,6 +49,6 @@
 </template>
 
 <script lang="ts">
-  import Mnemonic from './mnemonic.ts';
+  import Mnemonic from './mnemonic';
   export default Mnemonic;
 </script>
