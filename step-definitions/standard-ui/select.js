@@ -9,6 +9,7 @@ import { getElementIdByLabel } from '../../test-utils/test-utils';
 When('I click on the Vue Select with label {string}',
   async (label) => {
     const elementId = await getElementIdByLabel(label);
+    
     await client.click(`#${elementId}`);
   }
 );
