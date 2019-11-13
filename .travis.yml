@@ -1,20 +1,12 @@
 language: node_js
+node_js: "12"
+env:
+  - NIGHTWATCH_ENV=chrome
+  - NIGHTWATCH_ENV=firefox
+  - TESTPATTERN=feature/core/login.feature
 
 install:
   - npm install
 
-matrix:
-  include:
-  - name: "chrome"
-    node_js: "8.11.3"
-    env:
-      - NIGHTWATCH_ENV=chrome
-    script:
-      - npm run test-testnet
 
-  - name: "firefox"
-    node_js: "8.11.3"
-    env:
-      - NIGHTWATCH_ENV=firefox
-    script:
-      - npm run test-testnet
+script: npm run test-testnet-specific
