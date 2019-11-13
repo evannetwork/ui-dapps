@@ -3,7 +3,7 @@ Feature: evan.network profile
 Background: Creating a new unspecified account and navigate to the profile detail page
   # create new profile
   Given I go to the evan.network startpage
-  Then I want to see a text including "Account Type"
+  Then I want to see a text including "Account type"
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
