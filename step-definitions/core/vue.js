@@ -58,7 +58,7 @@ Given('I go to the evan.network startpage', async () => {
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
   });
-  await client.pause(5000);
+  await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I log out from vue/, async () => {
