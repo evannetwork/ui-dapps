@@ -20,7 +20,6 @@
 import {
   DAppLoaderComponent,
   RouteRegistrationInterface,
-  UnderDevelopmentComponent,
 } from '@evan.network/ui-vue-core';
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
@@ -30,6 +29,7 @@ import ProfileDetailComponent from './components/profile/profile.vue';
 import ProfileSettingsComponent from './components/settings/settings.vue';
 import VerificationsComponent from './components/verifications/overview/overview.vue';
 import ProfileSharingsComponent from './components/sharings/sharings.vue';
+import WalletComponent from './components/wallet/wallet.vue';
 
 /**
  * Routes the user to the default user detail page.
@@ -58,7 +58,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       { name: 'detail', path: 'detail', component: ProfileDetailComponent },
       { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
-      { name: 'wallet', path: 'wallet', component: UnderDevelopmentComponent },
+      { name: 'wallet', path: 'wallet', component: WalletComponent },
       { name: 'verifications', path: 'verifications', component: VerificationsComponent, },
       { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${ dappBrowser.getDomainName() }`, },
     ]
