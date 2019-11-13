@@ -12,3 +12,7 @@ Given("I am on the path {string}", async (path) => {
   await client.url(`${ evan.baseUrl }${path}`);
   await client.pause(1000)
 })
+
+When("I refresh the page", async () => {
+  await client.refresh();
+})

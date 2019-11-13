@@ -1,6 +1,6 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
-import { betterClearValue } from '../../test-utils/test-utils';
+import { betterClearValue, getElementIdByLabel } from '../../test-utils/test-utils';
 
 const getSelector = (label, angular) => {
   if (!angular) {
@@ -40,6 +40,17 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
   await client.setValue(selector, content);
 
   client.useCss();
+});
+
+/**
+ * Same semantic like "When I set Input field with label".
+ * Created separate function for backwards compatibility.
+ */
+When('I type {string} into the input field with label {string}', async(content, label) => {
+  const elementId = await getElementIdByLabel(label);
+  
+  await client.expect.element(`#${elementId}`).to.be.visible;
+  await client.setValue(`#${elementId}`, content);
 });
 
 /**

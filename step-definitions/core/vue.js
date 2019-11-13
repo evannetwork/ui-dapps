@@ -40,7 +40,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   await client.setValue('#password', [user.password]);
   await client.pause(1000);
   client.useXpath();
-  await client.click(buttonSelector('Unlock'));
+  await client.click(buttonSelector('Log in'));
   client.useCss();
   await client.pause(3000);
 
@@ -68,8 +68,8 @@ When(/I log out from vue/, async () => {
     loggedIn = false;
 
     await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`)
-    await client.waitForElementPresent('#dropdown-profile', 10 * 1000)
-    await client.click('#dropdown-profile')
+    await client.waitForElementPresent('#evan-dapp-profile', 10 * 1000)
+    await client.click('#evan-dapp-profile')
     await client.waitForElementPresent(`#evan-logout`, 10 * 1000)
     await client.click('#evan-logout')
     await client.waitForElementPresent(`.modal-content #submit-logout`, 10 * 1000)
@@ -78,8 +78,8 @@ When(/I log out from vue/, async () => {
 });
 
 Then(/I am no longer logged in to vue/, async () => {
-  await client.waitForElementPresent('#sign-in', 30 * 1000);
-  await client.assert.visible('#sign-in');
+  await client.waitForElementPresent('input#alias', 30 * 1000);
+  await client.assert.visible('input#alias');
 });
 
 When(/I switch to vue/, async () => {
