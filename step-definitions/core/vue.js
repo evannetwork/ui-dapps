@@ -26,7 +26,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   });
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`).refresh();
-  await client.pause(5000);
+  await client.waitForElementVisible('#onboarding.vue.evan', 60 * 1000);
 
   // vue, to define
   const split = user.mnemonic.split(' ');
