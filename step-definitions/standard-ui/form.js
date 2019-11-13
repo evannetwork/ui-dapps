@@ -48,6 +48,7 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
  */
 When('I type {string} into the input field with label {string}', async(content, label) => {
   const elementId = await getElementIdByLabel(label);
+  
   await client.expect.element(`#${elementId}`).to.be.visible;
   await client.setValue(`#${elementId}`, content);
 });
