@@ -48,7 +48,7 @@
           </profile-permission-wrapper>
         </div>
         <div class="col-xl-4">
-          <evan-wallet
+          <evan-wallet-card
             :accountDetails="userInfo"
             :address="$route.params.address"
           />
