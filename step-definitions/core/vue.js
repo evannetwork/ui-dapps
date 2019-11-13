@@ -31,7 +31,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   // vue, to define
   const split = user.mnemonic.split(' ');
   await client.click(`a[href*="#/dashboard.vue.evan/onboarding.vue.evan/sign-in"]`)
-  await client.waitForElementVisible('#mnemonicInput0', 10 * 1000);
+  await client.waitForElementVisible('#mnemonicInput0', 60 * 1000);
   for (let i = 0; i < split.length; i++) {
     await client.setValue(`#mnemonicInput${ i }`, [ split[i] ]);
   }
