@@ -5,6 +5,8 @@ install:
   - npm install
 
 jobs:
-  include:
-    - name: chrome/login
-      script: TESTPATTERN=feature/core/login.feature NIGHTWATCH_ENV=chrome npm run test-testnet-specific
+  - name: chrome/login
+    env: TESTPATTERN=features/core/login.feature NIGHTWATCH_ENV=chrome
+
+
+script: npm run test-testnet-specific
