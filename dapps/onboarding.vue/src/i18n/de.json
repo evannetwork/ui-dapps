@@ -193,117 +193,15 @@
             "error": "Bitte geben Sie einen Namen an!",
             "label": "Name",
             "placeholder": "Wie soll Ihr Twin heißen?"
+          },
+          "type": {
+            "label": "Type"
           }
         },
-        "list": {
-          "container-title": "Historie",
-          "date": "Datum",
-          "date0": {
-            "error": "Bitte wählen Sie ein Datum!",
-            "placeholder": "01.02.2019 09:01"
-          },
-          "date1": {
-            "error": "Bitte wählen Sie ein Datum!",
-            "placeholder": "01.02.2019 11:54"
-          },
-          "date2": {
-            "error": "Bitte wählen Sie ein Datum!",
-            "placeholder": "06.02.2019 11:13"
-          },
-          "date3": {
-            "error": "Bitte wählen Sie ein Datum!",
-            "placeholder": "07.02.2019 12:04"
-          },
-          "date4": {
-            "error": "Bitte wählen Sie ein Datum!",
-            "placeholder": "07.02.2019 12:15"
-          },
-          "description": "Beschreibung",
-          "description0": {
-            "error": "Bitte geben Sie eine Beschreibung an!",
-            "placeholder": "e.g. service start"
-          },
-          "description1": {
-            "error": "Bitte geben Sie eine Beschreibung an!",
-            "placeholder": "e.g. service end"
-          },
-          "description2": {
-            "error": "Bitte geben Sie eine Beschreibung an!",
-            "placeholder": "e.g. rent start"
-          },
-          "description3": {
-            "error": "Bitte geben Sie eine Beschreibung an!",
-            "placeholder": "e.g. rent end"
-          },
-          "description4": {
-            "error": "Bitte geben Sie eine Beschreibung an!",
-            "placeholder": "e.g. cleaning start"
-          },
-          "value": "Wert",
-          "value0": {
-            "error": "Bitte geben Sie einen Wert an!",
-            "placeholder": "Vertragswerkstatt"
-          },
-          "value1": {
-            "error": "Bitte geben Sie einen Wert an!",
-            "placeholder": "543.21 €"
-          },
-          "value2": {
-            "error": "Bitte geben Sie einen Wert an!",
-            "placeholder": "Mr. John Doe"
-          },
-          "value3": {
-            "error": "Bitte geben Sie einen Wert an!",
-            "placeholder": "123.45 km"
-          },
-          "value4": {
-            "error": "Bitte geben Sie einen Wert an!",
-            "placeholder": "Mr. Max Johnson"
-          }
-        },
-        "metadata": {
-          "container-title": "Spezifikationen",
-          "key0": {
-            "error": "Bitte geben Sie einen Feldnamen an!",
-            "placeholder": "e.g. Serien-Nummer"
-          },
-          "key1": {
-            "error": "Bitte geben Sie einen Feldnamen an!",
-            "placeholder": "e.g. Typ"
-          },
-          "key2": {
-            "error": "Bitte geben Sie einen Feldnamen an!",
-            "placeholder": "e.g. Hersteller"
-          },
-          "key3": {
-            "error": "Bitte geben Sie einen Feldnamen an!",
-            "placeholder": "e.g. Besitzer"
-          },
-          "key4": {
-            "error": "Bitte geben Sie einen Feldnamen an!",
-            "placeholder": "e.g. Treibstoff"
-          },
-          "notation": "Bennenung",
-          "value": "Wert",
-          "value0": {
-            "placeholder": "12XY3456ABC"
-          },
-          "value1": {
-            "placeholder": "Fahrzeug"
-          },
-          "value2": {
-            "placeholder": "BMW"
-          },
-          "value3": {
-            "placeholder": "Unternehmen AG"
-          },
-          "value4": {
-            "placeholder": "Benzin"
-          }
-        },
+        "empty-field": "Bitte füllen Sie das Feld {label} aus!",
         "steps": {
           "dbcp": {
-            "desc": "Wählen Sie einen sprechenden Namen",
+            "desc": "Wählen Sie einen Twin-Type und vergeben Sie einen sprechenden Namen",
             "title": "Generelle Informationen"
           },
           "finish": {

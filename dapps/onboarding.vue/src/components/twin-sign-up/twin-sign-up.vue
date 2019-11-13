@@ -55,40 +55,23 @@
             :form="twinDbcpForm">
           </evan-form>
         </div>
-        <div v-if="activeStep === 1">
+        <div
+          v-for="(step, index) in steps"
+          v-if="!rerenderSteps && index > 0 && index < steps.length - 1"
+          :class="{ 'd-none': activeStep !== index }">
           <p class="text-center mt-3 mb-4">
-            {{ '_onboarding.sign-up.twin.steps.metadata.desc' | translate }}
-          </p>
-          
-          <div class="row">
-            <div class="col-6">{{ '_onboarding.sign-up.twin.metadata.notation' | translate }}</div>
-            <div class="col-6 text-right">{{ '_onboarding.sign-up.twin.metadata.value' | translate }}</div>
-          </div>
-          <evan-form
-            :i18nScope="'_onboarding.sign-up.twin.metadata'"
-            :onlyForm="true"
-            :stacked="true"
-            :form="metadataForm">
-          </evan-form>
-        </div>
-        <div v-if="activeStep === 2">
-          <p class="text-center mt-3 mb-4">
-            {{ '_onboarding.sign-up.twin.steps.list.desc' | translate }}
+            {{ steps[activeStep].description }}
           </p>
 
-          <div class="row">
-            <div class="col-4">{{ '_onboarding.sign-up.twin.list.date' | translate }}</div>
-            <div class="col-4 text-center">{{ '_onboarding.sign-up.twin.list.description' | translate }}</div>
-            <div class="col-4 text-right">{{ '_onboarding.sign-up.twin.list.value' | translate }}</div>
-          </div>
-          <evan-form
-            :i18nScope="'_onboarding.sign-up.twin.list'"
-            :onlyForm="true"
-            :stacked="true"
-            :form="listForm">
-          </evan-form>
+          <twin-data-set-form
+            ref="stepForm"
+            :data="step.dataSetSpecs.data"
+            :dataSchema="step.dataSetSpecs.dataSchema"
+            :dataSetName="step.dataSetSpecs.dataSetName"
+            :description="step.dataSetSpecs.description"
+          />
         </div>
-        <div v-if="activeStep === 3">
+        <div v-if="activeStep === steps.length - 1">
           <p class="text-center mt-3 mb-4">
             {{ '_onboarding.sign-up.twin.steps.finish.desc' | translate }}
           </p>

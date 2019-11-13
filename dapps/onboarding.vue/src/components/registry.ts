@@ -23,27 +23,29 @@ import VueRecaptcha from 'vue-recaptcha';
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 import AcceptContactComponent from './accept-contact/accept-contact.vue';
+import CaptchaTermsOfUse from './sign-up/captcha-terms.vue';
+import DataSetForm from './twin-sign-up/data-set-form.vue';
 import LayoutWrapperComponent from './layout-wrapper/layout-wrapper.vue';
 import MnemonicComponent from './mnemonic/mnemonic.vue';
 import ProfileCreatingComponent from './sign-up/creating.vue';
-import CaptchaTermsOfUse from './sign-up/captcha-terms.vue';
 
 // export them all, so other applications can access them
 export {
   AcceptContactComponent,
   MnemonicComponent,
   VueRecaptcha,
-}
+};
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'profile-captcha-terms', component: CaptchaTermsOfUse, },
   { name: 'evan-onboarding-accept-contact', component: AcceptContactComponent },
   { name: 'evan-onboarding-layout-wrapper', component: LayoutWrapperComponent },
   { name: 'evan-onboarding-mnemonic', component: MnemonicComponent },
   { name: 'evan-profile-creating', component: ProfileCreatingComponent },
+  { name: 'profile-captcha-terms', component: CaptchaTermsOfUse, },
   { name: 'profile-company-contact', component: (profileDApp as any).CompanyContactForm, },
   { name: 'profile-company-registration', component: (profileDApp as any).CompanyRegistrationForm, },
+  { name: 'twin-data-set-form', component: DataSetForm },
   { name: 'vue-recaptcha', component: VueRecaptcha },
 ];
 

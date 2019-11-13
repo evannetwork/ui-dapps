@@ -29,9 +29,17 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import SignUp from '../sign-up/sign-up.ts';
 
+// load twin templates
+import bycicleTwin from './twins/bycicle.json';
+import carTwin from './twins/car.json';
+
+// get the twin helper
+import { getTranslationFromDBCP } from './twinHelper';
+
 interface TwinDBCPForm extends EvanForm {
-  name: EvanFormControl;
   description: EvanFormControl;
+  name: EvanFormControl;
+  type: EvanFormControl;
 }
 
 @Component({ })
@@ -52,13 +60,31 @@ export default class TwinSignUp extends mixins(SignUp) {
   listForm: EvanForm = null;
 
   /**
+   * Available twins, that can be selected for creation.
+   */
+  twins = {
+    bycicle: bycicleTwin,
+    car: carTwin
+  };
+
+  /**
+   * Collection data of data sets, that were filled
+   */
+  twinData = { };
+
+  /**
+   * Force dynamic step content rerendering
+   */
+  rerenderSteps = false;
+
+  /**
    * Setup twin forms.
    */
   created() {
     // makes a field required
-    const requiredValidator = (vueInstance: TwinSignUp, form: EvanForm, control: EvanFormControl) => {
-      return control.value && control.value.length !== 0;
-    }
+    const requiredValidator = (_: TwinSignUp, __: EvanForm, c: EvanFormControl) => {
+      return c.value && c.value.length !== 0;
+    };
 
     // base ui specs, that will be passed to the dynamic controls
     const uiSpecs = { attr: { label: '' } };
@@ -91,11 +117,33 @@ export default class TwinSignUp extends mixins(SignUp) {
     }
 
     // create forms with the dynamic created controls
-    this.metadataForm = new EvanForm(this, metadataControls);
-    this.listForm = new EvanForm(this, listControls);
+    this.metadataForm = new EvanForm(this, { });
+    this.listForm = new EvanForm(this, { });
 
     // setup twin dbcp formular
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
+      type: {
+        value: 'bycicle',
+        uiSpecs: {
+          attr: {
+            required: true,
+            options: Object.keys(this.twins).map((twinKey: string) => {
+              const twin = this.twins[twinKey];
+              return {
+                label: getTranslationFromDBCP(this, twin.description, 'name'),
+                value: twinKey,
+              };
+            }),
+          },
+          input: () => {
+            this.twinTypeChange();
+            // force step rerendering
+            this.rerenderSteps = true;
+            this.$nextTick(() => this.rerenderSteps = false);
+          },
+          type: 'select'
+        }
+      },
       name: {
         value: '',
         validate: requiredValidator,
@@ -116,42 +164,100 @@ export default class TwinSignUp extends mixins(SignUp) {
       }
     }));
 
+    // setup initial steps
+    this.twinTypeChange();
+
     // setup steps
+
+
+    // // setup test data
+    // for (let i = 0; i < 5; i++) {
+    //   this.metadataForm[`key${ i }`].value = `key${ i }`;
+    //   this.metadataForm[`value${ i }`].value = `value${ i }`;
+    //   // add list controls
+    //   this.listForm[`date${ i }`].value = `date${ i }`;
+    //   this.listForm[`description${ i }`].value = `description${ i }`;
+    //   this.listForm[`value${ i }`].value = `value${ i }`;
+    // }
+
+    this.twinDbcpForm.name.value = 'test';
+    this.profileForm.alias.value = 'test user';
+    this.profileForm.password0.value = 'Evan1234';
+    this.profileForm.password1.value = 'Evan1234';
+  }
+
+  /**
+   * Takes the current twin selection and setup the correct steps.
+   */
+  twinTypeChange() {
     const creatingOrOnboarded = () => this.onboardedDialog;
     this.steps = [
       {
         title: '_onboarding.sign-up.twin.steps.dbcp.title',
         disabled: () => creatingOrOnboarded(),
       },
-      {
-        title: '_onboarding.sign-up.twin.steps.metadata.title',
-        disabled: () => creatingOrOnboarded() || !this.twinDbcpForm.isValid,
-      },
-      {
-        title: '_onboarding.sign-up.twin.steps.list.title',
-        disabled: () => creatingOrOnboarded() || !this.metadataForm.isValid,
-      },
-      {
-        title: '_onboarding.sign-up.twin.steps.finish.title',
-        disabled: () => creatingOrOnboarded() || !this.listForm.isValid,
-      },
     ];
 
+    // iterate over the twin plugins and it's data sets, that should be filled
+    const twinDefinition = this.twins[this.twinDbcpForm.type.value];
+    const order = [ 'maintenance.maintenance', 'metadata.owner', 'metadata.characteristics', ];
+    const dataSets = [ ];
+    // collect all the data sets within the plugins
+    Object.keys(twinDefinition.plugins).forEach((pluginName: string) => {
+      Object
+        .keys(twinDefinition.plugins[pluginName].template.properties)
+        .forEach(key => dataSets.push(`${ pluginName }.${ key }`));
+    });
 
-    // setup test data
-    for (let i = 0; i < 5; i++) {
-      this.metadataForm[`key${ i }`].value = `key${ i }`
-      this.metadataForm[`value${ i }`].value = `value${ i }`
-      // add list controls
-      this.listForm[`date${ i }`].value = `date${ i }`
-      this.listForm[`description${ i }`].value = `description${ i }`
-      this.listForm[`value${ i }`].value = `value${ i }`
-    }
+    // sort all the data sets and apply them as steps
+    dataSets
+      .sort((a, b) =>
+        order.indexOf(a) < order.indexOf(b) ? 1 :
+          order.indexOf(a) > order.indexOf(b) ? -1 :
+            0
+      )
+      .forEach((key, stepIndex) => {
+        const [ pluginName, dataSetName ] = key.split('.');
+        const plugin = twinDefinition.plugins[pluginName];
 
-    this.twinDbcpForm.name.value = 'test';
-    this.profileForm.alias.value = 'test user'
-    this.profileForm.password0.value = 'Evan1234'
-    this.profileForm.password1.value = 'Evan1234'
+        if (dataSetName !== 'type') {
+          // setup data objects / arrays, especially for their data set type
+          if (plugin.template.properties[dataSetName].type === 'entry') {
+            this.twinData[key] = this.twinData[key] || { };
+          } else {
+            this.twinData[key] = this.twinData[key] || [ { }, { }, { } ];
+          }
+
+          this.steps.push({
+            dataSetSpecs: {
+              data: this.twinData[key],
+              dataSchema: plugin.template.properties[dataSetName].dataSchema,
+              description: plugin.description,
+              dataSetName,
+            },
+            description: getTranslationFromDBCP(this, plugin.description, `${ dataSetName }.description`),
+            title: getTranslationFromDBCP(this, plugin.description, `${ dataSetName }.name`),
+            disabled: () => {
+              if (stepIndex === 0 || !this.$refs.stepForm) {
+                return creatingOrOnboarded();
+              } else {
+                return creatingOrOnboarded() || !this.$refs.stepForm[stepIndex - 1].isValid();
+              }
+            },
+          });
+        }
+      });
+
+    this.steps.push({
+      title: '_onboarding.sign-up.twin.steps.finish.title',
+      disabled: () => {
+        if (!this.$refs.stepForm) {
+          return creatingOrOnboarded();
+        } else {
+          return creatingOrOnboarded() || !this.$refs.stepForm[this.$refs.stepForm.length - 1].isValid();
+        }
+      },
+    });
   }
 
   /**
@@ -267,7 +373,7 @@ export default class TwinSignUp extends mixins(SignUp) {
       const { description, containerData, template, } = this.buildContainerData();
       const network = runtime.environment;
       const profile = runtime.profile;
-      const agentUrl = 'http://localhost:8080'
+      const agentUrl = 'http://localhost:8080';
 
       // start creation animation
       this.nextCreationStatus();

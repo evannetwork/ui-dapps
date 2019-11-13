@@ -193,117 +193,15 @@
             "error": "Please insert a name!",
             "label": "Name",
             "placeholder": "What should the Digital Twin be called?"
+          },
+          "type": {
+            "label": "Type"
           }
         },
-        "list": {
-          "container-title": "History",
-          "date": "Date",
-          "date0": {
-            "error": "Please choose a date!",
-            "placeholder": "01.02.2019 09:01"
-          },
-          "date1": {
-            "error": "Please choose a date!",
-            "placeholder": "01.02.2019 11:54"
-          },
-          "date2": {
-            "error": "Please choose a date!",
-            "placeholder": "06.02.2019 11:13"
-          },
-          "date3": {
-            "error": "Please choose a date!",
-            "placeholder": "07.02.2019 12:04"
-          },
-          "date4": {
-            "error": "Please choose a date!",
-            "placeholder": "07.02.2019 12:15"
-          },
-          "description": "Description",
-          "description0": {
-            "error": "Please insert a description!",
-            "placeholder": "e.g. service start"
-          },
-          "description1": {
-            "error": "Please insert a description!",
-            "placeholder": "e.g. service end"
-          },
-          "description2": {
-            "error": "Please insert a description!",
-            "placeholder": "e.g. rent start"
-          },
-          "description3": {
-            "error": "Please insert a description!",
-            "placeholder": "e.g. rent end"
-          },
-          "description4": {
-            "error": "Please insert a description!",
-            "placeholder": "e.g. cleaning start"
-          },
-          "value": "Value",
-          "value0": {
-            "error": "Please insert a value!",
-            "placeholder": "authorized repair shop"
-          },
-          "value1": {
-            "error": "Please insert a value!",
-            "placeholder": "543.21 €"
-          },
-          "value2": {
-            "error": "Please insert a value!",
-            "placeholder": "Mr. John Doe"
-          },
-          "value3": {
-            "error": "Please insert a value!",
-            "placeholder": "123.45 Miles"
-          },
-          "value4": {
-            "error": "Please insert a value!",
-            "placeholder": "Mr. Max Johnson"
-          }
-        },
-        "metadata": {
-          "container-title": "Specifications",
-          "key0": {
-            "error": "Please insert a field name!",
-            "placeholder": "e.g. Serial-Nr."
-          },
-          "key1": {
-            "error": "Please insert a field name!",
-            "placeholder": "e.g. Type"
-          },
-          "key2": {
-            "error": "Please insert a field name!",
-            "placeholder": "e.g. Manufacturer"
-          },
-          "key3": {
-            "error": "Please insert a field name!",
-            "placeholder": "e.g. Owner"
-          },
-          "key4": {
-            "error": "Please insert a field name!",
-            "placeholder": "e.g. Fuel"
-          },
-          "notation": "Notation",
-          "value": "Value",
-          "value0": {
-            "placeholder": "12XY3456ABC"
-          },
-          "value1": {
-            "placeholder": "Vehicle"
-          },
-          "value2": {
-            "placeholder": "BMW"
-          },
-          "value3": {
-            "placeholder": "Company AG"
-          },
-          "value4": {
-            "placeholder": "Petrol"
-          }
-        },
+        "empty-field": "Please insert a value for {label}!",
         "steps": {
           "dbcp": {
-            "desc": "Give your twin a meaningful name",
+            "desc": "Choose a twin type and give your new twin meaningful name",
             "title": "Basic information"
           },
           "finish": {
