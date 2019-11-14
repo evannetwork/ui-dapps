@@ -18,12 +18,11 @@
 */
 
 // vue import
-import Component, { mixins } from 'vue-class-component'
-import Vue from 'vue';
-import { Prop, Watch } from 'vue-property-decorator'
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core'
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 /**
  * @class         ButtonsComponent
@@ -33,20 +32,20 @@ export default class ButtonsComponent extends mixins(EvanComponent) {
   @Prop({
     type: Number,
     default: 0
-  }) btnCounter: Number
+  }) btnCounter: Number;
 
   /**
    * Should the buttons be disabled?
    */
-  disabled = false
+  disabled = false;
 
   /**
    * The isLoading state
    */
-  isLoading = false
+  isLoading = false;
 
   /**
    * Display buttons in different button sizes
    */
-  size = 'normal'
+  size = 'normal';
 }
