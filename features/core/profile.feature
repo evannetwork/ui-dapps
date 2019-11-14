@@ -9,7 +9,7 @@ Background: Creating a new unspecified account and navigate to the profile detai
     And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I click the element with id "termsAccepted"
+    And I want to click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
