@@ -24,10 +24,13 @@ import { Prop } from 'vue-property-decorator';
 import axios from 'axios';
 
 // evan.network imports
-import { EvanForm, EvanFormControl, getDomainName, } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { agentUrl } from '@evan.network/ui';
+import { EvanForm, EvanFormControl, getDomainName, } from '@evan.network/ui-vue-core';
+
 import SignUp from '../sign-up/sign-up.ts';
+import { getDefaultDAppEns } from '../../utils';
 
 // load twin templates
 import bycicleTwin from './twins/bycicle.json';
@@ -81,45 +84,6 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Setup twin forms.
    */
   created() {
-    // makes a field required
-    const requiredValidator = (_: TwinSignUp, __: EvanForm, c: EvanFormControl) => {
-      return c.value && c.value.length !== 0;
-    };
-
-    // base ui specs, that will be passed to the dynamic controls
-    const uiSpecs = { attr: { label: '' } };
-    const control = { value: '', uiSpecs, };
-    const metadataControl = JSON.parse(JSON.stringify(control));
-    const listControl = JSON.parse(JSON.stringify(control));
-
-    // set control sizes
-    metadataControl.uiSpecs.attr.size = 6;
-    listControl.uiSpecs.attr.size = 4;
-
-    // create seperated control for dates
-    const dateControl = JSON.parse(JSON.stringify(listControl));
-    dateControl.uiSpecs.attr.type = 'date';
-
-    // controls that will be passed to the forms
-    const metadataControls = { };
-    const listControls = { };
-
-    // add controls to the formular
-    for (let i = 0; i < 5; i++) {
-      // add metadata controls
-      metadataControls[`key${ i }`] = { ...metadataControl, validate: requiredValidator };
-      metadataControls[`value${ i }`] = { ...metadataControl, };
-
-      // add list controls
-      listControls[`date${ i }`] = { ...dateControl, validate: requiredValidator, };
-      listControls[`description${ i }`] = { ...listControl, validate: requiredValidator, };
-      listControls[`value${ i }`] = { ...listControl, validate: requiredValidator, };
-    }
-
-    // create forms with the dynamic created controls
-    this.metadataForm = new EvanForm(this, { });
-    this.listForm = new EvanForm(this, { });
-
     // setup twin dbcp formular
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
       type: {
@@ -146,7 +110,9 @@ export default class TwinSignUp extends mixins(SignUp) {
       },
       name: {
         value: '',
-        validate: requiredValidator,
+        validate: (_: TwinSignUp, __: EvanForm, c: EvanFormControl) => {
+          return c.value && c.value.length !== 0;
+        },
         uiSpecs: {
           attr: {
             required: true,
@@ -166,24 +132,6 @@ export default class TwinSignUp extends mixins(SignUp) {
 
     // setup initial steps
     this.twinTypeChange();
-
-    // setup steps
-
-
-    // // setup test data
-    // for (let i = 0; i < 5; i++) {
-    //   this.metadataForm[`key${ i }`].value = `key${ i }`;
-    //   this.metadataForm[`value${ i }`].value = `value${ i }`;
-    //   // add list controls
-    //   this.listForm[`date${ i }`].value = `date${ i }`;
-    //   this.listForm[`description${ i }`].value = `description${ i }`;
-    //   this.listForm[`value${ i }`].value = `value${ i }`;
-    // }
-
-    this.twinDbcpForm.name.value = 'test';
-    this.profileForm.alias.value = 'test user';
-    this.profileForm.password0.value = 'Evan1234';
-    this.profileForm.password1.value = 'Evan1234';
   }
 
   /**
@@ -200,17 +148,18 @@ export default class TwinSignUp extends mixins(SignUp) {
 
     // iterate over the twin plugins and it's data sets, that should be filled
     const twinDefinition = this.twins[this.twinDbcpForm.type.value];
-    const order = [ 'maintenance.maintenance', 'metadata.owner', 'metadata.characteristics', ];
+    const order = [ 'maintenance.maintenance', 'metadata.characteristics', ];
     const dataSets = [ ];
     // collect all the data sets within the plugins
-    Object.keys(twinDefinition.plugins).forEach((pluginName: string) => {
+    Object.keys(twinDefinition.plugins).forEach((pluginName: string) =>
       Object
         .keys(twinDefinition.plugins[pluginName].template.properties)
-        .forEach(key => dataSets.push(`${ pluginName }.${ key }`));
-    });
+        .forEach(key => dataSets.push(`${ pluginName }.${ key }`))
+    );
 
     // sort all the data sets and apply them as steps
     dataSets
+      .filter(key => order.indexOf(key) !== -1)
       .sort((a, b) =>
         order.indexOf(a) < order.indexOf(b) ? 1 :
           order.indexOf(a) > order.indexOf(b) ? -1 :
@@ -239,7 +188,7 @@ export default class TwinSignUp extends mixins(SignUp) {
             title: getTranslationFromDBCP(this, plugin.description, `${ dataSetName }.name`),
             disabled: () => {
               if (stepIndex === 0 || !this.$refs.stepForm) {
-                return creatingOrOnboarded();
+                return creatingOrOnboarded() || !this.twinDbcpForm.isValid;
               } else {
                 return creatingOrOnboarded() || !this.$refs.stepForm[stepIndex - 1].isValid();
               }
@@ -264,12 +213,12 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Show the next status img and text for the profile creation.
    */
   nextCreationStatus() {
-    if (this.creationTime !== 44) {
+    if (this.creationTime !== 43) {
       this.creationTime++;
       this.timeoutCreationStatus = setTimeout(() => this.nextCreationStatus(), 1000);
     }
 
-    if (this.creationTime % 8 === 0) {
+    if (this.creationTime % 9 === 0) {
       this.creatingProfile += 1;
     }
   }
@@ -278,90 +227,40 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Uses the current formular data data to create container dbcp.
    */
   buildContainerData() {
-    const metadataName = this.$t('_onboarding.sign-up.twin.metadata.container-title');
-    const listName = this.$t('_onboarding.sign-up.twin.list.container-title');
+    const twinTemplate = this.twins[this.twinDbcpForm.type.value];
 
     // setup description
-    const description = {
-      description: this.twinDbcpForm.name.value,
+    const twinDescription = {
+      description: this.twinDbcpForm.description.value,
       name: this.twinDbcpForm.name.value,
       author: 'evan',
       version: '1.0.0',
       dbcpVersion: 2,
-      dataSchema: {
-        [ metadataName ]: {
-          $id: 'specifications_schema',
-          properties: { },
-          type: 'object'
-        },
-        [ listName ]: {
-          $id: 'history_schema',
-          items: {
-            properties: {
-              date: {
-                default: '',
-                type: 'string'
-              },
-              description: {
-                default: '',
-                type: 'string'
-              },
-              value: {
-                default: '',
-                type: 'string'
-              }
-            },
-            type: 'object'
-          },
-          type: 'array'
-        }
-      }
     };
 
-    // setup data object
+    // setup container data
+    let containerDescription = { author: 'evan', version: '1.0.0', dbcpVersion: 2, };
+    let containerTemplate = { };
+
+    // build container description and template definition out of seperated plugins
+    Object.keys(twinTemplate.plugins).forEach(pluginName => {
+      containerDescription = bcc.lodash.merge(containerDescription,
+        twinTemplate.plugins[pluginName].description);
+      containerTemplate = bcc.lodash.merge(containerTemplate,
+        twinTemplate.plugins[pluginName].template);
+    });
+
+    // for the usage of metadata name
+    containerDescription.description = this.twinDbcpForm.name.value;
+    containerDescription.name = this.twinDbcpForm.name.value;
+
+    // merge all the collected data, to build container data
     const containerData = { type: 'Signup Twin' };
-    containerData[metadataName] = { };
-    containerData[listName] = [ ];
+    Object.keys(this.twinData).forEach(key => {
+      containerData[key.split('.')[1]] = this.twinData[key];
+    });
 
-    // add controls to the formular
-    for (let i = 0; i < 5; i++) {
-      // add metadata containerData
-      const metadataKey = this.metadataForm[`key${ i }`].value;
-      containerData[metadataName][metadataKey] = this.metadataForm[`value${ i }`].value;
-
-      // add list containerData
-      containerData[listName].push({
-        date: this.listForm[`date${ i }`].value,
-        description: this.listForm[`description${ i }`].value,
-        value: this.listForm[`value${ i }`].value,
-      });
-
-      // add metadata schema
-      description.dataSchema[metadataName].properties[metadataKey] = {
-        default: '',
-        type: 'string',
-      };
-    }
-
-    // setup template definition
-    const template = {
-      permissions: [ metadataName, listName, ],
-      properties: {
-        [ metadataName ]: {
-          dataSchema: description.dataSchema[metadataName],
-          permissions: { '0': [ 'set' ] },
-          type: 'entry',
-        },
-        [ listName ]: {
-          dataSchema: description.dataSchema[listName],
-          permissions: { '0': [ 'set' ] },
-          type: 'list',
-        },
-      },
-      type: 'Signup Twin'
-    };
-
-    return { containerData, description, template, };
+    return { twinDescription, containerTemplate, containerDescription, containerData, };
   }
 
   /**
@@ -369,11 +268,11 @@ export default class TwinSignUp extends mixins(SignUp) {
    */
   async createOfflineTwin() {
     try {
-      const { password, accountId, privateKey, runtime, } = await this.getProfileCreationData();
-      const { description, containerData, template, } = this.buildContainerData();
-      const network = runtime.environment;
+      const { password, accountId, privateKey, runtime, vault, } =
+        await this.getProfileCreationData();
+      const { twinDescription, containerTemplate, containerDescription, containerData, } =
+        this.buildContainerData();
       const profile = runtime.profile;
-      const agentUrl = 'http://localhost:8080';
 
       // start creation animation
       this.nextCreationStatus();
@@ -388,18 +287,11 @@ export default class TwinSignUp extends mixins(SignUp) {
       // trigger smart agent to create a new twin
       const requestedTwinP = axios.post(`${ agentUrl }/api/smart-agents/twin/create`, {
         accountId,
-        signature,
         captchaToken: this.recaptchaToken,
-        twinDescription: {
-          description: this.twinDbcpForm.name.value,
-          name: this.twinDbcpForm.name.value,
-          author: 'evan',
-          version: '1.0.0',
-          dbcpVersion: 2,
-        },
-        containerDescription: description,
-        containerData,
-        containerTemplate: template
+        containerDescription,
+        containerTemplate,
+        signature,
+        twinDescription,
       });
 
       const createdProfileP = bcc.Onboarding.createOfflineProfile(
@@ -411,7 +303,7 @@ export default class TwinSignUp extends mixins(SignUp) {
         runtime.environment
       );
 
-      const [requestedTwin] = await Promise.all([requestedTwinP, createdProfileP])
+      const [requestedTwin] = await Promise.all([requestedTwinP, createdProfileP]);
       // set initial structure by creating addressbook structure and saving it to ipfs
       const cryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo('aesEcb');
       const fileHashes: any = {};
@@ -520,11 +412,21 @@ export default class TwinSignUp extends mixins(SignUp) {
         containerId: (requestedTwin as any).data.containerAddress,
       });
 
-      // show success message and navigate the user to the digital twins
-      this.creatingProfile = 6;
+      await this.finishOnboarding(runtime, vault, accountId, password);
+
+      // wait another 2 seconds to ensure, that the ipfs hashes are available
       setTimeout(() => {
-        window.location.hash = `/${getDefaultDAppEns() }/digitaltwins.${ getDomainName() }`;
-      }, 2000);
+        // show success message and navigate the user to the digital twins
+        this.creatingProfile = 6;
+        setTimeout(() => {
+          window.location.hash = [
+            `/${ getDefaultDAppEns() }`,
+            `digitaltwins.${ getDomainName() }`,
+            `digitaltwin.${ getDomainName() }`,
+            requestedTwin.data.twinAddress,
+          ].join('/');
+        }, 2000);
+      }, 2000)
     } catch (ex) {
       // reset all steps of proile creation
       dappBrowser.utils.log(ex.message, 'error');

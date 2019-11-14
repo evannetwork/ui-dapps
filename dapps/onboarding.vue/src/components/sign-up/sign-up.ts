@@ -322,17 +322,7 @@ export default class SignUp extends mixins(EvanComponent) {
           runtime.environment
         );
 
-        // check if onboarded, else throw it!
-        if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {
-          throw new Error('Onboarding has finished, but user isnt onboarded?');
-        }
-
-        // profile is setup!
-        await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
-        dappBrowser.core.setCurrentProvider('internal');
-
-        // set encrypted mnemonic for temporary usage
-        this.persistMnemonic(runtime, vault);
+        await this.finishOnboarding(runtime, vault, accountId, password);
 
         // show done animation and navigate to signed in page
         this.creatingProfile = 5;
@@ -362,6 +352,28 @@ export default class SignUp extends mixins(EvanComponent) {
   }
 
   /**
+   * Finish the onboarding process and sets the current mnemonic active.
+   *
+   * @param      {bccRuntime}  runtime    runtime
+   * @param      {any}         vault      created vault
+   * @param      {string}      accountId  account id
+   * @param      {string}      password   password
+   */
+  async finishOnboarding(runtime: bcc.Runtime, vault: any, accountId: string, password: string) {
+    // check if onboarded, else throw it!
+    if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {
+      throw new Error('Onboarding has finished, but user isnt onboarded?');
+    }
+
+    // profile is setup!
+    await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
+    dappBrowser.core.setCurrentProvider('internal');
+
+    // set encrypted mnemonic for temporary usage
+    this.persistMnemonic(runtime, vault);
+  }
+
+  /**
    * Writes encrypted mnemonic to local storage.
    *
    * @param runtime
@@ -373,7 +385,6 @@ export default class SignUp extends mixins(EvanComponent) {
     const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey, });
 
     window.localStorage['evan-mnemonic'] = encryptedMnemonic.toString('hex');
-    this.navigateToEvan();
   }
 
   /**
@@ -421,7 +432,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
         switch (this.profileForm.accountType.value) {
           case 'company': {
-            return this.$refs.companyContact && !this.$refs.companyContact.form.isValid
+            return this.$refs.companyContact && !this.$refs.companyContact.form.isValid;
           }
           default: {
             return !this.profileForm.isValid;

@@ -93,9 +93,9 @@
               ]
             },
             "type": "list"
-          },
-          "type": "list"
-        }
+          }
+        },
+        "type": "list"
       }
     },
     "metadata": {
@@ -292,9 +292,9 @@
               ]
             },
             "type": "entry"
-          },
-          "type": "metadata"
-        }
+          }
+        },
+        "type": "metadata"
       }
     }
   }
