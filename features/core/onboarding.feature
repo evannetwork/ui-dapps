@@ -13,14 +13,14 @@ Scenario: Registering a new account on evan Happy Path
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
-  When I click on button "Create Account"
-    Then I want to see a text including "Creating identity contract..."
-    And I want to see a text including "Encrypting user information..."
-    And I want to see a text including "Creating mailbox, address book, ..."
-    And I want to see a element with class "checkmark"
-    And I want to see a text including "Recovery Key"
-  When I click on button "View Profile"
-    Then I want to see a text including "What would you like to start with?"
+  #  When I click on button "Create Account"
+  #  Then I want to see a text including "Creating identity contract..."
+  #  And I want to see a text including "Encrypting user information..."
+  #  And I want to see a text including "Creating mailbox, address book, ..."
+  #  And I want to see a element with class "checkmark"
+  #  And I want to see a text including "Recovery Key"
+  # When I click on button "View Profile"
+  #  Then I want to see a text including "What would you like to start with?"
 
 Scenario: Registering a new account not set account name
 
