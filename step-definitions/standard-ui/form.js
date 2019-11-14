@@ -48,7 +48,7 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
  */
 When('I type {string} into the input field with label {string}', async(content, label) => {
   const elementId = await getElementIdByLabel(label);
-  
+
   await client.expect.element(`#${elementId}`).to.be.visible;
   await client.setValue(`#${elementId}`, content);
 });
@@ -186,6 +186,21 @@ Then('Input fields with labels {string} should be visible',
     for( const label of labels.split('|') ) {
       await client.expect.element(getSelector(label)).to.be.visible;
     }
+
+    client.useCss();
+  }
+)
+
+/**
+ * Click on label next to the evan checkbox control
+ */
+Then('I want to click on vue checkbox control with id {string}',
+  async(id) => {
+    client.useXpath();
+
+    const selector = `//*[@id="${ id }"]/following-sibling::label[@for="${ id }"]`;
+    await client.expect.element(selector).to.be.visible;
+    await client.click(selector);
 
     client.useCss();
   }

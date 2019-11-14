@@ -9,7 +9,7 @@ Scenario: Registering a new account on evan Happy Path
     And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I click the element with id "termsAccepted"
+    And I want to click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
@@ -65,7 +65,7 @@ Scenario: Registering a new account on evan and not check recaptcha
   And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   Then I click on button "Continue"
-  Then I click the element with id "termsAccepted"
+  Then I want to click on vue checkbox control with id "termsAccepted"
   Then the button "Create Account" should be "disabled"
 
 Scenario: Registering a new company account on evan
@@ -104,7 +104,7 @@ Scenario: Registering a new company account on evan
     And I set Input field with label "Website" to "https://evan.network"
     Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I click the element with id "termsAccepted"
+    And I want to click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
