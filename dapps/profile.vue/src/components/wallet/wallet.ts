@@ -25,5 +25,10 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component({ })
 export default class WalletComponent extends mixins(EvanComponent) {
+  payment_providers = [
+    { value: '1', label: 'SEPA Debit'},
+    { value: '2', label: 'Paypal'},
+    { value: '3', label: 'Blood'}
+  ];
   async created() {}
 }

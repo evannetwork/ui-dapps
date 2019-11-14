@@ -11,35 +11,71 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 https://evan.network/license/ */
 
 <template>
-  <div class="p-xxl-11 p-xl-6 p-3">
-    <div class="row">
-      <div class="col-xl-4">
-        <evan-wallet-card :address="$route.params.address" />
+  <div class="row">
+    <div class="p-xxl-11 p-xl-6 p-3 col-xl-8 col-xxl-9">
+      <div class="row">
+        <div class="col-xl-6">
+          <evan-wallet-card :address="$route.params.address" />
+        </div>
+        <div class="col-xl-4 d-flex">
+          <evan-button>Test</evan-button>
+          <evan-button>Test</evan-button>
+        </div>
       </div>
-      <div class="col-xl-4 d-flex">
-        <evan-button>Test</evan-button>
-        <evan-button>Test</evan-button>
+      <div class="row mt-5">
+        <div class="col-xl-12">
+          <h1>Last Transactions</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, dolore
+            distinctio porro eveniet facere eum saepe consequuntur aliquam
+            error, ea, consequatur commodi pariatur. Dolore architecto, quos
+            ipsum quidem id corrupti.
+          </p>
+        </div>
       </div>
+      <evan-swipe-panel
+        :alignment="'right'"
+        :showBackdrop="true"
+      ></evan-swipe-panel>
     </div>
-    <div class="row mt-5">
-      <div class="col-xl-11">
-        <h1>Last Transactions</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, dolore
-          distinctio porro eveniet facere eum saepe consequuntur aliquam error,
-          ea, consequatur commodi pariatur. Dolore architecto, quos ipsum quidem
-          id corrupti.
-        </p>
-      </div>
+    <div class="col-xl-4 col-xxl-3 wallet-side-panel">
+      <h1>Buy EVEs</h1>
+      <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
+      <input
+        class="form-control"
+        type="number"
+        required
+        min="10"
+        step="1"
+        id="eveAmount"
+        ref="eveAmount"
+      />
+
+      <evan-form-control-select
+        :options="payment_providers"
+        :placeholder="$t('_evan.choose-here')"
+      ></evan-form-control-select>
+
+      <p>
+        <small>
+          By entering your IBAN and confirming this payment, you authorize evan
+          GmbH and Stripe, our payment service provider, to send instructions to
+          your bank to debit your account and your bank to debit your account in
+          accordance with these instructions. You are entitled to a refund from
+          your bank in accordance with the terms of your agreement with your bank.
+          A refund must be requested within 8 weeks of the date your account was
+          debited.
+        </small>
+      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from "./wallet";
-  export default Component;
+import Component from './wallet';
+export default Component;
 </script>
 
 <style lang="scss">
-  @import "./wallet.scss";
+@import './wallet.scss';
 </style>
