@@ -27,7 +27,7 @@
             style="max-width: 390px"
             :src="customSteps[activeStep] ?
               customSteps[activeStep].picture :
-              $store.state.onboardingBaseUrl + '/assets/creating_' + activeStep + '.png'
+              `${ $store.state.onboardingBaseUrl }/assets/creating_${ activeStep }.png`
             ">
         </div>
         <div style="height: 10px" class="mx-auto progress my-3 bg-white">
@@ -39,7 +39,7 @@
         </div>
         <h5 class="font-weight-bold mt-5 text-center">
           {{ (customSteps[activeStep] ? customSteps[activeStep].text :
-              '_onboarding.sign-up.create-profile.status-' + activeStep) | translate }}
+              `_onboarding.sign-up.create-profile.status-${ activeStep}`) | translate }}
         </h5>
       </template>
       <div v-if="activeStep === maximumSteps" class="h-100 d-flex align-items-center justify-content-center">
@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './creating.ts';
+  import Component from './creating';
   export default Component;
 </script>
 

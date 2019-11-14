@@ -52,6 +52,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './captcha-terms.ts';
+  import Component from './captcha-terms';
   export default Component;
 </script>

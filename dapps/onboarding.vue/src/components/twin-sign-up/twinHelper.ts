@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { EvanComponent, } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 /**
  * Returns a translation, given by a specific key, from the dbcp.

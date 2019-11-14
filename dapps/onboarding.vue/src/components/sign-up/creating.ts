@@ -22,23 +22,23 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component({ })
 export default class ProfileCreatingComponent extends mixins(EvanComponent) {
   /**
    * Creating status that should be displayed
    */
-  @Prop() activeStep: any;
+  @Prop() activeStep: number;
 
   /**
    * amount of steps that should be displayed
    */
-  @Prop() maximumSteps: any;
+  @Prop() maximumSteps: number;
 
   /**
    * Custom steps that should overwrite the default ones
    */
-  @Prop({ default: { } }) customSteps: any;
+  @Prop({ default: { } }) customSteps: Array<any>;
 }
 

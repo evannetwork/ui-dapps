@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './data-set-form.ts';
+  import Component from './data-set-form';
   export default Component;
 </script>
 

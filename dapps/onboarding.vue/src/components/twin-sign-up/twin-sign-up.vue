@@ -24,7 +24,7 @@
       :maximumSteps="6"
       :customSteps="{
         5: {
-          picture: $store.state.onboardingBaseUrl + '/assets/creating_twin.png',
+          picture: `${ $store.state.onboardingBaseUrl }/assets/creating_twin.png`,
           text: $t('_onboarding.sign-up.twin.creating'),
         },
       }"
@@ -121,7 +121,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './twin-sign-up.ts';
+  import Component from './twin-sign-up';
   export default Component;
 </script>
 

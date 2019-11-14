@@ -120,7 +120,7 @@
 </template>
 
 <script lang="ts">
-  import SignUp from './sign-up.ts';
+  import SignUp from './sign-up';
   export default SignUp;
 </script>
 

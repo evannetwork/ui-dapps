@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent, } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component({ })
 export default class CaptchaTermsComponent extends mixins(EvanComponent) {

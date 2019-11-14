@@ -29,7 +29,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { agentUrl } from '@evan.network/ui';
 import { EvanForm, EvanFormControl, getDomainName, } from '@evan.network/ui-vue-core';
 
-import SignUp from '../sign-up/sign-up.ts';
+import SignUp from '../sign-up/sign-up';
 import { getDefaultDAppEns } from '../../utils';
 
 // load twin templates
@@ -85,6 +85,15 @@ export default class TwinSignUp extends mixins(SignUp) {
    */
   created() {
     // setup twin dbcp formular
+    this.setupTwinDBCPForm();
+    // setup initial steps
+    this.twinTypeChange();
+  }
+
+  /**
+   * Create the twin dbcp form.
+   */
+  setupTwinDBCPForm() {
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
       type: {
         value: 'bycicle',
@@ -129,9 +138,6 @@ export default class TwinSignUp extends mixins(SignUp) {
         },
       }
     }));
-
-    // setup initial steps
-    this.twinTypeChange();
   }
 
   /**
@@ -224,7 +230,7 @@ export default class TwinSignUp extends mixins(SignUp) {
   }
 
   /**
-   * Uses the current formular data data to create container dbcp.
+   * Uses the current formular data to create container dbcp.
    */
   buildContainerData() {
     const twinTemplate = this.twins[this.twinDbcpForm.type.value];
@@ -438,4 +444,3 @@ export default class TwinSignUp extends mixins(SignUp) {
     }
   }
 }
-
