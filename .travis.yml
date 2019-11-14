@@ -10,8 +10,10 @@ jobs:
     #  env: TESTPATTERN=features/core/login.feature NIGHTWATCH_ENV=chrome
     #- name: chrome/dashboard
     #  env: TESTPATTERN=features/core/dashboard.feature NIGHTWATCH_ENV=chrome
-    - name: chrome/profile
-      env: TESTPATTERN=features/core/profile.feature NIGHTWATCH_ENV=chrome
+    #- name: chrome/profile
+    #  env: TESTPATTERN=features/core/profile.feature NIGHTWATCH_ENV=chrome
+    - name: chrome/onboarding
+      env: TESTPATTERN=features/core/onboarding.feature NIGHTWATCH_ENV=chrome
     #- name: chrome/sharing
     #  env: TESTPATTERN=features/core/sharing.feature NIGHTWATCH_ENV=chrome
 
