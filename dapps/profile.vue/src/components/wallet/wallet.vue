@@ -12,7 +12,7 @@ https://evan.network/license/ */
 
 <template>
   <div class="row">
-    <div class="p-xxl-11 p-xl-6 p-3 col-xl-8 col-xxl-9">
+    <div class="p-xxl-11 p-xl-6 p-3 col-12">
       <div class="row">
         <div class="col-xl-6">
           <evan-wallet-card :address="$route.params.address" />
@@ -38,27 +38,41 @@ https://evan.network/license/ */
         :showBackdrop="true"
       ></evan-swipe-panel>
     </div>
-    <div class="col-xl-4 col-xxl-3 wallet-side-panel">
+    <evan-swipe-panel
+      class="light"
+      alignment="right"
+      ref="wallet-sidebar"
+      :showBackdrop="windowWidth < 1200"
+      :hideCloseButton="windowWidth >= 1200"
+      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+    >
       <h1>Buy EVEs</h1>
-      <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
-      <input
-        class="form-control"
-        type="number"
-        required
-        min="10"
-        step="1"
-        id="eveAmount"
-        ref="eveAmount"
-      />
 
-      <evan-form-control-select
-        :options="payment_providers"
-        :placeholder="$t('_evan.choose-here')"
-      ></evan-form-control-select>
+      <div>
+        <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
+        <input
+          class="form-control"
+          type="number"
+          required
+          min="10"
+          step="1"
+          id="eveAmount"
+          ref="eveAmount"
+        />
+      </div>
+
+      <div>
+        <label for="payment_provider">{{ '_wallet.select-payment-method' | translate }}</label>
+        <evan-form-control-select
+          :id="payment_provider"
+          :options="payment_providers"
+          :placeholder="$t('_evan.choose-here')"
+        ></evan-form-control-select>
+      </div>
 
       <p>
         <small>
-          By entering your IBAN and confirming this payment, you authorize evan
+          MOCK By entering your IBAN and confirming this payment, you authorize evan
           GmbH and Stripe, our payment service provider, to send instructions to
           your bank to debit your account and your bank to debit your account in
           accordance with these instructions. You are entitled to a refund from
@@ -67,7 +81,52 @@ https://evan.network/license/ */
           debited.
         </small>
       </p>
-    </div>
+
+      <div class="panel-footer" :class="{'relative': this.relative}">
+        <evan-button type="secondary" :label="$t('_evan.cancel')" />
+        <evan-button
+          type="primary"
+          :label="$t('_evan.sharing.update')"
+        />
+      </div>
+    </evan-swipe-panel>
+    <!-- <div class="col-xl-4 col-xxl-3 wallet-side-panel light">
+      <h1>Buy EVEs</h1>
+
+      <div>
+        <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
+        <input
+          class="form-control"
+          type="number"
+          required
+          min="10"
+          step="1"
+          id="eveAmount"
+          ref="eveAmount"
+        />
+      </div>
+
+      <div>
+        <label for="payment_provider">{{ '_wallet.select-payment-method' | translate }}</label>
+        <evan-form-control-select
+          :id="payment_provider"
+          :options="payment_providers"
+          :placeholder="$t('_evan.choose-here')"
+        ></evan-form-control-select>
+      </div>
+
+      <p>
+        <small>
+          MOCK By entering your IBAN and confirming this payment, you authorize evan
+          GmbH and Stripe, our payment service provider, to send instructions to
+          your bank to debit your account and your bank to debit your account in
+          accordance with these instructions. You are entitled to a refund from
+          your bank in accordance with the terms of your agreement with your bank.
+          A refund must be requested within 8 weeks of the date your account was
+          debited.
+        </small>
+      </p>
+    </div> -->
   </div>
 </template>
 
