@@ -18,35 +18,33 @@
 */
 
 <template>
-  <div class="layout-wrapper w-100">
-    <div class="col col-lg-6 left-panel">
-      <img class="evan-logo"
-        :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
-      <div class="d-flex h-100 align-items-center justify-content-center">
-        <div class="w-100">
-          <div class="text-center">
-            <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
-          </div>
-          <h1 class="ml-5 mb-5 font-weight-bold text-dark" >
-            {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}
-          </h1>
-          <h3 class="ml-5 text-dark">
-            {{ `_onboarding.headings.${ type }.${ step }.desc` | translate }}
-          </h3>
-        </div>
+  <div class="d-flex flex-wrap flex-row justify-content-between">
+    <div class="row w-100 m-0"
+      v-if="Array.isArray(data)">
+      <div class="array-header"
+        v-for="(key, index) in Object.keys(dataSchema.items.properties)"
+        :class="[ `col-${ Math.round(12 / Object.keys(dataSchema.items.properties).length) }` ]">
+        {{ getTranslationFromDBCP(`${ dataSetName }.properties.${ key }.label`) }}
       </div>
     </div>
-    <div class="col col-lg-6 content-wrapper" style="display: grid">
-      <slot></slot>
+    <div class="w-100 mt-3">
+      <evan-form
+        class="w-100"
+        v-for="(form) in forms"
+        :i18nScope="'_onboarding.sign-up.twin.metadata'"
+        :onlyForm="true"
+        :stacked="true"
+        :form="form">
+      </evan-form>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './layout-wrapper';
+  import Component from './data-set-form';
   export default Component;
 </script>
 
 <style lang="scss" scoped>
-  @import './layout-wrapper.scss';
+  @import './data-set-form.scss';
 </style>

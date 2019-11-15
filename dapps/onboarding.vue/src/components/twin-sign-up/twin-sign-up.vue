@@ -19,13 +19,23 @@
 
 <template>
   <div class="row h-100">
-    <evan-profile-creating :maximumSteps="5" :activeStep="creatingProfile" v-if="creatingProfile" />
+    <evan-profile-creating
+      :activeStep="creatingProfile"
+      :maximumSteps="6"
+      :customSteps="{
+        5: {
+          picture: `${ $store.state.onboardingBaseUrl }/assets/creating_twin.png`,
+          text: $t('_onboarding.sign-up.twin.creating'),
+        },
+      }"
+      v-if="creatingProfile"
+    />
     <evan-onboarding-layout-wrapper v-else
-      :type="`sign-up.${ profileForm.accountType.value }`"
+      type="twin-sign-up"
       :step="activeStep">
       <div>
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
-          {{ '_onboarding.sign-up.create-account' | translate }}
+          {{ '_onboarding.sign-up.twin.create' | translate }}
         </h4>
         <evan-steps class="text-center"
           minimal="true"
@@ -35,73 +45,64 @@
         />
         <div v-if="activeStep === 0">
           <p class="text-center mt-3 mb-4">
-            {{ '_onboarding.sign-up.steps.base.desc' | translate }}
+            {{ '_onboarding.sign-up.twin.steps.dbcp.desc' | translate }}
+          </p>
+
+          <evan-form
+            :i18nScope="'_onboarding.sign-up.twin.dbcp'"
+            :onlyForm="true"
+            :stacked="true"
+            :form="twinDbcpForm">
+          </evan-form>
+        </div>
+        <div
+          v-for="(step, index) in steps"
+          v-if="!rerenderSteps && index > 0 && index < steps.length - 1"
+          :class="{ 'd-none': activeStep !== index }">
+          <p class="text-center mt-3 mb-4">
+            {{ steps[activeStep].description }}
+          </p>
+
+          <twin-data-set-form
+            ref="stepForm"
+            :data="step.dataSetSpecs.data"
+            :dataSchema="step.dataSetSpecs.dataSchema"
+            :dataSetName="step.dataSetSpecs.dataSetName"
+            :description="step.dataSetSpecs.description"
+          />
+        </div>
+        <div v-if="activeStep === steps.length - 1">
+          <p class="text-center mt-3 mb-4">
+            {{ '_onboarding.sign-up.twin.steps.finish.desc' | translate }}
           </p>
 
           <evan-form
             :i18nScope="'_onboarding.sign-up'"
             :onlyForm="true"
             :stacked="true"
-            :form="profileForm"
-          />
-        </div>
-        <div v-if="profileForm.accountType.value === 'company'">
-          <p class="text-center mt-3 mb-4" v-if="activeStep === 1">
-            {{ '_onboarding.sign-up.steps.company.registration.desc' | translate }}
-          </p>
-          <p class="text-center mt-3 mb-4" v-if="activeStep === 2">
-            {{ '_onboarding.sign-up.steps.company.contact.desc' | translate }}
-          </p>
-
-          <!-- don't hide them, so formular validity checks will be done correctly -->
-          <profile-company-registration
-            ref="companyRegistration"
-            onlyForm="true"
-            stacked="true"
-            :address="address"
-            :class="{ 'd-none': activeStep !== 1 }"
-            :data="userData.registration || { }">
-          </profile-company-registration>
-          <profile-company-contact
-            ref="companyContact"
-            onlyForm="true"
-            stacked="true"
-            :address="address"
-            :class="{ 'd-none': activeStep !== 2 }"
-            :data="userData.contact || { }">
-          </profile-company-contact>
-        </div>
-        <div v-if="activeStep === (steps.length - 1)">
-          <p class="text-center mb-8">
-            {{ '_onboarding.sign-up.steps.captcha.desc' | translate }}
-          </p>
+            :form="profileForm">
+            <template v-slot:form-control-accountType>
+              <div class="d-none" />
+            </template>
+          </evan-form>
 
           <profile-captcha-terms :signUpComp="this" />
 
-          <div class="text-center mt-8">
-            <button type="button" class="btn  btn-primary btn-block"
+          <div class="text-center">
+            <button type="button" class="btn btn-primary btn-block"
               :disabled="!recaptchaToken || !termsAccepted.value"
-              @click="createProfile()">
+              @click="createOfflineTwin()">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
             </button>
           </div>
         </div>
-        <div class="text-center" v-else>
-          <button type="submit" class="btn  btn-primary btn-block"
+
+        <div class="text-center mt-5" v-else>
+          <button type="submit" class="btn btn-primary btn-block"
             :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
             @click="activeStep++">
             {{ '_onboarding.continue' | translate }}
           </button>
-
-          <p class="text-center mt-5" v-html="$t(`_onboarding.sign-up.already-signed-up`)"></p>
-        </div>
-
-        <div v-if="onboardedDialog">
-          <h5 class="text-center mt-4 mb-4">
-            {{ '_onboarding.sign-up.welcome-desc' | translate }}
-          </h5>
-
-          <evan-onboarding-accept-contact :loadAlias="true" />
         </div>
       </div>
     </evan-onboarding-layout-wrapper>
@@ -120,8 +121,8 @@
 </template>
 
 <script lang="ts">
-  import SignUp from './sign-up';
-  export default SignUp;
+  import Component from './twin-sign-up';
+  export default Component;
 </script>
 
 

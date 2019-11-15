@@ -3,6 +3,66 @@
     "close": "Close",
     "continue": "Continue",
     "free-input": "Free input",
+    "headings": {
+      "sign-in": {
+        "0": {
+          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+          "title": "Your gateway to digitization"
+        },
+        "1": {
+          "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+          "title": "Transparency"
+        }
+      },
+      "sign-up": {
+        "company": {
+          "0": {
+            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+            "title": "Your gateway to digitization"
+          },
+          "1": {
+            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+            "title": "Your gateway to digitization"
+          },
+          "2": {
+            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+            "title": "Your gateway to digitization"
+          },
+          "3": {
+            "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+            "title": "Transparency"
+          }
+        },
+        "user": {
+          "0": {
+            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+            "title": "Your gateway to digitization"
+          },
+          "1": {
+            "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+            "title": "Transparency"
+          }
+        }
+      },
+      "twin-sign-up": {
+        "0": {
+          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+          "title": "Your gateway to digitization"
+        },
+        "1": {
+          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+          "title": "Your gateway to digitization"
+        },
+        "2": {
+          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
+          "title": "Your gateway to digitization"
+        },
+        "3": {
+          "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+          "title": "Transparency"
+        }
+      }
+    },
     "invalid-mnemonic-integrity": "The composition of the words in your recovery key is incorrect. Please check your input.",
     "invalid-mnemonic-words-incorrect": "One or more of the given words is not allowed in recovery keys. Please check your input.",
     "mail-invitation-accepted": {
@@ -38,14 +98,20 @@
       "welcome-desc": "You have received a contact request."
     },
     "sign-up": {
-      "account-type": "Account type",
       "account-types": {
         "company": "Company",
         "user": "User"
       },
+      "accountType": {
+        "label": "Account type"
+      },
       "agree": "Agree",
-      "alias": "Account name",
-      "alias-help": "The account name is only visible to you.",
+      "alias": {
+        "error": "Please enter a account name!",
+        "hint": "The account name is only visible to you.",
+        "label": "Account name",
+        "placeholder": "John Doe | Sample Company Inc."
+      },
       "already-signed-up": "Have an account already? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Cancel",
       "create-account": "Create your account",
@@ -72,51 +138,16 @@
       "get-mnemonic": "Recovery Key",
       "get-mnemonic-desc": "Save your Recovery Key securely.",
       "get-mnemonic-desc-long": "Using this <b>recovery key</b>, you can <b>restore your identity</b> on any device and access your data. Please <b>save these 12 words in a secure way</b> (preferably offline, e.g. on a piece of paper). <br><br> If you lose these 12 words, you will <b>lose access to your business partners, contracts and profile information</b>.",
-      "headings": {
-        "sign-in": {
-          "0": {
-            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-            "title": "Your gateway to digitization"
-          },
-          "1": {
-            "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-            "title": "Transparency"
-          }
-        },
-        "sign-up": {
-          "company": {
-            "0": {
-              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-              "title": "Your gateway to digitization"
-            },
-            "1": {
-              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-              "title": "Your gateway to digitization"
-            },
-            "2": {
-              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-              "title": "Your gateway to digitization"
-            },
-            "3": {
-              "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-              "title": "Transparency"
-            }
-          },
-          "user": {
-            "0": {
-              "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-              "title": "Your gateway to digitization"
-            },
-            "1": {
-              "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-              "title": "Transparency"
-            }
-          }
-        }
+      "password0": {
+        "hint": "The password must consist of at least 8 characters (upper/lower case and numbers).",
+        "label": "Password",
+        "placeholder": ""
       },
-      "password-help": "The password must consist of at least 8 characters (upper/lower case and numbers).",
-      "password0": "Password",
-      "password1": "Retype password",
+      "password1": {
+        "hint": "The password must consist of at least 8 characters (upper/lower case and numbers).",
+        "label": "Retype password",
+        "placeholder": ""
+      },
       "profile-create-error": {
         "desc": "An error occurred during profile creation. Please try again.",
         "ok": "ok",
@@ -150,6 +181,43 @@
         "title": "Terms of use"
       },
       "title": "Sign up",
+      "twin": {
+        "create": "Create your Digital Twin",
+        "creating": "Creating Digital Twin...",
+        "dbcp": {
+          "description": {
+            "label": "Description",
+            "placeholder": "Briefly describe your Digital Twin"
+          },
+          "name": {
+            "error": "Please insert a name!",
+            "label": "Name",
+            "placeholder": "What should the Digital Twin be called?"
+          },
+          "type": {
+            "label": "Type"
+          }
+        },
+        "empty-field": "Please insert a value for {label}!",
+        "steps": {
+          "dbcp": {
+            "desc": "Choose a twin type and give your new twin meaningful name",
+            "title": "Basic information"
+          },
+          "finish": {
+            "desc": "For your access to your Digital Twin, we need an alias and a password.",
+            "title": "User information"
+          },
+          "list": {
+            "desc": "Deposit important, historical events",
+            "title": "History / Logs"
+          },
+          "metadata": {
+            "desc": "Describe your Digital Twin by its specifications",
+            "title": "Twin specifications"
+          }
+        }
+      },
       "use-profile": "Continue",
       "user-name": "John Doe | Sample Company Inc.",
       "welcome": "Contact Request",

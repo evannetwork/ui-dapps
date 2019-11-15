@@ -3,6 +3,66 @@
     "close": "Schließen",
     "continue": "Fortfahren",
     "free-input": "Freie Eingabe",
+    "headings": {
+      "sign-in": {
+        "0": {
+          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+          "title": "Ihr Digitalisierungsgateway"
+        },
+        "1": {
+          "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
+          "title": "Transparenz"
+        }
+      },
+      "sign-up": {
+        "company": {
+          "0": {
+            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+            "title": "Ihr Digitalisierungsgateway"
+          },
+          "1": {
+            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+            "title": "Ihr Digitalisierungsgateway"
+          },
+          "2": {
+            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+            "title": "Ihr Digitalisierungsgateway"
+          },
+          "3": {
+            "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
+            "title": "Transparenz"
+          }
+        },
+        "user": {
+          "0": {
+            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+            "title": "Ihr Digitalisierungsgateway"
+          },
+          "1": {
+            "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
+            "title": "Transparenz"
+          }
+        }
+      },
+      "twin-sign-up": {
+        "0": {
+          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+          "title": "Ihr Digitalisierungsgateway"
+        },
+        "1": {
+          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+          "title": "Ihr Digitalisierungsgateway"
+        },
+        "2": {
+          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
+          "title": "Ihr Digitalisierungsgateway"
+        },
+        "3": {
+          "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
+          "title": "Transparenz"
+        }
+      }
+    },
     "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungs-Schlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
     "invalid-mnemonic-words-incorrect": "Eines oder mehrere der angegebenen Wörter ist nicht erlaubt in Wiederherstellungsschlüsseln. Bitte überprüfen Sie Ihre Eingabe.",
     "mail-invitation-accepted": {
@@ -38,14 +98,20 @@
       "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
     },
     "sign-up": {
-      "account-type": "Account-Typ",
       "account-types": {
         "company": "Unternehmen",
         "user": "Nutzer"
       },
+      "accountType": {
+        "label": "Accounta-Typ"
+      },
       "agree": "Akzeptieren",
-      "alias": "Account-Name",
-      "alias-help": "Der Account-Name ist nur für Sie sichtbar.",
+      "alias": {
+        "error": "Bitte geben Sie einen Account-Namen an!",
+        "hint": "Der Account-Name ist nur für Sie sichtbar.",
+        "label": "Account-Name",
+        "placeholder": "John Doe | Beispiel Unternehmen GmbH"
+      },
       "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
       "create-account": "Erstellen Sie Ihren Account",
@@ -72,51 +138,16 @@
       "get-mnemonic": "Wiederherstellungsschlüssel",
       "get-mnemonic-desc": "Sichern Sie Ihren Wiederherstellungsschlüssel.",
       "get-mnemonic-desc-long": "Mit Hilfe dieses <b>Wiederherstellungsschlüssels</b> können Sie Ihre Identität auf <b>jedem beliebigen Gerät</b> wiederherstellen und auf Ihre Daten zugreifen. Bitte <b>sichern Sie sich diese 12 Wörter in einer möglichst sicheren Weise</b> (möglichst offline, z.B. auf einem Blatt Papier im Safe). <br><br> Wenn Sie diese 12 Wörter verlieren, <b>verlieren Sie den Zugang zu Ihren Geschäftspartnern, Verträgen und Profilinformationen.</b>",
-      "headings": {
-        "sign-in": {
-          "0": {
-            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-            "title": "Ihr Digitalisierungsgateway"
-          },
-          "1": {
-            "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-            "title": "Transparenz"
-          }
-        },
-        "sign-up": {
-          "company": {
-            "0": {
-              "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-              "title": "Ihr Digitalisierungsgateway"
-            },
-            "1": {
-              "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-              "title": "Ihr Digitalisierungsgateway"
-            },
-            "2": {
-              "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-              "title": "Ihr Digitalisierungsgateway"
-            },
-            "3": {
-              "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-              "title": "Transparenz"
-            }
-          },
-          "user": {
-            "0": {
-              "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-              "title": "Ihr Digitalisierungsgateway"
-            },
-            "1": {
-              "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-              "title": "Transparenz"
-            }
-          }
-        }
+      "password0": {
+        "hint": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
+        "label": "Passwort",
+        "placeholder": ""
       },
-      "password-help": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
-      "password0": "Passwort",
-      "password1": "Passwortwiederholung",
+      "password1": {
+        "hint": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
+        "label": "Passwortwiederholung",
+        "placeholder": ""
+      },
       "profile-create-error": {
         "desc": "Während der Profilerstellung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
         "ok": "ok",
@@ -150,6 +181,43 @@
         "title": "Nutzungsbedingungen"
       },
       "title": "Registrieren",
+      "twin": {
+        "create": "Erstellen Sie Ihren Digitalen Zwilling",
+        "creating": "Digitaler Zwilling wird erstellt...",
+        "dbcp": {
+          "description": {
+            "label": "Beschreibung",
+            "placeholder": "Beschreiben Sie kurz, Ihren Digitalen Zwilling"
+          },
+          "name": {
+            "error": "Bitte geben Sie einen Namen an!",
+            "label": "Name",
+            "placeholder": "Wie soll Ihr Twin heißen?"
+          },
+          "type": {
+            "label": "Type"
+          }
+        },
+        "empty-field": "Bitte füllen Sie das Feld {label} aus!",
+        "steps": {
+          "dbcp": {
+            "desc": "Wählen Sie einen Twin-Type und vergeben Sie einen sprechenden Namen",
+            "title": "Generelle Informationen"
+          },
+          "finish": {
+            "desc": "Für Ihren Zugang zu Ihrem Digital Twin benötigen wir einen Alias und ein Passwort.",
+            "title": "Benutzerinformationen"
+          },
+          "list": {
+            "desc": "Hinterlegung wichtiger, historischer Ereignisse",
+            "title": "Historie / Protokolle"
+          },
+          "metadata": {
+            "desc": "Beschreiben Sie Ihren Digital Twin anhand seiner Spezifikationen.",
+            "title": "Twin-Spezifikationen"
+          }
+        }
+      },
       "use-profile": "Weiter",
       "user-name": "Max Mustermann | Beispielfirma GmbH",
       "welcome": "Kontaktanfrage",

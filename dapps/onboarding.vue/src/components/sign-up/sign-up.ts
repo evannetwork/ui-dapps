@@ -30,10 +30,10 @@ import { getDefaultDAppEns } from '../../utils';
 interface ProfileFormInterface extends EvanForm {
   accountType: EvanFormControl;
   alias: EvanFormControl;
+  isValid?: boolean;
   password0: EvanFormControl;
   password1: EvanFormControl;
   termsAccepted: EvanFormControl;
-  isValid?: boolean;
 }
 
 @Component({ })
@@ -123,33 +123,55 @@ export default class SignUp extends mixins(EvanComponent) {
     }
   };
 
+  /**
+   * has the user accepted the terms of use?
+   */
+  termsAccepted = null;
+
   async created() {
+    const uiSpecs = { attr: { required: true, } };
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {
         value: 'user',
+        uiSpecs: {
+          attr: {
+            required: true,
+            options: [
+              { label: '_onboarding.sign-up.account-types.user', value: 'user', },
+              { label: '_onboarding.sign-up.account-types.company', value: 'company', },
+            ],
+          },
+          type: 'select'
+        },
+        validate: () => {
+          this.setSteps();
+          return true;
+        },
       },
       alias: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return this.value.length !== 0;
-        }
+        },
+        uiSpecs: { attr: { hint: true, required: true, } },
       },
       password0: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return vueInstance.getPasswordError(0, this.form) || true;
-        }
+        },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password'  } },
       },
       password1: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return vueInstance.getPasswordError(1, this.form) || true;
-        }
+        },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
       },
-      termsAccepted: {
-        value: false,
-      }
     }));
+
+    this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
 
     // update onboarding progress steps
     this.setSteps();
@@ -261,6 +283,23 @@ export default class SignUp extends mixins(EvanComponent) {
   }
 
   /**
+   * Return the profile creation information.
+   */
+  async getProfileCreationData() {
+    const password = this.profileForm.password0.value;
+    // load the vault using the current inputs and create a bcc profile runtime
+    const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
+    const provider = 'internal';
+    const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
+    const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
+
+    const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
+      bcc, accountId, vault.encryptionKey, privateKey);
+
+    return { password, vault, provider, accountId, privateKey, runtime, };
+  }
+
+  /**
    * Starts the profile creation.
    */
   async createProfile() {
@@ -272,14 +311,7 @@ export default class SignUp extends mixins(EvanComponent) {
       this.nextCreationStatus();
 
       try {
-        const password = this.profileForm.password0.value;
-        // load the vault using the current inputs and create a bcc profile runtime
-        const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
-        const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
-        const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
-
-        const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
-          bcc, accountId, vault.encryptionKey, privateKey);
+        const { password, accountId, privateKey, runtime, vault, } = await this.getProfileCreationData();
 
         await bcc.Onboarding.createOfflineProfile(
           runtime,
@@ -290,17 +322,7 @@ export default class SignUp extends mixins(EvanComponent) {
           runtime.environment
         );
 
-        // check if onboarded, else throw it!
-        if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {
-          throw new Error('Onboarding has finished, but user isnt onboarded?');
-        }
-
-        // profile is setup!
-        await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
-        dappBrowser.core.setCurrentProvider('internal');
-
-        // set encrypted mnemonic for temporary usage
-        this.persistMnemonic(runtime, vault);
+        await this.finishOnboarding(runtime, vault, accountId, password);
 
         // show done animation and navigate to signed in page
         this.creatingProfile = 5;
@@ -321,11 +343,34 @@ export default class SignUp extends mixins(EvanComponent) {
         this.creationTime = -1;
         this.recaptchaToken = null;
         (this.$refs.creatingProfileError as any).show();
+        window.clearTimeout(this.timeoutCreationStatus);
       }
 
       // stop ui status updates
       window.clearTimeout(this.timeoutCreationStatus);
     }
+  }
+
+  /**
+   * Finish the onboarding process and sets the current mnemonic active.
+   *
+   * @param      {bccRuntime}  runtime    runtime
+   * @param      {any}         vault      created vault
+   * @param      {string}      accountId  account id
+   * @param      {string}      password   password
+   */
+  async finishOnboarding(runtime: bcc.Runtime, vault: any, accountId: string, password: string) {
+    // check if onboarded, else throw it!
+    if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {
+      throw new Error('Onboarding has finished, but user isnt onboarded?');
+    }
+
+    // profile is setup!
+    await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
+    dappBrowser.core.setCurrentProvider('internal');
+
+    // set encrypted mnemonic for temporary usage
+    this.persistMnemonic(runtime, vault);
   }
 
   /**
@@ -340,7 +385,6 @@ export default class SignUp extends mixins(EvanComponent) {
     const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey, });
 
     window.localStorage['evan-mnemonic'] = encryptedMnemonic.toString('hex');
-    this.navigateToEvan();
   }
 
   /**
@@ -365,7 +409,7 @@ export default class SignUp extends mixins(EvanComponent) {
       },
     ];
 
-    if (this.profileForm.accountType.value === 'company') {
+    if (this.profileForm && this.profileForm.accountType.value === 'company') {
       // data company specific steps
       steps.push({
         title: '_onboarding.sign-up.steps.company.registration.title',
@@ -388,7 +432,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
         switch (this.profileForm.accountType.value) {
           case 'company': {
-            return this.$refs.companyContact && !this.$refs.companyContact.form.isValid
+            return this.$refs.companyContact && !this.$refs.companyContact.form.isValid;
           }
           default: {
             return !this.profileForm.isValid;

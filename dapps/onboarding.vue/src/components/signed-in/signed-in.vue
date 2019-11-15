@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-  import SignedIn from './signed-in.ts';
+  import SignedIn from './signed-in';
   export default SignedIn;
 </script>
 

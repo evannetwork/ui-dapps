@@ -17,19 +17,18 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper :routes="null">
-      <template v-slot:content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
-  </div>
-</template>
+// vue imports
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-  import Root from './root';
-  export default Root;
-</script>
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+
+@Component({ })
+export default class CaptchaTermsComponent extends mixins(EvanComponent) {
+  /**
+   * Parent sign up components instance
+   */
+  @Prop() signUpComp: any;
+}
+

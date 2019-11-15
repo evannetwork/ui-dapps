@@ -22,13 +22,15 @@ import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import SignedInComponent from './components/signed-in/signed-in.vue';
 import SignInComponent from './components/sign-in/sign-in.vue';
 import SignUpComponent from './components/sign-up/sign-up.vue';
+import TwinSignUp from './components/twin-sign-up/twin-sign-up.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
+  { path: '', name: 'sign-up', redirect: { path: 'sign-up' } },
   { path: 'sign-in', name: 'sign-in', component: SignInComponent },
   { path: 'sign-up', name: 'sign-up', component: SignUpComponent },
   { path: 'signed-in', name: 'signed-in', component: SignedInComponent },
-  { path: '', name: 'sign-up', component: SignUpComponent },
+  { path: 'twin-sign-up', name: 'twin-sign-up', component: TwinSignUp },
 ];
 
 export default routeRegistration;

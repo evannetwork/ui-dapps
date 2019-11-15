@@ -6,7 +6,7 @@
   as published by the Free Software Foundation.
 
   This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  but WITHOUT ANY WARRANTY; without even the implied warranty ofa
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU Affero General Public License for more details.
 
@@ -17,19 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="evan theme-evan">
-    <evan-dapp-wrapper :routes="null">
-      <template v-slot:content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </template>
-    </evan-dapp-wrapper>
-  </div>
-</template>
+/deep/ .evan-form {
+  /deep/ .container {
+    padding-top: 0 !important;
+  }
+}
 
-<script lang="ts">
-  import Root from './root';
-  export default Root;
-</script>
+.array-header {
+  padding-left: 0.5em !important;
+  padding-right: 0.5em !important;
+}
