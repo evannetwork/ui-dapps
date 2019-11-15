@@ -41,9 +41,10 @@ interface CustomerInterface {
   };
 }
 
-interface PaymentResponseInterface {
+interface StatusInterface {
   status: string;
   code: string;
+  result?: string;
 }
 
 interface OptionsInterface {
@@ -93,17 +94,20 @@ export class PaymentService {
    * @param id
    * @param amount
    * @param customer
-   * @param headers
    */
-  private async checkStatus(id: string, amount: number, customer: any): Promise<any> {
-    return axios.post(`${ this.agentUrl }/smart-agents/payment-processor/executePayment`, {
-      token: id,
-      amount,
-      customer,
-      requestId: this.requestId
-    }, {
-      headers: this.headers
-    });
+  private async checkStatus(id: string, amount: number, customer: any): Promise<StatusInterface> {
+    const {data: {status, code}} = await axios.post(
+      `${ this.agentUrl }/smart-agents/payment-processor/executePayment`, {
+        token: id,
+        amount,
+        customer,
+        requestId: this.requestId
+      }, {
+        headers: this.headers
+      }
+    );
+
+    return {status, code};
   }
 
   // TODO: call: authorization = await bcc.utils.getSmartAgentAuthHeaders(this.bcc.coreRuntime); from outside and
@@ -127,7 +131,7 @@ export class PaymentService {
    * @param customer
    * @param headers
    */
-  private async getStatus (id: string, amount: number, customer: any) {
+  private async getStatus (id: string, amount: number, customer: any): Promise<StatusInterface> {
     return new Promise((resolve, reject) => {
       this.intervalTimer = setInterval( async () => {
         const response = await this.checkStatus(id, amount, customer);
@@ -155,15 +159,6 @@ export class PaymentService {
     });
   }
 
-  // try {
-  //   this.paymentResponse = await this.executePayment(source.id, amount, customer, headers)
-  // } catch (error) {
-  //   this.paymentResponse = {
-  //     status: 'error',
-  //     code: this.getErrorCode(error.code)
-  //   }
-  // };
-
   /**
    * Execute the payment incl. polling of the result.
    *
@@ -172,7 +167,7 @@ export class PaymentService {
    * @param      {object}  customer  the customer object
    * @return     {promise}  resolved when done
    */
-  private async executePayment(id: string, amount: number, customer: any): Promise<any> {
+  private async executePayment(id: string, amount: number, customer: any): Promise<StatusInterface|Error> {
     // return the first resolving promise
     return Promise.race([
       this.getStatus(id, amount, customer),
@@ -212,7 +207,14 @@ export class PaymentService {
     };
   }
 
-  async buyEve(customer: CustomerInterface, eveAmount: number, options: OptionsInterface) {
+  /**
+   * Trigger an EVE payment.
+   *
+   * @param customer - CustomerInterface, may be created by getCustomer() method.
+   * @param eveAmount - desired amount of EVE.
+   * @param options - optional object to overwrite certain stripe options. @see: createStripeSourceData()
+   */
+  async buyEve(customer: CustomerInterface, eveAmount: number, options?: OptionsInterface): Promise<StatusInterface> {
     if (!this.stripe) {
       throw new Error('Stripe was not initialized, can not start payment process');
     }
@@ -231,7 +233,18 @@ export class PaymentService {
       throw new Error('Received neither `source` nor `error` from stripe createSource().');
     }
 
-    this.executePayment(source.id, eveAmount, customer);
+    let result = {};
+
+    try {
+      result = await this.executePayment(source.id, eveAmount, customer);
+    } catch (error) {
+      result = {
+        status: 'error',
+        code: this.getErrorCode(error.code)
+      };
+    }
+
+    return result;
   }
 
   /**
