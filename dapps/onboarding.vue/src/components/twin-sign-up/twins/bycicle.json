@@ -103,7 +103,7 @@
         "i18n": {
           "de": {
             "characteristics": {
-              "description": "Technische Informationen",
+              "description": "Beschreiben Sie Ihr Fahrrad mit dessen Stammdaten",
               "name": "Eigenschaften",
               "properties": {
                 "bycicleType": {
@@ -159,7 +159,7 @@
           },
           "en": {
             "characteristics": {
-              "description": "Technical information",
+              "description": "Describe your bycicle by it's specifications",
               "name": "Characteristics",
               "properties": {
                 "bycicleType": {

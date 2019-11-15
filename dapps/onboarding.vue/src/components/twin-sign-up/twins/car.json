@@ -103,7 +103,7 @@
         "i18n": {
           "de": {
             "characteristics": {
-              "description": "Technische Informationen des Autos",
+              "description": "Beschreiben Sie Ihr Fahrzeug mit dessen Stammdaten",
               "name": "Eigenschaften",
               "properties": {
                 "color": {
@@ -163,7 +163,7 @@
           },
           "en": {
             "characteristics": {
-              "description": "Technical information about the car",
+              "description": "Describe your car by it's specifications",
               "name": "Characteristics",
               "properties": {
                 "color": {

@@ -74,7 +74,7 @@ export default class DataSetForm extends mixins(EvanComponent) {
     const data = Array.isArray(this.data) ? this.data : [ this.data ];
 
     // setup initial formulars
-    this.forms = data.map(dataObj => this.getEntryForm(dataObj));
+    this.forms = data.map((dataObj: any, index: number) => this.getEntryForm(dataObj, index));
 
     // send reference to parent component
     this.$emit('init', this);
@@ -83,9 +83,10 @@ export default class DataSetForm extends mixins(EvanComponent) {
   /**
    * Returns a new evan form for a the given data schema.
    *
-   * @param      {any}  dataObj  The data object
+   * @param      {any}     dataObj  data object, for loading and saving changes
+   * @param      {number}  index    index of the data obj, used  to add id's to the input fields
    */
-  getEntryForm(dataObj: any) {
+  getEntryForm(dataObj: any, index: number) {
     const entrySchema = Array.isArray(this.data) ?
       this.dataSchema.items.properties : this.dataSchema.properties;
     const controlDefinition = { };
@@ -113,6 +114,7 @@ export default class DataSetForm extends mixins(EvanComponent) {
       controlDefinition[key].uiSpecs = {
         attr: {
           error: this.$t('_onboarding.sign-up.twin.empty-field', { label }),
+          id: `${ key }${ index }`,
           label,
           placeholder: getTranslationFromDBCP(this, this.description, `${ baseKey }.placeholder`),
           required,
