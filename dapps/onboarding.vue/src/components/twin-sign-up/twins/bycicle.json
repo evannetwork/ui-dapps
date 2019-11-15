@@ -71,15 +71,12 @@
               "items": {
                 "properties": {
                   "date": {
-                    "minLength": 1,
                     "type": "string"
                   },
                   "description": {
-                    "minLength": 1,
                     "type": "string"
                   },
                   "processor": {
-                    "minLength": 1,
                     "type": "string"
                   }
                 },
@@ -223,23 +220,18 @@
               "$id": "characteristics_schema",
               "properties": {
                 "bycicleType": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "color": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "frameHeight": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "gender": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "manufacturer": {
-                  "minLength": 1,
                   "type": "string"
                 }
               },

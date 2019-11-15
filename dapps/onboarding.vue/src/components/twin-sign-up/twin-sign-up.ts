@@ -131,11 +131,18 @@ export default class TwinSignUp extends mixins(SignUp) {
         uiSpecs: {
           attr: {
             rows: 5,
-            type: 'textarea',
-          }
+          },
+          type: 'textarea',
         },
       }
     }));
+  }
+
+  /**
+   * Render only the data set steps dynamically.
+   */
+  dataSetSteps() {
+    return this.steps.filter((step, index) => index !== 0);
   }
 
   /**
@@ -201,16 +208,16 @@ export default class TwinSignUp extends mixins(SignUp) {
         }
       });
 
-    this.steps.push({
-      title: '_onboarding.sign-up.twin.steps.finish.title',
-      disabled: () => {
-        if (!this.$refs.stepForm) {
-          return creatingOrOnboarded();
-        } else {
-          return creatingOrOnboarded() || !this.$refs.stepForm[this.$refs.stepForm.length - 1].isValid();
-        }
-      },
-    });
+    // this.steps.push({
+    //   title: '_onboarding.sign-up.twin.steps.finish.title',
+    //   disabled: () => {
+    //     if (!this.$refs.stepForm) {
+    //       return creatingOrOnboarded();
+    //     } else {
+    //       return creatingOrOnboarded() || !this.$refs.stepForm[this.$refs.stepForm.length - 1].isValid();
+    //     }
+    //   },
+    // });
   }
 
   /**

@@ -1,5 +1,7 @@
 {
   "_onboarding": {
+    "back": "Back",
+    "back-to-website": "Back to Homepage",
     "close": "Close",
     "continue": "Continue",
     "free-input": "Free input",
