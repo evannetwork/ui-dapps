@@ -18,15 +18,11 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-import axios from 'axios';
 
 // evan.network imports
-import { EvanComponent, EvanForm, EvanFormControl, getDomainName, } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { EvanComponent, EvanForm, EvanFormControl, } from '@evan.network/ui-vue-core';
 
 // get the twin helper
 import { getTranslationFromDBCP } from './twinHelper';

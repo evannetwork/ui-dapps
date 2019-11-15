@@ -18,9 +18,7 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 import axios from 'axios';
 
 // evan.network imports
