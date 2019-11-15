@@ -46,6 +46,12 @@
     @media (min-width: 992px) {
       display: grid;
     }
+
+    h3 {
+      * {
+        font-size: cssVar('h3-font-size');
+      }
+    }
   }
 
   .content-wrapper {

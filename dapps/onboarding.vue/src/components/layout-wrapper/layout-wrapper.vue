@@ -25,13 +25,13 @@
       <div class="d-flex h-100 align-items-center justify-content-center">
         <div class="w-100">
           <div class="text-center">
-            <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
+            <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`">
           </div>
           <h1 class="ml-5 mb-5 font-weight-bold text-dark" >
             {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}
           </h1>
-          <h3 class="ml-5 text-dark">
-            {{ `_onboarding.headings.${ type }.${ step }.desc` | translate }}
+          <h3 class="ml-5 text-dark"
+            v-html="$t(`_onboarding.headings.${ type }.${ step }.desc`)">
           </h3>
         </div>
       </div>

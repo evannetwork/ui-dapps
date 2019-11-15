@@ -467,5 +467,19 @@ export default class SignUp extends mixins(EvanComponent) {
 
     return userData;
   }
+
+  /**
+   * return the list of images, that should be displayed within the left panel for which step.
+   */
+  getLeftPanelImages() {
+    switch (this.profileForm.accountType.value) {
+      case 'company': {
+        return [ '7.svg', '8.svg', '9.svg', '13.png' ];
+      }
+      case 'user': {
+        return [ '7.svg', '4.png' ];
+      }
+    }
+  }
 }
 

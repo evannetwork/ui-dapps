@@ -45,4 +45,9 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
       return '';
     }
   }) type;
+
+  /**
+   * List of image names, that should be displayed on which step.
+   */
+  @Prop() images: Array<string>;
 }

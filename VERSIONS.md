@@ -4,6 +4,7 @@
 ### Features
 - `onboarding.vue` (v3.3.0)
   - add onboarding with twin creation
+  - add new images and texts to onboarding
 
 ### Fixes
 - `profile.vue` (v3.5.1)
