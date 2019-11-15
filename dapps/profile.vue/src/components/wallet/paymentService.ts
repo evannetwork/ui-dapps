@@ -18,9 +18,38 @@
 */
 
 import axios from 'axios';
-import { debounce } from 'lodash';
+import { debounce } from '@evan.network/lodash.libs';
 
-// TODO: customer interface, response interface (https://github.com/axios/axios/issues/1510)
+interface VatValidationInterface {
+  isValidVat: boolean;
+  tax: number;
+}
+
+interface CustomerInterface {
+  email: string;
+  shipping: {
+    name: string;
+    company: string;
+    street: string;
+    zip: string;
+    city: string;
+    country: string;
+  };
+  tax_info: {
+    type: string;
+    tax_id: string
+  };
+}
+
+interface PaymentResponseInterface {
+  status: string;
+  code: string;
+}
+
+interface OptionsInterface {
+  type: string;
+  currency: string;
+}
 
 export class PaymentService {
   private static PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
@@ -29,14 +58,19 @@ export class PaymentService {
   private intervalTimer = null;
   private requestId = null;
   private agentUrl = null;
+  private stripe: null;
+  private headers: {};
 
   /**
    * Initialise the payment service with the agent url.
    *
+   * @param stripe
    * @param agentUrl
    */
-  constructor(agentUrl = 'https://agents.test.evan.network/api') {
+  constructor(stripe: any, agentUrl = 'https://agents.test.evan.network/api') {
     this.agentUrl = agentUrl;
+    this.stripe = stripe;
+    // TODO: init with stripe API key and auth headers ?
   }
 
   private getErrorCode(code: string) {
@@ -54,26 +88,38 @@ export class PaymentService {
   }
 
   /**
-   * Check current payment state against smart agent
+   * Check current payment state against smart agent.
    *
    * @param id
    * @param amount
    * @param customer
    * @param headers
    */
-  private async checkStatus(id: string, amount: number, customer: any, headers = {}): Promise<any> {
+  private async checkStatus(id: string, amount: number, customer: any): Promise<any> {
     return axios.post(`${ this.agentUrl }/smart-agents/payment-processor/executePayment`, {
       token: id,
       amount,
       customer,
       requestId: this.requestId
     }, {
-      headers
+      headers: this.headers
     });
   }
 
+  // TODO: call: authorization = await bcc.utils.getSmartAgentAuthHeaders(this.bcc.coreRuntime); from outside and
+  // setAuthHeaders(authorization) to set the headers
+
   /**
-   * Request every 5 seconds and resolves when we got success or transferring status.
+   * Set auth header data to authenticate with current account against the payment smart agent.
+   *
+   * @param authorization
+   */
+  setAuthHeaders(authorization: string) {
+    this.headers = { authorization };
+  }
+
+  /**
+   * Request every X seconds and resolves when we got success or transferring status.
    * Reject on error response.
    *
    * @param id
@@ -81,10 +127,10 @@ export class PaymentService {
    * @param customer
    * @param headers
    */
-  private async getStatus (id: string, amount: number, customer: any, headers?: any) {
+  private async getStatus (id: string, amount: number, customer: any) {
     return new Promise((resolve, reject) => {
       this.intervalTimer = setInterval( async () => {
-        const response = await this.checkStatus(id, amount, customer, headers);
+        const response = await this.checkStatus(id, amount, customer);
 
         switch (response.status) {
           case 'error': {
@@ -124,13 +170,12 @@ export class PaymentService {
    * @param      {string}  id        the token for the payment
    * @param      {number}  amount    the eve amount to buy
    * @param      {object}  customer  the customer object
-   * @param      {object}  headers   additional headers to send
    * @return     {promise}  resolved when done
    */
-  public async executePayment(id: string, amount: number, customer: any, headers?: any) {
+  private async executePayment(id: string, amount: number, customer: any): Promise<any> {
     // return the first resolving promise
     return Promise.race([
-      this.getStatus(id, amount, customer, headers),
+      this.getStatus(id, amount, customer),
       new Promise((_, reject) =>
           setTimeout(() => {
             clearInterval(this.intervalTimer);
@@ -141,35 +186,122 @@ export class PaymentService {
   }
 
   /**
+   * Returns stripe source data object.
+   *
+   * @param customer
+   * @param param1
+   */
+  createStripeSourceData(customer, {type = 'card', currency = 'eur', notification_method = 'email'}) {
+    const usageTypes = {
+      card: 'single_use',
+      sepa_debit: 'resuable'
+    };
+
+    return {
+      type,
+      currency,
+      owner: {
+        name: customer.shipping.name,
+        email: customer.email
+      },
+      usage: usageTypes[type],
+      mandate: {
+        // Automatically send a mandate notification to your customer once the source is charged.
+        notification_method,
+      },
+    };
+  }
+
+  async buyEve(customer: CustomerInterface, eveAmount: number, options: OptionsInterface) {
+    if (!this.stripe) {
+      throw new Error('Stripe was not initialized, can not start payment process');
+    }
+
+    const sourceData = this.createStripeSourceData(customer, options);
+    const { source, error } = await this.stripe.sources.create(sourceData);
+
+    if (error) {
+      return {
+        status: 'error',
+        code: this.getErrorCode(error.message)
+      };
+    }
+
+    if (!source) {
+      throw new Error('Received neither `source` nor `error` from stripe createSource().');
+    }
+
+    this.executePayment(source.id, eveAmount, customer);
+  }
+
+  /**
+   * Check VAT number against backend.
    *
    * @param country
    * @param vat
    */
-  async requestVatValidation(country: string, vat: string) {
-    // const requestUrl = `${ this.agentUrl }/smart-agents/payment-processor/checkVat?country=${country}${vat ? '&vat=' + vat : ''}`;
+  private async requestVatValidation(country: string, vat?: string): Promise<VatValidationInterface> {
     const requestUrl = `${ this.agentUrl }/smart-agents/payment-processor/checkVat`;
-    const params = {
-      country,
-      vat  /// TODO check without vat is possible???
-    };
-    const { result: {isValidVat, tax, error} } = await axios.get(requestUrl, { params });
+    const params = { country, vat };
+    const { data: { result: { isValidVat, tax, error }}} = await axios.get(requestUrl, { params });
 
     if (error) {
       throw new Error(`Problem validation VAT Tax-ID: ${error}`);
     }
 
-    return {isValidVat, tax, error};
-
+    return { isValidVat, tax };
   }
 
   /**
-   * Validate VAT number and update UI.
+   * Validate VAT number and return result.
    *
    * @param vat
    */
-  public async validateVat(vat: string) {
-    const timeout = 500;
+  async validateVat(country: string, vat: string): Promise<VatValidationInterface> {
+    return debounce(() => this.requestVatValidation(country, vat), 500);
+  }
 
-    return debounce(this.requestVatValidation, 500);
+    /**
+   * Returns the tax information object if vat number is set;
+   *
+   * @param vat
+   */
+  getTaxInfo(vat?: string) {
+    return vat ? {
+      tax_id: vat,
+      type: 'vat'
+    } : undefined;
+  }
+
+  /**
+   * Create customer object from given fields.
+   *
+   * @param customer
+   * - name
+   * - email
+   * - company
+   * - street
+   * - city
+   * - zip
+   * - country
+   * - vat
+   */
+  getCustomer({ name, email, company, street, city, zip, country, vat }) {
+    const tax_info = this.getTaxInfo(vat);
+
+    return {
+      email,
+      shipping: {
+        name,
+        address: {
+          city,
+          country,
+          line1: company || name,
+          line2: street,
+          postal_code: zip,
+        }
+      },
+      tax_info
+    };
   }
 }
