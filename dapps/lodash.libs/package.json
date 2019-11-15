@@ -10,7 +10,7 @@
     "CSS"
   ],
   "main": "dist/lodash.js",
-  "name": "@evan.network/fontawesome",
+  "name": "@evan.network/lodash",
   "scripts": {
     "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
   },
