@@ -9,7 +9,7 @@ Scenario: Registering a new account on evan Happy Path
     And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I want to click on vue checkbox control with id "termsAccepted"
+    And I click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
@@ -65,7 +65,7 @@ Scenario: Registering a new account on evan and not check recaptcha
   And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   Then I click on button "Continue"
-  Then I want to click on vue checkbox control with id "termsAccepted"
+  Then I click on vue checkbox control with id "termsAccepted"
   Then the button "Create Account" should be "disabled"
 
 Scenario: Registering a new company account on evan
@@ -104,7 +104,7 @@ Scenario: Registering a new company account on evan
     And I set Input field with label "Website" to "https://evan.network"
     Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I want to click on vue checkbox control with id "termsAccepted"
+    And I click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
@@ -129,7 +129,7 @@ Scenario: Registering a new company account on evan
 Scenario: Creating a new bycicle twin using onboarding
 
   Given I go to the evan.network startpage
-    And I open the path "dashboard.vue.evan/onboarding.vue.evan/twin-sign-up"
+    And I am on the path "dashboard.vue.evan/onboarding.vue.evan/twin-sign-up"
     Then I want to see a text including "Create your Digital Twin"
     And I want to see a text including "Choose a twin type and give your new twin meaningful name"
     And the button "Continue" should be "disabled"
@@ -178,7 +178,7 @@ Scenario: Creating a new bycicle twin using onboarding
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
     And I click the element with id "evan-recaptcha"
-    And I want to click on vue checkbox control with id "termsAccepted"
+    And I click on vue checkbox control with id "termsAccepted"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
 
@@ -188,24 +188,24 @@ Scenario: Creating a new bycicle twin using onboarding
 #   Given I log in to evan.network using vue
 #     And I click on "Digital Twins" in main menu
 #     Then I want to see a text including "Onboarding Automated Twin"
-#   When I click a element with text including "Onboarding Automated Twin"
+#   When I click on an element with text including "Onboarding Automated Twin"
 #     Then I want to see a text including "Digital Twin"
 #     And I want to see a text including "Onboarding Automated Twin"
 #     And I want to see a text including "Plugin Overview"
 #     And I want to see a text including "Technical Details"
 #     And I want to see a text including "Permissions"
 #     And I want to see a text including "TestContainer"
-#   When I click a element with text including "TestContainer"
+#   When I click on an element with text including "TestContainer"
 #     Then I want to see a text including "History"
 #     And I want to see a text including "Specifications"
-#   When I click a element with text including "Specifications"
+#   When I click on an element with text including "Specifications"
 #     Then I want to see a text including "Data Set Type: Metadata"
 #     Then The value of the Input field with label "Type" should be "mountain bike"
 #     Then The value of the Input field with label "Color" should be "red"
 #     Then The value of the Input field with label "Wheel size" should be "29"
 #     Then The value of the Input field with label "Gender" should be "male"
 #     Then The value of the Input field with label "Manufacturer" should be "Ghost"
-#   When I click a element with text including "History"
+#   When I click on an element with text including "History"
 #     And I want to see a text including "01.01.2018"
 #     And I want to see a text including "02.03.2019"
 #     And I want to see a text including "30.11.2019"
@@ -215,12 +215,3 @@ Scenario: Creating a new bycicle twin using onboarding
 #     And I want to see a text including "User 1"
 #     And I want to see a text including "User 2"
 #     And I want to see a text including "User 3"
-
-
-
-
-
-
-
-
-

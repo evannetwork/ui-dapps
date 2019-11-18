@@ -5,12 +5,6 @@ import { setupEvan } from '../../test-utils/test-utils.js';
 
 export const WAIT_TIME = 15 * 1000;
 
-Given(/^I open the path "([^"]+)"$/, async path => {
-  const evan = setupEvan(client);
-
-  await client.url(`${ evan.baseUrl }#/${ path }`);
-});
-
 When(/^I click the element with id "([^"]+)"$/, async id => {
   const evan = setupEvan(client);
 

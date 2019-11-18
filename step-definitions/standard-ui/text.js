@@ -35,7 +35,7 @@ When('I want to see not a text including {string}',
 /**
  * Click on menu tab with a certain content.
  */
-When('I click a element with text including {string}',
+When('I click on an element with text including {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
