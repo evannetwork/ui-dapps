@@ -56,7 +56,7 @@ Then('The value of the Input field with label {string} should be {string}',
 );
 
 /**
- * Looks for an input field with sibling label having certain content and fills the values into the input field.
+ * Looks for an input field with certain placeholder and checks if it has the desired value.
  */
 Then('The value of the Input field with placeholder {string} should be {string}',
   async(placeholder, content) => {
