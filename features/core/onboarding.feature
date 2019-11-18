@@ -38,12 +38,12 @@ Scenario: Registering a new account and test password checks
   Then I want to see a text including "Select user type and specify your account name and password."
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test"
-    And I press the TAB key
+    And I press the "TAB" key
   Then I want to see a text including "Your password must be at least 8 characters long!"
     And the button "Continue" should be "disabled"
   Then I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1235"
-    And I press the TAB key
+    And I press the "TAB" key
   Then I want to see a text including "Your password must match the previous one!"
     And the button "Continue" should be "disabled"
 
