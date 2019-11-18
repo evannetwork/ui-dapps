@@ -78,8 +78,7 @@ When(/I log out from vue/, async () => {
 });
 
 Then(/I am no longer logged in to vue/, async () => {
-  await client.waitForElementPresent('input#alias', 30 * 1000);
-  await client.assert.visible('input#alias');
+  await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I switch to vue/, async () => {
