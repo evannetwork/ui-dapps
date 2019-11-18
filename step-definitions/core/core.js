@@ -1,5 +1,5 @@
 import { client } from 'nightwatch-api';
-import { When, Then } from 'cucumber';
+import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/test-utils.js';
 

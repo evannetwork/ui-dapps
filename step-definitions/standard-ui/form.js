@@ -14,7 +14,7 @@ const getSelector = (label, angular) => {
       `//label[normalize-space(text()) = '${label}']/preceding-sibling::${ inputSelector }`,
       `//label[normalize-space(text()) = '${label}']/following-sibling::${ inputSelector }`,
       `//label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::${ inputSelector }`
+      `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::${ inputSelector }`,
     ])).join('|');
   } else {
     return [
@@ -67,6 +67,17 @@ Then('The value of the Input field with label {string} should be {string}',
 );
 
 /**
+ * Looks for an input field with certain placeholder and checks if it has the desired value.
+ */
+Then('The value of the Input field with placeholder {string} should be {string}',
+  async(placeholder, content) => {
+    client.useXpath();
+    await client.assert.value(`//input[@placeholder='${ placeholder }']`, content);
+    client.useCss();
+  }
+);
+
+/**
  * Looks for an input field with id and fills the values into the input field.
  */
 When('I set Input field with id {string} to {string}',
@@ -75,6 +86,19 @@ When('I set Input field with id {string} to {string}',
     await client.expect.element(`#${ id }`).to.be.visible;
     await betterClearValue(`#${ id }`);
     await client.setValue(`#${ id }`, content);
+  }
+);
+
+/**
+ * Looks for an input field with id and fills the values into the input field.
+ */
+When('I set Input field with placeholder {string} to {string}',
+  async(placeholder, content) => {
+    const selector = `//input[@placeholder='${ placeholder }']`;
+    client.useXpath();
+    await client.expect.element(selector).to.be.visible;
+    await betterClearValue(selector);
+    await client.setValue(selector, content);
   }
 );
 
@@ -186,6 +210,21 @@ Then('Input fields with labels {string} should be visible',
     for( const label of labels.split('|') ) {
       await client.expect.element(getSelector(label)).to.be.visible;
     }
+
+    client.useCss();
+  }
+)
+
+/**
+ * Click on label next to the evan checkbox control
+ */
+Then('I click on vue checkbox control with id {string}',
+  async(id) => {
+    client.useXpath();
+
+    const selector = `//*[@id="${ id }"]/following-sibling::label[@for="${ id }"]`;
+    await client.expect.element(selector).to.be.visible;
+    await client.click(selector);
 
     client.useCss();
   }
