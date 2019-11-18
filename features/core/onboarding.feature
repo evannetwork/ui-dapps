@@ -28,7 +28,7 @@ Scenario: Registering a new account not set account name
   Then I want to see a text including "Select user type and specify your account name and password."
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
-  Then I want to see a text including "Please enter a user name!"
+  Then I want to see a text including "Please enter a account name!"
     And the button "Continue" should be "disabled"
 
 Scenario: Registering a new account and test password checks
