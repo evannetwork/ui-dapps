@@ -42,6 +42,7 @@ Scenario: Registering a new account and test password checks
     And the button "Continue" should be "disabled"
   Then I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1235"
+    And I press the TAB key
   Then I want to see a text including "Your password must match the previous one!"
     And the button "Continue" should be "disabled"
 
