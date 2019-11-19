@@ -28,7 +28,7 @@
               style="max-width: 390px"
               :src="`${ $store.state.onboardingBaseUrl }/assets/left-panel/${ images[creatingProfile - 1] }`">
           </div>
-          <div style="height: 10px" class="mx-auto progress my-3 bg-white">
+          <div style="height: 10px; min-width: 390px;" class="mx-auto progress my-3 bg-white">
             <div
               class="progress-bar"
               role="progressbar"

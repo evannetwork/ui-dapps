@@ -19,7 +19,7 @@
       "sign-up": {
         "company": {
           "0": {
-            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<br><br><b>Company</b><br>in order to be able to interact as a trustworthy company.<br><b>User</b><br>to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.",
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
             "title": "Registration in the evan.network"
           },
           "1": {
@@ -37,7 +37,7 @@
         },
         "user": {
           "0": {
-            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<br><br><b>Company</b><br>in order to be able to interact as a trustworthy company.<br><br><b>User</b><br>to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.",
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
             "title": "Registration in the evan.network"
           },
           "1": {

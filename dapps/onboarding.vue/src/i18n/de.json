@@ -19,7 +19,7 @@
       "sign-up": {
         "company": {
           "0": {
-            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<br><br><b>Unternehmen</b><br>um als vertrauensvolles Unternehmen interagieren zu können.<br><br><b>Nutzer</b><br>um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.",
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - um als vertrauensvolles Unternehmen interagieren zu können.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
             "title": "Registrierung im evan.network"
           },
           "1": {
@@ -37,7 +37,7 @@
         },
         "user": {
           "0": {
-            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<br><br><b>Unternehmen</b><br>um als vertrauensvolles Unternehmen interagieren zu können.<br><br><b>Nutzer</b><br>um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.",
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - um als vertrauensvolles Unternehmen interagieren zu können.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
             "title": "Registrierung im evan.network"
           },
           "1": {

@@ -23,8 +23,8 @@
       <img class="evan-logo"
         :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
       <div class="d-flex h-100 align-items-center justify-content-center">
-        <div class="w-100 text-center">
-          <div class="mb-5">
+        <div class="w-100">
+          <div class="mb-5 text-center">
             <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`">
           </div>
           <h2 class="mx-8 mb-2 font-weight-bold text-dark" >
