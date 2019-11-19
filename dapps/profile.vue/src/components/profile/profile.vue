@@ -98,11 +98,11 @@
             </template>
           </div>
           <template v-if="userInfo.profileType === 'company'">
-            <profile-permission-wrapper entryName="registration">
-              <profile-company-registration :address="address"></profile-company-registration>
-            </profile-permission-wrapper>
             <profile-permission-wrapper entryName="contact">
               <profile-company-contact :address="address"></profile-company-contact>
+            </profile-permission-wrapper>
+            <profile-permission-wrapper entryName="registration">
+              <profile-company-registration :address="address"></profile-company-registration>
             </profile-permission-wrapper>
           </template>
           <profile-permission-wrapper entryName="deviceDetails"

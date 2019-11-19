@@ -412,13 +412,13 @@ export default class SignUp extends mixins(EvanComponent) {
     if (this.profileForm && this.profileForm.accountType.value === 'company') {
       // data company specific steps
       steps.push({
-        title: '_onboarding.sign-up.steps.company.registration.title',
-        disabled: () => creatingOrOnboarded() || !this.profileForm.isValid,
-      });
-      steps.push({
         title: '_onboarding.sign-up.steps.company.contact.title',
         disabled: () => creatingOrOnboarded() ||
           (this.$refs.companyRegistration && !this.$refs.companyRegistration.form.isValid),
+      });
+      steps.push({
+        title: '_onboarding.sign-up.steps.company.registration.title',
+        disabled: () => creatingOrOnboarded() || !this.profileForm.isValid,
       });
     }
 

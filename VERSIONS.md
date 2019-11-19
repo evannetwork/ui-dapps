@@ -5,6 +5,7 @@
 - `onboarding.vue` (v3.3.0)
   - add onboarding with twin creation
   - add new images and texts to onboarding
+  - new order for company profile creation
 
 ### Fixes
 - `profile.vue` (v3.5.1)
@@ -18,6 +19,9 @@
   - fix "ugly" eve number input
 
 ### Deprecations
+- `onboarding.vue` (v3.3.0)
+  - remove company name from registration entry
+
 
 
 ## Version 3.11.0

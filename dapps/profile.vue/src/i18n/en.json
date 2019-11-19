@@ -48,7 +48,7 @@
         "company": {
           "error": "Please insert a company name!",
           "label": "Company",
-          "placeholder": "Evan GmbH"
+          "placeholder": "Sample Company"
         },
         "court": {
           "error": "Please enter the information of the registration authority!",
@@ -67,11 +67,11 @@
         "registerNumber": {
           "error": "Please enter the registration number",
           "label": "Registration Number",
-          "placeholder": "Choose..."
+          "placeholder": "HRA 12345"
         },
         "salesTaxID": {
-          "error": "Please enter the sales tax ID",
-          "label": "Sales Tax ID",
+          "error": "Please enter the VAT ID",
+          "label": "VAT ID",
           "placeholder": "DE999999999"
         },
         "title": "Registration"

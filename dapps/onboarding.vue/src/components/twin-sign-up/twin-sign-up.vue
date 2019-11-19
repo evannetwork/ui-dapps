@@ -108,14 +108,16 @@
           <profile-captcha-terms :signUpComp="this" />
           <div class="d-flex justify-content-between text-center mt-5">
             <evan-button
-              type="secondary"
-              @click="activeStep--">
+              @click="activeStep--"
+              class="mr-3"
+              type="secondary">
               {{ '_onboarding.back' | translate }}
             </evan-button>
             <evan-button
-              type="primary"
-              :disabled="!recaptchaToken || !termsAccepted.value"
-              @click="createOfflineTwin()">
+              :disabled="!(recaptchaToken && termsAccepted.value && profileForm.isValid)"
+              @click="createOfflineTwin()"
+              class="btn-block"
+              type="primary">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
             </evan-button>
           </div>
@@ -123,16 +125,18 @@
 
         <div class="d-flex justify-content-between text-center mt-5" v-else>
           <evan-button
-            type="secondary"
             :href="activeStep === 0 ? 'https://evan.network' : ''"
-            @click="activeStep !== 0 && activeStep--">
+            @click="activeStep !== 0 && activeStep--"
+            class="mr-3"
+            type="secondary">
             <template v-if="activeStep === 0">{{ '_onboarding.back-to-website' | translate }}</template>
             <template v-else>{{ '_onboarding.back' | translate }}</template>
           </evan-button>
           <evan-button
-            type="primary"
             :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
-            @click="activeStep++">
+            @click="activeStep++"
+            class="btn-block"
+            type="primary">
             {{ '_onboarding.continue' | translate }}
           </evan-button>
         </div>

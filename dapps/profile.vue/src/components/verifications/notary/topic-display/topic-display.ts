@@ -24,9 +24,8 @@ import moment from 'moment';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { FileHandler, } from '@evan.network/ui';
+import { FileHandler, getUserAlias, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../../../dispatchers/registry';
 import ProfileMigrationLibrary from '../../../../lib/profileMigration';
@@ -275,10 +274,9 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     // try to load company name from profile registration container
     if (!this.companyName) {
       const runtime: bcc.Runtime = (<any>this).getRuntime();
-
-      this.companyName = (
-        await ProfileMigrationLibrary.loadProfileData(this, 'registration') || {}
-      ).company || runtime.activeAccount;
+      const profileDApp = (this as any).$store.state.profileDApp;
+      this.companyName = await getUserAlias(profileDApp.profile,
+        profileDApp.accountDetails) || runtime.activeAccount;
     }
 
     (this as any).$store.commit('toggleSidePanel', this.topic);

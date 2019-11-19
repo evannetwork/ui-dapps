@@ -48,7 +48,7 @@
         "company": {
           "error": "Bitte geben Sie einen Firmennamen ein!",
           "label": "Unternehmen",
-          "placeholder": "Evan GmbH"
+          "placeholder": "Muster GmbH"
         },
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
@@ -67,7 +67,7 @@
         "registerNumber": {
           "error": "Bitte geben Sie die Registernummer ein.",
           "label": "Registernummer",
-          "placeholder": "Registernummer des Unternehmens"
+          "placeholder": "HRA 12345"
         },
         "salesTaxID": {
           "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
