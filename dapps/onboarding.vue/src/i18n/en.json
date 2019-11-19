@@ -19,7 +19,7 @@
       "sign-up": {
         "company": {
           "0": {
-            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements. <ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li>",
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<br><br><b>Company</b><br>in order to be able to interact as a trustworthy company.<br><b>User</b><br>to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.",
             "title": "Registration in the evan.network"
           },
           "1": {
@@ -37,7 +37,7 @@
         },
         "user": {
           "0": {
-            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements. <ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li>",
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<br><br><b>Company</b><br>in order to be able to interact as a trustworthy company.<br><br><b>User</b><br>to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.",
             "title": "Registration in the evan.network"
           },
           "1": {
@@ -61,7 +61,7 @@
         },
         "3": {
           "desc": "In order to use the digital twin, you need to register free of charge in the evan.network. The blockchain technology enables trustful interactions in the network. Your data sovereignty is guaranteed.",
-          "title": "Transparency"
+          "title": "Welcome to the evan.network"
         }
       }
     },
@@ -124,8 +124,15 @@
         "status-2": "Encrypting user information...",
         "status-3": "Creating mailbox, address book, ...",
         "status-4": "Setting up verification management...",
-        "status-5": "Identity was successfully created...",
+        "status-5": "Identity was successfully created!",
         "title": "Create Account"
+      },
+      "create-profile-twin": {
+        "status-1": "Creating identity contract...",
+        "status-2": "Encrypting user information...",
+        "status-3": "Creating mailbox, address book...",
+        "status-4": "Creating Digital Twin...",
+        "status-5": "Digital Twin was successfully created!"
       },
       "desc": "Create your evan.network identity",
       "desc-long": "Generate your secure and independent identity on the evan.network. With the help of this identity, you can interact with business partners, contracts and companies. You can restore your identity on another device at any time using your generated recovery key and continue working.",

@@ -6,11 +6,11 @@
         "name": "Fahrrad"
       },
       "en": {
-        "description": "Twin that represents a bycicle within the real world. Includes technical specifications, information about the owner and a maintenance log.",
-        "name": "Bycicle"
+        "description": "Twin that represents a bicycle within the real world. Includes technical specifications, information about the owner and a maintenance log.",
+        "name": "Bicycle"
       }
     },
-    "name": "bycicle"
+    "name": "bicycle"
   },
   "plugins": {
     "maintenance": {
@@ -103,7 +103,7 @@
               "description": "Beschreiben Sie Ihr Fahrrad mit dessen Stammdaten",
               "name": "Eigenschaften",
               "properties": {
-                "bycicleType": {
+                "bicycleType": {
                   "label": "Typ",
                   "placeholder": "Mountainbike, Rennrad, City"
                 },
@@ -156,10 +156,10 @@
           },
           "en": {
             "characteristics": {
-              "description": "Describe your bycicle by it's specifications",
+              "description": "Describe your bicycle by it's specifications",
               "name": "Characteristics",
               "properties": {
-                "bycicleType": {
+                "bicycleType": {
                   "label": "Type",
                   "placeholder": "mountain bike, racing bike, city, ..."
                 },
@@ -181,7 +181,7 @@
                 }
               }
             },
-            "description": "Technical information of a bycicle and it's owner.",
+            "description": "Technical information of a bicycle and it's owner.",
             "name": "Specifications",
             "owner": {
               "description": "Details of the owner",
@@ -219,7 +219,7 @@
             "dataSchema": {
               "$id": "characteristics_schema",
               "properties": {
-                "bycicleType": {
+                "bicycleType": {
                   "type": "string"
                 },
                 "color": {

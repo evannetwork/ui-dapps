@@ -22,7 +22,7 @@
     <evan-onboarding-layout-wrapper
       type="sign-in"
       :step="activeStep"
-      :images="[ '10.svg', '13.png' ]">
+      :images="[ '10.svg', '13.svg' ]">
       <div class="evan-steps">
         <div class="step" v-if="activeStep === 0">
           <h4

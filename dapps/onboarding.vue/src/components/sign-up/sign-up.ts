@@ -474,10 +474,10 @@ export default class SignUp extends mixins(EvanComponent) {
   getLeftPanelImages() {
     switch (this.profileForm.accountType.value) {
       case 'company': {
-        return [ '7.svg', '8.svg', '9.svg', '13.png' ];
+        return [ '7.svg', '8.svg', '9.svg', '13.svg' ];
       }
       case 'user': {
-        return [ '7.svg', '4.png' ];
+        return [ '7.svg', '4.svg' ];
       }
     }
   }

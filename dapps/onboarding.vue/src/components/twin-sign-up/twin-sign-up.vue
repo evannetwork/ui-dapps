@@ -19,21 +19,35 @@
 
 <template>
   <div class="row h-100">
-    <evan-profile-creating
-      :activeStep="creatingProfile"
-      :maximumSteps="6"
-      :customSteps="{
-        5: {
-          picture: `${ $store.state.onboardingBaseUrl }/assets/creating_twin.png`,
-          text: $t('_onboarding.sign-up.twin.creating'),
-        },
-      }"
-      v-if="creatingProfile"
-    />
+    <div class="col-12 d-flex justify-content-center align-items-center"
+      v-if="creatingProfile">
+      <div>
+        <template v-if="creatingProfile < 6">
+          <div>
+            <img class="img-fluid"
+              style="max-width: 390px"
+              :src="`${ $store.state.onboardingBaseUrl }/assets/left-panel/${ images[creatingProfile - 1] }`">
+          </div>
+          <div style="height: 10px" class="mx-auto progress my-3 bg-white">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              :style="{width: `${(creatingProfile * 20)}%`}"
+            ></div>
+          </div>
+          <h5 class="font-weight-bold mt-5 text-center">
+            {{ `_onboarding.sign-up.create-profile-twin.status-${ creatingProfile}` | translate }}
+          </h5>
+        </template>
+        <div v-else class="h-100 d-flex align-items-center justify-content-center">
+          <evan-success></evan-success>
+        </div>
+      </div>
+    </div>
     <evan-onboarding-layout-wrapper v-else
       type="twin-sign-up"
       :step="activeStep"
-      :images="[ '1.svg', '2.svg', '3.svg', '13.png' ]">
+      :images="[ '1.svg', '2.svg', '3.svg', '13.svg' ]">
       <div>
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.twin.create' | translate }}
