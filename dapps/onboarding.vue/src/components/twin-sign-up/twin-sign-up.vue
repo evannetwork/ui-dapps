@@ -54,10 +54,10 @@
         </h4>
         <evan-steps class="text-center"
           :activeStep="activeStep"
-          :steps="steps"
+          :steps="twinSteps"
           @stepChange="activeStep = $event"
           minimal="true"
-          v-if="activeStep !== steps.length"
+          v-if="activeStep !== twinSteps.length"
         />
         <div v-if="activeStep === 0">
           <p class="text-center mt-3 mb-4">
@@ -75,10 +75,10 @@
           <div
             v-for="(step, index) in dataSetSteps()"
             :key="index"
-            :class="{ 'd-none': activeStep !== steps.indexOf(step) }">
+            :class="{ 'd-none': activeStep !== twinSteps.indexOf(step) }">
             <p class="text-center mt-3 mb-4"
-              v-if="steps[activeStep]">
-              {{ steps[activeStep].description }}
+              v-if="twinSteps[activeStep]">
+              {{ twinSteps[activeStep].description }}
             </p>
 
             <twin-data-set-form
@@ -90,7 +90,7 @@
             />
           </div>
         </template>
-        <div v-if="activeStep === steps.length">
+        <div v-if="activeStep === twinSteps.length">
           <p class="text-center mt-3 mb-4">
             {{ '_onboarding.sign-up.twin.steps.finish.desc' | translate }}
           </p>
@@ -133,7 +133,7 @@
             <template v-else>{{ '_onboarding.back' | translate }}</template>
           </evan-button>
           <evan-button
-            :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
+            :disabled="twinSteps[activeStep + 1] && twinSteps[activeStep + 1].disabled()"
             @click="activeStep++"
             class="btn-block"
             type="primary">

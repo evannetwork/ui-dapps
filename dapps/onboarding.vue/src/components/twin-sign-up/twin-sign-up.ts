@@ -84,6 +84,11 @@ export default class TwinSignUp extends mixins(SignUp) {
   images = [ '1.svg', '2.svg', '3.svg', '13.svg' ];
 
   /**
+   * All steps that should be displayed for creating the current twin.
+   */
+  twinSteps: Array<any> = [ ];
+
+  /**
    * Setup twin forms.
    */
   created() {
@@ -147,7 +152,7 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Render only the data set steps dynamically.
    */
   dataSetSteps() {
-    return this.steps.filter((step, index) => index !== 0);
+    return this.twinSteps.filter((step, index) => index !== 0);
   }
 
   /**
@@ -155,7 +160,7 @@ export default class TwinSignUp extends mixins(SignUp) {
    */
   twinTypeChange() {
     const creatingOrOnboarded = () => this.onboardedDialog;
-    this.steps = [
+    this.twinSteps = [
       {
         title: '_onboarding.sign-up.twin.steps.dbcp.title',
         disabled: () => creatingOrOnboarded(),
@@ -193,7 +198,7 @@ export default class TwinSignUp extends mixins(SignUp) {
             this.twinData[key] = this.twinData[key] || [ { }, { }, { } ];
           }
 
-          this.steps.push({
+          this.twinSteps.push({
             dataSetSpecs: {
               data: this.twinData[key],
               dataSchema: plugin.template.properties[dataSetName].dataSchema,
@@ -212,17 +217,6 @@ export default class TwinSignUp extends mixins(SignUp) {
           });
         }
       });
-
-    // this.steps.push({
-    //   title: '_onboarding.sign-up.twin.steps.finish.title',
-    //   disabled: () => {
-    //     if (!this.$refs.stepForm) {
-    //       return creatingOrOnboarded();
-    //     } else {
-    //       return creatingOrOnboarded() || !this.$refs.stepForm[this.$refs.stepForm.length - 1].isValid();
-    //     }
-    //   },
-    // });
   }
 
   /**
