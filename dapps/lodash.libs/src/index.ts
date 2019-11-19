@@ -21,6 +21,4 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 dappBrowser.System.map['lodash'] = `lodash.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
 // map the original ui path to ui.libs
-import lodash from './lodash';
-
-export default lodash;
+export * from './lodash';
