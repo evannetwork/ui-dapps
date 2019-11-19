@@ -36,12 +36,6 @@ export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, r
       bcc.lodash,
       accountDetails || await profile.getProfileProperty('accountDetails') || { }
     );
-
-    // for companies load directly the company name and disable edit mode
-    if (accountDetails.profileType === 'company') {
-      registration = registration || (await profile.getProfileProperty('registration'));
-      accountDetails.accountName = registration.company;
-    }
   } catch (ex) { }
 
   // load alias from addressbook, when it's not available
