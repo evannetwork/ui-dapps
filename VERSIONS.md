@@ -14,6 +14,8 @@
   - change terms of use and captcha checkbox
 - `addressbook.vue` (v3.1.2)
   - contact click redirects to profile detail
+- `mailbox.vue` (v3.1.2)
+  - fix open attachment for comKeys
 
 ### Deprecations
 

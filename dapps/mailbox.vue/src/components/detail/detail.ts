@@ -18,14 +18,10 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import attachmentDispatcher from '../../dispatchers/attachmentDispatcher';
 
@@ -146,12 +142,29 @@ export default class DetailComponent extends mixins(EvanComponent) {
         toOpen = attachment.fullPath;
       } else {
         let storeKey = attachment.storeKey || attachment.address;
-        // use storeKey as default value that should be opened
-        toOpen = `/${ storeKey }`;
+        if (storeKey) {
+          // use storeKey as default value that should be opened
+          toOpen = `/${ storeKey }`;
 
-        // when a bc was addes, open it including the bc
-        if (attachment.bc) {
-          toOpen = `/${ attachment.bc }${ toOpen }`;
+          // when a bc was addes, open it including the bc
+          if (attachment.bc) {
+            toOpen = `/${ attachment.bc }${ toOpen }`;
+          }
+        }
+      }
+
+      // if no opener was found, check for the specific type default redirects
+      if (!toOpen) {
+        const domainName: string = (this as any).dapp.domainName;
+        switch (attachment.type) {
+          case 'commKey': {
+            toOpen = [
+              `/dashboard.vue.${ domainName }`,
+              `profile.vue.${ domainName }`,
+              `${ this.mail.from }`
+            ].join('/');
+            break;
+          }
         }
       }
 
