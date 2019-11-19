@@ -23,6 +23,12 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
+import {PaymentServiceV3} from './paymentService';
+
+/// <reference path="stripe/stripe.d.ts" /> // TODO ?
+
+declare var Stripe: any;
+
 @Component({ })
 export default class WalletComponent extends mixins(EvanComponent) {
   payment_providers = [
@@ -30,5 +36,44 @@ export default class WalletComponent extends mixins(EvanComponent) {
     { value: '2', label: 'Paypal'},
     { value: '3', label: 'Blood'}
   ];
-  async created() {}
+
+  paymentService;
+
+  async created() {
+    // let ckeditor = document.createElement('script');
+
+    // ckeditor.setAttribute('src', 'https://js.stripe.com/v1/');
+    // document.head.appendChild(ckeditor);
+
+    const runtime = (this as any).getRuntime();
+
+    Stripe.setPublishableKey('pk_test_TYooMQauvdEDq54NiTphI7jx');
+    // const stripe = Stripe();
+
+    console.log(Stripe);
+
+    this.paymentService = new PaymentServiceV3(runtime);
+
+  }
+
+  amountChangeHandler(amount) {
+    this.paymentService.createPaymentIntent(amount, customer, Stripe, );
+  }
+
+  buyEve() {
+
+    const customer = this.paymentService.getCustomer({
+      name: 'karl',
+      email: 'adlerkarl@gmail.com',
+      company: 'evan',
+      street: 'Teststreet',
+      city:  'testcity',
+      zip: '42424',
+      country: 'de',
+      vat: '4242424242424242'
+    });
+
+    this.paymentService.pay(customer, 20);
+
+  }
 }

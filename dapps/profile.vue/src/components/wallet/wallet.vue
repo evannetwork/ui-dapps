@@ -10,6 +10,8 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 02110-1301 USA, or download the license from the following URL:
 https://evan.network/license/ */
 
+<script src="https://js.stripe.com/v3/"></script>
+
 <template>
   <div class="row">
     <div class="p-xxl-11 p-xl-6 p-3 col-12">
@@ -33,10 +35,10 @@ https://evan.network/license/ */
           </p>
         </div>
       </div>
-      <evan-swipe-panel
+      <!-- <evan-swipe-panel
         :alignment="'right'"
         :showBackdrop="true"
-      ></evan-swipe-panel>
+      ></evan-swipe-panel> -->
     </div>
     <evan-swipe-panel
       class="light"
@@ -81,6 +83,29 @@ https://evan.network/license/ */
           debited.
         </small>
       </p>
+
+      <div class="sr-root">
+        <div class="sr-main">
+          <form id="payment-form" class="sr-payment-form">
+            <div class="sr-combo-inputs-row">
+              <div class="sr-input sr-card-element" id="card-element"></div>
+            </div>
+            <div class="sr-field-error" id="card-errors" role="alert"></div>
+            <button id="submit">
+              <div class="spinner hidden" id="spinner"></div>
+              <span id="button-text">Pay</span><span id="order-amount"></span>
+            </button>
+          </form>
+          <div class="sr-result hidden">
+            <p>Payment completed<br /></p>
+            <pre>
+              <code></code>
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <button @click="buyEve">BUY</button>
 
       <div class="panel-footer" :class="{'relative': this.relative}">
         <evan-button type="secondary" :label="$t('_evan.cancel')" />
