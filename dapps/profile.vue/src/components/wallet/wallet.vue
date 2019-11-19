@@ -69,8 +69,16 @@ https://evan.network/license/ */
           :id="payment_provider"
           :options="payment_providers"
           :placeholder="$t('_evan.choose-here')"
+          @change="methodChangeHandler"
         ></evan-form-control-select>
       </div>
+
+      
+
+      <button @click="buyEve">BUY</button>
+
+      <div ref="card" id="card"></div>
+
 
       <p>
         <small>
@@ -83,9 +91,6 @@ https://evan.network/license/ */
           debited.
         </small>
       </p>
-
-      <button @click="buyEve">BUY</button>
-
       <!-- <div class="panel-footer" :class="{'relative': this.relative}">
         <evan-button type="secondary" :label="$t('_evan.cancel')" />
         <evan-button

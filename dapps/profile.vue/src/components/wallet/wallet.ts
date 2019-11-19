@@ -23,57 +23,82 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-import {PaymentServiceV3} from './paymentService';
+import { PaymentServiceV3 } from './paymentv3.service';
 
 /// <reference path="stripe/stripe.d.ts" /> // TODO ?
 
 declare var Stripe: any;
 
-@Component({ })
+@Component({})
 export default class WalletComponent extends mixins(EvanComponent) {
   payment_providers = [
-    { value: '1', label: 'SEPA Debit'},
-    { value: '2', label: 'Paypal'},
-    { value: '3', label: 'Blood'}
+    { value: 'sepa', label: 'SEPA Debit' },
+    { value: 'card', label: 'Card' },
+    { value: 'iban', label: 'IBAN' }
   ];
 
   paymentService;
 
-  async created() {
-    // let ckeditor = document.createElement('script');
+  // stripe = Stripe(`pk_test_TYooMQauvdEDq54NiTphI7jx`);
+  // elements = this.stripe.elements();
+  // card = undefined;
 
-    // ckeditor.setAttribute('src', 'https://js.stripe.com/v1/');
-    // document.head.appendChild(ckeditor);
+  private elementStyles = {
+    // TODO: evan styles
+    base: {
+      color: '#32325d',
+      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+      fontSmoothing: 'antialiased',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aab7c4'
+      }
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a'
+    }
+  };
 
+  created() {
     const runtime = (this as any).getRuntime();
 
-    Stripe.setPublishableKey('pk_test_TYooMQauvdEDq54NiTphI7jx');
-    // const stripe = Stripe();
+    // Stripe.setPublishableKey('pk_test_TYooMQauvdEDq54NiTphI7jx');
+    // // const stripe = Stripe();
 
-    console.log(Stripe);
+    // console.log(Stripe);
 
     this.paymentService = new PaymentServiceV3(runtime);
-
+    // this.paymentService.initStripe('pk_test_kpO3T5fXA7aaftg9D0OO0w3S');
   }
 
   amountChangeHandler(amount) {
-    this.paymentService.createPaymentIntent(amount, customer, Stripe, );
+    // this.paymentService.createPaymentIntent(amount, customer, Stripe);
   }
 
-  buyEve() {
+  methodChangeHandler(event: Event) {
+    // this.card = this.elements.create((<HTMLSelectElement>event.target).value, {
+    //   style: this.elementStyles
+    // });
+    // this.card.mount('#card');
+  }
 
+  async buyEve() {
+    // let token = await this.stripe.createToken(this.card);
     const customer = this.paymentService.getCustomer({
       name: 'karl',
       email: 'adlerkarl@gmail.com',
       company: 'evan',
-      street: 'Teststreet',
-      city:  'testcity',
+      street: 'Test street',
+      city:  'test city',
       zip: '42424',
       country: 'de',
       vat: '4242424242424242'
     });
+    const intent = this.paymentService.createPaymentIntent('10', customer)
 
-    this.paymentService.pay(customer, 20);
+    console.log(intent);
 
+    // this.paymentService.pay(customer, 20);
   }
 }
