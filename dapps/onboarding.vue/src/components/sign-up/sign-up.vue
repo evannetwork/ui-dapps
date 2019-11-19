@@ -56,20 +56,21 @@
 
           <!-- don't hide them, so formular validity checks will be done correctly -->
           <profile-company-contact
-            ref="companyContact"
-            onlyForm="true"
-            stacked="true"
             :address="address"
             :class="{ 'd-none': activeStep !== 1 }"
-            :data="userData.contact || { }">
+            :data="userData.contact || { }"
+            @countryChanged="userData.contact.country = $event;"
+            onlyForm="true"
+            ref="companyContact"
+            stacked="true">
           </profile-company-contact>
           <profile-company-registration
-            ref="companyRegistration"
-            onlyForm="true"
-            stacked="true"
             :address="address"
-            :class="{ 'd-none': activeStep !== 2 }"
-            :data="userData.registration || { }">
+            :class="{ 'd-none': activeStep !== 2 || activeStep === (steps.length - 1) }"
+            :data="userData.registration || { }"
+            onlyForm="true"
+            ref="companyRegistration"
+            stacked="true">
           </profile-company-registration>
         </div>
         <div v-if="activeStep === (steps.length - 1)">

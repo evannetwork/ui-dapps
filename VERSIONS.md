@@ -6,6 +6,7 @@
   - add onboarding with twin creation
   - add new images and texts to onboarding
   - new order for company profile creation
+  - hide company registration form in onboarding for non german companies
 
 ### Fixes
 - `profile.vue` (v3.5.1)

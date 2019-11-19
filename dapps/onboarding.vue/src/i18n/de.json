@@ -111,7 +111,8 @@
       "alias": {
         "error": "Bitte geben Sie einen Account-Namen an!",
         "hint": "Der Account-Name ist nur für Sie sichtbar.",
-        "label": "Account-Name",
+        "user": "Account-Name",
+        "company": "Unternehmens-Name",
         "placeholder": "John Doe | Beispiel Unternehmen GmbH"
       },
       "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",

@@ -101,7 +101,9 @@
             <profile-permission-wrapper entryName="contact">
               <profile-company-contact :address="address"></profile-company-contact>
             </profile-permission-wrapper>
-            <profile-permission-wrapper entryName="registration">
+            <profile-permission-wrapper
+              entryName="registration"
+              v-if="$store.state.profileDApp.data.contact.country === 'DE'">
               <profile-company-registration :address="address"></profile-company-registration>
             </profile-permission-wrapper>
           </template>

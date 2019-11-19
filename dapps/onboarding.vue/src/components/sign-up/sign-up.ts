@@ -74,11 +74,6 @@ export default class SignUp extends mixins(EvanComponent) {
   profileForm: ProfileFormInterface = null;
 
   /**
-   * Available steps represented by it's titles
-   */
-  steps: Array<any> = [ ];
-
-  /**
    * steps status configurations
    */
   activeStep = 0;
@@ -120,6 +115,9 @@ export default class SignUp extends mixins(EvanComponent) {
   userData: any = {
     accountDetails: {
       accountType: 'user'
+    },
+    contact: {
+      country: 'DE',
     }
   };
 
@@ -127,6 +125,58 @@ export default class SignUp extends mixins(EvanComponent) {
    * has the user accepted the terms of use?
    */
   termsAccepted = null;
+
+  /**
+   * Return the steps for the selected profile type and if it's a company, the
+   * selected country.
+   */
+  get steps() {
+    const creatingOrOnboarded = () => this.onboardedDialog;
+
+    // set if from the created function to keep the correct disabled function context
+    const steps = [
+      {
+        title: '_onboarding.sign-up.steps.base.title',
+        disabled: () => creatingOrOnboarded(),
+      },
+    ];
+
+    if (this.profileForm && this.profileForm.accountType.value === 'company') {
+      // data company specific steps
+      steps.push({
+        title: '_onboarding.sign-up.steps.company.contact.title',
+        disabled: () => creatingOrOnboarded() || !this.profileForm.isValid,
+      });
+      if (this.userData.contact.country === 'DE') {
+        steps.push({
+          title: '_onboarding.sign-up.steps.company.registration.title',
+          disabled: () => creatingOrOnboarded() ||
+            this.$refs.companyContact && !this.$refs.companyContact.form.isValid,
+        });
+      }
+    }
+
+    // add finishing step
+    steps.push({
+      title: '_onboarding.sign-up.steps.captcha.title',
+      disabled: () => {
+        if (creatingOrOnboarded()) {
+          return true;
+        }
+
+        switch (this.profileForm.accountType.value) {
+          case 'company': {
+            return this.$refs.companyRegistration && !this.$refs.companyRegistration.form.isValid;
+          }
+          default: {
+            return !this.profileForm.isValid;
+          }
+        }
+      },
+    });
+
+    return steps;
+  }
 
   async created() {
     const uiSpecs = { attr: { required: true, } };
@@ -143,17 +193,19 @@ export default class SignUp extends mixins(EvanComponent) {
           },
           type: 'select'
         },
-        validate: () => {
-          this.setSteps();
-          return true;
-        },
       },
       alias: {
         value: '',
         validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
           return this.value.length !== 0;
         },
-        uiSpecs: { attr: { hint: true, required: true, } },
+        uiSpecs: {
+          attr: {
+            hint: true,
+            required: true,
+          },
+          label: () => this.$t(`_onboarding.sign-up.alias.${ this.profileForm.accountType.value }`),
+        },
       },
       password0: {
         value: '',
@@ -172,9 +224,6 @@ export default class SignUp extends mixins(EvanComponent) {
     }));
 
     this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
-
-    // update onboarding progress steps
-    this.setSteps();
 
     // if the user was inivted, show the welcome page
     if (this.$route.query.inviteeAlias) {
@@ -393,56 +442,6 @@ export default class SignUp extends mixins(EvanComponent) {
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
     window.location.hash = `/${ (this as any).$route.query.origin || getDefaultDAppEns() }`;
-  }
-
-  /**
-   * Update step definitions according to the current selected profile type
-   */
-  setSteps() {
-    const creatingOrOnboarded = () => this.onboardedDialog;
-
-    // set if from the created function to keep the correct disabled function context
-    const steps = [
-      {
-        title: '_onboarding.sign-up.steps.base.title',
-        disabled: () => creatingOrOnboarded(),
-      },
-    ];
-
-    if (this.profileForm && this.profileForm.accountType.value === 'company') {
-      // data company specific steps
-      steps.push({
-        title: '_onboarding.sign-up.steps.company.contact.title',
-        disabled: () => creatingOrOnboarded() ||
-          (this.$refs.companyRegistration && !this.$refs.companyRegistration.form.isValid),
-      });
-      steps.push({
-        title: '_onboarding.sign-up.steps.company.registration.title',
-        disabled: () => creatingOrOnboarded() || !this.profileForm.isValid,
-      });
-    }
-
-    // add finishing step
-    steps.push({
-      title: '_onboarding.sign-up.steps.captcha.title',
-      disabled: () => {
-        if (creatingOrOnboarded()) {
-          return true;
-        }
-
-        switch (this.profileForm.accountType.value) {
-          case 'company': {
-            return this.$refs.companyContact && !this.$refs.companyContact.form.isValid;
-          }
-          default: {
-            return !this.profileForm.isValid;
-          }
-        }
-      },
-    });
-
-    // update final steps
-    this.steps = steps;
   }
 
   /**
