@@ -21,7 +21,13 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 import * as bcc from '@evan.network/api-blockchain-core';
 
-import { StatusInterface, CustomerInterface, OptionsInterface, VatValidationInterface } from './interfaces';
+import {
+  StatusInterface,
+  CustomerInterface,
+  OptionsInterface,
+  VatValidationInterface,
+  CustomerParams
+} from './interfaces';
 
 export class PaymentService {
   private static PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
@@ -40,7 +46,11 @@ export class PaymentService {
    * @param stripe
    * @param agentUrl
    */
-  constructor(stripe: any, runtime: any, agentUrl = 'https://agents.test.evan.network/api') {
+  constructor(
+    stripe: any,
+    runtime: any,
+    agentUrl = 'https://agents.test.evan.network/api'
+  ) {
     this.agentUrl = agentUrl;
     this.stripe = stripe;
     this.runtime = runtime;
@@ -67,18 +77,26 @@ export class PaymentService {
    * @param amount
    * @param customer
    */
-  private async checkStatus(id: string, amount: number, customer: any): Promise<StatusInterface> {
-    const { data: { status, code } } = await axios.post(
-      `${this.agentUrl}/smart-agents/payment-processor/executePayment`, {
-      token: id,
-      amount,
-      customer,
-      requestId: this.requestId
-    }, {
-      headers: {
-        authorization: await this.getAuthHeaders()
+  private async checkStatus(
+    id: string,
+    amount: number,
+    customer: any
+  ): Promise<StatusInterface> {
+    const {
+      data: { status, code }
+    } = await axios.post(
+      `${this.agentUrl}/smart-agents/payment-processor/executePayment`,
+      {
+        token: id,
+        amount,
+        customer,
+        requestId: this.requestId
+      },
+      {
+        headers: {
+          authorization: await this.getAuthHeaders()
+        }
       }
-    }
     );
 
     return { status, code };
@@ -108,7 +126,11 @@ export class PaymentService {
    * @param customer
    * @param headers
    */
-  private async getStatus(id: string, amount: number, customer: any): Promise<StatusInterface> {
+  private async getStatus(
+    id: string,
+    amount: number,
+    customer: any
+  ): Promise<StatusInterface> {
     return new Promise((resolve, reject) => {
       this.intervalTimer = setInterval(async () => {
         const response = await this.checkStatus(id, amount, customer);
@@ -144,11 +166,15 @@ export class PaymentService {
    * @param      {object}  customer  the customer object
    * @return     {promise}  resolved when done
    */
-  private async executePayment(id: string, amount: number, customer: any): Promise<StatusInterface> {
+  private async executePayment(
+    id: string,
+    amount: number,
+    customer: any
+  ): Promise<StatusInterface> {
     // return the first resolving promise
     return Promise.race([
       this.getStatus(id, amount, customer),
-      new Promise<StatusInterface>((resolve) =>
+      new Promise<StatusInterface>(resolve =>
         setTimeout(() => {
           clearInterval(this.intervalTimer);
           resolve({
@@ -167,7 +193,10 @@ export class PaymentService {
    * @param customer
    * @param param1
    */
-  createStripeSourceData(customer, { type = 'card', currency = 'eur', notification_method = 'email' } = {}) {
+  createStripeSourceData(
+    customer,
+    { type = 'card', currency = 'eur', notification_method = 'email' } = {}
+  ) {
     const usageTypes = {
       card: 'single_use',
       sepa_debit: 'reusable'
@@ -183,8 +212,8 @@ export class PaymentService {
       usage: usageTypes[type],
       mandate: {
         // Automatically send a mandate notification to your customer once the source is charged.
-        notification_method,
-      },
+        notification_method
+      }
     };
   }
 
@@ -195,9 +224,15 @@ export class PaymentService {
    * @param eveAmount - desired amount of EVE.
    * @param options - optional object to overwrite certain stripe options. @see: createStripeSourceData()
    */
-  async buyEve(customer: CustomerInterface, eveAmount: number, options?: OptionsInterface): Promise<StatusInterface> {
+  async buyEve(
+    customer: CustomerInterface,
+    eveAmount: number,
+    options?: OptionsInterface
+  ): Promise<StatusInterface> {
     if (!this.stripe) {
-      throw new Error('Stripe was not initialized, can not start payment process');
+      throw new Error(
+        'Stripe was not initialized, can not start payment process'
+      );
     }
 
     const sourceData = this.createStripeSourceData(customer, options);
@@ -211,7 +246,9 @@ export class PaymentService {
     }
 
     if (!source) {
-      throw new Error('Received neither `source` nor `error` from stripe createSource().');
+      throw new Error(
+        'Received neither `source` nor `error` from stripe createSource().'
+      );
     }
 
     return await this.executePayment(source.id, eveAmount, customer);
@@ -223,10 +260,17 @@ export class PaymentService {
    * @param country
    * @param vat
    */
-  private async requestVatValidation(country: string, vat?: string): Promise<VatValidationInterface> {
+  private async requestVatValidation(
+    country: string,
+    vat?: string
+  ): Promise<VatValidationInterface> {
     const requestUrl = `${this.agentUrl}/smart-agents/payment-processor/checkVat`;
     const params = { country, vat };
-    const { data: { result: { isValidVat, tax, error } } } = await axios.get(requestUrl, { params });
+    const {
+      data: {
+        result: { isValidVat, tax, error }
+      }
+    } = await axios.get(requestUrl, { params });
 
     if (error) {
       throw new Error(`Problem validation VAT Tax-ID: ${error}`);
@@ -240,7 +284,10 @@ export class PaymentService {
    *
    * @param vat
    */
-  async validateVat(country: string, vat: string): Promise<VatValidationInterface> {
+  async validateVat(
+    country: string,
+    vat: string
+  ): Promise<VatValidationInterface> {
     return debounce(() => this.requestVatValidation(country, vat), 500);
   }
 
@@ -248,20 +295,15 @@ export class PaymentService {
    * Create customer object from given fields.
    *
    * @param customer
-   * - name
-   * - email
-   * - company
-   * - street
-   * - city
-   * - zip
-   * - country
-   * - vat
    */
-  getCustomer({ name, email, company, street, city, zip, country, vat }): CustomerInterface {
-    const tax_info = vat ? {
-      tax_id: vat,
-      type: 'vat'
-    } : undefined;
+  getCustomer(customer: CustomerParams): CustomerInterface {
+    const { name, email, company, street, city, zip, country, vat } = customer;
+    const tax_info = vat
+      ? {
+          tax_id: vat,
+          type: 'vat'
+        }
+      : undefined;
 
     return {
       email,
@@ -272,15 +314,13 @@ export class PaymentService {
           country,
           line1: company || name,
           line2: street,
-          postal_code: zip,
+          postal_code: zip
         }
       },
       tax_info
     };
   }
 }
-
-
 
 /**
  * TODO: v3 version!
@@ -298,19 +338,20 @@ export class PaymentServiceV3 {
   private authorization;
   private runtime;
 
-  private elementStyles = { // TODO: evvan styles
+  private elementStyles = {
+    // TODO: evvan styles
     base: {
-      color: "#32325d",
+      color: '#32325d',
       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSmoothing: "antialiased",
-      fontSize: "16px",
-      "::placeholder": {
-        color: "#aab7c4"
+      fontSmoothing: 'antialiased',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aab7c4'
       }
     },
     invalid: {
-      color: "#fa755a",
-      iconColor: "#fa755a"
+      color: '#fa755a',
+      iconColor: '#fa755a'
     }
   };
 
@@ -332,23 +373,35 @@ export class PaymentServiceV3 {
    * @param amount
    * @param customer
    */
-  public async createPaymentIntent(amount: number, customer: any, Stripe: any): Promise<any> {
-    const { data: { publishableKey, clientSecret } } = await axios.post(
-      `${this.agentUrl}/smart-agents/payment-processor/createPaymentIntent`, {
-      amount,   // amount in EVE
-      customer, // customer data necessary for calculating VAT and stuff...
-    }, {
-      headers: {
-        authorization: await this.getAuthHeaders()
+  public async createPaymentIntent(
+    amount: number,
+    customer: any,
+    Stripe: any
+  ): Promise<any> {
+    const {
+      data: { publishableKey, clientSecret }
+    } = await axios.post(
+      `${this.agentUrl}/smart-agents/payment-processor/createPaymentIntent`,
+      {
+        amount, // amount in EVE
+        customer // customer data necessary for calculating VAT and stuff...
+      },
+      {
+        headers: {
+          authorization: await this.getAuthHeaders()
+        }
       }
-    }
     );
 
     // Set up Stripe.js and Elements to use in checkout form
     return this.setupElements(publishableKey, clientSecret, Stripe);
   }
 
-  private setupElements(publishableKey: string, clientSecret: string, Stripe: any) {
+  private setupElements(
+    publishableKey: string,
+    clientSecret: string,
+    Stripe: any
+  ) {
     this.stripe = Stripe(publishableKey);
 
     const elements = this.stripe.elements();
@@ -356,7 +409,7 @@ export class PaymentServiceV3 {
     // TODO: card vs sepa
     const card = elements.create('card', { style: this.elementStyles });
     const sepa = elements.create('sepa...?', { style: this.elementStyles });
-    card.mount("#card-element"); // TODO: call in FE
+    card.mount('#card-element'); // TODO: call in FE
 
     return {
       stripe: this.stripe,
@@ -382,32 +435,30 @@ export class PaymentServiceV3 {
   }
 
   /*
-  * Calls stripe.confirmCardPayment which creates a pop-up modal to
-  * prompt the user to enter extra authentication details without leaving your page
-  */
+   * Calls stripe.confirmCardPayment which creates a pop-up modal to
+   * prompt the user to enter extra authentication details without leaving your page
+   */
   pay(stripe, card, clientSecret, method = 'card') {
-
     // Initiate the payment.
     // If authentication is required, confirmCardPayment will automatically display a modal
-    return stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card // TODO
-        }
-      });
-      // .then(function (result) {
-      //   if (result.error) {
-      //     // Show error to your customer
-      //     showError(result.error.message); // TODO return
-      //   } else {
-      //     // The payment has been processed!
-      //     orderComplete(clientSecret);
-      //   }
-      // });
+    return stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card // TODO
+      }
+    });
+    // .then(function (result) {
+    //   if (result.error) {
+    //     // Show error to your customer
+    //     showError(result.error.message); // TODO return
+    //   } else {
+    //     // The payment has been processed!
+    //     orderComplete(clientSecret);
+    //   }
+    // });
   }
 
   orderComplete(clientSecret) {
-    return this.stripe.retrievePaymentIntent(clientSecret);  // TODO: check success in UI, disable loading state
+    return this.stripe.retrievePaymentIntent(clientSecret); // TODO: check success in UI, disable loading state
   }
 
   /**
@@ -423,11 +474,22 @@ export class PaymentServiceV3 {
    * - country
    * - vat
    */
-  getCustomer({ name, email, company, street, city, zip, country, vat }): CustomerInterface {
-    const tax_info = vat ? {
-      tax_id: vat,
-      type: 'vat'
-    } : undefined;
+  getCustomer({
+    name,
+    email,
+    company,
+    street,
+    city,
+    zip,
+    country,
+    vat
+  }): CustomerInterface {
+    const tax_info = vat
+      ? {
+          tax_id: vat,
+          type: 'vat'
+        }
+      : undefined;
 
     return {
       email,
@@ -438,7 +500,7 @@ export class PaymentServiceV3 {
           country,
           line1: company || name,
           line2: street,
-          postal_code: zip,
+          postal_code: zip
         }
       },
       tax_info

@@ -84,36 +84,15 @@ https://evan.network/license/ */
         </small>
       </p>
 
-      <div class="sr-root">
-        <div class="sr-main">
-          <form id="payment-form" class="sr-payment-form">
-            <div class="sr-combo-inputs-row">
-              <div class="sr-input sr-card-element" id="card-element"></div>
-            </div>
-            <div class="sr-field-error" id="card-errors" role="alert"></div>
-            <button id="submit">
-              <div class="spinner hidden" id="spinner"></div>
-              <span id="button-text">Pay</span><span id="order-amount"></span>
-            </button>
-          </form>
-          <div class="sr-result hidden">
-            <p>Payment completed<br /></p>
-            <pre>
-              <code></code>
-            </pre>
-          </div>
-        </div>
-      </div>
-
       <button @click="buyEve">BUY</button>
 
-      <div class="panel-footer" :class="{'relative': this.relative}">
+      <!-- <div class="panel-footer" :class="{'relative': this.relative}">
         <evan-button type="secondary" :label="$t('_evan.cancel')" />
         <evan-button
           type="primary"
           :label="$t('_evan.sharing.update')"
         />
-      </div>
+      </div> -->
     </evan-swipe-panel>
     <!-- <div class="col-xl-4 col-xxl-3 wallet-side-panel light">
       <h1>Buy EVEs</h1>
