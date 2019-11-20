@@ -89,6 +89,11 @@
               :dataSetName="step.dataSetSpecs.dataSetName"
               :description="step.dataSetSpecs.description"
             />
+
+            <p class="d-block text-center mb-4 text-muted font-italic"
+              v-if="twinSteps[activeStep]">
+              {{ '_onboarding.sign-up.twin.further-changes' | translate }}
+            </p>
           </div>
         </template>
         <div v-if="activeStep === twinSteps.length">

@@ -109,11 +109,11 @@
       },
       "agree": "Akzeptieren",
       "alias": {
+        "company": "Unternehmens-Name",
         "error": "Bitte geben Sie einen Account-Namen an!",
         "hint": "Der Account-Name ist nur für Sie sichtbar.",
-        "user": "Account-Name",
-        "company": "Unternehmens-Name",
-        "placeholder": "John Doe | Beispiel Unternehmen GmbH"
+        "placeholder": "John Doe | Beispiel Unternehmen GmbH",
+        "user": "Account-Name"
       },
       "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
@@ -202,20 +202,21 @@
           "name": {
             "error": "Bitte geben Sie einen Namen an!",
             "label": "Name",
-            "placeholder": "Wie soll Ihr Twin heißen?"
+            "placeholder": "Wie soll Ihr Digitaler Zwilling heißen?"
           },
           "type": {
             "label": "Type"
           }
         },
         "empty-field": "Bitte füllen Sie das Feld {label} aus!",
+        "further-changes": "Änderungen sind nach der Erstellung möglich.",
         "steps": {
           "dbcp": {
             "desc": "Wählen Sie einen Typ für Ihren Digitalen Zwilling und vergeben Sie einen Namen.",
             "title": "Generelle Informationen"
           },
           "finish": {
-            "desc": "Für Ihren Zugang zu Ihrem Digital Twin benötigen wir einen Alias und ein Passwort.",
+            "desc": "Für Ihren Zugang zu Ihrem Digitaler Zwilling benötigen wir einen Alias und ein Passwort.",
             "title": "Benutzerinformationen"
           },
           "list": {
@@ -223,8 +224,8 @@
             "title": "Historie / Protokolle"
           },
           "metadata": {
-            "desc": "Beschreiben Sie Ihren Digital Twin anhand seiner Spezifikationen.",
-            "title": "Twin-Spezifikationen"
+            "desc": "Beschreiben Sie Ihren Digitaler Zwilling anhand seiner Spezifikationen.",
+            "title": "Digitaler Zwilling-Spezifikationen"
           }
         }
       },

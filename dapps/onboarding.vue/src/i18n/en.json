@@ -109,11 +109,11 @@
       },
       "agree": "Agree",
       "alias": {
+        "company": "Company name",
         "error": "Please enter a account name!",
         "hint": "The account name is only visible to you.",
-        "user": "Account name",
-        "company": "Company name",
-        "placeholder": "John Doe | Sample Company Inc."
+        "placeholder": "John Doe | Sample Company Inc.",
+        "user": "Account name"
       },
       "already-signed-up": "Have an account already? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Cancel",
@@ -209,6 +209,7 @@
           }
         },
         "empty-field": "Please insert a value for {label}!",
+        "further-changes": "Changes are possible after possible afterwards.",
         "steps": {
           "dbcp": {
             "desc": "Choose a type and give your Digital Twin a name.",
