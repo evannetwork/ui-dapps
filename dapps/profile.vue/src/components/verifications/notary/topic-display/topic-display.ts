@@ -24,7 +24,7 @@ import moment from 'moment';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { FileHandler, getUserAlias, } from '@evan.network/ui';
+import { FileHandler, bccUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import * as dispatchers from '../../../../dispatchers/registry';
@@ -275,7 +275,7 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     if (!this.companyName) {
       const runtime: bcc.Runtime = (<any>this).getRuntime();
       const profileDApp = (this as any).$store.state.profileDApp;
-      this.companyName = await getUserAlias(profileDApp.profile,
+      this.companyName = await bccUtils.getUserAlias(profileDApp.profile,
         profileDApp.accountDetails) || runtime.activeAccount;
     }
 

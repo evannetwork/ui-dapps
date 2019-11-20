@@ -24,7 +24,7 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { getUserAlias, } from '@evan.network/ui';
+import { bccUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 // internal
@@ -216,7 +216,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     this.approveData = [
       {
         label: (<any>this).$i18n.translate('_profile.company.registration.company.label'),
-        value: await getUserAlias(profileDApp.profile, profileDApp.accountDetails),
+        value: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
       },
       {
         label: (<any>this).$i18n.translate('_profile.company.contact.country.label'),
@@ -341,7 +341,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationEvanId: (<any>this).getRuntime().activeAccount,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
-      organizationName: await getUserAlias(profileDApp.profile, profileDApp.accountDetails),
+      organizationName: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
       organizationStreetAddress: this.companyData.contact.streetAndNumber,
       organizationZipCode: this.companyData.contact.postalCode,
     };

@@ -223,11 +223,6 @@ export default class SignUp extends mixins(EvanComponent) {
       },
     }));
 
-    this.profileForm.accountType.value = 'company';
-    this.profileForm.alias.value = 'test';
-    this.profileForm.password0.value = 'Evan1234';
-    this.profileForm.password1.value = 'Evan1234';
-
     this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
 
     // if the user was inivted, show the welcome page

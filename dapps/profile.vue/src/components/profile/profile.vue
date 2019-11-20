@@ -23,10 +23,11 @@
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div class="row">
-        <div class="col-xl-8 mb-3">
+        <div class="col left-col mb-3">
           <profile-permission-wrapper entryName="accountDetails">
             <div class="d-flex align-items-center">
               <evan-profile-preview
+                class="w-100"
                 ref="profilePreview"
                 size="lg"
                 :accountDetails="userInfo"
@@ -47,7 +48,7 @@
             </div>
           </profile-permission-wrapper>
         </div>
-        <div class="col-xl-4">
+        <div class="col right-col d-flex justify-content-end">
           <evan-wallet
             :accountDetails="userInfo"
             :address="$route.params.address"
@@ -56,7 +57,7 @@
       </div>
 
       <div class="row" v-if="userInfo">
-        <div class="col-xl-8 mt-3">
+        <div class="col left-col mt-3">
           <div class="text-center" v-if="userInfo.profileType === 'user'">
             <template v-if="this.isLoading()">
               <evan-loading></evan-loading>
@@ -112,7 +113,7 @@
             <profile-device-detail :address="address"></profile-device-detail>
           </profile-permission-wrapper>
         </div>
-        <div class="col-xl-4">
+        <div class="col right-col">
           <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
               icon="mdi mdi-plus"
