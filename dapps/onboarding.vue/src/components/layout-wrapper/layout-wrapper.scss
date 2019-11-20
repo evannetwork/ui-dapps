@@ -34,10 +34,6 @@
     width: 120px;
   }
 
-  img.desc-banner {
-    max-width: 300px;
-  }
-
   .left-panel {
     display: none;
     flex-direction: row;
@@ -46,6 +42,19 @@
 
     @media (min-width: 992px) {
       display: grid;
+    }
+
+    .banner-wrapper {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      min-height: 640px;
+      margin-bottom: 2em;
+
+      img {
+        max-width: 100%;
+      }
     }
 
     h3 {

@@ -50,4 +50,24 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
    * List of image names, that should be displayed on which step.
    */
   @Prop() images: Array<string>;
+
+  /**
+   * Special image size definitions for the left-panel images.
+   */
+  imageSizes = {
+    '1.svg': 'width: 292px; margin-bottom: 84px; margin-left: -4px;',
+    '2.svg': 'width: 292px; margin-bottom: 81px; margin-left: -3px;',
+    '3.svg': 'width: 282px; margin-bottom: 132px; margin-left: -1px;',
+    '4.svg': 'width: 282px; margin-bottom: 132px; margin-left: -1px;',
+    '5.svg': 'width: 282px; margin-bottom: 132px; margin-left: -1px;',
+    '6.svg': 'width: 643px; margin- bottom: 7px; margin-left: -1px;',
+    '7.svg': 'width: 246.1px; margin-bottom: 101px; margin-left: 3px;',
+    '8.svg': 'width: 246.1px; margin-bottom: 101px; margin-left: 3px;',
+    '9.svg': 'height: 535px; margin-bottom: 93px;',
+    '10.svg': 'width: 249px; margin-bottom: 108px; margin-left: 3px;',
+    '11.svg': 'width: 292px; margin-bottom: 84px; margin-left: -5px;',
+    '12.svg': 'width: 292px; margin-bottom: 85px; margin-left: 14px;',
+    '13.svg': 'height: 630px;',
+    '14.svg': 'width: 246.1px; margin-bottom: 101px; margin-left: 3px;;',
+  };
 }

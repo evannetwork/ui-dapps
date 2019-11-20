@@ -22,10 +22,13 @@
     <div class="col col-lg-6 left-panel">
       <img class="evan-logo"
         :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
-      <div class="d-flex h-100 align-items-center justify-content-center">
+      <div class="h-100">
         <div class="w-100">
-          <div class="mb-5 text-center">
-            <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`">
+          <div class="banner-wrapper">
+            <img
+              class="desc-banner"
+              :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`"
+              :style="imageSizes[images[step]]">
           </div>
           <h2 class="mx-8 mb-2 font-weight-bold text-dark" >
             {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}

@@ -42,7 +42,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * current mnemonic value as text
    */
   mnemonic = '';
-
+  
   /**
    * use to cancel riddle
    */
@@ -222,6 +222,11 @@ export default class SignUp extends mixins(EvanComponent) {
         uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
       },
     }));
+
+    this.profileForm.accountType.value = 'company';
+    this.profileForm.alias.value = 'test';
+    this.profileForm.password0.value = 'Evan1234';
+    this.profileForm.password1.value = 'Evan1234';
 
     this.termsAccepted = new EvanFormControl('termsAccepted', false, this);
 
