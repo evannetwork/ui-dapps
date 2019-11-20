@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div>
+  <div class="my-3">
     <div class="d-flex justify-content-center">
       <div class="terms-of-use">
         <evan-form-control-checkbox
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-center mb-3">
+    <div class="d-flex justify-content-center">
       <vue-recaptcha id="evan-recaptcha"
         v-if="!signUpComp.initialzing"
         ref="recaptcha"

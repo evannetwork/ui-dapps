@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="d-flex flex-wrap flex-row justify-content-between">
+  <div class="d-flex flex-wrap flex-row justify-content-between my-3">
     <div class="row w-100 m-0"
       v-if="Array.isArray(data)">
       <div class="array-header"
@@ -27,7 +27,7 @@
         {{ getTranslationFromDBCP(`${ dataSetName }.properties.${ key }.label`) }}
       </div>
     </div>
-    <div class="w-100 mt-3">
+    <div class="w-100">
       <evan-form
         class="w-100"
         v-for="(form) in forms"
