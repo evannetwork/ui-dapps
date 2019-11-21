@@ -94,6 +94,14 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    */
   listeners: Array<any> = [];
 
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize);
+    (<any>this).$store.state.uiState.swipePanel = '';
+
+    // clear dispatcher listeners
+    this.listeners.forEach(listener => listener());
+  }
+
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
     if (this.windowWidth >= 1200) {
@@ -139,6 +147,10 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   }
 
   async created() {
+    // set the update permission and always pass the current vue context into it, so it can use the
+    // vuex translate service
+    this.updatePermissions = updatePermissions.bind(null, this);
+
     // watch for permission updates
     this.listeners.push(dispatchers.shareProfileDispatcher.watch(async ($event: any) => {
       // set isLoading state to corresponding list elements
@@ -154,27 +166,22 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
         accountIds.forEach(item => this.isLoadingContacts.delete(item));
+        this.loading = true;
+        // Gets the profile permissions.
         this.sharedContacts = await getProfilePermissions((<any>this));
+        this.loading = false;
       }
-
-      // set the update permission and always pass the current vue context into it, so it can use the
-      // vuex translate service
-      this.updatePermissions = updatePermissions.bind(null, this);
     }));
 
+    // bind window resize listeners, so the side panel can be pinned to the right side on large
+    // devices and toggled on small devices
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
+    // load shared contacts
     this.sharedContacts = await getProfilePermissions((<any>this));
 
     this.loading = false;
-  }
-
-  beforeDestroy() {
-    window.removeEventListener('resize', this.handleWindowResize);
-
-    // clear dispatcher listeners
-    this.listeners.forEach(listener => listener());
   }
 
   /**

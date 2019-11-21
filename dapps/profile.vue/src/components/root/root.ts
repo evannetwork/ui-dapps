@@ -123,7 +123,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     }
 
     // load container data
-    if (profile.profileContainer && profileDApp.description) {
+    if (profile.profileContainer && profileDApp.description && profileDApp.description.dataSchema) {
       // load permissions
       const { readWrite, read } = await profile.profileContainer.getContainerShareConfigForAccount(
         activeAccount);

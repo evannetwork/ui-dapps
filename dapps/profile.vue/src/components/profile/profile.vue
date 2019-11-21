@@ -18,7 +18,6 @@
 */
 
 <template>
-
   <div class="profile-detail p-xxl-11 p-xl-6 p-3">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
@@ -139,13 +138,13 @@
         </div>
       </div>
       <evan-swipe-panel
-        class="light"
+        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+        @hide="$store.state.uiState.swipePanel = ''"
         alignment="right"
+        class="light"
         ref="shareSidebar"
         showBackdrop="true"
         type="default"
-        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
-        @hide="$store.state.uiState.swipePanel = ''"
         v-if="userInfo"
       >
         <evan-permissions-editor
