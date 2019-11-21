@@ -90,9 +90,9 @@ export default class WalletComponent extends mixins(EvanComponent) {
       city: 'test city',
       zip: '42424',
       country: 'de',
-      vat: '4242424242424242'
+      vat: 'DE145146812'
     });
-    const source = await this.paymentService.buyEve(customer, 10, this.card);
+    const source = await this.paymentService.buyEve(customer, '10', this.card);
 
     console.log(source);
 

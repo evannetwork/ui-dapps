@@ -22,13 +22,14 @@ import { debounce } from 'lodash';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import {
-  StatusInterface,
+  ErrorStatus,
   CustomerInterface,
   OptionsInterface,
   VatValidationInterface,
-  CustomerParams,
-  StripeSource
+  CustomerParams  
 } from './interfaces';
+import { StatusResponse } from './StatusResponse.interface';
+import { StripeSource } from './StripeSource.interface';
 
 declare var Stripe: any;
 
@@ -102,10 +103,10 @@ export class PaymentService {
    */
   async buyEve(
     customer: CustomerInterface,
-    eveAmount: number,
+    eveAmount: string,
     card: any,
     options?: OptionsInterface
-  ): Promise<StatusInterface> {
+  ): Promise<StatusResponse | ErrorStatus> {
     if (!this.stripe) {
       throw new Error(
         'Stripe was not initialized, can not start payment process'
@@ -140,27 +141,26 @@ export class PaymentService {
    */
   private async checkStatus(
     id: string,
-    amount: number,
+    amount: string,
     customer: any
-  ): Promise<StatusInterface> {
-    const {
-      data: { status, code }
-    } = await axios.post(
-      `${this.agentUrl}/smart-agents/payment-processor/executePayment`,
-      {
-        token: id,
-        amount,
-        customer,
-        requestId: this.requestId
-      },
-      {
-        headers: {
-          authorization: await this.getAuthHeaders()
+  ): Promise<StatusResponse> {
+    return new Promise(async(resolve) => {
+      const res = await axios.post<StatusResponse>(
+        `${this.agentUrl}/smart-agents/payment-processor/executePayment`,
+        {
+          token: id,
+          amount,
+          customer,
+          requestId: this.requestId
+        },
+        {
+          headers: {
+            authorization: await this.getAuthHeaders()
+          }
         }
-      }
-    );
-
-    return { status, code };
+      );
+      resolve(res.data);
+    })
   }
 
   /**
@@ -189,31 +189,29 @@ export class PaymentService {
    */
   private async getStatus(
     id: string,
-    amount: number,
+    amount: string,
     customer: any
-  ): Promise<StatusInterface> {
+  ): Promise<StatusResponse> {
     return new Promise((resolve, reject) => {
       this.intervalTimer = setInterval(async () => {
-        const response = await this.checkStatus(id, amount, customer);
+        const response = await this.checkStatus(id, amount, customer); 
 
+        console.log('this.requestId', this.requestId);
+        console.log('response', response);
+        
         switch (response.status) {
-          case 'error': {
+          case 'error':
             clearInterval(this.intervalTimer);
             reject(response);
-
-            break;
-          }
-          case 'new': {
+            break;        
+          case 'new':
             this.requestId = response.result;
-            break;
-          }
+            break;          
           case 'transferring':
-          case 'success': {
+          case 'success':
             clearInterval(this.intervalTimer);
             resolve(response);
-
-            break;
-          }
+            break;          
         }
       }, PaymentService.PAYMENT_RETRY);
     });
@@ -229,13 +227,13 @@ export class PaymentService {
    */
   private async executePayment(
     id: string,
-    amount: number,
+    amount: string,
     customer: any
-  ): Promise<StatusInterface> {
+  ): Promise<StatusResponse | ErrorStatus> {
     // return the first resolving promise
     return Promise.race([
       this.getStatus(id, amount, customer),
-      new Promise<StatusInterface>(resolve =>
+      new Promise<ErrorStatus>(resolve =>
         setTimeout(() => {
           clearInterval(this.intervalTimer);
           resolve({
@@ -290,7 +288,7 @@ export class PaymentService {
    *
    * @param customer
    */
-  private getCustomer(customer: CustomerParams): CustomerInterface {
+  getCustomer(customer: CustomerParams): CustomerInterface {
     const { name, email, company, street, city, zip, country, vat } = customer;
     const tax_info = vat
       ? {
@@ -308,8 +306,7 @@ export class PaymentService {
           country,
           line1: company || name,
           line2: street,
-          postal_code: zip,
-          state: '' // TODO
+          postal_code: zip
         }
       },
       tax_info
