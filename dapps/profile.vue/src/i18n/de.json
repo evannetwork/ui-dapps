@@ -318,7 +318,7 @@
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
-          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt.",
+          "only-de": "Momentan wird die notarielle Verifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",
