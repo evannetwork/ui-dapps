@@ -121,7 +121,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
     // setup registration form
     this.form = (<ContactFormInterface>new EvanForm(this, {
       country: {
-        value: contactData.country || 'DE',
+        value: contactData.country,
         validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
           // resubmit postalCode validation
           form.postalCode.value = form.postalCode.value;

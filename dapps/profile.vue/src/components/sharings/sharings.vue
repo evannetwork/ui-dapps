@@ -44,7 +44,7 @@ the following URL: https://evan.network/license/
             :loadPermissions="loadPermissions"
             :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
             :selectedContact="selectedSharedContacts !== null && selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-            :sortFilters="sortFilters[userInfo.profileType]"
+            :sortFilters="$store.state.profileDApp.sharingFilter"
             :updatePermissions="updatePermissions"
             i18nScope="_profile.sharing"
           />

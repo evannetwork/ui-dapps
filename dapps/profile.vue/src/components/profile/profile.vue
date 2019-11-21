@@ -102,6 +102,7 @@
               <profile-company-contact :address="address"></profile-company-contact>
             </profile-permission-wrapper>
             <profile-permission-wrapper
+              class="mt-5"
               entryName="registration"
               v-if="$store.state.profileDApp.data.contact.country === 'DE'">
               <profile-company-registration :address="address"></profile-company-registration>
@@ -150,7 +151,7 @@
         <evan-permissions-editor
           :loadPermissions="loadPermissions"
           :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-          :sortFilters="sortFilters[userInfo.profileType]"
+          :sortFilters="$store.state.profileDApp.sharingFilter"
           :updatePermissions="updatePermissions"
           i18nScope="_profile.sharing"
         />

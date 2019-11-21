@@ -28,7 +28,6 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as dispatchers from '../../dispatchers/registry';
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
-import { sortFilters } from '../utils/shareSortFilters';
 
 interface SharedContactInterface {
   accountId: string;
@@ -57,8 +56,6 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    * a list of contact IDs currently being loaded
    */
   isLoadingContacts = new Set<string>();
-
-  sortFilters = sortFilters;
 
   /**
    * Permission update function that is called by permission-editor.
@@ -100,6 +97,44 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
     // clear dispatcher listeners
     this.listeners.forEach(listener => listener());
+  }
+
+  async created() {
+    // set the update permission and always pass the current vue context into it, so it can use the
+    // vuex translate service
+    this.updatePermissions = updatePermissions.bind(null, this);
+
+    // watch for permission updates
+    this.listeners.push(dispatchers.shareProfileDispatcher.watch(async ($event: any) => {
+      // set isLoading state to corresponding list elements
+      if ($event.detail.status === 'starting') {
+        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
+        accountIds.forEach(item => this.isLoadingContacts.add(item));
+
+        // deselect list elements
+        this.selectedSharedContacts = this.selectedSharedContacts.filter(item => accountIds.includes(item));
+      }
+
+      // canceling isLoading state from corresponding list elements
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
+        accountIds.forEach(item => this.isLoadingContacts.delete(item));
+        this.loading = true;
+        // Gets the profile permissions.
+        this.sharedContacts = await getProfilePermissions((<any>this));
+        this.loading = false;
+      }
+    }));
+
+    // bind window resize listeners, so the side panel can be pinned to the right side on large
+    // devices and toggled on small devices
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
+
+    // load shared contacts
+    this.sharedContacts = await getProfilePermissions((<any>this));
+
+    this.loading = false;
   }
 
   handleWindowResize() {
@@ -144,44 +179,6 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
       .catch((e: Error) => {
         console.log('Error writing permissions', e.message);
       });
-  }
-
-  async created() {
-    // set the update permission and always pass the current vue context into it, so it can use the
-    // vuex translate service
-    this.updatePermissions = updatePermissions.bind(null, this);
-
-    // watch for permission updates
-    this.listeners.push(dispatchers.shareProfileDispatcher.watch(async ($event: any) => {
-      // set isLoading state to corresponding list elements
-      if ($event.detail.status === 'starting') {
-        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
-        accountIds.forEach(item => this.isLoadingContacts.add(item));
-
-        // deselect list elements
-        this.selectedSharedContacts = this.selectedSharedContacts.filter(item => accountIds.includes(item));
-      }
-
-      // canceling isLoading state from corresponding list elements
-      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-        const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
-        accountIds.forEach(item => this.isLoadingContacts.delete(item));
-        this.loading = true;
-        // Gets the profile permissions.
-        this.sharedContacts = await getProfilePermissions((<any>this));
-        this.loading = false;
-      }
-    }));
-
-    // bind window resize listeners, so the side panel can be pinned to the right side on large
-    // devices and toggled on small devices
-    window.addEventListener('resize', this.handleWindowResize);
-    this.handleWindowResize();
-
-    // load shared contacts
-    this.sharedContacts = await getProfilePermissions((<any>this));
-
-    this.loading = false;
   }
 
   /**

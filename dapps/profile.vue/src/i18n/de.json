@@ -2,13 +2,13 @@
   "_profile": {
     "bmail": {
       "share": {
-        "body": "Guten Tag,\n\nIhnen wurden Profilinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich das Profil anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
-        "title": "Profilinformationen"
+        "body": "Guten Tag,\n\nIhnen wurden Identitätsinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich die Identität anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
+        "title": "Identitätsinformationen"
       }
     },
     "breadcrumbs": {
       "addressbook.vue.evan": "Kontakte",
-      "detail": "Profil",
+      "detail": "Identität",
       "logout": "Ausloggen",
       "settings": "Einstellungen",
       "sharings": "Freigaben",
@@ -82,8 +82,8 @@
       "account-id": "Account-ID",
       "alias": "Alias",
       "balance": "Guthaben",
-      "desc": "Profilinformationen",
-      "edit": "Profil bearbeiten"
+      "desc": "Identitätsinformationen",
+      "edit": "Identität bearbeiten"
     },
     "device": {
       "detail": {
@@ -126,20 +126,20 @@
       }
     },
     "dispatchers": {
-      "profile-share": "Profilinformationen teilen...",
-      "profile-type": "Profiltyp wird geändert...",
-      "profile-update": "Profilinformationen werden gespeichert...",
+      "profile-share": "Identitätsinformationen teilen...",
+      "profile-type": "Identitätstyp wird geändert...",
+      "profile-update": "Identitätinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
       "verification-accept": "Verifikation wird angenommen..."
     },
     "not-permitted": {
-      "accountDetails": "Profil-Informationen",
+      "accountDetails": "Identitätinformationen",
       "contact": "Kontaktdaten",
       "desc": "Sie haben keine Berechtigungen, diese Daten einzusehen.",
       "deviceDetails": "Geräteinformationen",
       "registration": "Registrierungsdaten"
     },
-    "not-permitted-view": "Sie haben keine Rechte, diese Daten für das ausgewählte Profil anzusehen.",
+    "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {
@@ -156,8 +156,8 @@
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharing": {
-      "Profile Data": "Profildaten",
-      "accountDetails": "Profildetails",
+      "Profile Data": "Identitätsdaten",
+      "accountDetails": "Details",
       "accountName": "Name",
       "city": "Ort",
       "company": "Unternehmen",
@@ -165,16 +165,16 @@
       "country": "Firmensitz",
       "court": "Registergericht",
       "dataStreamSettings": "IoT-Einstellungen",
-      "description": "Um Ihre Profildaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
-      "description-no-contacts": "Profilinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Profil aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identität ein.",
+      "description": "Um Ihre Identitätsdaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
+      "description-no-contacts": "Identitätsinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identitäts-ID ein.",
       "deviceDetails": "Geräteinformationen",
       "location": "Standort",
       "manufacturer": "Hersteller",
       "owner": "Eigentümer",
-      "permissionsTitle": "Profilzugriffsrechte",
+      "permissionsTitle": "Identitätszugriffsrechte",
       "picture": "Bild",
       "postalCode": "Postleitzahl",
-      "profileType": "Profiltyp",
+      "profileType": "Identitätstyp",
       "register": "Register",
       "registerNumber": "Registernummer",
       "registration": "Registrierungsdaten",
@@ -186,17 +186,17 @@
       "website": "Website"
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Profilinformationen teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
-      "no-data": "Bisher wurden keine Profildaten freigegeben",
-      "title": "Freigaben für Ihre Profildaten"
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Identitätsinformationen teilen. Klicken Sie auf eine Identität, um die Berechtigungen anzupassen.",
+      "no-data": "Bisher wurden keine Identitätsdaten freigegeben",
+      "title": "Freigaben für Ihre Identitätsdaten"
     },
     "type": {
       "change": "Ändern",
-      "choose": "Profiltyp spezifieren",
-      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
-      "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
-      "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
-      "switch": "Geben Sie Ihren Profiltyp an."
+      "choose": "Identitätstyp spezifieren",
+      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihre Identität genauer zu spezifieren.",
+      "missing-type-foreign": "Für diese Identität wurde noch kein Typ ausgewählt.",
+      "no-verifications-avaiable": "Für Ihren Identitättyp stehen aktuell keine Verifikationen zur Verfügung.",
+      "switch": "Geben Sie Ihren Identitättyp an."
     },
     "verifications": {
       "add": "Verifikation hinzufügen",

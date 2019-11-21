@@ -2,13 +2,13 @@
   "_profile": {
     "bmail": {
       "share": {
-        "body": "Hello,\n\nprofile information from {alias} has been shared with you. Use the \"open attachment\" button to view the profile.\n\nBest regards,\n\n{alias}",
-        "title": "Profile information"
+        "body": "Hello,\n\nidentity information from {alias} has been shared with you. Use the \"open attachment\" button to view the identity.\n\nBest regards,\n\n{alias}",
+        "title": "Identity information"
       }
     },
     "breadcrumbs": {
       "addressbook.vue.evan": "Contacts",
-      "detail": "Profile",
+      "detail": "Identity",
       "logout": "Logout",
       "settings": "Settings",
       "sharings": "Sharings",
@@ -82,8 +82,8 @@
       "account-id": "Account-ID",
       "alias": "Alias",
       "balance": "Balance",
-      "desc": "Profile-Details",
-      "edit": "Edit Profile"
+      "desc": "Identity-Details",
+      "edit": "Edit Identity"
     },
     "device": {
       "detail": {
@@ -126,20 +126,20 @@
       }
     },
     "dispatchers": {
-      "profile-share": "Share profile information...",
-      "profile-type": "Changing profile type...",
-      "profile-update": "Updating profile information...",
+      "profile-share": "Share Identity information...",
+      "profile-type": "Changing Identity type...",
+      "profile-update": "Updating Identity information...",
       "request-verification": "Requesting Verification...",
       "verification-accept": "Accepting Verification..."
     },
     "not-permitted": {
-      "accountDetails": "Profile information",
+      "accountDetails": "Identity information",
       "contact": "Contact details",
       "desc": "You have no authorization to view this data.",
       "deviceDetails": "Device information",
       "registration": "Registration data"
     },
-    "not-permitted-view": "You do not have permission to view this data for the selected profile.",
+    "not-permitted-view": "You do not have permission to view this data for the selected Identity.",
     "settings": {
       "desc": "Settings",
       "dev-domain": {
@@ -156,8 +156,8 @@
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
     "sharing": {
-      "Profile Data": "Profile Data",
-      "accountDetails": "Profil Details",
+      "Profile Data": "Identity Data",
+      "accountDetails": "Identity Details",
       "accountName": "Account Name",
       "city": "City",
       "company": "Company",
@@ -165,16 +165,16 @@
       "country": "Country",
       "court": "Register Court",
       "dataStreamSettings": "Data Stream Settings",
-      "description": "To share your profile information with another contact, fill out the form below and click on “Update Sharing Options”",
-      "description-no-contacts": "Profile information can be shared with others after you have established a secure connection to their evan.network profile. Go to the contact overview and invite your business partners via e-mail or identity.",
+      "description": "To share your Identity information with another contact, fill out the form below and click on “Update Sharing Options”",
+      "description-no-contacts": "Identity information can be shared with others after you have established a secure connection to their evan.network Identity. Go to the contact overview and invite your business partners via e-mail or identity.",
       "deviceDetails": "Device Details",
       "location": "Location",
       "manufacturer": "Manufacturer",
       "owner": "Owner",
-      "permissionsTitle": "Update Profile Permissions",
+      "permissionsTitle": "Update Identity Permissions",
       "picture": "Picture",
       "postalCode": "Postal Code",
-      "profileType": "Profile Type",
+      "profileType": "Identity Type",
       "register": "Register",
       "registerNumber": "Registration Number",
       "registration": "Registration Data",
@@ -186,16 +186,16 @@
       "website": "Website"
     },
     "sharings": {
-      "desc": "Below are all the contacts with which you currently share your profile information. Click on a profile to adjust the permissions.",
-      "no-data": "No profile data has been shared yet.",
-      "title": "Your Profile Data Sharings"
+      "desc": "Below are all the contacts with which you currently share your Identity information. Click on a profile to adjust the permissions.",
+      "no-data": "No Identity data has been shared yet.",
+      "title": "Your Identity Data Sharings"
     },
     "type": {
       "change": "Change",
       "choose": "Specify Account Type",
-      "missing-type": "Use the interaction area below to specify your profile more precisely.",
-      "missing-type-foreign": "No profile type has yet been selected for this profile.",
-      "no-verifications-avaiable": "There are currently no verifications available for your profile type.",
+      "missing-type": "Use the interaction area below to specify your Identity more precisely.",
+      "missing-type-foreign": "No Identity type has yet been selected for this Identity.",
+      "no-verifications-avaiable": "There are currently no verifications available for your Identity type.",
       "switch": "Specify your Account Type"
     },
     "verifications": {

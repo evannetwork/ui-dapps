@@ -26,9 +26,9 @@
         <div class="w-100">
           <div class="banner-wrapper">
             <img
-              class="desc-banner"
               :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`"
-              :style="imageSizes[images[step]]">
+              @load="setImageStyle()"
+              class="desc-banner">
           </div>
           <h2 class="mx-8 mb-2 font-weight-bold text-dark" >
             {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}
