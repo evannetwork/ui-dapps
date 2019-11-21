@@ -48,6 +48,8 @@ import NotaryRequestComponent from './verifications/notary/actions/request/reque
 
 // topic display (the actual verification)
 import NotaryTopicDisplayComponent from './verifications/notary/topic-display/topic-display.vue';
+import BuyEveComponent from './wallet/buy/BuyEve.vue';
+import SendEveComponent from './wallet/send/SendEve.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
@@ -69,6 +71,8 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'notary-info-dialog', component: NotaryInfoModalComponent, },
   { name: 'notary-topic-display', component: NotaryTopicDisplayComponent, },
   { name: 'notary-verification-card', component: NotaryCardComponent, },
+  { name: 'buy-eve', component: BuyEveComponent },
+  { name: 'send-eve', component: SendEveComponent }
 ];
 
 export default componentRegistration;

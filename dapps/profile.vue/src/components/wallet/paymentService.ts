@@ -276,12 +276,12 @@ export class PaymentService {
    *
    * @param vat
    */
-  async validateVat(
-    country: string,
-    vat: string
-  ): Promise<VatValidationInterface> {
-    return debounce(() => this.requestVatValidation(country, vat), 500);
-  }
+  // async validateVat(
+  //   country: string,
+  //   vat: string
+  // ): Promise<VatValidationInterface> {
+  //   return debounce(() => this.requestVatValidation(country, vat), 500);
+  // }
 
   /**
    * Create customer object from given fields.

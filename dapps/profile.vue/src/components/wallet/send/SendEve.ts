@@ -17,10 +17,12 @@
   the following URL: https://evan.network/license/
 */
 
+// vue imports
 import Component, { mixins } from 'vue-class-component';
+
+// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component({})
-export default class WalletComponent extends mixins(EvanComponent) {
-
+export default class SendEveComponent extends mixins(EvanComponent) {
 }

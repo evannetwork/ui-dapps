@@ -10,8 +10,6 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 02110-1301 USA, or download the license from the following URL:
 https://evan.network/license/ */
 
-<script src="https://js.stripe.com/v3/"></script>
-
 <template>
   <div class="row">
     <div class="p-xxl-11 p-xl-6 p-3 col-12">
@@ -20,8 +18,8 @@ https://evan.network/license/ */
           <evan-wallet-card :address="$route.params.address" />
         </div>
         <div class="col-xl-4 d-flex">
-          <evan-button>Test</evan-button>
-          <evan-button>Test</evan-button>
+          <evan-button>Buy</evan-button>
+          <evan-button>Send</evan-button>
         </div>
       </div>
       <div class="row mt-5">
@@ -35,10 +33,6 @@ https://evan.network/license/ */
           </p>
         </div>
       </div>
-      <!-- <evan-swipe-panel
-        :alignment="'right'"
-        :showBackdrop="true"
-      ></evan-swipe-panel> -->
     </div>
     <evan-swipe-panel
       class="light"
@@ -48,94 +42,8 @@ https://evan.network/license/ */
       :hideCloseButton="windowWidth >= 1200"
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
     >
-      <h1>Buy EVEs</h1>
-
-      <div>
-        <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
-        <input
-          class="form-control"
-          type="number"
-          required
-          min="10"
-          step="1"
-          id="eveAmount"
-          ref="eveAmount"
-        />
-      </div>
-
-      <div>
-        <label for="payment_provider">{{ '_wallet.select-payment-method' | translate }}</label>
-        <evan-form-control-select
-          :id="payment_provider"
-          :options="payment_providers"
-          :placeholder="$t('_evan.choose-here')"
-          @change="methodChangeHandler"
-        ></evan-form-control-select>
-      </div>
-
-      
-
-      <button @click="buyEve">BUY</button>
-
-      <div ref="card" id="card"></div>
-
-
-      <p>
-        <small>
-          MOCK By entering your IBAN and confirming this payment, you authorize evan
-          GmbH and Stripe, our payment service provider, to send instructions to
-          your bank to debit your account and your bank to debit your account in
-          accordance with these instructions. You are entitled to a refund from
-          your bank in accordance with the terms of your agreement with your bank.
-          A refund must be requested within 8 weeks of the date your account was
-          debited.
-        </small>
-      </p>
-      <!-- <div class="panel-footer" :class="{'relative': this.relative}">
-        <evan-button type="secondary" :label="$t('_evan.cancel')" />
-        <evan-button
-          type="primary"
-          :label="$t('_evan.sharing.update')"
-        />
-      </div> -->
+      <buy-eve></buy-eve>
     </evan-swipe-panel>
-    <!-- <div class="col-xl-4 col-xxl-3 wallet-side-panel light">
-      <h1>Buy EVEs</h1>
-
-      <div>
-        <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
-        <input
-          class="form-control"
-          type="number"
-          required
-          min="10"
-          step="1"
-          id="eveAmount"
-          ref="eveAmount"
-        />
-      </div>
-
-      <div>
-        <label for="payment_provider">{{ '_wallet.select-payment-method' | translate }}</label>
-        <evan-form-control-select
-          :id="payment_provider"
-          :options="payment_providers"
-          :placeholder="$t('_evan.choose-here')"
-        ></evan-form-control-select>
-      </div>
-
-      <p>
-        <small>
-          MOCK By entering your IBAN and confirming this payment, you authorize evan
-          GmbH and Stripe, our payment service provider, to send instructions to
-          your bank to debit your account and your bank to debit your account in
-          accordance with these instructions. You are entitled to a refund from
-          your bank in accordance with the terms of your agreement with your bank.
-          A refund must be requested within 8 weeks of the date your account was
-          debited.
-        </small>
-      </p>
-    </div> -->
   </div>
 </template>
 
