@@ -28,7 +28,6 @@ import { FileHandler, bccUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import * as dispatchers from '../../../../dispatchers/registry';
-import ProfileMigrationLibrary from '../../../../lib/profileMigration';
 import { notarySmartAgentAccountId } from '../notary.lib';
 
 @Component({ })

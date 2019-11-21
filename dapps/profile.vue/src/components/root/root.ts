@@ -29,7 +29,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registry';
 
-import { sortFilters, getPermissionSortFilter, } from '../utils/shareSortFilters';
+import { getPermissionSortFilter, } from '../utils/shareSortFilters';
 
 @Component({ })
 export default class ProfileRootComponent extends mixins(EvanComponent) {
