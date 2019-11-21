@@ -24,6 +24,7 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import { PaymentServiceV3 } from './paymentv3.service';
+import { PaymentService } from './paymentService';
 
 /// <reference path="stripe/stripe.d.ts" /> // TODO ?
 
@@ -37,11 +38,12 @@ export default class WalletComponent extends mixins(EvanComponent) {
     { value: 'iban', label: 'IBAN' }
   ];
 
-  paymentService;
+  paymentService: PaymentService;
 
   // stripe = Stripe(`pk_test_TYooMQauvdEDq54NiTphI7jx`);
   // elements = this.stripe.elements();
-  // card = undefined;
+  card;
+  elements;
 
   private elementStyles = {
     // TODO: evan styles
@@ -62,14 +64,8 @@ export default class WalletComponent extends mixins(EvanComponent) {
 
   created() {
     const runtime = (this as any).getRuntime();
-
-    // Stripe.setPublishableKey('pk_test_TYooMQauvdEDq54NiTphI7jx');
-    // // const stripe = Stripe();
-
-    // console.log(Stripe);
-
-    this.paymentService = new PaymentServiceV3(runtime);
-    // this.paymentService.initStripe('pk_test_kpO3T5fXA7aaftg9D0OO0w3S');
+    this.paymentService = new PaymentService(runtime);
+    this.paymentService.initStripe();
   }
 
   amountChangeHandler(amount) {
@@ -77,10 +73,11 @@ export default class WalletComponent extends mixins(EvanComponent) {
   }
 
   methodChangeHandler(event: Event) {
-    // this.card = this.elements.create((<HTMLSelectElement>event.target).value, {
-    //   style: this.elementStyles
-    // });
-    // this.card.mount('#card');
+    this.elements = this.paymentService.getStripeElements();
+    this.card = this.elements.create((<HTMLSelectElement>event.target).value, {
+      style: this.elementStyles
+    });
+    this.card.mount('#card');
   }
 
   async buyEve() {
@@ -90,14 +87,14 @@ export default class WalletComponent extends mixins(EvanComponent) {
       email: 'adlerkarl@gmail.com',
       company: 'evan',
       street: 'Test street',
-      city:  'test city',
+      city: 'test city',
       zip: '42424',
       country: 'de',
       vat: '4242424242424242'
     });
-    const intent = this.paymentService.createPaymentIntent('10', customer)
+    const source = await this.paymentService.buyEve(customer, 10, this.card);
 
-    console.log(intent);
+    console.log(source);
 
     // this.paymentService.pay(customer, 20);
   }

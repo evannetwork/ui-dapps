@@ -26,8 +26,13 @@ import {
   CustomerInterface,
   OptionsInterface,
   VatValidationInterface,
-  CustomerParams
+  CustomerParams,
+  StripeSource
 } from './interfaces';
+
+declare var Stripe: any;
+
+const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
 
 export class PaymentService {
   private static PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
@@ -43,31 +48,87 @@ export class PaymentService {
   /**
    * Initialize the payment service with the agent url.
    *
-   * @param stripe
    * @param agentUrl
    */
   constructor(
-    stripe: any,
     runtime: any,
     agentUrl = 'https://agents.test.evan.network/api'
   ) {
     this.agentUrl = agentUrl;
-    this.stripe = stripe;
     this.runtime = runtime;
   }
 
-  private getErrorCode(code: string) {
-    const translatedCodes = [
-      'unknown_state',
-      'transaction_failed',
-      'charge_failed',
-      'invalid_customer',
-      'price_not_okay',
-      'too_many_accounts',
-      'wallet_not_enough_funds'
-    ];
+  initStripe() {
+    this.stripe = Stripe(PUB_KEY);
+  }  
 
-    return translatedCodes.indexOf(code) !== -1 ? code : 'unknown_state';
+  /**
+   * Returns stripe source data object.
+   * TODO: Params look weird still
+   * @param customer
+   * @param param1
+   */
+  createStripeSourceData(
+    customer: CustomerInterface,
+    { type = 'card', currency = 'eur', notification_method = 'email' } = {}
+  ): StripeSource {
+    const usageTypes = {
+      card: 'single_use',
+      sepa_debit: 'reusable'
+    };
+
+    return {
+      type,
+      currency,
+      owner: {
+        name: customer.shipping.name,
+        email: customer.email,
+        address: customer.shipping.address
+      },
+      usage: usageTypes[type],
+      mandate: {
+        // Automatically send a mandate notification to your customer once the source is charged.
+        notification_method
+      }
+    };
+  }
+
+  /**
+   * Trigger an EVE payment.
+   *
+   * @param customer - CustomerInterface, may be created by getCustomer() method.
+   * @param eveAmount - desired amount of EVE.
+   * @param options - optional object to overwrite certain stripe options. @see: createStripeSourceData()
+   */
+  async buyEve(
+    customer: CustomerInterface,
+    eveAmount: number,
+    card: any,
+    options?: OptionsInterface
+  ): Promise<StatusInterface> {
+    if (!this.stripe) {
+      throw new Error(
+        'Stripe was not initialized, can not start payment process'
+      );
+    }
+
+    const sourceData = this.createStripeSourceData(customer, options);
+    const { source, error } = await this.stripe.createSource(card, sourceData);
+
+    if (error) {
+      return {
+        status: 'error',
+        code: this.getErrorCode(error.message)
+      };
+    }
+
+    if (!source) {
+      throw new Error(
+        'Received neither `source` nor `error` from stripe createSource().'
+      );
+    }
+
+    return await this.executePayment(source.id, eveAmount, customer);
   }
 
   /**
@@ -188,73 +249,6 @@ export class PaymentService {
   }
 
   /**
-   * Returns stripe source data object.
-   *
-   * @param customer
-   * @param param1
-   */
-  createStripeSourceData(
-    customer,
-    { type = 'card', currency = 'eur', notification_method = 'email' } = {}
-  ) {
-    const usageTypes = {
-      card: 'single_use',
-      sepa_debit: 'reusable'
-    };
-
-    return {
-      type,
-      currency,
-      owner: {
-        name: customer.shipping.name,
-        email: customer.email
-      },
-      usage: usageTypes[type],
-      mandate: {
-        // Automatically send a mandate notification to your customer once the source is charged.
-        notification_method
-      }
-    };
-  }
-
-  /**
-   * Trigger an EVE payment.
-   *
-   * @param customer - CustomerInterface, may be created by getCustomer() method.
-   * @param eveAmount - desired amount of EVE.
-   * @param options - optional object to overwrite certain stripe options. @see: createStripeSourceData()
-   */
-  async buyEve(
-    customer: CustomerInterface,
-    eveAmount: number,
-    options?: OptionsInterface
-  ): Promise<StatusInterface> {
-    if (!this.stripe) {
-      throw new Error(
-        'Stripe was not initialized, can not start payment process'
-      );
-    }
-
-    const sourceData = this.createStripeSourceData(customer, options);
-    const { source, error } = await this.stripe.sources.create(sourceData);
-
-    if (error) {
-      return {
-        status: 'error',
-        code: this.getErrorCode(error.message)
-      };
-    }
-
-    if (!source) {
-      throw new Error(
-        'Received neither `source` nor `error` from stripe createSource().'
-      );
-    }
-
-    return await this.executePayment(source.id, eveAmount, customer);
-  }
-
-  /**
    * Check VAT number against backend.
    *
    * @param country
@@ -296,7 +290,7 @@ export class PaymentService {
    *
    * @param customer
    */
-  getCustomer(customer: CustomerParams): CustomerInterface {
+  private getCustomer(customer: CustomerParams): CustomerInterface {
     const { name, email, company, street, city, zip, country, vat } = customer;
     const tax_info = vat
       ? {
@@ -314,10 +308,29 @@ export class PaymentService {
           country,
           line1: company || name,
           line2: street,
-          postal_code: zip
+          postal_code: zip,
+          state: '' // TODO
         }
       },
       tax_info
     };
+  }
+
+  getStripeElements() {
+    return this.stripe.elements();
+  }
+
+  private getErrorCode(code: string) {
+    const translatedCodes = [
+      'unknown_state',
+      'transaction_failed',
+      'charge_failed',
+      'invalid_customer',
+      'price_not_okay',
+      'too_many_accounts',
+      'wallet_not_enough_funds'
+    ];
+
+    return translatedCodes.indexOf(code) !== -1 ? code : 'unknown_state';
   }
 }
