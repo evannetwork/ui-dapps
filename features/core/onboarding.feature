@@ -132,7 +132,7 @@ Scenario: Registering a new company account on evan
 Scenario: Creating a new bycicle twin using onboarding
 
   Given I go to the evan.network startpage
-    And I am on the path "dashboard.vue.evan/onboarding.vue.evan/twin-sign-up"
+    And I am on the path "#/dashboard.vue.evan/onboarding.vue.evan/twin-sign-up"
     Then I want to see a text including "Create your Digital Twin"
     And I want to see a text including "Choose a twin type and give your new twin meaningful name"
     And the button "Continue" should be "disabled"
