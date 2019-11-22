@@ -19,29 +19,45 @@
 
 <template>
   <div class="row h-100">
-    <evan-profile-creating
-      :activeStep="creatingProfile"
-      :maximumSteps="6"
-      :customSteps="{
-        5: {
-          picture: `${ $store.state.onboardingBaseUrl }/assets/creating_twin.png`,
-          text: $t('_onboarding.sign-up.twin.creating'),
-        },
-      }"
-      v-if="creatingProfile"
-    />
+    <div class="col-12 d-flex justify-content-center align-items-center"
+      v-if="creatingProfile">
+      <div>
+        <template v-if="creatingProfile < 6">
+          <div>
+            <img class="img-fluid"
+              style="max-width: 390px"
+              :src="`${ $store.state.onboardingBaseUrl }/assets/left-panel/${ images[creatingProfile - 1] }`">
+          </div>
+          <div style="height: 10px; min-width: 390px;" class="mx-auto progress my-3 bg-white">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              :style="{width: `${(creatingProfile * 20)}%`}"
+            ></div>
+          </div>
+          <h5 class="font-weight-bold mt-5 text-center">
+            {{ `_onboarding.sign-up.create-profile-twin.status-${ creatingProfile}` | translate }}
+          </h5>
+        </template>
+        <div v-else class="h-100 d-flex align-items-center justify-content-center">
+          <evan-success></evan-success>
+        </div>
+      </div>
+    </div>
     <evan-onboarding-layout-wrapper v-else
       type="twin-sign-up"
-      :step="activeStep">
+      :step="activeStep"
+      :images="[ '1.svg', '2.svg', '3.svg', '13.svg' ]">
       <div>
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.twin.create' | translate }}
         </h4>
         <evan-steps class="text-center"
-          minimal="true"
           :activeStep="activeStep"
           :steps="steps"
           @stepChange="activeStep = $event"
+          minimal="true"
+          v-if="activeStep !== steps.length"
         />
         <div v-if="activeStep === 0">
           <p class="text-center mt-3 mb-4">
@@ -55,23 +71,26 @@
             :form="twinDbcpForm">
           </evan-form>
         </div>
-        <div
-          v-for="(step, index) in steps"
-          v-if="!rerenderSteps && index > 0 && index < steps.length - 1"
-          :class="{ 'd-none': activeStep !== index }">
-          <p class="text-center mt-3 mb-4">
-            {{ steps[activeStep].description }}
-          </p>
+        <template v-if="!rerenderSteps">
+          <div
+            v-for="(step, index) in dataSetSteps()"
+            :key="index"
+            :class="{ 'd-none': activeStep !== steps.indexOf(step) }">
+            <p class="text-center mt-3 mb-4"
+              v-if="steps[activeStep]">
+              {{ steps[activeStep].description }}
+            </p>
 
-          <twin-data-set-form
-            ref="stepForm"
-            :data="step.dataSetSpecs.data"
-            :dataSchema="step.dataSetSpecs.dataSchema"
-            :dataSetName="step.dataSetSpecs.dataSetName"
-            :description="step.dataSetSpecs.description"
-          />
-        </div>
-        <div v-if="activeStep === steps.length - 1">
+            <twin-data-set-form
+              ref="stepForm"
+              :data="step.dataSetSpecs.data"
+              :dataSchema="step.dataSetSpecs.dataSchema"
+              :dataSetName="step.dataSetSpecs.dataSetName"
+              :description="step.dataSetSpecs.description"
+            />
+          </div>
+        </template>
+        <div v-if="activeStep === steps.length">
           <p class="text-center mt-3 mb-4">
             {{ '_onboarding.sign-up.twin.steps.finish.desc' | translate }}
           </p>
@@ -87,22 +106,35 @@
           </evan-form>
 
           <profile-captcha-terms :signUpComp="this" />
-
-          <div class="text-center">
-            <button type="button" class="btn btn-primary btn-block"
+          <div class="d-flex justify-content-between text-center mt-5">
+            <evan-button
+              type="secondary"
+              @click="activeStep--">
+              {{ '_onboarding.back' | translate }}
+            </evan-button>
+            <evan-button
+              type="primary"
               :disabled="!recaptchaToken || !termsAccepted.value"
               @click="createOfflineTwin()">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
-            </button>
+            </evan-button>
           </div>
         </div>
 
-        <div class="text-center mt-5" v-else>
-          <button type="submit" class="btn btn-primary btn-block"
+        <div class="d-flex justify-content-between text-center mt-5" v-else>
+          <evan-button
+            type="secondary"
+            :href="activeStep === 0 ? 'https://evan.network' : ''"
+            @click="activeStep !== 0 && activeStep--">
+            <template v-if="activeStep === 0">{{ '_onboarding.back-to-website' | translate }}</template>
+            <template v-else>{{ '_onboarding.back' | translate }}</template>
+          </evan-button>
+          <evan-button
+            type="primary"
             :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
             @click="activeStep++">
             {{ '_onboarding.continue' | translate }}
-          </button>
+          </evan-button>
         </div>
       </div>
     </evan-onboarding-layout-wrapper>

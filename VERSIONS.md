@@ -4,6 +4,7 @@
 ### Features
 - `onboarding.vue` (v3.3.0)
   - add onboarding with twin creation
+  - add new images and texts to onboarding
 
 ### Fixes
 - `profile.vue` (v3.5.1)
@@ -14,6 +15,7 @@
   - change terms of use and captcha checkbox
 - `addressbook.vue` (v3.1.2)
   - contact click redirects to profile detail
+  - fix "ugly" eve number input
 
 ### Deprecations
 

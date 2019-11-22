@@ -17,37 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
 
-@Component({ })
-export default class LayoutWrapperComponent extends mixins(EvanComponent) {
-  /**
-   * Step for translation the left panel text
-   */
-  @Prop({
-    type: String,
-    default: function() {
-      return '';
-    }
-  }) step;
+  -webkit-appearance: none;
+}
 
-  /**
-   * Type of the ui, for that the layout wrapper will be used (e.g. sign-up.company)
-   */
-  @Prop({
-    type: String,
-    default: function() {
-      return '';
-    }
-  }) type;
-
-  /**
-   * List of image names, that should be displayed on which step.
-   */
-  @Prop() images: Array<string>;
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
 }

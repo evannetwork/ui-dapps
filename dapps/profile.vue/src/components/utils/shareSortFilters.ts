@@ -1,5 +1,5 @@
 export const sortFilters = {
-  user: null,
+  user: [ 'accountDetails' ],
   company: ['accountDetails', 'registration', 'contact'],
   device: ['accountDetails', 'deviceDetails']
 }

@@ -1,65 +1,67 @@
 {
   "_onboarding": {
+    "back": "Zurück",
+    "back-to-website": "Zurück zur Homepage",
     "close": "Schließen",
     "continue": "Fortfahren",
     "free-input": "Freie Eingabe",
     "headings": {
       "sign-in": {
         "0": {
-          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-          "title": "Ihr Digitalisierungsgateway"
+          "desc": "Die Absicherung Ihrer Daten ist uns sehr wichtig. Daher ist der Login-Prozess zweigeteilt. Der <b>Wiederherstellungsschlüssel</b> unterstützt Sie bei der Absicherung Ihrer Informationen. Bitte bewahren Sie diesen für Dritte unzugänglich an einem sicheren Ort auf.",
+          "title": "Login im evan.network"
         },
         "1": {
           "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-          "title": "Transparenz"
+          "title": "Willkommen im evan.network"
         }
       },
       "sign-up": {
         "company": {
           "0": {
-            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-            "title": "Ihr Digitalisierungsgateway"
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - um als vertrauensvolles Unternehmen interagieren zu können.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
+            "title": "Registrierung im evan.network"
           },
           "1": {
-            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-            "title": "Ihr Digitalisierungsgateway"
+            "desc": "Um Transaktionen im evan.network durchzuführen, benötigen Sie einen Account. Auf Basis Ihrer unternehmensspezifischen Daten können Sie sich später als vertrauensvolles Unternehmen verifizieren lassen.",
+            "title": "Ihr Weg zum Unternehmensaccount"
           },
           "2": {
-            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-            "title": "Ihr Digitalisierungsgateway"
+            "desc": "Ihre Adressdaten benötigen Sie für die spätere Verifizierung als Unternehmen. Somit entsteht ein Netzwerk aus Partnern, die unternehmensübergreifend und direkt Daten und Informationen austauschen.",
+            "title": "Ihr Weg zum Unternehmensaccount"
           },
           "3": {
-            "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-            "title": "Transparenz"
+            "desc": "Nach Abschluss der Registrierung haben Sie Zugang zum evan.network und können vertrauensvoll mit Ihren Partnern interagieren.",
+            "title": "Willkommen im evan.network"
           }
         },
         "user": {
           "0": {
-            "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-            "title": "Ihr Digitalisierungsgateway"
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - um als vertrauensvolles Unternehmen interagieren zu können.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
+            "title": "Registrierung im evan.network"
           },
           "1": {
-            "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-            "title": "Transparenz"
+            "desc": "Nach Abschluss der Registrierung haben Sie Zugang zum evan.network und können vertrauensvoll mit Ihren Geschäftspartnern interagieren.",
+            "title": "Willkommen im evan.network"
           }
         }
       },
       "twin-sign-up": {
         "0": {
-          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-          "title": "Ihr Digitalisierungsgateway"
+          "desc": "Um Transaktionen im evan.network durchzuführen, sind Digitale Zwillinge der Schlüssel. Tragen Sie hier die Basisdaten Ihres Digitalen Zwillings ein, damit Sie Informationen mit Geschäftspartnern austauschen können.",
+          "title": "Ihr Weg zum Digitalen Zwilling"
         },
         "1": {
-          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-          "title": "Ihr Digitalisierungsgateway"
+          "desc": "Jeder Digitale Zwilling ist einzigartig. Sie bestimmen selbst, welche Informationen vertraulich mit Ihren Geschäftspartnern geteilt werden. Pflegen Sie hier die Spezifikationen Ihres Digitalen Zwillings nach Ihren Anforderungen ein.",
+          "title": "Datenhoheit hat die oberste Priorität"
         },
         "2": {
-          "desc": "Digitale Identitäten allein bilden noch kein Netzwerk. Es wird auch eine neutrale operative Plattform, auf der Transaktionen zwischen Dingen, Organisationen und Menschen sicher und zuverlässig abgewickelt werden können, benötigt.",
-          "title": "Ihr Digitalisierungsgateway"
+          "desc": "Mit dem Digitalen Zwilling vernetzen Sie sich mit ihren Geschäftspartnern. Sie bestimmen selbst, zu welchem Zeitpunkt Ihre Geschäftspartner Zugriff auf den Digitalen Zwilling und seine hinterlegten Informationen haben. Die Datenhoheit ist Ihnen somit garantiert.",
+          "title": "Informations- und Nutzungsrechte freigeben"
         },
         "3": {
-          "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
-          "title": "Transparenz"
+          "desc": "Um den Digitalen Zwilling nutzen zu können, ist die kostenfreie Anmeldung im evan.network erforderlich. Die Blockchain-Technologie ermöglicht vertrauensvolle Interaktionen im Netzwerk. Ihre Datenhoheit ist somit garantiert.",
+          "title": "Willkommen im evan.network"
         }
       }
     },
@@ -103,7 +105,7 @@
         "user": "Nutzer"
       },
       "accountType": {
-        "label": "Accounta-Typ"
+        "label": "Account-Typ"
       },
       "agree": "Akzeptieren",
       "alias": {
@@ -124,6 +126,13 @@
         "status-4": "Erstellung der Verifizierungsverwaltung...",
         "status-5": "Identität wurde erfolgreich erstellt...",
         "title": "Account erstellen"
+      },
+      "create-profile-twin": {
+        "status-1": "Erstellung des Identitätsvertrages...",
+        "status-2": "Verschlüsselung der Nutzerinformationen...",
+        "status-3": "Erstellung Mailbox, Adressbuch, ...",
+        "status-4": "Erstellung des Digitalen Zwillings...",
+        "status-5": "Digitaler Zwilling wurde erfolgreich erstellt!"
       },
       "desc": "Erstellen Sie Ihre evan.network Identität",
       "desc-long": "Generieren Sie Ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungsschlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
@@ -201,7 +210,7 @@
         "empty-field": "Bitte füllen Sie das Feld {label} aus!",
         "steps": {
           "dbcp": {
-            "desc": "Wählen Sie einen Twin-Type und vergeben Sie einen sprechenden Namen",
+            "desc": "Wählen Sie einen Typ für Ihren Digitalen Zwilling und vergeben Sie einen Namen.",
             "title": "Generelle Informationen"
           },
           "finish": {

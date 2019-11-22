@@ -69,67 +69,27 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
 
     // setup registration form
     this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
-      dataStreamSettings: {
-        value: deviceData.dataStreamSettings || '',
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            required: true,
-          }
-        }
+      type: {
+        value: deviceData.type || '',
       },
       location: {
         value: deviceData.location || '',
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            required: true,
-          }
-        }
       },
       manufacturer: {
         value: deviceData.manufacturer || '',
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            required: true,
-          }
-        }
       },
       owner: {
         value: deviceData.owner || '',
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length === 0 || EvanForm.validEthAddress(this.value);
-        },
-        uiSpecs: {
-          attr: {
-            required: true,
-          }
-        }
       },
       serialNumber: {
         value: deviceData.serialNumber || '',
-        validate: function(vueInstance: DeviceDetailForm, form: DeviceDetailFormInterface) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            required: true,
-          }
-        }
       },
       settings: {
         value: deviceData.settings ? deviceData.settings.files || deviceData.settings : [ ],
         uiSpecs: { type: 'files' }
       },
-      type: {
-        value: deviceData.type ? deviceData.type.files || deviceData.type : [ ],
+      dataStreamSettings: {
+        value: deviceData.dataStreamSettings ? deviceData.dataStreamSettings.files || deviceData.dataStreamSettings : [ ],
         uiSpecs: { type: 'files' }
       },
     }));
@@ -139,7 +99,7 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
     const formData = this.deviceDetailForm.getFormData();
     // set correct file format
     formData.settings = { files: formData.settings };
-    formData.type = { files: formData.type };
+    formData.dataStreamSettings = { files: formData.dataStreamSettings };
 
     dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
       address: this.$store.state.profileDApp.address,

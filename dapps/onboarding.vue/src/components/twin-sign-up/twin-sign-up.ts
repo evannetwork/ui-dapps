@@ -31,7 +31,7 @@ import SignUp from '../sign-up/sign-up';
 import { getDefaultDAppEns } from '../../utils';
 
 // load twin templates
-import bycicleTwin from './twins/bycicle.json';
+import bicycleTwin from './twins/bicycle.json';
 import carTwin from './twins/car.json';
 
 // get the twin helper
@@ -64,7 +64,7 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Available twins, that can be selected for creation.
    */
   twins = {
-    bycicle: bycicleTwin,
+    bicycle: bicycleTwin,
     car: carTwin
   };
 
@@ -77,6 +77,11 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Force dynamic step content rerendering
    */
   rerenderSteps = false;
+
+  /**
+   * Images that should be used for side panel and twin creation.
+   */
+  images = [ '1.svg', '2.svg', '3.svg', '13.svg' ];
 
   /**
    * Setup twin forms.
@@ -94,7 +99,7 @@ export default class TwinSignUp extends mixins(SignUp) {
   setupTwinDBCPForm() {
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
       type: {
-        value: 'bycicle',
+        value: 'bicycle',
         uiSpecs: {
           attr: {
             required: true,
@@ -131,11 +136,18 @@ export default class TwinSignUp extends mixins(SignUp) {
         uiSpecs: {
           attr: {
             rows: 5,
-            type: 'textarea',
-          }
+          },
+          type: 'textarea',
         },
       }
     }));
+  }
+
+  /**
+   * Render only the data set steps dynamically.
+   */
+  dataSetSteps() {
+    return this.steps.filter((step, index) => index !== 0);
   }
 
   /**
@@ -201,16 +213,16 @@ export default class TwinSignUp extends mixins(SignUp) {
         }
       });
 
-    this.steps.push({
-      title: '_onboarding.sign-up.twin.steps.finish.title',
-      disabled: () => {
-        if (!this.$refs.stepForm) {
-          return creatingOrOnboarded();
-        } else {
-          return creatingOrOnboarded() || !this.$refs.stepForm[this.$refs.stepForm.length - 1].isValid();
-        }
-      },
-    });
+    // this.steps.push({
+    //   title: '_onboarding.sign-up.twin.steps.finish.title',
+    //   disabled: () => {
+    //     if (!this.$refs.stepForm) {
+    //       return creatingOrOnboarded();
+    //     } else {
+    //       return creatingOrOnboarded() || !this.$refs.stepForm[this.$refs.stepForm.length - 1].isValid();
+    //     }
+    //   },
+    // });
   }
 
   /**
@@ -222,7 +234,7 @@ export default class TwinSignUp extends mixins(SignUp) {
       this.timeoutCreationStatus = setTimeout(() => this.nextCreationStatus(), 1000);
     }
 
-    if (this.creationTime % 9 === 0) {
+    if (this.creationTime % 11 === 0) {
       this.creatingProfile += 1;
     }
   }
