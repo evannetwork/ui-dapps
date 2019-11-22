@@ -18,14 +18,14 @@ export interface CustomerInterface {
 }
 
 export interface CustomerParams {
-  name: string;
-  email: string;
-  company: string;
-  street: string;
-  city: string;
-  zip: string;
-  country: string;
-  vat: string;
+  name?: string;
+  email?: string;
+  company?: string;
+  street?: string;
+  city?: string;
+  zip?: string;
+  country?: string;
+  vat?: string;
 }
 
 export interface ErrorStatus {

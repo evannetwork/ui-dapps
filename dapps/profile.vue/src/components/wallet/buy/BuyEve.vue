@@ -11,7 +11,7 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 https://evan.network/license/ */
 
 <template>
-  <div>
+  <form @submit.prevent="buyEve">
     <h1>Buy EVEs</h1>
 
     <div>
@@ -50,7 +50,7 @@ https://evan.network/license/ */
       </small>
     </p>
     <div class="panel-footer">
-      <button type="submit" class="btn btn-primary" @click="buyEve" :disabled="isLoading">
+      <button type="submit" class="btn btn-primary" :disabled="isLoading">
         <span
           class="spinner-border spinner-border-sm mr-3"
           role="status"
@@ -60,7 +60,7 @@ https://evan.network/license/ */
         <span>{{ '_evan.buy' | translate }}</span>
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script lang="ts">

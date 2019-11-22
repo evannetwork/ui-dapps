@@ -70,17 +70,18 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
 
   async buyEve() {
     this.isLoading = true;
+    const amount = this.$refs['eveAmount'];
     const customer = this.paymentService.getCustomer({
-      name: 'karl',
-      email: 'adlerkarl@gmail.com',
-      company: 'evan',
-      street: 'Test street',
-      city: 'test city',
-      zip: '42424',
-      country: 'de',
-      vat: 'DE145146812'
+      // name: 'karl',
+      // email: 'adlerkarl@gmail.com',
+      // company: 'evan',
+      // street: 'Test street',
+      // city: 'test city',
+      // zip: '42424',
+      // country: 'de',
+      // vat: 'DE145146812'
     });
-    const source = await this.paymentService.buyEve(customer, '10', this.card);
+    const source = await this.paymentService.buyEve(customer, '15', this.card);
     this.isLoading = false;
 
     console.log(source);

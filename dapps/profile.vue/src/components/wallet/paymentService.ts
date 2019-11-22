@@ -107,12 +107,6 @@ export class PaymentService {
     card: any,
     options?: OptionsInterface
   ): Promise<StatusResponse | ErrorStatus> {
-    if (!this.stripe) {
-      throw new Error(
-        'Stripe was not initialized, can not start payment process'
-      );
-    }
-
     const sourceData = this.createStripeSourceData(customer, options);
     const { source, error } = await this.stripe.createSource(card, sourceData);
 

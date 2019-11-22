@@ -21,6 +21,4 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component({})
-export default class WalletComponent extends mixins(EvanComponent) {
-
-}
+export default class WalletComponent extends mixins(EvanComponent) {}
