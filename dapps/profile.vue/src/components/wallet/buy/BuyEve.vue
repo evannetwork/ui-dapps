@@ -21,9 +21,9 @@ https://evan.network/license/ */
         type="number"
         required
         min="10"
-        step="1"
+        step="5"
         id="eveAmount"
-        ref="eveAmount"
+        v-model="eveAmount"
       />
     </div>
 
@@ -34,10 +34,11 @@ https://evan.network/license/ */
         :options="payment_providers"
         :placeholder="$t('_evan.choose-here')"
         @change="methodChangeHandler"
+        :required="true"
       ></evan-form-control-select>
     </div>
 
-    <div ref="card" id="card"></div>
+    <div ref="stripeElement" id="stripeElement"></div>
     <p>
       <small>
         MOCK By entering your IBAN and confirming this payment, you authorize

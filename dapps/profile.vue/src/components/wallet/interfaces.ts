@@ -35,6 +35,6 @@ export interface ErrorStatus {
 }
 
 export interface OptionsInterface {
-  type: string;
-  currency: string;
+  type?: string;
+  currency?: string;
 }

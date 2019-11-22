@@ -17,6 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
+// Example IBAN: DE89 3704 0044 0532 0130 00
+
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { PaymentService } from '../paymentService';
@@ -24,13 +26,17 @@ import { PaymentService } from '../paymentService';
 @Component({})
 export default class BuyEveComponent extends mixins(EvanComponent) {
   payment_providers = [
-    { value: 'sepa', label: 'SEPA Debit' },
+    { value: 'iban', label: 'SEPA Debit' },
     { value: 'card', label: 'Card' }
   ];
 
   paymentService: PaymentService;
-  card;
-  elements;
+
+  eveAmount: number;
+  // This is different from stripe element type (sepa_debit vs iban)
+  selectedMethod: 'card' | 'sepa_debit';
+  stripeElement: any;
+  elements: any;
   isLoading = false;
 
   // TODO: evan style
@@ -60,17 +66,32 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     // this.paymentService.createPaymentIntent(amount, customer, Stripe);
   }
 
+  /**
+   * Show corresponding stripe element depending on selected payment method
+   * @param event Passed event from select input
+   */
   methodChangeHandler(event: Event) {
-    this.elements = this.paymentService.getStripeElements();
-    this.card = this.elements.create((<HTMLSelectElement>event.target).value, {
+    const input = (<HTMLSelectElement>event.target).value;
+    // TODO: any until stripe types properly imported
+    let options: any = {
       style: this.elementStyles
-    });
-    this.card.mount('#card');
+    };
+    
+    if (input === 'iban') {
+      this.selectedMethod = 'sepa_debit';
+      options.supportedCountries = ['SEPA'];
+      options.placeholderCountry = 'DE'; // TODO: set to user lang
+    } else if (input === 'card') {
+      this.selectedMethod = 'card';
+    }
+
+    this.elements = this.paymentService.getStripeElements();
+    this.stripeElement = this.elements.create(input, options);
+    this.stripeElement.mount('#stripeElement');
   }
 
   async buyEve() {
     this.isLoading = true;
-    const amount = this.$refs['eveAmount'];
     const customer = this.paymentService.getCustomer({
       // name: 'karl',
       // email: 'adlerkarl@gmail.com',
@@ -81,9 +102,12 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       // country: 'de',
       // vat: 'DE145146812'
     });
-    const source = await this.paymentService.buyEve(customer, '15', this.card);
+    await this.paymentService.buyEve(
+      customer,
+      this.eveAmount.toString(),
+      this.stripeElement,
+      { type: this.selectedMethod }
+    );
     this.isLoading = false;
-
-    console.log(source);
   }
 }

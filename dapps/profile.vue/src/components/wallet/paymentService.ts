@@ -99,16 +99,17 @@ export class PaymentService {
    *
    * @param customer - CustomerInterface, may be created by getCustomer() method.
    * @param eveAmount - desired amount of EVE.
+   * @param stripeElement stripe element containing data (iban or credit card)
    * @param options - optional object to overwrite certain stripe options. @see: createStripeSourceData()
    */
   async buyEve(
     customer: CustomerInterface,
     eveAmount: string,
-    card: any,
+    stripeElement: any,
     options?: OptionsInterface
   ): Promise<StatusResponse | ErrorStatus> {
     const sourceData = this.createStripeSourceData(customer, options);
-    const { source, error } = await this.stripe.createSource(card, sourceData);
+    const { source, error } = await this.stripe.createSource(stripeElement, sourceData);
 
     if (error) {
       return {
@@ -123,7 +124,7 @@ export class PaymentService {
       );
     }
 
-    return await this.executePayment(source.id, eveAmount, customer);
+    return this.executePayment(source.id, eveAmount, customer);
   }
 
   /**
