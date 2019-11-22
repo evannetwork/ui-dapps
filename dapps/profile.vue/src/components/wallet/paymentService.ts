@@ -26,7 +26,7 @@ import {
   CustomerInterface,
   OptionsInterface,
   VatValidationInterface,
-  CustomerParams  
+  CustomerParams
 } from './interfaces';
 import { StatusResponse } from './StatusResponse.interface';
 import { StripeSource } from './StripeSource.interface';
@@ -51,27 +51,28 @@ export class PaymentService {
    *
    * @param agentUrl
    */
-  constructor(
-    runtime: any,
-    agentUrl = 'https://agents.test.evan.network/api'
-  ) {
+  constructor(runtime: any, agentUrl = 'https://agents.test.evan.network/api') {
     this.agentUrl = agentUrl;
     this.runtime = runtime;
   }
 
   initStripe() {
     this.stripe = Stripe(PUB_KEY);
-  }  
+  }
 
   /**
    * Returns stripe source data object.
-   * TODO: Params look weird still
+   *
    * @param customer
-   * @param param1
+   * @param options
    */
   createStripeSourceData(
     customer: CustomerInterface,
-    { type = 'card', currency = 'eur', notification_method = 'email' } = {}
+    {
+      type = 'card',
+      currency = 'eur',
+      notification_method = 'email'
+    }: OptionsInterface
   ): StripeSource {
     const usageTypes = {
       card: 'single_use',
@@ -79,8 +80,8 @@ export class PaymentService {
     };
 
     return {
-      type,
-      currency,
+      type: type,
+      currency: currency,
       owner: {
         name: customer.shipping.name,
         email: customer.email,
@@ -88,8 +89,7 @@ export class PaymentService {
       },
       usage: usageTypes[type],
       mandate: {
-        // Automatically send a mandate notification to your customer once the source is charged.
-        notification_method
+        notification_method: notification_method
       }
     };
   }
@@ -109,7 +109,10 @@ export class PaymentService {
     options?: OptionsInterface
   ): Promise<StatusResponse | ErrorStatus> {
     const sourceData = this.createStripeSourceData(customer, options);
-    const { source, error } = await this.stripe.createSource(stripeElement, sourceData);
+    const { source, error } = await this.stripe.createSource(
+      stripeElement,
+      sourceData
+    );
 
     if (error) {
       return {
@@ -139,7 +142,7 @@ export class PaymentService {
     amount: string,
     customer: any
   ): Promise<StatusResponse> {
-    return new Promise(async(resolve) => {
+    return new Promise(async resolve => {
       const res = await axios.post<StatusResponse>(
         `${this.agentUrl}/smart-agents/payment-processor/executePayment`,
         {
@@ -155,7 +158,7 @@ export class PaymentService {
         }
       );
       resolve(res.data);
-    })
+    });
   }
 
   /**
@@ -189,24 +192,24 @@ export class PaymentService {
   ): Promise<StatusResponse> {
     return new Promise((resolve, reject) => {
       this.intervalTimer = setInterval(async () => {
-        const response = await this.checkStatus(id, amount, customer); 
+        const response = await this.checkStatus(id, amount, customer);
 
         console.log('this.requestId', this.requestId);
         console.log('response', response);
-        
+
         switch (response.status) {
           case 'error':
             clearInterval(this.intervalTimer);
             reject(response);
-            break;        
+            break;
           case 'new':
             this.requestId = response.result;
-            break;          
+            break;
           case 'transferring':
           case 'success':
             clearInterval(this.intervalTimer);
             resolve(response);
-            break;          
+            break;
         }
       }, PaymentService.PAYMENT_RETRY);
     });

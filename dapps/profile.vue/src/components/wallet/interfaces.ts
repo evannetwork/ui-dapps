@@ -37,4 +37,5 @@ export interface ErrorStatus {
 export interface OptionsInterface {
   type?: string;
   currency?: string;
+  notification_method?: string;
 }

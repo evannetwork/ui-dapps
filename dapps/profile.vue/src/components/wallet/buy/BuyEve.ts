@@ -23,6 +23,23 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { PaymentService } from '../paymentService';
 
+// TODO: evan style
+const elementStyles = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+
 @Component({})
 export default class BuyEveComponent extends mixins(EvanComponent) {
   payment_providers = [
@@ -33,28 +50,11 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   paymentService: PaymentService;
 
   eveAmount: number;
-  // This is different from stripe element type (sepa_debit vs iban)
+  // selectedMethod is different from stripe element type (sepa_debit vs iban)
   selectedMethod: 'card' | 'sepa_debit';
   stripeElement: any;
   elements: any;
   isLoading = false;
-
-  // TODO: evan style
-  private elementStyles = {
-    base: {
-      color: '#32325d',
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSmoothing: 'antialiased',
-      fontSize: '16px',
-      '::placeholder': {
-        color: '#aab7c4'
-      }
-    },
-    invalid: {
-      color: '#fa755a',
-      iconColor: '#fa755a'
-    }
-  };
 
   created() {
     const runtime = (this as any).getRuntime();
@@ -74,9 +74,9 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     const input = (<HTMLSelectElement>event.target).value;
     // TODO: any until stripe types properly imported
     let options: any = {
-      style: this.elementStyles
+      style: elementStyles
     };
-    
+
     if (input === 'iban') {
       this.selectedMethod = 'sepa_debit';
       options.supportedCountries = ['SEPA'];
@@ -93,8 +93,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   async buyEve() {
     this.isLoading = true;
     const customer = this.paymentService.getCustomer({
-      // name: 'karl',
-      // email: 'adlerkarl@gmail.com',
+      name: 'karl',
+      email: 'adlerkarl@gmail.com',
       // company: 'evan',
       // street: 'Test street',
       // city: 'test city',
