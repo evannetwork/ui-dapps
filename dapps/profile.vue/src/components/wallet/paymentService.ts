@@ -68,11 +68,7 @@ export class PaymentService {
    */
   createStripeSourceData(
     customer: CustomerInterface,
-    {
-      type = 'card',
-      currency = 'eur',
-      notification_method = 'email'
-    }: OptionsInterface
+    { type = 'card', currency = 'eur', notification_method = 'email' }
   ): StripeSource {
     const usageTypes = {
       card: 'single_use',

@@ -42,13 +42,30 @@ const elementStyles = {
 
 @Component({})
 export default class BuyEveComponent extends mixins(EvanComponent) {
-  payment_providers = [
+  paymentService: PaymentService;
+
+  paymentMethods = [
     { value: 'iban', label: 'SEPA Debit' },
     { value: 'card', label: 'Card' }
   ];
 
-  paymentService: PaymentService;
+  detailedInputs = [
+    { id: 'name', label: '_wallet.name', type: 'text', value: '' },
+    { id: 'mail', label: '_wallet.mail', type: 'email', value: '' },
+    { id: 'company', label: '_wallet.company', type: 'text', value: '' },
+    { id: 'street', label: '_wallet.street', type: 'text', value: '' },
+    {
+      id: 'postal_code',
+      label: '_wallet.postal-code',
+      type: 'text',
+      value: ''
+    },
+    { id: 'city', label: '_wallet.city', type: 'text', value: '' },
+    { id: 'country', label: '_wallet.country', type: 'text', value: '' },
+    { id: 'vat', label: '_wallet.vat', type: 'number', value: '' }
+  ];
 
+  step = 0;
   eveAmount: number;
   // selectedMethod is different from stripe element type (sepa_debit vs iban)
   selectedMethod: 'card' | 'sepa_debit';
@@ -60,6 +77,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     const runtime = (this as any).getRuntime();
     this.paymentService = new PaymentService(runtime);
     this.paymentService.initStripe();
+    this.preloadDetails();
   }
 
   amountChangeHandler(amount) {
@@ -88,13 +106,14 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     this.elements = this.paymentService.getStripeElements();
     this.stripeElement = this.elements.create(input, options);
     this.stripeElement.mount('#stripeElement');
+    console.log(this.selectedMethod);
   }
 
   async buyEve() {
     this.isLoading = true;
     const customer = this.paymentService.getCustomer({
       name: 'karl',
-      email: 'adlerkarl@gmail.com',
+      email: 'adlerkarl@gmail.com'
       // company: 'evan',
       // street: 'Test street',
       // city: 'test city',
@@ -109,5 +128,18 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       { type: this.selectedMethod }
     );
     this.isLoading = false;
+  }
+
+  preloadDetails() {
+    const data = this.$store.state.profileDApp.data;
+    
+    this.detailedInputs[0].value = '';
+    this.detailedInputs[1].value = '';
+    this.detailedInputs[2].value = data.accountDetails.accountName || '';
+    this.detailedInputs[3].value = data.contact.streetAndNumber || '';
+    this.detailedInputs[4].value = data.contact.postalCode || '';
+    this.detailedInputs[5].value = data.contact.city || '';
+    this.detailedInputs[6].value = data.contact.country || '';
+    this.detailedInputs[7].value = data.accountDetails.vat || ''; // TODO doesnt exist yet
   }
 }

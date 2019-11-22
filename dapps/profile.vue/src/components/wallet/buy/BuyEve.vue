@@ -11,57 +11,79 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 https://evan.network/license/ */
 
 <template>
-  <form @submit.prevent="buyEve">
-    <h1>Buy EVEs</h1>
+  <div>
+    <form @submit.prevent="buyEve">
+      <h2>{{ '_wallet.buy-eves' | translate }}</h2>
 
-    <div>
-      <label for="eveAmount">{{ '_wallet.eve-amount' | translate }}</label>
-      <input
-        class="form-control"
-        type="number"
-        required
-        min="10"
-        step="5"
-        id="eveAmount"
-        v-model="eveAmount"
-      />
-    </div>
+      <div v-show="step === 0">
+        <div>
+          <!-- TODO type number not working -->
+          <evan-form-control-input
+            v-model="eveAmount"
+            type="number"
+            :label="$t('_wallet.eve-amount')"
+            :required="true"
+            min="10"
+            step="5"
+            :id="'eveAmount'"
+          />
+        </div>
 
-    <div>
-      <label for="payment_provider">{{ '_wallet.select-payment-method' | translate }}</label>
-      <evan-form-control-select
-        :id="payment_provider"
-        :options="payment_providers"
-        :placeholder="$t('_evan.choose-here')"
-        @change="methodChangeHandler"
-        :required="true"
-      ></evan-form-control-select>
-    </div>
+        <div>
+          <evan-form-control-select
+            :id="'paymentMethods'"
+            :options="paymentMethods"
+            :label="$t('_wallet.select-payment-method')"
+            :placeholder="$t('_evan.choose-here')"
+            :required="true"
+            @change="methodChangeHandler"
+          ></evan-form-control-select>
+        </div>
 
-    <div ref="stripeElement" id="stripeElement"></div>
-    <p>
-      <small>
-        MOCK By entering your IBAN and confirming this payment, you authorize
-        evan GmbH and Stripe, our payment service provider, to send
-        instructions to your bank to debit your account and your bank to debit
-        your account in accordance with these instructions. You are entitled
-        to a refund from your bank in accordance with the terms of your
-        agreement with your bank. A refund must be requested within 8 weeks of
-        the date your account was debited.
-      </small>
-    </p>
-    <div class="panel-footer">
-      <button type="submit" class="btn btn-primary" :disabled="isLoading">
-        <span
-          class="spinner-border spinner-border-sm mr-3"
-          role="status"
-          aria-hidden="true"
-          v-if="isLoading"
-        ></span>
-        <span>{{ '_evan.buy' | translate }}</span>
-      </button>
-    </div>
-  </form>
+        <label for="stripeElement" v-if="selectedMethod === 'card'">{{ '_wallet.card' | translate }}</label>
+        <div ref="stripeElement" id="stripeElement"></div>
+
+        <p>
+          <small>{{ '_wallet.disclaimer' | translate }}</small>
+        </p>
+      </div>
+
+      <div v-show="step === 1">
+        <template v-for="input in detailedInputs">
+          <evan-form-control-input
+            :key="input.id"
+            :id="input.id"
+            :label="input.label"
+            :type="input.type"
+            :placeholder="input.label"
+            :required="true"
+            v-model="input.value"
+          />
+        </template>
+      </div>
+
+      <div class="panel-footer">
+        <button type="button" class="btn btn-block btn-primary" @click="step++" v-if="step === 0">
+          <span>{{ '_evan.next' | translate }}</span>
+        </button>
+
+        <template v-else>
+          <button type="button" class="btn btn-secondary" @click="step--">
+            <span>{{ '_evan.back' | translate }}</span>
+          </button>
+          <button type="submit" class="btn btn-block btn-primary" :disabled="isLoading">
+            <span
+              class="spinner-border spinner-border-sm mr-3"
+              role="status"
+              aria-hidden="true"
+              v-if="isLoading"
+            ></span>
+            <span>{{ '_evan.buy' | translate }}</span>
+          </button>
+        </template>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -83,15 +105,5 @@ export default Component;
   left: 0;
   position: absolute;
   background: cssVar('bg-level-1');
-
-  &.relative {
-    position: relative;
-    padding: 24px 0;
-  }
-
-  button.btn-primary {
-    width: 100%;
-    margin-left: 20px;
-  }
 }
 </style>
