@@ -42,6 +42,7 @@ export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, r
   if (accountDetails && accountDetails.accountName) {
     return accountDetails.accountName;
   } else {
+    const profileOwner = profile.profileOwner;
     // load addressbook info
     const myProfile = new bcc.Profile({
       ...profile.options,
@@ -49,8 +50,8 @@ export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, r
       accountId: profile.activeAccount,
     });
     const addressBook = await myProfile.getAddressBook();
-    const contact = addressBook.profile[myProfile.profileOwner];
+    const contact = addressBook.profile[profileOwner];
 
-    return contact ? contact.alias : myProfile.profileOwner;
+    return contact ? contact.alias : profileOwner;
   }
 }
