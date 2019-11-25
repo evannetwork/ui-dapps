@@ -132,7 +132,7 @@ Scenario: Creating a new bycicle twin using onboarding
   Given I go to the evan.network startpage
     And I am on the path "#/dashboard.vue.evan/onboarding.vue.evan/twin-sign-up"
     Then I want to see a text including "Create your Digital Twin"
-    And I want to see a text including "Choose a twin type and give your new twin meaningful name"
+    And I want to see a text including "Choose a type and give your Digital Twin a name."
     And the button "Continue" should be "disabled"
 
   When I set Input field with label "Type" to "bycicle"
@@ -141,19 +141,19 @@ Scenario: Creating a new bycicle twin using onboarding
     Then the button "Continue" should be "enabled"
 
   When I click on button "Continue"
-    Then the button "Continue" should be "disabled"
-   # Then I want to see a text including "Describe your bycicle by it's specifications"
+    Then the button "Continue" should be "enabled"
+    Then I want to see a text including "Describe your bicycle by it's specifications"
 
   When I set Input field with label "Type" to "mountain bike"
     And I set Input field with label "Color" to "red"
     And I set Input field with label "Wheel size" to "29"
-    And I set Input field with label "Gender" to "male"
+    And I set Input field with label "Category" to "male"
     And I set Input field with label "Manufacturer" to "Ghost"
     Then the button "Continue" should be "enabled"
 
   When I click on button "Continue"
-    Then the button "Continue" should be "disabled"
-    And I want to see a text including "Complete history of maintenance logs."
+    Then the button "Continue" should be "enabled"
+    And I want to see a text including "History of maintenance logs."
     And I want to see a text including "Date"
     And I want to see a text including "Description"
     And I want to see a text including "Processor"
