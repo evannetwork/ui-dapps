@@ -85,18 +85,6 @@ Scenario: Registering a new company account on evan
     Then I want to see a element with class "evan-step-3"
     And the button "Continue" should be "enabled"
   When I click on button "Continue"
-    Then Input field with label "Company" should be visible
-    And Input field with label "Register Court" should be visible
-    And Input field with label "Register" should be visible
-    And Input field with label "Registration Number" should be visible
-    And Input field with label "Sales Tax ID" should be visible
-  When I set Input field with label "Company" to "Test Company"
-    And I set Input field with label "Register Court" to "Test Register Court"
-    And I set Input field with label "Register" to "DE"
-    And I set Input field with label "Registration Number" to "Test Registration Number"
-    And I set Input field with label "Sales Tax ID" to "Test Sales Tax ID"
-    Then the button "Continue" should be "enabled"
-  When I click on button "Continue"
     Then Input field with label "Street and Number" should be visible
     And Input field with label "Postal Code" should be visible
     And Input field with label "City" should be visible
@@ -105,6 +93,16 @@ Scenario: Registering a new company account on evan
     And I set Input field with label "Postal Code" to "99817"
     And I set Input field with label "City" to "Test City"
     And I set Input field with label "Website" to "https://evan.network"
+    Then the button "Continue" should be "enabled"
+  When I click on button "Continue"
+    Then Input field with label "Register Court" should be visible
+    And Input field with label "Register" should be visible
+    And Input field with label "Registration Number" should be visible
+    And Input field with label "Sales Tax ID" should be visible
+  When I set Input field with label "Register Court" to "Test Register Court"
+    And I set Input field with label "Register" to "DE"
+    And I set Input field with label "Registration Number" to "Test Registration Number"
+    And I set Input field with label "VAT ID" to "Test Sales Tax ID"
     Then the button "Continue" should be "enabled"
   When I click on button "Continue"
     And I want to click on vue checkbox control with id "termsAccepted"
