@@ -98,7 +98,7 @@ Scenario: Registering a new company account on evan
     Then Input field with label "Register Court" should be visible
     And Input field with label "Register" should be visible
     And Input field with label "Registration Number" should be visible
-    And Input field with label "Sales Tax ID" should be visible
+    And Input field with label "VAT ID" should be visible
   When I set Input field with label "Register Court" to "Test Register Court"
     And I set Input field with label "Register" to "DE"
     And I set Input field with label "Registration Number" to "Test Registration Number"
