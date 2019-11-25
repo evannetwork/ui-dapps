@@ -21,7 +21,7 @@
   <div class="profile-detail p-xxl-11 p-xl-6 p-3">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
-      <div class="row">
+      <div class="row profile-row">
         <div class="col left-col mb-3">
           <profile-permission-wrapper entryName="accountDetails">
             <div class="d-flex align-items-center">
@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="row" v-if="userInfo">
+      <div class="row profile-row" v-if="userInfo">
         <div class="col left-col mt-3">
           <div class="text-center" v-if="userInfo.profileType === 'user'">
             <template v-if="this.isLoading()">
@@ -146,8 +146,9 @@
         ref="shareSidebar"
         showBackdrop="true"
         type="default"
-        v-if="userInfo"
-      >
+        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+        @hide="$store.state.uiState.swipePanel = ''"
+        v-if="userInfo">
         <evan-permissions-editor
           :loadPermissions="loadPermissions"
           :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
