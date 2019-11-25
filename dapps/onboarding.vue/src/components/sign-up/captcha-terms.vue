@@ -22,7 +22,7 @@
     <div class="d-flex justify-content-center">
       <div class="terms-of-use">
         <evan-form-control-checkbox
-          class="mr-3" style="min-width: 0; width: auto;"
+          class="mr-3" style="min-width: 0; width: auto; margin: 0;"
           id="termsAccepted"
           v-model="signUpComp.termsAccepted.value"
           :class="{ 'is-invalid' : signUpComp.termsAccepted.error }"

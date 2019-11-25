@@ -19,7 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -70,4 +70,21 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
     '13.svg': 'height: 630px;',
     '14.svg': 'width: 246.1px; margin-bottom: 101px; margin-left: 3px;;',
   };
+
+  /**
+   * Set initial image size.
+   */
+  mounted() {
+    this.setImageStyle();
+  }
+
+  /**
+   * Set new image size, when img was loaded
+   */
+  setImageStyle() {
+    const banner: any = this.$el.querySelector('img.desc-banner');
+    if (banner) {
+      banner.style.cssText = this.imageSizes[this.images[this.step]];
+    }
+  }
 }
