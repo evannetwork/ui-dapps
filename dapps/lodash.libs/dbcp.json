@@ -7,7 +7,7 @@
       "files": [
         "lodash.libs.js"
       ],
-      "origin": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu",
+      "origin": "QmV23JwLoYGPbkdhQH6rYRBe3CZ6jpyosmCrcd7Fmzi3zs",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -30,9 +30,10 @@
       "evan",
       "library"
     ],
-    "version": "4.17.11",
+    "version": "4.17.15",
     "versions": {
-      "4.17.11": "QmdqXcMocgYWK8Hfrpq1SRT2TKNSX1fofndueqcmF3w5mu"
+      "4.17.11": "QmV9PhHPfKaUxbnnkoBhsK1m7TKFes7M1U3GymAH6omwY2",
+      "4.17.15": "Qmc5ja4RH8Wv8gEMRyicDZ5b7SZ1jc3HFr5jDPVXFwY5nS"
     }
   }
 }
