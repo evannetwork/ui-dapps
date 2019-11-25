@@ -1,65 +1,67 @@
 {
   "_onboarding": {
+    "back": "Back",
+    "back-to-website": "Back to Homepage",
     "close": "Close",
     "continue": "Continue",
     "free-input": "Free input",
     "headings": {
       "sign-in": {
         "0": {
-          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-          "title": "Your gateway to digitization"
+          "desc": "Your data security is very important to us. Therefore, the login process consists of two parts. The <b>recovery key</b> helps you to secure your information. Please keep it inaccessible to third parties in a safe place.",
+          "title": "Login to the evan.network"
         },
         "1": {
           "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-          "title": "Transparency"
+          "title": "Welcome to the evan.network"
         }
       },
       "sign-up": {
         "company": {
           "0": {
-            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-            "title": "Your gateway to digitization"
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
+            "title": "Registration in the evan.network"
           },
           "1": {
-            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-            "title": "Your gateway to digitization"
+            "desc": "To make transactions in the evan.network, you need an account. On the basis of your company-specific data, you can be verified later as a trustful company.",
+            "title": "Your path to a company account"
           },
           "2": {
-            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-            "title": "Your gateway to digitization"
+            "desc": "You need your address data later for the verification as a company. This creates a network of partners exchanging data and information directly across companies.",
+            "title": "Your path to a company account"
           },
           "3": {
-            "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-            "title": "Transparency"
+            "desc": "After completing the registration, you have access to the evan.network and can interact trustfully with your partners.",
+            "title": "Welcome to the evan.network"
           }
         },
         "user": {
           "0": {
-            "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-            "title": "Your gateway to digitization"
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
+            "title": "Registration in the evan.network"
           },
           "1": {
-            "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-            "title": "Transparency"
+            "desc": "After completing the registration, you have access to the evan.network and can interact trustfully with your partners",
+            "title": "Welcome to the evan.network"
           }
         }
       },
       "twin-sign-up": {
         "0": {
-          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-          "title": "Your gateway to digitization"
+          "desc": "Digital twins are the key to make transactions in the evan.network. Enter here the basic data of your digital twin, so that you can exchange information with business partners.",
+          "title": "Your gateway to digital twins"
         },
         "1": {
-          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-          "title": "Your gateway to digitization"
+          "desc": "Each digital twin is unique. Only you decide which information is shared confidentially with your business partners. Enter here the specifications of your digital twin, regarding to your requirements.",
+          "title": "Data sovereignty has top priority"
         },
         "2": {
-          "desc": "Digital Identities alone does not make a network. What is also needed is a neutral operating platform on which transactions between things, organizations and people can be securely and trustfully processed.",
-          "title": "Your gateway to digitization"
+          "desc": "The digital twin enables you to connect with your business partners. You decide when your business partners have access to the digital twin and its stored information. This guarantees your data sovereignty.",
+          "title": "Add rights and roles for information"
         },
         "3": {
-          "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
-          "title": "Transparency"
+          "desc": "In order to use the digital twin, you need to register free of charge in the evan.network. The blockchain technology enables trustful interactions in the network. Your data sovereignty is guaranteed.",
+          "title": "Welcome to the evan.network"
         }
       }
     },
@@ -122,8 +124,15 @@
         "status-2": "Encrypting user information...",
         "status-3": "Creating mailbox, address book, ...",
         "status-4": "Setting up verification management...",
-        "status-5": "Identity was successfully created...",
+        "status-5": "Identity was successfully created!",
         "title": "Create Account"
+      },
+      "create-profile-twin": {
+        "status-1": "Creating identity contract...",
+        "status-2": "Encrypting user information...",
+        "status-3": "Creating mailbox, address book...",
+        "status-4": "Creating Digital Twin...",
+        "status-5": "Digital Twin was successfully created!"
       },
       "desc": "Create your evan.network identity",
       "desc-long": "Generate your secure and independent identity on the evan.network. With the help of this identity, you can interact with business partners, contracts and companies. You can restore your identity on another device at any time using your generated recovery key and continue working.",
@@ -201,7 +210,7 @@
         "empty-field": "Please insert a value for {label}!",
         "steps": {
           "dbcp": {
-            "desc": "Choose a twin type and give your new twin meaningful name",
+            "desc": "Choose a type and give your Digital Twin a name.",
             "title": "Basic information"
           },
           "finish": {

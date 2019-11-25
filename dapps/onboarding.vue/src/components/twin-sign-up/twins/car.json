@@ -71,15 +71,12 @@
               "items": {
                 "properties": {
                   "date": {
-                    "minLength": 1,
                     "type": "string"
                   },
                   "description": {
-                    "minLength": 1,
                     "type": "string"
                   },
                   "processor": {
-                    "minLength": 1,
                     "type": "string"
                   }
                 },
@@ -231,27 +228,21 @@
               "$id": "characteristics_schema",
               "properties": {
                 "color": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "doors": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "gearbox": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "manufacturer": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "model": {
-                  "minLength": 1,
                   "type": "string"
                 },
                 "power": {
-                  "minLength": 1,
                   "type": "string"
                 }
               },

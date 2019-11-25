@@ -22,7 +22,8 @@
     <evan-profile-creating :maximumSteps="5" :activeStep="creatingProfile" v-if="creatingProfile" />
     <evan-onboarding-layout-wrapper v-else
       :type="`sign-up.${ profileForm.accountType.value }`"
-      :step="activeStep">
+      :step="activeStep"
+      :images="getLeftPanelImages()">
       <div>
         <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.create-account' | translate }}

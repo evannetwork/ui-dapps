@@ -68,6 +68,7 @@
               <div class="d-flex justify-content-center my-5">
                 <evan-card class="clickable fixed-size"
                   v-for="(type, index) in profileTypes"
+                  :key="index"
                   :class="{
                     'ml-3': index !== 0,
                     'evan-highlight active': newType === type,

@@ -30,7 +30,7 @@
               `${ $store.state.onboardingBaseUrl }/assets/creating_${ activeStep }.png`
             ">
         </div>
-        <div style="height: 10px" class="mx-auto progress my-3 bg-white">
+        <div style="height: 10px; min-width: 390px;" class="mx-auto progress my-3 bg-white">
           <div
             class="progress-bar"
             role="progressbar"
