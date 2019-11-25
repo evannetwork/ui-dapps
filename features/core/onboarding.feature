@@ -127,7 +127,7 @@ Scenario: Registering a new company account on evan
   #   And The value of the Input field with label "City" should be "Test City"
   #   And The value of the Input field with label "Website" should be "https://evan.network"
 
-Scenario: Creating a new bycicle twin using onboarding
+Scenario: Creating a new bicycle twin using onboarding
 
   Given I go to the evan.network startpage
     And I am on the path "#/dashboard.vue.evan/onboarding.vue.evan/twin-sign-up"
@@ -142,7 +142,7 @@ Scenario: Creating a new bycicle twin using onboarding
 
   When I click on button "Continue"
     Then the button "Continue" should be "enabled"
-    Then I want to see a text including "Describe your bicycle"
+    Then I want to see a text including "Describe your bicycle by it's specifications"
 
   When I set Input field with label "Type" to "mountain bike"
     And I set Input field with label "Color" to "red"
@@ -179,7 +179,7 @@ Scenario: Creating a new bycicle twin using onboarding
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
     And I click the element with id "evan-recaptcha"
-    And I click on vue checkbox control with id "termsAccepted"
+    And I want to click on vue checkbox control with id "termsAccepted"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
 

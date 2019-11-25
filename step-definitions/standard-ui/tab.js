@@ -8,7 +8,7 @@ When('I click on tab {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
-    const xPathSelector = `//*[contains(@class, 'evan-tab') and normalize-space(text()) = '${content}']`;
+    const xPathSelector = `//*[contains(@class, 'evan-tab') and normalize-space(text()) = "${content}"]`;
 
     await client.expect.element(xPathSelector).to.be.present;
     await client.click(xPathSelector);
@@ -23,7 +23,7 @@ Then('I want to see a tab {string}',
   async (content) => {
      // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
      client.useXpath();
-     const xPathSelector = `//*[contains(@class, 'evan-tab') and normalize-space(text()) = '${content}']`;
+     const xPathSelector = `//*[contains(@class, 'evan-tab') and normalize-space(text()) = "${content}"]`;
 
      await client.waitForElementPresent(xPathSelector, 10 * 1000);
      await client.expect.element(xPathSelector).to.be.visible;

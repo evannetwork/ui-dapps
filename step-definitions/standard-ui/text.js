@@ -9,7 +9,7 @@ When('I want to see a text including {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
-    const xPathSelector = `//*[normalize-space(text()) = '${content}']`;
+    const xPathSelector = `//*[normalize-space(text()) = "${content}"]`;
 
     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.be.present;
@@ -24,7 +24,7 @@ When('I want to see not a text including {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
-    const xPathSelector = `//*[normalize-space(text()) = '${content}']`;
+    const xPathSelector = `//*[normalize-space(text()) = "${content}"]`;
 
     await client.waitForElementNotPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.not.be.present;
@@ -39,7 +39,7 @@ When('I click on an element with text including {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
-    const xPathSelector = `//*[normalize-space(text()) = '${content}']`;
+    const xPathSelector = `//*[normalize-space(text()) = "${content}"]`;
 
     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.click(xPathSelector);
