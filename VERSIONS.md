@@ -16,6 +16,8 @@
 - `addressbook.vue` (v3.1.2)
   - contact click redirects to profile detail
   - fix "ugly" eve number input
+- `mailbox.vue` (v3.1.2)
+  - fix open attachment for comKeys
 
 ### Deprecations
 
