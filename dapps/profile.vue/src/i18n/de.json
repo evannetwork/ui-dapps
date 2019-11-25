@@ -133,7 +133,7 @@
       "verification-accept": "Verifikation wird angenommen..."
     },
     "not-permitted": {
-      "accountDetails": "Identitätinformationen",
+      "accountDetails": "Identitätsinformationen",
       "contact": "Kontaktdaten",
       "desc": "Sie haben keine Berechtigungen, diese Daten einzusehen.",
       "deviceDetails": "Geräteinformationen",
