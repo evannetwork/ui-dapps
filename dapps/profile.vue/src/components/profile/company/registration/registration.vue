@@ -20,7 +20,6 @@
 <template>
   <div>
     <evan-form
-      class="mt-2 mb-8"
       ref="form"
       :editable="onlyForm || $store.state.profileDApp.permissions.readWrite.indexOf('registration') !== -1"
       :enableCancel="onlyEdit ? false : true"

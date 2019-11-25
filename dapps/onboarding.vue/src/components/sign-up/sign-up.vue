@@ -25,21 +25,22 @@
       :step="activeStep"
       :images="getLeftPanelImages()">
       <div>
-        <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
+        <h4 class="text-center text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.create-account' | translate }}
         </h4>
-        <evan-steps class="text-center"
+        <evan-steps class="text-center my-3"
           minimal="true"
           :activeStep="activeStep"
           :steps="steps"
           @stepChange="activeStep = $event"
         />
         <div v-if="activeStep === 0">
-          <p class="text-center mt-3 mb-4">
+          <p class="text-center mt-3 mb-0">
             {{ '_onboarding.sign-up.steps.base.desc' | translate }}
           </p>
 
           <evan-form
+            class="mt-3 mb-2"
             :i18nScope="'_onboarding.sign-up'"
             :onlyForm="true"
             :stacked="true"
@@ -47,58 +48,83 @@
           />
         </div>
         <div v-if="profileForm.accountType.value === 'company'">
-          <p class="text-center mt-3 mb-4" v-if="activeStep === 1">
+          <p class="text-center mt-3 mb-0" v-if="activeStep === 1">
             {{ '_onboarding.sign-up.steps.company.registration.desc' | translate }}
           </p>
-          <p class="text-center mt-3 mb-4" v-if="activeStep === 2">
+          <p class="text-center mt-3 mb-0"
+            v-if="activeStep === 2 && activeStep !== (steps.length - 1)">
             {{ '_onboarding.sign-up.steps.company.contact.desc' | translate }}
           </p>
 
           <!-- don't hide them, so formular validity checks will be done correctly -->
-          <profile-company-registration
-            ref="companyRegistration"
-            onlyForm="true"
-            stacked="true"
+          <profile-company-contact
+            class="mt-3 mb-2"
             :address="address"
             :class="{ 'd-none': activeStep !== 1 }"
-            :data="userData.registration || { }">
-          </profile-company-registration>
-          <profile-company-contact
-            ref="companyContact"
+            :data="userData.contact || { }"
+            @countryChanged="userData.contact.country = $event;"
             onlyForm="true"
-            stacked="true"
-            :address="address"
-            :class="{ 'd-none': activeStep !== 2 }"
-            :data="userData.contact || { }">
+            ref="companyContact"
+            stacked="true">
           </profile-company-contact>
+          <profile-company-registration
+            class="mt-3 mb-2"
+            :address="address"
+            :class="{ 'd-none': activeStep !== 2 || activeStep === (steps.length - 1) }"
+            :data="userData.registration || { }"
+            onlyForm="true"
+            ref="companyRegistration"
+            stacked="true">
+          </profile-company-registration>
         </div>
         <div v-if="activeStep === (steps.length - 1)">
-          <p class="text-center mb-8">
+          <p class="text-center mb-3">
             {{ '_onboarding.sign-up.steps.captcha.desc' | translate }}
           </p>
 
           <profile-captcha-terms :signUpComp="this" />
-
-          <div class="text-center mt-8">
-            <button type="button" class="btn  btn-primary btn-block"
+          <div class="d-flex justify-content-between text-center">
+            <evan-button class="mr-3"
+              type="secondary"
+              @click="activeStep--">
+              {{ '_onboarding.back' | translate }}
+            </evan-button>
+            <evan-button
               :disabled="!recaptchaToken || !termsAccepted.value"
-              @click="createProfile()">
+              @click="createProfile()"
+              class="btn-block"
+              type="primary">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
-            </button>
+            </evan-button>
           </div>
         </div>
-        <div class="text-center" v-else>
-          <button type="submit" class="btn  btn-primary btn-block"
-            :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
-            @click="activeStep++">
-            {{ '_onboarding.continue' | translate }}
-          </button>
+        <div v-else>
+          <div class="d-flex justify-content-between text-center">
+            <evan-button
+              @click="activeStep--"
+              class="mr-3"
+              type="secondary"
+              v-if="activeStep !== 0">
+              {{ '_onboarding.back' | translate }}
+            </evan-button>
+            <span class="mx-auto" v-else></span>
+            <evan-button
+              :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
+              @click="activeStep++"
+              class="btn-block"
+              type="primary">
+              {{ '_onboarding.continue' | translate }}
+            </evan-button>
+          </div>
 
-          <p class="text-center mt-5" v-html="$t(`_onboarding.sign-up.already-signed-up`)"></p>
+          <p
+            class="text-center mt-5"
+            v-html="$t(`_onboarding.sign-up.already-signed-up`)"
+          />
         </div>
 
         <div v-if="onboardedDialog">
-          <h5 class="text-center mt-4 mb-4">
+          <h5 class="text-center">
             {{ '_onboarding.sign-up.welcome-desc' | translate }}
           </h5>
 

@@ -17,26 +17,23 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-form
-      ref="form"
-      :editable="onlyForm || $store.state.profileDApp.permissions.readWrite.indexOf('contact') !== -1"
-      :enableCancel="onlyEdit ? false : true"
-      :form="form"
-      :handleShare="() => $store.commit('toggleSidePanel', 'sharing')"
-      :i18nScope="'_profile.company.contact'"
-      :isLoading="!onlyForm && $store.state.dispatcher.curr.running.updateProfileDispatcher"
-      :onlyForm="onlyForm"
-      :shareable="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
-      :stacked="stacked"
-      :title="'_profile.company.contact.title' | translate"
-      @save="changeProfileData()">
-    </evan-form>
-  </div>
-</template>
+.terms-of-use {
+  display: flex;
+  align-items: center;
+  justify-content: left;
 
-<script lang="ts">
-  import Component from './contact';
-  export default Component;
-</script>
+  width: 300px;
+  height: 74px;
+  margin-bottom: 1em;
+  padding: 12px;
+
+  color: #000000;
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  background: #f9f9f9;
+  box-shadow: 0 0 4px 1px rgba(0,0,0,0.08);
+
+  * {
+    font-weight: 400;
+  }
+}

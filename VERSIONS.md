@@ -5,6 +5,8 @@
 - `onboarding.vue` (v3.3.0)
   - add onboarding with twin creation
   - add new images and texts to onboarding
+  - new order for company profile creation
+  - hide company registration form in onboarding for non german companies
 
 ### Fixes
 - `profile.vue` (v3.5.1)
@@ -20,6 +22,9 @@
   - fix open attachment for comKeys
 
 ### Deprecations
+- `onboarding.vue` (v3.3.0)
+  - remove company name from registration entry
+
 
 
 ## Version 3.11.0

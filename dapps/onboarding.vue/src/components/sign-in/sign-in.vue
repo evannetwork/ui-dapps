@@ -26,15 +26,16 @@
       <div class="evan-steps">
         <div class="step" v-if="activeStep === 0">
           <h4
-            class="text-center mt-4 mb-3 text-uppercase font-weight-bold"
+            class="text-center text-uppercase font-weight-bold"
           >{{ '_onboarding.sign-in.title' | translate }}</h4>
-          <p class="text-center mt-3 mb-4" v-html="$t(`_onboarding.sign-in.get-mnemonic-desc`)"></p>
+          <p class="text-center mb-0" v-html="$t(`_onboarding.sign-in.get-mnemonic-desc`)"></p>
 
           <h5
-            class="text-center mt-4 mb-3 text-uppercase font-weight-bold"
+            class="text-center text-uppercase font-weight-bold mt-5"
           >{{ '_onboarding.sign-in.recovery-key' | translate }}</h5>
 
           <evan-onboarding-mnemonic
+            class="my-3"
             :mnemonic.sync="mnemonic"
             :valid.sync="validMnemonic"
             v-on:submit="setMnemonic()"
@@ -45,7 +46,7 @@
             v-if="!profileExists"
           >{{ '_onboarding.sign-in.no-profile-desc' | translate }}</small>
 
-          <div class="text-center mt-4">
+          <div class="text-center">
             <button
               type="button"
               class="btn btn-block btn-primary"
@@ -65,7 +66,7 @@
         </div>
 
         <div class="step" v-if="activeStep === 2">
-          <h5 class="text-center mt-4 mb-4">{{ '_onboarding.sign-in.welcome-desc' | translate }}</h5>
+          <h5 class="text-center">{{ '_onboarding.sign-in.welcome-desc' | translate }}</h5>
 
           <evan-onboarding-accept-contact :loadAlias="true"></evan-onboarding-accept-contact>
         </div>

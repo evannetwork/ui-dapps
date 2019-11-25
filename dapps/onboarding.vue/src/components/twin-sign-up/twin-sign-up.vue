@@ -49,36 +49,37 @@
       :step="activeStep"
       :images="[ '1.svg', '2.svg', '3.svg', '13.svg' ]">
       <div>
-        <h4 class="text-center mt-4 mb-3 text-uppercase font-weight-bold">
+        <h4 class="text-center text-uppercase font-weight-bold">
           {{ '_onboarding.sign-up.twin.create' | translate }}
         </h4>
-        <evan-steps class="text-center"
+        <evan-steps class="text-center my-3"
           :activeStep="activeStep"
-          :steps="steps"
+          :steps="twinSteps"
           @stepChange="activeStep = $event"
           minimal="true"
-          v-if="activeStep !== steps.length"
+          v-if="activeStep !== twinSteps.length"
         />
         <div v-if="activeStep === 0">
-          <p class="text-center mt-3 mb-4">
+          <p class="text-center mb-0">
             {{ '_onboarding.sign-up.twin.steps.dbcp.desc' | translate }}
           </p>
 
           <evan-form
+            :form="twinDbcpForm"
             :i18nScope="'_onboarding.sign-up.twin.dbcp'"
             :onlyForm="true"
             :stacked="true"
-            :form="twinDbcpForm">
+            class="my-3">
           </evan-form>
         </div>
         <template v-if="!rerenderSteps">
           <div
             v-for="(step, index) in dataSetSteps()"
             :key="index"
-            :class="{ 'd-none': activeStep !== steps.indexOf(step) }">
-            <p class="text-center mt-3 mb-4"
-              v-if="steps[activeStep]">
-              {{ steps[activeStep].description }}
+            :class="{ 'd-none': activeStep !== twinSteps.indexOf(step) }">
+            <p class="text-center"
+              v-if="twinSteps[activeStep]">
+              {{ twinSteps[activeStep].description }}
             </p>
 
             <twin-data-set-form
@@ -88,51 +89,61 @@
               :dataSetName="step.dataSetSpecs.dataSetName"
               :description="step.dataSetSpecs.description"
             />
+
+            <p class="d-block text-center mb-4 text-muted font-italic"
+              v-if="twinSteps[activeStep]">
+              {{ '_onboarding.sign-up.twin.further-changes' | translate }}
+            </p>
           </div>
         </template>
-        <div v-if="activeStep === steps.length">
-          <p class="text-center mt-3 mb-4">
+        <div v-if="activeStep === twinSteps.length">
+          <p class="text-center mb-0">
             {{ '_onboarding.sign-up.twin.steps.finish.desc' | translate }}
           </p>
 
           <evan-form
+            :form="profileForm"
             :i18nScope="'_onboarding.sign-up'"
             :onlyForm="true"
             :stacked="true"
-            :form="profileForm">
+            class="mt-3">
             <template v-slot:form-control-accountType>
               <div class="d-none" />
             </template>
           </evan-form>
 
           <profile-captcha-terms :signUpComp="this" />
-          <div class="d-flex justify-content-between text-center mt-5">
+          <div class="d-flex justify-content-between text-center">
             <evan-button
-              type="secondary"
-              @click="activeStep--">
+              @click="activeStep--"
+              class="mr-3"
+              type="secondary">
               {{ '_onboarding.back' | translate }}
             </evan-button>
             <evan-button
-              type="primary"
-              :disabled="!recaptchaToken || !termsAccepted.value"
-              @click="createOfflineTwin()">
+              :disabled="!(recaptchaToken && termsAccepted.value && profileForm.isValid)"
+              @click="createOfflineTwin()"
+              class="btn-block"
+              type="primary">
               {{ '_onboarding.sign-up.create-profile.title' | translate }}
             </evan-button>
           </div>
         </div>
 
-        <div class="d-flex justify-content-between text-center mt-5" v-else>
+        <div class="d-flex justify-content-between text-center" v-else>
           <evan-button
-            type="secondary"
             :href="activeStep === 0 ? 'https://evan.network' : ''"
-            @click="activeStep !== 0 && activeStep--">
+            @click="activeStep !== 0 && activeStep--"
+            class="mr-3"
+            type="secondary">
             <template v-if="activeStep === 0">{{ '_onboarding.back-to-website' | translate }}</template>
             <template v-else>{{ '_onboarding.back' | translate }}</template>
           </evan-button>
           <evan-button
-            type="primary"
-            :disabled="steps[activeStep + 1] && steps[activeStep + 1].disabled()"
-            @click="activeStep++">
+            :disabled="twinSteps[activeStep + 1] && twinSteps[activeStep + 1].disabled()"
+            @click="activeStep++"
+            class="btn-block"
+            type="primary">
             {{ '_onboarding.continue' | translate }}
           </evan-button>
         </div>

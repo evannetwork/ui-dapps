@@ -18,15 +18,15 @@
 */
 
 <template>
-
   <div class="profile-detail p-xxl-11 p-xl-6 p-3">
     <evan-loading v-if="loading"></evan-loading>
     <template v-else>
       <div class="row">
-        <div class="col-xl-8 mb-3">
+        <div class="col left-col mb-3">
           <profile-permission-wrapper entryName="accountDetails">
             <div class="d-flex align-items-center">
               <evan-profile-preview
+                class="w-100"
                 ref="profilePreview"
                 size="lg"
                 :accountDetails="userInfo"
@@ -47,7 +47,7 @@
             </div>
           </profile-permission-wrapper>
         </div>
-        <div class="col-xl-4">
+        <div class="col right-col d-flex justify-content-end">
           <evan-wallet
             :accountDetails="userInfo"
             :address="$route.params.address"
@@ -56,7 +56,7 @@
       </div>
 
       <div class="row" v-if="userInfo">
-        <div class="col-xl-8 mt-3">
+        <div class="col left-col mt-3">
           <div class="text-center" v-if="userInfo.profileType === 'user'">
             <template v-if="this.isLoading()">
               <evan-loading></evan-loading>
@@ -98,11 +98,14 @@
             </template>
           </div>
           <template v-if="userInfo.profileType === 'company'">
-            <profile-permission-wrapper entryName="registration">
-              <profile-company-registration :address="address"></profile-company-registration>
-            </profile-permission-wrapper>
             <profile-permission-wrapper entryName="contact">
               <profile-company-contact :address="address"></profile-company-contact>
+            </profile-permission-wrapper>
+            <profile-permission-wrapper
+              class="mt-5"
+              entryName="registration"
+              v-if="$store.state.profileDApp.data.contact.country === 'DE'">
+              <profile-company-registration :address="address"></profile-company-registration>
             </profile-permission-wrapper>
           </template>
           <profile-permission-wrapper entryName="deviceDetails"
@@ -110,7 +113,7 @@
             <profile-device-detail :address="address"></profile-device-detail>
           </profile-permission-wrapper>
         </div>
-        <div class="col-xl-4">
+        <div class="col right-col">
           <template v-if="verificationCount === 0">
             <evan-card class="mt-3"
               icon="mdi mdi-plus"
@@ -136,19 +139,19 @@
         </div>
       </div>
       <evan-swipe-panel
-        class="light"
+        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+        @hide="$store.state.uiState.swipePanel = ''"
         alignment="right"
+        class="light"
         ref="shareSidebar"
         showBackdrop="true"
         type="default"
-        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
-        @hide="$store.state.uiState.swipePanel = ''"
         v-if="userInfo"
       >
         <evan-permissions-editor
           :loadPermissions="loadPermissions"
           :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-          :sortFilters="sortFilters[userInfo.profileType]"
+          :sortFilters="$store.state.profileDApp.sharingFilter"
           :updatePermissions="updatePermissions"
           i18nScope="_profile.sharing"
         />

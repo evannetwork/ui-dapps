@@ -29,6 +29,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from '../../dispatchers/registry';
 
+import { getPermissionSortFilter, } from '../utils/shareSortFilters';
+
 @Component({ })
 export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
@@ -123,7 +125,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     }
 
     // load container data
-    if (profile.profileContainer && profileDApp.description) {
+    if (profile.profileContainer && profileDApp.description && profileDApp.description.dataSchema) {
       // load permissions
       const { readWrite, read } = await profile.profileContainer.getContainerShareConfigForAccount(
         activeAccount);
@@ -132,6 +134,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         readWrite: readWrite || [ ],
       };
       profileDApp.data = await this.loadProfileEntries();
+      profileDApp.sharingFilter = getPermissionSortFilter(profileDApp.data);
     } else {
       if (profileDApp.isMyProfile) {
         profileDApp.permissions.read = [ 'accountDetails' ];

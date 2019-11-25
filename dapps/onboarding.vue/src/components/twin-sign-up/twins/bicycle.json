@@ -17,9 +17,9 @@
       "description": {
         "i18n": {
           "de": {
-            "description": "Vollständige Historie der Wartungsprotokolle.",
+            "description": "Historie der Wartungsprotokolle.",
             "maintenance": {
-              "description": "Vollständige Historie der Wartungsprotokolle.",
+              "description": "Historie der Wartungsprotokolle.",
               "name": "Wartung",
               "properties": {
                 "date": {
@@ -39,9 +39,9 @@
             "name": "Wartung"
           },
           "en": {
-            "description": "Complete history of maintenance logs.",
+            "description": "History of maintenance logs.",
             "maintenance": {
-              "description": "Complete history of maintenance logs.",
+              "description": "History of maintenance logs.",
               "name": "Maintenance",
               "properties": {
                 "date": {
@@ -115,8 +115,8 @@
                   "label": "Reifengröße",
                   "placeholder": "29\", 26\", 24\""
                 },
-                "gender": {
-                  "label": "Geschlecht",
+                "category": {
+                  "label": "Kategorie",
                   "placeholder": "Damen, Herren, Kinder"
                 },
                 "manufacturer": {
@@ -171,8 +171,8 @@
                   "label": "Wheel size",
                   "placeholder": "29\", 26\", 24\""
                 },
-                "gender": {
-                  "label": "Gender",
+                "category": {
+                  "label": "Category",
                   "placeholder": "Ladies, Gentlemen, Children"
                 },
                 "manufacturer": {
@@ -228,7 +228,7 @@
                 "frameHeight": {
                   "type": "string"
                 },
-                "gender": {
+                "category": {
                   "type": "string"
                 },
                 "manufacturer": {

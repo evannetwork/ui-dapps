@@ -21,4 +21,26 @@
   .profile-verification-card {
     margin-top: 1em;
   }
+
+  .row {
+    display: flex;
+    justify-content: flex-end;
+
+    .left-col {
+      flex-grow: 1;
+
+      min-width: 500px;
+    }
+
+    @media(min-width: 992px) {
+      .left-col, .right-col {
+        box-sizing: content-box;
+      }
+      // match wallet card width
+      .right-col {
+        min-width: 85.6mm;
+        max-width: 85.6mm !important;
+      }
+    }
+  }
 }

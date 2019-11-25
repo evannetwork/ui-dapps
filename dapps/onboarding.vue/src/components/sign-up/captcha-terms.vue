@@ -18,8 +18,28 @@
 */
 
 <template>
-  <div>
-    <div class="d-flex justify-content-center mb-3">
+  <div class="my-3">
+    <div class="d-flex justify-content-center">
+      <div class="terms-of-use">
+        <evan-form-control-checkbox
+          class="mr-3" style="min-width: 0; width: auto; margin: 0;"
+          id="termsAccepted"
+          v-model="signUpComp.termsAccepted.value"
+          :class="{ 'is-invalid' : signUpComp.termsAccepted.error }"
+          @input="signUpComp.termsAccepted.setDirty()"
+          @click="signUpComp.termsAccepted.value = !signUpComp.termsAccepted.value"
+        />
+        <label
+          for="termsAccepted"
+          class="form-check-label"
+          v-html="$t(`_onboarding.sign-up.terms-accepted`)">
+        </label>
+        <div class="invalid-feedback">
+          {{ '_onboarding.sign-up.errors.terms-accepted' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
       <vue-recaptcha id="evan-recaptcha"
         v-if="!signUpComp.initialzing"
         ref="recaptcha"
@@ -29,25 +49,6 @@
         @expired="signUpComp.onCaptchaExpired">
       </vue-recaptcha>
     </div>
-
-    <div class="d-flex justify-content-center">
-      <evan-form-control-checkbox
-        class="mr-3" style="min-width: 0; width: auto;"
-        id="termsAccepted"
-        v-model="signUpComp.termsAccepted.value"
-        :class="{ 'is-invalid' : signUpComp.termsAccepted.error }"
-        @input="signUpComp.termsAccepted.setDirty()"
-        @click="signUpComp.termsAccepted.value = !signUpComp.termsAccepted.value"
-      />
-      <label
-        for="termsAccepted"
-        class="form-check-label"
-        v-html="$t(`_onboarding.sign-up.terms-accepted`)">
-      </label>
-      <div class="invalid-feedback">
-        {{ '_onboarding.sign-up.errors.terms-accepted' | translate }}
-      </div>
-    </div>
   </div>
 </template>
 
@@ -55,3 +56,7 @@
   import Component from './captcha-terms';
   export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './captcha-terms.scss';
+</style>
