@@ -45,7 +45,7 @@ interface LabeledEntry {
 interface CompanyData {
   accountDetails: {
     accountName: string;
-    profileType: string,
+    profileType: string;
   };
   registration: {
     company: string,
