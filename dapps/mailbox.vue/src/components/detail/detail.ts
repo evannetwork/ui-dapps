@@ -146,7 +146,7 @@ export default class DetailComponent extends mixins(EvanComponent) {
           // use storeKey as default value that should be opened
           toOpen = `/${ storeKey }`;
 
-          // when a bc was addes, open it including the bc
+          // when a bc was added, open it including the bc
           if (attachment.bc) {
             toOpen = `/${ attachment.bc }${ toOpen }`;
           }
