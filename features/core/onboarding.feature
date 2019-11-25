@@ -142,7 +142,7 @@ Scenario: Creating a new bycicle twin using onboarding
 
   When I click on button "Continue"
     Then the button "Continue" should be "enabled"
-    Then I want to see a text including "Describe your bicycle by it\'s specifications"
+    Then I want to see a text including "Describe your bicycle"
 
   When I set Input field with label "Type" to "mountain bike"
     And I set Input field with label "Color" to "red"
