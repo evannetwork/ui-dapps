@@ -48,18 +48,18 @@ interface CompanyData {
     profileType: string;
   };
   registration: {
-    company: string,
-    court: string,
-    register: string,
-    registerNumber: string,
-    salesTaxID: string,
+    company: string;
+    court: string;
+    register: string;
+    registerNumber: string;
+    salesTaxID: string;
   };
   contact: {
-    city: string,
-    country: string,
-    postalCode: number,
-    streetAndNumber: string,
-    website: string,
+    city: string;
+    country: string;
+    postalCode: number;
+    streetAndNumber: string;
+    website: string;
   };
 }
 
