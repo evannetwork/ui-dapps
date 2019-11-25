@@ -8,6 +8,7 @@ const getSelector = (label, angular) => {
     const inputSelectors = [
       'input', 'div/input',
       'select', 'div/select',
+      'textarea', 'div/textarea'
     ];
 
     return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
