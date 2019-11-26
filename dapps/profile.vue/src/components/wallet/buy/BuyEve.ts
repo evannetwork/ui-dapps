@@ -76,7 +76,6 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   created() {
     const runtime = (this as any).getRuntime();
     this.paymentService = new PaymentService(runtime);
-    this.paymentService.initStripe();
     this.preloadDetails();
   }
 

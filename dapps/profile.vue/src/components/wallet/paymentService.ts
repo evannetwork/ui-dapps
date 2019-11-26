@@ -30,9 +30,9 @@ import {
 } from './interfaces';
 import { StatusResponse } from './StatusResponse.interface';
 import { StripeSource } from './StripeSource.interface';
+import { relativeTimeRounding } from 'moment';
 
 declare var Stripe: any;
-
 const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
 
 export class PaymentService {
@@ -54,9 +54,30 @@ export class PaymentService {
   constructor(runtime: any, agentUrl = 'https://agents.test.evan.network/api') {
     this.agentUrl = agentUrl;
     this.runtime = runtime;
+    this.ensureStripe();
   }
 
-  initStripe() {
+  ensureStripe() {
+    const stripeScriptId = 'stripeScript';
+    const stripeScriptPath = 'https://js.stripe.com/v3/';
+
+    if (document.getElementById(stripeScriptId) !== null) {
+      this.initStripe();
+      return;
+    }
+
+    const s = document.createElement('script');
+    s.setAttribute('id', stripeScriptId);
+    s.setAttribute('type', 'text/javascript');
+    s.setAttribute('src', stripeScriptPath);
+    s.onload = () => {
+      this.initStripe();
+    };
+
+    document.head.append(s);
+  }
+
+  private initStripe() {
     this.stripe = Stripe(PUB_KEY);
   }
 

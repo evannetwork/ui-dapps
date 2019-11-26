@@ -33,6 +33,7 @@ import { CustomerInterface, CustomerParams } from './interfaces';
  */
 
 declare let Stripe: any;
+const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
 
 export class PaymentServiceV3 {
   private agentUrl = null;
@@ -68,16 +69,31 @@ export class PaymentServiceV3 {
   constructor(runtime: any, agentUrl = 'https://agents.test.evan.network/api') {
     this.agentUrl = agentUrl;
     this.runtime = runtime;
-
-    this.initStripe('pk_test_kpO3T5fXA7aaftg9D0OO0w3S');
+    this.ensureStripe();
   }
 
-  initStripe(apiKey: string) {
-    this.stripe = Stripe(apiKey);
-    // let elements = this.stripe.elements();
+  private ensureStripe() {
+    const stripeScriptId = 'stripeScript';
+    const stripeScriptPath = 'https://js.stripe.com/v3/';
 
-    console.log(this.stripe);
-    console.log(this.card);
+    if (document.getElementById(stripeScriptId) !== null) {
+      this.initStripe();
+      return;
+    }
+
+    const s = document.createElement('script');
+    s.setAttribute('id', stripeScriptId);
+    s.setAttribute('type', 'text/javascript');
+    s.setAttribute('src', stripeScriptPath);
+    s.onload = () => {
+      this.initStripe();
+    };
+
+    document.head.append(s);
+  }
+
+  private initStripe() {
+    this.stripe = Stripe(PUB_KEY);
   }
 
   /**
