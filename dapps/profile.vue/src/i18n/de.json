@@ -32,7 +32,7 @@
           "error": "Bitte geben Sie einen Firmensitz an!",
           "label": "Firmensitz"
         },
-        "mail": {
+        "email": {
           "error": "Bitte geben Sie eine korrekt E-Mail Adresse an!",
           "label": "E-Mail",
           "placeholder": "test@test.de"
@@ -426,6 +426,7 @@
         "back": "Zurück",
         "buy": "EVE kaufen",
         "continue": "FortFahren",
+        "disclaimer": "Mit der Eingabe Ihrer IBAN und der Bestätigung dieser Zahlung ermächtigen Sie die evan GmbH und unseren Zahlungsdienstleister Stripe, Ihrer Bank Anweisungen zur Belastung Ihres Kontos und Ihrer Bank zur Belastung Ihres Kontos gemäß dieser Anweisungen zu übermitteln. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen nach dem Datum der Belastung Ihres Kontos beantragt werden.",
         "payForm": {
           "amount": {
             "amount": {
@@ -442,7 +443,9 @@
           }
         },
         "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
-        "title": "EVE kaufen"
+        "tax": "MwSt.",
+        "title": "EVE kaufen",
+        "total-amount": "Gesamtsumme"
       },
       "send-eve": {
         "accept": {

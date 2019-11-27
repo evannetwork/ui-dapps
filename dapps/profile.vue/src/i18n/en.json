@@ -32,7 +32,7 @@
           "error": "Please select the company headquarters country",
           "label": "Company HQ Country"
         },
-        "mail": {
+        "email": {
           "error": "Please insert a correct email address!",
           "label": "E-Mail",
           "placeholder": "test@test.de"
@@ -426,6 +426,7 @@
         "back": "Back",
         "buy": "Buy EVE",
         "continue": "Continue",
+        "disclaimer": "By entering your IBAN and confirming this payment, you authorize evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with these instructions. You are entitled to a refund from your bank in accordance with the terms of your agreement with your bank. A refund must be requested within 8 weeks of the date your account was debited.",
         "payForm": {
           "amount": {
             "error": "Please insert a correct number!",
@@ -439,10 +440,13 @@
             "label": "Payment Type"
           }
         },
-        "title": "Buy EVE",
         "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
         "tax": "Tax",
-        "total-amount": "Total"
+        "title": "Buy EVE",
+        "total-amount": "Total",
+        "stripe-element": {
+          
+        }
       },
       "send-eve": {
         "accept": {
