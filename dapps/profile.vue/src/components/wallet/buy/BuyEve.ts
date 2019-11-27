@@ -18,7 +18,6 @@
 */
 
 // Example IBAN: DE89 3704 0044 0532 0130 00
-
 import * as bcc from '@evan.network/api-blockchain-core';
 import { agentUrl } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
@@ -53,9 +52,9 @@ interface PayFormInterface extends EvanForm {
 
 interface ContactFormInterface extends EvanForm {
   name: EvanFormControl;
-  mail: EvanFormControl;
+  email: EvanFormControl;
   company: EvanFormControl;
-  street: EvanFormControl;
+  streetAndNumber: EvanFormControl;
   postalCode: EvanFormControl;
   city: EvanFormControl;
   country: EvanFormControl;
@@ -79,12 +78,6 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * Current active step (displayed fomular, payForm = 0, contactForm = 1)
    */
   step = 0;
-  eveAmount: number;
-  // selectedMethod is different from stripe element type (sepa_debit vs iban)
-  selectedMethod = '';
-  stripeElement: any;
-  elements: any;
-  isLoading = false;
 
   /**
    * Formular for retrieving the amount of eve and payment method.
@@ -114,6 +107,15 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   reverseCharge = false;
 
   /**
+   * Current stripe element
+   */
+  stripe = {
+    complete: false,
+    element: null,
+    error: null,
+  };
+
+  /**
    * Setup formulars and stripe
    */
   created() {
@@ -124,6 +126,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * Setup formular
    */
   async initialize() {
+    const $t = (this as any).$t;
     this.runtime = (<any>this).getRuntime();
 
     // setup payment service
@@ -131,10 +134,10 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     await this.paymentService.ensureStripe();
 
     // setup pay formular
-    this.payForm = (<PayFormInterface>new EvanForm(this, {
+    this.payForm = (<PayFormInterface>new EvanForm(this, { 
       amount: {
         value: 10,
-        validate: function(vueInstance: PayFormInterface) {
+        validate: function(vueInstance: BuyEveComponent) {
           const parsed = parseFloat(this.value);
 
           if (isNaN(parsed)) {
@@ -156,12 +159,17 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       type: {
         value: 'card',
+        validate: function(vueInstance: BuyEveComponent) {
+          vueInstance.payForm && vueInstance.renderStripeElement();
+
+          return true;
+        },
         uiSpecs: {
           type: 'select',
           attr: {
             options: [
-              { value: 'iban', label: (this as any).$t('_profile.wallet.buy-eve.payForm.type.iban') },
-              { value: 'card', label: (this as any).$t('_profile.wallet.buy-eve.payForm.type.card') },
+              { value: 'iban', label: $t('_profile.wallet.buy-eve.payForm.type.iban') },
+              { value: 'card', label: $t('_profile.wallet.buy-eve.payForm.type.card') },
             ],
             required: true,
           }
@@ -175,7 +183,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       name: {
         value: data.accountDetails.accountName || '',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: BuyEveComponent) {
           return this.value.length !== 0;
         },
         uiSpecs: {
@@ -184,9 +192,9 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
           }
         }
       },
-      mail: {
+      email: {
         value: 'test@test.de',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: BuyEveComponent) {
           return emailRegex.test(this.value);
         },
         uiSpecs: {
@@ -198,7 +206,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       company: {
         value: data.accountDetails.accountName || '',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: BuyEveComponent) {
           return this.value.length !== 0;
         },
         uiSpecs: {
@@ -210,7 +218,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       streetAndNumber: {
         value: data.contact.streetAndNumber || '',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: BuyEveComponent) {
           return this.value.length !== 0;
         },
         uiSpecs: {
@@ -221,7 +229,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       postalCode: {
         value: data.contact.postalCode || '',
-        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+        validate: function(vueInstance: BuyEveComponent, form: ContactFormInterface) {
           // check postcode validity only in germany
           return form.country.value === 'DE' ?
             /^\d{5}$/.test(this.value) :
@@ -235,7 +243,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       city: {
         value: data.contact.city || '',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: BuyEveComponent) {
           return this.value.length !== 0;
         },
         uiSpecs: {
@@ -246,7 +254,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       country: {
         value: data.contact.country || 'DE',
-        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+        validate: function(vueInstance: BuyEveComponent, form: ContactFormInterface) {
           // resubmit postalCode validation
           form.postalCode.value = form.postalCode.value;
           // resubmit vat calculation
@@ -262,7 +270,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       vat: {
         value: 'ATU43666001',
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: BuyEveComponent) {
           return vueInstance.validateVat(this.value,
             vueInstance.contactForm ? vueInstance.contactForm.country.value : null);
         },
@@ -275,53 +283,61 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     }));
 
     this.loading = false;
+    // render stripe element for initial payment type
+    this.$nextTick(() => this.renderStripeElement());
   }
 
   /**
-   * Show corresponding stripe element depending on selected payment method
-   * @param event Passed event from select input
+   * Renders the stripe element for the current payment method
+   *
+   * @param      {Event}  event   Passed event from select input
    */
-  methodChangeHandler(event: Event) {
-    this.selectedMethod = (<HTMLSelectElement>event.target).value;
-    // TODO: any until stripe types properly imported
-    let options: any = {
-      style: elementStyles
-    };
+  renderStripeElement() {
+    let options: any = { style: elementStyles };
 
-    if (this.selectedMethod === 'iban') {
+    if (this.payForm.type.value === 'iban') {
       options.supportedCountries = ['SEPA'];
-      options.placeholderCountry = 'DE'; // TODO: set to user lang
+      options.placeholderCountry = (<any>this).$i18n.locale().toUpperCase();
     }
 
-    this.elements = this.paymentService.getStripeElements();
-    this.stripeElement = this.elements.create(this.selectedMethod, options);
+    const elements = this.paymentService.getStripeElements();
+    this.stripe.element = elements.create(this.payForm.type.value, options);
     // clear old childs if needed
     document.getElementById('stripeElement').innerHTML = '';
     // insert new childs
-    this.stripeElement.mount('#stripeElement');
-
-    console.log(this.selectedMethod);
+    this.stripe.element.mount('#stripeElement');
+    // check if current values are correct
+    this.stripe.element.on('change', ($event) => {
+      this.stripe.complete = $event.complete;
+      this.stripe.error = $event.error;
+    });
   }
 
+  /**
+   * Trigger payment service to buy eve
+   */
   async buyEve() {
-    this.isLoading = true;
+    this.buying = true;
+
     const customer = this.paymentService.getCustomer({
-      name: 'karl',
-      email: 'adlerkarl@gmail.com'
-      // company: 'evan',
-      // street: 'Test street',
-      // city: 'test city',
-      // zip: '42424',
-      // country: 'de',
-      // vat: 'DE145146812'
+      name: this.contactForm.name.value,
+      email: this.contactForm.email.value,
+      company: this.contactForm.company.value,
+      street: this.contactForm.streetAndNumber.value,
+      city: this.contactForm.city.value,
+      zip: this.contactForm.postalCode.value,
+      country: this.contactForm.country.value.toLowerCase(),
+      vat: this.contactForm.vat.value,
     });
+
     await this.paymentService.buyEve(
       customer,
-      this.eveAmount.toString(),
-      this.stripeElement,
-      { type: this.selectedMethod }
+      this.payForm.amount.value.toString(),
+      this.stripe.element,
+      { type: this.payForm.type.value }
     );
-    this.isLoading = false;
+
+    this.buying = false;
   }
 
   /**
@@ -330,7 +346,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * @param      {string}  vat      vat number to check
    * @param      {string}  country  current select country
    */
-  async validateVat(vat: string, country: string): Promise<boolean> {
+  async validateVat(vat: string, country: string): Promise<boolean|string> {
     // allow empty vat in germany
     if (country === 'DE' && !vat) {
       this.taxValue = 19;

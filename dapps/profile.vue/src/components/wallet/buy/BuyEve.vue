@@ -46,11 +46,18 @@ https://evan.network/license/ */
           :stacked="true">
         </evan-form>
 
-        <div v-show="selectedMethod">
-          <div class="stripeElementLabel">{{ `_wallet.${selectedMethod}` | translate }}</div>
+        <div class="my-3">
+          <div class="stripeElementLabel">
+            {{ `_profile.wallet.buy-eve.payForm.type.${ payForm.type.value }` | translate }}
+          </div>
           <div id="stripeElement" class="stripeElement"/>
-          <small v-show="selectedMethod === 'iban'">
-            {{ '_wallet.disclaimer' | translate }}
+          <small
+            class="text-muted"
+            v-if="stripe.error && stripe.error.code">
+            {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` }}
+          </small>
+          <small v-show="payForm.type.value === 'iban'">
+            {{ '_profile.wallet.buy-eve.disclaimer' | translate }}
           </small>
         </div>
       </div>

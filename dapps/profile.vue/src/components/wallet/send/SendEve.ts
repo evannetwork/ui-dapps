@@ -24,7 +24,7 @@ import Component, { mixins } from 'vue-class-component';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { bccUtils } from '@evan.network/ui';
-import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 import { sendEveDispatcher } from '../../../dispatchers/registry';
 
@@ -114,7 +114,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
             accountId: this.runtime.activeAccount,
             profileOwner: address,
             ...this.runtime,
-          });
+          } as any);
 
           return {
             label: await bccUtils.getUserAlias(profile),
@@ -129,14 +129,14 @@ export default class SendEveComponent extends mixins(EvanComponent) {
 
     // setup currents users balance and define the gas fee to send eve
     const gasFee = 0.001;
-    this.currBalance = await dappBrowser.core.getBalance(this.address);
+    this.currBalance = await dappBrowser.core.getBalance(this.runtime.activeAccount);
 
     // setup formular
     const web3 = this.runtime.web3;
-    this.form = (<ContactFormInterface>new EvanForm(this, {
+    this.form = (<SendEveFormInterface>new EvanForm(this, {
       accountId: {
         value: '',
-        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+        validate: function(vueInstance: SendEveComponent, form: SendEveFormInterface) {
           return web3.utils.isAddress(this.value);
         },
         uiSpecs: {
@@ -149,7 +149,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
       },
       amount: {
         value: 1,
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: SendEveComponent) {
           const parsed = parseFloat(this.value);
 
           if (isNaN(parsed)) {
@@ -158,7 +158,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
             if ((parsed + gasFee) < vueInstance.currBalance) {
               return true;
             } else {
-              return vueInstance.$t('_profile.wallet.send-eve.form.amount.error-less', {
+              return (vueInstance as any).$t('_profile.wallet.send-eve.form.amount.error-less', {
                 balance: vueInstance.getReadableBalance(vueInstance.currBalance),
               });
             }
@@ -193,14 +193,14 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    */
   getReadableBalance(amount: number) {
     // load balance and parse it to 3 decimal places
-    const amount = Math.floor(parseFloat(amount) * 100) / 100;
-    return amount.toFixed(2).toLocaleString(this.$i18n.locale());
+    amount = Math.floor(amount * 100) / 100;
+    return (amount.toFixed(2) as any).toLocaleString((this as any).$i18n.locale());
   }
 
   /**
    * Starts the send eve dispatcher.
    */
   sendEve() {
-    sendEveDispatcher.start(this.runtime, this.form.getFormData());
+    sendEveDispatcher.start(this.runtime, (this as any).form.getFormData());
   }
 }
