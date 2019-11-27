@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts">
-  import AcceptContact from './accept-contact.ts';
+  import AcceptContact from './accept-contact';
   export default AcceptContact;
 </script>
 

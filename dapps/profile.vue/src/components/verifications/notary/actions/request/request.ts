@@ -24,8 +24,8 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { bccUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // internal
 import * as dispatchers from '../../../../../dispatchers/registry';
@@ -43,19 +43,23 @@ interface LabeledEntry {
 }
 
 interface CompanyData {
+  accountDetails: {
+    accountName: string;
+    profileType: string;
+  };
   registration: {
-    company: string,
-    court: string,
-    register: string,
-    registerNumber: string,
-    salesTaxID: string,
+    company: string;
+    court: string;
+    register: string;
+    registerNumber: string;
+    salesTaxID: string;
   };
   contact: {
-    city: string,
-    country: string,
-    postalCode: number,
-    streetAndNumber: string,
-    website: string,
+    city: string;
+    country: string;
+    postalCode: number;
+    streetAndNumber: string;
+    website: string;
   };
 }
 
@@ -207,11 +211,12 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Takes the users information and pass them into the apporve objects, so it can be displayed
    * using the key-value component.
    */
-  setupSummary() {
+  async setupSummary() {
+    const profileDApp = (this as any).$store.state.profileDApp;
     this.approveData = [
       {
         label: (<any>this).$i18n.translate('_profile.company.registration.company.label'),
-        value: this.companyData.registration.company
+        value: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
       },
       {
         label: (<any>this).$i18n.translate('_profile.company.contact.country.label'),
@@ -288,12 +293,14 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * Load currents users company data and checks, if some information are missing.
    */
   async loadCompanyData() {
+    const $store = (this as any).$store;
     // wait until profile was reloaded
-    await this.$store.state.loadingProfile;
+    await $store.state.loadingProfile;
 
     this.companyData = {
-      contact: this.$store.state.profileDApp.data.contact,
-      registration: this.$store.state.profileDApp.data.registration,
+      accountDetails: $store.state.profileDApp.data.accountDetails,
+      contact: $store.state.profileDApp.data.contact,
+      registration: $store.state.profileDApp.data.registration,
     };
 
     // detect empty values, that are required
@@ -310,22 +317,23 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * Move to next status tab.
    */
-  nextStatus() {
+  async nextStatus() {
     this.status += 1;
 
     // setup summary data
     if (this.status === 1) {
-      this.setupSummary();
+      await this.setupSummary();
     }
   }
 
   /**
    * Send the request verification b-mail, so the process will be triggered.
    */
-  requestIdentification() {
+  async requestIdentification() {
     this.sending = true;
 
     // define the request data, so we can append it into the attachment and as payload in the body
+    const profileDApp = (this as any).$store.state.profileDApp;
     const requestData = {
       organizationCity: this.companyData.contact.city,
       organizationContact: this.requestForm.contact.value,
@@ -333,7 +341,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationEvanId: (<any>this).getRuntime().activeAccount,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
-      organizationName: this.companyData.registration.company,
+      organizationName: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
       organizationStreetAddress: this.companyData.contact.streetAndNumber,
       organizationZipCode: this.companyData.contact.postalCode,
     };

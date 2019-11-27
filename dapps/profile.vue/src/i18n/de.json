@@ -2,13 +2,13 @@
   "_profile": {
     "bmail": {
       "share": {
-        "body": "Guten Tag,\n\nIhnen wurden Profilinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich das Profil anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
-        "title": "Profilinformationen"
+        "body": "Guten Tag,\n\nIhnen wurden Identitätsinformationen von {alias} freigegeben. Nutzen Sie den \"Anhang öffnen\" Button, um sich die Identität anzusehen.\n\nMit freundlichen Grüßen,\n\n{alias}",
+        "title": "Identitätsinformationen"
       }
     },
     "breadcrumbs": {
       "addressbook.vue.evan": "Kontakte",
-      "detail": "Profil",
+      "detail": "Identität",
       "logout": "Ausloggen",
       "settings": "Einstellungen",
       "sharings": "Freigaben",
@@ -72,7 +72,7 @@
         "company": {
           "error": "Bitte geben Sie einen Firmennamen ein!",
           "label": "Unternehmen",
-          "placeholder": "Evan GmbH"
+          "placeholder": "Muster GmbH"
         },
         "court": {
           "error": "Bitte geben Sie die Informationen der Registrierungsstelle ein!",
@@ -91,7 +91,7 @@
         "registerNumber": {
           "error": "Bitte geben Sie die Registernummer ein.",
           "label": "Registernummer",
-          "placeholder": "Registernummer des Unternehmens"
+          "placeholder": "HRA 12345"
         },
         "salesTaxID": {
           "error": "Bitte geben Sie die Umsatzsteuer-ID ein.",
@@ -106,8 +106,8 @@
       "account-id": "Account-ID",
       "alias": "Alias",
       "balance": "Guthaben",
-      "desc": "Profilinformationen",
-      "edit": "Profil bearbeiten"
+      "desc": "Identitätsinformationen",
+      "edit": "Identität bearbeiten"
     },
     "device": {
       "detail": {
@@ -150,21 +150,21 @@
       }
     },
     "dispatchers": {
-      "profile-share": "Profilinformationen teilen...",
-      "profile-type": "Profiltyp wird geändert...",
-      "profile-update": "Profilinformationen werden gespeichert...",
+      "profile-share": "Identitätsinformationen teilen...",
+      "profile-type": "Identitätstyp wird geändert...",
+      "profile-update": "Identitätinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
       "send-eve": "Sending Eve...",
       "verification-accept": "Verifikation wird angenommen..."
     },
     "not-permitted": {
-      "accountDetails": "Profil-Informationen",
+      "accountDetails": "Identitätsinformationen",
       "contact": "Kontaktdaten",
       "desc": "Sie haben keine Berechtigungen, diese Daten einzusehen.",
       "deviceDetails": "Geräteinformationen",
       "registration": "Registrierungsdaten"
     },
-    "not-permitted-view": "Sie haben keine Rechte, diese Daten für das ausgewählte Profil anzusehen.",
+    "not-permitted-view": "Sie haben keine Rechte, diese Daten für die ausgewählte Identität anzusehen.",
     "settings": {
       "desc": "Einstellungen",
       "dev-domain": {
@@ -181,8 +181,8 @@
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharing": {
-      "Profile Data": "Profildaten",
-      "accountDetails": "Profildetails",
+      "Profile Data": "Identitätsdaten",
+      "accountDetails": "Details",
       "accountName": "Name",
       "city": "Ort",
       "company": "Unternehmen",
@@ -190,16 +190,16 @@
       "country": "Firmensitz",
       "court": "Registergericht",
       "dataStreamSettings": "IoT-Einstellungen",
-      "description": "Um Ihre Profildaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
-      "description-no-contacts": "Profilinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Profil aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identität ein.",
+      "description": "Um Ihre Identitätsdaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
+      "description-no-contacts": "Identitätsinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identitäts-ID ein.",
       "deviceDetails": "Geräteinformationen",
       "location": "Standort",
       "manufacturer": "Hersteller",
       "owner": "Eigentümer",
-      "permissionsTitle": "Profilzugriffsrechte",
+      "permissionsTitle": "Identitätszugriffsrechte",
       "picture": "Bild",
       "postalCode": "Postleitzahl",
-      "profileType": "Profiltyp",
+      "profileType": "Identitätstyp",
       "register": "Register",
       "registerNumber": "Registernummer",
       "registration": "Registrierungsdaten",
@@ -211,17 +211,17 @@
       "website": "Website"
     },
     "sharings": {
-      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Profilinformationen teilen. Klicken Sie auf ein Profil, um die Berechtigungen anzupassen.",
-      "no-data": "Bisher wurden keine Profildaten freigegeben",
-      "title": "Freigaben für Ihre Profildaten"
+      "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Identitätsinformationen teilen. Klicken Sie auf eine Identität, um die Berechtigungen anzupassen.",
+      "no-data": "Bisher wurden keine Identitätsdaten freigegeben",
+      "title": "Freigaben für Ihre Identitätsdaten"
     },
     "type": {
       "change": "Ändern",
-      "choose": "Profiltyp spezifieren",
-      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihr Profil genauer zu spezifieren.",
-      "missing-type-foreign": "Für diese Profil wurde noch kein Profiltyp ausgewählt.",
-      "no-verifications-avaiable": "Für Ihren Profiltyp stehen aktuell keine Verifikationen zur Verfügung.",
-      "switch": "Geben Sie Ihren Profiltyp an."
+      "choose": "Identitätstyp spezifieren",
+      "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihre Identität genauer zu spezifieren.",
+      "missing-type-foreign": "Für diese Identität wurde noch kein Typ ausgewählt.",
+      "no-verifications-avaiable": "Für Ihren Identitättyp stehen aktuell keine Verifikationen zur Verfügung.",
+      "switch": "Geben Sie Ihren Identitättyp an."
     },
     "verifications": {
       "add": "Verifikation hinzufügen",
@@ -230,7 +230,7 @@
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
       },
-      "description": "Hier können Sie alle Ihre Verifikationen einsehen. Eine Verifikation im evan.network ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk wahrgenommen zu werden.",
+      "description": "Hier können Sie alle Ihre Verifikationen einsehen. Eine Verifikation im evan.network ermöglicht Ihnen, als vertrauensvoller Partner in einem digitalen Netzwerk wahrgenommen zu werden.",
       "done": "Schließen",
       "empty": "Keine Verifikationen verfügbar",
       "error": "Fehler",
@@ -344,7 +344,7 @@
             "title": "Beantragung einer Notariellen Bestätigung"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> Sie benötigen mindestens 200 EVE. Ihre Wallet hat nicht genügend EVE ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">EVE kaufen</a>",
-          "only-de": "Momentan wird die Notarverifikation nur für Unternehmen in Deutschland unterstützt.",
+          "only-de": "Momentan wird die notarielle Verifikation nur für Unternehmen in Deutschland unterstützt.",
           "postal-address": "Anschrift",
           "proof": {
             "description": "Für die Verifikation Ihres Unternehmens erhalten Sie im nächsten Schritt eine PIN per Post vom Notar zu Händen der folgenden Person.",

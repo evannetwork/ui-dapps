@@ -65,7 +65,7 @@ https://evan.network/license/ */
             <small
               class="text-muted"
               v-if="stripe.error && stripe.error.code">
-              {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` }}
+              {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` | translate }}
             </small>
             <small v-show="payForm.type.value === 'iban'">
               {{ '_profile.wallet.buy-eve.disclaimer' | translate }}
@@ -92,7 +92,7 @@ https://evan.network/license/ */
           @click="step = 1"
           type="primary"
         />
-            
+
         <div class="w-100" v-else>
           <div class="text-center mb-3">
             <span class="text-muted mb-3 d-block"

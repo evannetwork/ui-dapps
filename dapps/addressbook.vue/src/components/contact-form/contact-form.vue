@@ -107,4 +107,3 @@
   import Component from './contact-form';
   export default Component;
 </script>
-

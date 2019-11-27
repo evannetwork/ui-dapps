@@ -40,10 +40,7 @@
             </evan-dapp-wrapper-level-2>
             <div class="h-100 overflow-auto" style="flex: 1">
               <div class="h-100 text-center mt-10"
-                v-if="
-                  (!$store.state.profileDApp.isMyProfile && $route.name !== 'detail') ||
-                  $store.state.profileDApp.permissions.read.length === 0
-                ">
+                v-if="!$store.state.profileDApp.isMyProfile && $route.name !== 'detail'">
                 <h3>{{ '_profile.not-permitted-view' | translate }}</h3>
               </div>
               <transition name="fade" mode="out-in" v-else>

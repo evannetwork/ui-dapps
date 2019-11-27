@@ -82,7 +82,8 @@
               <div class="d-table-cell pt-2">
                 <span class="d-block">{{ issuerName }}</span>
                 <small class="d-block text-muted">{{ issuer }}</small>
-                <small class="d-block text-muted"> <strong>Verification Path:</strong> {{ topic }}</small>
+                <small class="d-block text-muted">
+                <strong>{{ '_profile.verifications.notary.verification.topic' | translate }}:</strong> {{ topic }}</small>
               </div>
             </div>
           </div>
