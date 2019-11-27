@@ -441,12 +441,12 @@
           }
         },
         "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
+        "stripe-element": {
+          "incomplete_number": "Invalid input"
+        },
         "tax": "Tax",
         "title": "Buy EVE",
-        "total-amount": "Total",
-        "stripe-element": {
-          
-        }
+        "total-amount": "Total"
       },
       "send-eve": {
         "accept": {

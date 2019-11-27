@@ -183,6 +183,14 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: BuyEveComponent) {
           vueInstance.payForm && vueInstance.renderStripeElement();
 
+          // invalidate stripe content
+          this.stripe.error = null;
+          this.stripe.complete = false;
+          if (this.stripe.element) {
+            this.stripe.element.destroy();
+            this.stripe.element = null;
+          }
+
           return true;
         },
         uiSpecs: {

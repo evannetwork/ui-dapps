@@ -443,6 +443,9 @@
           }
         },
         "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
+        "stripe-element": {
+          "incomplete_number": "Ungültige Eingabe!"
+        },
         "tax": "MwSt.",
         "title": "EVE kaufen",
         "total-amount": "Gesamtsumme"
