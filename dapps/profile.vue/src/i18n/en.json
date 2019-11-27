@@ -22,10 +22,25 @@
           "label": "City",
           "placeholder": "Berlin, London, Paris"
         },
+        "company": {
+          "error": "Please insert name of your company!",
+          "label": "Company Name",
+          "placeholder": "Sample GmbH"
+        },
         "country": {
           "desc": "Company headquarters country",
           "error": "Please select the company headquarters country",
           "label": "Company HQ Country"
+        },
+        "mail": {
+          "error": "Please insert a correct email address!",
+          "label": "E-Mail",
+          "placeholder": "test@test.de"
+        },
+        "name": {
+          "error": "Please insert your name!",
+          "label": "Name",
+          "placeholder": "Max Mustermann"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
@@ -38,6 +53,11 @@
           "placeholder": "My street 15"
         },
         "title": "Contact",
+        "vat": {
+          "error": "The VAT number could not be validated!",
+          "label": "VAT",
+          "placeholder": "DE99999999999"
+        },
         "website": {
           "error": "Please insert a valid url!",
           "label": "Website",
@@ -130,6 +150,7 @@
       "profile-type": "Changing profile type...",
       "profile-update": "Updating profile information...",
       "request-verification": "Requesting Verification...",
+      "send-eve": "Sending Eve...",
       "verification-accept": "Accepting Verification..."
     },
     "not-permitted": {
@@ -205,6 +226,7 @@
         "identifications": "Identifications",
         "notary": "Notary Verification"
       },
+      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network.",
       "done": "Close",
       "empty": "No verifications available",
       "error": "Error",
@@ -388,8 +410,55 @@
         }
       },
       "reload": "Reload",
-      "title": "All verifications",
-      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network."
+      "title": "All verifications"
+    },
+    "wallet": {
+      "buy-eve": {
+        "accept": {
+          "description": "Do you want to continue with buying <b>{amount} EVE</b>?",
+          "send": "Buy",
+          "title": "Buy EVE"
+        },
+        "back": "Back",
+        "continue": "Continue",
+        "buy": "Buy EVE",
+        "payForm": {
+          "amount": {
+            "error": "Please insert a correct number!",
+            "error-less": "You must by at least 10! ({balance} EVE)",
+            "label": "EVE",
+            "placeholder": "EVE to buy"
+          },
+          "type": {
+            "card": "Credit Card",
+            "iban": "SEPA Edit",
+            "label": "Payment Type"
+          }
+        },
+        "title": "Buy EVE"
+      },
+      "send-eve": {
+        "accept": {
+          "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
+          "send": "Send",
+          "title": "Send EVE"
+        },
+        "form": {
+          "accountId": {
+            "error": "You must insert a valid address.",
+            "label": "Identity",
+            "placeholder": "Kontakt or identity address"
+          },
+          "amount": {
+            "error": "Please insert a correct number!",
+            "error-less": "Account balance is to low! ({balance} EVE)",
+            "label": "EVE",
+            "placeholder": "EVE to send"
+          }
+        },
+        "send": "Send",
+        "title": "Send EVE"
+      }
     }
   }
 }

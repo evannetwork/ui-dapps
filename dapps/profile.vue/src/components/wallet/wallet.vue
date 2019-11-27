@@ -11,31 +11,37 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 https://evan.network/license/ */
 
 <template>
-  <div class="row">
-    <div class="p-xxl-11 p-xl-6 p-3 col-12">
-      <div class="row">
-        <div class="col-xl-6">
-          <evan-wallet-card :address="$route.params.address" />
-        </div>
-        <div class="col-xl-4 d-flex">
-          <evan-button>Buy</evan-button>
-          <evan-button>Send</evan-button>
-        </div>
-      </div>
-      <div class="row mt-5">
-        <div class="col-xl-12">
-          <h1>Last Transactions</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, dolore
-            distinctio porro eveniet facere eum saepe consequuntur aliquam
-            error, ea, consequatur commodi pariatur. Dolore architecto, quos
-            ipsum quidem id corrupti.
-          </p>
-        </div>
+  <div>
+    <evan-loading v-if="loading" />
+    <div class="p-xxl-11 p-xl-6 p-3" v-else>
+      <evan-wallet-card :address="$route.params.address" />
+      <div class="d-flex flex-column flex-grow-1 align-items-end justify-content-center">
+        <evan-button
+          :label="'_profile.wallet.send-eve.title' | translate"
+          @click="activeMode = 1"
+          style="min-width: 250px"
+          type="secondary"
+        />
+        <evan-button
+          :label="'_profile.wallet.buy-eve.title' | translate"
+          @click="activeMode = 0"
+          class="mt-2"
+          style="min-width: 250px"
+          type="secondary"
+        />
       </div>
     </div>
+    <div class="mt-5">
+      <h1>Last Transactions</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, dolore
+        distinctio porro eveniet facere eum saepe consequuntur aliquam
+        error, ea, consequatur commodi pariatur. Dolore architecto, quos
+        ipsum quidem id corrupti.
+      </p>
+    </div>
+
     <evan-swipe-panel
-      ref="wallet-sidebar"
       class="light"
       alignment="right"
       :title="'_wallet.buy-eves' | translate"
@@ -43,11 +49,13 @@ https://evan.network/license/ */
       :hideCloseButton="windowWidth >= 1200"
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
     >
-      <buy-eve
-        @init="buyEveComponent = $event" 
-      />
+      <template>
+        <profile-buy-eve v-if="activeMode === 0" @init="buyEveComponent = $event" />
+        <profile-send-eve v-else-if="activeMode === 1" />
+      </template>
 
       <template slot="footer" v-if="!!buyEveComponent">
+          
           <evan-button
             v-if="buyEveComponent.step === 0"
             type="primary"
@@ -68,7 +76,7 @@ https://evan.network/license/ */
               @click="buyEveComponent.buyEve()"
             />
           </template>
-        </template>
+      </template>
     </evan-swipe-panel>
   </div>
 </template>

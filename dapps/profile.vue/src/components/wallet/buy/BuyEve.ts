@@ -18,9 +18,10 @@
 */
 
 // Example IBAN: DE89 3704 0044 0532 0130 00
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+
 import { PaymentService } from '../paymentService';
 
 // TODO: evan style
@@ -40,31 +41,38 @@ const elementStyles = {
   }
 };
 
+interface PayFormInterface extends EvanForm {
+  type: EvanFormControl;
+  amount: EvanFormControl;
+}
+
+interface ContactFormInterface extends EvanForm {
+  name: EvanFormControl;
+  mail: EvanFormControl;
+  company: EvanFormControl;
+  street: EvanFormControl;
+  postalCode: EvanFormControl;
+  city: EvanFormControl;
+  country: EvanFormControl;
+  vat: EvanFormControl;
+}
+
+interface OptionInterface {
+  value: string;
+  label: string;
+}
+
 @Component({})
 export default class BuyEveComponent extends mixins(EvanComponent) {
-  paymentService: PaymentService;
+  /**
+   * loading states
+   */
+  loading = true;
+  buying = false;
 
-  paymentMethods = [
-    { value: 'iban', label: 'SEPA Debit' },
-    { value: 'card', label: 'Card' }
-  ];
-
-  detailedInputs = [
-    { id: 'name', label: '_wallet.name', type: 'text', value: '' },
-    { id: 'mail', label: '_wallet.mail', type: 'email', value: '' },
-    { id: 'company', label: '_wallet.company', type: 'text', value: '' },
-    { id: 'street', label: '_wallet.street', type: 'text', value: '' },
-    {
-      id: 'postal_code',
-      label: '_wallet.postal-code',
-      type: 'text',
-      value: ''
-    },
-    { id: 'city', label: '_wallet.city', type: 'text', value: '' },
-    { id: 'country', label: '_wallet.country', type: 'text', value: '' },
-    { id: 'vat', label: '_wallet.vat', type: 'number', value: '' }
-  ];
-
+  /**
+   * Current active step (displayed fomular, payForm = 0, contactForm = 1)
+   */
   step = 0;
   eveAmount: number;
   // selectedMethod is different from stripe element type (sepa_debit vs iban)
@@ -73,14 +81,185 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   elements: any;
   isLoading = false;
 
+  /**
+   * Formular for retrieving the amount of eve and payment method.
+   */
+  payForm: PayFormInterface = null;
+
+  /**
+   * Formular for retrieving users / companies contact informatione
+   */
+  contactForm: ContactFormInterface = null;
+
+  /**
+   * payment service instance
+   */
+  paymentService: PaymentService;
+
+  /**
+   * Current users runtime.
+   */
+  runtime: bcc.Runtime;
+
+  /**
+   * Setup formulars and stripe
+   */
   created() {
-    const runtime = (this as any).getRuntime();
-    this.paymentService = new PaymentService(runtime);
-    this.preloadDetails();
+    this.initialize();
   }
 
-  amountChangeHandler(amount) {
-    // this.paymentService.createPaymentIntent(amount, customer, Stripe);
+  /**
+   * Setup formular
+   */
+  async initialize() {
+    this.runtime = (<any>this).getRuntime();
+
+    // setup payment service
+    this.paymentService = new PaymentService(this.runtime);
+    await this.paymentService.ensureStripe();
+
+    // setup pay formular
+    this.payForm = (<ContactFormInterface>new EvanForm(this, { 
+      amount: {
+        value: 10,
+        validate: function(vueInstance: CompanyContactForm) {
+          const parsed = parseFloat(this.value);
+
+          if (isNaN(parsed)) {
+            return '_profile.wallet.buy-eve.form.amount.error';
+          } else {
+            if (parsed < 10) {
+              return '_profile.wallet.buy-eve.form.amount.error-less';
+            } else {
+              return true;
+            }
+          }
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+            type: 'number',
+          }
+        }
+      },
+      type: {
+        value: 'card',
+        uiSpecs: {
+          type: 'select',
+          attr: {
+            options: [
+              { value: 'iban', label: this.$t('_profile.wallet.buy-eve.payForm.type.iban') },
+              { value: 'card', label: this.$t('_profile.wallet.buy-eve.payForm.type.card') },
+            ],
+            required: true,
+          }
+        }
+      },
+    }));
+
+    // setup contact formular and pass profile data
+    const data = this.$store.state.profileDApp.data;
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    this.contactForm = (<ContactFormInterface>new EvanForm(this, {
+      name: {
+        value: data.accountDetails.accountName || '',
+        validate: function(vueInstance: CompanyContactForm) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
+      },
+      mail: {
+        value: '',
+        validate: function(vueInstance: CompanyContactForm) {
+          return emailRegex.test(this.value);
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+            type: 'email',
+          }
+        }
+      },
+      company: {
+        value: data.accountDetails.accountName || '',
+        validate: function(vueInstance: CompanyContactForm) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+            type: 'email',
+          }
+        }
+      },
+      streetAndNumber: {
+        value: data.contact.streetAndNumber || '',
+        validate: function(vueInstance: CompanyContactForm) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
+      },
+      postalCode: {
+        value: data.contact.postalCode || '',
+        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+          // check postcode validity only in germany
+          return form.country.value === 'DE' ?
+            /^\d{5}$/.test(this.value) :
+            true;
+        },
+        uiSpecs: {
+          attr: {
+            required: () => this.contactForm.country.value === 'DE',
+          }
+        }
+      },
+      city: {
+        value: data.contact.city || '',
+        validate: function(vueInstance: CompanyContactForm) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
+      },
+      country: {
+        value: data.contact.country || 'DE',
+        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+          // resubmit postalCode validation
+          form.postalCode.value = form.postalCode.value;
+          return this.value && this.value.length !== 0;
+        },
+        uiSpecs: {
+          type: 'countries',
+          attr: {
+            required: true,
+          }
+        }
+      },
+      vat: {
+        value: '',
+        validate: function(vueInstance: CompanyContactForm) {
+          return this.value.length !== 0;
+        },
+        uiSpecs: {
+          attr: {
+            required: true,
+          }
+        }
+      },
+    }));
+
+    this.loading = false;
   }
 
   /**
@@ -128,18 +307,5 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       { type: this.selectedMethod }
     );
     this.isLoading = false;
-  }
-
-  preloadDetails() {
-    const data = this.$store.state.profileDApp.data;
-    
-    this.detailedInputs[0].value = '';
-    this.detailedInputs[1].value = '';
-    this.detailedInputs[2].value = data.accountDetails.accountName || '';
-    this.detailedInputs[3].value = data.contact.streetAndNumber || '';
-    this.detailedInputs[4].value = data.contact.postalCode || '';
-    this.detailedInputs[5].value = data.contact.city || '';
-    this.detailedInputs[6].value = data.contact.country || '';
-    this.detailedInputs[7].value = data.accountDetails.vat || ''; // TODO doesnt exist yet
   }
 }
