@@ -54,9 +54,13 @@
         },
         "title": "Kontaktdaten",
         "vat": {
+          "billing_country_and_vat_missmatch": "Die angegebene USt-IdNr. passt nicht zu dem angegebenen Land.",
           "error": "USt-IdNr. konnte nicht validiert werden.",
+          "eu_billing_vat_not_given": "Bei Kaufvorgängen außerhalb Deutschlands und innerhalb der EU muss eine valide USt-IdNr. angegeben werden.",
           "label": "USt-IdNr.",
-          "placeholder": "DE99999999999"
+          "not_eu_billing_not_possible": "EVEs können aktuell nur innerhalb der EU gekauft werden.",
+          "placeholder": "DE99999999999",
+          "vat_number_invalid": "Die angegebene USt-IdNr. scheint ungültig zu sein."
         },
         "website": {
           "error": "Bitte geben Sie eine gültige URL ein!",
@@ -437,6 +441,7 @@
             }
           }
         },
+        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
         "title": "EVE kaufen"
       },
       "send-eve": {

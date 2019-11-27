@@ -54,9 +54,13 @@
         },
         "title": "Contact",
         "vat": {
+          "billing_country_and_vat_missmatch": "Provided VAT number does not match given country code.",
           "error": "The VAT number could not be validated!",
+          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT number.",
           "label": "VAT",
-          "placeholder": "DE99999999999"
+          "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
+          "placeholder": "DE99999999999",
+          "vat_number_invalid": "VAT number seems to be invalid."
         },
         "website": {
           "error": "Please insert a valid url!",
@@ -420,8 +424,8 @@
           "title": "Buy EVE"
         },
         "back": "Back",
-        "continue": "Continue",
         "buy": "Buy EVE",
+        "continue": "Continue",
         "payForm": {
           "amount": {
             "error": "Please insert a correct number!",
@@ -435,7 +439,10 @@
             "label": "Payment Type"
           }
         },
-        "title": "Buy EVE"
+        "title": "Buy EVE",
+        "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
+        "tax": "Tax",
+        "total-amount": "Total"
       },
       "send-eve": {
         "accept": {

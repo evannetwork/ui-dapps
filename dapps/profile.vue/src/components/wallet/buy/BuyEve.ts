@@ -18,9 +18,11 @@
 */
 
 // Example IBAN: DE89 3704 0044 0532 0130 00
+import { agentUrl } from '@evan.network/ui';
 import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 
 import Component, { mixins } from 'vue-class-component';
+import axios from 'axios';
 
 import { PaymentService } from '../paymentService';
 
@@ -96,6 +98,13 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   runtime: bcc.Runtime;
 
   /**
+   * VAT specific values (timeout for retrieving information, taxValue, ...)
+   */
+  vatCalcTimeout = null;
+  taxValue = 0;
+  reverseCharge = false;
+
+  /**
    * Setup formulars and stripe
    */
   created() {
@@ -167,7 +176,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         }
       },
       mail: {
-        value: '',
+        value: 'test@test.de',
         validate: function(vueInstance: CompanyContactForm) {
           return emailRegex.test(this.value);
         },
@@ -231,6 +240,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
           // resubmit postalCode validation
           form.postalCode.value = form.postalCode.value;
+          // resubmit vat calculation
+          form.vat.value = form.vat.value;
           return this.value && this.value.length !== 0;
         },
         uiSpecs: {
@@ -241,9 +252,10 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         }
       },
       vat: {
-        value: '',
+        value: 'ATU43666001',
         validate: function(vueInstance: CompanyContactForm) {
-          return this.value.length !== 0;
+          return vueInstance.validateVat(this.value,
+            vueInstance.contactForm ? vueInstance.contactForm.country.value : null);
         },
         uiSpecs: {
           attr: {
@@ -300,5 +312,46 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       { type: this.selectedMethod }
     );
     this.isLoading = false;
+  }
+
+  /**
+   * Check if a vat number is valid
+   *
+   * @param      {string}  vat      vat number to check
+   * @param      {string}  country  current select country
+   */
+  async validateVat(vat: string, country: string): Promise<boolean> {
+    // allow empty vat in germany
+    if (country === 'DE' && !vat) {
+      this.taxValue = 19;
+      return true;
+    }
+
+    // request server
+    if (vat) {
+      return new Promise(resolve => {
+        this.vatCalcTimeout && clearTimeout(this.vatCalcTimeout);
+        this.vatCalcTimeout = setTimeout(async () => {
+          const { data: { result: { error, reverseCharge, tax, } } } = await axios({
+            method: 'GET',
+            url: `${ agentUrl }/api/smart-agents/payment-processor/checkVat?` + 
+              `vat=${ vat }&country=${ country }`
+          });
+
+          // update taxValue
+          this.taxValue = tax || 0;
+          // needs reverse charge to be displayed?
+          this.reverseCharge = reverseCharge;
+          // clear timeout
+          delete this.vatCalcTimeout;
+          // resolve the error
+          if (error) {
+            resolve(`_profile.company.contact.vat.${ error }`);
+          } else {
+            resolve(true);
+          }
+        }, 500);
+      });
+    }
   }
 }
