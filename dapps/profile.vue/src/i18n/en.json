@@ -130,6 +130,7 @@
       "profile-type": "Changing profile type...",
       "profile-update": "Updating profile information...",
       "request-verification": "Requesting Verification...",
+      "send-eve": "Sending Eve...",
       "verification-accept": "Accepting Verification..."
     },
     "not-permitted": {
@@ -205,6 +206,7 @@
         "identifications": "Identifications",
         "notary": "Notary Verification"
       },
+      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network.",
       "done": "Close",
       "empty": "No verifications available",
       "error": "Error",
@@ -388,8 +390,34 @@
         }
       },
       "reload": "Reload",
-      "title": "All verifications",
-      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network."
+      "title": "All verifications"
+    },
+    "wallet": {
+      "buy-eve": {
+        "title": "Buy EVE"
+      },
+      "send-eve": {
+        "accept": {
+          "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
+          "send": "Send",
+          "title": "Send EVE"
+        },
+        "form": {
+          "accountId": {
+            "error": "You must insert a valid address.",
+            "label": "Identity",
+            "placeholder": "Kontakt or identity address"
+          },
+          "amount": {
+            "error": "Please insert a correct number!",
+            "error-less": "Account balance is to low! ({balance} EVE)",
+            "label": "EVE",
+            "placeholder": "EVE to send."
+          }
+        },
+        "send": "Send",
+        "title": "Send EVE"
+      }
     }
   }
 }

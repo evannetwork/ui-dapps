@@ -71,8 +71,8 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'notary-info-dialog', component: NotaryInfoModalComponent, },
   { name: 'notary-topic-display', component: NotaryTopicDisplayComponent, },
   { name: 'notary-verification-card', component: NotaryCardComponent, },
-  { name: 'buy-eve', component: BuyEveComponent },
-  { name: 'send-eve', component: SendEveComponent }
+  { name: 'profile-buy-eve', component: BuyEveComponent },
+  { name: 'profile-send-eve', component: SendEveComponent }
 ];
 
 export default componentRegistration;

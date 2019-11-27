@@ -130,6 +130,7 @@
       "profile-type": "Profiltyp wird geändert...",
       "profile-update": "Profilinformationen werden gespeichert...",
       "request-verification": "Verifikation wird beantragt...",
+      "send-eve": "Sending Eve...",
       "verification-accept": "Verifikation wird angenommen..."
     },
     "not-permitted": {
@@ -205,6 +206,7 @@
         "identifications": "Identifikationen",
         "notary": "Notarielle Verifikation"
       },
+      "description": "Hier können Sie alle Ihre Verifikationen einsehen. Eine Verifikation im evan.network ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk wahrgenommen zu werden.",
       "done": "Schließen",
       "empty": "Keine Verifikationen verfügbar",
       "error": "Fehler",
@@ -388,8 +390,31 @@
         }
       },
       "reload": "Neu-laden",
-      "title": "Alle Verifikationen",
-      "description": "Hier können Sie alle Ihre Verifikationen einsehen. Eine Verifikation im evan.network ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk wahrgenommen zu werden."
+      "title": "Alle Verifikationen"
+    },
+    "wallet": {
+      "send-eve": {
+        "accept": {
+          "description": "Möchten Sie <b>{amount} EVE</b> an <b>{name}</b> senden?",
+          "send": "Senden",
+          "title": "EVE senden"
+        },
+        "form": {
+          "accountId": {
+            "error": "Bitte geben Sie eine korrekte Adresse ein.",
+            "label": "Identität",
+            "placeholder": "Kontakt oder Identitätsadresse"
+          },
+          "amount": {
+            "error": "Bitte geben Sie eine Zahl ein!",
+            "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
+            "label": "EVE",
+            "placeholder": "Menge an Eve, die sie gesendet werden sollen."
+          }
+        },
+        "send": "Send",
+        "title": "Send EVE"
+      }
     }
   }
 }

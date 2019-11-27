@@ -17,16 +17,28 @@
   the following URL: https://evan.network/license/
 */
 
-import requestIdentificationDispatcher from './notary/requestIdentification';
-import sendEveDispatcher from './sendEve';
-import shareProfileDispatcher from './profile/share';
-import updateProfileDispatcher from './profile/update';
-import verificationAcceptDispatcher from './acceptVerification';
+import * as bcc from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-export {
-  requestIdentificationDispatcher,
-  sendEveDispatcher,
-  shareProfileDispatcher,
-  updateProfileDispatcher,
-  verificationAcceptDispatcher,
-};
+
+const dispatcher = new Dispatcher(
+  `profile.vue.${ dappBrowser.getDomainName() }`,
+  'sendEveDispatcher',
+  40 * 1000,
+  '_profile.dispatchers.send-eve'
+);
+
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
+
+    await runtime.executor.executeSend({
+      from: runtime.activeAccount,
+      to: data.accountId,
+      value: runtime.web3.utils.toWei(data.amount.toString(), 'ether'),
+    });
+  });
+
+export default dispatcher;
