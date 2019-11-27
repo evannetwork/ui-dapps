@@ -76,6 +76,12 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * Current active step (displayed fomular, payForm = 0, contactForm = 1)
    */
   step = 0;
+  eveAmount: number;
+  // selectedMethod is different from stripe element type (sepa_debit vs iban)
+  selectedMethod = '';
+  stripeElement: any;
+  elements: any;
+  isLoading = false;
 
   /**
    * Formular for retrieving the amount of eve and payment method.
@@ -273,23 +279,24 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * @param event Passed event from select input
    */
   methodChangeHandler(event: Event) {
-    const input = (<HTMLSelectElement>event.target).value;
+    this.selectedMethod = (<HTMLSelectElement>event.target).value;
     // TODO: any until stripe types properly imported
     let options: any = {
       style: elementStyles
     };
 
-    if (input === 'iban') {
-      this.selectedMethod = 'sepa_debit';
+    if (this.selectedMethod === 'iban') {
       options.supportedCountries = ['SEPA'];
       options.placeholderCountry = 'DE'; // TODO: set to user lang
-    } else if (input === 'card') {
-      this.selectedMethod = 'card';
     }
 
     this.elements = this.paymentService.getStripeElements();
-    this.stripeElement = this.elements.create(input, options);
+    this.stripeElement = this.elements.create(this.selectedMethod, options);
+    // clear old childs if needed
+    document.getElementById('stripeElement').innerHTML = '';
+    // insert new childs
     this.stripeElement.mount('#stripeElement');
+
     console.log(this.selectedMethod);
   }
 

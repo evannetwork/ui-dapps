@@ -47,16 +47,13 @@ https://evan.network/license/ */
           :stacked="true">
         </evan-form>
 
-        <label for="stripeElement"
-          v-if="selectedMethod === 'card'">
-          {{ '_wallet.card' | translate }}
-        </label>
-
-        <div ref="stripeElement" id="stripeElement"></div>
-
-        <p>
-          <small>{{ '_wallet.disclaimer' | translate }}</small>
-        </p>
+        <div v-show="selectedMethod">
+          <div class="stripeElementLabel">{{ `_wallet.${selectedMethod}` | translate }}</div>
+          <div id="stripeElement" class="stripeElement"/>
+          <small v-show="selectedMethod === 'iban'">
+            {{ '_wallet.disclaimer' | translate }}
+          </small>
+        </div>
       </div>
 
       <div v-show="step === 1">
@@ -110,28 +107,16 @@ https://evan.network/license/ */
           </div>
         </div>
       </div>
+    </form>
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import Component from './BuyEve';
-export default Component;
+  import Component from './BuyEve';
+  export default Component;
 </script>
 
 <style lang="scss">
-@import '~@evan.network/ui/src/style/utils';
-
-.panel-footer {
-  display: flex;
-  width: 100%;
-  padding: 24px;
-  align-items: center;
-  justify-content: flex-end;
-  border-top: 1px solid cssVar('border-color-2');
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  background: cssVar('bg-level-1');
-}
+  @import './BuyEve.scss';
 </style>

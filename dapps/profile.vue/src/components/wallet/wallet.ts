@@ -45,6 +45,11 @@ export default class WalletComponent extends mixins(EvanComponent) {
   listeners: Array<any> = [];
 
   /**
+   * is needed for the side panel footer interaction
+   */
+  buyEveComponent = null;
+
+  /**
    * Unbind window resize watcher
    */
   beforeDestroy() {
