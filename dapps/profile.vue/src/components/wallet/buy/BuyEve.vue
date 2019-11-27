@@ -21,8 +21,9 @@ https://evan.network/license/ */
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
     >
-      <!-- start contnet -->
       <evan-loading v-if="loading" />
+      <evan-success v-else-if="success" />
+      <!-- start content -->
       <template v-else>
         
         <evan-modal
@@ -82,7 +83,7 @@ https://evan.network/license/ */
           </evan-form>
         </div>
       </template>
-      <!-- end contnet -->
+      <!-- end content -->
 
       <template slot="footer">  
         <evan-button
