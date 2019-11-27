@@ -69,6 +69,11 @@ interface OptionInterface {
 @Component({})
 export default class BuyEveComponent extends mixins(EvanComponent) {
   /**
+   * current window width
+   */
+  windowWidth = 0;
+
+  /**
    * loading states
    */
   loading = true;
@@ -116,10 +121,26 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   };
 
   /**
+   * Watch for dispatcher updates
+   */
+  listeners: Array<any> = [];
+
+  /**
+   * Clear dispatcher listeners
+   */
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize);
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
    * Setup formulars and stripe
    */
   created() {
     this.initialize();
+
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
   }
 
   /**
@@ -378,6 +399,16 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
           }
         }, 500);
       });
+    }
+  }
+
+  /**
+   * Handle side panel opened state on wide screens
+   */
+  handleWindowResize() {
+    this.windowWidth = window.innerWidth;
+    if (this.windowWidth >= 1200) {
+      (<any>this).$store.state.uiState.swipePanel = 'sharing';
     }
   }
 }

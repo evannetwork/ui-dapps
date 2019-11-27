@@ -37,6 +37,11 @@ interface SendEveFormInterface extends EvanForm {
 @Component({})
 export default class SendEveComponent extends mixins(EvanComponent) {
   /**
+   * current window width
+   */
+  windowWidth = 0;
+
+  /**
    * loading states
    */
   loading = true;
@@ -71,6 +76,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    * Clear dispatcher listeners
    */
   beforeDestroy() {
+    window.removeEventListener('resize', this.handleWindowResize);
     this.listeners.forEach(listener => listener());
   }
 
@@ -79,6 +85,9 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    */
   async created() {
     this.runtime = (<any>this).getRuntime();
+
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
 
     // setup dispatcher watchers
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
@@ -202,5 +211,15 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    */
   sendEve() {
     sendEveDispatcher.start(this.runtime, (this as any).form.getFormData());
+  }
+
+  /**
+   * Handle side panel opened state on wide screens
+   */
+  handleWindowResize() {
+    this.windowWidth = window.innerWidth;
+    if (this.windowWidth >= 1200) {
+      (<any>this).$store.state.uiState.swipePanel = 'sharing';
+    }
   }
 }

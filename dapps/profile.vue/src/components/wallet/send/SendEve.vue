@@ -12,41 +12,63 @@ https://evan.network/license/ */
 
 <template>
   <div>
-    <evan-loading v-if="loading" />
-    <template v-else>
-      <evan-form
-        :disabled="sending"
-        :form="form"
-        :i18nScope="'_profile.wallet.send-eve.form'"
-        :onlyForm="true"
-        :stacked="true">
-      </evan-form>
+    <evan-swipe-panel
+      class="light"
+      alignment="right"
+      :title="'_profile.wallet.send-eve.title' | translate"
+      :showBackdrop="windowWidth < 1200"
+      :hideCloseButton="windowWidth >= 1200"
+      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+      :isOpen="$store.state.uiState.swipePanel === 'sendEve'"
+    >
+      <!-- start content -->
+      <evan-loading v-if="loading" />
+      <template v-else>
+        <evan-form
+          :disabled="sending"
+          :form="form"
+          :i18nScope="'_profile.wallet.send-eve.form'"
+          :onlyForm="true"
+          :stacked="true">
+        </evan-form>
 
-      <evan-modal
-        ref="acceptModal"
-        :maxWidth="'600px'">
-        <template v-slot:header>
-          <h5 class="modal-title">
-            {{ `_profile.wallet.send-eve.accept.title` | translate }}
-          </h5>
-        </template>
-        <template v-slot:body>
-          <span v-html="
-            $t(`_profile.wallet.send-eve.accept.description`, {
-              amount: getReadableBalance(form.amount.value),
-              name: getUserNameWithAddress(form.accountId.value)
-            })
-          " />
-        </template>
-        <template v-slot:footer>
-          <evan-button
-            @click="sendEve(); $refs.acceptModal.hide()"
-            type="primary">
-             {{ '_profile.wallet.send-eve.accept.send' | translate }}
-          </evan-button>
-        </template>
-      </evan-modal>
-    </template>
+        <evan-modal
+          ref="acceptModal"
+          :maxWidth="'600px'">
+          <template v-slot:header>
+            <h5 class="modal-title">
+              {{ `_profile.wallet.send-eve.accept.title` | translate }}
+            </h5>
+          </template>
+          <template v-slot:body>
+            <span v-html="
+              $t(`_profile.wallet.send-eve.accept.description`, {
+                amount: getReadableBalance(form.amount.value),
+                name: getUserNameWithAddress(form.accountId.value)
+              })
+            " />
+          </template>
+          <template v-slot:footer>
+            <evan-button
+              @click="sendEve(); $refs.acceptModal.hide()"
+              type="primary">
+              {{ '_profile.wallet.send-eve.accept.send' | translate }}
+            </evan-button>
+          </template>
+        </evan-modal>
+      </template>
+      <!-- content -->
+
+      <template slot="footer">  
+        <evan-button
+          :disabled="!form.isValid || sending"
+          :isLoading="sending"
+          :label="'_profile.wallet.send-eve.send' | translate"
+          @click="$refs.acceptModal.show()"
+          type="primary">
+        </evan-button>
+      </template>
+    </evan-swipe-panel>
   </div>
 </template>
 

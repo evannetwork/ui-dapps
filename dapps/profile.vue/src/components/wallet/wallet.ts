@@ -30,11 +30,6 @@ export default class WalletComponent extends mixins(EvanComponent) {
   activeMode = 0;
 
   /**
-   * current window width
-   */
-  windowWidth = 0;
-
-  /**
    * Show loading symbol
    */
   loading = false;
@@ -45,20 +40,9 @@ export default class WalletComponent extends mixins(EvanComponent) {
   listeners: Array<any> = [];
 
   /**
-   * is needed for the side panel footer interaction
-   */
-  buyEveComponent = null;
-
-  /**
-   * is needed for the side panel footer interaction
-   */
-  sendEveComponent = null;
-
-  /**
    * Unbind window resize watcher
    */
   beforeDestroy() {
-    window.removeEventListener('resize', this.handleWindowResize);
     this.listeners.forEach(listener => listener());
   }
 
@@ -66,9 +50,6 @@ export default class WalletComponent extends mixins(EvanComponent) {
    * Bin window resize watcher to handle side panel state and handle send eve events.
    */
   created() {
-    window.addEventListener('resize', this.handleWindowResize);
-    this.handleWindowResize();
-
     // setup dispatcher watchers
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset formular
@@ -78,27 +59,5 @@ export default class WalletComponent extends mixins(EvanComponent) {
         this.$nextTick(() => this.loading = false);
       }
     }));
-  }
-
-  /**
-   * Handle side panel opened state on wide screens
-   */
-  handleWindowResize() {
-    this.windowWidth = window.innerWidth;
-    if (this.windowWidth >= 1200) {
-      (<any>this).$store.state.uiState.swipePanel = 'sharing';
-    }
-  }
-
-  getSwipePanelTitle() {
-    if (this.activeMode === 0) {
-      return (this as any).$t('_profile.wallet.buy-eve.title');
-    }
-
-    if (this.activeMode === 1) {
-      return (this as any).$t('_profile.wallet.send-eve.title');
-    }
-
-    return null;
   }
 }
