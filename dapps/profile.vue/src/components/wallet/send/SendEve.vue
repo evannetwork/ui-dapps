@@ -12,10 +12,10 @@ https://evan.network/license/ */
 
 <template>
   <div>
+    <h2>{{ '_profile.wallet.send-eve.title' | translate }}</h2>
+
     <evan-loading v-if="loading" />
     <template v-else>
-      <h2>{{ '_profile.wallet.send-eve.title' | translate }}</h2>
-
       <evan-form
         :disabled="sending"
         :form="form"

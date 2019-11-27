@@ -12,35 +12,46 @@ https://evan.network/license/ */
 
 <template>
   <div>
-    <form @submit.prevent="buyEve">
-      <h2>{{ '_wallet.buy-eves' | translate }}</h2>
+    <h2>{{ '_profile.wallet.buy-eve.title' | translate }}</h2>
+    <evan-loading v-if="loading" />
+    <template v-else>
+      <evan-modal
+        ref="acceptModal"
+        :maxWidth="'600px'">
+        <template v-slot:header>
+          <h5 class="modal-title">
+            {{ `_profile.wallet.buy-eve.accept.title` | translate }}
+          </h5>
+        </template>
+        <template v-slot:body>
+          <span v-html="
+            $t(`_profile.wallet.buy-eve.accept.description`, {
+              amount: payform.amount.value,
+            })
+          " />
+        </template>
+        <template v-slot:footer>
+          <evan-button
+            @click="buyEve(); $refs.acceptModal.hide()"
+            type="primary">
+             {{ '_profile.wallet.buy-eve.accept.send' | translate }}
+          </evan-button>
+        </template>
+      </evan-modal>
 
       <div v-show="step === 0">
-        <div>
-          <!-- TODO type number not working -->
-          <evan-form-control-input
-            v-model="eveAmount"
-            type="number"
-            :label="$t('_wallet.eve-amount')"
-            :required="true"
-            min="10"
-            step="5"
-            :id="'eveAmount'"
-          />
-        </div>
+        <evan-form
+          :form="payForm"
+          :i18nScope="'_profile.wallet.buy-eve.payForm'"
+          :onlyForm="true"
+          :stacked="true">
+        </evan-form>
 
-        <div>
-          <evan-form-control-select
-            :id="'paymentMethods'"
-            :options="paymentMethods"
-            :label="$t('_wallet.select-payment-method')"
-            :placeholder="$t('_evan.choose-here')"
-            :required="true"
-            @change="methodChangeHandler"
-          ></evan-form-control-select>
-        </div>
+        <label for="stripeElement"
+          v-if="selectedMethod === 'card'">
+          {{ '_wallet.card' | translate }}
+        </label>
 
-        <label for="stripeElement" v-if="selectedMethod === 'card'">{{ '_wallet.card' | translate }}</label>
         <div ref="stripeElement" id="stripeElement"></div>
 
         <p>
@@ -49,40 +60,39 @@ https://evan.network/license/ */
       </div>
 
       <div v-show="step === 1">
-        <template v-for="input in detailedInputs">
-          <evan-form-control-input
-            :key="input.id"
-            :id="input.id"
-            :label="input.label"
-            :type="input.type"
-            :placeholder="input.label"
-            :required="true"
-            v-model="input.value"
-          />
-        </template>
+        <evan-form
+          :form="contactForm"
+          :i18nScope="'_profile.company.contact'"
+          :onlyForm="true"
+          :stacked="true">
+        </evan-form>
       </div>
 
       <div class="panel-footer">
-        <button type="button" class="btn btn-block btn-primary" @click="step++" v-if="step === 0">
-          <span>{{ '_evan.next' | translate }}</span>
-        </button>
-
+        <evan-button
+          :disabled="!payForm.isValid"
+          :label="'_profile.wallet.buy-eve.continue' | translate"
+          @click="step = 1"
+          class="btn-block"
+          type="primary"
+          v-if="step === 0"
+        />
         <template v-else>
-          <button type="button" class="btn btn-secondary" @click="step--">
-            <span>{{ '_evan.back' | translate }}</span>
-          </button>
-          <button type="submit" class="btn btn-block btn-primary" :disabled="isLoading">
-            <span
-              class="spinner-border spinner-border-sm mr-3"
-              role="status"
-              aria-hidden="true"
-              v-if="isLoading"
-            ></span>
-            <span>{{ '_evan.buy' | translate }}</span>
-          </button>
+          <evan-button
+            type="secondary"
+            @click="step--"
+            :label="'_profile.wallet.buy-eve.back' | translate"
+          />
+          <evan-button
+            :disabled="!payForm.isValid || !contactForm.isValid"
+            :label="'_profile.wallet.buy-eve.buy' | translate"
+            @click="$refs.acceptModal.show()"
+            class="ml-3 btn-block"
+            type="primary"
+          />
         </template>
       </div>
-    </form>
+    </template>
   </div>
 </template>
 

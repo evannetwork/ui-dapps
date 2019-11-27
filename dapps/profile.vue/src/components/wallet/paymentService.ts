@@ -54,27 +54,34 @@ export class PaymentService {
   constructor(runtime: any, agentUrl = 'https://agents.test.evan.network/api') {
     this.agentUrl = agentUrl;
     this.runtime = runtime;
-    this.ensureStripe();
   }
 
-  ensureStripe() {
-    const stripeScriptId = 'stripeScript';
-    const stripeScriptPath = 'https://js.stripe.com/v3/';
+  /**
+   * Ensure that stripe is loaded.
+   */
+  async ensureStripe() {
+    return new Promise((resolve) => {
+      const stripeScriptId = 'stripeScript';
+      const stripeScriptPath = 'https://js.stripe.com/v3/';
 
-    if (document.getElementById(stripeScriptId) !== null) {
-      this.initStripe();
-      return;
-    }
+      if (document.getElementById(stripeScriptId) !== null) {
+        this.initStripe();
+        return resolve();
+      } else {
+        const s = document.createElement('script');
 
-    const s = document.createElement('script');
-    s.setAttribute('id', stripeScriptId);
-    s.setAttribute('type', 'text/javascript');
-    s.setAttribute('src', stripeScriptPath);
-    s.onload = () => {
-      this.initStripe();
-    };
+        s.setAttribute('id', stripeScriptId);
+        s.setAttribute('type', 'text/javascript');
+        s.setAttribute('src', stripeScriptPath);
 
-    document.head.append(s);
+        s.onload = () => {
+          this.initStripe();
+          resolve();
+        };
+
+        document.head.append(s);
+      }
+    });
   }
 
   private initStripe() {
