@@ -12,7 +12,6 @@ https://evan.network/license/ */
 
 <template>
   <div>
-    <h2>{{ '_profile.wallet.buy-eve.title' | translate }}</h2>
     <evan-loading v-if="loading" />
     <template v-else>
       <evan-modal
@@ -64,50 +63,6 @@ https://evan.network/license/ */
           :stacked="true">
         </evan-form>
       </div>
-
-      <div class="panel-footer">
-        <evan-button
-          :disabled="!payForm.isValid"
-          :label="'_profile.wallet.buy-eve.continue' | translate"
-          @click="step = 1"
-          class="btn-block"
-          type="primary"
-          v-if="step === 0"
-        />
-        <div class="w-100" v-else>
-          <div class="text-center mb-3">
-            <span class="text-muted mb-3 d-block"
-              v-if="reverseCharge"
-              v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
-            />
-            <small>
-              {{ payForm.amount.value.toFixed(2) }} EVE x
-              {{ '1€' }} + {{ taxValue }}
-              ({{ (parseFloat(payForm.amount.value) / 100 * taxValue).toFixed(2) + '€' }})
-            </small>
-            <h3 class="mt-1">
-              {{ '_profile.wallet.buy-eve.total-amount' | translate }}:
-              {{ (payForm.amount.value + (parseFloat(payForm.amount.value) / 100 * taxValue)).toFixed(2) }} {{ '€' }}
-            </h3>
-          </div>
-
-          <div class="d-flex">
-            <evan-button
-              type="secondary"
-              @click="step--"
-              :label="'_profile.wallet.buy-eve.back' | translate"
-            />
-            <evan-button
-              :disabled="!payForm.isValid || !contactForm.isValid || vatCalcTimeout"
-              :label="'_profile.wallet.buy-eve.buy' | translate"
-              @click="$refs.acceptModal.show()"
-              class="ml-3 btn-block"
-              type="primary"
-            />
-          </div>
-        </div>
-      </div>
-    </form>
     </template>
   </div>
 </template>

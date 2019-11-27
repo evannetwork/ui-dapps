@@ -12,8 +12,6 @@ https://evan.network/license/ */
 
 <template>
   <div>
-    <h2>{{ '_profile.wallet.send-eve.title' | translate }}</h2>
-
     <evan-loading v-if="loading" />
     <template v-else>
       <evan-form
@@ -48,15 +46,6 @@ https://evan.network/license/ */
           </evan-button>
         </template>
       </evan-modal>
-
-      <evan-button
-        :disabled="!form.isValid || sending"
-        :isLoading="sending"
-        :label="'_profile.wallet.send-eve.send' | translate"
-        @click="$refs.acceptModal.show()"
-        class="btn-block mt-t"
-        type="primary">
-      </evan-button>
     </template>
   </div>
 </template>

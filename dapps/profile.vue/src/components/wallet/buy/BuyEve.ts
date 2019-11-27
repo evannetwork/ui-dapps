@@ -18,13 +18,16 @@
 */
 
 // Example IBAN: DE89 3704 0044 0532 0130 00
+
+import * as bcc from '@evan.network/api-blockchain-core';
 import { agentUrl } from '@evan.network/ui';
-import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 import Component, { mixins } from 'vue-class-component';
 import axios from 'axios';
 
 import { PaymentService } from '../paymentService';
+import CompanyContactForm from 'components/profile/company/contact/contact';
 
 // TODO: evan style
 const elementStyles = {
@@ -128,10 +131,10 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     await this.paymentService.ensureStripe();
 
     // setup pay formular
-    this.payForm = (<ContactFormInterface>new EvanForm(this, { 
+    this.payForm = (<PayFormInterface>new EvanForm(this, {
       amount: {
         value: 10,
-        validate: function(vueInstance: CompanyContactForm) {
+        validate: function(vueInstance: PayFormInterface) {
           const parsed = parseFloat(this.value);
 
           if (isNaN(parsed)) {
@@ -157,8 +160,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
           type: 'select',
           attr: {
             options: [
-              { value: 'iban', label: this.$t('_profile.wallet.buy-eve.payForm.type.iban') },
-              { value: 'card', label: this.$t('_profile.wallet.buy-eve.payForm.type.card') },
+              { value: 'iban', label: (this as any).$t('_profile.wallet.buy-eve.payForm.type.iban') },
+              { value: 'card', label: (this as any).$t('_profile.wallet.buy-eve.payForm.type.card') },
             ],
             required: true,
           }
@@ -167,7 +170,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     }));
 
     // setup contact formular and pass profile data
-    const data = this.$store.state.profileDApp.data;
+    const data = (this as any).$store.state.profileDApp.data;
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.contactForm = (<ContactFormInterface>new EvanForm(this, {
       name: {

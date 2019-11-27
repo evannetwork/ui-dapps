@@ -50,6 +50,11 @@ export default class WalletComponent extends mixins(EvanComponent) {
   buyEveComponent = null;
 
   /**
+   * is needed for the side panel footer interaction
+   */
+  sendEveComponent = null;
+
+  /**
    * Unbind window resize watcher
    */
   beforeDestroy() {
@@ -83,5 +88,17 @@ export default class WalletComponent extends mixins(EvanComponent) {
     if (this.windowWidth >= 1200) {
       (<any>this).$store.state.uiState.swipePanel = 'sharing';
     }
+  }
+
+  getSwipePanelTitle() {
+    if (this.activeMode === 0) {
+      return (this as any).$t('_profile.wallet.buy-eve.title');
+    }
+
+    if (this.activeMode === 1) {
+      return (this as any).$t('_profile.wallet.send-eve.title');
+    }
+
+    return null;
   }
 }
