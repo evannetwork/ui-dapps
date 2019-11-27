@@ -84,7 +84,7 @@ https://evan.network/license/ */
       </template>
       <!-- end contnet -->
 
-      <template slot="footer">  
+      <template slot="footer" v-if="!loading">  
         <evan-button
           v-if="step === 0"
           :disabled="!payForm.isValid || !(stripe.element && stripe.complete && !stripe.error)"

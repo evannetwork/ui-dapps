@@ -59,7 +59,7 @@ https://evan.network/license/ */
       </template>
       <!-- content -->
 
-      <template slot="footer">  
+      <template slot="footer" v-if="!loading">  
         <evan-button
           :disabled="!form.isValid || sending"
           :isLoading="sending"
