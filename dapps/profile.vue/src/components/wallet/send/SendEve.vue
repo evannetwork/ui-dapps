@@ -22,7 +22,6 @@ https://evan.network/license/ */
       :isOpen="$store.state.uiState.swipePanel === 'sendEve'"
     >
       <evan-loading v-if="loading" />
-      <evan-success v-else-if="success" />
       <!-- start content -->
       <template v-else>
         <evan-form

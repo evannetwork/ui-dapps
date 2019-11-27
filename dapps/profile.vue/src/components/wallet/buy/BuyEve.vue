@@ -21,8 +21,17 @@ https://evan.network/license/ */
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
     >
-      <evan-loading v-if="loading" />
-      <evan-success v-else-if="success" />
+      
+      <evan-loading v-if="loading || buying" />
+      <template v-else-if="stripe.success">
+        <evan-success />
+        <p>{{_profile.wallet.buy-eve.success}}</p>
+      </template>
+      <template v-else-if="!!stripe.payError">
+        <evan-failed />
+        <p>{{ `_profile.wallet.buy-eve.${ stripe.payError }` | translate }}</p>
+      </template>
+      
       <!-- start content -->
       <template v-else>
         <evan-modal
@@ -82,11 +91,6 @@ https://evan.network/license/ */
           </evan-form>
         </div>
       </template>
-
-      <template slot="footer">  
-      <p>buying: {{ buying }}</p>
-      <p>stripe success: {{ stripe.success }}</p>
-      <p>stripe error: {{ `_profile.wallet.buy-eve.${ stripe.payError }` | translate }}</p>
       <!-- end contnet -->
 
       <template slot="footer" v-if="!loading">  
