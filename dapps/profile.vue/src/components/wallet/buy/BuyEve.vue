@@ -11,10 +11,7 @@ Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
 https://evan.network/license/ */
 
 <template>
-  <div>
-    <form @submit.prevent="buyEve">
-      <h2>{{ '_wallet.buy-eves' | translate }}</h2>
-
+    <form>
       <div v-show="step === 0">
         <div>
           <!-- TODO type number not working -->
@@ -32,20 +29,22 @@ https://evan.network/license/ */
         <div>
           <evan-form-control-select
             :id="'paymentMethods'"
+            :value="selectedMethod"
             :options="paymentMethods"
             :label="$t('_wallet.select-payment-method')"
             :placeholder="$t('_evan.choose-here')"
             :required="true"
             @change="methodChangeHandler"
-          ></evan-form-control-select>
+          />
         </div>
-
-        <label for="stripeElement" v-if="selectedMethod === 'card'">{{ '_wallet.card' | translate }}</label>
-        <div ref="stripeElement" id="stripeElement"></div>
-
-        <p>
-          <small>{{ '_wallet.disclaimer' | translate }}</small>
-        </p>
+      
+        <div v-show="selectedMethod">
+          <div class="stripeElementLabel">{{ `_wallet.${selectedMethod}` | translate }}</div>
+          <div id="stripeElement" class="stripeElement"/>
+          <small v-show="selectedMethod === 'iban'">
+            {{ '_wallet.disclaimer' | translate }}
+          </small>
+        </div>
       </div>
 
       <div v-show="step === 1">
@@ -61,49 +60,14 @@ https://evan.network/license/ */
           />
         </template>
       </div>
-
-      <div class="panel-footer">
-        <button type="button" class="btn btn-block btn-primary" @click="step++" v-if="step === 0">
-          <span>{{ '_evan.next' | translate }}</span>
-        </button>
-
-        <template v-else>
-          <button type="button" class="btn btn-secondary" @click="step--">
-            <span>{{ '_evan.back' | translate }}</span>
-          </button>
-          <button type="submit" class="btn btn-block btn-primary" :disabled="isLoading">
-            <span
-              class="spinner-border spinner-border-sm mr-3"
-              role="status"
-              aria-hidden="true"
-              v-if="isLoading"
-            ></span>
-            <span>{{ '_evan.buy' | translate }}</span>
-          </button>
-        </template>
-      </div>
     </form>
-  </div>
 </template>
 
 <script lang="ts">
-import Component from './BuyEve';
-export default Component;
+  import Component from './BuyEve';
+  export default Component;
 </script>
 
 <style lang="scss">
-@import '~@evan.network/ui/src/style/utils';
-
-.panel-footer {
-  display: flex;
-  width: 100%;
-  padding: 24px;
-  align-items: center;
-  justify-content: flex-end;
-  border-top: 1px solid cssVar('border-color-2');
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  background: cssVar('bg-level-1');
-}
+  @import './BuyEve.scss';
 </style>

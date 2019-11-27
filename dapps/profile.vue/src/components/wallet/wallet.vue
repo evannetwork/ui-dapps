@@ -35,14 +35,40 @@ https://evan.network/license/ */
       </div>
     </div>
     <evan-swipe-panel
+      ref="wallet-sidebar"
       class="light"
       alignment="right"
-      ref="wallet-sidebar"
+      :title="'_wallet.buy-eves' | translate"
       :showBackdrop="windowWidth < 1200"
       :hideCloseButton="windowWidth >= 1200"
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
     >
-      <buy-eve></buy-eve>
+      <buy-eve
+        @init="buyEveComponent = $event" 
+      />
+
+      <template slot="footer" v-if="!!buyEveComponent">
+          <evan-button
+            v-if="buyEveComponent.step === 0"
+            type="primary"
+            @click="buyEveComponent.step++"
+            :label="'_evan.next' | translate"
+          />
+
+          <template v-else>
+            <evan-button 
+              type="secondary" 
+              :label="'_evan.back' | translate" 
+              @click="buyEveComponent.step--"
+            />
+            <evan-button
+              type="primary"
+              :isLoading="buyEveComponent.isLoading"
+              :label="'_evan.buy' | translate"
+              @click="buyEveComponent.buyEve()"
+            />
+          </template>
+        </template>
     </evan-swipe-panel>
   </div>
 </template>
