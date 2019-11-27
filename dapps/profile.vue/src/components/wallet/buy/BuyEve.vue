@@ -24,7 +24,6 @@ https://evan.network/license/ */
       <!-- start contnet -->
       <evan-loading v-if="loading" />
       <template v-else>
-        
         <evan-modal
           ref="acceptModal"
           :maxWidth="'600px'">
@@ -36,7 +35,7 @@ https://evan.network/license/ */
           <template v-slot:body>
             <span v-html="
               $t(`_profile.wallet.buy-eve.accept.description`, {
-                amount: payform.amount.value,
+                amount: payForm.amount.value.toFixed(2),
               })
             " />
           </template>
@@ -82,6 +81,10 @@ https://evan.network/license/ */
           </evan-form>
         </div>
       </template>
+
+      <p>buying: {{ buying }}</p>
+      <p>stripe success: {{ stripe.success }}</p>
+      <p>stripe error: {{ `_profile.wallet.buy-eve.${ stripe.payError }` | translate }}</p>
       <!-- end contnet -->
 
       <template slot="footer" v-if="!loading">  
