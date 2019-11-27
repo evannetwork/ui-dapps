@@ -13,13 +13,13 @@ https://evan.network/license/ */
 <template>
   <div>
     <evan-swipe-panel
-      class="light"
-      alignment="right"
-      :title="'_profile.wallet.buy-eve.title' | translate"
-      :showBackdrop="windowWidth < 1200"
       :hideCloseButton="windowWidth >= 1200"
-      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
+      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+      :showBackdrop="windowWidth < 1200"
+      :title="'_profile.wallet.buy-eve.title' | translate"
+      alignment="right"
+      class="light"
     >
       
       <evan-loading v-if="loading || buying" />

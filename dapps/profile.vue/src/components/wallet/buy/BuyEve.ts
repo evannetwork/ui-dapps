@@ -134,6 +134,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
     this.listeners.forEach(listener => listener());
+    // ensure side-panel to be closed
+    (this as any).$store.state.uiState.swipePanel = '';
   }
 
   /**
@@ -309,6 +311,11 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         }
       },
     }));
+
+    // check initial vat
+    if (this.contactForm.vat.value) {
+      this.contactForm.vat.value = this.contactForm.vat.value;
+    }
 
     this.loading = false;
     // render stripe element for initial payment type

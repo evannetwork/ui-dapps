@@ -78,6 +78,8 @@ export default class SendEveComponent extends mixins(EvanComponent) {
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
     this.listeners.forEach(listener => listener());
+    // ensure side-panel to be closed
+    (this as any).$store.state.uiState.swipePanel = '';
   }
 
   /**
