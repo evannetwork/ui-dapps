@@ -258,7 +258,7 @@ export default class Mnemonic extends mixins(EvanComponent) {
       } else {
         // select the first uncorrect word input
         for (let i = 0; i < 12; i++) {
-          if (!this.correctWords[i]) {
+          if (!this.correctWords[i] && this.$refs[`mnemonicInput${ i }`][0]) {
             return (this.$refs[`mnemonicInput${ i }`][0] as any).focus();
           }
         }

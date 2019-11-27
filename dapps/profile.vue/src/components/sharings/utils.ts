@@ -30,9 +30,7 @@ import { getDomainName } from '@evan.network/ui-dapp-browser';
  * @param permissions
  * @param properties
  */
-export const getPermissionsType = (permissions, properties) => {
-  const propertiesKeys = Object.keys(properties);
-
+export const getPermissionsType = (permissions, propertiesKeys) => {
   // check write permissions
   if (permissions.readWrite) {
     // check full access
@@ -108,12 +106,12 @@ export const getContacts = async (runtime): Promise<ContactInterface[]> => {
  * @param containerAddress
  * @param accountId
  */
-export const getPermissions = async (runtime, containerAddress, accountId = runtime.activeAccount) => {
-  const container = getContainer(runtime, containerAddress, accountId);
-  const properties = await getContainerProperties(container);
+export const getPermissions = async (vueInstance, containerAddress,
+  accountId = vueInstance.getRuntime().activeAccount) => {
+  const container = getContainer(vueInstance.getRuntime(), containerAddress, accountId);
   const shareConfigs = await container.getContainerShareConfigs();
 
-  let configs =  shareConfigs.map(config => {
+  let configs = shareConfigs.map(config => {
     // the own account should not take into consideration
     if (config.accountId === accountId) {
        return null;
@@ -121,8 +119,8 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
 
     return {
       accountId: config.accountId,
+      permissionType: getPermissionsType(config, vueInstance.$store.state.profileDApp.sharingFilter),
       sharedConfig: config,
-      permissionType: getPermissionsType(config, properties)
     };
   });
 
@@ -136,7 +134,7 @@ export const getPermissions = async (runtime, containerAddress, accountId = runt
  */
 export const getProfilePermissions = async (vueInstance) => {
   return getPermissions(
-    vueInstance.getRuntime(),
+    vueInstance,
     vueInstance.$store.state.profileDApp.profile.profileContract.options.address
   );
 };

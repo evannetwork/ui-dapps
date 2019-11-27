@@ -148,7 +148,10 @@
 </template>
 
 <script lang="ts">
-  import Component from './add.ts';
+  import Component from './add';
   export default Component;
 </script>
 
+<style lang="scss" scoped>
+  @import './add.scss';
+</style>

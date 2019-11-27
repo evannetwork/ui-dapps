@@ -201,7 +201,7 @@ export const de = {
       "title": "Verifizierungsprüfungen speichern"
     },
     "receiver": {
-      "desc": "Account-Adresse, an den EVE gesendet werden sollen",
+      "desc": "Account-Adresse, an die EVE gesendet werden sollen",
       "error": "Bitte geben Sie eine valide Adresse ein!",
       "title": "Empfänger"
     },

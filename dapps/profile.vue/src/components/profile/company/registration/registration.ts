@@ -101,17 +101,6 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
 
     // setup registration form
     this.form = (<RegistrationFormInterface>new EvanForm(this, {
-      company: {
-        value: registrationData.company || '',
-        validate: function(vueInstance: CompanyRegistrationForm) {
-          return this.value.length !== 0;
-        },
-        uiSpecs: {
-          attr: {
-            required: this.required.indexOf('company') !== -1,
-          }
-        }
-      },
       court: {
         value: registrationData.court || '',
         validate: function(vueInstance: CompanyRegistrationForm) {

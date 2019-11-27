@@ -67,14 +67,26 @@ dispatcher
     const runtime = utils.getRuntime(instance.runtime);
     const sharingArr = Array.isArray(data) ? data : [ data ];
 
-    await Promise.all(sharingArr.map((sharingData: any) => updateSharings(runtime, sharingData)));
+    if (Array.isArray(data)) {
+      await Promise.all(data.map(async (shareData: any) => {
+        await updateSharings(runtime, shareData);
+      }));
+    } else {
+      await updateSharings(runtime, data);
+    }
   })
   // remove "un-shared" fields
   .step(async (instance: DispatcherInstance, data: any) => {
     const runtime = utils.getRuntime(instance.runtime);
     const sharingArr = Array.isArray(data) ? data : [ data ];
 
-    await Promise.all(sharingArr.map((sharingData: any) => updateUnsharings(runtime, sharingData)));
+    if (Array.isArray(data)) {
+      await Promise.all(data.map(async (shareData: any) => {
+        await updateUnsharings(runtime, shareData);
+      }));
+    } else {
+      await updateUnsharings(runtime, data);
+    }
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {

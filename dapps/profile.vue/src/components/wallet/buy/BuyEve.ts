@@ -26,6 +26,7 @@ import Component, { mixins } from 'vue-class-component';
 import axios from 'axios';
 
 import { PaymentService } from '../paymentService';
+import { ErrorStatus } from '../interfaces';
 import CompanyContactForm from 'components/profile/company/contact/contact';
 
 // TODO: evan style
@@ -118,6 +119,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     complete: false,
     element: null,
     error: null,
+    payError: '',
+    success: false,
   };
 
   /**
@@ -183,6 +186,10 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: BuyEveComponent) {
           vueInstance.payForm && vueInstance.renderStripeElement();
 
+          // invalidate stripe content
+          vueInstance.stripe.error = null;
+          vueInstance.stripe.complete = false;
+
           return true;
         },
         uiSpecs: {
@@ -214,7 +221,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         }
       },
       email: {
-        value: 'test@test.de',
+        value: 'tobias.winkler@evan.team',
         validate: function(vueInstance: BuyEveComponent) {
           return emailRegex.test(this.value);
         },
@@ -351,12 +358,19 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       vat: this.contactForm.vat.value,
     });
 
-    await this.paymentService.buyEve(
+    const result = await this.paymentService.buyEve(
       customer,
       this.payForm.amount.value.toString(),
       this.stripe.element,
       { type: this.payForm.type.value }
     );
+
+    if (result.status === 'error') {
+      this.stripe.payError = (result as ErrorStatus).code;
+    } else {
+      this.stripe.payError = '';
+      this.stripe.success = true;
+    }
 
     this.buying = false;
   }

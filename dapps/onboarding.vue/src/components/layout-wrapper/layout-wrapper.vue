@@ -22,16 +22,19 @@
     <div class="col col-lg-6 left-panel">
       <img class="evan-logo"
         :src="$store.state.onboardingBaseUrl + `/assets/logo.png`">
-      <div class="d-flex h-100 align-items-center justify-content-center">
+      <div class="h-100">
         <div class="w-100">
-          <div class="text-center">
-            <img class="desc-banner" :src="$store.state.onboardingBaseUrl + `/assets/sign-up-banner.png`">
+          <div class="banner-wrapper">
+            <img
+              :src="$store.state.onboardingBaseUrl + `/assets/left-panel/${ images[step] }`"
+              @load="setImageStyle()"
+              class="desc-banner">
           </div>
-          <h1 class="ml-5 mb-5 font-weight-bold text-dark" >
-            {{ `_onboarding.sign-up.headings.${ type }.${ step }.title` | translate }}
-          </h1>
-          <h3 class="ml-5 text-dark">
-            {{ `_onboarding.sign-up.headings.${ type }.${ step }.desc` | translate }}
+          <h2 class="mx-8 mb-2 font-weight-bold text-dark" >
+            {{ `_onboarding.headings.${ type }.${ step }.title` | translate }}
+          </h2>
+          <h3 class="mx-8 text-dark"
+            v-html="$t(`_onboarding.headings.${ type }.${ step }.desc`)">
           </h3>
         </div>
       </div>

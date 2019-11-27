@@ -25,7 +25,6 @@ https://evan.network/license/ */
       <evan-success v-else-if="success" />
       <!-- start content -->
       <template v-else>
-        
         <evan-modal
           ref="acceptModal"
           :maxWidth="'600px'">
@@ -37,7 +36,7 @@ https://evan.network/license/ */
           <template v-slot:body>
             <span v-html="
               $t(`_profile.wallet.buy-eve.accept.description`, {
-                amount: payform.amount.value,
+                amount: payForm.amount.value.toFixed(2),
               })
             " />
           </template>
@@ -66,7 +65,7 @@ https://evan.network/license/ */
             <small
               class="text-muted"
               v-if="stripe.error && stripe.error.code">
-              {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` }}
+              {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` | translate }}
             </small>
             <small v-show="payForm.type.value === 'iban'">
               {{ '_profile.wallet.buy-eve.disclaimer' | translate }}
@@ -83,9 +82,14 @@ https://evan.network/license/ */
           </evan-form>
         </div>
       </template>
-      <!-- end content -->
 
       <template slot="footer">  
+      <p>buying: {{ buying }}</p>
+      <p>stripe success: {{ stripe.success }}</p>
+      <p>stripe error: {{ `_profile.wallet.buy-eve.${ stripe.payError }` | translate }}</p>
+      <!-- end contnet -->
+
+      <template slot="footer" v-if="!loading">  
         <evan-button
           v-if="step === 0"
           :disabled="!payForm.isValid || !(stripe.element && stripe.complete && !stripe.error)"
@@ -93,7 +97,7 @@ https://evan.network/license/ */
           @click="step = 1"
           type="primary"
         />
-            
+
         <div class="w-100" v-else>
           <div class="text-center mb-3">
             <span class="text-muted mb-3 d-block"

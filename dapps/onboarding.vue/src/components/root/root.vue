@@ -30,6 +30,6 @@
 </template>
 
 <script lang="ts">
-  import Root from './root.ts';
+  import Root from './root';
   export default Root;
 </script>
