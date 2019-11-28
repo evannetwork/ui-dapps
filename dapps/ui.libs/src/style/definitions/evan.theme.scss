@@ -122,7 +122,7 @@ $themeEvan: map-merge(
  * theme colors
  */
 $theme-colors: (
-  danger: cssVar('pink'),
+  danger: cssVar('red'),
   dark: #00313C,
   info: cssVar('blue'),
   light: cssVar('gray-200'),
@@ -135,8 +135,8 @@ $theme-colors: (
 $themeEvan: map-merge($themeEvan, $theme-colors);
 $themeEvan: map-merge(
   (
-    danger-darken: cssVar('pink-darken'),
-    danger-lighten: cssVar('pink-lighten'),
+    danger-darken: cssVar('red-darken'),
+    danger-lighten: cssVar('red-lighten'),
     dark-darken: darken(#023845, 10%),
     dark-lighten: lighten(#023845, 10%),
     info-darken: cssVar('blue-darken'),

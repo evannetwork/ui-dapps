@@ -8,8 +8,11 @@
   - hide optional text from formulars, when transparent mode is enabled
   - add `bccUtils` and `getUserAlias` function
   - update toast design
+  - use `red` as `danger` color
 - `qrcodejs.libs` (v1.0.0)
   - add qrcodejs lib
+- `evan.bootstrap.libs`
+  - add `text-red` class
 
 ### Deprecations
 
