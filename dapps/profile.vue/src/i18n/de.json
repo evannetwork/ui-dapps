@@ -480,7 +480,7 @@
             "error": "Bitte geben Sie eine Zahl ein!",
             "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
             "label": "EVE",
-            "placeholder": "Menge an Eve, die sie gesendet werden sollen."
+            "placeholder": "Menge an Eve, die gesendet werden sollen."
           }
         },
         "send": "Send",
