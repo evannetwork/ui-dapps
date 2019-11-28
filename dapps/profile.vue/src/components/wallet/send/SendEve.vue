@@ -21,8 +21,8 @@ https://evan.network/license/ */
       alignment="right"
       class="light"
     >
-      <!-- start content -->
       <evan-loading v-if="loading" />
+      <!-- start content -->
       <template v-else>
         <evan-form
           :disabled="sending"
