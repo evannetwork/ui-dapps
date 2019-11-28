@@ -377,7 +377,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
 
     const result = await this.paymentService.buyEve(
       customer,
-      this.payForm.amount.value.toString(),
+      // prevent 1e2 values that breaks the server
+      parseFloat(this.payForm.amount.value).toString(),
       this.stripe.element,
       { type: this.payForm.type.value === 'iban' ? 'sepa_debit' : 'card' },
     );

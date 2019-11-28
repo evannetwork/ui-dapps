@@ -146,20 +146,29 @@ export class PaymentService {
       console.error(ex.message);
     }
 
+    // do not continue with an error
+    if (!error) {
+      if (!source) {
+        throw new Error(
+          'Received neither `source` nor `error` from stripe createSource().'
+        );
+      }
+
+      try {
+        return await this.executePayment(source.id, eveAmount, customer);
+      } catch (ex) {
+        error = this.getErrorCode(ex.message);
+        console.error(ex.message);
+      }
+    }
+
+    // ensure central error handling
     if (error) {
       return {
         status: 'error',
         code: this.getErrorCode(error.message)
       };
     }
-
-    if (!source) {
-      throw new Error(
-        'Received neither `source` nor `error` from stripe createSource().'
-      );
-    }
-
-    return this.executePayment(source.id, eveAmount, customer);
   }
 
   /**
