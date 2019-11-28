@@ -441,8 +441,8 @@
           "amount": {
             "error": "Please insert a correct number!",
             "error-less": "You must by at least 10! ({balance} EVE)",
-            "label": "EVE",
-            "placeholder": "EVE to buy"
+            "label": "Amount of EVE (at least 10)",
+            "placeholder": "Enter a number"
           },
           "type": {
             "card": "Credit Card",
@@ -477,7 +477,7 @@
           "amount": {
             "error": "Please insert a correct number!",
             "error-less": "Account balance is to low! ({balance} EVE)",
-            "label": "EVE",
+            "label": "Amount of EVE",
             "placeholder": "EVE to send"
           }
         },

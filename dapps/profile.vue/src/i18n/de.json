@@ -442,8 +442,8 @@
             "amount": {
               "error": "Bitte geben Sie eine Zahl ein!",
               "error-less": "Sie müssen mindestens 10 EVE kaufen!",
-              "label": "EVE",
-              "placeholder": "Menge an Eve, die gekauft werden sollen."
+              "label": "Menge an EVE (mindestens 10)",
+              "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
             },
             "type": {
               "card": "Kreditkarte",
@@ -479,8 +479,8 @@
           "amount": {
             "error": "Bitte geben Sie eine Zahl ein!",
             "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
-            "label": "EVE",
-            "placeholder": "Menge an Eve, die gesendet werden sollen."
+            "label": "Menge an EVE",
+            "placeholder": "Anzahl der EVE, die Sie versenden möchten."
           }
         },
         "send": "Send",

@@ -27,23 +27,7 @@ import axios from 'axios';
 
 import { PaymentService } from '../paymentService';
 import { ErrorStatus } from '../interfaces';
-
-// TODO: evan style
-const elementStyles = {
-  base: {
-    color: '#32325d',
-    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-    fontSmoothing: 'antialiased',
-    fontSize: '16px',
-    '::placeholder': {
-      color: '#aab7c4'
-    }
-  },
-  invalid: {
-    color: '#fa755a',
-    iconColor: '#fa755a'
-  }
-};
+import { STRIPE_ELEMENT_CONFIG } from '../stripe-config';
 
 interface PayFormInterface extends EvanForm {
   type: EvanFormControl;
@@ -335,7 +319,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * @param      {Event}  event   Passed event from select input
    */
   renderStripeElement() {
-    let options: any = { style: elementStyles };
+    let options: any = { style: STRIPE_ELEMENT_CONFIG };
 
     if (this.payForm.type.value === 'iban') {
       options.supportedCountries = ['SEPA'];

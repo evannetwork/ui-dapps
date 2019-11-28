@@ -28,11 +28,11 @@ import {
   VatValidationInterface,
   CustomerParams
 } from './interfaces';
+import { PUB_KEY, stripeScriptId, stripeScriptPath } from './stripe-config';
 import { StatusResponse } from './StatusResponse.interface';
 import { StripeSource } from './StripeSource.interface';
 
 declare var Stripe: any;
-const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
 
 export class PaymentService {
   private static PAYMENT_TIMEOUT = 1000 * 60 * 10; // 10 minutes
@@ -60,9 +60,6 @@ export class PaymentService {
    */
   async ensureStripe() {
     return new Promise((resolve) => {
-      const stripeScriptId = 'stripeScript';
-      const stripeScriptPath = 'https://js.stripe.com/v3/';
-
       if (document.getElementById(stripeScriptId) !== null) {
         this.initStripe();
         return resolve();
@@ -233,9 +230,6 @@ export class PaymentService {
       this.intervalTimer = setInterval(async () => {
         const response = await this.checkStatus(id, amount, customer);
 
-        console.log('this.requestId', this.requestId);
-        console.log('response', response);
-
         switch (response.status) {
           case 'error':
             clearInterval(this.intervalTimer);
@@ -293,7 +287,7 @@ export class PaymentService {
     country: string,
     vat?: string
   ): Promise<VatValidationInterface> {
-    const requestUrl = `${this.agentUrl}/smart-agents/payment-processor/checkVat`;
+    const requestUrl = `${ this.agentUrl }/smart-agents/payment-processor/checkVat`;
     const params = { country, vat };
     const {
       data: {
