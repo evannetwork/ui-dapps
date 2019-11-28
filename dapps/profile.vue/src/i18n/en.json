@@ -472,7 +472,7 @@
           "accountId": {
             "error": "You must insert a valid address.",
             "label": "Identity",
-            "placeholder": "Kontakt or identity address"
+            "placeholder": "Contact or identity address"
           },
           "amount": {
             "error": "Please insert a correct number!",
