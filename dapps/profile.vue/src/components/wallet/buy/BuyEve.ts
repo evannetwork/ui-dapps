@@ -152,14 +152,23 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * Setup formular
    */
   async initialize() {
-    const $t = (this as any).$t;
+    this.loading = true;
     this.runtime = (<any>this).getRuntime();
+
+    // reset previous values
+    this.step = 0;
+    this.stripe.complete = null;
+    this.stripe.element = null;
+    this.stripe.error = null;
+    this.stripe.payError = null;
+    this.stripe.success = null;
 
     // setup payment service
     this.paymentService = new PaymentService(this.runtime);
     await this.paymentService.ensureStripe();
 
     // setup pay formular
+    const $t = (this as any).$t;
     this.payForm = (<PayFormInterface>new EvanForm(this, { 
       amount: {
         value: 10,
@@ -352,7 +361,9 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * Trigger payment service to buy eve
    */
   async buyEve() {
-    this.buying = true;
+    // set buying after the process has started, so stripe can retrieve the mounted element. Setting
+    // buying to true, removes the element from the dom.
+    this.$nextTick(() => this.buying = true);
 
     const customer = this.paymentService.getCustomer({
       name: this.contactForm.name.value,
@@ -369,7 +380,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       customer,
       this.payForm.amount.value.toString(),
       this.stripe.element,
-      { type: this.payForm.type.value }
+      { type: this.payForm.type.value === 'iban' ? 'sepa_debit' : 'card' },
     );
 
     if (result.status === 'error') {
@@ -431,5 +442,13 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     if (this.windowWidth >= 1200) {
       (<any>this).$store.state.uiState.swipePanel = 'sharing';
     }
+  }
+
+  /**
+   * Resets stripe payment error to show the buy eve formular again.
+   */
+  removeStripeError() {
+    this.stripe.payError = '';
+    this.buying = false;
   }
 }

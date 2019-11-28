@@ -17,9 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-import axios from 'axios';
-import { debounce } from 'lodash';
 import * as bcc from '@evan.network/api-blockchain-core';
+import axios from 'axios';
+import { agentUrl } from '@evan.network/ui';
+import { debounce } from 'lodash';
 
 import {
   ErrorStatus,
@@ -51,8 +52,8 @@ export class PaymentService {
    *
    * @param agentUrl
    */
-  constructor(runtime: any, agentUrl = 'https://agents.test.evan.network/api') {
-    this.agentUrl = agentUrl;
+  constructor(runtime: any) {
+    this.agentUrl = `${ agentUrl }/api`;
     this.runtime = runtime;
   }
 
@@ -132,11 +133,18 @@ export class PaymentService {
     stripeElement: any,
     options?: OptionsInterface
   ): Promise<StatusResponse | ErrorStatus> {
-    const sourceData = this.createStripeSourceData(customer, options);
-    const { source, error } = await this.stripe.createSource(
-      stripeElement,
-      sourceData
-    );
+    let source, error;
+
+    try {
+      const sourceData = this.createStripeSourceData(customer, options);
+      const stripeSourceResult = await this.stripe.createSource(stripeElement, sourceData);
+
+      source = stripeSourceResult.source;
+      error = stripeSourceResult.error;
+    } catch (ex) {
+      error = this.getErrorCode(ex.message);
+      console.error(ex.message);
+    }
 
     if (error) {
       return {

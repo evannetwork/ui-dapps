@@ -34,19 +34,13 @@ https://evan.network/license/ */
       </div>
 
       <div class="mt-5">
-        <h1>Last Transactions</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, dolore
-          distinctio porro eveniet facere eum saepe consequuntur aliquam
-          error, ea, consequatur commodi pariatur. Dolore architecto, quos
-          ipsum quidem id corrupti.
-        </p>
+        <h1>{{ '_profile.wallet.last-transactions' | translate }}</h1>
+        <evan-under-development />
       </div>
     </div>
 
     <profile-buy-eve v-if="activeMode === 0" />
     <profile-send-eve v-if="activeMode === 1" />
-
   </div>
 </template>
 
