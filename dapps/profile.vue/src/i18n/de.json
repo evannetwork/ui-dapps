@@ -443,7 +443,7 @@
               "error": "Bitte geben Sie eine Zahl ein!",
               "error-less": "Sie müssen mindestens 10 EVE kaufen!",
               "label": "EVE",
-              "placeholder": "Menge an Eve, die sie gekauft werden sollen."
+              "placeholder": "Menge an Eve, die gekauft werden sollen."
             },
             "type": {
               "card": "Kreditkarte",
