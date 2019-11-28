@@ -60,7 +60,7 @@ https://evan.network/license/ */
           <template v-slot:body>
             <span v-html="
               $t(`_profile.wallet.buy-eve.accept.description`, {
-                amount: payForm.amount.value.toFixed(2),
+                amount: parseFloat(payForm.amount.value).toFixed(2),
               })
             " />
           </template>
@@ -135,13 +135,13 @@ https://evan.network/license/ */
               v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
             />
             <small>
-              {{ payForm.amount.value.toFixed(2) }} EVE x
+              {{ parseFloat(payForm.amount.value).toFixed(2) }} EVE x
               {{ '1€' }} + {{ taxValue }}
               ({{ (parseFloat(payForm.amount.value) / 100 * taxValue).toFixed(2) + '€' }})
             </small>
             <h3 class="mt-1">
               {{ '_profile.wallet.buy-eve.total-amount' | translate }}:
-              {{ (payForm.amount.value + (parseFloat(payForm.amount.value) / 100 * taxValue)).toFixed(2) }} {{ '€' }}
+              {{ (parseFloat(payForm.amount.value) + (parseFloat(payForm.amount.value) / 100 * taxValue)).toFixed(2) }} {{ '€' }}
             </h3>
           </div>
 
