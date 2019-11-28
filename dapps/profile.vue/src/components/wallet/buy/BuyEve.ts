@@ -232,7 +232,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         }
       },
       email: {
-        value: 'tobias.winkler@evan.team',
+        value: '',
         validate: function(vueInstance: BuyEveComponent) {
           return emailRegex.test(this.value);
         },
@@ -305,7 +305,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         }
       },
       vat: {
-        value: 'ATU43666001',
+        value: '',
         validate: function(vueInstance: BuyEveComponent) {
           return vueInstance.validateVat(this.value,
             vueInstance.contactForm ? vueInstance.contactForm.country.value : null);

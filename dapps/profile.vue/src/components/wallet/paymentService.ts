@@ -302,18 +302,6 @@ export class PaymentService {
   }
 
   /**
-   * Validate VAT number and return result.
-   *
-   * @param vat
-   */
-  // async validateVat(
-  //   country: string,
-  //   vat: string
-  // ): Promise<VatValidationInterface> {
-  //   return debounce(() => this.requestVatValidation(country, vat), 500);
-  // }
-
-  /**
    * Create customer object from given fields.
    *
    * @param customer
