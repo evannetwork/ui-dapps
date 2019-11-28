@@ -220,8 +220,8 @@
       "choose": "Identitätstyp spezifieren",
       "missing-type": "Nutzen Sie die nachfolgende Interaktionsfläche, um Ihre Identität genauer zu spezifieren.",
       "missing-type-foreign": "Für diese Identität wurde noch kein Typ ausgewählt.",
-      "no-verifications-avaiable": "Für Ihren Identitättyp stehen aktuell keine Verifikationen zur Verfügung.",
-      "switch": "Geben Sie Ihren Identitättyp an."
+      "no-verifications-avaiable": "Für Ihren Identitätstyp stehen aktuell keine Verifikationen zur Verfügung.",
+      "switch": "Geben Sie Ihren Identitätstyp an."
     },
     "verifications": {
       "add": "Verifikation hinzufügen",
