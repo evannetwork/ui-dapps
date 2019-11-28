@@ -108,7 +108,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   /**
    * VAT specific values (timeout for retrieving information, taxValue, ...)
    */
-  vatCalcTimeout = 1;
+  vatCalcTimeout: any = 1;
   taxValue = 0;
   reverseCharge = false;
 
@@ -399,16 +399,18 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * @param      {string}  country  current select country
    */
   async validateVat(vat: string, country: string): Promise<boolean|string> {
+    this.vatCalcTimeout && clearTimeout(this.vatCalcTimeout);
+
     // allow empty vat in germany
     if (country === 'DE' && !vat) {
       this.taxValue = 19;
+      this.vatCalcTimeout = null;
       return true;
     }
 
     // request server
     if (vat) {
       return new Promise(resolve => {
-        this.vatCalcTimeout && clearTimeout(this.vatCalcTimeout);
         this.vatCalcTimeout = setTimeout(async () => {
           const { data: { result: { error, reverseCharge, tax, } } } = await axios({
             method: 'GET',
@@ -430,6 +432,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
           }
         }, 500);
       });
+    } else {
+      this.vatCalcTimeout = null;
     }
   }
 
