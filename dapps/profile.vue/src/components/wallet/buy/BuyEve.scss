@@ -32,3 +32,17 @@
 small {
   color: cssVar('gray-600');
 }
+
+.flex-center {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  font-weight: 600;
+
+  :not(:first-child) {
+    margin-top: 24px;
+  }
+}
