@@ -108,7 +108,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   /**
    * VAT specific values (timeout for retrieving information, taxValue, ...)
    */
-  vatCalcTimeout = null;
+  vatCalcTimeout = 1;
   taxValue = 0;
   reverseCharge = false;
 
@@ -245,12 +245,9 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       },
       company: {
         value: data.accountDetails.accountName || '',
-        validate: function(vueInstance: BuyEveComponent) {
-          return this.value.length !== 0;
-        },
         uiSpecs: {
           attr: {
-            required: true,
+            required: false,
             type: 'email',
           }
         }
@@ -315,7 +312,9 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: true,
+            required: () => {
+              return this.contactForm.country.value !== 'DE';
+            },
           }
         }
       },
@@ -422,7 +421,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
           // needs reverse charge to be displayed?
           this.reverseCharge = reverseCharge;
           // clear timeout
-          delete this.vatCalcTimeout;
+          this.vatCalcTimeout = null;
           // resolve the error
           if (error) {
             resolve(`_profile.company.contact.vat.${ error }`);

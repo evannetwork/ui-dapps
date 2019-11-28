@@ -125,7 +125,11 @@ https://evan.network/license/ */
           :class="{ 'invisible': buying || stripe.success || stripe.payError, }"
           class="w-100"
           v-else>
-          <div class="text-center mb-3">
+          <div class="text-center mb-3 position-relative">
+            <div class="vat-loading" v-if="vatCalcTimeout">
+              <div class="spinner-border text-primary" />
+            </div>
+
             <span class="text-muted mb-3 d-block"
               v-if="reverseCharge"
               v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
@@ -148,7 +152,7 @@ https://evan.network/license/ */
               :label="'_profile.wallet.buy-eve.back' | translate"
             />
             <evan-button
-              :disabled="!payForm.isValid || !contactForm.isValid || vatCalcTimeout"
+              :disabled="!payForm.isValid || !contactForm.isValid || !!vatCalcTimeout"
               :label="'_profile.wallet.buy-eve.buy' | translate"
               @click="$refs.acceptModal.show()"
               class="ml-3 btn-block"
