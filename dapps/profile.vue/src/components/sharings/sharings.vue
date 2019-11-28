@@ -34,6 +34,7 @@ the following URL: https://evan.network/license/
           class="light"
           alignment="right"
           ref="shareSidebar"
+          :title="'_profile.sharing.permissionsTitle' | translate"
           :showBackdrop="windowWidth < 1200"
           :hideCloseButton="windowWidth >= 1200"
           :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
@@ -41,6 +42,7 @@ the following URL: https://evan.network/license/
           @hide="selectedSharedContacts = null"
         >
           <evan-permissions-editor
+            @init="permissionsEditor = $event"
             :loadPermissions="loadPermissions"
             :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
             :selectedContact="selectedSharedContacts !== null && selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
@@ -48,6 +50,19 @@ the following URL: https://evan.network/license/
             :updatePermissions="updatePermissions"
             i18nScope="_profile.sharing"
           />
+          <template slot="footer" v-if="!!permissionsEditor">
+            <evan-button 
+              type="secondary" 
+              :label="$t('_evan.cancel')" 
+              @click="permissionsEditor.cancel()" 
+              :disabled="selectedSharedContacts.length === 0" />
+            <evan-button
+              type="primary"
+              :label="$t('_profile.sharing.update')"
+              :disabled="!permissionsEditor.permissionsChanged"
+              @click="permissionsEditor.writePermissions()"
+            />
+          </template>
         </evan-swipe-panel>
 
         <div class="content">

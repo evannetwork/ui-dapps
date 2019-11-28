@@ -17,35 +17,26 @@
   the following URL: https://evan.network/license/
 */
 
-// vue import
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 
-/**
- * @class         ButtonsComponent
- */
-@Component({ })
-export default class ButtonsComponent extends mixins(EvanComponent) {
-  @Prop({
-    type: Number,
-    default: 0
-  }) btnCounter: Number;
+const dispatcher = new Dispatcher(
+  `profile.vue.${ dappBrowser.getDomainName() }`,
+  'sendEveDispatcher',
+  40 * 1000,
+  '_profile.dispatchers.send-eve'
+);
 
-  /**
-   * Should the buttons be disabled?
-   */
-  disabled = false;
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const runtime = instance.runtime;
 
-  /**
-   * The isLoading state
-   */
-  isLoading = false;
+    await runtime.executor.executeSend({
+      from: runtime.activeAccount,
+      to: data.accountId,
+      value: runtime.web3.utils.toWei(data.amount.toString(), 'ether'),
+    });
+  });
 
-  /**
-   * Display buttons in different button sizes
-   */
-  size = 'normal';
-}
+export default dispatcher;

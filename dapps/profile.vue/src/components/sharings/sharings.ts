@@ -63,6 +63,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   updatePermissions: Function;
 
   /**
+   * is needed for the side panel footer interaction
+   */
+  permissionsEditor = null;
+
+  /**
    * computed property
    * selected shared contacts from vuex store
    */

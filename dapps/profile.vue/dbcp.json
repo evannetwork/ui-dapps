@@ -3,6 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
+        "lodash.libs": "^4",
         "countries.libs": "^1.1.0",
         "evancore.vue.libs": "^1.8.0",
         "datacontainer.digitaltwin": "^1.8.2"

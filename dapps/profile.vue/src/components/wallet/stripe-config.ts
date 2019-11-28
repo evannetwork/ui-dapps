@@ -17,35 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-// vue import
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-
-/**
- * @class         ButtonsComponent
- */
-@Component({ })
-export default class ButtonsComponent extends mixins(EvanComponent) {
-  @Prop({
-    type: Number,
-    default: 0
-  }) btnCounter: Number;
-
-  /**
-   * Should the buttons be disabled?
-   */
-  disabled = false;
-
-  /**
-   * The isLoading state
-   */
-  isLoading = false;
-
-  /**
-   * Display buttons in different button sizes
-   */
-  size = 'normal';
-}
+export const stripeScriptId = 'stripeScript';
+export const stripeScriptPath = 'https://js.stripe.com/v3/';
+export const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
+export const STRIPE_ELEMENT_CONFIG = {
+  base: {
+    color: '#32325d',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
