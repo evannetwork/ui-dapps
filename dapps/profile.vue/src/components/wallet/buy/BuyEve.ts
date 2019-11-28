@@ -27,7 +27,6 @@ import axios from 'axios';
 
 import { PaymentService } from '../paymentService';
 import { ErrorStatus } from '../interfaces';
-import CompanyContactForm from 'components/profile/company/contact/contact';
 
 // TODO: evan style
 const elementStyles = {

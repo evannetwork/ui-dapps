@@ -20,7 +20,6 @@
 import * as bcc from '@evan.network/api-blockchain-core';
 import axios from 'axios';
 import { agentUrl } from '@evan.network/ui';
-import { debounce } from 'lodash';
 
 import {
   ErrorStatus,
@@ -31,7 +30,6 @@ import {
 } from './interfaces';
 import { StatusResponse } from './StatusResponse.interface';
 import { StripeSource } from './StripeSource.interface';
-import { relativeTimeRounding } from 'moment';
 
 declare var Stripe: any;
 const PUB_KEY = 'pk_test_kpO3T5fXA7aaftg9D0OO0w3S';
