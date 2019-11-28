@@ -56,7 +56,7 @@
         "vat": {
           "billing_country_and_vat_missmatch": "Provided VAT number does not match given country code.",
           "error": "The VAT number could not be validated!",
-          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT number.",
+          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT number is required.",
           "label": "VAT",
           "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
           "placeholder": "DE99999999999",
