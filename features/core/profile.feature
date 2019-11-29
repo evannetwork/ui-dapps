@@ -3,13 +3,13 @@ Feature: evan.network profile
 Background: Creating a new unspecified account and navigate to the profile detail page
   # create new profile
   Given I go to the evan.network startpage
-  Then I want to see a text including "Please select an account type."
+  Then I want to see a text including "Account type"
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I click the element with id "termsAccepted"
+    And I want to click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"

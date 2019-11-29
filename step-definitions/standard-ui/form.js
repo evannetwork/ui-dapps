@@ -8,20 +8,21 @@ const getSelector = (label, angular) => {
     const inputSelectors = [
       'input', 'div/input',
       'select', 'div/select',
+      'textarea', 'div/textarea'
     ];
 
     return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
-      `//label[normalize-space(text()) = '${label}']/preceding-sibling::${ inputSelector }`,
-      `//label[normalize-space(text()) = '${label}']/following-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::${ inputSelector }`,
+      `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${ inputSelector }`,
+      `//label[normalize-space(text()) = "${label}"]/following-sibling::${ inputSelector }`,
+      `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${ inputSelector }`,
+      `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${ inputSelector }`,
     ])).join('|');
   } else {
     return [
-      `//ion-label[normalize-space(text()) = '${label}']/preceding-sibling::ion-input/input`,
-      `//ion-label[normalize-space(text()) = '${label}']/following-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = '${label}']/parent::*/preceding-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = '${label}']/parent::*/following-sibling::ion-input/input`
+      `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
+      `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
+      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
+      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`
     ].join('|');
   }
 }
@@ -48,7 +49,7 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
  */
 When('I type {string} into the input field with label {string}', async(content, label) => {
   const elementId = await getElementIdByLabel(label);
-  
+
   await client.expect.element(`#${elementId}`).to.be.visible;
   await client.setValue(`#${elementId}`, content);
 });
@@ -218,7 +219,7 @@ Then('Input fields with labels {string} should be visible',
 /**
  * Click on label next to the evan checkbox control
  */
-Then('I click on vue checkbox control with id {string}',
+Then('I want to click on vue checkbox control with id {string}',
   async(id) => {
     client.useXpath();
 

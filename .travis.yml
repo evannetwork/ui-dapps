@@ -1,20 +1,24 @@
 language: node_js
+node_js: "12"
 
 install:
   - npm install
 
-matrix:
+jobs:
   include:
-  - name: "chrome"
-    node_js: "8.11.3"
-    env:
-      - NIGHTWATCH_ENV=chrome
-    script:
-      - npm run test-testnet
+    - name: chrome/login
+      env: TESTPATTERN=features/core/login.feature NIGHTWATCH_ENV=chrome
+    - name: firefox/login
+      env: TESTPATTERN=features/core/login.feature NIGHTWATCH_ENV=firefox
+    - name: chrome/dashboard
+      env: TESTPATTERN=features/core/dashboard.feature NIGHTWATCH_ENV=chrome
+    #- name: chrome/profile
+    #  env: TESTPATTERN=features/core/profile.feature NIGHTWATCH_ENV=chrome
+    - name: chrome/onboarding
+      env: TESTPATTERN=features/core/onboarding.feature NIGHTWATCH_ENV=chrome
+    - name: chrome/eve-payment
+      env: TESTPATTERN=features/profile/eve-payments.feature NIGHTWATCH_ENV=chrome
+    - name: chrome/sharing
+      env: TESTPATTERN=features/core/sharing.feature NIGHTWATCH_ENV=chrome
 
-  - name: "firefox"
-    node_js: "8.11.3"
-    env:
-      - NIGHTWATCH_ENV=firefox
-    script:
-      - npm run test-testnet
+script: npm run test-testnet-specific

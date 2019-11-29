@@ -14,5 +14,6 @@ Given("I am on the path {string}", async (path) => {
 })
 
 When("I refresh the page", async () => {
+  await client.pause(3000);
   await client.refresh();
 })

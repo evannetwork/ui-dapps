@@ -3,7 +3,7 @@ import { When, Then } from 'cucumber';
 
 const buttonSelector = (content) => {
   return [
-    `//*[contains(@class, 'btn') and normalize-space(text()) = '${content}']`,
+    `//*[contains(@class, 'btn') and normalize-space(text()) = "${content}"]`,
     `//*[normalize-space(text()) = '${ content }']/ancestor::*[contains(@class, 'btn')]`
   ].join('|');
 }
@@ -32,7 +32,7 @@ When('I click on button before the text {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useXpath();
-    const xPathSelector = `//*[normalize-space(text()) = '${content}']/preceding::button[1]`;
+    const xPathSelector = `//*[normalize-space(text()) = "${content}"]/preceding::button[1]`;
 
     await client.expect.element(xPathSelector).to.be.present;
     await client.click(xPathSelector);

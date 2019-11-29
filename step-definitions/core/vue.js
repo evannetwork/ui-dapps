@@ -26,12 +26,12 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   });
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`).refresh();
-  await client.pause(5000);
+  await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 
   // vue, to define
   const split = user.mnemonic.split(' ');
   await client.click(`a[href*="#/dashboard.vue.evan/onboarding.vue.evan/sign-in"]`)
-  await client.waitForElementVisible('#mnemonicInput0', 10 * 1000);
+  await client.waitForElementVisible('#mnemonicInput0', 60 * 1000);
   for (let i = 0; i < split.length; i++) {
     await client.setValue(`#mnemonicInput${ i }`, [ split[i] ]);
   }
@@ -58,7 +58,7 @@ Given('I go to the evan.network startpage', async () => {
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
   });
-  await client.pause(5000);
+  await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I log out from vue/, async () => {
@@ -78,8 +78,7 @@ When(/I log out from vue/, async () => {
 });
 
 Then(/I am no longer logged in to vue/, async () => {
-  await client.waitForElementPresent('input#alias', 30 * 1000);
-  await client.assert.visible('input#alias');
+  await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I switch to vue/, async () => {
