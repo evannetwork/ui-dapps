@@ -155,6 +155,12 @@ export default class SendEveComponent extends mixins(EvanComponent) {
           attr: {
             options: this.accountOptions,
             required: true,
+            taggable: true,
+            'create-option': address => {
+              this.form.accountId.value = address;
+              this.accountOptions.push({ label: address, value: address, });
+              return address;
+            },
           }
         }
       },

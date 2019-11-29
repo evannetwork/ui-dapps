@@ -439,17 +439,15 @@
         },
         "payForm": {
           "amount": {
-            "amount": {
-              "error": "Bitte geben Sie eine Zahl ein!",
-              "error-less": "Sie müssen mindestens 10 EVE kaufen!",
-              "label": "Menge an EVE (mindestens 10)",
-              "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
-            },
-            "type": {
-              "card": "Kreditkarte",
-              "iban": "SEPA Abbuchung",
-              "label": "Zahlungstyp"
-            }
+            "error": "Bitte geben Sie eine Zahl ein!",
+            "error-less": "Sie müssen mindestens 10 EVE kaufen!",
+            "label": "Menge an EVE (mindestens 10)",
+            "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
+          },
+          "type": {
+            "card": "Kreditkarte",
+            "iban": "SEPA Abbuchung",
+            "label": "Zahlungstyp"
           }
         },
         "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
@@ -482,16 +480,16 @@
             "placeholder": "Anzahl der EVE, die Sie versenden möchten."
           }
         },
-        "send": "Send",
-        "title": "Send EVE"
+        "send": "Senden",
+        "title": "EVE senden"
       },
       "transactions": {
         "charged-at": "aufgeladen am",
         "credit-charged": "Guthaben aufgeladen",
-        "description": "Nachfolgend sind nur die Guthabenaufladungen aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}'>hier</a>.",
+        "description": "Nachfolgend sind nur die Guthabenaufladungen aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
         "empty": "Bisher wurden keine Guthabenaufladungen durchgeführt...",
         "load-more": "Ältere laden",
-        "title": "Letzte Transaktionen"
+        "title": "Guthaben aufgeladen"
       }
     }
   }
