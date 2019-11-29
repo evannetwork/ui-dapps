@@ -49,7 +49,7 @@
       align-items: flex-end;
       justify-content: center;
 
-      min-height: 640px;
+      min-height: 430px;
       margin-bottom: 2em;
 
       img {
@@ -58,8 +58,8 @@
     }
 
     h3 {
-      &, /deep/ * {
-        font-size: 1.2rem;
+      &,  /deep/ * {
+        font-size: 1.1rem;
         line-height: 2rem;
 
         text-align: justify;
@@ -67,7 +67,7 @@
         color: cssVar('dark');
       }
 
-      /deep/ ul {
+       /deep/ ul {
         margin-top: 1rem;
       }
     }
