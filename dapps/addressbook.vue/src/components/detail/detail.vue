@@ -30,7 +30,7 @@
             <i class="mdi mdi-delete text-danger clickable ml-3"
               id="contact-remove-start"
               @click="$refs.contactRemoveModal.show()"
-              v-if="isMyAccount">
+              v-if="!isMyAccount">
               <evan-tooltip :placement="'bottom'">
                 {{ '_addressbook.remove-contact.remove' | translate }}
               </evan-tooltip>

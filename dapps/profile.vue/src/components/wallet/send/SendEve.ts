@@ -105,6 +105,9 @@ export default class SendEveComponent extends mixins(EvanComponent) {
       }
     }));
 
+    // open side panel directly
+    (this as any).$store.state.uiState.swipePanel = 'sendEve';
+
     // setup all!
     this.initialize();
   }

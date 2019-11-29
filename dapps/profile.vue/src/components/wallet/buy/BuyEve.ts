@@ -146,10 +146,22 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     this.stripe.payError = null;
     this.stripe.success = null;
 
+    // setup forms
+    this.setupForms();
+
     // setup payment service
     this.paymentService = new PaymentService(this.runtime);
     await this.paymentService.ensureStripe();
 
+    this.loading = false;
+    // render stripe element for initial payment type
+    this.$nextTick(() => this.renderStripeElement());
+  }
+
+  /**
+   * Set the forms for the buy eve process.
+   */
+  setupForms() {
     // setup pay formular
     const $t = (this as any).$t;
     this.payForm = (<PayFormInterface>new EvanForm(this, { 
@@ -304,13 +316,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     }));
 
     // check initial vat
-    if (this.contactForm.vat.value) {
-      this.contactForm.vat.value = this.contactForm.vat.value;
-    }
-
-    this.loading = false;
-    // render stripe element for initial payment type
-    this.$nextTick(() => this.renderStripeElement());
+    this.contactForm.vat.value = this.contactForm.vat.value;
   }
 
   /**
@@ -319,24 +325,29 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    * @param      {Event}  event   Passed event from select input
    */
   renderStripeElement() {
-    let options: any = { style: STRIPE_ELEMENT_CONFIG };
+    if (document.getElementById('stripeElement') && !this.loading) {
+      let options: any = {
+        hidePostalCode: true,
+        style: STRIPE_ELEMENT_CONFIG,
+      };
 
-    if (this.payForm.type.value === 'iban') {
-      options.supportedCountries = ['SEPA'];
-      options.placeholderCountry = (<any>this).$i18n.locale().toUpperCase();
+      if (this.payForm.type.value === 'iban') {
+        options.supportedCountries = ['SEPA'];
+        options.placeholderCountry = (<any>this).$i18n.locale().toUpperCase();
+      }
+
+      const elements = this.paymentService.getStripeElements((<any>this).$i18n.locale());
+      this.stripe.element = elements.create(this.payForm.type.value, options);
+      // clear old childs if needed
+      document.getElementById('stripeElement').innerHTML = '';
+      // insert new childs
+      this.stripe.element.mount('#stripeElement');
+      // check if current values are correct
+      this.stripe.element.on('change', ($event) => {
+        this.stripe.complete = $event.complete;
+        this.stripe.error = $event.error;
+      });
     }
-
-    const elements = this.paymentService.getStripeElements();
-    this.stripe.element = elements.create(this.payForm.type.value, options);
-    // clear old childs if needed
-    document.getElementById('stripeElement').innerHTML = '';
-    // insert new childs
-    this.stripe.element.mount('#stripeElement');
-    // check if current values are correct
-    this.stripe.element.on('change', ($event) => {
-      this.stripe.complete = $event.complete;
-      this.stripe.error = $event.error;
-    });
   }
 
   /**

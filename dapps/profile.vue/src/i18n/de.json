@@ -426,7 +426,7 @@
         "back": "Zurück",
         "buy": "EVE kaufen",
         "buy-more": "Mehr EVE kaufen",
-        "continue": "FortFahren",
+        "continue": "Fortfahren",
         "disclaimer": "Mit der Eingabe Ihrer IBAN und der Bestätigung dieser Zahlung ermächtigen Sie die evan GmbH und unseren Zahlungsdienstleister Stripe, Ihrer Bank Anweisungen zur Belastung Ihres Kontos und Ihrer Bank zur Belastung Ihres Kontos gemäß dieser Anweisungen zu übermitteln. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen nach dem Datum der Belastung Ihres Kontos beantragt werden.",
         "errors": {
           "charge_failed": "Eine Zahlung kann aufgrund eines fehlgeschlagenen Zahlungs- bzw. Abbuchungsversuchs nicht ausgeführt werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
@@ -453,13 +453,15 @@
         "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
         "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
         "stripe-element": {
-          "incomplete_number": "Ungültige Eingabe!"
+          "incomplete_number": "Unvollständige Eingabe!",
+          "invalid_number": "Ungültige Kartennummer!"
         },
-        "success": "Ihre Bestellung wurde erfolgreich ausgelöst.  Sie erhalten eine Rechnung an die angegebene Email Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
+        "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene Email Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
         "tax": "MwSt.",
         "title": "EVE kaufen",
         "total-amount": "Gesamtsumme",
-        "try-again": "Erneut versuchen"
+        "try-again": "Erneut versuchen",
+        "vat": "MwSt."
       },
       "send-eve": {
         "accept": {

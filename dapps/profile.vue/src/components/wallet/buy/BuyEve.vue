@@ -13,13 +13,15 @@ https://evan.network/license/ */
 <template>
   <div>
     <evan-swipe-panel
-      class="light"
-      alignment="right"
-      :title="'_profile.wallet.buy-eve.title' | translate"
-      :showBackdrop="windowWidth < 1200"
       :hideCloseButton="windowWidth >= 1200"
-      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
+      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+      :showBackdrop="windowWidth < 1200"
+      :title="'_profile.wallet.buy-eve.title' | translate"
+      @hide="$store.state.uiState.swipePanel = ''"
+      @show="$nextTick(() => renderStripeElement())"
+      alignment="right"
+      class="light"
     >
       <evan-loading v-if="loading" />
       <div class="flex-center text-center" v-else-if="buying">
@@ -48,45 +50,17 @@ https://evan.network/license/ */
       </div>
 
       <!-- start content -->
-      <template v-else>
-        <evan-modal
-          ref="acceptModal"
-          :maxWidth="'600px'">
-          <template v-slot:header>
-            <h5 class="modal-title">
-              {{ `_profile.wallet.buy-eve.accept.title` | translate }}
-            </h5>
-          </template>
-          <template v-slot:body>
-            <span v-html="
-              $t(`_profile.wallet.buy-eve.accept.description`, {
-                amount: parseFloat(payForm.amount.value).toFixed(2),
-              })
-            " />
-          </template>
-          <template v-slot:footer>
-            <evan-button
-              @click="buyEve(); $refs.acceptModal.hide()"
-              type="primary">
-              {{ '_profile.wallet.buy-eve.accept.send' | translate }}
-            </evan-button>
-          </template>
-        </evan-modal>
-
-        <div v-show="step === 1">
-          <evan-form
-            :form="contactForm"
-            :i18nScope="'_profile.company.contact'"
-            :onlyForm="true"
-            :stacked="true">
-          </evan-form>
-        </div>
-      </template>
+      <div v-else v-show="step === 1">
+        <evan-form
+          :form="contactForm"
+          :i18nScope="'_profile.company.contact'"
+          :onlyForm="true"
+          :stacked="true">
+        </evan-form>
+      </div>
       
       <!-- do not remove the stripe element from dom! -->
-      <div
-        v-show="step === 0"
-        v-if="!loading">
+      <div v-show="step === 0 && !loading">
         <evan-form
           :form="payForm"
           :i18nScope="'_profile.wallet.buy-eve.payForm'"
@@ -136,7 +110,7 @@ https://evan.network/license/ */
             />
             <small>
               {{ parseFloat(payForm.amount.value).toFixed(2) }} EVE x
-              {{ '1€' }} + {{ taxValue }}
+              {{ '1€' }} + {{ taxValue }} {{ '_profile.wallet.buy-eve.vat' | translate }}
               ({{ (parseFloat(payForm.amount.value) / 100 * taxValue).toFixed(2) + '€' }})
             </small>
             <h3 class="mt-1">
@@ -154,8 +128,9 @@ https://evan.network/license/ */
             <evan-button
               :disabled="!payForm.isValid || !contactForm.isValid || !!vatCalcTimeout"
               :label="'_profile.wallet.buy-eve.buy' | translate"
-              @click="$refs.acceptModal.show()"
+              @click="buyEve()"
               class="ml-3 btn-block"
+              id="execute-payment"
               type="primary"
             />
           </div>

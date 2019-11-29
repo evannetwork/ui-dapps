@@ -14,10 +14,11 @@ https://evan.network/license/ */
   <div>
     <evan-swipe-panel
       :hideCloseButton="windowWidth >= 1200"
-      :isOpen="$store.state.uiState.swipePanel === 'sendEve'"
+      :isOpen="true"
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :showBackdrop="windowWidth < 1200"
       :title="'_profile.wallet.send-eve.title' | translate"
+      @hide="$store.state.uiState.swipePanel = ''"
       alignment="right"
       class="light"
     >

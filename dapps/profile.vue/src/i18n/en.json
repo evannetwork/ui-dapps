@@ -453,13 +453,15 @@
         "processing-hint": "Processing payment, this may take 3 to 5 minutes",
         "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
         "stripe-element": {
-          "incomplete_number": "Invalid input"
+          "incomplete_number": "Incomplete input!",
+          "invalid_number": "Invalid card number!"
         },
         "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited in the next 5 to 10 minutes to your wallet.",
         "tax": "Tax",
         "title": "Buy EVE",
         "total-amount": "Total",
-        "try-again": "Try again"
+        "try-again": "Try again",
+        "vat": "VAT"
       },
       "send-eve": {
         "accept": {

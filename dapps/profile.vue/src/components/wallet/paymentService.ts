@@ -332,8 +332,8 @@ export class PaymentService {
     };
   }
 
-  getStripeElements() {
-    return this.stripe.elements();
+  getStripeElements(locale) {
+    return this.stripe.elements({ locale, });
   }
 
   private getErrorCode(code: string) {
