@@ -371,6 +371,8 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     } else {
       this.stripe.payError = '';
       this.stripe.success = true;
+      // send event, so e.g. the transactions overview can reload
+      window.dispatchEvent(new CustomEvent('evan-credit-recharge'));
     }
 
     this.buying = false;

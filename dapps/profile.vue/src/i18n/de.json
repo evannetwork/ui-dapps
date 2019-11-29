@@ -463,7 +463,6 @@
         "total-amount": "Gesamtsumme",
         "try-again": "Erneut versuchen"
       },
-      "last-transactions": "Letzte Transaktionen",
       "send-eve": {
         "accept": {
           "description": "Möchten Sie <b>{amount} EVE</b> an <b>{name}</b> senden?",
@@ -485,6 +484,14 @@
         },
         "send": "Send",
         "title": "Send EVE"
+      },
+      "transactions": {
+        "charged-at": "aufgeladen am",
+        "credit-charged": "Guthaben aufgeladen",
+        "description": "Nachfolgend sind nur die Guthabenaufladungen aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}'>hier</a>.",
+        "empty": "Bisher wurden keine Guthabenaufladungen durchgeführt...",
+        "load-more": "Ältere laden",
+        "title": "Letzte Transaktionen"
       }
     }
   }

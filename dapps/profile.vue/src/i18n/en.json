@@ -461,7 +461,6 @@
         "total-amount": "Total",
         "try-again": "Try again"
       },
-      "last-transactions": "Last Transactions",
       "send-eve": {
         "accept": {
           "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
@@ -483,6 +482,14 @@
         },
         "send": "Send",
         "title": "Send EVE"
+      },
+      "transactions": {
+        "charged-at": "charged at",
+        "credit-charged": "Credit recharged",
+        "description": "Only credit recharges are listed below. A complete overview over the transactions can be found <a href='{explorerUrl}'>here</a>.",
+        "empty": "No credit recharges have been executed out so far...",
+        "load-more": "Load more",
+        "title": "Last Transactions"
       }
     }
   }

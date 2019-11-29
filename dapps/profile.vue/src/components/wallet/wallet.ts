@@ -49,7 +49,7 @@ export default class WalletComponent extends mixins(EvanComponent) {
   /**
    * Bin window resize watcher to handle side panel state and handle send eve events.
    */
-  created() {
+  async created() {
     // setup dispatcher watchers
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset formular
@@ -57,6 +57,23 @@ export default class WalletComponent extends mixins(EvanComponent) {
         // force ui rerendering
         this.loading = true;
         this.$nextTick(() => this.loading = false);
+      }
+    }));
+
+    const runtime = (this as any).getRuntime();
+    const web3 = runtime.web3;
+    const bRC = web3.eth.Contract([{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"},{"indexed":true,"name":"receiver","type":"address"}],"name":"AddedReceiver","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"receivers","type":"address[]"},{"indexed":false,"name":"rewards","type":"uint256[]"}],"name":"Rewarded","type":"event"}], '0xdccb7f7ec90c99ba744986539dd73b897401954b')
+    const paymentEvents = await bRC.getPastEvents('AddedReceiver', {
+      filter: { receiver: runtime.activeAccount },
+      fromBlock: 0,
+      toBlock: 'latest'
+    });
+    const receivedPayments = await Promise.all(paymentEvents.map(async (entry) => {
+      const block = await web3.eth.getBlock(entry.blockNumber);
+      const amount = web3.utils.fromWei(entry.returnValues.amount.toString());
+      return {
+        timestamp: block.timestamp,
+        amount
       }
     }));
   }
