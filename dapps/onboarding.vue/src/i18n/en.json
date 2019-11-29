@@ -12,22 +12,22 @@
           "title": "Login to the evan.network"
         },
         "1": {
-          "desc": "Blockchain technology enables transparency of transactions by secure a non-personalized transparency. Any transaction could be seen by any member of the blockchain. Your privacy is saved by using decrypted addresses instead of plain names",
+          "desc": "",
           "title": "Welcome to the evan.network"
         }
       },
       "sign-up": {
         "company": {
           "0": {
-            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - Do you want to use the advantages of blockchain technology as a company? Then create a company account in the evan.network in four simple steps. The optional verification of your company by a notary enables you to interact as a trusted partner in a digital network.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
             "title": "Registration in the evan.network"
           },
           "1": {
-            "desc": "To make transactions in the evan.network, you need an account. On the basis of your company-specific data, you can be verified later as a trustful company.",
+            "desc": "You need your address data for later verification as a company. This creates a network of trusted partners who exchange data and information directly across companies.",
             "title": "Your path to a company account"
           },
           "2": {
-            "desc": "You need your address data later for the verification as a company. This creates a network of partners exchanging data and information directly across companies.",
+            "desc": "In order to verify your company account, you need both address data and company-specific data. The extract from the commercial register can later be used by a notary to verify your company if required.",
             "title": "Your path to a company account"
           },
           "3": {
@@ -37,7 +37,7 @@
         },
         "user": {
           "0": {
-            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - in order to be able to interact as a trustworthy company.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
+            "desc": "To participate in the evan.network, please create an account. The account type depends on your requirements.<ul><li><b>Company</b> - Do you want to use the advantages of blockchain technology as a company? Then create a company account in the evan.network in four simple steps. The optional verification of your company by a notary enables you to interact as a trusted partner in a digital network.</li><li><b>User</b> - to interact as a real person. This account type offers the possibility to adapt to your requirements (e.g. company) at a later time.</li></ul>",
             "title": "Registration in the evan.network"
           },
           "1": {
@@ -86,14 +86,14 @@
       "decrypt": "Decrypt",
       "desc": "Restore an existing evan.network identity on this device",
       "get-mnemonic": "Recovery Key",
-      "get-mnemonic-desc": "Insert your recovery key to restore your evan.network identity or paste it from your clipboard.",
+      "get-mnemonic-desc": "Please enter the 12 words you received for registration.<br>You can also enter these 12 words using the \"Copy and Paste\" function.",
       "get-password": "Decrypt Identity",
       "get-password-desc": "Enter your password to access the data of your identity.",
       "invalid-password": "The provided password is invalid.",
       "next": "Next",
       "no-profile": "No identity found",
       "no-profile-desc": "There is no evan.network identity associated with this recovery key.",
-      "not-signed-up": "Need an account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Sign Up</a>",
+      "not-signed-up": "You don't have an account yet? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Sign Up</a>",
       "recovery-key": "Recovery Key",
       "title": "Log in",
       "welcome": "Contact request",
@@ -109,31 +109,39 @@
       },
       "agree": "Agree",
       "alias": {
-        "company": "Company name",
+        "company": "Name of the company",
         "error": "Please enter a account name!",
-        "hint": "The account name is only visible to you.",
+        "hint-company": "The name of your company is only visible to you.",
+        "hint-user": "The account name is only visible to you.",
         "placeholder": "John Doe | Sample Company Inc.",
         "user": "Account name"
       },
-      "already-signed-up": "Have an account already? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
+      "already-signed-up": "You are already signed up? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Cancel",
       "create-account": "Create your account",
       "create-profile": {
-        "creation-time": "about {creationTime} / 30 seconds",
-        "long": "All data for the creation of your evan.network identity has been recorded. Please confirm the terms of use via captcha query to complete the process.",
-        "status-1": "Creating identity contract...",
-        "status-2": "Encrypting user information...",
-        "status-3": "Creating mailbox, address book, ...",
-        "status-4": "Setting up verification management...",
-        "status-5": "Identity was successfully created!",
-        "title": "Create Account"
-      },
-      "create-profile-twin": {
-        "status-1": "Creating identity contract...",
-        "status-2": "Encrypting user information...",
-        "status-3": "Creating mailbox, address book...",
-        "status-4": "Creating Digital Twin...",
-        "status-5": "Digital Twin was successfully created!"
+        "company": {
+          "status-1": "Initialize connection to network...",
+          "status-2": "Creation of the company account...",
+          "status-3": "Creation of corporate identity on the basis of specific data...",
+          "status-4": "Creation of verification management...",
+          "status-5": "Identity was successfully created..."
+        },
+        "title": "Create Account",
+        "twin": {
+          "status-1": "Creating identity contract...",
+          "status-2": "Encrypting user information...",
+          "status-3": "Creating mailbox, address book...",
+          "status-4": "Creating Digital Twin...",
+          "status-5": "Digital Twin was successfully created!"
+        },
+        "user": {
+          "status-1": "Initialize connection to network...",
+          "status-2": "Creation of the company account...",
+          "status-3": "Creation of the identity...",
+          "status-4": "Creation of verification management...",
+          "status-5": "Identity was successfully created..."
+        }
       },
       "desc": "Create your evan.network identity",
       "desc-long": "Generate your secure and independent identity on the evan.network. With the help of this identity, you can interact with business partners, contracts and companies. You can restore your identity on another device at any time using your generated recovery key and continue working.",
@@ -171,7 +179,7 @@
           "title": "User information"
         },
         "captcha": {
-          "desc": "Please confirm that you are not acting as automatic software and accept our terms of use.",
+          "desc": "Please confirm the Terms of Use and the Capcha.",
           "title": "Terms of use"
         },
         "company": {

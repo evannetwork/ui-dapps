@@ -27,6 +27,11 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 @Component({ })
 export default class ProfileCreatingComponent extends mixins(EvanComponent) {
   /**
+   * account type that should be created
+   */
+  @Prop() type: string;
+
+  /**
    * Creating status that should be displayed
    */
   @Prop() activeStep: number;

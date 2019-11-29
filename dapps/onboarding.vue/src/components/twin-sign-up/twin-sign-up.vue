@@ -36,7 +36,7 @@
             ></div>
           </div>
           <h5 class="font-weight-bold mt-5 text-center">
-            {{ `_onboarding.sign-up.create-profile-twin.status-${ creatingProfile}` | translate }}
+            {{ `_onboarding.sign-up.create-profile.twin.status-${ creatingProfile}` | translate }}
           </h5>
         </template>
         <div v-else class="h-100 d-flex align-items-center justify-content-center">

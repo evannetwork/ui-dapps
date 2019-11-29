@@ -20,7 +20,7 @@
 <template>
   <div class="col-12 d-flex justify-content-center align-items-center"
     v-if="activeStep">
-    <div>
+    <div class="text-center" style="max-width: 390px">
       <template v-if="activeStep !== maximumSteps">
         <div>
           <img class="img-fluid"
@@ -39,7 +39,7 @@
         </div>
         <h5 class="font-weight-bold mt-5 text-center">
           {{ (customSteps[activeStep] ? customSteps[activeStep].text :
-              `_onboarding.sign-up.create-profile.status-${ activeStep}`) | translate }}
+              `_onboarding.sign-up.create-profile.${ type ? `${ type }.` : '' }status-${ activeStep}`) | translate }}
         </h5>
       </template>
       <div v-if="activeStep === maximumSteps" class="h-100 d-flex align-items-center justify-content-center">
