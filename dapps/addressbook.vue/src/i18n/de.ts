@@ -22,7 +22,8 @@ export default{
   "_addressbook": {
     "add": "Kontakt hinzufügen",
     "addressbook": "Kontakte",
-    "addressbook-desc": "Übersicht über Ihre vertrauenswürdigen Kontakte",
+    "addressbook-desc": "Übersicht über Ihre Kontakte",
+    "addressbook-desc-long": "Fügen Sie Partner hier als Kontakt hinzu, um Informationen mit diesen teilen.",
     "alias": "Alias",
     "all": "Alle",
     "category": "Kategorie",
@@ -34,7 +35,7 @@ export default{
         "title": "Account-ID"
       },
       "alias": {
-        "desc": "Nutzername des neuen Kontakts",
+        "desc": "Nutzername des neuen Partners für Ihre Kontaktübersicht",
         "error": "Bitte geben Sie einen Alias an!",
         "title": "Alias"
       },
@@ -44,8 +45,8 @@ export default{
         "title": "Kontaktanfrage"
       },
       "continue": "Weiter",
-      "desc": "Über dieses Formular können Sie einen Kontakt über eine bestehende evan.network Identität oder per E-Mail einladen. Sobald Sie einen Kontakt eingeladen haben, können Sie mit diesem sichere Nachrichten austauschen und ihn in Verträge einladen.",
-      "desc-email": "Sobald ein Nutzer per E-Mail eingeladen wird, können Sie diesen Kontakt nicht direkt verwenden, um mit diesem Daten zu teilen. Sobald der Anmeldeprozess des eingeladenen Benutzers abgeschlossen ist, erhalten Sie eine Blockchain Mail mit der Sie den Einladeprozess beenden und Kontaktdaten aktualisieren können. Weiterhin können Sie EVE als Startguthaben mitschicken.",
+      "desc": "Über dieses Formular können Sie einen Kontakt über eine bestehende evan.network Identität oder per E-Mail einladen. Sobald Sie einen Kontakt eingeladen haben, können Sie mit diesem Informationen austauschen.",
+      "desc-email": "Sie können hier einen weiteren Partner auf Basis der E-Mail einladen und ihm EVE für eine erste Interaktion im evan.network senden. Sobald sich Ihr Partner im evan.network angemeldet hat, erhalten Sie eine Information in Ihrem Account.",
       "email": {
         "desc": "E-Mail Adresse zum Einladen des Nutzers in das Netzwerk.",
         "error-added": "Die angegebene E-Mail Adresse haben Sie bereits zu Ihren Kontakten hinzugefügt.",

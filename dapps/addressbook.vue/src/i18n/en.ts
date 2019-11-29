@@ -22,7 +22,8 @@ export default {
   "_addressbook": {
     "add": "Add contact",
     "addressbook": "Contacts",
-    "addressbook-desc": "Overview about your trusted contacts",
+    "addressbook-desc": "Overview about your contacts",
+    "addressbook-desc-long": "Add partners here as a contact to share information with them.",
     "alias": "Alias",
     "all": "All",
     "category": "Category",
@@ -34,7 +35,7 @@ export default {
         "title": "Account ID"
       },
       "alias": {
-        "desc": "Username of the new contact",
+        "desc": "Username of the new partner for your contact overview",
         "error": "Please enter an alias!",
         "title": "Alias"
       },
@@ -44,8 +45,8 @@ export default {
         "title": "Contact Request"
       },
       "continue": "Continue",
-      "desc": "You can use this form to invite a contact via an existing evan.network identity or by email. As soon as you have invited a contact, you can exchange secure messages with them and invite them into contracts.",
-      "desc-email": "Once a user is invited by email, you cannot use this contact directly to share something with that user. As soon as the login process of the invited user is completed, you will receive a blockchain mail with that you can finish the invitation process and update the contact details. You can also send EVE as a starting credit.",
+      "desc": "You can use this form to invite a contact via an existing evan.network identity or by e-mail. As soon as you have invited a contact, you can exchange information with it.",
+      "desc-email": "Here you can invite another partner based on the e-mail and send him EVE for a first interaction in the evan.network. As soon as your partner has registered in the evan.network, you will receive information in your account.",
       "email": {
         "desc": "Email address for inviting the user to the network.",
         "error-added": "You have already added the specified email address to your contacts.",

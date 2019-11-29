@@ -37,6 +37,9 @@
               <h3 class="font-weight-bold mb-0 force-oneline bg-level-3">
                 {{ '_addressbook.addressbook-desc' | translate }}
               </h3>
+              <span>
+                {{ '_addressbook.addressbook-desc-long' | translate }}
+              </span>
             </div>
             <span class="mx-auto"></span>
             <button type="button" class="btn btn-primary "

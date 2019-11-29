@@ -133,7 +133,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
           type: 'v-select',
           attr: {
             options: this.countryOptions,
-            required: this.required.indexOf('country') !== -1,
+            required: !this.stacked || this.required.indexOf('country') !== -1,
           }
         }
       },
@@ -144,7 +144,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: this.required.indexOf('streetAndNumber') !== -1,
+            required: !this.stacked || this.required.indexOf('streetAndNumber') !== -1,
           }
         }
       },
@@ -157,7 +157,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: () => this.form.country.value === 'DE' && this.required.indexOf('postalCode') !== -1,
+            required: () => !this.stacked || this.form.country.value === 'DE' && this.required.indexOf('postalCode') !== -1,
           }
         }
       },
@@ -168,7 +168,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: this.required.indexOf('city') !== -1,
+            required: !this.stacked || this.required.indexOf('city') !== -1,
           }
         }
       },
@@ -180,7 +180,7 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: this.required.indexOf('website') !== -1,
+            required: !this.stacked || this.required.indexOf('website') !== -1,
           }
         }
       },
