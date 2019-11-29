@@ -21,7 +21,7 @@ import { Container, ContainerShareConfig, Profile, ContainerUnshareConfig, Runti
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import { getProfileShareBMail } from '../components/sharings/utils';
-import * as dispatchers from '../dispatchers/registry'; 
+import * as dispatchers from '../dispatchers/registry';
 
 /*
   Helper functions for permission handling.
@@ -284,7 +284,12 @@ const createUnshareConfig = (permissions, oldPermissions, accountId: string) => 
  * @param containerPermissions: any - the new permissions object
  * @param oldContainerPermissions: any - the old permissions object
  */
-export const updatePermissions = async (vueInstance: EvanComponent, runtime: Runtime, accountId: string, containerPermissions, oldContainerPermissions) => {
+export const updatePermissions = async (
+  vueInstance: EvanComponent,
+  runtime: Runtime,
+  accountId: string,
+  containerPermissions,
+  oldContainerPermissions) => {
   const containerConfigs = [];
   const bMailContent = await getProfileShareBMail(vueInstance);
 

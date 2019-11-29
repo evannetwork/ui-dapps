@@ -22,10 +22,25 @@
           "label": "City",
           "placeholder": "Berlin, London, Paris"
         },
+        "company": {
+          "error": "Please insert name of your company!",
+          "label": "Company Name",
+          "placeholder": "Sample GmbH"
+        },
         "country": {
           "desc": "Company headquarters country",
           "error": "Please select the company headquarters country",
           "label": "Company HQ Country"
+        },
+        "email": {
+          "error": "Please insert a correct email address!",
+          "label": "E-Mail",
+          "placeholder": "test@test.de"
+        },
+        "name": {
+          "error": "Please insert your name!",
+          "label": "Name",
+          "placeholder": "Max Mustermann"
         },
         "postalCode": {
           "error": "Please insert a valid postal code!",
@@ -38,6 +53,15 @@
           "placeholder": "My street 15"
         },
         "title": "Contact",
+        "vat": {
+          "billing_country_and_vat_missmatch": "Provided VAT number does not match given country code.",
+          "error": "The VAT number could not be validated!",
+          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT number is required.",
+          "label": "VAT",
+          "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
+          "placeholder": "DE99999999999",
+          "vat_number_invalid": "VAT number seems to be invalid."
+        },
         "website": {
           "error": "Please insert a valid url!",
           "label": "Website",
@@ -130,6 +154,7 @@
       "profile-type": "Changing Identity type...",
       "profile-update": "Updating Identity information...",
       "request-verification": "Requesting Verification...",
+      "send-eve": "Sending EVEs...",
       "verification-accept": "Accepting Verification..."
     },
     "not-permitted": {
@@ -205,6 +230,7 @@
         "identifications": "Identifications",
         "notary": "Notary Verification"
       },
+      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network.",
       "done": "Close",
       "empty": "No verifications available",
       "error": "Error",
@@ -388,8 +414,76 @@
         }
       },
       "reload": "Reload",
-      "title": "All verifications",
-      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network."
+      "title": "All verifications"
+    },
+    "wallet": {
+      "buy-eve": {
+        "accept": {
+          "description": "Do you want to continue with buying <b>{amount} EVE</b>?",
+          "send": "Buy",
+          "title": "Buy EVE"
+        },
+        "back": "Back",
+        "buy": "Buy EVE",
+        "buy-more": "Buy more",
+        "continue": "Continue",
+        "disclaimer": "By entering your IBAN and confirming this payment, you authorize evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with these instructions. You are entitled to a refund from your bank in accordance with the terms of your agreement with your bank. A refund must be requested within 8 weeks of the date your account was debited.",
+        "errors": {
+          "charge_failed": "A payment cannot be completed because of a failed payment/charge attempt. <b>Your card was NOT debited!</b> Please try again later.",
+          "invalid_customer": "Your customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
+          "price_not_okay": "An unknown error occurred on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
+          "too_many_accounts": "An unknown error occurred regarding your account. <b>Your card was NOT debited!</b> Please contact our customer support.",
+          "transaction_failed": "Your payment/charge was successful but the transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
+          "unknown_state": "An unknown error occurred during the payment process. Please contact our customer support.",
+          "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later."
+        },
+        "payForm": {
+          "amount": {
+            "error": "Please insert a correct number!",
+            "error-less": "You must by at least 10! ({balance} EVE)",
+            "label": "Amount of EVE (at least 10)",
+            "placeholder": "Enter a number"
+          },
+          "type": {
+            "card": "Credit Card",
+            "iban": "SEPA Edit",
+            "label": "Payment Type"
+          }
+        },
+        "processing-hint": "Processing payment, this may take 3 to 5 minutes",
+        "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
+        "stripe-element": {
+          "incomplete_number": "Invalid input"
+        },
+        "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited in the next 5 to 10 minutes to your wallet.",
+        "tax": "Tax",
+        "title": "Buy EVE",
+        "total-amount": "Total",
+        "try-again": "Try again"
+      },
+      "last-transactions": "Last Transactions",
+      "send-eve": {
+        "accept": {
+          "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
+          "send": "Send",
+          "title": "Send EVE"
+        },
+        "form": {
+          "accountId": {
+            "error": "You must insert a valid address.",
+            "label": "Identity",
+            "placeholder": "Contact or identity address"
+          },
+          "amount": {
+            "error": "Please insert a correct number!",
+            "error-less": "Account balance is to low! ({balance} EVE)",
+            "label": "Amount of EVE",
+            "placeholder": "EVE to send"
+          }
+        },
+        "send": "Send",
+        "title": "Send EVE"
+      }
     }
   }
 }

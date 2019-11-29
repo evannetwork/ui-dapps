@@ -48,7 +48,7 @@
           </profile-permission-wrapper>
         </div>
         <div class="col right-col d-flex justify-content-end">
-          <evan-wallet
+          <evan-wallet-card
             :accountDetails="userInfo"
             :address="$route.params.address"
           />
@@ -140,6 +140,7 @@
       </div>
       <evan-swipe-panel
         :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+        :title="'_profile.sharing.permissionsTitle' | translate"
         @hide="$store.state.uiState.swipePanel = ''"
         alignment="right"
         class="light"
@@ -148,12 +149,26 @@
         type="default"
         v-if="userInfo">
         <evan-permissions-editor
+          @init="permissionsEditor = $event"
           :loadPermissions="loadPermissions"
           :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
           :sortFilters="$store.state.profileDApp.sharingFilter"
           :updatePermissions="updatePermissions"
           i18nScope="_profile.sharing"
         />
+        <template slot="footer" v-if="!!permissionsEditor">
+          <evan-button 
+            type="secondary" 
+            :label="$t('_evan.cancel')" 
+            @click="permissionsEditor.cancel()" 
+            :disabled="selectedSharedContacts.length === 0" />
+          <evan-button
+            type="primary"
+            :label="$t('_evan.sharing.update')"
+            :disabled="!permissionsEditor.permissionsChanged"
+            @click="permissionsEditor.writePermissions()"
+          />
+        </template>
       </evan-swipe-panel>
     </template>
   </div>

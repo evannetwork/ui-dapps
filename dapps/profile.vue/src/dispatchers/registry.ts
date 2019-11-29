@@ -18,12 +18,14 @@
 */
 
 import requestIdentificationDispatcher from './notary/requestIdentification';
+import sendEveDispatcher from './sendEve';
 import shareProfileDispatcher from './profile/share';
 import updateProfileDispatcher from './profile/update';
 import verificationAcceptDispatcher from './acceptVerification';
 
 export {
   requestIdentificationDispatcher,
+  sendEveDispatcher,
   shareProfileDispatcher,
   updateProfileDispatcher,
   verificationAcceptDispatcher,

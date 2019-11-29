@@ -71,6 +71,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   updatePermissions: Function;
 
   /**
+   * is needed for the side panel footer interaction
+   */
+  permissionsEditor = null;
+
+  /**
    * Load the mail details
    */
   async created() {

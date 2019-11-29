@@ -17,35 +17,42 @@
   the following URL: https://evan.network/license/
 */
 
-// vue import
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+@import '~@evan.network/ui/src/style/utils';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+.stripeElement {
+  border-bottom: 1px solid cssVar('gray-500');
+  padding: 12px 0;
+}
 
-/**
- * @class         ButtonsComponent
- */
-@Component({ })
-export default class ButtonsComponent extends mixins(EvanComponent) {
-  @Prop({
-    type: Number,
-    default: 0
-  }) btnCounter: Number;
+.stripeElementLabel {
+  text-transform: uppercase;
+  color: cssVar('gray-600');
+}
 
-  /**
-   * Should the buttons be disabled?
-   */
-  disabled = false;
+small {
+  color: cssVar('gray-600');
+}
 
-  /**
-   * The isLoading state
-   */
-  isLoading = false;
+.flex-center {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  font-weight: 600;
 
-  /**
-   * Display buttons in different button sizes
-   */
-  size = 'normal';
+  :not(:first-child) {
+    margin-top: 24px;
+  }
+}
+
+.vat-loading {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5) !important;
 }

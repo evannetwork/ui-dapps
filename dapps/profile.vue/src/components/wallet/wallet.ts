@@ -17,35 +17,47 @@
   the following URL: https://evan.network/license/
 */
 
-// vue import
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-/**
- * @class         ButtonsComponent
- */
-@Component({ })
-export default class ButtonsComponent extends mixins(EvanComponent) {
-  @Prop({
-    type: Number,
-    default: 0
-  }) btnCounter: Number;
+import { sendEveDispatcher } from '../../dispatchers/registry';
+
+@Component({})
+export default class WalletComponent extends mixins(EvanComponent) {
+  /**
+   * Current display mode in side panel.
+   */
+  activeMode = 0;
 
   /**
-   * Should the buttons be disabled?
+   * Show loading symbol
    */
-  disabled = false;
+  loading = false;
 
   /**
-   * The isLoading state
+   * Watch for dispatcher updates
    */
-  isLoading = false;
+  listeners: Array<any> = [];
 
   /**
-   * Display buttons in different button sizes
+   * Unbind window resize watcher
    */
-  size = 'normal';
+  beforeDestroy() {
+    this.listeners.forEach(listener => listener());
+  }
+
+  /**
+   * Bin window resize watcher to handle side panel state and handle send eve events.
+   */
+  created() {
+    // setup dispatcher watchers
+    this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
+      // if dispatcher was finished, reload data and reset formular
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        // force ui rerendering
+        this.loading = true;
+        this.$nextTick(() => this.loading = false);
+      }
+    }));
+  }
 }
