@@ -4,6 +4,7 @@ Scenario: Registering a new account on evan Happy Path
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+    And I set Input field with label "Account type" to "user"
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
@@ -26,6 +27,7 @@ Scenario: Registering a new account not set account name
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+    And I set Input field with label "Account type" to "user"
     And I set Input field with label "Account name" to ""
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
@@ -36,6 +38,7 @@ Scenario: Registering a new account and test password checks
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+    And I set Input field with label "Account type" to "user"
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test"
     And I press the "TAB" key
@@ -51,6 +54,7 @@ Scenario: Registering a new account on evan and not check terms
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+  And I set Input field with label "Account type" to "user"
   And I set Input field with label "Account name" to "Automated Test Account"
   And I set Input field with label "Password" to "Test1234"
   And I set Input field with label "Retype password" to "Test1234"
@@ -63,6 +67,7 @@ Scenario: Registering a new account on evan and not check recaptcha
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+  And I set Input field with label "Account type" to "user"
   And I set Input field with label "Account name" to "Automated Test Account"
   And I set Input field with label "Password" to "Test1234"
   And I set Input field with label "Retype password" to "Test1234"
