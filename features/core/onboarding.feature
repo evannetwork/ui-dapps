@@ -80,7 +80,7 @@ Scenario: Registering a new company account on evan
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
-    And I set Input field with label "Account name" to "Automated Test Account"
+    And I set Input field with label "Name of the company" to "Automated Test Account"
     And I set Input field with label "Account type" to "company"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
