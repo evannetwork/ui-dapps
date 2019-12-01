@@ -18,6 +18,10 @@ jobs:
       env: TESTPATTERN=features/core/onboarding.feature NIGHTWATCH_ENV=chrome
     - name: chrome/eve-payment
       env: TESTPATTERN=features/profile/eve-payments.feature NIGHTWATCH_ENV=chrome
+    - name: chrome/eve-payment-vue
+      env: TESTPATTERN=features/profile/eve-payments-vue.feature NIGHTWATCH_ENV=chrome
+    - name: firefox/eve-payment-vue
+      env: TESTPATTERN=features/profile/eve-payments-vue.feature NIGHTWATCH_ENV=firefox
     - name: chrome/sharing
       env: TESTPATTERN=features/core/sharing.feature NIGHTWATCH_ENV=chrome
 

@@ -3,7 +3,7 @@ import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/test-utils.js';
 
-export const WAIT_TIME = 15 * 1000;
+export const WAIT_TIME = 300 * 1000;
 
 When(/^I click the element with id "([^"]+)"$/, async id => {
   const evan = setupEvan(client);
