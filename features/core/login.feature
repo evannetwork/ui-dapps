@@ -66,7 +66,7 @@ Scenario: Refreshing the page and re-entering password
   Then I want to see a text including "What would you like to start with?"
 
   When I refresh the page
-    And I wait for 3 seconds
+    And I wait for 10 seconds
     Then I want to see a text including "Alias"
     And I want to see a text including "Password"
   When I type "Test1234" into the input field with label "Password"
