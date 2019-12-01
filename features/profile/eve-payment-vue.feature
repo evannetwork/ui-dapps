@@ -3,7 +3,7 @@ Feature: EVE payments Vue
 
 Scenario: Checking amount when paying from Germany with an invalid German VAT number
   Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
@@ -28,7 +28,7 @@ Scenario: Checking amount when paying from Germany with an invalid German VAT nu
 
 Scenario: Checking amount when paying from Germany without a VAT number
   Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
@@ -50,7 +50,7 @@ Scenario: Checking amount when paying from Germany without a VAT number
 
 Scenario: Checking amount when paying from Italy with a valid Italian VAT number
    Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
@@ -73,7 +73,7 @@ Scenario: Checking amount when paying from Italy with a valid Italian VAT number
 
 Scenario: Checking amount when paying from Italy with an invalid Italian VAT number
    Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
@@ -97,7 +97,7 @@ Scenario: Checking amount when paying from Italy with an invalid Italian VAT num
 
 Scenario: Checking amount when paying from Italy without a VAT number
    Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
@@ -122,7 +122,7 @@ Scenario: Checking amount when paying from Italy without a VAT number
 
 Scenario: Checking amount when paying from Austria with a valid Italian VAT number
    Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
@@ -146,7 +146,7 @@ Scenario: Checking amount when paying from Austria with a valid Italian VAT numb
 
 Scenario: Executing Payment from Germany with a valid German VAT number
    Given I log in to evan.network using vue
-    And I click on "Profile" in main menu
+    And I click on "Identity" in main menu
     And I click on link to "wallet"
     And I click on button "Buy EVE"
     Then I want to see a text including "Buy EVE"
