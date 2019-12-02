@@ -159,6 +159,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
             options: this.accountOptions,
             required: true,
             taggable: true,
+            id: 'evan-eve-send-identity',
             'create-option': address => {
               this.form.accountId.value = address;
               this.accountOptions.push({ label: address, value: address, });
@@ -188,6 +189,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
           attr: {
             required: true,
             type: 'number',
+            id: 'evan-eve-send-amount',
           }
         }
       },

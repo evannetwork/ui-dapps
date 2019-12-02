@@ -52,6 +52,7 @@ https://evan.network/license/ */
           <template v-slot:footer>
             <evan-button
               @click="sendEve(); $refs.acceptModal.hide()"
+              id="evan-eve-send-submit"
               type="primary">
               {{ '_profile.wallet.send-eve.accept.send' | translate }}
             </evan-button>
@@ -66,6 +67,7 @@ https://evan.network/license/ */
           :isLoading="sending"
           :label="'_profile.wallet.send-eve.send' | translate"
           @click="$refs.acceptModal.show()"
+          id="evan-eve-send"
           type="primary">
         </evan-button>
       </template>
