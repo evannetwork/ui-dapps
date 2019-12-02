@@ -32,7 +32,7 @@ When('I click on button with id {string}',
   async (content) => {
     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
     client.useCss();
-    const buttonSelector = '#' + content;
+    const buttonSelector = `#${content}`;
 
     await client.expect.element(buttonSelector).to.be.present;
     await client.click(buttonSelector);
