@@ -84,7 +84,7 @@ export default class LayoutWrapperComponent extends mixins(EvanComponent) {
   setImageStyle() {
     const banner: any = this.$el.querySelector('img.desc-banner');
     if (banner) {
-      banner.style.cssText = this.imageSizes[this.images[this.step]] + ' z-index: 1';
+      banner.style.cssText = `${this.imageSizes[this.images[this.step]]} z-index: 1`;
     }
   }
 }
