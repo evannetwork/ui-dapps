@@ -2,26 +2,17 @@ import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
 
 const getSelector = (label, angular) => {
-  if (!angular) {
-    // support also the .input-wrapper element around the input
-    const inputSelectors = [
-      'div', 'div/div'
-    ];
+  // support also the .input-wrapper element around the input
+  const inputSelectors = [
+    'div/*[contains(@class, "v-select")]'
+  ];
 
-    return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
-      `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${ inputSelector }`,
-      `//label[normalize-space(text()) = "${label}"]/following-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${ inputSelector }`,
-    ])).join('|');
-  } else {
-    return [
-      `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
-      `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`
-    ].join('|');
-  }
+  return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
+    `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${ inputSelector }`,
+    `//label[normalize-space(text()) = "${label}"]/following-sibling::${ inputSelector }`,
+    `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${ inputSelector }`,
+    `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${ inputSelector }`,
+  ])).join('|');
 }
 
 /**
