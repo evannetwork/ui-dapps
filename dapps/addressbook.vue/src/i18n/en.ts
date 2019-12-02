@@ -22,7 +22,7 @@ export default {
   "_addressbook": {
     "add": "Add contact",
     "addressbook": "Contacts",
-    "addressbook-desc": "Overview about your contacts",
+    "addressbook-desc": "Overview of your contacts",
     "addressbook-desc-long": "Add partners here as a contact to share information with them.",
     "alias": "Alias",
     "all": "All",
