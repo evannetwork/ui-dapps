@@ -8,7 +8,7 @@ Scenario: Sending eve to a contact
     Then I want to see a text including "Send EVE"
     When I select the dropdown entry "Wallet2" from the dropdown box with the label "Identity"
       And I set Input field with label "Amount of EVE" to "5"
-      And the button "Send" should be "enabled"
+      Then the button "Send" should be "enabled"
     When I send "5" EVE with vue UI
       And I log out from vue
   Given I log in to evan.network using vue with wallet2
