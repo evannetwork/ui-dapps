@@ -456,7 +456,7 @@
           "incomplete_number": "Unvollständige Eingabe!",
           "invalid_number": "Ungültige Kartennummer!"
         },
-        "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene Email Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
+        "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
         "tax": "MwSt.",
         "title": "EVE kaufen",
         "total-amount": "Gesamtsumme",
