@@ -191,7 +191,7 @@
       "court": "Register Court",
       "dataStreamSettings": "Data Stream Settings",
       "description": "To share your identity information with other partners, first select the appropriate contact and then the information to share. Click on \"Share data\".",
-      "description-no-contacts": "Identity information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via e-mail or identity ID to share your data trustfully.",
+      "description-no-contacts": "Identity information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",
       "deviceDetails": "Device Details",
       "location": "Location",
       "manufacturer": "Manufacturer",
