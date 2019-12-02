@@ -46,7 +46,7 @@ export default{
       },
       "continue": "Weiter",
       "desc": "Über dieses Formular können Sie einen Kontakt über eine bestehende evan.network Identität oder per E-Mail einladen. Sobald Sie einen Kontakt eingeladen haben, können Sie mit diesem Informationen austauschen.",
-      "desc-email": "Sie können hier einen weiteren Partner auf Basis der E-Mail einladen und ihm EVE für eine erste Interaktion im evan.network senden. Sobald sich Ihr Partner im evan.network angemeldet hat, erhalten Sie eine Information in Ihrem Account.",
+      "desc-email": "Sie können hier einen weiteren Partner auf Basis der E-Mail einladen und ihm EVE für eine erste Interaktion im evan.network senden. Sobald sich Ihr Partner im evan.network angemeldet hat, erhalten Sie eine Benachrichtigung in Ihrem Account.",
       "email": {
         "desc": "E-Mail Adresse zum Einladen des Nutzers in das Netzwerk.",
         "error-added": "Die angegebene E-Mail Adresse haben Sie bereits zu Ihren Kontakten hinzugefügt.",
