@@ -20,6 +20,8 @@ jobs:
       env: TESTPATTERN=features/profile/eve-payments.feature NIGHTWATCH_ENV=chrome
     - name: chrome/eve-payment-vue
       env: TESTPATTERN=features/profile/eve-payment-vue.feature NIGHTWATCH_ENV=chrome
+    - name: chrome/eve-send-vue
+      env: TESTPATTERN=features/profile/eve-sending.feature NIGHTWATCH_ENV=chrome
     #- name: chrome/sharing
     #  env: TESTPATTERN=features/core/sharing.feature NIGHTWATCH_ENV=chrome
 
