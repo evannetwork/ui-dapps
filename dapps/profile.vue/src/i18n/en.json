@@ -190,8 +190,8 @@
       "country": "Country",
       "court": "Register Court",
       "dataStreamSettings": "Data Stream Settings",
-      "description": "To share your Identity information with another contact, fill out the form below and click on “Update Sharing Options”",
-      "description-no-contacts": "Identity information can be shared with others after you have established a secure connection to their evan.network Identity. Go to the contact overview and invite your business partners via e-mail or identity.",
+      "description": "To share your identity information with other partners, first select the appropriate contact and then the information to share. Click on \"Share data\".",
+      "description-no-contacts": "Identity information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",
       "deviceDetails": "Device Details",
       "location": "Location",
       "manufacturer": "Manufacturer",
@@ -453,15 +453,16 @@
         "processing-hint": "Processing payment, this may take 3 to 5 minutes",
         "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
         "stripe-element": {
-          "incomplete_number": "Invalid input"
+          "incomplete_number": "Incomplete input!",
+          "invalid_number": "Invalid card number!"
         },
         "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited in the next 5 to 10 minutes to your wallet.",
         "tax": "Tax",
         "title": "Buy EVE",
         "total-amount": "Total",
-        "try-again": "Try again"
+        "try-again": "Try again",
+        "vat": "VAT"
       },
-      "last-transactions": "Last Transactions",
       "send-eve": {
         "accept": {
           "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
@@ -483,6 +484,14 @@
         },
         "send": "Send",
         "title": "Send EVE"
+      },
+      "transactions": {
+        "charged-at": "charged at",
+        "credit-charged": "Credit recharged",
+        "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
+        "empty": "No credit recharges have been executed so far...",
+        "load-more": "Load more",
+        "title": "Credit recharged"
       }
     }
   }

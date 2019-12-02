@@ -12,22 +12,22 @@
           "title": "Login im evan.network"
         },
         "1": {
-          "desc": "Die Blockchain-Technologie ermöglicht die Transparenz von Transaktionen durch die Sicherstellung einer nicht personalisierten Transparenz. Jede Transaktion kann von jedem Mitglied der Blockchain eingesehen werden. Ihre Privatsphäre wird geschützt, indem entschlüsselte Adressen anstelle von einfachen Namen verwendet werden.",
+          "desc": "",
           "title": "Willkommen im evan.network"
         }
       },
       "sign-up": {
         "company": {
           "0": {
-            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - um als vertrauensvolles Unternehmen interagieren zu können.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - Sie wollen als Unternehmen die Vorteile der Blockchain-Technologie nutzen? Dann erstellen Sie sich in vier einfachen Schritten einen Unternehmens-Account im evan.network. Die optionale Verifikation Ihres Unternehmens durch einen Notar ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk zu interagieren.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
             "title": "Registrierung im evan.network"
           },
           "1": {
-            "desc": "Um Transaktionen im evan.network durchzuführen, benötigen Sie einen Account. Auf Basis Ihrer unternehmensspezifischen Daten können Sie sich später als vertrauensvolles Unternehmen verifizieren lassen.",
+            "desc": "Ihre Adressdaten benötigen Sie für die spätere Verifizierung als Unternehmen. Somit entsteht ein Netzwerk aus vertrauensvollen Partnern, die unternehmensübergreifend und direkt Daten und Informationen austauschen.",
             "title": "Ihr Weg zum Unternehmensaccount"
           },
           "2": {
-            "desc": "Ihre Adressdaten benötigen Sie für die spätere Verifizierung als Unternehmen. Somit entsteht ein Netzwerk aus Partnern, die unternehmensübergreifend und direkt Daten und Informationen austauschen.",
+            "desc": "Zur Verifikation Ihres Unternehmensaccounts benötigen Sie neben den Adressdaten auch unternehmensspezifische Daten. Anhand des Handelsregisterauszugs kann später bei Bedarf ein Notar Ihr Unternehmen verifizieren.",
             "title": "Ihr Weg zum Unternehmensaccount"
           },
           "3": {
@@ -37,7 +37,7 @@
         },
         "user": {
           "0": {
-            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - um als vertrauensvolles Unternehmen interagieren zu können.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - Sie wollen als Unternehmen die Vorteile der Blockchain-Technologie nutzen? Dann erstellen Sie sich in vier einfachen Schritten einen Unternehmens-Account im evan.network. Die optionale Verifikation Ihres Unternehmens durch einen Notar ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk zu interagieren.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
             "title": "Registrierung im evan.network"
           },
           "1": {
@@ -86,14 +86,14 @@
       "decrypt": "Entschlüsseln",
       "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerät wieder her",
       "get-mnemonic": "Wiederherstellungs-Schlüssel",
-      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein oder fügen Sie diese aus der Zwischenablage ein.",
+      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.<br>Diese 12 Wörter können Sie auch mit Hilfe der Funktion \"Kopieren und Einfügen\" eintragen.",
       "get-password": "Identität entschlüsseln",
       "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
       "invalid-password": "Das eingegebene Passwort ist ungültig.",
       "next": "Weiter",
       "no-profile": "Keine Identität gefunden",
       "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungsschlüssel existiert keine evan.network Identität.",
-      "not-signed-up": "Noch keinen Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
+      "not-signed-up": "Sie haben noch keinen Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
       "recovery-key": "Wiederherstellungsschlüssel",
       "title": "Einloggen",
       "welcome": "Kontaktanfrage",
@@ -109,31 +109,39 @@
       },
       "agree": "Akzeptieren",
       "alias": {
-        "company": "Unternehmens-Name",
+        "company": "Name des Unternehmens",
         "error": "Bitte geben Sie einen Account-Namen an!",
-        "hint": "Der Account-Name ist nur für Sie sichtbar.",
+        "hint-company": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
+        "hint-user": "Der Account-Name ist nur für Sie sichtbar.",
         "placeholder": "John Doe | Beispiel Unternehmen GmbH",
         "user": "Account-Name"
       },
-      "already-signed-up": "Bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
+      "already-signed-up": "Sie sind bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
       "cancel-riddle": "Abbrechen",
       "create-account": "Erstellen Sie Ihren Account",
       "create-profile": {
-        "creation-time": "ca. {creationTime} / 30 Sekunden",
-        "long": "Alle Daten zur Erstellung Ihrer evan.network Identität wurden aufgenommen. Bitte bestätigen Sie die Nutzungsbedingungen über die Captcha-Abfrage, um den Prozess abzuschließen.",
-        "status-1": "Erstellung des Identitätsvertrages...",
-        "status-2": "Verschlüsselung der Nutzerinformationen...",
-        "status-3": "Erstellung Mailbox, Adressbuch, ...",
-        "status-4": "Erstellung der Verifizierungsverwaltung...",
-        "status-5": "Identität wurde erfolgreich erstellt...",
-        "title": "Account erstellen"
-      },
-      "create-profile-twin": {
-        "status-1": "Erstellung des Identitätsvertrages...",
-        "status-2": "Verschlüsselung der Nutzerinformationen...",
-        "status-3": "Erstellung Mailbox, Adressbuch, ...",
-        "status-4": "Erstellung des Digitalen Zwillings...",
-        "status-5": "Digitaler Zwilling wurde erfolgreich erstellt!"
+        "company": {
+          "status-1": "Initialisiere Verbindung zum Netzwerk...",
+          "status-2": "Erstellung des Unternehmensaccounts...",
+          "status-3": "Erstellung der Unternehmensidentität auf Basis der spezifischen Daten...",
+          "status-4": "Erstellung des Verifizierungsmanagements...",
+          "status-5": "Identität wurde erfolgreich erstellt..."
+        },
+        "title": "Account erstellen",
+        "twin": {
+          "status-1": "Erstellung des Identitätsvertrages...",
+          "status-2": "Verschlüsselung der Nutzerinformationen...",
+          "status-3": "Erstellung Mailbox, Adressbuch, ...",
+          "status-4": "Erstellung des Digitalen Zwillings...",
+          "status-5": "Digitaler Zwilling wurde erfolgreich erstellt!"
+        },
+        "user": {
+          "status-1": "Initialisiere Verbindung zum Netzwerk...",
+          "status-2": "Erstellung des Accounts...",
+          "status-3": "Erstellung der Identität...",
+          "status-4": "Erstellung des Verifizierungsmanagements...",
+          "status-5": "Identität wurde erfolgreich erstellt..."
+        }
       },
       "desc": "Erstellen Sie Ihre evan.network Identität",
       "desc-long": "Generieren Sie Ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungsschlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
@@ -171,7 +179,7 @@
           "title": "Nutzerinformationen"
         },
         "captcha": {
-          "desc": "Bestätigen Sie das Captcha und die Nutzungsbedingungen.",
+          "desc": "Bestätigen Sie bitte die Nutzungsbedingungen und das Captcha.",
           "title": "Nutzungsbedingungen"
         },
         "company": {

@@ -58,6 +58,7 @@ export default class ContactDetailComponent extends mixins(EvanComponent) {
    */
   accountId = '';
   contact = null;
+  isMyAccount = false;
 
   /**
    * Load a specific contact and show the contact detail modal.
@@ -73,6 +74,7 @@ export default class ContactDetailComponent extends mixins(EvanComponent) {
     // set runtime params
     this.accountId = accountId;
     this.contact = addressBook.profile[accountId];
+    this.isMyAccount = accountId === runtime.activeAccount;
 
     // parse tags to have the correct format (move string as one entry to an new array, default
     // is an array)

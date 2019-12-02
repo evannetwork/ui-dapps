@@ -108,7 +108,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: this.required.indexOf('court') !== -1,
+            required: !this.stacked || this.required.indexOf('court') !== -1,
           }
         },
       },
@@ -121,7 +121,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
               { value: 'hra', label: '_profile.company.registration.register.types.hra', },
               { value: 'hrb', label: '_profile.company.registration.register.types.hrb', },
             ],
-            required: this.required.indexOf('register') !== -1,
+            required: !this.stacked || this.required.indexOf('register') !== -1,
           }
         },
         validate: function(vueInstance: CompanyRegistrationForm) {
@@ -135,7 +135,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: this.required.indexOf('registerNumber') !== -1,
+            required: !this.stacked || this.required.indexOf('registerNumber') !== -1,
           }
         }
       },
@@ -146,7 +146,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            required: this.required.indexOf('salesTaxID') !== -1,
+            required: !this.stacked || this.required.indexOf('salesTaxID') !== -1,
           }
         }
       },

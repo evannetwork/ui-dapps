@@ -190,8 +190,8 @@
       "country": "Firmensitz",
       "court": "Registergericht",
       "dataStreamSettings": "IoT-Einstellungen",
-      "description": "Um Ihre Identitätsdaten mit anderen Kontakten zu teilen, wählen Sie die Optionen unten und klicken Sie auf “Freigaben aktualisieren”",
-      "description-no-contacts": "Identitätsinformationen können mit Anderen geteilt werden, nachdem Sie eine sichere Verbindung zu dessen evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Geschäftspartner per E-Mail oder auch per Identitäts-ID ein.",
+      "description": "Um Ihre Identitätsdaten mit anderen Partnern zu teilen, wählen Sie zunächst den entsprechenden Kontakt sowie danach die zu teilenden Daten aus. Klicken Sie auf \"Daten freigeben\".",
+      "description-no-contacts": "Identitätsinformationen können mit anderen Partnern geteilt werden, nachdem Sie eine sichere Verbindung zu deren evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Partner per E-Mail oder auch per Identitäts-ID ein, um Ihre Daten vertrauensvoll zu teilen.",
       "deviceDetails": "Geräteinformationen",
       "location": "Standort",
       "manufacturer": "Hersteller",
@@ -426,7 +426,7 @@
         "back": "Zurück",
         "buy": "EVE kaufen",
         "buy-more": "Mehr EVE kaufen",
-        "continue": "FortFahren",
+        "continue": "Fortfahren",
         "disclaimer": "Mit der Eingabe Ihrer IBAN und der Bestätigung dieser Zahlung ermächtigen Sie die evan GmbH und unseren Zahlungsdienstleister Stripe, Ihrer Bank Anweisungen zur Belastung Ihres Kontos und Ihrer Bank zur Belastung Ihres Kontos gemäß dieser Anweisungen zu übermitteln. Sie haben Anspruch auf eine Rückerstattung von Ihrer Bank gemäß den Bedingungen Ihrer Vereinbarung mit Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen nach dem Datum der Belastung Ihres Kontos beantragt werden.",
         "errors": {
           "charge_failed": "Eine Zahlung kann aufgrund eines fehlgeschlagenen Zahlungs- bzw. Abbuchungsversuchs nicht ausgeführt werden. <b> Ihre Karte wurde NICHT belastet! </ b> Bitte versuchen Sie es später erneut.",
@@ -439,31 +439,30 @@
         },
         "payForm": {
           "amount": {
-            "amount": {
-              "error": "Bitte geben Sie eine Zahl ein!",
-              "error-less": "Sie müssen mindestens 10 EVE kaufen!",
-              "label": "Menge an EVE (mindestens 10)",
-              "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
-            },
-            "type": {
-              "card": "Kreditkarte",
-              "iban": "SEPA Abbuchung",
-              "label": "Zahlungstyp"
-            }
+            "error": "Bitte geben Sie eine Zahl ein!",
+            "error-less": "Sie müssen mindestens 10 EVE kaufen!",
+            "label": "Menge an EVE (mindestens 10)",
+            "placeholder": "Anzahl der EVE, die Sie kaufen wollen."
+          },
+          "type": {
+            "card": "Kreditkarte",
+            "iban": "SEPA Abbuchung",
+            "label": "Zahlungstyp"
           }
         },
         "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
         "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
         "stripe-element": {
-          "incomplete_number": "Ungültige Eingabe!"
+          "incomplete_number": "Unvollständige Eingabe!",
+          "invalid_number": "Ungültige Kartennummer!"
         },
-        "success": "Ihre Bestellung wurde erfolgreich ausgelöst.  Sie erhalten eine Rechnung an die angegebene Email Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. <br />Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
+        "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
         "tax": "MwSt.",
         "title": "EVE kaufen",
         "total-amount": "Gesamtsumme",
-        "try-again": "Erneut versuchen"
+        "try-again": "Erneut versuchen",
+        "vat": "MwSt."
       },
-      "last-transactions": "Letzte Transaktionen",
       "send-eve": {
         "accept": {
           "description": "Möchten Sie <b>{amount} EVE</b> an <b>{name}</b> senden?",
@@ -483,8 +482,16 @@
             "placeholder": "Anzahl der EVE, die Sie versenden möchten."
           }
         },
-        "send": "Send",
-        "title": "Send EVE"
+        "send": "Senden",
+        "title": "EVE senden"
+      },
+      "transactions": {
+        "charged-at": "aufgeladen am",
+        "credit-charged": "Guthaben aufgeladen",
+        "description": "Nachfolgend sind nur die Guthabenaufladungen aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
+        "empty": "Bisher wurden keine Guthabenaufladungen durchgeführt...",
+        "load-more": "Ältere laden",
+        "title": "Guthaben aufgeladen"
       }
     }
   }

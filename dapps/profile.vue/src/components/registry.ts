@@ -47,9 +47,10 @@ import NotaryPinComponent from './verifications/notary/actions/pin/pin.vue';
 import NotaryRequestComponent from './verifications/notary/actions/request/request.vue';
 
 // topic display (the actual verification)
-import NotaryTopicDisplayComponent from './verifications/notary/topic-display/topic-display.vue';
 import BuyEveComponent from './wallet/buy/BuyEve.vue';
+import NotaryTopicDisplayComponent from './verifications/notary/topic-display/topic-display.vue';
 import SendEveComponent from './wallet/send/SendEve.vue';
+import TransactionsComponent from './wallet/transactions/transactions.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
@@ -71,8 +72,10 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'notary-info-dialog', component: NotaryInfoModalComponent, },
   { name: 'notary-topic-display', component: NotaryTopicDisplayComponent, },
   { name: 'notary-verification-card', component: NotaryCardComponent, },
+  // payment
   { name: 'profile-buy-eve', component: BuyEveComponent },
-  { name: 'profile-send-eve', component: SendEveComponent }
+  { name: 'profile-send-eve', component: SendEveComponent },
+  { name: 'profile-transactions', component: TransactionsComponent }
 ];
 
 export default componentRegistration;

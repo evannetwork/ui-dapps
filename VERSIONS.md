@@ -7,26 +7,27 @@
   - add new images and texts to onboarding
   - new order for company profile creation
   - hide company registration form in onboarding for non german companies
+- `profile.vue` (v3.5.1)
+  - add eve sending
+  - add wallet page
+  - move profile switch to profile detail page
 
 ### Fixes
 - `profile.vue` (v3.5.1)
   - fix company contact control order
-  - i18n fixes
-  - move profile switch to profile detail page
-  - add wallet page
-  - add eve sending
+  - fix i18n texts
 - `onboarding.vue` (v3.2.1)
   - change terms of use and captcha checkbox
 - `addressbook.vue` (v3.1.2)
   - contact click redirects to profile detail
   - fix "ugly" eve number input
+  - fix i18n texts
 - `mailbox.vue` (v3.1.2)
   - fix open attachment for comKeys
 
 ### Deprecations
 - `onboarding.vue` (v3.3.0)
   - remove company name from registration entry
-
 
 
 ## Version 3.11.0

@@ -114,7 +114,7 @@ export default class SignUp extends mixins(EvanComponent) {
    */
   userData: any = {
     accountDetails: {
-      accountType: 'user'
+      accountType: 'company'
     },
     contact: {
       country: 'DE',
@@ -182,7 +182,7 @@ export default class SignUp extends mixins(EvanComponent) {
     const uiSpecs = { attr: { required: true, } };
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {
-        value: 'user',
+        value: 'company',
         uiSpecs: {
           attr: {
             required: true,
@@ -201,10 +201,10 @@ export default class SignUp extends mixins(EvanComponent) {
         },
         uiSpecs: {
           attr: {
-            hint: true,
+            hint: () => (this as any).$t(`_onboarding.sign-up.alias.hint-${ this.profileForm.accountType.value }`),
             required: true,
           },
-          label: () => this.$t(`_onboarding.sign-up.alias.${ this.profileForm.accountType.value }`),
+          label: () => (this as any).$t(`_onboarding.sign-up.alias.${ this.profileForm.accountType.value }`),
         },
       },
       password0: {

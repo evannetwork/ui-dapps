@@ -33,10 +33,7 @@ https://evan.network/license/ */
         </div>
       </div>
 
-      <div class="mt-5">
-        <h1>{{ '_profile.wallet.last-transactions' | translate }}</h1>
-        <evan-under-development />
-      </div>
+      <profile-transactions class="mt-10" />
     </div>
 
     <profile-buy-eve v-if="activeMode === 0" />
@@ -48,7 +45,3 @@ https://evan.network/license/ */
 import Component from './wallet';
 export default Component;
 </script>
-
-<style lang="scss">
-@import './wallet.scss';
-</style>

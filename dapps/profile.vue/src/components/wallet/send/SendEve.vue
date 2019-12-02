@@ -14,10 +14,11 @@ https://evan.network/license/ */
   <div>
     <evan-swipe-panel
       :hideCloseButton="windowWidth >= 1200"
-      :isOpen="$store.state.uiState.swipePanel === 'sendEve'"
+      :isOpen="true"
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :showBackdrop="windowWidth < 1200"
       :title="'_profile.wallet.send-eve.title' | translate"
+      @hide="$store.state.uiState.swipePanel = ''"
       alignment="right"
       class="light"
     >
@@ -51,6 +52,7 @@ https://evan.network/license/ */
           <template v-slot:footer>
             <evan-button
               @click="sendEve(); $refs.acceptModal.hide()"
+              id="evan-eve-send-submit"
               type="primary">
               {{ '_profile.wallet.send-eve.accept.send' | translate }}
             </evan-button>
@@ -65,6 +67,7 @@ https://evan.network/license/ */
           :isLoading="sending"
           :label="'_profile.wallet.send-eve.send' | translate"
           @click="$refs.acceptModal.show()"
+          id="evan-eve-send"
           type="primary">
         </evan-button>
       </template>

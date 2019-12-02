@@ -17,33 +17,39 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-
-@Component({ })
-export default class ProfileCreatingComponent extends mixins(EvanComponent) {
-  /**
-   * account type that should be created
-   */
-  @Prop() type: string;
-
-  /**
-   * Creating status that should be displayed
-   */
-  @Prop() activeStep: number;
-
-  /**
-   * amount of steps that should be displayed
-   */
-  @Prop() maximumSteps: number;
-
-  /**
-   * Custom steps that should overwrite the default ones
-   */
-  @Prop({ default: { } }) customSteps: Array<any>;
-}
-
+export default [
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "name": "receiver",
+        "type": "address"
+      }
+    ],
+    "name": "AddedReceiver",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "receivers",
+        "type": "address[]"
+      },
+      {
+        "indexed": false,
+        "name": "rewards",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "Rewarded",
+    "type": "event"
+  }
+];
