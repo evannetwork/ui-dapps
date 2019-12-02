@@ -1,4 +1,3 @@
-@only
 Feature: EVE payments Vue
 
 Scenario: Checking amount when paying from Germany with an invalid German VAT number
