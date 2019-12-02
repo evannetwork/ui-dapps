@@ -488,7 +488,7 @@
       "transactions": {
         "charged-at": "charged at",
         "credit-charged": "Credit recharged",
-        "description": "Only credit recharges are listed below. A complete overview over the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
+        "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
         "empty": "No credit recharges have been executed out so far...",
         "load-more": "Load more",
         "title": "Credit recharged"
