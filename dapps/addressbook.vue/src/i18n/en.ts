@@ -46,7 +46,7 @@ export default {
       },
       "continue": "Continue",
       "desc": "You can use this form to invite a contact via an existing evan.network identity or by email. As soon as you have invited a contact, you can exchange information with it.",
-      "desc-email": "Here you can invite another partner based on the e-mail and send him EVE for a first interaction in the evan.network. As soon as your partner has registered in the evan.network, you will receive information in your account.",
+      "desc-email": "Here you can invite another partner based on the email and send him EVE for a first interaction on the evan.network. As soon as your partner has registered on the evan.network, you will receive a notification in your account.",
       "email": {
         "desc": "Email address for inviting the user to the network.",
         "error-added": "You have already added the specified email address to your contacts.",
