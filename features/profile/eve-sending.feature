@@ -18,5 +18,5 @@ Scenario: Sending eve to a contact
     Then I want to see a text including "Send EVE"
     When I select the dropdown entry "Wallet1" from the dropdown box with the label "Identity"
       And I set Input field with label "Amount of EVE" to "5"
-      And the button "Send" should be "enabled"
+      Then the button "Send" should be "enabled"
     When I send "5" EVE with vue UI
