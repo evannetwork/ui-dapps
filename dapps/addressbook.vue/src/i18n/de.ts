@@ -23,7 +23,7 @@ export default{
     "add": "Kontakt hinzufügen",
     "addressbook": "Kontakte",
     "addressbook-desc": "Übersicht über Ihre Kontakte",
-    "addressbook-desc-long": "Fügen Sie Partner hier als Kontakt hinzu, um Informationen mit diesen teilen.",
+    "addressbook-desc-long": "Fügen Sie Partner hier als Kontakt hinzu, um Informationen mit diesen zu teilen.",
     "alias": "Alias",
     "all": "Alle",
     "category": "Kategorie",
