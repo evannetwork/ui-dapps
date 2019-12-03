@@ -24,11 +24,11 @@
           },
           "1": {
             "desc": "Ihre Adressdaten benötigen Sie für die spätere Verifizierung als Unternehmen. Somit entsteht ein Netzwerk aus vertrauensvollen Partnern, die unternehmensübergreifend und direkt Daten und Informationen austauschen.",
-            "title": "Ihr Weg zum Unternehmensaccount"
+            "title": "Ihr Weg zur Unternehmenidentität"
           },
           "2": {
-            "desc": "Zur Verifikation Ihres Unternehmensaccounts benötigen Sie neben den Adressdaten auch unternehmensspezifische Daten. Anhand des Handelsregisterauszugs kann später bei Bedarf ein Notar Ihr Unternehmen verifizieren.",
-            "title": "Ihr Weg zum Unternehmensaccount"
+            "desc": "Zur Verifikation Ihrer Unternehmenidentität benötigen Sie neben den Adressdaten auch unternehmensspezifische Daten. Anhand des Handelsregisterauszugs kann später bei Bedarf ein Notar Ihr Unternehmen verifizieren.",
+            "title": "Ihr Weg zur Unternehmenidentität"
           },
           "3": {
             "desc": "Nach Abschluss der Registrierung haben Sie Zugang zum evan.network und können vertrauensvoll mit Ihren Partnern interagieren.",
@@ -122,7 +122,7 @@
       "create-profile": {
         "company": {
           "status-1": "Initialisiere Verbindung zum Netzwerk...",
-          "status-2": "Erstellung des Unternehmensaccounts...",
+          "status-2": "Erstellung der Unternehmenidentität...",
           "status-3": "Erstellung der Unternehmensidentität auf Basis der spezifischen Daten...",
           "status-4": "Erstellung des Verifizierungsmanagements...",
           "status-5": "Identität wurde erfolgreich erstellt..."
