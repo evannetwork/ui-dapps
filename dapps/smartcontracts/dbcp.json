@@ -6,7 +6,7 @@
       "files": [
         "compiled.js"
       ],
-      "origin": "QmWq6vjF4Gu9PU2c94WdF8jjtWLHvBQyDtV3xsjixUczL3",
+      "origin": "QmaoqfzHKsTZqA7tgxH1frFVy8iPP8exK3QY1L7GdLuiu1",
       "type": "library"
     },
     "dbcpVersion": 2,
@@ -17,7 +17,7 @@
       "contractus",
       "library"
     ],
-    "version": "2.6.1",
+    "version": "2.7.0",
     "versions": {
       "0.1.0": "QmQ576qcoH4GXKRTYq3xqYJR62Lhf5665ySTj6YyENMZPJ",
       "0.9.0": "QmNfBLnAM4DctyNxg7CbE4mtYdmQfTN9bVGx8x12nMvjUD",
@@ -43,7 +43,8 @@
       "2.4.3": "QmaK1QLZG7j8TVdrqCT46SYtVaxbH85aLH1JiMCTGGFkHq",
       "2.5.0": "QmYN11YjQ5c8axJQ8fjPcbbjVzi1Dsv7JLsy2wdoRe7SeN",
       "2.6.0": "QmP4vHq44S3EF3kkMWDSYM2jDE8GG9X4pUpDzsdwZJ7xVe",
-      "2.6.1": "QmfPFVjjiWk48Pw125w1yRThaE5rr4XjfDnjFiZLzxqdhH"
+      "2.6.1": "QmfPFVjjiWk48Pw125w1yRThaE5rr4XjfDnjFiZLzxqdhH",
+      "2.7.0": "QmPY3S3xXZPFPA7KTs8bHaE1M25vjza4yafSAXB5s1M7te"
     }
   }
 }

@@ -7,7 +7,7 @@
       "files": [
         "qrcodejs.libs.js"
       ],
-      "origin": "QmPQum82CuKntKy67S2Gx2KbUnfhKvxxNKvP7iYxv84PvH",
+      "origin": "QmcEb8GezZ1iCugJGVLpT7uCviaJVt6YYZEz2k3NQWJKb1",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +32,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmPQum82CuKntKy67S2Gx2KbUnfhKvxxNKvP7iYxv84PvH"
+      "1.0.0": "QmPP72FGMTmnfWahJTEqbnGjmjZgSPUkSXTisGanWrJJ8o"
     }
   }
 }
