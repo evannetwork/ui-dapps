@@ -3,7 +3,7 @@ import { Given, When, Then } from 'cucumber';
 
 import { setupEvan } from '../../test-utils/test-utils.js';
 
-export const WAIT_TIME = 300 * 1000;
+export const WAIT_TIME = 15 * 1000;
 
 When(/^I click the element with id "([^"]+)"$/, async id => {
   const evan = setupEvan(client);
@@ -44,4 +44,8 @@ Then(/^I want to see a element with class "([^"]+)"$/, async className => {
 
 Then('I press the {string} key', async key => {
   await client.keys(client.Keys[key]);
+});
+
+Then('I wait {string} seconds until loading was finished', async waitTime => {
+  await client.waitForElementNotPresent(`.evan-loading`, parseInt(waitTime, 10) * 1000);
 });

@@ -143,6 +143,7 @@ Scenario: Checking amount when paying from Austria with a valid Italian VAT numb
     And the button with id "execute-payment" should be "disabled"
     And I want to see a text including "Total: 10.00 €"
 
+@only
 Scenario: Executing Payment from Germany with a valid German VAT number
    Given I log in to evan.network using vue
     And I click on "Identity" in main menu
@@ -166,4 +167,5 @@ Scenario: Executing Payment from Germany with a valid German VAT number
     And the button with id "execute-payment" should be "enabled"
     And I want to see a text including "Total: 11.90 €"
   When I click on button with id "execute-payment"
-    Then I want to see a text including "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice."
+    Then I wait "300" seconds until loading was finished
+    And I want to see a text including "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice."
