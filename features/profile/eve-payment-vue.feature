@@ -143,7 +143,6 @@ Scenario: Checking amount when paying from Austria with a valid Italian VAT numb
     And the button with id "execute-payment" should be "disabled"
     And I want to see a text including "Total: 10.00 €"
 
-@only
 Scenario: Executing Payment from Germany with a valid German VAT number
    Given I log in to evan.network using vue
     And I click on "Identity" in main menu
