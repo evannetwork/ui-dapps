@@ -20,8 +20,8 @@ Scenario: Navigating through core DApps using the dashboard
     Then I want to see not a text including "Data-Synchronization"
   When I click on "Help" in main menu
     Then I want to see a text including "Wiki"
-  When I click on "Profile" in main menu
-    Then I want to see a text including "Profile"
+  When I click on "Identity" in main menu
+    Then I want to see a text including "Identity"
     Then I want to see a text including "Wallet"
     Then I want to see a text including "Verifications"
     Then I want to see a text including "Contacts"

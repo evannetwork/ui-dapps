@@ -4,6 +4,7 @@ Scenario: Registering a new account on evan Happy Path
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+    And I set Input field with label "Account type" to "user"
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
@@ -26,6 +27,7 @@ Scenario: Registering a new account not set account name
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+    And I set Input field with label "Account type" to "user"
     And I set Input field with label "Account name" to ""
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
@@ -36,6 +38,7 @@ Scenario: Registering a new account and test password checks
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+    And I set Input field with label "Account type" to "user"
     And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test"
     And I press the "TAB" key
@@ -51,6 +54,7 @@ Scenario: Registering a new account on evan and not check terms
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+  And I set Input field with label "Account type" to "user"
   And I set Input field with label "Account name" to "Automated Test Account"
   And I set Input field with label "Password" to "Test1234"
   And I set Input field with label "Retype password" to "Test1234"
@@ -63,6 +67,7 @@ Scenario: Registering a new account on evan and not check recaptcha
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
+  And I set Input field with label "Account type" to "user"
   And I set Input field with label "Account name" to "Automated Test Account"
   And I set Input field with label "Password" to "Test1234"
   And I set Input field with label "Retype password" to "Test1234"
@@ -75,7 +80,7 @@ Scenario: Registering a new company account on evan
 
   Given I go to the evan.network startpage
   Then I want to see a text including "Select user type and specify your account name and password."
-    And I set Input field with label "Account name" to "Automated Test Account"
+    And I set Input field with label "Name of the company" to "Automated Test Account"
     And I set Input field with label "Account type" to "company"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
@@ -175,7 +180,7 @@ Scenario: Creating a new bicycle twin using onboarding
   When I click on button "Continue"
     Then the button "Create Account" should be "disabled"
     And I want to see a text including "For your access to your Digital Twin, we need an alias and a password."
-    And I set Input field with label "Account name" to "Automated Test Account"
+    And I set Input field with label "Name of the company" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
     And I click the element with id "evan-recaptcha"

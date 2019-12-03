@@ -27,6 +27,14 @@ module.exports = {
       mnemonic: process.env.USER_DEFAULT_MNEMONIC,
       password: process.env.USER_DEFAULT_PASSWORD
     },
+    wallet: {
+      mnemonic: process.env.USER_WALLET_MNEMONIC,
+      password: process.env.USER_WALLET_PASSWORD
+    },
+    wallet2: {
+      mnemonic: process.env.USER_WALLET2_MNEMONIC,
+      password: process.env.USER_WALLET2_PASSWORD
+    },
     rentalDispo: {
       mnemonic: process.env.USER_RENTAL_DISPO_MNEMONIC,
       password: process.env.USER_RENTAL_DISPO_PASSWORD

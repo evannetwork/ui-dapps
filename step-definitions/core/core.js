@@ -45,3 +45,7 @@ Then(/^I want to see a element with class "([^"]+)"$/, async className => {
 Then('I press the {string} key', async key => {
   await client.keys(client.Keys[key]);
 });
+
+Then('I wait {string} seconds until loading was finished', async waitTime => {
+  await client.waitForElementNotPresent(`.evan-loading`, parseInt(waitTime, 10) * 1000);
+});

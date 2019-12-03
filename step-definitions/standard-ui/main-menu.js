@@ -7,7 +7,7 @@ const mainMenu = {
   'Digital Twins': '#evan-dapp-digitaltwins',
   'Explorer': '#evan-dapp-explorer',
   'Help': '#evan-dapp-help',
-  'Profile': '#evan-dapp-profile',
+  'Identity': '#evan-dapp-profile',
   'Synchronization': '#evan-dapp-synchronization',
   'Verification Center': '#evan-dapp-verifications',
 };
