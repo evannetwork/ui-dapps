@@ -2,18 +2,26 @@
 
 ## Next Version
 ### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 3.12.0
+### Features
 - `onboarding.vue` (v3.3.0)
   - add onboarding with twin creation
   - add new images and texts to onboarding
   - new order for company profile creation
   - hide company registration form in onboarding for non german companies
-- `profile.vue` (v3.5.1)
+- `profile.vue` (v3.5.0)
   - add eve sending
   - add wallet page
   - move profile switch to profile detail page
 
 ### Fixes
-- `profile.vue` (v3.5.1)
+- `profile.vue` (v3.5.0)
   - fix company contact control order
   - fix i18n texts
 - `onboarding.vue` (v3.2.1)
@@ -22,7 +30,7 @@
   - contact click redirects to profile detail
   - fix "ugly" eve number input
   - fix i18n texts
-- `mailbox.vue` (v3.1.2)
+- `mailbox.vue` (v3.3.1)
   - fix open attachment for comKeys
 
 ### Deprecations

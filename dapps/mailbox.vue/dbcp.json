@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.8.0"
+        "evancore.vue.libs": "^1.9.0"
       },
       "entrypoint": "mailbox.vue.js",
       "files": [
         "mailbox.vue.js"
       ],
-      "origin": "QmfRNMaZppX5vXmiWeznmPzjWVaASvit2xoSqwAqDbj7rK",
+      "origin": "QmRJC7Kk5VVtdaobLJu53NTEGLBM962ppU8FDZfGsrZquE",
       "primaryColor": "#1862ac",
       "secondaryColor": "#f9f9ff",
       "type": "dapp"
@@ -32,7 +32,7 @@
       "dapp",
       "evan"
     ],
-    "version": "3.3.0",
+    "version": "3.3.1",
     "versions": {
       "0.1.0": "QmbDdbPM52f9Xbap7qHLE3BoYUsNSKq1mR3RVRJTc92gBK",
       "0.9.0": "QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51",
@@ -47,7 +47,8 @@
       "3.0.0": "QmfGHTHS1oawYk81Haa8NBXpdm3dS7wZ8vAkq3auVWcXMf",
       "3.1.0": "QmUMtmrXLVH29h5XaDsk6MGqaC5NGkUM8AdK2EcDCmyR46",
       "3.2.0": "QmchF3UYHdDsYX6wRhFu7cJLKVnRrWcaHwwnAo1kZhq8xW",
-      "3.3.0": "QmY5nVCnCR49WQWHsr2Z8SQci6EkKKHJV18124qTKrdUpP"
+      "3.3.0": "QmY5nVCnCR49WQWHsr2Z8SQci6EkKKHJV18124qTKrdUpP",
+      "3.3.1": "QmSS2aNfEWHj2GunzLMZjzpbwKFxdkXFWjXjE7wL5YPppr"
     }
   }
 }
