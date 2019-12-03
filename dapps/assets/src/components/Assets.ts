@@ -19,10 +19,21 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
+import VueRouter, { Route } from 'vue-router';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
+declare module 'vue/types/vue' {
+    interface Vue {
+      $i18n: any;
+      $router: VueRouter;
+      $route: Route;
+      $store: any;
+    }
+  }
+
 @Component({ })
 export default class AssetsComponent extends mixins(EvanComponent) {
+    
 }

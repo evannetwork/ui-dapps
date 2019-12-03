@@ -30,7 +30,6 @@ export * from './components/registry';
 export { translations }
 
 System.map['@evan.network/assets'] = `assets.${ getDomainName() }!dapp-content`;
-// System.map['@evan.network/assets.vue'] = `assets.vue.${ getDomainName() }!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
