@@ -3,13 +3,13 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "smartcontracts": "^2.6.1"
+        "smartcontracts": "^2.7.0"
       },
       "entrypoint": "bcc.js",
       "files": [
         "bcc.js"
       ],
-      "origin": "QmeXd4ZYgy5zpQ2SC1iXTFxnhnHgDU6MC1FdojZNFXzmRA",
+      "origin": "QmbRSJyhK4T6kanVtw3mzdEwWMmGvqrxx6tRraPrDErAvr",
       "type": "library"
     },
     "dbcpVersion": 2,
@@ -24,7 +24,7 @@
       "dapp",
       "library"
     ],
-    "version": "2.14.1",
+    "version": "2.15.0",
     "versions": {
       "0.1.0": "QmTsY7ASbvxATLnEemHZQ8oQha64ujYe9VXbDCouDk7Xtp",
       "0.9.0": "Qmbw3yX82TVN9WhsRyeaRpd89M9XXL1pds9GgqJL29ohar",
@@ -58,7 +58,8 @@
       "2.12.0": "QmQjLXgTtmoEW5BVgbkMUaZNA49Zk31xBcZjyHmzQxuoU2",
       "2.13.0": "QmUe28YGGJk4rnqiPwMJESY7q4PCG5QWW7pfJxsJxNRHQx",
       "2.14.0": "QmdUzHAuzaNuNDvrGbLADCnGgHz82iDbVAVwnD2yyvDuum",
-      "2.14.1": "QmcMa3rPELxxi3cW8GtBHN15vjEy9QAxaDpvA4ikpqq88w"
+      "2.14.1": "QmcMa3rPELxxi3cW8GtBHN15vjEy9QAxaDpvA4ikpqq88w",
+      "2.15.0": "QmT9NzsQizNoiq6hmcw7Yi6zr1JqX6rFugNgH34oPwfPr4"
     }
   }
 }

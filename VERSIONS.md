@@ -4,6 +4,31 @@
 ### Features
 
 ### Fixes
+
+### Deprecations
+
+
+## Version 1.12.0
+### Features
+- `@evan.networtk/api-blockchain-core-browserified` (v2.15.0)
+- `@evan.networtk/smart-contracts-core-browserified` (v2.7.0)
+
+### Fixesx
+- `@evan.network/ui-libs` (v1.8.0)
+  - hide optional text from formulars, when transparent mode is enabled
+  - add `bccUtils` and `getUserAlias` function
+  - update toast design
+  - use `red` as `danger` color
+- `qrcodejs.libs` (v1.0.0)
+  - add qrcodejs lib
+- `evan.bootstrap.libs`
+  - add `text-red` class
+
+
+## Version 1.11.0
+### Features
+
+### Fixes
 - `@evan.network/ui-libs` (v1.8.0)
   - hide optional text from formulars, when transparent mode is enabled
   - add `bccUtils` and `getUserAlias` function

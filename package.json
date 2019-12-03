@@ -59,7 +59,7 @@
   "devDependencies": {
     "@evan.network/api-blockchain-core": "^2.3.0",
     "@evan.network/smart-contracts-core": "^2.1.1",
-    "@evan.network/ui-dapp-browser": "^2.6.1"
+    "@evan.network/ui-dapp-browser": "^2.7.0"
   },
   "husky": {
     "hooks": {
@@ -86,5 +86,5 @@
     "serve-build": "gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
-  "version": "1.10.0"
+  "version": "1.12.0"
 }
