@@ -30,7 +30,7 @@ When('I click on button {string}',
  */
 When('I click on button with id {string}',
   async (content) => {
-    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
+    // be sure, that css is used
     client.useCss();
     const buttonSelector = `#${content}`;
 
