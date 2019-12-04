@@ -20,9 +20,8 @@
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
-import { notarySmartAgentAccountId } from '../../components/verifications/notary/notary.lib';
+import { notarySmartAgentAccountId, verificationCost } from '../../components/verifications/notary/notary.lib';
 
 const dispatcher = new Dispatcher(
   `profile.vue.${ dappBrowser.getDomainName() }`,
@@ -39,8 +38,6 @@ const dispatcher = new Dispatcher(
  * @param      {string}  alias      alias of the keyexchanged accountid
  */
 async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
-  const myAccountId = runtime.activeAccount;
-
   const profile = new bcc.Profile({
     accountId: targetAcc,
     contractLoader: runtime.contractLoader,
@@ -92,7 +89,7 @@ dispatcher
           ...data.requestData
         }]
       }
-    }, runtime.activeAccount, notarySmartAgentAccountId, '200000000000000000000');
+    }, runtime.activeAccount, notarySmartAgentAccountId, verificationCost);
   });
 
 export default dispatcher;

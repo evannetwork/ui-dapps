@@ -18,7 +18,6 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 
@@ -113,7 +112,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    */
   requiredCompanyFields = {
     contact: [ 'city', 'country', 'postalCode', 'streetAndNumber', ],
-    registration: [ 'company', 'court', 'register', 'registerNumber', 'salesTaxID' ],
+    registration: [ 'court', 'register', 'registerNumber', 'salesTaxID' ],
   };
   missingCompanyFields = { contact: [ ], registration: [ ], };
 
@@ -149,7 +148,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
   /**
    * minimum value of the verification costs (200 EVE)
    */
-  verificationCost = '200000000000000000000';
+  verificationCost =  notaryLib.verificationCost;
 
   /**
    * Watch if form validity changed and update steps accordingly
@@ -339,7 +338,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationCity: this.companyData.contact.city,
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.companyData.contact.country,
-      organizationEvanId: runtime.verifications.getIdentityForAccount(runtime.activeAccount, true),
+      organizationEvanId: await runtime.verifications.getIdentityForAccount(runtime.activeAccount, true),
       accountId: runtime.activeAccount,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
