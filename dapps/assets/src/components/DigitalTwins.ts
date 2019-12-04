@@ -19,7 +19,6 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import Vue from 'vue';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -34,7 +33,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       title: 'Name',
       dataIndex: 'name',
       scopedSlots: { customRender: 'name' },
-      sorter: (a, b) => ('' + a.attr).localeCompare(b.attr),
+      sorter: (a, b) => ('' + a.name.first).localeCompare(b.name.first)
     },
     {
       title: 'Gender',
@@ -43,7 +42,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     {
       title: 'Email',
       dataIndex: 'email',
-      sorter: (a, b) => ('' + a.attr).localeCompare(b.attr),
+      sorter: (a, b) => ('' + a.email).localeCompare(b.email)
     },
   ];
 
