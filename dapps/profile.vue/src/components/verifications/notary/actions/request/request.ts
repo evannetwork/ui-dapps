@@ -331,6 +331,7 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    */
   async requestIdentification() {
     this.sending = true;
+    const runtime: bcc.Runtime = (<any>this).getRuntime();
 
     // define the request data, so we can append it into the attachment and as payload in the body
     const profileDApp = (this as any).$store.state.profileDApp;
@@ -338,7 +339,8 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       organizationCity: this.companyData.contact.city,
       organizationContact: this.requestForm.contact.value,
       organizationCountry: this.companyData.contact.country,
-      organizationEvanId: (<any>this).getRuntime().activeAccount,
+      organizationEvanId: runtime.verifications.getIdentityForAccount(runtime.activeAccount, true),
+      accountId: runtime.activeAccount,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
       organizationName: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
