@@ -50,10 +50,3 @@
 import AssetsComponent from './Assets';
 export default AssetsComponent;
 </script>
-
-<style lang="scss" scoped>
-.router-link-active {
-  color: var(--evan-dark) !important;
-  background-color: var(--evan-bg-level-2) !important;
-}
-</style>

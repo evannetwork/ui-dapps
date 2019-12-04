@@ -19,11 +19,47 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
+import Vue from 'vue';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { DigitalTwinService } from './DigitalTwinService';
 
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
+  twinService: DigitalTwinService = new DigitalTwinService();
 
+  columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      scopedSlots: { customRender: 'name' },
+      sorter: (a, b) => ('' + a.attr).localeCompare(b.attr),
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'gender',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      sorter: (a, b) => ('' + a.attr).localeCompare(b.attr),
+    },
+  ];
+
+  data = [];
+
+  async mounted() {
+    await this.fetch();
+  }
+
+  async fetch() {
+    this.data = await this.twinService.getTwins();
+    console.log(this.data);
+    
+  }
+
+  private onChange(pagination, filters, sorter) {
+    console.log('params', pagination, filters, sorter);
+  }
 }

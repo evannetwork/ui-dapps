@@ -17,21 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div>
-    <h1>Digital Twins</h1>
-    <a-table
-      :columns="columns"
-      :dataSource="data"
-      :rowKey="record => record.login.uuid"
-      @change="onChange"
-    >
-      <template slot="name" slot-scope="name">{{name.first}} {{name.last}}</template>
-    </a-table>
-  </div>
-</template>
+import axios from 'axios';
 
-<script lang="ts">
-import DigitalTwinsComponent from './DigitalTwins';
-export default DigitalTwinsComponent;
-</script>
+export class DigitalTwinService {
+    async getTwins() {
+        const data: any = await axios.get('https://randomuser.me/api/?results=100');
+        return data.data.results;
+    }
+}

@@ -5,6 +5,7 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
+    "ant-design-vue": "^1.4.8",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.0.0",
@@ -58,7 +59,8 @@
     "@evan.network/ui-dapp-browser": "^2.7.0",
     "@evan.network/ui-vue-core": "^1.9.0",
     "@types/lodash": "^4.14.149",
-    "@types/stripe": "^7.13.5"
+    "@types/stripe": "^7.13.5",
+    "babel-plugin-import": "^1.13.0"
   },
   "husky": {
     "hooks": {}
