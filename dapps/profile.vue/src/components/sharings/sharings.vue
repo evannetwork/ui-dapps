@@ -42,12 +42,12 @@ the following URL: https://evan.network/license/
           @hide="selectedSharedContacts = null"
         >
           <evan-permissions-editor
-            @init="permissionsEditor = $event"
             :loadPermissions="loadPermissions"
             :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
             :selectedContact="selectedSharedContacts !== null && selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
             :sortFilters="$store.state.profileDApp.sharingFilter"
             :updatePermissions="updatePermissions"
+            @init="permissionsEditor = $event"
             i18nScope="_profile.sharing"
           />
           <template slot="footer" v-if="!!permissionsEditor">
@@ -58,7 +58,7 @@ the following URL: https://evan.network/license/
               :disabled="selectedSharedContacts.length === 0" />
             <evan-button
               type="primary"
-              :label="$t('_profile.sharing.update')"
+              :label="$t('_evan.sharing.update')"
               :disabled="!permissionsEditor.permissionsChanged"
               @click="permissionsEditor.writePermissions()"
             />
