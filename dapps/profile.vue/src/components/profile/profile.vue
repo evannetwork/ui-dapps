@@ -157,7 +157,6 @@
           @init="permissionsEditor = $event"
           i18nScope="_profile.sharing"
         />
-        {{ selectedSharedContacts }}
         <template slot="footer" v-if="!!permissionsEditor">
           <evan-button 
             type="secondary" 
