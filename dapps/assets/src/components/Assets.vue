@@ -20,20 +20,29 @@
 <template>
   <div class="evan theme-evan">
     <evan-dapp-wrapper>
-        <template v-slot:content>
-          <evan-dapp-wrapper-level-2 ref="level2Wrapper">
-            <div style="width: 300px">
-              <evan-nav-list :entries="navEntries" :showLogout="false"></evan-nav-list>
+      <template v-slot:content>
+        <evan-dapp-wrapper-level-2 ref="level2Wrapper">
+          <div style="width: 300px">
+            <!-- Not using nav-list because it doesnt support router-link properly -->
+            <div class="evan-nav-list">
+              <div class="nav-entries">
+                <template v-for="navItem in navItems">
+                  <router-link :id="navItem.id" :key="navItem.id" :to="navItem.to" :active-class="'active'">
+                    <i class="mr-3" :class="navItem.icon"></i>
+                    {{ navItem.label | translate }}
+                  </router-link>
+                </template>
+              </div>
             </div>
-          </evan-dapp-wrapper-level-2>
-        </template>
+          </div>
+        </evan-dapp-wrapper-level-2>
+        <transition name="fade" mode="out-in">
+          <div class="container py-3">
+            <router-view></router-view>
+          </div>
+        </transition>
+      </template>
     </evan-dapp-wrapper>
-
-    <transition name="fade" mode="out-in">
-      <div class="container py-3">
-        <router-view></router-view>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -41,3 +50,10 @@
 import AssetsComponent from './Assets';
 export default AssetsComponent;
 </script>
+
+<style lang="scss" scoped>
+.router-link-active {
+  color: var(--evan-dark) !important;
+  background-color: var(--evan-bg-level-2) !important;
+}
+</style>

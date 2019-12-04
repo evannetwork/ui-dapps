@@ -18,11 +18,13 @@
 */
 
 <template>
-  <div class="evan theme-evan">
-      Digital Twins
+  <div>
+    <h1>Digital Twins</h1>
+     
   </div>
 </template>
 
 <script lang="ts">
-
+import DigitalTwinsComponent from './DigitalTwins';
+export default DigitalTwinsComponent;
 </script>
