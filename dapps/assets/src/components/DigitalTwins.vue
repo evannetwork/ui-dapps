@@ -19,25 +19,10 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dapp-wrapper>
-        <template v-slot:content>
-          <evan-dapp-wrapper-level-2 ref="level2Wrapper">
-            <div style="width: 300px">
-              <evan-nav-list :entries="navEntries" :showLogout="false"></evan-nav-list>
-            </div>
-          </evan-dapp-wrapper-level-2>
-        </template>
-    </evan-dapp-wrapper>
-
-    <transition name="fade" mode="out-in">
-      <div class="container py-3">
-        <router-view></router-view>
-      </div>
-    </transition>
+      Digital Twins
   </div>
 </template>
 
 <script lang="ts">
-import AssetsComponent from './Assets';
-export default AssetsComponent;
+
 </script>

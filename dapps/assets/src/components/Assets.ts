@@ -25,15 +25,34 @@ import VueRouter, { Route } from 'vue-router';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 declare module 'vue/types/vue' {
-    interface Vue {
-      $i18n: any;
-      $router: VueRouter;
-      $route: Route;
-      $store: any;
-    }
+  interface Vue {
+    $i18n: any;
+    $router: VueRouter;
+    $route: Route;
+    $store: any;
   }
+}
 
-@Component({ })
+@Component
 export default class AssetsComponent extends mixins(EvanComponent) {
-    
+  navEntries = [
+    {
+      key: 'digitaltwins',
+      icon: 'mdi mdi-account-outline'
+    },
+    {
+      key: 'contacts',
+      icon: 'mdi mdi-wallet-outline'
+    },
+    { key: `others`, icon: 'mdi mdi-check-decagram' }
+  ].map(entry => {
+    return {
+      id: `nav-entry-${entry.key}`,
+      href: `${
+        entry.key
+      }`,
+      text: `_assets.${entry.key.split('/')[0]}`,
+      icon: entry.icon
+    };
+  });
 }
