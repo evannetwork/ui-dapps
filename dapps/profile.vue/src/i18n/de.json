@@ -454,7 +454,8 @@
         "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
         "stripe-element": {
           "incomplete_number": "Unvollständige Eingabe!",
-          "invalid_number": "Ungültige Kartennummer!"
+          "invalid_number": "Ungültige Kartennummer!",
+          "invalid_iban_start": "Bitte überprüfen Sie Ihre IBAN"
         },
         "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
         "tax": "MwSt.",

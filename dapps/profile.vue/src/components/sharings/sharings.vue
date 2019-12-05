@@ -52,17 +52,22 @@ the following URL: https://evan.network/license/
             i18nScope="_profile.sharing"
           />
           <template slot="footer" v-if="!!permissionsEditor">
-            <evan-button 
-              type="secondary" 
-              :label="$t('_evan.cancel')" 
-              @click="permissionsEditor.cancel()" 
-              :disabled="!selectedSharedContacts" />
-            <evan-button
-              type="primary"
-              :label="$t('_evan.sharing.update')"
-              :disabled="!permissionsEditor.permissionsChanged"
-              @click="permissionsEditor.writePermissions()"
-            />
+            <div class="d-flex">
+              <evan-button 
+                type="secondary" 
+                :label="$t('_evan.cancel')" 
+                @click="permissionsEditor.cancel()" 
+                :disabled="!selectedSharedContacts"
+                class="mr-3"
+              />
+              <evan-button
+                type="primary"
+                :label="$t('_evan.sharing.update')"
+                :disabled="!permissionsEditor.permissionsChanged"
+                @click="permissionsEditor.writePermissions()"
+                class="btn-block"
+              />
+            </div>
           </template>
         </evan-swipe-panel>
 

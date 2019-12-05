@@ -68,20 +68,20 @@ https://evan.network/license/ */
           :stacked="true">
         </evan-form>
 
-        <div class="my-3">
-          <div class="stripeElementLabel">
+        <template>
+          <label class="col-form-label">
             {{ `_profile.wallet.buy-eve.payForm.type.${ payForm.type.value }` | translate }}
-          </div>
+          </label>
           <div id="stripeElement" class="stripeElement"/>
           <small
-            class="text-muted"
+            class="text-red"
             v-if="stripe.error && stripe.error.code">
             {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` | translate }}
           </small>
-          <small v-if="payForm.type.value === 'iban'">
+          <small v-if="payForm.type.value === 'iban'" class="disclaimer text-muted">
             {{ '_profile.wallet.buy-eve.disclaimer' | translate }}
           </small>
-        </div>
+        </template>
       </div>
       <!-- end contnet -->
 
@@ -92,6 +92,7 @@ https://evan.network/license/ */
           :label="'_profile.wallet.buy-eve.continue' | translate"
           @click="step = 1"
           type="primary"
+          class="w-100"
         />
 
         <!-- keep displayed but hidden, so the loading circle is displayed correctly -->
@@ -99,12 +100,12 @@ https://evan.network/license/ */
           :class="{ 'invisible': buying || stripe.success || stripe.payError, }"
           class="w-100"
           v-else>
-          <div class="text-center mb-3 position-relative">
+          <div class="text-center mb-3">
             <div class="vat-loading" v-if="vatCalcTimeout">
               <div class="spinner-border text-primary" />
             </div>
 
-            <span class="text-muted mb-3 d-block"
+            <span class="text-muted mb-3"
               v-if="reverseCharge"
               v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
             />

@@ -454,7 +454,8 @@
         "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
         "stripe-element": {
           "incomplete_number": "Incomplete input!",
-          "invalid_number": "Invalid card number!"
+          "invalid_number": "Invalid card number!",
+          "invalid_iban_start": "Please check your IBAN"
         },
         "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited in the next 5 to 10 minutes to your wallet.",
         "tax": "Tax",

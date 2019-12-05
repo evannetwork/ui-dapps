@@ -68,6 +68,7 @@ https://evan.network/license/ */
           :label="'_profile.wallet.send-eve.send' | translate"
           @click="showModal"
           id="evan-eve-send"
+          class="w-100"
           type="primary">
         </evan-button>
       </template>
