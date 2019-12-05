@@ -7,7 +7,8 @@
       },
       "entrypoint": "assets.js",
       "files": [
-        "assets.js"
+        "assets.js",
+        "assets.css"
       ],
       "origin": "QmUt3AybpEsg37F4DwWkAfJPjuvHtHrCNQu2n74gEA4riZ",
       "primaryColor": "#52964b",

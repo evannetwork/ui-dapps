@@ -22,16 +22,29 @@
     <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
-          <div style="width: 300px">
+          <div class="sidenav">
             <!-- Not using nav-list because it doesnt support router-link properly -->
             <div class="evan-nav-list">
               <div class="nav-entries">
                 <template v-for="navItem in navItems">
-                  <router-link :id="navItem.id" :key="navItem.id" :to="navItem.to" :active-class="'active'">
+                  <router-link
+                    :id="navItem.id"
+                    :key="navItem.id"
+                    :to="navItem.to"
+                    :active-class="'active'"
+                  >
                     <i class="mr-3" :class="navItem.icon"></i>
                     {{ navItem.label | translate }}
                   </router-link>
                 </template>
+              </div>
+              <div class="spacer"></div>
+              <div class="nav-entries">
+                <evan-form-control-input
+                  :id="search"
+                  :type="search"
+                  :placeholder="'0x0000...'"
+                ></evan-form-control-input>
               </div>
             </div>
           </div>
@@ -50,3 +63,18 @@
 import AssetsComponent from './Assets';
 export default AssetsComponent;
 </script>
+
+<style lang="scss" scoped>
+.sidenav {
+  width: 300px;
+}
+
+.spacer {
+  display: flex;
+  flex: 1;
+}
+
+.evan-nav-list > .nav-entries {
+  flex: 0;
+}
+</style>
