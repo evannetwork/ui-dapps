@@ -18,8 +18,14 @@
 */
 
 /* tslint:disable */
-export default{
+export default {
   "_assets": {
+    "digitaltwin": {
+      "digitaltwin-title": "Digitale Zwillinge",
+      "my-own": "Eigene",
+      "favorites": "Favoriten",
+      "all": "Alle",
+    }
   }
 }
 /* tslint:enable */;

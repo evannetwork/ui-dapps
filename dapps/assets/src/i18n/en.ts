@@ -19,6 +19,13 @@
 
 /* tslint:disable */
 export default {
-  "_assets": {}
-};
+  "_assets": {
+    "digitaltwin": {
+      "digitaltwin-title": "Digital Twins",
+      "my-own": "My own",
+      "favorites": "Favorites",
+      "all": "All",
+    }
+  }
+}
 /* tslint:enable */
