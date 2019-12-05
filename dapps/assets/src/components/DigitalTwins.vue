@@ -31,7 +31,7 @@
       :rowKey="record => record.login.uuid"
       @change="onChange"
     >
-      <template slot="name" slot-scope="name">{{name.first}} {{name.last}}</template>
+      <template v-slot:name="{first, last}">{{first}} {{last}}</template>
     </a-table>
   </div>
 </template>
