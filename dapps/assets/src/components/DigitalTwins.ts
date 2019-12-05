@@ -44,6 +44,18 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       dataIndex: 'email',
       sorter: (a, b) => ('' + a.email).localeCompare(b.email)
     },
+    {
+      title: 'Owner',
+      dataIndex: 'owner',
+    },
+    {
+      title: 'Uploaded at',
+      dataIndex: 'uploaded',
+    },
+    {
+      title: 'Created at',
+      dataIndex: 'created',
+    },
   ];
 
   data = [];

@@ -19,7 +19,12 @@
 
 <template>
   <div>
-    <h1>Digital Twins</h1>
+    <div class="row">
+      <h1>{{ '_assets.digitaltwin.digitaltwin-title' | translate }}</h1>
+      <evan-button :type="'text'">{{'_assets.digitaltwin.my-own' | translate }}</evan-button>
+      <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
+      <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+    </div>
     <a-table
       :columns="columns"
       :dataSource="data"
