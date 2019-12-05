@@ -17,15 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_assets": {
-    "digitaltwin": {
-      "digitaltwin-title": "Digitale Zwillinge",
-      "my-own": "Eigene",
-      "favorites": "Favoriten",
-      "all": "Alle",
+import axios from 'axios';
+
+export class DigitalTwinService {
+    async getTwins() {
+        const data: any = await axios.get('https://randomuser.me/api/?results=100');
+        return data.data.results;
     }
-  }
 }
-/* tslint:enable */;
