@@ -22,6 +22,7 @@ https://evan.network/license/ */
             @click="activeMode = 1; $store.state.uiState.swipePanel = 'sendEve'"
             style="min-width: 250px"
             type="secondary"
+            :disabled="balance < 1.0"
           />
           <evan-button
             :label="'_profile.wallet.buy-eve.title' | translate"
