@@ -26,56 +26,11 @@ import { DigitalTwinService } from './DigitalTwinService';
 
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
-  twins = [
-    { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-    {
-      age: 89,
-      first_name: 'Geneva',
-      last_name: 'Wilson',
-      _rowVariant: 'danger'
-    },
-    {
-      age: 40,
-      first_name: 'Thor',
-      last_name: 'MacDonald',
-      _cellVariants: { age: 'info', first_name: 'warning' }
-    },
-    { age: 29, first_name: 'Dick', last_name: 'Dunlap' }
-  ]
   twinService: DigitalTwinService = new DigitalTwinService();
 
-  columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      scopedSlots: { customRender: 'name' },
-      sorter: (a, b) => ('' + a.name.first).localeCompare(b.name.first)
-    },
-    {
-      title: 'Gender',
-      dataIndex: 'gender',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      sorter: (a, b) => ('' + a.email).localeCompare(b.email)
-    },
-    {
-      title: 'Owner',
-      dataIndex: 'owner',
-    },
-    {
-      title: 'Uploaded at',
-      dataIndex: 'uploaded',
-    },
-    {
-      title: 'Created at',
-      dataIndex: 'created',
-    },
-  ];
-
   data = [];
+
+  columns = ['name', 'email', 'gender']
 
   async mounted() {
     await this.fetch();
@@ -85,9 +40,5 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     this.data = await this.twinService.getTwins();
     console.log(this.data);
     
-  }
-
-  private onChange(pagination, filters, sorter) {
-    console.log('params', pagination, filters, sorter);
   }
 }

@@ -40,11 +40,16 @@
               </div>
               <div class="spacer"></div>
               <div class="nav-entries">
-                <evan-form-control-input
-                  :id="search"
-                  :type="search"
-                  :placeholder="'0x0000...'"
-                ></evan-form-control-input>
+                <div class="bg-white border-top d-flex">
+                  <i class="mdi mdi-magnify text-muted px-3"></i>
+                  <input
+                    placeholder="0x123ABC..."
+                    class="border-0 p-3 w-100 form-control"
+                    style="height: 60px;"
+                    v-model="searchQuery"
+                    @keyup.enter="onSearchEnter"
+                  />
+                </div>
               </div>
             </div>
           </div>

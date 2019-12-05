@@ -18,44 +18,20 @@
 */
 
 // vue imports
-import Component, { mixins } from 'vue-class-component';
-import VueRouter, { Route } from 'vue-router';
+import Component, { mixins, } from 'vue-class-component';
+import { Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $i18n: any;
-    $router: VueRouter;
-    $route: Route;
-    $store: any;
-  }
-}
-
 @Component
-export default class AssetsComponent extends mixins(EvanComponent) {
-  searchQuery: string;
-  navItems = [
-    {
-      key: 'digitaltwins',
-      icon: 'mdi mdi-account-outline'
-    },
-    {
-      key: 'contacts',
-      icon: 'mdi mdi-wallet-outline'
-    }
-    // { key: `others`, icon: 'mdi mdi-check-decagram' }
-  ].map(entry => {
-    return {
-      label: `_assets.${entry.key}`,
-      icon: entry.icon,
-      to: { name: entry.key }
-    };
-  });
+export default class SearchResultComponent extends mixins(EvanComponent) {
+    searchQuery: string;
 
-  onSearchEnter() {
-    this.$router.push({ name: 'search', params: { query: this.searchQuery } });
-    this.searchQuery = '';
-  }
+    @Watch('$route', { immediate: true, deep: true })
+    onRouteChange(to, from) {
+        this.searchQuery = to.params.query;
+        console.log(this.searchQuery);
+        this.$forceUpdate();
+    }
 }

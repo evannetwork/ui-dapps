@@ -20,6 +20,8 @@
 /* tslint:disable */
 export default {
   "_assets": {
+    "contacts": "Kontakte",
+    "digitaltwins": "Digitale Zwillinge",
     "digitaltwin": {
       "digitaltwin-title": "Digitale Zwillinge",
       "my-own": "Eigene",

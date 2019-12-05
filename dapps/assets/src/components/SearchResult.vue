@@ -17,17 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
-/* tslint:disable */
-export default {
-  "_assets": {
-    "contacts": "Contacts",
-    "digitaltwins": "Digital Twins",
-    "digitaltwin": {
-      "digitaltwin-title": "Digital Twins",
-      "my-own": "My own",
-      "favorites": "Favorites",
-      "all": "All",
-    }
-  }
-}
-/* tslint:enable */
+<template>
+  <div>
+    You searched for {{ searchQuery }}
+  </div>
+</template>
+
+<script lang="ts">
+import SearchResultComponent from './SearchResult';
+export default SearchResultComponent;
+</script>
