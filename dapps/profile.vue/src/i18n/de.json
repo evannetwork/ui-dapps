@@ -488,10 +488,10 @@
       "transactions": {
         "charged-at": "aufgeladen am",
         "credit-charged": "Guthaben aufgeladen",
-        "description": "Nachfolgend sind nur die Guthabenaufladungen aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
-        "empty": "Bisher wurden keine Guthabenaufladungen durchgeführt...",
+        "description": "Nachfolgend sind nur Ihre EVE-Käufe aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
+        "empty": "Sie haben bisher noch keine EVEs gekauft",
         "load-more": "Ältere laden",
-        "title": "Guthaben aufgeladen"
+        "title": "EVE Käufe"
       }
     }
   }
