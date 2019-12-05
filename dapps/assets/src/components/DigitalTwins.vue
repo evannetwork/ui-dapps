@@ -19,6 +19,9 @@
 
 <template>
   <div>
+    <h1>Digital Twins</h1>
+    
+    <b-table class="evan-table" hover :items="twins"></b-table>
     <div class="row">
       <h1>{{ '_assets.digitaltwin.digitaltwin-title' | translate }}</h1>
       <evan-button :type="'text'">{{'_assets.digitaltwin.my-own' | translate }}</evan-button>
