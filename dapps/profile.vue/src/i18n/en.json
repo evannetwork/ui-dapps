@@ -476,7 +476,7 @@
             "placeholder": "Contact or identity address"
           },
           "amount": {
-            "error": "Please insert a correct number!",
+            "error": "Please enter a number greater than 0!",
             "error-less": "Account balance is to low! ({balance} EVE)",
             "label": "Amount of EVE",
             "placeholder": "EVE to send"

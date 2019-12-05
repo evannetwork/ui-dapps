@@ -159,7 +159,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: SendEveComponent) {
           const parsed = parseFloat(this.value);
 
-          if (isNaN(parsed)) {
+          if (isNaN(parsed) || parsed <= 0) {
             return '_profile.wallet.send-eve.form.amount.error';
           } else {
             if ((parsed + gasFee) < vueInstance.currBalance) {

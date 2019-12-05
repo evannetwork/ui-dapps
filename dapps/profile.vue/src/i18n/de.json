@@ -476,7 +476,7 @@
             "placeholder": "Kontakt oder Identitätsadresse"
           },
           "amount": {
-            "error": "Bitte geben Sie eine Zahl ein!",
+            "error": "Bitte geben Sie eine Zahl größer 0 ein!",
             "error-less": "Ihr Kontostand ist zu gering! ({balance} EVE)",
             "label": "Menge an EVE",
             "placeholder": "Anzahl der EVE, die Sie versenden möchten."
