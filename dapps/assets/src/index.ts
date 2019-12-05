@@ -20,6 +20,7 @@
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName, } from '@evan.network/ui-dapp-browser';
+import { TablePlugin } from 'bootstrap-vue';
 
 import translations from './i18n/translations';
 import routes from './routes';
@@ -41,6 +42,8 @@ System.map['@evan.network/assets'] = `assets.${ getDomainName() }!dapp-content`;
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
 export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+  Vue.use(TablePlugin);
+
   await initializeVue({
     components,
     container,

@@ -20,7 +20,8 @@
 <template>
   <div>
     <h1>Digital Twins</h1>
-     
+    
+    <b-table class="evan-table" hover :items="twins"></b-table>
   </div>
 </template>
 
