@@ -340,7 +340,7 @@
             "title": "Steps"
           },
           "mail": {
-            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Identity: {organizationEvanId}</li><li>Commercial Register Number: {organizationRegistrationNumber}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Identity: {organizationEvanId}</li><li>Account: {accountId}</li><li>Commercial Register Number: {organizationRegistration}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
             "title": "Request for Notary Verification"
           },
           "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
