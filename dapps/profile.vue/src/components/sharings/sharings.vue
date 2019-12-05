@@ -43,11 +43,12 @@ the following URL: https://evan.network/license/
         >
           <evan-permissions-editor
             @init="permissionsEditor = $event"
+            :contacts="contacts"
+            :selectedContact="selectedSharedContacts"
             :loadPermissions="loadPermissions"
-            :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
-            :selectedContact="selectedSharedContacts !== null && selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-            :sortFilters="$store.state.profileDApp.sharingFilter"
             :updatePermissions="updatePermissions"
+            :onSelect="handleOnSelect"
+            :sortFilters="$store.state.profileDApp.sharingFilter"
             i18nScope="_profile.sharing"
           />
           <template slot="footer" v-if="!!permissionsEditor">
@@ -55,7 +56,7 @@ the following URL: https://evan.network/license/
               type="secondary" 
               :label="$t('_evan.cancel')" 
               @click="permissionsEditor.cancel()" 
-              :disabled="selectedSharedContacts.length === 0" />
+              :disabled="!selectedSharedContacts" />
             <evan-button
               type="primary"
               :label="$t('_profile.sharing.update')"
@@ -73,7 +74,7 @@ the following URL: https://evan.network/license/
             <evan-base-list
               class="mt-5"
               :data="sharedContacts"
-              :isSelectedCallback="(item) => selectedSharedContacts !== null && selectedSharedContacts.includes(item.accountId)"
+              :isSelectedCallback="isSelectedCallback"
               :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
             >
               <template v-slot:item="{item}">

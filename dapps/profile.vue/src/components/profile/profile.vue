@@ -150,10 +150,12 @@
         v-if="userInfo">
         <evan-permissions-editor
           @init="permissionsEditor = $event"
+          :contacts="contacts"
+          :selectedContact="selectedSharedContacts"
+          :onSelect="handleOnSelect"
           :loadPermissions="loadPermissions"
-          :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-          :sortFilters="$store.state.profileDApp.sharingFilter"
           :updatePermissions="updatePermissions"
+          :sortFilters="$store.state.profileDApp.sharingFilter"
           i18nScope="_profile.sharing"
         />
         <template slot="footer" v-if="!!permissionsEditor">
@@ -161,7 +163,7 @@
             type="secondary" 
             :label="$t('_evan.cancel')" 
             @click="permissionsEditor.cancel()" 
-            :disabled="selectedSharedContacts.length === 0" />
+            :disabled="!selectedSharedContacts" />
           <evan-button
             type="primary"
             :label="$t('_evan.sharing.update')"

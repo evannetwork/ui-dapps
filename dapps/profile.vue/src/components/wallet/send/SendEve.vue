@@ -45,7 +45,7 @@ https://evan.network/license/ */
             <span v-html="
               $t(`_profile.wallet.send-eve.accept.description`, {
                 amount: getReadableBalance(form.amount.value),
-                name: getUserNameWithAddress(form.accountId.value)
+                name: userNameWithAddress
               })
             " />
           </template>
@@ -66,7 +66,7 @@ https://evan.network/license/ */
           :disabled="!form.isValid || sending"
           :isLoading="sending"
           :label="'_profile.wallet.send-eve.send' | translate"
-          @click="$refs.acceptModal.show()"
+          @click="showModal"
           id="evan-eve-send"
           type="primary">
         </evan-button>
