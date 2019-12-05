@@ -59,7 +59,7 @@ the following URL: https://evan.network/license/
               :disabled="!selectedSharedContacts" />
             <evan-button
               type="primary"
-              :label="$t('_profile.sharing.update')"
+              :label="$t('_evan.sharing.update')"
               :disabled="!permissionsEditor.permissionsChanged"
               @click="permissionsEditor.writePermissions()"
             />
