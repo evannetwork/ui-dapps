@@ -121,26 +121,26 @@
       "create-account": "Create your account",
       "create-profile": {
         "company": {
-          "status-1": "Initialize connection to network...",
-          "status-2": "Creation of the company account...",
-          "status-3": "Creation of corporate identity on the basis of specific data...",
-          "status-4": "Creation of verification management...",
-          "status-5": "Identity was successfully created..."
+          "status-1": "Initialize connection to network ...",
+          "status-2": "Create the company account ...",
+          "status-3": "Create the corporate identity on the basis of specific data ...",
+          "status-4": "Create the verification management ...",
+          "status-5": "Identity was successfully created!"
         },
         "title": "Create Account",
         "twin": {
-          "status-1": "Creating identity contract...",
-          "status-2": "Encrypting user information...",
-          "status-3": "Creating mailbox, address book...",
-          "status-4": "Creating Digital Twin...",
+          "status-1": "Create the identity contract ...",
+          "status-2": "Encrypt user information ...",
+          "status-3": "Create mailbox, address book ...",
+          "status-4": "Create the Digital Twin ...",
           "status-5": "Digital Twin was successfully created!"
         },
         "user": {
-          "status-1": "Initialize connection to network...",
-          "status-2": "Creation of the company account...",
-          "status-3": "Creation of the identity...",
-          "status-4": "Creation of verification management...",
-          "status-5": "Identity was successfully created..."
+          "status-1": "Initialize connection to network ...",
+          "status-2": "Create the company account ...",
+          "status-3": "Create the identity ...",
+          "status-4": "Create the verification management ...",
+          "status-5": "Identity was successfully created!"
         }
       },
       "desc": "Create your evan.network identity",
