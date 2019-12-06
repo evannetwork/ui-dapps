@@ -46,7 +46,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       this.isLoading = true;
       await this.fetchMore();
     }
-  }, 200, { trailing: true });
+  }, 100, { trailing: true });
 
   async fetchInitial() {
     this.data = await this.twinService.getTwins();

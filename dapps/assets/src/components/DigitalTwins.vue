@@ -30,12 +30,13 @@
       hover
       :items="data"
       :fields="columns"
+      :tbody-tr-class="'evan-table-row'"
       sticky-header="75vh"
       @scroll.native="scrollHandler"
     >
       <!-- <template v-slot:name="name">{{name.first}} {{name.last}}</template> -->
     </b-table>
-    <evan-loading v-if="isLoading"></evan-loading>
+    <evan-loading v-if="isLoading" :classes="'pt-3'"></evan-loading>
   </div>
 </template>
 
@@ -43,3 +44,26 @@
 import DigitalTwinsComponent from './DigitalTwins';
 export default DigitalTwinsComponent;
 </script>
+
+<style lang="scss" scoped>
+/deep/ .evan-table {
+      margin: 0;
+  table {
+    border-spacing: 0 4px;
+    border-collapse: separate;
+
+  }
+  table.table.b-table > thead > tr > th {
+    background-color: var(--evan-bg-level-3);
+    border: none;
+  }
+  table.table.b-table > tbody > tr > td {
+    vertical-align: middle;
+    border: none;
+  }
+  tr.evan-table-row {
+    height: 64px;
+    background-color: white;
+  }
+}
+</style>
