@@ -32,6 +32,6 @@ export default class SearchResultComponent extends mixins(EvanComponent) {
     onRouteChange(to, from) {
         this.searchQuery = to.params.query;
         console.log(this.searchQuery);
-        this.$forceUpdate();
+        this.$forceUpdate(); // TODO: This seems rather dirty. Need to see why it's not reactive.
     }
 }
