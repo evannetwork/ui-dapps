@@ -24,11 +24,11 @@
           },
           "1": {
             "desc": "Ihre Adressdaten benötigen Sie für die spätere Verifizierung als Unternehmen. Somit entsteht ein Netzwerk aus vertrauensvollen Partnern, die unternehmensübergreifend und direkt Daten und Informationen austauschen.",
-            "title": "Ihr Weg zur Unternehmenidentität"
+            "title": "Ihr Weg zur Unternehmensidentität"
           },
           "2": {
-            "desc": "Zur Verifikation Ihrer Unternehmenidentität benötigen Sie neben den Adressdaten auch unternehmensspezifische Daten. Anhand des Handelsregisterauszugs kann später bei Bedarf ein Notar Ihr Unternehmen verifizieren.",
-            "title": "Ihr Weg zur Unternehmenidentität"
+            "desc": "Zur Verifikation Ihrer Unternehmensidentität benötigen Sie neben den Adressdaten auch unternehmensspezifische Daten. Anhand des Handelsregisterauszugs kann später bei Bedarf ein Notar Ihr Unternehmen verifizieren.",
+            "title": "Ihr Weg zur Unternehmensidentität"
           },
           "3": {
             "desc": "Nach Abschluss der Registrierung haben Sie Zugang zum evan.network und können vertrauensvoll mit Ihren Partnern interagieren.",
@@ -121,26 +121,26 @@
       "create-account": "Erstellen Sie Ihren Account",
       "create-profile": {
         "company": {
-          "status-1": "Initialisiere Verbindung zum Netzwerk...",
-          "status-2": "Erstellung der Unternehmenidentität...",
-          "status-3": "Erstellung der Unternehmensidentität auf Basis der spezifischen Daten...",
-          "status-4": "Erstellung des Verifizierungsmanagements...",
-          "status-5": "Identität wurde erfolgreich erstellt..."
+          "status-1": "Initialisiere Verbindung zum Netzwerk ...",
+          "status-2": "Erstelle die Unternehmensidentität ...",
+          "status-3": "Erstelle die Unternehmensidentität auf Basis der spezifischen Daten ...",
+          "status-4": "Erstelle das Verifizierungsmanagement ...",
+          "status-5": "Identität wurde erfolgreich erstellt!"
         },
         "title": "Account erstellen",
         "twin": {
-          "status-1": "Erstellung des Identitätsvertrages...",
-          "status-2": "Verschlüsselung der Nutzerinformationen...",
-          "status-3": "Erstellung Mailbox, Adressbuch, ...",
-          "status-4": "Erstellung des Digitalen Zwillings...",
+          "status-1": "Erstelle den Identitätsvertrag ...",
+          "status-2": "Verschlüsselle Nutzerinformationen ...",
+          "status-3": "Erstelle Mailbox, Adressbuch, ...",
+          "status-4": "Erstelle den Digitalen Zwilling ...",
           "status-5": "Digitaler Zwilling wurde erfolgreich erstellt!"
         },
         "user": {
-          "status-1": "Initialisiere Verbindung zum Netzwerk...",
-          "status-2": "Erstellung des Accounts...",
-          "status-3": "Erstellung der Identität...",
-          "status-4": "Erstellung des Verifizierungsmanagements...",
-          "status-5": "Identität wurde erfolgreich erstellt..."
+          "status-1": "Initialisiere Verbindung zum Netzwerk ...",
+          "status-2": "Erstelle den Account ...",
+          "status-3": "Erstelle die Identität ...",
+          "status-4": "Erstelle das Verifizierungsmanagement ...",
+          "status-5": "Identität wurde erfolgreich erstellt!"
         }
       },
       "desc": "Erstellen Sie Ihre evan.network Identität",
