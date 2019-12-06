@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DigitalTwinService } from './DigitalTwinService';
+import { DigitalTwinService, DigitalTwin } from './DigitalTwinService';
 import { debounce } from 'lodash';
 
 @Component
@@ -31,7 +31,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   isLoading = true;
 
-  data = [];
+  data: DigitalTwin[] = [];
 
   columns = [
     { key: 'icon', label: '' },
@@ -39,7 +39,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     'owner',
     'updated',
     'created',
-    { key: 'actions', label: '' }
+    { key: 'favorite', label: '' }
   ];
 
   async mounted() {

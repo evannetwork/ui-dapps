@@ -19,8 +19,17 @@
 
 import axios from 'axios';
 
+export interface DigitalTwin {
+  icon: string;
+  name: string;
+  owner: string;
+  updated: string;
+  created: string;
+  favorite: boolean;
+}
+
 export class DigitalTwinService {
-  async getTwins() {
+  async getTwins(): Promise<DigitalTwin[]> {
     const data: any = await axios.get('https://randomuser.me/api/?results=20');
     return data.data.results.map(user => {
       return  {
@@ -28,7 +37,8 @@ export class DigitalTwinService {
         name: user.login.uuid,
         owner: `${user.name.first} ${user.name.last}`,
         updated: Date.now(),
-        created: Date.now()
+        created: Date.now(),
+        favorite: true
       }
     });
   }

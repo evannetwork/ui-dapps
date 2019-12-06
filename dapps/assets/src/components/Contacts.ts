@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { ContactsService } from './ContactsService';
+import { ContactsService, Contact } from './ContactsService';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
@@ -30,14 +30,14 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   isLoading = true;
 
-  data = [];
+  data: Contact[] = [];
 
   columns = [
     { key: 'icon', label: '' },
     'name',
     'updated',
     'created',
-    { key: 'actions', label: '' }
+    { key: 'favorite', label: '' }
   ];
 
   created() {

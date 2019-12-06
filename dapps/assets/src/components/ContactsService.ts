@@ -17,27 +17,37 @@
   the following URL: https://evan.network/license/
 */
 
+export interface Contact {
+  alias: string;
+  adress: string;
+  icon: string;
+  created: string;
+  updated: string;
+  favorite: boolean;
+}
+
 export class ContactsService {
-  contacts;
-  runtime;
+  private contacts;
+  private runtime;
 
   constructor(runtime) {
-      this.runtime = runtime;
+    this.runtime = runtime;
   }
 
-  async getContacts() {    
+  async getContacts(): Promise<Contact[]> {
     this.contacts = JSON.parse(
       JSON.stringify(await this.runtime.profile.getAddressBook())
     );
 
-    let data = [];
+    let data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(contact => {
       data.push({
         alias: this.contacts.profile[contact].alias,
         adress: contact,
         icon: 'mdi mdi-account-outline',
         created: new Date().toLocaleString(),
-        updated: new Date().toLocaleString()
+        updated: new Date().toLocaleString(),
+        favorite: true
       });
     });
     return data;

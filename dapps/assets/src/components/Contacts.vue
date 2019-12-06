@@ -46,6 +46,9 @@
       <template v-slot:cell(icon)="data">
         <i class="table-icon" :class="data.item.icon"></i>
       </template>
+      <template v-slot:cell(favorite)="data">
+        <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
+      </template>
     </b-table>
     <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
   </div>
