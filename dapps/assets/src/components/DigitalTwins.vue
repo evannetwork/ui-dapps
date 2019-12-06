@@ -31,12 +31,13 @@
       :items="data"
       :fields="columns"
       :tbody-tr-class="'evan-table-row'"
-      sticky-header="75vh"
+      sticky-header="80vh"
       @scroll.native="scrollHandler"
     >
+      <template v-slot:cell(icon)="data"><i class="table-icon" :class="data.item.icon"></i></template>
       <!-- <template v-slot:name="name">{{name.first}} {{name.last}}</template> -->
     </b-table>
-    <evan-loading v-if="isLoading" :classes="'pt-3'"></evan-loading>
+    <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
   </div>
 </template>
 
@@ -56,6 +57,7 @@ export default DigitalTwinsComponent;
   table.table.b-table > thead > tr > th {
     background-color: var(--evan-bg-level-3);
     border: none;
+    color: #6C757D;
   }
   table.table.b-table > tbody > tr > td {
     vertical-align: middle;
@@ -64,6 +66,11 @@ export default DigitalTwinsComponent;
   tr.evan-table-row {
     height: 64px;
     background-color: white;
+  }
+
+  .table-icon {
+    font-size: 1.75em;
+    margin-left: 0.25em;
   }
 }
 </style>

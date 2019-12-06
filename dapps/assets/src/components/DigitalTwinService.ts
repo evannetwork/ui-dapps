@@ -22,6 +22,14 @@ import axios from 'axios';
 export class DigitalTwinService {
   async getTwins() {
     const data: any = await axios.get('https://randomuser.me/api/?results=20');
-    return data.data.results;
+    return data.data.results.map(user => {
+      return  {
+        icon: 'mdi mdi-cube-outline',
+        name: user.login.uuid,
+        owner: `${user.name.first} ${user.name.last}`,
+        updated: Date.now(),
+        created: Date.now()
+      }
+    });
   }
 }
