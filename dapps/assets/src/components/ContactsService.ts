@@ -17,6 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
+import * as bcc from '@evan.network/api-blockchain-core';
+
 export interface Contact {
   alias: string;
   adress: string;
@@ -24,7 +26,14 @@ export interface Contact {
   created: string;
   updated: string;
   favorite: boolean;
-  type: 'user' | 'iot-device' | 'company';
+  type: ContactType;
+}
+
+enum ContactType {
+  USER = 'user',
+  IOT_DEVICE = 'iot-device',
+  COMPANY = 'company',
+  UNSHARED = 'unshared'
 }
 
 export class ContactsService {
@@ -41,28 +50,49 @@ export class ContactsService {
     );
 
     let data: Contact[] = [];
-    Object.keys(this.contacts.profile).forEach(contact => {
+    Object.keys(this.contacts.profile).forEach(async contact => {
+      const type = await this.getProfileType(contact);
       data.push({
         alias: this.contacts.profile[contact].alias,
         adress: contact,
-        icon: this.getIcon('user'), // TODO type
+        icon: this.getIcon(type),
         created: new Date().toLocaleString(),
         updated: new Date().toLocaleString(),
         favorite: true,
-        type: 'user' // TODO type
+        type: type
       });
     });
     return data;
   }
 
-  private getIcon(type: string): string {
+  private getIcon(type: ContactType): string {
     switch (type) {
-        case 'user':
-            return 'mdi mdi-account-outline';
-        case 'company':
-            return 'mdi mdi-domain';
-        case 'iot-device':
-            return 'mdi mdi-radio-tower';
+      case ContactType.USER:
+        return 'mdi mdi-account-outline';
+      case ContactType.COMPANY:
+        return 'mdi mdi-domain';
+      case ContactType.IOT_DEVICE:
+        return 'mdi mdi-radio-tower';
+      case ContactType.UNSHARED:
+        return 'mdi mdi-help-circle-outline';
+      default:
+        return 'mdi mdi-help-circle-outline';
+    }
+  }
+
+  private async getProfileType(accountId: string): Promise<ContactType> {
+    try {
+      const otherProfile = new bcc.Profile({
+        ...this.runtime,
+        accountId
+      });
+      const { profileType } = await otherProfile.getProfileProperty(
+        'accountDetails'
+      );
+      return profileType;
+    } catch (err) {
+      console.log(err);
+      return ContactType.UNSHARED;
     }
   }
 }
