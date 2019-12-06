@@ -21,7 +21,7 @@ import axios from 'axios';
 
 export class DigitalTwinService {
     async getTwins() {
-        const data: any = await axios.get('https://randomuser.me/api/?results=100');
+        const data: any = await axios.get('https://randomuser.me/api/?results=20');
         return data.data.results;
     }
 }

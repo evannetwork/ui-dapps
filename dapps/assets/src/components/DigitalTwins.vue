@@ -25,9 +25,17 @@
       <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
       <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
     </div>
-    <b-table class="evan-table" hover :items="data" :fields="columns" sticky-header>
+    <b-table
+      class="evan-table"
+      hover
+      :items="data"
+      :fields="columns"
+      sticky-header="75vh"
+      @scroll.native="scrollHandler"
+    >
       <!-- <template v-slot:name="name">{{name.first}} {{name.last}}</template> -->
     </b-table>
+    <evan-loading v-if="isLoading"></evan-loading>
   </div>
 </template>
 

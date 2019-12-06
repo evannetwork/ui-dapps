@@ -23,22 +23,38 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { DigitalTwinService } from './DigitalTwinService';
+import { debounce } from 'lodash';
 
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   twinService: DigitalTwinService = new DigitalTwinService();
 
+  isLoading = true;
+
   data = [];
 
-  columns = ['name', 'email', 'gender']
+  columns = ['name', 'email', 'gender'];
 
   async mounted() {
-    await this.fetch();
+    await this.fetchInitial();
   }
 
-  async fetch() {
+  scrollHandler = debounce(async function(ev) {
+    let bottomOfWindow =
+      ev.target.clientHeight + ev.target.scrollTop >= ev.target.scrollHeight;
+    if (bottomOfWindow) {
+      this.isLoading = true;
+      await this.fetchMore();
+    }
+  }, 200, { trailing: true });
+
+  async fetchInitial() {
     this.data = await this.twinService.getTwins();
-    console.log(this.data);
-    
+    this.isLoading = false;
+  }
+
+  async fetchMore() {
+    this.data = [...this.data, ...(await this.twinService.getTwins())];
+    this.isLoading = false;
   }
 }
