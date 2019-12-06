@@ -24,6 +24,7 @@ export interface Contact {
   created: string;
   updated: string;
   favorite: boolean;
+  type: 'user' | 'iot-device' | 'company';
 }
 
 export class ContactsService {
@@ -44,12 +45,24 @@ export class ContactsService {
       data.push({
         alias: this.contacts.profile[contact].alias,
         adress: contact,
-        icon: 'mdi mdi-account-outline',
+        icon: this.getIcon('user'), // TODO type
         created: new Date().toLocaleString(),
         updated: new Date().toLocaleString(),
-        favorite: true
+        favorite: true,
+        type: 'user' // TODO type
       });
     });
     return data;
+  }
+
+  private getIcon(type: string): string {
+    switch (type) {
+        case 'user':
+            return 'mdi mdi-account-outline';
+        case 'company':
+            return 'mdi mdi-domain';
+        case 'iot-device':
+            return 'mdi mdi-radio-tower';
+    }
   }
 }
