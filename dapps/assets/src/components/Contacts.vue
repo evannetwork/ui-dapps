@@ -38,7 +38,6 @@
       :fields="columns"
       :tbody-tr-class="'evan-table-row'"
       sticky-header="80vh"
-      @scroll.native="scrollHandler"
     >
       <template v-slot:cell(name)="data">
         {{ data.item.alias ? data.item.alias: data.item.adress }}

@@ -30,14 +30,16 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   isLoading = true;
 
+  sortBy = 'name';
+
   data: Contact[] = [];
 
   columns = [
-    { key: 'icon', label: '' },
-    'name',
-    'updated',
-    'created',
-    { key: 'favorite', label: '' }
+    { key: 'icon', label: '', sortable: false },
+    { key: 'name', sortable: true },
+    { key: 'updated', sortable: true },
+    { key: 'created', sortable: true },
+    { key: 'favorite', label: '', sortable: false }
   ];
 
   created() {

@@ -42,4 +42,12 @@ export class DigitalTwinService {
       }
     });
   }
+
+  filterByOwn(): Promise<DigitalTwin[]> {
+    return this.getTwins();
+  }
+
+  filterByFavorites(): Promise<DigitalTwin[]> {
+    return this.getTwins();
+  }
 }
