@@ -17,8 +17,4 @@
   the following URL: https://evan.network/license/
 */
 
-import axios from 'axios';
-
-export class SearchService {
-    query() {}
-}
+export class SearchService {}
