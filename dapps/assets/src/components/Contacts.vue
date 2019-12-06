@@ -18,8 +18,36 @@
 */
 
 <template>
-  <div class="evan theme-evan">
-      Contacts
+  <div>
+    <div class="row mt-5">
+      <div class="col-3">
+        <h1 class="h4">{{ '_assets.contacts.contacts-title' | translate }}</h1>
+      </div>
+      <div class="col-9 text-right">
+        <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.contacts.users' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.contacts.companies' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.contacts.iot-devices' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+      </div>
+    </div>
+    <b-table
+      class="evan-table"
+      hover
+      :items="data"
+      :fields="columns"
+      :tbody-tr-class="'evan-table-row'"
+      sticky-header="80vh"
+      @scroll.native="scrollHandler"
+    >
+      <template v-slot:cell(name)="data">
+        {{ data.item.alias ? data.item.alias: data.item.adress }}
+      </template>
+      <template v-slot:cell(icon)="data">
+        <i class="table-icon" :class="data.item.icon"></i>
+      </template>
+    </b-table>
+    <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
   </div>
 </template>
 

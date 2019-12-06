@@ -48,7 +48,7 @@ export default class AddressBookComponent extends mixins(EvanComponent) {
   categories: any = null;
 
   /**
-   * Original addressbook.
+   * Original adressbook.
    */
   addressBook: any = null;
 

@@ -17,41 +17,29 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+export class ContactsService {
+  contacts;
+  runtime;
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { ContactsService } from './ContactsService';
-
-@Component
-export default class ContactsComponent extends mixins(EvanComponent) {
-  contactService: ContactsService;
-
-  isLoading = true;
-
-  data = [];
-
-  columns = [
-    { key: 'icon', label: '' },
-    'name',
-    'updated',
-    'created',
-    { key: 'actions', label: '' }
-  ];
-
-  created() {
-    const runtime = (<any>this).getRuntime();
-    this.contactService = new ContactsService(runtime);
+  constructor(runtime) {
+      this.runtime = runtime;
   }
 
-  async mounted() {
-    await this.fetchInitial();    
-    this.isLoading = false;
-  }
+  async getContacts() {    
+    this.contacts = JSON.parse(
+      JSON.stringify(await this.runtime.profile.getAddressBook())
+    );
 
-  async fetchInitial() {
-    this.data = await this.contactService.getContacts();
-    console.log(this.data);
+    let data = [];
+    Object.keys(this.contacts.profile).forEach(contact => {
+      data.push({
+        alias: this.contacts.profile[contact].alias,
+        adress: contact,
+        icon: 'mdi mdi-account-outline',
+        created: new Date().toLocaleString(),
+        updated: new Date().toLocaleString()
+      });
+    });
+    return data;
   }
 }

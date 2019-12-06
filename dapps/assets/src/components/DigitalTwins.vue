@@ -52,12 +52,16 @@ import DigitalTwinsComponent from './DigitalTwins';
 export default DigitalTwinsComponent;
 </script>
 
-<style lang="scss" scoped>
-/deep/ .evan-table {
+<style lang="scss">
+.evan-table {
   margin: 0;
   table {
     border-spacing: 0 4px;
     border-collapse: separate;
+    .table-icon {
+      font-size: 1.75em;
+      margin-left: 0.25em;
+    }
   }
   table.table.b-table > thead > tr > th {
     background-color: var(--evan-bg-level-3);
@@ -71,11 +75,6 @@ export default DigitalTwinsComponent;
   tr.evan-table-row {
     height: 64px;
     background-color: white;
-  }
-
-  .table-icon {
-    font-size: 1.75em;
-    margin-left: 0.25em;
   }
 }
 </style>
