@@ -19,11 +19,15 @@
 
 <template>
   <div>
-    <div class="row">
-      <h1>{{ '_assets.digitaltwin.digitaltwin-title' | translate }}</h1>
-      <evan-button :type="'text'">{{'_assets.digitaltwin.my-own' | translate }}</evan-button>
-      <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
-      <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+    <div class="row mt-5">
+      <div class="col-6">
+        <h1 class="h4">{{ '_assets.digitaltwin.digitaltwin-title' | translate }}</h1>
+      </div>
+      <div class="col-6 text-right">
+        <evan-button :type="'text'">{{'_assets.digitaltwin.my-own' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+      </div>
     </div>
     <b-table
       class="evan-table"
@@ -34,7 +38,9 @@
       sticky-header="80vh"
       @scroll.native="scrollHandler"
     >
-      <template v-slot:cell(icon)="data"><i class="table-icon" :class="data.item.icon"></i></template>
+      <template v-slot:cell(icon)="data">
+        <i class="table-icon" :class="data.item.icon"></i>
+      </template>
       <!-- <template v-slot:name="name">{{name.first}} {{name.last}}</template> -->
     </b-table>
     <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
@@ -48,16 +54,15 @@ export default DigitalTwinsComponent;
 
 <style lang="scss" scoped>
 /deep/ .evan-table {
-      margin: 0;
+  margin: 0;
   table {
     border-spacing: 0 4px;
     border-collapse: separate;
-
   }
   table.table.b-table > thead > tr > th {
     background-color: var(--evan-bg-level-3);
     border: none;
-    color: #6C757D;
+    color: #6c757d;
   }
   table.table.b-table > tbody > tr > td {
     vertical-align: middle;

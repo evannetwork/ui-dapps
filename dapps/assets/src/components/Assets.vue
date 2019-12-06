@@ -41,7 +41,7 @@
               <div class="spacer"></div>
               <div class="nav-entries">
                 <div class="bg-white border-top d-flex">
-                  <i class="mdi mdi-magnify text-muted px-3"></i>
+                  <i class="mdi mdi-magnify text-muted p-3"></i>
                   <input
                     placeholder="0x123ABC..."
                     class="border-0 p-3 w-100 form-control"
@@ -55,7 +55,7 @@
           </div>
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
-          <div class="container py-3">
+          <div class="container content">
             <router-view></router-view>
           </div>
         </transition>
@@ -70,6 +70,9 @@ export default AssetsComponent;
 </script>
 
 <style lang="scss" scoped>
+.content {
+  max-width: 765px;
+}
 .sidenav {
   width: 300px;
 }
