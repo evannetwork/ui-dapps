@@ -21,7 +21,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 
 export interface Contact {
   alias: string;
-  adress: string;
+  address: string;
   icon: string;
   created: string;
   updated: string;
@@ -54,7 +54,7 @@ export class ContactsService {
       const type = await this.getProfileType(contact);
       data.push({
         alias: this.contacts.profile[contact].alias,
-        adress: contact,
+        address: contact,
         icon: this.getIcon(type),
         created: new Date().toLocaleString(),
         updated: new Date().toLocaleString(),

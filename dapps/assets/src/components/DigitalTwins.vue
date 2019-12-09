@@ -67,6 +67,7 @@ export default DigitalTwinsComponent;
     tr.evan-table-row {
       height: 64px;
       background-color: white;
+      cursor: pointer;
     }
     & > thead > tr > th {
       background-color: var(--evan-bg-level-3);

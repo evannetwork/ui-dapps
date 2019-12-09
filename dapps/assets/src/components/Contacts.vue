@@ -37,10 +37,11 @@
       :items="data"
       :fields="columns"
       :tbody-tr-class="'evan-table-row'"
+      @row-clicked="handleRowClicked"
       sticky-header="80vh"
     >
       <template v-slot:cell(alias)="data">
-        {{ data.item.alias ? data.item.alias: data.item.adress }}
+        {{ data.item.alias ? data.item.alias: data.item.address }}
       </template>
       <template v-slot:cell(icon)="data">
         <i class="table-icon" :class="data.item.icon"></i>
