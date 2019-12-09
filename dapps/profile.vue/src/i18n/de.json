@@ -24,7 +24,7 @@
         },
         "company": {
           "error": "Bitte geben Sie den Namen Ihres Unternehmens an!",
-          "label": "Unternehmensname",
+          "label": "Firma",
           "placeholder": "Sample GmbH"
         },
         "country": {
