@@ -111,7 +111,7 @@ https://evan.network/license/ */
             />
             <small>
               {{ parseFloat(payForm.amount.value).toFixed(2) }} EVE x
-              {{ '1€' }} + {{ taxValue }} {{ '_profile.wallet.buy-eve.vat' | translate }}
+              {{ '1€' }} + {{ taxValue }}% {{ '_profile.wallet.buy-eve.vat' | translate }}
               ({{ (parseFloat(payForm.amount.value) / 100 * taxValue).toFixed(2) + '€' }})
             </small>
             <h3 class="mt-1">
