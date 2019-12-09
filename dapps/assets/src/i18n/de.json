@@ -3,15 +3,22 @@
     "contacts": {
       "companies": "Unternehmen",
       "contacts-title": "Kontakte",
+      "created": "Erstellt",
       "favorites": "Favoriten",
       "iot-devices": "IOT-Devices",
+      "name": "Name",
+      "updated": "Aktualisiert",
       "users": "Nutzer"
     },
     "digitaltwins": {
       "all": "Alle",
+      "created": "Erstellt",
       "digitaltwins-title": "Digitale Zwillinge",
       "favorites": "Favoriten",
-      "my-own": "Eigene"
+      "my-own": "Eigene",
+      "name": "Name",
+      "owner": "Besitzer",
+      "updated": "Aktualisiert"
     }
   }
 }

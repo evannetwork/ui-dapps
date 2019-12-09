@@ -30,6 +30,7 @@ declare module 'vue/types/vue' {
     $router: VueRouter;
     $route: Route;
     $store: any;
+    $t: Function;
   }
 }
 

@@ -4,15 +4,22 @@
       "all": "All",
       "companies": "Companies",
       "contacts-title": "Contacts",
+      "created": "Created",
       "favorites": "Favorites",
       "iot-devices": "IOT Devices",
+      "name": "Name",
+      "updated": "Updated",
       "users": "Users"
     },
     "digitaltwins": {
       "all": "All",
+      "created": "Created",
       "digitaltwins-title": "Digital Twins",
       "favorites": "Favorites",
-      "my-own": "My own"
+      "my-own": "My own",
+      "name": "Name",
+      "owner": "Owner",
+      "updated": "Updated"
     }
   }
 }

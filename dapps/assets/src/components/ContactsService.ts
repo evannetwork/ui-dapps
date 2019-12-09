@@ -91,7 +91,6 @@ export class ContactsService {
       );
       return profileType;
     } catch (err) {
-      console.log(err);
       return ContactType.UNSHARED;
     }
   }

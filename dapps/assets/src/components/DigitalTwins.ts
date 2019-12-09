@@ -35,10 +35,10 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   columns = [
     { key: 'icon', label: '' },
-    'name',
-    'owner',
-    'updated',
-    'created',
+    { key: 'name', label: this.$t('_assets.digitaltwins.name') },
+    { key: 'owner', label: this.$t('_assets.digitaltwins.owner') },
+    { key: 'updated', label: this.$t('_assets.digitaltwins.updated') },
+    { key: 'created', label: this.$t('_assets.digitaltwins.created') },
     { key: 'favorite', label: '' }
   ];
 
