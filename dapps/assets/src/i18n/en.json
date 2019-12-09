@@ -1,12 +1,18 @@
 {
   "_assets": {
-    "contacts": "Contacts",
-    "digitaltwins": "Digital Twins",
-    "digitaltwin": {
-      "digitaltwin-title": "Digital Twins",
-      "my-own": "My own",
+    "contacts": {
+      "all": "All",
+      "companies": "Companies",
+      "contacts-title": "Contacts",
       "favorites": "Favorites",
-      "all": "All"
+      "iot-devices": "IOT Devices",
+      "users": "Users"
+    },
+    "digitaltwins": {
+      "all": "All",
+      "digitaltwins-title": "Digital Twins",
+      "favorites": "Favorites",
+      "my-own": "My own"
     }
   }
 }

@@ -24,11 +24,11 @@
         <h1 class="h4">{{ '_assets.contacts.contacts-title' | translate }}</h1>
       </div>
       <div class="col-9 text-right">
-        <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.contacts.favorites' | translate }}</evan-button>
         <evan-button :type="'text'">{{'_assets.contacts.users' | translate }}</evan-button>
         <evan-button :type="'text'">{{'_assets.contacts.companies' | translate }}</evan-button>
         <evan-button :type="'text'">{{'_assets.contacts.iot-devices' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.contacts.all' | translate }}</evan-button>
       </div>
     </div>
     <b-table

@@ -1,12 +1,17 @@
 {
   "_assets": {
-    "contacts": "Kontakte",
-    "digitaltwins": "Digitale Zwillinge",
-    "digitaltwin": {
-      "digitaltwin-title": "Digitale Zwillinge",
-      "my-own": "Eigene",
+    "contacts": {
+      "companies": "Unternehmen",
+      "contacts-title": "Kontakte",
       "favorites": "Favoriten",
-      "all": "Alle"
+      "iot-devices": "IOT-Devices",
+      "users": "Nutzer"
+    },
+    "digitaltwins": {
+      "all": "Alle",
+      "digitaltwins-title": "Digitale Zwillinge",
+      "favorites": "Favoriten",
+      "my-own": "Eigene"
     }
   }
 }
