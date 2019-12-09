@@ -31,6 +31,17 @@ declare module 'vue/types/vue' {
     $route: Route;
     $store: any;
     $t: Function;
+    dapp: Dapp;
+  }
+
+  interface Dapp {
+    baseHash: string;
+    baseUrl: string;
+    contractAddress: string;
+    domainName: string;
+    ens: string;
+    fullUrl: string;
+    rootEns: string;
   }
 }
 
