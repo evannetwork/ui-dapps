@@ -459,7 +459,10 @@
         },
         "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited in the next 5 to 10 minutes to your wallet.",
         "tax": "Tax",
-        "title": "Buy EVE",
+        "titles": {
+          "buy-eve": "Buy EVE",
+          "billing-info": "Please complete your billing informations"
+        },
         "total-amount": "Total",
         "try-again": "Try again",
         "vat": "VAT"

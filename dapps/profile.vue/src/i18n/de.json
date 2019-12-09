@@ -459,7 +459,10 @@
         },
         "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
         "tax": "MwSt.",
-        "title": "EVE kaufen",
+        "titles": {
+          "buy-eve": "EVE kaufen",
+          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen"
+        },
         "total-amount": "Gesamtsumme",
         "try-again": "Erneut versuchen",
         "vat": "MwSt."

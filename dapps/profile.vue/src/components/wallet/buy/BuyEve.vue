@@ -17,7 +17,7 @@ https://evan.network/license/ */
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
       :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
       :showBackdrop="windowWidth < 1200"
-      :title="'_profile.wallet.buy-eve.title' | translate"
+      :title="(step === 0 ? '_profile.wallet.buy-eve.titles.buy-eve' : '_profile.wallet.buy-eve.titles.billing-info') | translate"
       @hide="$store.state.uiState.swipePanel = ''"
       @show="$nextTick(() => renderStripeElement())"
       alignment="right"
