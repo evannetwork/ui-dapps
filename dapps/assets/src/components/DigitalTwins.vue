@@ -64,7 +64,7 @@ export default DigitalTwinsComponent;
   table.table.b-table > thead > tr > th {
     background-color: cssVar('bg-level-3');
     border: none;
-    color: #6c757d;
+    color: cssVar('gray-600');
   }
   table.table.b-table > tbody > tr > td {
     vertical-align: middle;
