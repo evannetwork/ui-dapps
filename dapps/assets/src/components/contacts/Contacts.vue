@@ -36,7 +36,9 @@
       hover
       :items="data"
       :fields="columns"
-      :tbody-tr-class="'evan-table-row'"
+      :tbody-tr-class="'evan-table-body-row'"
+      :thead-tr-class="'evan-table-head-row'"
+      :thead-class="'evan-table-head'"
       @row-clicked="handleRowClicked"
       sticky-header="80vh"
     >
