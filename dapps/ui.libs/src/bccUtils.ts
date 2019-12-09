@@ -55,3 +55,27 @@ export async function getUserAlias(profile: bcc.Profile, accountDetails?: any, r
     return contact ? contact.alias : profileOwner;
   }
 }
+
+/**
+ * Returns all contacts from current user addressbook
+ *
+ * @param {any} runtime
+ * @param {boolean} unfiltered default "false", if true response containing own contact and test entries, as well.
+ */
+export async function getContacts(runtime: any, unfiltered = false) {
+  // load the contacts for the current user, so we can display correct contact alias
+  const addressBook = (await runtime.profile.getAddressBook()).profile;
+
+  const contacts = Object.keys(addressBook).map(key => {
+    return {
+      'label': addressBook[key].alias,
+      'value': key
+    };
+  });
+
+  if (unfiltered) {
+    return contacts;
+  }
+
+  return contacts.filter(entry => entry.value !== runtime.activeAccount && !/\@/.test(entry.value));
+}
