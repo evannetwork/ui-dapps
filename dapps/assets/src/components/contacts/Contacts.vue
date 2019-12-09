@@ -40,9 +40,7 @@
       @row-clicked="handleRowClicked"
       sticky-header="80vh"
     >
-      <template v-slot:cell(alias)="data">
-        {{ data.item.alias ? data.item.alias: data.item.address }}
-      </template>
+      <template v-slot:cell(alias)="data">{{ data.item.alias ? data.item.alias: data.item.address }}</template>
       <template v-slot:cell(icon)="data">
         <i class="table-icon" :class="data.item.icon"></i>
       </template>
@@ -51,6 +49,33 @@
       </template>
     </b-table>
     <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
+
+    <evan-button
+      :type="'icon-primary'"
+      size="lg"
+      class="add-contact-btn"
+      icon="mdi mdi-plus"
+      @click="$refs.addContactPanel.show()"
+    ></evan-button>
+
+    <evan-swipe-panel
+      ref="addContactPanel"
+      alignment="right"
+      type="default"
+      class="light"
+      :backdrop="true"
+      :title="'Add a new contact'"
+    >
+      <p>Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan.</p>
+
+      <div class="d-flex">
+        <evan-button
+          type="secondary"
+          @click="$refs.addContactPanel.hide()"
+          :label="'_assets.contracts.cancel' | translate"
+        />
+      </div>
+    </evan-swipe-panel>
   </div>
 </template>
 
@@ -58,3 +83,32 @@
 import ContactsComponent from './Contacts';
 export default ContactsComponent;
 </script>
+
+<style lang="scss" scoped>
+.add-contact-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 60px;
+}
+
+/deep/ .evan-swipe-panel.light {
+  .light & {
+    background-color: cssVar('body-bg');
+
+    &,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    span,
+    p,
+    li,
+    b,
+    label,
+    small {
+      color: cssVar('text-color');
+    }
+  }
+}
+</style>

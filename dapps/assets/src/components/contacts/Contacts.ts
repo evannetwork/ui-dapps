@@ -50,6 +50,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   async mounted() {
     await this.fetchInitial();    
     this.isLoading = false;
+    console.log(this.$refs.contactAddModal);
+    
   }
 
   handleRowClicked(contact: Contact) {
@@ -59,5 +61,9 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   async fetchInitial() {
     this.data = await this.contactService.getContacts();
     console.log(this.data);
+  }
+
+  showAddContact() {
+    
   }
 }

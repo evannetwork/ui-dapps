@@ -19,9 +19,9 @@
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import AssetsComponent from './components/Assets.vue';
-import DigitalTwinsComponent from './components/DigitalTwins.vue';
-import ContactsComponent from './components/Contacts.vue';
-import SearchResultComponent from './components/SearchResult.vue';
+import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
+import ContactsComponent from './components/contacts/Contacts.vue';
+import SearchResultComponent from './components/searchresult/SearchResult.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
