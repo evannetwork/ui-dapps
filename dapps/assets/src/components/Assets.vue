@@ -71,9 +71,6 @@ export default AssetsComponent;
 </script>
 
 <style lang="scss" scoped>
-.content {
-  max-width: 765px;
-}
 .sidenav {
   width: 300px;
 }

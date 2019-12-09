@@ -51,11 +51,14 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   scrollHandler = debounce(
     async function(ev) {
-      let bottomOfWindow =
-        ev.target.clientHeight + ev.target.scrollTop >= ev.target.scrollHeight;
-      if (bottomOfWindow) {
-        this.isLoading = true;
-        await this.fetchMore();
+      if(!this.isLoading) {
+        const offset = 200;
+        let bottomOfWindow =
+          ev.target.clientHeight + ev.target.scrollTop >= ev.target.scrollHeight - offset;
+        if (bottomOfWindow) {
+          this.isLoading = true;
+          await this.fetchMore();
+        }
       }
     },
     100,
