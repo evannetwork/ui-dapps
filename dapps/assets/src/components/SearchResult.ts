@@ -18,7 +18,7 @@
 */
 
 // vue imports
-import Component, { mixins, } from 'vue-class-component';
+import Component, { mixins } from 'vue-class-component';
 import { Watch } from 'vue-property-decorator';
 
 // evan.network imports
@@ -26,12 +26,15 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class SearchResultComponent extends mixins(EvanComponent) {
-    searchQuery: string;
+  searchQuery: string;
 
-    @Watch('$route', { immediate: true, deep: true })
-    onRouteChange(to, from) {
-        this.searchQuery = to.params.query;
-        console.log(this.searchQuery);
-        this.$forceUpdate(); // TODO: This seems rather dirty. Need to see why it's not reactive.
-    }
+  /**
+   * Watch for changes in the search query
+   */
+  @Watch('$route', { immediate: true, deep: true })
+  onRouteChange(to) {
+    this.searchQuery = to.params.query;
+    console.log(this.searchQuery);
+    this.$forceUpdate(); // TODO: This seems rather dirty. Need to see why it's not reactive.
+  }
 }

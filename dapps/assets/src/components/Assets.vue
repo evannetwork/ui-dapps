@@ -23,7 +23,8 @@
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
           <div class="sidenav">
-            <!-- Not using nav-list because it doesnt support router-link properly -->
+            <!-- Not using nav-list because it doesnt support router-link properly
+            TODO: Refactor evan-nav-list to use router-links too -->
             <div class="evan-nav-list">
               <div class="nav-entries">
                 <template v-for="navItem in navItems">
@@ -38,7 +39,7 @@
                   </router-link>
                 </template>
               </div>
-              <div class="spacer"></div>
+              <div class="my-auto"></div>
               <div class="nav-entries">
                 <div class="bg-white border-top d-flex">
                   <i class="mdi mdi-magnify text-muted p-3"></i>
@@ -47,7 +48,7 @@
                     class="border-0 p-3 w-100 form-control"
                     style="height: 60px;"
                     v-model="searchQuery"
-                    @keyup.enter="onSearchEnter"
+                    @keyup.enter="handleSearchEnter"
                   />
                 </div>
               </div>
@@ -76,12 +77,6 @@ export default AssetsComponent;
 .sidenav {
   width: 300px;
 }
-
-.spacer {
-  display: flex;
-  flex: 1;
-}
-
 .evan-nav-list > .nav-entries {
   flex: 0;
 }

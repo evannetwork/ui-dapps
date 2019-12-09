@@ -36,6 +36,7 @@ declare module 'vue/types/vue' {
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
   searchQuery: string;
+
   navItems = [
     {
       key: 'digitaltwins',
@@ -54,7 +55,10 @@ export default class AssetsComponent extends mixins(EvanComponent) {
     };
   });
 
-  onSearchEnter() {
+  /**
+   * Handle user search query
+   */
+  handleSearchEnter() {
     this.$router.push({ name: 'search', params: { query: this.searchQuery } });
     this.searchQuery = '';
   }

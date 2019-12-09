@@ -46,6 +46,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     await this.fetchInitial();
   }
 
+  /**
+   * Watch if user scrolled down and load more twins when necessary
+   */
   scrollHandler = debounce(
     async function(ev) {
       let bottomOfWindow =
@@ -59,11 +62,17 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     { trailing: true }
   );
 
+  /**
+   * Load initial batch of digital twins
+   */
   async fetchInitial() {
     this.data = await this.twinService.getTwins();
     this.isLoading = false;
   }
 
+  /**
+   * Load more digital twins
+   */
   async fetchMore() {
     this.data = [...this.data, ...(await this.twinService.getTwins())];
     this.isLoading = false;
