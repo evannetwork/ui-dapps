@@ -25,39 +25,13 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { ContactsService, Contact } from './ContactsService';
 
 @Component
-export default class ContactsComponent extends mixins(EvanComponent) {
+export default class AddContactComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
-
-  isLoading = true;
-
-  sortBy = 'name';
-
-  data: Contact[] = [];
-
-  columns = [
-    { key: 'icon', label: '', sortable: false },
-    { key: 'alias', label: this.$t('_assets.contacts.name'), sortable: true },
-    { key: 'updated', label: this.$t('_assets.contacts.updated'), sortable: true },
-    { key: 'created', label: this.$t('_assets.contacts.created'), sortable: true },
-    { key: 'favorite', label: '', sortable: false }
-  ];
 
   created() {
     const runtime = (<any>this).getRuntime();
     this.contactService = new ContactsService(runtime);
   }
 
-  async mounted() {
-    this.data = await this.fetchContacts();    
-    this.isLoading = false;
-    
-  }
-
-  handleRowClicked(contact: Contact) {
-    window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${contact.address}/detail`;
-  }
-
-  async fetchContacts(): Promise<Contact[]> {
-    return this.contactService.getContacts();
-  }
+  addContact() {}
 }

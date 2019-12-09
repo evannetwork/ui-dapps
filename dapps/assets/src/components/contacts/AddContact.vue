@@ -17,13 +17,18 @@
   the following URL: https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import AddContactComponent from './contacts/AddContact.vue';
+<template>
+  <div>
+      <!-- Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan. -->
+      <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
+  </div>
+</template>
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'add-contact', component: AddContactComponent },
-];
+<script lang="ts">
+import AddContactComponent from './AddContact';
+export default AddContactComponent;
+</script>
 
-export default componentRegistration;
+<style lang="scss" scoped>
+
+</style>

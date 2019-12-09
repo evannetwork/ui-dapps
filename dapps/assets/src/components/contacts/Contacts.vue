@@ -65,18 +65,24 @@
       alignment="right"
       type="default"
       class="light"
-      :backdrop="true"
-      :title="'Add a new contact'"
+      :showBackdrop="true"
+      :hideCloseButton="true"
+      :title="$t('_assets.contacts.add-contact-title')"
     >
-      <p>Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan.</p>
+      <add-contact></add-contact>
 
-      <div class="d-flex">
+      <template v-slot:footer>
         <evan-button
           type="secondary"
           @click="$refs.addContactPanel.hide()"
           :label="'_assets.contracts.cancel' | translate"
         />
-      </div>
+        <evan-button
+          type="primary"
+          @click="addContact"
+          :label="'_assets.contracts.add-contact-btn' | translate"
+        />
+      </template>
     </evan-swipe-panel>
   </div>
 </template>
