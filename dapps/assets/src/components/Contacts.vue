@@ -39,7 +39,7 @@
       :tbody-tr-class="'evan-table-row'"
       sticky-header="80vh"
     >
-      <template v-slot:cell(name)="data">
+      <template v-slot:cell(alias)="data">
         {{ data.item.alias ? data.item.alias: data.item.adress }}
       </template>
       <template v-slot:cell(icon)="data">
