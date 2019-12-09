@@ -149,11 +149,12 @@
         type="default"
         v-if="userInfo">
         <evan-permissions-editor
-          @init="permissionsEditor = $event"
           :loadPermissions="loadPermissions"
+          :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
           :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
           :sortFilters="$store.state.profileDApp.sharingFilter"
           :updatePermissions="updatePermissions"
+          @init="permissionsEditor = $event"
           i18nScope="_profile.sharing"
         />
         <template slot="footer" v-if="!!permissionsEditor">

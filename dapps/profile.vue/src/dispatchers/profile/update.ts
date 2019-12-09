@@ -49,7 +49,9 @@ dispatcher
       }
     } else {
       // check, if profile was migrated before, else migrate it
-      await ProfileMigrationLibrary.checkOrMigrateProfile(instance.runtime);
+      await ProfileMigrationLibrary.checkOrMigrateProfile(instance.runtime, data.formData.profileType);
+      delete profile.profileContract;
+      await profile.loadForAccount();
     }
 
     await profile.setProfileProperties({
