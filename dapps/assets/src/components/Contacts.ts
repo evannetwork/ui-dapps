@@ -52,13 +52,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.isLoading = false;
   }
 
-  handleRowClicked(contact: Contact, index: number) {
-    console.log(contact, index);
-    
-    // if (contact.accountId) {
-    //   window.location.hash = `/${ this.dapp.rootEns }/profile.vue.${ this.dapp.domainName }/${
-    //     contact.accountId }/detail`;
-    // }
+  handleRowClicked(contact: Contact) {
+    this.$router.push(`profile.vue.${(this as any).dapp.domainName}/${contact.address}/detail`);
   }
 
   async fetchInitial() {
