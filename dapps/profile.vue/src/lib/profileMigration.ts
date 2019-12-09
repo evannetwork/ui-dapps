@@ -91,8 +91,9 @@ export default class ProfileMigrationLibrary {
           ...runtime.profile.accountTypes[type].template.properties,
         },
         dbcpVersion: 2,
-        description: 'Container for Digital Twin Data',
-        name: 'Container Contract (DataContract)',
+        name: 'Profile Container',
+        description: 'Container contract for storing and sharing profile related information ' +
+          '(account type, company information, device detail, ...)',
         version: '0.1.0',
       },
     };
