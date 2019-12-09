@@ -103,7 +103,7 @@ export default class ProfileMigrationLibrary {
       .forEach(property => description.public.dataSchema[property] = description.public.dataSchema[property].dataSchema);
 
     // calculate correct dbcp description and setup empty profile data properties
-    const profileTypeObject = { accountDetails: { profileType: type },};
+    const profileTypeObject = { accountDetails: { profileType: type }};
     Object.keys(runtime.profile.accountTypes[type].template.properties)
       .forEach(key => profileTypeObject[key] = { });
     const descriptionHash = await runtime.dfs.add(
