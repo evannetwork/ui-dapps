@@ -19,8 +19,8 @@
     "description": "Root app for displaying dapp favourites, mailbox.",
     "i18n": {
       "description": {
-        "de": "Digitale Zwillinge, Favoriten, Mailbox, Kontakte, Profil...",
-        "en": "Digital Twins, Favorites, Mailbox, Contacts, Profile..."
+        "de": "Digitale Zwillinge, Favoriten, Mailbox, Kontakte, Profil, ...",
+        "en": "Digital Twins, Favorites, Mailbox, Contacts, Profile, ..."
       },
       "name": {
         "de": "evan Dashboard - neues Design",

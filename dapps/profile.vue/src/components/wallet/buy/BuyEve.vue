@@ -28,7 +28,7 @@ https://evan.network/license/ */
         <div><evan-loading /></div>
         <div>{{ '_profile.wallet.buy-eve.processing-hint' | translate }}</div>
       </div>
-      <div class="flex-center text-center text-primary" v-else-if="stripe.success">
+      <div class="flex-center text-center" v-else-if="stripe.success">
         <div><evan-success /></div>
         <div v-html="$t('_profile.wallet.buy-eve.success')" />
         <evan-button
@@ -38,7 +38,7 @@ https://evan.network/license/ */
           type="primary"
         />
       </div>
-      <div class="flex-center text-center text-red" v-else-if="!!stripe.payError">
+      <div class="flex-center text-center" v-else-if="!!stripe.payError">
         <div><evan-failed /></div>
         <div v-html="$t(`_profile.wallet.buy-eve.errors.${ stripe.payError }`)" />
         <evan-button

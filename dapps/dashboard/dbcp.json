@@ -21,8 +21,8 @@
     "description": "Root app for displaying dapp favourites, mailbox.",
     "i18n": {
       "description": {
-        "de": "Favoriten, Mailbox, Kontakte, Profil...",
-        "en": "Favorites, Mailbox, Contacts, Profile..."
+        "de": "Favoriten, Mailbox, Kontakte, Profil, ...",
+        "en": "Favorites, Mailbox, Contacts, Profile, ..."
       },
       "name": {
         "de": "evan Dashboard",

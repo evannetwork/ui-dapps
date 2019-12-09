@@ -150,12 +150,12 @@
       }
     },
     "dispatchers": {
-      "profile-share": "Identitätsinformationen teilen...",
-      "profile-type": "Identitätstyp wird geändert...",
-      "profile-update": "Identitätinformationen werden gespeichert...",
-      "request-verification": "Verifikation wird beantragt...",
-      "send-eve": "EVEs werden gesendet...",
-      "verification-accept": "Verifikation wird angenommen..."
+      "profile-share": "Identitätsinformationen teilen",
+      "profile-type": "Identitätstyp wird geändert",
+      "profile-update": "Identitätinformationen werden gespeichert",
+      "request-verification": "Verifikation wird beantragt",
+      "send-eve": "EVEs werden gesendet",
+      "verification-accept": "Verifikation wird angenommen"
     },
     "not-permitted": {
       "accountDetails": "Identitätsinformationen",
@@ -238,7 +238,7 @@
       "next": "Weiter",
       "notary": {
         "account-id": "Identität",
-        "check-updates": "Warte auf Aktualisierung...",
+        "check-updates": "Warte auf Aktualisierung",
         "info": "Identifizieren Sie Ihr Konto als vertrauenswürdiges evan.network-Mitglied",
         "issue": {
           "accountId": {
@@ -355,7 +355,7 @@
           "requested1": "Sie haben erfolgreich eine notarielle Verifikation angefordert.",
           "requested2": "Es wurden 200 EVE als Transaktionskosten von Ihrem Wallet abgebucht.",
           "requested3": "Sie erhalten in Kürze vom Notar Post!",
-          "requesting": "Notarielle Verifikation wird angefordert...",
+          "requesting": "Notarielle Verifikation wird angefordert",
           "requesting-account": "Anfragende Identität",
           "step": "Schritt",
           "who": {
@@ -370,7 +370,7 @@
           }
         },
         "request-error": "Informationen zu dieser Anfrage konnten nicht geladen werden!",
-        "request-error-desc": "Bitte laden Sie erneut...",
+        "request-error-desc": "Bitte laden Sie die Seite erneut.",
         "request-notary-verification": "Eine notarielle Bestätigung beantragen",
         "status": {
           "accepted": "notariell verifiziert",
