@@ -38,7 +38,7 @@
                   </router-link>
                 </template>
               </div>
-              <div class="spacer"></div>
+              <div class="my-auto"></div>
               <div class="nav-entries">
                 <div class="bg-white border-top d-flex">
                   <i class="mdi mdi-magnify text-muted p-3"></i>
