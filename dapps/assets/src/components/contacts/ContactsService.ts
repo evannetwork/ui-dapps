@@ -49,6 +49,9 @@ export class ContactsService {
       JSON.stringify(await this.runtime.profile.getAddressBook())
     );
 
+    console.log(this.contacts);
+    
+
     let data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async contact => {
       const type = await this.getProfileType(contact);

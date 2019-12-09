@@ -21,6 +21,42 @@
   <div>
       <!-- Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan. -->
       <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
+
+      <evan-form-control-input
+        :label="$t('_assets.contacts.id-or-email')"
+        :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
+        :required="true"
+      />
+
+      <evan-form-control-input
+        :label="$t('_assets.contacts.contact-name')"
+        :placeholder="$t('_assets.contacts.contact-name-placeholder')"
+        :required="true"
+      />
+
+      <p>{{ '_assets.contacts.email-desc' | translate }}</p>
+
+      <evan-form-control-input
+        :label="$t('_assets.contacts.sender')"
+        :placeholder="$t('_assets.contacts.sender-placeholder')"
+        :value="''"
+        :required="true"
+      />
+
+      <evan-form-control-input
+        :label="$t('_assets.contacts.subject')"
+        :placeholder="$t('_assets.contacts.subject-placeholder')"
+        :value="$t('_assets.contacts.subject-prefill')"
+        :required="true"
+      />
+
+      <evan-form-control-textarea
+        :label="$t('_assets.contacts.message')"
+        :placeholder="$t('_assets.contacts.message-placeholder')"
+        :value="$t('_assets.contacts.message-prefill')"
+        :required="true"
+        :rows="5"
+      />
   </div>
 </template>
 

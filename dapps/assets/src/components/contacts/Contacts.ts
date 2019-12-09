@@ -49,8 +49,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   async mounted() {
     this.data = await this.fetchContacts();    
-    this.isLoading = false;
-    
+    this.isLoading = false; 
   }
 
   handleRowClicked(contact: Contact) {
