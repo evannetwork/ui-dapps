@@ -53,6 +53,8 @@ export default DigitalTwinsComponent;
 </script>
 
 <style lang="scss" scoped>
+@import'~@evan.network/ui/src/style/utils';
+
 /deep/ .evan-table {
   margin: 0;
   table {
@@ -60,7 +62,7 @@ export default DigitalTwinsComponent;
     border-collapse: separate;
   }
   table.table.b-table > thead > tr > th {
-    background-color: var(--evan-bg-level-3);
+    background-color: cssVar('bg-level-3');
     border: none;
     color: #6c757d;
   }
