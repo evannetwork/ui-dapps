@@ -75,12 +75,12 @@
         <evan-button
           type="secondary"
           @click="$refs.addContactPanel.hide()"
-          :label="'_assets.contracts.cancel' | translate"
+          :label="'_assets.contacts.cancel' | translate"
         />
         <evan-button
           type="primary"
           @click="addContact"
-          :label="'_assets.contracts.add-contact-btn' | translate"
+          :label="'_assets.contacts.add-contact-btn' | translate"
         />
       </template>
     </evan-swipe-panel>
