@@ -28,12 +28,12 @@ import { ContactsService, Contact } from './ContactsService';
 export default class AddContactComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
 
+  sender = '';
+
   created() {
     const runtime = (<any>this).getRuntime();
     this.contactService = new ContactsService(runtime);
-
-    console.log(this.$store);
-    
+    this.sender = window.localStorage.getItem('evan-alias');
   }
 
   addContact() {}

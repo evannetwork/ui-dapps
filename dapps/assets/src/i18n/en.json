@@ -17,7 +17,7 @@
       "id-or-email": "Evan ID or email",
       "iot-devices": "IOT Devices",
       "message-placeholder": "Message for the invited contact",
-      "message-prefill": "Hello,\n\nI want to add you as a contact.\n\nBest regards,\n\n",
+      "message-prefill": "Hello,\n\nI want to add you as a contact.\n\nBest regards,\n",
       "message": "Message",
       "name": "Name",
       "sender-placeholder": "Sender",

@@ -39,7 +39,7 @@
       <evan-form-control-input
         :label="$t('_assets.contacts.sender')"
         :placeholder="$t('_assets.contacts.sender-placeholder')"
-        :value="''"
+        :value="sender"
         :required="true"
       />
 
@@ -53,7 +53,7 @@
       <evan-form-control-textarea
         :label="$t('_assets.contacts.message')"
         :placeholder="$t('_assets.contacts.message-placeholder')"
-        :value="$t('_assets.contacts.message-prefill')"
+        :value="`${$t('_assets.contacts.message-prefill')}${sender}`"
         :required="true"
         :rows="5"
       />
