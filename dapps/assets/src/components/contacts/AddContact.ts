@@ -47,7 +47,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.addressbook = await runtime.profile.getAddressBook();
   }
 
-  addContact() {
+  async addContact() {
     const formData = {
       accountId: this.accountId,
       alias: this.alias,
@@ -60,9 +60,11 @@ export default class AddContactComponent extends mixins(EvanComponent) {
       msgTitle: this.msgTitle,
       updatedAt: new Date().toISOString(),
     };
-    this.contactService.addContact(formData);
+    await this.contactService.addContact(formData);
     
     this.closePanel();
+
+    this.$emit('contact-added');
   }
 
 

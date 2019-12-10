@@ -71,7 +71,7 @@
       @click="$refs.addContact.showPanel()"
     ></evan-button>
 
-    <add-contact ref="addContact" />
+    <add-contact ref="addContact" @contact-added="handleContactAdded" />
   </div>
 </template>
 

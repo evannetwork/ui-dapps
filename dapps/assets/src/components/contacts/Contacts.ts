@@ -59,6 +59,14 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${contact.address}/detail`;
   }
 
+  async handleContactAdded() {
+    console.log('Contact Added');
+    
+    this.isLoading = true;
+    this.data = await this.fetchContacts();
+    this.isLoading = false;
+  }
+
   async fetchContacts(): Promise<Contact[]> {
     return this.contactService.getContacts();
   }

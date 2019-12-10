@@ -67,8 +67,8 @@ export class ContactsService {
     return data;
   }
 
-  addContact(contact) {
-    InviteDispatcher.start(this.runtime, contact);
+  async addContact(contact) {
+    await InviteDispatcher.start(this.runtime, contact);
   }
 
   private getIcon(type: ContactType): string {
