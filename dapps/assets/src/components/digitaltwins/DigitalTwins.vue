@@ -83,6 +83,10 @@ export default DigitalTwinsComponent;
         vertical-align: middle;
         border: none;
       }
+
+      &.b-table-empty-row {
+        cursor: inherit;
+      }
     }
 
     i.table-icon {

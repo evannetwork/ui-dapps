@@ -40,8 +40,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   columns = [
     { key: 'icon', label: '', sortable: false },
     { key: 'alias', label: this.$t('_assets.contacts.name'), sortable: true },
-    { key: 'updated', label: this.$t('_assets.contacts.updated'), sortable: true },
-    { key: 'created', label: this.$t('_assets.contacts.created'), sortable: true },
+    { key: 'updatedAt', label: this.$t('_assets.contacts.updated'), sortable: true },
+    { key: 'createdAt', label: this.$t('_assets.contacts.created'), sortable: true },
     { key: 'favorite', label: '', sortable: false }
   ];
 

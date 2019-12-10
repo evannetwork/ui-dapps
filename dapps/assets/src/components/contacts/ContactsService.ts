@@ -18,21 +18,22 @@
 */
 
 import * as bcc from '@evan.network/api-blockchain-core';
+import InviteDispatcher from './InviteDispatcher';
 
 export interface Contact {
-  alias: string;
   address: string;
-  icon: string;
-  created: string;
-  updated: string;
+  alias: string;
+  createdAt: string;
   favorite: boolean;
+  icon: string;
   type: ContactType;
+  updatedAt: string;
 }
 
 enum ContactType {
-  USER = 'user',
-  IOT_DEVICE = 'iot-device',
   COMPANY = 'company',
+  IOT_DEVICE = 'iot-device',
+  USER = 'user',
   UNSHARED = 'unshared'
 }
 
@@ -45,24 +46,29 @@ export class ContactsService {
   }
 
   async getContacts(): Promise<Contact[]> {
-    this.contacts = JSON.parse(
-      JSON.stringify(await this.runtime.profile.getAddressBook())
-    );
+    this.contacts = await this.runtime.profile.getAddressBook()
+
+    console.log(this.contacts);
+    
     
     let data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async contact => {
       const type = await this.getProfileType(contact);
       data.push({
-        alias: this.contacts.profile[contact].alias,
         address: contact,
-        icon: this.getIcon(type),
-        created: new Date().toLocaleString(),
-        updated: new Date().toLocaleString(),
+        alias: this.contacts.profile[contact].alias,
+        createdAt: this.contacts.profile[contact].createdAt,
         favorite: true,
-        type: type
+        icon: this.getIcon(type),
+        type: type,
+        updatedAt: this.contacts.profile[contact].updatedAt,
       });
     });
     return data;
+  }
+
+  addContact(contact) {
+    InviteDispatcher.start(this.runtime, contact);
   }
 
   private getIcon(type: ContactType): string {

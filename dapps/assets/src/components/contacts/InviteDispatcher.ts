@@ -22,7 +22,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `assets.${ dappBrowser.getDomainName() }`,
+  `assets.${dappBrowser.getDomainName()}`,
   'inviteDispatcher',
   40 * 1000,
   '_assets.contacts.invite-dispatcher'
@@ -49,12 +49,10 @@ const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => {
     rightsAndRoles: runtime.rightsAndRoles,
     sharing: runtime.sharing
   });
-}
+};
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-      console.log(instance, data);
-      
     // check if mail smart agent was key exchanged
     if (data.emailInvite) {
       const runtime = instance.runtime;
@@ -63,20 +61,42 @@ dispatcher
       // get mail smart agent contact key
       const smartAgentCommKey = await runtime.profile.getContactKey(
         smartAgentAccountId,
-        'commKey',
+        'commKey'
       );
 
       // if the user hasn't added the smart agent, add it to the contacts
       if (!smartAgentCommKey) {
-        const targetPubKey = await getProfileForAccount(runtime, smartAgentAccountId).getPublicKey();
+        const targetPubKey = await getProfileForAccount(
+          runtime,
+          smartAgentAccountId
+        ).getPublicKey();
         const commKey = await runtime.keyExchange.generateCommKey();
-        await runtime.keyExchange.sendInvite(smartAgentAccountId, targetPubKey, commKey, {});
+        await runtime.keyExchange.sendInvite(
+          smartAgentAccountId,
+          targetPubKey,
+          commKey,
+          {}
+        );
 
         // add key to profile
-        await runtime.profile.addContactKey(smartAgentAccountId, 'commKey', commKey);
-        await runtime.profile.addProfileKey(smartAgentAccountId, 'alias', 'Email Smart Agent');
-        await runtime.profile.addProfileKey(smartAgentAccountId, 'tags', 'Smart Agent');
-        await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
+        await runtime.profile.addContactKey(
+          smartAgentAccountId,
+          'commKey',
+          commKey
+        );
+        await runtime.profile.addProfileKey(
+          smartAgentAccountId,
+          'alias',
+          'Email Smart Agent'
+        );
+        await runtime.profile.addProfileKey(
+          smartAgentAccountId,
+          'tags',
+          'Smart Agent'
+        );
+        await runtime.profile.storeForAccount(
+          runtime.profile.treeLabels.addressBook
+        );
       }
     }
   })
@@ -85,23 +105,28 @@ dispatcher
     const accountId = data.accountId || data.email;
 
     // ensure latest addressbook is loaded
-    await runtime.profile.loadForAccount(runtime.profile.treeLabels.addressBook);
+    await runtime.profile.loadForAccount(
+      runtime.profile.treeLabels.addressBook
+    );
 
     // send email invitation
     if (data.emailInvite) {
       await runtime.onboarding.sendInvitation(
         {
-            to: accountId,
-            subject: data.msgTitle,
-            body: data.msgBody,
-            fromAlias: data.fromAlias,
-            lang: data.currLang
+          to: accountId,
+          subject: data.msgTitle,
+          body: data.msgBody,
+          fromAlias: data.fromAlias,
+          lang: data.currLang
         },
         runtime.web3.utils.toWei('0')
       );
     } else {
       // generate communication keys
-      const targetPubKey = await getProfileForAccount(runtime, accountId).getPublicKey();
+      const targetPubKey = await getProfileForAccount(
+        runtime,
+        accountId
+      ).getPublicKey();
       const commKey = await runtime.keyExchange.generateCommKey();
       await runtime.keyExchange.sendInvite(accountId, targetPubKey, commKey, {
         fromAlias: data.fromAlias,
@@ -110,24 +135,26 @@ dispatcher
       });
 
       // add key to profile
-      await runtime.profile.addContactKey(
-        accountId,
-        'commKey',
-        commKey
-      );
+      await runtime.profile.addContactKey(accountId, 'commKey', commKey);
     }
 
     // update the contact details
-    await Promise.all([ 'alias', 'accountId', 'email', 'tags', ]
-      .map(profileKey => runtime.profile.addProfileKey(
-        accountId,
-        profileKey,
-        data[profileKey]
+    await Promise.all(
+      [
+        'alias',
+        'accountId',
+        'email',
+        'createdAt',
+        'updatedAt'
+      ].map(profileKey =>
+        runtime.profile.addProfileKey(accountId, profileKey, data[profileKey])
       )
-    ));
+    );
 
     // save the account
-    await runtime.profile.storeForAccount(runtime.profile.treeLabels.addressBook);
+    await runtime.profile.storeForAccount(
+      runtime.profile.treeLabels.addressBook
+    );
   });
 
 export default dispatcher;

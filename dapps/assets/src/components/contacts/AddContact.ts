@@ -23,7 +23,6 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
-import InviteDispatcher from './InviteDispatcher';
 
 @Component
 export default class AddContactComponent extends mixins(EvanComponent) {
@@ -52,15 +51,16 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     const formData = {
       accountId: this.accountId,
       alias: this.alias,
+      createdAt: new Date().toISOString(),
       currLang: window.localStorage.getItem('evan-language'),
       email: this.email,
       emailInvite: this.emailInvite,
       fromAlias: this.fromAlias,
       msgBody: this.msgBody,
-      msgTitle: this.msgTitle
+      msgTitle: this.msgTitle,
+      updatedAt: new Date().toISOString(),
     };
-
-    InviteDispatcher.start(this.getRuntime(), formData);
+    this.contactService.addContact(formData);
     
     this.closePanel();
   }
