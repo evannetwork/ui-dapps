@@ -57,33 +57,10 @@
       size="lg"
       class="add-contact-btn"
       icon="mdi mdi-plus"
-      @click="$refs.addContactPanel.show()"
+      @click="$refs.addContact.showPanel()"
     ></evan-button>
 
-    <evan-swipe-panel
-      ref="addContactPanel"
-      alignment="right"
-      type="default"
-      class="light"
-      :showBackdrop="true"
-      :hideCloseButton="true"
-      :title="$t('_assets.contacts.add-contact-title')"
-    >
-      <add-contact></add-contact>
-
-      <template v-slot:footer>
-        <evan-button
-          type="secondary"
-          @click="$refs.addContactPanel.hide()"
-          :label="'_assets.contacts.cancel' | translate"
-        />
-        <evan-button
-          type="primary"
-          @click="addContact"
-          :label="'_assets.contacts.add-contact-btn' | translate"
-        />
-      </template>
-    </evan-swipe-panel>
+    <add-contact ref="addContact" />
   </div>
 </template>
 

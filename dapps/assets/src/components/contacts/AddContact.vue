@@ -19,44 +19,70 @@
 
 <template>
   <div>
-      <!-- Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan. -->
+    <evan-swipe-panel
+      ref="addContactPanel"
+      alignment="right"
+      type="default"
+      :showBackdrop="true"
+      :hideCloseButton="true"
+      :title="$t('_assets.contacts.add-contact-title')"
+    >
       <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
 
-      <evan-form-control-input
-        :label="$t('_assets.contacts.id-or-email')"
-        :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
-        :required="true"
-      />
+      <form id="contactForm" ref="contactForm">
+        <evan-form-control-input
+          v-model="idOrEmail"
+          :label="$t('_assets.contacts.id-or-email')"
+          :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
+          :required="true"
+          :error="idOrEmailValidation"
+          @input="handleIdOrEmailChange"
+        />
 
-      <evan-form-control-input
-        :label="$t('_assets.contacts.contact-name')"
-        :placeholder="$t('_assets.contacts.contact-name-placeholder')"
-        :required="true"
-      />
+        <evan-form-control-input
+          v-model="alias"
+          :label="$t('_assets.contacts.contact-name')"
+          :placeholder="$t('_assets.contacts.contact-name-placeholder')"
+          :required="true"
+        />
 
-      <p>{{ '_assets.contacts.email-desc' | translate }}</p>
+        <p>{{ '_assets.contacts.email-desc' | translate }}</p>
 
-      <evan-form-control-input
-        :label="$t('_assets.contacts.sender')"
-        :placeholder="$t('_assets.contacts.sender-placeholder')"
-        :value="sender"
-        :required="true"
-      />
+        <evan-form-control-input
+          v-model="fromAlias"
+          :label="$t('_assets.contacts.sender')"
+          :placeholder="$t('_assets.contacts.sender-placeholder')"
+          :required="true"
+        />
 
-      <evan-form-control-input
-        :label="$t('_assets.contacts.subject')"
-        :placeholder="$t('_assets.contacts.subject-placeholder')"
-        :value="$t('_assets.contacts.subject-prefill')"
-        :required="true"
-      />
+        <evan-form-control-input
+          v-model="msgTitle"
+          :label="$t('_assets.contacts.subject')"
+          :placeholder="$t('_assets.contacts.subject-placeholder')"
+          :required="true"
+        />
 
-      <evan-form-control-textarea
-        :label="$t('_assets.contacts.message')"
-        :placeholder="$t('_assets.contacts.message-placeholder')"
-        :value="`${$t('_assets.contacts.message-prefill')}${sender}`"
-        :required="true"
-        :rows="5"
-      />
+        <evan-form-control-textarea
+          v-model="msgBody"
+          :label="$t('_assets.contacts.message')"
+          :placeholder="$t('_assets.contacts.message-placeholder')"
+          :required="true"
+          :rows="5"
+        />
+      </form>
+      <template v-slot:footer>
+        <evan-button
+          type="secondary"
+          @click="closePanel"
+          :label="'_assets.contacts.cancel' | translate"
+        />
+        <evan-button
+          type="primary"
+          @click="addContact"
+          :label="'_assets.contacts.add-contact-btn' | translate"
+        />
+      </template>
+    </evan-swipe-panel>
   </div>
 </template>
 
@@ -64,7 +90,3 @@
 import AddContactComponent from './AddContact';
 export default AddContactComponent;
 </script>
-
-<style lang="scss" scoped>
-
-</style>

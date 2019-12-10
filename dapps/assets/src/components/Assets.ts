@@ -32,6 +32,7 @@ declare module 'vue/types/vue' {
     $store: any;
     $t: Function;
     dapp: Dapp;
+    getRuntime: Function;
   }
 
   interface Dapp {

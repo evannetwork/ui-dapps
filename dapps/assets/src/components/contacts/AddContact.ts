@@ -21,20 +21,80 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { ContactsService, Contact } from './ContactsService';
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+import { ContactsService } from './ContactsService';
+import InviteDispatcher from './InviteDispatcher';
 
 @Component
 export default class AddContactComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
 
-  sender = '';
+  addressbook;
 
-  created() {
-    const runtime = (<any>this).getRuntime();
+  idOrEmailValidation = '';
+  idOrEmail = null;
+
+  accountId = null;
+  alias = null;
+  email = null;
+  emailInvite = null;
+  fromAlias = window.localStorage.getItem('evan-alias');
+  msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
+  msgTitle = this.$t('_assets.contacts.subject-prefill');
+
+  async created() {
+    const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
-    this.sender = window.localStorage.getItem('evan-alias');
+    this.addressbook = await runtime.profile.getAddressBook();
   }
 
-  addContact() {}
+  addContact() {
+    const formData = {
+      accountId: this.accountId,
+      alias: this.alias,
+      currLang: window.localStorage.getItem('evan-language'),
+      email: this.email,
+      emailInvite: this.emailInvite,
+      fromAlias: this.fromAlias,
+      msgBody: this.msgBody,
+      msgTitle: this.msgTitle
+    };
+
+    InviteDispatcher.start(this.getRuntime(), formData);
+    
+    this.closePanel();
+  }
+
+
+  handleIdOrEmailChange(value: string) {
+    this.idOrEmailValidation = this.validateIdOrEmail(value);
+  }
+
+  private validateIdOrEmail(value: string): string {
+    if (EvanForm.validEthAddress(value)) {
+      if (this.addressbook.profile[value]) {
+        return '_assets.contacts.error-added';
+      } else {
+        this.emailInvite = false;
+        this.accountId = value;
+        this.email = null;
+        return '';
+      }
+    } else if (EvanForm.validateEmail(value)) {
+      this.emailInvite = true;
+      this.email = value;
+      this.accountId = null;
+      return '';
+    } else {
+      return '_assets.contacts.error-id-or-email'
+    }
+  }
+
+  showPanel() {
+    (this.$refs.addContactPanel as any).show();
+  }
+
+  closePanel() {
+    (this.$refs.addContactPanel as any).hide();
+  }
 }
