@@ -43,6 +43,7 @@
       :thead-class="'evan-table-head'"
       @row-clicked="handleRowClicked"
       sticky-header="80vh"
+      show-empty
     >
       <template v-slot:cell(alias)="data">{{ data.item.alias ? data.item.alias: data.item.address }}</template>
       <template v-slot:cell(icon)="data">
@@ -50,6 +51,14 @@
       </template>
       <template v-slot:cell(favorite)="data">
         <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
+      </template>
+
+      <!-- Empty slots -->
+      <template v-slot:empty>
+        <h4>{{ '_assets.contacts.contacts-empty' }}</h4>
+      </template>
+      <template v-slot:emptyfiltered>
+        <h4>{{ '_assets.contacts.filtered-empty' }}</h4>
       </template>
     </b-table>
     <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
