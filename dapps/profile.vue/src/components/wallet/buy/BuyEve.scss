@@ -24,9 +24,9 @@
   padding: 12px 0;
 }
 
-.stripeElementLabel {
-  text-transform: uppercase;
-  color: cssVar('gray-600');
+.disclaimer {
+  display: block;
+  margin-top: 16px;
 }
 
 small {
@@ -40,7 +40,6 @@ small {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  font-weight: 600;
 
   :not(:first-child) {
     margin-top: 24px;

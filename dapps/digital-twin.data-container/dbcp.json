@@ -23,7 +23,7 @@
     "i18n": {
       "description": {
         "de": "Root app zur Darstellung der Mailbox, Favoriten, ...",
-        "en": "Root app for displaying dapp favourites, mailbox..."
+        "en": "Root app for displaying dapp favourites, mailbox, ..."
       },
       "name": {
         "de": "Daten Container",

@@ -27,6 +27,8 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as dispatchers from '../../dispatchers/registry';
 
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
+import { bccUtils } from '@evan.network/ui';
+import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 
 @Component({ })
 export default class ProfileDetailComponent extends mixins(EvanComponent) {
@@ -66,6 +68,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   newType = null;
 
   /**
+   * user contacts from addressbook
+   */
+  contacts: ContactInterface[] = null;
+
+  /**
    * Permission update function that is called by permission-editor.
    */
   updatePermissions: Function;
@@ -91,6 +98,10 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     // set the update permission and always pass the current vue context into it, so it can use the
     // vuex translate service
     this.updatePermissions = updatePermissions.bind(null, this);
+
+    // load contacts from addressbook
+    this.contacts = await bccUtils.getContacts((this as any).getRuntime());
+
     this.loading = false;
   }
 
@@ -155,6 +166,14 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     }
 
     return allPermissions[user];
+  }
+
+  /**
+   * Callback if user select a contact from Sharing-Side-Panel
+   * @param {string} contact selected contact id
+   */
+  handleOnSelect(contact) {
+    this.selectedSharedContacts = contact;
   }
 
   /**

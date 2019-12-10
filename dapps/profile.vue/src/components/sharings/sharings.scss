@@ -22,7 +22,7 @@ the following URL: https://evan.network/license/
 .profile-sharings {
   @media (min-width: 1200px) {
     .container {
-      .button-wrapper {
+      .plus-button {
         display: none;
       }
     }
@@ -35,7 +35,7 @@ the following URL: https://evan.network/license/
       padding: 32px;
     }
 
-    .button-wrapper {
+    .plus-button {
       position: absolute;
       right: 24px;
       bottom: 24px;

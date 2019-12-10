@@ -149,26 +149,32 @@
         type="default"
         v-if="userInfo">
         <evan-permissions-editor
-          :loadPermissions="loadPermissions"
-          :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
-          :selectedContact="selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-          :sortFilters="$store.state.profileDApp.sharingFilter"
-          :updatePermissions="updatePermissions"
           @init="permissionsEditor = $event"
+          :contacts="contacts"
+          :selectedContact="selectedSharedContacts"
+          :onSelect="handleOnSelect"
+          :loadPermissions="loadPermissions"
+          :updatePermissions="updatePermissions"
+          :sortFilters="$store.state.profileDApp.sharingFilter"
           i18nScope="_profile.sharing"
         />
         <template slot="footer" v-if="!!permissionsEditor">
-          <evan-button 
-            type="secondary" 
-            :label="$t('_evan.cancel')" 
-            @click="permissionsEditor.cancel()" 
-            :disabled="selectedSharedContacts.length === 0" />
-          <evan-button
-            type="primary"
-            :label="$t('_evan.sharing.update')"
-            :disabled="!permissionsEditor.permissionsChanged"
-            @click="permissionsEditor.writePermissions()"
-          />
+          <div class="d-flex">
+            <evan-button 
+              type="secondary" 
+              :label="$t('_evan.cancel')" 
+              @click="permissionsEditor.cancel()" 
+              :disabled="!selectedSharedContacts"
+              class="mr-3"
+            />
+            <evan-button
+              type="primary"
+              :label="$t('_evan.sharing.update')"
+              :disabled="!permissionsEditor.permissionsChanged"
+              @click="permissionsEditor.writePermissions()"
+              class="btn-block"
+            />
+          </div>
         </template>
       </evan-swipe-panel>
     </template>

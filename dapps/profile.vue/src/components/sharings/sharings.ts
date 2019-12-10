@@ -24,10 +24,13 @@ import Component, { mixins } from 'vue-class-component';
 // internal
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { bccUtils } from '@evan.network/ui';
 
 import * as dispatchers from '../../dispatchers/registry';
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
+import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
+
 
 interface SharedContactInterface {
   accountId: string;
@@ -46,6 +49,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    * status flags
    */
   loading = true;
+
+  /**
+   * contacts of current user
+   */
+  contacts: ContactInterface[];
 
   /**
    * contacts who share the profile data with
@@ -69,14 +77,14 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   /**
    * computed property
-   * selected shared contacts from vuex store
+   * selected shared contacts IDs from vuex store
    */
   get selectedSharedContacts() {
     return (this as any).$store.state.uiState.profile.selectedSharedContacts;
   }
 
-  set selectedSharedContacts(contacts) {
-    (this as any).$store.commit('setSelectedSharedContacts', contacts);
+  set selectedSharedContacts(contactIds) {
+    (this as any).$store.commit('setSelectedSharedContacts', contactIds);
 
     const sharedContact = this.selectedSharedContacts;
     // hide or show sidepanel
@@ -136,6 +144,9 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
+    // load contacts from addressbook
+    this.contacts = await bccUtils.getContacts((<any>this).getRuntime());
+
     // load shared contacts
     this.sharedContacts = await getProfilePermissions((<any>this));
 
@@ -149,34 +160,29 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * handler for overview item click
+   * @param item selected contact
+   * @param {MouseEvent} event
+   */
   handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
 
-    const index = this.selectedSharedContacts.indexOf(item.accountId);
-
-    // at first allow one selection only
-    this.selectedSharedContacts = index > -1 ? [] : [item.accountId];
-
-    // let newSharedContacts = this.selectedSharedContacts;
-    // if (index > -1) {
-    //   // remove from array
-    //   newSharedContacts.splice(index, 1);
-    // } else {
-    //   // push to array
-    //   newSharedContacts.push(item.accountId);
-    // }
-
-    // this.selectedSharedContacts = newSharedContacts;
+    this.selectedSharedContacts = item.accountId;
   }
 
-  async handleRemoveSharedContact(item: SharedContactInterface) {
-    await removeAllPermissions(this, item.sharedConfig)
+  /**
+   * Removes all permissions from given contact
+   * @param {SharedContactInterface} contact contact to remove all permissions
+   */
+  async handleRemoveSharedContact(contact: SharedContactInterface) {
+    await removeAllPermissions(this, contact.sharedConfig)
       .then(() => {
         // remove item from list
-        this.sharedContacts = this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
+        this.sharedContacts = this.sharedContacts.filter(item => item.accountId !== contact.accountId);
         // remove from selected shared contacts
-        const index = this.selectedSharedContacts.indexOf(item.accountId);
+        const index = this.selectedSharedContacts.indexOf(contact.accountId);
         if (index > -1) {
           this.selectedSharedContacts.splice(index, 1);
         }
@@ -187,20 +193,44 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Handler, if contact from permissions editor is selected
+   * @param {string} contact contact id from selected contact
+   */
+  handleOnSelect(contact) {
+    this.selectedSharedContacts = contact;
+  }
+
+  /**
+   * Callback, if overview entry is selected
+   * @param {any} item selected contact or contact id
+   */
+  isSelectedCallback(item): Boolean {
+    if (!this.selectedSharedContacts) {
+      return false;
+    }
+
+    if (typeof this.selectedSharedContacts === 'string') {
+      return this.selectedSharedContacts === item.accountId;
+    }
+
+    return this.selectedSharedContacts.value === item.accountId;
+  }
+
+  /**
    * Returns the permissions mapping for certain user. If nothing is shared with the user, copy from own and set all to
    * denied.
    *
-   * @param user: string - the user id.
+   * @param user: ContactInterface
    */
-  async loadPermissions(user: string) {
-    const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, this.$route.params.address);
+  async loadPermissions(address: string) {
+    const runtime = (this as any).getRuntime();
+    const allPermissions = await getProfilePermissionDetails(runtime, (this as any).$route.params.address);
 
-    if (!allPermissions[user]) {
+    if (!allPermissions[address]) {
       return allPermissions['new'];
     }
 
-    return allPermissions[user];
+    return allPermissions[address];
   }
 }
 

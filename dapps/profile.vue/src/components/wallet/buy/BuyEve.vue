@@ -13,11 +13,11 @@ https://evan.network/license/ */
 <template>
   <div>
     <evan-swipe-panel
-      :hideCloseButton="windowWidth >= 1200"
+      :hideCloseButton="windowWidth >= 1400"
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
-      :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
-      :showBackdrop="windowWidth < 1200"
-      :title="'_profile.wallet.buy-eve.title' | translate"
+      :mountId="windowWidth < 1400 ? null : 'dapp-wrapper-sidebar-right'"
+      :showBackdrop="windowWidth < 1400"
+      :title="(step === 0 ? '_profile.wallet.buy-eve.titles.buy-eve' : '_profile.wallet.buy-eve.titles.billing-info') | translate"
       @hide="$store.state.uiState.swipePanel = ''"
       @show="$nextTick(() => renderStripeElement())"
       alignment="right"
@@ -28,7 +28,7 @@ https://evan.network/license/ */
         <div><evan-loading /></div>
         <div>{{ '_profile.wallet.buy-eve.processing-hint' | translate }}</div>
       </div>
-      <div class="flex-center text-center text-primary" v-else-if="stripe.success">
+      <div class="flex-center text-center" v-else-if="stripe.success">
         <div><evan-success /></div>
         <div v-html="$t('_profile.wallet.buy-eve.success')" />
         <evan-button
@@ -38,7 +38,7 @@ https://evan.network/license/ */
           type="primary"
         />
       </div>
-      <div class="flex-center text-center text-red" v-else-if="!!stripe.payError">
+      <div class="flex-center text-center" v-else-if="!!stripe.payError">
         <div><evan-failed /></div>
         <div v-html="$t(`_profile.wallet.buy-eve.errors.${ stripe.payError }`)" />
         <evan-button
@@ -68,20 +68,20 @@ https://evan.network/license/ */
           :stacked="true">
         </evan-form>
 
-        <div class="my-3">
-          <div class="stripeElementLabel">
+        <template>
+          <label class="col-form-label">
             {{ `_profile.wallet.buy-eve.payForm.type.${ payForm.type.value }` | translate }}
-          </div>
+          </label>
           <div id="stripeElement" class="stripeElement"/>
           <small
-            class="text-muted"
+            class="text-red"
             v-if="stripe.error && stripe.error.code">
             {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` | translate }}
           </small>
-          <small v-if="payForm.type.value === 'iban'">
+          <small v-if="payForm.type.value === 'iban'" class="disclaimer text-muted">
             {{ '_profile.wallet.buy-eve.disclaimer' | translate }}
           </small>
-        </div>
+        </template>
       </div>
       <!-- end contnet -->
 
@@ -92,6 +92,7 @@ https://evan.network/license/ */
           :label="'_profile.wallet.buy-eve.continue' | translate"
           @click="step = 1"
           type="primary"
+          class="w-100"
         />
 
         <!-- keep displayed but hidden, so the loading circle is displayed correctly -->
@@ -99,18 +100,18 @@ https://evan.network/license/ */
           :class="{ 'invisible': buying || stripe.success || stripe.payError, }"
           class="w-100"
           v-else>
-          <div class="text-center mb-3 position-relative">
+          <div class="text-center mb-3">
             <div class="vat-loading" v-if="vatCalcTimeout">
               <div class="spinner-border text-primary" />
             </div>
 
-            <span class="text-muted mb-3 d-block"
+            <span class="text-muted mb-3"
               v-if="reverseCharge"
               v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
             />
             <small>
               {{ parseFloat(payForm.amount.value).toFixed(2) }} EVE x
-              {{ '1€' }} + {{ taxValue }} {{ '_profile.wallet.buy-eve.vat' | translate }}
+              {{ '1€' }} + {{ taxValue }}% {{ '_profile.wallet.buy-eve.vat' | translate }}
               ({{ (parseFloat(payForm.amount.value) / 100 * taxValue).toFixed(2) + '€' }})
             </small>
             <h3 class="mt-1">

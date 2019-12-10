@@ -121,25 +121,25 @@
       "create-account": "Erstellen Sie Ihren Account",
       "create-profile": {
         "company": {
-          "status-1": "Initialisiere Verbindung zum Netzwerk ...",
-          "status-2": "Erstelle die Unternehmensidentität ...",
-          "status-3": "Erstelle die Unternehmensidentität auf Basis der spezifischen Daten ...",
-          "status-4": "Erstelle das Verifizierungsmanagement ...",
-          "status-5": "Identität wurde erfolgreich erstellt!"
+          "status-1": "Initialisiere Verbindung zum Netzwerk",
+          "status-2": "Erstellung des Unternehmensaccounts",
+          "status-3": "Erstellung der Unternehmensidentität auf Basis der spezifischen Daten",
+          "status-4": "Erstellung des Verifizierungsmanagements",
+          "status-5": "Identität wurde erfolgreich erstellt"
         },
         "title": "Account erstellen",
         "twin": {
-          "status-1": "Erstelle den Identitätsvertrag ...",
-          "status-2": "Verschlüsselle Nutzerinformationen ...",
-          "status-3": "Erstelle Mailbox, Adressbuch, ...",
-          "status-4": "Erstelle den Digitalen Zwilling ...",
+          "status-1": "Erstellung des Identitätsvertrages",
+          "status-2": "Verschlüsselung der Nutzerinformationen",
+          "status-3": "Erstellung Mailbox, Adressbuch, ...",
+          "status-4": "Erstellung des Digitalen Zwillings",
           "status-5": "Digitaler Zwilling wurde erfolgreich erstellt!"
         },
         "user": {
-          "status-1": "Initialisiere Verbindung zum Netzwerk ...",
-          "status-2": "Erstelle den Account ...",
-          "status-3": "Erstelle die Identität ...",
-          "status-4": "Erstelle das Verifizierungsmanagement ...",
+          "status-1": "Initialisiere Verbindung zum Netzwerk",
+          "status-2": "Erstellung des Accounts",
+          "status-3": "Erstellung der Identität",
+          "status-4": "Erstellung des Verifizierungsmanagements",
           "status-5": "Identität wurde erfolgreich erstellt!"
         }
       },
@@ -201,7 +201,7 @@
       "title": "Registrieren",
       "twin": {
         "create": "Erstellen Sie Ihren Digitalen Zwilling",
-        "creating": "Digitaler Zwilling wird erstellt...",
+        "creating": "Digitaler Zwilling wird erstellt",
         "dbcp": {
           "description": {
             "label": "Beschreibung",

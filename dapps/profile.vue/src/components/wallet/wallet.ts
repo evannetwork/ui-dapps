@@ -17,6 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
@@ -40,6 +41,11 @@ export default class WalletComponent extends mixins(EvanComponent) {
   listeners: Array<any> = [];
 
   /**
+   * Currents users eve balances
+   */
+  balance = 0.0;
+
+  /**
    * Unbind window resize watcher
    */
   beforeDestroy() {
@@ -50,6 +56,8 @@ export default class WalletComponent extends mixins(EvanComponent) {
    * Bin window resize watcher to handle side panel state and handle send eve events.
    */
   async created() {
+    await this.loadBalance();
+
     // setup dispatcher watchers
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {
       // if dispatcher was finished, reload data and reset formular
@@ -59,5 +67,9 @@ export default class WalletComponent extends mixins(EvanComponent) {
         this.$nextTick(() => this.loading = false);
       }
     }));
+  }
+
+  async loadBalance() {
+    this.balance = parseFloat(await dappBrowser.core.getBalance((this as any).getRuntime().activeAccount));
   }
 }
