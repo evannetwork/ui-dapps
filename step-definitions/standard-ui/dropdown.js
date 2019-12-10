@@ -24,11 +24,13 @@ When('I select the dropdown entry {string} from the dropdown box with the label 
     client.useXpath();
     const xPathSelector = getSelector(label);
 
+    await client.expect.element('//*[contains(@class, "fullscreen")]').to.be.not.present;
     await client.expect.element(xPathSelector).to.be.present;
     await client.click(xPathSelector);
 
     const xPathSelectorLi = `//*[normalize-space(text()) = "${content}"]`;
 
+    await client.expect.element('//*[contains(@class, "fullscreen")]').to.be.not.present;
     await client.expect.element(xPathSelectorLi).to.be.present;
     await client.click(xPathSelectorLi);
     client.useCss(); // switches back to css selector
