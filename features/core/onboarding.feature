@@ -180,7 +180,7 @@ Scenario: Creating a new bicycle twin using onboarding
   When I click on button "Continue"
     Then the button "Create Account" should be "disabled"
     And I want to see a text including "For your access to your Digital Twin, we need an alias and a password."
-    And I set Input field with label "Name of the company" to "Automated Test Account"
+    And I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
     And I click the element with id "evan-recaptcha"
