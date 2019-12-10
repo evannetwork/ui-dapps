@@ -24,6 +24,7 @@ the following URL: https://evan.network/license/
       <div class="container">
 
         <evan-button
+          class="plus-button"
           size="lg"
           type="icon-primary"
           icon="mdi mdi-plus"
