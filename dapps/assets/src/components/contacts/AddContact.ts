@@ -30,21 +30,35 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   addressbook;
 
-  idOrEmailValidation = '';
-  idOrEmail = null;
+  idOrEmailValidation;
+  idOrEmail;
 
-  accountId = null;
-  alias = null;
-  email = null;
-  emailInvite = null;
-  fromAlias = window.localStorage.getItem('evan-alias');
-  msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
-  msgTitle = this.$t('_assets.contacts.subject-prefill');
+  accountId;
+  alias;
+  email;
+  emailInvite;
+  fromAlias;
+  msgBody;
+  msgTitle;
 
   async created() {
+    this.initState();
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
     this.addressbook = await runtime.profile.getAddressBook();
+  }
+
+  private initState() {
+    this.idOrEmailValidation = '';
+    this.idOrEmail = null;
+
+    this.accountId = null;
+    this.alias = null;
+    this.email = null;
+    this.emailInvite = null;
+    this.fromAlias = window.localStorage.getItem('evan-alias');
+    this.msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
+    this.msgTitle = this.$t('_assets.contacts.subject-prefill');
   }
 
   async addContact() {
@@ -64,7 +78,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     
     this.closePanel();
 
-    this.$emit('contact-added');
+    this.$emit('contact-added');    
   }
 
 
@@ -98,5 +112,6 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   closePanel() {
     (this.$refs.addContactPanel as any).hide();
+    this.initState();
   }
 }
