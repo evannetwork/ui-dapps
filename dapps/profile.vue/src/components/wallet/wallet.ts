@@ -56,7 +56,7 @@ export default class WalletComponent extends mixins(EvanComponent) {
    * Bin window resize watcher to handle side panel state and handle send eve events.
    */
   async created() {
-    this.loadBalance();
+    await this.loadBalance();
 
     // setup dispatcher watchers
     this.listeners.push(sendEveDispatcher.watch(async ($event: any) => {

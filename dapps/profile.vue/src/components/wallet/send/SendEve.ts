@@ -184,6 +184,9 @@ export default class SendEveComponent extends mixins(EvanComponent) {
     this.loading = false;
   }
 
+  /**
+   * writes specific string in userNameWithAddress variable used in the modal text
+   */
   async setUserNameWithAddress() {
     const profile = new bcc.Profile({
       accountId: this.runtime.activeAccount,
@@ -207,6 +210,9 @@ export default class SendEveComponent extends mixins(EvanComponent) {
     return (amount.toFixed(2) as any).toLocaleString((this as any).$i18n.locale());
   }
 
+  /**
+   * handler for displaying modal
+   */
   async showModal() {
     await this.setUserNameWithAddress();
     (this as any).$refs.acceptModal.show();

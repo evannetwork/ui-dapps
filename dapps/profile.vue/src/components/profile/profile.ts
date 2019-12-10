@@ -168,6 +168,10 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     return allPermissions[user];
   }
 
+  /**
+   * Callback if user select a contact from Sharing-Side-Panel
+   * @param {string} contact selected contact id
+   */
   handleOnSelect(contact) {
     this.selectedSharedContacts = contact;
   }

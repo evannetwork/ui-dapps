@@ -161,6 +161,11 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * handler for overview item click
+   * @param item selected contact
+   * @param {MouseEvent} event
+   */
   handleSharedContactClick(item: SharedContactInterface, event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
@@ -168,13 +173,17 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     this.selectedSharedContacts = item.accountId;
   }
 
-  async handleRemoveSharedContact(item: SharedContactInterface) {
-    await removeAllPermissions(this, item.sharedConfig)
+  /**
+   * Removes all permissions from given contact
+   * @param {SharedContactInterface} contact contact to remove all permissions
+   */
+  async handleRemoveSharedContact(contact: SharedContactInterface) {
+    await removeAllPermissions(this, contact.sharedConfig)
       .then(() => {
         // remove item from list
-        this.sharedContacts = this.sharedContacts.filter(contact => contact.accountId !== item.accountId);
+        this.sharedContacts = this.sharedContacts.filter(item => item.accountId !== contact.accountId);
         // remove from selected shared contacts
-        const index = this.selectedSharedContacts.indexOf(item.accountId);
+        const index = this.selectedSharedContacts.indexOf(contact.accountId);
         if (index > -1) {
           this.selectedSharedContacts.splice(index, 1);
         }
@@ -184,10 +193,18 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
       });
   }
 
+  /**
+   * Handler, if contact from permissions editor is selected
+   * @param {string} contact contact id from selected contact
+   */
   handleOnSelect(contact) {
     this.selectedSharedContacts = contact;
   }
 
+  /**
+   * Callback, if overview entry is selected
+   * @param {any} item selected contact or contact id
+   */
   isSelectedCallback(item): Boolean {
     if (!this.selectedSharedContacts) {
       return false;
