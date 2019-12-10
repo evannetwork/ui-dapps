@@ -20,20 +20,16 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import axios from 'axios';
+import { agentUrl } from '@evan.network/ui';
 
-/**
- * Account id of the notary smart agent
- */
-let notarySmartAgentAccountId;
 const coreRuntime = dappBrowser.bccHelper.coreRuntimes[bcc.instanceId];
+let notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
+let verificationCost = '200000000000000000000'; // 200 EVE
+
 if (coreRuntime.environment === 'testcore') {
   notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
-} else {
-  notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
+  verificationCost = '2000000000000000000'; // 2 EVE
 }
-
-// const agentUrl = 'http://192.168.100.56:8080'
-const agentUrl = 'https://agents.test.evan.network';
 
 /**
  * Requests the request/close action to clear open requests, when the identification process has
@@ -175,7 +171,6 @@ async function getAnswer(runtime, question, requestId) {
   return answerResponse.data;
 }
 
-
 export {
   closeRequest,
   getAnswer,
@@ -185,4 +180,5 @@ export {
   issueVerification,
   notarySmartAgentAccountId,
   triggerRequestReload,
+  verificationCost
 };

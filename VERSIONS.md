@@ -4,6 +4,8 @@
 ### Features
 
 ### Fixes
+- `profile.vue` (v3.5.1)
+  - fix sharing sidebar removes contact selection on permission checkbox select
 
 ### Deprecations
 
