@@ -178,7 +178,7 @@ export default class SignUp extends mixins(EvanComponent) {
     return steps;
   }
 
-  async created() {
+  created() {
     const uiSpecs = { attr: { required: true, } };
     this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
       accountType: {

@@ -22,7 +22,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dispatchers from '../dispatchers/registry';
 
 export default class ProfileMigrationLibrary {
-  static async checkOrMigrateProfile(runtime) {
+  static async checkOrMigrateProfile(runtime, type = 'user') {
     let description;
     try {
       // try to load the description, if this errors, create a new profile
@@ -31,7 +31,7 @@ export default class ProfileMigrationLibrary {
       );
     } catch (e) {
       // when the description errors, create a new profile
-      await this.migrateProfile(runtime);
+      await this.migrateProfile(runtime, type);
     }
   }
 
@@ -69,20 +69,51 @@ export default class ProfileMigrationLibrary {
    *
    * @param      {any}  runtime  The runtime
    */
-  static async migrateProfile(runtime) {
+  static async migrateProfile(runtime, type: string) {
     const profileAddress = runtime.profile.profileContract.options.address;
     const currentAccount = runtime.activeAccount;
+
+    const oldDataFields = ['addressBook', 'bookmarkedDapps', 'contracts', 'contacts', 'profileOptions', 'publicKey', 'templates'];
+    const newDataFields = [ 'accountDetails', 'contact', 'deviceDetails', 'registration', ];
 
     // get the profile factory
     const factoryAddress = await runtime.nameResolver.getAddress('profile.factory.evan');
     const factory = runtime.contractLoader.loadContract(
-      'BaseContractFactoryInterface',
+      'ProfileDataContractFactoryInterface',
       factoryAddress
     );
+
+    const description = {
+      public: {
+        author: '',
+        dataSchema: {
+          ...runtime.profile.accountTypes.user.template.properties,
+          ...runtime.profile.accountTypes[type].template.properties,
+        },
+        dbcpVersion: 2,
+        name: 'Profile Container',
+        description: 'Container contract for storing and sharing profile related information ' +
+          '(account type, company information, device detail, ...)',
+        version: '0.1.0',
+      },
+    };
+
+    // format data schema to remove properties
+    Object.keys(description.public.dataSchema)
+      .forEach(property => description.public.dataSchema[property] = description.public.dataSchema[property].dataSchema);
+
+    // calculate correct dbcp description and setup empty profile data properties
+    const profileTypeObject = { accountDetails: { profileType: type }};
+    Object.keys(runtime.profile.accountTypes[type].template.properties)
+      .forEach(key => profileTypeObject[key] = { });
+    const descriptionHash = await runtime.dfs.add(
+      'description', Buffer.from(JSON.stringify(description), 'binary'));
+
     // create a new profile contract from the factory
     const contractId = await runtime.executor.executeContractTransaction(
       factory,
-      'createContract', {
+      'createContract',
+      {
         from: currentAccount,
         autoGas: 1.1,
         event: { target: 'BaseContractFactoryInterface', eventName: 'ContractCreated', },
@@ -90,11 +121,15 @@ export default class ProfileMigrationLibrary {
       },
       '0x0000000000000000000000000000000000000000',
       currentAccount,
-      '0x0000000000000000000000000000000000000000000000000000000000000000',
+      descriptionHash,
       runtime.nameResolver.config.ensAddress,
+      [ ]
+        .concat(newDataFields)
+        .concat(oldDataFields)
+        .map(entry => runtime.nameResolver.soliditySha3(entry)),
+      [ ],
     );
 
-    const oldDataFields = ['addressBook', 'bookmarkedDapps', 'contracts', 'contacts', 'profileOptions', 'publicKey', 'templates'];
     // migrate the old fields from the profile
     await Promise.all(oldDataFields.map(async (oldDataField) => {
       const oldHash = await runtime.dataContract.getEntry(profileAddress, oldDataField, currentAccount, false, false);
@@ -108,7 +143,7 @@ export default class ProfileMigrationLibrary {
     const sharedNew = runtime.contractLoader.loadContract('Shared', contractId);
     const sharingHash = await runtime.executor.executeContractCall(shared, 'sharing');
     await runtime.executor.executeContractTransaction(
-            sharedNew, 'setSharing', { from: currentAccount, autoGas: 1.1, }, sharingHash);
+      sharedNew, 'setSharing', { from: currentAccount, autoGas: 1.1, }, sharingHash);
 
     // register profile for user
     const profileIndexDomain = runtime.nameResolver.getDomainName(
@@ -128,5 +163,8 @@ export default class ProfileMigrationLibrary {
     delete runtime.profile.profileContract;
     await runtime.profile.loadForAccount();
     runtime.profile.profileContract.options.address = contractId;
+
+    // ensure permissions on all new fields
+    await runtime.profile.setProfileProperties(profileTypeObject);
   }
 }

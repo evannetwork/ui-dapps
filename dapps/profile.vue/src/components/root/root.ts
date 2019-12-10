@@ -162,11 +162,11 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
         } catch (ex) {
           profileDApp.profile.log(`Could nor load accountDetails for ${ profileDApp.address }: ${ ex.message }`, 'error');
         }
+      }
 
-        // fill empty values
-        if (!data[key]) {
-          data[key] = { };
-        }
+      // fill empty values
+      if (!data[key]) {
+        data[key] = { };
       }
     }));
 

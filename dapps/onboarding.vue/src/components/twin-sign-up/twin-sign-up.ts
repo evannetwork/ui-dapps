@@ -102,6 +102,7 @@ export default class TwinSignUp extends mixins(SignUp) {
    * Create the twin dbcp form.
    */
   setupTwinDBCPForm() {
+    this.profileForm.accountType.value = 'user';
     this.twinDbcpForm = (<TwinDBCPForm> new EvanForm(this, {
       type: {
         value: 'bicycle',
