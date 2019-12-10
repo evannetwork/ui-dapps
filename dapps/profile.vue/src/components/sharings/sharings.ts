@@ -25,7 +25,6 @@ import Component, { mixins } from 'vue-class-component';
 import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
-import * as bcc from '@evan.network/api-blockchain-core';
 
 import * as dispatchers from '../../dispatchers/registry';
 import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
