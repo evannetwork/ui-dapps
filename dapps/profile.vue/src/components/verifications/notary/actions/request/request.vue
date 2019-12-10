@@ -107,12 +107,12 @@
             <p>{{ '_profile.verifications.notary.request.costs.hint' | translate }}</p>
             <div class="d-flex p-3 align-items-center justify-content-center">
               <evan-form-control-checkbox
-                class="mr-3 mb-0" style="min-width: 0;"
+                class="mr-3 mb-0" style="min-width: 0; width: auto;"
                 id="approvedCosts"
                 v-model="approvedCosts"
                 required
               />
-              <label for="costs-approval" class="form-check-label">
+              <label for="approvedCosts" class="form-check-label">
                 <h4 class="mb-0">{{ '_profile.verifications.notary.request.costs.approve' | translate }}</h4>
               </label>
             </div>
