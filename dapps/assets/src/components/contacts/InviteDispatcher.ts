@@ -25,7 +25,7 @@ const dispatcher = new Dispatcher(
   `assets.${ dappBrowser.getDomainName() }`,
   'inviteDispatcher',
   40 * 1000,
-  '_assets.contacts.dispatcher.invite'
+  '_assets.contacts.invite-dispatcher'
 );
 
 /**

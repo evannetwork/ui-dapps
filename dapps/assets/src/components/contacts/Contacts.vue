@@ -55,10 +55,10 @@
 
       <!-- Empty slots -->
       <template v-slot:empty>
-        <h4>{{ '_assets.contacts.contacts-empty' }}</h4>
+        <h4>{{ '_assets.contacts.contacts-empty' | translate }}</h4>
       </template>
       <template v-slot:emptyfiltered>
-        <h4>{{ '_assets.contacts.filtered-empty' }}</h4>
+        <h4>{{ '_assets.contacts.filtered-empty' | translate }}</h4>
       </template>
     </b-table>
     <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
