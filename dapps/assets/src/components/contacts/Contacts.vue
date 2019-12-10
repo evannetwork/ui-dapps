@@ -24,11 +24,11 @@
         <h1 class="h4">{{ '_assets.contacts.contacts-title' | translate }}</h1>
       </div>
       <div class="col-9 text-right">
-        <evan-button :type="'text'">{{'_assets.contacts.favorites' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.contacts.users' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.contacts.companies' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.contacts.iot-devices' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.contacts.all' | translate }}</evan-button>
+        <evan-button @click="filterByFavorites()" :type="'text'">{{'_assets.contacts.favorites' | translate }}</evan-button>
+        <evan-button @click="filterByType('users')" :type="'text'">{{'_assets.contacts.users' | translate }}</evan-button>
+        <evan-button @click="filterByType('company')" :type="'text'">{{'_assets.contacts.companies' | translate }}</evan-button>
+        <evan-button @click="filterByType('iot-device')" :type="'text'">{{'_assets.contacts.iot-devices' | translate }}</evan-button>
+        <evan-button @click="resetFilter" :type="'text'">{{'_assets.contacts.all' | translate }}</evan-button>
       </div>
     </div>
     <b-table
@@ -36,6 +36,8 @@
       hover
       :items="data"
       :fields="columns"
+      :filter="filter"
+      :filterIncludedFields="filterBy"
       :tbody-tr-class="'evan-table-body-row'"
       :thead-tr-class="'evan-table-head-row'"
       :thead-class="'evan-table-head'"

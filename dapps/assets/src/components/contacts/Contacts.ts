@@ -32,6 +32,9 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   sortBy = 'name';
 
+  filter = null;
+  filterBy = [];
+
   data: Contact[] = [];
 
   columns = [
@@ -49,7 +52,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   async mounted() {
     this.data = await this.fetchContacts();    
-    this.isLoading = false; 
+    this.isLoading = false;
   }
 
   handleRowClicked(contact: Contact) {
@@ -58,5 +61,20 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   async fetchContacts(): Promise<Contact[]> {
     return this.contactService.getContacts();
+  }
+
+  filterByType(type: string) {
+    this.filterBy = ['type'];
+    this.filter = type;
+  }
+
+  filterByFavorites() {
+    this.filterBy = ['favorite'];
+    this.filter = true;
+  }
+
+  resetFilter() {
+    this.filter = null;
+    this.filterBy = [];
   }
 }

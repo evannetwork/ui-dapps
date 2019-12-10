@@ -23,6 +23,7 @@
       ref="addContactPanel"
       alignment="right"
       type="default"
+      class="light"
       :showBackdrop="true"
       :hideCloseButton="true"
       :title="$t('_assets.contacts.add-contact-title')"

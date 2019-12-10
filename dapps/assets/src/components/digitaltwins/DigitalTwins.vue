@@ -77,6 +77,7 @@ export default DigitalTwinsComponent;
     & > tbody > tr.evan-table-body-row {
       height: 64px;
       background-color: white;
+      cursor: pointer;
 
       & > td {
         vertical-align: middle;
