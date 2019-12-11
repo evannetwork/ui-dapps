@@ -4,6 +4,7 @@
 ### Features
 
 ### Fixes
+- fix browserify map files
 
 ### Deprecations
 
