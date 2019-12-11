@@ -36,18 +36,19 @@ import ProfileWalletComponent from './components/wallet/wallet.vue';
  *
  * @return     {string}  redirect path to that the user should be navigated to.
  */
-const redirectToDefault = (to) => {
+const redirectToDefault = (to, childPath = 'detail') => {
   return [
     to.path.split(`/profile.vue.${ dappBrowser.getDomainName() }`)[0],
     `profile.vue.${ dappBrowser.getDomainName() }`,
     dappBrowser.core.getAccountId(),
-    'detail',
+    childPath,
   ].join('/');
 };
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: to => redirectToDefault(to), },
+  { path: 'verify', redirect: to => redirectToDefault(to, 'verifications'), },
   {
     // just used for nested routing
     component: AccountRootComponent,

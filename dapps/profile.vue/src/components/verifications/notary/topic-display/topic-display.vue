@@ -66,7 +66,7 @@
             </h3>
             <p :class="{ 'text-primary': !isExpired, 'text-warning': isExpired }">
                 {{ expiredTranslationString }}
-                {{ expirationDate | moment('LLL') }}
+                {{ expirationDate ? (expirationDate | moment('LLL')) : ''}}
             </p>
           </div>
           <small class="d-block text-justify text-muted">
