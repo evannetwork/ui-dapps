@@ -16,6 +16,10 @@ When('I send {string} EVE with vue UI', async (amount) => {
     previous = parseFloat(result.value.replace(/\s|\n|EVE/g, ''));
   });
 
+  await await client.execute(function() {
+    document.querySelectorAll('.fullscreen').forEach(el => el.parentElement.removeChild(el))
+  });
+
   // start eve sending  
   await client.click('#evan-eve-send');
   await client.waitForElementPresent('#evan-eve-send-submit', 5000);
