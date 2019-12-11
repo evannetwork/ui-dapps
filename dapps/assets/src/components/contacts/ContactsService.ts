@@ -58,7 +58,7 @@ export class ContactsService {
         address: contact,
         alias: this.contacts.profile[contact].alias,
         createdAt: this.contacts.profile[contact].createdAt,
-        favorite: true,
+        favorite: false,
         icon: this.getIcon(type),
         type: type,
         updatedAt: this.contacts.profile[contact].updatedAt,

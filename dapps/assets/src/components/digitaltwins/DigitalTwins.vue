@@ -67,11 +67,18 @@ export default DigitalTwinsComponent;
   table.table.b-table {
     border-spacing: 0 4px;
     border-collapse: separate;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
 
     & > thead.evan-table-head > tr.evan-table-head-row > th {
       background-color: cssVar('bg-level-3');
       border: none;
       color: cssVar('gray-600');
+
+      &[aria-sort="ascending"], &[aria-sort="descending"] {
+        color: cssVar('primary');
+      }
     }
 
     & > tbody > tr.evan-table-body-row {
