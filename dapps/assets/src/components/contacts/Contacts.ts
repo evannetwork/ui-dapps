@@ -33,7 +33,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   sortBy = 'name';
 
   filter = null;
-  filterBy = [];
+  filterBy: string[] = [];
 
   data: Contact[] = [];
 

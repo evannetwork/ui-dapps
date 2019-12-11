@@ -63,11 +63,11 @@ export default DigitalTwinsComponent;
 // TODO: Refactor into evan-table component for unified style
 .evan-table {
   margin: 0;
+  width: 100%;
 
   table.table.b-table {
     border-spacing: 0 4px;
     border-collapse: separate;
-    max-width: 768px;
     margin-left: auto;
     margin-right: auto;
 
