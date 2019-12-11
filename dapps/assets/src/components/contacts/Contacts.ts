@@ -78,11 +78,11 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   filterByFavorites() {
     this.filterBy = ['favorite'];
-    this.filter = true;
+    this.filter = 'true';
   }
 
   resetFilter() {
-    this.filter = null;
     this.filterBy = [];
+    this.filter = null;
   }
 }
