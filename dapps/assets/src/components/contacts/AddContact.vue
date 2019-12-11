@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div>
+  <form id="contactForm" @submit="addContact">
     <evan-swipe-panel
       ref="addContactPanel"
       alignment="right"
@@ -29,8 +29,6 @@
       :title="$t('_assets.contacts.add-contact-title')"
     >
       <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
-
-      <form id="contactForm" ref="contactForm">
         <evan-form-control-input
           v-model="idOrEmail"
           :label="$t('_assets.contacts.id-or-email')"
@@ -70,7 +68,6 @@
           :required="true"
           :rows="5"
         />
-      </form>
       <template v-slot:footer>
         <evan-button
           type="secondary"
@@ -79,12 +76,12 @@
         />
         <evan-button
           type="primary"
-          @click="addContact"
+          native-type="submit"
           :label="'_assets.contacts.add-contact-btn' | translate"
         />
       </template>
     </evan-swipe-panel>
-  </div>
+  </form>
 </template>
 
 <script lang="ts">
