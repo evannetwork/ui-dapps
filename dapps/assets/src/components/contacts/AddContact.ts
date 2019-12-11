@@ -126,6 +126,5 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   closePanel() {
     (this.$refs.addContactPanel as any).hide();
-    this.initState();
   }
 }
