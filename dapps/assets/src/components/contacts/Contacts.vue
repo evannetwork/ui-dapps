@@ -20,9 +20,9 @@
 <template>
   <div>
     <div class="content pt-5">
-      <div class="d-flex flex-row justify-content-between">
+      <div class="d-flex flex-row justify-content-between align-items-center">
         <div>
-          <h1 class="h4">{{ '_assets.contacts.contacts-title' | translate }}</h1>
+          <h1 class="h4" style="margin:0">{{ '_assets.contacts.contacts-title' | translate }}</h1>
         </div>
         <div>
           <evan-button
@@ -97,7 +97,7 @@
           <template v-slot:cell(favorite)="data">
             <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
           </template>
-  
+
           <!-- Empty slots -->
           <template v-slot:empty>
             <h4>{{ '_assets.contacts.contacts-empty' | translate }}</h4>
