@@ -30,16 +30,16 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   addressbook;
 
-  idOrEmailValidation;
-  idOrEmail;
+  idOrEmailValidation = '';
+  idOrEmail = null;
 
-  accountId;
-  alias;
-  email;
-  emailInvite;
-  fromAlias;
-  msgBody;
-  msgTitle;
+  accountId = null;
+  alias = null;
+  email = null;
+  emailInvite = null;
+  fromAlias = window.localStorage.getItem('evan-alias');
+  msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
+  msgTitle = this.$t('_assets.contacts.subject-prefill');
 
   async created() {
     this.initState();
@@ -85,8 +85,6 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   handleIdOrEmailChange(value: string) {
     this.idOrEmailValidation = this.validateIdOrEmail(value);
     console.log(this.idOrEmailValidation);
-    // this fixes it
-    // this.$forceUpdate();
   }
 
   private validateIdOrEmail(value: string): string {
