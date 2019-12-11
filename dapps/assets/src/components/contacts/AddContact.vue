@@ -18,7 +18,7 @@
 */
 
 <template>
-  <form id="contactForm" @submit="addContact">
+  <form id="contactForm" ref="contactForm" @submit.prevent="addContact">
     <evan-swipe-panel
       ref="addContactPanel"
       alignment="right"
@@ -77,6 +77,7 @@
         <evan-button
           type="primary"
           native-type="submit"
+          :disabled="!checkFormValid()"
           :label="'_assets.contacts.add-contact-btn' | translate"
         />
       </template>

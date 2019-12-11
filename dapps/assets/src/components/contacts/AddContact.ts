@@ -57,30 +57,33 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.email = null;
     this.emailInvite = null;
     this.fromAlias = window.localStorage.getItem('evan-alias');
-    this.msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
+    this.msgBody = `${this.$t('_assets.contacts.message-prefill')}${
+      this.fromAlias
+    }`;
     this.msgTitle = this.$t('_assets.contacts.subject-prefill');
   }
 
   async addContact() {
-    const formData = {
-      accountId: this.accountId,
-      alias: this.alias,
-      createdAt: new Date().toISOString(),
-      currLang: window.localStorage.getItem('evan-language'),
-      email: this.email,
-      emailInvite: this.emailInvite,
-      fromAlias: this.fromAlias,
-      msgBody: this.msgBody,
-      msgTitle: this.msgTitle,
-      updatedAt: new Date().toISOString(),
-    };
-    await this.contactService.addContact(formData);
-    
-    this.closePanel();
+    if (this.checkFormValid()) {
+      const formData = {
+        accountId: this.accountId,
+        alias: this.alias,
+        createdAt: new Date().toISOString(),
+        currLang: window.localStorage.getItem('evan-language'),
+        email: this.email,
+        emailInvite: this.emailInvite,
+        fromAlias: this.fromAlias,
+        msgBody: this.msgBody,
+        msgTitle: this.msgTitle,
+        updatedAt: new Date().toISOString()
+      };
+      await this.contactService.addContact(formData);
 
-    this.$emit('contact-added');    
+      this.closePanel();
+
+      this.$emit('contact-added');
+    }
   }
-
 
   handleIdOrEmailChange(value: string) {
     this.idOrEmailValidation = this.validateIdOrEmail(value);
@@ -103,8 +106,18 @@ export default class AddContactComponent extends mixins(EvanComponent) {
       this.accountId = null;
       return '';
     } else {
-      return '_assets.contacts.error-id-or-email'
+      return '_assets.contacts.error-id-or-email';
     }
+  }
+
+  checkFormValid(): boolean {
+    if (
+      document.querySelector('#contactForm :invalid') ||
+      this.idOrEmailValidation
+    ) {
+      return false;
+    }
+    return true;
   }
 
   showPanel() {
