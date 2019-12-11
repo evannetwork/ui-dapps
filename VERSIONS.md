@@ -6,6 +6,8 @@
 ### Fixes
 - `profile.vue` (v3.5.1)
   - fix sharing sidebar removes contact selection on permission checkbox select
+- `onboarding.vue` (3.3.1)
+  - fix small device max-width
 
 ### Deprecations
 

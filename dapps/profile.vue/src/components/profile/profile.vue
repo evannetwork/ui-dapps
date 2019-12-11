@@ -166,7 +166,8 @@
           <evan-button
             type="primary"
             :label="$t('_evan.sharing.update')"
-            :disabled="!permissionsEditor.permissionsChanged"
+            :disabled="!permissionsEditor.permissionsChanged ||
+              $store.state.dispatcher.curr.running.shareProfileDispatcher"
             @click="permissionsEditor.writePermissions()"
           />
         </template>
