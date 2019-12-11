@@ -17,41 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
+// import evan libs
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+// import ContactAddComponent from './add/add.vue';
+// import ContactDetailComponent from './detail/detail.vue';
+// import ContactFormComponent from './contact-form/contact-form.vue';
 
-.stripeElement {
-  border-bottom: 1px solid cssVar('gray-500');
-  padding: 12px 0;
+
+// export them all, so other applications can access them
+export {
+  // ContactAddComponent,
+  // ContactDetailComponent,
+  // ContactFormComponent,
 }
 
-.disclaimer {
-  display: block;
-  margin-top: 16px;
-}
+// map them to element names, so they can be used within templates
+const componentRegistration: Array<ComponentRegistrationInterface> = [
+];
 
-small {
-  color: cssVar('gray-600');
-}
-
-.flex-center {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-
-  :not(:first-child) {
-    margin-top: 24px;
-  }
-}
-
-.vat-loading {
-  position: absolute;
-  text-align: center;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5) !important;
-}
+export default componentRegistration;

@@ -17,41 +17,23 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
+// vue imports
+import Component, { mixins } from 'vue-class-component';
+import { Watch } from 'vue-property-decorator';
 
-.stripeElement {
-  border-bottom: 1px solid cssVar('gray-500');
-  padding: 12px 0;
-}
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-.disclaimer {
-  display: block;
-  margin-top: 16px;
-}
+@Component
+export default class SearchResultComponent extends mixins(EvanComponent) {
+  searchQuery: string;
 
-small {
-  color: cssVar('gray-600');
-}
-
-.flex-center {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-
-  :not(:first-child) {
-    margin-top: 24px;
+  /**
+   * Watch for changes in the search query
+   */
+  @Watch('$route', { immediate: true, deep: true })
+  onRouteChange(to) {
+    this.searchQuery = to.params.query;
+    this.$forceUpdate(); // TODO: This seems rather dirty. Need to see why it's not reactive.
   }
-}
-
-.vat-loading {
-  position: absolute;
-  text-align: center;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5) !important;
 }

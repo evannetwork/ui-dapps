@@ -17,41 +17,19 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
+import axios from 'axios';
 
-.stripeElement {
-  border-bottom: 1px solid cssVar('gray-500');
-  padding: 12px 0;
-}
-
-.disclaimer {
-  display: block;
-  margin-top: 16px;
-}
-
-small {
-  color: cssVar('gray-600');
-}
-
-.flex-center {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-
-  :not(:first-child) {
-    margin-top: 24px;
+export class DigitalTwinService {
+  async getTwins() {
+    const data: any = await axios.get('https://randomuser.me/api/?results=20');
+    return data.data.results.map(user => {
+      return  {
+        icon: 'mdi mdi-cube-outline',
+        name: user.login.uuid,
+        owner: `${user.name.first} ${user.name.last}`,
+        updated: Date.now(),
+        created: Date.now()
+      }
+    });
   }
-}
-
-.vat-loading {
-  position: absolute;
-  text-align: center;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5) !important;
 }

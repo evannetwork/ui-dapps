@@ -439,7 +439,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
    */
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
-    if (this.windowWidth >= 1200) {
+    if (this.windowWidth >= 1400) {
       (<any>this).$store.state.uiState.swipePanel = 'sharing';
     }
   }

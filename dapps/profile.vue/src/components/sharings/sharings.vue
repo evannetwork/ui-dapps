@@ -24,6 +24,7 @@ the following URL: https://evan.network/license/
       <div class="container">
 
         <evan-button
+          class="plus-button"
           size="lg"
           type="icon-primary"
           icon="mdi mdi-plus"
@@ -42,26 +43,32 @@ the following URL: https://evan.network/license/
           @hide="selectedSharedContacts = null"
         >
           <evan-permissions-editor
-            :loadPermissions="loadPermissions"
-            :onSelect="(accountId) => {this.selectedSharedContacts = accountId ? [accountId] : []}"
-            :selectedContact="selectedSharedContacts !== null && selectedSharedContacts.length > 0 ? selectedSharedContacts[0] : null"
-            :sortFilters="$store.state.profileDApp.sharingFilter"
-            :updatePermissions="updatePermissions"
             @init="permissionsEditor = $event"
+            :contacts="contacts"
+            :selectedContact="selectedSharedContacts"
+            :loadPermissions="loadPermissions"
+            :updatePermissions="updatePermissions"
+            :onSelect="handleOnSelect"
+            :sortFilters="$store.state.profileDApp.sharingFilter"
             i18nScope="_profile.sharing"
           />
           <template slot="footer" v-if="!!permissionsEditor">
-            <evan-button 
-              type="secondary" 
-              :label="$t('_evan.cancel')" 
-              @click="permissionsEditor.cancel()" 
-              :disabled="selectedSharedContacts.length === 0" />
-            <evan-button
-              type="primary"
-              :label="$t('_evan.sharing.update')"
-              :disabled="!permissionsEditor.permissionsChanged"
-              @click="permissionsEditor.writePermissions()"
-            />
+            <div class="d-flex">
+              <evan-button 
+                type="secondary" 
+                :label="$t('_evan.cancel')" 
+                @click="permissionsEditor.cancel()" 
+                :disabled="!selectedSharedContacts"
+                class="mr-3"
+              />
+              <evan-button
+                type="primary"
+                :label="$t('_evan.sharing.update')"
+                :disabled="!permissionsEditor.permissionsChanged"
+                @click="permissionsEditor.writePermissions()"
+                class="btn-block"
+              />
+            </div>
           </template>
         </evan-swipe-panel>
 
@@ -73,7 +80,7 @@ the following URL: https://evan.network/license/
             <evan-base-list
               class="mt-5"
               :data="sharedContacts"
-              :isSelectedCallback="(item) => selectedSharedContacts !== null && selectedSharedContacts.includes(item.accountId)"
+              :isSelectedCallback="isSelectedCallback"
               :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
             >
               <template v-slot:item="{item}">

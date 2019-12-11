@@ -25,6 +25,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { bccUtils } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
+import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 
 import { sendEveDispatcher } from '../../../dispatchers/registry';
 
@@ -55,12 +56,12 @@ export default class SendEveComponent extends mixins(EvanComponent) {
   /**
    * Currents users amount of eves (max. to send).
    */
-  currBalance: number = 0;
+  currBalance = 0;
 
   /**
    * List of accounts and it's names, that can be selected by the user.
    */
-  accountOptions: Array<{label, value}> = null;
+  accountOptions: ContactInterface[] = null;
 
   /**
    * Watch for dispatcher updates
@@ -71,6 +72,11 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    * Current users runtime.
    */
   runtime: bcc.Runtime;
+
+  /**
+   * Selected user info for translation values
+   */
+  userNameWithAddress = '';
 
   /**
    * Clear dispatcher listeners
@@ -118,28 +124,8 @@ export default class SendEveComponent extends mixins(EvanComponent) {
   async initialize() {
     this.loading = true;
 
-    // load addressbook and prepare account id selection
-    const addressbook = await this.runtime.profile.getAddressBook();
-    this.accountOptions = await Promise.all(
-      Object.keys(addressbook.profile).map(async (address: string) => {
-        // ignore cryptoInfo
-        if (this.runtime.web3.utils.isAddress(address)) {
-          const profile = new bcc.Profile({
-            accountId: this.runtime.activeAccount,
-            profileOwner: address,
-            ...this.runtime,
-          } as any);
-
-          return {
-            label: await bccUtils.getUserAlias(profile),
-            value: address,
-          }
-        }
-      })
-    );
-
-    // filter empty options
-    this.accountOptions = this.accountOptions.filter(option => !!option);
+    // load user contacts
+    this.accountOptions = await bccUtils.getContacts(this.runtime);
 
     // setup currents users balance and define the gas fee to send eve
     const gasFee = 0.001;
@@ -173,7 +159,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
         validate: function(vueInstance: SendEveComponent) {
           const parsed = parseFloat(this.value);
 
-          if (isNaN(parsed)) {
+          if (isNaN(parsed) || parsed <= 0) {
             return '_profile.wallet.send-eve.form.amount.error';
           } else {
             if ((parsed + gasFee) < vueInstance.currBalance) {
@@ -199,13 +185,18 @@ export default class SendEveComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Searches for a user name within the account options.
-   *
-   * @param      {string}  accountId  account id for that the name should be retrieved
+   * writes specific string in userNameWithAddress variable used in the modal text
    */
-  getUserNameWithAddress(accountId: string) {
-    const found = this.accountOptions.filter(option => option.value === accountId)[0];
-    return found ? `${ found.label } (${ accountId })` : accountId; 
+  async setUserNameWithAddress() {
+    const profile = new bcc.Profile({
+      accountId: this.runtime.activeAccount,
+      profileOwner: this.form.accountId.value,
+      ...this.runtime,
+    } as any);
+
+    const userAlias = await bccUtils.getUserAlias(profile);
+    const isNotContact = userAlias === this.form.accountId.value;
+    this.userNameWithAddress = isNotContact ? userAlias : `${ userAlias } (${ this.form.accountId.value })`;
   }
 
   /**
@@ -217,6 +208,14 @@ export default class SendEveComponent extends mixins(EvanComponent) {
     // load balance and parse it to 3 decimal places
     amount = Math.floor(amount * 100) / 100;
     return (amount.toFixed(2) as any).toLocaleString((this as any).$i18n.locale());
+  }
+
+  /**
+   * handler for displaying modal
+   */
+  async showModal() {
+    await this.setUserNameWithAddress();
+    (this as any).$refs.acceptModal.show();
   }
 
   /**

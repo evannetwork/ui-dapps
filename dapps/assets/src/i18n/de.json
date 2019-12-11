@@ -1,0 +1,12 @@
+{
+  "_assets": {
+    "contacts": "Kontakte",
+    "digitaltwins": "Digitale Zwillinge",
+    "digitaltwin": {
+      "digitaltwin-title": "Digitale Zwillinge",
+      "my-own": "Eigene",
+      "favorites": "Favoriten",
+      "all": "Alle"
+    }
+  }
+}

@@ -54,13 +54,13 @@
         },
         "title": "Contact",
         "vat": {
-          "billing_country_and_vat_missmatch": "Provided VAT number does not match given country code.",
-          "error": "The VAT number could not be validated!",
-          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT number is required.",
-          "label": "VAT",
+          "billing_country_and_vat_missmatch": "Provided VAT ID does not match given country code.",
+          "error": "The VAT ID could not be validated!",
+          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT ID is required.",
+          "label": "VAT ID",
           "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
           "placeholder": "DE99999999999",
-          "vat_number_invalid": "VAT number seems to be invalid."
+          "vat_number_invalid": "VAT ID seems to be invalid."
         },
         "website": {
           "error": "Please insert a valid url!",
@@ -150,12 +150,12 @@
       }
     },
     "dispatchers": {
-      "profile-share": "Share Identity information...",
-      "profile-type": "Changing Identity type...",
-      "profile-update": "Updating Identity information...",
-      "request-verification": "Requesting Verification...",
-      "send-eve": "Sending EVEs...",
-      "verification-accept": "Accepting Verification..."
+      "profile-share": "Share Identity information",
+      "profile-type": "Changing Identity type",
+      "profile-update": "Updating Identity information",
+      "request-verification": "Requesting Verification",
+      "send-eve": "Sending EVEs",
+      "verification-accept": "Accepting Verification"
     },
     "not-permitted": {
       "accountDetails": "Identity information",
@@ -238,7 +238,7 @@
       "next": "Next",
       "notary": {
         "account-id": "Identity",
-        "check-updates": "Checking for updates...",
+        "check-updates": "Checking for updates",
         "info": "Confirm your Identity to be a trusted evan.network member",
         "issue": {
           "accountId": {
@@ -355,7 +355,7 @@
           "requested1": "You have successfully applied for a Notary Verification for your organization.",
           "requested2": "Your wallet has been charged 200 EVE.",
           "requested3": "You will receive a letter from a notary soon.",
-          "requesting": "Notary verification is requested...",
+          "requesting": "Notary verification is requested",
           "requesting-account": "Requesting Identity",
           "step": "Step",
           "who": {
@@ -370,7 +370,7 @@
           }
         },
         "request-error": "Request could not be loaded!",
-        "request-error-desc": "Please reload...",
+        "request-error-desc": "Please reload",
         "request-notary-verification": "Request a notary verification",
         "status": {
           "accepted": "verified by notary",
@@ -454,11 +454,15 @@
         "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
         "stripe-element": {
           "incomplete_number": "Incomplete input!",
-          "invalid_number": "Invalid card number!"
+          "invalid_number": "Invalid card number!",
+          "invalid_iban_start": "Please check your IBAN"
         },
-        "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited in the next 5 to 10 minutes to your wallet.",
+        "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited to your wallet in the next 5 to 10 minutes.",
         "tax": "Tax",
-        "title": "Buy EVE",
+        "titles": {
+          "buy-eve": "Buy EVE",
+          "billing-info": "Please complete your billing informations"
+        },
         "total-amount": "Total",
         "try-again": "Try again",
         "vat": "VAT"
@@ -476,7 +480,7 @@
             "placeholder": "Contact or identity address"
           },
           "amount": {
-            "error": "Please insert a correct number!",
+            "error": "Please enter a number greater than 0!",
             "error-less": "Account balance is to low! ({balance} EVE)",
             "label": "Amount of EVE",
             "placeholder": "EVE to send"
@@ -489,7 +493,7 @@
         "charged-at": "charged at",
         "credit-charged": "Credit recharged",
         "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
-        "empty": "No credit recharges have been executed so far...",
+        "empty": "No credit recharges have yet been carried out.",
         "load-more": "Load more",
         "title": "Credit recharged"
       }

@@ -18,13 +18,10 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import IssueComponent from '../notary/actions/issue/issue.vue';
 
@@ -63,14 +60,14 @@ export default class VerificationsOverviewComponent extends mixins(EvanComponent
     const runtime = (<any>this).getRuntime();
 
     // use url address or use runtime activeAccount as default
-    this.address = this.$route.params.address || runtime.activeAccount;
+    this.address = (this as any).$route.params.address || runtime.activeAccount;
 
     // switch issue account
     this.canIssue = runtime.activeAccount === '0x662fD340606B6c00C51d1915A9f66C081E412e4B';
 
     // load users type
     this.type = (await runtime.dataContract.getEntry(
-      this.$store.state.profileDApp.profile.profileContract,
+      (this as any).$store.state.profileDApp.profile.profileContract,
       'accountDetails',
       runtime.activeAccount
     )).profileType;

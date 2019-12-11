@@ -17,41 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-.stripeElement {
-  border-bottom: 1px solid cssVar('gray-500');
-  padding: 12px 0;
-}
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-.disclaimer {
-  display: block;
-  margin-top: 16px;
-}
+@Component
+export default class ContactsComponent extends mixins(EvanComponent) {
 
-small {
-  color: cssVar('gray-600');
-}
-
-.flex-center {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-
-  :not(:first-child) {
-    margin-top: 24px;
-  }
-}
-
-.vat-loading {
-  position: absolute;
-  text-align: center;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5) !important;
 }

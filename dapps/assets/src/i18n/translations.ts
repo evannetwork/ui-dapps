@@ -17,41 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
+import de from './de';
+import en from './en';
 
-.stripeElement {
-  border-bottom: 1px solid cssVar('gray-500');
-  padding: 12px 0;
-}
-
-.disclaimer {
-  display: block;
-  margin-top: 16px;
-}
-
-small {
-  color: cssVar('gray-600');
-}
-
-.flex-center {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-
-  :not(:first-child) {
-    margin-top: 24px;
-  }
-}
-
-.vat-loading {
-  position: absolute;
-  text-align: center;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5) !important;
-}
+// map all languages
+export default { de, en };
