@@ -26,7 +26,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class SearchResultComponent extends mixins(EvanComponent) {
-  searchQuery: string;
+  searchQuery = '';
 
   /**
    * Watch for changes in the search query
@@ -34,6 +34,5 @@ export default class SearchResultComponent extends mixins(EvanComponent) {
   @Watch('$route', { immediate: true, deep: true })
   onRouteChange(to) {
     this.searchQuery = to.params.query;
-    this.$forceUpdate(); // TODO: This seems rather dirty. Need to see why it's not reactive.
   }
 }
