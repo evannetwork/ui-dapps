@@ -32,7 +32,7 @@ export interface Contact {
 
 enum ContactType {
   COMPANY = 'company',
-  IOT_DEVICE = 'iot-device',
+  IOT_DEVICE = 'device',
   USER = 'user',
   UNSHARED = 'unshared'
 }
@@ -46,11 +46,8 @@ export class ContactsService {
   }
 
   async getContacts(): Promise<Contact[]> {
-    this.contacts = await this.runtime.profile.getAddressBook()
+    this.contacts = await this.runtime.profile.getAddressBook();
 
-    console.log(this.contacts);
-    
-    
     let data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async contact => {
       const type = await this.getProfileType(contact);
@@ -61,9 +58,10 @@ export class ContactsService {
         favorite: Math.random() > 0.5 ? true : false, // TODO: hard coded
         icon: this.getIcon(type),
         type: type,
-        updatedAt: this.contacts.profile[contact].updatedAt,
+        updatedAt: this.contacts.profile[contact].updatedAt
       });
     });
+
     return data;
   }
 
@@ -90,11 +88,14 @@ export class ContactsService {
     try {
       const otherProfile = new bcc.Profile({
         ...this.runtime,
-        accountId
+        profileOwner: accountId,
+        accountId: this.runtime.activeAccount
       });
+
       const { profileType } = await otherProfile.getProfileProperty(
         'accountDetails'
       );
+
       return profileType;
     } catch (err) {
       return ContactType.UNSHARED;
