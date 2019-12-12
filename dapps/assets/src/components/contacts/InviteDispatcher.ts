@@ -35,19 +35,9 @@ const dispatcher = new Dispatcher(
  */
 const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => {
   return new bcc.Profile({
-    accountId: accountId,
-    contractLoader: runtime.contractLoader,
-    cryptoProvider: runtime.cryptoProvider,
-    dataContract: runtime.dataContract,
-    defaultCryptoAlgo: 'aes',
-    description: runtime.description,
-    dfs: runtime.dfs,
-    executor: runtime.executor,
-    ipld: runtime.ipld,
-    log: runtime.logger.log,
-    nameResolver: runtime.nameResolver,
-    rightsAndRoles: runtime.rightsAndRoles,
-    sharing: runtime.sharing
+    ...runtime as any, // TODO: Fix runtime interface
+    profileOwner: accountId,
+    accountId,
   });
 };
 
