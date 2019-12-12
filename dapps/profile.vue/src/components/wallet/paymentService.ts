@@ -242,7 +242,7 @@ export class PaymentService {
             this.requestId = response.result;
             break;
           case 'transferring':
-            this.setTransactionIntoLocalStorage(response);
+            this.writeTransactionIntoLocalStorage(response);
           // tslint:disable-next-line: no-switch-case-fall-through
           case 'success':
             clearInterval(this.intervalTimer);
@@ -285,7 +285,7 @@ export class PaymentService {
   /**
    * set transfering transaction into local storage for later status queries
    */
-  private setTransactionIntoLocalStorage(response: StatusResponse): void {
+  private writeTransactionIntoLocalStorage(response: StatusResponse): void {
     const transaction: TransferringTransactionInterface = {
       token: response.requesterInformation.receivedParams.token,
       amount: parseFloat(response.requesterInformation.receivedParams.amount),

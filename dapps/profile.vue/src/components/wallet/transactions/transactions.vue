@@ -71,13 +71,12 @@ https://evan.network/license/ */
               />
               <div>
                 <p class="mb-0 font-weight-semibold">
-                  {{ 
-                    (
-                      item.type === 'failedTransaction'
-                        ? '_profile.wallet.transactions.credit-failed-recharge'
-                        : '_profile.wallet.transactions.credit-running-recharge'
-                    ) | translate 
-                  }}
+                  <template v-if="item.type === 'failedTransaction'">
+                    {{'_profile.wallet.transactions.credit-failed-recharge' | translate }} 
+                  </template>
+                  <template v-else>
+                    {{ '_profile.wallet.transactions.credit-running-charge' | translate }}
+                  </template>
                 </p>
                 <small class="text-muted">
                   {{ '_profile.wallet.transactions.charged-at' | translate }}
