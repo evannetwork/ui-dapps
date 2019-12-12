@@ -13,6 +13,7 @@
       "contacts-title": "Contacts",
       "created": "Created",
       "email-desc": "The selected user will be notified with your contact request. In the following form you can adjust the request message.",
+      "error-id-or-email": "Please enter a valid Evan ID or email address",
       "favorites": "Favorites",
       "filtered-empty": "No results for this filter.",
       "id-or-email-placeholder": "0x000... or user@mail.com",

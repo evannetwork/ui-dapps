@@ -13,6 +13,7 @@
       "contacts-title": "Kontakte",
       "created": "Erstellt",
       "email-desc": "Der ausgewählte Nutzer wird mit Ihrer Anfrage kontaktiert. Im folgenden Formular können Sie diese bearbeiten.",
+      "error-id-or-email": "Bitte geben Sie eine valide Evan-ID oder E-Mail-Adresse ein",
       "favorites": "Favoriten",
       "filtered-empty": "Keine Ergebnisse für dieses Kriterium.",
       "id-or-email-placeholder": "0x000... oder nutzer@mail.com",

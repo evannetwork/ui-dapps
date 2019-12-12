@@ -87,7 +87,6 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   handleIdOrEmailChange(value: string) {
     this.idOrEmailErrorMessage = this.validateIdOrEmail(value);
-    console.log(this.idOrEmailErrorMessage);
   }
 
   private validateIdOrEmail(value: string): string {
