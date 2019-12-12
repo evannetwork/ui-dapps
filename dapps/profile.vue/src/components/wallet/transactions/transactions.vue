@@ -39,7 +39,7 @@ https://evan.network/license/ */
         class="mt-5"
         v-else>
         <template v-slot:item="{item}" style="height: 80px;">
-          <div class="p-3 d-flex align-items-center">
+          <div class="d-flex align-items-center h-100 px-3">
             <template v-if="item.type === 'creditCharged'">
               <i
                 class="mdi mdi-credit-card-outline mr-3"
@@ -54,12 +54,43 @@ https://evan.network/license/ */
                   {{ item.timestamp | moment('LLL') }}
                 </small>
               </div>
+              <span class="mx-auto"></span>
+              <span :class="{ 'text-primary': item.amount > 0 }">
+                <template v-if="item.amount > 0">+</template>
+                {{ item.amount.toFixed(2) }} EVE
+              </span>
             </template>
-            <span class="mx-auto"></span>
-            <span :class="{ 'text-primary': item.amount > 0 }">
-              <template v-if="item.amount > 0">+</template>
-              {{ item.amount.toFixed(2) }} EVE
-            </span>
+            <template v-else>
+              <i
+                :class="{
+                  'mr-3 mdi': true,
+                  'mdi-progress-close text-red': item.type === 'failedTransaction',
+                  'mdi-progress-upload': item.type === 'transferringTransaction'
+                }"
+                style="font-size: 2rem;"
+              />
+              <div>
+                <p class="mb-0 font-weight-semibold">
+                  {{ 
+                    (
+                      item.type === 'failedTransaction'
+                        ? '_profile.wallet.transactions.credit-failed-recharge'
+                        : '_profile.wallet.transactions.credit-running-recharge'
+                    ) | translate 
+                  }}
+                </p>
+                <small class="text-muted">
+                  {{ '_profile.wallet.transactions.charged-at' | translate }}
+                  {{ item.timestamp | moment('LLL') }}
+                </small>
+              </div>
+              <span class="mx-auto"></span>
+              <span :class="{ 'text-muted': item.amount > 0 }">
+                <template v-if="item.amount > 0">+</template>
+                {{ item.amount.toFixed(2) }} EVE
+              </span>
+            </template>
+            
           </div>
         </template>
       </evan-base-list>
