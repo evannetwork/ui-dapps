@@ -65,17 +65,18 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   async addContact() {
     if (this.checkFormValid()) {
+      const now = new Date().toISOString();
       const formData = {
         accountId: this.accountId,
         alias: this.alias,
-        createdAt: new Date().toISOString(),
+        createdAt: now,
         currLang: window.localStorage.getItem('evan-language'),
         email: this.email,
         emailInvite: this.emailInvite,
         fromAlias: this.fromAlias,
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
-        updatedAt: new Date().toISOString()
+        updatedAt: now
       };
       await this.contactService.addContact(formData);
 

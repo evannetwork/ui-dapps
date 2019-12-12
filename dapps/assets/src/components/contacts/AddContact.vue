@@ -29,47 +29,48 @@
       :title="$t('_assets.contacts.add-contact-title')"
       @hide="initState"
     >
+    <!-- :label="$t('_assets.contacts.id-or-email')" -->
       <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
-        <evan-form-control-input
-          v-model="idOrEmail"
-          :label="$t('_assets.contacts.id-or-email')"
-          :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
-          :required="true"
-          :error="idOrEmailErrorMessage"
-          @input="handleIdOrEmailChange"
-        />
+      <evan-form-control-input
+        v-model="idOrEmail"
+        :label="'_assets.contacts.id-or-email' | translate"
+        :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
+        :required="true"
+        :error="idOrEmailErrorMessage"
+        @input="handleIdOrEmailChange"
+      />
 
-        <evan-form-control-input
-          v-model="alias"
-          :label="$t('_assets.contacts.contact-name')"
-          :placeholder="$t('_assets.contacts.contact-name-placeholder')"
-          :required="true"
-        />
+      <evan-form-control-input
+        v-model="alias"
+        :label="$t('_assets.contacts.contact-name')"
+        :placeholder="$t('_assets.contacts.contact-name-placeholder')"
+        :required="true"
+      />
 
-        <p>{{ '_assets.contacts.email-desc' | translate }}</p>
+      <p>{{ '_assets.contacts.email-desc' | translate }}</p>
 
-        <evan-form-control-input
-          v-model="fromAlias"
-          disabled
-          :label="$t('_assets.contacts.sender')"
-          :placeholder="$t('_assets.contacts.sender-placeholder')"
-          :required="true"
-        />
+      <evan-form-control-input
+        v-model="fromAlias"
+        disabled
+        :label="$t('_assets.contacts.sender')"
+        :placeholder="$t('_assets.contacts.sender-placeholder')"
+        :required="true"
+      />
 
-        <evan-form-control-input
-          v-model="msgTitle"
-          :label="$t('_assets.contacts.subject')"
-          :placeholder="$t('_assets.contacts.subject-placeholder')"
-          :required="true"
-        />
+      <evan-form-control-input
+        v-model="msgTitle"
+        :label="$t('_assets.contacts.subject')"
+        :placeholder="$t('_assets.contacts.subject-placeholder')"
+        :required="true"
+      />
 
-        <evan-form-control-textarea
-          v-model="msgBody"
-          :label="$t('_assets.contacts.message')"
-          :placeholder="$t('_assets.contacts.message-placeholder')"
-          :required="true"
-          :rows="5"
-        />
+      <evan-form-control-textarea
+        v-model="msgBody"
+        :label="$t('_assets.contacts.message')"
+        :placeholder="$t('_assets.contacts.message-placeholder')"
+        :required="true"
+        :rows="5"
+      />
       <template v-slot:footer>
         <div class="d-flex">
           <evan-button

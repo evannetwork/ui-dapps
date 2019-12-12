@@ -35,7 +35,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   filter = null;
   filterBy: string[] = [];
 
-  data: Contact[] = [];
+  contacts: Contact[] = [];
 
   columns = [
     { key: 'icon', label: '', sortable: false },
@@ -51,7 +51,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async mounted() {
-    this.data = await this.fetchContacts();    
+    this.contacts = await this.fetchContacts();    
     this.isLoading = false;
   }
 
@@ -60,10 +60,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async handleContactAdded() {
-    console.log('Contact Added');
-    
     this.isLoading = true;
-    this.data = await this.fetchContacts();
+    this.contacts = await this.fetchContacts();
     this.isLoading = false;
   }
 
