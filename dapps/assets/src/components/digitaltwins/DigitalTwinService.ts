@@ -17,23 +17,37 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
-import { Watch } from 'vue-property-decorator';
+import axios from 'axios';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+export interface DigitalTwin {
+  icon: string;
+  name: string;
+  owner: string;
+  updated: string;
+  created: string;
+  favorite: boolean;
+}
 
-@Component
-export default class SearchResultComponent extends mixins(EvanComponent) {
-  searchQuery: string;
+export class DigitalTwinService {
+  async getTwins(): Promise<DigitalTwin[]> {
+    const data: any = await axios.get('https://randomuser.me/api/?results=20');
+    return data.data.results.map(user => {
+      return  {
+        icon: 'mdi mdi-cube-outline',
+        name: user.login.uuid,
+        owner: `${user.name.first} ${user.name.last}`,
+        updated: Date.now(),
+        created: Date.now(),
+        favorite: true
+      }
+    });
+  }
 
-  /**
-   * Watch for changes in the search query
-   */
-  @Watch('$route', { immediate: true, deep: true })
-  onRouteChange(to) {
-    this.searchQuery = to.params.query;
-    this.$forceUpdate(); // TODO: This seems rather dirty. Need to see why it's not reactive.
+  filterByOwn(): Promise<DigitalTwin[]> {
+    return this.getTwins();
+  }
+
+  filterByFavorites(): Promise<DigitalTwin[]> {
+    return this.getTwins();
   }
 }

@@ -1,12 +1,45 @@
 {
   "_assets": {
-    "contacts": "Kontakte",
-    "digitaltwins": "Digitale Zwillinge",
-    "digitaltwin": {
-      "digitaltwin-title": "Digitale Zwillinge",
-      "my-own": "Eigene",
+    "contacts": {
+      "add-contact-btn": "Kontakt hinzufügen",
+      "add-contact-desc": "Geben Sie die Evan-ID oder die E-Mail-Adresse Ihres Kontaktes ein um diesen einzuladen.",
+      "add-contact-title": "Neuen Kontakt hinzufügen",
+      "all": "Alle",
+      "cancel": "Abbrechen",
+      "companies": "Unternehmen",
+      "contact-name-placeholder": "Max Mustermann",
+      "contact-name": "Kontaktname",
+      "contacts-empty": "Sie haben noch keine Kontakte hinzugefügt.",
+      "contacts-title": "Kontakte",
+      "created": "Erstellt",
+      "email-desc": "Der ausgewählte Nutzer wird mit Ihrer Anfrage kontaktiert. Im folgenden Formular können Sie diese bearbeiten.",
       "favorites": "Favoriten",
-      "all": "Alle"
+      "filtered-empty": "Keine Ergebnisse für dieses Kriterium.",
+      "id-or-email-placeholder": "0x000... oder nutzer@mail.com",
+      "id-or-email": "Evan-ID oder E-Mail",
+      "invite-dispatcher": "Kontakt einladen",
+      "iot-devices": "IOT-Devices",
+      "message-placeholder": "Nachricht an den ausgewählten Nutzer",
+      "message-prefill": "Hallo,\n\nIch möchte Sie gerne als Kontakt hinzufügen.\n\nMit freundlichen Grüßen\n",
+      "message": "Nachricht",
+      "name": "Name",
+      "sender-placeholder": "Absender",
+      "sender": "Absender",
+      "subject-placeholder": "Betreff",
+      "subject-prefill": "Einladung zum evan.network",
+      "subject": "Betreff",
+      "updated": "Aktualisiert",
+      "users": "Nutzer"
+    },
+    "digitaltwins": {
+      "all": "Alle",
+      "created": "Erstellt",
+      "digitaltwins-title": "Digitale Zwillinge",
+      "favorites": "Favoriten",
+      "my-own": "Eigene",
+      "name": "Name",
+      "owner": "Besitzer",
+      "updated": "Aktualisiert"
     }
   }
 }

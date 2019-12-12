@@ -1,12 +1,45 @@
 {
   "_assets": {
-    "contacts": "Contacts",
-    "digitaltwins": "Digital Twins",
-    "digitaltwin": {
-      "digitaltwin-title": "Digital Twins",
-      "my-own": "My own",
+    "contacts": {
+      "add-contact-btn": "Add contact",
+      "add-contact-desc": "Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan.",
+      "add-contact-title": "Add new Contact",
+      "all": "All",
+      "cancel": "Cancel",
+      "companies": "Companies",      
+      "contact-name-placeholder": "Joe Doe",
+      "contact-name": "Contact Name",
+      "contacts-empty": "You currently have no contacts.",
+      "contacts-title": "Contacts",
+      "created": "Created",
+      "email-desc": "The selected user will be notified with your contact request. In the following form you can adjust the request message.",
       "favorites": "Favorites",
-      "all": "All"
+      "filtered-empty": "No results for this filter.",
+      "id-or-email-placeholder": "0x000... or user@mail.com",
+      "id-or-email": "Evan ID or email",
+      "invite-dispatcher": "Invite Contact",
+      "iot-devices": "IOT Devices",
+      "message-placeholder": "Message for the invited contact",
+      "message-prefill": "Hello,\n\nI want to add you as a contact.\n\nBest regards,\n",
+      "message": "Message",
+      "name": "Name",
+      "sender-placeholder": "Sender",
+      "sender": "Sender",
+      "subject-placeholder": "Subject",
+      "subject-prefill": "Invitation to evan.network",
+      "subject": "Subject",
+      "updated": "Updated",
+      "users": "Users"
+    },
+    "digitaltwins": {
+      "all": "All",
+      "created": "Created",
+      "digitaltwins-title": "Digital Twins",
+      "favorites": "Favorites",
+      "my-own": "My own",
+      "name": "Name",
+      "owner": "Owner",
+      "updated": "Updated"
     }
   }
 }

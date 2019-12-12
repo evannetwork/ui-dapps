@@ -21,12 +21,12 @@
   <div>
     <div class="row mt-5">
       <div class="col-6">
-        <h1 class="h4">{{ '_assets.digitaltwin.digitaltwin-title' | translate }}</h1>
+        <h1 class="h4">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</h1>
       </div>
       <div class="col-6 text-right">
-        <evan-button :type="'text'">{{'_assets.digitaltwin.my-own' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwins.my-own' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwins.favorites' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwins.all' | translate }}</evan-button>
       </div>
     </div>
     <b-table
@@ -34,14 +34,18 @@
       hover
       :items="data"
       :fields="columns"
-      :tbody-tr-class="'evan-table-row'"
+      :tbody-tr-class="'evan-table-body-row'"
+      :thead-tr-class="'evan-table-head-row'"
+      :thead-class="'evan-table-head'"
       sticky-header="80vh"
       @scroll.native="scrollHandler"
     >
       <template v-slot:cell(icon)="data">
         <i class="table-icon" :class="data.item.icon"></i>
       </template>
-      <!-- <template v-slot:name="name">{{name.first}} {{name.last}}</template> -->
+      <template v-slot:cell(favorite)="data">
+        <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
+      </template>
     </b-table>
     <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
   </div>
@@ -52,32 +56,50 @@ import DigitalTwinsComponent from './DigitalTwins';
 export default DigitalTwinsComponent;
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import'~@evan.network/ui/src/style/utils';
 
-/deep/ .evan-table {
+// Global table styles
+// TODO: Refactor into evan-table component for unified style
+.evan-table {
   margin: 0;
-  table {
+  width: 100%;
+
+  table.table.b-table {
     border-spacing: 0 4px;
     border-collapse: separate;
-  }
-  table.table.b-table > thead > tr > th {
-    background-color: cssVar('bg-level-3');
-    border: none;
-    color: cssVar('gray-600');
-  }
-  table.table.b-table > tbody > tr > td {
-    vertical-align: middle;
-    border: none;
-  }
-  tr.evan-table-row {
-    height: 64px;
-    background-color: white;
-  }
+    margin-left: auto;
+    margin-right: auto;
 
-  .table-icon {
-    font-size: 1.75em;
-    margin-left: 0.25em;
+    & > thead.evan-table-head > tr.evan-table-head-row > th {
+      background-color: cssVar('bg-level-3');
+      border: none;
+      color: cssVar('gray-600');
+
+      &[aria-sort="ascending"], &[aria-sort="descending"] {
+        color: cssVar('primary');
+      }
+    }
+
+    & > tbody > tr.evan-table-body-row {
+      height: 64px;
+      background-color: white;
+      cursor: pointer;
+
+      & > td {
+        vertical-align: middle;
+        border: none;
+      }
+
+      &.b-table-empty-row {
+        cursor: inherit;
+      }
+    }
+
+    i.table-icon {
+      font-size: 1.75em;
+      margin-left: 0.25em;
+    }
   }
 }
 </style>
