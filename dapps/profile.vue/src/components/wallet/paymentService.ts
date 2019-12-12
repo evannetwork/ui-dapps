@@ -358,7 +358,7 @@ export class PaymentService {
           element.requestId
         );
 
-        // delete transaction from lokal storage if status is success
+        // delete transaction from local storage if status is "success"
         if (response.status === 'success') {
           return null;
         }
