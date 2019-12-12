@@ -492,7 +492,7 @@
       "transactions": {
         "charged-at": "charged at",
         "credit-charged": "Credit recharged",
-        "credit-running-recharge": "Credit recharge not yet completed",
+        "credit-running-charge": "Charging credit card not completed yet",
         "credit-failed-recharge": "The charging has unfortunately failed",
         "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
         "empty": "No credit recharges have yet been carried out.",
