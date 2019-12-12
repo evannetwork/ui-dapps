@@ -455,7 +455,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * check if object is type of ErrorStatus or StatusResponse
+   * check if object is of type ErrorStatus or StatusResponse
    *
    * @param {ErrorStatus | StatusResponse} object
    */
