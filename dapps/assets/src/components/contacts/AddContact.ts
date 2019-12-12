@@ -30,7 +30,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   addressbook;
 
-  idOrEmailValidation = '';
+  idOrEmailErrorMessage = '';
   idOrEmail = null;
 
   accountId = null;
@@ -49,7 +49,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   }
 
   private initState() {
-    this.idOrEmailValidation = '';
+    this.idOrEmailErrorMessage = '';
     this.idOrEmail = null;
 
     this.accountId = null;
@@ -86,8 +86,8 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   }
 
   handleIdOrEmailChange(value: string) {
-    this.idOrEmailValidation = this.validateIdOrEmail(value);
-    console.log(this.idOrEmailValidation);
+    this.idOrEmailErrorMessage = this.validateIdOrEmail(value);
+    console.log(this.idOrEmailErrorMessage);
   }
 
   private validateIdOrEmail(value: string): string {
@@ -113,7 +113,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   checkFormValid(): boolean {
     if (
       document.querySelector('#contactForm :invalid') ||
-      this.idOrEmailValidation
+      this.idOrEmailErrorMessage
     ) {
       return false;
     }

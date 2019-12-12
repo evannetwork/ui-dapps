@@ -35,7 +35,7 @@
           :label="$t('_assets.contacts.id-or-email')"
           :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
           :required="true"
-          :error="idOrEmailValidation"
+          :error="idOrEmailErrorMessage"
           @input="handleIdOrEmailChange"
         />
 
