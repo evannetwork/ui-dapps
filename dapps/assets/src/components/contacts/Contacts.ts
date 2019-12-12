@@ -46,7 +46,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   ];
 
   created() {
-    const runtime = (<any>this).getRuntime();
+    const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
   }
 

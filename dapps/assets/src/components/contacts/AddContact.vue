@@ -50,6 +50,7 @@
 
         <evan-form-control-input
           v-model="fromAlias"
+          disabled
           :label="$t('_assets.contacts.sender')"
           :placeholder="$t('_assets.contacts.sender-placeholder')"
           :required="true"

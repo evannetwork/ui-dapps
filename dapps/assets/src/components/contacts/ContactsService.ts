@@ -95,7 +95,6 @@ export class ContactsService {
       const { profileType } = await otherProfile.getProfileProperty(
         'accountDetails'
       );
-
       return profileType;
     } catch (err) {
       return ContactType.UNSHARED;

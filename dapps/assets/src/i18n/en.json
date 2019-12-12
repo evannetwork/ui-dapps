@@ -12,7 +12,7 @@
       "contacts-empty": "You currently have no contacts.",
       "contacts-title": "Contacts",
       "created": "Created",
-      "email-desc": "The selected user will be notified by blockchain mail or email. In the following form you can adjust the message.",
+      "email-desc": "The selected user will be notified with your contact request. In the following form you can adjust the request message.",
       "favorites": "Favorites",
       "filtered-empty": "No results for this filter.",
       "id-or-email-placeholder": "0x000... or user@mail.com",
