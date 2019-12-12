@@ -111,10 +111,10 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
    * List of missing company information.
    */
   requiredCompanyFields = {
-    contact: [ 'city', 'country', 'postalCode', 'streetAndNumber', ],
-    registration: [ 'court', 'register', 'registerNumber', 'salesTaxID' ],
+    contact: [ 'city', 'country', 'postalCode', 'streetAndNumber' ],
+    registration: [ 'court', 'register', 'registerNumber' ],
   };
-  missingCompanyFields = { contact: [ ], registration: [ ], };
+  missingCompanyFields = { contact: [ ], registration: [ ] };
 
   /**
    * Show loading until the request was finished.
