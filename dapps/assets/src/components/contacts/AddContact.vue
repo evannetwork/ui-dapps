@@ -71,17 +71,20 @@
           :rows="5"
         />
       <template v-slot:footer>
-        <evan-button
-          type="secondary"
-          @click="closePanel"
-          :label="'_assets.contacts.cancel' | translate"
-        />
-        <evan-button
-          type="primary"
-          native-type="submit"
-          :disabled="!checkFormValid()"
-          :label="'_assets.contacts.add-contact-btn' | translate"
-        />
+        <div class="d-flex">
+          <evan-button
+            type="secondary"
+            @click="closePanel"
+            :label="'_assets.contacts.cancel' | translate"
+          />
+          <evan-button
+            type="primary"
+            native-type="submit"
+            class="ml-3 flex-grow-1"
+            :disabled="!checkFormValid()"
+            :label="'_assets.contacts.add-contact-btn' | translate"
+          />
+        </div>
       </template>
     </evan-swipe-panel>
   </form>
