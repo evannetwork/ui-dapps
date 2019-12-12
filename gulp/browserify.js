@@ -117,7 +117,7 @@ gulp.task('browserify', async function(callback) {
       .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(sourcemaps.write('./', {
         sourceMappingURL: function(file) {
-          return 'http://localhost:3000/external/dbcpread/' + file.relative + '.map';
+          return `http://localhost:3000/external/${ dbcp.public.name }/${ file.relative }.map`;
         }
       }))
       .pipe(gulp.dest(`${ distFolder }`))
