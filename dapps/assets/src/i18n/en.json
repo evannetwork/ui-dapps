@@ -7,6 +7,10 @@
       "my-own": "My own",
       "favorites": "Favorites",
       "all": "All"
+    },
+    "search": {
+      "searched-for": "You searched for",
+      "no-results": "Sorry, we can't find any results for your query"
     }
   }
 }

@@ -19,15 +19,19 @@
 
 <template>
   <div>
-    <p v-if="searchTerm">You searched for {{ searchTerm }}</p>
+    <p v-if="searchTerm" class="bold mt-5 search-hint">
+      {{ '_assets.search.searched-for' | translate }} {{ searchTerm }}
+    </p>
     <router-view
-      v-if="data.length > 0"
+      v-if="total > 0"
       :data="data"
       :isLoading="isLoading"
       :fetchMore="fetchMore"
     ></router-view>
-    <template v-else>
-      <h2>Sorry no resultes for your query</h2>
+    <template v-if="total === 0">
+      <p class="bold mt-5 search-hint text-center mt-5">
+        {{ '_assets.search.no-results' | translate }}
+      </p>
     </template>
   </div>
 </template>
@@ -36,3 +40,7 @@
   import DataContainer from './DataContainer';
   export default DataContainer;
 </script>
+
+<style lang="scss" scoped>
+  @import './DataContainer.scss';
+</style>

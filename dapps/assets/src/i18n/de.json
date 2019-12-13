@@ -7,6 +7,10 @@
       "my-own": "Eigene",
       "favorites": "Favoriten",
       "all": "Alle"
+    },
+    "search": {
+      "searched-for": "Sie sichten nach",
+      "no-results": "Leider keine Ergebnisse zu Ihrer Anfrage gefunden"
     }
   }
 }

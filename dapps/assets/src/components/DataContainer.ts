@@ -48,12 +48,13 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
   onRouteChange (to: Route) {
     this.searchTerm = to.params.query;
 
-    this.initialQuery(to.params.query);
+    this.initialQuery();
   }
 
-  async initialQuery(query: string) {
+  async initialQuery() {
     this.isLoading = true;
     this.page = 0;
+    this.data = [];
     const { result, total } = await this.search.query(this.type, { searchTerm: this.searchTerm });
 
     this.total = total;

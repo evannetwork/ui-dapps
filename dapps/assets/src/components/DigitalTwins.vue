@@ -29,7 +29,6 @@
         <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
       </div>
     </div>
-    <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
     <b-table
       class="evan-table"
       hover
