@@ -41,7 +41,7 @@ interface SearchResult {
 
 interface SearchResponse {
   data: {
-  requesterInformation?: any;
+    requesterInformation?: any;
     result: SearchResult[]
     serverInformation?: any;
     status: string;
