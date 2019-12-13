@@ -55,10 +55,17 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.isLoading = false;
   }
 
+  /**
+   * Route to profile of clicked contact 
+   * @param contact Clicked contact
+   */
   handleRowClicked(contact: Contact) {
     window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${contact.address}/detail`;
   }
 
+  /**
+   * Update contact list when new contact added
+   */
   async handleContactAdded() {
     this.isLoading = true;
     this.contacts = await this.fetchContacts();
