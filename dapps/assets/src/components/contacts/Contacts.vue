@@ -53,12 +53,12 @@
             :label="$t('_assets.contacts.companies')"
           />
           <evan-button
-            @click="filterByType('iot-device')"
+            @click="filterByType('device')"
             class="filter-btn ml-3"
             type="text-secondary"
             icon="mdi mdi-radio-tower"
             iconPosition="left"
-            :class="{ 'active': filter === 'iot-device' }"
+            :class="{ 'active': filter === 'device' }"
             :label="$t('_assets.contacts.iot-devices')"
           />
           <evan-button
