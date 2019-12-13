@@ -43,6 +43,11 @@ export function ensureValues(address: string, entry: UIContainerTemplateProperty
     dataSchema: cloneDeep(bcc.lodash, entry.dataSchema, true)
   });
 
+  // avoid saving of 0x000...
+  if (entry.value === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+    entry.value = '';
+  }
+
   // set default value
   entry.value = entry.value || fieldUtils.defaultValue(entry.dataSchema);
 

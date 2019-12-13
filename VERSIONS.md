@@ -8,6 +8,9 @@
   - fix sharing sidebar removes contact selection on permission checkbox select
 - `onboarding.vue` (3.3.1)
   - onboarding formulars exceeded screen width on small devices
+- `datacontainer.digitaltwin` (1.8.3)
+  - fix empty number values
+  - use default values for 0x0... entries
 
 ### Deprecations
 
