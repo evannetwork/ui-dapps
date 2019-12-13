@@ -2,7 +2,7 @@
   "_assets": {
     "contacts": {
       "add-contact-btn": "Add contact",
-      "add-contact-desc": "Enter the appropriate Evan ID to send a contact request or enter an email address to invite a new contact to Evan.",
+      "add-contact-desc": "Enter an Evan ID to add an existing account or an email to invite a new user to the evan.network.",
       "add-contact-title": "Add new Contact",
       "all": "All",
       "cancel": "Cancel",
@@ -20,14 +20,14 @@
       "id-or-email": "Evan ID or email",
       "invite-dispatcher": "Invite Contact",
       "iot-devices": "IOT Devices",
-      "message-placeholder": "Message for the invited contact",
+      "message-placeholder": "Message sent to the specified user",
       "message-prefill": "Hello,\n\nI want to add you as a contact.\n\nBest regards,\n",
       "message": "Message",
       "name": "Name",
       "sender-placeholder": "Sender",
       "sender": "Sender",
       "subject-placeholder": "Subject",
-      "subject-prefill": "Invitation to evan.network",
+      "subject-prefill": "Contact Request",
       "subject": "Subject",
       "updated": "Updated",
       "users": "Users"
