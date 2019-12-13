@@ -17,37 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import axios from 'axios';
+@import '~@evan.network/ui/src/style/utils';
 
-export interface DigitalTwin {
-  icon: string;
-  name: string;
-  owner: string;
-  updated: string;
-  created: string;
-  favorite: boolean;
-}
-
-export class DigitalTwinService {
-  async getTwins(): Promise<DigitalTwin[]> {
-    const data: any = await axios.get('https://randomuser.me/api/?results=20');
-    return data.data.results.map(user => {
-      return  {
-        icon: 'mdi mdi-cube-outline',
-        name: user.login.uuid,
-        owner: `${user.name.first} ${user.name.last}`,
-        updated: Date.now(),
-        created: Date.now(),
-        favorite: true
-      }
-    });
-  }
-
-  filterByOwn(): Promise<DigitalTwin[]> {
-    return this.getTwins();
-  }
-
-  filterByFavorites(): Promise<DigitalTwin[]> {
-    return this.getTwins();
-  }
+.search-hint {
+  color: cssVar("gray-600")
 }

@@ -22,62 +22,49 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DigitalTwinService, DigitalTwin } from './DigitalTwinService';
 import { debounce } from 'lodash';
+import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
-  twinService: DigitalTwinService = new DigitalTwinService();
-
-  isLoading = true;
-
-  data: DigitalTwin[] = [];
-
   columns = [
     { key: 'icon', label: '' },
-    { key: 'name', label: this.$t('_assets.digitaltwins.name') },
-    { key: 'owner', label: this.$t('_assets.digitaltwins.owner') },
-    { key: 'updated', label: this.$t('_assets.digitaltwins.updated') },
-    { key: 'created', label: this.$t('_assets.digitaltwins.created') },
-    { key: 'favorite', label: '' }
+    'name',
+    'owner',
+    'updated',
+    'created',
+    { key: 'actions', label: '' }
   ];
 
-  async mounted() {
-    await this.fetchInitial();
-  }
+  @Prop({
+    default: [],
+  }) data: any[];
+
+  @Prop({
+    default: true,
+  }) isLoading: boolean;
+
+  @Prop({
+    required: true
+  }) fetchMore: Function;
 
   /**
    * Watch if user scrolled down and load more twins when necessary
    */
   scrollHandler = debounce(
-    async function(ev) {
-      if(!this.isLoading) {
-        const offset = 200;
-        let bottomOfWindow =
-          ev.target.clientHeight + ev.target.scrollTop >= ev.target.scrollHeight - offset;
-        if (bottomOfWindow) {
-          this.isLoading = true;
-          await this.fetchMore();
-        }
+    async ({ target: { clientHeight, scrollTop, scrollHeight } }) => {
+      if (this.isLoading) {
+        return;
+      }
+
+      const offset = 200;
+      let bottomOfWindow = clientHeight + scrollTop >= scrollHeight - offset;
+
+      if (bottomOfWindow && typeof this.fetchMore === 'function') {
+        this.fetchMore();
       }
     },
     100,
     { trailing: true }
-  );
-
-  /**
-   * Load initial batch of digital twins
-   */
-  async fetchInitial() {
-    this.data = await this.twinService.getTwins();
-    this.isLoading = false;
-  }
-
-  /**
-   * Load more digital twins
-   */
-  async fetchMore() {
-    this.data = [...this.data, ...(await this.twinService.getTwins())];
-    this.isLoading = false;
-  }
+  )
 }

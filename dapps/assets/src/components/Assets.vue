@@ -56,7 +56,7 @@
           </div>
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
-          <div class="container">
+          <div class="container content">
             <router-view></router-view>
           </div>
         </transition>
