@@ -74,20 +74,17 @@
       </div>
 
       <div class="d-flex flex-row mt-3">
-        <b-table
-          class="evan-table"
-          hover
+        <evan-table
+          :hover="true"
           :items="contacts"
           :fields="columns"
           :filter="filter"
           :filterIncludedFields="filterBy"
-          :tbody-tr-class="'evan-table-body-row'"
-          :thead-tr-class="'evan-table-head-row'"
-          :thead-class="'evan-table-head'"
+          :sticky-header="'80vh'"
+          :show-empty="true"
           @row-clicked="handleRowClicked"
-          sticky-header="80vh"
-          show-empty
         >
+          
           <template
             v-slot:cell(alias)="contacts"
           >{{ contacts.item.alias ? contacts.item.alias : contacts.item.address }}</template>
@@ -105,7 +102,7 @@
           <template v-slot:emptyfiltered>
             <h4>{{ '_assets.contacts.filtered-empty' | translate }}</h4>
           </template>
-        </b-table>
+        </evan-table>
       </div>
       <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
     </div>

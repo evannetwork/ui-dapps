@@ -30,14 +30,13 @@
       </div>
     </div>
     <b-table
-      class="evan-table"
-      hover
+      :hover="true"
       :items="data"
       :fields="columns"
       :tbody-tr-class="'evan-table-body-row'"
       :thead-tr-class="'evan-table-head-row'"
       :thead-class="'evan-table-head'"
-      sticky-header="80vh"
+      :sticky-header="'80vh'"
       @scroll.native="scrollHandler"
     >
       <template v-slot:cell(icon)="data">
@@ -57,49 +56,4 @@ export default DigitalTwinsComponent;
 </script>
 
 <style lang="scss">
-@import'~@evan.network/ui/src/style/utils';
-
-// Global table styles
-// TODO: Refactor into evan-table component for unified style
-.evan-table {
-  margin: 0;
-  width: 100%;
-
-  table.table.b-table {
-    border-spacing: 0 4px;
-    border-collapse: separate;
-    margin-left: auto;
-    margin-right: auto;
-
-    & > thead.evan-table-head > tr.evan-table-head-row > th {
-      background-color: cssVar('bg-level-3');
-      border: none;
-      color: cssVar('gray-600');
-
-      &[aria-sort="ascending"], &[aria-sort="descending"] {
-        color: cssVar('primary');
-      }
-    }
-
-    & > tbody > tr.evan-table-body-row {
-      height: 64px;
-      background-color: white;
-      cursor: pointer;
-
-      & > td {
-        vertical-align: middle;
-        border: none;
-      }
-
-      &.b-table-empty-row {
-        cursor: inherit;
-      }
-    }
-
-    i.table-icon {
-      font-size: 1.75em;
-      margin-left: 0.25em;
-    }
-  }
-}
 </style>
