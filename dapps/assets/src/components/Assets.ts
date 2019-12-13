@@ -30,6 +30,19 @@ declare module 'vue/types/vue' {
     $router: VueRouter;
     $route: Route;
     $store: any;
+    $t: Function;
+    dapp: Dapp;
+    getRuntime: Function;
+  }
+
+  interface Dapp {
+    baseHash: string;
+    baseUrl: string;
+    contractAddress: string;
+    domainName: string;
+    ens: string;
+    fullUrl: string;
+    rootEns: string;
   }
 }
 
@@ -49,7 +62,7 @@ export default class AssetsComponent extends mixins(EvanComponent) {
     // { key: `others`, icon: 'mdi mdi-check-decagram' }
   ].map(entry => {
     return {
-      label: `_assets.${entry.key}`,
+      label: `_assets.${entry.key}.${entry.key}-title`,
       icon: entry.icon,
       to: { name: entry.key }
     };

@@ -17,13 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="evan theme-evan">
-      Contacts
-  </div>
-</template>
+// vue imports
+import Component, { mixins } from 'vue-class-component';
+import { Watch } from 'vue-property-decorator';
 
-<script lang="ts">
-import ContactsComponent from './Contacts';
-export default ContactsComponent;
-</script>
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+
+@Component
+export default class SearchResultComponent extends mixins(EvanComponent) {
+  searchQuery = '';
+
+  /**
+   * Watch for changes in the search query
+   */
+  @Watch('$route', { immediate: true, deep: true })
+  onRouteChange(to) {
+    this.searchQuery = to.params.query;
+  }
+}
