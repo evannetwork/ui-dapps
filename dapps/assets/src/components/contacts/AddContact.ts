@@ -63,6 +63,9 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.msgTitle = this.$t('_assets.contacts.subject-prefill');
   }
 
+  /**
+   * Add new contact based on form inputs
+   */
   async addContact() {
     if (this.checkFormValid()) {
       const now = new Date().toISOString();
@@ -86,6 +89,10 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * Handles changes on the input for evan id and email
+   * @param value input value
+   */
   handleIdOrEmailChange(value: string) {
     this.idOrEmailErrorMessage = this.validateIdOrEmail(value);
   }
