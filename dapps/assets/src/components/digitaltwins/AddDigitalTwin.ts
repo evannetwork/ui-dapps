@@ -17,15 +17,20 @@
   the following URL: https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import AddContactComponent from './contacts/AddContact.vue';
-import AddDigitalTwinComponent from './digitaltwins/AddDigitalTwin.vue';
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'add-contact', component: AddContactComponent },
-  { name: 'add-digital-twin', component: AddDigitalTwinComponent },
-];
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-export default componentRegistration;
+@Component
+export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
+
+  showPanel() {
+    (this.$refs.addDigitalTwinPanel as any).show();
+  }
+
+  closePanel() {
+    (this.$refs.addDigitalTwinPanel as any).hide();
+  }
+}
