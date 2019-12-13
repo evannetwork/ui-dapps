@@ -20,8 +20,6 @@
 import axios from 'axios';
 import { utils } from '@evan.network/api-blockchain-core';
 
-let agentUrl;
-
 interface QueryOptions {
   count?: number;
   offset?: number;
@@ -52,15 +50,19 @@ interface SearchResponse {
 }
 
 class SearchService {
-  searchUrl = `${agentUrl}/search`;
   runtime = null;
+  searchUrl: string;
 
   constructor(runtime: any) {
     if (!runtime) {
       throw new Error('Initialized search Service without runtime.');
     }
     this.runtime = runtime;
-    agentUrl = `https://search${runtime.environment === 'testcore' ? '.test' : ''}.evan.network/api/smart-agents' 
+
+    const core =  runtime.environment === 'testcore' ? '.test' : '';
+    const agentUrl = `https://search${ core }.evan.network/api/smart-agents`;
+
+    this.searchUrl = `${agentUrl}/search`;
   }
 
   async query(type = 'twins', options: QueryOptions) {
