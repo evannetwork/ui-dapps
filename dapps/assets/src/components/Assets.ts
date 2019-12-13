@@ -35,7 +35,7 @@ declare module 'vue/types/vue' {
 
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
-  searchQuery: string;
+  searchQuery = '';
 
   navItems = [
     {
@@ -55,11 +55,16 @@ export default class AssetsComponent extends mixins(EvanComponent) {
     };
   });
 
+  mounted() {
+    this.searchQuery = this.$route.params.query || '';
+  }
+
   /**
    * Handle user search query
    */
   handleSearchEnter() {
-    this.$router.push({ name: 'search', params: { query: this.searchQuery } });
+    // TODO switch depending on current selected item twins / contacts etc ...
+    this.$router.push({ path: `digitaltwins/${this.searchQuery}` });
     this.searchQuery = '';
   }
 }

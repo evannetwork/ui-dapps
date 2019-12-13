@@ -17,4 +17,86 @@
   the following URL: https://evan.network/license/
 */
 
-export class SearchService {}
+import axios from 'axios';
+import { utils } from '@evan.network/api-blockchain-core';
+
+let agentUrl = 'https://search.test.evan.network/api/smart-agents' // TODO: prod/dev switch
+
+interface QueryOptions {
+  count?: number;
+  offset?: number;
+  page?: number;
+  reverse?: boolean;
+  searchTerm?: string;
+  sortBy?: string;
+}
+
+interface SearchResult {
+  address: string
+  containers: string[]
+  created: number
+  description: string
+  name: string
+  owner: string
+  updated: number
+}
+
+interface SearchResponse {
+  data: {
+  requesterInformation?: any;
+    result: SearchResult[]
+    serverInformation?: any;
+    status: string;
+    total: number;
+  }
+}
+
+class SearchService {
+  searchUrl = `${agentUrl}/search`;
+  runtime = null;
+
+  constructor(runtime: any) {
+    if (!runtime) {
+      throw new Error('Initialized search Service without runtime.');
+    }
+    this.runtime = runtime;
+  }
+
+  async query(type = 'twins', options: QueryOptions) {
+    const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
+
+    const defaultOptions = {
+      count: 20,
+      offset: 0,
+      reverse: true,
+      sortBy: 'timestamp',
+      searchTerm: '*',
+      page: null
+    }
+    const params = Object.assign({}, defaultOptions, options);
+
+    // prefer paging over offset
+    if (params.page) {
+      params.offset = params.page * params.count;
+      delete params.page;
+    }
+
+    // wrap with wildcards if defined
+    params.searchTerm = !params.searchTerm || params.searchTerm === '*'
+      ? '*'
+      :`*${ params.searchTerm }*`;
+
+    const { data: { result, total }} = await axios.get(`${ this.searchUrl }/${ type }`, {
+      headers: {
+        'Authorization': authHeaders,
+      },
+      params,
+    }) as unknown as SearchResponse;
+
+    // TODO: error handling in request etc.. ..
+
+    return { result, total };
+  }
+}
+
+export default SearchService

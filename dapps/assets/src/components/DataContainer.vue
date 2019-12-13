@@ -19,11 +19,20 @@
 
 <template>
   <div>
-    You searched for {{ searchQuery }}
+    <p v-if="searchTerm">You searched for {{ searchTerm }}</p>
+    <router-view
+      v-if="data.length > 0"
+      :data="data"
+      :isLoading="isLoading"
+      :fetchMore="fetchMore"
+    ></router-view>
+    <template v-else>
+      <h2>Sorry no resultes for your query</h2>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-import SearchResultComponent from './SearchResult';
-export default SearchResultComponent;
+  import DataContainer from './DataContainer';
+  export default DataContainer;
 </script>
