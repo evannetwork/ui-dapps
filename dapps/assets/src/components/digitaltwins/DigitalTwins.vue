@@ -21,12 +21,12 @@
   <div>
     <div class="row mt-5">
       <div class="col-6">
-        <h1 class="h4">{{ '_assets.digitaltwin.digitaltwin-title' | translate }}</h1>
+        <h1 class="h4">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</h1>
       </div>
       <div class="col-6 text-right">
-        <evan-button :type="'text'">{{'_assets.digitaltwin.my-own' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.digitaltwin.favorites' | translate }}</evan-button>
-        <evan-button :type="'text'">{{'_assets.digitaltwin.all' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.search.my-own' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwins.favorites' | translate }}</evan-button>
+        <evan-button :type="'text'">{{'_assets.digitaltwins.all' | translate }}</evan-button>
       </div>
     </div>
     <b-table
@@ -54,7 +54,6 @@ export default DigitalTwinsComponent;
 
 <style lang="scss" scoped>
 @import'~@evan.network/ui/src/style/utils';
-
 /deep/ .evan-table {
   margin: 0;
   table {
@@ -74,7 +73,6 @@ export default DigitalTwinsComponent;
     height: 64px;
     background-color: white;
   }
-
   .table-icon {
     font-size: 1.75em;
     margin-left: 0.25em;
