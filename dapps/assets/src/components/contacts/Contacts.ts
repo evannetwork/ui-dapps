@@ -35,7 +35,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   filter = null;
   filterBy: string[] = [];
 
-  data: Contact[] = [];
+  contacts: Contact[] = [];
 
   columns = [
     { key: 'icon', label: '', sortable: false },
@@ -51,19 +51,24 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async mounted() {
-    this.data = await this.fetchContacts();    
+    this.contacts = await this.fetchContacts();    
     this.isLoading = false;
   }
 
+  /**
+   * Route to profile of clicked contact 
+   * @param contact Clicked contact
+   */
   handleRowClicked(contact: Contact) {
     window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${contact.address}/detail`;
   }
 
+  /**
+   * Update contact list when new contact added
+   */
   async handleContactAdded() {
-    console.log('Contact Added');
-    
     this.isLoading = true;
-    this.data = await this.fetchContacts();
+    this.contacts = await this.fetchContacts();
     this.isLoading = false;
   }
 

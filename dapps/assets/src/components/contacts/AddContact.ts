@@ -30,16 +30,16 @@ export default class AddContactComponent extends mixins(EvanComponent) {
 
   addressbook;
 
-  idOrEmailValidation = '';
+  idOrEmailErrorMessage = '';
   idOrEmail = null;
 
   accountId = null;
   alias = null;
   email = null;
   emailInvite = null;
-  fromAlias = window.localStorage.getItem('evan-alias');
-  msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
-  msgTitle = this.$t('_assets.contacts.subject-prefill');
+  fromAlias = null;
+  msgBody = null;
+  msgTitle = null;
 
   async created() {
     this.initState();
@@ -48,8 +48,11 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.addressbook = await runtime.profile.getAddressBook();
   }
 
+  /**
+   * Init and reset component state
+   */
   private initState() {
-    this.idOrEmailValidation = '';
+    this.idOrEmailErrorMessage = '';
     this.idOrEmail = null;
 
     this.accountId = null;
@@ -63,19 +66,23 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.msgTitle = this.$t('_assets.contacts.subject-prefill');
   }
 
+  /**
+   * Add new contact based on form inputs
+   */
   async addContact() {
     if (this.checkFormValid()) {
+      const now = new Date().toISOString();
       const formData = {
         accountId: this.accountId,
         alias: this.alias,
-        createdAt: new Date().toISOString(),
+        createdAt: now,
         currLang: window.localStorage.getItem('evan-language'),
         email: this.email,
         emailInvite: this.emailInvite,
         fromAlias: this.fromAlias,
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
-        updatedAt: new Date().toISOString()
+        updatedAt: now
       };
       await this.contactService.addContact(formData);
 
@@ -85,9 +92,12 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * Handles changes on the input for evan id and email
+   * @param value input value
+   */
   handleIdOrEmailChange(value: string) {
-    this.idOrEmailValidation = this.validateIdOrEmail(value);
-    console.log(this.idOrEmailValidation);
+    this.idOrEmailErrorMessage = this.validateIdOrEmail(value);
   }
 
   private validateIdOrEmail(value: string): string {
@@ -110,10 +120,13 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * Check if all required inputs are filled correctly
+   */
   checkFormValid(): boolean {
     if (
       document.querySelector('#contactForm :invalid') ||
-      this.idOrEmailValidation
+      this.idOrEmailErrorMessage
     ) {
       return false;
     }

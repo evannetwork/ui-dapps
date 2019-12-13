@@ -33,7 +33,7 @@
             iconPosition="left"
             :class="{ 'active': filterBy.includes('favorite') }"
             :label="$t('_assets.contacts.favorites')"
-          ></evan-button>
+          />
           <evan-button
             @click="filterByType('users')"
             class="filter-btn ml-3"
@@ -42,7 +42,7 @@
             iconPosition="left"
             :class="{ 'active': filter === 'users' }"
             :label="$t('_assets.contacts.users')"
-          ></evan-button>
+          />
           <evan-button
             @click="filterByType('company')"
             class="filter-btn ml-3"
@@ -51,7 +51,7 @@
             iconPosition="left"
             :class="{ 'active': filter === 'company' }"
             :label="$t('_assets.contacts.companies')"
-          ></evan-button>
+          />
           <evan-button
             @click="filterByType('iot-device')"
             class="filter-btn ml-3"
@@ -60,7 +60,7 @@
             iconPosition="left"
             :class="{ 'active': filter === 'iot-device' }"
             :label="$t('_assets.contacts.iot-devices')"
-          ></evan-button>
+          />
           <evan-button
             @click="resetFilter"
             class="filter-btn ml-3"
@@ -69,33 +69,30 @@
             iconPosition="left"
             :class="{ 'active': filter === null }"
             :label="$t('_assets.contacts.all')"
-          ></evan-button>
+          />
         </div>
       </div>
 
       <div class="d-flex flex-row mt-3">
-        <b-table
-          class="evan-table"
-          hover
-          :items="data"
+        <evan-table
+          :hover="true"
+          :items="contacts"
           :fields="columns"
           :filter="filter"
           :filterIncludedFields="filterBy"
-          :tbody-tr-class="'evan-table-body-row'"
-          :thead-tr-class="'evan-table-head-row'"
-          :thead-class="'evan-table-head'"
+          :sticky-header="'80vh'"
+          :show-empty="true"
           @row-clicked="handleRowClicked"
-          sticky-header="80vh"
-          show-empty
         >
+          
           <template
-            v-slot:cell(alias)="data"
-          >{{ data.item.alias ? data.item.alias: data.item.address }}</template>
-          <template v-slot:cell(icon)="data">
-            <i class="table-icon" :class="data.item.icon"></i>
+            v-slot:cell(alias)="contacts"
+          >{{ contacts.item.alias ? contacts.item.alias : contacts.item.address }}</template>
+          <template v-slot:cell(icon)="contacts">
+            <i class="table-icon" :class="contacts.item.icon"></i>
           </template>
-          <template v-slot:cell(favorite)="data">
-            <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
+          <template v-slot:cell(favorite)="contacts">
+            <i class="table-icon" :class="{'mdi mdi-star': contacts.item.favorite }"></i>
           </template>
 
           <!-- Empty slots -->
@@ -105,7 +102,7 @@
           <template v-slot:emptyfiltered>
             <h4>{{ '_assets.contacts.filtered-empty' | translate }}</h4>
           </template>
-        </b-table>
+        </evan-table>
       </div>
       <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
     </div>
@@ -153,23 +150,21 @@ export default ContactsComponent;
 }
 
 /deep/ .evan-swipe-panel.light {
-  .light & {
-    background-color: cssVar('body-bg');
+  background-color: cssVar('body-bg');
 
-    &,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    span,
-    p,
-    li,
-    b,
-    label,
-    small {
-      color: cssVar('text-color');
-    }
+  &,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  span,
+  p,
+  li,
+  b,
+  label,
+  small {
+    color: cssVar('text-color');
   }
 }
 </style>
