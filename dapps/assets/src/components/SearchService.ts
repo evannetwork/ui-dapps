@@ -30,19 +30,19 @@ interface QueryOptions {
 }
 
 interface SearchResult {
-  address: string
+  address: string;
   containers: string[]
-  created: number
-  description: string
-  name: string
-  owner: string
-  updated: number
+  created: number;
+  description: string;
+  name: string;
+  owner: string;
+  updated: number;
 }
 
 interface SearchResponse {
   data: {
     requesterInformation?: any;
-    result: SearchResult[]
+    result: SearchResult[];
     serverInformation?: any;
     status: string;
     total: number;
@@ -89,16 +89,16 @@ class SearchService {
       ? '*'
       :`*${ params.searchTerm }*`;
 
-    const { data: { result, total }} = await axios.get(`${ this.searchUrl }/${ type }`, {
+    const { data } = await axios.get<SearchResponse>(`${ this.searchUrl }/${ type }`, {
       headers: {
         'Authorization': authHeaders,
       },
       params,
-    }) as unknown as SearchResponse;
+    });
 
     // TODO: error handling in request etc.. ..
 
-    return { result, total };
+    return { ...data };
   }
 }
 
