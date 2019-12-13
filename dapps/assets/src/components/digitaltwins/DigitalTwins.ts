@@ -31,14 +31,16 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   isLoading = true;
 
+  selectedFilter = 'all';
+
   data: DigitalTwin[] = [];
 
   columns = [
     { key: 'icon', label: '' },
     { key: 'name', label: this.$t('_assets.digitaltwins.name') },
     { key: 'owner', label: this.$t('_assets.digitaltwins.owner') },
-    { key: 'updated', label: this.$t('_assets.digitaltwins.updated') },
-    { key: 'created', label: this.$t('_assets.digitaltwins.created') },
+    { key: 'updatedAt', label: this.$t('_assets.digitaltwins.updated') },
+    { key: 'createdAt', label: this.$t('_assets.digitaltwins.created') },
     { key: 'favorite', label: '' }
   ];
 

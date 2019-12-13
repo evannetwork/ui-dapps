@@ -36,9 +36,9 @@ export class DigitalTwinService {
         icon: 'mdi mdi-cube-outline',
         name: user.login.uuid,
         owner: `${user.name.first} ${user.name.last}`,
-        updated: Date.now(),
-        created: Date.now(),
-        favorite: true
+        updatedAt: Date.now(), // TODO: hard coded
+        createdAt: Date.now(), // TODO: hard coded
+        favorite: Math.random() > 0.5 ? true : false, // TODO: hard coded
       }
     });
   }
