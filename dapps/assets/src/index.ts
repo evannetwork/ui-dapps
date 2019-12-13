@@ -19,7 +19,7 @@
 
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
-import { System, getDomainName, } from '@evan.network/ui-dapp-browser';
+import { System, getDomainName } from '@evan.network/ui-dapp-browser';
 import { TablePlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
@@ -29,9 +29,10 @@ import components from './components/registry';
 import AssetsComponent from './components/Assets.vue';
 
 export * from './components/registry';
-export { translations }
+export { dispatcher } from './components/contacts/InviteDispatcher';
+export { translations };
 
-System.map['@evan.network/assets'] = `assets.${ getDomainName() }!dapp-content`;
+System.map['@evan.network/assets'] = `assets.${getDomainName()}!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
@@ -42,7 +43,12 @@ System.map['@evan.network/assets'] = `assets.${ getDomainName() }!dapp-content`;
  * @param      {any}     dappEnsOrContract  original ens / contract address that were loaded
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
-export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
+export async function startDApp(
+  container: any,
+  dbcpName: any,
+  dappEnsOrContract: any,
+  dappBaseUrl: any
+) {
   Vue.use(TablePlugin);
 
   await initializeVue({
@@ -53,8 +59,8 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     dbcpName,
     RootComponent: AssetsComponent,
     routes,
-    state: { },
+    state: {},
     translations: translations,
-    Vue: Vue,
+    Vue: Vue
   });
 }

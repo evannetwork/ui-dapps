@@ -21,7 +21,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-const dispatcher = new Dispatcher(
+export const dispatcher = new Dispatcher(
   `assets.${dappBrowser.getDomainName()}`,
   'inviteDispatcher',
   40 * 1000,
