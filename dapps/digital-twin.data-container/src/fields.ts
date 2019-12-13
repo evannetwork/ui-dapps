@@ -191,7 +191,7 @@ export function parseFieldValue(
       return value.trim();
     }
     case 'number': {
-      return typeof value !== 'undefined' && value !== '' ? parseFloat(value) : value;
+      return typeof value !== 'undefined' && value !== '' ? parseFloat(value) : undefined;
     }
     case 'files': {
       const converted = [ ];

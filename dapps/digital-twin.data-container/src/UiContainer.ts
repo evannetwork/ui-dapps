@@ -354,7 +354,7 @@ export default class UiContainer {
             if (this.isContainer) {
               owner = await container.getOwner();
               permissions = await container.getContainerShareConfigForAccount(
-                  this.runtime.activeAccount);
+                this.runtime.activeAccount);
             } else {
               owner = this.runtime.activeAccount;
               permissions = Object.keys(plugin.template.properties)
