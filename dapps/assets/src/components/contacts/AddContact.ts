@@ -37,9 +37,9 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   alias = null;
   email = null;
   emailInvite = null;
-  fromAlias = window.localStorage.getItem('evan-alias');
-  msgBody = `${this.$t('_assets.contacts.message-prefill')}${this.fromAlias}`;
-  msgTitle = this.$t('_assets.contacts.subject-prefill');
+  fromAlias = null;
+  msgBody = null;
+  msgTitle = null;
 
   async created() {
     this.initState();
@@ -48,6 +48,9 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.addressbook = await runtime.profile.getAddressBook();
   }
 
+  /**
+   * Init and reset component state
+   */
   private initState() {
     this.idOrEmailErrorMessage = '';
     this.idOrEmail = null;
@@ -117,6 +120,9 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * Check if all required inputs are filled correctly
+   */
   checkFormValid(): boolean {
     if (
       document.querySelector('#contactForm :invalid') ||
