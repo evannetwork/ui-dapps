@@ -9,8 +9,8 @@
       "all": "Alle"
     },
     "search": {
-      "searched-for": "Sie sichten nach",
-      "no-results": "Leider keine Ergebnisse zu Ihrer Anfrage gefunden"
+      "searched-for": "Sie suchten nach",
+      "no-results": "Leider wurden keine Ergebnisse zu Ihrer Anfrage gefunden"
     }
   }
 }

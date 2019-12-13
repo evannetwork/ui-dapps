@@ -46,7 +46,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
         }]
       },
       { name:'contacts', path: 'contacts', component: ContactsComponent },
-      // { name:'search', path: 'search/:query', component: SearchResultComponent },
     ]
   }
 
