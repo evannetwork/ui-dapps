@@ -20,8 +20,8 @@
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 import blockRewardContractInterface from './blockRewardContractInterface';
+import { PaymentService } from '../paymentService';
 
 interface TransactionInterface {
   amount: number;
@@ -54,6 +54,11 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
   displayedTransactions = 5;
 
   /**
+   * payment service instance
+   */
+  paymentService: PaymentService;
+
+  /**
    * Watch for dispatcher updates
    */
   listeners: Array<any> = [];
@@ -71,12 +76,17 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
   async created() {
     const runtime = (this as any).getRuntime();
 
+    // setup payment service
+    this.paymentService = new PaymentService(runtime);
+
     // use this link for viewing all transactions on explorer
-    this.explorerTransactionsUrl = runtime.environment === 'core' ?
-      'https://explorer.evan.network':
-      'https://testexplorer.evan.network'
-    this.explorerTransactionsUrl = `${ this.explorerTransactionsUrl }/address/` +
-      `${ runtime.activeAccount }/transactions`;
+    this.explorerTransactionsUrl =
+      runtime.environment === 'core'
+      ? 'https://explorer.evan.network'
+      : 'https://testexplorer.evan.network';
+
+    this.explorerTransactionsUrl =
+      `${ this.explorerTransactionsUrl }/address/${ runtime.activeAccount }/transactions`;
 
     // watch for buy eve events
     const reload = () => this.loadTransactions();
@@ -95,9 +105,14 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
 
     // load last credits
     const charged = await this.loadChargedCredits();
+    // load transferring transactions from local storage
+    const transferringTransactions = await this.paymentService.getTransactionsFromLocalStorage();
 
     // apply transactions to scope and sort them
-    this.transactions = [ ].concat(charged);
+    this.transactions = [ ].concat(charged).concat(transferringTransactions);
+    // filter null object
+    this.transactions = this.transactions.filter(item => item);
+
     this.transactions = this.transactions.sort((a, b) =>
       a.timestamp < b.timestamp ? 1 : (a.timestamp > b.timestamp ? -1 : 0)
     );
@@ -131,10 +146,10 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
         amount: parseFloat(amount),
         timestamp: block.timestamp,
         type: 'creditCharged',
-      }
+      };
     }));
 
-    return receivedPayments
+    return receivedPayments;
   }
 
   /**

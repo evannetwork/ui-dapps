@@ -26,11 +26,13 @@ import {
   CustomerInterface,
   OptionsInterface,
   VatValidationInterface,
+  TransferringTransactionInterface,
   CustomerParams
 } from './interfaces';
 import { PUB_KEY, stripeScriptId, stripeScriptPath } from './stripe-config';
 import { StatusResponse } from './StatusResponse.interface';
 import { StripeSource } from './StripeSource.interface';
+import moment from 'moment';
 
 declare var Stripe: any;
 
@@ -176,7 +178,8 @@ export class PaymentService {
   private async checkStatus(
     id: string,
     amount: string,
-    customer: any
+    customer: any,
+    requestId = this.requestId
   ): Promise<StatusResponse> {
     return new Promise(async resolve => {
       const res = await axios.post<StatusResponse>(
@@ -185,7 +188,7 @@ export class PaymentService {
           token: id,
           amount,
           customer,
-          requestId: this.requestId
+          requestId
         },
         {
           headers: {
@@ -239,6 +242,8 @@ export class PaymentService {
             this.requestId = response.result;
             break;
           case 'transferring':
+            this.writeTransactionIntoLocalStorage(response);
+          // tslint:disable-next-line: no-switch-case-fall-through
           case 'success':
             clearInterval(this.intervalTimer);
             resolve(response);
@@ -276,6 +281,98 @@ export class PaymentService {
       )
     ]);
   }
+
+  /**
+   * set transfering transaction into local storage for later status queries
+   */
+  private writeTransactionIntoLocalStorage(response: StatusResponse): void {
+    const transaction: TransferringTransactionInterface = {
+      token: response.requesterInformation.receivedParams.token,
+      amount: parseFloat(response.requesterInformation.receivedParams.amount),
+      customer: response.requesterInformation.receivedParams.customer,
+      requestId: this.requestId,
+      timestamp: response.serverInformation.currentTime,
+      type: 'transferringTransaction'
+    };
+
+    // get all transferring transactions from local storage
+    const transactions = window.localStorage['evan-credit-recharge']
+      ? JSON.parse(window.localStorage['evan-credit-recharge'])
+      : [];
+    // add new element
+    transactions.push(transaction);
+    // save all transactions into local storage again
+    window.localStorage['evan-credit-recharge'] = JSON.stringify(transactions);
+  }
+
+  /**
+   * get all transferring transactions from local storage
+   */
+  async getTransactionsFromLocalStorage(): Promise<TransferringTransactionInterface[]> {
+    // get transactions from local storage
+    let transactions = window.localStorage['evan-credit-recharge']
+      ? JSON.parse(window.localStorage['evan-credit-recharge'])
+      : [];
+    // filter null objects
+    transactions = transactions.filter(e => e);
+
+    // check transferring transaction status
+    let transferringTransactions = await this.checkTransferringTransactions(transactions);
+    // filter null objects
+    transferringTransactions = transferringTransactions.filter(e => e);
+
+    // write transaction back to local storage
+    if (transferringTransactions.length > 0) {
+      window.localStorage['evan-credit-recharge'] = JSON.stringify(transferringTransactions);
+    } else {
+      delete window.localStorage['evan-credit-recharge'];
+    }
+
+    return transferringTransactions;
+  }
+
+  /**
+   * check the current states of transferring transactions and
+   * filter out old transactions
+   *
+   * @param {TransferringTransaction[]} transactions
+   */
+  private async checkTransferringTransactions(
+    transactions: TransferringTransactionInterface[]
+  ): Promise<TransferringTransactionInterface[]> {
+    return transactions.length <= 0 ? [] : Promise.all(
+      transactions.map(async element => {
+        // delete transaction from local storage
+        // if type is failedTransaction and timestamp is older than 1 week
+        if (element.type === 'failedTransaction') {
+          if (moment(element.timestamp).add(1, 'week').isBefore(moment())) {
+            return null;
+          }
+          return element;
+        }
+
+        const response = await this.checkStatus(
+          element.token,
+          element.amount.toString(),
+          element.customer,
+          element.requestId
+        );
+
+        // delete transaction from local storage if status is "success"
+        if (response.status === 'success') {
+          return null;
+        }
+
+        // rename type from 'transferringTransaction' to 'failedTransaction'
+        if (response.status === 'error') {
+          element.type = 'failedTransaction';
+        }
+
+        return element;
+      })
+    );
+  }
+
 
   /**
    * Check VAT number against backend.
