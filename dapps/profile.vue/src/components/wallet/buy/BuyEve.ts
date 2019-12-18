@@ -28,6 +28,7 @@ import axios from 'axios';
 import { PaymentService } from '../paymentService';
 import { ErrorStatus } from '../interfaces';
 import { STRIPE_ELEMENT_CONFIG } from '../stripe-config';
+import { StatusResponse } from '../StatusResponse.interface';
 
 interface PayFormInterface extends EvanForm {
   type: EvanFormControl;
@@ -164,7 +165,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   setupForms() {
     // setup pay formular
     const $t = (this as any).$t;
-    this.payForm = (<PayFormInterface>new EvanForm(this, { 
+    this.payForm = (<PayFormInterface>new EvanForm(this, {
       amount: {
         value: 10,
         validate: function(vueInstance: BuyEveComponent) {
@@ -377,11 +378,12 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       { type: this.payForm.type.value === 'iban' ? 'sepa_debit' : 'card' },
     );
 
-    if (result.status === 'error') {
-      this.stripe.payError = (result as ErrorStatus).code;
+    if (this.isErrorStatus(result)) {
+      this.stripe.payError = result.code;
     } else {
       this.stripe.payError = '';
       this.stripe.success = true;
+
       // send event, so e.g. the transactions overview can reload
       window.dispatchEvent(new CustomEvent('evan-credit-recharge'));
     }
@@ -411,7 +413,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
         this.vatCalcTimeout = setTimeout(async () => {
           const { data: { result: { error, reverseCharge, tax, } } } = await axios({
             method: 'GET',
-            url: `${ agentUrl }/api/smart-agents/payment-processor/checkVat?` + 
+            url: `${ agentUrl }/api/smart-agents/payment-processor/checkVat?` +
               `vat=${ vat }&country=${ country }`
           });
 
@@ -450,5 +452,14 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   removeStripeError() {
     this.stripe.payError = '';
     this.buying = false;
+  }
+
+  /**
+   * check if object is of type ErrorStatus or StatusResponse
+   *
+   * @param {ErrorStatus | StatusResponse} object
+   */
+  isErrorStatus(object: ErrorStatus | StatusResponse): object is ErrorStatus {
+    return (object as ErrorStatus).code !== undefined;
   }
 }

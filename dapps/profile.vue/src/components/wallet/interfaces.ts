@@ -1,4 +1,4 @@
-import { Address } from "./StripeSource.interface";
+import { Address } from './StripeSource.interface';
 
 export interface VatValidationInterface {
   isValidVat: boolean;
@@ -38,4 +38,13 @@ export interface OptionsInterface {
   type?: string;
   currency?: string;
   notification_method?: string;
+}
+
+export interface TransferringTransactionInterface {
+  token: string;
+  amount: number;
+  timestamp: number;
+  customer: CustomerInterface;
+  requestId: string;
+  type: string;
 }
