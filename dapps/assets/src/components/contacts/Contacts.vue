@@ -97,10 +97,10 @@
 
           <!-- Empty slots -->
           <template v-slot:empty>
-            <h4>{{ '_assets.contacts.contacts-empty' | translate }}</h4>
+            <span>{{ '_assets.contacts.contacts-empty' | translate }}</span>
           </template>
           <template v-slot:emptyfiltered>
-            <h4>{{ '_assets.contacts.filtered-empty' | translate }}</h4>
+            <span>{{ '_assets.contacts.filtered-empty' | translate }}</span>
           </template>
         </evan-table>
       </div>
