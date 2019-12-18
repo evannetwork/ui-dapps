@@ -28,7 +28,7 @@
           <evan-button
             @click="filterByFavorites()"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-star-outline"
             iconPosition="left"
             :class="{ 'active': filterBy.includes('favorite') }"
@@ -37,7 +37,7 @@
           <evan-button
             @click="filterByType('users')"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-account-outline"
             iconPosition="left"
             :class="{ 'active': filter === 'users' }"
@@ -46,7 +46,7 @@
           <evan-button
             @click="filterByType('company')"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-domain"
             iconPosition="left"
             :class="{ 'active': filter === 'company' }"
@@ -55,7 +55,7 @@
           <evan-button
             @click="filterByType('iot-device')"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-radio-tower"
             iconPosition="left"
             :class="{ 'active': filter === 'iot-device' }"
@@ -64,7 +64,7 @@
           <evan-button
             @click="resetFilter"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-account-multiple-outline"
             iconPosition="left"
             :class="{ 'active': filter === null }"
@@ -144,16 +144,6 @@ h1.header {
   position: fixed;
   bottom: 40px;
   right: 60px;
-}
-
-/deep/ .filter-btn.btn {
-  color: cssVar('gray-600');
-  i.left.mdi {
-    margin-right: 0;
-  }
-  &.active {
-    border-bottom: 2px solid cssVar('primary');
-  }
 }
 
 /deep/ .evan-swipe-panel.light {
