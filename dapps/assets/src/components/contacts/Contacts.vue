@@ -22,7 +22,7 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div>
-          <h1 class="h4" style="margin:0">{{ '_assets.contacts.contacts-title' | translate }}</h1>
+          <h1 class="header">{{ '_assets.contacts.contacts-title' | translate }}</h1>
         </div>
         <div>
           <evan-button
@@ -82,6 +82,7 @@
           :filterIncludedFields="filterBy"
           :sticky-header="'80vh'"
           :show-empty="true"
+          :show-scrollbar="true"
           @row-clicked="handleRowClicked"
         >
           
@@ -104,7 +105,6 @@
           </template>
         </evan-table>
       </div>
-      <evan-loading v-if="isLoading" :classes="'mt-3'"></evan-loading>
     </div>
 
     <evan-button
@@ -126,6 +126,13 @@ export default ContactsComponent;
 
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
+
+h1.header {
+  font-size: 18px;
+  margin: 0;
+  color: cssVar('gray-600');
+  font-weight: bold;
+}
 
 .content {
   max-width: 768px;
