@@ -30,7 +30,7 @@ import SearchService from './SearchService';
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
   searchTerm = '';
-  search = new SearchService((this as any).getRuntime());
+  search = new SearchService(this.getRuntime());
   data = [];
   isLoading = false;
   page = 0;
