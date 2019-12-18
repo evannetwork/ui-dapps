@@ -53,13 +53,13 @@
       <p>{{ '_assets.digitaltwins.template-desc' | translate }}</p>
 
       <evan-form-control-select
-        :options="['Bike']"
+        :options="presetTemplates"
         :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
         :required="true"
         @change="handleTemplateSelectChange"
       />
 
-      <evan-file-input accept=".json"></evan-file-input>
+      <evan-file-input accept=".json" @input="handleFileUpoad"></evan-file-input>
 
       <template v-slot:footer>
         <div class="d-flex">

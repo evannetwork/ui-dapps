@@ -30,14 +30,32 @@ export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
   desc: string = null;
   template = null;
   image = null;
+  presetTemplates = [
+    {
+      label: this.$t('_assets.digitaltwins.bike'),
+      value: 'bike',
+      content: null
+    },
+    {
+      label: this.$t('_assets.digitaltwins.car'),
+      value: 'car',
+      content: null
+    }
+  ]
 
   handleTemplateSelectChange(ev) {
-    console.log(ev);
+    this.template = ev.target.value;
+    console.log(this.template);
     
   }
 
   handleImageChange(ev) {
     this.image = ev;
+  }
+
+  handleFileUpoad(ev) {
+    console.log(ev);
+    
   }
 
   showPanel() {
