@@ -74,9 +74,9 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       page: this.page,
       count: this.count,
       searchTerm: this.searchTerm
-    }
+    };
 
-    const { result } = await this.search.query(this.type, options)
+    const { result } = await this.search.query(this.type, options);
 
     this.data = [...this.data, ...result];
     this.isLoading = false;

@@ -31,7 +31,7 @@ interface QueryOptions {
 
 interface SearchResult {
   address: string;
-  containers: string[]
+  containers: string[];
   created: number;
   description: string;
   name: string;
@@ -39,14 +39,16 @@ interface SearchResult {
   updated: number;
 }
 
+interface SearchResponseData {
+  requesterInformation?: any;
+  result: SearchResult[];
+  serverInformation?: any;
+  status: string;
+  total: number;
+}
+
 interface SearchResponse {
-  data: {
-    requesterInformation?: any;
-    result: SearchResult[];
-    serverInformation?: any;
-    status: string;
-    total: number;
-  }
+  data: SearchResponseData;
 }
 
 class SearchService {
@@ -65,7 +67,7 @@ class SearchService {
     this.searchUrl = `${agentUrl}/search`;
   }
 
-  async query(type = 'twins', options: QueryOptions) {
+  async query(type = 'twins', options: QueryOptions): Promise<SearchResponseData> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
 
     const defaultOptions = {
@@ -75,7 +77,7 @@ class SearchService {
       sortBy: 'timestamp',
       searchTerm: '*',
       page: null
-    }
+    };
     const params = Object.assign({}, defaultOptions, options);
 
     // prefer paging over offset
@@ -87,7 +89,7 @@ class SearchService {
     // wrap with wildcards if defined
     params.searchTerm = !params.searchTerm || params.searchTerm === '*'
       ? '*'
-      :`*${ params.searchTerm }*`;
+      : `*${ params.searchTerm }*`;
 
     const { data } = await axios.get<SearchResponse>(`${ this.searchUrl }/${ type }`, {
       headers: {
@@ -98,8 +100,8 @@ class SearchService {
 
     // TODO: error handling in request etc.. ..
 
-    return { ...data };
+    return { ...data } as unknown as SearchResponseData;
   }
 }
 
-export default SearchService
+export default SearchService;
