@@ -28,29 +28,51 @@
       :hideCloseButton="true"
       :title="$t('_assets.digitaltwins.add-digitaltwin-title')"
     >
-
-      <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
+      <!-- Use profile picture componnent for now. Might need refactoring to adjust texts. -->
+      <evan-profile-picture
+        type="device"
+        :accountName="name"
+        :isEditable="true"
+        :src="image ? image : null"
+        @changed="handleImageChange"
+      />
 
       <evan-form-control-input
-        v-model="idOrEmail"
-        :label="'_assets.contacts.id-or-email' | translate"
-        :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
+        v-model="name"
+        :label="$t('_assets.digitaltwins.name')"
+        :placeholder="$t('_assets.digitaltwins.name-placeholder')"
         :required="true"
-        :error="idOrEmailErrorMessage"
-        @input="handleIdOrEmailChange"
       />
+
+      <evan-form-control-input
+        v-model="desc"
+        :label="$t('_assets.digitaltwins.desc')"
+        :placeholder="$t('_assets.digitaltwins.desc-placeholder')"
+      />
+
+      <p>{{ '_assets.digitaltwins.template-desc' | translate }}</p>
+
+      <evan-form-control-select
+        :options="['Bike']"
+        :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
+        :required="true"
+        @change="handleTemplateSelectChange"
+      />
+
+      <evan-file-input accept=".json"></evan-file-input>
+
       <template v-slot:footer>
         <div class="d-flex">
           <evan-button
             type="secondary"
             @click="closePanel"
-            :label="'_assets.contacts.cancel' | translate"
+            :label="'_assets.digitaltwins.cancel' | translate"
           />
           <evan-button
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :label="'_assets.contacts.add-contact-btn' | translate"
+            :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />
         </div>
       </template>

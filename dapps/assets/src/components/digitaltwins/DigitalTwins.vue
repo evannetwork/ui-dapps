@@ -60,6 +60,7 @@
           :hover="true"
           :items="data"
           :fields="columns"
+          :show-scrollbar="true"
           :sticky-header="'80vh'"
           @scroll.native="scrollHandler"
         >

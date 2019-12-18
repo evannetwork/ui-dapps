@@ -26,6 +26,20 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 @Component
 export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
+  name: string = null;
+  desc: string = null;
+  template = null;
+  image = null;
+
+  handleTemplateSelectChange(ev) {
+    console.log(ev);
+    
+  }
+
+  handleImageChange(ev) {
+    this.image = ev;
+  }
+
   showPanel() {
     (this.$refs.addDigitalTwinPanel as any).show();
   }
