@@ -48,8 +48,6 @@ declare module 'vue/types/vue' {
 
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
-  searchQuery = '';
-
   navItems = [
     {
       key: 'digitaltwins',
@@ -67,17 +65,4 @@ export default class AssetsComponent extends mixins(EvanComponent) {
       to: { name: entry.key }
     };
   });
-
-  mounted() {
-    this.searchQuery = this.$route.params.query || '';
-  }
-
-  /**
-   * Handle user search query
-   */
-  handleSearchEnter() {
-    // TODO switch depending on current selected item twins / contacts etc ...
-    this.$router.push({ path: `digitaltwins/${this.searchQuery}` });
-    this.searchQuery = '';
-  }
 }

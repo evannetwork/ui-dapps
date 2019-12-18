@@ -20,15 +20,35 @@
 <template>
   <div>
     <div class="row mt-5">
-      <div class="col-6">
-        <h1 class="h4">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</h1>
+      <div class="col-8">
+        <div class="search">
+          <label
+            @click="isActiveSearch = true"
+            for="searchInput"
+          >
+            <i class="mdi mdi-magnify"></i>
+            <span class="h4" v-if="!isActiveSearch">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
+          </label>
+          <input
+            id="searchInput"
+            v-if="isActiveSearch"
+            placeholder="0x123ABC..."
+            class="border-0"
+            v-model="searchTerm"
+          />
+        </div>
       </div>
-      <div class="col-6 text-right">
+      <div class="col-4 text-right">
         <evan-button :type="'text'">{{'_assets.search.my-own' | translate }}</evan-button>
         <evan-button :type="'text'">{{'_assets.digitaltwins.favorites' | translate }}</evan-button>
         <evan-button :type="'text'">{{'_assets.digitaltwins.all' | translate }}</evan-button>
       </div>
     </div>
+    <template v-if="total === 0">
+      <p class="bold mt-5 search-hint text-center mt-5">
+        {{ '_assets.search.no-results' | translate }}
+      </p>
+    </template>
     <b-table
       class="evan-table"
       hover
@@ -48,34 +68,10 @@
 </template>
 
 <script lang="ts">
-import DigitalTwinsComponent from './DigitalTwins';
-export default DigitalTwinsComponent;
+  import DigitalTwinsComponent from './DigitalTwins';
+  export default DigitalTwinsComponent;
 </script>
 
 <style lang="scss" scoped>
-@import'~@evan.network/ui/src/style/utils';
-/deep/ .evan-table {
-  margin: 0;
-  table {
-    border-spacing: 0 4px;
-    border-collapse: separate;
-  }
-  table.table.b-table > thead > tr > th {
-    background-color: cssVar('bg-level-3');
-    border: none;
-    color: cssVar('gray-600');
-  }
-  table.table.b-table > tbody > tr > td {
-    vertical-align: middle;
-    border: none;
-  }
-  tr.evan-table-row {
-    height: 64px;
-    background-color: white;
-  }
-  .table-icon {
-    font-size: 1.75em;
-    margin-left: 0.25em;
-  }
-}
+  @import './DigitalTwins.scss';
 </style>

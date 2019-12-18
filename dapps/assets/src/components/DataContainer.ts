@@ -48,14 +48,22 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
   onRouteChange (to: Route) {
     this.searchTerm = to.params.query;
 
-    this.initialQuery();
+    this.initialQuery(this.searchTerm);
   }
 
-  async initialQuery() {
+  mounted() {
+    this.searchTerm = this.$route.params.query || '';
+  }
+
+  async initialQuery(searchTerm = null) {
     this.isLoading = true;
     this.page = 0;
     this.data = [];
-    const { result, total } = await this.search.query(this.type, { searchTerm: this.searchTerm });
+    this.searchTerm = searchTerm;
+
+    this.$router.push({ path: `digitaltwins/${searchTerm}` });
+
+    const { result, total } = await this.search.query(this.type, { searchTerm });
 
     this.total = total;
     this.data = result;

@@ -23,7 +23,7 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { debounce } from 'lodash';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
@@ -35,6 +35,8 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     'created',
     { key: 'actions', label: '' }
   ];
+  searchTerm = '';
+  isActiveSearch = false;
 
   @Prop({
     default: [],
@@ -47,6 +49,15 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   @Prop({
     required: true
   }) fetchMore: Function;
+
+  @Prop({
+    required: true
+  }) search: Function;
+
+  @Watch('searchTerm')
+    onSearchtermChanged(searchTerm: string, oldVal: string) {
+      this.searchHandlerDebounced();
+    }
 
   /**
    * Watch if user scrolled down and load more twins when necessary
@@ -66,5 +77,17 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     },
     100,
     { trailing: true }
-  )
+  );
+
+  async searchHandler () {
+    if (typeof this.search === 'function') {
+      this.search(this.searchTerm);
+    }
+  }
+
+  searchHandlerDebounced = debounce(
+    this.searchHandler.bind(this),
+    250,
+    { trailing: true }
+  ).bind(this);
 }
