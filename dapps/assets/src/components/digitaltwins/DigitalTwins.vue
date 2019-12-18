@@ -22,16 +22,13 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div>
-          <h1
-            class="h4"
-            style="margin:0"
-          >{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</h1>
+          <h1 class="header">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</h1>
         </div>
         <div>
           <evan-button
             @click="filterByOwn()"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-account-outline"
             iconPosition="left"
             :class="{ 'active': selectedFilter === 'own' }"
@@ -40,7 +37,7 @@
           <evan-button
             @click="filterByFavorites()"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-star-outline"
             iconPosition="left"
             :class="{ 'active': selectedFilter === 'favorites' }"
@@ -49,7 +46,7 @@
           <evan-button
             @click="filterByAll()"
             class="filter-btn ml-3"
-            type="text-secondary"
+            type="text-filter"
             icon="mdi mdi-account-multiple-outline"
             iconPosition="left"
             :class="{ 'active': selectedFilter === 'all' }"
@@ -98,6 +95,13 @@ export default DigitalTwinsComponent;
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
 
+h1.header {
+  font-size: 18px;
+  margin: 0;
+  color: cssVar('gray-600');
+  font-weight: bold;
+}
+
 .content {
   max-width: 768px;
   margin-left: auto;
@@ -108,15 +112,5 @@ export default DigitalTwinsComponent;
   position: fixed;
   bottom: 40px;
   right: 60px;
-}
-
-/deep/ .filter-btn.btn {
-  color: cssVar('gray-600');
-  i.left.mdi {
-    margin-right: 0;
-  }
-  &.active {
-    border-bottom: 2px solid cssVar('primary');
-  }
 }
 </style>
