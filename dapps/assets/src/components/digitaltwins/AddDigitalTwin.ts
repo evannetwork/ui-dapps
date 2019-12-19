@@ -44,7 +44,6 @@ export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   handleTemplateSelectChange(ev) {
     this.template = ev.target.value;
-    console.log(this.template);
   }
 
   handleImageChange(ev) {
