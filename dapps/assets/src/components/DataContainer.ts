@@ -19,8 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -40,16 +39,6 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
   @Prop({
     default: 'twins'
   }) type: string;
-
-  /**
-   * Watch for changes in the search query
-   */
-  @Watch('$route', { immediate: true, deep: true })
-  onRouteChange (to: Route) {
-    this.searchTerm = to.params.query;
-
-    this.initialQuery(this.searchTerm);
-  }
 
   mounted() {
     this.searchTerm = this.$route.params.query || '';

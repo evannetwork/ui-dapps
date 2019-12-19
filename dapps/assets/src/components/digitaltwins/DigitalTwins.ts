@@ -58,7 +58,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }) search: Function;
 
   @Watch('searchTerm')
-  onSearchtermChanged(searchTerm: string, oldSearchTerm: string) {
+  onSearchTermChanged(searchTerm: string, oldSearchTerm: string) {
     if (searchTerm !== oldSearchTerm) {
       this.isActiveSearch = this.isActiveSearch || searchTerm.length > 0;
       this.searchHandlerDebounced();
@@ -107,20 +107,18 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     { trailing: true }
   );
 
-  async searchHandler () {
-    if (typeof this.search === 'function') {
-      this.search(this.searchTerm);
-    }
-  }
-
   /**
    * Debounce the search for 0.25s.
    */
   searchHandlerDebounced = debounce(
-    this.searchHandler.bind(this),
+    () => {
+      if (typeof this.search === 'function') {
+        this.search(this.searchTerm);
+      }
+    },
     250,
-    { trailing: true }
-  ).bind(this);
+    { trailing: true, leading: false }
+  );
 
   handleSearchBlur() {
     if (this.searchTerm.length === 0) {
