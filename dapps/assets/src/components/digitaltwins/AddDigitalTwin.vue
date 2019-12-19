@@ -44,7 +44,7 @@
         :required="true"
       />
 
-      <evan-form-control-input
+      <evan-form-control-textarea
         v-model="desc"
         :label="$t('_assets.digitaltwins.desc')"
         :placeholder="$t('_assets.digitaltwins.desc-placeholder')"
@@ -53,13 +53,19 @@
       <p>{{ '_assets.digitaltwins.template-desc' | translate }}</p>
 
       <evan-form-control-select
+        id="templateSelect"
+        :label="'_assets.digitaltwins.template-select-label' | translate"
         :options="presetTemplates"
         :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
         :required="true"
         @change="handleTemplateSelectChange"
       />
 
-      <evan-file-input accept=".json" @input="handleFileUpoad"></evan-file-input>
+      <evan-file-input
+        accept=".json"
+        @input="handleFileUpoad"
+        :placeholder="'_assets.digitaltwins.drag-desc' | translate"
+      ></evan-file-input>
 
       <template v-slot:footer>
         <div class="d-flex">
