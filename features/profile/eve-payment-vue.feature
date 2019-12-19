@@ -111,9 +111,9 @@ Scenario: Checking amount when paying from Italy without a VAT number
     And I set Input field with label "City" to "Test City"
     And I select the dropdown entry "Italy" from the dropdown box with the label "Company HQ Country"
     # And I select the country "Germany"
-    And I set Input field with label "VAT" to "IT00502591209"
+    And I set Input field with label "VAT ID" to "IT00502591209"
     And I wait for 2 seconds
-    And I set Input field with label "VAT" to ""
+    And I set Input field with label "VAT ID" to ""
     And I press the "TAB" key
     Then I want to see a text including "The VAT number could not be validated!"
     And the button with id "execute-payment" should be "disabled"
