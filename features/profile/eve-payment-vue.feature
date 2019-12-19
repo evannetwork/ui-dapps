@@ -115,7 +115,7 @@ Scenario: Checking amount when paying from Italy without a VAT number
     And I wait for 2 seconds
     And I set Input field with label "VAT ID" to ""
     And I press the "TAB" key
-    Then I want to see a text including "The VAT number could not be validated!"
+    Then I want to see a text including "The VAT ID could not be validated!"
     And the button with id "execute-payment" should be "disabled"
     And I want to see a text including "Total: 10.00 €"
 
