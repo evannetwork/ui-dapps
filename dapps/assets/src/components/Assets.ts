@@ -53,11 +53,11 @@ export default class AssetsComponent extends mixins(EvanComponent) {
   navItems = [
     {
       key: 'digitaltwins',
-      icon: 'mdi mdi-account-outline'
+      icon: 'mdi mdi-cube-outline'
     },
     {
       key: 'contacts',
-      icon: 'mdi mdi-wallet-outline'
+      icon: 'mdi mdi-account-multiple-outline'
     }
     // { key: `others`, icon: 'mdi mdi-check-decagram' }
   ].map(entry => {
