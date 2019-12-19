@@ -52,7 +52,6 @@ export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   handleFileUpoad(ev) {
     console.log(ev);
-    
   }
 
   showPanel() {
