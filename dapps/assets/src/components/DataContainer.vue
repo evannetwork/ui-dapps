@@ -19,20 +19,13 @@
 
 <template>
   <div>
-    <p v-if="searchTerm" class="bold mt-5 search-hint">
-      {{ '_assets.search.searched-for' | translate }} {{ searchTerm }}
-    </p>
     <router-view
-      v-if="total > 0"
       :data="data"
       :isLoading="isLoading"
       :fetchMore="fetchMore"
+      :search="initialQuery"
+      :searchTerm="searchTerm"
     ></router-view>
-    <template v-if="total === 0">
-      <p class="bold mt-5 search-hint text-center mt-5">
-        {{ '_assets.search.no-results' | translate }}
-      </p>
-    </template>
   </div>
 </template>
 

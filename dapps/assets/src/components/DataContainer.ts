@@ -19,8 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -41,21 +40,19 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     default: 'twins'
   }) type: string;
 
-  /**
-   * Watch for changes in the search query
-   */
-  @Watch('$route', { immediate: true, deep: true })
-  onRouteChange (to: Route) {
-    this.searchTerm = to.params.query;
-
-    this.initialQuery();
+  mounted() {
+    this.searchTerm = this.$route.params.query || '';
   }
 
-  async initialQuery() {
+  async initialQuery(searchTerm = '') {
     this.isLoading = true;
     this.page = 0;
     this.data = [];
-    const { result, total } = await this.search.query(this.type, { searchTerm: this.searchTerm });
+    this.searchTerm = searchTerm;
+
+    this.$router.push({ path: `digitaltwins/${searchTerm}` });
+
+    const { result, total } = await this.search.query(this.type, { searchTerm });
 
     this.total = total;
     this.data = result;

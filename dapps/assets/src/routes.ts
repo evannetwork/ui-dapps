@@ -31,7 +31,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     children: [
       { path: '', redirect: 'digitaltwins' },
       {
-        name:'digitaltwins',
+        name: 'digitaltwins',
         path: 'digitaltwins/',
         component: DataContainer,
         children: [{
@@ -45,7 +45,7 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
           meta: { type: 'twins' }
         }]
       },
-      { name:'contacts', path: 'contacts', component: ContactsComponent },
+      { name: 'contacts', path: 'contacts', component: ContactsComponent },
     ]
   }
 
