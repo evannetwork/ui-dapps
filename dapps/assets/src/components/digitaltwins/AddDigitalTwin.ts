@@ -19,50 +19,46 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import VueRouter, { Route } from 'vue-router';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $i18n: any;
-    $router: VueRouter;
-    $route: Route;
-    $store: any;
-    $t: Function;
-    dapp: Dapp;
-    getRuntime: Function;
-  }
-
-  interface Dapp {
-    baseHash: string;
-    baseUrl: string;
-    contractAddress: string;
-    domainName: string;
-    ens: string;
-    fullUrl: string;
-    rootEns: string;
-  }
-}
-
 @Component
-export default class AssetsComponent extends mixins(EvanComponent) {
-  navItems = [
+export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
+  name: string = null;
+  desc: string = null;
+  template = null;
+  image = null;
+  presetTemplates = [
     {
-      key: 'digitaltwins',
-      icon: 'mdi mdi-cube-outline'
+      label: this.$t('_assets.digitaltwins.bike'),
+      value: 'bike',
+      content: null
     },
     {
-      key: 'contacts',
-      icon: 'mdi mdi-account-multiple-outline'
+      label: this.$t('_assets.digitaltwins.car'),
+      value: 'car',
+      content: null
     }
-    // { key: `others`, icon: 'mdi mdi-check-decagram' }
-  ].map(entry => {
-    return {
-      label: `_assets.${entry.key}.${entry.key}-title`,
-      icon: entry.icon,
-      to: { name: entry.key }
-    };
-  });
+  ];
+
+  handleTemplateSelectChange(ev) {
+    this.template = ev.target.value;
+  }
+
+  handleImageChange(ev) {
+    this.image = ev;
+  }
+
+  handleFileUpoad(ev) {
+    console.log(ev);
+  }
+
+  showPanel() {
+    (this.$refs.addDigitalTwinPanel as any).show();
+  }
+
+  closePanel() {
+    (this.$refs.addDigitalTwinPanel as any).hide();
+  }
 }
