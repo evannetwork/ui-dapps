@@ -32,7 +32,7 @@
             icon="mdi mdi-account-outline"
             iconPosition="left"
             :class="{ 'active': selectedFilter === 'own' }"
-            :label="$t('_assets.digitaltwins.favorites')"
+            :label="$t('_assets.digitaltwins.my-own')"
           />
           <evan-button
             @click="filterByFavorites()"
@@ -47,7 +47,7 @@
             @click="filterByAll()"
             class="filter-btn ml-3"
             type="text-filter"
-            icon="mdi mdi-account-multiple-outline"
+            icon="mdi mdi-cube-outline"
             iconPosition="left"
             :class="{ 'active': selectedFilter === 'all' }"
             :label="$t('_assets.digitaltwins.all')"
