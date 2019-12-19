@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "./built/",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "target": "es5",
+    "paths": {
+      "@evan.network/addressbook": [
+        "../../addressbook.vue/dist/addressbook.vue.js"
+      ],
+      "@evan.network/datacontainer.digitaltwin": [
+        "../../digital-twin.data-container/dist/datacontainer.digitaltwin.js"
+      ]
+    }
+  },
+  "exclude": [
+    "../../../node_modules/@evan.network"
+  ],
+  "include": [
+    "./src/**/*",
+    "../../vue/ts-shim.d.ts"
+  ]
+}

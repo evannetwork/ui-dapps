@@ -1,0 +1,157 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import './utils';
+
+.evan {
+  .bg-level-1 {
+    background-color: cssVar('bg-level-1') !important;
+  }
+
+  .bg-level-2 {
+    background-color: cssVar('bg-level-2') !important;
+  }
+
+  .bg-level-3 {
+    background-color: cssVar('bg-level-3') !important;
+  }
+
+  .bg-inverted {
+    background-color: cssVar('bg-inverted') !important;
+  }
+
+  .evan-highlight {
+    cursor: pointer;
+    transition: 0.3s ease-out border, 0.3s ease-out transform;
+
+    *.highlight, .highlight * {
+      transition: 0.8s ease-out color;
+    }
+
+    &:hover, &.active {
+      transform: translateY(-3px);
+
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
+      &.border {
+        border: 2px solid cssVar('primary') !important;
+      }
+
+      *.highlight, .highlight * {
+        color: cssVar('primary') !important;
+      }
+    }
+
+    &.bg-primary {
+      *.highlight, .highlight * {
+        color: cssVar('light') !important;
+      }
+    }
+  }
+
+  .fullscreen {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    margin: auto;
+  }
+
+  .container-wide {
+    padding: 30px 3%;
+  }
+
+  .white-box {
+    background-color: cssVar('white');
+
+    .header, .footer {
+      display: flex;
+      align-items: center;
+
+      height: 64px;
+      padding: 0 1.5rem;
+    }
+
+    .header {
+      border-bottom: 1px solid cssVar('border-color-2');
+    }
+
+    .content {
+      padding: 1.5rem;
+    }
+
+    .footer {
+      justify-content: flex-end;
+
+      border-top: 1px solid cssVar('border-color-2');
+    }
+  }
+
+  .evan-triangle {
+    position: relative;
+
+    &:after, &:before {
+      position: absolute;
+      top: 100%;
+
+      width: 0;
+      height: 0;
+
+      content: ' ';
+      pointer-events: none;
+
+      border: solid transparent;
+    }
+
+    &.left {
+      &:after, &:before {
+        left: 25%;
+      }
+    }
+
+    &.right {
+      &:after, &:before {
+        left: 75%;
+      }
+    }
+
+    &.center {
+      &:after, &:before {
+        left: calc(50% - 5px);
+      }
+    }
+
+    &:after {
+      margin-left: -10px;
+
+      border-width: 10px;
+      border-top-color: #ffffff;
+    }
+
+    &:before {
+      margin-left: -12px;
+
+      border-width: 12px;
+      border-top-color: cssVar('gray-300');
+    }
+  }
+}

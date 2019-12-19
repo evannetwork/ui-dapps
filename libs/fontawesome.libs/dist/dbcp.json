@@ -1,0 +1,39 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "fontawesome.libs.js",
+      "files": [
+        "fontawesome.libs.js",
+        "fontawesome.libs.css"
+      ],
+      "origin": "QmTVoaRewYH98oXb4vvEPnWr3MBUPP9E2gzPJYWFkfZya1",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "fontawesome.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "fontawesome.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "5.7.2",
+    "versions": {
+      "5.7.2": "QmaTgmyxdQ88NaP7htJx94QzE4qisYFstQrnrJ1RcJRPg2"
+    }
+  }
+}

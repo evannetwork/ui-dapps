@@ -1,0 +1,20 @@
+
+<svg width="512px" height="279px" viewBox="0 0 512 279" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="under-construction" fill-rule="nonzero">
+            <polygon id="Shape" fill="#013946" points="0 255 512 255 512 279 0 279"></polygon>
+            <polygon id="Shape" fill="#6CC3C4" points="176 103 112 103 112 39"></polygon>
+            <polygon id="Shape" fill="#5DA7A8" points="176 103 112 103 112 79 152 79"></polygon>
+            <polygon id="Shape" fill="#6CC3C4" points="304 103 240 103 176 39 240 39"></polygon>
+            <polygon id="Shape" fill="#5DA7A8" points="304 103 240 103 216 79 280 79"></polygon>
+            <polygon id="Shape" fill="#6CC3C4" points="400 71 400 103 368 103 304 39 368 39"></polygon>
+            <polygon id="Shape" fill="#5DA7A8" points="400 79 400 103 368 103 344 79"></polygon>
+            <path d="M375,144 L375,111 L407,111 L407,32 L375,32 L375,0 L328,0 L328,32 L183,32 L183,0 L136,0 L136,32 L104,32 L104,111 L136,111 L136,191 L183,191 L183,159 L328,159 L328,191 L375,191 L375,159 L512,159 L512,144 L375,144 Z M392,47 L392,52.894531 L386.105469,47 L392,47 Z M343,15 L360,15 L360,32 L343,32 L343,15 Z M300.894531,47 L349.894531,96 L307.105469,96 L258.105469,47 L300.894531,47 Z M236.894531,47 L285.894531,96 L243.105469,96 L194.105469,47 L236.894531,47 Z M151,15 L168,15 L168,32 L151,32 L151,15 Z M119,96 L119,57.105469 L157.894531,96 L119,96 Z M168,176 L151,176 L151,111 L168,111 L168,176 Z M179.105469,96 L130.105469,47 L172.894531,47 L221.894531,96 L179.105469,96 Z M360,176 L343,176 L343,127 L328,127 L328,144 L183,144 L183,111 L360,111 L360,176 Z M371.105469,96 L322.105469,47 L364.894531,47 L392,74.105469 L392,96 L371.105469,96 Z" id="Shape" fill="#013946"></path>
+            <polygon id="Shape" fill="#013946" points="0 144 120 144 120 159 0 159"></polygon>
+            <polygon id="Shape" fill="#013946" points="192 208 320 208 320 223 192 223"></polygon>
+            <polygon id="Shape" fill="#013946" points="384 208 512 208 512 223 384 223"></polygon>
+            <polygon id="Shape" fill="#013946" points="0 208 128 208 128 223 0 223"></polygon>
+        </g>
+    </g>
+</svg>

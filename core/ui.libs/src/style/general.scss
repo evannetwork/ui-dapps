@@ -1,0 +1,134 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import './utils';
+
+.evan {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em !important;
+
+  display: initial;
+
+  @media (min-width: 1200px) {
+    font-size: 1em !important;
+  }
+
+  @media (max-width: 992px) {
+    font-size: 0.9em !important;
+  }
+
+  // @media (max-width: 768px) {
+  //   font-size: 0.85em !important;
+  // }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  .border.border-sm {
+    border-width: 1px !important;
+  }
+
+  .border-top.border-sm {
+    border-top-width: 1px !important;
+  }
+
+  .border-bottom.border-sm {
+    border-bottom-width: 1px !important;
+  }
+
+  .border-left.border-sm {
+    border-left-width: 1px !important;
+  }
+
+  .border-right.border-sm {
+    border-right-width: 1px !important;
+  }
+
+  .border-smooth {
+    border: 2px solid cssVar('border-color-2') !important;
+  }
+
+  // add font-size levels
+  @for $i from 0 through 10 {
+    .opacity-#{ $i * 10 } {
+      opacity: $i * 0.1;
+    }
+
+    .opacity-#{ ($i * 10) + 5 } {
+      font-size: ($i * 0.1) + 0.05;
+    }
+  }
+
+  .force-oneline {
+    display: block;
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    br {
+      display: none;
+    }
+
+    * {
+      display: inline-block;
+    }
+  }
+
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+
+  .overflow-y-auto {
+    overflow-x: auto;
+  }
+
+  .overflow-x-none {
+    overflow-x: none;
+  }
+
+  .overflow-y-none {
+    overflow-x: none;
+  }
+
+  .top-right, .top-left, .bottom-right, .bottom-left {
+    position: absolute;
+  }
+
+  .top-right {
+    top: 0;
+    right: 0;
+  }
+
+  .top-left {
+    top: 0;
+    left: 0;
+  }
+
+  .bottom-right {
+    right: 0;
+    bottom: 0;
+  }
+
+  .bottom-left {
+    bottom: 0;
+    left: 0;
+  }
+}

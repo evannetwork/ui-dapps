@@ -1,0 +1,504 @@
+{
+  "_profile": {
+    "bmail": {
+      "share": {
+        "body": "Hello,\n\nidentity information from {alias} has been shared with you. Use the \"open attachment\" button to view the identity.\n\nBest regards,\n\n{alias}",
+        "title": "Identity information"
+      }
+    },
+    "breadcrumbs": {
+      "addressbook.vue.evan": "Contacts",
+      "detail": "Identity",
+      "logout": "Logout",
+      "settings": "Settings",
+      "sharings": "Sharings",
+      "verifications": "Verifications",
+      "wallet": "Wallet"
+    },
+    "company": {
+      "contact": {
+        "city": {
+          "error": "Please insert city name!",
+          "label": "City",
+          "placeholder": "Berlin, London, Paris"
+        },
+        "company": {
+          "error": "Please insert name of your company!",
+          "label": "Company Name",
+          "placeholder": "Sample GmbH"
+        },
+        "country": {
+          "desc": "Company headquarters country",
+          "error": "Please select the company headquarters country",
+          "label": "Company HQ Country"
+        },
+        "email": {
+          "error": "Please insert a correct email address!",
+          "label": "E-Mail",
+          "placeholder": "test@test.de"
+        },
+        "name": {
+          "error": "Please insert your name!",
+          "label": "Name",
+          "placeholder": "Max Mustermann"
+        },
+        "postalCode": {
+          "error": "Please insert a valid postal code!",
+          "label": "Postal Code",
+          "placeholder": "12345"
+        },
+        "streetAndNumber": {
+          "error": "Please insert a street and a number!",
+          "label": "Street and Number",
+          "placeholder": "My street 15"
+        },
+        "title": "Contact",
+        "vat": {
+          "billing_country_and_vat_missmatch": "Provided VAT ID does not match given country code.",
+          "error": "The VAT ID could not be validated!",
+          "eu_billing_vat_not_given": "When buying EVEs from outside of Germany and in the European Union a valid VAT ID is required.",
+          "label": "VAT ID",
+          "not_eu_billing_not_possible": "Buying EVEs from outside of the European Union is currently not possible.",
+          "placeholder": "DE99999999999",
+          "vat_number_invalid": "VAT ID seems to be invalid."
+        },
+        "website": {
+          "error": "Please insert a valid url!",
+          "label": "Website",
+          "placeholder": "https://website.com"
+        }
+      },
+      "registration": {
+        "company": {
+          "error": "Please insert a company name!",
+          "label": "Company",
+          "placeholder": "Sample Company"
+        },
+        "court": {
+          "error": "Please enter the information of the registration authority!",
+          "label": "Register Court",
+          "placeholder": "Berlin"
+        },
+        "register": {
+          "error": "Please select the register type!",
+          "label": "Register",
+          "placeholder": "Type of register",
+          "types": {
+            "hra": "HRA",
+            "hrb": "HRB"
+          }
+        },
+        "registerNumber": {
+          "error": "Please enter the registration number",
+          "label": "Registration Number",
+          "placeholder": "HRA 12345"
+        },
+        "salesTaxID": {
+          "error": "Please enter the VAT ID",
+          "label": "VAT ID",
+          "placeholder": "DE999999999"
+        },
+        "title": "Registration"
+      }
+    },
+    "current-balance": "Current Balance",
+    "detail": {
+      "account-id": "Account-ID",
+      "alias": "Alias",
+      "balance": "Balance",
+      "desc": "Identity-Details",
+      "edit": "Edit Identity"
+    },
+    "device": {
+      "detail": {
+        "dataStreamSettings": {
+          "error": "Please insert data stream settings files!",
+          "label": "Data Stream Settings",
+          "placeholder": "Add data stream files"
+        },
+        "location": {
+          "error": "Please insert a location!",
+          "label": "Location",
+          "placeholder": "Type in the device location coords."
+        },
+        "manufacturer": {
+          "error": "Please insert a device manufacturer!",
+          "label": "Manufacturer",
+          "placeholder": "Type in the device manufacturer."
+        },
+        "owner": {
+          "error": "Please insert a valid account address!",
+          "label": "Owner",
+          "placeholder": "Type in the owners account address."
+        },
+        "serialNumber": {
+          "error": "Please insert a Serial Number!",
+          "label": "Serial Number",
+          "placeholder": "Type in the device Serial Number."
+        },
+        "settings": {
+          "error": "Please insert settings files!",
+          "label": "Settings",
+          "placeholder": "Add device settings files."
+        },
+        "title": "Device details",
+        "type": {
+          "error": "Please insert a device type!",
+          "label": "Type",
+          "placeholder": "Type in the device type."
+        }
+      }
+    },
+    "dispatchers": {
+      "profile-share": "Share Identity information",
+      "profile-type": "Changing Identity type",
+      "profile-update": "Updating Identity information",
+      "request-verification": "Requesting Verification",
+      "send-eve": "Sending EVEs",
+      "verification-accept": "Accepting Verification"
+    },
+    "not-permitted": {
+      "accountDetails": "Identity information",
+      "contact": "Contact details",
+      "desc": "You have no authorization to view this data.",
+      "deviceDetails": "Device information",
+      "registration": "Registration data"
+    },
+    "not-permitted-view": "You do not have permission to view this data for the selected Identity.",
+    "settings": {
+      "desc": "Settings",
+      "dev-domain": {
+        "desc": "With this configuration the ending \".evan\" is replaced by the given address. With this logic it is possible to use applications on different domains simultaneously for test purposes (e.g.: myapp.test.evan).",
+        "title": "Applications from test-domain"
+      },
+      "developer-mode": "Developer Mode",
+      "language": "Language",
+      "languages": {
+        "browser": "Browser-Language",
+        "de": "German",
+        "en": "English"
+      },
+      "reload-hint": "Please reload the application if you have changed the language settings."
+    },
+    "sharing": {
+      "Profile Data": "Identity Data",
+      "accountDetails": "Identity Details",
+      "accountName": "Account Name",
+      "city": "City",
+      "company": "Company",
+      "contact": "Contact",
+      "country": "Country",
+      "court": "Register Court",
+      "dataStreamSettings": "Data Stream Settings",
+      "description": "To share your identity information with other partners, first select the appropriate contact and then the information to share. Click on \"Share data\".",
+      "description-no-contacts": "Identity information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",
+      "deviceDetails": "Device Details",
+      "location": "Location",
+      "manufacturer": "Manufacturer",
+      "owner": "Owner",
+      "permissionsTitle": "Update Identity Permissions",
+      "picture": "Picture",
+      "postalCode": "Postal Code",
+      "profileType": "Identity Type",
+      "register": "Register",
+      "registerNumber": "Registration Number",
+      "registration": "Registration Data",
+      "salesTaxID": "Sales Tax ID",
+      "serialNumber": "Serial Number",
+      "settings": "Settings",
+      "streetAndNumber": "Street",
+      "type": "Type",
+      "website": "Website"
+    },
+    "sharings": {
+      "desc": "Below are all the contacts with which you currently share your Identity information. Click on a profile to adjust the permissions.",
+      "no-data": "No Identity data has been shared yet.",
+      "title": "Your Identity Data Sharings"
+    },
+    "type": {
+      "change": "Change",
+      "choose": "Specify Account Type",
+      "missing-type": "Use the interaction area below to specify your Identity more precisely.",
+      "missing-type-foreign": "No Identity type has yet been selected for this Identity.",
+      "no-verifications-avaiable": "There are currently no verifications available for your Identity type.",
+      "switch": "Specify your Account Type"
+    },
+    "verifications": {
+      "add": "Add Verification",
+      "back": "Go back",
+      "categories": {
+        "identifications": "Identifications",
+        "notary": "Notary Verification"
+      },
+      "description": "Here you can view all your verifications. Verification in the evan.network enables you to be perceived as a trustworthy partner in a digital network.",
+      "done": "Close",
+      "empty": "No verifications available",
+      "error": "Error",
+      "error-loading": "An error occurred while loading the data. Please try again.",
+      "next": "Next",
+      "notary": {
+        "account-id": "Identity",
+        "check-updates": "Checking for updates",
+        "info": "Confirm your Identity to be a trusted evan.network member",
+        "issue": {
+          "accountId": {
+            "desc": "Identity for which the notary confirmation should be created.",
+            "error": "Please enter a valid address!",
+            "title": "Identity"
+          },
+          "file-rename-hint": "The uploaded files will be renamed to a uniform naming scheme during the organization verification process.",
+          "header": "Issue Organization Verification",
+          "issue": "Issue Organization Verification",
+          "issued": {
+            "error": {
+              "desc": "The organization verification could not be issued. Please try again or contact your administrator.",
+              "title": "Error"
+            },
+            "success": {
+              "desc": "The organization verification was issued successfully.",
+              "title": "Finished"
+            }
+          },
+          "issuing": "Issuing Identification Verification",
+          "privateFiles": {
+            "error": "You must add at least 1 notarized document to continue.",
+            "title": "Private, Notary certified files"
+          },
+          "publicFiles": {
+            "error": "You must add at least 1 notarized document to continue.",
+            "title": "Public, Notary certified files"
+          },
+          "requestId": {
+            "desc": "Enter the request ID for which the notary verification is to be completed.",
+            "error": "Please enter a correct request ID",
+            "title": "Request ID"
+          }
+        },
+        "learn-more": "Learn more",
+        "no-requests": "You have not yet requested a Notary Verification. Use the following button to request one.",
+        "notary": "Knobloch Notary",
+        "pin": {
+          "confirmation-code": "Your confirmation code was successfully generated.",
+          "confirmation-code-desc": "Print your confirmation document.",
+          "desc": "Please enter the PIN that was sent to you and generate your confirmation code.",
+          "desc-hin": "Please pay attention to upper and lower case.",
+          "did-printed": "Did you print the document?",
+          "do-not-forget": "Please ensure to sign and stamp the document before sending it to the requesting notary.",
+          "download": "No option to print now? Download as PDF file.",
+          "generate-answer": "Generate code",
+          "header": "Authentication",
+          "next-step": "After successful verification by the notary, your Identity will be verified.",
+          "next-step2": "You will be informed of this in your mailbox.",
+          "pin": {
+            "desc": "The six digits PIN you received within the letter.",
+            "error": "Please enter the PIN to continue.",
+            "error2": "The PIN entered was not correct. Please enter the correct PIN.",
+            "title": "PIN"
+          },
+          "step": {
+            "pin": "PIN",
+            "print": "Print Document",
+            "send": "Send via Letter"
+          }
+        },
+        "print": "Print",
+        "request": {
+          "contact": {
+            "error": "Please enter a contact person!",
+            "label": "Contact Person *",
+            "placeholder": "Enter contact name"
+          },
+          "costs": {
+            "approve": "Yes, I request notarial verification, at the transaction cost of 200 EVE.",
+            "description": "The transaction fees for notarial verification are 200 EVE. Your wallet will be debited with this amount.",
+            "hint": "The request for a notarial verification is subject to a fee.",
+            "title": "Fees"
+          },
+          "department": {
+            "error": "Please insert the department of the company!",
+            "label": "Department",
+            "placeholder": "Department"
+          },
+          "description": "Please fill in the formular to request a notary verification of your organisation. This service is subject to a fee.",
+          "fill-missing": "Please fill in all required company information and save it.",
+          "header": "Notary Verification",
+          "how": {
+            "steps": {
+              "1": {
+                "description": "Enter the commercial register number, register court, your address and a contact person.",
+                "title": "Request"
+              },
+              "2": {
+                "description": "You will receive a PIN by letter. Use this to generate the confirmation document and send it signed to the inquiring notary.",
+                "title": "Authentication"
+              },
+              "3": {
+                "description": "If the notarial verification is successful, you will be notified. Accept the verification as the last step.",
+                "title": "Accept"
+              }
+            },
+            "title": "Steps"
+          },
+          "mail": {
+            "body": "I hereby request a Notary Verification with the following information: <br><br><ul><li>Identity: {organizationEvanId}</li><li>Account: {accountId}</li><li>Commercial Register Number: {organizationRegistration}</li><li>Organization: {organizationName}</li><li>Contact: {organizationContact}</li><li>Address: {organizationStreetAddress}</li><li>City: {organizationZipCode} {organizationCity} ,{organizationCountry}</li></ul>",
+            "title": "Request for Notary Verification"
+          },
+          "not-enough-funds": "<i class=\"mdi mdi-alert-outline\"></i> You need at least 200 EVE on your wallet. Your wallet has insufficient funds ({readableFunds} EVE)! <a href=\"/#/dashboard.evan/profile.evan/buy-eve\">Buy EVE</a>",
+          "only-de": "Currently, notary verification is only supported for companies in Germany.",
+          "postal-address": "Postal Address",
+          "proof": {
+            "description": "To complete the notary verification, you will receive a PIN by letter from a notary to attention of the following person.",
+            "title": "Please check all information."
+          },
+          "request-ident": "Request",
+          "request-verification": "Start request",
+          "requested1": "You have successfully applied for a Notary Verification for your organization.",
+          "requested2": "Your wallet has been charged 200 EVE.",
+          "requested3": "You will receive a letter from a notary soon.",
+          "requesting": "Notary verification is requested",
+          "requesting-account": "Requesting Identity",
+          "step": "Step",
+          "who": {
+            "description": "As a registered company you can request a notarial verification of your Identity.",
+            "link": "Learn More",
+            "title": "Prerequisites"
+          },
+          "why": {
+            "description": "The notarial verification confirms that your company has the Identity {accountId}. With this confirmation you can prove yourself to your business partners and verify that transactions, digital twins and smart contracts originate from you.",
+            "link": "Learn More",
+            "title": "Advantages"
+          }
+        },
+        "request-error": "Request could not be loaded!",
+        "request-error-desc": "Please reload",
+        "request-notary-verification": "Request a notary verification",
+        "status": {
+          "accepted": "verified by notary",
+          "confirming": "under review",
+          "finished": "verified by notary",
+          "forwarding": "is processed by the provider",
+          "issued": "verified by notary",
+          "requested": "requested",
+          "title": "Verification",
+          "unknown": "no verification"
+        },
+        "status-actions": {
+          "confirming": "Print confirmation",
+          "issued": "Accept",
+          "requested": "Enter PIN",
+          "unknown": "Request",
+          "unknown-long": "Request Notary Verification"
+        },
+        "step": {
+          "costs": "Transaction fee",
+          "summary": "Summary",
+          "your_data": "Request data"
+        },
+        "title": "Notary Verification",
+        "verification": {
+          "accept": "Accept",
+          "attachments": "Attachments",
+          "close-detail": "Done",
+          "created": "Created",
+          "expired": "expired",
+          "expired-on": "abgelaufen am",
+          "incorrect": "The organization IDs issued to you were not created by the correct instance.",
+          "organization": "Organization-Verification",
+          "organization-random": "Organization-ID-Verification",
+          "status": "Status",
+          "topic": "Verification Path",
+          "topic-desc": "This Identity of the company {companyName} was notarially verified. This certifies the authenticity of the company and the assignment to this account.",
+          "valid-indefinitely": "valid indefinitely",
+          "valid-until": "valid until",
+          "verified-by": "Verified by"
+        }
+      },
+      "reload": "Reload",
+      "title": "All verifications"
+    },
+    "wallet": {
+      "buy-eve": {
+        "accept": {
+          "description": "Do you want to continue with buying <b>{amount} EVE</b>?",
+          "send": "Buy",
+          "title": "Buy EVE"
+        },
+        "back": "Back",
+        "buy": "Buy EVE",
+        "buy-more": "Buy more",
+        "continue": "Continue",
+        "disclaimer": "By entering your IBAN and confirming this payment, you authorize evan GmbH and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with these instructions. You are entitled to a refund from your bank in accordance with the terms of your agreement with your bank. A refund must be requested within 8 weeks of the date your account was debited.",
+        "errors": {
+          "charge_failed": "A payment cannot be completed because of a failed payment/charge attempt. <b>Your card was NOT debited!</b> Please try again later.",
+          "invalid_customer": "Your customer data is invalid. <b>Your card was NOT debited!</b> Please try again later.",
+          "price_not_okay": "An unknown error occurred on the evan.network. <b>Your card was NOT debited!</b> Please try again later.",
+          "too_many_accounts": "An unknown error occurred regarding your account. <b>Your card was NOT debited!</b> Please contact our customer support.",
+          "transaction_failed": "Your payment/charge was successful but the transaction on blockchain failed. <b>Your card was debited!</b> Please contact our customer support.",
+          "unknown_state": "An unknown error occurred during the payment process. Please contact our customer support.",
+          "wallet_not_enough_funds": "An unknown error on the evan.network. <b>Your card was NOT debited!</b> Please try again later."
+        },
+        "payForm": {
+          "amount": {
+            "error": "Please insert a correct number!",
+            "error-less": "You must by at least 10! ({balance} EVE)",
+            "label": "Amount of EVE (at least 10)",
+            "placeholder": "Enter a number"
+          },
+          "type": {
+            "card": "Credit Card",
+            "iban": "SEPA Edit",
+            "label": "Payment Type"
+          }
+        },
+        "processing-hint": "Processing payment, this may take 3 to 5 minutes",
+        "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
+        "stripe-element": {
+          "incomplete_number": "Incomplete input!",
+          "invalid_number": "Invalid card number!",
+          "invalid_iban_start": "Please check your IBAN"
+        },
+        "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited to your wallet in the next 5 to 10 minutes.",
+        "tax": "Tax",
+        "titles": {
+          "buy-eve": "Buy EVE",
+          "billing-info": "Please complete your billing informations"
+        },
+        "total-amount": "Total",
+        "try-again": "Try again",
+        "vat": "VAT"
+      },
+      "send-eve": {
+        "accept": {
+          "description": "Do you want to continue with sending <b>{amount} EVE</b> to <b>{name}</b>?",
+          "send": "Send",
+          "title": "Send EVE"
+        },
+        "form": {
+          "accountId": {
+            "error": "You must insert a valid address.",
+            "label": "Identity",
+            "placeholder": "Contact or identity address"
+          },
+          "amount": {
+            "error": "Please enter a number greater than 0!",
+            "error-less": "Account balance is to low! ({balance} EVE)",
+            "label": "Amount of EVE",
+            "placeholder": "EVE to send"
+          }
+        },
+        "send": "Send",
+        "title": "Send EVE"
+      },
+      "transactions": {
+        "charged-at": "charged at",
+        "credit-charged": "Credit recharged",
+        "credit-running-charge": "Charging credit card not completed yet",
+        "credit-failed-charge": "The charging has failed unfortunately",
+        "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
+        "empty": "No credit recharges have yet been carried out.",
+        "load-more": "Load more",
+        "title": "Credit recharged"
+      }
+    }
+  }
+}

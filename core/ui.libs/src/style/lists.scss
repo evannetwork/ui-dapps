@@ -1,0 +1,71 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import './utils';
+
+.evan {
+  .evan-nav-list {
+    height: 100%;
+    padding-bottom: 1px;
+
+    &, .nav-entries {
+      display: flex;
+      flex-direction: column;
+    }
+
+    // use seperated nav-entries, so we can apply custom entries at the bottom and at the top,
+    // without using my-auto
+    .nav-entries {
+      flex: 1;
+
+      a {
+        font-size: 15px;
+        font-weight: 600;
+
+        display: flex;
+        align-items: center;
+
+        height: 70px;
+        padding-left: 22px;
+
+        cursor: pointer;
+        transition: background-color 0.5s ease-out, color 0.5s ease-out;
+        text-decoration: none !important;
+
+        &.active {
+          background-color: cssVar('bg-level-2') !important;
+
+          &, * {
+            color: cssVar('dark') !important;
+          }
+        };
+
+        &:hover {
+          &, * {
+            color: cssVar('primary') !important;
+          }
+        }
+
+        &, * {
+          color: cssVar('gray-600') !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import './utils';
+
+.evan {
+  .tab-1 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-1') !important;
+  }
+
+  .tab-2 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-2') !important;
+  }
+
+  .tab-3 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-3') !important;
+  }
+
+  .tab-4 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-4') !important;
+  }
+
+  .tab-5 {
+    color: cssVar('white') !important;
+    background-color: cssVar('tab-color-5') !important;
+  }
+
+  .evan-tabs, .evan-navigation-tabs {
+    display: flex;
+
+    .evan-tab {
+      font-size: 15px;
+      font-weight: 600;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 60px;
+      padding: 0 25px;
+
+      cursor: pointer;
+      transition: height 0.3s ease-out, box-shadow 0.3s ease-out;
+      text-align: center;
+    }
+  }
+
+  .evan-tabs {
+    .evan-tab {
+      background-color: cssVar('bg-level-1');
+
+      &.active {
+        color: cssVar('bg-text-primary');
+        background-color: cssVar('primary');
+      }
+    }
+  }
+
+  .evan-navigation-tabs {
+    height: 70px;
+
+    .evan-tab {
+      z-index: 9;
+
+      width: 100%;
+
+      &, * {
+        text-decoration: none !important;
+      }
+
+      &.active {
+        z-index: 10;
+
+        height: 70px;
+
+        box-shadow: 0 0 5px 2px rgba(75, 82, 88, 0.5);
+      }
+    }
+  }
+}

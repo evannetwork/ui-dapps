@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/dexie.js",
+  "name": "@evan.network/fontawesome",
+  "scripts": {
+    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+  },
+  "typings": "dist/dexie.d.ts",
+  "version": "2.0.4"
+}

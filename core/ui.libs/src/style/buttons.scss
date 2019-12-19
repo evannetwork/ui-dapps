@@ -1,0 +1,195 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import './utils';
+
+.evan.theme-evan {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 40px;
+    padding: 8px 24px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    border-radius: 2px;
+
+    &, * {
+      font-weight: bold;
+      line-height: 20px;
+
+      vertical-align: middle;
+    }
+
+    @each $color, $value in $theme-colors {
+      &[class*='btn-#{ $color }'] * {
+        color: cssVar('bg-text-#{ $color }');
+      }
+
+      &[class*='-outline-#{ $color }']:hover {
+        border-color: cssVar('#{ $color }-darken');
+        background-color: cssVar('#{ $color }-darken');
+      }
+    }
+
+    // general icon specifications
+    & {
+      i {
+        font-size: 25px;
+      }
+
+      i.left, .left[class^='spinner-'] {
+        margin-right: 12px;
+      }
+
+      i.right, .right[class^='spinner-'] {
+        margin-left: 12px;
+      }
+    }
+
+    // disabled state
+    &:disabled, &:disabled:hover {
+      border-color: cssVar('disabled');
+      background-color: cssVar('disabled');
+      box-shadow: none;
+
+      &, * {
+        color: cssVar('white');
+      }
+
+      &[class*='-outline-'] {
+        background-color: transparent;
+
+        &, * {
+          color: cssVar('disabled');
+        }
+      }
+    }
+
+    // btn size configurations
+    &.btn-lg {
+      font-weight: normal;
+
+      height: 48px;
+      padding: 12px 24px;
+    }
+
+    &.btn-sm {
+      font-weight: normal;
+      line-height: 10px;
+
+      height: 24px;
+      padding: 0 15px;
+
+      &, * {
+        font-size: 10px;
+      }
+
+      i {
+        font-size: 20px;
+      }
+
+      i.left, .left[class^='spinner-'] {
+        margin-right: 6px;
+      }
+
+      i.right, .right[class^='spinner-'] {
+        margin-left: 6px;
+      }
+    }
+
+    // icon and text buttons
+    &[class*='btn-icon'], &[class*='btn-text'], &.btn-link {
+      height: auto;
+
+      box-shadow: none;
+
+      &:disabled {
+        color: cssVar('disabled');
+        border: 0;
+        background-color: transparent;
+
+        i {
+          color: cssVar('disabled');
+        }
+      }
+    }
+
+    &[class*='btn-icon'], &[class*='btn-text'] {
+      &:hover {
+        background-color: cssVar('gray-300');
+
+        &:disabled {
+          background-color: transparent;
+        }
+      }
+    }
+
+    &[class*='btn-text'] {
+      padding: 5px;
+    }
+
+    &.btn-text-primary {
+      color: cssVar('primary');
+    }
+
+    &.btn-circle, &[class*='btn-icon'] {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+
+      border-radius: 50%;
+
+      &.btn-sm {
+        width: 30px;
+        height: 30px;
+      }
+
+      &.btn-lg {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    &[class*='btn-icon'] {
+      i, [class^='spinner-'] {
+        margin: 0;
+      }
+    }
+
+    &.btn-icon-primary {
+      background-color: cssVar('primary');
+      color: white;
+      box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.18);
+
+      &:hover {
+        background-color: cssVar('primary-darken');
+      }
+    }
+
+    &.btn-link {
+      &, &:hover {
+        color: cssVar('primary');
+      }
+    }
+  }
+}

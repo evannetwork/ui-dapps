@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/vue.libs.js",
+  "name": "@evan.network/vue",
+  "scripts": {
+    "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
+  },
+  "typings": "dist/vue.libs.d.ts",
+  "version": "2.5.2"
+}

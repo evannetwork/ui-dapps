@@ -1,0 +1,38 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "themify.libs.css",
+      "files": [
+        "themify.libs.css"
+      ],
+      "origin": "QmdzawiPJSmJCLWyhk7sL6fUna1T3HkfzSLe9GFZoAKNob",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "cached-dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "themify.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "themify.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "1.0.0",
+    "versions": {
+      "1.0.0": "QmNwWiRWnTqgc8dirTfLmXeo4ECbCNE8q5kbhrrV65Gc5U"
+    }
+  }
+}
