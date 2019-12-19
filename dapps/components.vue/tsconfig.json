@@ -25,6 +25,6 @@
   ],
   "include": [
     "./src/**/*",
-    "../../vue/ts-shim.d.ts"
+    "../../scripts/vue/ts-shim.d.ts"
   ]
 }

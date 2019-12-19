@@ -12,7 +12,7 @@
   "main": "dist/axios.vue.libs.js",
   "name": "@evan.network/axios",
   "scripts": {
-    "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/vue/gulpfile.js --dapp $(pwd)"
   },
   "typings": "dist/axios.vue.libs.d.ts",
   "version": "2.5.2"

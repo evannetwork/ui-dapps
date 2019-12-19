@@ -12,7 +12,7 @@
   "main": "dist/materialicons.libs.js",
   "name": "@evan.network/materialicons",
   "scripts": {
-    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/webpack/webpack.js --dapp $(pwd)"
   },
   "typings": "dist/materialicons.libs.d.ts",
   "version": "4.5.0"

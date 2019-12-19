@@ -24,7 +24,7 @@ const gulp = require('gulp');
 const path = require('path');
 const exec = require('child_process').exec;
 const dappDir = process.argv[process.argv.indexOf('--dapp') + 1];
-const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../gulp/lib');
+const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../lib');
 
 // Run Express, auto rebuild and restart on src changes
 gulp.task('build', async function () {

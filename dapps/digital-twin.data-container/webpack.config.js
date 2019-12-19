@@ -18,7 +18,7 @@
 */
 const getExternals = require('../../vue/webpack.externals');
 
-module.exports = require('../../vue/webpack.config')(
+module.exports = require('../../scripts/vue/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
   true,

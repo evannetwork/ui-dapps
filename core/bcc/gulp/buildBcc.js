@@ -19,7 +19,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../../../gulp/lib');
+const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../../../scripts/lib');
 const bccFolder = path.resolve(`../../node_modules/@evan.network/api-blockchain-core`);
 
 async function build() {

@@ -1,0 +1,17 @@
+*.cache
+*.log
+.DS_Store
+/.eslintcache
+/.package.json
+/browser-polyfill.js
+/browser.js
+/build
+/dapps/*/dist
+/dapps/*/node_modules
+/node_modules
+coverage
+dist
+documentation/*
+package-lock.json
+yarn.lock
+dapps/**/dist

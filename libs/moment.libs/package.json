@@ -12,7 +12,7 @@
   "main": "dist/moment.js",
   "name": "@evan.network/fontawesome",
   "scripts": {
-    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/webpack/webpack.js --dapp $(pwd)"
   },
   "typings": "dist/moment.d.ts",
   "version": "2.24.0"

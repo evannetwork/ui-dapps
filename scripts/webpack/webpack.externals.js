@@ -29,6 +29,6 @@ module.exports = function(customExcludes) {
     '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
     '@evan.network/ui': '@evan.network/ui',
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
-    ...(customExcludes || { }) 
+    ...(customExcludes || { })
   };
 }

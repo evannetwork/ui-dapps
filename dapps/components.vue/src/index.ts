@@ -19,7 +19,6 @@
 
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
-import VueHighlightJS from 'vue-highlightjs';
 
 import Main from './components/root/root.vue';
 import translations from './i18n/translations';
@@ -38,8 +37,6 @@ export * from './dispatchers/registry';
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
 export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
-  Vue.use(VueHighlightJS);
-
   await initializeVue({
     components,
     container,

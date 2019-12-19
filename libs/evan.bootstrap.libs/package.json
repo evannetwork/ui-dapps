@@ -12,7 +12,7 @@
   "main": "dist/evan.bootstrap.libs.js",
   "name": "@evan.network/bootstrap-theme-evan",
   "scripts": {
-    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/webpack/webpack.js --dapp $(pwd)"
   },
   "typings": "dist/evan.bootstrap.libs.d.ts",
   "version": "4.3.1"

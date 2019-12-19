@@ -18,7 +18,7 @@
 */
 
 // load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
-module.exports = require('../../vue/webpack.config')(
+module.exports = require('../../scripts/vue/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
   true,
