@@ -3,20 +3,13 @@
 .DS_Store
 .eslintcache
 .package.json
-/node_modules
-browser-polyfill.js
-browser.js
-build
 coverage
-dist
-documentation/*
+node_modules
 package-lock.json
 yarn.lock
 
 # dapp categories
-core/*/dist
-core/*/node_modules
-dapps/**/dist
-dapps/**/node_modules
-libs/**/dist
-libs/**/node_modules
+*/*/dist
+*/*/node_modules
+*/*/package-lock.json
+*/*/yarn.lock

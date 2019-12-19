@@ -50,6 +50,7 @@ async function initialize() {
     choices: [
       { name: 'core', value: 'core', checked: true },
       { name: 'dapps', value: 'dapps', checked: true },
+      { name: 'evan-libs', value: 'evan-libs', checked: false },
       { name: 'libs', value: 'libs', checked: false },
     ]
   }])).dappCategories;
