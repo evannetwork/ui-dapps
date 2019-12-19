@@ -33,10 +33,24 @@
       "users": "Users"
     },
     "digitaltwins": {
+      "add-digitaltwin-title": "Create a new Digital Twin",
       "all": "All",
+      "bike": "Bike",
+      "cancel": "Cancel",
+      "car": "Car",
+      "create-digitaltwin-btn": "Create Digital Twin",
       "created": "Created",
+      "desc-placeholder": "Briefly describe your Digital Twin and what it represents.",
+      "desc": "Description",
       "digitaltwins-title": "Digital Twins",
-      "favorites": "Favorites"
+      "drag-desc": "or just drag a template in here",      
+      "favorites": "Favorites",
+      "my-own": "My own",
+      "name-placeholder": "Fork Lift #3",
+      "name": "Name",
+      "template-desc": "Choose a template for your Digital Twin. More information on how to create a template for Digital Twins can be found here.",
+      "template-select-label": "Select a template",
+      "template-select-placeholder": "Select a template"
     },
     "search": {
       "my-own": "My own",

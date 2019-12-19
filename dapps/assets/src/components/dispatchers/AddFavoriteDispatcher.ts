@@ -17,15 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import AddContactComponent from './contacts/AddContact.vue';
-import AddDigitalTwinComponent from './digitaltwins/AddDigitalTwin.vue';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'add-contact', component: AddContactComponent },
-  { name: 'add-digital-twin', component: AddDigitalTwinComponent },
-];
+const dispatcher = new Dispatcher(
+  `assets.${ dappBrowser.getDomainName() }`,
+  'favoriteAddDispatcher',
+  40 * 1000,
+  '_assets.dispatcher.favorite.add'
+);
 
-export default componentRegistration;
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    await EvanUIDigitalTwin
+      .getDigitalTwin(instance.runtime, data.address)
+      .addAsFavorite();
+  });
+
+export default dispatcher;
