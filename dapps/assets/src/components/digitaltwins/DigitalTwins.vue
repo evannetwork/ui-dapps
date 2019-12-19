@@ -97,7 +97,7 @@ export default DigitalTwinsComponent;
 @import '~@evan.network/ui/src/style/utils';
 
 h1.header {
-  font-size: 18px;
+  font-size: cssVar('h4-font-size');
   margin: 0;
   color: cssVar('gray-600');
   font-weight: bold;
