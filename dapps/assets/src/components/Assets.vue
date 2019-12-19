@@ -39,19 +39,6 @@
                   </router-link>
                 </template>
               </div>
-              <div class="my-auto"></div>
-              <div class="nav-entries">
-                <div class="bg-white border-top d-flex">
-                  <i class="mdi mdi-magnify text-muted p-3"></i>
-                  <input
-                    placeholder="0x123ABC..."
-                    class="border-0 p-3 w-100 form-control"
-                    style="height: 60px;"
-                    v-model="searchQuery"
-                    @keyup.enter="handleSearchEnter"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </evan-dapp-wrapper-level-2>

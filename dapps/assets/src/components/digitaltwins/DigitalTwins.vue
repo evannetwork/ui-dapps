@@ -21,8 +21,23 @@
   <div>
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
-        <div>
-          <h1 class="header">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</h1>
+        <div class="search">
+          <label
+            @click="isActiveSearch = true"
+            for="searchInput"
+          >
+            <i class="mdi mdi-magnify mr-2"></i>
+            <span v-if="!isActiveSearch">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
+          </label>
+          <input
+            id="searchInput"
+            ref="searchInput"
+            v-show="isActiveSearch"
+            v-model="searchTerm"
+            @blur="handleSearchBlur"
+            @keydown.enter="$event.target.blur()"
+            autocomplete="off"
+          />
         </div>
         <div>
           <evan-button
@@ -89,29 +104,10 @@
 </template>
 
 <script lang="ts">
-import DigitalTwinsComponent from './DigitalTwins';
-export default DigitalTwinsComponent;
+  import DigitalTwinsComponent from './DigitalTwins';
+  export default DigitalTwinsComponent;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
-h1.header {
-  font-size: cssVar('h4-font-size');
-  margin: 0;
-  color: cssVar('gray-600');
-  font-weight: bold;
-}
-
-.content {
-  max-width: 768px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.add-twin-btn {
-  position: fixed;
-  bottom: 40px;
-  right: 60px;
-}
+  @import './DigitalTwins.scss';
 </style>
