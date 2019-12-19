@@ -24,6 +24,7 @@
       :isLoading="isLoading"
       :fetchMore="fetchMore"
       :search="initialQuery"
+      :searchTerm="searchTerm"
     ></router-view>
   </div>
 </template>

@@ -55,7 +55,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.searchTerm = this.$route.params.query || '';
   }
 
-  async initialQuery(searchTerm = null) {
+  async initialQuery(searchTerm = '') {
     this.isLoading = true;
     this.page = 0;
     this.data = [];

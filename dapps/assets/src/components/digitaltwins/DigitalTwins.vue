@@ -26,15 +26,17 @@
             @click="isActiveSearch = true"
             for="searchInput"
           >
-            <i class="mdi mdi-magnify"></i>
+            <i class="mdi mdi-magnify mr-2"></i>
             <span class="h4" v-if="!isActiveSearch">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
           </label>
           <input
             id="searchInput"
-            v-if="isActiveSearch"
-            placeholder="0x123ABC..."
-            class="border-0"
+            ref="searchInput"
+            v-show="isActiveSearch"
             v-model="searchTerm"
+            @blur="handleSearchBlur"
+            @keydown.enter="$event.target.blur()"
+            autocomplete="off"
           />
         </div>
       </div>

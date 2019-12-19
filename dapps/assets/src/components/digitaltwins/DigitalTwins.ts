@@ -35,12 +35,15 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     'created',
     { key: 'actions', label: '' }
   ];
-  searchTerm = '';
   isActiveSearch = false;
 
   @Prop({
     default: [],
   }) data: any[];
+
+  @Prop({
+    default: '',
+  }) searchTerm: string;
 
   @Prop({
     default: true,
@@ -55,9 +58,34 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }) search: Function;
 
   @Watch('searchTerm')
-    onSearchtermChanged(searchTerm: string, oldVal: string) {
+  onSearchtermChanged(searchTerm: string, oldSearchTerm: string) {
+    if (searchTerm !== oldSearchTerm) {
+      this.isActiveSearch = this.isActiveSearch || searchTerm.length > 0;
       this.searchHandlerDebounced();
     }
+  }
+
+  mounted() {
+    this.isActiveSearch = this.searchTerm.length > 0;
+
+    window.addEventListener('keydown', this.handleSearchShortcut);
+  }
+
+  destroyed() {
+    window.removeEventListener('keydown', this.handleSearchShortcut);
+  }
+
+  /**
+   * Activiate search when CMD+F or CTRL+F is pressed.
+   */
+  handleSearchShortcut(e: KeyboardEvent) {
+    if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
+      e.preventDefault();
+      this.isActiveSearch = true;
+      this.searchTerm = '';
+      this.$nextTick(() => (this.$refs['searchInput'] as HTMLInputElement).focus());
+    }
+  }
 
   /**
    * Watch if user scrolled down and load more twins when necessary
@@ -85,9 +113,18 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
+  /**
+   * Debounce the search for 0.25s.
+   */
   searchHandlerDebounced = debounce(
     this.searchHandler.bind(this),
     250,
     { trailing: true }
   ).bind(this);
+
+  handleSearchBlur() {
+    if (this.searchTerm.length === 0) {
+      this.isActiveSearch = false;
+    }
+  }
 }

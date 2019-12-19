@@ -8,6 +8,17 @@
   & input {
     padding: 2px 8px;
     outline: none;
+    background: transparent;
+    border: none;
+    font-size: cssVar("h4-font-size");
+
+    &:focus {
+      border-bottom: 1px solid cssVar("text-color");
+    }
+  }
+
+  label {
+    line-height: 32px;
   }
 }
 
