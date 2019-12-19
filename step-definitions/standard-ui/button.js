@@ -69,7 +69,7 @@ Then('I want to see a button {string}',
 
      client.useCss(); // switches back to css selector
   }
-)
+);
 
 /**
  * Assures that an element with .btn class has a certain state.
@@ -98,7 +98,7 @@ Then('the button {string} should be {string}',
 
     client.useCss();
   }
-)
+);
 
 
 /**
@@ -106,7 +106,6 @@ Then('the button {string} should be {string}',
  */
 Then('the button with id {string} should be {string}',
   async(content, statusType) => {
-    client.useCss();
     const buttonSelector = '#' + content;
     await client.waitForElementPresent(buttonSelector, WAIT_TIME);
     await client.expect.element(buttonSelector).to.be.visible;
@@ -124,9 +123,32 @@ Then('the button with id {string} should be {string}',
       default:
         throw new Error(`Button can not be tested for ${statusType}`)
     }
+  }
+);
 
+/**
+ * Asserts that a plus button is displayed
+ */
+Then('I want to see a plus button',
+  async () => {
+    client.useXpath();
+    const xPathSelector = '//button[contains(@class, "btn")]//i[contains(@class, "mdi-plus")]';
+    await client.expect.element(xPathSelector).to.be.visible;
     client.useCss();
   }
-)
+);
+
+/**
+ * Click on plus button
+ */
+When('I click on plus button',
+  async () => {
+    client.useXpath();
+    const xPathSelector = '//button[contains(@class, "btn")]//i[contains(@class, "mdi-plus")]';
+    await client.expect.element(xPathSelector).to.be.visible;
+    await client.click(xPathSelector);
+    client.useCss();
+  }
+);
 
 module.exports = { buttonSelector, }
