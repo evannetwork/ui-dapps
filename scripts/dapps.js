@@ -21,11 +21,12 @@ const del = require('del');
 const exec = require('child_process').exec;
 const fs = require('fs');
 const gulp = require('gulp');
+const inquirer = require('inquirer');
 const path = require('path');
 const Throttle = require('promise-parallel-throttle');
 const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv, getArgs } = require('./lib');
 
-let arg, dappDirs, longestDAppName, serves;
+let arg, dappDirs, categories, longestDAppName, serves;
 
 /**
  * Initialize dapp folders and symlink core projects
@@ -33,13 +34,30 @@ let arg, dappDirs, longestDAppName, serves;
  * @return     {Promise}  resolved when done
  */
 async function initialize() {
+  console.clear();
+
+  // setup initial values
   arg = getArgs(process.argv);
   longestDAppName = 0;
   serves = { };
 
-  dappDirs = [ ].concat(
-    ...[ 'core', 'dapps', 'libs' ].map(key => getDirectories(path.resolve(`../${ key }`)))
-  );
+  // ask for folders to build / serve
+  const prompt = inquirer.createPromptModule();
+  categories = (await prompt([{
+    name: 'dappCategories',
+    message: 'Which dapp categories should be build?',
+    type: 'checkbox',
+    choices: [
+      { name: 'core', value: 'core', checked: true },
+      { name: 'dapps', value: 'dapps', checked: true },
+      { name: 'libs', value: 'libs', checked: false },
+    ]
+  }])).dappCategories;
+  dappDirs = [ ]
+    .concat(
+      ...categories.map(key => getDirectories(path.resolve(`../${ key }`)))
+    )
+    .sort();
 
   // check for longest dapp name to have a correct display
   for (let dappDir of dappDirs) {
@@ -62,11 +80,21 @@ async function initialize() {
  * @return     {string}  filled dapp name
  */
 const getFilledDAppName = (dappName) => {
-  while (dappName.length < longestDAppName + 5) {
+  while (dappName.length < longestDAppName + 3) {
     dappName += ' ';
   }
 
   return dappName;
+}
+
+/**
+ * Return the dapp dirs for a specific category.
+ *
+ * @param      {string}  category  category name (core, libs, dapps)
+ */
+const getCatgeroyDAppDirs = (category) => {
+  const categoryPath = path.resolve(`${ __dirname }/../${ category }`);
+  return dappDirs.filter(dappDir => dappDir.indexOf(categoryPath) !== -1);
 }
 
 /**
@@ -76,25 +104,28 @@ const logServing = async () => {
   console.clear();
 
   console.log(`Watching DApps: ${ nodeEnv }`);
-  console.log('--------------\n');
+  console.log('--------------');
 
-  for (let dappDir of dappDirs) {
-    const dappName = dappDir.split('/').pop();
-    const logDAppName = getFilledDAppName(dappName);
+  for (const category of categories) {
+    console.log(`\n => ${ category }`);
+    for (const dappDir of getCatgeroyDAppDirs(category)) {
+      const dappName = dappDir.split('/').pop();
+      const logDAppName = getFilledDAppName(dappName);
 
-    // load the status of the dapp
-    const timeLog = `(${ serves[dappName].duration }s / ${ serves[dappName].lastDuration }s)`;
-    if (serves[dappName].rebuild) {
-      console.log(`  ${ logDAppName }:     rebuilding ${ timeLog }`);
-    } else if (serves[dappName].loading) {
-      console.log(`  ${ logDAppName }:   building ${ timeLog }`);
-    } else {
-      console.log(`  ${ logDAppName }: watching ${ timeLog }`);
-    }
+      // load the status of the dapp
+      const timeLog = `(${ serves[dappName].duration }s / ${ serves[dappName].lastDuration }s)`;
+      if (serves[dappName].rebuild) {
+        console.log(`    - ${ logDAppName }:     rebuilding ${ timeLog }`);
+      } else if (serves[dappName].loading) {
+        console.log(`    - ${ logDAppName }:   building ${ timeLog }`);
+      } else {
+        console.log(`    - ${ logDAppName }: watching ${ timeLog }`);
+      }
 
-    if (serves[dappName].error) {
-      console.log();
-      console.error(serves[dappName].error);
+      if (serves[dappName].error) {
+        console.log();
+        console.error(serves[dappName].error);
+      }
     }
   }
 
@@ -175,8 +206,10 @@ gulp.task('dapps-serve', async () => {
 
 // Run Express, auto rebuild and restart on src changes
 gulp.task('dapps-build', async function () {
+  // check which dapp categories should be build
   await initialize();
 
+  // only build one dapp
   if (arg.folder) {
     // relative to root
     process.chdir('..');
@@ -187,14 +220,17 @@ gulp.task('dapps-build', async function () {
       console.error(ex);
     }
   } else {
-    await Throttle.all(dappDirs.map(dappDir => async () => {
-      try {
-        // navigate to the dapp dir and run the build command
-        await buildDApp(dappDir);
-      } catch (ex) {
-        console.error(ex);
-      }
-    }), { maxInProgress: 10 });
+    // build all categories
+    for (const category of categories) {
+      await Throttle.all(getCatgeroyDAppDirs(category).map(dappDir => async () => {
+        try {
+          // navigate to the dapp dir and run the build command
+          await buildDApp(dappDir);
+        } catch (ex) {
+          console.error(ex);
+        }
+      }), { maxInProgress: 10 });
+    }
   }
 });
 

@@ -32,6 +32,7 @@
     "gulp-typescript": "^5.0.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "husky": "^2.2.0",
+    "inquirer": "^7.0.1",
     "leaflet": "^1.4.0",
     "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.5.0",
@@ -79,9 +80,7 @@
     "@evan.network/ui-dapp-browser": "^2.7.0"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "tslint --config tslint.json \"./dapps/*/src/**/*.ts\""
-    }
+    "hooks": {}
   },
   "keywords": [
     "javascript",
