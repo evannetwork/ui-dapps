@@ -25,7 +25,6 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
-
   name: string = null;
   desc: string = null;
   template = null;
