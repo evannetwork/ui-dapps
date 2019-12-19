@@ -9,8 +9,8 @@ Scenario: Navigating through core DApps using the dashboard
     Then I want to see a text including "Overview of my Digital Twins"
   When I click on "Verification Center" in main menu
     Then I want to see a text including "Under construction"
-  When I click on "Explorer" in main menu
-    Then I want to see a text including "Under construction"
+  When I click on "My Assets" in main menu
+    Then I want to see a text including "Digital Twins"
   When I click on "Actions" in main menu
     Then I want to see a text including "Incoming Messages"
   When I click on "Synchronization" in main menu
