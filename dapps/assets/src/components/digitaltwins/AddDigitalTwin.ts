@@ -41,7 +41,7 @@ export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
       value: 'car',
       content: null
     }
-  ]
+  ];
 
   handleTemplateSelectChange(ev) {
     this.template = ev.target.value;
