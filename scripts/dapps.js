@@ -28,7 +28,7 @@ const serveStatic = require('serve-static');
 const Throttle = require('promise-parallel-throttle');
 const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv, getArgs } = require('./lib');
 
-let arg, dappDirs, categories, longestDAppName, serves, watching;
+let arg, dappDirs, categories, longestDAppName, serves, watching, expressApp;
 
 /**
  * Initialize dapp folders and symlink core projects
@@ -106,13 +106,22 @@ const getCatgeroyDAppDirs = (category) => {
 const logServing = async () => {
   console.clear();
 
-  console.log(`Watching DApps`);
-  console.log('--------------');
-  console.log(`\nbuild type: ${ nodeEnv }`)
-  console.log(`\nstarted local server: http://localhost:3000`)
+  console.log(`----------------------`);
+  console.log(`│ evan.network dapps │`);
+  console.log('----------------------');
+
+  console.log(`\nbuild type           : ${ watching ? 'serving' : 'building' }`);
+  console.log(`environment          : ${ nodeEnv }`);
+  expressApp && console.log(`started local server : http://localhost:3000`)
 
   for (const category of categories) {
-    console.log(`\n => ${ category }`);
+    // calculate good looking categoryTitle
+    let categoryTitle = ` ${ category } `;
+    while (categoryTitle.length < longestDAppName + 16) {
+      categoryTitle = !!(categoryTitle.length%2) ? `${ categoryTitle }-` : `-${ categoryTitle }`;
+    }
+    console.log(`\n${ categoryTitle }`);
+
     for (const dappDir of getCatgeroyDAppDirs(category)) {
       const dappName = dappDir.split('/').pop();
       const logDAppName = getFilledDAppName(dappName);
@@ -125,14 +134,14 @@ const logServing = async () => {
         : `(${ status.duration }s)`;
       let statusMsg;
       if (serves[dappName].rebuild) {
-        statusMsg = `    ${ logDAppName } »»»»»» ${ timeLog }`;
+        statusMsg = ` ${ logDAppName } »»»»»» ${ timeLog }`;
       } else if (serves[dappName].loading) {
-        statusMsg =`    ${ logDAppName } »»»   ${ timeLog }`;
+        statusMsg =` ${ logDAppName } »»»   ${ timeLog }`;
       } else {
         if (watching) {
-          statusMsg =`    ${ logDAppName } ∞     ${ timeLog }`;
+          statusMsg =` ${ logDAppName } ∞     ${ timeLog }`;
         } else {
-          statusMsg =`    ${ logDAppName } ${ wasBuild ? '√' : '»' }     ${ timeLog }`;
+          statusMsg =` ${ logDAppName } ${ wasBuild ? '√' : '»' }     ${ timeLog }`;
         }
       }
 
@@ -211,31 +220,27 @@ const buildDApp = async (dappDir) => {
 }
 
 const startStaticServer = async () => {
-  const app = express();
+  expressApp = express();
   const dappBrowserPath = path.resolve('../node_modules/@evan.network/ui-dapp-browser');
 
-  app.use(serveStatic(`${ dappBrowserPath }/runtime`));
-  app.use(serveStatic('.'));
-  app.use((req, res, next) => {
+  expressApp.use(serveStatic(`${ dappBrowserPath }/runtime`));
+  expressApp.use(serveStatic('.'));
+  expressApp.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
 
-  app.use('/dev-dapps', (req, res) => {
+  expressApp.use('/dev-dapps', (req, res) => {
     const data = { externals: [] };
-
     try {
       data.externals = getDirectories(path.resolve(`${ dappBrowserPath }/runtime/external`))
         .map(external => external.split(path.sep).pop());
     } catch (ex) { }
-
-    console.log('Serving DApps locally: ' + data.externals.join(', '));
-
     res.send(data);
   });
 
-  return new Promise(resolve => app.listen(3000, resolve));
+  return new Promise(resolve => expressApp.listen(3000, resolve));
 }
 
 // Run Express, auto rebuild and restart on src changes
@@ -283,6 +288,6 @@ gulp.task('dapps-build', async function () {
 });
 
 // start local file server and start dapp watching
-gulp.task('serve', gulp.series([ () => startStaticServer(), ], 'dapps-serve'));
+gulp.task('serve', gulp.series(startStaticServer, 'dapps-serve'));
 
 gulp.task('default', gulp.series([ 'dapps-build' ]));
