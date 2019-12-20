@@ -1,0 +1,86 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+/**
+ * import bootstrap essentials
+ */
+@import '../bootstrap/mixins';
+@import '../bootstrap/functions';
+@import '../bootstrap/_variables';
+@import '../../../ui.libs/src/style/utils';
+
+/**
+ * include fonts and bootstrap
+ */
+.evan.theme-evan {
+  @import "../bootstrap/functions";
+  @import "../bootstrap/variables";
+  @import "../bootstrap/mixins";
+  @import "../bootstrap/root";
+  @import "../bootstrap/reboot";
+  @import "../bootstrap/type";
+  @import "../bootstrap/buttons";
+  @import "../bootstrap/images";
+  @import "../bootstrap/code";
+  @import "../bootstrap/grid";
+  @import "../bootstrap/tables";
+  @import "../bootstrap/forms";
+  @import "../bootstrap/transitions";
+  @import "../bootstrap/dropdown";
+  @import "../bootstrap/button-group";
+  @import "../bootstrap/input-group";
+  @import "../bootstrap/custom-forms";
+  @import "../bootstrap/nav";
+  @import "../bootstrap/navbar";
+  @import "../bootstrap/card";
+  @import "../bootstrap/breadcrumb";
+  @import "../bootstrap/pagination";
+  @import "../bootstrap/badge";
+  @import "../bootstrap/jumbotron";
+  @import "../bootstrap/alert";
+  @import "../bootstrap/progress";
+  @import "../bootstrap/media";
+  @import "../bootstrap/list-group";
+  @import "../bootstrap/close";
+  @import "../bootstrap/toasts";
+  @import "../bootstrap/modal";
+  @import "../bootstrap/tooltip";
+  @import "../bootstrap/popover";
+  @import "../bootstrap/carousel";
+  @import "../bootstrap/spinners";
+  @import "../bootstrap/utilities";
+  @import "../bootstrap/print";
+
+  & {
+    font-family: $font-family-base;
+    font-weight: $font-weight-base;
+    line-height: $line-height-base;
+
+    margin: 0;
+
+    text-align: left;
+
+    color: $body-color;
+    background-color: cssVar('body-bg');
+
+    @include font-size($font-size-base);
+    -webkit-tap-highlight-color: rgba($black, 0);
+    -webkit-text-size-adjust: 100%;
+  }
+}

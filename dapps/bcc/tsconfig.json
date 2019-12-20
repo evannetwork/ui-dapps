@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "lib": [
+      "es2017"
+    ],
+    "module": "commonjs",
+    "outDir": "./dist/build",
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "target": "es5"
+  },
+  "exclude": [
+    "@evan.network/ui-dapp-browser",
+    "@evan.network/smart-contracts-core"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}

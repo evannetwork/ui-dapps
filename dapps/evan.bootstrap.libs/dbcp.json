@@ -1,0 +1,39 @@
+{
+  "public": {
+    "author": "evan GmbH",
+    "dapp": {
+      "dependencies": {},
+      "entrypoint": "evan.bootstrap.libs.js",
+      "files": [
+        "evan.bootstrap.libs.js",
+        "evan.bootstrap.libs.css"
+      ],
+      "origin": "QmPmDZCFF9n5Kh1a4FfANid7GrNUzvFRiKe5h56Dz7StAh",
+      "primaryColor": "",
+      "secondaryColor": "#f9f9ff",
+      "standalone": false,
+      "type": "dapp"
+    },
+    "dbcpVersion": 2,
+    "description": "",
+    "i18n": {
+      "description": {
+        "en": ""
+      },
+      "name": {
+        "en": "evan.bootstrap.libs"
+      }
+    },
+    "imgSquare": "",
+    "name": "evan.bootstrap.libs",
+    "tags": [
+      "dapp",
+      "evan",
+      "library"
+    ],
+    "version": "4.3.1",
+    "versions": {
+      "4.3.1": "QmVmMGFraKofa3PKMKiohSejxSkbxeYAhHCueBUiuadyC3"
+    }
+  }
+}

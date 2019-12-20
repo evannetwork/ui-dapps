@@ -1,0 +1,189 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+@import './utils';
+
+.evan {
+  .evan-steps {
+    .evan-step-header-sm {
+      position: relative;
+
+      button.btn {
+        position: relative;
+
+        height: auto !important;
+        padding: 5px;
+
+        text-align: center;
+        // reset button styles
+
+        border: 0;
+        background-color: transparent !important;
+        box-shadow: none !important;
+
+        &.active {
+          span:first-child {
+            color: cssVar('bg-text-dark');
+            background-color: cssVar('dark');
+          }
+        }
+
+        span:first-child {
+          z-index: 1;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 8px;
+          height: 8px;
+          margin: auto;
+          margin-bottom: 5px;
+
+          color: cssVar('white');
+          border-radius: 50%;
+          background-color: cssVar('gray-500');
+        }
+
+        span:nth-child(2) {
+          font-weight: 600;
+
+          display: block;
+
+          min-width: 100px;
+
+          white-space: normal;
+          word-break: break-word;
+
+          color: cssVar('gray-500');
+        }
+
+        &:disabled {
+          span:nth-child(2) {
+            color: cssVar('disabled');
+          }
+
+          .stepper-circle {
+            color: cssVar('white');
+            background-color: cssVar('disabled') !important;
+          }
+        }
+      }
+    }
+
+    .evan-step-header {
+      position: relative;
+
+      display: flex;
+      overflow-x: auto;
+      align-items: start;
+      justify-content: start;
+
+      padding: 0 20px 20px 0;
+
+      button.btn {
+        position: relative;
+        z-index: 1;
+
+        display: block;
+        flex: 1;
+
+        height: auto !important;
+
+        text-align: center;
+        // reset button styles
+
+        border: 0;
+        background-color: transparent !important;
+        box-shadow: none !important;
+
+        &:before {
+          position: absolute;
+          z-index: -1;
+          top: 25px;
+          right: -2px;
+          left: 0;
+
+          height: 2px;
+          margin: auto;
+
+          content: ' ';
+
+          background-color: cssVar('border-color');
+        }
+
+        &:first-child:before {
+          left: 50%;
+        }
+
+        &:last-child:before {
+          right: 50%;
+        }
+
+        &.active {
+          span:first-child {
+            color: cssVar('bg-text-dark');
+            background-color: cssVar('dark');
+          }
+        }
+
+        span:first-child {
+          z-index: 1;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 40px;
+          height: 40px;
+          margin: auto;
+          margin-bottom: 5px;
+
+          color: cssVar('white');
+          border-radius: 50%;
+          background-color: cssVar('gray-500');
+        }
+
+        span:nth-child(2) {
+          font-weight: 600;
+
+          display: block;
+
+          min-width: 100px;
+
+          white-space: normal;
+          word-break: break-word;
+
+          color: cssVar('gray-500');
+        }
+
+        &:disabled {
+          span:nth-child(2) {
+            color: cssVar('disabled');
+          }
+
+          .stepper-circle {
+            color: cssVar('white');
+            background-color: cssVar('disabled') !important;
+          }
+        }
+      }
+    }
+  }
+}

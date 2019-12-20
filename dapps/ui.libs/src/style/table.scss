@@ -1,0 +1,250 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+.evan {
+  table {
+    &.evan-table, &.evan-flex-table {
+      thead tr {
+        th {
+          font-weight: 600;
+
+          text-transform: uppercase;
+
+          color: cssVar('text-muted');
+          background-color: cssVar('bg-level-1');
+        }
+      }
+
+      tr {
+        td, th {
+          font-size: cssVar('text-font-size');
+          font-weight: 400;
+
+          min-height: 50px;
+          padding: 1em 1.5em;
+
+          vertical-align: top;
+          word-wrap: break-word;
+          word-break: break-word;
+
+          overflow-wrap: break-word;
+
+          &:first-child {
+            padding-left: 2em;
+          }
+
+          &:last-child {
+            padding-right: 2em;
+          }
+        }
+      }
+
+      tbody {
+        tr:nth-child(odd) {
+          td {
+            background-color: cssVar('table-row-odd');
+
+            .overflow-multiline:after {
+              background-color: cssVar('table-row-odd');
+            }
+          }
+        }
+
+        tr:nth-child(even) {
+          td {
+            background-color: cssVar('table-row-even');
+
+            .overflow-multiline:after {
+              background-color: cssVar('table-row-even');
+            }
+          }
+        }
+
+        tr:first-child {
+          td {
+            border-top: 1px solid cssVar('border-color');
+          }
+        }
+
+        tr:last-child {
+          td {
+            border-bottom: 1px solid cssVar('border-color');
+          }
+        }
+      }
+    }
+
+    &.evan-flex-table {
+      display: flex;
+      overflow-x: auto;
+      flex-flow: column nowrap;
+      justify-content: space-between;
+
+      margin-bottom: 0;
+      padding-bottom: 1.5em;
+
+      @media screen and (max-width: 767px) {
+        &.table-responsive {
+          overflow-y: hidden;
+
+          width: auto;
+          margin-bottom: 15px;
+
+          -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+      }
+
+      tr {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+      }
+
+      tr {
+        display: flex;
+
+        td, th {
+          flex-basis: 0;
+          flex-grow: 1;
+
+          &.first {
+            flex-grow: 0.3;
+            justify-content: flex-start;
+          }
+
+          &.last {
+            flex-grow: 0.3;
+            justify-content: flex-end;
+          }
+        }
+      }
+
+      td {
+        th {
+          display: none;
+        }
+      }
+    }
+
+    &.evan-flex-table.responsive-table {
+      @media screen and (max-width: 992px) {
+        thead {
+          display: none;
+        }
+
+        tbody {
+          tr {
+            flex-flow: column;
+
+            margin: 20px 10px;
+
+            box-shadow: 0 0 5px 0 cssVar('gray-500');
+
+            &:first-child td, &:last-child td {
+              border-top: 0;
+              border-bottom: 0;
+            }
+
+            td {
+              display: flex;
+              flex-flow: row;
+
+              padding: 0 30px;
+
+              &.fill-content * {
+                width: auto;
+              }
+
+              & > * {
+                display: flex;
+                align-items: center;
+              }
+
+              th {
+                font-weight: bold;
+
+                display: flex;
+
+                padding: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.no-wrap {
+      thead tr {
+        th {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &.static-first {
+      tr {
+        position: relative;
+
+        th, td {
+          height: 50px;
+
+          &:first-child {
+            position: absolute;
+            z-index: 5;
+            left: 0;
+
+            overflow: hidden;
+
+            width: 200px;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            border-right: 1px solid cssVar('border-color');
+            box-shadow: 4px 2px 5px 0 var(--evan-border-color);
+          }
+
+          &:nth-child(2) {
+            padding-left: 250px;
+          }
+
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+
+    &.hover {
+      tbody {
+        tr:hover {
+          transition-duration: 0.3s;
+          transition-property: transform;
+          transform: scale(1.01);
+
+          box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+
+  .table-scroll-container {
+    overflow-x: auto;
+  }
+}
