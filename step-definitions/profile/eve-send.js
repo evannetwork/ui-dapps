@@ -8,11 +8,16 @@ import { setupEvan } from '../../test-utils/test-utils.js';
  * formulars. So the test can submit the transaction and can check for balance differences.
  */
 When('I send {string} EVE with vue UI', async (amount) => {
+  client.useCss();
   const evan = setupEvan(client);
   let previous, after;
 
   await client.getText('#evan-account-balance', (result) => {
     previous = parseFloat(result.value.replace(/\s|\n|EVE/g, ''));
+  });
+
+  await await client.execute(function() {
+    document.querySelectorAll('.fullscreen').forEach(el => el.parentElement.removeChild(el))
   });
 
   // start eve sending  

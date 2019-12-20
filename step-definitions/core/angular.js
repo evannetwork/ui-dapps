@@ -6,9 +6,10 @@ import { setupEvan } from '../../test-utils/test-utils.js';
 let loggedIn = false;
 
 Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPart, accountName) => {
+  client.useCss();
   const evan = setupEvan(client);
 
-  await client.url(evan.baseUrl);
+  await client.url(`${ evan.baseUrl }#/onboarding.evan?origin=dashboard.evan`);
   await client.pause(5000);
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
   if (!user || !user.mnemonic) {
@@ -43,6 +44,7 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
 });
 
 When(/^I log out from angular$/, async () => {
+  client.useCss();
   const evan = setupEvan(client);
 
   if (loggedIn) {
@@ -55,16 +57,20 @@ When(/^I log out from angular$/, async () => {
       .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
       .pause(3 * 1000)
       .click(`ion-alert .alert-button-group button:nth-child(2)`)
+      .pause(100)
+      .url(`${ evan.baseUrl }#/onboarding.evan?origin=dashboard.evan`)
       .pause(3 * 1000);
   }
 });
 
 Then(/^I can see the angular dashboard$/, async () => {
+  client.useCss();
   await client.waitForElementPresent('#dashboard', 30 * 1000);
   await client.assert.visible('#dashboard');
 });
 
 Then(/^I am no longer logged in to angular$/, async () => {
+  client.useCss();
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
   await client.assert.visible('onboarding-root');
 });

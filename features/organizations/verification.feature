@@ -5,7 +5,7 @@ Scenario: Requesting Notary Verification with non company user
   Given I log in to evan.network using vue with organizationIdentificationNonCompany
   When I click on "Identity" in main menu
     And I click the element with id "nav-entry-verifications"
-    Then I want to see a text including "There are currently no verifications available for your profile type."
+    Then I want to see a text including "There are currently no verifications available for your Identity type."
 
 Scenario: Requesting Notary Verification for current user
   Given I log in to evan.network using vue with organizationIdentification
@@ -54,10 +54,9 @@ Scenario: Requesting Notary Verification for current user
 Scenario: Requesting Notary Verification for current user with missing info
   Given I log in to evan.network using vue with organizationIdentification
   When I click on "Identity" in main menu
-    When I set Input field with label "Company" to "Test Company"
     And I set Input field with label "Register Court" to ""
     And I set Input field with label "Registration Number" to ""
-    And I set Input field with label "Sales Tax ID" to ""
+    And I set Input field with label "VAT ID" to ""
   When I click on button "Save"
     Then the button "Save" should be "disabled"
     And I want to see a element with class "spinner-border"
@@ -69,18 +68,16 @@ Scenario: Requesting Notary Verification for current user with missing info
     And I want to see a button "Start request"
   When I click on button "Start request"
     Then I want to see a text including "Registration"
-      And Input field with label "Company" should be visible
       And Input field with label "Register Court" should be visible
       And Input field with label "Register" should be visible
       And Input field with label "Registration Number" should be visible
-      And Input field with label "Sales Tax ID" should be visible
+      And Input field with label "VAT ID" should be visible
       And The value of the Input field with label "Register Court" should be ""
       And The value of the Input field with label "Registration Number" should be ""
-      And The value of the Input field with label "Sales Tax ID" should be ""
-  When I set Input field with label "Company" to "Test Company"
-    And I set Input field with label "Register Court" to "Test Register Court"
+      And The value of the Input field with label "VAT ID" should be ""
+    When I set Input field with label "Register Court" to "Test Register Court"
     And I set Input field with label "Registration Number" to "Test Registration Number"
-    And I set Input field with label "Sales Tax ID" to "Test Sales Tax ID"
+    And I set Input field with label "VAT ID" to "Test VAT ID"
     And I click on button "Save"
     Then the button "Save" should be "disabled"
     And I want to see a element with class "spinner-border"
@@ -90,4 +87,4 @@ Scenario: Requesting Notary Verification for current user with missing info
     And I click on "Identity" in main menu
     And The value of the Input field with label "Register Court" should be "Test Register Court"
     And The value of the Input field with label "Registration Number" should be "Test Registration Number"
-    And The value of the Input field with label "Sales Tax ID" should be "Test Sales Tax ID"
+    And The value of the Input field with label "VAT ID" should be "Test VAT ID"

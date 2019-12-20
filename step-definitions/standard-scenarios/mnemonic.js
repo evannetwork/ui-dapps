@@ -2,6 +2,7 @@ import { client } from 'nightwatch-api';
 import { When } from 'cucumber';
 
 When('I enter the mnemonic {string}', async mnemonic => {
+  client.useCss();
   let words = mnemonic.split(' ');
 
   for (let i = 0; i < words.length; i++) {

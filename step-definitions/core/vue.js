@@ -7,6 +7,7 @@ import { buttonSelector } from '../../step-definitions/standard-ui/button';
 let loggedIn = false;
 
 Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
+  client.useCss();
   const evan = setupEvan(client);
 
   if (customPart && !evan.accounts[accountName]) {
@@ -26,6 +27,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   });
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`).refresh();
+  await client.waitForElementNotPresent('#evan-initial-loading', 60 * 1000);
   await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 
   // vue, to define
@@ -49,6 +51,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
 
 
 Given('I go to the evan.network startpage', async () => {
+  client.useCss();
   const evan = setupEvan(client);
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
@@ -58,10 +61,12 @@ Given('I go to the evan.network startpage', async () => {
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
   });
+  await client.waitForElementNotPresent('#evan-initial-loading', 60 * 1000);
   await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I log out from vue/, async () => {
+  client.useCss();
   const evan = setupEvan(client);
 
   if (loggedIn) {
@@ -78,10 +83,13 @@ When(/I log out from vue/, async () => {
 });
 
 Then(/I am no longer logged in to vue/, async () => {
+  client.useCss();
+  await client.waitForElementNotPresent('#evan-initial-loading', 60 * 1000);
   await client.waitForElementVisible('#onboarding\\.vue\\.evan', 60 * 1000);
 });
 
 When(/I switch to vue/, async () => {
+  client.useCss();
   const evan = setupEvan(client);
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);

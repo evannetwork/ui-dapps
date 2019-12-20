@@ -5,7 +5,7 @@ const mainMenu = {
   'Actions': '#evan-dapp-mailbox',
   'DApps': '#evan-dapp-favorites',
   'Digital Twins': '#evan-dapp-digitaltwins',
-  'Explorer': '#evan-dapp-explorer',
+  'My Assets': '#evan-dapp-assets',
   'Help': '#evan-dapp-help',
   'Identity': '#evan-dapp-profile',
   'Synchronization': '#evan-dapp-synchronization',

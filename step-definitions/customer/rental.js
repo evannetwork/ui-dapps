@@ -263,13 +263,16 @@ Given(/^I start the rental demo$/, async () => {
 });
 
 Then(/^the disponent can create a transport order$/, async () => {
+  client.useCss();
   await createTransportOrder(client);
 });
 
 Then(/^the driver can resolve a transport order$/, async () => {
+  client.useCss();
   await solveTransportOrder(client);
 });
 
 Then(/^the disponent can finish the transport order$/, async () => {
+  client.useCss();
   await finishTransportOrder(client);
 });
