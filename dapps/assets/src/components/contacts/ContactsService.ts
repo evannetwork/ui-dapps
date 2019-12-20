@@ -71,20 +71,32 @@ export class ContactsService {
     await InviteDispatcher.start(this.runtime, contactFormData);
   }
 
-  addFavorite(contact): Promise<any> {
-    return this.runtime.profile.addProfileKey(
+  async addFavorite(contact): Promise<void> {
+    await this.runtime.profile.addProfileKey(
       contact.address,
       'isFavorite',
       'true'
     );
+
+    await this.runtime.profile.storeForAccount(
+      this.runtime.profile.treeLabels.addressBook
+    );
   }
 
-  removeFavorite(contact): Promise<any> {
-    return this.runtime.profile.addProfileKey(
+  async removeFavorite(contact): Promise<void> {
+    await this.runtime.profile.addProfileKey(
       contact.address,
       'isFavorite',
       'false'
     );
+
+    await this.runtime.profile.storeForAccount(
+      this.runtime.profile.treeLabels.addressBook
+    );
+
+    const cont = await this.runtime.profile.getAddressBook();
+    console.log(cont);
+    
   }
 
   private getIcon(type: ContactType): string {

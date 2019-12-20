@@ -31,7 +31,7 @@
             type="text-filter"
             icon="mdi mdi-star-outline"
             iconPosition="left"
-            :class="{ 'active': filterBy.includes('favorite') }"
+            :class="{ 'active': filterBy.includes('isFavorite') }"
             :label="$t('_assets.contacts.favorites')"
           />
           <evan-button
@@ -91,9 +91,13 @@
           <template v-slot:cell(icon)="contacts">
             <i class="table-icon" :class="contacts.item.icon"></i>
           </template>
-          <template v-slot:cell(favorite)="contacts">
+          <template v-slot:cell(isFavorite)="contacts">
+            <evan-loading
+              v-if="isFavoriteLoading.loading && (isFavoriteLoading.index === contacts.index)"
+              classes=""
+            />
             <evan-button
-              v-if="contacts.item.isFavorite === 'true'"
+              v-else-if="contacts.item.isFavorite === 'true'"
               type="icon-secondary"
               icon="mdi mdi-star"
               @click="removeFavorite(contacts)"

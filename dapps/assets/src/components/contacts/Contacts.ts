@@ -29,6 +29,10 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
 
   isLoading = true;
+  isFavoriteLoading = {
+    index: null,
+    loading: false
+  };
 
   sortBy = 'name';
 
@@ -42,7 +46,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     { key: 'alias', label: this.$t('_assets.contacts.name'), sortable: true },
     { key: 'updatedAt', label: this.$t('_assets.contacts.updated'), sortable: true },
     { key: 'createdAt', label: this.$t('_assets.contacts.created'), sortable: true },
-    { key: 'favorite', label: '', sortable: false }
+    { key: 'isFavorite', label: '', sortable: false }
   ];
 
   created() {
@@ -53,6 +57,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   async mounted() {
     this.contacts = await this.fetchContacts();    
     this.isLoading = false;
+    console.log(this.contacts);
+    
   }
 
   /**
@@ -77,13 +83,24 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(contact) {
+    this.setFavoriteLoading(contact.index, true);
     await this.contactService.addFavorite(contact.item);
-    this.contacts[contact.index].isFavorite = "true";
+    this.setFavoriteLoading(contact.index, false);
+    this.contacts[contact.index].isFavorite = 'true';
   }
 
   async removeFavorite(contact) {
-    await this.contactService.removeFavorite(contact);
-    this.contacts[contact.index].isFavorite = "false";
+    this.setFavoriteLoading(contact.index, true);
+    await this.contactService.removeFavorite(contact.item);
+    this.setFavoriteLoading(contact.index, false);
+    this.contacts[contact.index].isFavorite = 'false';
+  }
+
+  private setFavoriteLoading(index: number, flag: boolean) {
+    this.isFavoriteLoading = {
+      index: index,
+      loading: flag
+    };
   }
 
   filterByType(type: string) {
@@ -92,7 +109,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   filterByFavorites() {
-    this.filterBy = ['favorite'];
+    this.filterBy = ['isFavorite'];
     this.filter = 'true';
   }
 
