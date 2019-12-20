@@ -12,7 +12,7 @@
   "main": "dist/vuex.libs.js",
   "name": "@evan.network/vuex",
   "scripts": {
-    "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
   "typings": "dist/vuex.libs.d.ts",
   "version": "2.5.2"

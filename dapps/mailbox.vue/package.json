@@ -12,7 +12,7 @@
   "main": "dist/index.js",
   "name": "@evan.network/mailbox.vue",
   "scripts": {
-    "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
   "version": "3.3.1"

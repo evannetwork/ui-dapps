@@ -12,7 +12,7 @@
   "main": "dist/lodash.js",
   "name": "@evan.network/lodash",
   "scripts": {
-    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/webpack.config.js --dapp $(pwd)"
   },
   "typings": "dist/lodash.d.ts",
   "version": "4.17.11"

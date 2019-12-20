@@ -12,7 +12,7 @@
   "main": "dist/compiled.js",
   "name": "@evan.network/smart-contracts-core-browserified",
   "scripts": {
-    "build": "node gulp/buildContracts.js && gulp --gulpfile ../../gulp/browserify.js browserify --dapp $(pwd)"
+    "build": "node gulp/buildContracts.js && gulp --gulpfile ../../scripts/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
   "version": "2.7.0"

@@ -12,7 +12,7 @@
   "main": "dist/qrcodejs.js",
   "name": "@evan.network/qrcodejs",
   "scripts": {
-    "build": "gulp --gulpfile ../../gulp/webpack.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/webpack.config.js --dapp $(pwd)"
   },
   "typings": "dist/qrcodejs.d.ts",
   "version": "1.0.0"

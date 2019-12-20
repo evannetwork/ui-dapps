@@ -26,7 +26,7 @@ const path = require('path');
 const Throttle = require('promise-parallel-throttle');
 const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv, getArgs } = require('./lib');
 
-let arg, dappDirs, categories, longestDAppName, serves;
+let arg, dappDirs, categories, longestDAppName, serves, watching;
 
 /**
  * Initialize dapp folders and symlink core projects
@@ -104,8 +104,9 @@ const getCatgeroyDAppDirs = (category) => {
 const logServing = async () => {
   console.clear();
 
-  console.log(`Watching DApps: ${ nodeEnv }`);
+  console.log(`Watching DApps`);
   console.log('--------------');
+  console.log(`\nbuild type: ${ nodeEnv }`)
 
   for (const category of categories) {
     console.log(`\n => ${ category }`);
@@ -114,14 +115,23 @@ const logServing = async () => {
       const logDAppName = getFilledDAppName(dappName);
 
       // load the status of the dapp
-      const timeLog = `(${ serves[dappName].duration }s / ${ serves[dappName].lastDuration }s)`;
+      const timeLog = serves[dappName].lastDuration
+        ? `(${ serves[dappName].duration }s / ${ serves[dappName].lastDuration }s)`
+        : `(${ serves[dappName].duration }s)`;
+      let statusMsg;
       if (serves[dappName].rebuild) {
-        console.log(`    - ${ logDAppName }:     rebuilding ${ timeLog }`);
+        statusMsg = `    - ${ logDAppName }:     rebuilding ${ timeLog }`;
       } else if (serves[dappName].loading) {
-        console.log(`    - ${ logDAppName }:   building ${ timeLog }`);
+        statusMsg =`    - ${ logDAppName }:   building ${ timeLog }`;
       } else {
-        console.log(`    - ${ logDAppName }: watching ${ timeLog }`);
+        if (watching) {
+          statusMsg =`    - ${ logDAppName }: watching ${ timeLog }`;
+        } else {
+          statusMsg =`    - ${ logDAppName }: --- ${ timeLog }`;
+        }
       }
+
+      console.log(statusMsg);
 
       if (serves[dappName].error) {
         console.log();
@@ -197,7 +207,10 @@ const buildDApp = async (dappDir) => {
 // Run Express, auto rebuild and restart on src changes
 gulp.task('dapps-serve', async () => {
   await initialize();
+  // set watching flag so output will be correct
+  watching = true
 
+  // start watching
   dappDirs.forEach(dappDir =>
     gulp.watch(`${dappDir}/src/**/*`, (event) => buildDApp(dappDir))
   );

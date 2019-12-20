@@ -17,18 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-/**
- * Returns the default webpack vue externals.
- *
- * @param      {any}     customExcludes  object with custom externals
- * @return     {Object}  object with all externals
- */
-module.exports = function(customExcludes) {
-  return {
-    '@evan.network/api-blockchain-core': '@evan.network/api-blockchain-core',
-    '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
-    '@evan.network/ui': '@evan.network/ui',
-    '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
-    ...(customExcludes || { })
-  };
-}
+// load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
+module.exports = require('../../scripts/dapp/webpack.config')(
+  require('./dbcp.json').public.name,
+  require('path').resolve(__dirname, './dist'),
+);

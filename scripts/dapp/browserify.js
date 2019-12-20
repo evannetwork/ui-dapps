@@ -26,7 +26,7 @@ const gulpReplace = require('gulp-replace');
 const path = require('path');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
-const { runExec } = require('./lib');
+const { runExec } = require('../lib');
 
 // extract the dapp relative folder
 const dappRelativePath = process.argv[process.argv.indexOf('--dapp') + 1];

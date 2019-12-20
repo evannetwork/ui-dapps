@@ -12,7 +12,7 @@
   "main": "dist/digitaltwin.lib.js",
   "name": "@evan.network/digitaltwin.lib",
   "scripts": {
-    "build": "gulp --gulpfile ../../vue/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
   "version": "1.8.0"
 }
