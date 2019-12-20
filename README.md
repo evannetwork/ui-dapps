@@ -72,21 +72,27 @@ DApps for wrapping UI framework specific libraries (vue, d3, vuex, ...).
 - use `yarn install` or `npm install`
 
 ### Development
-- start an local development server [locally](http://localhost:3000/dev.html)
+- build dapps without serving for changes
 ```bash
-npm run serve
+yarn build
 ```
 
-- build all dapps
+- start an development server [locally](http://localhost:3000/dev.html) and watch for changes within dapps
 ```bash
-npm run dapps-build
-```
-
-- serve for file change tracking
-```bash
-npm run dapps-serve
+yarn serve
 ```
 
 ## Deployment
 Have a look at the [deployment description](https://evannetwork.github.io/dev/deployment).
 
+## Tests
+Currently only [e2e tests](./tests-e2e) are implemented for the dapps. For instructions, please have a look at the seperated [readme file](.tests-e2e).
+
+For running the tests you can use the following commands:
+```
+yarn test-local
+yarn test-local-only
+yarn test-testnet
+yarn test-testnet-only
+yarn test-testnet-specific
+```
