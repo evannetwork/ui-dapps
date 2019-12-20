@@ -25,6 +25,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import SearchService from './SearchService';
+import * as bcc from '@evan.network/api-blockchain-core';
 
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
@@ -40,9 +41,12 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     default: 'twins'
   }) type: string;
 
-  mounted() {
+  async mounted() {
     this.searchTerm = this.$route.params.query || '';
     this.initialQuery(this.searchTerm);
+
+    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime());
+    console.log('Favorites', favorites);
   }
 
   async initialQuery(searchTerm = '') {

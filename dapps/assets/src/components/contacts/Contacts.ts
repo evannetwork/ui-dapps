@@ -65,7 +65,6 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   async mounted() {
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
-    console.log(this.contacts);
   }
 
   /**
@@ -90,8 +89,6 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(contact) {
-    console.log(contact, this.contacts);
-
     this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.addFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);

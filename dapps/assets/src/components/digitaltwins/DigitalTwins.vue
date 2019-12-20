@@ -80,10 +80,30 @@
           @scroll.native="scrollHandler"
         >
           <template v-slot:cell(icon)="data">
-            <i class="table-icon" :class="data.item.icon"></i>
+            <i class="table-icon mdi mdi-cube-outline" />
           </template>
-          <template v-slot:cell(favorite)="data">
-            <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
+          <template v-slot:cell(isFavorite)="twin">
+            <!-- <evan-loading
+              v-if="isFavoriteLoading.loading && (isFavoriteLoading.id === twin.item.address)"
+              classes=""
+            /> -->
+            <evan-loading
+              v-if="false"
+              classes=""
+            />
+            <evan-button
+              v-else-if="twin.item.isFavorite === 'true'"
+              type="icon-secondary"
+              icon="mdi mdi-star"
+              @click="removeFavorite(twin)"
+            />
+            <evan-button
+              v-else
+              class="visible-on-row-hover"
+              type="icon-secondary"
+              icon="mdi mdi-star-outline"
+              @click="addFavorite(twin)"
+            />
           </template>
         </evan-table>
       </div>

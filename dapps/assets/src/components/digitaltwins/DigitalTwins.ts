@@ -25,6 +25,9 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { debounce } from 'lodash';
 import { Prop, Watch } from 'vue-property-decorator';
 
+import * as bcc from '@evan.network/api-blockchain-core';
+import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
+
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   columns = [
@@ -33,29 +36,34 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     'owner',
     'updated',
     'created',
-    { key: 'actions', label: '' }
+    { key: 'isFavorite', label: '' }
   ];
   isActiveSearch = false;
 
   @Prop({
-    default: [],
-  }) data: any[];
+    default: []
+  })
+  data: any[];
 
   @Prop({
-    default: '',
-  }) searchTerm: string;
+    default: ''
+  })
+  searchTerm: string;
 
   @Prop({
-    default: true,
-  }) isLoading: boolean;
+    default: true
+  })
+  isLoading: boolean;
 
   @Prop({
     required: true
-  }) fetchMore: Function;
+  })
+  fetchMore: Function;
 
   @Prop({
     required: true
-  }) search: Function;
+  })
+  search: Function;
 
   @Watch('searchTerm')
   onSearchTermChanged(searchTerm: string, oldSearchTerm: string) {
@@ -76,14 +84,16 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Activiate search when CMD+F or CTRL+F is pressed.
+   * Activate search when CMD+F or CTRL+F is pressed.
    */
   handleSearchShortcut(e: KeyboardEvent) {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
       e.preventDefault();
       this.isActiveSearch = true;
       this.searchTerm = '';
-      this.$nextTick(() => (this.$refs['searchInput'] as HTMLInputElement).focus());
+      this.$nextTick(() =>
+        (this.$refs['searchInput'] as HTMLInputElement).focus()
+      );
     }
   }
 
@@ -124,5 +134,17 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     if (this.searchTerm.length === 0) {
       this.isActiveSearch = false;
     }
+  }
+
+  async addFavorite(twin) {
+    console.log(twin);
+    await EvanUIDigitalTwin.getDigitalTwin(
+      this.getRuntime(),
+      twin.item.address
+    ).addAsFavorite();
+  }
+
+  removeFavorite(twin) {
+    console.log(twin);
   }
 }
