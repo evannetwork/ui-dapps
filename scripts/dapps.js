@@ -19,10 +19,12 @@
 
 const del = require('del');
 const exec = require('child_process').exec;
+const express = require('express');
 const fs = require('fs');
 const gulp = require('gulp');
 const inquirer = require('inquirer');
 const path = require('path');
+const serveStatic = require('serve-static');
 const Throttle = require('promise-parallel-throttle');
 const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv, getArgs } = require('./lib');
 
@@ -107,6 +109,7 @@ const logServing = async () => {
   console.log(`Watching DApps`);
   console.log('--------------');
   console.log(`\nbuild type: ${ nodeEnv }`)
+  console.log(`\nstarted local server: http://localhost:3000`)
 
   for (const category of categories) {
     console.log(`\n => ${ category }`);
@@ -115,19 +118,21 @@ const logServing = async () => {
       const logDAppName = getFilledDAppName(dappName);
 
       // load the status of the dapp
-      const timeLog = serves[dappName].lastDuration
-        ? `(${ serves[dappName].duration }s / ${ serves[dappName].lastDuration }s)`
-        : `(${ serves[dappName].duration }s)`;
+      const status = serves[dappName];
+      const wasBuild = serves[dappName].lastDuration;
+      const timeLog = wasBuild && serves[dappName].loading
+        ? `(${ status.duration }s / ${ status.lastDuration }s)`
+        : `(${ status.duration }s)`;
       let statusMsg;
       if (serves[dappName].rebuild) {
-        statusMsg = `    - ${ logDAppName }:     rebuilding ${ timeLog }`;
+        statusMsg = `    ${ logDAppName } »»»»»» ${ timeLog }`;
       } else if (serves[dappName].loading) {
-        statusMsg =`    - ${ logDAppName }:   building ${ timeLog }`;
+        statusMsg =`    ${ logDAppName } »»»   ${ timeLog }`;
       } else {
         if (watching) {
-          statusMsg =`    - ${ logDAppName }: watching ${ timeLog }`;
+          statusMsg =`    ${ logDAppName } ∞     ${ timeLog }`;
         } else {
-          statusMsg =`    - ${ logDAppName }: --- ${ timeLog }`;
+          statusMsg =`    ${ logDAppName } ${ wasBuild ? '√' : '»' }     ${ timeLog }`;
         }
       }
 
@@ -135,7 +140,7 @@ const logServing = async () => {
 
       if (serves[dappName].error) {
         console.log();
-        console.error(serves[dappName].error);
+        console.error(serves[dappName].error.replace(/^/gm, '      '));
       }
     }
   }
@@ -152,8 +157,9 @@ const buildDApp = async (dappDir) => {
   // if its not already building, build the dapp
   const dappName = dappDir.split('/').pop();
   if (!serves[dappName].loading) {
-    serves[dappName].loading = true;
+    serves[dappName].duration = 0;
     serves[dappName].error = '';
+    serves[dappName].loading = true;
     logServing();
 
     // track the build time
@@ -204,11 +210,39 @@ const buildDApp = async (dappDir) => {
   }
 }
 
+const startStaticServer = async () => {
+  const app = express();
+  const dappBrowserPath = path.resolve('../node_modules/@evan.network/ui-dapp-browser');
+
+  app.use(serveStatic(`${ dappBrowserPath }/runtime`));
+  app.use(serveStatic('.'));
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+
+  app.use('/dev-dapps', (req, res) => {
+    const data = { externals: [] };
+
+    try {
+      data.externals = getDirectories(path.resolve(`${ dappBrowserPath }/runtime/external`))
+        .map(external => external.split(path.sep).pop());
+    } catch (ex) { }
+
+    console.log('Serving DApps locally: ' + data.externals.join(', '));
+
+    res.send(data);
+  });
+
+  return new Promise(resolve => app.listen(3000, resolve));
+}
+
 // Run Express, auto rebuild and restart on src changes
 gulp.task('dapps-serve', async () => {
   await initialize();
   // set watching flag so output will be correct
-  watching = true
+  watching = true;
 
   // start watching
   dappDirs.forEach(dappDir =>
@@ -247,5 +281,8 @@ gulp.task('dapps-build', async function () {
     }
   }
 });
+
+// start local file server and start dapp watching
+gulp.task('serve', gulp.series([ () => startStaticServer(), ], 'dapps-serve'));
 
 gulp.task('default', gulp.series([ 'dapps-build' ]));

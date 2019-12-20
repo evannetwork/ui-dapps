@@ -16,7 +16,7 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-const getExternals = require('../../vue/webpack.externals');
+const getExternals = require('../../scripts/dapp/webpack.externals');
 
 module.exports = require('../../scripts/dapp/webpack.config')(
   require('./dbcp.json').public.name,

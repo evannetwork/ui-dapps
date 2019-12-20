@@ -12,7 +12,7 @@
   "main": "dist/bcc.js",
   "name": "@evan.network/api-blockchain-core-browserified",
   "scripts": {
-    "build": "node ./gulp/buildBcc.js && gulp --gulpfile ../../scripts/browserify.js browserify --dapp $(pwd)"
+    "build": "node ./gulp/buildBcc.js && gulp --gulpfile ../../scripts/dapp/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
   "version": "2.15.0"

@@ -42,6 +42,6 @@ module.exports = function(customExcludes) {
     'vue-select': 'vue-select',
     'vuex': 'vuex',
     'vuex-i18n': 'vuex-i18n',
-    ...(customExcludes || { }) 
+    ...(customExcludes || { })
   };
 }

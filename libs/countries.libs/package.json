@@ -12,7 +12,7 @@
   "main": "dist/countries.libs.js",
   "name": "@evan.network/ui-countries",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/webpack.config.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
   "typings": "dist/countries.libs.d.ts",
   "version": "1.1.0"

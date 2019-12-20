@@ -46,9 +46,9 @@ gulp.task('build', async function () {
 
   try {
     // bundle everything using webpack
-    await runExec('../../node_modules/webpack/bin/webpack.js', dappDir, 'stdout');
+    await runExec('../../node_modules/webpack/bin/webpack.js', dappDir, 'stderr');
   } catch (ex) {
-    process.stderr.write(ex.message || ex, () => process.exit(1))
+    process.stderr.write(ex.message || ex)
   }
 
   // copy the dbcp.json and all css files into the runtimeFolder

@@ -30,7 +30,7 @@ const { runExec } = require('../lib');
 
 // extract the dapp relative folder
 const dappRelativePath = process.argv[process.argv.indexOf('--dapp') + 1];
-const rootFolder = path.resolve(process.cwd(), '..');
+const rootFolder = path.resolve(process.cwd(), '../..');
 
 /**
  * check if a folder exists, else, create it
