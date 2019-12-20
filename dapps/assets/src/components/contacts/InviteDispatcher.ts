@@ -135,7 +135,8 @@ dispatcher
         'accountId',
         'email',
         'createdAt',
-        'updatedAt'
+        'updatedAt',
+        'isFavorite'
       ].map(profileKey =>
         runtime.profile.addProfileKey(accountId, profileKey, data[profileKey])
       )

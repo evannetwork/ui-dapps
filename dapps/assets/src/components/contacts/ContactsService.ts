@@ -24,7 +24,7 @@ export interface Contact {
   address: string;
   alias: string;
   createdAt: string;
-  favorite: boolean;
+  isFavorite: string;
   icon: string;
   type: ContactType;
   updatedAt: string;
@@ -39,7 +39,7 @@ enum ContactType {
 
 export class ContactsService {
   private contacts;
-  private runtime;
+  private runtime: bcc.Runtime;
 
   constructor(runtime) {
     this.runtime = runtime;
@@ -51,22 +51,40 @@ export class ContactsService {
     let data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async contact => {
       const type = await this.getProfileType(contact);
-      data.push({
-        address: contact,
-        alias: this.contacts.profile[contact].alias,
-        createdAt: this.contacts.profile[contact].createdAt,
-        favorite: Math.random() > 0.5 ? true : false, // TODO: hard coded
-        icon: this.getIcon(type),
-        type: type,
-        updatedAt: this.contacts.profile[contact].updatedAt
-      });
+      // filter out own account
+      if (contact != this.runtime.activeAccount) {
+        data.push({
+          address: contact,
+          alias: this.contacts.profile[contact].alias,
+          createdAt: this.contacts.profile[contact].createdAt,
+          isFavorite: this.contacts.profile[contact].isFavorite,
+          icon: this.getIcon(type),
+          type: type,
+          updatedAt: this.contacts.profile[contact].updatedAt
+        });
+      }
     });
-
     return data;
   }
 
-  async addContact(contact) {
-    await InviteDispatcher.start(this.runtime, contact);
+  async addContact(contactFormData) {
+    await InviteDispatcher.start(this.runtime, contactFormData);
+  }
+
+  addFavorite(contact): Promise<any> {
+    return this.runtime.profile.addProfileKey(
+      contact.address,
+      'isFavorite',
+      'true'
+    );
+  }
+
+  removeFavorite(contact): Promise<any> {
+    return this.runtime.profile.addProfileKey(
+      contact.address,
+      'isFavorite',
+      'false'
+    );
   }
 
   private getIcon(type: ContactType): string {
@@ -87,7 +105,7 @@ export class ContactsService {
   private async getProfileType(accountId: string): Promise<ContactType> {
     try {
       const otherProfile = new bcc.Profile({
-        ...this.runtime,
+        ...(this.runtime as any),
         profileOwner: accountId,
         accountId: this.runtime.activeAccount
       });

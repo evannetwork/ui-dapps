@@ -22,7 +22,7 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div>
-          <h1 class="header">{{ '_assets.contacts.contacts-title' | translate }}</h1>
+          <h1 class="heading">{{ '_assets.contacts.contacts-title' | translate }}</h1>
         </div>
         <div>
           <evan-button
@@ -85,7 +85,6 @@
           :show-scrollbar="true"
           @row-clicked="handleRowClicked"
         >
-          
           <template
             v-slot:cell(alias)="contacts"
           >{{ contacts.item.alias ? contacts.item.alias : contacts.item.address }}</template>
@@ -93,7 +92,19 @@
             <i class="table-icon" :class="contacts.item.icon"></i>
           </template>
           <template v-slot:cell(favorite)="contacts">
-            <i class="table-icon" :class="{'mdi mdi-star': contacts.item.favorite }"></i>
+            <evan-button
+              v-if="contacts.item.isFavorite === 'true'"
+              type="icon-secondary"
+              icon="mdi mdi-star"
+              @click="removeFavorite(contacts)"
+            />
+            <evan-button
+              v-else
+              class="visible-on-row-hover"
+              type="icon-secondary"
+              icon="mdi mdi-star-outline"
+              @click="addFavorite(contacts)"
+            />
           </template>
 
           <!-- Empty slots -->
@@ -113,7 +124,7 @@
       class="add-contact-btn"
       icon="mdi mdi-plus"
       @click="$refs.addContact.showPanel()"
-    ></evan-button>
+    />
 
     <add-contact ref="addContact" @contact-added="handleContactAdded" />
   </div>
@@ -127,7 +138,7 @@ export default ContactsComponent;
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
 
-h1.header {
+h1.heading {
   font-size: cssVar('h4-font-size');
   margin: 0;
   color: cssVar('gray-600');

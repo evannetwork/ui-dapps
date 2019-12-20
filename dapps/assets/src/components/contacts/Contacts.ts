@@ -76,6 +76,16 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     return this.contactService.getContacts();
   }
 
+  async addFavorite(contact) {
+    await this.contactService.addFavorite(contact.item);
+    this.contacts[contact.index].isFavorite = "true";
+  }
+
+  async removeFavorite(contact) {
+    await this.contactService.removeFavorite(contact);
+    this.contacts[contact.index].isFavorite = "false";
+  }
+
   filterByType(type: string) {
     this.filterBy = ['type'];
     this.filter = type;

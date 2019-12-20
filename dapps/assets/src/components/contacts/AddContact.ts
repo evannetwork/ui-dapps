@@ -79,6 +79,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
         currLang: window.localStorage.getItem('evan-language'),
         email: this.email,
         emailInvite: this.emailInvite,
+        isFavorite: false,
         fromAlias: this.fromAlias,
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
