@@ -93,7 +93,7 @@
           </template>
           <template v-slot:cell(isFavorite)="contacts">
             <evan-loading
-              v-if="isFavoriteLoading.loading && (isFavoriteLoading.index === contacts.index)"
+              v-if="isFavoriteLoading.loading && (isFavoriteLoading.id === contacts.item.address)"
               classes=""
             />
             <evan-button

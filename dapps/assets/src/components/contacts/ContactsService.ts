@@ -92,11 +92,7 @@ export class ContactsService {
 
     await this.runtime.profile.storeForAccount(
       this.runtime.profile.treeLabels.addressBook
-    );
-
-    const cont = await this.runtime.profile.getAddressBook();
-    console.log(cont);
-    
+    );    
   }
 
   private getIcon(type: ContactType): string {

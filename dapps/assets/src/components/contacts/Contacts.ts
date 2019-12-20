@@ -30,7 +30,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   isLoading = true;
   isFavoriteLoading = {
-    index: null,
+    id: null,
     loading: false
   };
 
@@ -44,8 +44,16 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   columns = [
     { key: 'icon', label: '', sortable: false },
     { key: 'alias', label: this.$t('_assets.contacts.name'), sortable: true },
-    { key: 'updatedAt', label: this.$t('_assets.contacts.updated'), sortable: true },
-    { key: 'createdAt', label: this.$t('_assets.contacts.created'), sortable: true },
+    {
+      key: 'updatedAt',
+      label: this.$t('_assets.contacts.updated'),
+      sortable: true
+    },
+    {
+      key: 'createdAt',
+      label: this.$t('_assets.contacts.created'),
+      sortable: true
+    },
     { key: 'isFavorite', label: '', sortable: false }
   ];
 
@@ -55,14 +63,13 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async mounted() {
-    this.contacts = await this.fetchContacts();    
+    this.contacts = await this.fetchContacts();
     this.isLoading = false;
     console.log(this.contacts);
-    
   }
 
   /**
-   * Route to profile of clicked contact 
+   * Route to profile of clicked contact
    * @param contact Clicked contact
    */
   handleRowClicked(contact: Contact) {
@@ -83,22 +90,28 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(contact) {
-    this.setFavoriteLoading(contact.index, true);
+    console.log(contact, this.contacts);
+
+    this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.addFavorite(contact.item);
-    this.setFavoriteLoading(contact.index, false);
-    this.contacts[contact.index].isFavorite = 'true';
+    this.setFavoriteLoading(contact.item.address, false);
+    this.contacts.find(
+      item => contact.item.address === item.address
+    ).isFavorite = 'true';
   }
 
   async removeFavorite(contact) {
-    this.setFavoriteLoading(contact.index, true);
+    this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.removeFavorite(contact.item);
-    this.setFavoriteLoading(contact.index, false);
-    this.contacts[contact.index].isFavorite = 'false';
+    this.setFavoriteLoading(contact.item.address, false);
+    this.contacts.find(
+      item => contact.item.address === item.address
+    ).isFavorite = 'false';
   }
 
-  private setFavoriteLoading(index: number, flag: boolean) {
+  private setFavoriteLoading(id: string, flag: boolean) {
     this.isFavoriteLoading = {
-      index: index,
+      id,
       loading: flag
     };
   }
