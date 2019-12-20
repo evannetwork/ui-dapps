@@ -1,0 +1,82 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<div class="evan-content evan-relative" *ngIf="!loading">
+  <h2 class="content-header m-b-0 m-t-0">{{ '_dappdapps.add' | translate }}</h2>
+
+  <form class="no-padding-top"
+    [formGroup]="dappForm" 
+    (ngSubmit)="submit(dappForm.value.ensAddress)">
+    <ion-item>
+      <ion-label stacked>{{ '_dappdapps.ensaddress' | translate }}</ion-label>
+      <ion-input 
+        formControlName="ensAddress"
+        type="text"
+        (keydown)="submitOnEnter($event)"
+        [placeholder]="'_dappdapps.ensaddress-desc' | translate"
+        clearInput>
+      </ion-input>
+    </ion-item>
+    <div text-left margin-top>
+      <button ion-button icon-left outline round type="submit" 
+        [disabled]="!dappForm.valid || loading">
+        <span *ngIf="loading">
+          <ion-spinner color="light"></ion-spinner>
+          <span>{{ '_dappdapps.adding' | translate }}</span>
+        </span>
+        <span *ngIf="!loading">
+          <ion-icon name="add" color="light"></ion-icon>
+          <span>{{ '_dappdapps.add' | translate }}</span>
+        </span>
+      </button>
+    </div>
+  </form>
+  <button class="top-right" ion-button icon-left icon-only round
+    (click)="scanQRCode()">
+    <ion-icon name="qr-scanner" color="light"></ion-icon>
+  </button>
+</div>
+
+<div class="evan-relative evan-content" 
+  [class.loading]="featuredLoading"
+  *ngIf="featuredLoading || featuredDapps.length > 0">
+  <h2 class="content-header m-b-0 m-t-0">{{ '_dappdapps.featured_dapps' | translate }}</h2>
+  <evan-loading *ngIf="featuredLoading" delayLoading="500"></evan-loading>
+  <ion-list class="evan-grid" *ngIf="!featuredLoading">
+    <ion-item-sliding *ngFor="let dapp of featuredDapps">
+      <ion-item color="light" (click)="submit(dapp.ensAddress)">
+        <ion-avatar class="clickable" item-start *ngIf="dapp.imgSquare" [style.background-color]="dapp.dapp.primaryColor">
+          <div class="evan-avatar-wrapper" [style.background-color]="dapp.dapp.secondaryColor">
+            <img *oneTime [src]="_DomSanitizer.bypassSecurityTrustUrl(dapp.imgSquare)" />
+          </div>
+        </ion-avatar>
+        <ion-label class="clickable">
+          <h2 *ngIf="!dapp.translated.name">{{ '_dappdapps.no_title' | translate }}</h2>
+          <h2 *ngIf="dapp.translated.name">{{ dapp.translated.name }}</h2>
+          <h3>{{ dapp.translated.description }}</h3>
+        </ion-label>
+        <div item-content>
+          <button ion-button clear round icon-only>
+            <ion-icon name="arrow-forward" color="light"></ion-icon>
+          </button>
+        </div>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+</div>

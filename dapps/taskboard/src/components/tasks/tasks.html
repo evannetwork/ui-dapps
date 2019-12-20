@@ -1,0 +1,116 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<div class="animation-container"
+  [class.is-side-panel]="utils.isLG && isTaskActive()"
+  [class.evan-tabs-container]="!utils.isLG"
+  [@tabSlideTransition]="!isTaskActive() ? 0 : 1">
+
+  <h1 class="task-header" text-center [innerHTML]="'taskboard' | translate"
+    *ngIf="!loading && utils.isMD && !isTaskActive()">
+  </h1>
+  
+  <div class="evan-relative evan-content evan-mini-content transparent"
+    [class.task-open]="isTaskActive()"
+    *ngIf="(utils.isLG || (!utils.isLG && !isTaskActive()))"
+    [@opacityTransition]>
+    <evan-loading *ngIf="loading"></evan-loading>
+
+    <ng-container *ngIf="!loading">
+      <dashboard-top-buttons *ngIf="!utils.isLG">
+        <button ion-button icon-only round clear (click)="showSearch = !showSearch; ref.detectChanges()">
+          <ion-icon name="search" color="light"></ion-icon>
+        </button>
+      </dashboard-top-buttons>
+      
+      <dashboard-top-buttons class="on-small-move-down" *ngIf="!utils.isLG">
+        <button ion-button icon-left (click)="createTask()">
+          <ion-icon name="add" color="light"></ion-icon>
+        </button>
+      </dashboard-top-buttons>
+
+      <div class="evan-relative">
+        <ion-item class="no-border" margin-vertical *ngIf="utils.isMD || showSearch">
+          <ion-icon item-start name="search" padding-left></ion-icon>
+          <ion-input 
+            type="text"
+            [placeholder]="'_dapptaskboard.filter-items' | translate"
+            [(ngModel)]="filterString"
+            (keydown)="filterChanged($event)">
+          </ion-input>
+        </ion-item>
+
+        <button class="create-task-button" ion-button icon-only round
+          (click)="createTask()"
+          *ngIf="utils.isLG">
+          <ion-icon name="add" color="light"></ion-icon>
+        </button>
+      </div>
+        
+      <evan-empty-dapp *ngIf="filteredTasks.length === 0 && filterString"
+        [text]="(filterString ? '_dapptaskboard.nothing-found-filter' :
+          '_dapptaskboard.no-task-created') | translate:{ filter: filterString }"
+        ensAddress="taskboard">
+      </evan-empty-dapp>
+  
+      <ion-list class="task-todo-list">
+        <ion-item class="clickable" *ngFor="let task of filteredTasks"
+          [class.active]="task.address && task.address === getActiveTask()"
+          [class.contract-status-0]="task.contractState === 0"
+          [class.contract-status-5]="task.contractState === 5"
+          [class.contract-status-7]="task.contractState === 7"
+          (click)="openTask(task)">
+          <h2>{{ task.name }}</h2>
+          <span *ngIf="!task.loading">
+            <ng-container *ngIf="task.todos.length">
+              {{ task.todos.length }} {{ '_dapptaskboard.todos' | translate }} {{ '_dapptaskboard.for' | translate }}
+            </ng-container>
+            <ng-container *ngIf="task.members.length">
+              {{ task.members.length }} {{ '_dapptaskboard.members' | translate }}
+            </ng-container>
+          </span>
+          <span class="top-right" *ngIf="!task.loading && !task.ex">
+            {{ '_dapptaskboard.contract-states.' + task.contractState | translate }}
+          </span>
+          <div class="progress-container" *ngIf="getTaskProgress(task) > 0">
+            <div class="progress"
+              [style.width]="getTaskProgress(task) + '%'"
+              [class.finished]="getTaskProgress(task) === 100"></div>
+          </div>
+          <button ion-button icon-only clear item-end
+            *ngIf="!task.loading && !task.ex">
+            <ion-icon name="arrow-forward" color="light"></ion-icon>
+          </button>
+          <ion-spinner item-end color="primary" *ngIf="task.loading && !task.ex">
+          </ion-spinner>
+          <button ion-button icon-only clear item-end *ngIf="task.ex">
+            <ion-icon name="flag" color="danger" *ngIf="task.ex"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </div>
+
+  <div class="router-container"
+    [class.task-open]="isTaskActive()"
+    *ngIf="utils.isLG || (!utils.isLG && isTaskActive())"
+    [@routerTransition]="o?.activatedRouteData?.state">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
+</div>

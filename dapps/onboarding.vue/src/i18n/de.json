@@ -1,0 +1,255 @@
+{
+  "_onboarding": {
+    "back": "Zurück",
+    "back-to-website": "Zurück zur Homepage",
+    "close": "Schließen",
+    "continue": "Fortfahren",
+    "free-input": "Freie Eingabe",
+    "headings": {
+      "sign-in": {
+        "0": {
+          "desc": "Die Absicherung Ihrer Daten ist uns sehr wichtig. Daher ist der Login-Prozess zweigeteilt. Der <b>Wiederherstellungsschlüssel</b> unterstützt Sie bei der Absicherung Ihrer Informationen. Bitte bewahren Sie diesen für Dritte unzugänglich an einem sicheren Ort auf.",
+          "title": "Login im evan.network"
+        },
+        "1": {
+          "desc": "",
+          "title": "Willkommen im evan.network"
+        }
+      },
+      "sign-up": {
+        "company": {
+          "0": {
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - Sie wollen als Unternehmen die Vorteile der Blockchain-Technologie nutzen? Dann erstellen Sie sich in vier einfachen Schritten einen Unternehmens-Account im evan.network. Die optionale Verifikation Ihres Unternehmens durch einen Notar ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk zu interagieren.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
+            "title": "Registrierung im evan.network"
+          },
+          "1": {
+            "desc": "Ihre Adressdaten benötigen Sie für die spätere Verifizierung als Unternehmen. Somit entsteht ein Netzwerk aus vertrauensvollen Partnern, die unternehmensübergreifend und direkt Daten und Informationen austauschen.",
+            "title": "Ihr Weg zur Unternehmensidentität"
+          },
+          "2": {
+            "desc": "Zur Verifikation Ihrer Unternehmensidentität benötigen Sie neben den Adressdaten auch unternehmensspezifische Daten. Anhand des Handelsregisterauszugs kann später bei Bedarf ein Notar Ihr Unternehmen verifizieren.",
+            "title": "Ihr Weg zur Unternehmensidentität"
+          },
+          "3": {
+            "desc": "Nach Abschluss der Registrierung haben Sie Zugang zum evan.network und können vertrauensvoll mit Ihren Partnern interagieren.",
+            "title": "Willkommen im evan.network"
+          }
+        },
+        "user": {
+          "0": {
+            "desc": "Um im evan.network teilzunehmen, legen Sie bitte einen Account an. Der Account-Typ hängt von Ihren Anforderungen ab.<ul><li><b>Unternehmen</b> - Sie wollen als Unternehmen die Vorteile der Blockchain-Technologie nutzen? Dann erstellen Sie sich in vier einfachen Schritten einen Unternehmens-Account im evan.network. Die optionale Verifikation Ihres Unternehmens durch einen Notar ermöglicht Ihnen als vertrauensvoller Partner in einem digitalen Netzwerk zu interagieren.</li><li><b>Nutzer</b> - um als reale Person zu interagieren. Dieser Accounttyp bietet die Möglichkeit, zu einem späteren Zeitpunkt an Ihre Anforderungen (z.B. Company) anzupassen.</li></ul>",
+            "title": "Registrierung im evan.network"
+          },
+          "1": {
+            "desc": "Nach Abschluss der Registrierung haben Sie Zugang zum evan.network und können vertrauensvoll mit Ihren Geschäftspartnern interagieren.",
+            "title": "Willkommen im evan.network"
+          }
+        }
+      },
+      "twin-sign-up": {
+        "0": {
+          "desc": "Um Transaktionen im evan.network durchzuführen, sind Digitale Zwillinge der Schlüssel. Tragen Sie hier die Basisdaten Ihres Digitalen Zwillings ein, damit Sie Informationen mit Geschäftspartnern austauschen können.",
+          "title": "Ihr Weg zum Digitalen Zwilling"
+        },
+        "1": {
+          "desc": "Jeder Digitale Zwilling ist einzigartig. Sie bestimmen selbst, welche Informationen vertraulich mit Ihren Geschäftspartnern geteilt werden. Pflegen Sie hier die Spezifikationen Ihres Digitalen Zwillings nach Ihren Anforderungen ein.",
+          "title": "Datenhoheit hat die oberste Priorität"
+        },
+        "2": {
+          "desc": "Mit dem Digitalen Zwilling vernetzen Sie sich mit ihren Geschäftspartnern. Sie bestimmen selbst, zu welchem Zeitpunkt Ihre Geschäftspartner Zugriff auf den Digitalen Zwilling und seine hinterlegten Informationen haben. Die Datenhoheit ist Ihnen somit garantiert.",
+          "title": "Informations- und Nutzungsrechte freigeben"
+        },
+        "3": {
+          "desc": "Um den Digitalen Zwilling nutzen zu können, ist die kostenfreie Anmeldung im evan.network erforderlich. Die Blockchain-Technologie ermöglicht vertrauensvolle Interaktionen im Netzwerk. Ihre Datenhoheit ist somit garantiert.",
+          "title": "Willkommen im evan.network"
+        }
+      }
+    },
+    "invalid-mnemonic-integrity": "Die Zusammensetzung der Wörter Ihres Wiederherstellungs-Schlüssels ist inkorrekt. Bitte überprüfen Sie Ihre Eingabe.",
+    "invalid-mnemonic-words-incorrect": "Eines oder mehrere der angegebenen Wörter ist nicht erlaubt in Wiederherstellungsschlüsseln. Bitte überprüfen Sie Ihre Eingabe.",
+    "mail-invitation-accepted": {
+      "body": "Guten Tag, <br>der Benutzer mit der Email Adresse {userEmail} hat Ihre Einladung in das evan.network angenommen und ist nun verfügbar unter dem Namen: {{ userAlias }}.<br><br> Ihr evan.network Team",
+      "subject": "Nutzer hat Ihre Anfrage angenommen",
+      "title": "Einladung angenommen"
+    },
+    "mnemonic-word": "{index}. Wort",
+    "mnemonic-words": "12 Wörter",
+    "password": "Passwort",
+    "password-match-repeat": "Die Passwörter müssen übereinstimmen.",
+    "password-min-characters": "Das Passwort muss mindestens 8 Zeichen enthalten.",
+    "password-one-character": "Das Passwort muss mindestens ein Zeichen enthalten.",
+    "password-one-digest-needed": "Das Passwort muss mindestens eine Zahl enthalten.",
+    "password-one-uppercase-character": "Das Passwort muss mindestens einen Großbuchstaben enthalten.",
+    "password-repeat": "Passwort wiederholen",
+    "please-login-signup": "Nutzen Sie eine bestehende Identität oder erstellen Sie eine neue, um fortzufahren.",
+    "sign-in": {
+      "decrypt": "Entschlüsseln",
+      "desc": "Stellen Sie eine bestehende evan.network Identität auf diesem Gerät wieder her",
+      "get-mnemonic": "Wiederherstellungs-Schlüssel",
+      "get-mnemonic-desc": "Bitte geben Sie die 12 Wörter, die Sie zur Registrierung erhalten haben, ein.<br>Diese 12 Wörter können Sie auch mit Hilfe der Funktion \"Kopieren und Einfügen\" eintragen.",
+      "get-password": "Identität entschlüsseln",
+      "get-password-desc": "Geben Sie Ihr Passwort ein, um auf die Daten Ihrer Identität zuzugreifen.",
+      "invalid-password": "Das eingegebene Passwort ist ungültig.",
+      "next": "Weiter",
+      "no-profile": "Keine Identität gefunden",
+      "no-profile-desc": "Im Zusammenhang mit diesem Wiederherstellungsschlüssel existiert keine evan.network Identität.",
+      "not-signed-up": "Sie haben noch keinen Account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Account erstellen</a>",
+      "recovery-key": "Wiederherstellungsschlüssel",
+      "title": "Einloggen",
+      "welcome": "Kontaktanfrage",
+      "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
+    },
+    "sign-up": {
+      "account-types": {
+        "company": "Unternehmen",
+        "user": "Nutzer"
+      },
+      "accountType": {
+        "label": "Account-Typ"
+      },
+      "agree": "Akzeptieren",
+      "alias": {
+        "company": "Name des Unternehmens",
+        "error": "Bitte geben Sie einen Account-Namen an!",
+        "hint-company": "Der Name Ihres Unternehmens ist nur für Sie sichtbar.",
+        "hint-user": "Der Account-Name ist nur für Sie sichtbar.",
+        "placeholder": "John Doe | Beispiel Unternehmen GmbH",
+        "user": "Account-Name"
+      },
+      "already-signed-up": "Sie sind bereits registriert? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-in\">Login</a>",
+      "cancel-riddle": "Abbrechen",
+      "create-account": "Erstellen Sie Ihren Account",
+      "create-profile": {
+        "company": {
+          "status-1": "Initialisiere Verbindung zum Netzwerk",
+          "status-2": "Erstellung des Unternehmensaccounts",
+          "status-3": "Erstellung der Unternehmensidentität auf Basis der spezifischen Daten",
+          "status-4": "Erstellung des Verifizierungsmanagements",
+          "status-5": "Identität wurde erfolgreich erstellt"
+        },
+        "title": "Account erstellen",
+        "twin": {
+          "status-1": "Erstellung des Identitätsvertrages",
+          "status-2": "Verschlüsselung der Nutzerinformationen",
+          "status-3": "Erstellung Mailbox, Adressbuch, ...",
+          "status-4": "Erstellung des Digitalen Zwillings",
+          "status-5": "Digitaler Zwilling wurde erfolgreich erstellt!"
+        },
+        "user": {
+          "status-1": "Initialisiere Verbindung zum Netzwerk",
+          "status-2": "Erstellung des Accounts",
+          "status-3": "Erstellung der Identität",
+          "status-4": "Erstellung des Verifizierungsmanagements",
+          "status-5": "Identität wurde erfolgreich erstellt!"
+        }
+      },
+      "desc": "Erstellen Sie Ihre evan.network Identität",
+      "desc-long": "Generieren Sie Ihre abgesicherte und eingenständige Identität auf dem evan.network. Mit Hilfe dieser Identität, können Sie mit Geschäftspartnern, Verträgen und Unternehmen interagieren. Sie können Ihre Identität über Ihren generierten Wiederherstellungsschlüssel jederzeit auf einem anderen Gerät wiederherstellen und weiter arbeiten.",
+      "errors": {
+        "password-match-repeat": "Ihr Passwort muss mit der vorherigen Eingabe übereinstimmen.",
+        "password-min-characters": "Ihr Passwort muss mindestens 8 Zeichen lang sein.",
+        "password-one-character": "Ihr Passwort muss mindestens einen Buchstaben enthalten.",
+        "password-one-digest-needed": "Ihr Passwort muss mindestens eine Ziffer enthalten.",
+        "password-one-uppercase-character": "Ihr Passwort muss mindestens einen Großbuchstaben enthalten.",
+        "user-name": "Bitte geben Sie einen Nutzernamen an!"
+      },
+      "get-mnemonic": "Wiederherstellungsschlüssel",
+      "get-mnemonic-desc": "Sichern Sie Ihren Wiederherstellungsschlüssel.",
+      "get-mnemonic-desc-long": "Mit Hilfe dieses <b>Wiederherstellungsschlüssels</b> können Sie Ihre Identität auf <b>jedem beliebigen Gerät</b> wiederherstellen und auf Ihre Daten zugreifen. Bitte <b>sichern Sie sich diese 12 Wörter in einer möglichst sicheren Weise</b> (möglichst offline, z.B. auf einem Blatt Papier im Safe). <br><br> Wenn Sie diese 12 Wörter verlieren, <b>verlieren Sie den Zugang zu Ihren Geschäftspartnern, Verträgen und Profilinformationen.</b>",
+      "password0": {
+        "hint": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
+        "label": "Passwort",
+        "placeholder": ""
+      },
+      "password1": {
+        "hint": "Das Passwort muss aus mindestens 8 Zeichen bestehen (Groß-/Kleinbuchstaben und Zahlen).",
+        "label": "Passwortwiederholung",
+        "placeholder": ""
+      },
+      "profile-create-error": {
+        "desc": "Während der Profilerstellung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+        "ok": "ok",
+        "title": "Fehler"
+      },
+      "profile-information": "Nutzerinformationen",
+      "profile-information-desc": "Bitte wählen Sie einen Nutzernamen und ein Passwort.",
+      "steps": {
+        "base": {
+          "desc": "Wählen Sie den Benutzertyp und geben Sie Ihren Account-Namen und Ihr Passwort an.",
+          "title": "Nutzerinformationen"
+        },
+        "captcha": {
+          "desc": "Bestätigen Sie bitte die Nutzungsbedingungen und das Captcha.",
+          "title": "Nutzungsbedingungen"
+        },
+        "company": {
+          "contact": {
+            "desc": "Geben Sie den Sitz Ihres Unternehmens an.",
+            "title": "Kontaktinformationen"
+          },
+          "registration": {
+            "desc": "Geben Sie die unternehmensspezifischen Daten an. Wenn Sie nicht alle Daten direkt zur Hand haben, können Sie diese auch später ausfüllen.",
+            "title": "Unternehmensdaten"
+          }
+        }
+      },
+      "terms-accepted": "Ich stimme den <a href=\"https://evan.network/terms/\" target=\"_blank\" rel=\"noopener noreferrer\">Nutzungsbedingungen</a> zu.",
+      "terms-of-use": {
+        "desc": "Bestätigen Sie die Nutzungsbedingungen und verifizieren Sie Ihre reelle Interaktion.",
+        "title": "Nutzungsbedingungen"
+      },
+      "title": "Registrieren",
+      "twin": {
+        "create": "Erstellen Sie Ihren Digitalen Zwilling",
+        "creating": "Digitaler Zwilling wird erstellt",
+        "dbcp": {
+          "description": {
+            "label": "Beschreibung",
+            "placeholder": "Beschreiben Sie kurz, Ihren Digitalen Zwilling"
+          },
+          "name": {
+            "error": "Bitte geben Sie einen Namen an!",
+            "label": "Name",
+            "placeholder": "Wie soll Ihr Digitaler Zwilling heißen?"
+          },
+          "type": {
+            "label": "Type"
+          }
+        },
+        "empty-field": "Bitte füllen Sie das Feld {label} aus!",
+        "further-changes": "Änderungen sind nach der Erstellung möglich.",
+        "steps": {
+          "dbcp": {
+            "desc": "Wählen Sie einen Typ für Ihren Digitalen Zwilling und vergeben Sie einen Namen.",
+            "title": "Generelle Informationen"
+          },
+          "finish": {
+            "desc": "Für den Zugang zu Ihrem Digitalen Zwilling benötigen wir einen Alias und ein Passwort.",
+            "title": "Benutzerinformationen"
+          },
+          "list": {
+            "desc": "Hinterlegung wichtiger, historischer Ereignisse",
+            "title": "Historie / Protokolle"
+          },
+          "metadata": {
+            "desc": "Beschreiben Sie Ihren Digitaler Zwilling anhand seiner Spezifikationen.",
+            "title": "Digitaler Zwilling-Spezifikationen"
+          }
+        }
+      },
+      "use-profile": "Weiter",
+      "user-name": "Max Mustermann | Beispielfirma GmbH",
+      "welcome": "Kontaktanfrage",
+      "welcome-desc": "Sie haben eine Kontaktanfrage erhalten."
+    },
+    "signed-in": {
+      "accept-contact": "Kontaktanfrage akzeptieren",
+      "go-to-evan": "Weiter zum evan.network",
+      "invited": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie wurden von <b>{inviteeAlias}</b> in das evan.network eingeladen. Wenn Sie diesen Kontakt zu Ihrem Adressbuch hinzufügen, erhalten Sie <b>{eveAmount} EVE</b> als Einladungsgeschenk.",
+      "title": "evan.network Anmeldung",
+      "unlock-for-accept": "Sie sind bereits im evan.network angemeldet.<br><br>Sie haben eine Kontaktanfrage von <b>{inviteeAlias}</b> erhalten. Entsperren Sie Ihr Profil, um fortzufahren oder nutzen Sie den \"zurück\" Button, um sich mit einer anderen Identität anzumelden.",
+      "welcome-signed-in": "Sie sind bereits im evan.network angemeldet <b>({accountId})</b>.<br><br>Nutzen Sie den nachfolgenden Button, um mit Ihrer Arbeit fortzufahren.",
+      "welcome-unlocked": "Herzlich willkommen im evan.network <b>{alias} ({accountId})</b>.<br><br>Sie können nun mit Ihrer Arbeit starten."
+    }
+  }
+}

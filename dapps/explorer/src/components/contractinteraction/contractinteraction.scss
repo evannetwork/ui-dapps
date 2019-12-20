@@ -1,0 +1,41 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+explorer-contractinteraction {
+  .run-button {
+    @media (min-width: 769px) {
+      position: absolute;
+      z-index: 1;
+      top: 18px;
+      right: 25px;
+    }
+    
+    @media (max-width: 768px) {
+      width: 100%;
+
+      text-align: right;
+    }
+  }
+
+  ion-row {
+    ion-col:nth-child(odd) {
+      padding-left: 0 !important;
+    }
+  }
+}

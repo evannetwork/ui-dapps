@@ -1,0 +1,110 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title [innerHTML]="'_dapponboarding.onboarding' | translate"></ion-title>
+  </ion-navbar>
+</ion-header>
+<evan-loading *ngIf="loading"></evan-loading>
+<ion-content ion-fixed [style.display]="loading ? 'none':'block'">
+  <div class="vertical-center-container">
+    <div class="content-container" text-left *ngIf="!loading">
+      <h3>{{ '_dapponboarding.no-profile' | translate }}</h3>
+
+      <p class="continuous-text no-margin-top"
+        [innerHTML]="'_dapponboarding.no-profile-desc' | translate">
+      </p>
+
+      <form [formGroup]="onboardingForm" (ngSubmit)="createProfile()">
+        <ion-item>
+          <ion-label stacked>{{ '_dapponboarding.user-alias' | translate }}</ion-label>
+          <ion-input formControlName="alias" (keyup.enter)="createProfile()"></ion-input>
+        </ion-item>
+        <ion-item class="no-margin-top">
+          <ion-label stacked>{{ '_dapponboarding.password' | translate }}</ion-label>
+          <ion-input type="password" formControlName="password" (keyup.enter)="createProfile()"></ion-input>
+        </ion-item>
+        <div class="input-error" [@growTransition]="{ value: ':enter', params : { height : '22px' } }"
+          *ngIf="(onboardingForm.controls.password?.dirty || onboardingForm.controls.password.touched) && onboardingForm.controls.password.errors">
+          {{ onboardingForm.controls.password.errors[0] | translate }}
+        </div>
+        <ion-item class="no-margin-top">
+          <ion-label stacked>{{ '_dapponboarding.password-repeat' | translate }}</ion-label>
+          <ion-input type="password" formControlName="passwordRepeat" (keyup.enter)="createProfile()"></ion-input>
+        </ion-item>
+        <div class="input-error" [@growTransition]="{ value: ':enter', params : { height : '22px' } }"
+          *ngIf="(onboardingForm.controls.passwordRepeat?.dirty || onboardingForm.controls.passwordRepeat.touched) && onboardingForm.controls.passwordRepeat.errors">
+          {{ onboardingForm.controls.passwordRepeat.errors[0] | translate }}
+        </div>
+      </form>
+
+      <div class="content-container" text-left>
+        <p class="copy-container"
+          (click)="core.copyString(activeAccount)">
+          <b>{{ '_dapponboarding.account-id' | translate }}:</b>
+          <span>{{ activeAccount }}</span>
+          <button ion-button icon-only round clear title="copy">
+            <ion-icon name="copy" color="light"></ion-icon>
+          </button>
+        </p>
+      </div>
+
+      <div class="no-margin-bottom" margin padding text-center *ngIf="utils.isMD">
+        <button ion-button round icon-left color="danger"
+          *ngIf="ex"
+          (click)="loggingService.sendLogs()">
+          <ion-icon name="alert"></ion-icon>
+          {{ '_dapponboarding.report-error' | translate }}
+        </button>
+        <button ion-button round icon-left color="primary"
+          [disabled]="!onboardingForm.valid || loading"
+          (click)="createProfile()">
+          <ion-icon name="cloud-done"></ion-icon>
+          {{ '_dapponboarding.create-profile' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="content-container" text-center *ngIf="loading">
+      <ion-spinner color="light"></ion-spinner>
+      <span class="evan-no-elements">{{ '_dapponboarding.wait-for-profile' | translate }}</span>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="active" text-center *ngIf="!utils.isMD && !loading">
+  <button ion-button round icon-left color="danger"
+    *ngIf="ex"
+    (click)="loggingService.sendLogs()">
+    <ion-icon name="alert"></ion-icon>
+    {{ '_dapponboarding.report-error' | translate }}
+  </button>
+  <button ion-button round icon-left color="primary"
+    [disabled]="!onboardingForm.valid || loading"
+    (click)="createProfile()">
+    <ion-icon name="cloud-done"></ion-icon>
+    {{ '_dapponboarding.create-profile' | translate }}
+  </button>
+</ion-footer>

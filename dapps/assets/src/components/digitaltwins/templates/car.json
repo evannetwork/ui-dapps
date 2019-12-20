@@ -1,0 +1,292 @@
+{
+    "description": {
+      "i18n": {
+        "de": {
+          "description": "Dieser Zwilling stellt ein Fahrzeug in der realen Welt dar. Er enthält technische Spezifikationen, Informationen über den Eigentümer und ein Wartungsprotokoll.",
+          "name": "Auto"
+        },
+        "en": {
+          "description": "Twin that represents a car within the real world. Includes technical specifications, information about the owner and a maintenance log.",
+          "name": "Car"
+        }
+      },
+      "name": "car"
+    },
+    "plugins": {
+      "maintenance": {
+        "description": {
+          "i18n": {
+            "de": {
+              "description": "Vollständige Historie der Wartungsprotokolle.",
+              "maintenance": {
+                "description": "Vollständige Historie der Wartungsprotokolle.",
+                "name": "Wartung",
+                "properties": {
+                  "date": {
+                    "label": "Datum",
+                    "placeholder": "01.01.2018"
+                  },
+                  "description": {
+                    "label": "Beschreibung",
+                    "placeholder": "Wartung der Reifen"
+                  },
+                  "processor": {
+                    "label": "Bearbeiter",
+                    "placeholder": "Max Mustermann"
+                  }
+                }
+              },
+              "name": "Wartung"
+            },
+            "en": {
+              "description": "Complete history of maintenance logs.",
+              "maintenance": {
+                "description": "Complete history of maintenance logs.",
+                "name": "Maintenance",
+                "properties": {
+                  "date": {
+                    "label": "Date",
+                    "placeholder": "01.01.2018"
+                  },
+                  "description": {
+                    "label": "Description",
+                    "placeholder": "Maintenance of the gearbox"
+                  },
+                  "processor": {
+                    "label": "Processor",
+                    "placeholder": "Max Mustermann"
+                  }
+                }
+              },
+              "name": "Maintenance"
+            }
+          },
+          "name": "maintenance"
+        },
+        "template": {
+          "properties": {
+            "maintenance": {
+              "dataSchema": {
+                "$id": "maintenance_schema",
+                "items": {
+                  "properties": {
+                    "date": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "processor": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "permissions": {
+                "0": [
+                  "set"
+                ]
+              },
+              "type": "list"
+            }
+          },
+          "type": "list"
+        }
+      },
+      "metadata": {
+        "description": {
+          "i18n": {
+            "de": {
+              "characteristics": {
+                "description": "Beschreiben Sie Ihr Fahrzeug mit dessen Stammdaten",
+                "name": "Eigenschaften",
+                "properties": {
+                  "color": {
+                    "label": "Farbe",
+                    "placeholder": "rot, grün, blau"
+                  },
+                  "doors": {
+                    "label": "Anzahl Türen",
+                    "placeholder": "3, 5"
+                  },
+                  "gearbox": {
+                    "label": "Getriebe",
+                    "placeholder": "Schaltgetriebe, Automatik"
+                  },
+                  "manufacturer": {
+                    "label": "Hersteller",
+                    "placeholder": "Audi, BMW, Renault"
+                  },
+                  "model": {
+                    "label": "Modell",
+                    "placeholder": "Audi A6, BMW X3, Rentault Megane"
+                  },
+                  "power": {
+                    "label": "Leistung",
+                    "placeholder": "50 PS, 120 PS"
+                  }
+                }
+              },
+              "description": "Technische Informationen eines Autos und Kontaktdaten des Eigentümers.",
+              "name": "Spezifikationen",
+              "owner": {
+                "description": "Details zum Eigentümer",
+                "name": "Name",
+                "properties": {
+                  "city": {
+                    "label": "Stadt",
+                    "placeholder": "Berlin"
+                  },
+                  "country": {
+                    "label": "Land",
+                    "placeholder": "Deutschland"
+                  },
+                  "name": {
+                    "label": "Name",
+                    "placeholder": "Max Mustermann"
+                  },
+                  "plz": {
+                    "label": "Postleitzahl",
+                    "placeholder": "10115"
+                  },
+                  "streetNumber": {
+                    "label": "Straße & Nummer",
+                    "placeholder": "Max Mustermann Str. 2a"
+                  }
+                }
+              }
+            },
+            "en": {
+              "characteristics": {
+                "description": "Describe your car by it's specifications",
+                "name": "Characteristics",
+                "properties": {
+                  "color": {
+                    "label": "Color",
+                    "placeholder": "read, green, blue"
+                  },
+                  "doors": {
+                    "label": "Number of doors",
+                    "placeholder": "3, 5"
+                  },
+                  "gearbox": {
+                    "label": "Gearbox",
+                    "placeholder": "Manual transmission, automatic"
+                  },
+                  "manufacturer": {
+                    "label": "Manufacturer",
+                    "placeholder": "Audi, BMW, Renault"
+                  },
+                  "model": {
+                    "label": "Model",
+                    "placeholder": "Audi A6, BMW X3, Rentault Megane"
+                  },
+                  "power": {
+                    "label": "Power",
+                    "placeholder": "50 PS, 120 PS"
+                  }
+                }
+              },
+              "description": "Technical information of a car and it's owner.",
+              "name": "Specifications",
+              "owner": {
+                "description": "Details of the owner",
+                "name": "Name",
+                "properties": {
+                  "city": {
+                    "label": "City",
+                    "placeholder": "Berlin"
+                  },
+                  "country": {
+                    "label": "Country",
+                    "placeholder": "Germany"
+                  },
+                  "name": {
+                    "label": "Name",
+                    "placeholder": "Max Mustermann"
+                  },
+                  "plz": {
+                    "label": "Post-Code",
+                    "placeholder": "10115"
+                  },
+                  "streetNumber": {
+                    "label": "Street & Number",
+                    "placeholder": "Max Mustermann Str. 2a"
+                  }
+                }
+              }
+            }
+          },
+          "name": "specifications"
+        },
+        "template": {
+          "properties": {
+            "characteristics": {
+              "dataSchema": {
+                "$id": "characteristics_schema",
+                "properties": {
+                  "color": {
+                    "type": "string"
+                  },
+                  "doors": {
+                    "type": "string"
+                  },
+                  "gearbox": {
+                    "type": "string"
+                  },
+                  "manufacturer": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "power": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "permissions": {
+                "0": [
+                  "set"
+                ]
+              },
+              "type": "entry"
+            },
+            "owner": {
+              "dataSchema": {
+                "$id": "characteristics_schema",
+                "properties": {
+                  "city": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "plz": {
+                    "type": "string"
+                  },
+                  "streetNumber": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "permissions": {
+                "0": [
+                  "set"
+                ]
+              },
+              "type": "entry"
+            }
+          },
+          "type": "metadata"
+        }
+      }
+    }
+  }

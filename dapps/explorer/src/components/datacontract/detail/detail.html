@@ -1,0 +1,186 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<div class="evan-content">
+  <ion-item>
+    <ion-label>
+      {{ '_explorer.datacontract.use-dfs-storage' | translate }}
+    </ion-label>
+    <ion-checkbox
+      [(ngModel)]="useDfsStorage"
+      (ionChange)="ref.detectChanges()">
+    </ion-checkbox>
+  </ion-item>
+  <span class="input-hint">{{ '_explorer.datacontract.use-dfs-storage-desc' | translate }}</span>
+  <ion-item>
+    <ion-label>
+      {{ '_explorer.datacontract.encrypt-hashes' | translate }}
+    </ion-label>
+    <ion-checkbox
+      [(ngModel)]="encryptedHashes"
+      (ionChange)="ref.detectChanges()">
+    </ion-checkbox>
+  </ion-item>
+  <span class="input-hint">{{ '_explorer.datacontract.encrypt-hashes-desc' | translate }}</span>
+  <ion-item *ngIf="encryptedHashes">
+    <ion-label stacked>
+      <h3>{{ '_explorer.datacontract.encryption' | translate }}</h3>
+    </ion-label>
+    <ion-input 
+      [(ngModel)]="encryption"
+      (ionChange)="ref.detectChanges()">
+    </ion-input>
+  </ion-item>
+
+  <div text-right margin-top>
+    <button ion-button outline round
+      [disabled]="updating"
+      (click)="update();">
+      <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+      {{ '_explorer.datacontract.use-configuration' | translate }}
+    </button>
+  </div>
+</div>
+<div class="evan-content" *ngIf="error">
+  <h2 class="content-header">{{ '_explorer.generic-error' | translate }}</h2>
+
+  <div class="error-display">
+    {{ core.utils.getErrorLog(error) }}
+  </div>
+</div>
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<ng-container class="evan-content" *ngIf="!loading">
+  <datacontract-listentry
+    *ngIf="explorerService?.dataSchema && explorerService?.dataSchema[entryKey]"
+    header="_explorer.datacontract.data-schema"
+    [parent]="explorerService?.dataSchema"
+    [contractAddress]="contractAddress"
+    [key]="entryKey"
+    toggable="true">
+  </datacontract-listentry>
+
+  <ng-container *ngIf="type === 'list'">
+    <div class="evan-content evan-relative" *ngIf="canCall.addListEntries">
+      <h2 class="content-header">
+        {{ '_explorer.datacontract.add-list-entry' | translate }}
+      </h2>
+      <button ion-button icon-only clear class="top-right"
+        (click)="enableAddListEntries = !enableAddListEntries; ref.detectChanges()">
+        <ion-icon name="arrow-up" *ngIf="enableAddListEntries"></ion-icon>
+        <ion-icon name="arrow-down" *ngIf="!enableAddListEntries"></ion-icon>
+      </button>
+      <ng-container *ngIf="enableAddListEntries">
+        <ace-editor margin-top mode="json"
+          [(text)]="newListEntry"
+          (textChanged)="ref.detectChanges()"
+          [durationBeforeCallback]="300"
+          [options]="explorerService.aceOptions"
+          style="min-height:300px">
+        </ace-editor>
+        <div text-right>
+          <button ion-button outline round
+            [disabled]="updating || !newListEntry"
+            (click)="addListEntry(); newListEntry = '';">
+            <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+            {{ '_explorer.datacontract.add-list-entry' | translate }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <div class="evan-relative" *ngFor="let entry of data; let i = index">
+      <datacontract-listentry
+        [header]="('_explorer.datacontract.listentry' | translate) + (i + 1)"
+        [parent]="data"
+        [contractAddress]="contractAddress"
+        [key]="i">
+        <ng-container evan-content>
+          <button class="top-right" ion-button icon-only clear
+            *ngIf="canCall.removeListEntries"
+            (click)="removeListEntry(i)">
+            <ion-icon name="trash" color="danger" *ngIf="!updating"></ion-icon>
+            <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+          </button>
+        </ng-container>
+      </datacontract-listentry>
+    </div>
+
+    <contract-listentries #listEntryComponent margin-bottom
+      [contractId]="contractAddress"
+      [count]="10"
+      [dfsStorage]="useDfsStorage"
+      [encryptedHashes]="encryptedHashes"
+      [listName]="entryKey"
+      [reverse]="true"
+      [onUpdate]="loadListEntries.bind(this)"
+      [onError]="onListEntryError.bind(this)">
+    </contract-listentries>
+  </ng-container>
+  <ng-container>
+    <datacontract-listentry
+      *ngIf="type === 'entry' && data"
+      header="_explorer.datacontract.data"
+      [parent]="this"
+      [contractAddress]="contractAddress"
+      key="data">
+      <div evan-content text-right margin-top>
+        <button ion-button outline round
+          *ngIf="canCall.setEntry"
+          [disabled]="updating"
+          (click)="updateEntry()">
+          <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+          {{ '_explorer.datacontract.set-entry' | translate }}
+        </button>
+
+        <span *ngIf="!canCall.setEntry" class="dbcp-not-allowed">
+          {{ '_explorer.datacontract.set-entry-not-allowed' | translate }}
+        </span>
+      </div>
+    </datacontract-listentry>
+  </ng-container>
+  <div class="evan-content" *ngIf="type === 'entry' && !data">
+    <h2 class="content-header">{{ '_explorer.datacontract.no-data-found' | translate }}: {{ entryKey }}</h2>
+    <ace-editor margin-top mode="json"
+      [(text)]="newListEntry"
+      (textChanged)="ref.detectChanges()"
+      [durationBeforeCallback]="300"
+      [options]="explorerService.aceOptions"
+      style="min-height:300px">
+    </ace-editor>
+    <div text-right>
+      <button ion-button outline round
+        *ngIf="canCall.addListEntries"
+        [disabled]="updating || !newListEntry"
+        (click)="addListEntry(newListEntry); newListEntry = '';">
+        <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+        {{ '_explorer.datacontract.add-list-entry' | translate }}
+      </button>
+      <button ion-button outline round
+        *ngIf="canCall.setEntry"
+        [disabled]="updating || !newListEntry"
+        (click)="updateEntry(newListEntry); newListEntry = '';">
+        <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+        {{ '_explorer.datacontract.set-entry' | translate }}
+      </button>
+
+      <span *ngIf="!canCall.addListEntries && !canCall.setEntry" class="dbcp-not-allowed">
+        {{ '_explorer.datacontract.set-entry-not-allowed' | translate }}
+      </span>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,65 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<ng-container *ngIf="!loading">
+  <div class="left-panel" *ngIf="screenSize > 1100 || !entryKey">
+    <ion-item>
+      <ion-label stacked>{{ '_explorer.datacontract.explore-custom' | translate }}</ion-label>
+      <ion-input
+        [(ngModel)]="entryName"
+        (keyup.enter)="addEntry()"
+        (ionChange)="ref.detectChanges()">
+      </ion-input>
+    </ion-item>
+    <span class="input-hint">{{ '_explorer.datacontract.add-custom-entries' | translate }}</span>
+
+    <div text-center>
+      <button ion-button outline round margin-top
+        [disabled]="updating || !entryName"
+        (click)="addEntry()">
+        <ion-spinner color="light" *ngIf="updating"></ion-spinner>
+        {{ '_explorer.datacontract.start-explorer-custom' | translate }}
+      </button>
+    </div>
+
+    <div class="evan-small-seperator" margin-vertical></div>
+
+    <ng-container *ngIf="entries.length > 0">
+      <ion-label class="standalone">
+        {{ '_explorer.datacontract.entries' | translate}}
+      </ion-label>
+      <ion-list>
+        <ion-item class="clickable"
+          *ngFor="let entryKey of entries" 
+          routerLink="./{{entryKey}}"
+          routerLinkActive="active">
+          {{ entryKey }}
+        </ion-item>
+      </ion-list>
+    </ng-container>
+  </div>
+
+  <div class="right-panel" *ngIf="screenSize > 1100 || entryKey">
+    <evan-empty-dapp *ngIf="!entryKey"
+      text="_explorer.datacontract.no-entry-selected">
+    </evan-empty-dapp>
+    <router-outlet #o="outlet" *ngIf="!reloadRouter"></router-outlet>
+  </div>
+</ng-container>

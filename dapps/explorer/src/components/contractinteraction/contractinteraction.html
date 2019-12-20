@@ -1,0 +1,78 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<ng-container *ngIf="!loading">
+  <div class="evan-content" *ngIf="abiFunctions.length === 0">
+    <h2 class="content-header">{{ '_explorer.interaction.abi-missing' | translate }}</h2>
+    <span>{{ '_explorer.interaction.abi-missing-desc' | translate }}</span>
+  </div>
+  <div class="evan-content evan-relative" *ngFor="let abi of abiFunctions">
+    <h2 class="content-header">{{ abi.name }}({{ abi.readableInputs }})</h2>
+
+    <ion-row *ngIf="!explorerService.rawMode">
+      <ion-col col-12 col-md-6 *ngFor="let input of abi.inputs; let i = index">
+        <ion-item>
+          <ion-label stacked>
+            <h3>{{ input.name }} ({{ input.type }})</h3>
+          </ion-label>
+          <ion-input
+            [(ngModel)]="abi.inputValues[i]"
+            [placeholder]="input.type"
+            (ionChange)="ref.detectChanges()">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="explorerService.rawMode">
+      <ion-label class="standalone">
+        {{ '_explorer.interaction.inputs' | translate }}
+      </ion-label>
+      <ace-editor margin-top mode="json"
+        [(text)]="abi.inputValues"
+        (textChanged)="ref.detectChanges()"
+        [durationBeforeCallback]="300"
+        [options]="explorerService.aceOptions"
+        style="min-height:150px">
+      </ace-editor>
+    </ng-container>
+    <div class="run-button">
+      <button ion-button outline round
+        [disabled]="running || !areInputsValid(abi)"
+        (click)="runAbiFunc(abi)">
+        <ion-spinner color="light" *ngIf="running"></ion-spinner>
+        {{ ('_explorer.interaction.constant-' + abi.constant) | translate }}
+      </button>
+    </div>
+
+    <ng-container *ngIf="abi.wasExecuted">
+      <div class="evan-small-seperator" margin-top></div>
+      <ion-label class="standalone">
+        {{ '_explorer.interaction.result' | translate }}
+      </ion-label>
+      <ace-editor margin-top mode="json"
+        [(text)]="abi.result"
+        (textChanged)="ref.detectChanges()"
+        [durationBeforeCallback]="200"
+        [options]="explorerService.aceOptions"
+        [style.min-height]="explorerService.getInitialAceHeight(abi.result)">
+      </ace-editor>
+    </ng-container>
+  </div>
+</ng-container>

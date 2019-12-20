@@ -1,0 +1,76 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<evan-loading *ngIf="loading" delayLoading="500"></evan-loading>
+<div class="evan-content evan-relative" *ngIf="!loading">
+  <h2 class="content-header m-b-0">{{ '_explorer.section.general' | translate }}</h2>
+
+  <div class="top-right-info" *ngIf="created">
+    {{ '_explorer.created' | translate }}: {{ created | date:'medium':'':translateService.translate.currentLang }}
+  </div>
+  <ion-row>
+    <ion-col col-12 col-md-6>
+      <ion-label class="standalone">
+        <h4>{{ '_explorer.opened-address' | translate }}</h4>
+      </ion-label>
+      <a target="_blank" href="{{ explorerUrl }}/address/{{ id }}">
+        {{ id }}
+      </a>
+    </ion-col>
+    <ion-col col-12 col-md-6>
+      <ion-label class="standalone">
+        <h4>{{ '_explorer.contract-address' | translate }}</h4>
+      </ion-label>
+      <a target="_blank" href="{{ explorerUrl }}/address/{{ contractAddress }}">
+        {{ contractAddress }}
+      </a>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12 col-md-6 *ngIf="owner">
+      <ion-label class="standalone">
+        <h4>{{ '_explorer.owner' | translate }}</h4>
+      </ion-label>
+      <a target="_blank" href="{{ explorerUrl }}/address/{{ owner }}">
+        {{ owner }}
+      </a>
+    </ion-col>
+    <ion-col col-12 col-md-6 *ngIf="contractType">
+      <ion-label class="standalone">
+        <h4>{{ '_explorer.contract-type' | translate }}</h4>
+      </ion-label>
+      {{ contractType }}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col col-12 col-md-6>
+      <ion-label class="standalone">
+        <h4>{{ '_explorer.balance' | translate }}</h4>
+      </ion-label>
+      {{ balance }} EVE
+    </ion-col>
+  </ion-row>
+
+  <div text-right margin-top *ngIf="dbcp?.public?.dapp">
+    <button ion-button round outline (click)="openDApp()">
+      {{ '_explorer.open-dapp' | translate }}
+    </button>
+  </div>
+</div>

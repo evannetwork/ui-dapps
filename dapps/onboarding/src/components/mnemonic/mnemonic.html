@@ -1,0 +1,97 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<ion-item class="toggle-input" [@growTransition]="{ value: ':enter', params : { height : '44px' } }"
+  *ngIf="!isRiddle">
+  <ion-label>{{ '_dapponboarding.show-mnemonic-input' | translate }}</ion-label>
+  <ion-toggle color="primary"
+    [(ngModel)]="showInput"
+    (ionChange)="toggleInput($event)">
+  </ion-toggle>
+</ion-item>
+
+<ng-container *ngIf="!showInput">
+  <ng-container *ngIf="!read">
+    <ng-container *ngFor="let word of originalWords; let i = index">
+      <ion-item *ngIf="riddleWords.indexOf(i) === -1" [style.order]="i * 2">
+        <h3><span>{{ i + 1 }}.</span> {{ word }}</h3>
+      </ion-item>
+      <ion-item class="riddle-item"
+        [class.correct]="words[i] === originalWords[i]"
+        [style.order]="i * 2"
+        *ngIf="riddleWords.indexOf(i) !== -1">
+        <ion-label color="light">{{ i + 1 }}.</ion-label>
+        <ion-input placeholder="???"
+          (keydown)="filterHelp(words[i], $event)"
+          (focus)="activateHelp($event, i)"
+          (focusout)="deactivateHelp($event)"
+          [(ngModel)]="words[i]">
+        </ion-input>
+      </ion-item>
+    </ng-container>
+  </ng-container>
+  
+  <ng-container *ngIf="read">
+    <ion-item
+      *ngFor="let word of originalWords; let i = index"
+      [style.order]="i * 2"
+      [class.correct]="lightwallet.isValidMnemonicWord(words[i])">
+      <ion-label color="light">{{ i + 1 }}.</ion-label>
+      <ion-input placeholder="???"
+        (keydown)="filterHelp(words[i], $event)"
+        (focus)="activateHelp($event, i)"
+        (focusout)="deactivateHelp($event)"
+        [(ngModel)]="words[i]">
+      </ion-input>
+    </ion-item>
+  </ng-container>
+  <div class="mnemonic-help" #mnemonichelp
+    [@growTransition]="{ value: ':enter', params : { height : '52px' } }"
+    [style.order]="getMnemonicHelpOrder()"
+    *ngIf="activeWord !== -1 && words[activeWord] !== '' && help.length > 0 && !(help.length === 1 && words[activeWord] === help[0])">
+    <ion-item icon-end
+      *ngFor="let helpWord of help; let i = index"
+      [class.active]="activeHelp === i"
+      (click)="setHelpWord(helpWord)">
+      <h3>{{ helpWord }}</h3>
+    </ion-item>
+  </div>
+  
+  <div class="error" *ngIf="wordsAreFilled() && !isValid()" padding>
+    {{ '_dapponboarding.invalid-mnemonic' | translate }}
+  </div>
+</ng-container>
+
+<div class="direct-input" *ngIf="showInput">
+  <ion-item>
+    <ion-label stacked>{{ '_dapponboarding.mnemonic' | translate }}</ion-label>
+    <ion-textarea rows="3"
+      [(ngModel)]="mnemonic"
+      [readonly]="!read"
+      (keydown)="submitMnemonicDirectInput($event)"
+      (paste)="submitMnemonicDirectInput($event)">
+    </ion-textarea>
+  </ion-item>
+  <button *ngIf="!read" ion-button icon-only round clear outline (click)="core.copyString(mnemonic)">
+    <ion-icon name="copy" color="light"></ion-icon>
+  </button>
+  <button *ngIf="read" ion-button icon-only round clear outline (click)="scanQRCode()">
+    <ion-icon name="qr-scanner" color="light"></ion-icon>
+  </button>
+</div>

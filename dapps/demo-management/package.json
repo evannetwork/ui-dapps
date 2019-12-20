@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "Angular 5",
+    "Ionic",
+    "DApp",
+    "SASS"
+  ],
+  "main": "dist/index.js",
+  "name": "@evan.network/demo-management",
+  "scripts": {
+    "build": "cd ../.. && npm run angular-build dapps/demo-management"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.5.0"
+}

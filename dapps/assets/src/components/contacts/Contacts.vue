@@ -1,0 +1,167 @@
+/*
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+*/
+
+<template>
+  <div>
+    <div class="content pt-5">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div>
+          <h1 class="header">{{ '_assets.contacts.contacts-title' | translate }}</h1>
+        </div>
+        <div>
+          <evan-button
+            @click="filterByFavorites()"
+            class="filter-btn ml-3"
+            type="text-filter"
+            icon="mdi mdi-star-outline"
+            iconPosition="left"
+            :class="{ 'active': filterBy.includes('favorite') }"
+            :label="$t('_assets.contacts.favorites')"
+          />
+          <evan-button
+            @click="filterByType('users')"
+            class="filter-btn ml-3"
+            type="text-filter"
+            icon="mdi mdi-account-outline"
+            iconPosition="left"
+            :class="{ 'active': filter === 'users' }"
+            :label="$t('_assets.contacts.users')"
+          />
+          <evan-button
+            @click="filterByType('company')"
+            class="filter-btn ml-3"
+            type="text-filter"
+            icon="mdi mdi-domain"
+            iconPosition="left"
+            :class="{ 'active': filter === 'company' }"
+            :label="$t('_assets.contacts.companies')"
+          />
+          <evan-button
+            @click="filterByType('device')"
+            class="filter-btn ml-3"
+            type="text-filter"
+            icon="mdi mdi-radio-tower"
+            iconPosition="left"
+            :class="{ 'active': filter === 'device' }"
+            :label="$t('_assets.contacts.iot-devices')"
+          />
+          <evan-button
+            @click="resetFilter"
+            class="filter-btn ml-3"
+            type="text-filter"
+            icon="mdi mdi-account-multiple-outline"
+            iconPosition="left"
+            :class="{ 'active': filter === null }"
+            :label="$t('_assets.contacts.all')"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex flex-row mt-3">
+        <evan-table
+          :hover="true"
+          :items="contacts"
+          :fields="columns"
+          :filter="filter"
+          :filterIncludedFields="filterBy"
+          :sticky-header="'80vh'"
+          :show-empty="true"
+          :show-scrollbar="true"
+          @row-clicked="handleRowClicked"
+        >
+          
+          <template
+            v-slot:cell(alias)="contacts"
+          >{{ contacts.item.alias ? contacts.item.alias : contacts.item.address }}</template>
+          <template v-slot:cell(icon)="contacts">
+            <i class="table-icon" :class="contacts.item.icon"></i>
+          </template>
+          <template v-slot:cell(favorite)="contacts">
+            <i class="table-icon" :class="{'mdi mdi-star': contacts.item.favorite }"></i>
+          </template>
+
+          <!-- Empty slots -->
+          <template v-slot:empty>
+            <span>{{ '_assets.contacts.contacts-empty' | translate }}</span>
+          </template>
+          <template v-slot:emptyfiltered>
+            <span>{{ '_assets.contacts.filtered-empty' | translate }}</span>
+          </template>
+        </evan-table>
+      </div>
+    </div>
+
+    <evan-button
+      :type="'icon-primary'"
+      size="lg"
+      class="add-contact-btn"
+      icon="mdi mdi-plus"
+      @click="$refs.addContact.showPanel()"
+    ></evan-button>
+
+    <add-contact ref="addContact" @contact-added="handleContactAdded" />
+  </div>
+</template>
+
+<script lang="ts">
+import ContactsComponent from './Contacts';
+export default ContactsComponent;
+</script>
+
+<style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+
+h1.header {
+  font-size: cssVar('h4-font-size');
+  margin: 0;
+  color: cssVar('gray-600');
+  font-weight: bold;
+}
+
+.content {
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-contact-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 60px;
+}
+
+/deep/ .evan-swipe-panel.light {
+  background-color: cssVar('body-bg');
+
+  &,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  span,
+  p,
+  li,
+  b,
+  label,
+  small {
+    color: cssVar('text-color');
+  }
+}
+</style>

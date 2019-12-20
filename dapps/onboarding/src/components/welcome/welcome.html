@@ -1,0 +1,58 @@
+<!--
+  Copyright (C) 2018-present evan GmbH.
+
+  This program is free software: you can redistribute it and/or modify it
+  under the terms of the GNU Affero General Public License, version 3,
+  as published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/ or
+  write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
+  the following URL: https://evan.network/license/
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title [innerHTML]="'_dapponboarding.welcome' | translate"></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content ion-fixed ion-fixed *ngIf="!loading">
+  <div class="vertical-center-container">
+    <ion-slides #slider>
+      <ion-slide>
+        <div class="invite-container" *ngIf="params?.onboardingID" text-left padding>
+          <span [innerHTML]="'_dapponboarding.onboarding-info' | translate:params"></span><br><br>
+          <span [innerHTML]="'_dapponboarding.onboarding-desc' | translate:params"></span>
+        </div>
+        <h3>{{ '_dapponboarding.start-using-evan' | translate }}</h3>
+        <div class="start-buttons">
+          <button ion-button text-left (click)="setCurrentProvider('identity-create')" color="primary">
+            <span>{{ '_dapponboarding.new-mnemonic-account' | translate }}</span>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        
+          <button ion-button text-left (click)="setCurrentProvider('identity-import')" color="primary">
+            <span>{{ '_dapponboarding.mnemonic-account' | translate }}</span>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>
+
+<ion-footer [class.active]="showInfo">
+  <button ion-button full text-left icon-end (click)="showInfo = !showInfo; ref.detectChanges()" clear>
+    <span [innerHTML]="'_dapponboarding.what-is-evan' | translate"></span>
+    <ion-icon [name]="showInfo ? 'arrow-down' : 'arrow-up'"></ion-icon>
+  </button>
+  <div class="evan-info" padding-horizontal *ngIf="showInfo">
+    <p class="long-text" [innerHTML]="'_dapponboarding.welcome-desc' | translate"></p>
+  </div>
+</ion-footer>
