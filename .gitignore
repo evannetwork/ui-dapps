@@ -1,0 +1,8 @@
+.env.local
+.env
+local.log
+node_modules
+tests_output
+yarn-error.log
+yarn.lock
+selenium-server.log
