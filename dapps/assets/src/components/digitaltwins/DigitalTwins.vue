@@ -103,7 +103,7 @@
       </div>
     </div>
 
-    <evan-loading v-if="isLoading" :classes="'mt-3'" />
+    <evan-loading v-if="isLoading" classes />
 
     <evan-button
       :type="'icon-primary'"
