@@ -179,12 +179,16 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   async removeFavorite(twin) {
-    this.favoriteList.find(fav => twin.item.address === fav.id).isLoading = true;
+    this.favoriteList.find(
+      fav => twin.item.address === fav.id
+    ).isLoading = true;
     await EvanUIDigitalTwin.getDigitalTwin(
       this.getRuntime(),
       twin.item.address
     ).removeFromFavorites();
-    this.favoriteList = this.favoriteList.filter(fav => twin.item.address !== fav.id);
+    this.favoriteList = this.favoriteList.filter(
+      fav => twin.item.address !== fav.id
+    );
   }
 
   private isFavorite(twin) {

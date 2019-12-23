@@ -22,10 +22,7 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="search">
-          <label
-            @click="isActiveSearch = true"
-            for="searchInput"
-          >
+          <label @click="isActiveSearch = true" for="searchInput">
             <i class="mdi mdi-magnify mr-2"></i>
             <span v-if="!isActiveSearch">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
           </label>
@@ -82,17 +79,10 @@
           <template v-slot:cell(icon)="data">
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
-          <template v-slot:cell(updated)="data">
-            {{ data.item.updated | moment('DD.MM.YYYY') }}
-          </template>
-          <template v-slot:cell(created)="data">
-            {{ data.item.updated | moment('DD.MM.YYYY') }}
-          </template>
+          <template v-slot:cell(updated)="data">{{ data.item.updated | moment('DD.MM.YYYY') }}</template>
+          <template v-slot:cell(created)="data">{{ data.item.updated | moment('DD.MM.YYYY') }}</template>
           <template v-slot:cell(isFavorite)="twin">
-            <evan-loading
-              v-if="isFavoriteLoading(twin)"
-              classes=""
-            />
+            <evan-loading v-if="isFavoriteLoading(twin)" classes />
             <evan-button
               v-else-if="isFavorite(twin)"
               type="icon-secondary"
@@ -128,10 +118,10 @@
 </template>
 
 <script lang="ts">
-  import DigitalTwinsComponent from './DigitalTwins';
-  export default DigitalTwinsComponent;
+import DigitalTwinsComponent from './DigitalTwins';
+export default DigitalTwinsComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './DigitalTwins.scss';
+@import './DigitalTwins.scss';
 </style>
