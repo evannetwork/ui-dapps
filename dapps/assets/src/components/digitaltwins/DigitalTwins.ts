@@ -163,18 +163,19 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(twin) {
-    this.favoriteList.push({
+    let newFav = {
       id: twin.item.address,
       isFavorite: false,
       isLoading: true
-    });
+    };
+    this.favoriteList = [...this.favoriteList, newFav];
     await EvanUIDigitalTwin.getDigitalTwin(
       this.getRuntime(),
       twin.item.address
     ).addAsFavorite();
 
-    this.favoriteList.find(fav => twin.item.address === fav.id).isFavorite = true;
-    this.favoriteList.find(fav => twin.item.address === fav.id).isLoading = false;
+    newFav.isFavorite = true;
+    newFav.isLoading = false;
   }
 
   async removeFavorite(twin) {
