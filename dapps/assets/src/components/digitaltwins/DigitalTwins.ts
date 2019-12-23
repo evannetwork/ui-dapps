@@ -79,7 +79,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * handle multiple calls at the same time
    */
   get isAnyLoading(): boolean {
-    return !!this.favoriteList.filter(fav => fav.isLoading === true).length;
+    return this.favoriteList.some(fav => fav.isLoading === true);
   }
 
   @Watch('searchTerm')
