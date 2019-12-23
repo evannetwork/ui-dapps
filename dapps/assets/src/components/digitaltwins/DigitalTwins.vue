@@ -77,6 +77,10 @@
           :fields="columns"
           :show-scrollbar="true"
           :sticky-header="'80vh'"
+          :sortBy="sortBy"
+          :sort-direction="reverse ? 'desc' : 'asc'"
+          no-local-sorting="true"
+          @sort-changed="sortHandler"
           @scroll.native="scrollHandler"
         >
           <template v-slot:cell(icon)="data">

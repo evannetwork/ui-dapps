@@ -42,9 +42,11 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
 
   mounted() {
     this.searchTerm = this.$route.params.query || '';
+
+    this.initialQuery(this.searchTerm);
   }
 
-  async initialQuery(searchTerm = '') {
+  async initialQuery(searchTerm = '', sorting = {}) {
     this.isLoading = true;
     this.page = 0;
     this.data = [];
@@ -52,7 +54,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
 
     this.$router.push({ path: `digitaltwins/${searchTerm}` });
 
-    const { result, total } = await this.search.query(this.type, { searchTerm });
+    const { result, total } = await this.search.query(this.type, { searchTerm, ...sorting });
 
     this.total = total;
     this.data = result;
@@ -60,7 +62,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.isLoading = false;
   }
 
-  async fetchMore() {
+  async fetchMore(sorting = {}) {
     if (this.isLoading || this.data.length === this.total) {
       return;
     }
@@ -70,7 +72,8 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     const options = {
       page: this.page,
       count: this.count,
-      searchTerm: this.searchTerm
+      searchTerm: this.searchTerm,
+      ...sorting
     };
 
     const { result } = await this.search.query(this.type, options);
