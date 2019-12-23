@@ -88,13 +88,14 @@
               classes=""
             /> -->
             <evan-loading
-              v-if="false"
+              v-if="isFavoriteLoading(twin)"
               classes=""
             />
             <evan-button
-              v-else-if="twin.item.isFavorite === 'true'"
+              v-else-if="isFavorite(twin)"
               type="icon-secondary"
               icon="mdi mdi-star"
+              :disabled="isAnyLoading"
               @click="removeFavorite(twin)"
             />
             <evan-button
@@ -102,6 +103,7 @@
               class="visible-on-row-hover"
               type="icon-secondary"
               icon="mdi mdi-star-outline"
+              :disabled="isAnyLoading"
               @click="addFavorite(twin)"
             />
           </template>

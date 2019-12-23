@@ -28,6 +28,12 @@ import { Prop, Watch } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
 
+interface Favorite {
+  id: string;
+  isFavorite: boolean;
+  isLoading: boolean;
+}
+
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   columns = [
@@ -65,6 +71,17 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   })
   search: Function;
 
+  favoriteList: Favorite[] = [];
+
+  /**
+   * Flag to disable other favorite buttons.
+   * This can be remove once the backend can
+   * handle multiple calls at the same time
+   */
+  get isAnyLoading(): boolean {
+    return !!this.favoriteList.filter(fav => fav.isLoading === true).length;
+  }
+
   @Watch('searchTerm')
   onSearchTermChanged(searchTerm: string, oldSearchTerm: string) {
     if (searchTerm !== oldSearchTerm) {
@@ -73,10 +90,19 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
-  mounted() {
+  async mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
 
     window.addEventListener('keydown', this.handleSearchShortcut);
+
+    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime());
+    favorites.forEach(fav => {
+      this.favoriteList.push({
+        id: fav,
+        isFavorite: true,
+        isLoading: false
+      });
+    });
   }
 
   destroyed() {
@@ -138,13 +164,35 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   async addFavorite(twin) {
     console.log(twin);
+    this.favoriteList.push({
+      id: twin.item.address,
+      isFavorite: false,
+      isLoading: true
+    });
     await EvanUIDigitalTwin.getDigitalTwin(
       this.getRuntime(),
       twin.item.address
     ).addAsFavorite();
+
+    this.favoriteList.find(fav => twin.item.address === fav.id).isFavorite = true;
+    this.favoriteList.find(fav => twin.item.address === fav.id).isLoading = false;
   }
 
-  removeFavorite(twin) {
+  async removeFavorite(twin) {
     console.log(twin);
+    this.favoriteList = this.favoriteList.filter(fav => twin.item.address !== fav.id);
+    await EvanUIDigitalTwin.getDigitalTwin(
+      this.getRuntime(),
+      twin.item.address
+    ).removeFromFavorites();
+  }
+
+  private isFavorite(twin) {
+    return this.favoriteList.filter(fav => twin.item.address === fav.id).length;
+  }
+
+  private isFavoriteLoading(twin) {
+    const fav = this.favoriteList.find(item => twin.item.address === item.id);
+    return fav ? fav.isLoading : false;
   }
 }
