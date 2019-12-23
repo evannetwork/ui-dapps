@@ -83,10 +83,6 @@
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
           <template v-slot:cell(isFavorite)="twin">
-            <!-- <evan-loading
-              v-if="isFavoriteLoading.loading && (isFavoriteLoading.id === twin.item.address)"
-              classes=""
-            /> -->
             <evan-loading
               v-if="isFavoriteLoading(twin)"
               classes=""

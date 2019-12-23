@@ -44,9 +44,6 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
   async mounted() {
     this.searchTerm = this.$route.params.query || '';
     this.initialQuery(this.searchTerm);
-
-    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime());
-    console.log('Favorites', favorites);
   }
 
   async initialQuery(searchTerm = '') {

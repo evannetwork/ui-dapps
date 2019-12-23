@@ -163,7 +163,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(twin) {
-    console.log(twin);
     this.favoriteList.push({
       id: twin.item.address,
       isFavorite: false,
@@ -179,12 +178,12 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   async removeFavorite(twin) {
-    console.log(twin);
-    this.favoriteList = this.favoriteList.filter(fav => twin.item.address !== fav.id);
+    this.favoriteList.find(fav => twin.item.address === fav.id).isLoading = true;
     await EvanUIDigitalTwin.getDigitalTwin(
       this.getRuntime(),
       twin.item.address
     ).removeFromFavorites();
+    this.favoriteList = this.favoriteList.filter(fav => twin.item.address !== fav.id);
   }
 
   private isFavorite(twin) {

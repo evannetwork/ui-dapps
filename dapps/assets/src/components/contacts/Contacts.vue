@@ -100,6 +100,7 @@
               v-else-if="contacts.item.isFavorite === 'true'"
               type="icon-secondary"
               icon="mdi mdi-star"
+              :disabled="isFavoriteLoading.loading"
               @click="removeFavorite(contacts)"
             />
             <evan-button
@@ -107,6 +108,7 @@
               class="visible-on-row-hover"
               type="icon-secondary"
               icon="mdi mdi-star-outline"
+              :disabled="isFavoriteLoading.loading"
               @click="addFavorite(contacts)"
             />
           </template>
