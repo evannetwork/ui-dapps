@@ -23,7 +23,8 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
-import { Contact, ContactTableItem } from './ContactInterfaces';
+import { Contact } from './ContactInterfaces';
+import { EvanTableItem } from 'shared/EvanTable';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
@@ -90,7 +91,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     return this.contactService.getContacts();
   }
 
-  async addFavorite(contact: ContactTableItem) {
+  async addFavorite(contact: EvanTableItem<Contact>) {
     this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.addFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);
@@ -99,7 +100,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     ).isFavorite = 'true';
   }
 
-  async removeFavorite(contact: ContactTableItem) {
+  async removeFavorite(contact: EvanTableItem<Contact>) {
     this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.removeFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);

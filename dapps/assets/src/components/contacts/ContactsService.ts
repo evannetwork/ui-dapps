@@ -19,7 +19,7 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import InviteDispatcher from './InviteDispatcher';
-import { Contact, ContactType, ContactFormData, ContactTableItem } from './ContactInterfaces';
+import { Contact, ContactType, ContactFormData } from './ContactInterfaces';
 
 export class ContactsService {
   private contacts;

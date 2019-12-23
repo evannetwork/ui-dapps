@@ -27,6 +27,8 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
+import { EvanTableItem } from 'shared/EvanTable';
+import { DigitalTwin } from './DigitalTwinInterface';
 
 interface Favorite {
   id: string;
@@ -164,7 +166,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
-  async addFavorite(twin) {
+  async addFavorite(twin: EvanTableItem<DigitalTwin>) {
     let newFav = {
       id: twin.item.address,
       isFavorite: false,
@@ -181,7 +183,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     newFav.isLoading = false;
   }
 
-  async removeFavorite(twin) {
+  async removeFavorite(twin: EvanTableItem<DigitalTwin>) {
     this.favoriteList.find(
       fav => twin.item.address === fav.id
     ).isLoading = true;
@@ -196,11 +198,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     );
   }
 
-  private isFavorite(twin) {
+  private isFavorite(twin: EvanTableItem<DigitalTwin>) {
     return this.favoriteList.filter(fav => twin.item.address === fav.id).length;
   }
 
-  private isFavoriteLoading(twin) {
+  private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>) {
     const fav = this.favoriteList.find(item => twin.item.address === item.id);
     return fav ? fav.isLoading : false;
   }
