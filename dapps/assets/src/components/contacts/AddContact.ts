@@ -23,6 +23,7 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
+import { ContactFormData } from './ContactInterfaces';
 
 @Component
 export default class AddContactComponent extends mixins(EvanComponent) {
@@ -66,27 +67,31 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.msgTitle = this.$t('_assets.contacts.subject-prefill');
   }
 
+
+
   /**
    * Add new contact based on form inputs
    */
   async addContact() {
     if (this.checkFormValid()) {
       const now = new Date().toISOString();
-      const formData = {
+      const formData: ContactFormData = {
         accountId: this.accountId,
         alias: this.alias,
         createdAt: now,
         currLang: window.localStorage.getItem('evan-language'),
         email: this.email,
         emailInvite: this.emailInvite,
+        isFavorite: false,
         fromAlias: this.fromAlias,
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
         updatedAt: now
       };
-      await this.contactService.addContact(formData);
 
       this.closePanel();
+
+      await this.contactService.addContact(formData);
 
       this.$emit('contact-added');
     }

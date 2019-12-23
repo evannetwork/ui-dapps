@@ -22,13 +22,20 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { ContactsService, Contact } from './ContactsService';
+import { ContactsService } from './ContactsService';
+import { Contact } from './ContactInterfaces';
+import { EvanTableItem } from 'shared/EvanTable';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
 
   isLoading = true;
+  // currently only one contact can be favored at a time
+  isFavoriteLoading = {
+    id: null,
+    loading: false
+  };
 
   sortBy = 'name';
 
@@ -40,9 +47,17 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   columns = [
     { key: 'icon', label: '', sortable: false },
     { key: 'alias', label: this.$t('_assets.contacts.name'), sortable: true },
-    { key: 'updatedAt', label: this.$t('_assets.contacts.updated'), sortable: true },
-    { key: 'createdAt', label: this.$t('_assets.contacts.created'), sortable: true },
-    { key: 'favorite', label: '', sortable: false }
+    {
+      key: 'updatedAt',
+      label: this.$t('_assets.contacts.updated'),
+      sortable: true
+    },
+    {
+      key: 'createdAt',
+      label: this.$t('_assets.contacts.created'),
+      sortable: true
+    },
+    { key: 'isFavorite', label: '', sortable: false }
   ];
 
   created() {
@@ -51,12 +66,12 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   async mounted() {
-    this.contacts = await this.fetchContacts();    
+    this.contacts = await this.fetchContacts();
     this.isLoading = false;
   }
 
   /**
-   * Route to profile of clicked contact 
+   * Route to profile of clicked contact
    * @param contact Clicked contact
    */
   handleRowClicked(contact: Contact) {
@@ -76,13 +91,38 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     return this.contactService.getContacts();
   }
 
+  async addFavorite(contact: EvanTableItem<Contact>) {
+    this.setFavoriteLoading(contact.item.address, true);
+    await this.contactService.addFavorite(contact.item);
+    this.setFavoriteLoading(contact.item.address, false);
+    this.contacts.find(
+      item => contact.item.address === item.address
+    ).isFavorite = 'true';
+  }
+
+  async removeFavorite(contact: EvanTableItem<Contact>) {
+    this.setFavoriteLoading(contact.item.address, true);
+    await this.contactService.removeFavorite(contact.item);
+    this.setFavoriteLoading(contact.item.address, false);
+    this.contacts.find(
+      item => contact.item.address === item.address
+    ).isFavorite = 'false';
+  }
+
+  private setFavoriteLoading(id: string, flag: boolean) {
+    this.isFavoriteLoading = {
+      id,
+      loading: flag
+    };
+  }
+
   filterByType(type: string) {
     this.filterBy = ['type'];
     this.filter = type;
   }
 
   filterByFavorites() {
-    this.filterBy = ['favorite'];
+    this.filterBy = ['isFavorite'];
     this.filter = 'true';
   }
 
