@@ -25,7 +25,6 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import SearchService from './SearchService';
-import * as bcc from '@evan.network/api-blockchain-core';
 
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
