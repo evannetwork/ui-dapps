@@ -19,23 +19,7 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import InviteDispatcher from './InviteDispatcher';
-
-export interface Contact {
-  address: string;
-  alias: string;
-  createdAt: string;
-  isFavorite: string;
-  icon: string;
-  type: ContactType;
-  updatedAt: string;
-}
-
-enum ContactType {
-  COMPANY = 'company',
-  IOT_DEVICE = 'device',
-  USER = 'user',
-  UNSHARED = 'unshared'
-}
+import { Contact, ContactType, ContactFormData, ContactTableItem } from './ContactInterfaces';
 
 export class ContactsService {
   private contacts;
@@ -45,14 +29,17 @@ export class ContactsService {
     this.runtime = runtime;
   }
 
+  /**
+   * Return well-formatted list of contacts
+   */
   async getContacts(): Promise<Contact[]> {
     this.contacts = await this.runtime.profile.getAddressBook();
 
     let data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async contact => {
-      const type = await this.getProfileType(contact);
       // filter out own account
-      if (contact != this.runtime.activeAccount) {
+      if (contact !== this.runtime.activeAccount) {
+        const type = await this.getProfileType(contact);
         data.push({
           address: contact,
           alias: this.contacts.profile[contact].alias,
@@ -67,11 +54,11 @@ export class ContactsService {
     return data;
   }
 
-  async addContact(contactFormData) {
+  async addContact(contactFormData: ContactFormData) {
     await InviteDispatcher.start(this.runtime, contactFormData);
   }
 
-  async addFavorite(contact): Promise<void> {
+  async addFavorite(contact: Contact): Promise<void> {
     await this.runtime.profile.addProfileKey(
       contact.address,
       'isFavorite',
@@ -83,7 +70,7 @@ export class ContactsService {
     );
   }
 
-  async removeFavorite(contact): Promise<void> {
+  async removeFavorite(contact: Contact): Promise<void> {
     await this.runtime.profile.addProfileKey(
       contact.address,
       'isFavorite',
@@ -92,9 +79,13 @@ export class ContactsService {
 
     await this.runtime.profile.storeForAccount(
       this.runtime.profile.treeLabels.addressBook
-    );    
+    );
   }
 
+  /**
+   * Return corresponding icon for account type.
+   * @param type Account type
+   */
   private getIcon(type: ContactType): string {
     switch (type) {
       case ContactType.USER:
@@ -110,6 +101,10 @@ export class ContactsService {
     }
   }
 
+  /**
+   * Try to get profile type if it's shared
+   * @param accountId Address
+   */
   private async getProfileType(accountId: string): Promise<ContactType> {
     try {
       const otherProfile = new bcc.Profile({

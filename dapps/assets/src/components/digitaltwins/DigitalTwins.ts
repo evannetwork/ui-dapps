@@ -71,6 +71,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   })
   search: Function;
 
+  // contains list of favorites and their state
   favoriteList: Favorite[] = [];
 
   /**
@@ -95,6 +96,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
     window.addEventListener('keydown', this.handleSearchShortcut);
 
+    // initial loading of favorites
     const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime());
     favorites.forEach(fav => {
       this.favoriteList.push({
@@ -169,6 +171,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       isLoading: true
     };
     this.favoriteList = [...this.favoriteList, newFav];
+
     await EvanUIDigitalTwin.getDigitalTwin(
       this.getRuntime(),
       twin.item.address
@@ -182,10 +185,12 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     this.favoriteList.find(
       fav => twin.item.address === fav.id
     ).isLoading = true;
+
     await EvanUIDigitalTwin.getDigitalTwin(
       this.getRuntime(),
       twin.item.address
     ).removeFromFavorites();
+
     this.favoriteList = this.favoriteList.filter(
       fav => twin.item.address !== fav.id
     );

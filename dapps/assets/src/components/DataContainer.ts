@@ -40,7 +40,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     default: 'twins'
   }) type: string;
 
-  async mounted() {
+  mounted() {
     this.searchTerm = this.$route.params.query || '';
     this.initialQuery(this.searchTerm);
   }
