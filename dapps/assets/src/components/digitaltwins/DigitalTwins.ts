@@ -19,16 +19,25 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
+import moment from 'moment';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { debounce } from 'lodash';
 import { Prop, Watch } from 'vue-property-decorator';
-
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
 import { EvanTableItem } from 'shared/EvanTable';
 import { DigitalTwin } from './DigitalTwinInterface';
+
+interface SortFilter {
+  filter?: any;
+  sortBy?: string;
+  sortDesc?: boolean;
+  perPage?: number;
+  currentPage?: number;
+  apiUrl?: string;
+}
 
 interface Favorite {
   id: string;
@@ -38,12 +47,16 @@ interface Favorite {
 
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
+  sortBy = 'updated';
+  reverse = true;
+  selectedFilter = 'all';
+
   columns = [
     { key: 'icon', label: '' },
-    { key: 'name', label: this.$t('_assets.digitaltwins.name') },
-    { key: 'owner', label: this.$t('_assets.digitaltwins.owner') },
-    { key: 'updated', label: this.$t('_assets.digitaltwins.updated') },
-    { key: 'created', label: this.$t('_assets.digitaltwins.created') },
+    { key: 'name', label: this.$t('_assets.digitaltwins.name'), sortable: true },
+    { key: 'owner', label: this.$t('_assets.digitaltwins.owner'), sortable: true },
+    { key: 'updated', label: this.$t('_assets.digitaltwins.updated'), sortable: true },
+    { key: 'created', label: this.$t('_assets.digitaltwins.created'), sortable: true },
     { key: 'isFavorite', label: '' }
   ];
   isActiveSearch = false;
@@ -93,6 +106,23 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
+  @Watch('selectedFilter')
+  onFilterChanged(newFilter: string, oldFilter: string) {
+    if (newFilter !== oldFilter) {
+      if (newFilter === 'favorites') {
+        // TODO: query by all IDs from favorites
+
+        alert('This function will be available soon.');
+        this.selectedFilter = oldFilter;
+
+        return;
+      }
+
+      this.searchHandlerDebounced();
+    }
+  }
+
+
   async mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
 
@@ -139,8 +169,8 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       const offset = 200;
       let bottomOfWindow = clientHeight + scrollTop >= scrollHeight - offset;
 
-      if (bottomOfWindow && typeof this.fetchMore === 'function') {
-        this.fetchMore();
+      if (bottomOfWindow) {
+        this.performFetchMore();
       }
     },
     100,
@@ -148,14 +178,28 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   );
 
   /**
-   * Debounce the search for 0.25s.
+   * Helper method to keep class this-context for debounced search.
+   */
+  performSearch() {
+    if (typeof this.search === 'function') {
+      this.search(this.searchTerm, { sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
+    }
+  }
+
+  /**
+   * Helper method to keep class this-context for debounced fetch.
+   */
+  performFetchMore() {
+    if (typeof this.fetchMore === 'function') {
+      this.fetchMore({ sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
+    }
+  }
+
+  /**
+   * Debounce the search.
    */
   searchHandlerDebounced = debounce(
-    () => {
-      if (typeof this.search === 'function') {
-        this.search(this.searchTerm);
-      }
-    },
+    this.performSearch,
     250,
     { trailing: true, leading: false }
   );
@@ -164,6 +208,14 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     if (this.searchTerm.length === 0) {
       this.isActiveSearch = false;
     }
+  }
+
+  sortHandler(ctx: SortFilter) {
+    const { sortBy, sortDesc: reverse } = ctx;
+
+    this.sortBy = sortBy;
+    this.reverse = reverse;
+    this.searchHandlerDebounced();
   }
 
   async addFavorite(twin: EvanTableItem<DigitalTwin>) {

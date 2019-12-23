@@ -38,16 +38,16 @@
         </div>
         <div>
           <evan-button
-            @click="filterByOwn()"
+            @click="selectedFilter = 'my'"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
             iconPosition="left"
-            :class="{ 'active': selectedFilter === 'own' }"
+            :class="{ 'active': selectedFilter === 'my' }"
             :label="$t('_assets.digitaltwins.my-own')"
           />
           <evan-button
-            @click="filterByFavorites()"
+            @click="selectedFilter = 'favorites'"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
@@ -56,7 +56,7 @@
             :label="$t('_assets.digitaltwins.favorites')"
           />
           <evan-button
-            @click="filterByAll()"
+            @click="selectedFilter = 'all'"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-cube-outline"
@@ -74,6 +74,10 @@
           :fields="columns"
           :show-scrollbar="true"
           :sticky-header="'80vh'"
+          :sortBy="sortBy"
+          :sort-direction="reverse ? 'desc' : 'asc'"
+          no-local-sorting="true"
+          @sort-changed="sortHandler"
           @scroll.native="scrollHandler"
         >
           <template v-slot:cell(icon)="data">
