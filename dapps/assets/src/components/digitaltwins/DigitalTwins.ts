@@ -157,7 +157,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Debounce the search for 0.25s.
+   * Debounce the search.
    */
   searchHandlerDebounced = debounce(
     this.performSearch,
