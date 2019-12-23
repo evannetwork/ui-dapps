@@ -22,7 +22,7 @@ Scenario: Checking amount when paying from Germany with an invalid German VAT nu
     And I press the "TAB" key
     Then I want to see a text including "VAT ID seems to be invalid."
     And the button with id "execute-payment" should be "disabled"
-    And I want to see a text including "Total: 10.00 €"
+    And I want to see a text including "Total: 11.90 €"
 
 
 Scenario: Checking amount when paying from Germany without a VAT number
@@ -92,7 +92,7 @@ Scenario: Checking amount when paying from Italy with an invalid Italian VAT num
     And I press the "TAB" key
     Then I want to see a text including "VAT ID seems to be invalid."
     And the button with id "execute-payment" should be "disabled"
-    And I want to see a text including "Total: 10.00 €"
+    And I want to see a text including "Total: 11.90 €"
 
 Scenario: Checking amount when paying from Italy without a VAT number
    Given I log in to evan.network using vue
@@ -117,7 +117,7 @@ Scenario: Checking amount when paying from Italy without a VAT number
     And I press the "TAB" key
     Then I want to see a text including "The VAT ID could not be validated!"
     And the button with id "execute-payment" should be "disabled"
-    And I want to see a text including "Total: 10.00 €"
+    And I want to see a text including "Total: 11.90 €"
 
 Scenario: Checking amount when paying from Austria with a valid Italian VAT number
    Given I log in to evan.network using vue
@@ -141,7 +141,7 @@ Scenario: Checking amount when paying from Austria with a valid Italian VAT numb
     And I press the "TAB" key
     Then I want to see a text including "Provided VAT ID does not match given country code."
     And the button with id "execute-payment" should be "disabled"
-    And I want to see a text including "Total: 10.00 €"
+    And I want to see a text including "Total: 11.90 €"
 
 Scenario: Executing Payment from Germany with a valid German VAT number
    Given I log in to evan.network using vue
