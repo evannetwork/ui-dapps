@@ -169,6 +169,12 @@ h1.heading {
   right: 60px;
 }
 
+/deep/.filter-btn {
+  span {
+    font-size: 12px;
+  }
+}
+
 /deep/ .evan-swipe-panel.light {
   background-color: cssVar('body-bg');
 

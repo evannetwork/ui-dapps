@@ -85,9 +85,10 @@ export default class AddContactComponent extends mixins(EvanComponent) {
         msgTitle: this.msgTitle,
         updatedAt: now
       };
-      await this.contactService.addContact(formData);
 
       this.closePanel();
+
+      await this.contactService.addContact(formData);
 
       this.$emit('contact-added');
     }

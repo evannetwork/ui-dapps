@@ -6,6 +6,12 @@
   margin-right: auto;
 }
 
+/deep/.filter-btn {
+  span {
+    font-size: 12px;
+  }
+}
+
 .add-twin-btn {
   position: fixed;
   bottom: 40px;
