@@ -39,6 +39,7 @@ interface SortFilter {
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   sortBy = 'updated';
   reverse = true;
+  selectedFilter = 'all';
 
   columns = [
     { key: 'icon', label: '' },
@@ -77,6 +78,23 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       this.searchHandlerDebounced();
     }
   }
+
+  @Watch('selectedFilter')
+  onFilterChanged(newFilter: string, oldFilter: string) {
+    if (newFilter !== oldFilter) {
+      if (newFilter === 'favorites') {
+        // TODO: query by all IDs from favorites
+
+        alert('This function will be available soon.');
+        this.selectedFilter = oldFilter;
+
+        return;
+      }
+
+      this.searchHandlerDebounced();
+    }
+  }
+
 
   mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
@@ -125,7 +143,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   performSearch() {
     if (typeof this.search === 'function') {
-      this.search(this.searchTerm, { sortBy: this.sortBy, reverse: this.reverse });
+      this.search(this.searchTerm, { sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
     }
   }
 
@@ -134,7 +152,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   performFetchMore() {
     if (typeof this.fetchMore === 'function') {
-      this.fetchMore({ sortBy: this.sortBy, reverse: this.reverse });
+      this.fetchMore({ sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
     }
   }
 
