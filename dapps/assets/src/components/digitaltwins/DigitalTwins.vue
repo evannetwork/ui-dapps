@@ -22,10 +22,7 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="search">
-          <label
-            @click="isActiveSearch = true"
-            for="searchInput"
-          >
+          <label @click="isActiveSearch = true" for="searchInput">
             <i class="mdi mdi-magnify mr-2"></i>
             <span v-if="!isActiveSearch">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
           </label>
@@ -84,16 +81,33 @@
           @scroll.native="scrollHandler"
         >
           <template v-slot:cell(icon)="data">
-            <i class="table-icon" :class="data.item.icon"></i>
+            <i class="table-icon mdi mdi-cube-outline" />
           </template>
-          <template v-slot:cell(favorite)="data">
-            <i class="table-icon" :class="{'mdi mdi-star': data.item.favorite}"></i>
+          <template v-slot:cell(updated)="data">{{ data.item.updated | moment('DD.MM.YYYY') }}</template>
+          <template v-slot:cell(created)="data">{{ data.item.updated | moment('DD.MM.YYYY') }}</template>
+          <template v-slot:cell(isFavorite)="twin">
+            <evan-loading v-if="isFavoriteLoading(twin)" classes />
+            <evan-button
+              v-else-if="isFavorite(twin)"
+              type="icon-secondary"
+              icon="mdi mdi-star"
+              :disabled="isAnyLoading"
+              @click="removeFavorite(twin)"
+            />
+            <evan-button
+              v-else
+              class="visible-on-row-hover"
+              type="icon-secondary"
+              icon="mdi mdi-star-outline"
+              :disabled="isAnyLoading"
+              @click="addFavorite(twin)"
+            />
           </template>
         </evan-table>
       </div>
     </div>
 
-    <evan-loading v-if="isLoading" :classes="'mt-3'" />
+    <evan-loading v-if="isLoading" classes />
 
     <evan-button
       :type="'icon-primary'"
@@ -108,10 +122,10 @@
 </template>
 
 <script lang="ts">
-  import DigitalTwinsComponent from './DigitalTwins';
-  export default DigitalTwinsComponent;
+import DigitalTwinsComponent from './DigitalTwins';
+export default DigitalTwinsComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './DigitalTwins.scss';
+@import './DigitalTwins.scss';
 </style>

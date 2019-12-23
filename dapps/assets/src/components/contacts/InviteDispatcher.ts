@@ -128,20 +128,21 @@ dispatcher
       await runtime.profile.addContactKey(accountId, 'commKey', commKey);
     }
 
-    // update the contact details
+    // aggregate the contact details
     await Promise.all(
       [
         'alias',
         'accountId',
         'email',
         'createdAt',
-        'updatedAt'
+        'updatedAt',
+        'isFavorite'
       ].map(profileKey =>
         runtime.profile.addProfileKey(accountId, profileKey, data[profileKey])
       )
     );
 
-    // save the account
+    // save for the account
     await runtime.profile.storeForAccount(
       runtime.profile.treeLabels.addressBook
     );
