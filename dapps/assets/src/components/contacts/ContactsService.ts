@@ -103,7 +103,7 @@ export class ContactsService {
 
   /**
    * Try to get profile type if it's shared
-   * @param accountId Address
+   * @param accountId Account address
    */
   private async getProfileType(accountId: string): Promise<ContactType> {
     try {
