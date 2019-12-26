@@ -92,10 +92,10 @@
             <i class="table-icon" :class="contacts.item.icon"></i>
           </template>
           <template v-slot:cell(createdAt)="contacts">
-            {{ contacts.item.updated | moment('DD.MM.YYYY') }}
+            {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
           </template>
           <template v-slot:cell(updatedAt)="contacts">
-            {{ contacts.item.updated | moment('DD.MM.YYYY') }}
+            {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
           </template>
           <template v-slot:cell(isFavorite)="contacts">
             <evan-loading
