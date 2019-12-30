@@ -60,14 +60,14 @@ When('I click on button before the text {string}',
  */
 Then('I want to see a button {string}',
   async (content) => {
-     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
-     client.useXpath();
-     const xPathSelector = buttonSelector(content);
+    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
+    client.useXpath();
+    const xPathSelector = buttonSelector(content);
 
-     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
-     await client.expect.element(xPathSelector).to.be.visible;
+    await client.waitForElementPresent(xPathSelector, WAIT_TIME);
+    await client.expect.element(xPathSelector).to.be.visible;
 
-     client.useCss(); // switches back to css selector
+    client.useCss(); // switches back to css selector
   }
 );
 
@@ -126,25 +126,38 @@ Then('the button with id {string} should be {string}',
   }
 );
 
+const getIconClass = (icon) => {
+  const iconMap = {
+    plus: "mdi-plus",
+  }
+
+  if (!iconMap[icon]) {
+    return icon;
+  }
+
+  return iconMap[icon];
+}
+
 /**
- * Asserts that a plus button is displayed
+ * Asserts that a certain icon button is displayed
  */
-Then('I want to see a plus button',
-  async () => {
+Then('I want to see a {string} icon button',
+  async (icon) => {
     client.useXpath();
-    const xPathSelector = '//button[contains(@class, "btn")]//i[contains(@class, "mdi-plus")]';
+    const xPathSelector = `//button[contains(@class, "btn")]//i[contains(@class, "${getIconClass(icon)}")]`;
     await client.expect.element(xPathSelector).to.be.visible;
     client.useCss();
   }
 );
 
 /**
- * Click on plus button
+ * Click on icon button.
  */
-When('I click on plus button',
-  async () => {
+When('I click on the {string} icon button',
+  async (icon) => {
     client.useXpath();
-    const xPathSelector = '//button[contains(@class, "btn")]//i[contains(@class, "mdi-plus")]';
+    const xPathSelector = `//button[contains(@class, "btn")]//i[contains(@class, "${getIconClass(icon)}")]`;
+
     await client.expect.element(xPathSelector).to.be.visible;
     await client.click(xPathSelector);
     client.useCss();

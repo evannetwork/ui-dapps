@@ -69,10 +69,10 @@ const setupEvan = function(browser, customs) {
 
 /**
  * A better `clearValue` for inputs having a more complex interaction.
- * 
+ *
  * @export
- * @param {string} selector 
- * @returns 
+ * @param {string} selector
+ * @returns
  */
 function betterClearValue(selector) {
   const { RIGHT_ARROW, BACK_SPACE } = client.Keys;
@@ -96,11 +96,34 @@ async function getElementIdByLabel(value) {
   return elementId;
 }
 
+async function getElementsCount(selector, mode = "xpath") {
+  return new Promise((resolve, reject) => {
+    client.elements(mode, selector, function (result) {
+      console.log('Length', result.value.length) //(if there are 3 li, here should be a count of 3)
+      resolve(result.value.length);
+    });
+  }
+)};
+
+async function scrollToElement(selector) {
+  return new Promise((resolve, reject) => {
+    return client.element(selector, (res) => {
+      console.log('scrol start to', res.value)
+      client.moveTo(res.value.ELEMENT, 0, 0, () => {
+        console.log('scrolled finished')
+        resolve();
+      })
+    })
+  });
+}
+
+
 module.exports = {
   backspaces,
   betterClearValue,
   setupEvan,
   getElementIdByLabel,
+  getElementsCount,
   pauseHere: async () => {
     console.log('/******************************************************************************/');
     console.log('test paused, enjoy your developer tools :3');
@@ -117,4 +140,5 @@ module.exports = {
       resolve(ans);
     }))
   },
+  scrollToElement
 };

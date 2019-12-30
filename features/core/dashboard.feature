@@ -17,7 +17,7 @@ Scenario: Navigating through core DApps using the dashboard
     Then I want to see a text including "Data-Synchronization"
     And I want to see a text including "Everything is synchronized..."
   When I click on button before the text "Data-Synchronization"
-    Then I want to see not a text including "Data-Synchronization"
+    Then I do not want to see a text including "Data-Synchronization"
   When I click on "Help" in main menu
     Then I want to see a text including "Wiki"
   When I click on "Identity" in main menu

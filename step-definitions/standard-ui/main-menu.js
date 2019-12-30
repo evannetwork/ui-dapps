@@ -10,6 +10,7 @@ const mainMenu = {
   'Identity': '#evan-dapp-profile',
   'Synchronization': '#evan-dapp-synchronization',
   'Verification Center': '#evan-dapp-verifications',
+  'My Assets': '#evan-dapp-assets',
 };
 
 /**

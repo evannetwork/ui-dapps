@@ -1,16 +1,16 @@
 Feature: Contacts assets
+  Background:
+    Given I log in to evan.network using vue
+      And I click on "My Assets" in main menu
 
-Scenario: Check whether the content of Contacts is displayed
-  Given I log in to evan.network using vue
-    And I go to My Assets tab
-    And I go to Contacts tab
-    And I wait for 2 seconds
-    Then I want to see a table of "contacts"
+  Scenario: Check whether the content of Contacts is displayed
+    When I click on "Contacts" in sub menu
+    Then I want to see a "h1" headline including "Contacts"
+      And I want to see a table having 5 headers
+      And I want to see a table having headers "Name, Updated, Created"
 
-Scenario: Check whether the modal for New Contact Invitation is displayed
-  Given I log in to evan.network using vue
-    And I go to Contacts tab
-    Then I want to see a plus button
-    When I click on plus button
+  Scenario: Check whether the modal for New Contact Invitation is displayed
+    Given I am on the path "#/dashboard.vue.evan/assets.evan/contacts"
+    Then I want to see a "plus" icon button
+    When I click on the "plus" icon button
     Then I want to see a swipe-panel with the title "Add new Contact"
-    

@@ -201,6 +201,18 @@ Then('Input field with label {string} should be visible',
 )
 
 /**
+ * Assures that an input field beside a certain label fields is present in the DOM.
+ */
+Then('Input field with label {string} should be invisible',
+  async(label) => {
+    client.useXpath();
+    await client.expect.element(getSelector(label)).to.be.present;
+    await client.expect.element(getSelector(label)).not.to.be.visible;
+    client.useCss();
+  }
+)
+
+/**
  * Assures that many input fields beside a certain labels are visible.
  * - labels should be seperated by pipes 'Label1|Label2'.
  */
