@@ -97,7 +97,14 @@ module.exports = function(
           use: [
             MiniCssExtractPlugin.loader, // process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
             'css-loader', // translates css into commonJS
-            'sass-loader' // compiles sass to css, using node sass by default
+            'resolve-url-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                sourceMapContents: false
+              }
+            }
           ]
         },
         {

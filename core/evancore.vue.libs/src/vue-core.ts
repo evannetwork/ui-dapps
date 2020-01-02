@@ -19,13 +19,13 @@
 
 // import vue libs
 import VueMoment from 'vue-moment';
-import VueRouter from 'vue-router';
 import VueToasted from 'vue-toasted';
 import Vuex from 'vuex';
 import vuexI18n from 'vuex-i18n';
 
 // setup moment locales
-const moment = require('moment').default;
+// const moment = require('moment').default;
+import * as moment from 'moment';
 
 // import evan libs
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
@@ -39,7 +39,7 @@ import { initializeRouting } from './routing';
 
 /******************************************** functions *******************************************/
 /**
- * Starts an evan vue dapp and wraps all start functionallities.
+ * Starts an evan vue dapp and wraps all start functionalities.
  *
  * @param      {EvanVueOptions}  options  vue options passed by the dapp
  */
@@ -74,7 +74,7 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
   const uiLibBaseUrl = dappBrowser.dapp.getDAppBaseUrl(vueCoreDbcp,
     `${ vueCoreDbcp.name }.${ getDomainName() }`);
 
-  // initialze VueX
+  // initialize VueX
   Vue.use(Vuex);
   const store = new Vuex.Store({
     state: {
