@@ -8,7 +8,7 @@ let loggedIn = false;
 Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPart, accountName) => {
   const evan = setupEvan(client);
 
-  await client.url(evan.baseUrl);
+  await client.url(`${evan.baseUrl}/#/onboarding.evan`);
   await client.pause(5000);
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
   if (!user || !user.mnemonic) {
@@ -59,13 +59,18 @@ When(/^I log out from angular$/, async () => {
   }
 });
 
+/**
+ * @deprecated
+ */
 Then(/^I can see the angular dashboard$/, async () => {
   await client.waitForElementPresent('#dashboard', 30 * 1000);
   await client.assert.visible('#dashboard');
 });
 
+/**
+ * @deprecated
+ */
 Then(/^I am no longer logged in to angular$/, async () => {
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
   await client.assert.visible('onboarding-root');
 });
- 

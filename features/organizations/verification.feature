@@ -54,8 +54,8 @@ Scenario: Requesting Notary Verification for current user
 Scenario: Requesting Notary Verification for current user with missing info
   Given I log in to evan.network using vue with organizationIdentification
   When I click on "Identity" in main menu
-    When I set Input field with label "Company" to "Test Company"
-    And I set Input field with label "Register Court" to ""
+    # When I set Input field with label "Company" to "Test Company" # TODO: how to change?
+    When I set Input field with label "Register Court" to ""
     And I set Input field with label "Registration Number" to ""
     And I set Input field with label "Sales Tax ID" to ""
   When I click on button "Save"

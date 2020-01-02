@@ -1,4 +1,3 @@
-@only
 Feature: Digital Twin assets
 
   Background:

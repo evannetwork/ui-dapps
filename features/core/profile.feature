@@ -1,3 +1,4 @@
+@skip
 Feature: evan.network profile
 
 Background: Creating a new unspecified account and navigate to the profile detail page

@@ -1,5 +1,6 @@
 Feature: EVE payments
 
+@angular
 Scenario: Checking amount when paying from Germany with an invalid German VAT number
   Given I log in to evan.network using angular
     And I go to EVE payments tab

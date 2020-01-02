@@ -16,7 +16,7 @@ const getSelector = (label, angular) => {
 }
 
 /**
- * Click on button with a certain content.
+ * Select certain entry from vue-select dropdown.
  */
 When('I select the dropdown entry {string} from the dropdown box with the label {string}',
   async (content, label) => {
@@ -32,5 +32,24 @@ When('I select the dropdown entry {string} from the dropdown box with the label 
     await client.expect.element(xPathSelectorLi).to.be.present;
     await client.click(xPathSelectorLi);
     client.useCss(); // switches back to css selector
+  }
+);
+
+/**
+ * Select entry by index from vue-select dropdown.
+ */
+When('I select entry {int} from dropdown with the label {string}',
+  async (entry, label) => {
+    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
+    client.useXpath();
+    const xPathSelector = getSelector(label);
+
+    await client.expect.element(xPathSelector).to.be.present;
+    await client.click(xPathSelector);
+
+    client.useCss();
+    const liSelector = `ul.vs__dropdown-menu li:nth-child(${entry})`;
+    await client.expect.element(liSelector).to.be.present;
+    await client.click(liSelector)
   }
 );

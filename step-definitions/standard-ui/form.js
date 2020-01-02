@@ -231,7 +231,7 @@ Then('Input fields with labels {string} should be visible',
 /**
  * Click on label next to the evan checkbox control
  */
-Then('I want to click on vue checkbox control with id {string}',
+Then('I click on vue checkbox control with id {string}',
   async(id) => {
     client.useXpath();
 

@@ -56,16 +56,17 @@ Then('I want to see a table having {string} {int} rows', async (operator, count)
     case "at least":
     case "above":
       console.log(`check for ${elementsCount} bigger than ${count}`)
-      await client.verify.ok(elementsCount > count, `Got more than ${count} rows.`);
+      return client.verify.ok(elementsCount > count, `Got more than ${count} rows.`);
       break;
     case "max":
     case "maximum":
     case "below":
       console.log(`check for ${elementsCount} smaller than ${count}`)
-      await client.verify.ok(elementsCount < count, `Got less than ${count} rows.`);
+      return client.verify.ok(elementsCount < count, `Got less than ${count} rows.`);
+      // await client.expect(elementsCount).to.be.lt(count);
       break;
     default:
-      await client.verify.ok(elementsCount === count, `Got exactly ${count} rows.`);
+      return client.verify.ok(elementsCount === count, `Got exactly ${count} rows.`);
   }
 });
 

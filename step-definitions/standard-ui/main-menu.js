@@ -6,6 +6,7 @@ const mainMenu = {
   'DApps': '#evan-dapp-favorites',
   'Digital Twins': '#evan-dapp-digitaltwins',
   'Explorer': '#evan-dapp-explorer',
+  'Favorites': '#evan-dapp-favorites',
   'Help': '#evan-dapp-help',
   'Identity': '#evan-dapp-profile',
   'Synchronization': '#evan-dapp-synchronization',
