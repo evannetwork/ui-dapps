@@ -48,9 +48,11 @@
       "my-own": "My own",
       "name-placeholder": "Fork Lift #3",
       "name": "Name",
+      "owner": "Owner",
       "template-desc": "Choose a template for your Digital Twin. More information on how to create a template for Digital Twins can be found here.",
       "template-select-label": "Select a template",
-      "template-select-placeholder": "Select a template"
+      "template-select-placeholder": "Select a template",
+      "updated": "Updated"
     },
     "search": {
       "my-own": "My own",

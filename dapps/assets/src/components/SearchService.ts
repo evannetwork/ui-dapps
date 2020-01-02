@@ -74,7 +74,7 @@ class SearchService {
       count: 20,
       offset: 0,
       reverse: true,
-      sortBy: 'timestamp',
+      sortBy: 'updated',
       searchTerm: '*',
       page: null
     };
@@ -98,7 +98,7 @@ class SearchService {
       params,
     });
 
-    // TODO: error handling in request etc.. ..
+    // TODO: error handling in request etc...
 
     return { ...data } as unknown as SearchResponseData;
   }

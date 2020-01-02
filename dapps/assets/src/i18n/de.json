@@ -48,9 +48,11 @@
       "my-own": "Eigene",
       "name-placeholder": "Gabelstapler #3",
       "name": "Name",
+      "owner": "Besitzer",
       "template-desc": "Wählen Sie ein Template für Ihren Digitalen Zwilling. Mehr Informationen zur Erstellung von Templates finden Sie hier.",
       "template-select-label": "Template wählen",
-      "template-select-placeholder": "Wählen Sie ein Template"
+      "template-select-placeholder": "Wählen Sie ein Template",
+      "updated": "Aktualisiert"
     },
     "search": {
       "my-own": "Eigene",
