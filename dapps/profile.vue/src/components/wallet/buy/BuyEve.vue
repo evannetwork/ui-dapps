@@ -83,7 +83,7 @@ https://evan.network/license/ */
           </small>
         </template>
       </div>
-      <!-- end contnet -->
+      <!-- end content -->
 
       <template slot="footer" v-if="!loading">  
         <evan-button

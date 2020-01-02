@@ -12,6 +12,11 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "outDir": "./built/",
+    "paths": {
+      "@evan.network/digitaltwin.lib": [
+        "../../digital-twin.lib/dist/digitaltwin.lib.js"
+      ]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,

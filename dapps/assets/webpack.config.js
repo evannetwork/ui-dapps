@@ -17,8 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-module.exports = require('../../scripts/dapp/webpack.config')(
+const getExternals = require('../../vue/webpack.externals');
+
+module.exports = require('../../vue/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
   true,
+  false,
+  getExternals({
+    '@evan.network/digitaltwin.lib': '@evan.network/digitaltwin.lib',
+  })
 );
