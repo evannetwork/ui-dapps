@@ -16,5 +16,5 @@ Feature: Digital Twin assets
       And I wait for 3 seconds
     Then I want to see a table having "at least" 25 rows
     And I wait for 3 seconds
-    And I want to see a table having "at least" 30 rows
+    And I want to see a table having "at least" 26 rows
 

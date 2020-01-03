@@ -1,5 +1,5 @@
 import { client } from 'nightwatch-api';
-import { When, Then } from 'cucumber';
+import { When } from 'cucumber';
 
 const getSelector = (label, angular) => {
   // support also the .input-wrapper element around the input
@@ -15,41 +15,76 @@ const getSelector = (label, angular) => {
   ])).join('|');
 }
 
+const activateSelect = async (label) => {
+  client.useXpath();
+  const xPathSelector = getSelector(label);
+
+  await client.expect.element(xPathSelector).to.be.present;
+  await client.click(xPathSelector);
+}
+
+const selectNthEntry = async (entry, label) => {
+  await activateSelect(label);
+
+  client.useCss();
+  const liSelector = `ul.vs__dropdown-menu li:nth-child(${entry})`;
+
+  await client.expect.element(liSelector).to.be.present;
+  await client.click(liSelector);
+}
+
+const selectEntryByValue = async (content, label) => {
+  await activateSelect(label);
+
+  client.useXpath();
+  const xPathSelectorLi = `//*[normalize-space(text()) = "${content}"]`;
+
+  await client.expect.element(xPathSelectorLi).to.be.present;
+  await client.click(xPathSelectorLi);
+  client.useCss(); // switches back to css selector
+}
+
+const selectByContentOrEntryIndex = async (content, entryIndex, label) => {
+  client.useXpath();
+  await activateSelect(label);
+
+  const xPathContent = `//ul[contains(concat(" ",normalize-space(@class)," ")," vs__dropdown-menu ")]//li[normalize-space(text()) = "${content}"]`;
+  const xpathIndex = `//ul[contains(concat(" ",normalize-space(@class)," ")," vs__dropdown-menu ")]//li[${entryIndex}]`;
+  const xPathSelectorLi = `${xPathContent}|${xpathIndex}`;
+
+  await client.expect.element(xPathSelectorLi).to.be.present;
+  await client.click(xPathSelectorLi);
+  client.useCss(); // switches back to css selector
+}
+
 /**
  * Select certain entry from vue-select dropdown.
  */
-When('I select the dropdown entry {string} from the dropdown box with the label {string}',
-  async (content, label) => {
-    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
-    client.useXpath();
-    const xPathSelector = getSelector(label);
-
-    await client.expect.element(xPathSelector).to.be.present;
-    await client.click(xPathSelector);
-
-    const xPathSelectorLi = `//*[normalize-space(text()) = "${content}"]`;
-
-    await client.expect.element(xPathSelectorLi).to.be.present;
-    await client.click(xPathSelectorLi);
-    client.useCss(); // switches back to css selector
-  }
-);
+When('I select the entry {string} from the dropdown with the label {string}', selectEntryByValue);
 
 /**
  * Select entry by index from vue-select dropdown.
  */
-When('I select entry {int} from dropdown with the label {string}',
-  async (entry, label) => {
-    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
-    client.useXpath();
-    const xPathSelector = getSelector(label);
+When('I select entry {int} from dropdown with the label {string}', selectNthEntry);
 
-    await client.expect.element(xPathSelector).to.be.present;
-    await client.click(xPathSelector);
+/**
+ * Select entry by index from vue-select dropdown.
+ */
+When('I select the entry {string} or entry {int} from dropdown with the label {string}', selectByContentOrEntryIndex);
 
-    client.useCss();
-    const liSelector = `ul.vs__dropdown-menu li:nth-child(${entry})`;
-    await client.expect.element(liSelector).to.be.present;
-    await client.click(liSelector)
+/**
+ * Click on a Vue Select box
+ */
+When('I click on the Vue Select with label {string}',
+  async (label) => {
+    let elementId;
+    const xPathSelector = `//*/text()[normalize-space(.) = '${label}']/parent::*`;
+
+    // Get id of select box from "for" attribute of the label
+    await client.getAttribute('xpath', xPathSelector, "for", attr => {
+      elementId = attr.value;
+    });
+
+    await client.click(`#${elementId}`);
   }
 );

@@ -3,7 +3,7 @@ import { When } from 'cucumber';
 import { WAIT_TIME_FOR_ELEMENT } from '../../conf/constants';
 
 const subMenuSelector = (entry) => {
-  return `//div[contains(@class, 'sidenav')]//a[normalize-space(text()) = "${entry}"]`;
+  return `//div[contains(@class, 'dapp-wrapper-sidebar-2')]//a[normalize-space(text()) = "${entry}"]`;
 }
 
 /**

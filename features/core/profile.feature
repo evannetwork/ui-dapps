@@ -24,7 +24,7 @@ Background: Creating a new unspecified account and navigate to the profile detai
     Then I want to see a text including "What would you like to start with?"
   # test profile type switch
   When I click on "Profile" in main menu
-    Then I want to see a text including "Profile"
+    Then I want to see a text including "Identity"
     Then I want to see a text including "Wallet"
     Then I want to see a text including "Verifications"
     Then I want to see a text including "Contacts"
@@ -45,7 +45,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
     And Input field with label "Register Court" should be visible
     And Input field with label "Register" should be visible
     And Input field with label "Registration Number" should be visible
-    And Input field with label "Sales Tax ID" should be visible
+    And Input field with label "VAT ID" should be visible
   Then I want to see a text including "Contact"
     And Input field with label "Street and Number" should be visible
     And Input field with label "Postal Code" should be visible
@@ -60,7 +60,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
       And I set Input field with label "Register Court" to "Test Register Court"
       And I set Input field with label "Register" to "DE"
       And I set Input field with label "Registration Number" to "Test Registration Number"
-      And I set Input field with label "Sales Tax ID" to "Test Sales Tax ID"
+      And I set Input field with label "VAT ID" to "Test VAT ID"
       Then the button "Save" should be "enabled"
       When I click on button "Save"
         Then the button "Save" should be "disabled"
@@ -72,7 +72,7 @@ Scenario: Switching from unspecified account to company account and fill the pro
         And The value of the Input field with label "Register Court" should be "Test Register Court"
         And The value of the Input field with label "Register" should be "DE"
         And The value of the Input field with label "Registration Number" should be "Test Registration Number"
-        And The value of the Input field with label "Sales Tax ID" should be "Test Sales Tax ID"
+        And The value of the Input field with label "VAT ID" should be "Test VAT ID"
   When I click on input field with label "Street and Number"
     Then I want to see a button "Save"
     Then I want to see a button "Cancel"

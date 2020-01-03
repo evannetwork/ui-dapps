@@ -105,19 +105,6 @@ async function getElementsCount(selector, mode = "xpath") {
   }
 )};
 
-async function scrollToElement(selector) {
-  return new Promise((resolve, reject) => {
-    return client.element(selector, (res) => {
-      console.log('scrol start to', res.value)
-      client.moveTo(res.value.ELEMENT, 0, 0, () => {
-        console.log('scrolled finished')
-        resolve();
-      })
-    })
-  });
-}
-
-
 module.exports = {
   backspaces,
   betterClearValue,
@@ -139,6 +126,5 @@ module.exports = {
       rl.close();
       resolve(ans);
     }))
-  },
-  scrollToElement
+  }
 };

@@ -25,11 +25,11 @@
   "main": "test-utils/evan.js",
   "name": "@evan.network/ui-tests",
   "scripts": {
-    "test-testnet": "env-cmd cucumber-js  --tags 'not @angular and not @skip' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
+    "test-testnet": "env-cmd cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
     "test-testnet-only": "env-cmd cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
-    "test-testnet-specific": "env-cmd cucumber-js --tags 'not @angular and not @skip' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty ${TESTPATTERN}",
+    "test-testnet-specific": "env-cmd cucumber-js --tags not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty ${TESTPATTERN}",
     "test-local-only": "env-cmd -f .env.local cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
-    "test-local": "env-cmd -f .env.local cucumber-js  --tags 'not @angular and not @skip' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
+    "test-local": "env-cmd -f .env.local cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
   },
   "version": "0.1.0"
 }
