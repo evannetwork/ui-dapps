@@ -63,18 +63,12 @@ When(/^I log out from angular$/, async () => {
   }
 });
 
-/**
- * @deprecated
- */
 Then(/^I can see the angular dashboard$/, async () => {
   client.useCss();
   await client.waitForElementPresent('#dashboard', 30 * 1000);
   await client.assert.visible('#dashboard');
 });
 
-/**
- * @deprecated
- */
 Then(/^I am no longer logged in to angular$/, async () => {
   client.useCss();
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
