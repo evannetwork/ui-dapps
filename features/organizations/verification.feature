@@ -1,4 +1,4 @@
-@CORE-238 @only
+@CORE-238
 Feature: Organizations - Notary Verification
 
   Scenario: Requesting Notary Verification with non company user
@@ -55,8 +55,8 @@ Feature: Organizations - Notary Verification
   Scenario: Requesting Notary Verification for current user with missing info
     Given I log in to evan.network using vue with organizationIdentification
     When I click on "Identity" in main menu
-    # When I set Input field with label "Company" to "Test Company" # TODO: how to change?
-    When I set Input field with label "Register Court" to ""
+    # And I set Input field with label "Company" to "Test Company" # TODO: how to change?
+      And I set Input field with label "Register Court" to ""
       And I set Input field with label "Registration Number" to ""
       And I set Input field with label "VAT ID" to ""
     When I click on button "Save"
@@ -77,7 +77,6 @@ Feature: Organizations - Notary Verification
       And The value of the Input field with label "Registration Number" should be ""
     When I set Input field with label "Register Court" to "Test Register Court"
       And I set Input field with label "Registration Number" to "Test Registration Number"
-      And I set Input field with label "VAT ID" to "Test VAT ID"
       And I click on button "Save"
     Then the button "Save" should be "disabled"
       And I want to see a element with class "spinner-border"
@@ -87,4 +86,3 @@ Feature: Organizations - Notary Verification
       And I click on "Identity" in main menu
       And The value of the Input field with label "Register Court" should be "Test Register Court"
       And The value of the Input field with label "Registration Number" should be "Test Registration Number"
-      And The value of the Input field with label "VAT ID" should be "Test VAT ID"

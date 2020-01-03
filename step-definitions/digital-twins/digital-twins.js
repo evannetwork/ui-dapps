@@ -116,6 +116,7 @@ const waitForSyncFinished = async (preLoading = 300000, loading = 300000) => {
 
 When(/^I create a new digital twin with the name "([^"]+)" and the description "([^"]+)"$/,
   async (name, description) => {
+    client.useCss();
     await client.click(selectors.mainMenu.digitalTwinsButton);
     await client.waitForElementPresent(selectors.twins.createButton, 10000);
     await client.click(selectors.twins.createButton);
@@ -137,6 +138,7 @@ When(/^I create a new digital twin with the name "([^"]+)" and the description "
 
 When(/^I add a container with the name "([^"]+)" and the description "([^"]+)"$/,
   async (name, description) => {
+    client.useCss();
     await client.waitForElementPresent(selectors.twins.createContainerButton, 10000);
     await client.click(selectors.twins.createContainerButton);
     await client.waitForElementPresent(selectors.container.edit.step1Button, 10000);
@@ -151,6 +153,7 @@ When(/^I add a container with the name "([^"]+)" and the description "([^"]+)"$/
 
 When(/^I add a data set with the type "(([^"]+))", the name "([^"]+)" and the value "([^"]+)"$/,
   async (type, name, value) => {
+    client.useCss();
     // start
     await client.click(selectors.container.edit.addDataSet);
 
@@ -202,6 +205,7 @@ When(/^I add a data set with the type "(([^"]+))", the name "([^"]+)" and the va
 // requires "When(/^I create a new digital twin with the name..." beforehand
 // as selection on twin with a specific name is tricky and anonymous browser does not keep order of last twins
 Then(/^I can open the last twin$/, async () => {
+  client.useCss();
   // open description of given twin
   await client.click(selectors.mainMenu.digitalTwinsButton);
   await client.waitForElementPresent(selectors.twins.favoriteTwins, 10000);
@@ -210,24 +214,27 @@ Then(/^I can open the last twin$/, async () => {
 });
 
 Then(/^I can see that the twin name is "([^"]+)" and the description is "([^"]+)"$/, async (name, description) => {
+  client.useCss();
   await client.waitForElementPresent(selectors.twins.view.twinName, 10000);
   await client.expect.element(selectors.twins.view.twinName).text.to.equal(name);
   await client.expect.element(selectors.twins.view.twinDescription).text.to.equal(description);
 });
 
 Then(/^I can see that the first property has a key named "([^"]+)" and a value of "([^"]+)"$/, async (name, value) => {
+  client.useCss();
   await client.pause(1000);
   await client.expect.element(selectors.container.edit.dataSet.view.fieldName(0)).text.to.equal(name);
   await client.expect.element(selectors.container.edit.dataSet.view.fieldValue(0)).text.to.equal(value);
 });
 
 Then(/^I can see that the value is "([^"]+)"$/, async (value) => {
+  client.useCss();
   await client.pause(1000);
   await client.expect.element(selectors.container.edit.dataSet.view.fieldValueSingle).text.to.equal(value);
 });
 
-
 When(/^I define a new plugin with the name "([^"]+)" and the description "([^"]+)"$/, async (pluginName, pluginDescription) => {
+  client.useCss();
   // click on the left twin menu icon
   await client.click(selectors.mainMenu.digitalTwinsButton);
   await client.waitForElementPresent(selectors.twins.createButton, 10000);
@@ -249,6 +256,7 @@ When(/^I define a new plugin with the name "([^"]+)" and the description "([^"]+
 
 
 When(/^add a data set with the type "(([^"]+))" with the name "([^"]+)"$/, async (type, name) => {
+  client.useCss();
   // add a new data area
   await client.click(selectors.container.create.addButton);
   await client.waitForElementPresent(selectors.container.create.entryAddModal, 10000);
@@ -260,6 +268,7 @@ When(/^add a data set with the type "(([^"]+))" with the name "([^"]+)"$/, async
 });
 
 When(/^add a field to the data set "(([^"]+))" with the name "([^"]+)" with the type "([^"]+)" and the default value "([^"]+)"$/, async (dataSet, fieldName, fieldType, defaultFieldValue) => {
+  client.useCss();
   await client.pause(1000);
   client.elements('css selector', selectors.container.create.dataSetSteps, async (buttonElements) => {
     console.dir(buttonElements)
@@ -282,11 +291,10 @@ When(/^add a field to the data set "(([^"]+))" with the name "([^"]+)" with the 
 });
 
 When(/^create the plugin$/, async (type, name) => {
+  client.useCss();
   // add a new data area
   await client.click(selectors.container.edit.dataSet.edit.finishButton);
   await client.waitForElementPresent(selectors.container.createModal, 10000);
 
   await client.click(selectors.container.createModal);
-
-
 });

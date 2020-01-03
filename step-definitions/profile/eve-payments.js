@@ -43,6 +43,7 @@ When('I select the country {string}', async (country) => {
 
 When('I enter the credit card {string}, valid util {string} with the CVC {string}',
 async (card, validUntil, cvc) => {
+  client.useCss();
   // switch to stripe iframe
   await client.frame(0)
 

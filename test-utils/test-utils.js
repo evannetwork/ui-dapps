@@ -105,12 +105,30 @@ async function getElementsCount(selector, mode = "xpath") {
   }
 )};
 
+/**
+ * Allowes using `process.env.MY_VARIABLE` in cucumber tests, when implemented in step function.
+ *
+ * @param {*} content
+ */
+function parseEnvVar(content) {
+  let inputValue = content;
+  try {
+    const envVar = content.replace('process.env.', '');
+    inputValue = process.env[envVar] || content;
+  } catch (e) {
+    console.error(`Env variable ${content} is not defined.`);
+  }
+
+  return inputValue;
+}
+
 module.exports = {
   backspaces,
   betterClearValue,
   setupEvan,
   getElementIdByLabel,
   getElementsCount,
+  parseEnvVar,
   pauseHere: async () => {
     console.log('/******************************************************************************/');
     console.log('test paused, enjoy your developer tools :3');

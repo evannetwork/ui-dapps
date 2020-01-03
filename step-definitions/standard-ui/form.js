@@ -1,6 +1,6 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
-import { betterClearValue, getElementIdByLabel } from '../../test-utils/test-utils';
+import { betterClearValue, getElementIdByLabel, parseEnvVar } from '../../test-utils/test-utils';
 
 const getSelector = (label, angular) => {
   if (!angular) {
@@ -51,32 +51,9 @@ When('I type {string} into the input field with label {string}', async(content, 
   const elementId = await getElementIdByLabel(label);
 
   await client.expect.element(`#${elementId}`).to.be.visible;
-  await client.setValue(`#${elementId}`, content);
+  await betterClearValue(`#${elementId}`);
+  await client.setValue(`#${elementId}`, parseEnvVar(content));
 });
-
-/**
- * Looks for an input field with sibling label having certain content and fills the values into the input field.
- */
-Then('The value of the Input field with label {string} should be {string}',
-  async(label, content) => {
-    client.useXpath();
-    // select following or preceding input with label having text or having text in any tag inside label tag
-    const selector = getSelector(label);
-    await client.assert.value(selector, content);
-    client.useCss();
-  }
-);
-
-/**
- * Looks for an input field with certain placeholder and checks if it has the desired value.
- */
-Then('The value of the Input field with placeholder {string} should be {string}',
-  async(placeholder, content) => {
-    client.useXpath();
-    await client.assert.value(`//input[@placeholder='${ placeholder }']`, content);
-    client.useCss();
-  }
-);
 
 /**
  * Looks for an input field with id and fills the values into the input field.
@@ -84,9 +61,10 @@ Then('The value of the Input field with placeholder {string} should be {string}'
 When('I set Input field with id {string} to {string}',
   async(id, content) => {
     client.useCss();
+
     await client.expect.element(`#${ id }`).to.be.visible;
     await betterClearValue(`#${ id }`);
-    await client.setValue(`#${ id }`, content);
+    await client.setValue(`#${ id }`, parseEnvVar(content));
   }
 );
 
@@ -99,7 +77,7 @@ When('I set Input field with placeholder {string} to {string}',
     client.useXpath();
     await client.expect.element(selector).to.be.visible;
     await betterClearValue(selector);
-    await client.setValue(selector, content);
+    await client.setValue(selector, parseEnvVar(content));
   }
 );
 
@@ -242,3 +220,30 @@ Then('I click on vue checkbox control with id {string}',
     client.useCss();
   }
 )
+
+/**
+ * Looks for an input field with sibling label having certain content and fills the values into the input field.
+ */
+Then('The value of the Input field with label {string} should be {string}',
+  async(label, content) => {
+    client.useXpath();
+    const expected = parseEnvVar(content);
+    // select following or preceding input with label having text or having text in any tag inside label tag
+    const selector = getSelector(label);
+    await client.assert.value(selector, expected);
+    client.useCss();
+  }
+);
+
+/**
+ * Looks for an input field with certain placeholder and checks if it has the desired value.
+ */
+Then('The value of the Input field with placeholder {string} should be {string}',
+  async(placeholder, content) => {
+    client.useXpath();
+    const expected = parseEnvVar(content);
+
+    await client.assert.value(`//input[@placeholder='${ placeholder }']`, expected);
+    client.useCss();
+  }
+);

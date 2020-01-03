@@ -11,6 +11,7 @@ BeforeAll(async () => {
   const options = { env: process.env.NIGHTWATCH_ENV || 'chrome', };
   await startWebDriver(options);
   await createSession(options);
+  await client.resizeWindow(1920, 1080);
 });
 
 Before( () => {

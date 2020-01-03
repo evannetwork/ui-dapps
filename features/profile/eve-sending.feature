@@ -1,4 +1,3 @@
-@only
 Feature: EVE sending
 
   Scenario: Sending eve to a contact

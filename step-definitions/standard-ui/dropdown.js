@@ -37,7 +37,8 @@ const selectEntryByValue = async (content, label) => {
   await activateSelect(label);
 
   client.useXpath();
-  const xPathSelectorLi = `//*[normalize-space(text()) = "${content}"]`;
+  const xPathSelectorLi = `//ul[contains(concat(" ",normalize-space(@class)," ")," vs__dropdown-menu ")]//li[normalize-space(text()) = "${content}"]`;
+  // const xPathSelectorLi = `//*[normalize-space(text()) = "${content}"]`; // TODO: removeme
 
   await client.expect.element(xPathSelectorLi).to.be.present;
   await client.click(xPathSelectorLi);

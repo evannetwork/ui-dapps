@@ -75,11 +75,10 @@ Scenario: Refreshing the page and re-entering password
     And I click on button "Log in"
     And I wait for 3 seconds
     Then I want to see a text including "The provided password is invalid."
-  # TODO: login using correct password
-  # When I type "MY_PASSWORD" into the input field with label "Password"
-  #   And I click on button "Log in"
-  #   And I wait for 3 seconds
-  #   Then I want to see a text including "What would you like to start with?"
+  When I type "process.env.USER_DEFAULT_PASSWORD" into the input field with label "Password"
+    And I click on button "Log in"
+    And I wait for 3 seconds
+    Then I want to see a text including "What would you like to start with?"
 
 @tag:noLogout
 Scenario: Logout from of evan.network using vue
