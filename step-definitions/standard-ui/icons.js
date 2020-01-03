@@ -17,7 +17,7 @@ When('I want to see the {string} icon',
 /**
  * Ensure that a specific icon is shown.
  */
-When('I want to click on the {string} icon',
+When('I click on the {string} icon',
   async(icon) => {
     await client.expect.element(`.mdi.mdi-${ icon }`).to.be.visible;
     await client.click(`.mdi.mdi-${ icon }`);

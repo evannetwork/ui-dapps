@@ -46,7 +46,7 @@ Scenario: Handle errors in synchronization
     And I click on button "Error Dispatcher"
     Then I want to see the "alert" icon
   When I click on "Synchronization" in main menu
-    And I want to click on the "close-circle-outline" icon
+    And I click on the "close-circle-outline" icon
     Then I want to see a text including "Delete Entry"
   When I click on button "Delete"
     Then I want to see a text including "Everything is synchronized"

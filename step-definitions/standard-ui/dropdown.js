@@ -69,7 +69,7 @@ When('I select the entry {string} from the dropdown with the label {string}', se
 When('I select entry {int} from dropdown with the label {string}', selectNthEntry);
 
 /**
- * Select entry by index from vue-select dropdown.
+ * Select entry by index from vue-select dropdown and fallback to index if not found.
  */
 When('I select the entry {string} or entry {int} from dropdown with the label {string}', selectByContentOrEntryIndex);
 
