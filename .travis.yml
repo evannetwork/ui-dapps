@@ -22,8 +22,6 @@ jobs:
       env: TESTPATTERN=features/profile/eve-payment-vue.feature NIGHTWATCH_ENV=chrome
     - name: chrome/eve-send-vue
       env: TESTPATTERN=features/profile/eve-sending.feature NIGHTWATCH_ENV=chrome
-    - name: chrome/eve-send-vue
-      env: TESTPATTERN=features/profile/eve-sending.feature NIGHTWATCH_ENV=chrome
     - name: chrome/assets/contacts
       env: TESTPATTERN=features/assets/contacts.feature NIGHTWATCH_ENV=chrome
     - name: firefox/assets/contacts
