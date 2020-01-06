@@ -164,7 +164,6 @@ Feature: EVE payments Vue
       # And I select the country "Germany"
       And I set Input field with label "VAT ID" to "DE811363057"
       And I press the "TAB" key
-      And the button with id "execute-payment" should be "disabled"
       And the button with id "execute-payment" should be "enabled"
       And I want to see a text including "Total: 11.90 €"
     When I click on button with id "execute-payment"

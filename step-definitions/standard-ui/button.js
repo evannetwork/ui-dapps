@@ -145,6 +145,7 @@ Then('I want to see a {string} icon button',
   async (icon) => {
     client.useXpath();
     const xPathSelector = `//button[contains(@class, "btn")]//i[contains(@class, "${getIconClass(icon)}")]`;
+    await client.waitForElementPresent(xPathSelector, 15000);
     await client.expect.element(xPathSelector).to.be.visible;
     client.useCss();
   }
