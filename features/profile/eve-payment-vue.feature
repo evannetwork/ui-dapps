@@ -46,7 +46,6 @@ Feature: EVE payments Vue
       And the button with id "execute-payment" should be "enabled"
       And I want to see a text including "Total: 11.90 €"
 
-
   Scenario: Checking amount when paying from Italy with a valid Italian VAT ID
     Given I log in to evan.network using vue
       And I click on "Identity" in main menu
@@ -55,6 +54,7 @@ Feature: EVE payments Vue
     Then I want to see a text including "Buy EVE"
       # When I set Input field with label "Amount of EVE (at least 10)" to "15"
       And I enter the credit card "4242424242424242", valid util "424" with the CVC "242"
+      And I wait for 2 seconds
     Then the button "Continue" should be "enabled"
     When I click on button "Continue"
       And I set Input field with label "Name" to "Test"
@@ -78,6 +78,7 @@ Feature: EVE payments Vue
     Then I want to see a text including "Buy EVE"
       # When I set Input field with label "Amount of EVE (at least 10)" to "15"
       And I enter the credit card "4242424242424242", valid util "424" with the CVC "242"
+      And I wait for 2 seconds
     Then the button "Continue" should be "enabled"
     When I click on button "Continue"
       And I set Input field with label "Name" to "Test"
