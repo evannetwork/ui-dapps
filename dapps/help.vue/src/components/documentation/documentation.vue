@@ -17,5 +17,25 @@
   the following URL: https://evan.network/license/
 */
 
-// map the original ui path to ui.libs
-import './index.scss';
+<template>
+  <div id="documentation" class="h-100">
+    <evan-dapp-wrapper class="h-100">
+      <template v-slot:content>
+        <evan-dapp-wrapper-level-2>
+          <div style="width: 300px;">
+            <evan-nav-list :entries="navEntries"></evan-nav-list>
+          </div>
+        </evan-dapp-wrapper-level-2>
+
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </template>
+    </evan-dapp-wrapper>
+  </div>
+</template>
+
+<script lang="ts">
+  import DocumentationComponent from './documentation';
+  export default DocumentationComponent;
+</script>

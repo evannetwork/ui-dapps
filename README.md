@@ -1,12 +1,14 @@
 # evan.network UI
 
-This project is a general container for evan.network ui core projects, dapp libraries and dapp implementations. DApps can be imported using it's module name (like `@evan.network/ui`) within nodejs or using the ens address within the `dbcp.json` file ([sample](./core/evancore.vue.libs/dbcp.json)).
+This project is a general container for evan.network ui core projects, DApp libraries and implementations. DApps can be imported using their module name (e.g. `@evan.network/ui`) within nodejs or using the ens address within the `dbcp.json` file ([example](./core/evancore.vue.libs/dbcp.json)).
 
-## Whats in?
-All evan.network dapps are seperated into to the following categories:
+## Content
 
-### [core](./core)
-UI core libraries for building ui and vue applications on evan.network. 
+All evan.network DApps are separated into to the following categories:
+
+### [Core](./core)
+
+UI core libraries for building ui and vue applications on evan.network.
 
 | module name                        | ens address              |
 |:-----------------------------------|:-------------------------|
@@ -14,7 +16,8 @@ UI core libraries for building ui and vue applications on evan.network.
 | bootstrap                          | evan.bootstrap.libs.evan |
 | @evan.network/evancore.vue.libs    | evancore.vue.libs.evan   |
 
-### [dapps](./dapps)
+### [DApps](./dapps)
+
 DApp implementations like Dashboard, Profile, Digitaltwin or Addressbook.
 
 | module name                        | ens address                 |
@@ -33,7 +36,8 @@ DApp implementations like Dashboard, Profile, Digitaltwin or Addressbook.
 | ---                                | onboarding.vue              |
 | ---                                | profile.vue                 |
 
-### [evan-libs](./evan-libs)
+### [Evan-Libs](./evan-libs)
+
 DApps for wrapping evan.network core libraries (@evan.network/api-blockchain-core, @evan.network/smart-contracts-core)
 
 | module name                                     | ens address              |
@@ -41,13 +45,14 @@ DApps for wrapping evan.network core libraries (@evan.network/api-blockchain-cor
 | @evan.network/api-blockchain-core-browserified  | bcc                      |
 | @evan.network/smart-contracts-core-browserified | smartcontracts           |
 
-### [libs](./libs)
+### [Libs](./libs)
+
 DApps for wrapping UI framework specific libraries (vue, d3, vuex, ...).
 
 | module name                        | ens address              |
 |:-----------------------------------|:-------------------------|
 | axios                              | axios.vue.libs           |
-| boostrap                           | boostrap.vue.libs        |
+| bootstrap                          | bootstrap.vue.libs       |
 | countries                          | countries.libs           |
 | d3                                 | d3.libs                  |
 | dexie                              | dexie.libs               |
@@ -68,28 +73,36 @@ DApps for wrapping UI framework specific libraries (vue, d3, vuex, ...).
 | vuex                               | vuex.libs                |
 
 ## Usage
+
 ### Install
-- use `yarn install` or `npm install`
+
+- use `yarn` or `npm install`
 
 ### Development
-- build dapps without serving for changes
+
+- build DApps without serving for changes
+
 ```bash
 yarn build
 ```
 
-- start an development server [locally](http://localhost:3000/dev.html) and watch for changes within dapps
+- start an development server [locally](http://localhost:3000/dev.html) and watch for changes within DApps
+
 ```bash
 yarn serve
 ```
 
 ## Deployment
+
 Have a look at the [deployment description](https://evannetwork.github.io/dev/deployment).
 
 ## Tests
-Currently only [e2e tests](./tests-e2e) are implemented for the dapps. For instructions, please have a look at the seperated [readme file](.tests-e2e).
+
+Currently only [e2e tests](./tests-e2e) are implemented for the DApps. For instructions, please have a look at the separated [readme file](.tests-e2e).
 
 For running the tests you can use the following commands:
-```
+
+```bash
 yarn test-local
 yarn test-local-only
 yarn test-testnet

@@ -9,8 +9,8 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/dexie.js",
-  "name": "@evan.network/fontawesome",
+  "main": "dist/dexie.libs.js",
+  "name": "dexie.libs",
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },

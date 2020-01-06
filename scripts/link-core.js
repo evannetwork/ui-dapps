@@ -48,7 +48,7 @@ gulp.task('link-core', async () => {
             const symlink = `${ nodeModulePath }/${ desc.name }`;
             const symlinkParent = `${ nodeModulePath }/${ desc.name.split('/')[0] }`;
 
-            // ensure, that sub hirarchy folders exists
+            // ensure, that sub hierarchy folders exists
             if (symlink !== symlinkParent && !fs.existsSync(symlinkParent)) {
               fs.mkdirSync(symlinkParent);
             }

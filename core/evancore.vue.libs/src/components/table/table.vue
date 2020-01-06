@@ -95,6 +95,13 @@ export default Component;
       &.b-table-empty-row {
         cursor: inherit;
       }
+
+      .visible-on-row-hover {
+        visibility: hidden;
+      }
+      &:hover .visible-on-row-hover {
+        visibility: visible;
+      }
     }
 
     i.table-icon {

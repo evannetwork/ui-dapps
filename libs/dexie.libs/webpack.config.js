@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-// load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
+// load not the name from package.json, it uses @evan.network/ui-vue-core and not the dbcp origin
 module.exports = require('../../scripts/dapp/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),

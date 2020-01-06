@@ -17,9 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-const getExternals = require('../../vue/webpack.externals');
+const getExternals = require('../../scripts/dapp/webpack.externals');
 
-module.exports = require('../../vue/webpack.config')(
+module.exports = require('../../scripts/dapp/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
   true,
