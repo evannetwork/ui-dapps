@@ -68,6 +68,13 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
   @Prop() disabled: boolean;
 
   /**
+   * Empty text that shown, when no files are uploaded and the component is disabled.
+   */
+  @Prop({
+    default: [ ]
+  }) value: Array<any>;
+
+  /**
    * is set to an index of a file that should be removed
    */
   fileRemove = -1;
@@ -76,8 +83,6 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    * is dropzone hovered?
    */
   hovered = false;
-
-  value: UIContainerFile[] = [];
 
   /**
    * Transform the input files to the correct format.

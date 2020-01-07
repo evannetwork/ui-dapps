@@ -2,8 +2,8 @@
 This project include general and global, framework independent, evan.network functionallities and stylings.
 
 The following stylings are per default included:
-- [evan bootstrap](https://github.com/evannetwork/ui-core/tree/master/dapps/evan.bootstrap.libs)
-- [materialicons](https://github.com/evannetwork/ui-core/tree/master/dapps/materialicons.libs)
+- [evan bootstrap](https://github.com/evannetwork/ui-dapps/tree/master/core/evan.bootstrap.libs)
+- [materialicons](https://github.com/evannetwork/ui-dapps/tree/master/libs/materialicons.libs)
 
 The following functionalities are included:
 - configuration values for runtime environments
