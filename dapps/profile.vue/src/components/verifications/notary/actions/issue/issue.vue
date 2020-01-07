@@ -79,14 +79,19 @@
             <label for="alias">
               {{ `_profile.verifications.notary.issue.accountId.title` | translate }} *
             </label>
-            <input class="form-control" required
-              ref="alias"
-              :placeholder="`_profile.verifications.notary.issue.accountId.desc` | translate"
-              v-model="issueForm.accountId.value"
-              :class="{ 'is-invalid' : issueForm.accountId.error }"
-              @blur="issueForm.accountId.setDirty()">
-            <div class="invalid-feedback">
-              {{ `_profile.verifications.notary.issue.accountId.error` | translate }}
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">did:evan:</span>
+              </div>
+              <input class="form-control" required
+                ref="alias"
+                :placeholder="`_profile.verifications.notary.issue.accountId.desc` | translate"
+                v-model="issueForm.accountId.value"
+                :class="{ 'is-invalid' : issueForm.accountId.error }"
+                @blur="issueForm.accountId.setDirty()">
+              <div class="invalid-feedback">
+                {{ `_profile.verifications.notary.issue.accountId.error` | translate }}
+              </div>
             </div>
           </div>
           <div>
