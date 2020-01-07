@@ -437,27 +437,33 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
     if (vat) {
       return new Promise(resolve => {
         this.vatCalcTimeout = setTimeout(async () => {
-          const { data: { result: { error, reverseCharge, tax, } } } = await axios({
-            method: 'GET',
-            url: `${ agentUrl }/api/smart-agents/payment-processor/checkVat`,
-            params: {
-              vat,
-              country
-            }
-          });
+          try {
+            const { data: { result: { error, reverseCharge, tax, } } } = await axios({
+              method: 'GET',
+              url: `${ agentUrl }/api/smart-agents/payment-processor/checkVat`,
+              params: {
+                vat,
+                country
+              }
+            });
 
-          // update taxValue
-          this.taxValue = tax !== undefined ? tax : GERMAN_VAT;
-          // needs reverse charge to be displayed?
-          this.reverseCharge = reverseCharge;
-          // clear timeout
-          clearTimeout(this.vatCalcTimeout);
-          this.vatCalcTimeout = null;
-          // resolve the error
-          if (error) {
-            resolve(`_profile.company.contact.vat.${ error }`);
-          } else {
-            resolve(true);
+            // update taxValue
+            this.taxValue = tax !== undefined ? tax : GERMAN_VAT;
+            // needs reverse charge to be displayed?
+            this.reverseCharge = reverseCharge;
+            // clear timeout
+            clearTimeout(this.vatCalcTimeout);
+            this.vatCalcTimeout = null;
+            // resolve the error
+            if (error) {
+              resolve(`_profile.company.contact.vat.${ error }`);
+            } else {
+              resolve(true);
+            }
+          } catch(e) {
+            clearTimeout(this.vatCalcTimeout);
+            this.vatCalcTimeout = null;
+            resolve(`_profile.company.contact.vat.error`);
           }
         }, 500);
       });
