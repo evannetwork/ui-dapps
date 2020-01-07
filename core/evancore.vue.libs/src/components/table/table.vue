@@ -43,7 +43,7 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
+@import '~@core/ui.libs/src/style/utils';
 
 .evan-table-wrapper {
   width: 100%;

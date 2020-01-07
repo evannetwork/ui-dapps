@@ -148,7 +148,7 @@ export default ContactsComponent;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
+@import '~@core/ui.libs/src/style/utils';
 
 h1.heading {
   font-size: cssVar('h4-font-size');
