@@ -73,8 +73,7 @@ module.exports = function(
           loader: 'ts-loader',
           options: {
             transpileOnly,
-            appendTsSuffixTo: [/\.vue$/],
-            configFile: 'tsconfig.json'
+            appendTsSuffixTo: [/\.vue$/]
           }
         },
         {
@@ -139,7 +138,7 @@ module.exports = function(
       alias: {
         vue$: 'vue/dist/vue.esm.js'
       },
-      plugins: [new TsconfigPathsPlugin({ configFile: '../../tsconfig.json' })]
+      plugins: [new TsconfigPathsPlugin({ extensions: ['.ts', '.js', '.vue', '.json'] })]
     },
     performance: {
       hints: false

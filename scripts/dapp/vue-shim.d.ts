@@ -17,33 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-import VueRouter, { Route } from 'vue-router';
-
 // !IMPORTANT!: Import this d.ts file within your vue tsconfig to fix "cannot find module" errors
 // while importing vue files
 declare module '*.vue' {
   import { EvanComponent, } from '@evan.network/ui-vue-core';
   export default EvanComponent;
-}
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $i18n: any;
-    $router: VueRouter;
-    $route: Route;
-    $store: any;
-    $t: Function;
-    dapp: Dapp;
-    getRuntime: Function;
-  }
-
-  interface Dapp {
-    baseHash: string;
-    baseUrl: string;
-    contractAddress: string;
-    domainName: string;
-    ens: string;
-    fullUrl: string;
-    rootEns: string;
-  }
 }

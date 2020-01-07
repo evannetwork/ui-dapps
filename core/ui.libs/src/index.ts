@@ -23,7 +23,8 @@ dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainNa
 
 import EvanQueue from './Queue';
 import { Dispatcher, DispatcherInstance } from './Dispatcher';
-import './index.scss';
+// Why import this?
+// import './index.scss';
 import * as FileHandler from './Files';
 import * as bccUtils from './bccUtils';
 
