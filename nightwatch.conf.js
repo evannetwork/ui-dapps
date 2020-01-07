@@ -41,6 +41,10 @@ if (localBrowser) {
     globals: {
       accounts,
     },
+    disable_error_log: true,
+    webdriver: {
+      keep_alive: true
+    }
   };
 }
 
