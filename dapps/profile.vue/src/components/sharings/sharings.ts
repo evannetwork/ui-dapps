@@ -83,12 +83,12 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     return (this as any).$store.state.uiState.profile.selectedSharedContacts;
   }
 
-  set selectedSharedContacts(contactIds) {
-    (this as any).$store.commit('setSelectedSharedContacts', contactIds);
+  set selectedSharedContacts(contactId) {
+    (this as any).$store.commit('setSelectedSharedContacts', contactId);
 
     const sharedContact = this.selectedSharedContacts;
     // hide or show sidepanel
-    if (!sharedContact || sharedContact === null || sharedContact.length === 0) {
+    if (!sharedContact || sharedContact === null) {
       (<any>this).$store.state.uiState.swipePanel = '';
     } else {
       (<any>this).$store.state.uiState.swipePanel = 'sharing';
@@ -125,7 +125,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
         accountIds.forEach(item => this.isLoadingContacts.add(item));
 
         // deselect list elements
-        this.selectedSharedContacts = this.selectedSharedContacts.filter(item => accountIds.includes(item));
+        this.selectedSharedContacts = null;
       }
 
       // canceling isLoading state from corresponding list elements
@@ -182,10 +182,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
         // remove item from list
         this.sharedContacts = this.sharedContacts.filter(item => item.accountId !== contact.accountId);
         // remove from selected shared contacts
-        const index = this.selectedSharedContacts.indexOf(contact.accountId);
-        if (index > -1) {
-          this.selectedSharedContacts.splice(index, 1);
-        }
+        this.selectedSharedContacts = null;
       })
       .catch((e: Error) => {
         console.log('Error writing permissions', e.message);
