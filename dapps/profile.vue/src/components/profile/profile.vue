@@ -51,6 +51,7 @@
           <evan-wallet-card
             :accountDetails="userInfo"
             :address="$route.params.address"
+            :href="$route.params.address == runtimeAddress ? undefined : null"
           />
         </div>
       </div>
@@ -160,10 +161,10 @@
         />
         <template slot="footer" v-if="!!permissionsEditor">
           <div class="d-flex">
-            <evan-button 
-              type="secondary" 
-              :label="$t('_evan.cancel')" 
-              @click="permissionsEditor.cancel()" 
+            <evan-button
+              type="secondary"
+              :label="$t('_evan.cancel')"
+              @click="permissionsEditor.cancel()"
               :disabled="!selectedSharedContacts"
               class="mr-3"
             />

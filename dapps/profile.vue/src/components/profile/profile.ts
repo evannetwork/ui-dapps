@@ -43,6 +43,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   address = '';
 
   /**
+   * Address of the current logged in runtime
+   */
+  runtimeAddress = '';
+
+  /**
    * Currents users account information
    */
   userInfo = null;
@@ -89,6 +94,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     // fill empty address with current logged in user
     this.address = (<any>this).$store.state.profileDApp.address;
     this.userInfo = (<any>this).$store.state.profileDApp.data.accountDetails;
+    this.runtimeAddress = (<any>this).getRuntime().activeAccount;
     // load balance and parse it to 3 decimal places
     const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
     this.balance = {
