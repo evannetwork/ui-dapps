@@ -44,7 +44,8 @@ if (localBrowser) {
     disable_error_log: true,
     webdriver: {
       keep_alive: true
-    }
+    },
+    silent: false
   };
 }
 
