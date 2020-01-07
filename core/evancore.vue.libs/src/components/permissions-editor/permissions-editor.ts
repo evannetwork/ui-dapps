@@ -20,7 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { deepEqual, bccUtils } from '@evan.network/ui/src';
+import { deepEqual, bccUtils } from '@core/ui.libs/dist';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { ContactInterface, ContainerPermissionsInterface } from '../../interfaces';
 import EvanComponent from '../../component';

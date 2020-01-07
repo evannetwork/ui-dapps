@@ -23,12 +23,12 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils } from '@evan.network/ui';
+import { bccUtils } from '@core/ui.libs/dist';
 
 import EvanComponent from '../../component';
 import EvanVueDispatcherHandler from '../../dispatcher';
 import { DAppWrapperRouteInterface } from '../../interfaces';
-import { EvanQueue, Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { EvanQueue, Dispatcher, DispatcherInstance } from '@core/ui.libs/dist';
 import { getDomainName } from '../../utils';
 
 // load domain name for quick usage

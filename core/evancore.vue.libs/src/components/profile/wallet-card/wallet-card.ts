@@ -19,7 +19,7 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils, } from '@evan.network/ui';
+import { bccUtils, } from '@core/ui.libs/dist';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
@@ -99,7 +99,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
         const amount = Math.floor(parseFloat(
           await dappBrowser.core.getBalance(this.address)) * 100) / 100;
         this.balance = {
-          amount: amount.toFixed(2).toLocaleString(this.$i18n.locale()),
+          amount: amount.toLocaleString(this.$i18n.locale(), { style: 'currency' }),
           timestamp: Date.now(),
         };
       })(),

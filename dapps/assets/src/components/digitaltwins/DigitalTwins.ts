@@ -21,12 +21,12 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@core/evancore.vue.libs/dist';
 import { debounce } from 'lodash';
 import { Prop, Watch } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
-import { EvanTableItem } from 'shared/EvanTable';
+import { EvanUIDigitalTwin } from '@dapps/digital-twin.lib/dist';
+import { EvanTableItem } from '../../shared/EvanTable';
 import { DigitalTwin } from './DigitalTwinInterface';
 
 interface SortFilter {

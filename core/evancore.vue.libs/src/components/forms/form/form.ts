@@ -24,7 +24,7 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 // evan imports
 import * as bcc from '@evan.network/api-blockchain-core';
-import { cloneDeep } from '@evan.network/ui';
+import { cloneDeep } from '@core/ui.libs/dist';
 
 import EvanComponent from '../../../component';
 import { EvanForm, EvanFormControl } from '../../../forms';
