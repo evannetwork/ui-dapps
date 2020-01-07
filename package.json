@@ -10,9 +10,9 @@
     "babel-preset-env": "^1.7.0",
     "chromedriver": "latest",
     "cross-env": "^5.2.0",
-    "cucumber": "^5.1.0",
+    "cucumber": "6",
     "cucumber-html-reporter": "^5.0.0",
-    "cucumber-pretty": "^1.5.0",
+    "cucumber-pretty": "6",
     "dotenv-safe": "^6.1.0",
     "geckodriver": "^1.16.2",
     "mkdirp": "^0.5.1",
@@ -27,7 +27,7 @@
   "scripts": {
     "test-testnet": "env-cmd cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
     "test-testnet-only": "env-cmd cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
-    "test-testnet-specific": "env-cmd cucumber-js --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty ${TESTPATTERN}",
+    "test-testnet-specific": "env-cmd cucumber-js --tags 'not (@angular or @skip)' --retry 2 --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty ${TESTPATTERN}",
     "test-local-only": "env-cmd -f .env.local cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
     "test-local": "env-cmd -f .env.local cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty"
   },

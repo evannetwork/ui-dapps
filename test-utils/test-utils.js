@@ -111,10 +111,14 @@ async function getElementsCount(selector, mode = "xpath") {
  * @param {*} content
  */
 function parseEnvVar(content) {
+  if (!content || typeof conetnt === 'string' && content.length === 0) {
+    return content;
+  }
+
   let inputValue = content;
   try {
     const envVar = content.replace('process.env.', '');
-    inputValue = process.env[envVar] || content;
+    inputValue = typeof process.env[envVar] === 'string' ? process.env[envVar] : content;
   } catch (e) {
     console.error(`Env variable ${content} is not defined.`);
   }

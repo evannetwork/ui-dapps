@@ -37,14 +37,17 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
   const selector = getSelector(label, !!angular);
 
   await client.expect.element(selector).to.be.visible;
-  await betterClearValue(selector),
-  await client.setValue(selector, content);
+  await betterClearValue(selector);
+
+  if ( content && typeof content === 'string' && content.length > 0) {
+    await client.setValue(selector, parseEnvVar(content));
+  }
 
   client.useCss();
 });
 
 /**
- * Same semantic like "When I set Input field with label".
+ * Same semantic like "When I set( angular)? Input field with label ".
  * Created separate function for backwards compatibility.
  */
 When('I type {string} into the input field with label {string}', async(content, label) => {
@@ -52,7 +55,10 @@ When('I type {string} into the input field with label {string}', async(content, 
 
   await client.expect.element(`#${elementId}`).to.be.visible;
   await betterClearValue(`#${elementId}`);
-  await client.setValue(`#${elementId}`, parseEnvVar(content));
+
+  if ( content && typeof content === 'string' && content.length > 0) {
+    await client.setValue(`#${elementId}`, parseEnvVar(content));
+  }
 });
 
 /**
@@ -64,7 +70,10 @@ When('I set Input field with id {string} to {string}',
 
     await client.expect.element(`#${ id }`).to.be.visible;
     await betterClearValue(`#${ id }`);
-    await client.setValue(`#${ id }`, parseEnvVar(content));
+
+    if ( content && typeof content === 'string' && content.length > 0) {
+      await client.setValue(`#${ id }`, parseEnvVar(content));
+    }
   }
 );
 
@@ -77,7 +86,10 @@ When('I set Input field with placeholder {string} to {string}',
     client.useXpath();
     await client.expect.element(selector).to.be.visible;
     await betterClearValue(selector);
-    await client.setValue(selector, parseEnvVar(content));
+
+    if ( content && typeof content === 'string' && content.length > 0) {
+      await client.setValue(selector, parseEnvVar(content));
+    }
   }
 );
 

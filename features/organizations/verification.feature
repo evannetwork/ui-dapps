@@ -55,7 +55,9 @@ Feature: Organizations - Notary Verification
   Scenario: Requesting Notary Verification for current user with missing info
     Given I log in to evan.network using vue with organizationIdentification
     When I click on "Identity" in main menu
-    # And I set Input field with label "Company" to "Test Company" # TODO: how to change?
+      # And I set Input field with label "Company" to "Test Company" # TODO: how to change?
+      #  make sure changing at least one value to trigger change event
+      And I set Input field with label "Register Court" to "A value"
       And I set Input field with label "Register Court" to ""
       And I set Input field with label "Registration Number" to ""
       And I set Input field with label "VAT ID" to ""
@@ -69,7 +71,7 @@ Feature: Organizations - Notary Verification
     Then I want to see a modal with the title "Notary Verification"
       And I want to see a button "Start request"
     When I click on button "Start request"
-    Then I want to see a text including "Registration"
+    Then I want to see a text including "Please fill in all required company information and save it."
       And Input field with label "Register Court" should be visible
       And Input field with label "Register" should be visible
       And Input field with label "Registration Number" should be visible
