@@ -75,13 +75,14 @@ const setupEvan = function(browser, customs) {
  * @returns
  */
 function betterClearValue(selector) {
-  const { RIGHT_ARROW, BACK_SPACE } = client.Keys;
+  const { RIGHT_ARROW, BACK_SPACE, TAB } = client.Keys;
   return client.getValue(selector, result => {
     const chars = result.value.split('');
     // Make sure we are at the end of the input
     chars.forEach(() => client.setValue(selector, RIGHT_ARROW));
     // Delete all the existing characters
     chars.forEach(() => client.setValue(selector, BACK_SPACE));
+    client.setValue(selector, TAB);
   });
 }
 
