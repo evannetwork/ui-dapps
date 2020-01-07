@@ -12,7 +12,8 @@
   "main": "dist/ui.libs.js",
   "name": "@evan.network/ui",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && yarn build:declarations",
+    "build:declarations": "tsc --declarationDir dist/ --emitDeclarationOnly"
   },
   "typings": "dist/ui.libs.d.ts",
   "version": "1.8.0"

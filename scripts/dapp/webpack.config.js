@@ -28,6 +28,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 /**
  * Returns the webpack configuration for the dapp to build
@@ -73,6 +74,7 @@ module.exports = function(
           options: {
             transpileOnly,
             appendTsSuffixTo: [/\.vue$/],
+            configFile: 'tsconfig.json'
           }
         },
         {
@@ -136,7 +138,8 @@ module.exports = function(
       extensions: ['.ts', '.js', '.vue', '.json'],
       alias: {
         vue$: 'vue/dist/vue.esm.js'
-      }
+      },
+      plugins: [new TsconfigPathsPlugin({ configFile: '../../tsconfig.json' })]
     },
     performance: {
       hints: false
