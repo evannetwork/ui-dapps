@@ -51,7 +51,7 @@
           <evan-wallet-card
             :accountDetails="userInfo"
             :address="$route.params.address"
-            :href="$route.params.address == runtimeAddress ? undefined : null"
+            :href="$store.state.profileDApp.isMyProfile ? undefined : null"
           />
         </div>
       </div>
