@@ -5,19 +5,17 @@ Scenario: Navigating through core DApps using the dashboard
   Then I want to see a text including "What would you like to start with?"
   When I click on "DApps" in main menu
     Then I want to see a text including "Overview about your favorites"
-  When I click on "Digital Twins" in main menu
-    Then I want to see a text including "Overview of my Digital Twins"
-  When I click on "Verification Center" in main menu
-    Then I want to see a text including "Under construction"
   When I click on "My Assets" in main menu
     Then I want to see a text including "Digital Twins"
+  When I click on "Verification Center" in main menu
+    Then I want to see a text including "Under construction"
   When I click on "Actions" in main menu
     Then I want to see a text including "Incoming Messages"
   When I click on "Synchronization" in main menu
     Then I want to see a text including "Data-Synchronization"
     And I want to see a text including "Everything is synchronized"
   When I click on button before the text "Data-Synchronization"
-    Then I want to see not a text including "Data-Synchronization"
+    Then I do not want to see a text including "Data-Synchronization"
   When I click on "Help" in main menu
     Then I want to see a text including "Wiki"
   When I click on "Identity" in main menu
@@ -48,7 +46,7 @@ Scenario: Handle errors in synchronization
     And I click on button "Error Dispatcher"
     Then I want to see the "alert" icon
   When I click on "Synchronization" in main menu
-    And I want to click on the "close-circle-outline" icon
+    And I click on the "close-circle-outline" icon
     Then I want to see a text including "Delete Entry"
   When I click on button "Delete"
     Then I want to see a text including "Everything is synchronized"
