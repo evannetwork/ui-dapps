@@ -2,7 +2,8 @@ language: node_js
 node_js: "12"
 
 install:
-  - cd ./tests-e2e && npm install
+  - cd ./tests-e2e
+  - npm install
 
 jobs:
   include:
@@ -33,4 +34,5 @@ jobs:
     #- name: chrome/sharing
     #  env: TESTPATTERN=features/core/sharing.feature NIGHTWATCH_ENV=chrome
 
-script: cd ./tests-e2e && npm run test-testnet-specific
+script:
+  - npm run test-testnet-specific
