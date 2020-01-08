@@ -23,14 +23,14 @@ dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainNa
 
 import EvanQueue from './Queue';
 import { Dispatcher, DispatcherInstance } from './Dispatcher';
-// Why import this?
-// import './index.scss';
+import './index.scss';
 import * as FileHandler from './Files';
 import * as bccUtils from './bccUtils';
+import { UIContainerFile } from './Files';
 
 export * from './config';
 export * from './utils';
-export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler, bccUtils, };
+export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler, bccUtils, UIContainerFile};
 
 /**
  * if the ui.evan dapp is loaded as an normal dapp, show the style preview.

@@ -71,6 +71,7 @@ module.exports = function(
         {
           test: /\.tsx?$/,
           loader: 'ts-loader',
+          exclude: /node_modules/,
           options: {
             transpileOnly,
             appendTsSuffixTo: [/\.vue$/]

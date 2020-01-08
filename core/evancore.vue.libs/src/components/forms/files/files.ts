@@ -22,10 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import { FileHandler } from '@core/ui.libs/dist';
+import { FileHandler, UIContainerFile } from '@evan.network/ui';
 
 import ControlComponent from '../control/control';
-import { UIContainerFile } from '@core/ui.libs/dist/Files';
 
 /**
  * Wrapper for HTML 5 file upload. Uses the ui-core File utils, load load, return and format files

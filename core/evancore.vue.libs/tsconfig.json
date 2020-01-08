@@ -34,6 +34,7 @@
   "include": [
     "./src/**/*",
   ],
+  "exclude": ["dist"],
   "compilerOptions": {
     "outDir": "dist"
   }

@@ -22,10 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { FileHandler, } from '@core/ui.libs/dist';
+import { FileHandler, UIContainerFile } from '@evan.network/ui';
 
 import EvanComponent from '../../../component';
-import { UIContainerFile } from '@core/ui.libs/dist/Files';
 
 /**
  * Wrapper for profile verifications.

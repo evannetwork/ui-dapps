@@ -15,6 +15,6 @@
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && yarn build:declarations",
     "build:declarations": "tsc --declarationDir dist/ --emitDeclarationOnly"
   },
-  "typings": "dist/ui.libs.d.ts",
+  "typings": "dist/index.d.ts",
   "version": "1.8.0"
 }

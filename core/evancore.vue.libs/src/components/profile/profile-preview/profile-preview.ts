@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { Dispatcher, cloneDeep, FileHandler, bccUtils, } from '@core/ui.libs/dist';
+import { Dispatcher, cloneDeep, FileHandler, bccUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 // vue imports

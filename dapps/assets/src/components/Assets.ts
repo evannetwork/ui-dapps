@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 import VueRouter, { Route } from 'vue-router';
 
 // evan.network imports
-import { EvanComponent } from '@core/evancore.vue.libs/dist';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 // declare module 'vue/types/vue' {
 //   interface Vue {

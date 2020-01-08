@@ -19,7 +19,7 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils, } from '@core/ui.libs/dist';
+import { bccUtils, } from '@evan.network/ui';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';

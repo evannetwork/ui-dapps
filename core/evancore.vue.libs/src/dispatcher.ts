@@ -23,7 +23,7 @@ import Vue from 'vue';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { EvanQueue, Dispatcher, DispatcherInstance } from '@core/ui.libs/dist';
+import { EvanQueue, Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 /**
  * evan.network vue handler for dispatchers. Adds dispatcher status information to the vuex store.
