@@ -13,7 +13,7 @@
   "name": "assets",
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b",
-    "build:declarations": "tsc --declarationDir dist/ --emitDeclarationOnly"
+    "build:declarations": "tsc --emitDeclarationOnly"
   },
   "typings": "dist/index.d.ts",
   "version": "1.0.0"

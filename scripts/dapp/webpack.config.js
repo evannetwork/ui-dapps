@@ -27,7 +27,6 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 /**
@@ -47,7 +46,7 @@ module.exports = function(
   dist,
   transpileOnly = false,
   prodMode = false,
-  externals = getExternals(),
+  externals = getExternals()
 ) {
   // enable prodMode, when node_env was set
   prodMode = prodMode || process.env.NODE_ENV === 'production';
@@ -74,9 +73,8 @@ module.exports = function(
           exclude: /node_modules/,
           options: {
             transpileOnly,
-            appendTsSuffixTo: [/\.vue$/],
-            // projectReferences: true
-          },
+            appendTsSuffixTo: [/\.vue$/]
+          }
         },
         {
           test: /\.vue$/,
@@ -132,14 +130,17 @@ module.exports = function(
         // both options are optional
         filename: `${name}.css`,
         chunkFilename: `${name}.css`
-      }),
+      })
     ],
     resolve: {
       extensions: ['.ts', '.js', '.vue', '.json'],
       alias: {
         vue$: 'vue/dist/vue.esm.js'
       },
-      plugins: [new TsconfigPathsPlugin({ extensions: ['.ts', '.js', '.vue', '.json'] })]
+      plugins: [
+        // Add tsconfig paths to webpack module resolver
+        new TsconfigPathsPlugin({ extensions: ['.ts', '.js', '.vue', '.json'] })
+      ]
     },
     performance: {
       hints: false
@@ -161,7 +162,7 @@ module.exports = function(
         parallel: true,
         sourceMap: false
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new OptimizeCSSAssetsPlugin({})
     ]);
   } else if (!transpileOnly) {
     webpackConfig.plugins.push(
