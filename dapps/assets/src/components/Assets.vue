@@ -56,12 +56,3 @@
 import AssetsComponent from './Assets';
 export default AssetsComponent;
 </script>
-
-<style lang="scss" scoped>
-.sidenav {
-  width: 300px;
-}
-.evan-nav-list > .nav-entries {
-  flex: 0;
-}
-</style>
