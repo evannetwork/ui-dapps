@@ -92,7 +92,7 @@ const getFilledDAppName = (dappName) => {
  *
  * @param      {string}  category  category name (core, libs, dapps)
  */
-const getCatgeroyDAppDirs = (category) => {
+const getCategoryDAppDirs = (category) => {
   const categoryPath = path.resolve(`${ __dirname }/../${ category }`);
   return dappDirs.filter(dappDir => dappDir.indexOf(categoryPath) !== -1);
 }
@@ -119,7 +119,7 @@ const logServing = async () => {
     }
     console.log(`\n${ categoryTitle }`);
 
-    for (const dappDir of getCatgeroyDAppDirs(category)) {
+    for (const dappDir of getCategoryDAppDirs(category)) {
       const dappName = dappDir.split('/').pop();
       const logDAppName = getFilledDAppName(dappName);
 
@@ -272,7 +272,7 @@ gulp.task('dapps-build', async function () {
   } else {
     // build all categories
     for (const category of categories) {
-      await Throttle.all(getCatgeroyDAppDirs(category).map(dappDir => async () => {
+      await Throttle.all(getCategoryDAppDirs(category).map(dappDir => async () => {
         try {
           // navigate to the dapp dir and run the build command
           await buildDApp(dappDir);
