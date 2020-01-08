@@ -20,15 +20,15 @@
 const path = require('path');
 const fs = require('fs');
 const { runExec, scriptsFolder, isDirectory, getDirectories } = require('../../../scripts/lib');
+const dbcpFolder = path.resolve(`../../node_modules/@evan.network/dbcp`);
 const bccFolder = path.resolve(`../../node_modules/@evan.network/api-blockchain-core`);
 
 async function build() {
-  try {
-    if (fs.existsSync(`${ bccFolder }/src/index.ts`)) {
-      await runExec('npm run build', bccFolder);
-    }
-  } catch(err) {
-    console.error(err)
+  if (fs.existsSync(`${ dbcpFolder }/src/index.ts`)) {
+    await runExec('npm run build', dbcpFolder);
+  }
+  if (fs.existsSync(`${ bccFolder }/src/index.ts`)) {
+    await runExec('npm run build', bccFolder);
   }
 }
 
