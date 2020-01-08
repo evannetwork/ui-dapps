@@ -17,16 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
-const del = require('del');
-const exec = require('child_process').exec;
 const express = require('express');
-const fs = require('fs');
 const gulp = require('gulp');
 const inquirer = require('inquirer');
 const path = require('path');
 const serveStatic = require('serve-static');
 const Throttle = require('promise-parallel-throttle');
-const { runExec, scriptsFolder, isDirectory, getDirectories, nodeEnv, getArgs } = require('./lib');
+const { runExec, getDirectories, nodeEnv, getArgs } = require('./lib');
 
 let arg, dappDirs, categories, longestDAppName, serves, watching, expressApp;
 

@@ -27,5 +27,8 @@
   "exclude": [
     "node_modules"
   ],
+  "include": [
+    "./**/*.ts"
+  ],
   "files": ["./scripts/dapp/vue-shim.d.ts"],
 }
