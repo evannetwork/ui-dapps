@@ -12,7 +12,7 @@
   "main": "dist/ui.libs.js",
   "name": "@evan.network/ui",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && yarn -b",
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b",
     "build:declarations": "tsc --emitDeclarationOnly"
   },
   "typings": "dist/index.d.ts",
