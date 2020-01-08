@@ -19,14 +19,14 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils, } from '@evan.network/ui';
+import { bccUtils } from '@evan.network/ui';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import EvanComponent from '../../../component';
 import { Prop } from 'vue-property-decorator';
 
-@Component({ })
+@Component
 export default class WalletCardComponent extends mixins(EvanComponent) {
   /**
    * Address of the specific account.
@@ -61,7 +61,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded
    */
-  balance: { amount: string, timestamp: number } = null;
+  balance: { amount: string; timestamp: number } = null;
 
   /**
    * Original url of the current vue core, so we can access assets via url.
@@ -81,8 +81,8 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
     this.walletLink = [
       dapp.baseUrl,
       dapp.rootEns,
-      `profile.vue.${ dapp.domainName }`,
-      `${ this.address }/wallet`,
+      `profile.vue.${dapp.domainName}`,
+      `${this.address}/wallet`
     ].join('/');
 
     await Promise.all([
@@ -90,26 +90,38 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
         const profile = new bcc.Profile({
           profileOwner: this.address,
           accountId: this.$store.state.runtime.activeAccount,
-          ...this.$store.state.runtime,
+          ...this.$store.state.runtime
         });
-        this.alias = await bccUtils.getUserAlias(profile, this.accountDetails, this.registration);
+        this.alias = await bccUtils.getUserAlias(
+          profile,
+          this.accountDetails,
+          this.registration
+        );
       })(),
       (async () => {
         // load balance and parse it to 3 decimal places
-        const amount = Math.floor(parseFloat(
-          await dappBrowser.core.getBalance(this.address)) * 100) / 100;
+        const amount =
+          Math.floor(
+            parseFloat(await dappBrowser.core.getBalance(this.address)) * 100
+          ) / 100;
         this.balance = {
-          amount: amount.toLocaleString(this.$i18n.locale(), { style: 'currency' }),
-          timestamp: Date.now(),
+          amount: amount.toLocaleString(this.$i18n.locale(), {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }),
+          timestamp: Date.now()
         };
       })(),
       (async () => {
         // load the vue evan core to get its origin and access the images
-        const vueCoreDbcp = await dappBrowser.System
-          .import(`evancore.vue.libs.${ dappBrowser.getDomainName() }!ens`);
-        this.vueCoreBaseUrl = dappBrowser.dapp.getDAppBaseUrl(vueCoreDbcp,
-          `${ vueCoreDbcp.name }.${ dappBrowser.getDomainName() }`);
-      })(),
+        const vueCoreDbcp = await dappBrowser.System.import(
+          `evancore.vue.libs.${dappBrowser.getDomainName()}!ens`
+        );
+        this.vueCoreBaseUrl = dappBrowser.dapp.getDAppBaseUrl(
+          vueCoreDbcp,
+          `${vueCoreDbcp.name}.${dappBrowser.getDomainName()}`
+        );
+      })()
     ]);
 
     this.loading = false;
