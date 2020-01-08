@@ -99,7 +99,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
         );
       })(),
       (async () => {
-        // load balance and parse it to 3 decimal places
+        // load balance and parse it to 2 decimal places
         const amount =
           Math.floor(
             parseFloat(await dappBrowser.core.getBalance(this.address)) * 100
