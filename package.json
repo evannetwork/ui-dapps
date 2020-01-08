@@ -79,24 +79,6 @@
     "webpack-cli": "^3.2.1"
   },
   "description": "Mono-Repo for organising evan.network dapp structure.",
-  "devDependencies": {
-    "@babel/register": "^7.4.0",
-    "babel-preset-env": "^1.7.0",
-    "browserstack-local": "^1.3.7",
-    "chromedriver": "latest",
-    "cross-env": "^5.2.0",
-    "cucumber": "6",
-    "cucumber-html-reporter": "^5.0.0",
-    "cucumber-pretty": "6",
-    "dotenv-safe": "^6.1.0",
-    "env-cmd": "^9.0.1",
-    "geckodriver": "^1.16.2",
-    "mkdirp": "^0.5.1",
-    "nightwatch": "1.3.2",
-    "nightwatch-api": "3.0.1",
-    "npm-run-all": "^4.1.5",
-    "selenium-server-standalone-jar": "^3.141.5"
-  },
   "husky": {
     "hooks": {}
   },
@@ -122,12 +104,7 @@
     "link-core": "gulp --gulpfile scripts/link-core.js link-core",
     "serve": "npm run link-core && gulp --gulpfile scripts/dapps.js serve",
     "serve-build": "npm run link-core && gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
-    "test-local": "cd ./tests-e2e && env-cmd -f .env.local cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format ../node_modules/cucumber-pretty",
-    "test-local-only": "cd ./tests-e2e && env-cmd -f .env.local cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format ../node_modules/cucumber-pretty",
-    "test-testnet": "cd ./tests-e2e && env-cmd cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format ../node_modules/cucumber-pretty",
-    "test-testnet-only": "cd ./tests-e2e && env-cmd cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format ../node_modules/cucumber-pretty",
-    "test-testnet-specific": "cd ./tests-e2e && env-cmd cucumber-js --tags 'not (@angular or @skip)' --retry 2 --require-module @babel/register --require cucumber.conf.js --require step-definitions --format ../node_modules/cucumber-pretty ${TESTPATTERN}",
     "tsc": "tsc -p "
   },
-  "version": "1.0.0"
+  "version": "4.0.0"
 }
