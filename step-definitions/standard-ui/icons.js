@@ -7,8 +7,10 @@ import { When, Then } from 'cucumber';
 When('I want to see the {string} icon',
   async(icon) => {
     if (icon.startsWith('spinner')) {
+      await client.waitForElementPresent(`[class*='${ icon }']`, 15000);
       await client.expect.element(`[class*='${ icon }']`).to.be.visible;
     } else {
+      await client.waitForElementPresent(`.mdi.mdi-${ icon }`, 15000);
       await client.expect.element(`.mdi.mdi-${ icon }`).to.be.visible;
     }
   }
@@ -17,7 +19,7 @@ When('I want to see the {string} icon',
 /**
  * Ensure that a specific icon is shown.
  */
-When('I want to click on the {string} icon',
+When('I click on the {string} icon',
   async(icon) => {
     await client.expect.element(`.mdi.mdi-${ icon }`).to.be.visible;
     await client.click(`.mdi.mdi-${ icon }`);

@@ -1,3 +1,4 @@
+@angular
 Feature: Rental demo
 
 Scenario: Dispo can create transportorder

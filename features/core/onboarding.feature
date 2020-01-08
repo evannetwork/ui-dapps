@@ -10,7 +10,7 @@ Scenario: Registering a new account on evan Happy Path
     And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I want to click on vue checkbox control with id "termsAccepted"
+    And I click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
@@ -73,7 +73,7 @@ Scenario: Registering a new account on evan and not check recaptcha
   And I set Input field with label "Retype password" to "Test1234"
   Then the button "Continue" should be "enabled"
   Then I click on button "Continue"
-  Then I want to click on vue checkbox control with id "termsAccepted"
+  Then I click on vue checkbox control with id "termsAccepted"
   Then the button "Create Account" should be "disabled"
 
 Scenario: Registering a new company account on evan
@@ -107,10 +107,10 @@ Scenario: Registering a new company account on evan
   When I set Input field with label "Register Court" to "Test Register Court"
     And I set Input field with label "Register" to "DE"
     And I set Input field with label "Registration Number" to "Test Registration Number"
-    And I set Input field with label "VAT ID" to "Test Sales Tax ID"
+    And I set Input field with label "VAT ID" to "Test VAT ID"
     Then the button "Continue" should be "enabled"
   When I click on button "Continue"
-    And I want to click on vue checkbox control with id "termsAccepted"
+    And I click on vue checkbox control with id "termsAccepted"
     And I click the element with id "evan-recaptcha"
     And I wait for 3 seconds
     Then the button "Create Account" should be "enabled"
@@ -126,7 +126,7 @@ Scenario: Registering a new company account on evan
   #   And The value of the Input field with label "Register Court" should be "Test Register Court"
   #   And The value of the Input field with label "Register" should be "DE"
   #   And The value of the Input field with label "Registration Number" should be "Test Registration Number"
-  #   And The value of the Input field with label "Sales Tax ID" should be "Test Sales Tax ID"
+  #   And The value of the Input field with label "VAT ID" should be "Test VAT ID"
   #   And The value of the Input field with label "Street and Number" should be "Test Street 16"
   #   And The value of the Input field with label "Postal Code" should be "99817"
   #   And The value of the Input field with label "City" should be "Test City"
@@ -178,15 +178,15 @@ Scenario: Creating a new bicycle twin using onboarding
     Then the button "Continue" should be "enabled"
 
   When I click on button "Continue"
-    Then the button "Create Account" should be "disabled"
+  Then the button "Create Account" should be "disabled"
     And I want to see a text including "For your access to your Digital Twin, we need an alias and a password."
-    And I set Input field with label "Account name" to "Automated Test Account"
+  When I set Input field with label "Account name" to "Automated Test Account"
     And I set Input field with label "Password" to "Test1234"
     And I set Input field with label "Retype password" to "Test1234"
     And I click the element with id "evan-recaptcha"
-    And I want to click on vue checkbox control with id "termsAccepted"
+    And I click on vue checkbox control with id "termsAccepted"
     And I wait for 3 seconds
-    Then the button "Create Account" should be "enabled"
+  Then the button "Create Account" should be "enabled"
 
   # TODO: wait until profile was created
 # Scenario: Creating a new twin using onboarding

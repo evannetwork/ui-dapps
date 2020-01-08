@@ -5,9 +5,11 @@ const mainMenu = {
   'Actions': '#evan-dapp-mailbox',
   'DApps': '#evan-dapp-favorites',
   'Digital Twins': '#evan-dapp-digitaltwins',
-  'My Assets': '#evan-dapp-assets',
+  'Explorer': '#evan-dapp-explorer',
+  'Favorites': '#evan-dapp-favorites',
   'Help': '#evan-dapp-help',
   'Identity': '#evan-dapp-profile',
+  'My Assets': '#evan-dapp-assets',
   'Synchronization': '#evan-dapp-synchronization',
   'Verification Center': '#evan-dapp-verifications',
 };
