@@ -31,7 +31,6 @@ build/*
 
 # Playground tmp files
 .playground
-.tmp
 
 # dapp categories
 */*/dist
