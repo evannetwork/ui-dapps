@@ -28,7 +28,7 @@ import { bccUtils } from '@evan.network/ui';
 import EvanComponent from '../../component';
 import EvanVueDispatcherHandler from '../../dispatcher';
 import { DAppWrapperRouteInterface } from '../../interfaces';
-import { EvanQueue, Dispatcher, DispatcherInstance } from '@core/ui.libs';
+import { EvanQueue, Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName } from '../../utils';
 
 // load domain name for quick usage

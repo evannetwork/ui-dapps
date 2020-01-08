@@ -177,6 +177,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './container-link.ts';
+  import Component from './container-link';
   export default Component;
 </script>

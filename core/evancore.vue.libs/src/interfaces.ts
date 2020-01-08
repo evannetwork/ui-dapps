@@ -84,7 +84,7 @@ export interface EvanFormControlUISpecs {
  * Represents one generalized form control within an vue form.
  */
 export interface EvanFormControlOptions {
-  name: string;
+  name?: string;
   uiSpecs?: EvanFormControlUISpecs;
   validate?: Function;
   value?: any;
