@@ -78,7 +78,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
    */
   async created() {
     const dapp = this.$store.state.dapp;
-    this.walletLink = [
+    this.walletLink = this.href !== undefined ? this.href :[
       dapp.baseUrl,
       dapp.rootEns,
       `profile.vue.${ dapp.domainName }`,
