@@ -28,17 +28,23 @@ if (localBrowser) {
     selenium: {
       start_process: false,
       host: 'hub-cloud.browserstack.com',
-      port: 80
+      port: 443
     },
     desiredCapabilities: {
       'browserstack.user': process.env.BROWSERSTACK_USERNAME,
       'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
+      'browserstack.selenium_version': '3.141.59',
+      'resolution': '1920x1080',
       os: 'Windows',
       os_version: '10'
     },
     globals: {
       accounts,
     },
+    disable_error_log: true,
+    webdriver: {
+      keep_alive: true
+    }
   };
 }
 

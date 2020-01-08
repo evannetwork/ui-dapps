@@ -1,16 +1,17 @@
 Feature: evan.network login
 
+@angular
 Scenario: Logging in to evan.network using angular
 
   Given I log in to evan.network using angular
-  Then I can see the angular dashboard
+  Then I want to see a text including "What would you like to start with?"
 
-@tag:noLogout
+@tag:noLogout @angular
 Scenario: Logout from of evan.network using angular
 
   Given I log in to evan.network using angular with default
   When I log out from angular
-  Then I am no longer logged in to angular
+  Then I want to see a text including "Create your Account"
 
 Scenario: Logging in to evan.network using vue
 
@@ -70,10 +71,14 @@ Scenario: Refreshing the page and re-entering password
     And I wait for 10 seconds
     Then I want to see a text including "Alias"
     And I want to see a text including "Password"
-  When I type "Test1234" into the input field with label "Password"
+  When I type "wrongpassword" into the input field with label "Password"
     And I click on button "Log in"
     And I wait for 3 seconds
-    Then I want to see a text including "Welcome to the evan.network"
+    Then I want to see a text including "The provided password is invalid."
+  When I type "process.env.USER_DEFAULT_PASSWORD" into the input field with label "Password"
+    And I click on button "Log in"
+    And I wait for 3 seconds
+    Then I want to see a text including "What would you like to start with?"
 
 @tag:noLogout
 Scenario: Logout from of evan.network using vue

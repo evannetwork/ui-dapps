@@ -74,4 +74,3 @@ Then(/^I am no longer logged in to angular$/, async () => {
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
   await client.assert.visible('onboarding-root');
 });
- 
