@@ -43,11 +43,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   address = '';
 
   /**
-   * Address of the current logged in runtime
-   */
-  runtimeAddress = '';
-
-  /**
    * Currents users account information
    */
   userInfo = null;
