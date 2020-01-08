@@ -69,19 +69,20 @@ const setupEvan = function(browser, customs) {
 
 /**
  * A better `clearValue` for inputs having a more complex interaction.
- * 
+ *
  * @export
- * @param {string} selector 
- * @returns 
+ * @param {string} selector
+ * @returns
  */
 function betterClearValue(selector) {
-  const { RIGHT_ARROW, BACK_SPACE } = client.Keys;
+  const { RIGHT_ARROW, BACK_SPACE, TAB } = client.Keys;
   return client.getValue(selector, result => {
     const chars = result.value.split('');
     // Make sure we are at the end of the input
     chars.forEach(() => client.setValue(selector, RIGHT_ARROW));
     // Delete all the existing characters
     chars.forEach(() => client.setValue(selector, BACK_SPACE));
+    client.setValue(selector, TAB);
   });
 }
 
@@ -96,11 +97,43 @@ async function getElementIdByLabel(value) {
   return elementId;
 }
 
+async function getElementsCount(selector, mode = "xpath") {
+  return new Promise((resolve, reject) => {
+    client.elements(mode, selector, function (result) {
+      console.log('Length', result.value.length) //(if there are 3 li, here should be a count of 3)
+      resolve(result.value.length);
+    });
+  }
+)};
+
+/**
+ * Allowes using `process.env.MY_VARIABLE` in cucumber tests, when implemented in step function.
+ *
+ * @param {*} content
+ */
+function parseEnvVar(content) {
+  if (!content || typeof conetnt === 'string' && content.length === 0) {
+    return content;
+  }
+
+  let inputValue = content;
+  try {
+    const envVar = content.replace('process.env.', '');
+    inputValue = typeof process.env[envVar] === 'string' ? process.env[envVar] : content;
+  } catch (e) {
+    console.error(`Env variable ${content} is not defined.`);
+  }
+
+  return inputValue;
+}
+
 module.exports = {
   backspaces,
   betterClearValue,
   setupEvan,
   getElementIdByLabel,
+  getElementsCount,
+  parseEnvVar,
   pauseHere: async () => {
     console.log('/******************************************************************************/');
     console.log('test paused, enjoy your developer tools :3');
@@ -116,5 +149,5 @@ module.exports = {
       rl.close();
       resolve(ans);
     }))
-  },
+  }
 };

@@ -60,16 +60,16 @@ When('I click on button before the text {string}',
  */
 Then('I want to see a button {string}',
   async (content) => {
-     // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
-     client.useXpath();
-     const xPathSelector = buttonSelector(content);
+    // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
+    client.useXpath();
+    const xPathSelector = buttonSelector(content);
 
-     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
-     await client.expect.element(xPathSelector).to.be.visible;
+    await client.waitForElementPresent(xPathSelector, WAIT_TIME);
+    await client.expect.element(xPathSelector).to.be.visible;
 
-     client.useCss(); // switches back to css selector
+    client.useCss(); // switches back to css selector
   }
-)
+);
 
 /**
  * Assures that an element with .btn class has a certain state.
@@ -98,7 +98,7 @@ Then('the button {string} should be {string}',
 
     client.useCss();
   }
-)
+);
 
 
 /**
@@ -106,7 +106,6 @@ Then('the button {string} should be {string}',
  */
 Then('the button with id {string} should be {string}',
   async(content, statusType) => {
-    client.useCss();
     const buttonSelector = '#' + content;
     await client.waitForElementPresent(buttonSelector, WAIT_TIME);
     await client.expect.element(buttonSelector).to.be.visible;
@@ -124,9 +123,46 @@ Then('the button with id {string} should be {string}',
       default:
         throw new Error(`Button can not be tested for ${statusType}`)
     }
+  }
+);
 
+const getIconClass = (icon) => {
+  const iconMap = {
+    plus: "mdi-plus",
+  }
+
+  if (!iconMap[icon]) {
+    return icon;
+  }
+
+  return iconMap[icon];
+}
+
+/**
+ * Asserts that a certain icon button is displayed
+ */
+Then('I want to see a {string} icon button',
+  async (icon) => {
+    client.useXpath();
+    const xPathSelector = `//button[contains(@class, "btn")]//i[contains(@class, "${getIconClass(icon)}")]`;
+    await client.waitForElementPresent(xPathSelector, 15000);
+    await client.expect.element(xPathSelector).to.be.visible;
     client.useCss();
   }
-)
+);
+
+/**
+ * Click on icon button.
+ */
+When('I click on the {string} icon button',
+  async (icon) => {
+    client.useXpath();
+    const xPathSelector = `//button[contains(@class, "btn")]//i[contains(@class, "${getIconClass(icon)}")]`;
+
+    await client.expect.element(xPathSelector).to.be.visible;
+    await client.click(xPathSelector);
+    client.useCss();
+  }
+);
 
 module.exports = { buttonSelector, }

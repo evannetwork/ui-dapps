@@ -1,4 +1,4 @@
-const { setDefaultTimeout, After, AfterAll, BeforeAll } = require('cucumber');
+const { setDefaultTimeout, After, AfterAll, Before, BeforeAll } = require('cucumber');
 const { client, createSession, closeSession, startWebDriver, stopWebDriver } = require('nightwatch-api');
 const { setupEvan } = require('./test-utils/test-utils.js');
 
@@ -13,6 +13,11 @@ BeforeAll(async () => {
   await createSession(options);
   await client.resizeWindow(1920, 1080);
 });
+
+Before( () => {
+  // ensure we use css selector by default
+  client.useCss();
+})
 
 After(async (scenario) => {
   const noLogout = !!scenario.pickle.tags.filter(tag => tag.name == '@tag:noLogout').length;

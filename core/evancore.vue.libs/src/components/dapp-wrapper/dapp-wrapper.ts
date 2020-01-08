@@ -79,6 +79,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     default: function(options): DAppWrapperRouteInterface[] {
       return [
         { title: `${ i18nPref }.favorites`, path: `favorites.vue.${ domainName }`, icon: 'mdi mdi-apps' },
+        { title: `${ i18nPref }.digitaltwins`, path: `digitaltwins.${ domainName }`, icon: 'mdi mdi-cube-outline' },
         { title: `${ i18nPref }.assets`, path: `assets.${ domainName }`, icon: 'mdi mdi-home' },
         { title: `${ i18nPref }.verifications`, path: `verifications.vue.${ domainName }`, icon: 'mdi mdi-checkbox-marked-circle-outline' },
       ];
@@ -489,9 +490,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     // setup dispatcher data saving logic
     this.setupQueue();
 
-    // load mail information and initialize and mail watcher
-    this.loadMails();
-    this.mailsWatcher = setInterval(() => this.loadMails(), 30e3);
+    // load mail information and initialize an mail watcher
+    if (!this.mailsWatcher) {
+      this.loadMails();
+      this.mailsWatcher = setInterval(() => this.loadMails(), 30e3);
+    }
 
     this.userInfo.loading = false;
   }
