@@ -1,14 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@evan.network/digitaltwin.lib": [
-        "../digital-twin.lib"
-      ]
-    },
-  },  
+    "outDir": "dist",
+    "emitDeclarationOnly": true
+  },
   "extends": "../../tsconfig.json",
-  "include": [
-    "./src/**/*",
-  ]
+  "include": ["./src/**/*"],
+  "references": [{ "path": "../digital-twin.lib" }]
 }

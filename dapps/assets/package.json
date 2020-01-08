@@ -12,7 +12,7 @@
   "main": "dist/assets.js",
   "name": "assets",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && yarn build:declarations",
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b",
     "build:declarations": "tsc --declarationDir dist/ --emitDeclarationOnly"
   },
   "typings": "dist/index.d.ts",
