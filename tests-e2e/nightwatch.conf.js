@@ -16,8 +16,13 @@ if (localBrowser) {
       server_path: seleniumServer.path,
       port: 4444,
       cli_args: {
+        port: 4444,
         'webdriver.chrome.driver': chromeDriver.path
       }
+    },
+    webdriver: {
+      keep_alive: true,
+      cli_args: ['--port=4444']
     },
     globals: {
       accounts,
