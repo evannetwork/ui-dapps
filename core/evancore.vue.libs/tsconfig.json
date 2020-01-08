@@ -1,10 +1,10 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "./src/**/*",
-  ],
+  "include": ["./src/**/*.ts"],
   "exclude": ["dist"],
   "compilerOptions": {
-    "outDir": "dist"
-  }
+    "outDir": "dist",
+    "emitDeclarationOnly": true
+  },
+  "references": [{ "path": "../ui.libs" }]
 }

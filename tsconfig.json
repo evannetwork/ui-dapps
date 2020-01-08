@@ -3,18 +3,17 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": true,
+    "declarationMap": true,
     "experimentalDecorators": true,
-    "lib": [
-      "es2015",
-      "dom"
-    ],
+    "lib": ["es2015", "dom"],
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "paths": {
-      "@dapps/*": [
-        "./dapps/*"
-      ]
+      "@dapps/*": ["./dapps/*"],
+      "@evan.network/ui": ["./core/ui.libs"],
+      "@evan.network/ui/*": ["./core/ui.libs/*"],
+      "@evan.network/ui-vue-core": ["./core/evancore.vue.libs"],
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -24,11 +23,6 @@
     "strictPropertyInitialization": false,
     "target": "es5"
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "./**/*.ts"
-  ],
-  "files": ["./scripts/dapp/vue-shim.d.ts"],
+  "exclude": ["node_modules"],
+  "files": ["./scripts/dapp/vue-shim.d.ts"]
 }

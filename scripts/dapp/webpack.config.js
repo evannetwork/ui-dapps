@@ -74,8 +74,9 @@ module.exports = function(
           exclude: /node_modules/,
           options: {
             transpileOnly,
-            appendTsSuffixTo: [/\.vue$/]
-          }
+            appendTsSuffixTo: [/\.vue$/],
+            // projectReferences: true
+          },
         },
         {
           test: /\.vue$/,
@@ -132,7 +133,6 @@ module.exports = function(
         filename: `${name}.css`,
         chunkFilename: `${name}.css`
       }),
-      new ForkTsCheckerWebpackPlugin({ vue: true })
     ],
     resolve: {
       extensions: ['.ts', '.js', '.vue', '.json'],
