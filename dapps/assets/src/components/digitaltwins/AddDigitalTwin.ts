@@ -23,8 +23,12 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
+// load twin templates
+import bicycleTwin from './templates/bicycle.json';
+import carTwin from './templates/car.json';
+
 @Component
-export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
+class AddDigitalTwinComponent extends mixins(EvanComponent) {
   name: string = null;
   desc: string = null;
   template = null;
@@ -33,25 +37,50 @@ export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
     {
       label: this.$t('_assets.digitaltwins.bike'),
       value: 'bike',
-      content: null
+      content: bicycleTwin
     },
     {
       label: this.$t('_assets.digitaltwins.car'),
       value: 'car',
-      content: null
+      content: carTwin
     }
   ];
 
-  handleTemplateSelectChange(ev) {
-    this.template = ev.target.value;
+  handleTemplateSelectChange(event: Event) {
+    this.template = (<HTMLInputElement>event.target).value;
+
+    console.log(this.template);
   }
 
-  handleImageChange(ev) {
+  handleImageChange(ev: Event) {
     this.image = ev;
   }
 
-  handleFileUpoad(ev) {
-    console.log(ev);
+  /**
+   * Converts Blob representing JSON file into an JS Object.
+   *
+   * @param blob
+   */
+  _blobToObj(blob: Blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      try {
+        reader.onload = (ev) => {
+          resolve(JSON.parse(<string>ev.target.result));
+        };
+
+        reader.readAsText(blob);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  async handleFileUpload (ev: Event) {
+    const schema = await this._blobToObj(ev[0].blob);
+
+    console.log(schema);
   }
 
   showPanel() {
@@ -61,4 +90,10 @@ export default class AddDigitalTwinComponent extends mixins(EvanComponent) {
   closePanel() {
     (this.$refs.addDigitalTwinPanel as any).hide();
   }
+
+  addDigitalTwin(ev: Event) {
+    console.log(ev);
+  }
 }
+
+export default AddDigitalTwinComponent;

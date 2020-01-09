@@ -50,7 +50,10 @@
         :placeholder="$t('_assets.digitaltwins.desc-placeholder')"
       />
 
-      <p>{{ '_assets.digitaltwins.template-desc' | translate }}</p>
+      <p>
+        {{ '_assets.digitaltwins.template-desc' | translate }}
+        <a href="">{{ '_assets.more' | translate }}</a> <!-- TODO Link -->
+      </p>
 
       <evan-form-control-select
         id="templateSelect"
@@ -63,7 +66,7 @@
 
       <evan-file-input
         accept=".json"
-        @input="handleFileUpoad"
+        @input="handleFileUpload"
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
       ></evan-file-input>
 

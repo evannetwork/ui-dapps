@@ -43,7 +43,7 @@
       "desc-placeholder": "Beschreiben sie kurz ihren Digitalen Zwilling und dessen Eigenschaften.",
       "desc": "Beschreibung",
       "digitaltwins-title": "Digitale Zwillinge",
-      "drag-desc": "oder ziehen Sie das Template hier hinein",      
+      "drag-desc": "oder ziehen Sie das Template hier hinein",
       "favorites": "Favoriten",
       "my-own": "Eigene",
       "name-placeholder": "Gabelstapler #3",
@@ -61,6 +61,7 @@
       "owner": "Besitzer",
       "searched-for": "Sie suchten nach",
       "updated": "Aktualisiert"
-    }
+    },
+    "more": "mehr dazu"
   }
 }
