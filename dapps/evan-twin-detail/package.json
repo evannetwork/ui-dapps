@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/evan-twin-detail.js",
+  "name": "evan-twin-detail",
+  "scripts": {
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.0.0"
+}
