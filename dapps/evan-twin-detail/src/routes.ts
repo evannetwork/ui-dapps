@@ -45,8 +45,6 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
     //   { name: 'contacts', path: 'contacts', component: ContactsComponent },
     // ]
   }
-
-  // { path: 'contacts', component: AssetsComponent },
 ];
 
 export default routeRegistration;

@@ -56,3 +56,7 @@
 import EvanTwinDetailComponent from './EvanTwinDetail';
 export default EvanTwinDetailComponent;
 </script>
+
+<style lang="scss" scoped>
+@import "EvanTwinDetail.scss";
+</style>

@@ -90,7 +90,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   /**
    * Flag to disable other favorite buttons.
-   * This can be remove once the backend can
+   * This can be removed once the backend can
    * handle multiple calls at the same time
    */
   get isAnyLoading(): boolean {

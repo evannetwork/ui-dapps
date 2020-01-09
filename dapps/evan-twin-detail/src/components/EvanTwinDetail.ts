@@ -34,10 +34,9 @@ export default class EvanTwinDetailComponent extends mixins(EvanComponent) {
       key: 'contacts',
       icon: 'mdi mdi-account-multiple-outline'
     }
-    // { key: `others`, icon: 'mdi mdi-check-decagram' }
   ].map(entry => {
     return {
-      label: `_assets.${entry.key}.${entry.key}-title`,
+      label: `_twin-detail.${entry.key}.${entry.key}-title`,
       icon: entry.icon,
       to: { name: entry.key }
     };

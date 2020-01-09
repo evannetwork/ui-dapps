@@ -171,14 +171,14 @@ module.exports = function(
   }
 
   // only rebuild d.ts files when we are running in production mode or they does not exists
-  if (!transpileOnly && (prodMode || !fs.existsSync(`${dist}/${name}.d.ts`))) {
-    webpackConfig.plugins.push(
-      new DeclarationBundlerPlugin({
-        moduleName: `'${packageJson.name}'`,
-        out: `${name}.d.ts`
-      })
-    );
-  }
+  // if (!transpileOnly && (prodMode || !fs.existsSync(`${dist}/${name}.d.ts`))) {
+  //   webpackConfig.plugins.push(
+  //     new DeclarationBundlerPlugin({
+  //       moduleName: `'${packageJson.name}'`,
+  //       out: `${name}.d.ts`
+  //     })
+  //   );
+  // }
 
   return webpackConfig;
 };

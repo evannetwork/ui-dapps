@@ -6,7 +6,11 @@
     "tsBuildInfoFile": "./dist/tsbuildinfo",
   },
   "extends": "../../tsconfig.json",
-  "include": ["./src/**/*"],
-  // Required to build. https://github.com/microsoft/TypeScript/issues/25636
-  "files": ["./src/i18n/de.json", "./src/i18n/en.json"]
+  "include": [
+    "./src/**/*",
+    // Required to build. https://github.com/microsoft/TypeScript/issues/25636
+    "./src/**/*.json",
+  ],
+  
+  // "files": ["./src/i18n/de.json", "./src/i18n/en.json"]
 }

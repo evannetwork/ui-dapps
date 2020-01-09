@@ -25,7 +25,7 @@ import { System, getDomainName } from '@evan.network/ui-dapp-browser';
 import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
-import EvanTwinDetailComponent from './components/EvanTwinDetail';
+import EvanTwinDetailComponent from './components/EvanTwinDetail.vue';
 export * from './components/registry';
 export { translations };
 
