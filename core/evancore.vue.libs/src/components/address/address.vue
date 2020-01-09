@@ -23,7 +23,7 @@
     :class="this.class"
     @mouseenter="hover = true;"
     @mouseleave="hover = false;">
-    {{ address }}
+    {{ `${didPrefix}${address}` }}
     <div class="interactions">
       <button class="btn btn-sm btn-icon"
         @click="copyAddress();">
