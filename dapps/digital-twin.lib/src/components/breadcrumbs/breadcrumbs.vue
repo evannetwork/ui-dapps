@@ -32,6 +32,6 @@
 </template>
 
 <script lang="ts">
-  import TwinsRootComponent from './breadcrumbs.ts';
+  import TwinsRootComponent from './breadcrumbs';
   export default TwinsRootComponent;
 </script>

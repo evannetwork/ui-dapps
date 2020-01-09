@@ -17,15 +17,12 @@
   the following URL: https://evan.network/license/
 */
 
-import Vue from 'vue';
-import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
+import { getDomainName } from '@evan.network/ui-vue-core';
 import { System, } from '@evan.network/ui-dapp-browser';
 
 import * as utils from './utils';
 import componentRegistration from './components/registry';
-import components from './components/registry';
 import EvanUIDigitalTwin from './digitaltwin';
-import Main from './components/root/root.vue';
 import translations from './i18n/translations';
 
 export * from './utils';

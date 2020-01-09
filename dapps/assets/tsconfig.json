@@ -1,35 +1,9 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
-    "declaration": true,
-    "experimentalDecorators": true,
-    "lib": [
-      "es2015",
-      "dom"
-    ],
-    "module": "es2015",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "outDir": "./built/",
-    "paths": {
-      "@evan.network/digitaltwin.lib": [
-        "../../digital-twin.lib/dist/digitaltwin.lib.js"
-      ]
-    },
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": false,
-    "strictFunctionTypes": false,
-    "strictPropertyInitialization": false,
-    "target": "es5"
+    "outDir": "dist",
+    "emitDeclarationOnly": true
   },
-  "exclude": [
-    "../../../node_modules/@evan.network"
-  ],
-  "include": [
-    "./src/**/*",
-    "../../scripts/dapp/vue-shim.d.ts"
-  ]
+  "extends": "../../tsconfig.json",
+  "include": ["./src/**/*"],
+  "references": [{ "path": "../digital-twin.lib" }]
 }

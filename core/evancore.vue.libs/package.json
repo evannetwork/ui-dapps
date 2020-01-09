@@ -12,8 +12,8 @@
   "main": "dist/evancore.vue.libs.js",
   "name": "@evan.network/ui-vue-core",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
   },
-  "typings": "dist/evancore.vue.libs.d.ts",
+  "typings": "dist/index.d.ts",
   "version": "1.9.0"
 }

@@ -5,6 +5,7 @@
 .env.local
 .eslintcache
 .package.json
+.vscode
 coverage
 local.log
 node_modules

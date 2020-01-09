@@ -22,7 +22,7 @@ import { EvanFormControlOptions, EvanFormControlUISpecs, } from './interfaces';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 /**
- * Represents one formular input and handles dirty and error flags, also runs validations.
+ * Represents one form input and handles dirty and error flags, also runs validations.
  *
  * @class      EvanFormControl
  */

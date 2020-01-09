@@ -58,6 +58,6 @@
 </template>
 
 <script lang="ts">
-  import Component from './dbcp.ts';
+  import Component from './dbcp';
   export default Component;
 </script>

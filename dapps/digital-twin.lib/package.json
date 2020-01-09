@@ -12,7 +12,8 @@
   "main": "dist/digitaltwin.lib.js",
   "name": "@evan.network/digitaltwin.lib",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
   },
+  "typings": "dist/index.d.ts",
   "version": "1.8.0"
 }

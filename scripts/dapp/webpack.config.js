@@ -22,11 +22,12 @@ const fs = require('fs');
 const getExternals = require('./webpack.externals');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 /**
  * Returns the webpack configuration for the dapp to build
@@ -45,12 +46,12 @@ module.exports = function(
   dist,
   transpileOnly = false,
   prodMode = false,
-  externals = getExternals(),
+  externals = getExternals()
 ) {
   // enable prodMode, when node_env was set
   prodMode = prodMode || process.env.NODE_ENV === 'production';
 
-  const packageJson = require(path.resolve(`${ dist }/../package.json`));
+  const packageJson = require(path.resolve(`${dist}/../package.json`));
   const webpackConfig = {
     entry: './src/index.ts',
     externals: externals,
@@ -59,8 +60,8 @@ module.exports = function(
     output: {
       path: dist,
       publicPath: '/dist/',
-      filename: `${ name }.js`,
-      library: `${ name }.js`,
+      filename: `${name}.js`,
+      library: `${name}.js`,
       libraryTarget: 'umd',
       umdNamedDefine: true
     },
@@ -72,7 +73,7 @@ module.exports = function(
           exclude: /node_modules/,
           options: {
             transpileOnly,
-            appendTsSuffixTo: [/\.vue$/],
+            appendTsSuffixTo: [/\.vue$/]
           }
         },
         {
@@ -83,11 +84,7 @@ module.exports = function(
               // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
               // the "scss" and "sass" values for the lang attribute to the right configs here.
               // other preprocessors should work out of the box, no loader config like this necessary.
-              'scss': [
-                'vue-style-loader',
-                'css-loader',
-                'sass-loader'
-              ]
+              scss: ['vue-style-loader', 'css-loader', 'sass-loader']
             }
             // other vue-loader options go here
           }
@@ -109,17 +106,19 @@ module.exports = function(
         },
         {
           test: /\.(woff(2)?|ttf|eot|svg|png|jpg|gif)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [{
-            loader: 'file-loader',
-            options: {
-              name: 'assets/[name].[ext]?[hash]',
-              publicPath: (url, resourcePath, context) => url
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'assets/[name].[ext]?[hash]',
+                publicPath: (url, resourcePath, context) => url
+              }
             }
-          }]
+          ]
         },
         {
           test: /\.js$/,
-          exclude: file => (/node_modules/.test(file) && !/\.vue\.js/.test(file)),
+          exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
           loader: 'babel-loader'
         }
       ]
@@ -129,20 +128,24 @@ module.exports = function(
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: `${ name }.css`,
-        chunkFilename: `${ name }.css`,
-      }),
+        filename: `${name}.css`,
+        chunkFilename: `${name}.css`
+      })
     ],
     resolve: {
       extensions: ['.ts', '.js', '.vue', '.json'],
       alias: {
-        'vue$': 'vue/dist/vue.esm.js'
-      }
+        vue$: 'vue/dist/vue.esm.js'
+      },
+      plugins: [
+        // Add tsconfig paths to webpack module resolver
+        new TsconfigPathsPlugin({ extensions: ['.ts', '.js', '.vue', '.json'] })
+      ]
     },
     performance: {
       hints: false
     }
-  }
+  };
 
   if (prodMode) {
     webpackConfig.devtool = '#source-map';
@@ -159,19 +162,23 @@ module.exports = function(
         parallel: true,
         sourceMap: false
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new OptimizeCSSAssetsPlugin({})
     ]);
   } else if (!transpileOnly) {
-    webpackConfig.plugins.push(new HardSourceWebpackPlugin({ cacheDirectory: 'build-cache', }));
+    webpackConfig.plugins.push(
+      new HardSourceWebpackPlugin({ cacheDirectory: 'build-cache' })
+    );
   }
 
   // only rebuild d.ts files when we are running in production mode or they does not exists
-  if (!transpileOnly && (prodMode || !fs.existsSync(`${ dist }/${ name }.d.ts`))) {
-    webpackConfig.plugins.push(new DeclarationBundlerPlugin({
-      moduleName: `'${ packageJson.name }'`,
-      out: `${ name }.d.ts`,
-    }));
+  if (!transpileOnly && (prodMode || !fs.existsSync(`${dist}/${name}.d.ts`))) {
+    webpackConfig.plugins.push(
+      new DeclarationBundlerPlugin({
+        moduleName: `'${packageJson.name}'`,
+        out: `${name}.d.ts`
+      })
+    );
   }
 
   return webpackConfig;
-}
+};

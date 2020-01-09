@@ -50,6 +50,6 @@
 </template>
 
 <script lang="ts">
-  import DtTreeRootComponent from './tree-root.ts';
+  import DtTreeRootComponent from './tree-root';
   export default DtTreeRootComponent;
 </script>

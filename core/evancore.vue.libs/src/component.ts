@@ -25,6 +25,7 @@ import VueRouter, { Route } from 'vue-router';
 // evan.network imports
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { getDomainName } from './utils';
+import { StartedDAppInfo } from './interfaces';
 
 /**
  * Evan.network component wrapper for easily accessing blockchain runtime data and active DApp information.
@@ -36,7 +37,7 @@ export default class EvanComponent extends Vue {
   /**
    * active dapp that was detected by the routing lib (getNextDApp)
    */
-  dapp: any;
+  dapp: StartedDAppInfo;
 
   dispatcher;
 
