@@ -117,3 +117,16 @@ export interface ContainerPermissionsInterface {
   key: string;
   permissions: PermissionsInterface;
 }
+
+/**
+ * Information about a started dapp. Have a look at ./routing getNextDApp function for more details.
+ */
+export interface StartedDAppInfo {
+  baseHash: string;
+  baseUrl: string;
+  contractAddress: string;
+  domainName: string;
+  ens: string;
+  fullUrl: string;
+  rootEns: string;
+}
