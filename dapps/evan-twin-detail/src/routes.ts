@@ -18,32 +18,33 @@
 */
 // import evan libs
 import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
+import EvanTwinDetailComponent from './components/EvanTwinDetail';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  // {
-  //   path: '',
-  //   component: AssetsComponent,
-  //   children: [
-  //     { path: '', redirect: 'digitaltwins' },
-  //     {
-  //       name: 'digitaltwins',
-  //       path: 'digitaltwins/',
-  //       component: DataContainer,
-  //       children: [{
-  //         path: ':query',
-  //         props: true,
-  //         component: DigitalTwinsComponent,
-  //         meta: { type: 'twins' }
-  //       }, {
-  //         path: '',
-  //         component: DigitalTwinsComponent,
-  //         meta: { type: 'twins' }
-  //       }]
-  //     },
-  //     { name: 'contacts', path: 'contacts', component: ContactsComponent },
-  //   ]
-  // }
+  {
+    path: '',
+    component: EvanTwinDetailComponent,
+    // children: [
+    //   { path: '', redirect: 'digitaltwins' },
+    //   {
+    //     name: 'digitaltwins',
+    //     path: 'digitaltwins/',
+    //     component: DataContainer,
+    //     children: [{
+    //       path: ':query',
+    //       props: true,
+    //       component: DigitalTwinsComponent,
+    //       meta: { type: 'twins' }
+    //     }, {
+    //       path: '',
+    //       component: DigitalTwinsComponent,
+    //       meta: { type: 'twins' }
+    //     }]
+    //   },
+    //   { name: 'contacts', path: 'contacts', component: ContactsComponent },
+    // ]
+  }
 
   // { path: 'contacts', component: AssetsComponent },
 ];

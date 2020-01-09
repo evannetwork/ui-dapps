@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "composite": true,
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./dist/tsbuildinfo",
   },
   "extends": "../../tsconfig.json",
   "include": ["./src/**/*"],
-  // "references": [{ "path": "../digital-twin.lib" }]
+  // Required to build. https://github.com/microsoft/TypeScript/issues/25636
+  "files": ["./src/i18n/de.json", "./src/i18n/en.json"]
 }
