@@ -21,6 +21,5 @@
 // while importing vue files
 declare module '*.vue' {
   import { EvanComponent, } from '@evan.network/ui-vue-core';
-
   export default EvanComponent;
 }

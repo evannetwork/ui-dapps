@@ -26,7 +26,7 @@ import { debounce } from 'lodash';
 import { Prop, Watch } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
-import { EvanTableItem } from 'shared/EvanTable';
+import { EvanTableItem } from '../../shared/EvanTable';
 import { DigitalTwin } from './DigitalTwinInterface';
 
 interface SortFilter {

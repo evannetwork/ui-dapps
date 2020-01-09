@@ -84,7 +84,7 @@ export interface EvanFormControlUISpecs {
  * Represents one generalized form control within an vue form.
  */
 export interface EvanFormControlOptions {
-  name: string;
+  name?: string;
   uiSpecs?: EvanFormControlUISpecs;
   validate?: Function;
   value?: any;
@@ -116,4 +116,17 @@ export interface ContainerPermissionsInterface {
   label: string;
   key: string;
   permissions: PermissionsInterface;
+}
+
+/**
+ * Information about a started dapp. Have a look at ./routing getNextDApp function for more details.
+ */
+export interface StartedDAppInfo {
+  baseHash: string;
+  baseUrl: string;
+  contractAddress: string;
+  domainName: string;
+  ens: string;
+  fullUrl: string;
+  rootEns: string;
 }

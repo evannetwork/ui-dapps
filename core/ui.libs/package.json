@@ -12,8 +12,8 @@
   "main": "dist/ui.libs.js",
   "name": "@evan.network/ui",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
   },
-  "typings": "dist/ui.libs.d.ts",
+  "typings": "dist/index.d.ts",
   "version": "1.8.0"
 }

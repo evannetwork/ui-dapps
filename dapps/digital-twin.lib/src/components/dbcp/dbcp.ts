@@ -17,12 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 
@@ -58,7 +54,8 @@ export default class DBCPComponent extends mixins(EvanComponent) {
   /**
    * Currently used dbcp form instance for getting name, imgSquare, description
    */
-  _form: DBCPForm = null;
+  // _form: DBCPForm = null;
+  _form: any = null;
 
   /**
    * Setup the form.

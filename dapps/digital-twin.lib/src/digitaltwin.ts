@@ -103,7 +103,7 @@ export default class EvanUIDigitalTwin {
       address: address === 'dt-create' ? '' : address,
       containerConfig: { accountId: runtime.activeAccount, },
       description: dbcp,
-    }
+    };
   }
 
   /**
@@ -376,7 +376,7 @@ export default class EvanUIDigitalTwin {
         this.dispatcherListeners.splice(this.dispatcherListeners.indexOf(addListener, 1));
         this.dispatcherListeners.splice(this.dispatcherListeners.indexOf(removeListener, 1));
       }
-    }
+    };
 
     // watch for updates
     const addListener = dispatchers.dt.favoriteAddDispatcher.watch(watch);
@@ -447,7 +447,7 @@ export default class EvanUIDigitalTwin {
           dispatcherInstanceId: instance.id,
           loading: true,
           name: instance.data.name,
-        }
+        };
 
         // if the container gets linked, it already exists, so we can add a navigation path
         if (instance.dispatcher.name === 'linkDispatcher') {
