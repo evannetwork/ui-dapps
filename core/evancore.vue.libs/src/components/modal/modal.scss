@@ -1,0 +1,12 @@
+.modal .modal-dialog.full-page {
+  width: calc(100vw - 52px);
+  max-width: calc(100vw - 52px);
+  margin: 0;
+  margin-left: 52px;
+
+  .modal-content {
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+}
