@@ -17,17 +17,36 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div>
-    <h1>{{ '_twin-details.overview.overview-title' || translate }}</h1>
-  </div>
-</template>
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-<script lang="ts">
-import EvanTwinDetailOverviewComponent from './EvanTwinDetailOverview';
-export default EvanTwinDetailOverviewComponent;
-</script>
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-<style lang="scss" scoped>
-@import "EvanTwinDetailOverview.scss";
-</style>
+@Component
+export class EvanTwinDetailDataComponent extends mixins(EvanComponent) {
+  mounted() {
+    console.log(this.$route);
+  }
+
+  navItems = [
+    {
+      key: 'general',
+      icon: 'mdi mdi-cube-outline'
+    },
+    {
+      key: 'specifications',
+      icon: 'mdi mdi-account-multiple-outline'
+    },
+    {
+      key: 'logs',
+      icon: 'mdi mdi-account-multiple-outline'
+    }
+  ].map(entry => {
+    return {
+      label: `_twin-detail.${entry.key}.${entry.key}-title`,
+      icon: entry.icon,
+      to: { name: entry.key }
+    };
+  });
+}

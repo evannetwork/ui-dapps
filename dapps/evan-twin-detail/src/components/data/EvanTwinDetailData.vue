@@ -19,15 +19,35 @@
 
 <template>
   <div>
-    <h1>{{ '_twin-details.overview.overview-title' || translate }}</h1>
+    <h1>{{ '_twin-detail.data.data-title' | translate }}</h1>
+    <div class="sidenav">
+      <!-- Not using nav-list because it doesnt support router-link properly
+      TODO: Refactor evan-nav-list to use router-links too -->
+      <div class="evan-nav-list">
+        <div class="nav-entries">
+          <template v-for="navItem in navItems">
+            <router-link
+              :id="navItem.id"
+              :key="navItem.id"
+              :to="navItem.to"
+              :active-class="'active'"
+            >
+              <i class="mr-3" :class="navItem.icon"></i>
+              {{ navItem.label | translate }}
+            </router-link>
+          </template>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts">
-import EvanTwinDetailOverviewComponent from './EvanTwinDetailOverview';
-export default EvanTwinDetailOverviewComponent;
+import { EvanTwinDetailDataComponent } from './EvanTwinDetailData';
+export default EvanTwinDetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "EvanTwinDetailOverview.scss";
+@import "EvanTwinDetailData.scss";
 </style>

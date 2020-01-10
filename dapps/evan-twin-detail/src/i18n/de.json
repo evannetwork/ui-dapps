@@ -1,5 +1,19 @@
 {
-  "_twin-detail": {
-    
+  "_twin-detail": {    
+    "data": {
+      "data-title": "Daten"
+    },
+    "did": {
+      "did-title": "DID"
+    },
+    "overview": {
+      "overview-title": "Übersicht"
+    },
+    "sharings": {
+      "sharings-title": "Sharings"
+    },
+    "verifications": {
+      "verifications-title": "Verifikationen"
+    }
   }
 }
