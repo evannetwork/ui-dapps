@@ -34,6 +34,7 @@
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Digitalen Zwilling erstellen",
+      "add-image": "Bild hinzufügen",
       "all": "Alle",
       "bike": "Fahrrad",
       "cancel": "Abbrechen",
@@ -62,6 +63,7 @@
       "searched-for": "Sie suchten nach",
       "updated": "Aktualisiert"
     },
-    "more": "mehr dazu"
+    "more": "mehr dazu",
+    "optional": "optional"
   }
 }

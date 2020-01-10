@@ -46,21 +46,21 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
   /**
    * Name of the input.
    */
-   @Prop() name: string;
+  @Prop() name: string;
 
-   /**
-    * Empty text that shown, when no files are uploaded and the component is not disabled.
-    */
-   @Prop({
-     default: '_evan.file-input.description'
-   }) placeholder: string;
+  /**
+  * Empty text that shown, when no files are uploaded and the component is not disabled.
+  */
+  @Prop({
+    default: '_evan.file-input.description'
+  }) placeholder: string;
 
   /**
     * Empty text that shown, when no files are uploaded and the component is disabled.
     */
-   @Prop({
-     default: '_evan.file-input.empty'
-   }) emptyText: string;
+  @Prop({
+    default: '_evan.file-input.empty'
+  }) emptyText: string;
 
   /**
    * Disable drag & drop and the upload button

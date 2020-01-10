@@ -17,39 +17,60 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { ContainerPlugin } from '@evan.network/api-blockchain-core';
 
 // load twin templates
 import bicycleTwin from './templates/bicycle.json';
 import carTwin from './templates/car.json';
 
+// TODO: get from common interfaces
+interface DigitalTwinTemplate {
+  description: {
+    description?: string;
+    i18n?: {
+      [language: string]: {
+        description?: string;
+        name: string;
+      }
+    };
+    name: string;
+  };
+  plugins: { [pluginName: string]: ContainerPlugin };
+}
+
 @Component
 class AddDigitalTwinComponent extends mixins(EvanComponent) {
-  name: string = null;
-  desc: string = null;
-  template = null;
+  description: string = null;
   image = null;
+  name: string = null;
+  selectedTemplate = 'car';
+  template = <DigitalTwinTemplate>carTwin;
   presetTemplates = [
     {
       label: this.$t('_assets.digitaltwins.bike'),
-      value: 'bike',
-      content: bicycleTwin
+      value: 'bike'
     },
     {
       label: this.$t('_assets.digitaltwins.car'),
-      value: 'car',
-      content: carTwin
+      value: 'car'
     }
   ];
 
   handleTemplateSelectChange(event: Event) {
-    this.template = (<HTMLInputElement>event.target).value;
+    this.selectedTemplate = (<HTMLInputElement>event.target).value;
 
-    console.log(this.template);
+    switch (this.selectedTemplate) {
+      case 'bike':
+        this.template = bicycleTwin;
+        break;
+      case 'car':
+        this.template = carTwin;
+        break;
+      default:
+        console.error('Unknow twin template selected');
+    }
   }
 
   handleImageChange(ev: Event) {
@@ -61,7 +82,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param blob
    */
-  _blobToObj(blob: Blob) {
+  _blobToObj(blob: Blob): Promise<Object> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
@@ -77,10 +98,41 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     });
   }
 
-  async handleFileUpload (ev: Event) {
-    const schema = await this._blobToObj(ev[0].blob);
+  /**
+   * Returns localized string from template or general if not found.
+   *
+   * @param template
+   */
+  getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
+    const lang = window.localStorage.getItem('evan-language');
 
-    console.log(schema);
+    return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
+  }
+
+  /**
+   * Set empty fields from template and update current template by uploaded file.
+   *
+   * @param ev
+   */
+  async handleFileUpload (ev: Event) {
+    // reset when file was deleted
+    if (!ev[0]) {
+      this.template = null;
+
+      return;
+    }
+
+    this.template = await this._blobToObj(ev[0].blob) as DigitalTwinTemplate;
+
+    if (!this.name) {
+      this.name = this.getLocalizedTemplateEntry(this.template, 'name');
+    }
+
+    if (!this.description) {
+      this.description = this.getLocalizedTemplateEntry(this.template, 'description');
+    }
+
+    this.selectedTemplate = null;
   }
 
   showPanel() {
@@ -91,8 +143,18 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     (this.$refs.addDigitalTwinPanel as any).hide();
   }
 
-  addDigitalTwin(ev: Event) {
-    console.log(ev);
+  addDigitalTwin() {
+    // merge custom fields into template.
+    const template = <any>Object.assign({}, this.template); // TODO: use twin template interface
+
+    if (this.description) {
+      template.description.description = this.description;
+    }
+    template.description.name = this.name;
+    delete template.description.i18n;
+
+    console.log('template', template);
+    // TODO: dispatch with image and template
   }
 }
 

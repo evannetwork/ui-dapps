@@ -34,6 +34,7 @@
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Create a new Digital Twin",
+      "add-image": "Add Image",
       "all": "All",
       "bike": "Bike",
       "cancel": "Cancel",
@@ -62,6 +63,7 @@
       "searched-for": "You searched for",
       "updated": "Updated"
     },
-    "more": "more infomation"
+    "more": "more infomation",
+    "optional": "optional"
   }
 }

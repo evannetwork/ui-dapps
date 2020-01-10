@@ -28,15 +28,20 @@
       :hideCloseButton="true"
       :title="$t('_assets.digitaltwins.add-digitaltwin-title')"
     >
-      <!-- Use profile picture componnent for now. Might need refactoring to adjust texts. -->
-      <evan-profile-picture
-        type="device"
-        :accountName="name"
-        :isEditable="true"
-        :src="image ? image : null"
-        @changed="handleImageChange"
-      />
-
+      <label class="col-form-label" for="new-twin-picture">
+        {{ '_assets.digitaltwins.add-image' | translate }}
+        <small class="text-muted">({{ '_assets.optional' | translate }})</small>
+      </label>
+      <div class="my-3 centerX">
+        <evan-profile-picture
+          id="new-twin-picture"
+          type="device"
+          :accountName="name"
+          :isEditable="true"
+          :src="image ? image : null"
+          @changed="handleImageChange"
+        />
+      </div>
       <evan-form-control-input
         v-model="name"
         :label="$t('_assets.digitaltwins.name')"
@@ -45,7 +50,7 @@
       />
 
       <evan-form-control-textarea
-        v-model="desc"
+        v-model="description"
         :label="$t('_assets.digitaltwins.desc')"
         :placeholder="$t('_assets.digitaltwins.desc-placeholder')"
       />
@@ -60,7 +65,8 @@
         :label="'_assets.digitaltwins.template-select-label' | translate"
         :options="presetTemplates"
         :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
-        :required="true"
+        :required="template === null"
+        :value="selectedTemplate"
         @change="handleTemplateSelectChange"
       />
 
@@ -81,6 +87,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
+            :disabled="!(name && template)"
             :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />
         </div>
@@ -93,3 +100,7 @@
 import AddDigitalTwinComponent from './AddDigitalTwin';
 export default AddDigitalTwinComponent;
 </script>
+
+<style lang="scss" scoped>
+  @import './AddDigitalTwins.scss';
+</style>
