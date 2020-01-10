@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="evan theme-evan">
+  <div class="evan theme-evan" :id="$route.params.address">
     <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">

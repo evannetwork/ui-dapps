@@ -21,13 +21,14 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { debounce } from 'lodash';
-import { Prop, Watch } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
-import { EvanTableItem } from '../../shared/EvanTable';
+import { debounce } from 'lodash';
 import { DigitalTwin } from './DigitalTwinInterface';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanTableItem } from '../../shared/EvanTable';
+import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { Prop, Watch } from 'vue-property-decorator';
 
 interface SortFilter {
   filter?: any;
@@ -233,7 +234,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   handleRowClicked(twin: DigitalTwin) {
     this.$router.push({
-      path: `digitaltwins/${twin.address}`
+      path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
     });
   }
 

@@ -24,7 +24,7 @@ import EvanTwinDetailOverviewComponent from './components/EvanTwinDetailOverview
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
   {
-    path: '',
+    path: ':address',
     component: EvanTwinDetailComponent,
     children: [
       {

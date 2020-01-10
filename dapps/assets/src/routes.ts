@@ -22,7 +22,10 @@ import DataContainer from './components/DataContainer.vue';
 import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
 import DigitalTwinDetailComponent from './components/digitaltwins/DigitalTwinDetail.vue';
 import ContactsComponent from './components/contacts/Contacts.vue';
+
 import { RouteConfig } from 'vue-router';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
@@ -50,8 +53,8 @@ const routeRegistration: Array<RouteConfig> = [
         ]
       },
       {
-        path: 'digitaltwins/:id',
-        component: DigitalTwinDetailComponent,
+        path: `evan-twin-detail.${ getDomainName() }/:id`,
+        component: DAppLoaderComponent,
       },
       { name: 'contacts', path: 'contacts', component: ContactsComponent }
     ]
