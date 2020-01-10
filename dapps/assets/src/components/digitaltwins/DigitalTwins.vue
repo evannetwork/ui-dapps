@@ -79,6 +79,7 @@
           no-local-sorting="true"
           @sort-changed="sortHandler"
           @scroll.native="scrollHandler"
+          @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(icon)="data">
             <i class="table-icon mdi mdi-cube-outline" />

@@ -17,14 +17,15 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import AssetsComponent from './components/Assets.vue';
 import DataContainer from './components/DataContainer.vue';
 import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
+import DigitalTwinDetailComponent from './components/digitaltwins/DigitalTwinDetail.vue';
 import ContactsComponent from './components/contacts/Contacts.vue';
+import { RouteConfig } from 'vue-router';
 
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [
+const routeRegistration: Array<RouteConfig> = [
   {
     path: '',
     component: AssetsComponent,
@@ -34,18 +35,25 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
         name: 'digitaltwins',
         path: 'digitaltwins/',
         component: DataContainer,
-        children: [{
-          path: ':query',
-          props: true,
-          component: DigitalTwinsComponent,
-          meta: { type: 'twins' }
-        }, {
-          path: '',
-          component: DigitalTwinsComponent,
-          meta: { type: 'twins' }
-        }]
+        children: [
+          {
+            path: '',
+            component: DigitalTwinsComponent,
+            meta: { type: 'twins' }
+          },
+          {
+            path: 'search/:query',
+            props: true,
+            component: DigitalTwinsComponent,
+            meta: { type: 'twins' }
+          },
+        ]
       },
-      { name: 'contacts', path: 'contacts', component: ContactsComponent },
+      {
+        path: 'digitaltwins/:id',
+        component: DigitalTwinDetailComponent,
+      },
+      { name: 'contacts', path: 'contacts', component: ContactsComponent }
     ]
   }
 

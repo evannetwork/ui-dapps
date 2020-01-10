@@ -52,10 +52,26 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   columns = [
     { key: 'icon', label: '' },
-    { key: 'name', label: this.$t('_assets.digitaltwins.name'), sortable: true },
-    { key: 'owner', label: this.$t('_assets.digitaltwins.owner'), sortable: true },
-    { key: 'updated', label: this.$t('_assets.digitaltwins.updated'), sortable: true },
-    { key: 'created', label: this.$t('_assets.digitaltwins.created'), sortable: true },
+    {
+      key: 'name',
+      label: this.$t('_assets.digitaltwins.name'),
+      sortable: true
+    },
+    {
+      key: 'owner',
+      label: this.$t('_assets.digitaltwins.owner'),
+      sortable: true
+    },
+    {
+      key: 'updated',
+      label: this.$t('_assets.digitaltwins.updated'),
+      sortable: true
+    },
+    {
+      key: 'created',
+      label: this.$t('_assets.digitaltwins.created'),
+      sortable: true
+    },
     { key: 'isFavorite', label: '' }
   ];
   isActiveSearch = false;
@@ -121,7 +137,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
-
   async mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
 
@@ -181,7 +196,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   performSearch() {
     if (typeof this.search === 'function') {
-      this.search(this.searchTerm, { sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
+      this.search(this.searchTerm, {
+        sortBy: this.sortBy,
+        reverse: this.reverse,
+        type: this.selectedFilter
+      });
     }
   }
 
@@ -190,23 +209,32 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   performFetchMore() {
     if (typeof this.fetchMore === 'function') {
-      this.fetchMore({ sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
+      this.fetchMore({
+        sortBy: this.sortBy,
+        reverse: this.reverse,
+        type: this.selectedFilter
+      });
     }
   }
 
   /**
    * Debounce the search.
    */
-  searchHandlerDebounced = debounce(
-    this.performSearch,
-    250,
-    { trailing: true, leading: false }
-  );
+  searchHandlerDebounced = debounce(this.performSearch, 250, {
+    trailing: true,
+    leading: false
+  });
 
   handleSearchBlur() {
     if (this.searchTerm.length === 0) {
       this.isActiveSearch = false;
     }
+  }
+
+  handleRowClicked(twin: DigitalTwin) {
+    this.$router.push({
+      path: `digitaltwins/${twin.address}`
+    });
   }
 
   sortHandler(ctx: SortFilter) {
@@ -253,10 +281,10 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     return this.favoriteList.some(fav => twin.item.address === fav.id);
   }
 
-/**
- * Check if specific twin is loading favorite
- * @param twin Digital Twin
- */
+  /**
+   * Check if specific twin is loading favorite
+   * @param twin Digital Twin
+   */
   private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>) {
     const fav = this.favoriteList.find(item => twin.item.address === item.id);
     return fav ? fav.isLoading : false;
