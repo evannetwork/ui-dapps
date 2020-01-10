@@ -78,12 +78,15 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
    */
   async created() {
     const dapp = this.$store.state.dapp;
-    this.walletLink = this.href !== undefined ? this.href :[
-      dapp.baseUrl,
-      dapp.rootEns,
-      `profile.vue.${dapp.domainName}`,
-      `${this.address}/wallet`
-    ].join('/');
+    this.walletLink =
+      this.href !== undefined
+        ? this.href
+        : [
+            dapp.baseUrl,
+            dapp.rootEns,
+            `profile.vue.${dapp.domainName}`,
+            `${this.address}/wallet`
+          ].join('/');
 
     await Promise.all([
       (async () => {
@@ -100,10 +103,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
       })(),
       (async () => {
         // load balance and parse it to 2 decimal places
-        const amount =
-          Math.floor(
-            parseFloat(await dappBrowser.core.getBalance(this.address)) * 100
-          ) / 100;
+        const amount = await dappBrowser.core.getBalance(this.address);
         this.balance = {
           amount: amount.toLocaleString(this.$i18n.locale(), {
             minimumFractionDigits: 2,
