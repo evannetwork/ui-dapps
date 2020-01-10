@@ -19,11 +19,12 @@
 
 <template>
   <div>
-      <h1>Test</h1>
   </div>
 </template>
 
 <script lang="ts">
+import DigitalTwinDetailComponent from './DigitalTwinDetail';
+export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
