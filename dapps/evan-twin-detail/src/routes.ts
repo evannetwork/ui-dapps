@@ -17,34 +17,89 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
-import EvanTwinDetailComponent from './components/EvanTwinDetail';
+import EvanTwinDetailComponent from './components/EvanTwinDetail.vue';
+import { RouteConfig } from 'vue-router';
+import EvanTwinDetailOverviewComponent from './components/EvanTwinDetailOverview.vue';
 
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [
+const routeRegistration: Array<RouteConfig> = [
   {
     path: '',
     component: EvanTwinDetailComponent,
-    // children: [
-    //   { path: '', redirect: 'digitaltwins' },
-    //   {
-    //     name: 'digitaltwins',
-    //     path: 'digitaltwins/',
-    //     component: DataContainer,
-    //     children: [{
-    //       path: ':query',
-    //       props: true,
-    //       component: DigitalTwinsComponent,
-    //       meta: { type: 'twins' }
-    //     }, {
-    //       path: '',
-    //       component: DigitalTwinsComponent,
-    //       meta: { type: 'twins' }
-    //     }]
-    //   },
-    //   { name: 'contacts', path: 'contacts', component: ContactsComponent },
-    // ]
+    children: [
+      {
+        path: '',
+        redirect: 'overview'
+      },
+      {
+        name: 'overview',
+        path: 'overview',
+        component: EvanTwinDetailOverviewComponent
+      },
+      {
+        name: 'data',
+        path: 'data',
+        component: EvanTwinDetailOverviewComponent
+      },
+      {
+        name: 'verifications',
+        path: 'verifications',
+        component: EvanTwinDetailOverviewComponent
+      },
+      {
+        name: 'sharings',
+        path: 'sharings',
+        component: EvanTwinDetailOverviewComponent
+      },
+      {
+        name: 'did',
+        path: 'did',
+        component: EvanTwinDetailOverviewComponent
+      }
+    ]
   }
+  // {
+  //   name: 'overview',
+  //   path: 'overview',
+  //   component: EvanTwinDetailOverviewComponent,
+  // },
+  // {
+  //   path: ':id',
+  //   component: EvanTwinDetailOverviewComponent,
+  // }
 ];
 
 export default routeRegistration;
+
+// const routeRegistration: Array<RouteConfig> = [
+//   {
+//     path: '',
+//     component: AssetsComponent,
+//     children: [
+//       { path: '', redirect: 'digitaltwins' },
+//       {
+//         name: 'digitaltwins',
+//         path: 'digitaltwins',
+//         component: DataContainer,
+//         children: [
+//           {
+//             path: '',
+//             component: DigitalTwinsComponent,
+//             meta: { type: 'twins' }
+//           },
+//           {
+//             path: 'search/:query',
+//             props: true,
+//             component: DigitalTwinsComponent,
+//             meta: { type: 'twins' }
+//           },
+//         ]
+//       },
+//       {
+//         path: 'digitaltwins/:id',
+//         component: DigitalTwinDetailComponent,
+//       },
+//       { name: 'contacts', path: 'contacts', component: ContactsComponent }
+//     ]
+//   }
+// ];

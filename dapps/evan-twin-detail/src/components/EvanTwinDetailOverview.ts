@@ -22,32 +22,10 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { dapp } from '@evan.network/ui-dapp-browser';
 
 @Component
-export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
-  async mounted() {
-    await this.startDetailDApp();
-  }
-
-  async startDetailDApp() {
-    this.$el.innerHTML = `
-      <div class="evan-loading w-100 h-100 pt-5 pb-5 text-center">
-        <div class="spinner-border text-primary"></div>
-      </div>
-    `;
-    // save loading el, so it can be removed after the dapp was started
-    const loadingEl = this.$el.children[0];
-
-    const containerEl = document.createElement('div');
-    this.$el.appendChild(containerEl);
-
-    // startup the dapp
-    await dapp.startDApp('evan-twin-detail.evan', containerEl);
-
-    // remove loading element
-    if (loadingEl.parentElement) {
-      loadingEl.parentElement.removeChild(loadingEl);
-    }
+export default class EvanTwinDetailOverviewComponent extends mixins(EvanComponent) {
+  mounted() {
+    console.log(this.$route);
   }
 }

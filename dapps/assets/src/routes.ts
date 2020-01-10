@@ -33,7 +33,7 @@ const routeRegistration: Array<RouteConfig> = [
       { path: '', redirect: 'digitaltwins' },
       {
         name: 'digitaltwins',
-        path: 'digitaltwins/',
+        path: 'digitaltwins',
         component: DataContainer,
         children: [
           {
@@ -56,8 +56,6 @@ const routeRegistration: Array<RouteConfig> = [
       { name: 'contacts', path: 'contacts', component: ContactsComponent }
     ]
   }
-
-  // { path: 'contacts', component: AssetsComponent },
 ];
 
 export default routeRegistration;
