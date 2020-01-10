@@ -20,7 +20,6 @@
 import AssetsComponent from './components/Assets.vue';
 import DataContainer from './components/DataContainer.vue';
 import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
-import DigitalTwinDetailComponent from './components/digitaltwins/DigitalTwinDetail.vue';
 import ContactsComponent from './components/contacts/Contacts.vue';
 
 import { RouteConfig } from 'vue-router';
@@ -49,12 +48,12 @@ const routeRegistration: Array<RouteConfig> = [
             props: true,
             component: DigitalTwinsComponent,
             meta: { type: 'twins' }
-          },
+          }
         ]
       },
       {
-        path: `evan-twin-detail.${ getDomainName() }/:id`,
-        component: DAppLoaderComponent,
+        path: `evan-twin-detail.${getDomainName()}/:id`,
+        component: DAppLoaderComponent
       },
       { name: 'contacts', path: 'contacts', component: ContactsComponent }
     ]
