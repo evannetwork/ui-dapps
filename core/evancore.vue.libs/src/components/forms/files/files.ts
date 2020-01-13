@@ -56,7 +56,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
   }) placeholder: string;
 
   /**
-    * Empty text that shown, when no files are uploaded and the component is disabled.
+    * Empty text that is shown when no files are uploaded and the component is disabled.
     */
   @Prop({
     default: '_evan.file-input.empty'
