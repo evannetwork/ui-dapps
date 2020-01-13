@@ -1,7 +1,16 @@
 {
   "_twin-detail": {    
     "data": {
-      "data-title": "Data"
+      "data-title": "Data",
+      "general": {
+        "general-title": "General"
+      },
+      "logs": {
+        "logs-title": "Logs"
+      },
+      "specifications": {
+        "specifications-title": "Specifications"
+      }
     },
     "did": {
       "did-title": "DID"

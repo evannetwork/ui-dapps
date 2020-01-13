@@ -21,7 +21,7 @@
   <div>
     <div class="sidenav">
       <!-- Not using nav-list because it doesnt support router-link properly
-      TODO: Refactor evan-nav-list to use router-links too -->
+      TODO: Refactor evan-nav-list to use router-links too-->
       <div class="evan-nav-list">
         <div class="nav-entries">
           <template v-for="navItem in navItems">
@@ -39,8 +39,35 @@
       </div>
     </div>
     <div class="content-card">
-      <h2>{{ '_twin-detail.data.general.general-title' | translate }}</h2>
-      
+      <h2>{{ '_twin-detail.data.general.information-title' | translate }}</h2>
+
+      <evan-form-control-input
+        v-model="name"
+        :value="'hi'"
+        :label="$t('_twin-detail.data.general.name')"
+        :placeholder="$t('_twin-detail.data.general.name-placeholder')"
+        :required="true"
+      />
+
+      <evan-form-control-textarea
+        v-model="description"
+        :label="$t('_twin-detail.data.general.desc')"
+        :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
+      />
+
+      <evan-form-control-input
+        v-model="type"
+        :label="$t('_twin-detail.data.general.type')"
+        :disabled="true"
+        :required="true"
+      />
+
+      <evan-form-control-input
+        v-model="owner"
+        :label="$t('_twin-detail.data.general.owner')"
+        :disabled="true"
+        :required="true"
+      />
     </div>
   </div>
 </template>
@@ -57,5 +84,6 @@ export default EvanTwinDetailDataGeneralComponent;
   background: white;
   border-radius: 5px;
   max-width: 564px;
+  padding: 32px 24px;
 }
 </style>

@@ -44,7 +44,7 @@ export default class DetailDataComponent extends mixins(EvanComponent) {
     }
   ].map(entry => {
     return {
-      label: `_twin-detail.${entry.key}.${entry.key}-title`,
+      label: `_twin-detail.data.${entry.key}.${entry.key}-title`,
       icon: entry.icon,
       to: { name: entry.key }
     };

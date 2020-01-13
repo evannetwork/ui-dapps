@@ -26,7 +26,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 @Component
 export default class EvanTwinDetailComponent extends mixins(EvanComponent) {
   mounted() {
-    console.log(this.$route);
+
   }
 
   navItems = [
