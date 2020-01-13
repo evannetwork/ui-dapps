@@ -19,6 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { UIContainerFile } from '@evan.network/ui';
 import { ContainerPlugin } from '@evan.network/api-blockchain-core';
 
 // load twin templates
@@ -112,17 +113,17 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   /**
    * Set empty fields from template and update current template by uploaded file.
    *
-   * @param ev
+   * @param files
    */
-  async handleFileUpload (ev: Event) {
+  async handleFileUpload (files: UIContainerFile[]) {
     // reset when file was deleted
-    if (!ev[0]) {
+    if (!files[0]) {
       this.template = null;
 
       return;
     }
 
-    this.template = await this._blobToObj(ev[0].blob) as DigitalTwinTemplate;
+    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
 
     if (!this.name) {
       this.name = this.getLocalizedTemplateEntry(this.template, 'name');
