@@ -57,7 +57,13 @@
 
       <p>
         {{ '_assets.digitaltwins.template-desc' | translate }}
-        <a href="">{{ '_assets.more' | translate }}</a> <!-- TODO Link -->
+        <a
+          href="https://evannetwork.github.io/docs/first_steps/power_apps/digital-twin.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ '_assets.more' | translate }}
+        </a>
       </p>
 
       <evan-form-control-select
