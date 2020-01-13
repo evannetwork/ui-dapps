@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { EvanTwinDetailComponent } from './EvanTwinDetail';
+import EvanTwinDetailComponent from './EvanTwinDetail';
 export default EvanTwinDetailComponent;
 </script>
 

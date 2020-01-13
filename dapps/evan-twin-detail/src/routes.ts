@@ -20,7 +20,8 @@
 import EvanTwinDetailComponent from './components/EvanTwinDetail.vue';
 import { RouteConfig } from 'vue-router';
 import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
-import EvanTwinDetailDataComponent from './components/data/EvanTwinDetailData.vue';
+import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
+import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
@@ -49,17 +50,17 @@ const routeRegistration: Array<RouteConfig> = [
           {
             name: 'general',
             path: 'general',
-            component: EvanTwinDetailDataComponent
+            component: EvanTwinDetailDataGeneralComponent
           },
           {
             name: 'specifications',
             path: 'specifications',
-            component: EvanTwinDetailDataComponent
+            component: UnderDevelopmentComponent
           },
           {
             name: 'logs',
             path: 'logs',
-            component: EvanTwinDetailDataComponent
+            component: UnderDevelopmentComponent
           },
         ]
       },

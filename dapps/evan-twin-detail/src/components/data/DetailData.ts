@@ -24,30 +24,22 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
-export default class EvanTwinDetailComponent extends mixins(EvanComponent) {
+export default class DetailDataComponent extends mixins(EvanComponent) {
   mounted() {
     console.log(this.$route);
   }
 
   navItems = [
     {
-      key: 'overview',
+      key: 'general',
       icon: 'mdi mdi-cube-outline'
     },
     {
-      key: 'data',
+      key: 'specifications',
       icon: 'mdi mdi-account-multiple-outline'
     },
     {
-      key: 'verifications',
-      icon: 'mdi mdi-account-multiple-outline'
-    },
-    {
-      key: 'sharings',
-      icon: 'mdi mdi-account-multiple-outline'
-    },
-    {
-      key: 'did',
+      key: 'logs',
       icon: 'mdi mdi-account-multiple-outline'
     }
   ].map(entry => {

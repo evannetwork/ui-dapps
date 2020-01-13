@@ -39,15 +39,16 @@
         </div>
       </div>
     </div>
+    <router-view></router-view>
 
   </div>
 </template>
 
 <script lang="ts">
-import { EvanTwinDetailDataComponent } from './EvanTwinDetailData';
-export default EvanTwinDetailDataComponent;
+import DetailDataComponent from './DetailData';
+export default DetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "EvanTwinDetailData.scss";
+@import "DetailData.scss";
 </style>
