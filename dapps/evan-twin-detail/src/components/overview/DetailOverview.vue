@@ -24,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import EvanTwinDetailOverviewComponent from './EvanTwinDetailOverview';
+import EvanTwinDetailOverviewComponent from './DetailOverview';
 export default EvanTwinDetailOverviewComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "EvanTwinDetailOverview.scss";
+// @import "EvanTwinDetailOverview.scss";
 </style>

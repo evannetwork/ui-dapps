@@ -19,7 +19,6 @@
 
 <template>
   <div>
-    <h1>{{ '_twin-detail.data.data-title' | translate }}</h1>
     <div class="sidenav">
       <!-- Not using nav-list because it doesnt support router-link properly
       TODO: Refactor evan-nav-list to use router-links too -->
@@ -39,6 +38,7 @@
         </div>
       </div>
     </div>
+
     <router-view></router-view>
 
   </div>
@@ -50,5 +50,5 @@ export default DetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "DetailData.scss";
+// @import "DetailData.scss";
 </style>

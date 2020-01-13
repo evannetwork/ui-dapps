@@ -19,7 +19,29 @@
 
 <template>
   <div>
-    <h1>{{ '_twin-detail.data.general.general-title' | translate }}</h1>
+    <div class="sidenav">
+      <!-- Not using nav-list because it doesnt support router-link properly
+      TODO: Refactor evan-nav-list to use router-links too -->
+      <div class="evan-nav-list">
+        <div class="nav-entries">
+          <template v-for="navItem in navItems">
+            <router-link
+              :id="navItem.id"
+              :key="navItem.id"
+              :to="navItem.to"
+              :active-class="'active'"
+            >
+              <i class="mr-3" :class="navItem.icon"></i>
+              {{ navItem.label | translate }}
+            </router-link>
+          </template>
+        </div>
+      </div>
+    </div>
+    <div class="content-card">
+      <h2>{{ '_twin-detail.data.general.general-title' | translate }}</h2>
+      
+    </div>
   </div>
 </template>
 
@@ -29,5 +51,11 @@ export default EvanTwinDetailDataGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "DetailDataGeneral.scss";
+// @import "DetailDataGeneral.scss";
+
+.content-card {
+  background: white;
+  border-radius: 5px;
+  max-width: 564px;
+}
 </style>
