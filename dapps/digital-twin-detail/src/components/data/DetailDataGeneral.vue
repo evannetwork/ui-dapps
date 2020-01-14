@@ -40,7 +40,6 @@
 
         <evan-form-control-input
           v-model="name"
-          :value="'hi'"
           :label="$t('_twin-detail.data.general.name')"
           :placeholder="$t('_twin-detail.data.general.name-placeholder')"
           :required="true"

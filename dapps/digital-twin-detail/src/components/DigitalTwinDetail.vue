@@ -25,15 +25,10 @@
           <div class="sidenav">
             <div class="sidenav-header">
               <div class="icon-row">
-                <evan-button
-                  @click="close"
-                  :type="'icon-secondary'"
-                  size="lg"
-                  icon="mdi mdi-close"
-                />
+                <evan-button @click="close" :type="'icon-secondary'" icon="mdi mdi-close" />
                 <div class="flex-grow-1"></div>
-                <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-star-outline" />
-                <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-dots-vertical" />
+                <evan-button :type="'icon-secondary'" icon="mdi mdi-star-outline" />
+                <evan-button :type="'icon-secondary'" icon="mdi mdi-dots-vertical" />
               </div>
 
               <evan-profile-picture
