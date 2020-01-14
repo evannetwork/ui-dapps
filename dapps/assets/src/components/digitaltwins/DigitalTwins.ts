@@ -233,9 +233,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   handleRowClicked(twin: DigitalTwin) {
-    this.$router.push({
-      path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
-    });
+    window.location.hash = `/${this.dapp.rootEns}/digital-twin-detail.${this.dapp.domainName}/${twin.address}`;
+
+    // this.$router.push({
+    //   path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
+    // });
   }
 
   sortHandler(ctx: SortFilter) {

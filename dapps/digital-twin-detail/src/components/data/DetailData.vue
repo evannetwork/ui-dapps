@@ -18,10 +18,10 @@
 */
 
 <template>
-  <div>
+  <div class="d-flex">
     <div class="sidenav">
       <!-- Not using nav-list because it doesnt support router-link properly
-      TODO: Refactor evan-nav-list to use router-links too -->
+      TODO: Refactor evan-nav-list to use router-links too-->
       <div class="evan-nav-list">
         <div class="nav-entries">
           <template v-for="navItem in navItems">
@@ -31,7 +31,6 @@
               :to="navItem.to"
               :active-class="'active'"
             >
-              <i class="mr-3" :class="navItem.icon"></i>
               {{ navItem.label | translate }}
             </router-link>
           </template>
@@ -39,8 +38,9 @@
       </div>
     </div>
 
-    <router-view></router-view>
-
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -50,5 +50,21 @@ export default DetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-// @import "DetailData.scss";
+@import '~@evan.network/ui/src/style/utils';
+
+.sidenav {
+  width: 205px;
+  background: white;
+  border: 2px solid cssVar('bg-level-2');
+  margin-left: 3px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 56px;
+}
 </style>

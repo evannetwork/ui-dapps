@@ -23,8 +23,33 @@
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
           <div class="sidenav">
+            <div class="sidenav-header">
+              <div class="icon-row">
+                <evan-button
+                  @click="close"
+                  :type="'icon-secondary'"
+                  size="lg"
+                  icon="mdi mdi-close"
+                />
+                <div class="flex-grow-1"></div>
+                <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-star-outline" />
+                <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-dots-vertical" />
+              </div>
+
+              <evan-profile-picture
+                class="twin-avatar"
+                type="device"
+                :src="'https://via.placeholder.com/150'"
+              />
+              <h4 class="twin-name text-center mt-2">TODO NAME</h4>
+              <h5 class="twin-owner text-center">TODO OWNER</h5>
+              <small
+                class="twin-desc text-center mt-3"
+              >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
+            </div>
+
             <!-- Not using nav-list because it doesnt support router-link properly
-            TODO: Refactor evan-nav-list to use router-links too -->
+            TODO: Refactor evan-nav-list to use router-links too-->
             <div class="evan-nav-list">
               <div class="nav-entries">
                 <template v-for="navItem in navItems">
@@ -43,9 +68,7 @@
           </div>
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
-          <div class="container content">
-            <router-view></router-view>
-          </div>
+          <router-view></router-view>
         </transition>
       </template>
     </evan-dapp-wrapper>
@@ -53,10 +76,42 @@
 </template>
 
 <script lang="ts">
-import EvanTwinDetailComponent from './EvanTwinDetail';
-export default EvanTwinDetailComponent;
+import DigitalTwinDetailComponent from './DigitalTwinDetail';
+export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "EvanTwinDetail.scss";
+@import '~@evan.network/ui/src/style/utils';
+
+.sidenav {
+  width: 240px;
+
+  .sidenav-header {
+    padding: 24px;
+
+    .icon-row {
+      display: flex;
+      margin: -16px; // counter too big padding for icons
+    }
+    .twin-name {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .twin-owner {
+      font-size: 10px;
+      color: cssVar('gray-600');
+    }
+    .twin-desc {
+      font-size: 10px;
+      color: cssVar('gray-900');
+    }
+  }
+}
+
+/deep/ .twin-avatar .profile-picture {
+  --size: 96px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

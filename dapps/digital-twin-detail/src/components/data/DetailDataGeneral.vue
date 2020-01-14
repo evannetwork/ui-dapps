@@ -19,25 +19,6 @@
 
 <template>
   <div>
-    <div class="sidenav">
-      <!-- Not using nav-list because it doesnt support router-link properly
-      TODO: Refactor evan-nav-list to use router-links too-->
-      <div class="evan-nav-list">
-        <div class="nav-entries">
-          <template v-for="navItem in navItems">
-            <router-link
-              :id="navItem.id"
-              :key="navItem.id"
-              :to="navItem.to"
-              :active-class="'active'"
-            >
-              <i class="mr-3" :class="navItem.icon"></i>
-              {{ navItem.label | translate }}
-            </router-link>
-          </template>
-        </div>
-      </div>
-    </div>
     <div class="content-card">
       <h2>{{ '_twin-detail.data.general.information-title' | translate }}</h2>
 

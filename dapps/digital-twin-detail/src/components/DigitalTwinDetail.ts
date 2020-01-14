@@ -24,29 +24,41 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
-export default class DetailDataComponent extends mixins(EvanComponent) {
+export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   mounted() {
-    console.log(this.$route);
+
   }
 
   navItems = [
     {
-      key: 'general',
-      icon: 'mdi mdi-cube-outline'
+      key: 'overview',
+      icon: 'mdi mdi-view-dashboard-outline'
     },
     {
-      key: 'specifications',
-      icon: 'mdi mdi-account-multiple-outline'
+      key: 'data',
+      icon: 'mdi mdi-file-document-box-outline'
     },
     {
-      key: 'logs',
-      icon: 'mdi mdi-account-multiple-outline'
+      key: 'verifications',
+      icon: 'mdi mdi-checkbox-marked-circle-outline'
+    },
+    {
+      key: 'sharings',
+      icon: 'mdi mdi-share-variant'
+    },
+    {
+      key: 'did',
+      icon: 'mdi mdi-identifier'
     }
   ].map(entry => {
     return {
-      label: `_twin-detail.data.${entry.key}.${entry.key}-title`,
+      label: `_twin-detail.${entry.key}.${entry.key}-title`,
       icon: entry.icon,
       to: { name: entry.key }
     };
   });
+
+  close() {
+    window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
+  }
 }

@@ -17,13 +17,12 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import EvanTwinDetailComponent from './components/EvanTwinDetail.vue';
+import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import { RouteConfig } from 'vue-router';
 import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
 import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
 
-// map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
   {
     path: ':address',
@@ -42,26 +41,17 @@ const routeRegistration: Array<RouteConfig> = [
         name: 'data',
         path: 'data',
         component: EvanTwinDetailDataComponent,
+        redirect: 'data/general',
         children: [
-          {
-            path: '',
-            redirect: 'general'
-          },
           {
             name: 'general',
             path: 'general',
             component: EvanTwinDetailDataGeneralComponent
           },
           {
-            name: 'specifications',
-            path: 'specifications',
+            path: ':dataset',
             component: UnderDevelopmentComponent
-          },
-          {
-            name: 'logs',
-            path: 'logs',
-            component: UnderDevelopmentComponent
-          },
+          }
         ]
       },
       {

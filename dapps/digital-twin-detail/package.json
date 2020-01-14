@@ -9,8 +9,8 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/evan-twin-detail.js",
-  "name": "evan-twin-detail",
+  "main": "dist/digital-twin-detail.js",
+  "name": "digital-twin-detail",
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
   },
