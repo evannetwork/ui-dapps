@@ -57,6 +57,12 @@ export default class DAppContainer extends bcc.Container {
   contractAddress: string;
 
   /**
+   * Contains all data, that is currently processed by the container save dispatchers. So get entry
+   * can merge original values with these ones.
+   */
+  dispatcherData: any = { };
+
+  /**
    * Currents twin description
    */
   description: DBCPDescriptionInterface;
@@ -116,7 +122,7 @@ export default class DAppContainer extends bcc.Container {
    */
   public async addListEntries(listName: string, values: any[]): Promise<void> {
     await dispatchers.containerSaveDispatcher.start(this.runtime, {
-      addres: this.contractAddress,
+      address: this.contractAddress,
       data: {
         [listName]: values,
       },
@@ -135,6 +141,7 @@ export default class DAppContainer extends bcc.Container {
     ]);
 
     // reset previous saving states
+    this.dispatcherData = { };
     this.dispatcherStates = {
       container: false,
       description: false,
@@ -149,6 +156,7 @@ export default class DAppContainer extends bcc.Container {
       if (instance.data.address === this.contractAddress) {
         this.dispatcherStates.container = true;
         this.dispatcherStates.description = true;
+        this.description = instance.data.description;
       }
     });
 
@@ -157,7 +165,8 @@ export default class DAppContainer extends bcc.Container {
       if (instance.data.address === this.contractAddress) {
         (instance.data.entriesToSave || Object.keys(instance.data.value)).forEach(key => {
           this.dispatcherStates.container = true;
-          this.dispatcherStates.entries[key] = true; 
+          this.dispatcherStates.entries[key] = true;
+          this.dispatcherData[key] = instance.data.value[key];
         });
       }
     });
@@ -212,6 +221,42 @@ export default class DAppContainer extends bcc.Container {
     this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
   }
 
+  /**
+   * Return entry from contract including current dispatcher value
+   *
+   * @param      {string}  entryName  entry name
+   */
+  public async getEntry(entryName: string): Promise<any> {
+    if (this.dispatcherData[entryName]) {
+      return this.dispatcherData[entryName];
+    } else {
+      return await super.getEntry(entryName);
+    }
+  }
+
+  /**
+   * Return list entries from contract including dispatcher values.
+   *
+   * @param      {string}   listName  name of a list in the container
+   * @param      {number}   count     number of items to retrieve
+   * @param      {number}   offset    skip this many entries
+   * @param      {boolean}  reverse   if true, fetches last items first
+   */
+  public async getListEntries(
+    listName: string,
+    count = 10,
+    offset = 0,
+    reverse = false,
+  ): Promise<any[]> {
+    let listEntries = await super.getListEntries(listName, count, offset, reverse);
+
+    // if offset === 0 and the dispatcher is savin some values, add this values to the top
+    if (offset === 0 && this.dispatcherData[listName]) {
+      listEntries.unshift(this.dispatcherData[listName]);
+    }
+
+    return listEntries;
+  }
 
   /**
    * Load basic container information and ensure dispatcher states
@@ -241,7 +286,7 @@ export default class DAppContainer extends bcc.Container {
    */
   public async storeData(data: { [id: string]: any }): Promise<void> {
     await dispatchers.containerSaveDispatcher.start(this.runtime, {
-      addres: this.contractAddress,
+      address: this.contractAddress,
       data,
     });
   }
@@ -254,7 +299,7 @@ export default class DAppContainer extends bcc.Container {
    */
   public async setEntry(entryName: string, value: any, updateDescription = true): Promise<void> {
     await dispatchers.containerSaveDispatcher.start(this.runtime, {
-      addres: this.contractAddress,
+      address: this.contractAddress,
       data: {
         [entryName]: value,
       },

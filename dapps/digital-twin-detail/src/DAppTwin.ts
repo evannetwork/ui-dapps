@@ -142,6 +142,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
       if (instance.data.address === this.contractAddress) {
         this.dispatcherStates.description = true;
         this.dispatcherStates.twin = true;
+        this.description = instance.data.description;
       }
     });
 
@@ -221,8 +222,10 @@ export default class DAppTwin extends bcc.DigitalTwin {
    * @param      {DBCPDescriptionInterface}  description  description to save
    */
   public async setDescription(description = this.description) {
-    await super.setDescription(description);
-    this.description = await this.getDescription();
+    await await dispatchers.containerSaveDispatcher.start(this.runtime, {
+      addres: this.contractAddress,
+      description,
+    });
   }
 
   /**
