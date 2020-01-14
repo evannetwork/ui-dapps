@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { DigitalTwin, Runtime, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
+import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 

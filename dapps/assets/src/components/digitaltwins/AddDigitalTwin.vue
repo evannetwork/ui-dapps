@@ -83,6 +83,14 @@
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
       ></evan-file-input>
 
+      <div v-if="templateErrors">
+        <ul>
+          <li v-for="error in templateErrors" :key="error.property">
+            <span class="text-warning">{{ error.message }}</span>
+          </li>
+        </ul>
+      </div>
+
       <template v-slot:footer>
         <div class="d-flex">
           <evan-button

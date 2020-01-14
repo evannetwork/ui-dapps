@@ -20,7 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { UIContainerFile } from '@evan.network/ui';
-import { ContainerPlugin } from '@evan.network/api-blockchain-core';
+import { ContainerPlugin, Runtime } from '@evan.network/api-blockchain-core';
 
 import createTwinDispatcher from '../dispatchers/createTwinDispatcher';
 // load twin template
@@ -47,11 +47,12 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   description: string = null;
   image = null;
   name: string = null;
-  runtime = null;
+  runtime: Runtime = null;
   selectedTemplate = 'carTwin';
   template = <DigitalTwinTemplate>carTwin;
   twinTemplates = { bicycleTwin, carTwin };
   presetTemplates = this._getTemplateSelectOptions();
+  templateErrors: any = null;
 
   // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
@@ -79,11 +80,18 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       return;
     }
 
+    const rollBackTemplate = JSON.stringify(this.template);
+
     this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
 
-    const valid = this.runtime.description.validateDescription(this.template);
+    // @ts-ignore // TODO: update dts of validateDescription()
+    this.templateErrors = this.runtime.description.validateDescription(this.template);
 
-    console.log(valid);
+    if (this.templateErrors && this.templateErrors.length > 0) {
+      this.template = JSON.parse(rollBackTemplate);
+
+      return;
+    }
 
     this._setDefaults();
     this._addToPresetTemplates(this.template, files[0].name);
