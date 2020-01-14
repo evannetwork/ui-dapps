@@ -106,3 +106,7 @@
 import AddDigitalTwinComponent from './AddDigitalTwin';
 export default AddDigitalTwinComponent;
 </script>
+
+<style lang="scss" scoped>
+  @import './AddDigitalTwins.scss';
+</style>

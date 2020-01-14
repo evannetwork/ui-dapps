@@ -48,9 +48,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   name: string = null;
 
   twinTemplates = { bicycleTwin, carTwin };
-  selectedTemplate = null;
-  // template = <DigitalTwinTemplate>carTwin;
-  template = null;
+  selectedTemplate = 'carTwin';
+  template = <DigitalTwinTemplate>carTwin;
 
   // generate select options from twin templates
   presetTemplates = this._getTemplateSelectOptions();
@@ -107,7 +106,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     // TODO: dispatch with image and template
   }
 
-    /**
+  /**
    * Converts Blob representing JSON file into an JS Object.
    *
    * @param blob
