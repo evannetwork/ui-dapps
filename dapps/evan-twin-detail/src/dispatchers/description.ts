@@ -34,11 +34,11 @@ const dispatcher = new Dispatcher(
 dispatcher
   // update description
   .step(async (instance: DispatcherInstance, data: any) => {
-    if (data.dbcp) {
-      await EvanUIDigitalTwin
-        .getDigitalTwin(instance.runtime, data.address)
-        .setDescription(data.dbcp);
-    }
+    await instance.runtime.description.setDescription(
+      data.addres,
+      data.description,
+      instance.runtime.activeAccount
+    );
   });
 
 export default dispatcher;

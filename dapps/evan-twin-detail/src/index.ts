@@ -46,7 +46,6 @@ export async function startDApp(
   dappEnsOrContract: any,
   dappBaseUrl: any
 ) {
-
   await initializeVue({
     components,
     container,

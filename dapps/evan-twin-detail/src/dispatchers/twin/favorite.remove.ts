@@ -24,7 +24,7 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib'
 
 const dispatcher = new Dispatcher(
-  `digitaltwin.${ dappBrowser.getDomainName() }`,
+  `evan-twin-detail.${ dappBrowser.getDomainName() }`,
   'twinFavoriteRemoveDispatcher',
   40 * 1000,
   '_twin-dispatcher.twin.favorite.remove'
@@ -32,9 +32,11 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    await EvanUIDigitalTwin
-      .getDigitalTwin(instance.runtime, data.address)
-      .removeFromFavorites();
+    const twin = new bcc.DigitalTwin(instance.runtime as bcc.DigitalTwinOptions, {
+      accountId: instance.runtime.activeAccount,
+      address: data.address,
+    });
+    await twin.removeFromFavorites();
   });
 
 export default dispatcher;

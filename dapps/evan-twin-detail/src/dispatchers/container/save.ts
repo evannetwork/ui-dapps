@@ -23,7 +23,7 @@ import { Dispatcher, DispatcherInstance, deepEqual, cloneDeep } from '@evan.netw
 import { utils } from '@evan.network/digitaltwin.lib';
 
 const dispatcher = new Dispatcher(
-  `datacontainer.digitaltwin.${ dappBrowser.getDomainName() }`,
+  `evan-twin-detail.${ dappBrowser.getDomainName() }`,
   'containerSaveDispatcher',
   40 * 1000,
   '_twin-dispatcher.container.save'
@@ -31,62 +31,22 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .startup(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    const container = utils.getContainer(runtime, data.address);
-    data.plugin = data.plugin || await container.toPlugin(false);
-
-    // analyse data and check, which data fields must be saved
-    // => for perfomance optimizations this will be passed into the dispatcher
-    // data.saveDescription = data.saveDescription;
-    data.entriesToSave = data.entriesToSave || [ ];
+    // be able to save already saved entries to indexedDB, so we will not save duplicated on errors
+    data.entriesToSave = data.entriesToSave || Object.keys(data.value);
   })
-
-  // update description
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    const container = utils.getContainer(runtime, data.address);
-    const description = await container.getDescription();
-    const newDescription = data.description;
-
-    // check for changed data
-    if (data.saveDescription) {
-      // set dbcp values
-      description.name = newDescription.name;
-      description.description = newDescription.description;
-      description.imgSquare = newDescription.imgSquare;
-
-      // don't forget to update the template schema
-      description.dataSchema = { };
-      Object.keys(data.plugin.template.properties).forEach(property =>
-        description.dataSchema[property] = data.plugin.template.properties[property].dataSchema
-      );
-
-      await container.setDescription(description);
-    }
-  })
-
-  // update entries
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = utils.getRuntime(instance.runtime);
-    const container = utils.getContainer(runtime, data.address);
-    const containerCache = new ContainerCache(runtime.activeAccount);
+    const container = new bcc.Container(instance.runtime as bcc.ContainerOptions, data.address);
+    const { template } = await container.toPlugin();
 
     // copy the entries to save, so the iteration will not be affected by removing entries to save
     // from the data object => entries will be removed and the data will be persisted, after the
     // synchronization of this entry was saved successfull, so the user won't do this twice
     const entriesToSave = cloneDeep(bcc.lodash, data.entriesToSave, true);
     await Promise.all(entriesToSave.map(async (entryKey: string, index: number) => {
-      if (data.plugin.template.properties[entryKey].type === 'list') {
-        await container.addListEntries(entryKey, data.plugin.template.properties[entryKey].value);
+      if (template.properties[entryKey].type === 'list') {
+        await container.addListEntries(entryKey, data.value);
       } else {
-        await container.setEntry(entryKey, data.plugin.template.properties[entryKey].value);
-      }
-
-      // delete cached entry
-      const cached = await containerCache.get(data.address);
-      if (cached) {
-        delete cached.template.properties[entryKey];
-        await containerCache.put(data.address, cached);
+        await container.setEntry(entryKey, data.value);
       }
 
       // remove the list entry and persist the state into the indexeddb
