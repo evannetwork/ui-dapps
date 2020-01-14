@@ -8,6 +8,7 @@
         "information-title": "Information",
         "name": "Name",
         "owner": "Owner",
+        "twin-image": "Twin Image",
         "type": "Type"
       },
       "logs": {

@@ -39,7 +39,7 @@
               <evan-profile-picture
                 class="twin-avatar"
                 type="device"
-                :src="'https://via.placeholder.com/150'"
+                :src="'https://via.placeholder.com/96'"
               />
               <h4 class="twin-name text-center mt-2">TODO NAME</h4>
               <h5 class="twin-owner text-center">TODO OWNER</h5>
