@@ -28,7 +28,17 @@
                 <evan-button @click="close" :type="'icon-secondary'" icon="mdi mdi-close" />
                 <div class="flex-grow-1"></div>
                 <evan-button :type="'icon-secondary'" icon="mdi mdi-star-outline" />
-                <evan-button :type="'icon-secondary'" icon="mdi mdi-dots-vertical" />
+                <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret>
+                  <template v-slot:button-content>
+                    <evan-button
+                      :type="'icon-secondary'"
+                      icon="mdi mdi-dots-vertical"
+                    />
+                  </template>
+                  <b-dropdown-item href="#">Action</b-dropdown-item>
+                  <b-dropdown-item href="#">Another action</b-dropdown-item>
+                  <b-dropdown-item href="#">Something else here...</b-dropdown-item>
+                </b-dropdown>
               </div>
 
               <evan-profile-picture
@@ -87,6 +97,12 @@ export default DigitalTwinDetailComponent;
     .icon-row {
       display: flex;
       margin: -16px; // counter too big padding for icons
+
+      /deep/ .dropdown.b-dropdown {
+        & > button.btn {
+          padding: 0;
+        }
+      }
     }
     .twin-name {
       font-size: 12px;
@@ -103,6 +119,8 @@ export default DigitalTwinDetailComponent;
     }
   }
 }
+
+
 
 /deep/ .twin-avatar .profile-picture {
   --size: 96px;

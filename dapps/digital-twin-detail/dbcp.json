@@ -2,6 +2,10 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
+      "dependencies": {
+        "bootstrap.vue.libs": "^2.1.0",
+        "evancore.vue.libs": "^1.9.0"
+      },
       "entrypoint": "digital-twin-detail.js",
       "files": ["digital-twin-detail.js", "digital-twin-detail.css"],
       "origin": "QmUt3AybpEsg37F4DwWkAfJPjuvHtHrCNQu2n74gEA4riZ",
