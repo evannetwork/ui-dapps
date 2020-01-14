@@ -54,17 +54,15 @@
 </template>
 
 <script lang="ts">
-import EvanTwinDetailDataGeneralComponent from './DetailDataGeneral';
-export default EvanTwinDetailDataGeneralComponent;
+import DigitalTwinDetailDataGeneralComponent from './DetailDataGeneral';
+export default DigitalTwinDetailDataGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-// @import "DetailDataGeneral.scss";
-
 .content-card {
   background: white;
-  border-radius: 5px;
-  max-width: 564px;
+  border-radius: 4px;
+  width: 564px;
   padding: 32px 24px;
 }
 </style>

@@ -25,10 +25,6 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
-  mounted() {
-
-  }
-
   navItems = [
     {
       key: 'overview',

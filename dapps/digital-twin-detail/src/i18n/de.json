@@ -3,7 +3,12 @@
     "data": {
       "data-title": "Daten",
       "general": {
-        "general-title": "Allgemein"
+        "desc": "Beschreibung",
+        "general-title": "Allgemein",
+        "information-title": "Informationen",
+        "name": "Name",
+        "owner": "Besitzer",
+        "type": "Typ"
       },
       "logs": {
         "logs-title": "Logs"
