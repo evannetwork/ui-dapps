@@ -17,33 +17,30 @@
   the following URL: https://evan.network/license/
 */
 
-import { DigitalTwin } from '@evan.network/api-blockchain-core';
+import { DigitalTwin, Runtime, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { utils } from '@evan.network/digitaltwin.lib';
-
 
 const dispatcher = new Dispatcher(
   `assets.${ dappBrowser.getDomainName() }`,  // TODO: verify if its correct
   'createTwinDispatcher',
-  40 * 1000,
+  1000000, // depends propably on plugins etc.
   'assets.digital-twins.create-twin-dispatcher'
 );
-
-let runtime = null;
 
 dispatcher
   // upload image into ipfs
   .step(async (instance: DispatcherInstance, { twinImage, twinTemplate } ) => {
-    runtime = utils.getRuntime(instance.runtime);
+    const imageBuffer = Buffer.from(twinImage.file);
 
     // add ipfs to template
-    // twinTemplate.imgSquare = await runtime.dfs.add(twinImage.key, twinImage.dataBuffer);;
+    twinTemplate.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+    console.log(twinTemplate.imgSquare);
   })
   // create the twin
   .step(async (instance: DispatcherInstance, { twinTemplate }) => {
-    const newTwin = await DigitalTwin.create(runtime, {
-      accountId: runtime.accountId,
+    const newTwin = await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
+      accountId: instance.runtime.activeAccount,
       ...twinTemplate
     });
 

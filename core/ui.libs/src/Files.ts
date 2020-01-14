@@ -18,6 +18,7 @@
 */
 
 import * as bcc from '@evan.network/api-blockchain-core';
+import FileType from 'file-type/browser';
 
 export interface UIContainerFile extends bcc.ContainerFile {
   /**
@@ -69,6 +70,21 @@ export async function fileToContainerFile(
     readableSize: getReadableFileSize(file.size),
     size: file.size,
   };
+}
+
+export async function blobUriFromIpfsHash(runtime: bcc.Runtime, hash: string) {
+  // @ts-ignore
+  const buffer = await runtime.dfs.get(hash, true);
+
+  return blobUriFromBuffer(buffer);
+}
+
+export async function blobUriFromBuffer(buffer: Buffer) {
+  const urlCreator = (<any>window).URL || (<any>window).webkitURL;
+  const fileType = await FileType.fromBuffer(buffer);
+  const blob = new Blob([buffer], fileType as BlobPropertyBag);
+
+  return urlCreator.createObjectURL(blob);
 }
 
 /**

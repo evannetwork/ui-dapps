@@ -65,7 +65,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   }
 
   async created() {
-    this.runtime = await this.getRuntime(); // TODO: possible to do unblocking?
+    this.runtime = await this.getRuntime();
   }
 
   /**
@@ -110,9 +110,6 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
     template.description.name = this.name;
     delete template.description.i18n;
-
-    console.log('template', template);
-    // TODO: dispatch with image and template
 
     createTwinDispatcher.start(this.getRuntime(), {twinTemplate: template, twinImage: this.image } );
   }
