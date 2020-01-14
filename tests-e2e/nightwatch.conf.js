@@ -27,7 +27,7 @@ if (localBrowser) {
     globals: {
       accounts,
     },
-  }
+  };
 } else {
   defaultConfig = {
     selenium: {

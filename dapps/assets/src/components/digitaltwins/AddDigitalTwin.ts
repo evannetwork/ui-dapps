@@ -46,36 +46,65 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   description: string = null;
   image = null;
   name: string = null;
-  selectedTemplate = 'car';
-  template = <DigitalTwinTemplate>carTwin;
-  presetTemplates = [
-    {
-      label: this.$t('_assets.digitaltwins.bike'),
-      value: 'bike'
-    },
-    {
-      label: this.$t('_assets.digitaltwins.car'),
-      value: 'car'
-    }
-  ];
+
+  twinTemplates = { bicycleTwin, carTwin };
+  selectedTemplate = null;
+  // template = <DigitalTwinTemplate>carTwin;
+  template = null;
+
+  // generate select options from twin templates
+  presetTemplates = this._getTemplateSelectOptions();
 
   handleTemplateSelectChange(event: Event) {
     this.selectedTemplate = (<HTMLInputElement>event.target).value;
-
-    switch (this.selectedTemplate) {
-      case 'bike':
-        this.template = bicycleTwin;
-        break;
-      case 'car':
-        this.template = carTwin;
-        break;
-      default:
-        console.error('Unknow twin template selected');
-    }
+    this.template = this.twinTemplates[this.selectedTemplate];
+    this._setDefaults();
   }
 
   handleImageChange(ev: Event) {
     this.image = ev;
+  }
+
+  /**
+   * Set empty fields from template and update current template by uploaded file.
+   *
+   * @param files
+   */
+  async handleFileUpload (files: UIContainerFile[]) {
+    // skip when file was deleted
+    if (!files[0]) {
+      return;
+    }
+
+    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
+    this._setDefaults();
+    this._addToPresetTemplates(this.template, files[0].name);
+    this.selectedTemplate = files[0].name;
+
+    // ugly hack to wait till underlying select component received new props
+    window.setTimeout(() => this.$forceUpdate(), 200);
+  }
+
+  showPanel() {
+    (this.$refs.addDigitalTwinPanel as any).show();
+  }
+
+  closePanel() {
+    (this.$refs.addDigitalTwinPanel as any).hide();
+  }
+
+  addDigitalTwin() {
+    // merge custom fields into template.
+    const template = <any>Object.assign({}, this.template); // TODO: use twin template interface
+
+    if (this.description) {
+      template.description.description = this.description;
+    }
+    template.description.name = this.name;
+    delete template.description.i18n;
+
+    console.log('template', template);
+    // TODO: dispatch with image and template
   }
 
   /**
@@ -100,62 +129,47 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Adds e new entry to the twin selection list.
+   *
+   * @param template - DigitalTwinTemplate
+   * @param twinKey - unique key per template
+   */
+  _addToPresetTemplates(template: DigitalTwinTemplate, key: string) {
+    this.twinTemplates[key] = template;
+    this.presetTemplates = this._getTemplateSelectOptions();
+  }
+
+  _getTemplateSelectOptions() {
+    return Object.keys(this.twinTemplates).map(twinKey => {
+      return {
+        value: twinKey,
+        label: this._getLocalizedTemplateEntry(this.twinTemplates[twinKey], 'name'),
+      };
+    });
+  }
+
+  /**
    * Returns localized string from template or general if not found.
    *
    * @param template
    */
-  getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
-    const lang = window.localStorage.getItem('evan-language');
+  _getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
+    const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
 
     return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
   }
 
   /**
-   * Set empty fields from template and update current template by uploaded file.
-   *
-   * @param files
+   * Set name and description from twin template when not set before.
    */
-  async handleFileUpload (files: UIContainerFile[]) {
-    // reset when file was deleted
-    if (!files[0]) {
-      this.template = null;
-
-      return;
-    }
-
-    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
-
+  _setDefaults() {
     if (!this.name) {
-      this.name = this.getLocalizedTemplateEntry(this.template, 'name');
+      this.name = this._getLocalizedTemplateEntry(this.template, 'name');
     }
 
     if (!this.description) {
-      this.description = this.getLocalizedTemplateEntry(this.template, 'description');
+      this.description = this._getLocalizedTemplateEntry(this.template, 'description');
     }
-
-    this.selectedTemplate = null;
-  }
-
-  showPanel() {
-    (this.$refs.addDigitalTwinPanel as any).show();
-  }
-
-  closePanel() {
-    (this.$refs.addDigitalTwinPanel as any).hide();
-  }
-
-  addDigitalTwin() {
-    // merge custom fields into template.
-    const template = <any>Object.assign({}, this.template); // TODO: use twin template interface
-
-    if (this.description) {
-      template.description.description = this.description;
-    }
-    template.description.name = this.name;
-    delete template.description.i18n;
-
-    console.log('template', template);
-    // TODO: dispatch with image and template
   }
 }
 
