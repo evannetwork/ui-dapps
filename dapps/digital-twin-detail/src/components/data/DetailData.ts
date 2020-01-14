@@ -31,22 +31,18 @@ export default class DetailDataComponent extends mixins(EvanComponent) {
 
   navItems = [
     {
-      key: 'general',
-      icon: 'mdi mdi-cube-outline'
+      key: 'general'
     },
     {
-      key: 'specifications',
-      icon: 'mdi mdi-account-multiple-outline'
+      key: 'specifications'
     },
     {
-      key: 'logs',
-      icon: 'mdi mdi-account-multiple-outline'
+      key: 'logs'
     }
   ].map(entry => {
     return {
       label: `_twin-detail.data.${entry.key}.${entry.key}-title`,
-      icon: entry.icon,
-      to: { name: entry.key }
+      to: entry.key
     };
   });
 }

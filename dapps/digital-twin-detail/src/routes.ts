@@ -49,15 +49,9 @@ const routeRegistration: Array<RouteConfig> = [
             component: EvanTwinDetailDataGeneralComponent
           },
           {
-            name: 'specifications',
-            path: 'specifications',
+            path: ':dataset',
             component: UnderDevelopmentComponent
-          },
-          {
-            name: 'logs',
-            path: 'logs',
-            component: UnderDevelopmentComponent
-          },
+          }
         ]
       },
       {
