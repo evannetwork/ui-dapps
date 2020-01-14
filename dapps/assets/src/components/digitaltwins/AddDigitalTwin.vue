@@ -32,7 +32,7 @@
         {{ '_assets.digitaltwins.add-image' | translate }}
         <small class="text-muted">({{ '_assets.optional' | translate }})</small>
       </label>
-      <div class="my-3 centerX">
+      <div class="my-3 d-flex justify-content-center">
         <evan-profile-picture
           id="new-twin-picture"
           type="device"
@@ -71,7 +71,7 @@
         :label="'_assets.digitaltwins.template-select-label' | translate"
         :options="presetTemplates"
         :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
-        :required="template === null"
+        :required="true"
         :value="selectedTemplate"
         @change="handleTemplateSelectChange"
       />
@@ -106,7 +106,3 @@
 import AddDigitalTwinComponent from './AddDigitalTwin';
 export default AddDigitalTwinComponent;
 </script>
-
-<style lang="scss" scoped>
-  @import './AddDigitalTwins.scss';
-</style>

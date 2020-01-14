@@ -46,68 +46,23 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   description: string = null;
   image = null;
   name: string = null;
-  selectedTemplate = 'car';
-  template = <DigitalTwinTemplate>carTwin;
-  presetTemplates = [
-    {
-      label: this.$t('_assets.digitaltwins.bike'),
-      value: 'bike'
-    },
-    {
-      label: this.$t('_assets.digitaltwins.car'),
-      value: 'car'
-    }
-  ];
+
+  twinTemplates = { bicycleTwin, carTwin };
+  selectedTemplate = null;
+  // template = <DigitalTwinTemplate>carTwin;
+  template = null;
+
+  // generate select options from twin templates
+  presetTemplates = this._getTemplateSelectOptions();
 
   handleTemplateSelectChange(event: Event) {
     this.selectedTemplate = (<HTMLInputElement>event.target).value;
-
-    switch (this.selectedTemplate) {
-      case 'bike':
-        this.template = bicycleTwin;
-        break;
-      case 'car':
-        this.template = carTwin;
-        break;
-      default:
-        console.error('Unknow twin template selected');
-    }
+    this.template = this.twinTemplates[this.selectedTemplate];
+    this._setDefaults();
   }
 
   handleImageChange(ev: Event) {
     this.image = ev;
-  }
-
-  /**
-   * Converts Blob representing JSON file into an JS Object.
-   *
-   * @param blob
-   */
-  _blobToObj(blob: Blob): Promise<Object> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      try {
-        reader.onload = (ev) => {
-          resolve(JSON.parse(<string>ev.target.result));
-        };
-
-        reader.readAsText(blob);
-      } catch (err) {
-        reject(err);
-      }
-    });
-  }
-
-  /**
-   * Returns localized string from template or general if not found.
-   *
-   * @param template
-   */
-  getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
-    const lang = window.localStorage.getItem('evan-language');
-
-    return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
   }
 
   /**
@@ -116,24 +71,18 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    * @param files
    */
   async handleFileUpload (files: UIContainerFile[]) {
-    // reset when file was deleted
+    // skip when file was deleted
     if (!files[0]) {
-      this.template = null;
-
       return;
     }
 
     this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
+    this._setDefaults();
+    this._addToPresetTemplates(this.template, files[0].name);
+    this.selectedTemplate = files[0].name;
 
-    if (!this.name) {
-      this.name = this.getLocalizedTemplateEntry(this.template, 'name');
-    }
-
-    if (!this.description) {
-      this.description = this.getLocalizedTemplateEntry(this.template, 'description');
-    }
-
-    this.selectedTemplate = null;
+    // ugly hack to wait till underlying select component received new props
+    window.setTimeout(() => this.$forceUpdate(), 200);
   }
 
   showPanel() {
@@ -156,6 +105,71 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
     console.log('template', template);
     // TODO: dispatch with image and template
+  }
+
+    /**
+   * Converts Blob representing JSON file into an JS Object.
+   *
+   * @param blob
+   */
+  _blobToObj(blob: Blob): Promise<Object> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      try {
+        reader.onload = (ev) => {
+          resolve(JSON.parse(<string>ev.target.result));
+        };
+
+        reader.readAsText(blob);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  /**
+   * Adds e new entry to the twin selection list.
+   *
+   * @param template - DigitalTwinTemplate
+   * @param twinKey - unique key per template
+   */
+  _addToPresetTemplates(template: DigitalTwinTemplate, key: string) {
+    this.twinTemplates[key] = template;
+    this.presetTemplates = this._getTemplateSelectOptions();
+  }
+
+  _getTemplateSelectOptions() {
+    return Object.keys(this.twinTemplates).map(twinKey => {
+      return {
+        value: twinKey,
+        label: this._getLocalizedTemplateEntry(this.twinTemplates[twinKey], 'name'),
+      };
+    });
+  }
+
+  /**
+   * Returns localized string from template or general if not found.
+   *
+   * @param template
+   */
+  _getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
+    const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
+
+    return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
+  }
+
+  /**
+   * Set name and description from twin template when not set before.
+   */
+  _setDefaults() {
+    if (!this.name) {
+      this.name = this._getLocalizedTemplateEntry(this.template, 'name');
+    }
+
+    if (!this.description) {
+      this.description = this._getLocalizedTemplateEntry(this.template, 'description');
+    }
   }
 }
 
