@@ -27,6 +27,7 @@ import routes from './routes';
 import components from './components/registry';
 import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 export * from './components/registry';
+export * from './dispatchers';
 export { translations };
 
 System.map['@evan.network/digital-twin-detail'] = `digital-twin-detail.${getDomainName()}!dapp-content`;

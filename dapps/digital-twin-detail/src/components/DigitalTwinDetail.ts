@@ -23,8 +23,22 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
+// intenral imports
+import DAppTwin from '../DAppTwin';
+import TwinDAppComponent from '../TwinDAppComponent';
+
 @Component
-export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
+export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent) {
+  /**
+   * Show loading symbol
+   */
+  loading = true;
+
+  /**
+   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
+   */
+  hashChangeWatcher: any;
+
   navItems = [
     {
       key: 'overview',
@@ -54,7 +68,42 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     };
   });
 
+  /**
+   * Clear the hash change watcher
+   */
+  beforeDestroy() {
+    // clear listeners
+    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
+    this.$store.state.twin && this.$store.state.twin.stop();
+  }
+
   close() {
     window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
+  }
+
+  /**
+   * Setup digital twin functionallities.
+   */
+  async initialize() {
+    let beforeAddress;
+
+    // watch for url changes and load different twin data
+    this.hashChangeWatcher = async () => {
+      // only load another twin, when address has changed
+      if (beforeAddress !== this.$route.params.address) {
+        this.loading = true;
+        this.$store.state.twin && this.$store.state.twin.stop();
+        this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.address);
+        
+        await this.$store.state.twin.initialize();
+
+        beforeAddress = this.$store.state.twin.contractAddress;
+        this.loading = false;
+      }
+    };
+
+    await this.hashChangeWatcher();
+    // watch for hash changes
+    window.addEventListener('hashchange', this.hashChangeWatcher);
   }
 }

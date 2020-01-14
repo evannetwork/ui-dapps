@@ -16,6 +16,6 @@ export class DigitalTwinService {
 
   async getOwner(twin: DigitalTwin) {
     await twin.ensureContract();
-    return this.runtime.executor.executeContractCall(twin.contract, 'owner');
+    return this.runtime.executor.executeContractCall((twin as any).contract, 'owner');
   }
 }

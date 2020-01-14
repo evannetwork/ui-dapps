@@ -44,7 +44,7 @@ export interface DBCPDescriptionInterface {
  * 
  * TODO: Sharing handling.
  */
-export class DAppContainer extends bcc.Container {
+export default class DAppContainer extends bcc.Container {
   /**
    * All loaded containers, enhanced with ui flags and data.
    */
@@ -103,6 +103,7 @@ export class DAppContainer extends bcc.Container {
       address,
     });
 
+    this.runtime = runtime;
     this.vue = vue;
   }
   /**

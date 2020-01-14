@@ -21,8 +21,9 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-import { DBCPDescriptionInterface, DAppContainer } from './DAppContainer';
+import DAppContainer from './DAppContainer';
 import dispatchers from './dispatchers';
+import { DBCPDescriptionInterface, } from './DAppContainer';
 
 /**
  * Extended DigitalTwin class to merge backend logic with dispatcher watching functionalities. Also
@@ -30,7 +31,7 @@ import dispatchers from './dispatchers';
  *
  * @class      DigitalTwinService (name)
  */
-export class DAppTwin extends bcc.DigitalTwin {
+export default class DAppTwin extends bcc.DigitalTwin {
   /**
    * All loaded containers, enhanced with ui flags and data.
    */
@@ -94,6 +95,7 @@ export class DAppTwin extends bcc.DigitalTwin {
       address,
     });
 
+    this.runtime = runtime;
     this.vue = vue;
   }
 
@@ -213,5 +215,12 @@ export class DAppTwin extends bcc.DigitalTwin {
   public async setDescription(description = this.description) {
     await super.setDescription(description);
     this.description = await this.getDescription();
+  }
+
+  /**
+   * Stop all dispatcher listeners.
+   */
+  async stop() {
+    console.log('IMPLEMENT twin stop.')
   }
 }
