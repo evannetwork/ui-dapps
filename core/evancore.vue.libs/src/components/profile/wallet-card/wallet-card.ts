@@ -100,16 +100,13 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
       })(),
       (async () => {
         // load balance and parse it to 2 decimal places
-        const amount =
-          Math.floor(
-            parseFloat(await dappBrowser.core.getBalance(this.address)) * 100
-          ) / 100;
+        const amount = await dappBrowser.core.getBalance(this.address);
         this.balance = {
           amount: amount.toLocaleString(this.$i18n.locale(), {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           }),
-          timestamp: Date.now()
+          timestamp: Date.now(),
         };
       })(),
       (async () => {
