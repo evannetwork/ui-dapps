@@ -23,7 +23,6 @@ import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
 import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
 
-// map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
   {
     path: ':address',
@@ -42,11 +41,8 @@ const routeRegistration: Array<RouteConfig> = [
         name: 'data',
         path: 'data',
         component: EvanTwinDetailDataComponent,
+        redirect: 'data/general',
         children: [
-          {
-            path: '',
-            redirect: 'general'
-          },
           {
             name: 'general',
             path: 'general',

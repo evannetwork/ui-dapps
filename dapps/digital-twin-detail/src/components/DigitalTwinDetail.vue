@@ -25,20 +25,26 @@
           <div class="sidenav">
             <div class="sidenav-header">
               <div class="icon-row">
-                <evan-button @click="close" :type="'icon-secondary'" size="lg" icon="mdi mdi-close" />
+                <evan-button
+                  @click="close"
+                  :type="'icon-secondary'"
+                  size="lg"
+                  icon="mdi mdi-close"
+                />
                 <div class="flex-grow-1"></div>
                 <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-star-outline" />
                 <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-dots-vertical" />
               </div>
+
               <evan-profile-picture
                 class="twin-avatar"
                 type="device"
                 :src="'https://via.placeholder.com/150'"
               />
-              <h4 class="text-center">TODO NAME</h4>
-              <h5 class="text-center text-muted">TODO OWNER</h5>
+              <h4 class="twin-name text-center mt-2">TODO NAME</h4>
+              <h5 class="twin-owner text-center">TODO OWNER</h5>
               <small
-                class="text-center mt-3"
+                class="twin-desc text-center mt-3"
               >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
             </div>
 
@@ -75,16 +81,32 @@ export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+
 .sidenav {
   width: 240px;
-}
-.sidenav-header {
-  padding: 24px;
-}
 
-.icon-row {
-  display: flex;
-  margin: -16px; // counter too big padding for icons
+  .sidenav-header {
+    padding: 24px;
+
+    .icon-row {
+      display: flex;
+      margin: -16px; // counter too big padding for icons
+    }
+    .twin-name {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .twin-owner {
+      font-size: 10px;
+      color: cssVar('gray-600');
+    }
+    .twin-desc {
+      font-size: 10px;
+      color: cssVar('gray-900');
+    }
+  }
 }
 
 /deep/ .twin-avatar .profile-picture {
