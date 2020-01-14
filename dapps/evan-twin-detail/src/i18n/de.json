@@ -1,5 +1,5 @@
 {
-  "_twin-detail": {    
+  "_twin-detail": {
     "data": {
       "data-title": "Daten",
       "general": {
@@ -23,6 +23,19 @@
     },
     "verifications": {
       "verifications-title": "Verifikationen"
+    }
+  },
+  "_twin-dispatcher": {
+    "container": {
+      "save": "Daten speichern...",
+      "share": "Daten freigeben..."
+    },
+    "description": "Beschreibung speichern...",
+    "twin": {
+      "favorite": {
+        "add": "Favorit hinzufügen...",
+        "remove": "Favorit entfernen..."
+      }
     }
   }
 }
