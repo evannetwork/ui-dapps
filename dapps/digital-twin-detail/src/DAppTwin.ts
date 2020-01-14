@@ -64,6 +64,11 @@ export class DAppTwin extends bcc.DigitalTwin {
   };
 
   /**
+   * Twin owner address
+   */
+  owner: string;
+
+  /**
    * Initial provided runtime for creating DAppContainer instances.
    */
   runtime: bcc.Runtime;
@@ -164,6 +169,7 @@ export class DAppTwin extends bcc.DigitalTwin {
   private async ensureTwinInfo() {
     this.contractAddress = await this.getContractAddress();
     this.description = await this.getDescription();
+    this.owner = await this.runtime.executor.executeContractCall((this as any).contract, 'owner');
   }
 
   /**
@@ -192,9 +198,11 @@ export class DAppTwin extends bcc.DigitalTwin {
    * Load basic twin information and setup dispatcher watchers for loading states.
    */
   public async initialize() {
+    await (this as any).ensureContract();
     await this.ensureTwinInfo();
     await this.ensureContainers();
     await this.ensureDispatcherStates();
+    await this.ensureI18N();
   }
 
   /**

@@ -80,6 +80,11 @@ export class DAppContainer extends bcc.Container {
   };
 
   /**
+   * Container owner address
+   */
+  owner: string;
+
+  /**
    * Initial provided runtime for creating DAppContainer instances.
    */
   runtime: bcc.Runtime;
@@ -168,6 +173,7 @@ export class DAppContainer extends bcc.Container {
   private async ensureContainerInfo() {
     this.contractAddress = await this.getContractAddress();
     this.description = await this.getDescription();
+    this.owner = await this.runtime.executor.executeContractCall((this as any).contract, 'owner');
   }
 
   /**
@@ -204,8 +210,8 @@ export class DAppContainer extends bcc.Container {
    * Load basic container information and ensure dispatcher states
    */
   public async initialize() {
+    await (this as any).ensureContract();
     await this.ensureContainerInfo();
-    // set loading states of the container
     await this.ensureDispatcherStates();
     await this.ensureI18N();
   }
