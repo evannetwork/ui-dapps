@@ -40,6 +40,7 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
   await initializeVue({
     components,
     container,
+    contractRouting: true,
     dappBaseUrl,
     dappEnsOrContract,
     dbcpName,

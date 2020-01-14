@@ -18,11 +18,13 @@
     - fix empty number values
     - use default values for 0x0... entries
 - core
-  - `evancore.vue.libs` (v1.9.1)
+  - `evancore.vue.libs` (v1.10.0)
     - fix unchecking all read properties are not unchecking all readWrite fields in `evan-permission-editor`
 
 ### Deprecations
-
+- core
+  - `evancore.vue.libs` (v1.10.0)
+    - disable default contract address routing detect, can be enabled by passing `contractRouting` to vueCore initialization
 
 # Archived repository history
 DApps were previously organized in several github projects. Please have a look at the following projects for previous dapp versions
