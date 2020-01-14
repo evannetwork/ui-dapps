@@ -20,35 +20,39 @@
 <template>
   <div>
     <div class="content-card">
-      <h2>{{ '_twin-detail.data.general.information-title' | translate }}</h2>
+      <!-- <h2 class="card-heading">{{ '_twin-detail.data.general.information-title' | translate }}</h2> -->
 
-      <evan-form-control-input
-        v-model="name"
-        :value="'hi'"
-        :label="$t('_twin-detail.data.general.name')"
-        :placeholder="$t('_twin-detail.data.general.name-placeholder')"
-        :required="true"
-      />
+      <evan-form
+        :title="'_twin-detail.data.general.information-title' | translate"
+      >
+        <evan-form-control-input
+          v-model="name"
+          :value="'hi'"
+          :label="$t('_twin-detail.data.general.name')"
+          :placeholder="$t('_twin-detail.data.general.name-placeholder')"
+          :required="true"
+        />
 
-      <evan-form-control-textarea
-        v-model="description"
-        :label="$t('_twin-detail.data.general.desc')"
-        :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
-      />
+        <evan-form-control-textarea
+          v-model="description"
+          :label="$t('_twin-detail.data.general.desc')"
+          :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
+        />
 
-      <evan-form-control-input
-        v-model="type"
-        :label="$t('_twin-detail.data.general.type')"
-        :disabled="true"
-        :required="true"
-      />
+        <evan-form-control-input
+          v-model="type"
+          :label="$t('_twin-detail.data.general.type')"
+          :disabled="true"
+          :required="true"
+        />
 
-      <evan-form-control-input
-        v-model="owner"
-        :label="$t('_twin-detail.data.general.owner')"
-        :disabled="true"
-        :required="true"
-      />
+        <evan-form-control-input
+          v-model="owner"
+          :label="$t('_twin-detail.data.general.owner')"
+          :disabled="true"
+          :required="true"
+        />
+      </evan-form>
     </div>
   </div>
 </template>
@@ -64,5 +68,11 @@ export default DigitalTwinDetailDataGeneralComponent;
   border-radius: 4px;
   width: 564px;
   padding: 32px 24px;
+
+  .card-heading {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
 }
 </style>
