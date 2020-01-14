@@ -43,9 +43,9 @@
           </div>
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
-          <div class="container content">
+          <!-- <div class="container content"> -->
             <router-view></router-view>
-          </div>
+          <!-- </div> -->
         </transition>
       </template>
     </evan-dapp-wrapper>
@@ -53,10 +53,10 @@
 </template>
 
 <script lang="ts">
-import EvanTwinDetailComponent from './EvanTwinDetail';
-export default EvanTwinDetailComponent;
+import DigitalTwinDetailComponent from './DigitalTwinDetail';
+export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
-@import "EvanTwinDetail.scss";
+@import "DigitalTwinDetail.scss";
 </style>

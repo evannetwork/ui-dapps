@@ -50,5 +50,11 @@ export default DetailDataComponent;
 </script>
 
 <style lang="scss" scoped>
-// @import "DetailData.scss";
+@import '~@evan.network/ui/src/style/utils';
+
+.sidenav {
+  width: 240px;
+  background: white;
+  border: 1px solid cssVar('bg-lvl-1');
+}
 </style>

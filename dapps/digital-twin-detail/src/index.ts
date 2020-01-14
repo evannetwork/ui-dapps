@@ -25,11 +25,11 @@ import { System, getDomainName } from '@evan.network/ui-dapp-browser';
 import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
-import EvanTwinDetailComponent from './components/EvanTwinDetail.vue';
+import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 export * from './components/registry';
 export { translations };
 
-System.map['@evan.network/evan-twin-detail'] = `evan-twin-detail.${getDomainName()}!dapp-content`;
+System.map['@evan.network/digital-twin-detail'] = `digital-twin-detail.${getDomainName()}!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

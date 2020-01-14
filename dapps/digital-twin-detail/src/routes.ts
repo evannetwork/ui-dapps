@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import EvanTwinDetailComponent from './components/EvanTwinDetail.vue';
+import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import { RouteConfig } from 'vue-router';
 import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
