@@ -48,9 +48,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   name: string = null;
 
   twinTemplates = { bicycleTwin, carTwin };
-  selectedTemplate = null;
-  // template = <DigitalTwinTemplate>carTwin;
-  template = null;
+  selectedTemplate = 'carTwin';
+  template = <DigitalTwinTemplate>carTwin;
 
   // generate select options from twin templates
   presetTemplates = this._getTemplateSelectOptions();
