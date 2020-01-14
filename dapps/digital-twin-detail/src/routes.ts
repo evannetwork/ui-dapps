@@ -25,7 +25,7 @@ import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGene
 
 const routeRegistration: Array<RouteConfig> = [
   {
-    path: ':address',
+    path: ':twin',
     component: EvanTwinDetailComponent,
     children: [
       {
@@ -49,7 +49,7 @@ const routeRegistration: Array<RouteConfig> = [
             component: EvanTwinDetailDataGeneralComponent
           },
           {
-            path: ':dataset',
+            path: ':container',
             component: UnderDevelopmentComponent
           }
         ]

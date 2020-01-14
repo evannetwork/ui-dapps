@@ -17,27 +17,23 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import * as bcc from '@evan.network/api-blockchain-core';
+import { bccUtils } from '@evan.network/ui';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwin } from 'dapps/digital-twin.lib';
-import { DigitalTwin } from '@evan.network/api-blockchain-core';
+/**
+ * Loads the owner address and owner name for a specific contract.
+ *
+ * @return     {Promise<{ owner: string, name: string}>}  The owner for contract.
+ */
+export const getOwnerForContract = async function (runtime: bcc.Runtime, contract: any)
+  :Promise<{ owner: string, name: string }> {
+  // load owner address and owner name
+  const owner = await runtime.executor.executeContractCall(contract, 'owner');
+  const name = await bccUtils.getUserAlias(new bcc.Profile({
+    accountId: runtime.activeAccount,
+    profileOwner: owner,
+    ...(runtime as bcc.ProfileOptions)
+  }));
 
-@Component
-export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
-  name: string = null;
-  description: string = null;
-  type: string = 'TODO Type';
-  owner: string = 'TODO Owner';
-  twin: DigitalTwin;
-
-  async mounted() {
-    this.twin = EvanUIDigitalTwin.getDigitalTwin(this.getRuntime(), this.$route.params.container);
-    const desc = await this.twin.getDescription();
-     console.log(desc);
-    this.name = desc.name;
-    this.description = desc.description;
-  }
-}
+  return { owner, name };
+};

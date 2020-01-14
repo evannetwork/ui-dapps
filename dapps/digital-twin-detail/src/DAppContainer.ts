@@ -22,6 +22,7 @@ import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import dispatchers from './dispatchers';
+import { getOwnerForContract, } from './utils';
 
 // TODO: remove type description when ticket is implemented
 // (https://evannetwork.atlassian.net/browse/CORE-864)
@@ -80,9 +81,10 @@ export default class DAppContainer extends bcc.Container {
   };
 
   /**
-   * Container owner address
+   * Container owner address and name
    */
   owner: string;
+  ownerName: string;
 
   /**
    * Initial provided runtime for creating DAppContainer instances.
@@ -174,7 +176,11 @@ export default class DAppContainer extends bcc.Container {
   private async ensureContainerInfo() {
     this.contractAddress = await this.getContractAddress();
     this.description = await this.getDescription();
-    this.owner = await this.runtime.executor.executeContractCall((this as any).contract, 'owner');
+
+    // load owner address and owner name
+    const { owner, name } = await getOwnerForContract(this.runtime, (this as any).contract);
+    this.owner = owner;
+    this.ownerName = name;
   }
 
   /**
@@ -203,7 +209,7 @@ export default class DAppContainer extends bcc.Container {
       }
     }
 
-    this.vue.$i18n.add(locales[0], newTranslations);
+    this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
   }
 
 

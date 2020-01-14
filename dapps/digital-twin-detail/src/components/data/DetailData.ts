@@ -20,25 +20,24 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+// internal imports
+import TwinDAppComponent from '../../TwinDAppComponent';
 
 @Component
-export default class DetailDataComponent extends mixins(EvanComponent) {
+export default class DetailDataComponent extends mixins(TwinDAppComponent) {
   navItems = [
     {
-      key: 'general'
+      label: `_twin-detail.data.general.general-title`,
+      to: 'general'
     },
-    {
-      key: 'specifications'
-    },
-    {
-      key: 'logs'
-    }
-  ].map(entry => {
-    return {
-      label: `_twin-detail.data.${entry.key}.${entry.key}-title`,
-      to: entry.key
-    };
-  });
+  ];
+
+  created() {
+    this.navItems = this.navItems.concat(this.$store.state.twin.containerKeys.map(key => {
+      return {
+        label: this.$t(`${ this.$store.state.twin.contractAddress }.name`, key),
+        to: key
+      };
+    }));
+  }
 }

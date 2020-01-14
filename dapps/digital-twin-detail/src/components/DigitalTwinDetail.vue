@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="evan theme-evan" :id="$route.params.address">
+  <div class="evan theme-evan">
     <evan-dapp-wrapper @loggedin="initialize()">
       <template v-slot:content>
         <evan-loading v-if="loading" />

@@ -18,12 +18,13 @@
 */
 
 import * as bcc from '@evan.network/api-blockchain-core';
-import { DispatcherInstance } from '@evan.network/ui';
+import { DispatcherInstance, } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import DAppContainer from './DAppContainer';
 import dispatchers from './dispatchers';
 import { DBCPDescriptionInterface, } from './DAppContainer';
+import { getOwnerForContract, } from './utils';
 
 /**
  * Extended DigitalTwin class to merge backend logic with dispatcher watching functionalities. Also
@@ -36,6 +37,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
    * All loaded containers, enhanced with ui flags and data.
    */
   containers: { [id: string]: DAppContainer };
+  containerKeys: string[];
 
   /**
    * Twins contract address (also resolved ens address)
@@ -65,9 +67,10 @@ export default class DAppTwin extends bcc.DigitalTwin {
   };
 
   /**
-   * Twin owner address
+   * Twin owner address and name
    */
   owner: string;
+  ownerName: string;
 
   /**
    * Initial provided runtime for creating DAppContainer instances.
@@ -107,7 +110,8 @@ export default class DAppTwin extends bcc.DigitalTwin {
 
     // transform twinEntries to containers object, so all 
     const twinEntries = await this.getEntries();
-    await Promise.all(Object.keys(twinEntries).map(async (key: string) => {
+    this.containerKeys = Object.keys(twinEntries);
+    await Promise.all(this.containerKeys.map(async (key: string) => {
       this.containers[key] = new DAppContainer(
         this.vue,
         this.runtime,
@@ -171,7 +175,11 @@ export default class DAppTwin extends bcc.DigitalTwin {
   private async ensureTwinInfo() {
     this.contractAddress = await this.getContractAddress();
     this.description = await this.getDescription();
-    this.owner = await this.runtime.executor.executeContractCall((this as any).contract, 'owner');
+
+    // load owner address and owner name
+    const { owner, name } = await getOwnerForContract(this.runtime, (this as any).contract);
+    this.owner = owner;
+    this.ownerName = name;
   }
 
   /**
@@ -193,7 +201,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
       newTranslations.description = i18n[locale].name || newTranslations.description;
     }
 
-    this.vue.$i18n.add(locales[0], newTranslations);
+    this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
   }
 
   /**

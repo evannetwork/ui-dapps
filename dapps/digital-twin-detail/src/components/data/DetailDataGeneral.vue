@@ -26,7 +26,7 @@
         :title="'_twin-detail.data.general.information-title' | translate"
       >
         <evan-form-control-input
-          v-model="name"
+          v-model="$store.state.twin.description.name"
           :value="'hi'"
           :label="$t('_twin-detail.data.general.name')"
           :placeholder="$t('_twin-detail.data.general.name-placeholder')"
@@ -34,7 +34,7 @@
         />
 
         <evan-form-control-textarea
-          v-model="description"
+          v-model="$store.state.twin.description.description"
           :label="$t('_twin-detail.data.general.desc')"
           :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
         />
@@ -47,7 +47,7 @@
         />
 
         <evan-form-control-input
-          v-model="owner"
+          :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.owner })`"
           :label="$t('_twin-detail.data.general.owner')"
           :disabled="true"
           :required="true"
