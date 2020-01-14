@@ -74,7 +74,7 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
   beforeDestroy() {
     // clear listeners
     this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
-    this.$store.state.twin && this.$store.state.twin.stop();
+    this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
   }
 
   close() {
@@ -92,7 +92,7 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
       // only load another twin, when address has changed
       if (beforeAddress !== this.$route.params.twin) {
         this.loading = true;
-        this.$store.state.twin && this.$store.state.twin.stop();
+        this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
         this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
         
         await this.$store.state.twin.initialize();

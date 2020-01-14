@@ -87,6 +87,11 @@ export default class DAppContainer extends bcc.Container {
   };
 
   /**
+   * List of dispatcher watchers, so they can be cleared on page leaving
+   */
+  listeners: Function[] = [ ];
+
+  /**
    * Container owner address and name
    */
   owner: string;
@@ -141,8 +146,8 @@ export default class DAppContainer extends bcc.Container {
     ]);
 
     // reset previous saving states
-    this.dispatcherData = { };
-    this.dispatcherStates = {
+    const dispatcherData = { };
+    const dispatcherStates = {
       container: false,
       description: false,
       entries: { },
@@ -154,9 +159,9 @@ export default class DAppContainer extends bcc.Container {
     // check description save states
     (descInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        this.dispatcherStates.container = true;
-        this.dispatcherStates.description = true;
-        this.description = instance.data.description;
+        dispatcherStates.container = true;
+        dispatcherStates.description = true;
+        this.vue.$set(this, 'description', instance.data.description);
       }
     });
 
@@ -164,9 +169,9 @@ export default class DAppContainer extends bcc.Container {
     (saveInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
         (instance.data.entriesToSave || Object.keys(instance.data.value)).forEach(key => {
-          this.dispatcherStates.container = true;
-          this.dispatcherStates.entries[key] = true;
-          this.dispatcherData[key] = instance.data.value[key];
+          dispatcherStates.container = true;
+          dispatcherStates.entries[key] = true;
+          dispatcherData[key] = instance.data.value[key];
         });
       }
     });
@@ -177,6 +182,10 @@ export default class DAppContainer extends bcc.Container {
       // if (instance.data.address === this.contractAddress) {
       // }
     });
+
+    // set it afterwards to reduce vue update triggers
+    this.vue.$set(this, 'dispatcherData', dispatcherData);
+    this.vue.$set(this, 'dispatcherStates', dispatcherStates);
   }
 
   /**
@@ -305,5 +314,26 @@ export default class DAppContainer extends bcc.Container {
       },
       updateDescription,
     });
+  }
+
+  /**
+   * Start all dispatcher watchers.
+   */
+  public watchDispatchers() {
+    // clear previously running watchers
+    this.stopWatchDispatchers();
+    // trigger all new watchers and save the listeners
+    this.listeners = [
+      dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.containerSaveDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
+    ];
+  }
+
+  /**
+   * Stop all dispatcher listeners.
+   */
+  async stopWatchDispatchers() {
+    this.listeners.forEach(listener => listener());
   }
 }

@@ -30,7 +30,8 @@ import { getOwnerForContract, } from './utils';
  * Extended DigitalTwin class to merge backend logic with dispatcher watching functionalities. Also
  * provides for stateful data holding.
  *
- * @class      DigitalTwinService (name)
+ * TODO: Implement correct dispatcher callback logic. Currently only dispatcher loading states gets
+ * resetted. No values will be updated.
  */
 export default class DAppTwin extends bcc.DigitalTwin {
   /**
@@ -67,6 +68,11 @@ export default class DAppTwin extends bcc.DigitalTwin {
   };
 
   /**
+   * List of dispatcher watchers, so they can be cleared on page leaving
+   */
+  listeners: Function[] = [ ];
+
+  /**
    * Twin owner address and name
    */
   owner: string;
@@ -76,13 +82,6 @@ export default class DAppTwin extends bcc.DigitalTwin {
    * Initial provided runtime for creating DAppContainer instances.
    */
   runtime: bcc.Runtime;
-
-  /**
-   * Current description save state.
-   */
-  saving: {
-    description: boolean;
-  };
 
   /**
    * Vue state for accessing and extending translations
@@ -135,14 +134,20 @@ export default class DAppTwin extends bcc.DigitalTwin {
     ]);
 
     // reset previous saving states
-    this.saving = { description: false };
+    const dispatcherStates = {
+      addFavorite: false,
+      description: false,
+      favorite: false,
+      removeFavorite: false,
+      twin: false,
+    };
 
     // check description save states
     (descInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
         this.dispatcherStates.description = true;
         this.dispatcherStates.twin = true;
-        this.description = instance.data.description;
+        this.vue.$set(this, 'description', instance.data.description);
       }
     });
 
@@ -168,6 +173,9 @@ export default class DAppTwin extends bcc.DigitalTwin {
         this.dispatcherStates.twin = true;
       }
     });
+
+    // set it afterwards to reduce vue update triggers
+    this.vue.$set(this, 'dispatcherStates', dispatcherStates);
   }
 
   /**
@@ -229,9 +237,26 @@ export default class DAppTwin extends bcc.DigitalTwin {
   }
 
   /**
+   * Start all dispatcher watchers.
+   */
+  public watchDispatchers() {
+    // clear previously running watchers
+    this.stopWatchDispatchers();
+    // trigger all new watchers and save the listeners
+    this.listeners = [
+      dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.twinFavoriteAddDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.twinFavoriteRemoveDispatcher.watch(() => this.ensureDispatcherStates()),
+    ];
+  }
+
+  /**
    * Stop all dispatcher listeners.
    */
-  async stop() {
-    console.log('IMPLEMENT twin stop.')
+  async stopWatchDispatchers() {
+    // clear own watchers
+    this.listeners.forEach(listener => listener());
+    // clear container watchers
+    this.containerKeys.forEach(key => this.containers[key].stopWatchDispatchers());
   }
 }
