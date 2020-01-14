@@ -32,23 +32,23 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   navItems = [
     {
       key: 'overview',
-      icon: 'mdi mdi-cube-outline'
+      icon: 'mdi mdi-view-dashboard-outline'
     },
     {
       key: 'data',
-      icon: 'mdi mdi-account-multiple-outline'
+      icon: 'mdi mdi-file-document-box-outline'
     },
     {
       key: 'verifications',
-      icon: 'mdi mdi-account-multiple-outline'
+      icon: 'mdi mdi-checkbox-marked-circle-outline'
     },
     {
       key: 'sharings',
-      icon: 'mdi mdi-account-multiple-outline'
+      icon: 'mdi mdi-share-variant'
     },
     {
       key: 'did',
-      icon: 'mdi mdi-account-multiple-outline'
+      icon: 'mdi mdi-identifier'
     }
   ].map(entry => {
     return {
