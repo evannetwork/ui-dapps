@@ -19,13 +19,10 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import EvanComponent from '../../component';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 /**
  * Bootstrap modal wrapper in evan custom design.
@@ -38,32 +35,37 @@ export default class EvanModal extends mixins(EvanComponent) {
   /**
    * Removes the normal content containers and enables the ``<slot name="content" v-if="customModal"></slot>`` slot.
    */
-  @Prop({ }) customModal;
+  @Prop({ }) customModal: boolean;
+
+  /**
+   * Flag to span the modal over whole page
+   */
+  @Prop({ default: false }) fullPage: boolean;
 
   /**
    * Set true, to hide the default cancel button in footer.
    */
   @Prop({
     default: false
-  }) hideFooterButton;
+  }) hideFooterButton: boolean;
 
   @Prop({
     default: false
-  }) hideCloseButton;
+  }) hideCloseButton: boolean;
 
   /**
    * Set true, to disable hide() function on modal backdrop click.
    */
   @Prop({
     default: false
-  }) disableBackdrop;
+  }) disableBackdrop: boolean;
 
   /**
    * Configurable modal width
    */
   @Prop({
     default: '500px'
-  }) maxWidth;
+  }) maxWidth: string;
 
   /**
    * Enable or disable evna specific modal part classes. E.g. by removing the modal-header class,
@@ -75,7 +77,7 @@ export default class EvanModal extends mixins(EvanComponent) {
       'modal-body',
       'modal-footer',
     ]
-  }) modalClasses;
+  }) modalClasses: string[];
 
   /**
    * Overwrite the original close function.

@@ -25,8 +25,9 @@
         @click="!disableBackdrop && (closeAction ? closeAction() : hide())">
         <div
           class="modal-dialog"
+          :class="{'full-page' : fullPage}"
           role="document"
-          :style="{ 'max-width': maxWidth }"
+          :style="{ 'max-width': maxWidth && !fullPage }"
           @mousedown="preventHide=true;"
           @mouseup="preventHide=false;"
         >
@@ -67,3 +68,6 @@
   export default Component;
 </script>
 
+<style lang="scss" scoped>
+  @import './modal.scss';
+</style>

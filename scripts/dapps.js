@@ -183,12 +183,17 @@ const buildDApp = async (dappDir) => {
 
       // clear timer and calculate time
       serves[dappName].lastDuration = Math.round((Date.now() - startTime) / 1000);
-      
+
       try {
         // show mac notification
         await runExec(`osascript -e 'display notification "${dappName} was successfully build in ${serves[dappName].lastDuration} seconds." with title "${dappName} build"'`)
+        if (process.env.LIVE_RELOAD === 'chrome') {
+          await runExec(`osascript -e 'tell application "Google Chrome" to reload (tabs of window 1 whose URL contains "localhost:3000")'`)
+        } else if(process.env.LIVE_RELOAD === 'brave') {
+          await runExec(`osascript -e 'tell application "Brave Browser" to reload (tabs of window 1 whose URL contains "localhost:3000")'`)
+        }
       } catch (ex) { }
-      
+
       delete serves[dappName].error;
     } catch (ex) {
       try {

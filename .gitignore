@@ -1,14 +1,19 @@
 *.cache
 *.log
 .DS_Store
+.env
+.env.local
 .eslintcache
 .package.json
+.vscode
 coverage
+local.log
 node_modules
 package-lock.json
+selenium-server.log
+tests_output
+yarn-error.log
 yarn.lock
-.env.local
-.vscode
 
 # dapp categories
 */*/dist
