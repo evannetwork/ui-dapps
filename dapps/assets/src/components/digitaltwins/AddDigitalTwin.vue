@@ -58,9 +58,10 @@
       <p>
         {{ '_assets.digitaltwins.template-desc' | translate }}
         <a
-          href="https://evannetwork.github.io/docs/first_steps/power_apps/digital-twin.html"
+          href="https://api-blockchain-core.readthedocs.io/en/latest/contracts/digital-twin-usage-examples.html#handling-templates-and-plugins"
           target="_blank"
           rel="noopener noreferrer"
+          title="Twin API documentation"
         >
           {{ '_assets.more' | translate }}
         </a>

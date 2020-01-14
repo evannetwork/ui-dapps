@@ -22,7 +22,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { UIContainerFile } from '@evan.network/ui';
 import { ContainerPlugin } from '@evan.network/api-blockchain-core';
 
-// load twin templates
+import createTwinDispatcher from '../dispatchers/createTwinDispatcher';
+// load twin template
 import bicycleTwin from './templates/bicycle.json';
 import carTwin from './templates/car.json';
 
@@ -46,14 +47,13 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   description: string = null;
   image = null;
   name: string = null;
-
-  twinTemplates = { bicycleTwin, carTwin };
+  runtime = null;
   selectedTemplate = 'carTwin';
   template = <DigitalTwinTemplate>carTwin;
-
-  // generate select options from twin templates
+  twinTemplates = { bicycleTwin, carTwin };
   presetTemplates = this._getTemplateSelectOptions();
 
+  // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
     this.selectedTemplate = (<HTMLInputElement>event.target).value;
     this.template = this.twinTemplates[this.selectedTemplate];
@@ -62,6 +62,10 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   handleImageChange(ev: Event) {
     this.image = ev;
+  }
+
+  async created() {
+    this.runtime = await this.getRuntime(); // TODO: possible to do unblocking?
   }
 
   /**
@@ -76,6 +80,11 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
 
     this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
+
+    const valid = this.runtime.description.validateDescription(this.template);
+
+    console.log(valid);
+
     this._setDefaults();
     this._addToPresetTemplates(this.template, files[0].name);
     this.selectedTemplate = files[0].name;
@@ -104,6 +113,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
     console.log('template', template);
     // TODO: dispatch with image and template
+
+    createTwinDispatcher.start(this.getRuntime(), {twinTemplate: template, twinImage: this.image } );
   }
 
   /**

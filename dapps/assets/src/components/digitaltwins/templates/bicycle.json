@@ -1,5 +1,8 @@
 {
     "description": {
+      "description": "Twin that represents a bicycle within the real world. Includes technical specifications, information about the owner and a maintenance log.",
+      "author": "Evan GmbH",
+      "version": "0.1.0",
       "i18n": {
         "de": {
           "description": "Dieser Zwilling stellt ein Fahrrad in der realen Welt dar. Er enthält technische Spezifikationen, Informationen über den Eigentümer und ein Wartungsprotokoll.",
@@ -15,6 +18,9 @@
     "plugins": {
       "maintenance": {
         "description": {
+          "description": "Maintenance",
+          "author": "Evan GmbH",
+          "version": "0.1.0",
           "i18n": {
             "de": {
               "description": "Historie der Wartungsprotokolle.",
@@ -97,6 +103,9 @@
       },
       "metadata": {
         "description": {
+          "description": "Specifications",
+          "author": "Evan GmbH",
+          "version": "0.1.0",
           "i18n": {
             "de": {
               "characteristics": {
