@@ -25,7 +25,5 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class EvanTwinDetailOverviewComponent extends mixins(EvanComponent) {
-  mounted() {
-    console.log(this.$route);
-  }
+
 }

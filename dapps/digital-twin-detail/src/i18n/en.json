@@ -3,7 +3,12 @@
     "data": {
       "data-title": "Data",
       "general": {
-        "general-title": "General"
+        "desc": "Description",
+        "general-title": "General",
+        "information-title": "Information",
+        "name": "Name",
+        "owner": "Owner",
+        "type": "Type"
       },
       "logs": {
         "logs-title": "Logs"

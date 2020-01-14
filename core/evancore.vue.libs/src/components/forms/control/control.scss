@@ -1,3 +1,20 @@
+@import '~@evan.network/ui/src/style/utils';
+
 .input-wrapper {
   position: relative;
+
+  input.form-control, textarea.form-control {
+    font-size: 12px;
+    border: 1px solid cssVar('gray-500');
+    color: cssVar('gray-900');
+  
+    &:focus {
+      border: 1px solid cssVar('primary');
+    }
+  
+    &[disabled] {
+      border: 1px solid cssVar('gray-200');
+      color: cssVar('gray-600');
+    }
+  }
 }

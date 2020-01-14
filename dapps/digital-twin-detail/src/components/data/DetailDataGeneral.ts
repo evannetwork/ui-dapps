@@ -26,11 +26,11 @@ import { EvanUIDigitalTwin } from 'dapps/digital-twin.lib';
 import { DigitalTwin } from '@evan.network/api-blockchain-core';
 
 @Component
-export default class EvanTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
+export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
   name: string = null;
   description: string = null;
-  type: string = null;
-  owner: string = null;
+  type: string = 'TODO Type';
+  owner: string = 'TODO Owner';
   twin: DigitalTwin;
 
   async mounted() {

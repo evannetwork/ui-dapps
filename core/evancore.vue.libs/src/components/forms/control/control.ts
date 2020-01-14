@@ -19,8 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import Vue from 'vue';
-import { Prop, Watch } from 'vue-property-decorator';
+import { Prop } from 'vue-property-decorator';
 
 import EvanComponent from '../../../component';
 
@@ -79,7 +78,7 @@ export default class ControlComponent extends mixins(EvanComponent) {
   @Prop() disabled: boolean;
 
   /**
-   * Enable stacked to show labels and inputs not on oneline.
+   * Enable stacked to show labels and inputs not on one line.
    */
   @Prop({
     default: false,
