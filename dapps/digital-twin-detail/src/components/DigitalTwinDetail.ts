@@ -57,4 +57,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
       to: { name: entry.key }
     };
   });
+
+  close() {
+    window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
+  }
 }

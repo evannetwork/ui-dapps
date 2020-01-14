@@ -233,7 +233,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   handleRowClicked(twin: DigitalTwin) {
-    window.location.hash = `/${this.dapp.rootEns}/evan-twin-detail.${this.dapp.domainName}/${twin.address}`;
+    window.location.hash = `/${this.dapp.rootEns}/digital-twin-detail.${this.dapp.domainName}/${twin.address}`;
 
     // this.$router.push({
     //   path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
