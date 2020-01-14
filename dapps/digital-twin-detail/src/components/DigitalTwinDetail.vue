@@ -25,6 +25,10 @@
           <div class="sidenav">
             <!-- Not using nav-list because it doesnt support router-link properly
             TODO: Refactor evan-nav-list to use router-links too -->
+            <evan-profile-picture
+              type="device"
+              :src="'https://via.placeholder.com/150'"
+            />
             <div class="evan-nav-list">
               <div class="nav-entries">
                 <template v-for="navItem in navItems">

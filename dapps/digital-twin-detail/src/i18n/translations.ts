@@ -17,8 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import de from './de.json.js';
-import en from './en.json.js';
+import de from './de.json';
+import en from './en.json';
 
 // map all languages
 export default { de, en };
