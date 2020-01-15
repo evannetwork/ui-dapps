@@ -60,6 +60,7 @@ export default DetailDataComponent;
   height: 100vh;
   position: sticky;
   top: 0;
+  overflow-y: auto;
 }
 
 .content {
