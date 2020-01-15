@@ -22,7 +22,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `assets.${ dappBrowser.getDomainName() }`,  // TODO: verify if its correct
+  `assets.${ dappBrowser.getDomainName() }`,
   'createTwinDispatcher',
   1000000, // depends propably on plugins etc.
   'assets.digital-twins.create-twin-dispatcher'
