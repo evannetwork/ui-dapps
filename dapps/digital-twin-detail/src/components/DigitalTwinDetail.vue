@@ -91,6 +91,10 @@ export default DigitalTwinDetailComponent;
 .sidenav {
   width: 240px;
 
+  .evan-nav-list {
+    height: auto;
+  }
+
   .sidenav-header {
     padding: 24px;
 
