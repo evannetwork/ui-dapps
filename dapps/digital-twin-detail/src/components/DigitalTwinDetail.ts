@@ -104,7 +104,7 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
     };
 
     await this.hashChangeWatcher();
-    // watch for hash changes
+    // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
   }
 }

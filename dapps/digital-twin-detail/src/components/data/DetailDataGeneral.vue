@@ -20,16 +20,29 @@
 <template>
   <div>
     <div class="content-card">
-      <!-- <h2 class="card-heading">{{ '_twin-detail.data.general.information-title' | translate }}</h2> -->
       <!-- TODO: sample loading states
-        <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.description"></div>
+        <div class="spinner-border spinner-border-sm" v-if="$store.state.twin.dispatcherStates.description"></div>
       -->
-      <evan-form
-        :title="'_twin-detail.data.general.information-title' | translate"
-      >
+      <evan-form :title="'_twin-detail.data.general.information-title' | translate">
+        <div class="form-group inline">
+          <label
+            for="twin-avatar"
+            class="col-form-label"
+          >{{ '_twin-detail.data.general.twin-image' | translate }}</label>
+            <div class="input-wrapper">
+              <evan-profile-picture
+                id="twin-avatar"
+                class="twin-avatar"
+                type="device"
+                :isEditable="true"
+                :src="'https://via.placeholder.com/96'"
+                @changed="handleImageChange"
+              />
+            </div>
+        </div>
+
         <evan-form-control-input
           v-model="$store.state.twin.description.name"
-          :value="'hi'"
           :label="$t('_twin-detail.data.general.name')"
           :placeholder="$t('_twin-detail.data.general.name-placeholder')"
           :required="true"
@@ -76,5 +89,19 @@ export default DigitalTwinDetailDataGeneralComponent;
     text-transform: uppercase;
     font-weight: bold;
   }
+}
+
+.form-group.inline {
+   align-items: center;
+
+   & > label.col-form-label {
+    font-size: 12px;
+  }
+}
+
+/deep/ .twin-avatar .profile-picture {
+  --size: 96px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

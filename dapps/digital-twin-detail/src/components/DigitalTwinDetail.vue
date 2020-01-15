@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="evan theme-evan">
+  <div class="evan theme-evan" :id="$route.params.address">
     <evan-dapp-wrapper @loggedin="initialize()">
       <template v-slot:content>
         <evan-loading v-if="loading" />
@@ -27,21 +27,26 @@
             <div class="sidenav">
               <div class="sidenav-header">
                 <div class="icon-row">
-                  <evan-button
-                    @click="close"
-                    :type="'icon-secondary'"
-                    size="lg"
-                    icon="mdi mdi-close"
-                  />
+                  <evan-button @click="close" :type="'icon-secondary'" icon="mdi mdi-close" />
                   <div class="flex-grow-1"></div>
-                  <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-star-outline" />
-                  <evan-button :type="'icon-secondary'" size="lg" icon="mdi mdi-dots-vertical" />
+                  <evan-button :type="'icon-secondary'" icon="mdi mdi-star-outline" />
+                  <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret>
+                    <template v-slot:button-content>
+                      <evan-button
+                        :type="'icon-secondary'"
+                        icon="mdi mdi-dots-vertical"
+                      />
+                    </template>
+                    <b-dropdown-item href="#">TODO Clone</b-dropdown-item>
+                    <b-dropdown-item href="#">TODO Export</b-dropdown-item>
+                    <b-dropdown-item href="#">TODO Remove</b-dropdown-item>
+                  </b-dropdown>
                 </div>
 
                 <evan-profile-picture
                   class="twin-avatar"
                   type="device"
-                  :src="'https://via.placeholder.com/150'"
+                  :src="'https://via.placeholder.com/96'"
                 />
                 <h4 class="twin-name text-center mt-2">TODO NAME</h4>
                 <h5 class="twin-owner text-center">TODO OWNER</h5>
@@ -49,12 +54,6 @@
                   class="twin-desc text-center mt-3"
                 >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
               </div>
-
-              <!-- TODO: sample loading states
-                <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.twin"></div>
-                <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.description"></div>
-                <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.favorite"></div>
-              -->
 
               <!-- Not using nav-list because it doesnt support router-link properly
               TODO: Refactor evan-nav-list to use router-links too-->
@@ -101,6 +100,12 @@ export default DigitalTwinDetailComponent;
     .icon-row {
       display: flex;
       margin: -16px; // counter too big padding for icons
+
+      /deep/ .dropdown.b-dropdown {
+        & > button.btn {
+          padding: 0;
+        }
+      }
     }
     .twin-name {
       font-size: 12px;
@@ -117,6 +122,8 @@ export default DigitalTwinDetailComponent;
     }
   }
 }
+
+
 
 /deep/ .twin-avatar .profile-picture {
   --size: 96px;

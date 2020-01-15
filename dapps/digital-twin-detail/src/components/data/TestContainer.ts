@@ -37,10 +37,20 @@ export default class TestContainerComponent extends mixins(TwinDAppComponent) {
     this.$store.state.container.stopWatchDispatchers();
   }
 
+  created() {
+    this.setupContainer();
+  }
+
+  beforeRouteUpdate() {
+    this.setupContainer();
+  }
+
   /**
    * Setup vuex container and ensure entry data
    */
-  async created() {
+  async setupContainer() {
+    console.log('setup container');
+    this.loading = true;
     this.$store.state.container = this.$store.state.twin
       .containerContracts[this.$route.params.container];
 

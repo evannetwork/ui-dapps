@@ -26,4 +26,5 @@ import { DigitalTwin } from '@evan.network/api-blockchain-core';
 
 @Component
 export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
+
 }

@@ -24,8 +24,8 @@
       <div>
         <h3>{{ `${ $route.params.container }.name` | translate }}</h3>
         <span>{{ `${ $route.params.container }.description` | translate }}</span>
-        <div class="spinner-border spinner-border-sm" v-if="$route.params.container.dispatcherStates.description"></div>
-        <div class="spinner-border spinner-border-sm" v-if="$route.params.container.dispatcherStates.container"></div>
+        <div class="spinner-border spinner-border-sm" v-if="$store.state.container.dispatcherStates.description"></div>
+        <div class="spinner-border spinner-border-sm" v-if="$store.state.container.dispatcherStates.container"></div>
       </div>
 
       <div class="bg-white p-3 mt-3"
@@ -33,7 +33,7 @@
         <h5 class="my-0 py-0 text-uppercase font-weight-bold">
           {{ $t(`${ $route.params.container }.properties.${ entryKey }.name`, entryKey) }}
           {{ $t(`${ $route.params.container }.properties.${ entryKey }.description`, entryKey) }}
-          <div class="spinner-border spinner-border-sm" v-if="$route.params.container.dispatcherStates.entries[entryKey]"></div>
+          <div class="spinner-border spinner-border-sm" v-if="$store.state.container.dispatcherStates.entries[entryKey]"></div>
         </h5>
 
         <textarea

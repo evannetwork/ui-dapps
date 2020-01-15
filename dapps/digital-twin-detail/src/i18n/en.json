@@ -8,6 +8,7 @@
         "information-title": "Information",
         "name": "Name",
         "owner": "Owner",
+        "twin-image": "Twin Image",
         "type": "Type"
       },
       "logs": {
@@ -18,7 +19,7 @@
       }
     },
     "did": {
-      "did-title": "DID"
+      "did-title": "Decentralized ID"
     },
     "overview": {
       "overview-title": "Overview"
