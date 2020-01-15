@@ -17,27 +17,12 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
+import { Container, ContainerPlugin, Runtime, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
-import { getOwnerForContract, } from './utils';
-
-// TODO: remove type description when ticket is implemented
-// (https://evannetwork.atlassian.net/browse/CORE-864)
-export interface DBCPDescriptionInterface {
-  author: string;
-  description?: string;
-  i18n?: {
-    [language: string]: {
-      [id: string]: any;
-      description?: string;
-      name: string;
-    };
-  };
-  name: string;
-}
+import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
@@ -45,27 +30,12 @@ export interface DBCPDescriptionInterface {
  * 
  * TODO: Sharing handling.
  */
-export default class DAppContainer extends bcc.Container {
-  /**
-   * All loaded containers, enhanced with ui flags and data.
-   */
-  containers: { [id: string]: DAppContainer };
-
-  /**
-   * Twins contract address (also resolved ens address)
-   */
-  contractAddress: string;
-
+class DAppContainer extends Container {
   /**
    * Contains all data, that is currently processed by the container save dispatchers. So get entry
    * can merge original values with these ones.
    */
   dispatcherData: any = { };
-
-  /**
-   * Currents twin description
-   */
-  description: DBCPDescriptionInterface;
 
   /**
    * Current states for running dispatchers. Includes description saving, entry saving, sharing /
@@ -93,43 +63,18 @@ export default class DAppContainer extends bcc.Container {
   entries: { [entryName: string]: any };
 
   /**
-   * List of dispatcher watchers, so they can be cleared on page leaving
-   */
-  listeners: Function[] = [ ];
-
-  /**
    * Containers plugin definition for accessing entry data schemas.
    */
-  plugin: bcc.ContainerPlugin;
-
-  /**
-   * Container owner address and name
-   */
-  owner: string;
-  ownerName: string;
-
-  /**
-   * Initial provided runtime for creating DAppContainer instances.
-   */
-  runtime: bcc.Runtime;
-
-  /**
-   * Vue state for accessing and extending translations
-   */
-  vue: EvanComponent;
+  plugin: ContainerPlugin;
 
   /**
    * Call super and initialize new container class.
    */
-  constructor(vue: EvanComponent, runtime: bcc.Runtime, address: string) {
-    super(runtime as bcc.ContainerOptions, {
-      accountId: runtime.activeAccount,
-      address,
-    });
-
-    this.runtime = runtime;
-    this.vue = vue;
+  constructor(vue: EvanComponent, runtime: Runtime, address: string) {
+    super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    this.baseConstructor(vue, runtime, address);
   }
+
   /**
    * Add list entries using the digital-twin detail dispatcher.
    *
@@ -206,20 +151,6 @@ export default class DAppContainer extends bcc.Container {
   }
 
   /**
-   * Basic twin information and update instance params.
-   */
-  private async ensureContainerInfo() {
-    this.contractAddress = await this.getContractAddress();
-    this.description = await this.getDescription();
-    this.plugin = await this.toPlugin();
-
-    // load owner address and owner name
-    const { owner, name } = await getOwnerForContract(this.runtime, (this as any).contract);
-    this.owner = owner;
-    this.ownerName = name;
-  }
-
-  /**
    * Setup the whole data object for the current container. Is not loaded by default, must be runned
    * using
    *
@@ -241,35 +172,6 @@ export default class DAppContainer extends bcc.Container {
   }
 
   /**
-   * Check descriptions i18n and extend vue translation pipeline.
-   */
-  private ensureI18N() {
-    const locales = [ 'en', this.vue.$i18n.locale(), ];
-    const i18n: any = this.description?.i18n || { };
-    const newTranslations = {
-      description: this.description.description,
-      name: this.description.name,
-      properties: { },
-    };
-
-    // also support default language
-    for (let locale in locales) {
-      i18n[locale] = i18n[locale] || { };
-
-      newTranslations.name = i18n[locale].name || newTranslations.name;
-      newTranslations.description = i18n[locale].name || newTranslations.description;
-
-      // check if properties are sent and merge them
-      if (i18n[locale].properties) {
-        newTranslations.properties = bcc.lodash.merge(newTranslations.properties,
-          i18n[locale].properties);
-      }
-    }
-
-    this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
-  }
-
-  /**
    * Return entry from contract including current dispatcher value
    *
    * @param      {string}  entryName  entry name
@@ -278,7 +180,7 @@ export default class DAppContainer extends bcc.Container {
     if (this.dispatcherData[entryName]) {
       return this.dispatcherData[entryName];
     } else {
-      return await super.getEntry(entryName);
+      return await Container.prototype.getEntry.call(this, entryName);
     }
   }
 
@@ -296,9 +198,10 @@ export default class DAppContainer extends bcc.Container {
     offset = 0,
     reverse = false,
   ): Promise<any[]> {
-    let listEntries = await super.getListEntries(listName, count, offset, reverse);
+    let listEntries = await Container.prototype.getListEntries.call(this, listName, count,
+      offset, reverse);
 
-    // if offset === 0 and the dispatcher is savin some values, add this values to the top
+    // if offset === 0 and the dispatcher is saving some values, add this values to the top
     if (offset === 0 && this.dispatcherData[listName]) {
       listEntries.unshift(this.dispatcherData[listName]);
     }
@@ -310,10 +213,10 @@ export default class DAppContainer extends bcc.Container {
    * Load basic container information and ensure dispatcher states
    */
   public async initialize() {
-    await (this as any).ensureContract();
-    await this.ensureContainerInfo();
+    await this.loadBaseInfo();
+    this.plugin = await this.toPlugin();
     await this.ensureDispatcherStates();
-    await this.ensureI18N();
+    this.ensureI18N();
   }
 
   /**
@@ -321,9 +224,8 @@ export default class DAppContainer extends bcc.Container {
    *
    * @param      {DBCPDescriptionInterface}  description  description to save
    */
-  public async setDescription(description = this.description) {
-    await super.setDescription(description);
-    this.description = await this.getDescription();
+  public async setDescription(description?) {
+    this.baseSetDescription(description);
   }
 
   /**
@@ -385,3 +287,9 @@ export default class DAppContainer extends bcc.Container {
     this.listeners.forEach(listener => listener());
   }
 }
+
+// enable multi inheritance for general DAppContract
+interface DAppContainer extends DAppContract { }
+applyMixins(DAppContainer, [ DAppContract ]);
+
+export default DAppContainer;

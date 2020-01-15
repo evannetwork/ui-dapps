@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
     "composite": true,
+    "outDir": "dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "./dist/tsbuildinfo",
+    "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
   "extends": "../../tsconfig.json",
   "include": [
     "./src/**/*",
-    // Required to build. https://github.com/microsoft/TypeScript/issues/25636
     "./src/**/*.json",
-  ],
-  
-  // "files": ["./src/i18n/de.json", "./src/i18n/en.json"]
+    "./src/vue-shim.d.ts"
+  ]
 }

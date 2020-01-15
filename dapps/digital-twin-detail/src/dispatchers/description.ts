@@ -17,12 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib'
-import { utils } from '@evan.network/digitaltwin.lib';
 
 const dispatcher = new Dispatcher(
   `evan-twin-detail.${ dappBrowser.getDomainName() }`,

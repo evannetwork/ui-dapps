@@ -62,7 +62,7 @@
         />
 
         <evan-form-control-input
-          :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.owner })`"
+          :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
           :label="$t('_twin-detail.data.general.owner')"
           :disabled="true"
           :required="true"

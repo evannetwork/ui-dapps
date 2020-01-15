@@ -17,14 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
-import { DispatcherInstance, } from '@evan.network/ui';
+import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
+import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { mixins } from 'vue-class-component';
 
+import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
 import DAppContainer from './DAppContainer';
 import * as dispatchers from './dispatchers';
-import { DBCPDescriptionInterface, } from './DAppContainer';
-import { getOwnerForContract, } from './utils';
 
 /**
  * Extended DigitalTwin class to merge backend logic with dispatcher watching functionalities. Also
@@ -33,23 +33,13 @@ import { getOwnerForContract, } from './utils';
  * TODO: Implement correct dispatcher callback logic. Currently only dispatcher loading states gets
  * resetted. No values will be updated.
  */
-export default class DAppTwin extends bcc.DigitalTwin {
+class DAppTwin extends DigitalTwin {
   /**
    * All loaded containers, enhanced with ui flags and data.
    */
   containers: { [id: string]: DAppContainer };
   containerContracts: { [id: string]: DAppContainer };
   containerKeys: string[];
-
-  /**
-   * Twins contract address (also resolved ens address)
-   */
-  contractAddress: string;
-
-  /**
-   * Currents twin description
-   */
-  description: DBCPDescriptionInterface;
 
   /**
    * Current states for running dispatchers. Includes description saving, entry saving, sharing /
@@ -74,37 +64,11 @@ export default class DAppTwin extends bcc.DigitalTwin {
   favorite: boolean;
 
   /**
-   * List of dispatcher watchers, so they can be cleared on page leaving
-   */
-  listeners: Function[] = [ ];
-
-  /**
-   * Twin owner address and name
-   */
-  owner: string;
-  ownerName: string;
-
-  /**
-   * Initial provided runtime for creating DAppContainer instances.
-   */
-  runtime: bcc.Runtime;
-
-  /**
-   * Vue state for accessing and extending translations
-   */
-  vue: EvanComponent;
-
-  /**
    * Call super and initialize new twin class.
    */
-  constructor(vue: EvanComponent, runtime: bcc.Runtime, address: string) {
-    super(runtime as bcc.DigitalTwinOptions, {
-      accountId: runtime.activeAccount,
-      address,
-    });
-
-    this.runtime = runtime;
-    this.vue = vue;
+  constructor(vue: EvanComponent, runtime: Runtime, address: string) {
+    super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    this.baseConstructor(vue, runtime, address);
   }
 
   /**
@@ -127,7 +91,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
       // load description, contractAddress, dispatcherStates
       await this.containers[key].initialize();
       
-      // make contracts also directly accessable
+      // make contracts also directly accessible
       this.containerContracts[this.containers[key].contractAddress] = this.containers[key];
     }));
   }
@@ -191,62 +155,16 @@ export default class DAppTwin extends bcc.DigitalTwin {
   }
 
   /**
-   * Basic twin information and update instance params.
-   */
-  private async ensureTwinInfo() {
-    this.contractAddress = await this.getContractAddress();
-    this.description = await this.getDescription();
-    this.favorite = await this.isFavorite();
-
-    // load owner address and owner name
-    const { owner, name } = await getOwnerForContract(this.runtime, (this as any).contract);
-    this.owner = owner;
-    this.ownerName = name;
-  }
-
-  /**
-   * Check descriptions i18n and extend vue translation pipeline.
-   */
-  private ensureI18N() {
-    const locales = [ 'en', this.vue.$i18n.locale(), ];
-    const i18n: any = this.description?.i18n || { };
-    const newTranslations = {
-      description: this.description.description,
-      name: this.description.name,
-    };
-
-    // also support default language
-    for (let locale in locales) {
-      i18n[locale] = i18n[locale] || { };
-
-      newTranslations.name = i18n[locale].name || newTranslations.name;
-      newTranslations.description = i18n[locale].name || newTranslations.description;
-    }
-
-    this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
-  }
-
-  /**
    * Load basic twin information and setup dispatcher watchers for loading states.
    */
   public async initialize() {
-    await (this as any).ensureContract();
-    await this.ensureTwinInfo();
+    // load base info and check for favorites status
+    await this.loadBaseInfo();
+    this.favorite = await this.isFavorite();
+
     await this.ensureContainers();
     await this.ensureDispatcherStates();
-    await this.ensureI18N();
-  }
-
-  /**
-   * Saves the current description for this twin.
-   *
-   * @param      {DBCPDescriptionInterface}  description  description to save
-   */
-  public async setDescription(description = this.description) {
-    await await dispatchers.descriptionDispatcher.start(this.runtime, {
-      addres: this.contractAddress,
-      description,
-    });
+    this.ensureI18N();
   }
 
   /**
@@ -272,4 +190,19 @@ export default class DAppTwin extends bcc.DigitalTwin {
     // clear container watchers
     this.containerKeys.forEach(key => this.containers[key].stopWatchDispatchers());
   }
+
+  /**
+   * Saves the current description for this twin.
+   *
+   * @param      {DBCPDescriptionInterface}  description  description to save
+   */
+  public async setDescription(description?: DBCPDescriptionInterface) {
+    this.baseSetDescription(description);
+  }
 }
+
+// enable multi inheritance for general DAppContract
+interface DAppTwin extends DAppContract { }
+applyMixins(DAppTwin, [ DAppContract ]);
+
+export default DAppTwin;

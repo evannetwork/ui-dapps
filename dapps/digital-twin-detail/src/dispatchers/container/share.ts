@@ -18,9 +18,8 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import * as bcc from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig } from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { utils } from '@evan.network/digitaltwin.lib';
 
 const dispatcher = new Dispatcher(
   `evan-twin-detail.${dappBrowser.getDomainName()}`,
@@ -32,10 +31,10 @@ const dispatcher = new Dispatcher(
 /**
  * Return a new container instances for a given runtime and container address.
  *
- * @return     {bcc.Container}  The container.
+ * @return     {Container}  The container.
  */
 const getContainer = (runtime, address) => {
-  return new bcc.Container(<any>runtime, {
+  return new Container(<any>runtime, {
     accountId: runtime.activeAccount,
     address: address,
   });
@@ -100,7 +99,7 @@ dispatcher
 
     await Promise.all(sharingArr.map(async (sharingData: any) => {
       if (sharingData.bMailContent || data.bMailContent) {
-        await Promise.all(sharingData.shareConfigs.map(async (shareConfig: bcc.ContainerShareConfig) => {
+        await Promise.all(sharingData.shareConfigs.map(async (shareConfig: ContainerShareConfig) => {
           await instance.runtime.mailbox.sendMail(
             sharingData.bMailContent || data.bMailContent,
             instance.runtime.activeAccount,

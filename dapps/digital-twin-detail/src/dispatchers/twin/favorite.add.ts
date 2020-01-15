@@ -17,11 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
+import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwin, utils } from '@evan.network/digitaltwin.lib'
 
 const dispatcher = new Dispatcher(
   `evan-twin-detail.${ dappBrowser.getDomainName() }`,
@@ -32,7 +30,7 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const twin = new bcc.DigitalTwin(instance.runtime as bcc.DigitalTwinOptions, {
+    const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,
       address: data.address,
     });

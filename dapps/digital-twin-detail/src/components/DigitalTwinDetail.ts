@@ -20,10 +20,7 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-
-// intenral imports
+// internal imports
 import DAppTwin from '../DAppTwin';
 import TwinDAppComponent from '../TwinDAppComponent';
 
@@ -35,7 +32,7 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
   loading = true;
 
   /**
-   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
+   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
    */
   hashChangeWatcher: any;
 
@@ -82,11 +79,10 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
   }
 
   /**
-   * Setup digital twin functionallities.
+   * Setup digital twin functionalities.
    */
   async initialize() {
     let beforeTwin;
-    let beforeContainer;
 
     // watch for url changes and load different twin data
     this.hashChangeWatcher = async () => {
