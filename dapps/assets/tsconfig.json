@@ -6,6 +6,5 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../digital-twin.lib" },
-    { "path": "../digital-twin-detail" }
   ]
 }
