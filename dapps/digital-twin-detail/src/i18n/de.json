@@ -8,7 +8,7 @@
         "information-title": "Informationen",
         "name": "Name",
         "owner": "Besitzer",
-        "twin-image": "Zwilling Bild",
+        "twin-image": "Bild",
         "type": "Typ"
       },
       "logs": {
@@ -25,7 +25,7 @@
       "overview-title": "Übersicht"
     },
     "sharings": {
-      "sharings-title": "Sharings"
+      "sharings-title": "Freigaben"
     },
     "verifications": {
       "verifications-title": "Verifikationen"

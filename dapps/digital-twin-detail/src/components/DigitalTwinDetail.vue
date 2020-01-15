@@ -120,8 +120,6 @@ export default DigitalTwinDetailComponent;
   }
 }
 
-
-
 /deep/ .twin-avatar .profile-picture {
   --size: 96px;
   margin-left: auto;
