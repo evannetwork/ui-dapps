@@ -25,6 +25,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 // intenral imports
 import DAppTwin from './DAppTwin';
+import DAppContainer from './DAppContainer';
 
 /**
  * Used to handle correct typings for the twin detail dapp.
@@ -33,6 +34,7 @@ import DAppTwin from './DAppTwin';
 export default class TwinDAppComponent extends mixins(EvanComponent) {
   $store: {
     state: {
+      container: DAppContainer;
       twin: DAppTwin;
     };
   };

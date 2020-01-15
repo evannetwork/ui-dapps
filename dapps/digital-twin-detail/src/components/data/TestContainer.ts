@@ -24,26 +24,30 @@ import Component, { mixins } from 'vue-class-component';
 import TwinDAppComponent from '../../TwinDAppComponent';
 
 @Component
-export default class DetailDataComponent extends mixins(TwinDAppComponent) {
-  navItems = [
-    {
-      label: `_twin-detail.data.general.general-title`,
-      to: 'general'
-    },
-  ];
+export default class TestContainerComponent extends mixins(TwinDAppComponent) {
+  /**
+   * Show loading symbol while loading container
+   */
+  loading = true;
 
   /**
-   * Setup dynamic navigation structure.s
+   * Clear dispatcher watchers
+   */
+  beforeDestroy() {
+    this.$store.state.container.stopWatchDispatchers();
+  }
+
+  /**
+   * Setup vuex container and ensure entry data
    */
   async created() {
-    const twin = this.$store.state.twin;
-    this.navItems = this.navItems.concat(twin.containerKeys.map(key => {
-      const containerAddress = twin.containers[key].contractAddress;
+    this.$store.state.container = this.$store.state.twin
+      .containerContracts[this.$route.params.container];
 
-      return {
-        label: this.$t(`${ containerAddress }.name`, key),
-        to: containerAddress
-      };
-    }));
+    // ensure loaded entries and start dispatcher watching
+    await this.$store.state.container.ensureEntries();
+    this.$store.state.container.watchDispatchers();
+
+    this.loading = false;
   }
 }

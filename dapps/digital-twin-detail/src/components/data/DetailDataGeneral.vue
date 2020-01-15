@@ -21,7 +21,9 @@
   <div>
     <div class="content-card">
       <!-- <h2 class="card-heading">{{ '_twin-detail.data.general.information-title' | translate }}</h2> -->
-
+      <!-- TODO: sample loading states
+        <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.description"></div>
+      -->
       <evan-form
         :title="'_twin-detail.data.general.information-title' | translate"
       >

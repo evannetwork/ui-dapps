@@ -85,19 +85,20 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
    * Setup digital twin functionallities.
    */
   async initialize() {
-    let beforeAddress;
+    let beforeTwin;
+    let beforeContainer;
 
     // watch for url changes and load different twin data
     this.hashChangeWatcher = async () => {
       // only load another twin, when address has changed
-      if (beforeAddress !== this.$route.params.twin) {
+      if (beforeTwin !== this.$route.params.twin) {
         this.loading = true;
         this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
         this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
         
         await this.$store.state.twin.initialize();
 
-        beforeAddress = this.$store.state.twin.contractAddress;
+        beforeTwin = this.$store.state.twin.contractAddress;
         this.loading = false;
       }
     };

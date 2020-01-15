@@ -23,7 +23,7 @@ import containerShareDispatcher from './container/share';
 import twinFavoriteAddDispatcher from './twin/favorite.add';
 import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
 
-export default {
+export {
   containerSaveDispatcher,
   containerShareDispatcher,
   descriptionDispatcher,

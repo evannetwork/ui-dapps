@@ -22,7 +22,7 @@ import { DispatcherInstance, } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import DAppContainer from './DAppContainer';
-import dispatchers from './dispatchers';
+import * as dispatchers from './dispatchers';
 import { DBCPDescriptionInterface, } from './DAppContainer';
 import { getOwnerForContract, } from './utils';
 
@@ -38,6 +38,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
    * All loaded containers, enhanced with ui flags and data.
    */
   containers: { [id: string]: DAppContainer };
+  containerContracts: { [id: string]: DAppContainer };
   containerKeys: string[];
 
   /**
@@ -66,6 +67,11 @@ export default class DAppTwin extends bcc.DigitalTwin {
     // removing twins from favorites
     removeFavorite: boolean;
   };
+
+  /**
+   * Is this twin a favorite?
+   */
+  favorite: boolean;
 
   /**
    * List of dispatcher watchers, so they can be cleared on page leaving
@@ -106,6 +112,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
    */
   private async ensureContainers() {
     this.containers = { };
+    this.containerContracts = { };
 
     // transform twinEntries to containers object, so all 
     const twinEntries = await this.getEntries();
@@ -119,6 +126,9 @@ export default class DAppTwin extends bcc.DigitalTwin {
 
       // load description, contractAddress, dispatcherStates
       await this.containers[key].initialize();
+      
+      // make contracts also directly accessable
+      this.containerContracts[this.containers[key].contractAddress] = this.containers[key];
     }));
   }
 
@@ -145,8 +155,8 @@ export default class DAppTwin extends bcc.DigitalTwin {
     // check description save states
     (descInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        this.dispatcherStates.description = true;
-        this.dispatcherStates.twin = true;
+        dispatcherStates.description = true;
+        dispatcherStates.twin = true;
         this.vue.$set(this, 'description', instance.data.description);
       }
     });
@@ -154,23 +164,25 @@ export default class DAppTwin extends bcc.DigitalTwin {
     // check if twin is added as favorite
     (addFavInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        this.dispatcherStates.addFavorite = true;
-        this.dispatcherStates.favorite = true;
+        dispatcherStates.addFavorite = true;
+        dispatcherStates.favorite = true;
+        this.vue.$set(this, 'favorite', true);
       }
     });
 
     // check if twin is removed from favorite
     (removeFavInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        this.dispatcherStates.removeFavorite = true;
-        this.dispatcherStates.favorite = true;
+        dispatcherStates.removeFavorite = true;
+        dispatcherStates.favorite = true;
+        this.vue.$set(this, 'favorite', false);
       }
     });
 
     // check if any container gets saved
     Object.keys(this.containers).forEach(containerKey => {
       if (this.containers[containerKey].dispatcherStates.container) {
-        this.dispatcherStates.twin = true;
+        dispatcherStates.twin = true;
       }
     });
 
@@ -184,6 +196,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
   private async ensureTwinInfo() {
     this.contractAddress = await this.getContractAddress();
     this.description = await this.getDescription();
+    this.favorite = await this.isFavorite();
 
     // load owner address and owner name
     const { owner, name } = await getOwnerForContract(this.runtime, (this as any).contract);
@@ -230,7 +243,7 @@ export default class DAppTwin extends bcc.DigitalTwin {
    * @param      {DBCPDescriptionInterface}  description  description to save
    */
   public async setDescription(description = this.description) {
-    await await dispatchers.containerSaveDispatcher.start(this.runtime, {
+    await await dispatchers.descriptionDispatcher.start(this.runtime, {
       addres: this.contractAddress,
       description,
     });

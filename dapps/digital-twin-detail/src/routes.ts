@@ -17,11 +17,13 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import { RouteConfig } from 'vue-router';
 import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
+
+import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
 import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
+import TestContainerComponent from './components/data/TestContainer.vue';
 
 const routeRegistration: Array<RouteConfig> = [
   {
@@ -50,7 +52,7 @@ const routeRegistration: Array<RouteConfig> = [
           },
           {
             path: ':container',
-            component: UnderDevelopmentComponent
+            component: TestContainerComponent
           }
         ]
       },

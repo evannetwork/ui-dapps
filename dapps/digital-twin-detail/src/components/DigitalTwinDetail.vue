@@ -50,6 +50,12 @@
                 >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
               </div>
 
+              <!-- TODO: sample loading states
+                <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.twin"></div>
+                <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.description"></div>
+                <div class="spinner-border spinner-border-sm" v-if="$route.params.twin.dispatcherStates.favorite"></div>
+              -->
+
               <!-- Not using nav-list because it doesnt support router-link properly
               TODO: Refactor evan-nav-list to use router-links too-->
               <div class="evan-nav-list">

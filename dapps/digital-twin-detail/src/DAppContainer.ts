@@ -21,7 +21,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-import dispatchers from './dispatchers';
+import * as dispatchers from './dispatchers';
 import { getOwnerForContract, } from './utils';
 
 // TODO: remove type description when ticket is implemented
@@ -87,9 +87,20 @@ export default class DAppContainer extends bcc.Container {
   };
 
   /**
+   * All container entries mapped to it's loaded data
+   */
+  entryKeys: string[];
+  entries: { [entryName: string]: any };
+
+  /**
    * List of dispatcher watchers, so they can be cleared on page leaving
    */
   listeners: Function[] = [ ];
+
+  /**
+   * Containers plugin definition for accessing entry data schemas.
+   */
+  plugin: bcc.ContainerPlugin;
 
   /**
    * Container owner address and name
@@ -168,10 +179,16 @@ export default class DAppContainer extends bcc.Container {
     // check for saving entries
     (saveInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        (instance.data.entriesToSave || Object.keys(instance.data.value)).forEach(key => {
+        (instance.data.entriesToSave || Object.keys(instance.data.value)).forEach(entryKey => {
           dispatcherStates.container = true;
-          dispatcherStates.entries[key] = true;
-          dispatcherData[key] = instance.data.value[key];
+          dispatcherStates.entries[entryKey] = true;
+          dispatcherData[entryKey] = instance.data.value[entryKey];
+
+          // do not overwrite list values, ui must render it using dispatcherData
+          const entryDef = this.plugin.template.properties[entryKey];
+          if (entryDef.type === 'entry') {
+            this.entries[entryKey] = instance.data.value[entryKey];
+          }
         });
       }
     });
@@ -194,11 +211,33 @@ export default class DAppContainer extends bcc.Container {
   private async ensureContainerInfo() {
     this.contractAddress = await this.getContractAddress();
     this.description = await this.getDescription();
+    this.plugin = await this.toPlugin();
 
     // load owner address and owner name
     const { owner, name } = await getOwnerForContract(this.runtime, (this as any).contract);
     this.owner = owner;
     this.ownerName = name;
+  }
+
+  /**
+   * Setup the whole data object for the current container. Is not loaded by default, must be runned
+   * using
+   *
+   * @param      {string}  entriesToLoad  load only specific entriess
+   */
+  public async ensureEntries(entriesToLoad?: string[]) {
+    this.entries = { };
+    this.entryKeys = Object.keys(this.plugin.template.properties);
+    // load entry data
+    await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
+      const entryDef = this.plugin.template.properties[entryKey];
+
+      if (entryDef.type === 'list') {
+        this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
+      } else {
+        this.entries[entryKey] = await this.getEntry(entryKey);
+      }
+    }));
   }
 
   /**
@@ -325,7 +364,16 @@ export default class DAppContainer extends bcc.Container {
     // trigger all new watchers and save the listeners
     this.listeners = [
       dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
-      dispatchers.containerSaveDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.containerSaveDispatcher.watch(async ($event: any) => {
+        const beforeSave = this.dispatcherStates.container;
+        await this.ensureDispatcherStates();
+
+        // force entry reloading, when data was already loaded and container update was finished
+        if (beforeSave && !this.dispatcherStates.container &&
+            ($event.detail.status === 'finished' || $event.detail.status === 'deleted')) {
+          await this.ensureEntries(Object.keys($event.data.data));
+        }
+      }),
       dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
     ];
   }
