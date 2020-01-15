@@ -59,6 +59,8 @@ export interface EvanVueOptionsInterface {
   dappBaseUrl: string;
   dappEnsOrContract: string;
   dbcpName: string;
+  // enable contract address detection for nested routing, so only ens addresses will be detected
+  contractRouting?: boolean;
   RootComponent: any;
   routes: Array<RouteRegistrationInterface>;
   state: any;

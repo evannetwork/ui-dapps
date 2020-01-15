@@ -34,6 +34,7 @@
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Digitalen Zwilling erstellen",
+      "add-image": "Bild hinzufügen",
       "all": "Alle",
       "bike": "Fahrrad",
       "cancel": "Abbrechen",
@@ -43,10 +44,10 @@
       "desc-placeholder": "Beschreiben sie kurz ihren Digitalen Zwilling und dessen Eigenschaften.",
       "desc": "Beschreibung",
       "digitaltwins-title": "Digitale Zwillinge",
-      "drag-desc": "oder ziehen Sie das Template hier hinein",      
+      "drag-desc": "oder ziehen Sie das Template hier hinein",
       "favorites": "Favoriten",
       "my-own": "Eigene",
-      "name-placeholder": "Gabelstapler #3",
+      "name-placeholder": "Aussagekräftiger Name",
       "name": "Name",
       "owner": "Besitzer",
       "template-desc": "Wählen Sie ein Template für Ihren Digitalen Zwilling. Mehr Informationen zur Erstellung von Templates finden Sie hier.",
@@ -61,6 +62,8 @@
       "owner": "Besitzer",
       "searched-for": "Sie suchten nach",
       "updated": "Aktualisiert"
-    }
+    },
+    "more": "mehr dazu",
+    "optional": "optional"
   }
 }
