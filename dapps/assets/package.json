@@ -12,7 +12,7 @@
   "main": "dist/assets.js",
   "name": "assets",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b",
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b && npm run lint",
     "lint": "eslint --ext ts --fix src/"
   },
   "typings": "dist/index.d.ts",
