@@ -84,12 +84,16 @@
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
       ></evan-file-input>
 
-      <div v-if="templateErrors">
-        <ul>
-          <li v-for="error in templateErrors" :key="error.property">
-            <span class="text-warning">{{ error.message }}</span>
-          </li>
-        </ul>
+      <div v-if="templateErrors.length > 0">
+        <h4 class="text-warning">Errors occured in template</h4>
+        <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
+          <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>
+          <ul v-if="pluginErrors.errors">
+            <li v-for="error in pluginErrors.errors" :key="error.property">
+              <span>{{ error.message }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <template v-slot:footer>

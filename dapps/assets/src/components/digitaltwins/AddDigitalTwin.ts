@@ -42,6 +42,19 @@ interface DigitalTwinTemplate {
   plugins: { [pluginName: string]: ContainerPlugin };
 }
 
+interface ValidationError {
+  dataPath: string;
+  keyword: string;
+  message: string;
+  params: any;
+  schemaPath: string;
+}
+
+interface TemplateError {
+  name: string;
+  errors: ValidationError[];
+}
+
 @Component
 class AddDigitalTwinComponent extends mixins(EvanComponent) {
   description: string = null;
@@ -52,7 +65,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   template = <DigitalTwinTemplate>carTwin;
   twinTemplates = { bicycleTwin, carTwin };
   presetTemplates = this._getTemplateSelectOptions();
-  templateErrors: any = null;
+  templateErrors: any[] = [];
 
   // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
@@ -75,19 +88,19 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    * @param files
    */
   async handleFileUpload (files: UIContainerFile[]) {
+    this.templateErrors = [];
     // skip when file was deleted
     if (!files[0]) {
+
       return;
     }
 
     const rollBackTemplate = JSON.stringify(this.template);
-
     this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
 
-    // @ts-ignore // TODO: update dts of validateDescription()
-    this.templateErrors = this.runtime.description.validateDescription(this.template);
+    this.templateErrors = this._getTemplateErrors(this.template);
 
-    if (this.templateErrors && this.templateErrors.length > 0) {
+    if (this.templateErrors.length > 0) {
       this.template = JSON.parse(rollBackTemplate);
 
       return;
@@ -185,6 +198,32 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     if (!this.description) {
       this.description = this._getLocalizedTemplateEntry(this.template, 'description');
     }
+  }
+
+  _getTemplateErrors(template: any): TemplateError[] {
+    const templateErrors = [];
+    const validationResult = this.runtime.description.validateDescription({public: template.description});
+
+    if (Array.isArray(validationResult)) {
+      templateErrors.push({
+        name: 'description',
+        errors: validationResult
+      });
+    }
+
+    Object.keys(template.plugins).forEach((pluginKey: string) => {
+      const { description } = template.plugins[pluginKey];
+      const errors = this.runtime.description.validateDescription({public: description});
+
+      if (Array.isArray(errors) && errors.length > 0) {
+        templateErrors.push({
+          name: pluginKey,
+          errors
+        });
+      }
+    });
+
+    return templateErrors;
   }
 }
 
