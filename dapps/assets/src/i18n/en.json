@@ -34,6 +34,7 @@
     },
     "digitaltwins": {
       "add-digitaltwin-title": "Create a new Digital Twin",
+      "add-image": "Add Image",
       "all": "All",
       "bike": "Bike",
       "cancel": "Cancel",
@@ -43,13 +44,13 @@
       "desc-placeholder": "Briefly describe your Digital Twin and what it represents.",
       "desc": "Description",
       "digitaltwins-title": "Digital Twins",
-      "drag-desc": "or just drag a template in here",      
+      "drag-desc": "or just drag a template in here",
       "favorites": "Favorites",
       "my-own": "My own",
-      "name-placeholder": "Fork Lift #3",
+      "name-placeholder": "Give a meaningful name",
       "name": "Name",
       "owner": "Owner",
-      "template-desc": "Choose a template for your Digital Twin. More information on how to create a template for Digital Twins can be found here.",
+      "template-desc": "Choose a template for your Digital Twin. More information on how to create a template for Digital Twins can be found here:",
       "template-select-label": "Select a template",
       "template-select-placeholder": "Select a template",
       "updated": "Updated"
@@ -61,6 +62,8 @@
       "owner": "Owner",
       "searched-for": "You searched for",
       "updated": "Updated"
-    }
+    },
+    "more": "more infomation",
+    "optional": "optional"
   }
 }

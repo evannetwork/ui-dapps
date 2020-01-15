@@ -109,7 +109,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           }),
-          timestamp: Date.now()
+          timestamp: Date.now(),
         };
       })(),
       (async () => {

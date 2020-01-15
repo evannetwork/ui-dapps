@@ -56,8 +56,52 @@ the following URL: https://evan.network/license/
             <evan-button @click="$refs.swipePanelRight.hide()" icon="mdi mdi-arrow-right" />
           </evan-swipe-panel>
         </div>
+
+        <h3 class="mt-5">Modals</h3>
+        <div class="row">
+          <evan-button @click="$refs.customModal.show()" label="custom header, body and footer" />
+          <evan-button @click="$refs.fullPageModal.show()" label="full page modal" />
+          <evan-button @click="$refs.customFullPageModal.show()" label="custom content full page modal" />
+        </div>
+
       </div>
     </div>
+
+    <evan-modal
+      ref="customModal"
+      :maxWidth="'600px'"
+    >
+      <template v-slot:header>
+        <h5 class="modal-title">Slot header</h5>
+      </template>
+      <template v-slot:body>Slot Body</template>
+      <template v-slot:footer>Slot Footer</template>
+    </evan-modal>
+
+    <evan-modal
+      ref="fullPageModal"
+      :fullPage="true"
+    >
+      <template v-slot:header>
+        <h5 class="modal-title">Slot header</h5>
+      </template>
+      <template v-slot:body>Slot Body</template>
+      <template v-slot:footer>Slot Footer</template>
+    </evan-modal>
+
+    <evan-modal
+      ref="customFullPageModal"
+      :fullPage="true"
+      :customModal="true"
+    >
+      <template v-slot:content>
+        <h5>content header</h5>
+        <p>
+          Lorem ipsum dolor sot amet consecutor...
+        </p>
+      </template>
+    </evan-modal>
+
   </div>
 </template>
 

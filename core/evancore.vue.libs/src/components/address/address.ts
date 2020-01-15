@@ -36,6 +36,10 @@ export default class AddressComponent extends mixins(EvanComponent) {
    */
   @Prop() address;
 
+  @Prop({
+    default: 'did:evan:'
+  }) didPrefix: String;
+
   /**
    * Specific custom classes
    */
@@ -54,7 +58,7 @@ export default class AddressComponent extends mixins(EvanComponent) {
     const $temp: any = document.createElement('input');
     document.body.appendChild($temp);
     // apply copy value
-    $temp.value = this.address;
+    $temp.value = `${this.didPrefix}${this.address}`;
     // trigger copy
     $temp.select();
     document.execCommand('copy');

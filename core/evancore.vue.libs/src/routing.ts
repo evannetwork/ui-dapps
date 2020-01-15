@@ -53,7 +53,7 @@ export async function initializeRouting(options: EvanVueOptionsInterface) {
   const routes: Array<RouteRegistrationInterface> = [ ];
 
   // get the correct base paths
-  const dappToLoad = await getNextDApp(options.dappEnsOrContract);
+  const dappToLoad = await getNextDApp(options.dappEnsOrContract, options.contractRouting);
 
   // prefill routes with base hash
   options.routes.forEach((route) => {
@@ -130,10 +130,11 @@ export async function initializeRouting(options: EvanVueOptionsInterface) {
  *   4. when navigating to /dashboard.evan/digitaltwins.evan, the dapp-loader trackts the url change
  *      and 3. will be started with the new url hash
  *
- * @param      {string}   dappEnsOrContract     The dapp ens or contract (e.g.
- *                                              /dashboard.evan/onboarding.evan)
+ * @param      {string}   dappEnsOrContract  The dapp ens or contract (e.g.
+ *                                           /dashboard.evan/onboarding.evan)
+ * @param      {boolean}  contractRouting    disable contract address detection
  */
-export async function getNextDApp(dappEnsOrContract?: string) {
+export async function getNextDApp(dappEnsOrContract?: string, contractRouting = false) {
   // parse current route by replacing all #/ and /# to handle incorrect navigations
   const currentHash = decodeURIComponent(window.location.hash).split('?')[0];
   // all hash paths in the url
@@ -196,10 +197,12 @@ export async function getNextDApp(dappEnsOrContract?: string) {
   //   => dappIndex loads an contract directly
   //   => it's not the last ens index of the hash, but the next element starts with 0x, so we
   //      assumes to load an contract
-  if (ensParts[dappIndex].startsWith('0x')) {
-    contractAddress = ensParts[dappIndex];
-  } else if (dappIndex < ensParts.length - 1 && ensParts[dappIndex + 1].startsWith('0x')) {
-    contractAddress = ensParts[dappIndex + 1];
+  if (contractRouting) {
+    if (ensParts[dappIndex].startsWith('0x')) {
+      contractAddress = ensParts[dappIndex];
+    } else if (dappIndex < ensParts.length - 1 && ensParts[dappIndex + 1].startsWith('0x')) {
+      contractAddress = ensParts[dappIndex + 1];
+    }
   }
 
   return {
