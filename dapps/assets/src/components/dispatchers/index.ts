@@ -17,8 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import createTwinDispatcher from './AddFavoriteDispatcher';
-import favoriteAddDispatcher from './createTwinDispatcher';
+import createTwinDispatcher from './createTwinDispatcher';
+import favoriteAddDispatcher from './AddFavoriteDispatcher';
 
 export {
   createTwinDispatcher,
