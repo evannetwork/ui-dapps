@@ -34,7 +34,7 @@ interface DigitalTwinTemplate {
       [language: string]: {
         description?: string;
         name: string;
-      }
+      };
     };
     name: string;
   };
@@ -47,7 +47,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   image = null;
   name: string = null;
   selectedTemplate = 'car';
-  template = <DigitalTwinTemplate>carTwin;
+  template = carTwin as DigitalTwinTemplate;
   presetTemplates = [
     {
       label: this.$t('_assets.digitaltwins.bike'),
@@ -60,7 +60,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   ];
 
   handleTemplateSelectChange(event: Event) {
-    this.selectedTemplate = (<HTMLInputElement>event.target).value;
+    this.selectedTemplate = (event.target as HTMLInputElement).value;
 
     switch (this.selectedTemplate) {
       case 'bike':
@@ -70,7 +70,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
         this.template = carTwin;
         break;
       default:
-        console.error('Unknow twin template selected');
+        console.error('Unknown twin template selected');
     }
   }
 
@@ -83,13 +83,13 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param blob
    */
-  _blobToObj(blob: Blob): Promise<Object> {
+  _blobToObj(blob: Blob): Promise<any> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
       try {
         reader.onload = (ev) => {
-          resolve(JSON.parse(<string>ev.target.result));
+          resolve(JSON.parse(ev.target.result as string));
         };
 
         reader.readAsText(blob);
@@ -146,7 +146,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   addDigitalTwin() {
     // merge custom fields into template.
-    const template = <any>Object.assign({}, this.template); // TODO: use twin template interface
+    const template = Object.assign({}, this.template); // TODO: use twin template interface
 
     if (this.description) {
       template.description.description = this.description;

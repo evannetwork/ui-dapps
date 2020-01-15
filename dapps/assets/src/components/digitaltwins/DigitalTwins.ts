@@ -166,7 +166,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       }
 
       const offset = 200;
-      let bottomOfWindow = clientHeight + scrollTop >= scrollHeight - offset;
+      const bottomOfWindow = clientHeight + scrollTop >= scrollHeight - offset;
 
       if (bottomOfWindow) {
         this.performFetchMore();
@@ -218,7 +218,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(twin: EvanTableItem<DigitalTwin>) {
-    let newFav = {
+    const newFav = {
       id: twin.item.address,
       isFavorite: false,
       isLoading: true
