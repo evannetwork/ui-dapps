@@ -29,7 +29,7 @@
               :id="navItem.id"
               :key="navItem.id"
               :to="navItem.to"
-              :active-class="'active'"
+              active-class="active"
             >
               {{ navItem.label | translate }}
             </router-link>

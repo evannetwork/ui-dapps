@@ -6,7 +6,6 @@
         "bootstrap.vue.libs": "^2.1.0",
         "evancore.vue.libs": "^1.9.0",
         "digitaltwin.lib": "^1.8.0",
-        "digital-twin-detail": "^1.0.0",
         "lodash.libs": "4.17.15"
       },
       "entrypoint": "assets.js",
