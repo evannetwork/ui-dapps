@@ -114,7 +114,7 @@ export default class DAppLoaderComponent extends mixins(EvanComponent) {
     const loadingEl = this.$el.children[0];
 
     // get module id
-    this.startedDApp = await getNextDApp();
+    this.startedDApp = await getNextDApp(null, this.$store.state.options.contractRouting);
 
     // create a new container el, vue will replace this element
     const containerEl = document.createElement('div');
