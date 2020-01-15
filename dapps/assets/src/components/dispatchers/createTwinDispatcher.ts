@@ -43,10 +43,9 @@ dispatcher
   .step(async (instance: DispatcherInstance, { twinTemplate }) => {
     const newTwin = await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,
-      ...twinTemplate  
+      containerConfig: { accountId: instance.runtime.activeAccount },
+      ...twinTemplate
     });
-
-    console.log('new Twin:', newTwin);
   });
 
 export default dispatcher;
