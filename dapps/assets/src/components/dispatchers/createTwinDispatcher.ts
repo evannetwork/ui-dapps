@@ -31,17 +31,19 @@ const dispatcher = new Dispatcher(
 dispatcher
   // upload image into ipfs
   .step(async (instance: DispatcherInstance, { twinImage, twinTemplate } ) => {
-    const imageBuffer = Buffer.from(twinImage.file);
+    if (twinImage) {
+      const imageBuffer = Buffer.from(twinImage.file);
 
-    // add ipfs to template
-    twinTemplate.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
-    console.log(twinTemplate.imgSquare);
+      // add ipfs to template
+      twinTemplate.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      console.log(twinTemplate.imgSquare);
+    }
   })
   // create the twin
   .step(async (instance: DispatcherInstance, { twinTemplate }) => {
     const newTwin = await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,
-      ...twinTemplate
+      ...twinTemplate  
     });
 
     console.log('new Twin:', newTwin);
