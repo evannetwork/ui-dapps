@@ -75,6 +75,7 @@
         :required="true"
         :value="selectedTemplate"
         @change="handleTemplateSelectChange"
+        ref="templateSelector"
       />
 
       <evan-file-input

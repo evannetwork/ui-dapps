@@ -97,8 +97,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     this._addToPresetTemplates(this.template, files[0].name);
     this.selectedTemplate = files[0].name;
 
-    // ugly hack to wait till underlying select component received new props
-    window.setTimeout(() => this.$forceUpdate(), 200);
+    // wait till template select component received new props
+    (this.$refs.templateSelector as EvanComponent).$nextTick(this.$forceUpdate);
   }
 
   showPanel() {
