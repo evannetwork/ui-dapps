@@ -20,7 +20,7 @@
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName } from '@evan.network/ui-dapp-browser';
-// import { DropdownPlugin } from 'bootstrap-vue';
+import { DropdownPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import translations from './i18n/translations';
@@ -48,7 +48,7 @@ export async function startDApp(
   dappEnsOrContract: any,
   dappBaseUrl: any
 ) {
-  // Vue.use(DropdownPlugin);
+  Vue.use(DropdownPlugin);
 
   await initializeVue({
     components,

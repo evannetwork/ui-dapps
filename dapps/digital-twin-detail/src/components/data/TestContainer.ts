@@ -49,7 +49,6 @@ export default class TestContainerComponent extends mixins(TwinDAppComponent) {
    * Setup vuex container and ensure entry data
    */
   async setupContainer() {
-    console.log('setup container');
     this.loading = true;
     this.$store.state.container = this.$store.state.twin
       .containerContracts[this.$route.params.container];
