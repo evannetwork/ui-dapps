@@ -22,7 +22,7 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `digital-twin.lib.${ dappBrowser.getDomainName() }`,
+  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
   'twinFavoriteRemoveDispatcher',
   40 * 1000,
   '_digital-twin-lib.dispatchers.twin.favorite.remove'
