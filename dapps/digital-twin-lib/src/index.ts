@@ -17,14 +17,19 @@
   the following URL: https://evan.network/license/
 */
 
-const getExternals = require('../../scripts/dapp/webpack.externals');
+import { getDomainName } from '@evan.network/ui-vue-core';
+import { System, } from '@evan.network/ui-dapp-browser';
 
-module.exports = require('../../scripts/dapp/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-  false,
-  getExternals({
-    '@evan.network/digital-twin.lib': '@evan.network/digital-twin.lib'
-  })
-);
+import * as dispatchers from './dispatchers';
+import DAppContainer from './DAppContainer';
+import DAppTwin from './DAppTwin';
+import translations from './i18n';
+
+export {
+  dispatchers,
+  translations,
+  DAppContainer,
+  DAppTwin,
+};
+
+System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${ getDomainName() }!dapp-content`;

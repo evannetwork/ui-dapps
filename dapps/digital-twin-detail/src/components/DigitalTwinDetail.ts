@@ -21,7 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // internal imports
-import { DAppTwin } from '@evan.network/digital-twin.lib';
+import { DAppTwin } from '@evan.network/digital-twin-lib';
 import TwinDAppComponent from '../TwinDAppComponent';
 
 @Component

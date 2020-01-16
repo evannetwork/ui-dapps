@@ -16,8 +16,8 @@ The ui-vue-core for evan.network includes specific vue components, helper functi
   - [UI API Doc](https://ui-docs.readthedocs.io/en/latest/vue/evancore.vue.libs.html)
   - Reference Projects:
     - [addressbook.vue](https://github.com/evannetwork/ui-dapps/tree/master/dapps/addressbook.vue)
-    - [digital-twin.detail](https://github.com/evannetwork/ui-dapps/tree/master/dapps/digital-twin.detail)
-    - [digital-twin.lib](https://github.com/evannetwork/ui-dapps/tree/master/dapps/digital-twin.lib)
+    - [digital-twin-detail](https://github.com/evannetwork/ui-dapps/tree/master/dapps/digital-twin-detail)
+    - [digital-twin-lib](https://github.com/evannetwork/ui-dapps/tree/master/dapps/digital-twin-lib)
     - [favorites.vue](https://github.com/evannetwork/ui-dapps/tree/master/dapps/favorites.vue)
     - [mailbox.vue](https://github.com/evannetwork/ui-dapps/tree/master/dapps/mailbox.vue)
     - [onboarding.vue](https://github.com/evannetwork/ui-dapps/tree/master/dapps/onboarding.vue)

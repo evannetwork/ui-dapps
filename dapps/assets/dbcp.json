@@ -5,7 +5,7 @@
       "dependencies": {
         "bootstrap.vue.libs": "^2.1.0",
         "evancore.vue.libs": "^1.9.0",
-        "digital-twin.lib": "^2.0.0",
+        "lib.digital-twin": "^2.0.0",
         "lodash.libs": "4.17.15"
       },
       "entrypoint": "assets.js",

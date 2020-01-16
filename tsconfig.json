@@ -14,8 +14,8 @@
       "@evan.network/ui": ["./core/ui.libs"],
       "@evan.network/ui/*": ["./core/ui.libs/*"],
       "@evan.network/ui-vue-core": ["./core/evancore.vue.libs"],
-      "@evan.network/digital-twin.lib": ["./dapps/digital-twin.lib"],
-      "@evan.network/digital-twin.detail": ["./dapps/digital-twin.detail"]
+      "@evan.network/digital-twin-lib": ["./dapps/digital-twin-lib"],
+      "@evan.network/digital-twin-detail": ["./dapps/digital-twin-detail"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

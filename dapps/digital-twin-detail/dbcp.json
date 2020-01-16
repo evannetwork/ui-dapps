@@ -4,7 +4,7 @@
     "dapp": {
       "dependencies": {
         "bootstrap.vue.libs": "^2.1.0",
-        "digital-twin.lib": "^2.0.0",
+        "lib.digital-twin": "^2.0.0",
         "evancore.vue.libs": "^1.9.0"
       },
       "entrypoint": "detail.digital-twin.js",

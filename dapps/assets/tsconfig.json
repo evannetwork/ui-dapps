@@ -8,7 +8,7 @@
   ],
   "references": [
     {
-      "path": "../digital-twin.lib"
+      "path": "../digital-twin-lib"
     }
   ]
 }

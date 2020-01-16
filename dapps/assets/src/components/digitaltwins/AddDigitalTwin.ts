@@ -19,7 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { ContainerPlugin, Runtime } from '@evan.network/api-blockchain-core';
-import { dispatchers } from '@evan.network/digital-twin.lib';
+import { dispatchers } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { UIContainerFile } from '@evan.network/ui';
 
