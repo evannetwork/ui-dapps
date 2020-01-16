@@ -81,7 +81,7 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
   /**
    * Setup digital twin functionalities.
    */
-  async initialize() {
+  async initialize(): Promise<void> {
     let beforeTwin;
 
     // watch for url changes and load different twin data

@@ -6,9 +6,6 @@
     "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
   "extends": "../../tsconfig.json",
-  "include": [
-    "./src/**/*",
-    "./src/**/*.json",
-    "./src/vue-shim.d.ts"
-  ]
+  "include": ["./src/**/*", "./src/**/*.json", "./src/vue-shim.d.ts"],
+  "references": [{ "path": "../ui.libs" }, { "path": "../evancore.vue.libs" }]
 }
