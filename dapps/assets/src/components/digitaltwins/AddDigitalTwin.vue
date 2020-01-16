@@ -1,31 +1,28 @@
-/*
-  Copyright (C) 2018-present evan GmbH.
-
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Affero General Public License, version 3,
-  as published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Affero General Public License for more details.
-
-  You should have received a copy of the GNU Affero General Public License
-  along with this program. If not, see http://www.gnu.org/licenses/ or
-  write to the Free Software Foundation, Inc., 51 Franklin Street,
-  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
-  the following URL: https://evan.network/license/
-*/
+/* Copyright (C) 2018-present evan GmbH. This program is free software: you can
+redistribute it and/or modify it under the terms of the GNU Affero General
+Public License, version 3, as published by the Free Software Foundation. This
+program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License along
+with this program. If not, see http://www.gnu.org/licenses/ or write to the Free
+Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
+02110-1301 USA, or download the license from the following URL:
+https://evan.network/license/ */
 
 <template>
-  <form id="digitalTwinForm" ref="digitalTwinForm" @submit.prevent="addDigitalTwin">
+  <form
+    id="digitalTwinForm"
+    ref="digitalTwinForm"
+    @submit.prevent="addDigitalTwin"
+  >
     <evan-swipe-panel
       ref="addDigitalTwinPanel"
       alignment="right"
       type="default"
       class="light"
-      :showBackdrop="true"
-      :hideCloseButton="true"
+      :show-backdrop="true"
+      :hide-close-button="true"
       :title="$t('_assets.digitaltwins.add-digitaltwin-title')"
     >
       <label class="col-form-label" for="new-twin-picture">
@@ -36,8 +33,8 @@
         <evan-profile-picture
           id="new-twin-picture"
           type="device"
-          :accountName="name"
-          :isEditable="true"
+          :account-name="name"
+          :is-editable="true"
           :src="image ? image : null"
           @changed="handleImageChange"
         />
@@ -69,19 +66,21 @@
 
       <evan-form-control-select
         id="templateSelect"
+        ref="templateSelector"
         :label="'_assets.digitaltwins.template-select-label' | translate"
         :options="presetTemplates"
-        :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
+        :placeholder="
+          '_assets.digitaltwins.template-select-placeholder' | translate
+        "
         :required="true"
         :value="selectedTemplate"
         @change="handleTemplateSelectChange"
-        ref="templateSelector"
       />
 
       <evan-file-input
         accept=".json"
-        @input="handleFileUpload"
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
+        @input="handleFileUpload"
       ></evan-file-input>
 
       <div v-if="templateErrors.length > 0">
@@ -100,8 +99,8 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            @click="closePanel"
             :label="'_assets.digitaltwins.cancel' | translate"
+            @click="closePanel"
           />
           <evan-button
             type="primary"
@@ -122,5 +121,5 @@ export default AddDigitalTwinComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './AddDigitalTwins.scss';
+@import './AddDigitalTwins.scss';
 </style>

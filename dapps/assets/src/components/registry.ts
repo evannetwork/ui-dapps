@@ -25,7 +25,7 @@ import AddDigitalTwinComponent from './digitaltwins/AddDigitalTwin.vue';
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'add-contact', component: AddContactComponent },
-  { name: 'add-digital-twin', component: AddDigitalTwinComponent },
+  { name: 'add-digital-twin', component: AddDigitalTwinComponent }
 ];
 
 export default componentRegistration;

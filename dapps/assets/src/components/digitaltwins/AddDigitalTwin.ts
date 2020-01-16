@@ -87,16 +87,17 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param files
    */
-  async handleFileUpload (files: UIContainerFile[]) {
+  async handleFileUpload(files: UIContainerFile[]) {
     this.templateErrors = [];
     // skip when file was deleted
     if (!files[0]) {
-
       return;
     }
 
     const rollBackTemplate = JSON.stringify(this.template);
-    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
+    this.template = (await this._blobToObj(
+      files[0].blob
+    )) as DigitalTwinTemplate;
 
     this.templateErrors = this._getTemplateErrors(this.template);
 
@@ -132,8 +133,10 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     template.description.name = this.name;
     delete template.description.i18n;
 
-    dispatchers.twinCreateDispatcher
-      .start(this.getRuntime(), {twinTemplate: template, twinImage: this.image } );
+    dispatchers.twinCreateDispatcher.start(this.getRuntime(), {
+      twinTemplate: template,
+      twinImage: this.image
+    });
   }
 
   /**
@@ -146,7 +149,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       const reader = new FileReader();
 
       try {
-        reader.onload = (ev) => {
+        reader.onload = ev => {
           resolve(JSON.parse(ev.target.result as string));
         };
 
@@ -172,7 +175,10 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     return Object.keys(this.twinTemplates).map(twinKey => {
       return {
         value: twinKey,
-        label: this._getLocalizedTemplateEntry(this.twinTemplates[twinKey], 'name'),
+        label: this._getLocalizedTemplateEntry(
+          this.twinTemplates[twinKey],
+          'name'
+        )
       };
     });
   }
@@ -182,10 +188,18 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param template
    */
-  _getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
-    const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
+  _getLocalizedTemplateEntry(
+    template: DigitalTwinTemplate,
+    entry: string
+  ): string {
+    const lang =
+      this.$i18n.locale() || window.localStorage.getItem('evan-language');
 
-    return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
+    return (
+      template.description?.i18n[lang]?.[entry] ||
+      template.description?.[entry] ||
+      ''
+    );
   }
 
   /**
@@ -197,13 +211,18 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
 
     if (!this.description) {
-      this.description = this._getLocalizedTemplateEntry(this.template, 'description');
+      this.description = this._getLocalizedTemplateEntry(
+        this.template,
+        'description'
+      );
     }
   }
 
   _getTemplateErrors(template: any): TemplateError[] {
     const templateErrors = [];
-    const validationResult = this.runtime.description.validateDescription({public: template.description});
+    const validationResult = this.runtime.description.validateDescription({
+      public: template.description
+    });
 
     if (Array.isArray(validationResult)) {
       templateErrors.push({
@@ -213,7 +232,9 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
     Object.keys(template.plugins).forEach((pluginKey: string) => {
       const { description } = template.plugins[pluginKey];
-      const errors = this.runtime.description.validateDescription({public: description});
+      const errors = this.runtime.description.validateDescription({
+        public: description
+      });
 
       if (Array.isArray(errors) && errors.length > 0) {
         templateErrors.push({

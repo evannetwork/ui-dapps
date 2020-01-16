@@ -35,9 +35,9 @@ export const dispatcher = new Dispatcher(
  */
 const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => {
   return new bcc.Profile({
-    ...runtime as any, // TODO: Fix runtime interface
+    ...(runtime as any), // TODO: Fix runtime interface
     profileOwner: accountId,
-    accountId,
+    accountId
   });
 };
 

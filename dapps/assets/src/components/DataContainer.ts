@@ -38,7 +38,8 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
 
   @Prop({
     default: 'twins'
-  }) type: string;
+  })
+  type: string;
 
   mounted(): void {
     this.searchTerm = this.$route.params.query || '';
@@ -59,7 +60,10 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       this.$router.push({ path: `digitaltwins/` });
     }
 
-    const { result, total } = await this.search.query(this.type, { searchTerm, ...sorting });
+    const { result, total } = await this.search.query(this.type, {
+      searchTerm,
+      ...sorting
+    });
 
     this.total = total;
     this.data = result;

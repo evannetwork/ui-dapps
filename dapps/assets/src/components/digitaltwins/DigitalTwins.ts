@@ -255,8 +255,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     };
     this.favoriteList = [...this.favoriteList, newFav];
 
-    await dispatchers.twinFavoriteAddDispatcher
-      .start(this.getRuntime(), { address: twin.item.address });
+    await dispatchers.twinFavoriteAddDispatcher.start(this.getRuntime(), {
+      address: twin.item.address
+    });
 
     newFav.isFavorite = true;
     newFav.isLoading = false;
@@ -267,8 +268,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       fav => twin.item.address === fav.id
     ).isLoading = true;
 
-    await dispatchers.twinFavoriteRemoveDispatcher
-      .start(this.getRuntime(), { address: twin.item.address });
+    await dispatchers.twinFavoriteRemoveDispatcher.start(this.getRuntime(), {
+      address: twin.item.address
+    });
 
     this.favoriteList = this.favoriteList.filter(
       fav => twin.item.address !== fav.id

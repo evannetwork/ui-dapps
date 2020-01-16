@@ -1,74 +1,69 @@
-/*
-  Copyright (C) 2018-present evan GmbH.
-
-  This program is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Affero General Public License, version 3,
-  as published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Affero General Public License for more details.
-
-  You should have received a copy of the GNU Affero General Public License
-  along with this program. If not, see http://www.gnu.org/licenses/ or
-  write to the Free Software Foundation, Inc., 51 Franklin Street,
-  Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
-  the following URL: https://evan.network/license/
-*/
+/* Copyright (C) 2018-present evan GmbH. This program is free software: you can
+redistribute it and/or modify it under the terms of the GNU Affero General
+Public License, version 3, as published by the Free Software Foundation. This
+program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License along
+with this program. If not, see http://www.gnu.org/licenses/ or write to the Free
+Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA,
+02110-1301 USA, or download the license from the following URL:
+https://evan.network/license/ */
 
 <template>
   <div>
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div>
-          <h1 class="heading">{{ '_assets.contacts.contacts-title' | translate }}</h1>
+          <h1 class="heading">
+            {{ '_assets.contacts.contacts-title' | translate }}
+          </h1>
         </div>
         <div>
           <evan-button
-            @click="filterByFavorites()"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
-            iconPosition="left"
-            :class="{ 'active': filterBy.includes('isFavorite') }"
+            icon-position="left"
+            :class="{ active: filterBy.includes('isFavorite') }"
             :label="$t('_assets.contacts.favorites')"
+            @click="filterByFavorites()"
           />
           <evan-button
-            @click="filterByType('users')"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
-            iconPosition="left"
-            :class="{ 'active': filter === 'users' }"
+            icon-position="left"
+            :class="{ active: filter === 'users' }"
             :label="$t('_assets.contacts.users')"
+            @click="filterByType('users')"
           />
           <evan-button
-            @click="filterByType('company')"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-domain"
-            iconPosition="left"
-            :class="{ 'active': filter === 'company' }"
+            icon-position="left"
+            :class="{ active: filter === 'company' }"
             :label="$t('_assets.contacts.companies')"
+            @click="filterByType('company')"
           />
           <evan-button
-            @click="filterByType('device')"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-radio-tower"
-            iconPosition="left"
-            :class="{ 'active': filter === 'device' }"
+            icon-position="left"
+            :class="{ active: filter === 'device' }"
             :label="$t('_assets.contacts.iot-devices')"
+            @click="filterByType('device')"
           />
           <evan-button
-            @click="resetFilter"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-account-multiple-outline"
-            iconPosition="left"
-            :class="{ 'active': filter === null }"
+            icon-position="left"
+            :class="{ active: filter === null }"
             :label="$t('_assets.contacts.all')"
+            @click="resetFilter"
           />
         </div>
       </div>
@@ -79,15 +74,15 @@
           :items="contacts"
           :fields="columns"
           :filter="filter"
-          :filterIncludedFields="filterBy"
+          :filter-included-fields="filterBy"
           :sticky-header="'80vh'"
           :show-empty="true"
           :show-scrollbar="true"
           @row-clicked="handleRowClicked"
         >
-          <template
-            v-slot:cell(alias)="contacts"
-          >{{ contacts.item.alias ? contacts.item.alias : contacts.item.address }}</template>
+          <template v-slot:cell(alias)="contacts">{{
+            contacts.item.alias ? contacts.item.alias : contacts.item.address
+          }}</template>
           <template v-slot:cell(icon)="contacts">
             <i class="table-icon" :class="contacts.item.icon"></i>
           </template>
@@ -99,7 +94,10 @@
           </template>
           <template v-slot:cell(isFavorite)="contacts">
             <evan-loading
-              v-if="isFavoriteLoading.loading && (isFavoriteLoading.id === contacts.item.address)"
+              v-if="
+                isFavoriteLoading.loading &&
+                  isFavoriteLoading.id === contacts.item.address
+              "
               classes=""
             />
             <evan-button
