@@ -17,15 +17,15 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
 import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactType, ContactFormData } from './ContactInterfaces';
+import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 
 export class ContactsService {
   private contacts;
-  private runtime: bcc.Runtime;
+  private runtime: Runtime;
 
-  constructor(runtime) {
+  constructor(runtime: Runtime) {
     this.runtime = runtime;
   }
 
@@ -35,7 +35,7 @@ export class ContactsService {
   async getContacts(): Promise<Contact[]> {
     this.contacts = await this.runtime.profile.getAddressBook();
 
-    let data: Contact[] = [];
+    const data: Contact[] = [];
     Object.keys(this.contacts.profile).forEach(async contact => {
       // filter out own account
       if (contact !== this.runtime.activeAccount) {
@@ -54,7 +54,7 @@ export class ContactsService {
     return data;
   }
 
-  async addContact(contactFormData: ContactFormData) {
+  async addContact(contactFormData: ContactFormData): Promise<void> {
     await InviteDispatcher.start(this.runtime, contactFormData);
   }
 
@@ -107,7 +107,7 @@ export class ContactsService {
    */
   private async getProfileType(accountId: string): Promise<ContactType> {
     try {
-      const otherProfile = new bcc.Profile({
+      const otherProfile = new Profile({
         ...(this.runtime as any),
         profileOwner: accountId,
         accountId: this.runtime.activeAccount

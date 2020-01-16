@@ -35,7 +35,7 @@ interface DigitalTwinTemplate {
       [language: string]: {
         description?: string;
         name: string;
-      }
+      };
     };
     name: string;
   };
@@ -62,14 +62,14 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   name: string = null;
   runtime: Runtime = null;
   selectedTemplate = 'carTwin';
-  template = <DigitalTwinTemplate>carTwin;
+  template = carTwin as DigitalTwinTemplate;
   twinTemplates = { bicycleTwin, carTwin };
   presetTemplates = this._getTemplateSelectOptions();
   templateErrors: any[] = [];
 
   // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
-    this.selectedTemplate = (<HTMLInputElement>event.target).value;
+    this.selectedTemplate = (event.target as HTMLInputElement).value;
     this.template = this.twinTemplates[this.selectedTemplate];
     this._setDefaults();
   }
@@ -124,7 +124,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   addDigitalTwin() {
     // merge custom fields into template.
-    const template = <any>Object.assign({}, this.template); // TODO: use twin template interface
+    const template = Object.assign({}, this.template) as any; // TODO: use twin template interface
 
     if (this.description) {
       template.description.description = this.description;
@@ -140,13 +140,13 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param blob
    */
-  _blobToObj(blob: Blob): Promise<Object> {
+  _blobToObj(blob: Blob): Promise<any> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
       try {
         reader.onload = (ev) => {
-          resolve(JSON.parse(<string>ev.target.result));
+          resolve(JSON.parse(ev.target.result as string));
         };
 
         reader.readAsText(blob);
@@ -210,7 +210,6 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
         errors: validationResult
       });
     }
-
     Object.keys(template.plugins).forEach((pluginKey: string) => {
       const { description } = template.plugins[pluginKey];
       const errors = this.runtime.description.validateDescription({public: description});
