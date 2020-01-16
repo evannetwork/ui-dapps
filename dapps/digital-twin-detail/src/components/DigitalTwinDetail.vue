@@ -43,41 +43,40 @@
                   </b-dropdown>
                 </div>
 
-                  <evan-profile-picture
-                    class="twin-avatar"
-                    type="device"
-                    :src="'https://via.placeholder.com/96'"
-                  />
-                  <h4 class="twin-name text-center mt-2">TODO NAME</h4>
-                  <h5 class="twin-owner text-center">TODO OWNER</h5>
-                  <small
-                    class="twin-desc text-center mt-3"
-                  >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
-                </div>
+                <evan-profile-picture
+                  class="twin-avatar"
+                  type="device"
+                  :src="'https://via.placeholder.com/96'"
+                />
+                <h4 class="twin-name text-center mt-2">TODO NAME</h4>
+                <h5 class="twin-owner text-center">TODO OWNER</h5>
+                <small
+                  class="twin-desc text-center mt-3"
+                >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
+              </div>
 
-                <!-- Not using nav-list because it doesnt support router-link properly
-                TODO: Refactor evan-nav-list to use router-links too-->
-                <div class="evan-nav-list">
-                  <div class="nav-entries">
-                    <template v-for="navItem in navItems">
-                      <router-link
-                        :id="navItem.id"
-                        :key="navItem.id"
-                        :to="navItem.to"
-                        :active-class="'active'"
-                      >
-                        <i class="mr-3" :class="navItem.icon"></i>
-                        {{ navItem.label | translate }}
-                      </router-link>
-                    </template>
-                  </div>
+              <!-- Not using nav-list because it doesnt support router-link properly
+              TODO: Refactor evan-nav-list to use router-links too-->
+              <div class="evan-nav-list">
+                <div class="nav-entries">
+                  <template v-for="navItem in navItems">
+                    <router-link
+                      :id="navItem.id"
+                      :key="navItem.id"
+                      :to="navItem.to"
+                      :active-class="'active'"
+                    >
+                      <i class="mr-3" :class="navItem.icon"></i>
+                      {{ navItem.label | translate }}
+                    </router-link>
+                  </template>
                 </div>
               </div>
-            </evan-dapp-wrapper-level-2>
-            <transition name="fade" mode="out-in">
-              <router-view></router-view>
-            </transition>
-          </template>
+            </div>
+          </evan-dapp-wrapper-level-2>
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
         </template>
       </template>
     </evan-dapp-wrapper>
