@@ -29,7 +29,7 @@
               :id="navItem.id"
               :key="navItem.id"
               :to="navItem.to"
-              :active-class="'active'"
+              active-class="active"
             >
               {{ navItem.label | translate }}
             </router-link>
@@ -60,6 +60,7 @@ export default DetailDataComponent;
   height: 100vh;
   position: sticky;
   top: 0;
+  overflow-y: auto;
 }
 
 .content {

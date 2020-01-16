@@ -97,6 +97,12 @@ export class Dispatcher {
     return () => window.removeEventListener(`evan-queue-${ dappEns }-${ name }`, watch);
   }
 
+  /**
+   * @param  {string} dappEns - Original dapp ens address.
+   * @param  {string} name - Technical exported class member of the dispatcher within the dapp.
+   * @param  {number} gas - estimated gas price for one full steps run.
+   * @param  {string} title? - I18N display key.
+   */
   constructor(dappEns: string, name: string, gas: number, title?: string) {
     this.dappEns = dappEns;
     this.name = name;

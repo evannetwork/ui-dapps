@@ -32,7 +32,7 @@
         {{ '_assets.digitaltwins.add-image' | translate }}
         <small class="text-muted">({{ '_assets.optional' | translate }})</small>
       </label>
-      <div class="my-3 centerX">
+      <div class="my-3 d-flex justify-content-center">
         <evan-profile-picture
           id="new-twin-picture"
           type="device"
@@ -58,9 +58,10 @@
       <p>
         {{ '_assets.digitaltwins.template-desc' | translate }}
         <a
-          href="https://evannetwork.github.io/docs/first_steps/power_apps/digital-twin.html"
+          href="https://api-blockchain-core.readthedocs.io/en/latest/contracts/digital-twin-usage-examples.html#handling-templates-and-plugins"
           target="_blank"
           rel="noopener noreferrer"
+          title="Twin API documentation"
         >
           {{ '_assets.more' | translate }}
         </a>
@@ -71,9 +72,10 @@
         :label="'_assets.digitaltwins.template-select-label' | translate"
         :options="presetTemplates"
         :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
-        :required="template === null"
+        :required="true"
         :value="selectedTemplate"
         @change="handleTemplateSelectChange"
+        ref="templateSelector"
       />
 
       <evan-file-input
@@ -81,6 +83,18 @@
         @input="handleFileUpload"
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
       ></evan-file-input>
+
+      <div v-if="templateErrors.length > 0">
+        <h4 class="text-warning">Errors occured in template</h4>
+        <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
+          <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>
+          <ul v-if="pluginErrors.errors">
+            <li v-for="error in pluginErrors.errors" :key="error.property">
+              <span>{{ error.message }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <template v-slot:footer>
         <div class="d-flex">

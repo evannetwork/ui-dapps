@@ -84,8 +84,8 @@
           <template v-slot:cell(icon)="data">
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
-          <template v-slot:cell(updated)="data">{{ data.item.updated | moment('DD.MM.YYYY') }}</template>
-          <template v-slot:cell(created)="data">{{ data.item.updated | moment('DD.MM.YYYY') }}</template>
+          <template v-slot:cell(updated)="data">{{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}</template>
+          <template v-slot:cell(created)="data">{{ data.item.created | moment('DD.MM.YYYY hh:mm') }}</template>
           <template v-slot:cell(isFavorite)="twin">
             <evan-loading v-if="isFavoriteLoading(twin)" classes />
             <evan-button

@@ -18,7 +18,7 @@
 */
 
 import axios from 'axios';
-import { utils } from '@evan.network/api-blockchain-core';
+import { utils, Runtime } from '@evan.network/api-blockchain-core';
 
 interface QueryOptions {
   count?: number;
@@ -52,10 +52,10 @@ interface SearchResponse {
 }
 
 class SearchService {
-  runtime = null;
+  runtime: Runtime = null;
   searchUrl: string;
 
-  constructor(runtime: any) {
+  constructor(runtime: Runtime) {
     if (!runtime) {
       throw new Error('Initialized search Service without runtime.');
     }
