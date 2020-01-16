@@ -31,8 +31,8 @@ dispatcher
   // update description
   .step(async (instance: DispatcherInstance, data: any) => {
     await instance.runtime.description.setDescription(
-      data.addres,
-      data.description,
+      data.address,
+      { public: data.description },
       instance.runtime.activeAccount
     );
   });

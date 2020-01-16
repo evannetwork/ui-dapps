@@ -18,7 +18,7 @@
 */
 
 
-import { System, dapp, queue, getDomainName, bccHelper } from '@evan.network/ui-dapp-browser';
+import { System } from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import EvanQueue from './Queue';

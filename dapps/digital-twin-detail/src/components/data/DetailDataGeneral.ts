@@ -21,7 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import { dispatchers } from '@evan.network/digital-twin-lib';
 
 import DbcpForm from '../general/DbcpForm';
@@ -37,11 +37,12 @@ export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanCo
    * Save the current description definition.
    */
   async setDescription(): Promise<void> {
+    const { name, description, }: any = this.dbcpForm.formInstance.getFormData();
     await dispatchers.descriptionDispatcher.start(this.getRuntime(), {
-      address: this.$store.state.twin.contractAddres,
+      address: this.$store.state.twin.contractAddress,
       description: {
         ...this.$store.state.twin.description,
-        ...this.dbcpForm.formInstance.getFormData(),
+        ...{ name, description },
       }
     });
   }
