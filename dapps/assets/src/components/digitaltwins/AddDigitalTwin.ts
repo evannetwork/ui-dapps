@@ -62,14 +62,14 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   name: string = null;
   runtime: Runtime = null;
   selectedTemplate = 'carTwin';
-  template = <DigitalTwinTemplate>carTwin;
+  template = carTwin as DigitalTwinTemplate;
   twinTemplates = { bicycleTwin, carTwin };
   presetTemplates = this._getTemplateSelectOptions();
   templateErrors: any[] = [];
 
   // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
-    this.selectedTemplate = (<HTMLInputElement>event.target).value;
+    this.selectedTemplate = (event.target as HTMLInputElement).value;
     this.template = this.twinTemplates[this.selectedTemplate];
     this._setDefaults();
   }
@@ -124,7 +124,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   addDigitalTwin() {
     // merge custom fields into template.
-    const template = <any>Object.assign({}, this.template); // TODO: use twin template interface
+    const template = Object.assign({}, this.template) as any; // TODO: use twin template interface
 
     if (this.description) {
       template.description.description = this.description;

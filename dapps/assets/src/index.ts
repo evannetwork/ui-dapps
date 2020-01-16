@@ -45,11 +45,11 @@ System.map['@evan.network/assets'] = `assets.${getDomainName()}!dapp-content`;
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
 export async function startDApp(
-  container: any,
-  dbcpName: any,
-  dappEnsOrContract: any,
-  dappBaseUrl: any
-) {
+  container: Element,
+  dbcpName: string,
+  dappEnsOrContract: string,
+  dappBaseUrl: string
+): Promise<void> {
   Vue.use(TablePlugin);
 
   await initializeVue({

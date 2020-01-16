@@ -42,7 +42,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   msgBody = null;
   msgTitle = null;
 
-  async created() {
+  async created(): Promise<void> {
     this.initState();
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
@@ -52,7 +52,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   /**
    * Init and reset component state
    */
-  private initState() {
+  private initState(): void {
     this.idOrEmailErrorMessage = '';
     this.idOrEmail = null;
 
@@ -72,7 +72,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   /**
    * Add new contact based on form inputs
    */
-  async addContact() {
+  async addContact(): Promise<void> {
     if (this.checkFormValid()) {
       const now = new Date().toISOString();
       const formData: ContactFormData = {
@@ -101,7 +101,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
    * Handles changes on the input for evan id and email
    * @param value input value
    */
-  handleIdOrEmailChange(value: string) {
+  handleIdOrEmailChange(value: string): void {
     this.idOrEmailErrorMessage = this.validateIdOrEmail(value);
   }
 
@@ -138,11 +138,11 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     return true;
   }
 
-  showPanel() {
+  showPanel(): void {
     (this.$refs.addContactPanel as any).show();
   }
 
-  closePanel() {
+  closePanel(): void {
     (this.$refs.addContactPanel as any).hide();
   }
 }
