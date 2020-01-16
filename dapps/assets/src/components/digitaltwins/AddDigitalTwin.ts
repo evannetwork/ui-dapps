@@ -18,11 +18,11 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { ContainerPlugin, Runtime } from '@evan.network/api-blockchain-core';
+import { dispatchers } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { UIContainerFile } from '@evan.network/ui';
-import { ContainerPlugin, Runtime } from '@evan.network/api-blockchain-core';
 
-import createTwinDispatcher from '../dispatchers/createTwinDispatcher';
 // load twin template
 import bicycleTwin from './templates/bicycle.json';
 import carTwin from './templates/car.json';
@@ -132,7 +132,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     template.description.name = this.name;
     delete template.description.i18n;
 
-    createTwinDispatcher.start(this.getRuntime(), {twinTemplate: template, twinImage: this.image } );
+    dispatchers.twinCreateDispatcher
+      .start(this.getRuntime(), {twinTemplate: template, twinImage: this.image } );
   }
 
   /**

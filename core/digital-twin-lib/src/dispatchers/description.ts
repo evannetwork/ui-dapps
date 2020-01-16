@@ -17,22 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DAppTwin, DAppContainer } from '@evan.network/digital-twin-lib';
+const dispatcher = new Dispatcher(
+  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  'descriptionDispatcher',
+  40 * 1000,
+  '_digital-twin-lib.dispatchers.description'
+);
 
-/**
- * Used to handle correct typings for the twin detail dapp.
- */
-@Component
-export default class TwinDAppComponent extends mixins(EvanComponent) {
-  $store: {
-    state: {
-      container: DAppContainer;
-      twin: DAppTwin;
-    };
-  };
-}
+dispatcher
+  // update description
+  .step(async (instance: DispatcherInstance, data: any) => {
+    await instance.runtime.description.setDescription(
+      data.addres,
+      data.description,
+      instance.runtime.activeAccount
+    );
+  });
+
+export default dispatcher;

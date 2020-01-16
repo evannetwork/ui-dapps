@@ -3,8 +3,12 @@
     "outDir": "dist"
   },
   "extends": "../../tsconfig.json",
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../digital-twin.lib" },
+    {
+      "path": "../../core/digital-twin-lib"
+    }
   ]
 }

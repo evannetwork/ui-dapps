@@ -17,22 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DAppTwin, DAppContainer } from '@evan.network/digital-twin-lib';
+const dispatcher = new Dispatcher(
+  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  'twinFavoriteAddDispatcher',
+  40 * 1000,
+  '_digital-twin-lib.dispatchers.twin.favorite.add'
+);
 
-/**
- * Used to handle correct typings for the twin detail dapp.
- */
-@Component
-export default class TwinDAppComponent extends mixins(EvanComponent) {
-  $store: {
-    state: {
-      container: DAppContainer;
-      twin: DAppTwin;
-    };
-  };
-}
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
+      accountId: instance.runtime.activeAccount,
+      address: data.address,
+    });
+    await twin.addAsFavorite();
+  });
+
+export default dispatcher;

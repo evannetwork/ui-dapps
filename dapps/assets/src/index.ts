@@ -29,7 +29,6 @@ import components from './components/registry';
 import AssetsComponent from './components/Assets.vue';
 
 export * from './components/registry';
-export * from './components/dispatchers';
 export { dispatcher } from './components/contacts/InviteDispatcher';
 export { translations };
 

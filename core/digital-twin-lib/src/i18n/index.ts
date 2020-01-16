@@ -17,22 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import de from './de.json';
+import en from './en.json';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DAppTwin, DAppContainer } from '@evan.network/digital-twin-lib';
-
-/**
- * Used to handle correct typings for the twin detail dapp.
- */
-@Component
-export default class TwinDAppComponent extends mixins(EvanComponent) {
-  $store: {
-    state: {
-      container: DAppContainer;
-      twin: DAppTwin;
-    };
-  };
-}
+// map all langugages
+export default { de, en };

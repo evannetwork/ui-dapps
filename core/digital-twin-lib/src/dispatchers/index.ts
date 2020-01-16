@@ -17,22 +17,18 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import containerSaveDispatcher from './container/save';
+import containerShareDispatcher from './container/share';
+import descriptionDispatcher from './description';
+import twinCreateDispatcher from './twin/create';
+import twinFavoriteAddDispatcher from './twin/favorite.add';
+import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
 
-// evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DAppTwin, DAppContainer } from '@evan.network/digital-twin-lib';
-
-/**
- * Used to handle correct typings for the twin detail dapp.
- */
-@Component
-export default class TwinDAppComponent extends mixins(EvanComponent) {
-  $store: {
-    state: {
-      container: DAppContainer;
-      twin: DAppTwin;
-    };
-  };
-}
+export {
+  containerSaveDispatcher,
+  containerShareDispatcher,
+  descriptionDispatcher,
+  twinCreateDispatcher,
+  twinFavoriteAddDispatcher,
+  twinFavoriteRemoveDispatcher,
+};

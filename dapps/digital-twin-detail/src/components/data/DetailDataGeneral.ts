@@ -22,7 +22,6 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DigitalTwin } from '@evan.network/api-blockchain-core';
 
 @Component
 export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {

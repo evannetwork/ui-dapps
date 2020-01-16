@@ -25,6 +25,10 @@
 - core
   - `evancore.vue.libs` (v1.10.0)
     - disable default contract address routing detect, can be enabled by passing `contractRouting` to vueCore initialization
+- dapps
+  - remove old digital twins dapps
+  - `digital-twin-lib` (v2.0.0)
+    - refactor old digital twin lib for new twin functions
 
 # Archived repository history
 DApps were previously organized in several github projects. Please have a look at the following projects for previous dapp versions
@@ -569,7 +573,7 @@ DApps were previously organized in several github projects. Please have a look a
   - add updated terms of use
 - `mailbox.vue`
   - add new entry for accepting verifications
-- `digitaltwin`, `digital-twin.data-container`, `digital-twin.lib`
+- `digitaltwin`, `digital-twin.data-container`, `digital-twin-lib`
   - remove defined factory contract addresses for `DigitalTwin` and `Container` creation and use default ens addresses
   - use environment specific links for `technical` detail view
 - `organizations`
