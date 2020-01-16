@@ -17,14 +17,23 @@
   the following URL: https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
+<template>
+  <div>
+    <evan-form
+      :form="formInstance"
+      @save="$emit('save')"
+      i18nScope="_twin-detail.dbcp-form"
+      v-bind="$props"
+    />
+  </div>
+</template>
 
-import DbcpForm from './general/DbcpForm.vue';
+<script lang="ts">
+import DbcpForm from './DbcpForm';
+export default DbcpForm;
+</script>
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { component: DbcpForm, name: 'evan-dbcp-form' },
-];
+<style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
 
-export default componentRegistration;
+</style>

@@ -39,6 +39,22 @@ dispatcher
     }
   })
   // create the twin
+  .step(async (instance: DispatcherInstance, data) => {
+    // check if template should be loaded from contract
+    if (typeof data.twinTemplate === 'string' && data.twinTemplate.startsWith('0x')) {
+      const twinInstance = new DigitalTwin(
+        instance.runtime as DigitalTwinOptions,
+        {
+          accountId: instance.runtime.activeAccount,
+          address: data.twinTemplate
+        }
+      );
+
+      data.twinTemplate = await twinInstance.exportAsTemplate(true);
+      await instance.save();
+    }
+  })
+  // create the twin
   .step(async (instance: DispatcherInstance, { twinTemplate }) => {
     await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,

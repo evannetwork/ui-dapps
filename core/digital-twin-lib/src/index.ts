@@ -24,12 +24,14 @@ import * as dispatchers from './dispatchers';
 import DAppContainer from './DAppContainer';
 import DAppTwin from './DAppTwin';
 import translations from './i18n';
+import { DBCPDescriptionInterface } from './DAppContract';
 
 export {
-  dispatchers,
-  translations,
   DAppContainer,
   DAppTwin,
+  DBCPDescriptionInterface,
+  dispatchers,
+  translations,
 };
 
 System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${ getDomainName() }!dapp-content`;

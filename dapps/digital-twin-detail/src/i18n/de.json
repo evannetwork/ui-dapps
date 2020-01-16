@@ -2,24 +2,44 @@
   "_twin-detail": {
     "data": {
       "context-menu": {
-        "export-template": "Als Template exportieren",
-        "download-template": "Herunterladen"
+        "download-template": "Herunterladen",
+        "duplicate-twin": "Duplizieren",
+        "duplicating-twin": "Duplikat wird erstellt...",
+        "export-template": "Als Vorlage exportieren",
+        "exporting-twin": "Vorlage wird erstellt..."
       },
       "data-title": "Daten",
       "general": {
         "desc": "Beschreibung",
         "general-title": "Allgemein",
         "information-title": "Informationen",
-        "name": "Name",
-        "owner": "Besitzer",
-        "twin-image": "Bild",
-        "type": "Typ"
+        "type-value": "Digitaler Zwilling"
       },
       "logs": {
         "logs-title": "Logs"
       },
       "specifications": {
         "specifications-title": "Spezifikationen"
+      }
+    },
+    "dbcp-form": {
+      "description": {
+        "label": "Beschreibung",
+        "placeholder": "Kurze Beschreibung des Digitalen Zwillings"
+      },
+      "img": {
+        "label": "Bild"
+      },
+      "name": {
+        "error": "Bitte geben Sie einen Namen ein!",
+        "label": "Name",
+        "placeholder": "Aussagekräftiger Name"
+      },
+      "owner": {
+        "label": "Eigentümer"
+      },
+      "type": {
+        "label": "Typ"
       }
     },
     "did": {

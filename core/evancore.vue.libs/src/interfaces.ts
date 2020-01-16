@@ -76,8 +76,9 @@ export interface EvanFormControlUISpecs {
     placeholder?: string;
     error?: string;
     label?: string;
-    options?: Array<{ label: string, value: any }>;
+    options?: Array<{ label: string; value: any }>;
     size?: number;
+    required?: boolean|Function;
   };
   type: string;
 }
@@ -86,6 +87,7 @@ export interface EvanFormControlUISpecs {
  * Represents one generalized form control within an vue form.
  */
 export interface EvanFormControlOptions {
+  disabled?: boolean|Function;
   name?: string;
   uiSpecs?: EvanFormControlUISpecs;
   validate?: Function;

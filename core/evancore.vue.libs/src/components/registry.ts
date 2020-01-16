@@ -35,7 +35,7 @@ import DropdownComponent from './dropdown/dropdown.vue';
 import EvanCheckboxComponent from './forms/checkbox/checkbox.vue';
 import EvanComponent from '../component';
 import FailedComponent from './failed/failed.vue';
-import FormComponent from './forms/form/form.vue';
+import EvanFormComponent from './forms/form/form.vue';
 import FormControlCheckboxComponent from './forms/checkbox/checkbox-control.vue';
 import FormControlComponent from './forms/control/control.vue';
 import FormControlCountriesComponent from './forms/countries/countries.vue';
@@ -82,7 +82,7 @@ export {
   EvanCheckboxComponent,
   EvanComponent,
   FailedComponent,
-  FormComponent,
+  EvanFormComponent,
   FormControlCheckboxComponent,
   FormControlComponent,
   FormControlCountriesComponent,
@@ -135,7 +135,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-form-control-countries', component: FormControlCountriesComponent },
   { name: 'evan-form-control-v-select', component: FormControlVSelectComponent },
   { name: 'evan-form-control', component: FormControlComponent },
-  { name: 'evan-form', component: FormComponent },
+  { name: 'evan-form', component: EvanFormComponent },
   { name: 'evan-iframe', component: IframeComponent },
   { name: 'evan-loading', component: DAppLoadingComponent },
   { name: 'evan-login', component: LoginComponent },

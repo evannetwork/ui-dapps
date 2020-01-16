@@ -21,9 +21,28 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanForm } from '@evan.network/ui-vue-core';
+import { dispatchers } from '@evan.network/digital-twin-lib';
+
+import DbcpForm from '../general/DbcpForm';
 
 @Component
 export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
+  /**
+   * When duplicate twin modal is opened, this form will be available.
+   */
+  dbcpForm: DbcpForm;
 
+  /**
+   * Save the current description definition.
+   */
+  async setDescription(): Promise<void> {
+    await dispatchers.descriptionDispatcher.start(this.getRuntime(), {
+      address: this.$store.state.twin.contractAddres,
+      description: {
+        ...this.$store.state.twin.description,
+        ...this.dbcpForm.formInstance.getFormData(),
+      }
+    });
+  }
 }

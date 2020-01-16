@@ -2,8 +2,11 @@
   "_twin-detail": {
     "data": {
       "context-menu": {
+        "download-template": "Download",
+        "duplicate-twin": "Duplicate",
+        "duplicating-twin": "Creating duplicate...",
         "export-template": "Export as template",
-        "download-template": "Download"
+        "exporting-twin": "Creating template..."
       },
       "data-title": "Data",
       "general": {
@@ -13,13 +16,34 @@
         "name": "Name",
         "owner": "Owner",
         "twin-image": "Twin Image",
-        "type": "Type"
+        "type": "Type",
+        "type-value": "Digital Twin"
       },
       "logs": {
         "logs-title": "Logs"
       },
       "specifications": {
         "specifications-title": "Specifications"
+      }
+    },
+    "dbcp-form": {
+      "description": {
+        "label": "Description",
+        "placeholder": "Briefly describe your Digital Twin and what it represents."
+      },
+      "img": {
+        "label": "Image"
+      },
+      "name": {
+        "error": "Please provide a name!",
+        "label": "Name",
+        "placeholder": "Give a meaningful name"
+      },
+      "owner": {
+        "label": "Owner"
+      },
+      "type": {
+        "label": "Type"
       }
     },
     "did": {

@@ -39,7 +39,10 @@
                         icon="mdi mdi-dots-vertical"
                       />
                     </template>
-                    <b-dropdown-item href="#">TODO Clone</b-dropdown-item>
+                    <b-dropdown-item
+                      @click="duplicateTwin()">
+                      {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
+                    </b-dropdown-item>
                     <b-dropdown-item
                       @click="exportTwinTemplate()">
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
@@ -54,7 +57,14 @@
                     </template>
 
                     <template v-slot:body>
-                      <evan-loading v-if="exporting" />
+                      <template v-if="exporting">
+                        <evan-loading />
+                        <div class="mt-3 text-center">
+                          <h4>
+                            {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
+                          </h4>
+                        </div>
+                      </template>
                       <evan-success v-else />
                     </template>
 
@@ -62,9 +72,48 @@
                       <evan-button
                         type="primary"
                         :disabled="exporting"
-                        :isLoading="exporting"
                         :label="$t('_twin-detail.data.context-menu.download-template')"
                         @click="downloadTwinTemplate()"
+                      />
+                    </template>
+                  </evan-modal>
+
+                  <evan-modal ref="duplicateModal">
+                    <template v-slot:header>
+                      <h5 class="modal-title">
+                        {{ `_twin-detail.data.context-menu.duplicate-twin` | translate }}
+                      </h5>
+                    </template>
+
+                    <template v-slot:body>
+                      <template v-if="exporting || duplicating">
+                        <evan-loading />
+                        <div class="mt-3 text-center">
+                          <h4 v-if="exporting">
+                            {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
+                          </h4>
+                          <h4 v-else-if="duplicating">
+                            {{ `_twin-detail.data.context-menu.duplicating-twin` | translate }}
+                          </h4>
+                        </div>
+                      </template>
+                      <evan-dbcp-form
+                        ref="dbcpForm"
+                        :contractAddress="$store.state.twin.contractAddress"
+                        :description="$store.state.twin.description"
+                        i18nScope="_twin-detail.data.general"
+                        onlyForm="true"
+                        @init="dbcpForm = $event"
+                        v-else
+                      />
+                    </template>
+
+                    <template v-slot:footer>
+                      <evan-button
+                        type="primary"
+                        :disabled="exporting || duplicating"
+                        :label="$t('_twin-detail.data.context-menu.duplicate-twin')"
+                        @click="createTwinDuplicate()"
                       />
                     </template>
                   </evan-modal>

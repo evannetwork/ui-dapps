@@ -20,54 +20,17 @@
 <template>
   <div>
     <div class="content-card">
-      <!-- TODO: sample loading states
-        <div class="spinner-border spinner-border-sm" v-if="$store.state.twin.dispatcherStates.description"></div>
-      -->
-      <evan-form :title="'_twin-detail.data.general.information-title' | translate">
-        <div class="form-group inline">
-          <label
-            for="twin-avatar"
-            class="col-form-label"
-          >{{ '_twin-detail.data.general.twin-image' | translate }}</label>
-            <div class="input-wrapper">
-              <evan-profile-picture
-                id="twin-avatar"
-                class="twin-avatar"
-                type="device"
-                :isEditable="true"
-                :src="'https://via.placeholder.com/96'"
-                @changed="handleImageChange"
-              />
-            </div>
-        </div>
-
-        <evan-form-control-input
-          v-model="$store.state.twin.description.name"
-          :label="$t('_twin-detail.data.general.name')"
-          :placeholder="$t('_twin-detail.data.general.name-placeholder')"
-          :required="true"
-        />
-
-        <evan-form-control-textarea
-          v-model="$store.state.twin.description.description"
-          :label="$t('_twin-detail.data.general.desc')"
-          :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
-        />
-
-        <evan-form-control-input
-          v-model="type"
-          :label="$t('_twin-detail.data.general.type')"
-          :disabled="true"
-          :required="true"
-        />
-
-        <evan-form-control-input
-          :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
-          :label="$t('_twin-detail.data.general.owner')"
-          :disabled="true"
-          :required="true"
-        />
-      </evan-form>
+      <evan-dbcp-form
+        :contractAddress="$store.state.twin.contractAddress"
+        :description="$store.state.twin.description"
+        :isLoading="$store.state.twin.dispatcherStates.description"
+        :owner="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
+        :shareable="false"
+        :title="'_twin-detail.data.general.information-title' | translate"
+        :type="$t('_twin-detail.data.general.type-value')"
+        @init="dbcpForm = $event"
+        @save="setDescription();"
+      />
     </div>
   </div>
 </template>
