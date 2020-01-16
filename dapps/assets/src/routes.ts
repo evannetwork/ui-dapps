@@ -17,14 +17,17 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 import AssetsComponent from './components/Assets.vue';
 import DataContainer from './components/DataContainer.vue';
 import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
 import ContactsComponent from './components/contacts/Contacts.vue';
 
+import { RouteConfig } from 'vue-router';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
+
 // map them to element names, so they can be used within templates
-const routeRegistration: Array<RouteRegistrationInterface> = [
+const routeRegistration: Array<RouteConfig> = [
   {
     path: '',
     component: AssetsComponent,
@@ -32,24 +35,29 @@ const routeRegistration: Array<RouteRegistrationInterface> = [
       { path: '', redirect: 'digitaltwins' },
       {
         name: 'digitaltwins',
-        path: 'digitaltwins/',
+        path: 'digitaltwins',
         component: DataContainer,
-        children: [{
-          path: ':query',
-          props: true,
-          component: DigitalTwinsComponent,
-          meta: { type: 'twins' }
-        }, {
-          path: '',
-          component: DigitalTwinsComponent,
-          meta: { type: 'twins' }
-        }]
+        children: [
+          {
+            path: '',
+            component: DigitalTwinsComponent,
+            meta: { type: 'twins' }
+          },
+          {
+            path: 'search/:query',
+            props: true,
+            component: DigitalTwinsComponent,
+            meta: { type: 'twins' }
+          }
+        ]
       },
-      { name: 'contacts', path: 'contacts', component: ContactsComponent },
+      {
+        path: `evan-twin-detail.${getDomainName()}/:id`,
+        component: DAppLoaderComponent
+      },
+      { name: 'contacts', path: 'contacts', component: ContactsComponent }
     ]
   }
-
-  // { path: 'contacts', component: AssetsComponent },
 ];
 
 export default routeRegistration;

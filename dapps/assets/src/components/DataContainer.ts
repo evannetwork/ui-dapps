@@ -52,7 +52,12 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.data = [];
     this.searchTerm = searchTerm;
 
-    this.$router.push({ path: `digitaltwins/${searchTerm}` });
+    // Necessary for proper routing. Otherwise collision with detail dapp
+    if (searchTerm) {
+      this.$router.push({ path: `digitaltwins/search/${searchTerm}` });
+    } else {
+      this.$router.push({ path: `digitaltwins/` });
+    }
 
     const { result, total } = await this.search.query(this.type, { searchTerm, ...sorting });
 

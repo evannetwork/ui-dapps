@@ -19,22 +19,42 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { Prop, } from 'vue-property-decorator';
 
-import EvanControlComponent from '../control/control';
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-/**
- * Base component for input element.
- *
- * @class         FormDataInput
- * @selector      evan-form-control-input
- */
-@Component({})
-export default class InputComponent extends mixins(EvanControlComponent) {
-  /**
-   * Input type attribute
-   */
-  @Prop({
-    default: 'text',
-  }) type: string;
+@Component
+export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
+  navItems = [
+    {
+      key: 'overview',
+      icon: 'mdi mdi-view-dashboard-outline'
+    },
+    {
+      key: 'data',
+      icon: 'mdi mdi-file-document-box-outline'
+    },
+    {
+      key: 'verifications',
+      icon: 'mdi mdi-checkbox-marked-circle-outline'
+    },
+    {
+      key: 'sharings',
+      icon: 'mdi mdi-share-variant'
+    },
+    {
+      key: 'did',
+      icon: 'mdi mdi-identifier'
+    }
+  ].map(entry => {
+    return {
+      label: `_twin-detail.${entry.key}.${entry.key}-title`,
+      icon: entry.icon,
+      to: { name: entry.key }
+    };
+  });
+
+  close() {
+    window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
+  }
 }

@@ -17,24 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
-import { Prop, } from 'vue-property-decorator';
+import de from './de.json';
+import en from './en.json';
 
-import EvanControlComponent from '../control/control';
-
-/**
- * Base component for input element.
- *
- * @class         FormDataInput
- * @selector      evan-form-control-input
- */
-@Component({})
-export default class InputComponent extends mixins(EvanControlComponent) {
-  /**
-   * Input type attribute
-   */
-  @Prop({
-    default: 'text',
-  }) type: string;
-}
+// map all languages
+export default { de, en };
