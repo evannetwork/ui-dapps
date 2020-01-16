@@ -1,0 +1,16 @@
+{
+  "_digital-twin-lib": {
+    "dispatchers": {
+      "container": {
+        "save": "Daten speichern...",
+        "share": "Daten freigeben..."
+      },
+      "description": "Beschreibung speichern...",
+      "twin": {
+        "favorite": {
+          "add": "Favorit hinzufügen...",
+          "remove": "Favorit entfernen..."
+        }
+      }
+    }
+  }}

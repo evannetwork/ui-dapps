@@ -17,14 +17,18 @@
   the following URL: https://evan.network/license/
 */
 
-const getExternals = require('../../scripts/dapp/webpack.externals');
+import containerSaveDispatcher from './container/save';
+import containerShareDispatcher from './container/share';
+import descriptionDispatcher from './description';
+import twinCreateDispatcher from './twin/create';
+import twinFavoriteAddDispatcher from './twin/favorite.add';
+import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
 
-module.exports = require('../../scripts/dapp/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-  false,
-  getExternals({
-    '@evan.network/lib.digital-twin': '@evan.network/lib.digital-twin',
-  })
-);
+export {
+  containerSaveDispatcher,
+  containerShareDispatcher,
+  descriptionDispatcher,
+  twinCreateDispatcher,
+  twinFavoriteAddDispatcher,
+  twinFavoriteRemoveDispatcher,
+};

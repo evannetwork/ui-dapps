@@ -52,7 +52,7 @@ const routeRegistration: Array<RouteConfig> = [
         ]
       },
       {
-        path: `evan-twin-detail.${getDomainName()}/:id`,
+        path: `detail.digital-twin.${getDomainName()}/:id`,
         component: DAppLoaderComponent
       },
       { name: 'contacts', path: 'contacts', component: ContactsComponent }

@@ -20,19 +20,17 @@
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName } from '@evan.network/ui-dapp-browser';
-import { TablePlugin } from 'bootstrap-vue';
+import { DropdownPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
-import AssetsComponent from './components/Assets.vue';
-
+import DigitalTwinDetailComponent from './components/DigitalTwinDetail.vue';
 export * from './components/registry';
-export { dispatcher } from './components/contacts/InviteDispatcher';
 export { translations };
 
-System.map['@evan.network/assets'] = `assets.${getDomainName()}!dapp-content`;
+System.map['@evan.network/detail.digital-twin'] = `detail.digital-twin.${getDomainName()}!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
@@ -44,12 +42,12 @@ System.map['@evan.network/assets'] = `assets.${getDomainName()}!dapp-content`;
  * @param      {string}  dappBaseUrl  origin of the dapp
  */
 export async function startDApp(
-  container: Element,
-  dbcpName: string,
-  dappEnsOrContract: string,
-  dappBaseUrl: string
-): Promise<void> {
-  Vue.use(TablePlugin);
+  container: any,
+  dbcpName: any,
+  dappEnsOrContract: any,
+  dappBaseUrl: any
+) {
+  Vue.use(DropdownPlugin);
 
   await initializeVue({
     components,
@@ -57,7 +55,7 @@ export async function startDApp(
     dappBaseUrl,
     dappEnsOrContract,
     dbcpName,
-    RootComponent: AssetsComponent,
+    RootComponent: DigitalTwinDetailComponent,
     routes,
     state: {},
     translations: translations,

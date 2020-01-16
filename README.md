@@ -28,7 +28,7 @@ DApp implementations like Dashboard, Profile, Digitaltwin or Addressbook.
 | ---                                | dashboard.vue               |
 | ---                                | digital-twin                |
 | ---                                | digital-twin.data-container |
-| ---                                | digital-twin.lib            |
+| ---                                | lib.digital-twin            |
 | ---                                | digital-twins               |
 | ---                                | favorites.vue               |
 | ---                                | help.vue                    |

@@ -17,14 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-const getExternals = require('../../scripts/dapp/webpack.externals');
+import de from './de.json';
+import en from './en.json';
 
-module.exports = require('../../scripts/dapp/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-  false,
-  getExternals({
-    '@evan.network/lib.digital-twin': '@evan.network/lib.digital-twin',
-  })
-);
+// map all langugages
+export default { de, en };

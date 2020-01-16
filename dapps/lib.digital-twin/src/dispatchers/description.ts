@@ -17,14 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-const getExternals = require('../../scripts/dapp/webpack.externals');
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-module.exports = require('../../scripts/dapp/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-  false,
-  getExternals({
-    '@evan.network/lib.digital-twin': '@evan.network/lib.digital-twin',
-  })
+const dispatcher = new Dispatcher(
+  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  'descriptionDispatcher',
+  40 * 1000,
+  '_digital-twin-lib.dispatchers.description'
 );
+
+dispatcher
+  // update description
+  .step(async (instance: DispatcherInstance, data: any) => {
+    await instance.runtime.description.setDescription(
+      data.addres,
+      data.description,
+      instance.runtime.activeAccount
+    );
+  });
+
+export default dispatcher;

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./dist/tsbuildinfo"
+  },
+  "extends": "../../tsconfig.json",
+  "include": [
+    "./src/**/*",
+    "./src/**/*.json",
+    "./src/vue-shim.d.ts"
+  ],
+  "references": [
+    {
+      "path": "../lib.digital-twin"
+    }
+  ]
+}

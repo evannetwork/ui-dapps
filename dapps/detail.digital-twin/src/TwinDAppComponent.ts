@@ -17,14 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-const getExternals = require('../../scripts/dapp/webpack.externals');
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-module.exports = require('../../scripts/dapp/webpack.config')(
-  require('./dbcp.json').public.name,
-  require('path').resolve(__dirname, './dist'),
-  true,
-  false,
-  getExternals({
-    '@evan.network/lib.digital-twin': '@evan.network/lib.digital-twin',
-  })
-);
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { DAppTwin, DAppContainer } from '@evan.network/lib.digital-twin';
+
+/**
+ * Used to handle correct typings for the twin detail dapp.
+ */
+@Component
+export default class TwinDAppComponent extends mixins(EvanComponent) {
+  $store: {
+    state: {
+      container: DAppContainer;
+      twin: DAppTwin;
+    };
+  };
+}

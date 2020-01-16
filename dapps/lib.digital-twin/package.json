@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/lib.digital-twin.js",
+  "name": "@evan.network/lib.digital-twin",
+  "scripts": {
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
+  },
+  "typings": "dist/index.d.ts",
+  "version": "1.8.0"
+}

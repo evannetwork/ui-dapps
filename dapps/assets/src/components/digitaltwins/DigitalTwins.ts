@@ -24,10 +24,9 @@ import Component, { mixins } from 'vue-class-component';
 import * as bcc from '@evan.network/api-blockchain-core';
 import { debounce } from 'lodash';
 import { DigitalTwin } from './DigitalTwinInterface';
+import { dispatchers } from '@evan.network/lib.digital-twin';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { EvanTableItem } from '../../shared/EvanTable';
-import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
-import { getDomainName } from '@evan.network/ui-dapp-browser';
 import { Prop, Watch } from 'vue-property-decorator';
 
 interface SortFilter {
@@ -233,7 +232,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   handleRowClicked(twin: DigitalTwin) {
-    window.location.hash = `/${this.dapp.rootEns}/digital-twin-detail.${this.dapp.domainName}/${twin.address}`;
+    window.location.hash = `/${this.dapp.rootEns}/detail.digital-twin.${this.dapp.domainName}/${twin.address}`;
 
     // this.$router.push({
     //   path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
@@ -256,10 +255,8 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     };
     this.favoriteList = [...this.favoriteList, newFav];
 
-    await EvanUIDigitalTwin.getDigitalTwin(
-      this.getRuntime(),
-      twin.item.address
-    ).addAsFavorite();
+    await dispatchers.twinFavoriteAddDispatcher
+      .start(this.getRuntime(), { address: twin.item.address });
 
     newFav.isFavorite = true;
     newFav.isLoading = false;
@@ -270,10 +267,8 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       fav => twin.item.address === fav.id
     ).isLoading = true;
 
-    await EvanUIDigitalTwin.getDigitalTwin(
-      this.getRuntime(),
-      twin.item.address
-    ).removeFromFavorites();
+    await dispatchers.twinFavoriteRemoveDispatcher
+      .start(this.getRuntime(), { address: twin.item.address });
 
     this.favoriteList = this.favoriteList.filter(
       fav => twin.item.address !== fav.id
