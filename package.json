@@ -27,6 +27,7 @@
     "dexie": "^2.0.4",
     "express": "^4.17.1",
     "file-loader": "^3.0.1",
+    "file-type": "^13.0.3",
     "gulp": "^4.0.0",
     "gulp-open": "^2.0.0",
     "gulp-replace": "^0.6.1",
