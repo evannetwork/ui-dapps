@@ -19,22 +19,25 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { Prop, } from 'vue-property-decorator';
 
-import EvanControlComponent from '../control/control';
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanUIDigitalTwin } from 'dapps/digital-twin.lib';
+import { DigitalTwin } from '@evan.network/api-blockchain-core';
 
-/**
- * Base component for input element.
- *
- * @class         FormDataInput
- * @selector      evan-form-control-input
- */
-@Component({})
-export default class InputComponent extends mixins(EvanControlComponent) {
-  /**
-   * Input type attribute
-   */
-  @Prop({
-    default: 'text',
-  }) type: string;
+@Component
+export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
+  name: string = null;
+  description: string = null;
+  type = 'TODO Type';
+  owner = 'TODO Owner';
+  twin: DigitalTwin;
+
+  async mounted() {
+    this.twin = EvanUIDigitalTwin.getDigitalTwin(this.getRuntime(), this.$route.params.address);
+    const desc = await this.twin.getDescription();
+     console.log(desc);
+    this.name = desc.name;
+    this.description = desc.description;
+  }
 }

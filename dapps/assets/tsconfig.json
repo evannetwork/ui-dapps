@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "emitDeclarationOnly": true
+    "outDir": "dist"
   },
   "extends": "../../tsconfig.json",
   "include": ["./src/**/*"],
-  "references": [{ "path": "../digital-twin.lib" }]
+  "references": [
+    { "path": "../digital-twin.lib" },
+  ]
 }

@@ -1,0 +1,34 @@
+{
+  "_twin-detail": {    
+    "data": {
+      "data-title": "Daten",
+      "general": {
+        "desc": "Beschreibung",
+        "general-title": "Allgemein",
+        "information-title": "Informationen",
+        "name": "Name",
+        "owner": "Besitzer",
+        "twin-image": "Bild",
+        "type": "Typ"
+      },
+      "logs": {
+        "logs-title": "Logs"
+      },
+      "specifications": {
+        "specifications-title": "Spezifikationen"
+      }
+    },
+    "did": {
+      "did-title": "Decentralized ID"
+    },
+    "overview": {
+      "overview-title": "Übersicht"
+    },
+    "sharings": {
+      "sharings-title": "Freigaben"
+    },
+    "verifications": {
+      "verifications-title": "Verifikationen"
+    }
+  }
+}

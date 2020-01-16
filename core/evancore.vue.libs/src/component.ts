@@ -18,7 +18,7 @@
 */
 
 // vue imports
-import Component, { mixins } from 'vue-class-component';
+import Component from 'vue-class-component';
 import Vue from 'vue';
 import VueRouter, { Route } from 'vue-router';
 

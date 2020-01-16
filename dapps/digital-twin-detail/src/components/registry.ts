@@ -17,24 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
-import { Prop, } from 'vue-property-decorator';
+// import evan libs
+import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import EvanControlComponent from '../control/control';
+// map them to element names, so they can be used within templates
+const componentRegistration: Array<ComponentRegistrationInterface> = [];
 
-/**
- * Base component for input element.
- *
- * @class         FormDataInput
- * @selector      evan-form-control-input
- */
-@Component({})
-export default class InputComponent extends mixins(EvanControlComponent) {
-  /**
-   * Input type attribute
-   */
-  @Prop({
-    default: 'text',
-  }) type: string;
-}
+export default componentRegistration;

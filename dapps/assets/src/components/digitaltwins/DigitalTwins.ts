@@ -21,13 +21,14 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
-import { debounce } from 'lodash';
-import { Prop, Watch } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
-import { EvanTableItem } from '../../shared/EvanTable';
+import { debounce } from 'lodash';
 import { DigitalTwin } from './DigitalTwinInterface';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanTableItem } from '../../shared/EvanTable';
+import { EvanUIDigitalTwin } from '@evan.network/digitaltwin.lib';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { Prop, Watch } from 'vue-property-decorator';
 
 interface SortFilter {
   filter?: any;
@@ -52,10 +53,26 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   columns = [
     { key: 'icon', label: '' },
-    { key: 'name', label: this.$t('_assets.digitaltwins.name'), sortable: true },
-    { key: 'owner', label: this.$t('_assets.digitaltwins.owner'), sortable: true },
-    { key: 'updated', label: this.$t('_assets.digitaltwins.updated'), sortable: true },
-    { key: 'created', label: this.$t('_assets.digitaltwins.created'), sortable: true },
+    {
+      key: 'name',
+      label: this.$t('_assets.digitaltwins.name'),
+      sortable: true
+    },
+    {
+      key: 'owner',
+      label: this.$t('_assets.digitaltwins.owner'),
+      sortable: true
+    },
+    {
+      key: 'updated',
+      label: this.$t('_assets.digitaltwins.updated'),
+      sortable: true
+    },
+    {
+      key: 'created',
+      label: this.$t('_assets.digitaltwins.created'),
+      sortable: true
+    },
     { key: 'isFavorite', label: '' }
   ];
   isActiveSearch = false;
@@ -90,7 +107,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   /**
    * Flag to disable other favorite buttons.
-   * This can be remove once the backend can
+   * This can be removed once the backend can
    * handle multiple calls at the same time
    */
   get isAnyLoading(): boolean {
@@ -120,7 +137,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       this.searchHandlerDebounced();
     }
   }
-
 
   async mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
@@ -181,7 +197,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   performSearch() {
     if (typeof this.search === 'function') {
-      this.search(this.searchTerm, { sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
+      this.search(this.searchTerm, {
+        sortBy: this.sortBy,
+        reverse: this.reverse,
+        type: this.selectedFilter
+      });
     }
   }
 
@@ -190,23 +210,34 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   performFetchMore() {
     if (typeof this.fetchMore === 'function') {
-      this.fetchMore({ sortBy: this.sortBy, reverse: this.reverse, type: this.selectedFilter });
+      this.fetchMore({
+        sortBy: this.sortBy,
+        reverse: this.reverse,
+        type: this.selectedFilter
+      });
     }
   }
 
   /**
    * Debounce the search.
    */
-  searchHandlerDebounced = debounce(
-    this.performSearch,
-    250,
-    { trailing: true, leading: false }
-  );
+  searchHandlerDebounced = debounce(this.performSearch, 250, {
+    trailing: true,
+    leading: false
+  });
 
   handleSearchBlur() {
     if (this.searchTerm.length === 0) {
       this.isActiveSearch = false;
     }
+  }
+
+  handleRowClicked(twin: DigitalTwin) {
+    window.location.hash = `/${this.dapp.rootEns}/digital-twin-detail.${this.dapp.domainName}/${twin.address}`;
+
+    // this.$router.push({
+    //   path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
+    // });
   }
 
   sortHandler(ctx: SortFilter) {
@@ -253,10 +284,10 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     return this.favoriteList.some(fav => twin.item.address === fav.id);
   }
 
-/**
- * Check if specific twin is loading favorite
- * @param twin Digital Twin
- */
+  /**
+   * Check if specific twin is loading favorite
+   * @param twin Digital Twin
+   */
   private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>) {
     const fav = this.favoriteList.find(item => twin.item.address === item.id);
     return fav ? fav.isLoading : false;

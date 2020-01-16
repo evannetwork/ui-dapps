@@ -132,6 +132,7 @@ class ProfilePicture extends mixins(EvanComponent) {
    */
   usePicture() {
     this.$emit('changed', this.changedPicture);
+    this.$parent.$emit('setFocus');
     (<any>this).$refs.pictureUploadModal.hide();
   }
 

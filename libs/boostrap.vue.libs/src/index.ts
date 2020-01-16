@@ -24,4 +24,5 @@ export {
   TableLitePlugin,
   TablePlugin,
   TableSimplePlugin,
+  DropdownPlugin
 } from 'bootstrap-vue';
