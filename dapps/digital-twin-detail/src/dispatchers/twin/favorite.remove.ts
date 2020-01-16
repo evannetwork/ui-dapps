@@ -17,33 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-// internal imports
-import TwinDAppComponent from '../../TwinDAppComponent';
+const dispatcher = new Dispatcher(
+  `evan-twin-detail.${ dappBrowser.getDomainName() }`,
+  'twinFavoriteRemoveDispatcher',
+  40 * 1000,
+  '_twin-dispatcher.twin.favorite.remove'
+);
 
-@Component
-export default class DetailDataComponent extends mixins(TwinDAppComponent) {
-  navItems = [
-    {
-      label: `_twin-detail.data.general.general-title`,
-      to: 'general'
-    },
-  ];
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
+      accountId: instance.runtime.activeAccount,
+      address: data.address,
+    });
+    await twin.removeFromFavorites();
+  });
 
-  /**
-   * Setup dynamic navigation structure.s
-   */
-  async created() {
-    const twin = this.$store.state.twin;
-    this.navItems = this.navItems.concat(twin.containerKeys.map(key => {
-      const containerAddress = twin.containers[key].contractAddress;
-
-      return {
-        label: this.$t(`${ containerAddress }.name`, key),
-        to: containerAddress
-      };
-    }));
-  }
-}
+export default dispatcher;

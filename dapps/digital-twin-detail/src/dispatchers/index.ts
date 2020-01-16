@@ -17,33 +17,16 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import descriptionDispatcher from './description';
+import containerSaveDispatcher from './container/save';
+import containerShareDispatcher from './container/share';
+import twinFavoriteAddDispatcher from './twin/favorite.add';
+import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
 
-// internal imports
-import TwinDAppComponent from '../../TwinDAppComponent';
-
-@Component
-export default class DetailDataComponent extends mixins(TwinDAppComponent) {
-  navItems = [
-    {
-      label: `_twin-detail.data.general.general-title`,
-      to: 'general'
-    },
-  ];
-
-  /**
-   * Setup dynamic navigation structure.s
-   */
-  async created() {
-    const twin = this.$store.state.twin;
-    this.navItems = this.navItems.concat(twin.containerKeys.map(key => {
-      const containerAddress = twin.containers[key].contractAddress;
-
-      return {
-        label: this.$t(`${ containerAddress }.name`, key),
-        to: containerAddress
-      };
-    }));
-  }
-}
+export {
+  containerSaveDispatcher,
+  containerShareDispatcher,
+  descriptionDispatcher,
+  twinFavoriteAddDispatcher,
+  twinFavoriteRemoveDispatcher,
+};

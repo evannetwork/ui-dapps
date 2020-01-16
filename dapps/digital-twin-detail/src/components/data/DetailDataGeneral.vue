@@ -20,6 +20,9 @@
 <template>
   <div>
     <div class="content-card">
+      <!-- TODO: sample loading states
+        <div class="spinner-border spinner-border-sm" v-if="$store.state.twin.dispatcherStates.description"></div>
+      -->
       <evan-form :title="'_twin-detail.data.general.information-title' | translate">
         <div class="form-group inline">
           <label
@@ -39,14 +42,14 @@
         </div>
 
         <evan-form-control-input
-          v-model="name"
+          v-model="$store.state.twin.description.name"
           :label="$t('_twin-detail.data.general.name')"
           :placeholder="$t('_twin-detail.data.general.name-placeholder')"
           :required="true"
         />
 
         <evan-form-control-textarea
-          v-model="description"
+          v-model="$store.state.twin.description.description"
           :label="$t('_twin-detail.data.general.desc')"
           :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
         />
@@ -59,7 +62,7 @@
         />
 
         <evan-form-control-input
-          v-model="owner"
+          :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
           :label="$t('_twin-detail.data.general.owner')"
           :disabled="true"
           :required="true"

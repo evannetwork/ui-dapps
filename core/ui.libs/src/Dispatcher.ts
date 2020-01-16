@@ -139,7 +139,8 @@ export class Dispatcher {
    * @param      {bccRuntime}  runtime  bcc runtime
    * @param      {boolean}     asArray  should be the result an array?
    */
-  async getInstances(runtime: bcc.Runtime, asArray = true): Promise<any> {
+  async getInstances(runtime: bcc.Runtime, asArray = true)
+    : Promise<DispatcherInstance[]|{[name: string]: DispatcherInstance}> {
     // create a new queue and initialize it
     const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
 

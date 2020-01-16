@@ -22,22 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { EvanUIDigitalTwin } from 'dapps/digital-twin.lib';
 import { DigitalTwin } from '@evan.network/api-blockchain-core';
 
 @Component
 export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
-  name: string = null;
-  description: string = null;
-  type = 'TODO Type';
-  owner = 'TODO Owner';
-  twin: DigitalTwin;
 
-  async mounted() {
-    this.twin = EvanUIDigitalTwin.getDigitalTwin(this.getRuntime(), this.$route.params.address);
-    const desc = await this.twin.getDescription();
-     console.log(desc);
-    this.name = desc.name;
-    this.description = desc.description;
-  }
 }

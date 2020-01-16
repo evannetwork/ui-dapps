@@ -20,30 +20,22 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
+
 // internal imports
-import TwinDAppComponent from '../../TwinDAppComponent';
+import DAppTwin from './DAppTwin';
+import DAppContainer from './DAppContainer';
 
+/**
+ * Used to handle correct typings for the twin detail dapp.
+ */
 @Component
-export default class DetailDataComponent extends mixins(TwinDAppComponent) {
-  navItems = [
-    {
-      label: `_twin-detail.data.general.general-title`,
-      to: 'general'
-    },
-  ];
-
-  /**
-   * Setup dynamic navigation structure.s
-   */
-  async created() {
-    const twin = this.$store.state.twin;
-    this.navItems = this.navItems.concat(twin.containerKeys.map(key => {
-      const containerAddress = twin.containers[key].contractAddress;
-
-      return {
-        label: this.$t(`${ containerAddress }.name`, key),
-        to: containerAddress
-      };
-    }));
-  }
+export default class TwinDAppComponent extends mixins(EvanComponent) {
+  $store: {
+    state: {
+      container: DAppContainer;
+      twin: DAppTwin;
+    };
+  };
 }

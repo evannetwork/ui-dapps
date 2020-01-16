@@ -39,7 +39,7 @@
     </div>
 
     <div class="content">
-      <router-view></router-view>
+      <router-view :key="$route.params.container"></router-view>
     </div>
   </div>
 </template>

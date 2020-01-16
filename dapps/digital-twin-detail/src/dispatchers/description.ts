@@ -17,33 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
-import Component, { mixins } from 'vue-class-component';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-// internal imports
-import TwinDAppComponent from '../../TwinDAppComponent';
+const dispatcher = new Dispatcher(
+  `evan-twin-detail.${ dappBrowser.getDomainName() }`,
+  'descriptionDispatcher',
+  40 * 1000,
+  '_twin-dispatcher.description'
+);
 
-@Component
-export default class DetailDataComponent extends mixins(TwinDAppComponent) {
-  navItems = [
-    {
-      label: `_twin-detail.data.general.general-title`,
-      to: 'general'
-    },
-  ];
+dispatcher
+  // update description
+  .step(async (instance: DispatcherInstance, data: any) => {
+    await instance.runtime.description.setDescription(
+      data.addres,
+      data.description,
+      instance.runtime.activeAccount
+    );
+  });
 
-  /**
-   * Setup dynamic navigation structure.s
-   */
-  async created() {
-    const twin = this.$store.state.twin;
-    this.navItems = this.navItems.concat(twin.containerKeys.map(key => {
-      const containerAddress = twin.containers[key].contractAddress;
-
-      return {
-        label: this.$t(`${ containerAddress }.name`, key),
-        to: containerAddress
-      };
-    }));
-  }
-}
+export default dispatcher;
