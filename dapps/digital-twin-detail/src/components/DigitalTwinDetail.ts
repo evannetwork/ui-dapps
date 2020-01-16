@@ -21,7 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // internal imports
-import { DAppTwin } from '@evan.network/digital-twin-lib';
+import { DAppTwin, dispatchers } from '@evan.network/digital-twin-lib';
 import TwinDAppComponent from '../TwinDAppComponent';
 
 @Component
@@ -30,6 +30,18 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
    * Show loading symbol
    */
   loading = true;
+
+  get isFavorite(): boolean {
+    return this.$store.state.twin.favorite;
+  }
+
+  set isFavorite(flag: boolean) {
+    console.log('New flag', flag);
+    
+    this.$store.state.twin.favorite = flag;
+    console.log('store', this.$store.state.twin.favorite);
+    
+  }
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
@@ -64,6 +76,14 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
       to: { name: entry.key }
     };
   });
+
+  mounted() {
+    setInterval(() => {
+      console.log(this.$store.state.twin.favorite);
+    }, 1000)
+    // console.log(this);
+    
+  }
 
   /**
    * Clear the hash change watcher
@@ -103,4 +123,21 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
   }
+
+  async addFavorite(): Promise<void> {
+    console.log('Fav?', this.isFavorite);
+    await dispatchers.twinFavoriteAddDispatcher
+      .start(this.getRuntime(), { address: this.$store.state.twin.contractAddress });
+    this.isFavorite = true;
+    console.log('Fav?', this.isFavorite);
+  }
+
+  async removeFavorite(): Promise<void> {
+    console.log('Fav?', this.isFavorite);
+    await dispatchers.twinFavoriteRemoveDispatcher
+      .start(this.getRuntime(), { address: this.$store.state.twin.contractAddress });
+      this.isFavorite = false;
+    console.log('Fav?', this.isFavorite);
+  }
+
 }

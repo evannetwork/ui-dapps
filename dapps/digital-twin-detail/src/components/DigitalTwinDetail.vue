@@ -29,7 +29,8 @@
                 <div class="icon-row">
                   <evan-button @click="close" type="icon-secondary" icon="mdi mdi-close" />
                   <div class="flex-grow-1"></div>
-                  <evan-button :type="'icon-secondary'" icon="mdi mdi-star-outline" />
+                  <evan-button v-if="!isFavorite" @click="addFavorite" type="icon-secondary" icon="mdi mdi-star-outline" />
+                  <evan-button v-else @click="removeFavorite" type="icon-secondary" icon="mdi mdi-star" />
                   <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret>
                     <template v-slot:button-content>
                       <evan-button
