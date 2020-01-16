@@ -66,9 +66,9 @@
 
                   <evan-modal ref="exportModal">
                     <template v-slot:header>
-                      <h5
-                        class="modal-title"
-                      >{{ `_twin-detail.data.context-menu.export-template` | translate }}</h5>
+                      <h5 class="modal-title">
+                        {{ `_twin-detail.data.context-menu.export-template` | translate }}
+                      </h5>
                     </template>
 
                     <template v-slot:body>
@@ -138,14 +138,11 @@ export default DigitalTwinDetailComponent;
 
 .sidenav {
   width: 240px;
-
   .evan-nav-list {
     height: auto;
   }
-
   .sidenav-header {
     padding: 24px;
-
     .icon-row {
       display: flex;
       margin: -16px; // counter too big padding for icons
