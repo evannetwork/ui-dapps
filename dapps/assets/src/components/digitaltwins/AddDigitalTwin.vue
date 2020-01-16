@@ -108,6 +108,7 @@
             native-type="submit"
             class="ml-3 flex-grow-1"
             :disabled="!(name && template)"
+            :isLoading="loading"
             :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />
         </div>

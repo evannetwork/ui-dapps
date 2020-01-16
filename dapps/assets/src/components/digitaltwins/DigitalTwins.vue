@@ -118,7 +118,7 @@
       @click="$refs.addDigitaTwin.showPanel()"
     />
 
-    <add-digital-twin ref="addDigitaTwin" />
+    <add-digital-twin ref="addDigitaTwin" :createdCallBack="delayedSearch" />
   </div>
 </template>
 

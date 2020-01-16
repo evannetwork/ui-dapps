@@ -21,6 +21,7 @@ import Component, { mixins } from 'vue-class-component';
 import { ContainerPlugin, Runtime } from '@evan.network/api-blockchain-core';
 import { dispatchers } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Prop } from 'vue-property-decorator';
 import { UIContainerFile } from '@evan.network/ui';
 
 // load twin template
@@ -67,6 +68,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   presetTemplates = this._getTemplateSelectOptions();
   templateErrors: any[] = [];
 
+  @Prop() createdCallBack: Function;
+
   // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
     this.selectedTemplate = (event.target as HTMLInputElement).value;
@@ -78,8 +81,37 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     this.image = ev;
   }
 
+  loading = false;
+
   async created() {
+    console.log(typeof this.createdCallBack);
     this.runtime = await this.getRuntime();
+    dispatchers.twinCreateDispatcher.watch( ({detail: { status }}: CustomEvent) => {
+      if (status === 'running') {
+        this.resetForm();
+        this.loading = false;
+      }
+
+      if (status === 'error') {
+        alert('There was a problem creating the twin. Please check your config and try again.');
+
+        this.loading = false;
+      }
+
+      if (status === 'finished' && typeof this.createdCallBack === 'function') {
+        console.log('cretaed cb');
+        this.createdCallBack();
+      }
+    });
+  }
+
+  resetForm() {
+    this.description = null;
+    this.image = null;
+    this.name = null;
+    this.selectedTemplate = 'carTwin';
+    this.template = carTwin as DigitalTwinTemplate;
+    this.templateErrors = [];
   }
 
   /**
@@ -124,6 +156,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   addDigitalTwin() {
     // merge custom fields into template.
+    this.loading = true;
     const template = Object.assign({}, this.template) as any; // TODO: use twin template interface
 
     if (this.description) {
