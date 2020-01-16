@@ -135,3 +135,19 @@ export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
     return lodash.cloneDeep(obj);
   }
 }
+
+/**
+ * Downloads a string as file.
+ *
+ * @param      {string}  fileName  file name to download the content to.
+ * @param      {string}  contnt   content that should be placed within the file.
+ */
+export function downloadObject(fileName: string, content: any): void {
+  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(content));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute('href', dataStr);
+  downloadAnchorNode.setAttribute('download', fileName + '.json');
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
