@@ -22,7 +22,7 @@ import { Container, ContainerShareConfig } from '@evan.network/api-blockchain-co
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${dappBrowser.getDomainName()}`,
+  `digital-twin.lib.${dappBrowser.getDomainName()}`,
   'containerShareDispatcher',
   40 * 1000,
   '_digital-twin-lib.dispatchers.container.share'

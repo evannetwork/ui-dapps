@@ -30,7 +30,7 @@ import DigitalTwinDetailComponent from './components/DigitalTwinDetail.vue';
 export * from './components/registry';
 export { translations };
 
-System.map['@evan.network/detail.digital-twin'] = `detail.digital-twin.${getDomainName()}!dapp-content`;
+System.map['@evan.network/digital-twin.detail'] = `detail.digital-twin.${getDomainName()}!dapp-content`;
 
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current

@@ -22,29 +22,19 @@ import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
-  'twinCreateDispatcher',
-  1000000, // depends propably on plugins etc.
-  '_digital-twin-lib.dispatchers.twin.create'
+  `digital-twin.lib.${ dappBrowser.getDomainName() }`,
+  'twinFavoriteRemoveDispatcher',
+  40 * 1000,
+  '_digital-twin-lib.dispatchers.twin.favorite.remove'
 );
 
 dispatcher
-  // upload image into ipfs
-  .step(async (instance: DispatcherInstance, { twinImage, twinTemplate } ) => {
-    if (twinImage) {
-      const imageBuffer = Buffer.from(twinImage.file);
-
-      // add ipfs to template
-      twinTemplate.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
-    }
-  })
-  // create the twin
-  .step(async (instance: DispatcherInstance, { twinTemplate }) => {
-    await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,
-      containerConfig: { accountId: instance.runtime.activeAccount },
-      ...twinTemplate
+      address: data.address,
     });
+    await twin.removeFromFavorites();
   });
 
 export default dispatcher;

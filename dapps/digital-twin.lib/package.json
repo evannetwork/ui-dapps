@@ -9,11 +9,11 @@
     "DApp",
     "CSS"
   ],
-  "main": "dist/detail.digital-twin.js",
-  "name": "detail.digital-twin",
+  "main": "dist/digital-twin.lib.js",
+  "name": "@evan.network/digital-twin.lib",
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
   },
   "typings": "dist/index.d.ts",
-  "version": "1.0.0"
+  "version": "1.8.0"
 }

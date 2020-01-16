@@ -22,7 +22,7 @@ import { Container, ContainerOptions, lodash } from '@evan.network/api-blockchai
 import { Dispatcher, DispatcherInstance, cloneDeep } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  `digital-twin.lib.${ dappBrowser.getDomainName() }`,
   'containerSaveDispatcher',
   40 * 1000,
   '_digital-twin-lib.dispatchers.container.save'

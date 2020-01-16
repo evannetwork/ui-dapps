@@ -17,19 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-import { getDomainName } from '@evan.network/ui-vue-core';
-import { System, } from '@evan.network/ui-dapp-browser';
+import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
-import * as dispatchers from './dispatchers';
-import DAppContainer from './DAppContainer';
-import DAppTwin from './DAppTwin';
-import translations from './i18n';
+const dispatcher = new Dispatcher(
+  `digital-twin.lib.${ dappBrowser.getDomainName() }`,
+  'twinFavoriteAddDispatcher',
+  40 * 1000,
+  '_digital-twin-lib.dispatchers.twin.favorite.add'
+);
 
-export {
-  dispatchers,
-  translations,
-  DAppContainer,
-  DAppTwin,
-};
+dispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
+      accountId: instance.runtime.activeAccount,
+      address: data.address,
+    });
+    await twin.addAsFavorite();
+  });
 
-System.map['@evan.network/lib.digital-twin'] = `lib.digital-twin.${ getDomainName() }!dapp-content`;
+export default dispatcher;

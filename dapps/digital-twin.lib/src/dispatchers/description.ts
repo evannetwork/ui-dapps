@@ -17,24 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
-  'twinFavoriteRemoveDispatcher',
+  `digital-twin.lib.${ dappBrowser.getDomainName() }`,
+  'descriptionDispatcher',
   40 * 1000,
-  '_digital-twin-lib.dispatchers.twin.favorite.remove'
+  '_digital-twin-lib.dispatchers.description'
 );
 
 dispatcher
+  // update description
   .step(async (instance: DispatcherInstance, data: any) => {
-    const twin = new DigitalTwin(instance.runtime as DigitalTwinOptions, {
-      accountId: instance.runtime.activeAccount,
-      address: data.address,
-    });
-    await twin.removeFromFavorites();
+    await instance.runtime.description.setDescription(
+      data.addres,
+      data.description,
+      instance.runtime.activeAccount
+    );
   });
 
 export default dispatcher;

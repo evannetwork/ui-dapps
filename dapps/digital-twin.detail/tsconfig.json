@@ -13,7 +13,7 @@
   ],
   "references": [
     {
-      "path": "../lib.digital-twin"
+      "path": "../digital-twin.lib"
     }
   ]
 }
