@@ -31,18 +31,9 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   loading = true;
   exporting = false;
+  favoriteLoading = true;
 
-  get isFavorite(): boolean {
-    return this.$store.state.twin.favorite;
-  }
-
-  set isFavorite(flag: boolean) {
-    console.log('New flag', flag);
-    
-    this.$store.state.twin.favorite = flag;
-    console.log('store', this.$store.state.twin.favorite);
-    
-  }
+  isFavorite = null;
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
@@ -84,11 +75,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   });
 
   mounted() {
-    setInterval(() => {
-      console.log(this.$store.state.twin.favorite);
-    }, 1000)
-    // console.log(this);
-    
+    this.isFavorite = this.$store.state.twin?.favorite;
+    this.favoriteLoading = false;
   }
 
   /**
@@ -131,19 +119,19 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   }
 
   async addFavorite(): Promise<void> {
-    console.log('Fav?', this.isFavorite);
+    this.favoriteLoading = true;
     await dispatchers.twinFavoriteAddDispatcher
       .start(this.getRuntime(), { address: this.$store.state.twin.contractAddress });
     this.isFavorite = true;
-    console.log('Fav?', this.isFavorite);
+    this.favoriteLoading = false;
   }
 
   async removeFavorite(): Promise<void> {
-    console.log('Fav?', this.isFavorite);
+    this.favoriteLoading = true;
     await dispatchers.twinFavoriteRemoveDispatcher
       .start(this.getRuntime(), { address: this.$store.state.twin.contractAddress });
-      this.isFavorite = false;
-    console.log('Fav?', this.isFavorite);
+    this.isFavorite = false;
+    this.favoriteLoading = false;
   }
 
   /**
@@ -162,7 +150,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Triggers the previously exported twin template.
    */
-  downloadTwinTemplate() {
+  downloadTwinTemplate(): void {
     downloadObject(this.$store.state.twin.description.name, this.exportedTemplate);
     (this.$refs.exportModal as any).hide();
   }

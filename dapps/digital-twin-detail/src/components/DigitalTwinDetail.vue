@@ -29,10 +29,28 @@
                 <div class="icon-row">
                   <evan-button @click="close" type="icon-secondary" icon="mdi mdi-close" />
                   <div class="flex-grow-1"></div>
-                  <evan-button v-if="!isFavorite" @click="addFavorite" type="icon-secondary" icon="mdi mdi-star-outline" />
-                  <evan-button v-else @click="removeFavorite" type="icon-secondary" icon="mdi mdi-star" />
-                  <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret
-                    :disabled="exporting">
+
+                  <!-- Favorite Handling -->
+                  <evan-loading v-if="favoriteLoading" classes="icon-replacer" />
+                  <evan-button
+                    v-else-if="!isFavorite"
+                    @click="addFavorite"
+                    type="icon-secondary"
+                    icon="mdi mdi-star-outline"
+                  />
+                  <evan-button
+                    v-else
+                    @click="removeFavorite"
+                    type="icon-secondary"
+                    icon="mdi mdi-star"
+                  />
+
+                  <b-dropdown
+                    variant="link"
+                    toggle-class="text-decoration-none"
+                    no-caret
+                    :disabled="exporting"
+                  >
                     <template v-slot:button-content>
                       <evan-button
                         :isLoading="exporting"
@@ -42,16 +60,15 @@
                     </template>
                     <b-dropdown-item href="#">TODO Clone</b-dropdown-item>
                     <b-dropdown-item
-                      @click="exportTwinTemplate()">
-                      {{ '_twin-detail.data.context-menu.export-template' | translate }}
-                    </b-dropdown-item>
+                      @click="exportTwinTemplate()"
+                    >{{ '_twin-detail.data.context-menu.export-template' | translate }}</b-dropdown-item>
                   </b-dropdown>
 
                   <evan-modal ref="exportModal">
                     <template v-slot:header>
-                      <h5 class="modal-title">
-                        {{ `_twin-detail.data.context-menu.export-template` | translate }}
-                      </h5>
+                      <h5
+                        class="modal-title"
+                      >{{ `_twin-detail.data.context-menu.export-template` | translate }}</h5>
                     </template>
 
                     <template v-slot:body>
@@ -76,16 +93,11 @@
                   type="device"
                   :src="'https://via.placeholder.com/96'"
                 />
-                <h4 class="twin-name text-center mt-2">
-                  {{ $store.state.twin.description.name }}
-                </h4>
-                <h5 class="twin-owner text-center">
-                  {{ $store.state.twin.ownerName }}
-                </h5>
+                <h4 class="twin-name text-center mt-2">{{ $store.state.twin.description.name }}</h4>
+                <h5 class="twin-owner text-center">{{ $store.state.twin.ownerName }}</h5>
                 <small
-                  class="twin-desc text-center mt-3">
-                  {{ $store.state.twin.description.description }}                  
-                </small>
+                  class="twin-desc text-center mt-3"
+                >{{ $store.state.twin.description.description }}</small>
               </div>
 
               <!-- Not using nav-list because it doesnt support router-link properly
