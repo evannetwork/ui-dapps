@@ -17,24 +17,30 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// internal imports
+import { DigitalTwinTemplate } from '@evan.network/api-blockchain-core';
 import { DAppTwin } from '@evan.network/digital-twin-lib';
-import TwinDAppComponent from '../TwinDAppComponent';
+import { downloadObject } from '@evan.network/ui';
+import { EvanComponent, ModalComponent } from '@evan.network/ui-vue-core';
+
 
 @Component
-export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent) {
+export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
   loading = true;
+  exporting = false;
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
    */
   hashChangeWatcher: any;
+
+  /**
+   * Template definition of the current twin.
+   */
+  exportedTemplate: DigitalTwinTemplate;
 
   navItems = [
     {
@@ -91,7 +97,7 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
         this.loading = true;
         this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
         this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
-        
+
         await this.$store.state.twin.initialize();
 
         beforeTwin = this.$store.state.twin.contractAddress;
@@ -102,5 +108,26 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Exports the current opened twin as templated and downloads it as a json file.
+   */
+  async exportTwinTemplate(): Promise<void> {
+    (this.$refs.exportModal as any).show();
+
+    if (!this.exportedTemplate) {
+      this.exporting = true;
+      this.exportedTemplate = await this.$store.state.twin.exportAsTemplate();
+      this.exporting = false;
+    }
+  }
+
+  /**
+   * Triggers the previously exported twin template.
+   */
+  downloadTwinTemplate() {
+    downloadObject(this.$store.state.twin.description.name, this.exportedTemplate);
+    (this.$refs.exportModal as any).hide();
   }
 }

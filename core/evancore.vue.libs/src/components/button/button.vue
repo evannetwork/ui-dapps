@@ -31,7 +31,7 @@
     :type="nativeType"
     @click="$emit('click', $event)">
     <template v-if="!$slots.default">
-      <div class="spinner-border spinner-border-sm spinner" v-if="isLoading" />
+      <div class="spinner-border spinner-border-sm" v-if="isLoading" />
       <template :class="{'hidden': isLoading}" >
         <template v-if="icon && !label">
           <i :class="[icon, 'centered']" />
