@@ -492,8 +492,8 @@
       "transactions": {
         "charged-at": "aufgeladen am",
         "credit-charged": "Guthaben aufgeladen",
-        "credit-running-recharge": "Aufbuchung noch nicht abgeschlossen",
-        "credit-failed-recharge": "Die Aufbuchung ist leider fehlgeschlagen",
+        "credit-running-charge": "Aufbuchung noch nicht abgeschlossen",
+        "credit-failed-charge": "Die Aufbuchung ist leider fehlgeschlagen",
         "description": "Nachfolgend sind nur Ihre EVE-Käufe aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
         "empty": "Sie haben bisher noch keine EVEs gekauft",
         "load-more": "Ältere laden",
