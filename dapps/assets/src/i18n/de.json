@@ -39,7 +39,7 @@
       "cancel": "Abbrechen",
       "create-digitaltwin-btn": "Zwilling erstellen",
       "created": "Erstellt",
-      "create-dispatcher": "Erstelle neuen Twin",
+      "create-info": "Der Twin erscheint in der Liste sobald er vollständig erstellt wurde.",
       "desc-placeholder": "Beschreiben sie kurz ihren Digitalen Zwilling und dessen Eigenschaften.",
       "desc": "Beschreibung",
       "digitaltwins-title": "Digitale Zwillinge",
