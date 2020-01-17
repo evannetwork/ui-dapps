@@ -76,7 +76,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
   mounted() {
     this.isFavorite = this.$store.state.twin?.favorite;
-    this.favoriteLoading = false;
+    // this.favoriteLoading = false;
   }
 
   /**
@@ -120,16 +120,14 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
   async addFavorite(): Promise<void> {
     this.favoriteLoading = true;
-    await dispatchers.twinFavoriteAddDispatcher
-      .start(this.getRuntime(), { address: this.$store.state.twin.contractAddress });
+    await this.$store.state.twin.addAsFavorite();
     this.isFavorite = true;
     this.favoriteLoading = false;
   }
 
   async removeFavorite(): Promise<void> {
     this.favoriteLoading = true;
-    await dispatchers.twinFavoriteRemoveDispatcher
-      .start(this.getRuntime(), { address: this.$store.state.twin.contractAddress });
+    await this.$store.state.twin.removeFromFavorites();
     this.isFavorite = false;
     this.favoriteLoading = false;
   }
