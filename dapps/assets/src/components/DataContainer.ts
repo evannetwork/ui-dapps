@@ -43,7 +43,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
   total = null;
 
   @Prop({
-    default: 'twins'
+    default: 'twins',
   })
   type: string;
 
@@ -68,7 +68,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
 
     const { result, total } = await this.search.query(this.type, {
       searchTerm,
-      ...sorting
+      ...sorting,
     });
 
     this.total = total;
@@ -88,7 +88,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       page: this.page,
       count: this.count,
       searchTerm: this.searchTerm,
-      ...sorting
+      ...sorting,
     };
 
     const { result } = await this.search.query(this.type, options);

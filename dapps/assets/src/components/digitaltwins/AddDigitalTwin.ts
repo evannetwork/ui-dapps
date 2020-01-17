@@ -104,7 +104,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
     const rollBackTemplate = JSON.stringify(this.template);
     this.template = (await this._blobToObj(
-      files[0].blob
+      files[0].blob,
     )) as DigitalTwinTemplate;
 
     this.templateErrors = this._getTemplateErrors(this.template);
@@ -143,7 +143,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
     dispatchers.twinCreateDispatcher.start(this.getRuntime(), {
       twinTemplate: template,
-      twinImage: this.image
+      twinImage: this.image,
     });
   }
 
@@ -157,7 +157,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       const reader = new FileReader();
 
       try {
-        reader.onload = ev => {
+        reader.onload = (ev) => {
           resolve(JSON.parse(ev.target.result as string));
         };
 
@@ -180,12 +180,12 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   }
 
   _getTemplateSelectOptions() {
-    return Object.keys(this.twinTemplates).map(twinKey => ({
+    return Object.keys(this.twinTemplates).map((twinKey) => ({
       value: twinKey,
       label: this._getLocalizedTemplateEntry(
         this.twinTemplates[twinKey],
-        'name'
-      )
+        'name',
+      ),
     }));
   }
 
@@ -196,15 +196,14 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    */
   _getLocalizedTemplateEntry(
     template: DigitalTwinTemplate,
-    entry: string
+    entry: string,
   ): string {
-    const lang =
-      this.$i18n.locale() || window.localStorage.getItem('evan-language');
+    const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
 
     return (
-      template.description?.i18n[lang]?.[entry] ||
-      template.description?.[entry] ||
-      ''
+      template.description?.i18n[lang]?.[entry]
+      || template.description?.[entry]
+      || ''
     );
   }
 
@@ -219,7 +218,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     if (!this.description) {
       this.description = this._getLocalizedTemplateEntry(
         this.template,
-        'description'
+        'description',
       );
     }
   }
@@ -227,25 +226,25 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   _getTemplateErrors(template: any): TemplateError[] {
     const templateErrors = [];
     const validationResult = this.runtime.description.validateDescription({
-      public: template.description
+      public: template.description,
     });
 
     if (Array.isArray(validationResult)) {
       templateErrors.push({
         name: 'description',
-        errors: validationResult
+        errors: validationResult,
       });
     }
     Object.keys(template.plugins).forEach((pluginKey: string) => {
       const { description } = template.plugins[pluginKey];
       const errors = this.runtime.description.validateDescription({
-        public: description
+        public: description,
       });
 
       if (Array.isArray(errors) && errors.length > 0) {
         templateErrors.push({
           name: pluginKey,
-          errors
+          errors,
         });
       }
     });

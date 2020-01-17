@@ -40,23 +40,23 @@ const routeRegistration: Array<RouteConfig> = [
           {
             path: '',
             component: DigitalTwinsComponent,
-            meta: { type: 'twins' }
+            meta: { type: 'twins' },
           },
           {
             path: 'search/:query',
             props: true,
             component: DigitalTwinsComponent,
-            meta: { type: 'twins' }
-          }
-        ]
+            meta: { type: 'twins' },
+          },
+        ],
       },
       {
         path: `detail.digital-twin.${getDomainName()}/:id`,
-        component: DAppLoaderComponent
+        component: DAppLoaderComponent,
       },
-      { name: 'contacts', path: 'contacts', component: ContactsComponent }
-    ]
-  }
+      { name: 'contacts', path: 'contacts', component: ContactsComponent },
+    ],
+  },
 ];
 
 export default routeRegistration;

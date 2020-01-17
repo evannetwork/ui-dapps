@@ -27,7 +27,10 @@
       :hide-close-button="true"
       :title="$t('_assets.digitaltwins.add-digitaltwin-title')"
     >
-      <label class="col-form-label" for="new-twin-picture">
+      <label
+        class="col-form-label"
+        for="new-twin-picture"
+      >
         {{ '_assets.digitaltwins.add-image' | translate }}
         <small class="text-muted">({{ '_assets.optional' | translate }})</small>
       </label>
@@ -61,8 +64,7 @@
           target="_blank"
           rel="noopener noreferrer"
           title="Twin API documentation"
-          >{{ '_assets.more' | translate }}</a
-        >
+        >{{ '_assets.more' | translate }}</a>
       </p>
 
       <evan-form-control-select
@@ -88,12 +90,18 @@
         <h4 class="text-warning">
           Errors occured in template
         </h4>
-        <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
+        <div
+          v-for="pluginErrors in templateErrors"
+          :key="pluginErrors.name"
+        >
           <h5 v-if="pluginErrors.errors">
             {{ pluginErrors.name }}
           </h5>
           <ul v-if="pluginErrors.errors">
-            <li v-for="error in pluginErrors.errors" :key="error.property">
+            <li
+              v-for="error in pluginErrors.errors"
+              :key="error.property"
+            >
               <span>{{ error.message }}</span>
             </li>
           </ul>

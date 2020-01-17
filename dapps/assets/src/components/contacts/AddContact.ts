@@ -91,7 +91,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
         fromAlias: this.fromAlias,
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
-        updatedAt: now
+        updatedAt: now,
       };
 
       this.closePanel();
@@ -134,8 +134,8 @@ export default class AddContactComponent extends mixins(EvanComponent) {
    */
   checkFormValid(): boolean {
     if (
-      document.querySelector('#contactForm :invalid') ||
-      this.idOrEmailErrorMessage
+      document.querySelector('#contactForm :invalid')
+      || this.idOrEmailErrorMessage
     ) {
       return false;
     }

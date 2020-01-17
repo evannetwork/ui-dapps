@@ -61,6 +61,6 @@ export async function startDApp(
     routes,
     state: {},
     translations,
-    Vue
+    Vue,
   });
 }

@@ -70,7 +70,7 @@ class SearchService {
 
   async query(
     type = 'twins',
-    options: QueryOptions
+    options: QueryOptions,
   ): Promise<SearchResponseData> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
 
@@ -80,7 +80,7 @@ class SearchService {
       reverse: true,
       sortBy: 'updated',
       searchTerm: '*',
-      page: null
+      page: null,
     };
     const params = { ...defaultOptions, ...options };
 
@@ -91,19 +91,18 @@ class SearchService {
     }
 
     // wrap with wildcards if defined
-    params.searchTerm =
-      !params.searchTerm || params.searchTerm === '*'
-        ? '*'
-        : `*${params.searchTerm}*`;
+    params.searchTerm = !params.searchTerm || params.searchTerm === '*'
+      ? '*'
+      : `*${params.searchTerm}*`;
 
     const { data } = await axios.get<SearchResponse>(
       `${this.searchUrl}/${type}`,
       {
         headers: {
-          Authorization: authHeaders
+          Authorization: authHeaders,
         },
-        params
-      }
+        params,
+      },
     );
 
     // TODO: error handling in request etc...

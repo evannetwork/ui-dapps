@@ -88,7 +88,10 @@
             }}
           </template>
           <template v-slot:cell(icon)="contacts">
-            <i class="table-icon" :class="contacts.item.icon" />
+            <i
+              class="table-icon"
+              :class="contacts.item.icon"
+            />
           </template>
           <template v-slot:cell(createdAt)="contacts">
             {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
@@ -140,7 +143,10 @@
       @click="$refs.addContact.showPanel()"
     />
 
-    <add-contact ref="addContact" @contact-added="handleContactAdded" />
+    <add-contact
+      ref="addContact"
+      @contact-added="handleContactAdded"
+    />
   </div>
 </template>
 

@@ -17,7 +17,10 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="search">
-          <label for="searchInput" @click="isActiveSearch = true">
+          <label
+            for="searchInput"
+            @click="isActiveSearch = true"
+          >
             <i class="mdi mdi-magnify mr-2" />
             <span v-if="!isActiveSearch">{{
               '_assets.digitaltwins.digitaltwins-title' | translate
@@ -31,7 +34,7 @@
             autocomplete="off"
             @blur="handleSearchBlur"
             @keydown.enter="$event.target.blur()"
-          />
+          >
         </div>
         <div>
           <evan-button
@@ -78,7 +81,7 @@
           @scroll.native="scrollHandler"
           @row-clicked="handleRowClicked"
         >
-          <template v-slot:cell(icon)="data">
+          <template v-slot:cell(icon)>
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
           <template v-slot:cell(updated)="data">
@@ -88,7 +91,10 @@
             {{ data.item.created | moment('DD.MM.YYYY hh:mm') }}
           </template>
           <template v-slot:cell(isFavorite)="twin">
-            <evan-loading v-if="isFavoriteLoading(twin)" classes />
+            <evan-loading
+              v-if="isFavoriteLoading(twin)"
+              classes
+            />
             <evan-button
               v-else-if="isFavorite(twin)"
               type="icon-secondary"
@@ -109,7 +115,10 @@
       </div>
     </div>
 
-    <evan-loading v-if="isLoading" classes />
+    <evan-loading
+      v-if="isLoading"
+      classes
+    />
 
     <evan-button
       :type="'icon-primary'"

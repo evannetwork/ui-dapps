@@ -25,7 +25,7 @@ export const dispatcher = new Dispatcher(
   `assets.${dappBrowser.getDomainName()}`,
   'inviteDispatcher',
   40 * 1000,
-  '_assets.contacts.invite-dispatcher'
+  '_assets.contacts.invite-dispatcher',
 );
 
 /**
@@ -33,12 +33,11 @@ export const dispatcher = new Dispatcher(
  *
  * @return     {bcc.Runtime}  profile for account
  */
-const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) =>
-  new bcc.Profile({
-    ...(runtime as any), // TODO: Fix runtime interface
-    profileOwner: accountId,
-    accountId
-  });
+const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => new bcc.Profile({
+  ...(runtime as any), // TODO: Fix runtime interface
+  profileOwner: accountId,
+  accountId,
+});
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
@@ -50,41 +49,41 @@ dispatcher
       // get mail smart agent contact key
       const smartAgentCommKey = await runtime.profile.getContactKey(
         smartAgentAccountId,
-        'commKey'
+        'commKey',
       );
 
       // if the user hasn't added the smart agent, add it to the contacts
       if (!smartAgentCommKey) {
         const targetPubKey = await getProfileForAccount(
           runtime,
-          smartAgentAccountId
+          smartAgentAccountId,
         ).getPublicKey();
         const commKey = await runtime.keyExchange.generateCommKey();
         await runtime.keyExchange.sendInvite(
           smartAgentAccountId,
           targetPubKey,
           commKey,
-          {}
+          {},
         );
 
         // add key to profile
         await runtime.profile.addContactKey(
           smartAgentAccountId,
           'commKey',
-          commKey
+          commKey,
         );
         await runtime.profile.addProfileKey(
           smartAgentAccountId,
           'alias',
-          'Email Smart Agent'
+          'Email Smart Agent',
         );
         await runtime.profile.addProfileKey(
           smartAgentAccountId,
           'tags',
-          'Smart Agent'
+          'Smart Agent',
         );
         await runtime.profile.storeForAccount(
-          runtime.profile.treeLabels.addressBook
+          runtime.profile.treeLabels.addressBook,
         );
       }
     }
@@ -95,7 +94,7 @@ dispatcher
 
     // ensure latest addressbook is loaded
     await runtime.profile.loadForAccount(
-      runtime.profile.treeLabels.addressBook
+      runtime.profile.treeLabels.addressBook,
     );
 
     // send email invitation
@@ -106,21 +105,21 @@ dispatcher
           subject: data.msgTitle,
           body: data.msgBody,
           fromAlias: data.fromAlias,
-          lang: data.currLang
+          lang: data.currLang,
         },
-        runtime.web3.utils.toWei('0')
+        runtime.web3.utils.toWei('0'),
       );
     } else {
       // generate communication keys
       const targetPubKey = await getProfileForAccount(
         runtime,
-        accountId
+        accountId,
       ).getPublicKey();
       const commKey = await runtime.keyExchange.generateCommKey();
       await runtime.keyExchange.sendInvite(accountId, targetPubKey, commKey, {
         fromAlias: data.fromAlias,
         title: data.msgTitle,
-        body: data.msgBody
+        body: data.msgBody,
       });
 
       // add key to profile
@@ -135,15 +134,13 @@ dispatcher
         'email',
         'createdAt',
         'updatedAt',
-        'isFavorite'
-      ].map(profileKey =>
-        runtime.profile.addProfileKey(accountId, profileKey, data[profileKey])
-      )
+        'isFavorite',
+      ].map((profileKey) => runtime.profile.addProfileKey(accountId, profileKey, data[profileKey])),
     );
 
     // save for the account
     await runtime.profile.storeForAccount(
-      runtime.profile.treeLabels.addressBook
+      runtime.profile.treeLabels.addressBook,
     );
   });
 

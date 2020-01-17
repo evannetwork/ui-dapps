@@ -29,7 +29,10 @@
                     :to="navItem.to"
                     :active-class="'active'"
                   >
-                    <i class="mr-3" :class="navItem.icon" />
+                    <i
+                      class="mr-3"
+                      :class="navItem.icon"
+                    />
                     {{ navItem.label | translate }}
                   </router-link>
                 </template>
@@ -37,7 +40,10 @@
             </div>
           </div>
         </evan-dapp-wrapper-level-2>
-        <transition name="fade" mode="out-in">
+        <transition
+          name="fade"
+          mode="out-in"
+        >
           <div class="container content">
             <router-view />
           </div>

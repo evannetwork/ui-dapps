@@ -13,7 +13,11 @@
 */
 
 <template>
-  <form id="contactForm" ref="contactForm" @submit.prevent="addContact">
+  <form
+    id="contactForm"
+    ref="contactForm"
+    @submit.prevent="addContact"
+  >
     <evan-swipe-panel
       ref="addContactPanel"
       alignment="right"
