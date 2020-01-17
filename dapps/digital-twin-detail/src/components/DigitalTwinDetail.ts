@@ -31,7 +31,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   loading = true;
   exporting = false;
-  favoriteLoading = true;
+  favoriteLoading = false;
 
   isFavorite = null;
 
@@ -74,11 +74,6 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     };
   });
 
-  mounted() {
-    this.isFavorite = this.$store.state.twin?.favorite;
-    // this.favoriteLoading = false;
-  }
-
   /**
    * Clear the hash change watcher
    */
@@ -108,6 +103,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         await this.$store.state.twin.initialize();
 
+        this.isFavorite = this.$store.state.twin.favorite;
         beforeTwin = this.$store.state.twin.contractAddress;
         this.loading = false;
       }
