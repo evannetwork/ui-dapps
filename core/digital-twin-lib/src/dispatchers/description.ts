@@ -17,11 +17,12 @@
   the following URL: https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { getDomainName, ipfs, } from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { Ipfs } from '@evan.network/api-blockchain-core';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  `lib.digital-twin.${ getDomainName() }`,
   'descriptionDispatcher',
   40 * 1000,
   '_digital-twin-lib.dispatchers.description'
@@ -33,8 +34,11 @@ dispatcher
     if (twinImage) {
       const imageBuffer = Buffer.from(twinImage.file);
 
-      // add ipfs to template
-      description.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      // upload file, build correct ipfs url and build the img url
+      const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
+      const { host, port, protocol } = ipfs.ipfsConfig;
+      description.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
     }
   })
   // update description

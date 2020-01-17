@@ -18,11 +18,12 @@
 */
 
 import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getDomainName, ipfs, } from '@evan.network/ui-dapp-browser';
+import { Ipfs } from '@evan.network/api-blockchain-core';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  `lib.digital-twin.${ getDomainName() }`,
   'twinCreateDispatcher',
   1000000, // depends propably on plugins etc.
   '_digital-twin-lib.dispatchers.twin.create'
@@ -34,8 +35,11 @@ dispatcher
     if (twinImage) {
       const imageBuffer = Buffer.from(twinImage.file);
 
-      // add ipfs to template
-      twinTemplate.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      // upload file, build correct ipfs url and build the img url
+      const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
+      const { host, port, protocol } = ipfs.ipfsConfig;
+      twinTemplate.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
     }
   })
   // create the twin

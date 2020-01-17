@@ -34,7 +34,7 @@
             type="device"
             :accountName="name"
             :isEditable="true"
-            :src="image ? image : null"
+            :src="image || description.imgSquare || null"
             @changed="image = $event"
           />
         </div>

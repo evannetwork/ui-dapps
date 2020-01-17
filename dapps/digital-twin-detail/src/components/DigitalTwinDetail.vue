@@ -140,6 +140,7 @@
                 <evan-profile-picture
                   class="twin-avatar"
                   type="device"
+                  :src="$store.state.twin.description.imgSquare"
                 />
                 <h4 class="twin-name text-center mt-2">
                   {{ $store.state.twin.description.name }}
