@@ -24,12 +24,22 @@ import * as dispatchers from './dispatchers';
 import DAppContainer from './DAppContainer';
 import DAppTwin from './DAppTwin';
 import translations from './i18n';
+import { DigitalTwinInterface } from './interfaces/DigitalTwinInterface';
+import {
+  DigitalTwinTemplateInterface,
+  ValidationErrorInterface,
+  TemplateErrorInterface,
+} from './interfaces/DigitalTwinTemplate';
 
 export {
-  dispatchers,
-  translations,
   DAppContainer,
   DAppTwin,
+  dispatchers,
+  translations,
+  DigitalTwinInterface,
+  DigitalTwinTemplateInterface,
+  ValidationErrorInterface,
+  TemplateErrorInterface,
 };
 
 System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${ getDomainName() }!dapp-content`;

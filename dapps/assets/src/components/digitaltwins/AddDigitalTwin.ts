@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { ContainerPlugin, Runtime } from '@evan.network/api-blockchain-core';
+import { Runtime } from '@evan.network/api-blockchain-core';
 import { dispatchers } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
@@ -27,34 +27,7 @@ import { UIContainerFile } from '@evan.network/ui';
 // load twin template
 import bicycleTwin from './templates/bicycle.json';
 import carTwin from './templates/car.json';
-
-// TODO: get from common interfaces
-interface DigitalTwinTemplate {
-  description: {
-    description?: string;
-    i18n?: {
-      [language: string]: {
-        description?: string;
-        name: string;
-      };
-    };
-    name: string;
-  };
-  plugins: { [pluginName: string]: ContainerPlugin };
-}
-
-interface ValidationError {
-  dataPath: string;
-  keyword: string;
-  message: string;
-  params: any;
-  schemaPath: string;
-}
-
-interface TemplateError {
-  name: string;
-  errors: ValidationError[];
-}
+import { DigitalTwinTemplateInterface, TemplateErrorInterface } from '@evan.network/digital-twin-lib';
 
 @Component
 class AddDigitalTwinComponent extends mixins(EvanComponent) {
@@ -63,10 +36,10 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   name: string = null;
   runtime: Runtime = null;
   selectedTemplate = 'carTwin';
-  template = carTwin as DigitalTwinTemplate;
+  template = carTwin as DigitalTwinTemplateInterface;
   twinTemplates = { bicycleTwin, carTwin };
   presetTemplates = this._getTemplateSelectOptions();
-  templateErrors: any[] = [];
+  TemplateErrorInterfaces: any[] = [];
 
   @Prop() createdCallBack: Function;
 
@@ -84,7 +57,6 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   loading = false;
 
   async created() {
-    console.log(typeof this.createdCallBack);
     this.runtime = await this.getRuntime();
     dispatchers.twinCreateDispatcher.watch( ({detail: { status }}: CustomEvent) => {
       if (status === 'running') {
@@ -99,7 +71,6 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       }
 
       if (status === 'finished' && typeof this.createdCallBack === 'function') {
-        console.log('cretaed cb');
         this.createdCallBack();
       }
     });
@@ -110,8 +81,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     this.image = null;
     this.name = null;
     this.selectedTemplate = 'carTwin';
-    this.template = carTwin as DigitalTwinTemplate;
-    this.templateErrors = [];
+    this.template = carTwin as DigitalTwinTemplateInterface;
+    this.TemplateErrorInterfaces = [];
   }
 
   /**
@@ -120,7 +91,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    * @param files
    */
   async handleFileUpload (files: UIContainerFile[]) {
-    this.templateErrors = [];
+    this.TemplateErrorInterfaces = [];
     // skip when file was deleted
     if (!files[0]) {
 
@@ -128,11 +99,11 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
 
     const rollBackTemplate = JSON.stringify(this.template);
-    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplate;
+    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplateInterface;
 
-    this.templateErrors = this._getTemplateErrors(this.template);
+    this.TemplateErrorInterfaces = this._getTemplateErrorInterfaces(this.template);
 
-    if (this.templateErrors.length > 0) {
+    if (this.TemplateErrorInterfaces.length > 0) {
       this.template = JSON.parse(rollBackTemplate);
 
       return;
@@ -196,7 +167,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    * @param template - DigitalTwinTemplate
    * @param twinKey - unique key per template
    */
-  _addToPresetTemplates(template: DigitalTwinTemplate, key: string) {
+  _addToPresetTemplates(template: DigitalTwinTemplateInterface, key: string) {
     this.twinTemplates[key] = template;
     this.presetTemplates = this._getTemplateSelectOptions();
   }
@@ -215,7 +186,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param template
    */
-  _getLocalizedTemplateEntry(template: DigitalTwinTemplate, entry: string): string {
+  _getLocalizedTemplateEntry(template: DigitalTwinTemplateInterface, entry: string): string {
     const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
 
     return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
@@ -234,12 +205,12 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
   }
 
-  _getTemplateErrors(template: any): TemplateError[] {
-    const templateErrors = [];
+  _getTemplateErrorInterfaces(template: any): TemplateErrorInterface[] {
+    const TemplateErrorInterfaces = [];
     const validationResult = this.runtime.description.validateDescription({public: template.description});
 
     if (Array.isArray(validationResult)) {
-      templateErrors.push({
+      TemplateErrorInterfaces.push({
         name: 'description',
         errors: validationResult
       });
@@ -249,14 +220,14 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       const errors = this.runtime.description.validateDescription({public: description});
 
       if (Array.isArray(errors) && errors.length > 0) {
-        templateErrors.push({
+        TemplateErrorInterfaces.push({
           name: pluginKey,
           errors
         });
       }
     });
 
-    return templateErrors;
+    return TemplateErrorInterfaces;
   }
 }
 

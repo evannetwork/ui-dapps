@@ -1,4 +1,4 @@
-export interface DigitalTwin {
+export interface DigitalTwinInterface {
   address: string;
   containers: any[];
   created: number;
