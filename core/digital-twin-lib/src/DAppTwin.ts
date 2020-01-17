@@ -72,6 +72,14 @@ class DAppTwin extends DigitalTwin {
   }
 
   /**
+   * Add the digital twin with given address to profile using the digital twin dispatcher.
+   */
+  public async addAsFavorite(): Promise<void> {
+    await dispatchers.twinFavoriteAddDispatcher
+      .start(this.runtime, { address: this.contractAddress });
+  }
+
+  /**
    * Reset containers object and reload all container definitions.
    */
   private async ensureContainers() {
@@ -165,6 +173,14 @@ class DAppTwin extends DigitalTwin {
     await this.ensureContainers();
     await this.ensureDispatcherStates();
     this.ensureI18N();
+  }
+
+  /*
+   * Removes the current twin from the favorites in profile with digital twin dispatcher.
+   */
+  public async removeFromFavorites(): Promise<void> {
+    await dispatchers.twinFavoriteRemoveDispatcher
+      .start(this.runtime, { address: this.contractAddress });
   }
 
   /**
