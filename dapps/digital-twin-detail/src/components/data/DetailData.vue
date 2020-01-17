@@ -30,6 +30,7 @@
               :key="navItem.id"
               :to="navItem.to"
               active-class="active"
+              class="text-uppercase"
             >
               {{ navItem.label | translate }}
             </router-link>
@@ -53,7 +54,7 @@ export default DetailDataComponent;
 @import '~@evan.network/ui/src/style/utils';
 
 .sidenav {
-  width: 205px;
+  width: 250px;
   background: white;
   border: 2px solid cssVar('bg-level-2');
   margin-left: 3px;
@@ -61,6 +62,15 @@ export default DetailDataComponent;
   position: sticky;
   top: 0;
   overflow-y: auto;
+
+  .evan-nav-list {
+    .nav-entries {
+      a {
+        font-weight: 600;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 .content {

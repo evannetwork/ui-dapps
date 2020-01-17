@@ -18,24 +18,51 @@
 */
 
 import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getDomainName, ipfs, } from '@evan.network/ui-dapp-browser';
+import { Ipfs } from '@evan.network/api-blockchain-core';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  `lib.digital-twin.${ getDomainName() }`,
   'twinCreateDispatcher',
   1000000, // depends probably on plugins etc.
   '_digital-twin-lib.dispatchers.twin.create'
 );
 
 dispatcher
+  .step(async (instance: DispatcherInstance, data) => {
+    // check if template should be loaded from contract
+    if (typeof data.twinTemplate === 'string' && data.twinTemplate.startsWith('0x')) {
+      const twinInstance = new DigitalTwin(
+        instance.runtime as DigitalTwinOptions,
+        {
+          accountId: instance.runtime.activeAccount,
+          address: data.twinTemplate
+        }
+      );
+
+      data.twinTemplate = await twinInstance.exportAsTemplate(true);
+      await instance.save();
+    }
+
+    // merge passed description with twin template description
+    if (data.description) {
+      data.twinTemplate.description = {
+        ...data.twinTemplate.description,
+        ...data.description,
+      };
+    }
+  })
   // upload image into ipfs
-  .step(async (instance: DispatcherInstance, { twinImage, twinTemplate } ) => {
-    if (twinImage) {
+  .step(async (instance: DispatcherInstance, { twinTemplate, twinImage}) => {
+    if (twinImage && typeof twinImage !== 'string') {
       const imageBuffer = Buffer.from(twinImage.file);
 
-      // add ipfs to template
-      twinTemplate.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      // upload file, build correct ipfs url and build the img url
+      const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
+      const { host, port, protocol } = ipfs.ipfsConfig;
+      twinTemplate.description.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
     }
   })
   // create the twin

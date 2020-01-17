@@ -29,18 +29,20 @@
                 <div class="icon-row">
                   <evan-button @click="close" type="icon-secondary" icon="mdi mdi-close" />
                   <div class="flex-grow-1"></div>
-
                   <!-- Favorite Handling -->
-                  <evan-loading v-if="favoriteLoading" classes="icon-replacer" />
+                  <evan-loading
+                    v-if="$store.state.twin.dispatcherStates.favorite"
+                    classes="icon-replacer"
+                  />
                   <evan-button
-                    v-else-if="!isFavorite"
-                    @click="addFavorite"
+                    v-else-if="!$store.state.twin.favorite"
+                    @click="$store.state.twin.addAsFavorite()"
                     type="icon-secondary"
                     icon="mdi mdi-star-outline"
                   />
                   <evan-button
                     v-else
-                    @click="removeFavorite"
+                    @click="$store.state.twin.removeFromFavorites()"
                     type="icon-secondary"
                     icon="mdi mdi-star"
                   />
@@ -49,49 +51,29 @@
                     variant="link"
                     toggle-class="text-decoration-none"
                     no-caret
-                    :disabled="exporting"
                   >
                     <template v-slot:button-content>
                       <evan-button
-                        :isLoading="exporting"
                         :type="'icon-secondary'"
                         icon="mdi mdi-dots-vertical"
                       />
                     </template>
-                    <b-dropdown-item href="#">TODO Clone</b-dropdown-item>
                     <b-dropdown-item
-                      @click="exportTwinTemplate()"
+                      @click="$refs.twinInteractions.duplicateTwin();">
+                      {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
+                    </b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.twinInteractions.exportTemplate();"
                     >{{ '_twin-detail.data.context-menu.export-template' | translate }}</b-dropdown-item>
                   </b-dropdown>
 
-                  <evan-modal ref="exportModal">
-                    <template v-slot:header>
-                      <h5 class="modal-title">
-                        {{ `_twin-detail.data.context-menu.export-template` | translate }}
-                      </h5>
-                    </template>
-
-                    <template v-slot:body>
-                      <evan-loading v-if="exporting" />
-                      <evan-success v-else />
-                    </template>
-
-                    <template v-slot:footer>
-                      <evan-button
-                        type="primary"
-                        :disabled="exporting"
-                        :isLoading="exporting"
-                        :label="$t('_twin-detail.data.context-menu.download-template')"
-                        @click="downloadTwinTemplate()"
-                      />
-                    </template>
-                  </evan-modal>
+                  <digital-twin-interactions ref="twinInteractions" />
                 </div>
 
                 <evan-profile-picture
                   class="twin-avatar"
                   type="device"
-                  :src="'https://via.placeholder.com/96'"
+                  :src="$store.state.twin.description.imgSquare"
                 />
                 <h4 class="twin-name text-center mt-2">{{ $store.state.twin.description.name }}</h4>
                 <h5 class="twin-owner text-center">{{ $store.state.twin.ownerName }}</h5>

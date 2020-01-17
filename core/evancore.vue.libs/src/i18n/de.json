@@ -55,6 +55,20 @@
       "queue-error": "Während der Synchronisation ist ein Fehler aufgetreten.",
       "sync-complete": "Abgeschlossen"
     },
+    "dbcp-form": {
+      "description": {
+        "label": "Beschreibung",
+        "placeholder": "Kurze Beschreibung des Digitalen Zwillings"
+      },
+      "image": {
+        "label": "Bild"
+      },
+      "name": {
+        "error": "Bitte geben Sie einen Namen ein!",
+        "label": "Name",
+        "placeholder": "Aussagekräftiger Name"
+      }
+    },
     "dispatcher-not-found": "Synchronisations Job nicht gefunden",
     "file-input": {
       "description": "Ziehen Sie Ihre Datei(en) hierher, um zu beginnen<br>oder klicken Sie zum Durchsuchen",

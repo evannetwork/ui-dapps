@@ -17,6 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
+import Vue from 'vue';
 import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -116,7 +117,7 @@ class DAppTwin extends DigitalTwin {
     ]);
 
     // reset previous saving states
-    const dispatcherStates = {
+    this.dispatcherStates = {
       addFavorite: false,
       description: false,
       favorite: false,
@@ -127,39 +128,36 @@ class DAppTwin extends DigitalTwin {
     // check description save states
     (descInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        dispatcherStates.description = true;
-        dispatcherStates.twin = true;
-        this.vue.$set(this, 'description', instance.data.description);
+        this.dispatcherStates.description = true;
+        this.dispatcherStates.twin = true;
+        this.description = instance.data.description;
       }
     });
 
     // check if twin is added as favorite
     (addFavInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        dispatcherStates.addFavorite = true;
-        dispatcherStates.favorite = true;
-        this.vue.$set(this, 'favorite', true);
+        this.dispatcherStates.addFavorite = true;
+        this.dispatcherStates.favorite = true;
+        this.favorite = true;
       }
     });
 
     // check if twin is removed from favorite
     (removeFavInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        dispatcherStates.removeFavorite = true;
-        dispatcherStates.favorite = true;
-        this.vue.$set(this, 'favorite', false);
+        this.dispatcherStates.removeFavorite = true;
+        this.dispatcherStates.favorite = true;
+        this.favorite = false;
       }
     });
 
     // check if any container gets saved
     Object.keys(this.containers).forEach(containerKey => {
       if (this.containers[containerKey].dispatcherStates.container) {
-        dispatcherStates.twin = true;
+        this.dispatcherStates.twin = true;
       }
     });
-
-    // set it afterwards to reduce vue update triggers
-    this.vue.$set(this, 'dispatcherStates', dispatcherStates);
   }
 
   /**

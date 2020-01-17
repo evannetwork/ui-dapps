@@ -20,7 +20,11 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
+import DigitalTwinInteractionsComponent from './TwinInteractions.vue';
+
 // map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [];
+const componentRegistration: Array<ComponentRegistrationInterface> = [
+  { component: DigitalTwinInteractionsComponent, name: 'digital-twin-interactions' }
+];
 
 export default componentRegistration;

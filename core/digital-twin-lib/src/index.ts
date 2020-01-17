@@ -24,15 +24,18 @@ import * as dispatchers from './dispatchers';
 import DAppContainer from './DAppContainer';
 import DAppTwin from './DAppTwin';
 import translations from './i18n';
+import { DBCPDescriptionInterface } from './DAppContract';
 import { DigitalTwinInterface } from './interfaces/DigitalTwinInterface';
 import {
   ValidationErrorInterface,
   TemplateErrorInterface,
 } from './interfaces/TemplateValidationErrors';
 
+
 export {
   DAppContainer,
   DAppTwin,
+  DBCPDescriptionInterface,
   dispatchers,
   translations,
   DigitalTwinInterface,

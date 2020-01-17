@@ -157,6 +157,7 @@ class DAppContainer extends Container {
    * @param      {string}  entriesToLoad  load only specific entriess
    */
   public async ensureEntries(entriesToLoad?: string[]) {
+    this.plugin = await this.toPlugin();
     this.entries = { };
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
@@ -214,7 +215,6 @@ class DAppContainer extends Container {
    */
   public async initialize() {
     await this.loadBaseInfo();
-    this.plugin = await this.toPlugin();
     await this.ensureDispatcherStates();
     this.ensureI18N();
   }
