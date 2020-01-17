@@ -36,13 +36,11 @@ export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanCo
    */
   async setDescription(): Promise<void> {
     const { description, image }: any = this.dbcpForm.getDescription();
-    await dispatchers.descriptionDispatcher.start(this.getRuntime(), {
-      address: this.$store.state.twin.contractAddress,
-      description: {
-        ...this.$store.state.twin.description,
-        ...description,
-      },
-      twinImage: image,
+
+    this.$store.state.twin.setDescription({
+      ...this.$store.state.twin.description,
+      ...description,
+      ...{ imgSquare: image },
     });
   }
 }

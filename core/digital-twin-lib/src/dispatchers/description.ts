@@ -30,22 +30,22 @@ const dispatcher = new Dispatcher(
 
 dispatcher
   // upload image into ipfs
-  .step(async (instance: DispatcherInstance, { description, twinImage, } ) => {
-    if (twinImage) {
-      const imageBuffer = Buffer.from(twinImage.file);
+  .step(async (instance: DispatcherInstance, { description, } ) => {
+    if (description.imgSquare && typeof description.imgSquare !== 'string') {
+      const imageBuffer = Buffer.from(description.imgSquare.file);
 
       // upload file, build correct ipfs url and build the img url
-      const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      const uploaded = await instance.runtime.dfs.add(description.imgSquare.name, imageBuffer);
       const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
       const { host, port, protocol } = ipfs.ipfsConfig;
       description.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
     }
   })
   // update description
-  .step(async (instance: DispatcherInstance, data: any) => {
+  .step(async (instance: DispatcherInstance, { address, description }) => {
     await instance.runtime.description.setDescription(
-      data.address,
-      { public: data.description },
+      address,
+      { public: description },
       instance.runtime.activeAccount
     );
   });

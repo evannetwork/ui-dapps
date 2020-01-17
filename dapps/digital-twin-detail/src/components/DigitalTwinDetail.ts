@@ -82,7 +82,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Clear the hash change watcher
    */
-  beforeDestroy() {
+  beforeDestroy(): void {
     // clear listeners
     this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
     this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
@@ -107,20 +107,16 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Open the twin clone dialog and setup clone description.
+   * Go back to assets dapp.
    */
-  async duplicateTwin() {
-    this.duplicatePanel.show();
-  }
-
-  close() {
+  close(): void {
     window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
   }
 
   /**
    * Triggers the previously exported twin template.
    */
-  downloadTwinTemplate() {
+  downloadTwinTemplate(): void {
     downloadObject(this.$store.state.twin.description.name, this.exportedTemplate);
     this.exportModal.hide();
   }
@@ -145,7 +141,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     let beforeTwin;
 
     // watch for url changes and load different twin data
-    this.hashChangeWatcher = async () => {
+    this.hashChangeWatcher = async (): Promise<void> => {
       // only load another twin, when address has changed
       if (this.$route.params.twin && beforeTwin !== this.$route.params.twin) {
         beforeTwin = this.$route.params.twin;
