@@ -1,35 +1,35 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
   },
   extends: [
     'airbnb-base',
     'plugin:vue/recommended',
-    // 'prettier/vue',
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
     // 'plugin:prettier/recommended',
-    // 'prettier/@typescript-eslint'
+    // 'prettier/vue',
+    // 'prettier/@typescript-eslint',
   ],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
   },
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2018,
     extraFileExtensions: ['.vue'],
     parser: '@typescript-eslint/parser',
-    sourceType: 'module'
+    sourceType: 'module',
     // project: ['./tsconfig.json', './**/tsconfig.json'],
     // tsconfigRootDir: '.'
   },
   plugins: [
     'vue',
     // 'prettier',
-    '@typescript-eslint'
+    '@typescript-eslint',
   ],
   rules: {
     /**
@@ -51,6 +51,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off', // disabled to avoid collision with TS
     'import/no-unresolved': 'off', // disabled to avoid collision with TS
     'import/extensions': 'off', // disabled to avoid collision with TS
-    'multiline-comment-style': ['warn', 'bare-block']
-  }
+    'multiline-comment-style': ['warn', 'bare-block'],
+    'import/prefer-default-export': 'off', // too restrictive
+  },
 };
