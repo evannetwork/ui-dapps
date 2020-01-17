@@ -105,6 +105,7 @@ Scenario: Registering a new company account on evan
     And Input field with label "Registration Number" should be visible
     And Input field with label "VAT ID" should be visible
   When I set Input field with label "Register Court" to "Test Register Court"
+    # TODO: should be HRB/HRA ???
     And I set Input field with label "Register" to "DE"
     And I set Input field with label "Registration Number" to "Test Registration Number"
     And I set Input field with label "VAT ID" to "Test VAT ID"
