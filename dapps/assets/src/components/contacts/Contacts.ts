@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import ContactsService from './ContactsService';
+import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import { EvanTableItem } from '../../shared/EvanTable';
 
