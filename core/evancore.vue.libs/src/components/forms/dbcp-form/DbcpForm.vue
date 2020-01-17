@@ -22,9 +22,27 @@
     <evan-form
       :form="formInstance"
       @save="$emit('save')"
-      i18nScope="_twin-detail.dbcp-form"
+      i18nScope="_evan.dbcp-form"
       v-bind="$props">
-      <slot />
+      <evan-form-control
+        :label="$t('_evan.dbcp-form.image.label')"
+        :stacked="stacked"
+        class="twin-image"
+        required="true">
+        <div class="d-flex justify-content-center">
+          <evan-profile-picture
+            type="device"
+            :accountName="name"
+            :isEditable="true"
+            :src="image ? image : null"
+            @changed="image = $event"
+          />
+        </div>
+      </evan-form-control>
+
+      <template v-slot:after>
+        <slot />
+      </template>
     </evan-form>
   </div>
 </template>
@@ -37,4 +55,8 @@ export default DbcpFormComponent;
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
 
+/deep/ .twin-image label {
+  align-items: center;
+  display: flex;
+}
 </style>

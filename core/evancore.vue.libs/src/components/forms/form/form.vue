@@ -65,6 +65,7 @@
             </slot>
           </template>
         </slot>
+        <slot name="after"></slot>
       </form>
     </div>
     <template v-if="(editMode || isLoading) && !onlyForm">

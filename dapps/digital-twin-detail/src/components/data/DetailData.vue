@@ -30,6 +30,7 @@
               :key="navItem.id"
               :to="navItem.to"
               active-class="active"
+              class="text-uppercase"
             >
               {{ navItem.label | translate }}
             </router-link>
@@ -61,6 +62,15 @@ export default DetailDataComponent;
   position: sticky;
   top: 0;
   overflow-y: auto;
+
+  .evan-nav-list {
+    .nav-entries {
+      a {
+        font-weight: 600;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 .content {

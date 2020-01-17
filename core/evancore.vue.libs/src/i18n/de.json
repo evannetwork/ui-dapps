@@ -60,7 +60,7 @@
         "label": "Beschreibung",
         "placeholder": "Kurze Beschreibung des Digitalen Zwillings"
       },
-      "img": {
+      "image": {
         "label": "Bild"
       },
       "name": {

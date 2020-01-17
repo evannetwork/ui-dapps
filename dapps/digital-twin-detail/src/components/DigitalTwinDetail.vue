@@ -19,7 +19,6 @@
 
 <template>
   <div class="evan theme-evan">
-    {{ loading }}
     <evan-dapp-wrapper @loggedin="initialize()">
       <template v-slot:content>
         <evan-loading v-if="loading" />
@@ -50,34 +49,43 @@
                     </b-dropdown-item>
                   </b-dropdown>
 
-                  <evan-modal ref="exportModal">
-                    <template v-slot:header>
-                      <h5 class="modal-title">
-                        {{ `_twin-detail.data.context-menu.export-template` | translate }}
-                      </h5>
-                    </template>
-
-                    <template v-slot:body>
-                      <template v-if="exporting">
+                  <evan-swipe-panel
+                    @init="exportModal = $event"
+                    alignment="right"
+                    class="light"
+                    :title="'_twin-detail.data.context-menu.export-template' | translate"
+                    showBackdrop="true"
+                    type="default">
+                    <div class="d-flex h-100 align-items-center justify-content-center">
+                      <div v-if="exporting">
                         <evan-loading />
                         <div class="mt-3 text-center">
                           <h4>
                             {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
                           </h4>
                         </div>
-                      </template>
+                      </div>
                       <evan-success v-else />
-                    </template>
+                    </div>
 
-                    <template v-slot:footer>
-                      <evan-button
-                        type="primary"
-                        :disabled="exporting"
-                        :label="$t('_twin-detail.data.context-menu.download-template')"
-                        @click="downloadTwinTemplate()"
-                      />
+                    <template slot="footer">
+                      <div class="d-flex">
+                        <evan-button
+                          type="secondary"
+                          :label="$t('_evan.cancel')"
+                          @click="duplicatePanel.cancel()"
+                          class="mr-3"
+                        />
+                        <span class="mx-auto" />
+                        <evan-button
+                          type="primary"
+                          :disabled="exporting"
+                          :label="$t('_twin-detail.data.context-menu.download-template')"
+                          @click="downloadTwinTemplate()"
+                        />
+                      </div>
                     </template>
-                  </evan-modal>
+                  </evan-swipe-panel>
 
                   <evan-swipe-panel
                     @init="duplicatePanel = $event"
@@ -86,7 +94,9 @@
                     :title="'_twin-detail.data.context-menu.duplicate-twin' | translate"
                     showBackdrop="true"
                     type="default">
-                    <template v-if="exporting || duplicating">
+                    <div
+                      class="d-flex h-100 align-items-center justify-content-center"
+                      v-if="exporting || duplicating">
                       <evan-loading />
                       <div class="mt-3 text-center">
                         <h4 v-if="exporting">
@@ -96,8 +106,9 @@
                           {{ `_twin-detail.data.context-menu.duplicating-twin` | translate }}
                         </h4>
                       </div>
-                    </template>
+                    </div>
                     <evan-form-dbcp
+                      class="pt-5"
                       ref="dbcpForm"
                       :contractAddress="$store.state.twin.contractAddress"
                       :description="$store.state.twin.description"
@@ -114,6 +125,7 @@
                           @click="duplicatePanel.cancel()"
                           class="mr-3"
                         />
+                        <span class="mx-auto" />
                         <evan-button
                           type="primary"
                           :disabled="exporting || duplicating"
@@ -128,7 +140,6 @@
                 <evan-profile-picture
                   class="twin-avatar"
                   type="device"
-                  :src="'https://via.placeholder.com/96'"
                 />
                 <h4 class="twin-name text-center mt-2">
                   {{ $store.state.twin.description.name }}

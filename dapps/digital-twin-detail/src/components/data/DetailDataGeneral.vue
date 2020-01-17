@@ -74,10 +74,4 @@ export default DigitalTwinDetailDataGeneralComponent;
     font-size: 12px;
   }
 }
-
-/deep/ .twin-avatar .profile-picture {
-  --size: 96px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

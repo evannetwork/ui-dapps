@@ -60,6 +60,11 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
   formInstance: DbcpFormInterface;
 
   /**
+   * New uploaded image
+   */
+  image = null;
+
+  /**
    * setup form
    */
   created(): void {
@@ -80,5 +85,15 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
         value: this.description.description,
       },
     }) as DbcpFormInterface;
+  }
+
+  /**
+   * Return the current description
+   */
+  getDescription(): any {
+    return {
+      description: this.formInstance.getFormData(),
+      image: this.image,
+    }
   }
 }

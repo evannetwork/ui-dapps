@@ -28,6 +28,15 @@ const dispatcher = new Dispatcher(
 );
 
 dispatcher
+  // upload image into ipfs
+  .step(async (instance: DispatcherInstance, { description, twinImage, } ) => {
+    if (twinImage) {
+      const imageBuffer = Buffer.from(twinImage.file);
+
+      // add ipfs to template
+      description.imgSquare = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+    }
+  })
   // update description
   .step(async (instance: DispatcherInstance, data: any) => {
     await instance.runtime.description.setDescription(

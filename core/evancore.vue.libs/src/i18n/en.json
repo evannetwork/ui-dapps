@@ -60,7 +60,7 @@
         "label": "Description",
         "placeholder": "Briefly describe your Digital Twin and what it represents."
       },
-      "img": {
+      "image": {
         "label": "Image"
       },
       "name": {
