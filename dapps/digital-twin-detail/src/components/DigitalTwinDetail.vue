@@ -92,7 +92,7 @@
                       <div class="d-flex">
                         <evan-button
                           type="secondary"
-                          :label="$t('_evan.cancel')"
+                          :label="'_evan.cancel' | translate"
                           @click="exportModal.hide()"
                           class="mr-3"
                         />
