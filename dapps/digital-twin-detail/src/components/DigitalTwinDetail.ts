@@ -94,12 +94,14 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   async createTwinDuplicate(): Promise<void> {
     this.duplicating = true;
     
-    const { description, image }: any = this.dbcpForm.getDescription();
+    const description: any = this.dbcpForm.getDescription();
+    const imqSquare = description.imgSquare;
+    delete description.imqSquare;
     // start twin duplicate dispatcher
     await dispatchers.twinCreateDispatcher
       .start(this.getRuntime(), {
-        description: { description },
-        twinImage: image,
+        description,
+        twinImage: imqSquare,
         twinTemplate: this.$store.state.twin.contractAddress,
       });
 

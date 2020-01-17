@@ -22,7 +22,6 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, DbcpFormComponentClass } from '@evan.network/ui-vue-core';
-import { dispatchers } from '@evan.network/digital-twin-lib';
 
 @Component
 export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanComponent) {
@@ -35,12 +34,9 @@ export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanCo
    * Save the current description definition.
    */
   async setDescription(): Promise<void> {
-    const { description, image }: any = this.dbcpForm.getDescription();
-
     this.$store.state.twin.setDescription({
       ...this.$store.state.twin.description,
-      ...description,
-      ...{ imgSquare: image },
+      ...this.dbcpForm.getDescription(),
     });
   }
 }

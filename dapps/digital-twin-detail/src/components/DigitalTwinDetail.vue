@@ -115,7 +115,7 @@
                     showBackdrop="true"
                     type="default">
                     <div
-                      class="d-flex h-100 align-items-center justify-content-center"
+                      class="d-flex flex-column h-100 align-items-center justify-content-center"
                       v-if="exporting || duplicating">
                       <div><evan-loading /></div>
                       <div class="mt-3 text-center">

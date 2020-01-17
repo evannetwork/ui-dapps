@@ -98,8 +98,8 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
    */
   getDescription(): any {
     return {
-      description: this.formInstance.getFormData(),
-      image: this.image,
+      ...this.formInstance.getFormData(),
+      imgSquare: this.image || this.description.imgSquare
     }
   }
 }

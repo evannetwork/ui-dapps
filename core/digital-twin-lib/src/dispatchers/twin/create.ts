@@ -30,19 +30,6 @@ const dispatcher = new Dispatcher(
 );
 
 dispatcher
-  // upload image into ipfs
-  .step(async (instance: DispatcherInstance, { twinImage, twinTemplate } ) => {
-    if (twinImage) {
-      const imageBuffer = Buffer.from(twinImage.file);
-
-      // upload file, build correct ipfs url and build the img url
-      const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
-      const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
-      const { host, port, protocol } = ipfs.ipfsConfig;
-      twinTemplate.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
-    }
-  })
-  // create the twin
   .step(async (instance: DispatcherInstance, data) => {
     // check if template should be loaded from contract
     if (typeof data.twinTemplate === 'string' && data.twinTemplate.startsWith('0x')) {
@@ -56,6 +43,26 @@ dispatcher
 
       data.twinTemplate = await twinInstance.exportAsTemplate(true);
       await instance.save();
+    }
+
+    // merge passed description with twin template description
+    if (data.description) {
+      data.twinTemplate.description = {
+        ...data.twinTemplate.description,
+        ...data.description,
+      };
+    }
+  })
+  // upload image into ipfs
+  .step(async (instance: DispatcherInstance, { twinTemplate, twinImage}) => {
+    if (twinImage && typeof twinImage !== 'string') {
+      const imageBuffer = Buffer.from(twinImage.file);
+
+      // upload file, build correct ipfs url and build the img url
+      const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
+      const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
+      const { host, port, protocol } = ipfs.ipfsConfig;
+      twinTemplate.description.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
     }
   })
   // create the twin
