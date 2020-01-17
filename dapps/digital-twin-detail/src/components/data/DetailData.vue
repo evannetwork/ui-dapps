@@ -54,7 +54,7 @@ export default DetailDataComponent;
 @import '~@evan.network/ui/src/style/utils';
 
 .sidenav {
-  width: 205px;
+  width: 250px;
   background: white;
   border: 2px solid cssVar('bg-level-2');
   margin-left: 3px;
