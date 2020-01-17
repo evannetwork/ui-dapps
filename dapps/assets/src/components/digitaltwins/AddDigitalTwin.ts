@@ -59,7 +59,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   async created() {
     this.runtime = await this.getRuntime();
     dispatchers.twinCreateDispatcher.watch( ({detail: { status }}: CustomEvent) => {
-      if (status === 'running') {
+      if (status === 'starting') {
         this.resetForm();
         this.loading = false;
 
