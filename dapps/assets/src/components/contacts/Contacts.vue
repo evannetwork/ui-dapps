@@ -80,11 +80,13 @@ https://evan.network/license/ */
           :show-scrollbar="true"
           @row-clicked="handleRowClicked"
         >
-          <template v-slot:cell(alias)="contacts">{{
-            contacts.item.alias ? contacts.item.alias : contacts.item.address
-          }}</template>
+          <template v-slot:cell(alias)="contacts">
+            {{
+              contacts.item.alias ? contacts.item.alias : contacts.item.address
+            }}
+          </template>
           <template v-slot:cell(icon)="contacts">
-            <i class="table-icon" :class="contacts.item.icon"></i>
+            <i class="table-icon" :class="contacts.item.icon" />
           </template>
           <template v-slot:cell(createdAt)="contacts">
             {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}

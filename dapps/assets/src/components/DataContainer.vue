@@ -18,7 +18,7 @@ https://evan.network/license/ */
       :fetch-more="fetchMore"
       :search="initialQuery"
       :search-term="searchTerm"
-    ></router-view>
+    />
   </div>
 </template>
 

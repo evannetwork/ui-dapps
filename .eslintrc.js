@@ -4,13 +4,14 @@ module.exports = {
     es6: true
   },
   extends: [
+    // 'airbnb-base',
     'plugin:vue/recommended',
-    'prettier/vue',
+    // 'prettier/vue',
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
-    // "airbnb-base"
+    'plugin:@typescript-eslint/recommended'
+    // 'plugin:prettier/recommended',
+    // 'prettier/@typescript-eslint'
   ],
   globals: {
     Atomics: 'readonly',
@@ -19,12 +20,15 @@ module.exports = {
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2018,
+    extraFileExtensions: ['.vue'],
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
+    // project: ['./tsconfig.json', './**/tsconfig.json'],
+    // tsconfigRootDir: '.'
   },
   plugins: [
     'vue',
-    // "prettier",
+    //   'prettier',
     '@typescript-eslint'
   ],
   rules: {

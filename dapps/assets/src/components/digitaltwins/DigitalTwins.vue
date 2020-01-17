@@ -16,7 +16,7 @@ https://evan.network/license/ */
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="search">
           <label for="searchInput" @click="isActiveSearch = true">
-            <i class="mdi mdi-magnify mr-2"></i>
+            <i class="mdi mdi-magnify mr-2" />
             <span v-if="!isActiveSearch">{{
               '_assets.digitaltwins.digitaltwins-title' | translate
             }}</span>
@@ -79,12 +79,12 @@ https://evan.network/license/ */
           <template v-slot:cell(icon)="data">
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
-          <template v-slot:cell(updated)="data">{{
-            data.item.updated | moment('DD.MM.YYYY hh:mm')
-          }}</template>
-          <template v-slot:cell(created)="data">{{
-            data.item.created | moment('DD.MM.YYYY hh:mm')
-          }}</template>
+          <template v-slot:cell(updated)="data">
+            {{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}
+          </template>
+          <template v-slot:cell(created)="data">
+            {{ data.item.created | moment('DD.MM.YYYY hh:mm') }}
+          </template>
           <template v-slot:cell(isFavorite)="twin">
             <evan-loading v-if="isFavoriteLoading(twin)" classes />
             <evan-button

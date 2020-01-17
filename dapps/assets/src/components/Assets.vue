@@ -27,7 +27,7 @@ https://evan.network/license/ */
                     :to="navItem.to"
                     :active-class="'active'"
                   >
-                    <i class="mr-3" :class="navItem.icon"></i>
+                    <i class="mr-3" :class="navItem.icon" />
                     {{ navItem.label | translate }}
                   </router-link>
                 </template>
@@ -37,7 +37,7 @@ https://evan.network/license/ */
         </evan-dapp-wrapper-level-2>
         <transition name="fade" mode="out-in">
           <div class="container content">
-            <router-view></router-view>
+            <router-view />
           </div>
         </transition>
       </template>

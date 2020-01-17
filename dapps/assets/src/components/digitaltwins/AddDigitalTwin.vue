@@ -81,12 +81,16 @@ https://evan.network/license/ */
         accept=".json"
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
         @input="handleFileUpload"
-      ></evan-file-input>
+      />
 
       <div v-if="templateErrors.length > 0">
-        <h4 class="text-warning">Errors occured in template</h4>
+        <h4 class="text-warning">
+          Errors occured in template
+        </h4>
         <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
-          <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>
+          <h5 v-if="pluginErrors.errors">
+            {{ pluginErrors.name }}
+          </h5>
           <ul v-if="pluginErrors.errors">
             <li v-for="error in pluginErrors.errors" :key="error.property">
               <span>{{ error.message }}</span>
