@@ -13,6 +13,8 @@
         "desc": "Beschreibung",
         "general-title": "Allgemein",
         "information-title": "Informationen",
+        "owner": "Eigentümer",
+        "type": "Typ",
         "type-value": "Digitaler Zwilling"
       },
       "logs": {
@@ -20,26 +22,6 @@
       },
       "specifications": {
         "specifications-title": "Spezifikationen"
-      }
-    },
-    "dbcp-form": {
-      "description": {
-        "label": "Beschreibung",
-        "placeholder": "Kurze Beschreibung des Digitalen Zwillings"
-      },
-      "img": {
-        "label": "Bild"
-      },
-      "name": {
-        "error": "Bitte geben Sie einen Namen ein!",
-        "label": "Name",
-        "placeholder": "Aussagekräftiger Name"
-      },
-      "owner": {
-        "label": "Eigentümer"
-      },
-      "type": {
-        "label": "Typ"
       }
     },
     "did": {

@@ -31,11 +31,13 @@ import DAppLoaderComponent from './dapp-loader/dapp-loader.vue';
 import DAppLoadingComponent from './loading/loading.vue';
 import DAppWrapperComponent from './dapp-wrapper/dapp-wrapper.vue';
 import DAppWrapperSidebarLevel2Component from './dapp-wrapper-level-2/dapp-wrapper-level-2.vue';
+import DbcpFormComponent from './forms/dbcp-form/DbcpForm.vue';
+import DbcpFormComponentClass from './forms/dbcp-form/DbcpForm';
 import DropdownComponent from './dropdown/dropdown.vue';
 import EvanCheckboxComponent from './forms/checkbox/checkbox.vue';
 import EvanComponent from '../component';
-import FailedComponent from './failed/failed.vue';
 import EvanFormComponent from './forms/form/form.vue';
+import FailedComponent from './failed/failed.vue';
 import FormControlCheckboxComponent from './forms/checkbox/checkbox-control.vue';
 import FormControlComponent from './forms/control/control.vue';
 import FormControlCountriesComponent from './forms/countries/countries.vue';
@@ -60,6 +62,7 @@ import SharedContact from './lists/shared-contact/shared-contact.vue';
 import StepsComponent from './steps/steps.vue';
 import SuccessComponent from './success/success.vue';
 import SwipePanelComponent from './swipe-panel/swipe-panel.vue';
+import SwipePanelComponentClass from './swipe-panel/swipe-panel';
 import TableComponent from './table/table.vue';
 import TooltipComponent from './tooltip/tooltip.vue';
 import UnderDevelopmentComponent from './under-development/under-development.vue';
@@ -78,11 +81,13 @@ export {
   DAppLoadingComponent,
   DAppWrapperComponent,
   DAppWrapperSidebarLevel2Component,
+  DbcpFormComponent,
+  DbcpFormComponentClass,
   DropdownComponent,
   EvanCheckboxComponent,
   EvanComponent,
-  FailedComponent,
   EvanFormComponent,
+  FailedComponent,
   FormControlCheckboxComponent,
   FormControlComponent,
   FormControlCountriesComponent,
@@ -106,6 +111,7 @@ export {
   StepsComponent,
   SuccessComponent,
   SwipePanelComponent,
+  SwipePanelComponentClass,
   TableComponent,
   TooltipComponent,
   UnderDevelopmentComponent,
@@ -122,20 +128,21 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-checkbox', component: EvanCheckboxComponent },
   { name: 'evan-contact-batch', component: ContactBatchComponent },
   { name: 'evan-dapp-loader', component: DAppLoaderComponent },
-  { name: 'evan-dapp-wrapper-level-2', component: DAppWrapperSidebarLevel2Component },
   { name: 'evan-dapp-wrapper', component: DAppWrapperComponent },
+  { name: 'evan-dapp-wrapper-level-2', component: DAppWrapperSidebarLevel2Component },
   { name: 'evan-dropdown', component: DropdownComponent },
   { name: 'evan-failed', component: FailedComponent },
   { name: 'evan-file-input', component: FormControlFilesComponent },
+  { name: 'evan-form', component: EvanFormComponent },
+  { name: 'evan-form-control', component: FormControlComponent },
   { name: 'evan-form-control-checkbox', component: FormControlCheckboxComponent },
+  { name: 'evan-form-control-countries', component: FormControlCountriesComponent },
   { name: 'evan-form-control-files', component: FormControlFilesComponent },
   { name: 'evan-form-control-input', component: FormControlInputComponent },
   { name: 'evan-form-control-select', component: FormControlSelectComponent },
   { name: 'evan-form-control-textarea', component: FormControlTextareaComponent },
-  { name: 'evan-form-control-countries', component: FormControlCountriesComponent },
   { name: 'evan-form-control-v-select', component: FormControlVSelectComponent },
-  { name: 'evan-form-control', component: FormControlComponent },
-  { name: 'evan-form', component: EvanFormComponent },
+  { name: 'evan-form-dbcp', component: DbcpFormComponent },
   { name: 'evan-iframe', component: IframeComponent },
   { name: 'evan-loading', component: DAppLoadingComponent },
   { name: 'evan-login', component: LoginComponent },
@@ -144,8 +151,8 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-modal', component: ModalComponent },
   { name: 'evan-nav-list', component: NavListComponent },
   { name: 'evan-nav-tabs', component: NavTabsComponent },
-  { name: 'evan-permissions-editor', component: PermissionsEditorComponent },
   { name: 'evan-permissions', component: PermissionsComponent },
+  { name: 'evan-permissions-editor', component: PermissionsEditorComponent },
   { name: 'evan-profile-picture', component: ProfilePicture },
   { name: 'evan-profile-preview', component: ProfilePreview },
   { name: 'evan-qr-code', component: QRCodeComponent },

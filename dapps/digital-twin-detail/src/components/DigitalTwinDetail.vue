@@ -19,6 +19,7 @@
 
 <template>
   <div class="evan theme-evan">
+    {{ loading }}
     <evan-dapp-wrapper @loggedin="initialize()">
       <template v-slot:content>
         <evan-loading v-if="loading" />
@@ -78,45 +79,50 @@
                     </template>
                   </evan-modal>
 
-                  <evan-modal ref="duplicateModal">
-                    <template v-slot:header>
-                      <h5 class="modal-title">
-                        {{ `_twin-detail.data.context-menu.duplicate-twin` | translate }}
-                      </h5>
+                  <evan-swipe-panel
+                    @init="duplicatePanel = $event"
+                    alignment="right"
+                    class="light"
+                    :title="'_twin-detail.data.context-menu.duplicate-twin' | translate"
+                    showBackdrop="true"
+                    type="default">
+                    <template v-if="exporting || duplicating">
+                      <evan-loading />
+                      <div class="mt-3 text-center">
+                        <h4 v-if="exporting">
+                          {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
+                        </h4>
+                        <h4 v-else-if="duplicating">
+                          {{ `_twin-detail.data.context-menu.duplicating-twin` | translate }}
+                        </h4>
+                      </div>
                     </template>
-
-                    <template v-slot:body>
-                      <template v-if="exporting || duplicating">
-                        <evan-loading />
-                        <div class="mt-3 text-center">
-                          <h4 v-if="exporting">
-                            {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
-                          </h4>
-                          <h4 v-else-if="duplicating">
-                            {{ `_twin-detail.data.context-menu.duplicating-twin` | translate }}
-                          </h4>
-                        </div>
-                      </template>
-                      <evan-dbcp-form
-                        ref="dbcpForm"
-                        :contractAddress="$store.state.twin.contractAddress"
-                        :description="$store.state.twin.description"
-                        i18nScope="_twin-detail.data.general"
-                        onlyForm="true"
-                        @init="dbcpForm = $event"
-                        v-else
-                      />
+                    <evan-form-dbcp
+                      ref="dbcpForm"
+                      :contractAddress="$store.state.twin.contractAddress"
+                      :description="$store.state.twin.description"
+                      i18nScope="_twin-detail.data.general"
+                      onlyForm="true"
+                      @init="dbcpForm = $event"
+                      v-else
+                    />
+                    <template slot="footer">
+                      <div class="d-flex">
+                        <evan-button
+                          type="secondary"
+                          :label="$t('_evan.cancel')"
+                          @click="duplicatePanel.cancel()"
+                          class="mr-3"
+                        />
+                        <evan-button
+                          type="primary"
+                          :disabled="exporting || duplicating"
+                          :label="$t('_twin-detail.data.context-menu.duplicate-twin')"
+                          @click="createTwinDuplicate()"
+                        />
+                      </div>
                     </template>
-
-                    <template v-slot:footer>
-                      <evan-button
-                        type="primary"
-                        :disabled="exporting || duplicating"
-                        :label="$t('_twin-detail.data.context-menu.duplicate-twin')"
-                        @click="createTwinDuplicate()"
-                      />
-                    </template>
-                  </evan-modal>
+                  </evan-swipe-panel>
                 </div>
 
                 <evan-profile-picture

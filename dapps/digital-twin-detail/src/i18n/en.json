@@ -26,26 +26,6 @@
         "specifications-title": "Specifications"
       }
     },
-    "dbcp-form": {
-      "description": {
-        "label": "Description",
-        "placeholder": "Briefly describe your Digital Twin and what it represents."
-      },
-      "img": {
-        "label": "Image"
-      },
-      "name": {
-        "error": "Please provide a name!",
-        "label": "Name",
-        "placeholder": "Give a meaningful name"
-      },
-      "owner": {
-        "label": "Owner"
-      },
-      "type": {
-        "label": "Type"
-      }
-    },
     "did": {
       "did-title": "Decentralized ID"
     },

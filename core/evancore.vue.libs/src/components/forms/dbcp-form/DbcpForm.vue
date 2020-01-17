@@ -23,14 +23,15 @@
       :form="formInstance"
       @save="$emit('save')"
       i18nScope="_twin-detail.dbcp-form"
-      v-bind="$props"
-    />
+      v-bind="$props">
+      <slot />
+    </evan-form>
   </div>
 </template>
 
 <script lang="ts">
-import DbcpForm from './DbcpForm';
-export default DbcpForm;
+import DbcpFormComponent from './DbcpForm';
+export default DbcpFormComponent;
 </script>
 
 <style lang="scss" scoped>

@@ -55,6 +55,20 @@
       "queue-error": "An error occurred during synchronization.",
       "sync-complete": "Complete"
     },
+    "dbcp-form": {
+      "description": {
+        "label": "Description",
+        "placeholder": "Briefly describe your Digital Twin and what it represents."
+      },
+      "img": {
+        "label": "Image"
+      },
+      "name": {
+        "error": "Please provide a name!",
+        "label": "Name",
+        "placeholder": "Give a meaningful name"
+      }
+    },
     "dispatcher-not-found": "Synchronization job not found",
     "file-input": {
       "description": "Drag your file(s) here to begin<br> or click to browse",

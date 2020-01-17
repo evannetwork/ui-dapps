@@ -20,7 +20,7 @@
 <template>
   <div>
     <div class="content-card">
-      <evan-dbcp-form
+      <evan-form-dbcp
         :contractAddress="$store.state.twin.contractAddress"
         :description="$store.state.twin.description"
         :isLoading="$store.state.twin.dispatcherStates.description"
@@ -29,8 +29,21 @@
         :title="'_twin-detail.data.general.information-title' | translate"
         :type="$t('_twin-detail.data.general.type-value')"
         @init="dbcpForm = $event"
-        @save="setDescription();"
-      />
+        @save="setDescription();">
+        <evan-form-control-input
+          :disabled="true"
+          :label="$t('_twin-detail.data.general.type')"
+          :required="true"
+          :value="$t('_twin-detail.data.general.type-value')"
+        />
+
+        <evan-form-control-input
+          :disabled="true"
+          :label="$t('_twin-detail.data.general.owner')"
+          :required="true"
+          :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
+        />
+      </evan-form-dbcp>
     </div>
   </div>
 </template>

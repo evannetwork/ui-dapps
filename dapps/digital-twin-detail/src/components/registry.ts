@@ -20,11 +20,7 @@
 // import evan libs
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
-import DbcpForm from './general/DbcpForm.vue';
-
 // map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { component: DbcpForm, name: 'evan-dbcp-form' },
-];
+const componentRegistration: Array<ComponentRegistrationInterface> = [ ];
 
 export default componentRegistration;

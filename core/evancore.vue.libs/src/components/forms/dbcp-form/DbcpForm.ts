@@ -18,9 +18,10 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DBCPDescriptionInterface } from '@evan.network/digital-twin-lib';
-import { EvanForm, EvanFormControl, EvanFormComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
+
+import EvanFormComponent from '../form/form';
+import { EvanForm, EvanFormControl } from '../../../forms';
 
 interface DbcpFormInterface extends EvanForm {
   description: EvanFormControl;
@@ -32,7 +33,7 @@ interface DbcpFormInterface extends EvanForm {
 
 
 @Component
-export default class DbcpForm extends mixins(EvanFormComponent) {
+export default class DbcpFormComponent extends mixins(EvanFormComponent) {
   /**
    * Contract address for the contract that should be saved
    */
@@ -41,7 +42,7 @@ export default class DbcpForm extends mixins(EvanFormComponent) {
   /**
    * Contracts dbcp description
    */
-  @Prop() description: DBCPDescriptionInterface;
+  @Prop() description: any;
 
   /**
    * Shows the owner input box.
@@ -64,7 +65,7 @@ export default class DbcpForm extends mixins(EvanFormComponent) {
   created(): void {
     this.formInstance = new EvanForm(this, {
       name: {
-        validate: (dbcpForm: DbcpForm, formInstance: DbcpFormInterface): boolean => {
+        validate: (dbcpForm: DbcpFormComponent, formInstance: DbcpFormInterface): boolean => {
           return formInstance.name.value.length !== 0;
         },
         value: this.description.name,
@@ -79,15 +80,5 @@ export default class DbcpForm extends mixins(EvanFormComponent) {
         value: this.description.description,
       },
     }) as DbcpFormInterface;
-
-    // apply optional owner field
-    if (this.owner) {
-      this.formInstance.addControl('owner', { disabled: true, value: this.owner });
-    }
-
-    // apply optional type field
-    if (this.type) {
-      this.formInstance.addControl('type', { disabled: true, value: this.type });
-    }
   }
 }

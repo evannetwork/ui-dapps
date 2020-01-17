@@ -18,15 +18,12 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DAppTwin } from '@evan.network/digital-twin-lib';
-import { dispatchers } from '@evan.network/digital-twin-lib';
+import { DAppTwin, dispatchers } from '@evan.network/digital-twin-lib';
 import { DigitalTwinTemplate } from '@evan.network/api-blockchain-core';
 import { downloadObject } from '@evan.network/ui';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, } from '@evan.network/ui-vue-core';
 
-import DbcpForm from './general/DbcpForm';
-
-@Component
+Component
 export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
@@ -46,9 +43,10 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   exportedTemplate: DigitalTwinTemplate;
 
   /**
-   * When duplicate twin modal is opened, this form will be available.
+   * Element instances.
    */
-  dbcpForm: DbcpForm;
+  // duplicatePanel: SwipePanelComponentClass;
+  // dbcpForm: DbcpFormComponentClass;
 
   navItems = [
     {
@@ -91,26 +89,26 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Creates a duplicated twin from the current definition.
    */
-  async createTwinDuplicate(): Promise<void> {
-    this.duplicating = true;
+  // async createTwinDuplicate(): Promise<void> {
+  //   this.duplicating = true;
     
-    const { name, description }: any = this.dbcpForm.formInstance.getFormData();
-    // start twin duplicate dispatcher
-    await dispatchers.twinCreateDispatcher
-      .start(this.getRuntime(), {
-        description: { name, description },
-        twinTemplate: this.$store.state.twin.contractAddress,
-      });
+  //   const { name, description }: any = this.dbcpForm.formInstance.getFormData();
+  //   // start twin duplicate dispatcher
+  //   await dispatchers.twinCreateDispatcher
+  //     .start(this.getRuntime(), {
+  //       description: { name, description },
+  //       twinTemplate: this.$store.state.twin.contractAddress,
+  //     });
 
-    this.duplicating = false;
-  }
+  //   this.duplicating = false;
+  // }
 
-  /**
-   * Open the twin clone dialog and setup clone description.
-   */
-  async duplicateTwin() {
-    (this.$refs.duplicateModal as any).show();
-  }
+  // /**
+  //  * Open the twin clone dialog and setup clone description.
+  //  */
+  // async duplicateTwin() {
+  //   this.duplicatePanel.show();
+  // }
 
   close() {
     window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
@@ -146,7 +144,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     // watch for url changes and load different twin data
     this.hashChangeWatcher = async () => {
       // only load another twin, when address has changed
-      if (beforeTwin !== this.$route.params.twin) {
+      if (this.$route.params.twin && beforeTwin !== this.$route.params.twin) {
+        console.log('started loading')
         this.loading = true;
         this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
         this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
@@ -155,6 +154,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         beforeTwin = this.$store.state.twin.contractAddress;
         this.loading = false;
+        console.log(this.loading);
+        console.log('finished loading')
       }
     };
 
