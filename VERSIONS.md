@@ -25,6 +25,8 @@
 - core
   - `evancore.vue.libs` (v1.10.0)
     - disable default contract address routing detect, can be enabled by passing `contractRouting` to vueCore initialization
+  - `ui.libs`
+    - add `downloadObject` function
 - dapps
   - remove old digital twins dapps
   - `digital-twin-lib` (v2.0.0)

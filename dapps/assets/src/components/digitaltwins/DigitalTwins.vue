@@ -81,13 +81,13 @@
           @scroll.native="scrollHandler"
           @row-clicked="handleRowClicked"
         >
-          <template v-slot:cell(icon)="data">
+          <template v-slot:cell(icon)>
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
           <template v-slot:cell(updated)="data">{{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}</template>
           <template v-slot:cell(created)="data">{{ data.item.created | moment('DD.MM.YYYY hh:mm') }}</template>
           <template v-slot:cell(isFavorite)="twin">
-            <evan-loading v-if="isFavoriteLoading(twin)" classes />
+            <evan-loading v-if="isFavoriteLoading(twin)" classes="icon-replacer" />
             <evan-button
               v-else-if="isFavorite(twin)"
               type="icon-secondary"

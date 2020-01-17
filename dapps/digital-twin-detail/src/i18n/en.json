@@ -1,6 +1,10 @@
 {
   "_twin-detail": {
     "data": {
+      "context-menu": {
+        "export-template": "Export as template",
+        "download-template": "Download"
+      },
       "data-title": "Data",
       "general": {
         "desc": "Description",

@@ -42,7 +42,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * current mnemonic value as text
    */
   mnemonic = '';
-  
+
   /**
    * use to cancel riddle
    */
@@ -410,7 +410,7 @@ export default class SignUp extends mixins(EvanComponent) {
    */
   async finishOnboarding(runtime: bcc.Runtime, vault: any, accountId: string, password: string) {
     // check if onboarded, else throw it!
-    if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {
+    if (!runtime.profile) {
       throw new Error('Onboarding has finished, but user isnt onboarded?');
     }
 

@@ -19,12 +19,10 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// internal imports
-import TwinDAppComponent from '../../TwinDAppComponent';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
-export default class DetailDataComponent extends mixins(TwinDAppComponent) {
+export default class DetailDataComponent extends mixins(EvanComponent) {
   navItems = [
     {
       label: `_twin-detail.data.general.general-title`,
