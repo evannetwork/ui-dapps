@@ -109,7 +109,7 @@ export default class EvanModal extends mixins(EvanComponent) {
   /**
    * Renders the modal element and shows it animated.
    */
-  public show() {
+  show() {
     this.isRendered = true;
     this.$nextTick(() => this.isShown = true);
   }

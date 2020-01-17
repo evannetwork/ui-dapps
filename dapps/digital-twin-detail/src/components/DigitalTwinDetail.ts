@@ -29,9 +29,15 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  loading = true;
-  exporting = false;
   duplicating = false;
+  exporting = false;
+  favoriteLoading = false;
+  loading = true;
+
+  /**
+   * Is the current twin a favorite?
+   */
+  isFavorite = null;
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
@@ -78,6 +84,14 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
       to: { name: entry.key }
     };
   });
+
+  async addFavorite(): Promise<void> {
+    this.favoriteLoading = true;
+    await this.$store.state.twin.addAsFavorite();
+    this.isFavorite = true;
+    this.favoriteLoading = false;
+  }
+
 
   /**
    * Clear the hash change watcher
@@ -154,6 +168,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         await this.$store.state.twin.initialize();
 
+        this.isFavorite = this.$store.state.twin.favorite;
         beforeTwin = this.$store.state.twin.contractAddress;
         this.loading = false;
       }
@@ -162,5 +177,12 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  async removeFavorite(): Promise<void> {
+    this.favoriteLoading = true;
+    await this.$store.state.twin.removeFromFavorites();
+    this.isFavorite = false;
+    this.favoriteLoading = false;
   }
 }
