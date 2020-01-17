@@ -11,7 +11,8 @@
         "favorite": {
           "add": "Favorit hinzufügen...",
           "remove": "Favorit entfernen..."
-        }
+        },
+        "create": "Zwilling erstellen"
       }
     }
   }

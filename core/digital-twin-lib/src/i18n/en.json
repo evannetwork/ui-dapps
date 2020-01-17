@@ -11,7 +11,8 @@
         "favorite": {
           "add": "Adding favorite...",
           "remove": "Removing favorite..."
-        }
+        },
+        "create": "Create Twin"
       }
     }
   }
