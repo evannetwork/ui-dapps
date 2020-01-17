@@ -81,7 +81,7 @@
                         <div><evan-loading /></div>
                         <div class="mt-3 text-center">
                           <h4>
-                            {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
+                            {{ '_twin-detail.data.context-menu.exporting-twin' | translate }}
                           </h4>
                         </div>
                       </div>
