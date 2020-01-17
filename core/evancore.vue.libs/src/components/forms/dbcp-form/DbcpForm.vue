@@ -23,6 +23,7 @@
       :form="formInstance"
       @save="$emit('save')"
       i18nScope="_evan.dbcp-form"
+      ref="form"
       v-bind="$props">
       <evan-form-control
         :label="$t('_evan.dbcp-form.image.label')"
@@ -35,7 +36,7 @@
             :accountName="name"
             :isEditable="true"
             :src="image || description.imgSquare || null"
-            @changed="image = $event"
+            @changed="image = $event; $refs.form.setEditMode(true)"
           />
         </div>
       </evan-form-control>
