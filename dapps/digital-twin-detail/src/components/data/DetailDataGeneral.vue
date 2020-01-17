@@ -27,19 +27,19 @@
         :owner="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
         :shareable="false"
         :title="'_twin-detail.data.general.information-title' | translate"
-        :type="$t('_twin-detail.data.general.type-value')"
+        :type="'_twin-detail.data.general.type-value' | translate"
         @init="dbcpForm = $event"
         @save="setDescription();">
         <evan-form-control-input
           :disabled="true"
-          :label="$t('_twin-detail.data.general.type')"
+          :label="'_twin-detail.data.general.type' | translate"
           :required="true"
-          :value="$t('_twin-detail.data.general.type-value')"
+          :value="'_twin-detail.data.general.type-value' | translate"
         />
 
         <evan-form-control-input
           :disabled="true"
-          :label="$t('_twin-detail.data.general.owner')"
+          :label="'_twin-detail.data.general.owner' | translate"
           :required="true"
           :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
         />

@@ -42,7 +42,7 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            :label="$t('_evan.cancel')"
+            :label="'_evan.cancel' | translate"
             @click="exportModal.hide()"
             class="mr-3"
           />
@@ -50,7 +50,7 @@
           <evan-button
             type="primary"
             :disabled="exporting"
-            :label="$t('_twin-detail.data.context-menu.download-template')"
+            :label="'_twin-detail.data.context-menu.download-template' | translate"
             @click="downloadTwinTemplate()"
           />
         </div>
@@ -91,7 +91,7 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            :label="$t('_evan.cancel')"
+            :label="'_evan.cancel' | translate"
             @click="duplicatePanel.hide()"
             class="mr-3"
           />
@@ -99,7 +99,7 @@
           <evan-button
             type="primary"
             :disabled="exporting || duplicating"
-            :label="$t('_twin-detail.data.context-menu.duplicate-twin')"
+            :label="'_twin-detail.data.context-menu.duplicate-twin' | translate"
             @click="createTwinDuplicate()"
           />
         </div>
