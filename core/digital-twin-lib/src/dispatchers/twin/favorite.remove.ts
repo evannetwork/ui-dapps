@@ -18,11 +18,11 @@
 */
 
 import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  `lib.digital-twin.${ getDomainName() }`,
   'twinFavoriteRemoveDispatcher',
   40 * 1000,
   '_digital-twin-lib.dispatchers.twin.favorite.remove'

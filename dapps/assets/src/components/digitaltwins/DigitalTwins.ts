@@ -23,11 +23,10 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import { debounce } from 'lodash';
-import { dispatchers } from '@evan.network/digital-twin-lib';
+import { dispatchers, DigitalTwinInterface as DigitalTwin } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
 import { EvanTableItem } from '../../shared/EvanTable';
-import { DigitalTwin } from './DigitalTwinInterface';
 
 interface SortFilter {
   filter?: any;
@@ -154,6 +153,12 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
         isLoading: false,
       });
     });
+  }
+
+  delayedSearch() {
+    window.setTimeout(() => {
+      this.performSearch();
+    }, 5000);
   }
 
   destroyed() {

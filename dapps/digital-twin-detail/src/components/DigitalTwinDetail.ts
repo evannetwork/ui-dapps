@@ -19,9 +19,9 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { DigitalTwinTemplate } from '@evan.network/api-blockchain-core';
-import { DAppTwin } from '@evan.network/digital-twin-lib';
+import { DAppTwin, dispatchers } from '@evan.network/digital-twin-lib';
 import { downloadObject } from '@evan.network/ui';
-import { EvanComponent, ModalComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 
 @Component
@@ -31,6 +31,9 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   loading = true;
   exporting = false;
+  favoriteLoading = false;
+
+  isFavorite = null;
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
@@ -100,6 +103,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         await this.$store.state.twin.initialize();
 
+        this.isFavorite = this.$store.state.twin.favorite;
         beforeTwin = this.$store.state.twin.contractAddress;
         this.loading = false;
       }
@@ -108,6 +112,20 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  async addFavorite(): Promise<void> {
+    this.favoriteLoading = true;
+    await this.$store.state.twin.addAsFavorite();
+    this.isFavorite = true;
+    this.favoriteLoading = false;
+  }
+
+  async removeFavorite(): Promise<void> {
+    this.favoriteLoading = true;
+    await this.$store.state.twin.removeFromFavorites();
+    this.isFavorite = false;
+    this.favoriteLoading = false;
   }
 
   /**
@@ -126,7 +144,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Triggers the previously exported twin template.
    */
-  downloadTwinTemplate() {
+  downloadTwinTemplate(): void {
     downloadObject(this.$store.state.twin.description.name, this.exportedTemplate);
     (this.$refs.exportModal as any).hide();
   }
