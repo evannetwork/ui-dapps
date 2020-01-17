@@ -7,11 +7,12 @@
       },
       "description": "Beschreibung speichern...",
       "twin": {
-        "create": "Digitaler Zwilling wird erstellt...",
+        "create": "Digitaler Zwilling wird erstellt ...",
         "favorite": {
           "add": "Favorit hinzufügen...",
           "remove": "Favorit entfernen..."
-        }
+        },
+        "create": "Zwilling erstellen"
       }
     }
   }

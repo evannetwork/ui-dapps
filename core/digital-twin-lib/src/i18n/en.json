@@ -7,11 +7,12 @@
       },
       "description": "Saving description...",
       "twin": {
-        "create": "Creating Digital Twin...",
+        "create": "Creating Digital Twin ...",
         "favorite": {
           "add": "Adding favorite...",
           "remove": "Removing favorite..."
-        }
+        },
+        "create": "Create Twin"
       }
     }
   }
