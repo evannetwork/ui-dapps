@@ -47,7 +47,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   handleTemplateSelectChange(event: Event) {
     this.selectedTemplate = (event.target as HTMLInputElement).value;
     this.template = this.twinTemplates[this.selectedTemplate];
-    this._setDefaults();
+    this.setDefaults();
   }
 
   handleImageChange(ev: Event) {
@@ -99,7 +99,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
 
     const rollBackTemplate = JSON.stringify(this.template);
-    this.template = await this._blobToObj(files[0].blob) as DigitalTwinTemplateInterface;
+    this.template = await this.blobToObj(files[0].blob) as DigitalTwinTemplateInterface;
 
     this.TemplateErrorInterfaces = this._getTemplateErrorInterfaces(this.template);
 
@@ -109,8 +109,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       return;
     }
 
-    this._setDefaults();
-    this._addToPresetTemplates(this.template, files[0].name);
+    this.setDefaults();
+    this.addToPresetTemplates(this.template, files[0].name);
     this.selectedTemplate = files[0].name;
 
     // wait till template select component received new props
@@ -145,7 +145,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param blob
    */
-  _blobToObj(blob: Blob): Promise<any> {
+  private blobToObj(blob: Blob): Promise<any> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
@@ -167,7 +167,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    * @param template - DigitalTwinTemplate
    * @param twinKey - unique key per template
    */
-  _addToPresetTemplates(template: DigitalTwinTemplateInterface, key: string) {
+  private addToPresetTemplates(template: DigitalTwinTemplateInterface, key: string) {
     this.twinTemplates[key] = template;
     this.presetTemplates = this._getTemplateSelectOptions();
   }
@@ -186,7 +186,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param template
    */
-  _getLocalizedTemplateEntry(template: DigitalTwinTemplateInterface, entry: string): string {
+  private _getLocalizedTemplateEntry(template: DigitalTwinTemplateInterface, entry: string): string {
     const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
 
     return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
@@ -195,7 +195,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   /**
    * Set name and description from twin template when not set before.
    */
-  _setDefaults() {
+  private setDefaults() {
     if (!this.name) {
       this.name = this._getLocalizedTemplateEntry(this.template, 'name');
     }
@@ -205,7 +205,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
   }
 
-  _getTemplateErrorInterfaces(template: any): TemplateErrorInterface[] {
+  private _getTemplateErrorInterfaces(template: any): TemplateErrorInterface[] {
     const TemplateErrorInterfaces = [];
     const validationResult = this.runtime.description.validateDescription({public: template.description});
 
@@ -215,6 +215,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
         errors: validationResult
       });
     }
+
     Object.keys(template.plugins).forEach((pluginKey: string) => {
       const { description } = template.plugins[pluginKey];
       const errors = this.runtime.description.validateDescription({public: description});
