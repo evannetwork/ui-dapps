@@ -58,13 +58,21 @@ interface TemplateError {
 @Component
 class AddDigitalTwinComponent extends mixins(EvanComponent) {
   description: string = null;
+
   image = null;
+
   name: string = null;
+
   runtime: Runtime = null;
+
   selectedTemplate = 'carTwin';
+
   template = carTwin as DigitalTwinTemplate;
+
   twinTemplates = { bicycleTwin, carTwin };
+
   presetTemplates = this._getTemplateSelectOptions();
+
   templateErrors: any[] = [];
 
   // generate select options from twin templates
@@ -125,7 +133,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   addDigitalTwin() {
     // merge custom fields into template.
-    const template = Object.assign({}, this.template) as any; // TODO: use twin template interface
+    const template = { ...this.template } as any; // TODO: use twin template interface
 
     if (this.description) {
       template.description.description = this.description;
@@ -172,15 +180,13 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   }
 
   _getTemplateSelectOptions() {
-    return Object.keys(this.twinTemplates).map(twinKey => {
-      return {
-        value: twinKey,
-        label: this._getLocalizedTemplateEntry(
-          this.twinTemplates[twinKey],
-          'name'
-        )
-      };
-    });
+    return Object.keys(this.twinTemplates).map(twinKey => ({
+      value: twinKey,
+      label: this._getLocalizedTemplateEntry(
+        this.twinTemplates[twinKey],
+        'name'
+      )
+    }));
   }
 
   /**

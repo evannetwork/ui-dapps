@@ -53,6 +53,7 @@ interface SearchResponse {
 
 class SearchService {
   runtime: Runtime = null;
+
   searchUrl: string;
 
   constructor(runtime: Runtime) {
@@ -81,7 +82,7 @@ class SearchService {
       searchTerm: '*',
       page: null
     };
-    const params = Object.assign({}, defaultOptions, options);
+    const params = { ...defaultOptions, ...options };
 
     // prefer paging over offset
     if (params.page) {

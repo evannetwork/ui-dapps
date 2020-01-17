@@ -33,19 +33,18 @@ export const dispatcher = new Dispatcher(
  *
  * @return     {bcc.Runtime}  profile for account
  */
-const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) => {
-  return new bcc.Profile({
+const getProfileForAccount = (runtime: bcc.Runtime, accountId: string) =>
+  new bcc.Profile({
     ...(runtime as any), // TODO: Fix runtime interface
     profileOwner: accountId,
     accountId
   });
-};
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
     // check if mail smart agent was key exchanged
     if (data.emailInvite) {
-      const runtime = instance.runtime;
+      const { runtime } = instance;
       const smartAgentAccountId = '0x063fB42cCe4CA5448D69b4418cb89E663E71A139';
 
       // get mail smart agent contact key
@@ -91,7 +90,7 @@ dispatcher
     }
   })
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = instance.runtime;
+    const { runtime } = instance;
     const accountId = data.accountId || data.email;
 
     // ensure latest addressbook is loaded

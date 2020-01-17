@@ -121,6 +121,7 @@ https://evan.network/license/ */
 
 <script lang="ts">
 import AddDigitalTwinComponent from './AddDigitalTwin';
+
 export default AddDigitalTwinComponent;
 </script>
 

@@ -23,11 +23,11 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import { debounce } from 'lodash';
-import { DigitalTwin } from './DigitalTwinInterface';
 import { dispatchers } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { EvanTableItem } from '../../shared/EvanTable';
 import { Prop, Watch } from 'vue-property-decorator';
+import { EvanTableItem } from '../../shared/EvanTable';
+import { DigitalTwin } from './DigitalTwinInterface';
 
 interface SortFilter {
   filter?: any;
@@ -47,7 +47,9 @@ interface Favorite {
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   sortBy = 'updated';
+
   reverse = true;
+
   selectedFilter = 'all';
 
   columns = [
@@ -74,6 +76,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     },
     { key: 'isFavorite', label: '' }
   ];
+
   isActiveSearch = false;
 
   @Prop({
@@ -166,7 +169,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       this.isActiveSearch = true;
       this.searchTerm = '';
       this.$nextTick(() =>
-        (this.$refs['searchInput'] as HTMLInputElement).focus()
+        (this.$refs.searchInput as HTMLInputElement).focus()
       );
     }
   }

@@ -144,6 +144,7 @@ https://evan.network/license/ */
 
 <script lang="ts">
 import ContactsComponent from './Contacts';
+
 export default ContactsComponent;
 </script>
 

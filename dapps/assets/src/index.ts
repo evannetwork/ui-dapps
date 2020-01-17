@@ -60,7 +60,7 @@ export async function startDApp(
     RootComponent: AssetsComponent,
     routes,
     state: {},
-    translations: translations,
-    Vue: Vue
+    translations,
+    Vue
   });
 }

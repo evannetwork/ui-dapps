@@ -47,5 +47,6 @@ https://evan.network/license/ */
 
 <script lang="ts">
 import AssetsComponent from './Assets';
+
 export default AssetsComponent;
 </script>

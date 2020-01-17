@@ -123,6 +123,7 @@ https://evan.network/license/ */
 
 <script lang="ts">
 import DigitalTwinsComponent from './DigitalTwins';
+
 export default DigitalTwinsComponent;
 </script>
 

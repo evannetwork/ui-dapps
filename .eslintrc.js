@@ -4,7 +4,7 @@ module.exports = {
     es6: true
   },
   extends: [
-    // 'airbnb-base',
+    'airbnb-base',
     'plugin:vue/recommended',
     // 'prettier/vue',
     'eslint:recommended',
@@ -32,8 +32,23 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    /**
+     * Misc
+     */
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    /**
+     * Vue related rules
+     * https://vuejs.github.io/eslint-plugin-vue/rules/#priority-a-essential-error-prevention
+     */
+    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    /**
+     * ESLint and Airbnb related rules
+     * https://eslint.org/docs/rules/
+     */
+    // 'sort-imports': 'warn', // This can be auto fixed
+    'import/no-extraneous-dependencies': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off'
   }
 };

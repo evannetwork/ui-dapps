@@ -24,6 +24,7 @@ https://evan.network/license/ */
 
 <script lang="ts">
 import DataContainer from './DataContainer';
+
 export default DataContainer;
 </script>
 

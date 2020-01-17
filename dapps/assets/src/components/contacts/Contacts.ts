@@ -31,6 +31,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
 
   isLoading = true;
+
   // currently only one contact can be favored at a time
   isFavoriteLoading = {
     id: null,
@@ -40,6 +41,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   sortBy = 'name';
 
   filter = null;
+
   filterBy: string[] = [];
 
   contacts: Contact[] = [];

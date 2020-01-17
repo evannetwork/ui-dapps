@@ -86,5 +86,6 @@ https://evan.network/license/ */
 
 <script lang="ts">
 import AddContactComponent from './AddContact';
+
 export default AddContactComponent;
 </script>

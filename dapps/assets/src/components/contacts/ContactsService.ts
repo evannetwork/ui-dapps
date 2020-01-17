@@ -17,12 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
+import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactType, ContactFormData } from './ContactInterfaces';
-import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 
-export class ContactsService {
+export default class ContactsService {
   private contacts;
+
   private runtime: Runtime;
 
   constructor(runtime: Runtime) {
@@ -46,7 +47,7 @@ export class ContactsService {
           createdAt: this.contacts.profile[contact].createdAt,
           isFavorite: this.contacts.profile[contact].isFavorite,
           icon: this.getIcon(type),
-          type: type,
+          type,
           updatedAt: this.contacts.profile[contact].updatedAt
         });
       }
@@ -86,7 +87,7 @@ export class ContactsService {
    * Return corresponding icon for account type.
    * @param type Account type
    */
-  private getIcon(type: ContactType): string {
+  private static getIcon(type: ContactType): string {
     switch (type) {
       case ContactType.USER:
         return 'mdi mdi-account-outline';
