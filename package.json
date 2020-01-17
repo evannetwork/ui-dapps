@@ -103,6 +103,17 @@
     "serve-build": "npm run link-core && gulp --gulpfile node_modules/@evan.network/ui-dapp-browser/gulp/serve.js serve --build",
     "tsc": "tsc -p "
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "version": "4.0.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.16.0",
@@ -113,6 +124,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.1.2",
+    "lint-staged": "^9.5.0",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1"
   }
