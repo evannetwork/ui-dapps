@@ -29,16 +29,23 @@ import SearchService from './SearchService';
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
   searchTerm = '';
+
   search = new SearchService(this.getRuntime());
+
   data = [];
+
   isLoading = false;
+
   page = 0;
+
   count = 20;
+
   total = null;
 
   @Prop({
-    default: 'twins'
-  }) type: string;
+    default: 'twins',
+  })
+  type: string;
 
   mounted(): void {
     this.searchTerm = this.$route.params.query || '';
@@ -56,10 +63,13 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     if (searchTerm) {
       this.$router.push({ path: `digitaltwins/search/${searchTerm}` });
     } else {
-      this.$router.push({ path: `digitaltwins/` });
+      this.$router.push({ path: 'digitaltwins/' });
     }
 
-    const { result, total } = await this.search.query(this.type, { searchTerm, ...sorting });
+    const { result, total } = await this.search.query(this.type, {
+      searchTerm,
+      ...sorting,
+    });
 
     this.total = total;
     this.data = result;
@@ -78,7 +88,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       page: this.page,
       count: this.count,
       searchTerm: this.searchTerm,
-      ...sorting
+      ...sorting,
     };
 
     const { result } = await this.search.query(this.type, options);

@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { ContactsService } from './ContactsService';
+import ContactsService from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import { EvanTableItem } from '../../shared/EvanTable';
 
@@ -31,15 +31,17 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   contactService: ContactsService;
 
   isLoading = true;
+
   // currently only one contact can be favored at a time
   isFavoriteLoading = {
     id: null,
-    loading: false
+    loading: false,
   };
 
   sortBy = 'name';
 
   filter = null;
+
   filterBy: string[] = [];
 
   contacts: Contact[] = [];
@@ -50,14 +52,14 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     {
       key: 'updatedAt',
       label: this.$t('_assets.contacts.updated'),
-      sortable: true
+      sortable: true,
     },
     {
       key: 'createdAt',
       label: this.$t('_assets.contacts.created'),
-      sortable: true
+      sortable: true,
     },
-    { key: 'isFavorite', label: '', sortable: false }
+    { key: 'isFavorite', label: '', sortable: false },
   ];
 
   created() {
@@ -96,7 +98,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     await this.contactService.addFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);
     this.contacts.find(
-      item => contact.item.address === item.address
+      (item) => contact.item.address === item.address,
     ).isFavorite = 'true';
   }
 
@@ -105,14 +107,14 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     await this.contactService.removeFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);
     this.contacts.find(
-      item => contact.item.address === item.address
+      (item) => contact.item.address === item.address,
     ).isFavorite = 'false';
   }
 
   private setFavoriteLoading(id: string, flag: boolean) {
     this.isFavoriteLoading = {
       id,
-      loading: flag
+      loading: flag,
     };
   }
 

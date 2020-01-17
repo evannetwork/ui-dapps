@@ -18,18 +18,22 @@
 */
 
 <template>
-  <form id="contactForm" ref="contactForm" @submit.prevent="addContact">
+  <form
+    id="contactForm"
+    ref="contactForm"
+    @submit.prevent="addContact"
+  >
     <evan-swipe-panel
       ref="addContactPanel"
       alignment="right"
       type="default"
       class="light"
-      :showBackdrop="true"
-      :hideCloseButton="true"
+      :show-backdrop="true"
+      :hide-close-button="true"
       :title="$t('_assets.contacts.add-contact-title')"
       @hide="initState"
     >
-    <!-- :label="$t('_assets.contacts.id-or-email')" -->
+      <!-- :label="$t('_assets.contacts.id-or-email')" -->
       <p>{{ '_assets.contacts.add-contact-desc' | translate }}</p>
       <evan-form-control-input
         v-model="idOrEmail"
@@ -75,8 +79,8 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            @click="closePanel"
             :label="'_assets.contacts.cancel' | translate"
+            @click="closePanel"
           />
           <evan-button
             type="primary"
@@ -93,5 +97,6 @@
 
 <script lang="ts">
 import AddContactComponent from './AddContact';
+
 export default AddContactComponent;
 </script>

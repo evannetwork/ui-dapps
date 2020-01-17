@@ -32,14 +32,21 @@ export default class AddContactComponent extends mixins(EvanComponent) {
   addressbook;
 
   idOrEmailErrorMessage = '';
+
   idOrEmail = null;
 
   accountId = null;
+
   alias = null;
+
   email = null;
+
   emailInvite = null;
+
   fromAlias = null;
+
   msgBody = null;
+
   msgTitle = null;
 
   async created(): Promise<void> {
@@ -67,8 +74,6 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     this.msgTitle = this.$t('_assets.contacts.subject-prefill');
   }
 
-
-
   /**
    * Add new contact based on form inputs
    */
@@ -86,7 +91,7 @@ export default class AddContactComponent extends mixins(EvanComponent) {
         fromAlias: this.fromAlias,
         msgBody: this.msgBody,
         msgTitle: this.msgTitle,
-        updatedAt: now
+        updatedAt: now,
       };
 
       this.closePanel();
@@ -109,20 +114,19 @@ export default class AddContactComponent extends mixins(EvanComponent) {
     if (EvanForm.validEthAddress(value)) {
       if (this.addressbook.profile[value]) {
         return '_assets.contacts.error-added';
-      } else {
-        this.emailInvite = false;
-        this.accountId = value;
-        this.email = null;
-        return '';
       }
-    } else if (EvanForm.validateEmail(value)) {
+      this.emailInvite = false;
+      this.accountId = value;
+      this.email = null;
+      return '';
+    }
+    if (EvanForm.validateEmail(value)) {
       this.emailInvite = true;
       this.email = value;
       this.accountId = null;
       return '';
-    } else {
-      return '_assets.contacts.error-id-or-email';
     }
+    return '_assets.contacts.error-id-or-email';
   }
 
   /**
@@ -130,8 +134,8 @@ export default class AddContactComponent extends mixins(EvanComponent) {
    */
   checkFormValid(): boolean {
     if (
-      document.querySelector('#contactForm :invalid') ||
-      this.idOrEmailErrorMessage
+      document.querySelector('#contactForm :invalid')
+      || this.idOrEmailErrorMessage
     ) {
       return false;
     }

@@ -47,7 +47,7 @@ export async function startDApp(
   container: Element,
   dbcpName: string,
   dappEnsOrContract: string,
-  dappBaseUrl: string
+  dappBaseUrl: string,
 ): Promise<void> {
   Vue.use(TablePlugin);
 
@@ -60,7 +60,7 @@ export async function startDApp(
     RootComponent: AssetsComponent,
     routes,
     state: {},
-    translations: translations,
-    Vue: Vue
+    translations,
+    Vue,
   });
 }
