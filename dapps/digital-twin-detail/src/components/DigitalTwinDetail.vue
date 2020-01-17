@@ -91,7 +91,7 @@
                         <evan-button
                           type="secondary"
                           :label="$t('_evan.cancel')"
-                          @click="duplicatePanel.cancel()"
+                          @click="exportModal.hide()"
                           class="mr-3"
                         />
                         <span class="mx-auto" />
@@ -140,7 +140,7 @@
                         <evan-button
                           type="secondary"
                           :label="$t('_evan.cancel')"
-                          @click="duplicatePanel.cancel()"
+                          @click="duplicatePanel.hide()"
                           class="mr-3"
                         />
                         <span class="mx-auto" />
