@@ -51,110 +51,23 @@
                     variant="link"
                     toggle-class="text-decoration-none"
                     no-caret
-                    :disabled="exporting"
                   >
                     <template v-slot:button-content>
                       <evan-button
-                        :isLoading="exporting"
                         :type="'icon-secondary'"
                         icon="mdi mdi-dots-vertical"
                       />
                     </template>
                     <b-dropdown-item
-                      @click="duplicatePanel.show()">
+                      @click="$refs.twinInteractions.duplicateTwin();">
                       {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
-                      @click="exportTwinTemplate()"
+                      @click="$refs.twinInteractions.exportTemplate();"
                     >{{ '_twin-detail.data.context-menu.export-template' | translate }}</b-dropdown-item>
                   </b-dropdown>
 
-                  <evan-swipe-panel
-                    @init="exportModal = $event"
-                    alignment="right"
-                    class="light"
-                    :title="'_twin-detail.data.context-menu.export-template' | translate"
-                    showBackdrop="true"
-                    type="default">
-                    <div class="d-flex h-100 align-items-center justify-content-center">
-                      <div v-if="exporting">
-                        <div><evan-loading /></div>
-                        <div class="mt-3 text-center">
-                          <h4>
-                            {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
-                          </h4>
-                        </div>
-                      </div>
-                      <evan-success v-else />
-                    </div>
-
-                    <template slot="footer">
-                      <div class="d-flex">
-                        <evan-button
-                          type="secondary"
-                          :label="$t('_evan.cancel')"
-                          @click="exportModal.hide()"
-                          class="mr-3"
-                        />
-                        <span class="mx-auto" />
-                        <evan-button
-                          type="primary"
-                          :disabled="exporting"
-                          :label="$t('_twin-detail.data.context-menu.download-template')"
-                          @click="downloadTwinTemplate()"
-                        />
-                      </div>
-                    </template>
-                  </evan-swipe-panel>
-
-                  <evan-swipe-panel
-                    @init="duplicatePanel = $event"
-                    alignment="right"
-                    class="light"
-                    :title="'_twin-detail.data.context-menu.duplicate-twin' | translate"
-                    showBackdrop="true"
-                    type="default">
-                    <div
-                      class="d-flex flex-column h-100 align-items-center justify-content-center"
-                      v-if="exporting || duplicating">
-                      <div><evan-loading /></div>
-                      <div class="mt-3 text-center">
-                        <h4 v-if="exporting">
-                          {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
-                        </h4>
-                        <h4 v-else-if="duplicating">
-                          {{ `_twin-detail.data.context-menu.duplicating-twin` | translate }}
-                        </h4>
-                      </div>
-                    </div>
-                    <evan-form-dbcp
-                      class="pt-5"
-                      ref="dbcpForm"
-                      :contractAddress="$store.state.twin.contractAddress"
-                      :description="$store.state.twin.description"
-                      i18nScope="_twin-detail.data.general"
-                      onlyForm="true"
-                      @init="dbcpForm = $event"
-                      v-else
-                    />
-                    <template slot="footer">
-                      <div class="d-flex">
-                        <evan-button
-                          type="secondary"
-                          :label="$t('_evan.cancel')"
-                          @click="duplicatePanel.hide()"
-                          class="mr-3"
-                        />
-                        <span class="mx-auto" />
-                        <evan-button
-                          type="primary"
-                          :disabled="exporting || duplicating"
-                          :label="$t('_twin-detail.data.context-menu.duplicate-twin')"
-                          @click="createTwinDuplicate()"
-                        />
-                      </div>
-                    </template>
-                  </evan-swipe-panel>
+                  <digital-twin-interactions ref="twinInteractions" />
                 </div>
 
                 <evan-profile-picture

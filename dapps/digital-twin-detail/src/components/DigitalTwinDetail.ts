@@ -18,10 +18,8 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DigitalTwinTemplate } from '@evan.network/api-blockchain-core';
-import { DAppTwin, dispatchers } from '@evan.network/digital-twin-lib';
-import { downloadObject } from '@evan.network/ui';
-import { EvanComponent, DbcpFormComponentClass, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
+import { DAppTwin, } from '@evan.network/digital-twin-lib';
+import { EvanComponent, } from '@evan.network/ui-vue-core';
 
 
 @Component
@@ -29,26 +27,12 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
-  duplicating = false;
-  exporting = false;
   loading = true;
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
    */
   hashChangeWatcher: any;
-
-  /**
-   * Template definition of the current twin.
-   */
-  exportedTemplate: DigitalTwinTemplate;
-
-  /**
-   * Element instances.
-   */
-  dbcpForm: DbcpFormComponentClass;
-  duplicatePanel: SwipePanelComponentClass;
-  exportModal: SwipePanelComponentClass;
 
   navItems = [
     {
@@ -89,51 +73,10 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Creates a duplicated twin from the current definition.
-   */
-  async createTwinDuplicate(): Promise<void> {
-    this.duplicating = true;
-    
-    const description: any = this.dbcpForm.getDescription();
-    const imqSquare = description.imgSquare;
-    delete description.imqSquare;
-    // start twin duplicate dispatcher
-    await dispatchers.twinCreateDispatcher
-      .start(this.getRuntime(), {
-        description,
-        twinImage: imqSquare,
-        twinTemplate: this.$store.state.twin.contractAddress,
-      });
-
-    this.duplicating = false;
-  }
-
-  /**
    * Go back to assets dapp.
    */
   close(): void {
     window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
-  }
-
-  /**
-   * Triggers the previously exported twin template.
-   */
-  downloadTwinTemplate(): void {
-    downloadObject(this.$store.state.twin.description.name, this.exportedTemplate);
-    this.exportModal.hide();
-  }
-
-  /**
-   * Exports the current opened twin as templated and downloads it as a json file.
-   */
-  async exportTwinTemplate(showModal = true): Promise<void> {
-    showModal && this.exportModal.show();
-
-    if (!this.exportedTemplate) {
-      this.exporting = true;
-      this.exportedTemplate = await this.$store.state.twin.exportAsTemplate();
-      this.exporting = false;
-    }
   }
 
   /**
@@ -150,7 +93,6 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         // show loading and remove old watchers
         this.loading = true;
-        this.exportedTemplate = null;
         this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
 
         // initialize a new twin, but keep old reference until twin is loaded
