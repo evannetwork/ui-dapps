@@ -18,16 +18,23 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { Runtime } from '@evan.network/api-blockchain-core';
-import { dispatchers } from '@evan.network/digital-twin-lib';
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
+
+// @evan imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import { UIContainerFile } from '@evan.network/ui';
+import {
+  Runtime,
+  DigitalTwinTemplate as DigitalTwinTemplateInterface,
+} from '@evan.network/api-blockchain-core';
+import {
+  dispatchers,
+  TemplateErrorInterface,
+} from '@evan.network/digital-twin-lib';
 
 // load twin template
 import bicycleTwin from './templates/bicycle.json';
 import carTwin from './templates/car.json';
-import { DigitalTwinTemplateInterface, TemplateErrorInterface } from '@evan.network/digital-twin-lib';
 
 @Component
 class AddDigitalTwinComponent extends mixins(EvanComponent) {

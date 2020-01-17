@@ -26,10 +26,9 @@ import DAppTwin from './DAppTwin';
 import translations from './i18n';
 import { DigitalTwinInterface } from './interfaces/DigitalTwinInterface';
 import {
-  DigitalTwinTemplateInterface,
   ValidationErrorInterface,
   TemplateErrorInterface,
-} from './interfaces/DigitalTwinTemplate';
+} from './interfaces/TemplateValidationErrors';
 
 export {
   DAppContainer,
@@ -37,7 +36,6 @@ export {
   dispatchers,
   translations,
   DigitalTwinInterface,
-  DigitalTwinTemplateInterface,
   ValidationErrorInterface,
   TemplateErrorInterface,
 };
