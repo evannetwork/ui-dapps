@@ -29,18 +29,20 @@
                 <div class="icon-row">
                   <evan-button @click="close" type="icon-secondary" icon="mdi mdi-close" />
                   <div class="flex-grow-1"></div>
-
                   <!-- Favorite Handling -->
-                  <evan-loading v-if="favoriteLoading" classes="icon-replacer" />
+                  <evan-loading
+                    v-if="$store.state.twin.dispatcherStates.favorite"
+                    classes="icon-replacer"
+                  />
                   <evan-button
-                    v-else-if="!isFavorite"
-                    @click="addFavorite"
+                    v-else-if="!$store.state.twin.favorite"
+                    @click="$store.state.twin.addAsFavorite()"
                     type="icon-secondary"
                     icon="mdi mdi-star-outline"
                   />
                   <evan-button
                     v-else
-                    @click="removeFavorite"
+                    @click="$store.state.twin.removeFromFavorites()"
                     type="icon-secondary"
                     icon="mdi mdi-star"
                   />
@@ -59,7 +61,7 @@
                       />
                     </template>
                     <b-dropdown-item
-                      @click="duplicateTwin()">
+                      @click="duplicatePanel.show()">
                       {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
@@ -76,7 +78,7 @@
                     type="default">
                     <div class="d-flex h-100 align-items-center justify-content-center">
                       <div v-if="exporting">
-                        <evan-loading />
+                        <div><evan-loading /></div>
                         <div class="mt-3 text-center">
                           <h4>
                             {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
@@ -115,7 +117,7 @@
                     <div
                       class="d-flex h-100 align-items-center justify-content-center"
                       v-if="exporting || duplicating">
-                      <evan-loading />
+                      <div><evan-loading /></div>
                       <div class="mt-3 text-center">
                         <h4 v-if="exporting">
                           {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}

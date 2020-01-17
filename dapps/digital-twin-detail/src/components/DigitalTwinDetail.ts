@@ -31,13 +31,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   duplicating = false;
   exporting = false;
-  favoriteLoading = false;
   loading = true;
-
-  /**
-   * Is the current twin a favorite?
-   */
-  isFavorite = null;
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
@@ -84,14 +78,6 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
       to: { name: entry.key }
     };
   });
-
-  async addFavorite(): Promise<void> {
-    this.favoriteLoading = true;
-    await this.$store.state.twin.addAsFavorite();
-    this.isFavorite = true;
-    this.favoriteLoading = false;
-  }
-
 
   /**
    * Clear the hash change watcher
@@ -162,14 +148,20 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     this.hashChangeWatcher = async () => {
       // only load another twin, when address has changed
       if (this.$route.params.twin && beforeTwin !== this.$route.params.twin) {
+        beforeTwin = this.$route.params.twin;
+
+        // show loading and remove old watchers
         this.loading = true;
+        this.exportedTemplate = null;
         this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
-        this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
 
-        await this.$store.state.twin.initialize();
+        // initialize a new twin, but keep old reference until twin is loaded
+        const newTwin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
+        await newTwin.initialize();
+        newTwin.watchDispatchers();
 
-        this.isFavorite = this.$store.state.twin.favorite;
-        beforeTwin = this.$store.state.twin.contractAddress;
+        // set new reference and hide loading
+        this.$set(this.$store.state, 'twin', newTwin);
         this.loading = false;
       }
     };
@@ -177,12 +169,5 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
-  }
-
-  async removeFavorite(): Promise<void> {
-    this.favoriteLoading = true;
-    await this.$store.state.twin.removeFromFavorites();
-    this.isFavorite = false;
-    this.favoriteLoading = false;
   }
 }

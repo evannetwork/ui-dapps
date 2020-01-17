@@ -83,6 +83,12 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
       },
       description: {
         value: this.description.description,
+        uiSpecs: {
+          attr: {
+            rows: 5,
+          },
+          type: 'textarea',
+        }
       },
     }) as DbcpFormInterface;
   }

@@ -57,7 +57,7 @@ export async function startDApp(
     dbcpName,
     RootComponent: DigitalTwinDetailComponent,
     routes,
-    state: {},
+    state: { },
     translations: translations,
     Vue: Vue
   });
