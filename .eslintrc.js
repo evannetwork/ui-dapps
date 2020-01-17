@@ -51,7 +51,8 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off', // disabled to avoid collision with TS
     'import/no-unresolved': 'off', // disabled to avoid collision with TS
     'import/extensions': 'off', // disabled to avoid collision with TS
-    'multiline-comment-style': ['warn', 'bare-block'],
+    'multiline-comment-style': ['warn', 'bare-block'], // fix formatting license
     'import/prefer-default-export': 'off', // too restrictive
+    'max-len': ['warn', { code: 120 }],
   },
 };

@@ -73,7 +73,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   async created() {
     this.runtime = await this.getRuntime();
-    dispatchers.twinCreateDispatcher.watch( ({detail: { status }}: CustomEvent) => {
+    dispatchers.twinCreateDispatcher.watch(({ detail: { status } }: CustomEvent) => {
       if (status === 'starting') {
         this.resetForm();
         this.loading = false;
@@ -83,7 +83,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
           {
             type: 'info',
             duration: 10000, // 10 seconds
-          }
+          },
         );
       }
 
@@ -113,7 +113,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param files
    */
-  async handleFileUpload (files: UIContainerFile[]) {
+  async handleFileUpload(files: UIContainerFile[]) {
     this.templateErrors = [];
     // skip when file was deleted
     if (!files[0]) {
@@ -121,7 +121,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
 
     const rollBackTemplate = JSON.stringify(this.template);
-    this.template = await this.blobToObj(files[0].blob) as DigitalTwinTemplateInterface;
+    this.template = await AddDigitalTwinComponent.blobToObj(files[0].blob) as DigitalTwinTemplateInterface;
 
     this.templateErrors = this.getTemplateErrorInterfaces(this.template);
 
@@ -150,7 +150,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   addDigitalTwin() {
     // merge custom fields into template.
     this.loading = true;
-    const template = Object.assign({}, this.template) as DigitalTwinTemplateInterface;
+    const template = ({ ...this.template }) as DigitalTwinTemplateInterface;
 
     if (this.description) {
       template.description.description = this.description;
@@ -169,7 +169,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param blob
    */
-  private blobToObj(blob: Blob): Promise<any> {
+  private static blobToObj(blob: Blob): Promise<any> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
@@ -197,12 +197,10 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   }
 
   private getTemplateSelectOptions(templates: Record<string, DigitalTwinTemplateInterface>) {
-    return Object.keys(templates).map((twinKey) => {
-      return {
-        value: twinKey,
-        label: this.getLocalizedTemplateEntry(templates[twinKey], 'name'),
-      };
-    });
+    return Object.keys(templates).map((twinKey) => ({
+      value: twinKey,
+      label: this.getLocalizedTemplateEntry(templates[twinKey], 'name'),
+    }));
   }
 
   /**
@@ -235,7 +233,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   private getTemplateErrorInterfaces(template: DigitalTwinTemplateInterface): TemplateErrorInterface[] {
     const TemplateErrorInterfaces = [];
-    const validationResult = this.runtime.description.validateDescription({public: template.description});
+    const validationResult = this.runtime.description.validateDescription({ public: template.description });
 
     if (Array.isArray(validationResult)) {
       TemplateErrorInterfaces.push({

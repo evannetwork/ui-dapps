@@ -92,9 +92,16 @@
       />
 
       <div v-if="templateErrors && templateErrors.length > 0">
-        <h4 class="text-warning">Errors occured in template</h4>
-        <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
-          <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>
+        <h4 class="text-warning">
+          Errors occured in template
+        </h4>
+        <div
+          v-for="pluginErrors in templateErrors"
+          :key="pluginErrors.name"
+        >
+          <h5 v-if="pluginErrors.errors">
+            {{ pluginErrors.name }}
+          </h5>
           <ul v-if="pluginErrors.errors">
             <li
               v-for="error in pluginErrors.errors"
@@ -118,7 +125,7 @@
             native-type="submit"
             class="ml-3 flex-grow-1"
             :disabled="!(name && template)"
-            :isLoading="loading"
+            :is-loading="loading"
             :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />
         </div>

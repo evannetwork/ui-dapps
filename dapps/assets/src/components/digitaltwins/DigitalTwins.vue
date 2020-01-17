@@ -96,7 +96,10 @@
             {{ data.item.created | moment('DD.MM.YYYY hh:mm') }}
           </template>
           <template v-slot:cell(isFavorite)="twin">
-            <evan-loading v-if="isFavoriteLoading(twin)" classes="icon-replacer" />
+            <evan-loading
+              v-if="isFavoriteLoading(twin)"
+              classes="icon-replacer"
+            />
             <evan-button
               v-else-if="isFavorite(twin)"
               type="icon-secondary"
@@ -130,7 +133,10 @@
       @click="$refs.addDigitaTwin.showPanel()"
     />
 
-    <add-digital-twin ref="addDigitaTwin" :createdCallBack="delayedSearch" />
+    <add-digital-twin
+      ref="addDigitaTwin"
+      :created-call-back="delayedSearch"
+    />
   </div>
 </template>
 
