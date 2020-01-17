@@ -153,10 +153,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   delayedSearch() {
-    console.log('ready');
-
     window.setTimeout(() => {
-      console.log('fetch');
       this.performSearch();
     }, 5000);
   }

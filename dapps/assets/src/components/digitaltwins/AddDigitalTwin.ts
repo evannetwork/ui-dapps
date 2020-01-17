@@ -38,8 +38,8 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   selectedTemplate = 'carTwin';
   template = carTwin as DigitalTwinTemplateInterface;
   twinTemplates = { bicycleTwin, carTwin };
-  presetTemplates = this._getTemplateSelectOptions();
-  TemplateErrorInterfaces: any[] = [];
+  presetTemplates = this.getTemplateSelectOptions({ bicycleTwin, carTwin });
+  TemplateErrors: TemplateErrorInterface[] = [];
 
   @Prop() createdCallBack: Function;
 
@@ -62,6 +62,14 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       if (status === 'running') {
         this.resetForm();
         this.loading = false;
+
+        this.$toasted.show(
+          this.$t('_assets.digitaltwins.create-info'),
+          {
+            type: 'info',
+            duration: 10000, // 10 seconds
+          }
+        );
       }
 
       if (status === 'error') {
@@ -82,7 +90,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     this.name = null;
     this.selectedTemplate = 'carTwin';
     this.template = carTwin as DigitalTwinTemplateInterface;
-    this.TemplateErrorInterfaces = [];
+    this.TemplateErrors = [];
   }
 
   /**
@@ -91,7 +99,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    * @param files
    */
   async handleFileUpload (files: UIContainerFile[]) {
-    this.TemplateErrorInterfaces = [];
+    this.TemplateErrors = [];
     // skip when file was deleted
     if (!files[0]) {
 
@@ -101,9 +109,9 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     const rollBackTemplate = JSON.stringify(this.template);
     this.template = await this.blobToObj(files[0].blob) as DigitalTwinTemplateInterface;
 
-    this.TemplateErrorInterfaces = this._getTemplateErrorInterfaces(this.template);
+    this.TemplateErrors = this.getTemplateErrorInterfaces(this.template);
 
-    if (this.TemplateErrorInterfaces.length > 0) {
+    if (this.TemplateErrors.length > 0) {
       this.template = JSON.parse(rollBackTemplate);
 
       return;
@@ -128,7 +136,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   addDigitalTwin() {
     // merge custom fields into template.
     this.loading = true;
-    const template = Object.assign({}, this.template) as any; // TODO: use twin template interface
+    const template = Object.assign({}, this.template) as DigitalTwinTemplateInterface;
 
     if (this.description) {
       template.description.description = this.description;
@@ -169,14 +177,14 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    */
   private addToPresetTemplates(template: DigitalTwinTemplateInterface, key: string) {
     this.twinTemplates[key] = template;
-    this.presetTemplates = this._getTemplateSelectOptions();
+    this.presetTemplates = this.getTemplateSelectOptions(this.twinTemplates);
   }
 
-  _getTemplateSelectOptions() {
-    return Object.keys(this.twinTemplates).map(twinKey => {
+  private getTemplateSelectOptions(templates: Record<string, DigitalTwinTemplateInterface>) {
+    return Object.keys(templates).map((twinKey) => {
       return {
         value: twinKey,
-        label: this._getLocalizedTemplateEntry(this.twinTemplates[twinKey], 'name'),
+        label: this.getLocalizedTemplateEntry(templates[twinKey], 'name'),
       };
     });
   }
@@ -186,7 +194,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    *
    * @param template
    */
-  private _getLocalizedTemplateEntry(template: DigitalTwinTemplateInterface, entry: string): string {
+  private getLocalizedTemplateEntry(template: DigitalTwinTemplateInterface, entry: string): string {
     const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
 
     return template.description?.i18n[lang]?.[entry] || template.description?.[entry] || '';
@@ -197,15 +205,15 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    */
   private setDefaults() {
     if (!this.name) {
-      this.name = this._getLocalizedTemplateEntry(this.template, 'name');
+      this.name = this.getLocalizedTemplateEntry(this.template, 'name');
     }
 
     if (!this.description) {
-      this.description = this._getLocalizedTemplateEntry(this.template, 'description');
+      this.description = this.getLocalizedTemplateEntry(this.template, 'description');
     }
   }
 
-  private _getTemplateErrorInterfaces(template: any): TemplateErrorInterface[] {
+  private getTemplateErrorInterfaces(template: DigitalTwinTemplateInterface): TemplateErrorInterface[] {
     const TemplateErrorInterfaces = [];
     const validationResult = this.runtime.description.validateDescription({public: template.description});
 

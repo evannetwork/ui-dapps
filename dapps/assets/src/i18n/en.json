@@ -39,7 +39,7 @@
       "cancel": "Cancel",
       "create-digitaltwin-btn": "Create Digital Twin",
       "created": "Created",
-      "create-dispatcher": "Create new Twin",
+      "create-info": "The twin will appear in the list as soon as it's fully created on the chain.",
       "desc-placeholder": "Briefly describe your Digital Twin and what it represents.",
       "desc": "Description",
       "digitaltwins-title": "Digital Twins",
@@ -62,7 +62,7 @@
       "searched-for": "You searched for",
       "updated": "Updated"
     },
-    "more": "more infomation",
+    "more": "more information",
     "optional": "optional"
   }
 }

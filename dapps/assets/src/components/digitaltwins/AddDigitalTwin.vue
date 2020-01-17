@@ -84,7 +84,7 @@
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
       ></evan-file-input>
 
-      <div v-if="templateErrors.length > 0">
+      <div v-if="templateErrors && templateErrors.length > 0">
         <h4 class="text-warning">Errors occured in template</h4>
         <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
           <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>

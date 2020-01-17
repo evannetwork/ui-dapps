@@ -54,6 +54,7 @@ export default class EvanComponent extends Vue {
   $route: Route;
   $store: any;
   $t: any;
+  $toasted: any;
 
   /**
    * Are currently automated test running?
