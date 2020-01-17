@@ -1,4 +1,4 @@
-import { DBCPDescriptionInterface } from '@evan.network/digital-twin-lib';
+import { DBCPDescriptionInterface } from '../DAppContract';
 import { ContainerPlugin } from '@evan.network/api-blockchain-core';
 
 export interface DigitalTwinTemplateInterface {
