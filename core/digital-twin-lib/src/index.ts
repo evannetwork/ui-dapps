@@ -25,7 +25,7 @@ import DAppContainer from './DAppContainer';
 import DAppTwin from './DAppTwin';
 import translations from './i18n';
 import { DBCPDescriptionInterface } from './DAppContract';
-import { DigitalTwinInterface } from './interfaces/DigitalTwinInterface';
+import { DigitalTwinSearchInterface } from './interfaces/DigitalTwinInterface';
 import {
   ValidationErrorInterface,
   TemplateErrorInterface,
@@ -38,7 +38,7 @@ export {
   DBCPDescriptionInterface,
   dispatchers,
   translations,
-  DigitalTwinInterface,
+  DigitalTwinSearchInterface,
   ValidationErrorInterface,
   TemplateErrorInterface,
 };

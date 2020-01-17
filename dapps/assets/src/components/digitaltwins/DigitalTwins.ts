@@ -23,7 +23,10 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import { debounce } from 'lodash';
-import { dispatchers, DigitalTwinInterface as DigitalTwin } from '@evan.network/digital-twin-lib';
+import {
+  dispatchers,
+  DigitalTwinSearchInterface as DigitalTwin,
+} from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { EvanTableItem } from '../../shared/EvanTable';
 import { Prop, Watch } from 'vue-property-decorator';
