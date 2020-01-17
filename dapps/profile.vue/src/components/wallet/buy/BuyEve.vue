@@ -17,7 +17,11 @@ https://evan.network/license/ */
       :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
       :mountId="windowWidth < 1400 ? null : 'dapp-wrapper-sidebar-right'"
       :showBackdrop="windowWidth < 1400"
-      :title="(step === 0 ? '_profile.wallet.buy-eve.titles.buy-eve' : '_profile.wallet.buy-eve.titles.billing-info') | translate"
+      :title="
+        (step === 0
+          ? '_profile.wallet.buy-eve.titles.buy-eve'
+          : '_profile.wallet.buy-eve.titles.billing-info') | translate
+      "
       @hide="$store.state.uiState.swipePanel = ''"
       @show="$nextTick(() => renderStripeElement())"
       alignment="right"
@@ -40,7 +44,7 @@ https://evan.network/license/ */
       </div>
       <div class="flex-center text-center" v-else-if="!!stripe.payError">
         <div><evan-failed /></div>
-        <div v-html="$t(`_profile.wallet.buy-eve.errors.${ stripe.payError }`)" />
+        <div v-html="$t(`_profile.wallet.buy-eve.errors.${stripe.payError}`)" />
         <evan-button
           :label="'_profile.wallet.buy-eve.try-again' | translate"
           @click="removeStripeError()"
@@ -55,40 +59,52 @@ https://evan.network/license/ */
           :form="contactForm"
           :i18nScope="'_profile.company.contact'"
           :onlyForm="true"
-          :stacked="true">
+          :stacked="true"
+        >
         </evan-form>
       </div>
-      
+
       <!-- do not remove the stripe element from dom! -->
       <div v-show="step === 0 && !loading">
         <evan-form
           :form="payForm"
           :i18nScope="'_profile.wallet.buy-eve.payForm'"
           :onlyForm="true"
-          :stacked="true">
+          :stacked="true"
+        >
         </evan-form>
 
         <template>
           <label class="col-form-label">
-            {{ `_profile.wallet.buy-eve.payForm.type.${ payForm.type.value }` | translate }}
+            {{
+              `_profile.wallet.buy-eve.payForm.type.${payForm.type.value}`
+                | translate
+            }}
           </label>
-          <div id="stripeElement" class="stripeElement"/>
-          <small
-            class="text-red"
-            v-if="stripe.error && stripe.error.code">
-            {{ `_profile.wallet.buy-eve.stripe-element.${ stripe.error.code }` | translate }}
+          <div id="stripeElement" class="stripeElement" />
+          <small class="text-red" v-if="stripe.error && stripe.error.code">
+            {{
+              `_profile.wallet.buy-eve.stripe-element.${stripe.error.code}`
+                | translate
+            }}
           </small>
-          <small v-if="payForm.type.value === 'iban'" class="disclaimer text-muted">
+          <small
+            v-if="payForm.type.value === 'iban'"
+            class="disclaimer text-muted"
+          >
             {{ '_profile.wallet.buy-eve.disclaimer' | translate }}
           </small>
         </template>
       </div>
       <!-- end content -->
 
-      <template slot="footer" v-if="!loading">  
+      <template slot="footer" v-if="!loading">
         <evan-button
           v-if="step === 0"
-          :disabled="!payForm.isValid || !(stripe.element && stripe.complete && !stripe.error)"
+          :disabled="
+            !payForm.isValid ||
+              !(stripe.element && stripe.complete && !stripe.error)
+          "
           :label="'_profile.wallet.buy-eve.continue' | translate"
           @click="step = 1"
           type="primary"
@@ -97,26 +113,38 @@ https://evan.network/license/ */
 
         <!-- keep displayed but hidden, so the loading circle is displayed correctly -->
         <div
-          :class="{ 'invisible': buying || stripe.success || stripe.payError, }"
+          :class="{ invisible: buying || stripe.success || stripe.payError }"
           class="w-100"
-          v-else>
+          v-else
+        >
           <div class="text-center mb-3">
             <div class="vat-loading" v-if="vatCalcTimeout">
               <div class="spinner-border text-primary" />
             </div>
 
-            <span class="text-muted mb-3"
+            <span
+              class="text-muted mb-3"
               v-if="reverseCharge"
               v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
             />
             <small>
               {{ parseFloat(payForm.amount.value).toFixed(2) }} EVE x
-              {{ '1€' }} + {{ taxValue }}% {{ '_profile.wallet.buy-eve.vat' | translate }}
-              ({{ (parseFloat(payForm.amount.value) / 100 * taxValue).toFixed(2) + '€' }})
+              {{ '1€' }} + {{ taxValue }}%
+              {{ '_profile.wallet.buy-eve.vat' | translate }} ({{
+                ((parseFloat(payForm.amount.value) / 100) * taxValue).toFixed(
+                  2
+                ) + '€'
+              }})
             </small>
             <h3 class="mt-1">
               {{ '_profile.wallet.buy-eve.total-amount' | translate }}:
-              {{ (parseFloat(payForm.amount.value) + (parseFloat(payForm.amount.value) / 100 * taxValue)).toFixed(2) }} {{ '€' }}
+              {{
+                (
+                  parseFloat(payForm.amount.value) +
+                  (parseFloat(payForm.amount.value) / 100) * taxValue
+                ).toFixed(2)
+              }}
+              {{ '€' }}
             </h3>
           </div>
 
@@ -127,7 +155,9 @@ https://evan.network/license/ */
               :label="'_profile.wallet.buy-eve.back' | translate"
             />
             <evan-button
-              :disabled="!payForm.isValid || !contactForm.isValid || !!vatCalcTimeout"
+              :disabled="
+                !payForm.isValid || !contactForm.isValid || !!vatCalcTimeout
+              "
               :label="'_profile.wallet.buy-eve.buy' | translate"
               @click="buyEve()"
               class="ml-3 btn-block"
@@ -142,10 +172,10 @@ https://evan.network/license/ */
 </template>
 
 <script lang="ts">
-  import Component from './BuyEve';
-  export default Component;
+import Component from './BuyEve';
+export default Component;
 </script>
 
 <style lang="scss">
-  @import './BuyEve.scss';
+@import './BuyEve.scss';
 </style>

@@ -16,17 +16,25 @@ https://evan.network/license/ */
     <div class="p-xxl-11 p-xl-6 p-3" v-else>
       <div class="d-flex flex-wrap">
         <evan-wallet-card :address="$route.params.address" />
-        <div class="d-flex flex-column flex-grow-1 align-items-end justify-content-center">
+        <div
+          class="d-flex flex-column flex-grow-1 align-items-end justify-content-center"
+        >
           <evan-button
             :label="'_profile.wallet.send-eve.title' | translate"
-            @click="activeMode = 1; $store.state.uiState.swipePanel = 'sendEve'"
+            @click="
+              activeMode = 1;
+              $store.state.uiState.swipePanel = 'sendEve';
+            "
             style="min-width: 250px"
             type="secondary"
             :disabled="balance < 0.1"
           />
           <evan-button
             :label="'_profile.wallet.buy-eve.titles.buy-eve' | translate"
-            @click="activeMode = 0; $store.state.uiState.swipePanel = 'buyEve'"
+            @click="
+              activeMode = 0;
+              $store.state.uiState.swipePanel = 'buyEve';
+            "
             class="mt-2"
             style="min-width: 250px"
             type="secondary"

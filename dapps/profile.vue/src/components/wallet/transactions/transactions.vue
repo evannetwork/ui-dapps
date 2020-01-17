@@ -16,17 +16,24 @@ https://evan.network/license/ */
       {{ '_profile.wallet.transactions.title' | translate }}
     </h3>
     <span
-      v-html="$t('_profile.wallet.transactions.description', { explorerUrl: explorerTransactionsUrl })"
+      v-html="
+        $t('_profile.wallet.transactions.description', {
+          explorerUrl: explorerTransactionsUrl
+        })
+      "
     />
-    
+
     <evan-loading v-if="loading" />
     <template v-else>
       <evan-base-list
-        :data="[ null ]"
+        :data="[null]"
         class="mt-5"
-        v-if="transactions.length === 0">
-        <template v-slot:item="{item}" style="height: 80px;">
-          <div class="p-3 h-100 d-flex justify-content-center align-items-center">
+        v-if="transactions.length === 0"
+      >
+        <template v-slot:item="{ item }" style="height: 80px;">
+          <div
+            class="p-3 h-100 d-flex justify-content-center align-items-center"
+          >
             <p class="mb-0 font-weight-semibold">
               {{ '_profile.wallet.transactions.empty' | translate }}
             </p>
@@ -34,11 +41,8 @@ https://evan.network/license/ */
         </template>
       </evan-base-list>
 
-      <evan-base-list
-        :data="renderedTransactions()"
-        class="mt-5"
-        v-else>
-        <template v-slot:item="{item}" style="height: 80px;">
+      <evan-base-list :data="renderedTransactions()" class="mt-5" v-else>
+        <template v-slot:item="{ item }" style="height: 80px;">
           <div class="d-flex align-items-center h-100 px-3">
             <template v-if="item.type === 'creditCharged'">
               <i
@@ -47,7 +51,9 @@ https://evan.network/license/ */
               />
               <div>
                 <p class="mb-0 font-weight-semibold">
-                  {{ '_profile.wallet.transactions.credit-charged' | translate }}
+                  {{
+                    '_profile.wallet.transactions.credit-charged' | translate
+                  }}
                 </p>
                 <small class="text-muted">
                   {{ '_profile.wallet.transactions.charged-at' | translate }}
@@ -64,7 +70,8 @@ https://evan.network/license/ */
               <i
                 :class="{
                   'mr-3 mdi': true,
-                  'mdi-progress-close text-red': item.type === 'failedTransaction',
+                  'mdi-progress-close text-red':
+                    item.type === 'failedTransaction',
                   'mdi-progress-upload': item.type === 'transferringTransaction'
                 }"
                 style="font-size: 2rem;"
@@ -72,10 +79,16 @@ https://evan.network/license/ */
               <div>
                 <p class="mb-0 font-weight-semibold">
                   <template v-if="item.type === 'failedTransaction'">
-                    {{'_profile.wallet.transactions.credit-failed-recharge' | translate }} 
+                    {{
+                      '_profile.wallet.transactions.credit-failed-recharge'
+                        | translate
+                    }}
                   </template>
                   <template v-else>
-                    {{ '_profile.wallet.transactions.credit-running-charge' | translate }}
+                    {{
+                      '_profile.wallet.transactions.credit-running-charge'
+                        | translate
+                    }}
                   </template>
                 </p>
                 <small class="text-muted">
@@ -89,7 +102,6 @@ https://evan.network/license/ */
                 {{ item.amount.toFixed(2) }} EVE
               </span>
             </template>
-            
           </div>
         </template>
       </evan-base-list>
@@ -112,5 +124,5 @@ export default Component;
 </script>
 
 <style lang="scss">
-  @import './transactions.scss';
+@import './transactions.scss';
 </style>

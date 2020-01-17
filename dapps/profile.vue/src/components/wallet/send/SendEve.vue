@@ -30,30 +30,35 @@ https://evan.network/license/ */
           :form="form"
           :i18nScope="'_profile.wallet.send-eve.form'"
           :onlyForm="true"
-          :stacked="true">
+          :stacked="true"
+        >
         </evan-form>
 
-        <evan-modal
-          ref="acceptModal"
-          :maxWidth="'600px'">
+        <evan-modal ref="acceptModal" :maxWidth="'600px'">
           <template v-slot:header>
             <h5 class="modal-title">
               {{ `_profile.wallet.send-eve.accept.title` | translate }}
             </h5>
           </template>
           <template v-slot:body>
-            <span v-html="
-              $t(`_profile.wallet.send-eve.accept.description`, {
-                amount: getReadableBalance(form.amount.value),
-                name: userNameWithAddress
-              })
-            " />
+            <span
+              v-html="
+                $t(`_profile.wallet.send-eve.accept.description`, {
+                  amount: getReadableBalance(form.amount.value),
+                  name: userNameWithAddress
+                })
+              "
+            />
           </template>
           <template v-slot:footer>
             <evan-button
-              @click="sendEve(); $refs.acceptModal.hide()"
+              @click="
+                sendEve();
+                $refs.acceptModal.hide();
+              "
               id="evan-eve-send-submit"
-              type="primary">
+              type="primary"
+            >
               {{ '_profile.wallet.send-eve.accept.send' | translate }}
             </evan-button>
           </template>
@@ -61,7 +66,7 @@ https://evan.network/license/ */
       </template>
       <!-- content -->
 
-      <template slot="footer" v-if="!loading">  
+      <template slot="footer" v-if="!loading">
         <evan-button
           :disabled="!form.isValid || sending"
           :isLoading="sending"
@@ -69,7 +74,8 @@ https://evan.network/license/ */
           @click="showModal"
           id="evan-eve-send"
           class="w-100"
-          type="primary">
+          type="primary"
+        >
         </evan-button>
       </template>
     </evan-swipe-panel>
@@ -81,5 +87,4 @@ import Component from './SendEve';
 export default Component;
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -59,9 +59,8 @@ https://evan.network/license/ */
           target="_blank"
           rel="noopener noreferrer"
           title="Twin API documentation"
+          >{{ '_assets.more' | translate }}</a
         >
-          {{ '_assets.more' | translate }}
-        </a>
       </p>
 
       <evan-form-control-select
