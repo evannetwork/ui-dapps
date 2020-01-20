@@ -53,6 +53,7 @@ interface SearchResponse {
 
 class SearchService {
   runtime: Runtime = null;
+
   searchUrl: string;
 
   constructor(runtime: Runtime) {
@@ -61,13 +62,16 @@ class SearchService {
     }
     this.runtime = runtime;
 
-    const core =  runtime.environment === 'testcore' ? '.test' : '';
-    const agentUrl = `https://search${ core }.evan.network/api/smart-agents`;
+    const core = runtime.environment === 'testcore' ? '.test' : '';
+    const agentUrl = `https://search${core}.evan.network/api/smart-agents`;
 
     this.searchUrl = `${agentUrl}/search`;
   }
 
-  async query(type = 'twins', options: QueryOptions): Promise<SearchResponseData> {
+  async query(
+    type = 'twins',
+    options: QueryOptions,
+  ): Promise<SearchResponseData> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
 
     const defaultOptions = {
@@ -76,9 +80,9 @@ class SearchService {
       reverse: true,
       sortBy: 'updated',
       searchTerm: '*',
-      page: null
+      page: null,
     };
-    const params = Object.assign({}, defaultOptions, options);
+    const params = { ...defaultOptions, ...options };
 
     // prefer paging over offset
     if (params.page) {
@@ -89,18 +93,21 @@ class SearchService {
     // wrap with wildcards if defined
     params.searchTerm = !params.searchTerm || params.searchTerm === '*'
       ? '*'
-      : `*${ params.searchTerm }*`;
+      : `*${params.searchTerm}*`;
 
-    const { data } = await axios.get<SearchResponse>(`${ this.searchUrl }/${ type }`, {
-      headers: {
-        'Authorization': authHeaders,
+    const { data } = await axios.get<SearchResponse>(
+      `${this.searchUrl}/${type}`,
+      {
+        headers: {
+          Authorization: authHeaders,
+        },
+        params,
       },
-      params,
-    });
+    );
 
     // TODO: error handling in request etc...
 
-    return { ...data } as unknown as SearchResponseData;
+    return ({ ...data } as unknown) as SearchResponseData;
   }
 }
 

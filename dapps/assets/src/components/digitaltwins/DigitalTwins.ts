@@ -28,8 +28,8 @@ import {
   DigitalTwinSearchInterface as DigitalTwin,
 } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { EvanTableItem } from '../../shared/EvanTable';
 import { Prop, Watch } from 'vue-property-decorator';
+import { EvanTableItem } from '../../shared/EvanTable';
 
 interface SortFilter {
   filter?: any;
@@ -49,7 +49,9 @@ interface Favorite {
 @Component
 export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   sortBy = 'updated';
+
   reverse = true;
+
   selectedFilter = 'all';
 
   columns = [
@@ -57,49 +59,50 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     {
       key: 'name',
       label: this.$t('_assets.digitaltwins.name'),
-      sortable: true
+      sortable: true,
     },
     {
       key: 'owner',
       label: this.$t('_assets.digitaltwins.owner'),
-      sortable: true
+      sortable: true,
     },
     {
       key: 'updated',
       label: this.$t('_assets.digitaltwins.updated'),
-      sortable: true
+      sortable: true,
     },
     {
       key: 'created',
       label: this.$t('_assets.digitaltwins.created'),
-      sortable: true
+      sortable: true,
     },
-    { key: 'isFavorite', label: '' }
+    { key: 'isFavorite', label: '' },
   ];
+
   isActiveSearch = false;
 
   @Prop({
-    default: []
+    default: [],
   })
   data: any[];
 
   @Prop({
-    default: ''
+    default: '',
   })
   searchTerm: string;
 
   @Prop({
-    default: true
+    default: true,
   })
   isLoading: boolean;
 
   @Prop({
-    required: true
+    required: true,
   })
   fetchMore: Function;
 
   @Prop({
-    required: true
+    required: true,
   })
   search: Function;
 
@@ -112,7 +115,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * handle multiple calls at the same time
    */
   get isAnyLoading(): boolean {
-    return this.favoriteList.some(fav => fav.isLoading === true);
+    return this.favoriteList.some((fav) => fav.isLoading === true);
   }
 
   @Watch('searchTerm')
@@ -146,11 +149,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
     // initial loading of favorites
     const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime());
-    favorites.forEach(fav => {
+    favorites.forEach((fav) => {
       this.favoriteList.push({
         id: fav,
         isFavorite: true,
-        isLoading: false
+        isLoading: false,
       });
     });
   }
@@ -173,9 +176,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       e.preventDefault();
       this.isActiveSearch = true;
       this.searchTerm = '';
-      this.$nextTick(() =>
-        (this.$refs['searchInput'] as HTMLInputElement).focus()
-      );
+      this.$nextTick(() => (this.$refs.searchInput as HTMLInputElement).focus());
     }
   }
 
@@ -196,7 +197,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       }
     },
     100,
-    { trailing: true }
+    { trailing: true },
   );
 
   /**
@@ -207,7 +208,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       this.search(this.searchTerm, {
         sortBy: this.sortBy,
         reverse: this.reverse,
-        type: this.selectedFilter
+        type: this.selectedFilter,
       });
     }
   }
@@ -220,7 +221,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       this.fetchMore({
         sortBy: this.sortBy,
         reverse: this.reverse,
-        type: this.selectedFilter
+        type: this.selectedFilter,
       });
     }
   }
@@ -230,7 +231,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    */
   searchHandlerDebounced = debounce(this.performSearch, 250, {
     trailing: true,
-    leading: false
+    leading: false,
   });
 
   handleSearchBlur() {
@@ -242,9 +243,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   handleRowClicked(twin: DigitalTwin) {
     window.location.hash = `/${this.dapp.rootEns}/detail.digital-twin.${this.dapp.domainName}/${twin.address}`;
 
-    // this.$router.push({
-    //   path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
-    // });
+    /* this.$router.push({
+       path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
+       }); */
   }
 
   sortHandler(ctx: SortFilter) {
@@ -259,12 +260,13 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     const newFav = {
       id: twin.item.address,
       isFavorite: false,
-      isLoading: true
+      isLoading: true,
     };
     this.favoriteList = [...this.favoriteList, newFav];
 
-    await dispatchers.twinFavoriteAddDispatcher
-      .start(this.getRuntime(), { address: twin.item.address });
+    await dispatchers.twinFavoriteAddDispatcher.start(this.getRuntime(), {
+      address: twin.item.address,
+    });
 
     newFav.isFavorite = true;
     newFav.isLoading = false;
@@ -272,19 +274,20 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   async removeFavorite(twin: EvanTableItem<DigitalTwin>) {
     this.favoriteList.find(
-      fav => twin.item.address === fav.id
+      (fav) => twin.item.address === fav.id,
     ).isLoading = true;
 
-    await dispatchers.twinFavoriteRemoveDispatcher
-      .start(this.getRuntime(), { address: twin.item.address });
+    await dispatchers.twinFavoriteRemoveDispatcher.start(this.getRuntime(), {
+      address: twin.item.address,
+    });
 
     this.favoriteList = this.favoriteList.filter(
-      fav => twin.item.address !== fav.id
+      (fav) => twin.item.address !== fav.id,
     );
   }
 
   private isFavorite(twin: EvanTableItem<DigitalTwin>) {
-    return this.favoriteList.some(fav => twin.item.address === fav.id);
+    return this.favoriteList.some((fav) => twin.item.address === fav.id);
   }
 
   /**
@@ -292,7 +295,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * @param twin Digital Twin
    */
   private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>) {
-    const fav = this.favoriteList.find(item => twin.item.address === item.id);
+    const fav = this.favoriteList.find((item) => twin.item.address === item.id);
     return fav ? fav.isLoading : false;
   }
 }

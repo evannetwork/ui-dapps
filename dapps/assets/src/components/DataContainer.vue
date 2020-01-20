@@ -21,19 +21,20 @@
   <div>
     <router-view
       :data="data"
-      :isLoading="isLoading"
-      :fetchMore="fetchMore"
+      :is-loading="isLoading"
+      :fetch-more="fetchMore"
       :search="initialQuery"
-      :searchTerm="searchTerm"
-    ></router-view>
+      :search-term="searchTerm"
+    />
   </div>
 </template>
 
 <script lang="ts">
-  import DataContainer from './DataContainer';
-  export default DataContainer;
+import DataContainer from './DataContainer';
+
+export default DataContainer;
 </script>
 
 <style lang="scss" scoped>
-  @import './DataContainer.scss';
+@import './DataContainer.scss';
 </style>

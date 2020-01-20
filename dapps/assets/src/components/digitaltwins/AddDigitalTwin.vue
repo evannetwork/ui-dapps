@@ -18,17 +18,24 @@
 */
 
 <template>
-  <form id="digitalTwinForm" ref="digitalTwinForm" @submit.prevent="addDigitalTwin">
+  <form
+    id="digitalTwinForm"
+    ref="digitalTwinForm"
+    @submit.prevent="addDigitalTwin"
+  >
     <evan-swipe-panel
       ref="addDigitalTwinPanel"
       alignment="right"
       type="default"
       class="light"
-      :showBackdrop="true"
-      :hideCloseButton="true"
+      :show-backdrop="true"
+      :hide-close-button="true"
       :title="$t('_assets.digitaltwins.add-digitaltwin-title')"
     >
-      <label class="col-form-label" for="new-twin-picture">
+      <label
+        class="col-form-label"
+        for="new-twin-picture"
+      >
         {{ '_assets.digitaltwins.add-image' | translate }}
         <small class="text-muted">({{ '_assets.optional' | translate }})</small>
       </label>
@@ -36,8 +43,8 @@
         <evan-profile-picture
           id="new-twin-picture"
           type="device"
-          :accountName="name"
-          :isEditable="true"
+          :account-name="name"
+          :is-editable="true"
           :src="image ? image : null"
           @changed="handleImageChange"
         />
@@ -62,34 +69,44 @@
           target="_blank"
           rel="noopener noreferrer"
           title="Twin API documentation"
-        >
-          {{ '_assets.more' | translate }}
-        </a>
+        >{{ '_assets.more' | translate }}</a>
       </p>
 
       <evan-form-control-select
         id="templateSelect"
+        ref="templateSelector"
         :label="'_assets.digitaltwins.template-select-label' | translate"
         :options="presetTemplates"
-        :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
+        :placeholder="
+          '_assets.digitaltwins.template-select-placeholder' | translate
+        "
         :required="true"
         :value="selectedTemplate"
         @change="handleTemplateSelectChange"
-        ref="templateSelector"
       />
 
       <evan-file-input
         accept=".json"
-        @input="handleFileUpload"
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
-      ></evan-file-input>
+        @input="handleFileUpload"
+      />
 
       <div v-if="templateErrors && templateErrors.length > 0">
-        <h4 class="text-warning">Errors occured in template</h4>
-        <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
-          <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>
+        <h4 class="text-warning">
+          Errors occured in template
+        </h4>
+        <div
+          v-for="pluginErrors in templateErrors"
+          :key="pluginErrors.name"
+        >
+          <h5 v-if="pluginErrors.errors">
+            {{ pluginErrors.name }}
+          </h5>
           <ul v-if="pluginErrors.errors">
-            <li v-for="error in pluginErrors.errors" :key="error.property">
+            <li
+              v-for="error in pluginErrors.errors"
+              :key="error.property"
+            >
               <span>{{ error.message }}</span>
             </li>
           </ul>
@@ -100,15 +117,15 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            @click="closePanel"
             :label="'_assets.digitaltwins.cancel' | translate"
+            @click="closePanel"
           />
           <evan-button
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
             :disabled="!(name && template)"
-            :isLoading="loading"
+            :is-loading="loading"
             :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />
         </div>
@@ -119,9 +136,10 @@
 
 <script lang="ts">
 import AddDigitalTwinComponent from './AddDigitalTwin';
+
 export default AddDigitalTwinComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './AddDigitalTwins.scss';
+@import './AddDigitalTwins.scss';
 </style>

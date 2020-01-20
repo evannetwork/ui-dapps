@@ -17,12 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
+import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactType, ContactFormData } from './ContactInterfaces';
-import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 
 export class ContactsService {
   private contacts;
+
   private runtime: Runtime;
 
   constructor(runtime: Runtime) {
@@ -36,7 +37,7 @@ export class ContactsService {
     this.contacts = await this.runtime.profile.getAddressBook();
 
     const data: Contact[] = [];
-    Object.keys(this.contacts.profile).forEach(async contact => {
+    Object.keys(this.contacts.profile).forEach(async (contact) => {
       // filter out own account
       if (contact !== this.runtime.activeAccount) {
         const type = await this.getProfileType(contact);
@@ -45,9 +46,9 @@ export class ContactsService {
           alias: this.contacts.profile[contact].alias,
           createdAt: this.contacts.profile[contact].createdAt,
           isFavorite: this.contacts.profile[contact].isFavorite,
-          icon: this.getIcon(type),
-          type: type,
-          updatedAt: this.contacts.profile[contact].updatedAt
+          icon: ContactsService.getIcon(type),
+          type,
+          updatedAt: this.contacts.profile[contact].updatedAt,
         });
       }
     });
@@ -62,11 +63,11 @@ export class ContactsService {
     await this.runtime.profile.addProfileKey(
       contact.address,
       'isFavorite',
-      'true'
+      'true',
     );
 
     await this.runtime.profile.storeForAccount(
-      this.runtime.profile.treeLabels.addressBook
+      this.runtime.profile.treeLabels.addressBook,
     );
   }
 
@@ -74,11 +75,11 @@ export class ContactsService {
     await this.runtime.profile.addProfileKey(
       contact.address,
       'isFavorite',
-      'false'
+      'false',
     );
 
     await this.runtime.profile.storeForAccount(
-      this.runtime.profile.treeLabels.addressBook
+      this.runtime.profile.treeLabels.addressBook,
     );
   }
 
@@ -86,7 +87,7 @@ export class ContactsService {
    * Return corresponding icon for account type.
    * @param type Account type
    */
-  private getIcon(type: ContactType): string {
+  private static getIcon(type: ContactType): string {
     switch (type) {
       case ContactType.USER:
         return 'mdi mdi-account-outline';
@@ -110,11 +111,11 @@ export class ContactsService {
       const otherProfile = new Profile({
         ...(this.runtime as any),
         profileOwner: accountId,
-        accountId: this.runtime.activeAccount
+        accountId: this.runtime.activeAccount,
       });
 
       const { profileType } = await otherProfile.getProfileProperty(
-        'accountDetails'
+        'accountDetails',
       );
       return profileType;
     } catch (err) {

@@ -22,47 +22,52 @@
     <div class="content pt-5">
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="search">
-          <label @click="isActiveSearch = true" for="searchInput">
-            <i class="mdi mdi-magnify mr-2"></i>
-            <span v-if="!isActiveSearch">{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
+          <label
+            for="searchInput"
+            @click="isActiveSearch = true"
+          >
+            <i class="mdi mdi-magnify mr-2" />
+            <span v-if="!isActiveSearch">{{
+              '_assets.digitaltwins.digitaltwins-title' | translate
+            }}</span>
           </label>
           <input
+            v-show="isActiveSearch"
             id="searchInput"
             ref="searchInput"
-            v-show="isActiveSearch"
             v-model="searchTerm"
+            autocomplete="off"
             @blur="handleSearchBlur"
             @keydown.enter="$event.target.blur()"
-            autocomplete="off"
-          />
+          >
         </div>
         <div>
           <evan-button
-            @click="selectedFilter = 'my'"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
-            iconPosition="left"
-            :class="{ 'active': selectedFilter === 'my' }"
+            icon-position="left"
+            :class="{ active: selectedFilter === 'my' }"
             :label="$t('_assets.digitaltwins.my-own')"
+            @click="selectedFilter = 'my'"
           />
           <evan-button
-            @click="selectedFilter = 'favorites'"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
-            iconPosition="left"
-            :class="{ 'active': selectedFilter === 'favorites' }"
+            icon-position="left"
+            :class="{ active: selectedFilter === 'favorites' }"
             :label="$t('_assets.digitaltwins.favorites')"
+            @click="selectedFilter = 'favorites'"
           />
           <evan-button
-            @click="selectedFilter = 'all'"
             class="filter-btn ml-3"
             type="text-filter"
             icon="mdi mdi-cube-outline"
-            iconPosition="left"
-            :class="{ 'active': selectedFilter === 'all' }"
+            icon-position="left"
+            :class="{ active: selectedFilter === 'all' }"
             :label="$t('_assets.digitaltwins.all')"
+            @click="selectedFilter = 'all'"
           />
         </div>
       </div>
@@ -74,7 +79,7 @@
           :fields="columns"
           :show-scrollbar="true"
           :sticky-header="'80vh'"
-          :sortBy="sortBy"
+          :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
           no-local-sorting="true"
           @sort-changed="sortHandler"
@@ -84,10 +89,17 @@
           <template v-slot:cell(icon)>
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
-          <template v-slot:cell(updated)="data">{{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}</template>
-          <template v-slot:cell(created)="data">{{ data.item.created | moment('DD.MM.YYYY hh:mm') }}</template>
+          <template v-slot:cell(updated)="data">
+            {{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}
+          </template>
+          <template v-slot:cell(created)="data">
+            {{ data.item.created | moment('DD.MM.YYYY hh:mm') }}
+          </template>
           <template v-slot:cell(isFavorite)="twin">
-            <evan-loading v-if="isFavoriteLoading(twin)" classes="icon-replacer" />
+            <evan-loading
+              v-if="isFavoriteLoading(twin)"
+              classes="icon-replacer"
+            />
             <evan-button
               v-else-if="isFavorite(twin)"
               type="icon-secondary"
@@ -108,7 +120,10 @@
       </div>
     </div>
 
-    <evan-loading v-if="isLoading" classes />
+    <evan-loading
+      v-if="isLoading"
+      classes
+    />
 
     <evan-button
       :type="'icon-primary'"
@@ -118,12 +133,16 @@
       @click="$refs.addDigitaTwin.showPanel()"
     />
 
-    <add-digital-twin ref="addDigitaTwin" :createdCallBack="delayedSearch" />
+    <add-digital-twin
+      ref="addDigitaTwin"
+      :created-call-back="delayedSearch"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import DigitalTwinsComponent from './DigitalTwins';
+
 export default DigitalTwinsComponent;
 </script>
 

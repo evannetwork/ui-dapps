@@ -17,14 +17,13 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
+import { RouteConfig } from 'vue-router';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 import AssetsComponent from './components/Assets.vue';
 import DataContainer from './components/DataContainer.vue';
 import DigitalTwinsComponent from './components/digitaltwins/DigitalTwins.vue';
 import ContactsComponent from './components/contacts/Contacts.vue';
-
-import { RouteConfig } from 'vue-router';
-import { getDomainName } from '@evan.network/ui-dapp-browser';
-import { DAppLoaderComponent } from '@evan.network/ui-vue-core';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteConfig> = [
@@ -41,23 +40,23 @@ const routeRegistration: Array<RouteConfig> = [
           {
             path: '',
             component: DigitalTwinsComponent,
-            meta: { type: 'twins' }
+            meta: { type: 'twins' },
           },
           {
             path: 'search/:query',
             props: true,
             component: DigitalTwinsComponent,
-            meta: { type: 'twins' }
-          }
-        ]
+            meta: { type: 'twins' },
+          },
+        ],
       },
       {
         path: `detail.digital-twin.${getDomainName()}/:id`,
-        component: DAppLoaderComponent
+        component: DAppLoaderComponent,
       },
-      { name: 'contacts', path: 'contacts', component: ContactsComponent }
-    ]
-  }
+      { name: 'contacts', path: 'contacts', component: ContactsComponent },
+    ],
+  },
 ];
 
 export default routeRegistration;
