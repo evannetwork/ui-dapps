@@ -120,10 +120,7 @@
       </div>
     </div>
 
-    <evan-loading
-      v-if="isLoading"
-      classes
-    />
+    <evan-loading v-if="isLoading" />
 
     <evan-button
       :type="'icon-primary'"
