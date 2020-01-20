@@ -21,7 +21,7 @@ import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactType, ContactFormData } from './ContactInterfaces';
 
-export default class ContactsService {
+export class ContactsService {
   private contacts;
 
   private runtime: Runtime;
