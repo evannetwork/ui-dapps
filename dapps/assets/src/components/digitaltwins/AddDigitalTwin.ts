@@ -56,12 +56,12 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   templateErrors: TemplateErrorInterface[] = [];
 
-  createWatcher: Function;
+  clearTwinCreateWatcher: Function;
 
   @Prop() createdCallBack: Function;
 
   beforeDestroy() {
-    this.createWatcher();
+    this.clearTwinCreateWatcher();
   }
 
   // generate select options from twin templates
@@ -79,7 +79,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   async created() {
     this.runtime = await this.getRuntime();
-    this.createWatcher = dispatchers.twinCreateDispatcher
+    this.clearTwinCreateWatcher = dispatchers.twinCreateDispatcher
       .watch(({ detail: { status } }: CustomEvent) => {
         if (status === 'starting') {
           this.resetForm();
