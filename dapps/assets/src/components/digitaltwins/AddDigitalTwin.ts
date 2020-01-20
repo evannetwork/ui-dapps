@@ -56,7 +56,13 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   templateErrors: TemplateErrorInterface[] = [];
 
+  createWatcher: Function;
+
   @Prop() createdCallBack: Function;
+
+  beforeDestroy() {
+    this.createWatcher();
+  }
 
   // generate select options from twin templates
   handleTemplateSelectChange(event: Event) {
@@ -73,30 +79,31 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   async created() {
     this.runtime = await this.getRuntime();
-    dispatchers.twinCreateDispatcher.watch(({ detail: { status } }: CustomEvent) => {
-      if (status === 'starting') {
-        this.resetForm();
-        this.loading = false;
+    this.createWatcher = dispatchers.twinCreateDispatcher
+      .watch(({ detail: { status } }: CustomEvent) => {
+        if (status === 'starting') {
+          this.resetForm();
+          this.loading = false;
 
-        this.$toasted.show(
-          this.$t('_assets.digitaltwins.create-info'),
-          {
-            type: 'info',
-            duration: 10000, // 10 seconds
-          },
-        );
-      }
+          this.$toasted.show(
+            this.$t('_assets.digitaltwins.create-info'),
+            {
+              type: 'info',
+              duration: 10000, // 10 seconds
+            },
+          );
+        }
 
-      if (status === 'error') {
-        alert('There was a problem creating the twin. Please check your config and try again.');
+        if (status === 'error') {
+          alert('There was a problem creating the twin. Please check your config and try again.');
 
-        this.loading = false;
-      }
+          this.loading = false;
+        }
 
-      if (status === 'finished' && typeof this.createdCallBack === 'function') {
-        this.createdCallBack();
-      }
-    });
+        if (status === 'finished' && typeof this.createdCallBack === 'function') {
+          this.createdCallBack();
+        }
+      });
   }
 
   resetForm() {
@@ -210,12 +217,13 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
    */
   private getLocalizedTemplateEntry(template: DigitalTwinTemplateInterface, entry: string): string {
     const lang = this.$i18n.locale() || window.localStorage.getItem('evan-language');
+    let localized = template.description?.[entry] || '';
 
-    return (
-      template.description?.i18n[lang]?.[entry]
-      || template.description?.[entry]
-      || ''
-    );
+    if (template.description?.i18n && template.description?.i18n[lang]?.[entry]) {
+      localized = template.description?.i18n[lang]?.[entry];
+    }
+
+    return localized;
   }
 
   /**
