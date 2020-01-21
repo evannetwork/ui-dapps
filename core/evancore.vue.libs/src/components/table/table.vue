@@ -103,7 +103,7 @@ export default Component;
         width: 120px;
       }
       &.th-icon {
-        width: 60px;
+        width: 70px;
       }
     }
 

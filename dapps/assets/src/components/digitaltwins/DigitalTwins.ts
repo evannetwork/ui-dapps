@@ -60,7 +60,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
       key: 'name',
       label: this.$t('_assets.digitaltwins.name'),
       sortable: true,
-      thClass: 'th-important',
       tdClass: 'truncate',
     },
     {

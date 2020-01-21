@@ -172,7 +172,7 @@ h1.heading {
 }
 
 .content {
-  max-width: 768px;
+  max-width: 850px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -181,12 +181,6 @@ h1.heading {
   position: fixed;
   bottom: 40px;
   right: 60px;
-}
-
-/deep/.filter-btn {
-  span {
-    font-size: 12px;
-  }
 }
 
 /deep/ .evan-swipe-panel.light {
