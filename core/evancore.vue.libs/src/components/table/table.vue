@@ -20,25 +20,37 @@
 <template>
   <b-table
     v-bind="$attrs"
-    v-on="$listeners"
     class="evan-table-wrapper"
     :class="{ 'show-scrollbar': showScrollbar }"
     :tbody-tr-class="'evan-table-body-row'"
     :thead-tr-class="'evan-table-head-row'"
     :thead-class="'evan-table-head'"
+    v-on="$listeners"
   >
     <!-- Pass on all named slots -->
-    <slot v-for="slot in Object.keys($slots)" :name="slot" :slot="slot" />
+    <slot
+      v-for="slot in Object.keys($slots)"
+      :slot="slot"
+      :name="slot"
+    />
 
     <!-- Pass on all scoped slots -->
-    <template v-for="slot in Object.keys($scopedSlots)" :slot="slot" slot-scope="scope">
-      <slot :name="slot" v-bind="scope" />
+    <template
+      v-for="slot in Object.keys($scopedSlots)"
+      :slot="slot"
+      slot-scope="scope"
+    >
+      <slot
+        :name="slot"
+        v-bind="scope"
+      />
     </template>
   </b-table>
 </template>
 
 <script lang="ts">
 import Component from './table';
+
 export default Component;
 </script>
 
@@ -59,6 +71,7 @@ export default Component;
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
       background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
       -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
     }
   }
@@ -67,6 +80,11 @@ export default Component;
     margin: 0;
     margin-left: auto;
     margin-right: auto;
+
+   // This can create janky behavior with sticky table header
+   // Without this we have trouble with borders on rows
+    border-collapse: separate;
+    border-spacing: 0 5px;
 
     & > thead.evan-table-head > tr.evan-table-head-row > th {
       background-color: cssVar('bg-level-3');
@@ -82,10 +100,17 @@ export default Component;
     & > tbody > tr.evan-table-body-row {
       height: 64px;
       background-color: white;
+      // border: 1px solid white;
       cursor: pointer;
       // create spacing between rows without using border-collapse
       // because it causes janky behavior with sticky header
-      border-bottom: 4px solid cssVar('bg-level-3');
+      // border-bottom: 4px solid cssVar('bg-level-3');
+
+      &:hover {
+        background-color: cssVar('gray-100');
+        // border: 1px solid cssVar('gray-200');
+        box-shadow:inset 0px 0px 0px 1px cssVar('gray-200');
+      }
 
       & > td {
         vertical-align: middle;
