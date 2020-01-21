@@ -49,7 +49,8 @@
       "name-placeholder": "Aussagekräftiger Name",
       "name": "Name",
       "owner": "Besitzer",
-      "template-desc": "Wählen Sie ein Template für Ihren Digitalen Zwilling. Mehr Informationen zur Erstellung von Templates finden Sie hier.",
+      "template-desc": "Wählen Sie ein Template für Ihren Digitalen Zwilling. Mehr Informationen zur Erstellung von Templates finden Sie ",
+      "template-desc-link": "hier.",
       "template-select-label": "Template wählen",
       "template-select-placeholder": "Wählen Sie ein Template",
       "updated": "Aktualisiert"
@@ -62,7 +63,6 @@
       "searched-for": "Sie suchten nach",
       "updated": "Aktualisiert"
     },
-    "more": "mehr dazu",
     "optional": "optional"
   }
 }

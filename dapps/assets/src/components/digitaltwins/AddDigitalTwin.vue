@@ -69,7 +69,7 @@
           target="_blank"
           rel="noopener noreferrer"
           title="Twin API documentation"
-        >{{ '_assets.more' | translate }}</a>
+        >{{ '_assets.digitaltwins.template-desc-link' | translate }}</a>
       </p>
 
       <evan-form-control-select
