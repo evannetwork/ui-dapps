@@ -26,7 +26,10 @@
             for="searchInput"
             @click="isActiveSearch = true"
           >
-            <i class="mdi mdi-magnify mr-2" />
+            <i
+              class="mdi mdi-magnify mr-1"
+              style="font-size: 22px"
+            />
             <span v-if="!isActiveSearch">{{
               '_assets.digitaltwins.digitaltwins-title' | translate
             }}</span>
