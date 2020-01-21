@@ -23,7 +23,6 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Watch } from 'vue-property-decorator';
-import { onRouteChange } from '@evan.network/ui-dapp-browser/runtime/build/routing';
 
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
