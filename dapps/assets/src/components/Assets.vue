@@ -23,6 +23,12 @@
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
           <div class="sidenav">
+            <div class="sidenav-header">
+              <i
+                class="mr-3 sidenav-header-icon"
+                :class="activeIcon"
+              />
+            </div>
             <!-- Not using nav-list because it doesnt support router-link properly
             TODO: Refactor evan-nav-list to use router-links too -->
             <div class="evan-nav-list">
@@ -63,3 +69,15 @@ import AssetsComponent from './Assets';
 
 export default AssetsComponent;
 </script>
+
+<style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+
+.sidenav-header {
+  text-align: center;
+  .sidenav-header-icon {
+    font-size: 5rem;
+    color: cssVar('gray-900');
+  }
+}
+</style>
