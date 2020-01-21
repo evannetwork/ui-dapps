@@ -48,7 +48,7 @@
           <evan-button
             class="ml-3"
             type="text-filter"
-            icon="mdi mdi-domain"
+            icon="mdi mdi-office-building"
             icon-position="left"
             :class="{ active: filter === 'company' }"
             :label="$t('_assets.contacts.companies')"
