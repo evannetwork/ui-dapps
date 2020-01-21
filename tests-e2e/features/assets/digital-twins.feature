@@ -3,9 +3,10 @@ Feature: Digital Twin assets
   Background:
     Given I log in to evan.network using vue
       And I click on "My Assets" in main menu
+      And I click on "Digital Twins" in sub menu
+
 
   Scenario: Check whether the content of Digital Twins is displayed
-    When I click on "Digital Twins" in sub menu
     Then Input field with label "Digital Twins" should be invisible
       And I want to see a table having 6 headers
       And I want to see a table having headers "Name, Owner, Updated, Created"
@@ -19,7 +20,6 @@ Feature: Digital Twin assets
     And I want to see a table having "at least" 26 rows
 @skip
   Scenario: Searching for specififc keywords
-    When I click on "Digital Twins" in sub menu
     Then Input field with label "Digital Twins" should be invisible
       And I want to see a table having 6 headers
       And I want to see a table having headers "Name, Owner, Updated, Created"
@@ -30,3 +30,5 @@ Feature: Digital Twin assets
       And I set Input field with id "searchInput" to "gibberishstringtwinwontfindanything"
       And I wait for 2 seconds
     Then I want to see a table having "exactly" 0 rows
+
+

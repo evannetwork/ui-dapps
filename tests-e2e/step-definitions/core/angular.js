@@ -1,7 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../test-utils/test-utils.js';
+import { setupEvan } from '../../../test-utils/test-utils.js';
 
 let loggedIn = false;
 
@@ -9,28 +9,28 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
   client.useCss();
   const evan = setupEvan(client);
 
-  await client.url(`${ evan.baseUrl }#/onboarding.evan?origin=dashboard.evan`);
+  await client.url(`${evan.baseUrl}#/onboarding.evan?origin=dashboard.evan`);
   await client.pause(5000);
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
   if (!user || !user.mnemonic) {
     throw new Error(`no account data found for account ${accountName || 'default'}`);
   }
 
-  await client.execute(function() {
+  await client.execute(() => {
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
     return true;
-  }, [], function(result) {
+  }, [], function (result) {
     this.assert.ok(result.value);
-  })
+  });
 
   loggedIn = true;
   await client
-    .execute(function() {
+    .execute(() => {
       window.localStorage['bc-dev-logs'] = 'debug';
       window.localStorage['angular-dev-logs'] = 'debug';
-    }, [], function(result) {})
+    }, [])
     .waitForElementVisible('onboarding-welcome', 30 * 1000)
     .assert.elementPresent('.slide-zoom > h3')
     .pause(3 * 1000)
@@ -51,14 +51,14 @@ When(/^I log out from angular$/, async () => {
     loggedIn = false;
 
     await client
-      .url(`${ evan.baseUrl }#/profile.evan`)
+      .url(`${evan.baseUrl}#/profile.evan`)
       .waitForElementPresent('evan-profile-detail .evan-content button.button-outline-md-alert', 10 * 1000)
       .click('evan-profile-detail .evan-content button.button-outline-md-alert')
-      .waitForElementPresent(`ion-alert .alert-button-group button:nth-child(2)`, 10 * 1000)
+      .waitForElementPresent('ion-alert .alert-button-group button:nth-child(2)', 10 * 1000)
       .pause(3 * 1000)
-      .click(`ion-alert .alert-button-group button:nth-child(2)`)
+      .click('ion-alert .alert-button-group button:nth-child(2)')
       .pause(100)
-      .url(`${ evan.baseUrl }#/onboarding.evan?origin=dashboard.evan`)
+      .url(`${evan.baseUrl}#/onboarding.evan?origin=dashboard.evan`)
       .pause(3 * 1000);
   }
 });

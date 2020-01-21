@@ -16,13 +16,16 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+import { client } from 'nightwatch-api';
 
 const isVue = async () => {
   const elements = await new Promise((resolve) => {
-    client.elements('css selector', '.theme-evan', result => resolve(result.value)); });
+    client.elements('css selector', '.theme-evan', (result) => resolve(result.value));
+  });
+
   return !!elements.length;
 };
 
 module.exports = {
   isVue,
-}
+};
