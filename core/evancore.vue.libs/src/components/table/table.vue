@@ -153,4 +153,11 @@ export default Component;
     }
   }
 }
+// TODO: Find a better solution at some point
+// http://www.outlinenone.com/
+/deep/ * {
+  &:focus {
+    outline: 0;
+  }
+}
 </style>
