@@ -4,7 +4,7 @@
       "context-menu": {
         "download-template": "Download",
         "duplicate-twin": "Duplicate",
-        "duplicating-twin": "Creating duplicate...",
+        "duplicating-twin": "Creating duplicate ...",
         "export-template": "Export as template",
         "exporting-twin": "Creating template ..."
       },

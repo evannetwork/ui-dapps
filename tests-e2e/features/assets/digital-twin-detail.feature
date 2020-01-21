@@ -25,7 +25,7 @@ Feature: Digital Twin Detail
     When I set Input field with label "Name" to "Test Car Twin 2"
       And I set Input field with label "Description" to "Nice Description"
       And I click on button "Save"
-    Then I want to see a text including "Starting Saving description..."
+    Then I want to see a text including "Starting Saving description ..."
       And I want to see a text including "Saving description... completed"
       And I want to see a text including "Test Car Twin 2"
       And I want to see a text including "Nice Description"
@@ -40,21 +40,21 @@ Feature: Digital Twin Detail
     When I set Input field with label "Name" to "Test Car Twin"
       And I set Input field with label "Description" to "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
       And I click on button "Save"
-    Then I want to see a text including "Starting Saving description..."
-      And I want to see a text including "Saving description... completed"
+    Then I want to see a text including "Starting Saving description ..."
+      And I want to see a text including "Saving description ... completed"
 
   Scenario: Mark as favorite
     # mark as favorite
     When I click on the "star-outline" icon
     Then I want to see an element with class "evan-loading.icon-replacer"
-      And I want to see a text including "Starting Adding favorite..."
-      And I want to see a text including "Adding favorite... completed"
+      And I want to see a text including "Starting Adding favorite ..."
+      And I want to see a text including "Adding favorite ... completed"
       And I want to see the "star" icon
     # remove from favorites
     When I click on the "star" icon
     Then I want to see an element with class "evan-loading.icon-replacer"
-      And I want to see a text including "Starting Removing favorite..."
-      And I want to see a text including "Removing favorite... completed"
+      And I want to see a text including "Starting Removing favorite ..."
+      And I want to see a text including "Removing favorite ... completed"
       And I want to see the "star-outline" icon
 
   Scenario: Export as template
