@@ -74,9 +74,11 @@
 
       <div class="d-flex flex-row mt-3">
         <evan-table
+          :borderless="true"
           :hover="true"
           :items="data"
           :fields="columns"
+          :fixed="true"
           :show-scrollbar="true"
           :sticky-header="'80vh'"
           :sort-by="sortBy"
@@ -88,9 +90,6 @@
         >
           <template v-slot:cell(icon)>
             <i class="table-icon mdi mdi-cube-outline" />
-          </template>
-          <template v-slot:cell(name)="data">
-            <span class="td-important">{{ data.item.name }}</span>
           </template>
           <template v-slot:cell(updated)="data">
             {{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}

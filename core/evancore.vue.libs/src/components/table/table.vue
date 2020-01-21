@@ -96,28 +96,43 @@ export default Component;
       &[aria-sort='descending'] {
         color: cssVar('primary');
       }
+      &.th-important {
+        width: 200px;
+      }
+      &.th-date {
+        width: 120px;
+      }
+      &.th-icon {
+        width: 60px;
+      }
     }
 
     & > tbody > tr.evan-table-body-row {
       height: 64px;
       background-color: white;
       color: cssVar('gray-600');
-      // border: 1px solid white;
       cursor: pointer;
+
       // create spacing between rows without using border-collapse
       // because it causes janky behavior with sticky header
       // border-bottom: 4px solid cssVar('bg-level-3');
 
       &:hover {
         background-color: cssVar('gray-100');
-        // border: 1px solid cssVar('gray-200');
-        box-shadow:inset 0px 0px 0px 1px cssVar('gray-200');
+        // border creates janky jumping. Using inset shadow as an alternative
+        box-shadow: inset 0px 0px 0px 1px cssVar('gray-200');
       }
 
       & > td {
         vertical-align: middle;
         border: none;
-        font-size: 10px;
+        font-size: 12px;
+
+        &.truncate {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
 
       &.b-table-empty-row {

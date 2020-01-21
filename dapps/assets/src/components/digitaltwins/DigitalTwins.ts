@@ -55,28 +55,34 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   selectedFilter = 'all';
 
   columns = [
-    { key: 'icon', label: '' },
+    { key: 'icon', label: '', thClass: 'th-icon' },
     {
       key: 'name',
       label: this.$t('_assets.digitaltwins.name'),
       sortable: true,
+      thClass: 'th-important',
+      tdClass: 'truncate',
     },
     {
       key: 'owner',
       label: this.$t('_assets.digitaltwins.owner'),
       sortable: true,
+      thClass: 'th-important',
+      tdClass: 'truncate',
     },
     {
       key: 'updated',
       label: this.$t('_assets.digitaltwins.updated'),
       sortable: true,
+      thClass: 'th-date',
     },
     {
       key: 'created',
       label: this.$t('_assets.digitaltwins.created'),
       sortable: true,
+      thClass: 'th-date',
     },
-    { key: 'isFavorite', label: '' },
+    { key: 'isFavorite', label: '', thClass: 'th-icon' },
   ];
 
   isActiveSearch = false;
