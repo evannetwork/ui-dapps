@@ -63,7 +63,7 @@ Feature: Organizations - Notary Verification
       And I set Input field with label "VAT ID" to ""
     When I click on button "Save"
     Then the button "Save" should be "disabled"
-      And I want to see a element with class "spinner-border"
+      And I want to see an element with class "spinner-border"
       And I wait for 5 seconds
     When I click on "Verifications" in sub menu
     Then I want to see a text including "Request a notary verification"
@@ -81,7 +81,7 @@ Feature: Organizations - Notary Verification
       And I set Input field with label "Registration Number" to "Test Registration Number"
       And I click on button "Save"
     Then the button "Save" should be "disabled"
-      And I want to see a element with class "spinner-border"
+      And I want to see an element with class "spinner-border"
       And I wait for 5 seconds
       And Input fields with labels "Contact Person *|Department" should be visible
     When I click on button "Cancel"

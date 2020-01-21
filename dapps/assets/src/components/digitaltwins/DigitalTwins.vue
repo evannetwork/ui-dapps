@@ -1,4 +1,4 @@
-/*
+  /*
   Copyright (C) 2018-present evan GmbH.
 
   This program is free software: you can redistribute it and/or modify it
@@ -23,6 +23,7 @@
       <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="search">
           <label
+            id="twin-enable-search"
             for="searchInput"
             @click="isActiveSearch = true"
           >
