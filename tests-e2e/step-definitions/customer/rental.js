@@ -20,7 +20,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
 const twinAddress = 'DEV';
 
@@ -75,7 +75,7 @@ const rentalFuncs = {
   },
 };
 
-evan = setupEvan(client, rentalFuncs);
+evan = testUtils.setupEvan(client, rentalFuncs);
 
 /**
  * Test the transport order creation.

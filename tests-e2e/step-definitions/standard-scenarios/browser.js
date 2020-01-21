@@ -3,9 +3,9 @@ import {
   Given, When, Then, setDefinitionFunctionWrapper, Tag,
 } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
-const evan = setupEvan(client);
+const evan = testUtils.setupEvan(client);
 
 /**
  * Navigate to path in browser...

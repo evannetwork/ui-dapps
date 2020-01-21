@@ -1,10 +1,10 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
 When(/I go to EVE payments tab/, async () => {
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   await client.url(`${evan.baseUrl}#/dashboard.evan/profile.evan/buy-eve`);
   await client.waitForElementPresent('.buy-eve', 10 * 1000);

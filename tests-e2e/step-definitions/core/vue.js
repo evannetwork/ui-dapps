@@ -1,7 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 import * as buttons from '../standard-ui/button.js';
 
 
@@ -9,14 +9,15 @@ let loggedIn = false;
 
 Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   if (customPart && !evan.accounts[accountName]) {
     throw new Error(`no account data found for account ${accountName}`);
   }
   const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
   await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
-  client.execute(() => {
+  // eslint-disable-next-line
+  client.execute(function () {
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
@@ -35,7 +36,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   const split = user.mnemonic.split(' ');
   await client.click('a[href*="#/dashboard.vue.evan/onboarding.vue.evan/sign-in"]');
   await client.waitForElementVisible('#mnemonicInput0', 60 * 1000);
-  Promise.race(split.map((_, index) => client.setValue(`#mnemonicInput${index}`, [split[index]])));
+  await Promise.race(split.map((_, index) => client.setValue(`#mnemonicInput${index}`, [split[index]])));
   await client.click('#sign-in');
   await client.waitForElementVisible('#password');
   await client.setValue('#password', [user.password]);
@@ -51,7 +52,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
 
 Given('I go to the evan.network startpage', async () => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
   await client.execute(() => {
@@ -66,7 +67,7 @@ Given('I go to the evan.network startpage', async () => {
 
 When(/I log out from vue/, async () => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   if (loggedIn) {
     loggedIn = false;
@@ -89,7 +90,7 @@ Then(/I am no longer logged in to vue/, async () => {
 
 When(/I switch to vue/, async () => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
   await client.waitForElementPresent('#dapp-home', 10 * 1000);

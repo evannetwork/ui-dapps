@@ -1,13 +1,13 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
 let loggedIn = false;
 
 Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPart, accountName) => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   await client.url(`${evan.baseUrl}#/onboarding.evan?origin=dashboard.evan`);
   await client.pause(5000);
@@ -45,7 +45,7 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
 
 When(/^I log out from angular$/, async () => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   if (loggedIn) {
     loggedIn = false;

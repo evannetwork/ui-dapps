@@ -7,6 +7,7 @@ Feature: Digital Twin Detail
       And I search in assets for "Test Car Twin"
       And I click on an element with text including "Test Car Twin"
       And I wait for 3 seconds
+      And I wait 20 seconds until loading was finished
 
   Scenario: Open Digital Twin
     Then I want to see a element with class "twin-name"
@@ -57,8 +58,22 @@ Feature: Digital Twin Detail
       And I want to see a text including "Removing favorite... completed"
       Then I want to see the "star-outline" icon
 
-  Scenario: Export as template
-    # mark as favorite
+  Scenario: Export as template=
     When I click on the "dots-vertical" icon button
       Then I want to see a text including "Export as template"
-    When I click on an element with text including {string}
+    When I click on an element with text including "Export as template"
+      And I wait for 3 seconds
+      Then I want to see a text including "Creating template..."
+      And I want to see a element with class "evan-success"
+      And the button "Download" should be "enabled"
+
+  Scenario: Create Twin duplicate
+    When I click on the "dots-vertical" icon button
+      Then I want to see a text including "Duplicate"
+    When I click on an element with text including "Duplicate"
+      And I wait for 3 seconds
+      Then the button "Duplicate" should be "enabled"
+    When I click on button with id "create-duplicate"
+      Then I want to see a text including "Starting Create Twin"
+      And I wait 60 seconds until loading was finished
+      Then I want to see a text including "Create Twin completed"

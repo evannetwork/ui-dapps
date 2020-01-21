@@ -1,11 +1,11 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
 When('I click on link to {string}', async (linkPart) => {
   let contained = '';
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
 
   switch (linkPart) {
     case 'My Account':
@@ -22,7 +22,7 @@ When('I click on link to {string}', async (linkPart) => {
 
 Then('I want to see a link to {string}',
   async (linkPart) => {
-    const evan = setupEvan(client);
+    const evan = testUtils.setupEvan(client);
     let contained = '';
 
     switch (linkPart) {

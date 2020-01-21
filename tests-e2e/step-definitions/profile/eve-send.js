@@ -1,7 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
 /**
  * Sends eve to another user. Current ui must be on wallet, with opened eve send ui and filled out
@@ -9,7 +9,7 @@ import { setupEvan } from '../../../test-utils/test-utils.js';
  */
 When('I send {string} EVE with vue UI', async (amount) => {
   client.useCss();
-  const evan = setupEvan(client);
+  const evan = testUtils.setupEvan(client);
   let previous; let
     after;
 
