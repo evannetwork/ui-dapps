@@ -59,6 +59,7 @@ export default Component;
 
 .evan-table-wrapper {
   width: 100%;
+  margin-bottom: 0;
 
   &.show-scrollbar {
     overflow-y: scroll;
@@ -150,6 +151,10 @@ export default Component;
     i.table-icon {
       font-size: 2.5em;
       margin-left: 0.25em;
+    }
+
+    .table-spacer {
+      height: 16px;
     }
   }
 }

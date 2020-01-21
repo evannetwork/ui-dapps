@@ -82,7 +82,7 @@
           :fields="columns"
           :filter="filter"
           :filter-included-fields="filterBy"
-          :sticky-header="'80vh'"
+          :sticky-header="'calc(100vh - 85px)'"
           :show-empty="true"
           :show-scrollbar="true"
           @row-clicked="handleRowClicked"
@@ -127,6 +127,9 @@
               :disabled="isFavoriteLoading.loading"
               @click="addFavorite(contacts)"
             />
+          </template>
+          <template v-slot:table-caption>
+            <div class="table-spacer" />
           </template>
 
           <!-- Empty slots -->
