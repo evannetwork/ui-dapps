@@ -17,8 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
+import * as events from 'events';
 import readline from 'readline';
 import { client } from 'nightwatch-api';
+
 import angularUtils from './angular';
 import vueUtils from './vue';
 
@@ -30,20 +32,18 @@ const backspaces = (n) => [...Array(n)].map(() => '\ue003').join('');
  * @param      {any}  browser  the nightwatch browser instance.
  * @param      {any}  customs  custom properties that should be added to the evan context
  */
-const setupEvan = function(browser, customs) {
+const setupEvan = function (browser, customs) {
   // evan.url = 'https://dashboard.test.evan.network';
-  const merged = Object.assign(
-    {
-      angular: angularUtils,
-      ensRoot: 'evan',
-      vue: vueUtils,
-    },
-    customs,
-  );
+  const merged = {
+    angular: angularUtils,
+    ensRoot: 'evan',
+    vue: vueUtils,
+    ...customs,
+  };
 
-  // define proxy for late binding
-  // maybe we rework this later to reduce obscurity
-  var handler = {
+  /* define proxy for late binding
+     maybe we rework this later to reduce obscurity */
+  const handler = {
     get: (obj, prop) => {
       let toReturn;
       if (browser.options.globals[prop]) {
@@ -54,18 +54,18 @@ const setupEvan = function(browser, customs) {
         toReturn = angularUtils[prop] || vueUtils[prop];
       }
       return typeof toReturn === 'function' ? toReturn.bind(obj, browser) : toReturn;
-    }
+    },
   };
 
-  var proxy = new Proxy(merged, handler);
+  const proxy = new Proxy(merged, handler);
 
-  // fix event listener maximum:
-  //    MaxListenersExceededWarning: Possible EventEmitter memory leak
-  //    detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit
-  require('events').EventEmitter.defaultMaxListeners = 100;
+  /* fix event listener maximum:
+        MaxListenersExceededWarning: Possible EventEmitter memory leak
+        detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit */
+  events.EventEmitter.defaultMaxListeners = 100;
 
   return proxy;
-}
+};
 
 /**
  * A better `clearValue` for inputs having a more complex interaction.
@@ -76,7 +76,7 @@ const setupEvan = function(browser, customs) {
  */
 function betterClearValue(selector) {
   const { RIGHT_ARROW, BACK_SPACE, TAB } = client.Keys;
-  return client.getValue(selector, result => {
+  return client.getValue(selector, (result) => {
     const chars = result.value.split('');
     // Make sure we are at the end of the input
     chars.forEach(() => client.setValue(selector, RIGHT_ARROW));
@@ -91,28 +91,29 @@ async function getElementIdByLabel(value) {
   const xPathSelector = `//*/text()[normalize-space(.) = '${value}']/parent::*`;
 
   // Get id of select box from "for" attribute of the label
-  await client.getAttribute('xpath', xPathSelector, 'for', function(attr) {
-      elementId = attr.value;
+  await client.getAttribute('xpath', xPathSelector, 'for', (attr) => {
+    elementId = attr.value;
   });
+
   return elementId;
 }
 
-async function getElementsCount(selector, mode = "xpath") {
+async function getElementsCount(selector, mode = 'xpath') {
   return new Promise((resolve, reject) => {
-    client.elements(mode, selector, function (result) {
-      console.log('Length', result.value.length) //(if there are 3 li, here should be a count of 3)
+    client.elements(mode, selector, (result) => {
+      console.log('Length', result.value.length); // (if there are 3 li, here should be a count of 3)
       resolve(result.value.length);
     });
-  }
-)};
+  });
+}
 
 /**
- * Allowes using `process.env.MY_VARIABLE` in cucumber tests, when implemented in step function.
+ * Allows using `process.env.MY_VARIABLE` in cucumber tests, when implemented in step function.
  *
  * @param {*} content
  */
 function parseEnvVar(content) {
-  if (!content || typeof conetnt === 'string' && content.length === 0) {
+  if (!content || (typeof content === 'string' && content.length === 0)) {
     return content;
   }
 
@@ -133,26 +134,44 @@ const getSelector = (label, angular) => {
     const inputSelectors = [
       'input', 'div/input',
       'select', 'div/select',
-      'textarea', 'div/textarea'
+      'textarea', 'div/textarea',
     ];
 
-    return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
-      `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${ inputSelector }`,
-      `//label[normalize-space(text()) = "${label}"]/following-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${ inputSelector }`,
-    ])).join('|');
-  } else {
     return [
-      `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
-      `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`
+      ...inputSelectors.map((inputSelector) => [
+        `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
+        `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
+        `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
+        `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
+      ]),
     ].join('|');
   }
+  return [
+    `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
+    `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
+    `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
+    `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`,
+  ].join('|');
+};
+
+async function pauseHere() {
+  console.log('/******************************************************************************/');
+  console.log('test paused, enjoy your developer tools :3');
+  console.log(' ---> press ENTER key to continue <---');
+  console.log('/******************************************************************************/');
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => rl.question('...', (ans) => {
+    rl.close();
+    resolve(ans);
+  }));
 }
 
-module.exports = {
+export {
   backspaces,
   betterClearValue,
   getSelector,
@@ -160,20 +179,5 @@ module.exports = {
   getElementIdByLabel,
   getElementsCount,
   parseEnvVar,
-  pauseHere: async () => {
-    console.log('/******************************************************************************/');
-    console.log('test paused, enjoy your developer tools :3');
-    console.log(' ---> press ENTER key to continue <---');
-    console.log('/******************************************************************************/');
-
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-
-    return new Promise(resolve => rl.question('...', ans => {
-      rl.close();
-      resolve(ans);
-    }))
-  }
+  pauseHere,
 };

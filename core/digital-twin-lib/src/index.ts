@@ -18,7 +18,7 @@
 */
 
 import { getDomainName } from '@evan.network/ui-vue-core';
-import { System, } from '@evan.network/ui-dapp-browser';
+import { System } from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from './dispatchers';
 import DAppContainer from './DAppContainer';
@@ -31,7 +31,7 @@ import {
   TemplateErrorInterface,
 } from './interfaces/TemplateValidationErrors';
 
-
+export * from './dispatchers';
 export {
   DAppContainer,
   DAppTwin,
@@ -43,4 +43,4 @@ export {
   TemplateErrorInterface,
 };
 
-System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${ getDomainName() }!dapp-content`;
+System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${getDomainName()}!dapp-content`;

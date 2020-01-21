@@ -20,12 +20,13 @@
 <template>
   <div>
     <evan-swipe-panel
-      @init="exportModal = $event"
       alignment="right"
       class="light"
       :title="'_twin-detail.data.context-menu.export-template' | translate"
-      showBackdrop="true"
-      type="default">
+      show-backdrop="true"
+      type="default"
+      @init="exportModal = $event"
+    >
       <div class="d-flex h-100 align-items-center justify-content-center">
         <div v-if="exporting">
           <div><evan-loading /></div>
@@ -43,8 +44,8 @@
           <evan-button
             type="secondary"
             :label="'_evan.cancel' | translate"
-            @click="exportModal.hide()"
             class="mr-3"
+            @click="exportModal.hide()"
           />
           <span class="mx-auto" />
           <evan-button
@@ -58,15 +59,17 @@
     </evan-swipe-panel>
 
     <evan-swipe-panel
-      @init="duplicatePanel = $event"
       alignment="right"
       class="light"
       :title="'_twin-detail.data.context-menu.duplicate-twin' | translate"
-      showBackdrop="true"
-      type="default">
+      show-backdrop="true"
+      type="default"
+      @init="duplicatePanel = $event"
+    >
       <div
+        v-if="exporting || duplicating"
         class="d-flex flex-column h-100 align-items-center justify-content-center"
-        v-if="exporting || duplicating">
+      >
         <div><evan-loading /></div>
         <div class="mt-3 text-center">
           <h4 v-if="exporting">
@@ -78,25 +81,26 @@
         </div>
       </div>
       <evan-form-dbcp
-        class="pt-5"
-        ref="dbcpForm"
-        :contractAddress="$store.state.twin.contractAddress"
-        :description="$store.state.twin.description"
-        i18nScope="_twin-detail.data.general"
-        onlyForm="true"
-        @init="dbcpForm = $event"
         v-else
+        ref="dbcpForm"
+        class="pt-5"
+        :contract-address="$store.state.twin.contractAddress"
+        :description="$store.state.twin.description"
+        i18n-scope="_twin-detail.data.general"
+        only-form="true"
+        @init="dbcpForm = $event"
       />
       <template slot="footer">
         <div class="d-flex">
           <evan-button
             type="secondary"
+            class="mr-3"
             :label="'_evan.cancel' | translate"
             @click="duplicatePanel.hide()"
-            class="mr-3"
           />
           <span class="mx-auto" />
           <evan-button
+            id="create-duplicate"
             type="primary"
             :disabled="exporting || duplicating"
             :label="'_twin-detail.data.context-menu.duplicate-twin' | translate"
@@ -110,6 +114,6 @@
 
 <script lang="ts">
 import DigitalTwinInteractionsComponent from './TwinInteractions';
+
 export default DigitalTwinInteractionsComponent;
 </script>
-
