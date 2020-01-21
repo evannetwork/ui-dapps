@@ -10,9 +10,9 @@ Feature: Digital Twin Detail
       And I wait 20 seconds until loading was finished
 
   Scenario: Open Digital Twin
-    Then I want to see a element with class "twin-name"
-      And I want to see a element with class "twin-owner"
-      And I want to see a element with class "twin-desc"
+    Then I want to see an element with class "twin-name"
+      And I want to see an element with class "twin-owner"
+      And I want to see an element with class "twin-desc"
       And I want to see a text including "Test Car Twin"
       And I want to see a text including "Test Account"
       And I want to see a text including "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
@@ -34,7 +34,7 @@ Feature: Digital Twin Detail
       And I type "process.env.USER_DEFAULT_PASSWORD" into the input field with label "Password"
       And I click on button "Log in"
       And I wait for 3 seconds
-      And I want to see a text including "Test Car Twin 2"
+      Then I want to see a text including "Test Car Twin 2"
       And I want to see a text including "Nice Description"
     # reset to previous description
     When I set Input field with label "Name" to "Test Car Twin"
@@ -45,26 +45,25 @@ Feature: Digital Twin Detail
 
   Scenario: Mark as favorite
     # mark as favorite
-    Then I want to see the "star-outline" icon
     When I click on the "star-outline" icon
-      Then I want to see a element with class "evan-loading.icon-replacer"
+      Then I want to see an element with class "evan-loading.icon-replacer"
       And I want to see a text including "Starting Adding favorite..."
       And I want to see a text including "Adding favorite... completed"
-      Then I want to see the "star" icon
+      And I want to see the "star" icon
     # remove from favorites
     When I click on the "star" icon
-      Then I want to see a element with class "evan-loading.icon-replacer"
+      Then I want to see an element with class "evan-loading.icon-replacer"
       And I want to see a text including "Starting Removing favorite..."
       And I want to see a text including "Removing favorite... completed"
-      Then I want to see the "star-outline" icon
+      And I want to see the "star-outline" icon
 
-  Scenario: Export as template=
+  Scenario: Export as template
     When I click on the "dots-vertical" icon button
       Then I want to see a text including "Export as template"
     When I click on an element with text including "Export as template"
       And I wait for 3 seconds
-      Then I want to see a text including "Creating template..."
-      And I want to see a element with class "evan-success"
+      Then I want to see a text including "Creating template ..."
+      And I want to see an element with class "evan-success"
       And the button "Download" should be "enabled"
 
   Scenario: Create Twin duplicate
@@ -75,5 +74,5 @@ Feature: Digital Twin Detail
       Then the button "Duplicate" should be "enabled"
     When I click on button with id "create-duplicate"
       Then I want to see a text including "Starting Create Twin"
-      And I wait 60 seconds until loading was finished
+    When I wait 60 seconds until loading was finished
       Then I want to see a text including "Create Twin completed"

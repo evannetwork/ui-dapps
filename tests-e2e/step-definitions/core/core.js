@@ -41,7 +41,7 @@ Then(/^I want to see a element with id "([^"]+)"$/, async (id) => {
   await client.waitForElementPresent(`.${id}`, WAIT_TIME);
 });
 
-Then(/^I want to see a element with class "([^"]+)"$/, async (className) => {
+Then(/^I want to see an element with class "([^"]+)"$/, async (className) => {
   client.useCss();
   testUtils.setupEvan(client);
 
