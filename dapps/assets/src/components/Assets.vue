@@ -23,7 +23,7 @@
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
           <div class="sidenav">
-            <div class="sidenav-header">
+            <div class="sidenav-header pt-3 pb-3">
               <i
                 class="mr-3 sidenav-header-icon"
                 :class="activeIcon"

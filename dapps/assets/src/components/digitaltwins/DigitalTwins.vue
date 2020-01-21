@@ -89,6 +89,9 @@
           <template v-slot:cell(icon)>
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
+          <template v-slot:cell(name)="data">
+            <span class="td-important">{{ data.item.name }}</span>
+          </template>
           <template v-slot:cell(updated)="data">
             {{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}
           </template>

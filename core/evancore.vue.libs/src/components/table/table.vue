@@ -90,6 +90,7 @@ export default Component;
       background-color: cssVar('bg-level-3');
       border: none;
       color: cssVar('gray-600');
+      font-size: 10px;
 
       &[aria-sort='ascending'],
       &[aria-sort='descending'] {
@@ -100,6 +101,7 @@ export default Component;
     & > tbody > tr.evan-table-body-row {
       height: 64px;
       background-color: white;
+      color: cssVar('gray-600');
       // border: 1px solid white;
       cursor: pointer;
       // create spacing between rows without using border-collapse
@@ -115,6 +117,7 @@ export default Component;
       & > td {
         vertical-align: middle;
         border: none;
+        font-size: 10px;
       }
 
       &.b-table-empty-row {
@@ -130,7 +133,7 @@ export default Component;
     }
 
     i.table-icon {
-      font-size: 1.75em;
+      font-size: 2.5em;
       margin-left: 0.25em;
     }
   }

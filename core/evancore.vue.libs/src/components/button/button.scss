@@ -37,6 +37,7 @@
   font-weight: normal;
   & > i.left.mdi {
     margin-right: 6px;
+    font-size: 18px;
   }
   &.active {
     border-bottom: 2px solid cssVar('primary');
