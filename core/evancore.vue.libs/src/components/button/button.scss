@@ -33,13 +33,19 @@
 }
 
 .btn-text-filter.btn {
-  color: cssVar('gray-600');
-  font-weight: normal;
+  &, span {
+    color: cssVar('gray-600');
+    font-weight: normal;
+    font-size: 12px;
+  }
   & > i.left.mdi {
     margin-right: 6px;
     font-size: 18px;
   }
   &.active {
     border-bottom: 2px solid cssVar('primary');
+  }
+  &:hover span {
+    color: cssVar('gray-900');
   }
 }

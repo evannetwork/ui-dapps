@@ -28,7 +28,7 @@
         </div>
         <div>
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
             icon-position="left"
@@ -37,7 +37,7 @@
             @click="filterByFavorites()"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
             icon-position="left"
@@ -46,7 +46,7 @@
             @click="filterByType('users')"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-domain"
             icon-position="left"
@@ -54,17 +54,17 @@
             :label="$t('_assets.contacts.companies')"
             @click="filterByType('company')"
           />
-          <evan-button
-            class="filter-btn ml-3"
+          <!-- <evan-button
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-radio-tower"
             icon-position="left"
             :class="{ active: filter === 'device' }"
             :label="$t('_assets.contacts.iot-devices')"
             @click="filterByType('device')"
-          />
+          /> -->
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-account-multiple-outline"
             icon-position="left"

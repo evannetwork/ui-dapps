@@ -43,7 +43,7 @@
         </div>
         <div>
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
             icon-position="left"
@@ -52,7 +52,7 @@
             @click="selectedFilter = 'my'"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
             icon-position="left"
@@ -61,7 +61,7 @@
             @click="selectedFilter = 'favorites'"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-cube-outline"
             icon-position="left"
