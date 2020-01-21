@@ -84,7 +84,6 @@
         :value="selectedTemplate"
         @change="handleTemplateSelectChange"
       />
-
       <evan-file-input
         accept=".json"
         :placeholder="'_assets.digitaltwins.drag-desc' | translate"
@@ -124,7 +123,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!(name && template)"
+            :disabled="!(name && template) || templateErrors.length > 0"
             :is-loading="loading"
             :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />

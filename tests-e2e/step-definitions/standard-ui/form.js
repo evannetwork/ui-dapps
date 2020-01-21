@@ -1,31 +1,13 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
-import { betterClearValue, getElementIdByLabel, parseEnvVar } from '../../test-utils/test-utils';
+import {
+  betterClearValue,
+  getElementIdByLabel,
+  getSelector,
+  parseEnvVar
+} from '../../test-utils/test-utils';
 
-const getSelector = (label, angular) => {
-  if (!angular) {
-    // support also the .input-wrapper element around the input
-    const inputSelectors = [
-      'input', 'div/input',
-      'select', 'div/select',
-      'textarea', 'div/textarea'
-    ];
 
-    return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
-      `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${ inputSelector }`,
-      `//label[normalize-space(text()) = "${label}"]/following-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${ inputSelector }`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${ inputSelector }`,
-    ])).join('|');
-  } else {
-    return [
-      `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
-      `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
-      `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`
-    ].join('|');
-  }
-}
 
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
@@ -48,17 +30,36 @@ When(/^I set( angular)? Input field with label \"([^"]*)\" to \"([^"]*)\"$/, asy
 
 /**
  * Same semantic like "When I set( angular)? Input field with label ".
+ *
  * Created separate function for backwards compatibility.
  */
 When('I type {string} into the input field with label {string}', async(content, label) => {
   const elementId = await getElementIdByLabel(label);
 
-  await client.expect.element(`#${elementId}`).to.be.visible;
-  await betterClearValue(`#${elementId}`);
+
+  if(elementId) {
+    await client.expect.element(`#${elementId}`).to.be.visible;
+    await betterClearValue(`#${elementId}`);
+
+    if ( content && typeof content === 'string' && content.length > 0) {
+      await client.setValue(`#${elementId}`, parseEnvVar(content));
+    }
+
+    return;
+  }
+
+  // if input has no "id" or label has no "for" attribute
+  client.useXpath();
+  const selector = getSelector(label, false);
+
+  await client.expect.element(selector).to.be.visible;
+  await betterClearValue(selector);
 
   if ( content && typeof content === 'string' && content.length > 0) {
-    await client.setValue(`#${elementId}`, parseEnvVar(content));
+    await client.setValue(selector, parseEnvVar(content));
   }
+
+  client.useCss();
 });
 
 /**
@@ -90,6 +91,7 @@ When('I set Input field with placeholder {string} to {string}',
     if ( content && typeof content === 'string' && content.length > 0) {
       await client.setValue(selector, parseEnvVar(content));
     }
+    client.useCss();
   }
 );
 
