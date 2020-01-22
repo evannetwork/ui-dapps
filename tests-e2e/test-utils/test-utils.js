@@ -24,7 +24,9 @@ import { client } from 'nightwatch-api';
 import angularUtils from './angular';
 import vueUtils from './vue';
 
-const backspaces = (n) => [...Array(n)].map(() => '\ue003').join('');
+export function backspaces(n) {
+  [...Array(n)].map(() => '\ue003').join('');
+}
 
 /**
  * Sets the default evan configuration parameters for the test.
@@ -32,7 +34,7 @@ const backspaces = (n) => [...Array(n)].map(() => '\ue003').join('');
  * @param      {any}  browser  the nightwatch browser instance.
  * @param      {any}  customs  custom properties that should be added to the evan context
  */
-const setupEvan = function (browser, customs) {
+export function setupEvan(browser, customs) {
   // evan.url = 'https://dashboard.test.evan.network';
   const merged = {
     angular: angularUtils,
@@ -65,7 +67,7 @@ const setupEvan = function (browser, customs) {
   events.EventEmitter.defaultMaxListeners = 100;
 
   return proxy;
-};
+}
 
 /**
  * A better `clearValue` for inputs having a more complex interaction.
@@ -74,7 +76,7 @@ const setupEvan = function (browser, customs) {
  * @param {string} selector
  * @returns
  */
-function betterClearValue(selector) {
+export function betterClearValue(selector) {
   const { RIGHT_ARROW, BACK_SPACE, TAB } = client.Keys;
   return client.getValue(selector, (result) => {
     const chars = result.value.split('');
@@ -86,7 +88,7 @@ function betterClearValue(selector) {
   });
 }
 
-async function getElementIdByLabel(value) {
+export async function getElementIdByLabel(value) {
   let elementId;
   const xPathSelector = `//*/text()[normalize-space(.) = '${value}']/parent::*`;
 
@@ -98,7 +100,7 @@ async function getElementIdByLabel(value) {
   return elementId;
 }
 
-async function getElementsCount(selector, mode = 'xpath') {
+export async function getElementsCount(selector, mode = 'xpath') {
   return new Promise((resolve, reject) => {
     client.elements(mode, selector, (result) => {
       console.log('Length', result.value.length); // (if there are 3 li, here should be a count of 3)
@@ -112,7 +114,7 @@ async function getElementsCount(selector, mode = 'xpath') {
  *
  * @param {*} content
  */
-function parseEnvVar(content) {
+export function parseEnvVar(content) {
   if (!content || (typeof content === 'string' && content.length === 0)) {
     return content;
   }
@@ -128,7 +130,7 @@ function parseEnvVar(content) {
   return inputValue;
 }
 
-const getSelector = (label, angular) => {
+export function getSelector(label, angular) {
   if (!angular) {
     // support also the .input-wrapper element around the input
     const inputSelectors = [
@@ -137,24 +139,23 @@ const getSelector = (label, angular) => {
       'textarea', 'div/textarea',
     ];
 
-    return [
-      ...inputSelectors.map((inputSelector) => [
-        `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
-        `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
-        `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
-        `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
-      ]),
-    ].join('|');
+    return inputSelectors.map((inputSelector) => [
+      `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
+      `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
+      `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
+      `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
+    ].join('|')).join('|');
   }
+
   return [
     `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
     `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
     `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
     `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`,
   ].join('|');
-};
+}
 
-async function pauseHere() {
+export async function pauseHere() {
   console.log('/******************************************************************************/');
   console.log('test paused, enjoy your developer tools :3');
   console.log(' ---> press ENTER key to continue <---');
@@ -170,14 +171,3 @@ async function pauseHere() {
     resolve(ans);
   }));
 }
-
-export {
-  backspaces,
-  betterClearValue,
-  getSelector,
-  setupEvan,
-  getElementIdByLabel,
-  getElementsCount,
-  parseEnvVar,
-  pauseHere,
-};
