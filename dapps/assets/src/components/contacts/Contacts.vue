@@ -54,15 +54,6 @@
             :label="$t('_assets.contacts.companies')"
             @click="filterByType('company')"
           />
-          <!-- <evan-button
-            class="ml-3"
-            type="text-filter"
-            icon="mdi mdi-radio-tower"
-            icon-position="left"
-            :class="{ active: filter === 'device' }"
-            :label="$t('_assets.contacts.iot-devices')"
-            @click="filterByType('device')"
-          /> -->
           <evan-button
             class="ml-3"
             type="text-filter"
@@ -189,18 +180,7 @@ h1.heading {
 /deep/ .evan-swipe-panel.light {
   background-color: cssVar('body-bg');
 
-  &,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  span,
-  p,
-  li,
-  b,
-  label,
-  small {
+  * {
     color: cssVar('text-color');
   }
 }
