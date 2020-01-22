@@ -96,7 +96,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       border: none;
       color: cssVar('gray-600');
       font-size: 10px;
-      // Using values form figma creates weird shadow bleeding
+      // Using values from figma creates weird shadow bleeding
       box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.15);
 
       &[aria-sort] {
