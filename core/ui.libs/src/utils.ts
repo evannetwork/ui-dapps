@@ -16,7 +16,7 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-const isArray = Array.isArray;
+const { isArray } = Array;
 const keyList = Object.keys;
 const hasProp = Object.prototype.hasOwnProperty;
 
@@ -26,9 +26,10 @@ const fileTypes = [
   Uint16Array,
   Uint32Array,
   Uint8Array,
-  ArrayBuffer
+  ArrayBuffer,
 ];
 
+/* eslint-disable */
 /**
  * Deep equal for objects (https://github.com/epoberezkin/fast-deep-equal/blob/master/index.js)
  *
@@ -46,11 +47,11 @@ export function deepEqual(a, b) {
       return true;
     }
 
-    let arrA = isArray(a)
-      , arrB = isArray(b)
-      , i
-      , length
-      , key;
+    const arrA = isArray(a);
+    const arrB = isArray(b);
+    let i;
+    let length;
+    let key;
 
     if (arrA && arrB) {
       length = a.length;
@@ -115,6 +116,7 @@ export function deepEqual(a, b) {
 
   return a !== a && b !== b;
 }
+/* eslint-enable */
 
 /**
  * Lodash cloneDeep wrapper including ignoreFiles flag.
@@ -126,14 +128,16 @@ export function deepEqual(a, b) {
 export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
   if (ignoreFiles) {
     return lodash.cloneDeepWith(obj, (value: any) => {
-      // value.__proto__.constructor.toString().indexOf('Buffer') !== -1
+      // eslint-disable-next-line no-underscore-dangle
       if (value && (value._isBuffer || fileTypes.indexOf(value.constructor) !== -1)) {
         return value;
       }
+
+      return undefined;
     });
-  } else {
-    return lodash.cloneDeep(obj);
   }
+
+  return lodash.cloneDeep(obj);
 }
 
 /**
@@ -143,10 +147,11 @@ export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
  * @param      {string}  contnt   content that should be placed within the file.
  */
 export function downloadObject(fileName: string, content: any): void {
-  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(content));
+  const stringified = JSON.stringify(content, null, 2);
+  const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(stringified)}`;
   const downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute('href', dataStr);
-  downloadAnchorNode.setAttribute('download', fileName + '.json');
+  downloadAnchorNode.setAttribute('download', `${fileName}.json`);
   document.body.appendChild(downloadAnchorNode); // required for firefox
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
