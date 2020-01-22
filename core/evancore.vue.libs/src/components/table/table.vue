@@ -133,7 +133,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
     }
 
     & > tbody > tr.evan-table-body-row {
-      height: 64px;
+      height: 56px;
       background-color: white;
       color: cssVar('gray-600');
       cursor: pointer;
@@ -152,6 +152,8 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
         vertical-align: middle;
         border: none;
         font-size: 12px;
+        padding-top: 0;
+        padding-bottom: 0;
 
         &.truncate {
           text-overflow: ellipsis;
