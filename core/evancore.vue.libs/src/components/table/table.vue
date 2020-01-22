@@ -57,6 +57,9 @@ export default Component;
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
 
+$arrow-down: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="%2346C2BF" d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z" /></svg>';
+$arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="%2346C2BF" d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>';
+
 .evan-table-wrapper {
   width: 100%;
   margin-bottom: 0;
@@ -93,10 +96,31 @@ export default Component;
       color: cssVar('gray-600');
       font-size: 10px;
 
+      &[aria-sort] {
+        // remove standard arrows
+        background-image: none;
+      }
+
       &[aria-sort='ascending'],
       &[aria-sort='descending'] {
         color: cssVar('primary');
+
+        &::after {
+          // 14px to avoid janky height changes on sort
+          height: 14px;
+          width: 14px;
+          vertical-align: sub;
+          display: inline-block;
+          margin-left: 6px;
+        }
       }
+      &[aria-sort='ascending']::after {
+        content: url('data:image/svg+xml;utf-8,' + $arrow-up);
+      }
+      &[aria-sort='descending']::after {
+        content: url('data:image/svg+xml;utf-8,' + $arrow-down);
+      }
+
       &.th-important {
         width: 200px;
       }
