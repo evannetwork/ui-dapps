@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
+import { Prop } from 'vue-property-decorator';
 
 import EvanFormComponent from '../form/form';
 import { EvanForm, EvanFormControl } from '../../../forms';
