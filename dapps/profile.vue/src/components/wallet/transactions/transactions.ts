@@ -66,27 +66,25 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
   /**
    * Clear dispatcher listeners
    */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
+  beforeDestroy(): void {
+    this.listeners.forEach((listener) => listener());
   }
 
   /**
    * Load last transactions.
    */
-  async created() {
-    const runtime = (this as any).getRuntime();
+  async created(): Promise<void> {
+    const runtime = this.getRuntime();
 
     // setup payment service
     this.paymentService = new PaymentService(runtime);
 
     // use this link for viewing all transactions on explorer
-    this.explorerTransactionsUrl =
-      runtime.environment === 'core'
+    this.explorerTransactionsUrl = runtime.environment === 'core'
       ? 'https://explorer.evan.network'
       : 'https://testexplorer.evan.network';
 
-    this.explorerTransactionsUrl =
-      `${ this.explorerTransactionsUrl }/address/${ runtime.activeAccount }/transactions`;
+    this.explorerTransactionsUrl = `${this.explorerTransactionsUrl}/address/${runtime.activeAccount}/transactions`;
 
     // watch for buy eve events
     const reload = () => this.loadTransactions();
@@ -100,7 +98,7 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
   /**
    * Load all transactions from charged credits. (add search integration later)
    */
-  async loadTransactions () {
+  async loadTransactions(): Promise<void> {
     this.loading = true;
 
     // load last credits
@@ -108,14 +106,12 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
     // load transferring transactions from local storage
     const transferringTransactions = await this.paymentService.getTransactionsFromLocalStorage();
 
-    // apply transactions to scope and sort them
-    this.transactions = [ ].concat(charged).concat(transferringTransactions);
-    // filter null object
-    this.transactions = this.transactions.filter(item => item);
+    this.transactions = [...charged, ...transferringTransactions];
 
-    this.transactions = this.transactions.sort((a, b) =>
-      a.timestamp < b.timestamp ? 1 : (a.timestamp > b.timestamp ? -1 : 0)
-    );
+    this.transactions = this.transactions
+      // filter null object
+      .filter((item) => item)
+      .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1));
 
     this.loading = false;
   }
@@ -124,30 +120,32 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
    * Load all transactions where the current user buyed eve.
    */
   async loadChargedCredits(): Promise<Array<TransactionInterface>> {
-    const runtime = (this as any).getRuntime();
-    const web3 = runtime.web3;
+    const runtime = this.getRuntime();
+    const { web3 } = runtime;
     const bRC = web3.eth.Contract(
       blockRewardContractInterface,
-      runtime.environment === 'core' ?
-        '0x1000000000000000000000000000000000000002':
-        '0xdccb7f7ec90c99ba744986539dd73b897401954b'
+      runtime.environment === 'core'
+        ? '0x1000000000000000000000000000000000000002'
+        : '0xdccb7f7ec90c99ba744986539dd73b897401954b',
     );
 
     const paymentEvents = await bRC.getPastEvents('AddedReceiver', {
       filter: { receiver: runtime.activeAccount },
       fromBlock: 0,
-      toBlock: 'latest'
+      toBlock: 'latest',
     });
 
-    const receivedPayments: Array<TransactionInterface> = await Promise.all(paymentEvents.map(async (entry) => {
-      const block = await web3.eth.getBlock(entry.blockNumber);
-      const amount = web3.utils.fromWei(entry.returnValues.amount.toString());
-      return {
-        amount: parseFloat(amount),
-        timestamp: block.timestamp,
-        type: 'creditCharged',
-      };
-    }));
+    const receivedPayments: Array<TransactionInterface> = await Promise.all(
+      paymentEvents.map(async (entry) => {
+        const block = await web3.eth.getBlock(entry.blockNumber);
+        const amount = web3.utils.fromWei(entry.returnValues.amount.toString());
+        return {
+          amount: parseFloat(amount),
+          timestamp: block.timestamp,
+          type: 'creditCharged',
+        };
+      }),
+    );
 
     return receivedPayments;
   }
@@ -155,7 +153,7 @@ export default class TransactionsComponent extends mixins(EvanComponent) {
   /**
    * Render only X transactions.
    */
-  renderedTransactions() {
+  renderedTransactions(): TransactionInterface[] {
     return this.transactions.slice(0, this.displayedTransactions);
   }
 }
