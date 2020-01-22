@@ -55,6 +55,7 @@ export default class AssetsComponent extends mixins(EvanComponent) {
   private getActiveIcon(): string {
     const matched = this.$route.matched.map((match) => match.name);
     const activeRoute = matched.find((route) => typeof route !== 'undefined');
+
     return this.navItems.find((item) => item.to.name === activeRoute).icon;
   }
 }
