@@ -18,16 +18,23 @@
 */
 
 <template>
-  <div class="evan-form"
+  <div
+    class="evan-form"
     :class="{
       'edit-mode': editMode && !onlyForm,
       'form-data-wrapper': !onlyForm,
       'transparent': !editMode && !onlyForm,
     }"
   >
-    <div class="d-flex justify-content-between align-items-center pb-1" v-if="!onlyForm">
+    <div
+      v-if="!onlyForm"
+      class="d-flex justify-content-between align-items-center pb-1"
+    >
       <h5 class="my-0 py-0 text-uppercase font-weight-bold">
-        <i class="mdi mr-2" :class="[ {'mdi-lock': !isPublic}, {'mdi-web': isPublic} ]" />
+        <i
+          class="mdi mr-2"
+          :class="[ {'mdi-lock': !isPublic}, {'mdi-web': isPublic} ]"
+        />
         {{ title }}
       </h5>
       <evan-button
@@ -39,25 +46,33 @@
         {{ '_evan.share' | translate }}
       </evan-button>
     </div>
-    <div class="px-0"
+    <div
+      class="px-0"
       :class="{
         'container': stacked,
         'pt-4': !onlyForm,
-      }">
-      <form class="d-flex flex-wrap flex-row justify-content-between" @submit="save">
-        <slot v-bind:setEditMode="setEditMode"></slot>
-        <slot name="form" v-if="form">
+      }"
+    >
+      <form
+        class="d-flex flex-wrap flex-row justify-content-between"
+        @submit="save"
+      >
+        <slot :setEditMode="setEditMode" />
+        <slot
+          v-if="form"
+          name="form"
+        >
           <template v-for="(controlName) in form.controls">
             <slot :name="`form-control-${ controlName }`">
               <component
+                :is="getControlComponentName(form[controlName])"
+                v-model="form[controlName].value"
                 :disabled="!editable || isLoading"
                 :error="(onlyForm || editMode && !onlyForm) ? getTranslation(form[controlName], 'error') : false"
                 :hint="getTranslation(form[controlName], 'hint')"
-                :is="getControlComponentName(form[controlName])"
                 :label="getTranslation(form[controlName], 'label')"
                 :placeholder="getTranslation(form[controlName], 'placeholder')"
                 :stacked="stacked"
-                v-model="form[controlName].value"
                 v-bind="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr : { }"
                 @blur="form[controlName].setDirty()"
                 @input="form[controlName].uiSpecs && form[controlName].uiSpecs.input ? form[controlName].uiSpecs.input($event) : null"
@@ -65,34 +80,34 @@
             </slot>
           </template>
         </slot>
-        <slot name="after"></slot>
+        <slot name="after" />
       </form>
     </div>
     <template v-if="(editMode || isLoading) && !onlyForm">
       <div class="d-flex justify-content-end">
         <div>
           <a
+            v-if="!isLoading"
             class="text-muted mb-3 d-block text-right"
             href="https://evannetwork.github.io/docs/other/glossary.html#e"
             target="_blank"
             rel="noopener noreferrer"
-            v-if="!isLoading"
           >
             <i class="mdi mdi-information-outline mr-2" />
             {{ '_evan.transaction_costs_hint' | translate }}
           </a>
           <div class="d-flex justify-content-end">
             <evan-button
+              v-if="!isLoading && enableCancel"
               class="mr-3"
               type="secondary"
-              v-if="!isLoading && enableCancel"
-              @click="cancel"
               :label="'_evan.cancel' | translate"
+              @click="cancel"
             />
             <evan-button
               type="primary"
               :disabled="isLoading || disabled || (form && !form.isValid)"
-              :isLoading="isLoading"
+              :is-loading="isLoading"
               :label="'_evan.save' | translate"
               @click="save"
             />
@@ -104,7 +119,7 @@
 </template>
 
 <script lang="ts">
-  import FormDataWrapper from './form';
-  export default FormDataWrapper;
-</script>
+import FormDataWrapper from './form';
 
+export default FormDataWrapper;
+</script>

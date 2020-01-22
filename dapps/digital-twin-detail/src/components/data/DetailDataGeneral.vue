@@ -21,15 +21,13 @@
   <div>
     <div class="content-card">
       <evan-form-dbcp
-        :contractAddress="$store.state.twin.contractAddress"
         :description="$store.state.twin.description"
-        :isLoading="$store.state.twin.dispatcherStates.description"
-        :owner="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
+        :is-loading="$store.state.twin.dispatcherStates.description"
         :shareable="false"
         :title="'_twin-detail.data.general.information-title' | translate"
-        :type="'_twin-detail.data.general.type-value' | translate"
         @init="dbcpForm = $event"
-        @save="setDescription();">
+        @save="setDescription();"
+      >
         <evan-form-control-input
           :disabled="true"
           :label="'_twin-detail.data.general.type' | translate"
@@ -50,6 +48,7 @@
 
 <script lang="ts">
 import DigitalTwinDetailDataGeneralComponent from './DetailDataGeneral';
+
 export default DigitalTwinDetailDataGeneralComponent;
 </script>
 

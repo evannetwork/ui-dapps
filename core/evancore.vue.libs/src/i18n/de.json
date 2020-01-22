@@ -57,6 +57,8 @@
     },
     "dbcp-form": {
       "description": {
+        "error": "Bitte geben Sie maximal 300 Zeichen ein.",
+        "hint": "Max. 300 Zeichen",
         "label": "Beschreibung",
         "placeholder": "Kurze Beschreibung des Digitalen Zwillings"
       },
