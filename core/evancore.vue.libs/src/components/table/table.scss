@@ -1,0 +1,139 @@
+@import '~@evan.network/ui/src/style/utils';
+
+// Fill "hardcoded" here because cssVars don't work
+$arrow-down: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="%2346C2BF" d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z" /></svg>';
+$arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="%2346C2BF" d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>';
+
+.evan-table-wrapper {
+  width: 100%;
+  margin-bottom: 0;
+
+  &.show-scrollbar {
+    overflow-y: scroll;
+    // This is needed for webkit browsers
+    // https://stackoverflow.com/a/31278448
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  /deep/ table.table.b-table {
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    // This can create janky behavior with sticky table header
+    // Without this we have trouble with borders on rows
+    border-collapse: separate;
+    border-spacing: 0 5px;
+
+    & > thead.evan-table-head > tr.evan-table-head-row > th {
+      background-color: cssVar('bg-level-3');
+      border: none;
+      color: cssVar('gray-600');
+      font-size: 10px;
+      // Using values from figma creates weird shadow bleeding
+      box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.15);
+
+      &[aria-sort] {
+        // remove standard arrows
+        background-image: none;
+      }
+
+      &[aria-sort='ascending'],
+      &[aria-sort='descending'] {
+        color: cssVar('primary');
+
+        &::after {
+          // 14px to avoid janky height changes on sort
+          height: 14px;
+          width: 14px;
+          vertical-align: sub;
+          display: inline-block;
+          margin-left: 6px;
+        }
+      }
+      &[aria-sort='ascending']::after {
+        content: url('data:image/svg+xml;utf-8,' + $arrow-up);
+      }
+      &[aria-sort='descending']::after {
+        content: url('data:image/svg+xml;utf-8,' + $arrow-down);
+      }
+
+      &.th-important {
+        width: 200px;
+      }
+      &.th-date {
+        width: 120px;
+      }
+      &.th-icon {
+        width: 70px;
+      }
+    }
+
+    & > tbody > tr.evan-table-body-row {
+      height: 56px;
+      background-color: white;
+      color: cssVar('gray-600');
+      cursor: pointer;
+
+      // create spacing between rows without using border-collapse
+      // because it causes janky behavior with sticky header
+      // border-bottom: 4px solid cssVar('bg-level-3');
+
+      &:hover {
+        background-color: cssVar('gray-100');
+        // border creates janky jumping. Using inset shadow as an alternative
+        box-shadow: inset 0px 0px 0px 1px cssVar('gray-200');
+      }
+
+      & > td {
+        vertical-align: middle;
+        border: none;
+        font-size: 12px;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        &.truncate {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+
+      &.b-table-empty-row {
+        cursor: inherit;
+      }
+
+      .visible-on-row-hover {
+        visibility: hidden;
+      }
+      &:hover .visible-on-row-hover {
+        visibility: visible;
+      }
+    }
+
+    i.table-icon {
+      font-size: 2.5em;
+      margin-left: 0.25em;
+    }
+
+    .table-spacer {
+      height: 16px;
+    }
+  }
+}
+// TODO: Find a better solution at some point
+// http://www.outlinenone.com/
+/deep/ * {
+  &:focus {
+    outline: 0;
+  }
+}
