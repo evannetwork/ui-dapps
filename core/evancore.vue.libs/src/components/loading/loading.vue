@@ -18,12 +18,16 @@
 */
 
 <template>
-  <div class="evan-loading" :class="classes">
-    <div class="spinner-border text-primary"></div>
+  <div
+    class="evan-loading"
+    :class="classes"
+  >
+    <div class="spinner-border" />
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './loading';
-  export default Component;
+import Component from './loading';
+
+export default Component;
 </script>

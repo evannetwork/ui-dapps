@@ -17,28 +17,28 @@
   the following URL: https://evan.network/license/
 */
 
+@import './utils';
+
 /**
  * https://loading.io/css/
  */
 .evan {
-  // .spinner-border {
-  //   min-width: 2rem;
-  //   min-height: 2rem;
-  // }
-
-  // .spinner-border-sm {
-  //   min-width: 1rem;
-  //   min-height: 1rem;
-  // }
+  .evan-loading {
+    color: cssVar('primary');
+  }
 
   .evan-loading.icon-replacer {
     display: flex;
-    height: 40px; // mimic icon dimensions
+
     width: 40px;
+    height: 40px; // mimic icon dimensions
+
     .spinner-border {
-      margin: auto;
       width: 25px;
       height: 25px;
+      margin: auto;
+
+      color: cssVar('text-color');
     }
   }
 }
