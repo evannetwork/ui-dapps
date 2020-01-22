@@ -1,0 +1,293 @@
+{
+  "description": {
+    "dbcpVersion": 2,
+    "description": "Twin that represents a bicycle within the real world. Includes technical specifications, information about the owner and a maintenance log.",
+    "author": "Evan GmbH",
+    "version": "0.1.0",
+    "i18n": {
+      "de": {
+        "description": "Dieser Zwilling stellt ein Fahrrad in der realen Welt dar. Er enthält technische Spezifikationen, Informationen über den Eigentümer und ein Wartungsprotokoll.",
+        "name": "Fahrrad"
+      },
+      "en": {
+        "description": "English description for Bicycle Twin with manual file upload.",
+        "name": "Bicycle"
+      }
+    },
+    "name": "bicycle"
+  },
+  "plugins": {
+    "maintenance": {
+      "description": {
+        "dbcpVersion": 2,
+        "description": "Maintenance",
+        "author": "Evan GmbH",
+        "version": "0.1.0",
+        "i18n": {
+          "de": {
+            "description": "Historie der Wartungsprotokolle.",
+            "maintenance": {
+              "description": "Historie der Wartungsprotokolle.",
+              "name": "Wartung",
+              "properties": {
+                "date": {
+                  "label": "Datum",
+                  "placeholder": "01.01.2018"
+                },
+                "description": {
+                  "label": "Beschreibung",
+                  "placeholder": "Wartung der Schaltung"
+                },
+                "processor": {
+                  "label": "Bearbeiter",
+                  "placeholder": "Max Mustermann"
+                }
+              }
+            },
+            "name": "Wartung"
+          },
+          "en": {
+            "description": "History of maintenance logs.",
+            "maintenance": {
+              "description": "History of maintenance logs.",
+              "name": "Maintenance",
+              "properties": {
+                "date": {
+                  "label": "Date",
+                  "placeholder": "01.01.2018"
+                },
+                "description": {
+                  "label": "Description",
+                  "placeholder": "Maintenance of the gearbox"
+                },
+                "processor": {
+                  "label": "Processor",
+                  "placeholder": "Max Mustermann"
+                }
+              }
+            },
+            "name": "Maintenance"
+          }
+        },
+        "name": "maintenance"
+      },
+      "template": {
+        "properties": {
+          "maintenance": {
+            "dataSchema": {
+              "$id": "maintenance_schema",
+              "items": {
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "processor": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "permissions": {
+              "0": [
+                "set"
+              ]
+            },
+            "type": "list"
+          }
+        },
+        "type": "list"
+      }
+    },
+    "metadata": {
+      "description": {
+        "dbcpVersion": 2,
+        "description": "Specifications",
+        "author": "Evan GmbH",
+        "version": "0.1.0",
+        "i18n": {
+          "de": {
+            "characteristics": {
+              "description": "Beschreiben Sie Ihr Fahrrad mit dessen Stammdaten",
+              "name": "Eigenschaften",
+              "properties": {
+                "bicycleType": {
+                  "label": "Typ",
+                  "placeholder": "Mountainbike, Rennrad, City"
+                },
+                "color": {
+                  "label": "Farbe",
+                  "placeholder": "rot, grün, blau"
+                },
+                "frameHeight": {
+                  "label": "Reifengröße",
+                  "placeholder": "29\", 26\", 24\""
+                },
+                "category": {
+                  "label": "Kategorie",
+                  "placeholder": "Damen, Herren, Kinder"
+                },
+                "manufacturer": {
+                  "label": "Hersteller",
+                  "placeholder": "Ghost, Giant, Kona"
+                }
+              }
+            },
+            "description": "Technische Informationen eines Fahrrads und Kontaktdaten des Eigentümers.",
+            "name": "Spezifikationen",
+            "owner": {
+              "description": "Details zum Eigentümer",
+              "name": "Name",
+              "properties": {
+                "city": {
+                  "label": "Stadt",
+                  "placeholder": "Berlin"
+                },
+                "country": {
+                  "label": "Land",
+                  "placeholder": "Deutschland"
+                },
+                "name": {
+                  "label": "Name",
+                  "placeholder": "Max Mustermann"
+                },
+                "plz": {
+                  "label": "Postleitzahl",
+                  "placeholder": "10115"
+                },
+                "streetNumber": {
+                  "label": "Straße & Nummer",
+                  "placeholder": "Max Mustermann Str. 2a"
+                }
+              }
+            }
+          },
+          "en": {
+            "characteristics": {
+              "description": "Describe your bicycle by it's specifications",
+              "name": "Characteristics",
+              "properties": {
+                "bicycleType": {
+                  "label": "Type",
+                  "placeholder": "mountain bike, racing bike, city, ..."
+                },
+                "color": {
+                  "label": "Color",
+                  "placeholder": "red, green, blue"
+                },
+                "frameHeight": {
+                  "label": "Wheel size",
+                  "placeholder": "29\", 26\", 24\""
+                },
+                "category": {
+                  "label": "Category",
+                  "placeholder": "Ladies, Gentlemen, Children"
+                },
+                "manufacturer": {
+                  "label": "Manufacturer",
+                  "placeholder": "Ghost, Giant, Kona"
+                }
+              }
+            },
+            "description": "Technical information of a bicycle and it's owner.",
+            "name": "Specifications",
+            "owner": {
+              "description": "Details of the owner",
+              "name": "Name",
+              "properties": {
+                "city": {
+                  "label": "City",
+                  "placeholder": "Berlin"
+                },
+                "country": {
+                  "label": "Country",
+                  "placeholder": "Germany"
+                },
+                "name": {
+                  "label": "Name",
+                  "placeholder": "Max Mustermann"
+                },
+                "plz": {
+                  "label": "Post-Code",
+                  "placeholder": "10115"
+                },
+                "streetNumber": {
+                  "label": "Street & Number",
+                  "placeholder": "Max Mustermann Str. 2a"
+                }
+              }
+            }
+          }
+        },
+        "name": "specifications"
+      },
+      "template": {
+        "properties": {
+          "characteristics": {
+            "dataSchema": {
+              "$id": "characteristics_schema",
+              "properties": {
+                "bicycleType": {
+                  "type": "string"
+                },
+                "color": {
+                  "type": "string"
+                },
+                "frameHeight": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "manufacturer": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "permissions": {
+              "0": [
+                "set"
+              ]
+            },
+            "type": "entry"
+          },
+          "owner": {
+            "dataSchema": {
+              "$id": "characteristics_schema",
+              "properties": {
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "plz": {
+                  "type": "string"
+                },
+                "streetNumber": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "permissions": {
+              "0": [
+                "set"
+              ]
+            },
+            "type": "entry"
+          }
+        },
+        "type": "metadata"
+      }
+    }
+  }
+}

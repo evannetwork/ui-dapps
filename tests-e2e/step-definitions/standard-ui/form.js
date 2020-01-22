@@ -1,32 +1,11 @@
 import { client } from 'nightwatch-api';
 import { When, Then } from 'cucumber';
-import * as testUtils from '../../test-utils/test-utils.js';
-
-const getSelector = (label, angular) => {
-  if (!angular) {
-    // support also the .input-wrapper element around the input
-    const inputSelectors = [
-      'input', 'div/input',
-      'select', 'div/select',
-      'textarea', 'div/textarea',
-    ];
-
-    return [
-      ...inputSelectors.map((inputSelector) => [
-        `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
-        `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
-        `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
-        `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
-      ]),
-    ].join('|');
-  }
-  return [
-    `//ion-label[normalize-space(text()) = "${label}"]/preceding-sibling::ion-input/input`,
-    `//ion-label[normalize-space(text()) = "${label}"]/following-sibling::ion-input/input`,
-    `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::ion-input/input`,
-    `//ion-label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::ion-input/input`,
-  ].join('|');
-};
+import {
+  betterClearValue,
+  getElementIdByLabel,
+  getSelector,
+  parseEnvVar,
+} from '../../test-utils/test-utils';
 
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
@@ -38,10 +17,10 @@ When(/^I set( angular)? Input field with label "([^"]*)" to "([^"]*)"$/, async (
   const selector = getSelector(label, !!angular);
 
   await client.expect.element(selector).to.be.visible;
-  await testUtils.betterClearValue(selector);
+  await betterClearValue(selector);
 
   if (content && typeof content === 'string' && content.length > 0) {
-    await client.setValue(selector, testUtils.parseEnvVar(content));
+    await client.setValue(selector, parseEnvVar(content));
   }
 
   client.useCss();
@@ -49,17 +28,36 @@ When(/^I set( angular)? Input field with label "([^"]*)" to "([^"]*)"$/, async (
 
 /**
  * Same semantic like "When I set( angular)? Input field with label ".
+ *
  * Created separate function for backwards compatibility.
  */
 When('I type {string} into the input field with label {string}', async (content, label) => {
-  const elementId = await testUtils.getElementIdByLabel(label);
+  const elementId = await getElementIdByLabel(label);
 
-  await client.expect.element(`#${elementId}`).to.be.visible;
-  await testUtils.betterClearValue(`#${elementId}`);
+
+  if (elementId) {
+    await client.expect.element(`#${elementId}`).to.be.visible;
+    await betterClearValue(`#${elementId}`);
+
+    if (content && typeof content === 'string' && content.length > 0) {
+      await client.setValue(`#${elementId}`, parseEnvVar(content));
+    }
+
+    return;
+  }
+
+  // if input has no "id" or label has no "for" attribute
+  client.useXpath();
+  const selector = getSelector(label, false);
+
+  await client.expect.element(selector).to.be.visible;
+  await betterClearValue(selector);
 
   if (content && typeof content === 'string' && content.length > 0) {
-    await client.setValue(`#${elementId}`, testUtils.parseEnvVar(content));
+    await client.setValue(selector, parseEnvVar(content));
   }
+
+  client.useCss();
 });
 
 /**
@@ -70,10 +68,10 @@ When('I set Input field with id {string} to {string}',
     client.useCss();
 
     await client.expect.element(`#${id}`).to.be.visible;
-    await testUtils.betterClearValue(`#${id}`);
+    await betterClearValue(`#${id}`);
 
     if (content && typeof content === 'string' && content.length > 0) {
-      await client.setValue(`#${id}`, testUtils.parseEnvVar(content));
+      await client.setValue(`#${id}`, parseEnvVar(content));
     }
   });
 
@@ -85,11 +83,12 @@ When('I set Input field with placeholder {string} to {string}',
     const selector = `//input[@placeholder='${placeholder}']`;
     client.useXpath();
     await client.expect.element(selector).to.be.visible;
-    await testUtils.betterClearValue(selector);
+    await betterClearValue(selector);
 
     if (content && typeof content === 'string' && content.length > 0) {
-      await client.setValue(selector, testUtils.parseEnvVar(content));
+      await client.setValue(selector, parseEnvVar(content));
     }
+    client.useCss();
   });
 
 /**
@@ -99,7 +98,7 @@ When('I clear Input field with id {string}',
   async (id) => {
     client.useCss();
     await client.expect.element(`#${id}`).to.be.visible;
-    await testUtils.betterClearValue(`#${id}`);
+    await betterClearValue(`#${id}`);
   });
 
 /**
@@ -128,7 +127,7 @@ When('I clear input field with label {string}',
     // select following or preceding input with label having text or having text in any tag inside label tag
     const selector = getSelector(label);
     await client.expect.element(selector).to.be.visible;
-    await testUtils.betterClearValue(selector);
+    await betterClearValue(selector);
 
     client.useCss();
   });
@@ -224,7 +223,7 @@ Then('I click on vue checkbox control with id {string}',
 Then('The value of the Input field with label {string} should be {string}',
   async (label, content) => {
     client.useXpath();
-    const expected = testUtils.parseEnvVar(content);
+    const expected = parseEnvVar(content);
     // select following or preceding input with label having text or having text in any tag inside label tag
     const selector = getSelector(label);
     await client.assert.value(selector, expected);
@@ -237,7 +236,7 @@ Then('The value of the Input field with label {string} should be {string}',
 Then('The value of the Input field with placeholder {string} should be {string}',
   async (placeholder, content) => {
     client.useXpath();
-    const expected = testUtils.parseEnvVar(content);
+    const expected = parseEnvVar(content);
 
     await client.assert.value(`//input[@placeholder='${placeholder}']`, expected);
     client.useCss();
