@@ -20,31 +20,33 @@
 <template>
   <div>
     <evan-loading v-if="loading" />
-    <div class="p-xxl-11 p-xl-6 p-3" v-else>
-      <div class="d-flex flex-wrap">
+    <div
+      v-else
+      class="p-xxl-11 p-xl-6 p-3"
+    >
+      <div class="d-flex flex-wrap justify-content-center">
         <evan-wallet-card :address="$route.params.address" />
         <div
-          class="d-flex flex-column flex-grow-1 align-items-end justify-content-center"
+          class="d-flex flex-column flex-grow-1 align-items-center justify-content-center align-items-lg-end p-3"
         >
           <evan-button
+            class="nav-button"
+            type="secondary"
+            :disabled="balance < 0.1"
             :label="'_profile.wallet.send-eve.title' | translate"
             @click="
               activeMode = 1;
               $store.state.uiState.swipePanel = 'sendEve';
             "
-            style="min-width: 250px"
-            type="secondary"
-            :disabled="balance < 0.1"
           />
           <evan-button
+            class="mt-2 nav-button"
+            type="secondary"
             :label="'_profile.wallet.buy-eve.titles.buy-eve' | translate"
             @click="
               activeMode = 0;
               $store.state.uiState.swipePanel = 'buyEve';
             "
-            class="mt-2"
-            style="min-width: 250px"
-            type="secondary"
           />
         </div>
       </div>
@@ -59,5 +61,14 @@
 
 <script lang="ts">
 import Component from './wallet';
+
 export default Component;
 </script>
+
+<style lang="scss" scoped>
+.nav-button {
+  // fixed width of the wallet card
+  max-width: 323px;
+  width: 100%;
+}
+</style>
