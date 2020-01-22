@@ -20,66 +20,72 @@
 <template>
   <div>
     <evan-swipe-panel
-      :hideCloseButton="windowWidth >= 1400"
-      :isOpen="$store.state.uiState.swipePanel === 'buyEve'"
-      :mountId="windowWidth < 1400 ? null : 'dapp-wrapper-sidebar-right'"
-      :showBackdrop="windowWidth < 1400"
-      :title="
-        (step === 0
-          ? '_profile.wallet.buy-eve.titles.buy-eve'
-          : '_profile.wallet.buy-eve.titles.billing-info') | translate
-      "
-      @hide="$store.state.uiState.swipePanel = ''"
-      @show="$nextTick(() => renderStripeElement())"
+      :hide-close-button="windowWidth >= 1400"
+      :is-open="$store.state.uiState.swipePanel === 'buyEve'"
+      :mount-id="windowWidth < 1400 ? null : 'dapp-wrapper-sidebar-right'"
+      :show-backdrop="windowWidth < 1400"
+      :title="panelTitle"
       alignment="right"
       class="light"
+      @hide="$store.state.uiState.swipePanel = ''"
+      @show="$nextTick(() => renderStripeElement())"
     >
       <evan-loading v-if="loading" />
-      <div class="flex-center text-center" v-else-if="buying">
+      <div
+        v-else-if="buying"
+        class="flex-center text-center"
+      >
         <div><evan-loading /></div>
         <div>{{ '_profile.wallet.buy-eve.processing-hint' | translate }}</div>
       </div>
-      <div class="flex-center text-center" v-else-if="stripe.success">
+      <div
+        v-else-if="stripe.success"
+        class="flex-center text-center"
+      >
         <div><evan-success /></div>
         <div v-html="$t('_profile.wallet.buy-eve.success')" />
         <evan-button
           :label="'_profile.wallet.buy-eve.buy-more' | translate"
-          @click="initialize()"
           class="mt-3"
           type="primary"
+          @click="initialize()"
         />
       </div>
-      <div class="flex-center text-center" v-else-if="!!stripe.payError">
+      <div
+        v-else-if="!!stripe.payError"
+        class="flex-center text-center"
+      >
         <div><evan-failed /></div>
         <div v-html="$t(`_profile.wallet.buy-eve.errors.${stripe.payError}`)" />
         <evan-button
           :label="'_profile.wallet.buy-eve.try-again' | translate"
-          @click="removeStripeError()"
           class="mt-3"
           type="primary"
+          @click="removeStripeError()"
         />
       </div>
 
       <!-- start content -->
-      <div v-else v-show="step === 1">
+      <div
+        v-else
+        v-show="step === 1"
+      >
         <evan-form
           :form="contactForm"
-          :i18nScope="'_profile.company.contact'"
-          :onlyForm="true"
+          :i18n-scope="'_profile.company.contact'"
+          :only-form="true"
           :stacked="true"
-        >
-        </evan-form>
+        />
       </div>
 
       <!-- do not remove the stripe element from dom! -->
       <div v-show="step === 0 && !loading">
         <evan-form
           :form="payForm"
-          :i18nScope="'_profile.wallet.buy-eve.payForm'"
-          :onlyForm="true"
+          :i18n-scope="'_profile.wallet.buy-eve.payForm'"
+          :only-form="true"
           :stacked="true"
-        >
-        </evan-form>
+        />
 
         <template>
           <label class="col-form-label">
@@ -88,8 +94,14 @@
                 | translate
             }}
           </label>
-          <div id="stripeElement" class="stripeElement" />
-          <small class="text-red" v-if="stripe.error && stripe.error.code">
+          <div
+            id="stripeElement"
+            class="stripeElement"
+          />
+          <small
+            v-if="stripe.error && stripe.error.code"
+            class="text-red"
+          >
             {{
               `_profile.wallet.buy-eve.stripe-element.${stripe.error.code}`
                 | translate
@@ -105,7 +117,10 @@
       </div>
       <!-- end content -->
 
-      <template slot="footer" v-if="!loading">
+      <template
+        v-if="!loading"
+        slot="footer"
+      >
         <evan-button
           v-if="step === 0"
           :disabled="
@@ -113,27 +128,34 @@
               !(stripe.element && stripe.complete && !stripe.error)
           "
           :label="'_profile.wallet.buy-eve.continue' | translate"
-          @click="step = 1"
           type="primary"
           class="w-100"
+          @click="step = 1"
         />
 
         <!-- keep displayed but hidden, so the loading circle is displayed correctly -->
         <div
+          v-else
           :class="{ invisible: buying || stripe.success || stripe.payError }"
           class="w-100"
-          v-else
         >
           <div class="text-center mb-3">
-            <div class="vat-loading" v-if="vatCalcTimeout">
+            <div
+              v-if="vatCalcTimeout"
+              class="vat-loading"
+            >
               <div class="spinner-border text-primary" />
             </div>
 
             <span
-              class="text-muted mb-3"
               v-if="reverseCharge"
-              v-html="$t('_profile.wallet.buy-eve.reverse-charge')"
-            />
+              class="text-muted mb-3"
+            >
+              {{ '_profile.wallet.buy-eve.reverse-charge' | translate }}
+            </span>
+            <span>
+              {{ '_profile.wallet.buy-eve.reverse-charge-please-check' | translate }}
+            </span>
             <small>
               {{ parseFloat(payForm.amount.value).toFixed(2) }} EVE x
               {{ '1€' }} + {{ taxValue }}%
@@ -158,18 +180,18 @@
           <div class="d-flex">
             <evan-button
               type="secondary"
-              @click="step--"
               :label="'_profile.wallet.buy-eve.back' | translate"
+              @click="step--"
             />
             <evan-button
+              id="execute-payment"
               :disabled="
                 !payForm.isValid || !contactForm.isValid || !!vatCalcTimeout
               "
               :label="'_profile.wallet.buy-eve.buy' | translate"
-              @click="buyEve()"
               class="ml-3 btn-block"
-              id="execute-payment"
               type="primary"
+              @click="buyEve()"
             />
           </div>
         </div>
@@ -180,6 +202,7 @@
 
 <script lang="ts">
 import Component from './BuyEve';
+
 export default Component;
 </script>
 

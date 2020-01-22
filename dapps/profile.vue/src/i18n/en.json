@@ -451,7 +451,8 @@
           }
         },
         "processing-hint": "Processing payment, this may take 3 to 5 minutes",
-        "reverse-charge": "Reverse charge applies!<br>Please check for possibly arising tax liabilities in your country from this purchase.",
+        "reverse-charge": "Reverse charge applies!",
+        "reverse-charge-please-check": "Please check for possibly arising tax liabilities in your country from this purchase.",
         "stripe-element": {
           "incomplete_number": "Incomplete input!",
           "invalid_number": "Invalid card number!",
@@ -461,7 +462,9 @@
         "tax": "Tax",
         "titles": {
           "buy-eve": "Buy EVE",
-          "billing-info": "Please complete your billing informations"
+          "billing-info": "Please complete your billing information",
+          "finished": "Finished",
+          "processing": "In progress"
         },
         "total-amount": "Total",
         "try-again": "Try again",

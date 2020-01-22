@@ -451,7 +451,8 @@
           }
         },
         "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
-        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
+        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.",
+        "reverse-charge-please-check": "Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
         "stripe-element": {
           "incomplete_number": "Unvollständige Eingabe!",
           "invalid_number": "Ungültige Kartennummer!",
@@ -461,7 +462,9 @@
         "tax": "USt.",
         "titles": {
           "buy-eve": "EVE kaufen",
-          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen"
+          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen",
+          "finished": "Fertig",
+          "processing": "In Arbeit"
         },
         "total-amount": "Gesamtsumme",
         "try-again": "Erneut versuchen",
