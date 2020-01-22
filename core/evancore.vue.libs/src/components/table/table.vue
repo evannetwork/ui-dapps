@@ -57,6 +57,7 @@ export default Component;
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
 
+// Fill "hardcoded" here because cssVars don't work
 $arrow-down: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="%2346C2BF" d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z" /></svg>';
 $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="%2346C2BF" d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>';
 
@@ -85,8 +86,8 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
     margin-left: auto;
     margin-right: auto;
 
-   // This can create janky behavior with sticky table header
-   // Without this we have trouble with borders on rows
+    // This can create janky behavior with sticky table header
+    // Without this we have trouble with borders on rows
     border-collapse: separate;
     border-spacing: 0 5px;
 
