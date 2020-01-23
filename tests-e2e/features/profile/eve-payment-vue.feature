@@ -170,5 +170,5 @@ Feature: EVE payments Vue
       And the button with id "execute-payment" should be "enabled"
       And I want to see a text including "Total: 11.90 €"
     When I click on button with id "execute-payment"
-    Then I wait "300" seconds until loading was finished
+    Then I wait 300 seconds until loading was finished
       And I want to see a text including "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice."
