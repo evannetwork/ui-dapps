@@ -91,12 +91,13 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            :label="'_evan.cancel' | translate"
             class="mr-3"
+            :label="'_evan.cancel' | translate"
             @click="duplicatePanel.hide()"
           />
           <span class="mx-auto" />
           <evan-button
+            id="create-duplicate"
             type="primary"
             :disabled="exporting || duplicating"
             :label="'_twin-detail.data.context-menu.duplicate-twin' | translate"

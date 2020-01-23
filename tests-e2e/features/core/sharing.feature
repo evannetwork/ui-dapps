@@ -21,7 +21,7 @@ Feature: evan.network sharing
     Then the button "Share data" should be "enabled"
     When I click on button "Share data"
 
-@skip
+  @skip
   Scenario: Share via share button on profile page
     Given I log in to evan.network using vue
     Then I want to see a text including "What would you like to start with?"

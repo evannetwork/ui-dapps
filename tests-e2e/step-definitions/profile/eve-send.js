@@ -1,7 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, When, Then } from 'cucumber';
 
-import { setupEvan } from '../../test-utils/test-utils.js';
+import * as testUtils from '../../test-utils/test-utils.js';
 
 /**
  * Sends eve to another user. Current ui must be on wallet, with opened eve send ui and filled out
@@ -9,8 +9,9 @@ import { setupEvan } from '../../test-utils/test-utils.js';
  */
 When('I send {string} EVE with vue UI', async (amount) => {
   client.useCss();
-  const evan = setupEvan(client);
-  let previous, after;
+  const evan = testUtils.setupEvan(client);
+  let previous; let
+    after;
 
   await client.getText('#evan-account-balance', (result) => {
     previous = parseFloat(result.value.replace(/\s|\n|EVE/g, ''));
@@ -25,15 +26,15 @@ When('I send {string} EVE with vue UI', async (amount) => {
   await client.pause(3 * 1000);
 
   await client.getText('#evan-account-balance', (result) => {
-    after = parseFloat(result.value.replace(/\s|\n|EVE/g, ''))
+    after = parseFloat(result.value.replace(/\s|\n|EVE/g, ''));
   });
 
-  // gas fee is also used and must be calculated, just check with an difference of 0.1 eve to be
-  // sure
-  if (!(after + parseFloat(amount) <= previous) ||
-      !(after + parseFloat(amount) + 0.1 >= previous)) {
-    throw new Error(`Invalid balance after eve sending! ` +
-      `(${ previous } => ${ amount } EVE => ${ after })`);
+  /* gas fee is also used and must be calculated, just check with an difference of 0.1 eve to be
+     sure */
+  if (!(after + parseFloat(amount) <= previous)
+      || !(after + parseFloat(amount) + 0.1 >= previous)) {
+    throw new Error('Invalid balance after eve sending! '
+      + `(${previous} => ${amount} EVE => ${after})`);
   }
   // wait until success is gone
   await client.pause(5 * 1000);

@@ -1,38 +1,35 @@
-@skip
 Feature: Digital Twins
-  skip this feature currently, since test needs to be updated
+  Test different scenarios using predefined templates, upload of correct template and a template with missing properties.
+  Checks also if empty description field is filled with the translated value from template.
 
-Scenario: Creating a new twin
-  Given I log in to evan.network using vue
-  When I create a new digital twin with the name "Test Twin" and the description "this is a test twin"
-    Then I can open the last twin
-    And I can see that the twin name is "Test Twin" and the description is "this is a test twin"
+  Background:
+    Given I log in to evan.network using vue
+    When I click on "My Assets" in main menu
+    Then I want to see a text including "Digital Twins"
+      And I want to see a "plus" icon button
+    When I click on the "plus" icon button
+    Then I want to see a text including "Create a new Digital Twin"
+      And I want to see a text including "Add Image"
+      And the button "Create Digital Twin" should be "disabled"
 
-Scenario: Creating a new twin and plugin with a Metadata field and add it to the twin
-  Given I log in to evan.network using vue
-    Then I can open the last twin
-  When I define a new plugin with the name "Test Container" and the description "this is a test container"
-    And add a data set with the type "Metadata" with the name "Sample Value"
-    And add a field to the data set "Sample Value" with the name "Sample Field" with the type "Text" and the default value "Test"
-    And create the plugin
-      Then I can see the the plugin "Test Container" in my list of plugins
-  When I add a container with the name "Test Container" and the description "this is a test container"
-    And I add a data set with the type "Metadata", the name "Test data set" and the value "field 1:value 1"
-    And I can see that the first property has a key named "field 1" and a value of "value 1"
+  Scenario: Creating a new twin from predefined template
+    When I set Input field with placeholder "Give a meaningful name" to "My Testtwin 1337"
+      And I set Input field with label "Select a template" to "Bicycle"
+      And I wait for 1 seconds
+    Then The value of the Input field with label "Description" should be "Twin that represents a bicycle within the real world. Includes technical specifications, information about the owner and a maintenance log."
+    Then the button "Create Digital Twin" should be "enabled"
 
-Scenario: Creating a new twin and add a container with a Text field
-  Given I log in to evan.network using vue
-  When I create a new digital twin with the name "Test Twin" and the description "this is a test twin"
-    Then I can open the last twin
-  When I add a container with the name "Test Container" and the description "this is a test container"
-    And I add a data set with the type "Text", the name "Test data set" and the value "I am a sample value"
-    And I can see that the value is "I am a sample value"
+  Scenario: Creating a new twin from json upload template
+    When I type "Meaningful test" into the input field with label "Name"
+      And I upload file "bicycle.json" to the dropzone with the id "file-input-upload"
+      And I wait for 1 seconds
+    Then I do not want to see a text including "Errors occured in template"
+      And The value of the Input field with label "Description" should be "English description for Bicycle Twin with manual file upload."
+      And the button "Create Digital Twin" should be "enabled"
 
-
-Scenario: Creating a new twin and add a container with a Number field
-  Given I log in to evan.network using vue
-  When I create a new digital twin with the name "Test Twin" and the description "this is a test twin"
-    Then I can open the last twin
-  When I add a container with the name "Test Container" and the description "this is a test container"
-    And I add a data set with the type "Number", the name "Test data set" and the value "1337"
-    And I can see that the value is "1337"
+  Scenario: Creating a new twin from errornous template
+    When I set Input field with placeholder "Give a meaningful name" to "My Testtwin 1337"
+      And I upload file "bicycle-with-errors.json" to the dropzone with the id "file-input-upload"
+      And I wait for 1 seconds
+    Then I want to see a text including "Errors occured in template"
+      And the button "Create Digital Twin" should be "disabled"
