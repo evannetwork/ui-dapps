@@ -24,8 +24,9 @@
 </template>
 
 <script lang="ts">
-import EvanTwinDetailOverviewComponent from './DetailOverview';
-export default EvanTwinDetailOverviewComponent;
+import DetailOverviewComponent from './DetailOverview';
+
+export default DetailOverviewComponent;
 </script>
 
 <style lang="scss" scoped>

@@ -12,7 +12,8 @@
   "main": "dist/digital-twin-detail.js",
   "name": "digital-twin-detail",
   "scripts": {
-    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b"
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd) && tsc -b && npm run lint",
+    "lint": "eslint --ext .ts,.vue --fix src/"
   },
   "typings": "dist/index.d.ts",
   "version": "1.0.0"

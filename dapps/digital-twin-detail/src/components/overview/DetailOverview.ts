@@ -24,6 +24,6 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
-export default class EvanTwinDetailOverviewComponent extends mixins(EvanComponent) {
+export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
 }
