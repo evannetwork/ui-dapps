@@ -14,6 +14,7 @@
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
+  "type": "module",
   "typings": "dist/vuex.libs.d.ts",
   "version": "2.5.2"
 }
