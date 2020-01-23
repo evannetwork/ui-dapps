@@ -24,8 +24,8 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 
 import Component, { mixins } from 'vue-class-component';
 import axios from 'axios';
-
 import { Watch } from 'vue-property-decorator';
+
 import { PaymentService } from '../paymentService';
 import { ErrorStatus } from '../interfaces';
 import { STRIPE_ELEMENT_CONFIG } from '../stripe-config';
