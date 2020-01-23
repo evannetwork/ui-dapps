@@ -16,7 +16,7 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
     throw new Error(`no account data found for account ${accountName || 'default'}`);
   }
 
-  await client.execute(() => {
+  await client.execute(function setDefaults() { // eslint-disable-line prefer-arrow-callback
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');

@@ -23,7 +23,7 @@ When('I select the country {string}', async (country) => {
   const selectedCountry = `//button[@ion-button='alert-radio-button']/*/*[normalize-space(text()) = '${country}']/parent::*/parent::*`;
   const radioButton = await client.element('xpath', selectedCountry);
 
-  await client.execute((innerCountry) => {
+  await client.execute(function selectCountry(innerCountry) { // eslint-disable-line prefer-arrow-callback
     const radioButtons = Array.from(document.querySelectorAll('ion-alert button.alert-radio-button'));
     const matches = radioButtons.filter((innerRadioButton) => innerRadioButton.querySelector('.alert-radio-label').innerText === innerCountry);
     if (matches.length) {
