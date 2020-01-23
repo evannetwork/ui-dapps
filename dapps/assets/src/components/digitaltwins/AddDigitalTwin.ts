@@ -79,6 +79,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     this.clearTwinCreateWatcher = dispatchers.twinCreateDispatcher
       .watch(({ detail: { status } }: CustomEvent) => {
         if (status === 'starting') {
+          this.closePanel();
           this.loading = false;
 
           this.$toasted.show(
