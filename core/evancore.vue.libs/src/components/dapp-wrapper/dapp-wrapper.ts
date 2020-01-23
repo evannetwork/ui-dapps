@@ -80,7 +80,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       return [
         { title: `${ i18nPref }.favorites`, path: `favorites.vue.${ domainName }`, icon: 'mdi mdi-apps' },
         { title: `${ i18nPref }.digitaltwins`, path: `digitaltwins.${ domainName }`, icon: 'mdi mdi-cube-outline' },
-        { title: `${ i18nPref }.assets`, path: `assets.${ domainName }`, icon: 'mdi mdi-home-outline' },
+        { title: `${ i18nPref }.assets`, path: `assets.${ domainName }`, icon: 'mdi mdi-cube-outline' },
         { title: `${ i18nPref }.verifications`, path: `verifications.vue.${ domainName }`, icon: 'mdi mdi-checkbox-marked-circle-outline' },
       ];
     }
