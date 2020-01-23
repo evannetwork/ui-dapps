@@ -110,6 +110,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   favoriteList: Favorite[] = [];
 
   /**
+   * Used to cancel delayed search, when user already navigated to different page
+   */
+  delayedLoadingTimeout: any;
+
+  /**
    * Flag to disable other favorite buttons.
    * This can be removed once the backend can
    * handle multiple calls at the same time
@@ -142,6 +147,13 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
+  beforeDestroy(): void {
+    // cancel delayed search, when user is already leaving the page
+    if (this.delayedLoadingTimeout) {
+      window.clearTimeout(this.delayedLoadingTimeout);
+    }
+  }
+
   async mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
 
@@ -159,7 +171,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   delayedSearch() {
-    window.setTimeout(() => {
+    this.delayedLoadingTimeout = window.setTimeout(() => {
       this.performSearch();
     }, 5000);
   }
