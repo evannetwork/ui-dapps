@@ -2,7 +2,9 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "moment.libs": "^2.24.0"
+      },
       "entrypoint": "toasted.vue.libs.js",
       "files": [
         "toasted.vue.libs.js"

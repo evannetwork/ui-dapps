@@ -2,7 +2,10 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "moment.libs": "^2.24.0",
+        "vue.libs": "^2.5.0"
+      },
       "entrypoint": "moment.vue.libs.js",
       "files": [
         "moment.vue.libs.js"
