@@ -127,6 +127,15 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   listeners: Array<any> = [];
 
   /**
+   * check if object is of type ErrorStatus or StatusResponse
+   *
+   * @param {ErrorStatus | StatusResponse} object
+   */
+  static isErrorStatus(object: ErrorStatus | StatusResponse): object is ErrorStatus {
+    return (object as ErrorStatus).code !== undefined;
+  }
+
+  /**
    * computed property for the swipe panel title.
    */
   get panelTitle(): string {
@@ -426,7 +435,7 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
       { type: this.payForm.type.value === 'iban' ? 'sepa_debit' : 'card' },
     );
 
-    if (this.isErrorStatus(result)) {
+    if (BuyEveComponent.isErrorStatus(result)) {
       this.stripe.payError = result.code;
     } else {
       this.stripe.payError = '';
@@ -509,14 +518,5 @@ export default class BuyEveComponent extends mixins(EvanComponent) {
   removeStripeError(): void {
     this.stripe.payError = '';
     this.buying = false;
-  }
-
-  /**
-   * check if object is of type ErrorStatus or StatusResponse
-   *
-   * @param {ErrorStatus | StatusResponse} object
-   */
-  static isErrorStatus(object: ErrorStatus | StatusResponse): object is ErrorStatus {
-    return (object as ErrorStatus).code !== undefined;
   }
 }
