@@ -34,6 +34,7 @@
         "stopped": "Stopped {title} ({percentage}%)",
         "stopping": "Stopping {title} ({percentage}%)"
       },
+      "dispatcher-url-callback": "Open",
       "empty-queue": "Everything is synchronized",
       "from": "from",
       "instance-accept": {

@@ -752,7 +752,18 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         }
 
         // trigger special queue interactions and set toast type
-        let toastType = 'info';
+        const toastOpts = {
+          action: null,
+          duration: 3000,
+          type: 'info',
+        };
+        const toastMessage = this.$t(
+          `_evan.dapp-wrapper.dispatcher-status.${instance.status}`,
+          {
+            title: this.$t(instance.dispatcher.title),
+            percentage: Math.round((100 / instance.dispatcher.steps.length) * instance.stepIndex),
+          },
+        );
         switch (instance.status) {
           case 'accept': {
             this.startDispatcherInstance(instance);
@@ -763,30 +774,34 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
             break;
           }
           case 'error': {
-            toastType = 'error';
+            toastOpts.type = 'error';
             break;
           }
           case 'finished': {
+            if (instance.data.callbackUrl) {
+              toastOpts.duration = null;
+              toastOpts.action = {
+                text: this.$t('_evan.dapp-wrapper.dispatcher-url-callback'),
+                onClick: (e, toastObject): void => {
+                  window.location.hash = instance.data.callbackUrl;
+                  toastObject.goAway(0);
+                },
+              };
+            } else {
+              toastOpts.duration = 7000;
+            }
+
             delete this.queueInstances[instance.id];
-            toastType = 'success';
+            toastOpts.type = 'success';
             break;
           }
           default: {
-            toastType = 'info';
+            toastOpts.type = 'info';
           }
         }
 
         // show user synchronisation status
-        this.$toasted.show(this.$t(
-          `_evan.dapp-wrapper.dispatcher-status.${instance.status}`,
-          {
-            title: this.$t(instance.dispatcher.title),
-            percentage: Math.round((100 / instance.dispatcher.steps.length) * instance.stepIndex),
-          },
-        ), {
-          duration: toastType === 'success' ? 7000 : 3000,
-          type: toastType,
-        });
+        this.$toasted.show(toastMessage, toastOpts);
 
         if (instance.status !== 'finished' && instance.status !== 'deleted') {
           /* if the watch was already defined and it's not the incoming instance, copy only the

@@ -17,28 +17,28 @@
   the following URL: https://evan.network/license/
 */
 
-import { DigitalTwin, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
+import { DigitalTwin, DigitalTwinOptions, Ipfs } from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { getDomainName, ipfs, } from '@evan.network/ui-dapp-browser';
-import { Ipfs } from '@evan.network/api-blockchain-core';
+import { getDomainName, ipfs } from '@evan.network/ui-dapp-browser';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ getDomainName() }`,
+  `lib.digital-twin.${getDomainName()}`,
   'twinCreateDispatcher',
   1000000, // depends probably on plugins etc.
-  '_digital-twin-lib.dispatchers.twin.create'
+  '_digital-twin-lib.dispatchers.twin.create',
 );
 
+/* eslint-disable no-param-reassign */
 dispatcher
-  .step(async (instance: DispatcherInstance, data) => {
+  .step(async (instance: DispatcherInstance, data: any) => {
     // check if template should be loaded from contract
     if (typeof data.twinTemplate === 'string' && data.twinTemplate.startsWith('0x')) {
       const twinInstance = new DigitalTwin(
         instance.runtime as DigitalTwinOptions,
         {
           accountId: instance.runtime.activeAccount,
-          address: data.twinTemplate
-        }
+          address: data.twinTemplate,
+        },
       );
 
       data.twinTemplate = await twinInstance.exportAsTemplate(true);
@@ -54,7 +54,7 @@ dispatcher
     }
   })
   // upload image into ipfs
-  .step(async (instance: DispatcherInstance, { twinTemplate, twinImage}) => {
+  .step(async (instance: DispatcherInstance, { twinTemplate, twinImage }) => {
     if (twinImage && typeof twinImage !== 'string') {
       const imageBuffer = Buffer.from(twinImage.file);
 
@@ -62,16 +62,22 @@ dispatcher
       const uploaded = await instance.runtime.dfs.add(twinImage.name, imageBuffer);
       const ipfsHash = Ipfs.bytes32ToIpfsHash(uploaded);
       const { host, port, protocol } = ipfs.ipfsConfig;
-      twinTemplate.description.imgSquare = `${ protocol }://${ host }:${port}/ipfs/${ ipfsHash }`;
+      twinTemplate.description.imgSquare = `${protocol}://${host}:${port}/ipfs/${ipfsHash}`;
     }
   })
   // create the twin
-  .step(async (instance: DispatcherInstance, { twinTemplate }) => {
-    await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
+  .step(async (instance: DispatcherInstance, data) => {
+    const twin = await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,
       containerConfig: { accountId: instance.runtime.activeAccount },
-      ...twinTemplate
+      ...data.twinTemplate,
     });
+
+    const domainName = getDomainName();
+    const contractAddress = await twin.getContractAddress();
+    data.callbackUrl = `/dashboard.vue.${domainName}/detail.digital-twin.${domainName}/${
+      contractAddress}`;
   });
+/* eslint-enable no-param-reassign */
 
 export default dispatcher;
