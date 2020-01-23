@@ -5,45 +5,13 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
-    'plugin:vue/recommended',
     'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    // 'plugin:prettier/recommended',
-    // 'prettier/vue',
-    // 'prettier/@typescript-eslint',
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: 'vue-eslint-parser',
-  parserOptions: {
-    ecmaVersion: 2018,
-    extraFileExtensions: ['.vue'],
-    parser: '@typescript-eslint/parser',
-    sourceType: 'module',
-    // project: ['./tsconfig.json', './**/tsconfig.json'],
-    // tsconfigRootDir: '.'
-  },
-  plugins: [
-    'vue',
-    // 'prettier',
-    '@typescript-eslint',
-  ],
   rules: {
-    /**
-     * Misc
-     */
-    // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-
-    /**
-     * Vue related rules
-     * https://vuejs.github.io/eslint-plugin-vue/rules/#priority-a-essential-error-prevention
-     */
-    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
-
     /**
      * ESLint and Airbnb related rules
      * https://eslint.org/docs/rules/
@@ -55,4 +23,39 @@ module.exports = {
     'import/prefer-default-export': 'off', // too restrictive
     'max-len': ['warn', { code: 120 }],
   },
+  overrides: [
+    {
+      files: [ '**/*.ts', '**/*.vue', ],
+      extends: [
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+      ],
+      plugins: [
+        '@typescript-eslint',
+      ]
+    },
+    {
+      files: [ '**/*.vue', ],
+      extends: [
+        'plugin:vue/recommended',
+      ],
+      plugins: [
+        'vue',
+      ],
+      parser: 'vue-eslint-parser',
+      parserOptions: {
+        ecmaVersion: 2018,
+        extraFileExtensions: ['.vue'],
+        parser: '@typescript-eslint/parser',
+        sourceType: 'module',
+      },
+      rules: {
+        /**
+         * Vue related rules
+         * https://vuejs.github.io/eslint-plugin-vue/rules/#priority-a-essential-error-prevention
+         */
+        'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+      }
+    }
+  ]
 };
