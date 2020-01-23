@@ -24,10 +24,10 @@
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
           <div class="sidenav">
             <div class="sidenav-header pt-3 pb-3">
-              <i
-                class="mr-3 sidenav-header-icon"
-                :class="activeIcon"
-              />
+              <i class="sidenav-header-icon mdi mdi-cube-outline" />
+              <h4 class="sidenav-header-heading">
+                {{ '_assets.my-assets' | translate }}
+              </h4>
             </div>
             <!-- Not using nav-list because it doesnt support router-link properly
             TODO: Refactor evan-nav-list to use router-links too -->
@@ -77,8 +77,12 @@ export default AssetsComponent;
 }
 .sidenav-header {
   text-align: center;
+  .sidenav-header-heading {
+    font-size: 12px;
+    font-weight: bold;
+  }
   .sidenav-header-icon {
-    font-size: 5rem;
+    font-size: 4rem;
     color: cssVar('gray-900');
   }
 }

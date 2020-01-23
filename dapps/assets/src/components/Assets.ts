@@ -22,12 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { Watch } from 'vue-property-decorator';
 
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
-  activeIcon = null;
-
   navItems = [
     {
       key: 'digitaltwins',
@@ -42,20 +39,4 @@ export default class AssetsComponent extends mixins(EvanComponent) {
     icon: entry.icon,
     to: { name: entry.key },
   }));
-
-  mounted(): void {
-    this.onRouteChange();
-  }
-
-  @Watch('$route')
-  onRouteChange(): void {
-    this.activeIcon = this.getActiveIcon();
-  }
-
-  private getActiveIcon(): string {
-    const matched = this.$route.matched.map((match) => match.name);
-    const activeRoute = matched.find((route) => typeof route !== 'undefined');
-
-    return this.navItems.find((item) => item.to.name === activeRoute).icon;
-  }
 }
