@@ -104,7 +104,6 @@ Feature: evan.network onboarding
       And Input field with label "Register" should be visible
       And Input field with label "Registration Number" should be visible
       And Input field with label "VAT ID" should be visible
-    # TODO: should be HRB/HRA ???
     When I set Input field with label "Register Court" to "Test Register Court"
       And I set Input field with label "Register" to "DE"
       And I set Input field with label "Registration Number" to "Test Registration Number"

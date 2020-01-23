@@ -55,7 +55,7 @@ Given('I go to the evan.network startpage', async () => {
   const evan = testUtils.setupEvan(client);
 
   await client.url(`${evan.baseUrl}#/dashboard.vue.evan`);
-  await client.execute(() => {
+  await client.execute(function setDefaults() { // eslint-disable-line prefer-arrow-callback
     window.localStorage.setItem('evan-language', 'en');
     window.localStorage.setItem('evan-test-mode', true);
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
