@@ -83,7 +83,7 @@
           :fields="columns"
           :fixed="true"
           :show-scrollbar="true"
-          :sticky-header="'80vh'"
+          :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
           no-local-sorting="true"
@@ -120,6 +120,9 @@
               :disabled="isAnyLoading"
               @click="addFavorite(twin)"
             />
+          </template>
+          <template v-slot:table-caption>
+            <div class="table-spacer" />
           </template>
         </evan-table>
       </div>

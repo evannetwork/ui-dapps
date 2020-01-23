@@ -72,7 +72,9 @@ export default AssetsComponent;
 
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
-
+.evan-nav-list {
+  height: auto;
+}
 .sidenav-header {
   text-align: center;
   .sidenav-header-icon {
