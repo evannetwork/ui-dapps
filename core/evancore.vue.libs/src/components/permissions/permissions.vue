@@ -1,6 +1,9 @@
 <template>
   <div>
-    <table class="permissions" v-if="permissions">
+    <table
+      v-if="permissions"
+      class="permissions"
+    >
       <thead>
         <th>
           <h4> {{ getTranslation(label) }} </h4>
@@ -23,11 +26,19 @@
         </th>
       </thead>
       <tbody>
-        <tr v-for="property in computedSortFilter" :key="property">
+        <tr
+          v-for="property in computedSortFilter"
+          :key="property"
+        >
           <template v-if="permissions[property]">
             <td class="caption">
               <span>{{ getTranslation(property) }}</span>
-              <span>{{ permissions[property].fields ? permissions[property].fields.map(field =>  getTranslation(field)).join(', ') : property }}</span>
+              <span>
+                {{ permissions[property].fields
+                  ? permissions[property].fields.map(field =>
+                    getTranslation(field)).join(', ') : property
+                }}
+              </span>
             </td>
             <td>
               <evan-form-control-checkbox
@@ -48,17 +59,19 @@
       </tbody>
     </table>
     <div v-else>
-      <p class="p-6 text-error">{{ 'evan.sharing.noPermissions' | translate }}</p>
+      <p class="p-6 text-error">
+        {{ 'evan.sharing.noPermissions' | translate }}
+      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './permissions';
-  export default Component;
+import Component from './permissions';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>
   @import './permissions.scss'
 </style>
-
