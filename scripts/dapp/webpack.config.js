@@ -46,7 +46,6 @@ module.exports = function getWebpackConfig(
   externals = getExternals(),
 ) {
   // enable prodMode, when node_env was set
-  const prodMode = _prodMode || process.env.NODE_ENV === 'production';
 
   const webpackConfig = {
     entry: './src/index.ts',
