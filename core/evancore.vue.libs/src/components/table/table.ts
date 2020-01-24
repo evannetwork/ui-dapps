@@ -21,8 +21,8 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import EvanComponent from '../../component';
 import { Prop } from 'vue-property-decorator';
+import EvanComponent from '../../component';
 
 /**
  * Data Table based on bootstrap table
