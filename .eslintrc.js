@@ -54,5 +54,15 @@ module.exports = {
     'import/prefer-default-export': 'off', // too restrictive
     'max-len': ['warn', { code: 120 }],
     'multiline-comment-style': ['warn', 'bare-block'], // fix formatting license
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": [
+          "state",
+          "dispatcherData"
+        ]
+      }
+    ]
   },
 };

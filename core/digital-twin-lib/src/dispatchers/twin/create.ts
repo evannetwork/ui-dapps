@@ -28,33 +28,34 @@ const dispatcher = new Dispatcher(
   '_digital-twin-lib.dispatchers.twin.create',
 );
 
-/* eslint-disable no-param-reassign */
 dispatcher
-  .step(async (instance: DispatcherInstance, data: any) => {
+  .step(async (instance: DispatcherInstance, dispatcherData: any) => {
     // check if template should be loaded from contract
-    if (typeof data.twinTemplate === 'string' && data.twinTemplate.startsWith('0x')) {
+    if (typeof dispatcherData.twinTemplate === 'string'
+      && dispatcherData.twinTemplate.startsWith('0x')) {
       const twinInstance = new DigitalTwin(
         instance.runtime as DigitalTwinOptions,
         {
           accountId: instance.runtime.activeAccount,
-          address: data.twinTemplate,
+          address: dispatcherData.twinTemplate,
         },
       );
 
-      data.twinTemplate = await twinInstance.exportAsTemplate(true);
+      dispatcherData.twinTemplate = await twinInstance.exportAsTemplate(true);
       await instance.save();
     }
 
     // merge passed description with twin template description
-    if (data.description) {
-      data.twinTemplate.description = {
-        ...data.twinTemplate.description,
-        ...data.description,
+    if (dispatcherData.description) {
+      dispatcherData.twinTemplate.description = {
+        ...dispatcherData.twinTemplate.description,
+        ...dispatcherData.description,
       };
     }
   })
   // upload image into ipfs
-  .step(async (instance: DispatcherInstance, { twinTemplate, twinImage }) => {
+  .step(async (instance: DispatcherInstance, dispatcherData: any) => {
+    const { twinTemplate, twinImage } = dispatcherData;
     if (twinImage && typeof twinImage !== 'string') {
       const imageBuffer = Buffer.from(twinImage.file);
 
@@ -66,18 +67,17 @@ dispatcher
     }
   })
   // create the twin
-  .step(async (instance: DispatcherInstance, data) => {
+  .step(async (instance: DispatcherInstance, dispatcherData: any) => {
     const twin = await DigitalTwin.create(instance.runtime as DigitalTwinOptions, {
       accountId: instance.runtime.activeAccount,
       containerConfig: { accountId: instance.runtime.activeAccount },
-      ...data.twinTemplate,
+      ...dispatcherData.twinTemplate,
     });
 
     const domainName = getDomainName();
     const contractAddress = await twin.getContractAddress();
-    data.callbackUrl = `/dashboard.vue.${domainName}/detail.digital-twin.${domainName}/${
+    dispatcherData.callbackUrl = `/dashboard.vue.${domainName}/detail.digital-twin.${domainName}/${
       contractAddress}`;
   });
-/* eslint-enable no-param-reassign */
 
 export default dispatcher;
