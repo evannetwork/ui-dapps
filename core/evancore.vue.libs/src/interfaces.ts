@@ -17,7 +17,6 @@
   the following URL: https://evan.network/license/
 */
 
-/** ****************************************** interfaces ***************************************** */
 /**
  * Used to map routes to a route name and a specific component.
  */
