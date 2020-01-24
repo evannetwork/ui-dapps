@@ -13,7 +13,9 @@
       <tbody>
         <tr>
           <td>{{ '_twin-detail.overview.did' | translate }}</td>
-          <td>{{ did }}</td>
+          <td class="value">
+            {{ did }}
+          </td>
           <td>
             <evan-button
               type="icon-secondary"
@@ -62,13 +64,16 @@ export default DetailOverviewGeneralComponent;
 table {
   width: 100%;
 
-  th.label {
+  .label {
     width: 120px;
   }
-  th.value {
-    width: auto;
+  .value {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 370px;
+    overflow: hidden;
   }
-  th.action {
+  .action {
     width: 50px;
   }
 }

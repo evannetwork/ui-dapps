@@ -118,9 +118,10 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Cuts the description to a maximum of 300 characters.
+   * Limits the description to a certain maximum amount of characters.
    *
    * @param      {string}  desc    description that should be shortend
+   * @param      {number}  maxChars  maximum length of string
    */
   getShortDescription(desc = this.$store.state.twin.description.description, maxChars = 300): string {
     return desc.length > maxChars ? `${desc.slice(0, maxChars)}...` : desc;

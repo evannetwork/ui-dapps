@@ -4,7 +4,7 @@
       {{ '_twin-detail.overview.transactions-title' | translate }}
     </h2>
 
-    <table class="simple">
+    <table class="mt-4 simple">
       <thead>
         <th>
           {{ '_twin-detail.overview.amount' | translate }}
@@ -22,7 +22,9 @@
           v-for="row in transactions"
           :key="row.id"
         >
-          <td>{{ row.amount }}</td>
+          <td class="amount">
+            {{ row.amount }}
+          </td>
           <td>{{ row.name }}</td>
           <td>{{ row.date }}</td>
           <td>
@@ -62,10 +64,22 @@ table.simple {
 
   thead {
     background-color: cssVar('gray-200');
+    th {
+      font-weight: 600;
+      padding: 8px;
+    }
   }
 
-  td, th {
-    padding: 8px;
+  td {
+    padding-left: 8px;
+  }
+
+  th.action {
+    width: 48px;
+  }
+
+  td.amount {
+    font-weight: 600;
   }
 }
 </style>

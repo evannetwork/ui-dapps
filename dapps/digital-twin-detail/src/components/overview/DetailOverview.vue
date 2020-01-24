@@ -22,13 +22,13 @@
     <div class="content">
       <detail-overview-general
         class="mb-3"
-        :did="'TODO'"
-        :owner="'TODO'"
+        :did="`did:evan:${twin.description.identity}`"
+        :owner="twin.ownerName"
         :created-at="'TODO'"
       />
 
       <detail-overview-transactions
-        :transactions="[{ id: 0, amount: 0.01, name: 'Hans', date: '08.01.2020 13:01' }]"
+        :transactions="transactions"
       />
     </div>
   </div>
