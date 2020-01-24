@@ -72,7 +72,7 @@ export function cloneDeep(lodash: any, obj: any, ignoreFiles = false): any {
  */
 export function downloadObject(fileName: string, content: any): void {
   const stringified = JSON.stringify(content, null, 2);
-  const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(stringified)}`;
+  const dataStr = `data:application/json;charset=utf-8,${encodeURIComponent(stringified)}`;
   const downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute('href', dataStr);
   downloadAnchorNode.setAttribute('download', `${fileName}.json`);
