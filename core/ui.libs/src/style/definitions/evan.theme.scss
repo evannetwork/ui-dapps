@@ -213,7 +213,7 @@ $themeEvan: map-merge(
     bg-text-warning: cssVar('white'),
     input-placeholder-color: cssVar('gray-400'),
     text-color-inverted: cssVar('white'),
-    text-color: cssVar('black'),
+    text-color: cssVar('gray-900'),
     text-muted: cssVar('gray-500'),
     yiq-text-dark: cssVar('text-color'),
     yiq-text-light: cssVar('text-color-inverted')
@@ -245,8 +245,9 @@ $themeEvan: map-merge(
     h4-font-size:    18px   ,   // 18px / 1.125em / 1.125rem
     h5-font-size:    16px   ,   // 16px / 1em     / 1rem
     h6-font-size:    15px   ,   // 15px / 0.938em / 0.938rem
-    text-font-size:  14px   ,   // 14px / 0.875em
-    small-font-size: 12px   ,
+    // text-font-size:  14px   ,   // 14px / 0.875em
+    text-font-size:  12px   ,   // 14px / 0.875em
+    small-font-size: 10px   ,
   ),
   $themeEvan
 );
