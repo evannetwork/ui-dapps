@@ -36,30 +36,31 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
   navItems = [
     {
-      key: 'overview',
+      key: '_twin-detail.nav-items.overview',
       icon: 'mdi mdi-view-dashboard-outline',
+      to: { name: 'overview' },
     },
     {
-      key: 'data',
+      key: '_twin-detail.nav-items.data',
       icon: 'mdi mdi-file-document-box-outline',
+      to: { name: 'data' },
     },
     {
-      key: 'verifications',
+      key: '_twin-detail.nav-items.verifications',
       icon: 'mdi mdi-checkbox-marked-circle-outline',
+      to: { name: 'verifications' },
     },
     {
-      key: 'sharings',
+      key: '_twin-detail.nav-items.sharings',
       icon: 'mdi mdi-share-variant',
+      to: { name: 'sharings' },
     },
     {
-      key: 'did',
+      key: '_twin-detail.nav-items.did',
       icon: 'mdi mdi-identifier',
+      to: { name: 'did' },
     },
-  ].map((entry) => ({
-    label: `_twin-detail.${entry.key}.${entry.key}-title`,
-    icon: entry.icon,
-    to: { name: entry.key },
-  }));
+  ];
 
   /**
    * Clear the hash change watcher
@@ -121,7 +122,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    *
    * @param      {string}  desc    description that should be shortend
    */
-  getShortDescription(desc: string, maxChars = 300): string {
+  getShortDescription(desc = this.$store.state.twin.description.description, maxChars = 300): string {
     return desc.length > maxChars ? `${desc.slice(0, maxChars)}...` : desc;
   }
 }
