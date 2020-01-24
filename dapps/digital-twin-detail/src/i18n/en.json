@@ -30,7 +30,15 @@
       "did-title": "Decentralized ID"
     },
     "overview": {
-      "overview-title": "Overview"
+      "amount": "Amount",
+      "created-at": "Created at",
+      "date": "Date",
+      "did": "Decentralized ID",
+      "general-title": "General",
+      "name": "Name",
+      "overview-title": "Overview",
+      "owner": "Owner",
+      "transactions-title": "Last Transactions"
     },
     "sharings": {
       "sharings-title": "Sharings"

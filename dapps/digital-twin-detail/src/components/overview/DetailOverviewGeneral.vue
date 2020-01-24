@@ -1,7 +1,7 @@
 <template>
   <div class="content-card">
     <h2 class="card-heading">
-      {{ '_twin-detail.general' | translate }}
+      {{ '_twin-detail.overview.general-title' | translate }}
     </h2>
 
     <table>
@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{ '_twin-detail.did' | translate }}</td>
+          <td>{{ '_twin-detail.overview.did' | translate }}</td>
           <td>{{ did }}</td>
           <td>
             <evan-button
@@ -22,7 +22,7 @@
           </td>
         </tr>
         <tr>
-          <td>{{ '_twin-detail.owner' | translate }}</td>
+          <td>{{ '_twin-detail.overview.owner' | translate }}</td>
           <td>{{ owner }}</td>
           <td>
             <evan-button
@@ -32,7 +32,7 @@
           </td>
         </tr>
         <tr>
-          <td>{{ '_twin-detail.created-at' | translate }}</td>
+          <td>{{ '_twin-detail.overview.created-at' | translate }}</td>
           <td>{{ createdAt }}</td>
           <td />
         </tr>

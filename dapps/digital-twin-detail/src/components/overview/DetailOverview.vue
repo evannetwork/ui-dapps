@@ -21,9 +21,14 @@
   <div class="d-flex">
     <div class="content">
       <detail-overview-general
+        class="mb-3"
         :did="'TODO'"
         :owner="'TODO'"
         :created-at="'TODO'"
+      />
+
+      <detail-overview-transactions
+        :transactions="[{ id: 0, amount: 0.01, name: 'Hans', date: '08.01.2020 13:01' }]"
       />
     </div>
   </div>

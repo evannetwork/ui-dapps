@@ -21,10 +21,14 @@
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 import DigitalTwinInteractionsComponent from './TwinInteractions.vue';
+import DetailOverviewGeneralComponent from './overview/DetailOverviewGeneral.vue';
+import DetailOverviewTransactionsComponent from './overview/DetailOverviewTransactions.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { component: DigitalTwinInteractionsComponent, name: 'digital-twin-interactions' },
+  { component: DetailOverviewGeneralComponent, name: 'detail-overview-general' },
+  { component: DetailOverviewTransactionsComponent, name: 'detail-overview-transactions' },
 ];
 
 export default componentRegistration;

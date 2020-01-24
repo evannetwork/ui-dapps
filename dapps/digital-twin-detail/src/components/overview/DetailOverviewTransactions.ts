@@ -22,10 +22,6 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
 
 @Component
-export default class DetailOverviewGeneralComponent extends mixins(EvanComponent) {
-  @Prop() did: string;
-
-  @Prop() owner: string;
-
-  @Prop() createdAt: string;
+export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
+  @Prop() transactions: [];
 }

@@ -28,7 +28,15 @@
       "did-title": "Decentralized ID"
     },
     "overview": {
-      "overview-title": "Übersicht"
+      "amount": "Betrag",
+      "created-at": "Erstellt am",
+      "date": "Datum",
+      "did": "Decentralized ID",
+      "general-title": "Allgemein",
+      "name": "Name",
+      "overview-title": "Übersicht",
+      "owner": "Besitzer",
+      "transaction-title": "Letzte Transaktionen"
     },
     "sharings": {
       "sharings-title": "Freigaben"
