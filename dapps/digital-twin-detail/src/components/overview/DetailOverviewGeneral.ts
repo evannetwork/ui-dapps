@@ -17,28 +17,19 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="d-flex">
-    <div class="content">
-      <detail-overview-general
-        :did="'TODO'"
-        :owner="'TODO'"
-        :created-at="'TODO'"
-      />
-    </div>
-  </div>
-</template>
+import Component, { mixins } from 'vue-class-component';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Prop } from 'vue-property-decorator';
 
-<script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
+@Component
+export default class DetailOverviewGeneralComponent extends mixins(EvanComponent) {
+  @Prop() did: string;
 
-export default DetailOverviewComponent;
-</script>
+  @Prop() owner: string;
 
-<style lang="scss" scoped>
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
+  @Prop() createdAt: string;
+
+  /* created(): void {
+         console.log(this.did, this.owner, this.createdAt);
+       } */
 }
-</style>

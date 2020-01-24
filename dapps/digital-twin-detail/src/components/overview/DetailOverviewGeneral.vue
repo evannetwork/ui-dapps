@@ -5,10 +5,15 @@
     </h2>
 
     <table>
+      <thead>
+        <th class="label" />
+        <th class="value" />
+        <th class="action" />
+      </thead>
       <tbody>
         <tr>
           <td>{{ '_twin-detail.did' | translate }}</td>
-          <td>{{ 'did' }}</td>
+          <td>{{ did }}</td>
           <td>
             <evan-button
               type="icon-secondary"
@@ -18,7 +23,7 @@
         </tr>
         <tr>
           <td>{{ '_twin-detail.owner' | translate }}</td>
-          <td>{{ 'owner' }}</td>
+          <td>{{ owner }}</td>
           <td>
             <evan-button
               type="icon-secondary"
@@ -28,7 +33,7 @@
         </tr>
         <tr>
           <td>{{ '_twin-detail.created-at' | translate }}</td>
-          <td>{{ 'createdAt' }}</td>
+          <td>{{ createdAt }}</td>
           <td />
         </tr>
       </tbody>
@@ -37,25 +42,9 @@
 </template>
 
 <script lang="ts">
-import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
-// import { Prop } from 'vue-property-decorator';
+import DetailOverviewGeneralComponent from './DetailOverviewGeneral';
 
-@Component({
-  name: 'detail-overview-general',
-})
-export default class DetailOverviewGeneralComponent extends mixins(EvanComponent) {
-  // @Prop() did: string = null;
-
-  // @Prop() owner: string = null;
-
-  // @Prop() createdAt: string = null;
-
-  /* created(): void {
-         console.log(this.did, this.owner, this.createdAt);
-       } */
-}
-
+export default DetailOverviewGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
@@ -68,6 +57,19 @@ export default class DetailOverviewGeneralComponent extends mixins(EvanComponent
   .card-heading {
     font-size: 18px;
     font-weight: bold;
+  }
+}
+table {
+  width: 100%;
+
+  th.label {
+    width: 120px;
+  }
+  th.value {
+    width: auto;
+  }
+  th.action {
+    width: 50px;
   }
 }
 </style>
