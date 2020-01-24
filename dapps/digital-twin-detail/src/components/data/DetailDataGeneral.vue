@@ -53,7 +53,7 @@ export default DigitalTwinDetailDataGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-.content-card {
+/deep/ .content-card {
   background: white;
   border-radius: 4px;
   width: 564px;

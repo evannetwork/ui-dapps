@@ -63,7 +63,8 @@ class SearchService {
     this.runtime = runtime;
 
     const core = runtime.environment === 'testcore' ? '.test' : '';
-    const agentUrl = `https://search${core}.evan.network/api/smart-agents`;
+    // const agentUrl = `https://search${core}.evan.network/api/smart-agents`;
+    const agentUrl = 'http://localhost:8080/api/smart-agents';
 
     this.searchUrl = `${agentUrl}/search`;
   }

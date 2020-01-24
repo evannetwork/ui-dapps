@@ -24,23 +24,23 @@
       <div>
         <h3>{{ `${ $route.params.container }.name` | translate }}</h3>
         <span>{{ `${ $route.params.container }.description` | translate }}</span>
-        <div class="spinner-border spinner-border-sm" v-if="$store.state.container.dispatcherStates.description"></div>
-        <div class="spinner-border spinner-border-sm" v-if="$store.state.container.dispatcherStates.container"></div>
+        <div
+          v-if="$store.state.container.dispatcherStates.description"
+          class="spinner-border spinner-border-sm"
+        />
+        <div
+          v-if="$store.state.container.dispatcherStates.container"
+          class="spinner-border spinner-border-sm"
+        />
       </div>
 
-      <div class="bg-white p-3 mt-3"
-        v-for="(entryKey, index) in $store.state.container.entryKeys">
-        <h5 class="my-0 py-0 text-uppercase font-weight-bold">
-          {{ $t(`${ $route.params.container }.properties.${ entryKey }.name`, entryKey) }}
-          {{ $t(`${ $route.params.container }.properties.${ entryKey }.description`, entryKey) }}
-          <div class="spinner-border spinner-border-sm" v-if="$store.state.container.dispatcherStates.entries[entryKey]"></div>
-        </h5>
-
-        <textarea
-          :value="JSON.stringify($store.state.container.entries[entryKey], null, 2)"
-          class="mt-3"
-          rows="10"
-          style="width: 500px"
+      <div
+        v-for="entryKey in $store.state.container.entryKeys"
+        :key="entryKey"
+      >
+        <component
+          :is="`container-${getEntryType(entryKey)}`"
+          :name="entryKey"
         />
       </div>
     </div>
@@ -48,7 +48,8 @@
 </template>
 
 <script lang="ts">
-import TestContainerComponent from './TestContainer';
+import TestContainerComponent from './Container';
+
 export default TestContainerComponent;
 </script>
 
