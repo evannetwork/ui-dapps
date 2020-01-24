@@ -108,7 +108,7 @@
                         class="mr-3"
                         :class="navItem.icon"
                       />
-                      {{ navItem.label | translate }}
+                      {{ navItem.key | translate }}
                     </router-link>
                   </template>
                 </div>

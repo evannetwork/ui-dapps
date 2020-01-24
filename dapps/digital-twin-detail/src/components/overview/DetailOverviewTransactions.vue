@@ -63,5 +63,9 @@ table.simple {
   thead {
     background-color: cssVar('gray-200');
   }
+
+  td, th {
+    padding: 8px;
+  }
 }
 </style>
