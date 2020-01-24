@@ -1,6 +1,6 @@
 <template>
   <div class="content-card">
-    <h2 class="card-heading">
+    <h2 class="card-heading mb-3">
       {{ '_twin-detail.overview.general-title' | translate }}
     </h2>
 
@@ -74,7 +74,10 @@ table {
     overflow: hidden;
   }
   .action {
-    width: 50px;
+    width: 48px;
+  }
+  tr {
+    height: 48px;
   }
 }
 </style>
