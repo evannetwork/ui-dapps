@@ -20,21 +20,24 @@
 <template>
   <div>
     <evan-form
-      :form="formInstance"
-      @save="$emit('save')"
-      i18nScope="_evan.dbcp-form"
       ref="form"
-      v-bind="$props">
+      :form="dbcpForm"
+      i18n-scope="_evan.dbcp-form"
+      v-bind="$props"
+      @save="$emit('save')"
+    >
       <evan-form-control
         :label="$t('_evan.dbcp-form.image.label')"
         :stacked="stacked"
+        :required="false"
         class="twin-image"
-        required="true">
+      >
         <div class="d-flex justify-content-center">
           <evan-profile-picture
+            size="lg"
             type="device"
-            :accountName="name"
-            :isEditable="true"
+            :account-name="name"
+            :is-editable="true"
             :src="image || description.imgSquare || null"
             @changed="image = $event; $refs.form.setEditMode(true)"
           />
@@ -50,6 +53,7 @@
 
 <script lang="ts">
 import DbcpFormComponent from './DbcpForm';
+
 export default DbcpFormComponent;
 </script>
 

@@ -67,16 +67,13 @@
       @init="duplicatePanel = $event"
     >
       <div
-        v-if="exporting || duplicating"
+        v-if="exporting"
         class="d-flex flex-column h-100 align-items-center justify-content-center"
       >
         <div><evan-loading /></div>
         <div class="mt-3 text-center">
-          <h4 v-if="exporting">
+          <h4>
             {{ `_twin-detail.data.context-menu.exporting-twin` | translate }}
-          </h4>
-          <h4 v-else-if="duplicating">
-            {{ `_twin-detail.data.context-menu.duplicating-twin` | translate }}
           </h4>
         </div>
       </div>

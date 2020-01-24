@@ -38,22 +38,25 @@
       "all": "Alle",
       "cancel": "Abbrechen",
       "create-digitaltwin-btn": "Zwilling erstellen",
-      "created": "Erstellt",
       "create-info": "Der Twin erscheint in der Liste sobald er vollständig erstellt wurde.",
-      "desc-placeholder": "Beschreiben sie kurz ihren Digitalen Zwilling und dessen Eigenschaften.",
+      "created": "Erstellt",
       "desc": "Beschreibung",
+      "desc-placeholder": "Beschreiben sie kurz ihren Digitalen Zwilling und dessen Eigenschaften.",
       "digitaltwins-title": "Digitale Zwillinge",
       "drag-desc": "oder ziehen Sie das Template hier hinein",
       "favorites": "Favoriten",
       "my-own": "Eigene",
-      "name-placeholder": "Aussagekräftiger Name",
       "name": "Name",
+      "name-placeholder": "Aussagekräftiger Name",
       "owner": "Besitzer",
-      "template-desc": "Wählen Sie ein Template für Ihren Digitalen Zwilling. Mehr Informationen zur Erstellung von Templates finden Sie hier.",
+      "template-desc": "Wählen Sie ein Template für Ihren Digitalen Zwilling. Mehr Informationen zur Erstellung von Templates finden Sie ",
+      "template-desc-link": "hier.",
       "template-select-label": "Template wählen",
       "template-select-placeholder": "Wählen Sie ein Template",
       "updated": "Aktualisiert"
     },
+    "my-assets": "Meine Assets",
+    "optional": "optional",
     "search": {
       "my-own": "Eigene",
       "name": "Name",
@@ -61,9 +64,6 @@
       "owner": "Besitzer",
       "searched-for": "Sie suchten nach",
       "updated": "Aktualisiert"
-    },
-    "more": "mehr dazu",
-    "my-assets": "Meine Assets",
-    "optional": "optional"
+    }
   }
 }

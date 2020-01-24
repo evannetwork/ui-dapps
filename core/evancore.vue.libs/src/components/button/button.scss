@@ -19,29 +19,36 @@
 .button-wrapper {
   position: relative;
 
-  .hidden {
-    opacity: 0;
-  }
-
-  .spinner {
-    position: absolute;
-  }
-
   span {
     color: inherit;
+  }
+
+  &.is-loading {
+    * {
+      opacity: 0;
+    }
+
+    .spinner-border {
+      position: absolute;
+
+      opacity: 1;
+    }
   }
 }
 
 .btn-text-filter.btn {
   &, span {
-    color: cssVar('gray-600');
-    font-weight: normal;
     font-size: 12px;
+    font-weight: normal;
+
+    color: cssVar('gray-600');
   }
   & > i.left.mdi {
-    margin-right: 6px;
     font-size: 18px;
+
+    margin-right: 6px;
   }
+
   &.active {
     border-bottom: 2px solid cssVar('primary');
   }

@@ -38,22 +38,25 @@
       "all": "All",
       "cancel": "Cancel",
       "create-digitaltwin-btn": "Create Digital Twin",
-      "created": "Created",
       "create-info": "The twin will appear in the list as soon as it's fully created on the chain.",
-      "desc-placeholder": "Briefly describe your Digital Twin and what it represents.",
+      "created": "Created",
       "desc": "Description",
+      "desc-placeholder": "Briefly describe your Digital Twin and what it represents.",
       "digitaltwins-title": "Digital Twins",
       "drag-desc": "or just drag a template in here",
       "favorites": "Favorites",
       "my-own": "My own",
-      "name-placeholder": "Give a meaningful name",
       "name": "Name",
+      "name-placeholder": "Give a meaningful name",
       "owner": "Owner",
-      "template-desc": "Choose a template for your Digital Twin. More information on how to create a template for Digital Twins can be found here:",
+      "template-desc": "Choose a template for your Digital Twin. More information on how to create a template for Digital Twins can be found ",
+      "template-desc-link": "here.",
       "template-select-label": "Select a template",
       "template-select-placeholder": "Select a template",
       "updated": "Updated"
     },
+    "my-assets": "My Assets",
+    "optional": "optional",
     "search": {
       "my-own": "My own",
       "name": "Name",
@@ -61,9 +64,6 @@
       "owner": "Owner",
       "searched-for": "You searched for",
       "updated": "Updated"
-    },
-    "more": "more information",
-    "my-assets": "My Assets",
-    "optional": "optional"
+    }
   }
 }

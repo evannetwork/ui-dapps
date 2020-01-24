@@ -34,6 +34,7 @@
         "stopped": "Stopped {title} ({percentage}%)",
         "stopping": "Stopping {title} ({percentage}%)"
       },
+      "dispatcher-url-callback": "Open",
       "empty-queue": "Everything is synchronized",
       "from": "from",
       "instance-accept": {
@@ -57,6 +58,8 @@
     },
     "dbcp-form": {
       "description": {
+        "error": "Please enter a maximum of {maxDescriptionChars} characters.",
+        "hint": "max. {maxDescriptionChars} characters",
         "label": "Description",
         "placeholder": "Briefly describe your Digital Twin and what it represents."
       },

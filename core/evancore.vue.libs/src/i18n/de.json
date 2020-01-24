@@ -34,6 +34,7 @@
         "stopped": "Wird gestoppt {title} ({percentage}%)",
         "stopping": "Gestoppt {title} ({percentage}%)"
       },
+      "dispatcher-url-callback": "Öffnen",
       "empty-queue": "Alles ist synchronisiert",
       "from": "von",
       "instance-accept": {
@@ -57,6 +58,8 @@
     },
     "dbcp-form": {
       "description": {
+        "error": "Bitte geben Sie maximal {maxDescriptionChars} Zeichen ein.",
+        "hint": "Max. {maxDescriptionChars} Zeichen",
         "label": "Beschreibung",
         "placeholder": "Kurze Beschreibung des Digitalen Zwillings"
       },

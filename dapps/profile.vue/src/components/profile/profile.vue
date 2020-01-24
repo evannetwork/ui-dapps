@@ -158,10 +158,10 @@
         </div>
       </div>
       <evan-swipe-panel
+        v-if="userInfo"
         ref="shareSidebar"
         :is-open="$store.state.uiState.swipePanel === 'sharing'"
         :title="'_profile.sharing.permissionsTitle' | translate"
-        v-if="userInfo"
         alignment="right"
         class="light"
         show-backdrop="true"

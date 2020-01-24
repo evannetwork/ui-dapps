@@ -18,38 +18,51 @@
 */
 
 <template>
-  <component class="btn button-wrapper"
+  <component
     :is="href ? 'a' : 'button'"
+    class="btn button-wrapper"
     :class="[
-      { [ knownTypes[type] ]: knownTypes[type] },
+      { 'is-loading': isLoading },
+      { [ `btn-${ size }` ]: size !== 'normal' },
       { [ `btn-${ type }` ]: !knownTypes[type] },
-      { [ `btn-${ size }` ]: size !== 'normal'  },
+      { [ knownTypes[type] ]: knownTypes[type] },
     ]"
     :disabled="disabled"
     :href="href"
     :rel="href ? 'noopener noreferrer': ''"
     :type="nativeType"
-    @click="$emit('click', $event)">
+    @click="$emit('click', $event)"
+  >
     <template v-if="!$slots.default">
-      <div class="spinner-border spinner-border-sm" v-if="isLoading" />
-      <template :class="{'hidden': isLoading}" >
+      <div
+        v-if="isLoading"
+        class="spinner-border spinner-border-sm"
+      />
+      <template>
         <template v-if="icon && !label">
           <i :class="[icon, 'centered']" />
         </template>
         <template v-else>
-          <i v-if="icon && iconPosition === 'left'" :class="[icon, 'label', 'left']" />
-          <span>{{label}}</span>
-          <i v-if="icon && iconPosition === 'right'" :class="[icon, 'label', 'right']" />
+          <i
+            v-if="icon && iconPosition === 'left'"
+            :class="[icon, 'label', 'left']"
+          />
+          <span>{{ label }}</span>
+          <i
+            v-if="icon && iconPosition === 'right'"
+            :class="[icon, 'label', 'right']"
+          />
         </template>
       </template>
     </template>
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
 <script lang="ts">
-  import Button from './button';
-  export default Button;
+import Button from './button';
+
+export default Button;
 </script>
 
 <style lang="scss" scoped>

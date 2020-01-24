@@ -18,36 +18,51 @@
 */
 
 <template>
-  <div class="form-group"
+  <div
+    class="form-group"
     :class="{ 'inline': !stacked, }"
-    :style="{ 'width': size === 12 ? '100%' : `${ 100 * (size / 12) }%`, }">
-    <label class="col-form-label"
+    :style="{ 'width': size === 12 ? '100%' : `${ 100 * (size / 12) }%`, }"
+  >
+    <label
+      v-if="label"
+      class="col-form-label"
       :for="id"
-      v-if="label">
+    >
       {{ label }}
-      <small class="text-muted" v-if="!isRequired()">
+      <small
+        v-if="!isRequired()"
+        class="text-muted"
+      >
         ({{ '_evan.optional' | translate }})
       </small>
     </label>
-    <div class="input-wrapper"
-      :style="{ 'min-width': label ? '300px' : '0px' }">
-      <slot></slot>
-      <div class="invalid-feedback" v-if="error">
+    <div
+      class="input-wrapper"
+      :style="{ 'min-width': label ? '300px' : '0px' }"
+    >
+      <slot />
+      <div
+        v-if="error"
+        class="invalid-feedback"
+      >
         {{ error | translate }}
       </div>
+      <small
+        v-if="hint && !disabled"
+        class="control-hint form-text text-muted"
+      >
+        {{ hint | translate }}
+      </small>
     </div>
-    <small class="form-text text-muted" v-if="hint">
-      {{ hint | translate }}
-    </small>
   </div>
 </template>
 
 <script lang="ts">
-  import FormDataInput from './control'
-  export default FormDataInput
+import FormDataInput from './control';
+
+export default FormDataInput;
 </script>
 
 <style lang="scss" scoped>
   @import './control.scss';
 </style>
-

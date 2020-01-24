@@ -26,6 +26,7 @@
     "del": "^4.0.0",
     "dexie": "^2.0.4",
     "express": "^4.17.1",
+    "fast-deep-equal": "^3.1.1",
     "file-loader": "^3.0.1",
     "file-type": "^13.0.3",
     "gulp": "^4.0.0",
