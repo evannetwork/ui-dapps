@@ -20,94 +20,40 @@
 <template>
   <b-table
     v-bind="$attrs"
-    v-on="$listeners"
     class="evan-table-wrapper"
     :class="{ 'show-scrollbar': showScrollbar }"
     :tbody-tr-class="'evan-table-body-row'"
     :thead-tr-class="'evan-table-head-row'"
     :thead-class="'evan-table-head'"
+    v-on="$listeners"
   >
     <!-- Pass on all named slots -->
-    <slot v-for="slot in Object.keys($slots)" :name="slot" :slot="slot" />
+    <slot
+      v-for="slot in Object.keys($slots)"
+      :slot="slot"
+      :name="slot"
+    />
 
     <!-- Pass on all scoped slots -->
-    <template v-for="slot in Object.keys($scopedSlots)" :slot="slot" slot-scope="scope">
-      <slot :name="slot" v-bind="scope" />
+    <template
+      v-for="slot in Object.keys($scopedSlots)"
+      :slot="slot"
+      slot-scope="scope"
+    >
+      <slot
+        :name="slot"
+        v-bind="scope"
+      />
     </template>
   </b-table>
 </template>
 
 <script lang="ts">
 import Component from './table';
+
 export default Component;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
-.evan-table-wrapper {
-  width: 100%;
-
-  &.show-scrollbar {
-    overflow-y: scroll;
-    // This is needed for webkit browsers
-    // https://stackoverflow.com/a/31278448
-    &::-webkit-scrollbar {
-      -webkit-appearance: none;
-      width: 7px;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, 0.5);
-      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
-    }
-  }
-
-  /deep/ table.table.b-table {
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
-
-    & > thead.evan-table-head > tr.evan-table-head-row > th {
-      background-color: cssVar('bg-level-3');
-      border: none;
-      color: cssVar('gray-600');
-
-      &[aria-sort='ascending'],
-      &[aria-sort='descending'] {
-        color: cssVar('primary');
-      }
-    }
-
-    & > tbody > tr.evan-table-body-row {
-      height: 64px;
-      background-color: white;
-      cursor: pointer;
-      // create spacing between rows without using border-collapse
-      // because it causes janky behavior with sticky header
-      border-bottom: 4px solid cssVar('bg-level-3');
-
-      & > td {
-        vertical-align: middle;
-        border: none;
-      }
-
-      &.b-table-empty-row {
-        cursor: inherit;
-      }
-
-      .visible-on-row-hover {
-        visibility: hidden;
-      }
-      &:hover .visible-on-row-hover {
-        visibility: visible;
-      }
-    }
-
-    i.table-icon {
-      font-size: 1.75em;
-      margin-left: 0.25em;
-    }
-  }
-}
+@import './table.scss';
 </style>

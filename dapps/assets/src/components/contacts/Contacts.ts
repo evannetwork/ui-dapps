@@ -47,27 +47,44 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   contacts: Contact[] = [];
 
   columns = [
-    { key: 'icon', label: '', sortable: false },
-    { key: 'alias', label: this.$t('_assets.contacts.name'), sortable: true },
+    {
+      key: 'icon',
+      label: '',
+      sortable: false,
+      thClass: 'th-icon',
+    },
+    {
+      key: 'alias',
+      label: this.$t('_assets.contacts.name'),
+      sortable: true,
+      tdClass: 'truncate',
+    },
     {
       key: 'updatedAt',
       label: this.$t('_assets.contacts.updated'),
       sortable: true,
+      thClass: 'th-date',
     },
     {
       key: 'createdAt',
       label: this.$t('_assets.contacts.created'),
       sortable: true,
+      thClass: 'th-date',
     },
-    { key: 'isFavorite', label: '', sortable: false },
+    {
+      key: 'isFavorite',
+      label: '',
+      sortable: false,
+      thClass: 'th-icon',
+    },
   ];
 
-  created() {
+  created(): void {
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
   }
 
-  async mounted() {
+  async mounted(): Promise<void> {
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
   }
@@ -76,14 +93,14 @@ export default class ContactsComponent extends mixins(EvanComponent) {
    * Route to profile of clicked contact
    * @param contact Clicked contact
    */
-  handleRowClicked(contact: Contact) {
+  handleRowClicked(contact: Contact): void {
     window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${contact.address}/detail`;
   }
 
   /**
    * Update contact list when new contact added
    */
-  async handleContactAdded() {
+  async handleContactAdded(): Promise<void> {
     this.isLoading = true;
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
@@ -93,7 +110,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     return this.contactService.getContacts();
   }
 
-  async addFavorite(contact: EvanTableItem<Contact>) {
+  async addFavorite(contact: EvanTableItem<Contact>): Promise<void> {
     this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.addFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);
@@ -102,7 +119,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     ).isFavorite = 'true';
   }
 
-  async removeFavorite(contact: EvanTableItem<Contact>) {
+  async removeFavorite(contact: EvanTableItem<Contact>): Promise<void> {
     this.setFavoriteLoading(contact.item.address, true);
     await this.contactService.removeFavorite(contact.item);
     this.setFavoriteLoading(contact.item.address, false);
@@ -111,24 +128,24 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     ).isFavorite = 'false';
   }
 
-  private setFavoriteLoading(id: string, flag: boolean) {
+  private setFavoriteLoading(id: string, flag: boolean): void {
     this.isFavoriteLoading = {
       id,
       loading: flag,
     };
   }
 
-  filterByType(type: string) {
+  filterByType(type: string): void {
     this.filterBy = ['type'];
     this.filter = type;
   }
 
-  filterByFavorites() {
+  filterByFavorites(): void {
     this.filterBy = ['isFavorite'];
     this.filter = 'true';
   }
 
-  resetFilter() {
+  resetFilter(): void {
     this.filterBy = [];
     this.filter = null;
   }

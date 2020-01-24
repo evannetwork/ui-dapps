@@ -17,6 +17,8 @@ Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
 the following URL: https://evan.network/license/
 */
 
+@import '~@evan.network/ui/src/style/utils';
+
 $transition-timing-function: cubic-bezier(1, -0.115, 0.975, 0.855);
 $transition-duration: 150ms;
 $open-indicator-size: 0.8;
@@ -38,16 +40,32 @@ $open-indicator-size: 0.8;
 
   max-width: 100%;
   margin: 0;
-  padding: 0.4rem 1.125rem;
+  padding: 0.4rem 1rem;
+  font-size: 12px !important;
 }
 
 .vs__selected-options {
   padding: 0;
 }
 
-.vs__search, .vs__search:focus {
-  padding: 0;
+.v-select {
+  border: 1px solid cssVar('gray-500');
+  border-radius: 5px;
+  color: cssVar('gray-900');
 
+  &:focus {
+    border: 1px solid cssVar('primary');
+  }
+
+  &[disabled] {
+    border: 1px solid cssVar('gray-200');
+    color: cssVar('gray-600');
+  }
+}
+
+.vs__search {
+  padding: 0;
+  font-size: 12px !important;
   text-indent: 1.125rem;
 }
 
@@ -73,6 +91,10 @@ $open-indicator-size: 0.8;
 //  Open State
 .vs--open .vs__open-indicator {
   transform: rotate(180deg) scale($open-indicator-size);
+}
+
+.vs--open {
+  border-color: cssVar('primary');
 }
 
 //  Loading State

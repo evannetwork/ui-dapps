@@ -20,7 +20,10 @@
 <template>
   <div>
     <div class="content pt-5">
-      <div class="d-flex flex-row justify-content-between align-items-center">
+      <div
+        class="d-flex flex-row justify-content-between align-items-center"
+        style="max-height: 33px"
+      >
         <div>
           <h1 class="heading">
             {{ '_assets.contacts.contacts-title' | translate }}
@@ -28,7 +31,7 @@
         </div>
         <div>
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
             icon-position="left"
@@ -37,7 +40,7 @@
             @click="filterByFavorites()"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
             icon-position="left"
@@ -46,25 +49,16 @@
             @click="filterByType('users')"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
-            icon="mdi mdi-domain"
+            icon="mdi mdi-office-building"
             icon-position="left"
             :class="{ active: filter === 'company' }"
             :label="$t('_assets.contacts.companies')"
             @click="filterByType('company')"
           />
           <evan-button
-            class="filter-btn ml-3"
-            type="text-filter"
-            icon="mdi mdi-radio-tower"
-            icon-position="left"
-            :class="{ active: filter === 'device' }"
-            :label="$t('_assets.contacts.iot-devices')"
-            @click="filterByType('device')"
-          />
-          <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-account-multiple-outline"
             icon-position="left"
@@ -82,7 +76,7 @@
           :fields="columns"
           :filter="filter"
           :filter-included-fields="filterBy"
-          :sticky-header="'80vh'"
+          :sticky-header="'calc(100vh - 85px)'"
           :show-empty="true"
           :show-scrollbar="true"
           @row-clicked="handleRowClicked"
@@ -99,10 +93,14 @@
             />
           </template>
           <template v-slot:cell(createdAt)="contacts">
-            {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
+            <template v-if="contacts.item.createdAt">
+              {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
+            </template>
           </template>
           <template v-slot:cell(updatedAt)="contacts">
-            {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
+            <template v-if="contacts.item.updatedAt">
+              {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
+            </template>
           </template>
           <template v-slot:cell(isFavorite)="contacts">
             <evan-loading
@@ -127,6 +125,9 @@
               :disabled="isFavoriteLoading.loading"
               @click="addFavorite(contacts)"
             />
+          </template>
+          <template v-slot:table-caption>
+            <div class="table-spacer" />
           </template>
 
           <!-- Empty slots -->
@@ -172,7 +173,7 @@ h1.heading {
 }
 
 .content {
-  max-width: 768px;
+  max-width: 850px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -183,27 +184,10 @@ h1.heading {
   right: 60px;
 }
 
-/deep/.filter-btn {
-  span {
-    font-size: 12px;
-  }
-}
-
 /deep/ .evan-swipe-panel.light {
   background-color: cssVar('body-bg');
 
-  &,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  span,
-  p,
-  li,
-  b,
-  label,
-  small {
+  * {
     color: cssVar('text-color');
   }
 }

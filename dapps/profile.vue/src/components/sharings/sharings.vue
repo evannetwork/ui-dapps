@@ -22,7 +22,6 @@ the following URL: https://evan.network/license/
     <evan-loading v-if="loading" />
     <template v-else>
       <div class="container">
-
         <evan-button
           class="plus-button"
           size="lg"
@@ -32,62 +31,67 @@ the following URL: https://evan.network/license/
         />
 
         <evan-swipe-panel
+          ref="shareSidebar"
           class="light"
           alignment="right"
-          ref="shareSidebar"
           :title="'_profile.sharing.permissionsTitle' | translate"
-          :showBackdrop="windowWidth < 1200"
-          :hideCloseButton="windowWidth >= 1200"
-          :mountId="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
-          :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+          :show-backdrop="windowWidth < 1200"
+          :hide-close-button="windowWidth >= 1200"
+          :mount-id="windowWidth < 1200 ? null : 'dapp-wrapper-sidebar-right'"
+          :is-open="$store.state.uiState.swipePanel === 'sharing'"
           @hide="selectedSharedContacts = null"
         >
           <evan-permissions-editor
-            @init="permissionsEditor = $event"
             :contacts="contacts"
-            :selectedContact="selectedSharedContacts"
-            :loadPermissions="loadPermissions"
-            :updatePermissions="updatePermissions"
-            :onSelect="handleOnSelect"
-            :sortFilters="$store.state.profileDApp.sharingFilter"
-            i18nScope="_profile.sharing"
+            :selected-contact="selectedSharedContacts"
+            :load-permissions="loadPermissions"
+            :update-permissions="updatePermissions"
+            :on-select="handleOnSelect"
+            :sort-filters="$store.state.profileDApp.sharingFilter"
+            i18n-scope="_profile.sharing"
+            @init="permissionsEditor = $event"
           />
-          <template slot="footer" v-if="!!permissionsEditor">
+          <template
+            v-if="!!permissionsEditor"
+            slot="footer"
+          >
             <div class="d-flex">
-              <evan-button 
-                type="secondary" 
-                :label="$t('_evan.cancel')" 
-                @click="permissionsEditor.cancel()" 
+              <evan-button
+                type="secondary"
+                :label="$t('_evan.cancel')"
                 :disabled="!selectedSharedContacts"
                 class="mr-3"
+                @click="permissionsEditor.cancel()"
               />
               <evan-button
                 type="primary"
                 :label="$t('_evan.sharing.update')"
-                :disabled="!permissionsEditor.permissionsChanged"
-                @click="permissionsEditor.writePermissions()"
+                :disabled="!permissionsEditor.permissionsChanged || !selectedSharedContacts"
                 class="btn-block"
+                @click="permissionsEditor.writePermissions()"
               />
             </div>
           </template>
         </evan-swipe-panel>
 
         <div class="content">
-          <h3 class="font-weight-bold">{{ '_profile.sharings.title' | translate }}</h3>
+          <h3 class="font-weight-bold">
+            {{ '_profile.sharings.title' | translate }}
+          </h3>
           <p>{{ '_profile.sharings.desc' | translate }}</p>
 
           <template v-if="sharedContacts && sharedContacts.length > 0">
             <evan-base-list
               class="mt-5"
               :data="sharedContacts"
-              :isSelectedCallback="isSelectedCallback"
-              :itemClickedCallback ="(item, event) => handleSharedContactClick(item, event)"
+              :is-selected-callback="isSelectedCallback"
+              :item-clicked-callback="(item, event) => handleSharedContactClick(item, event)"
             >
               <template v-slot:item="{item}">
                 <evan-shared-contact
                   :item="item"
-                  :removeCallback="() => handleRemoveSharedContact(item)"
-                  :isLoading="!!isLoadingContacts && isLoadingContacts.has(item.accountId)"
+                  :remove-callback="() => handleRemoveSharedContact(item)"
+                  :is-loading="!!isLoadingContacts && isLoadingContacts.has(item.accountId)"
                 />
               </template>
             </evan-base-list>
@@ -109,6 +113,7 @@ the following URL: https://evan.network/license/
 </style>
 
 <script lang="ts">
-  import Component from "./sharings";
-  export default Component;
+import Component from './sharings';
+
+export default Component;
 </script>

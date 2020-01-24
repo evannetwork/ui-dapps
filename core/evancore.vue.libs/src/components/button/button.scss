@@ -37,15 +37,22 @@
 }
 
 .btn-text-filter.btn {
-  font-weight: normal;
+  &, span {
+    font-size: 12px;
+    font-weight: normal;
 
-  color: cssVar('gray-600');
-
+    color: cssVar('gray-600');
+  }
   & > i.left.mdi {
+    font-size: 18px;
+
     margin-right: 6px;
   }
 
   &.active {
     border-bottom: 2px solid cssVar('primary');
+  }
+  &:hover span {
+    color: cssVar('gray-900');
   }
 }
