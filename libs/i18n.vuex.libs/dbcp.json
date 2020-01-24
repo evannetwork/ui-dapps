@@ -2,7 +2,10 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "vue.libs": "^2.5.0",
+        "vuex.libs": "^3.0.0"
+      },
       "entrypoint": "i18n.vuex.libs.js",
       "files": [
         "i18n.vuex.libs.js"

@@ -2,7 +2,9 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "vue.libs": "^2.5.0"
+      },
       "entrypoint": "bootstrap.vue.libs.js",
       "files": [
         "bootstrap.vue.libs.js"

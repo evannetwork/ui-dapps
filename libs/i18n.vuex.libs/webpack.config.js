@@ -25,5 +25,7 @@ module.exports = require('../../scripts/dapp/webpack.config')(
   true,
   {
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
+    vue: 'vue',
+    vuex: 'vuex',
   },
 );

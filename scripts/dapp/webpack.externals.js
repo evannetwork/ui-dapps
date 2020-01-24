@@ -23,7 +23,7 @@
  * @param      {any}     customExcludes  object with custom externals
  * @return     {Object}  object with all externals
  */
-module.exports = function(customExcludes) {
+module.exports = function getCustomExcludes(customExcludes) {
   return {
     '@evan.network/api-blockchain-core': '@evan.network/api-blockchain-core',
     '@evan.network/smart-contracts-core': '@evan.network/smart-contracts-core',
@@ -31,17 +31,18 @@ module.exports = function(customExcludes) {
     '@evan.network/ui-countries': '@evan.network/ui-countries',
     '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
     '@evan.network/ui-vue-core': '@evan.network/ui-vue-core',
-    'axios': 'axios',
     'bootstrap-vue': 'bootstrap-vue',
-    'dexie': 'dexie',
-    'lodash': 'lodash',
-    'vue': 'vue',
     'vue-material': 'vue-material',
     'vue-recaptcha': 'vue-recaptcha',
     'vue-router': 'vue-router',
     'vue-select': 'vue-select',
-    'vuex': 'vuex',
+    vuex: 'vuex',
     'vuex-i18n': 'vuex-i18n',
-    ...(customExcludes || { })
+    axios: 'axios',
+    dexie: 'dexie',
+    lodash: 'lodash',
+    qrcodejs: 'qrcodejs',
+    vue: 'vue',
+    ...(customExcludes || { }),
   };
-}
+};
