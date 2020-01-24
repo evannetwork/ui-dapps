@@ -16,8 +16,9 @@
           <td class="value">
             {{ did }}
           </td>
-          <td>
+          <td class="action">
             <evan-button
+              size="sm"
               type="icon-secondary"
               icon="mdi mdi-content-copy"
             />
@@ -26,8 +27,9 @@
         <tr>
           <td>{{ '_twin-detail.overview.owner' | translate }}</td>
           <td>{{ owner }}</td>
-          <td>
+          <td class="action">
             <evan-button
+              size="sm"
               type="icon-secondary"
               icon="mdi mdi-chevron-right"
             />
@@ -75,6 +77,7 @@ table {
   }
   .action {
     width: 48px;
+    text-align: right;
   }
   tr {
     height: 48px;

@@ -29,6 +29,7 @@
           <td>{{ row.date }}</td>
           <td>
             <evan-button
+              size="sm"
               type="icon-secondary"
               icon="mdi mdi-chevron-right"
             />
@@ -71,7 +72,7 @@ table.simple {
   }
 
   td {
-    padding-left: 8px;
+    padding: 8px;
   }
 
   th.action {
