@@ -42,7 +42,7 @@ module.exports = function getWebpackConfig(
   name,
   dist,
   transpileOnly = false,
-  _prodMode = false,
+  prodMode = process.env.NODE_ENV === 'production',
   externals = getExternals(),
 ) {
   // enable prodMode, when node_env was set
