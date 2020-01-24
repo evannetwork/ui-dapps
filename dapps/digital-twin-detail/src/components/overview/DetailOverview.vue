@@ -18,8 +18,10 @@
 */
 
 <template>
-  <div>
-    <h1>{{ '_twin-details.overview.overview-title' || translate }}</h1>
+  <div class="d-flex">
+    <div class="content">
+      <detail-overview-general />
+    </div>
   </div>
 </template>
 
@@ -30,5 +32,9 @@ export default DetailOverviewComponent;
 </script>
 
 <style lang="scss" scoped>
-// @import "EvanTwinDetailOverview.scss";
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 56px;
+}
 </style>
