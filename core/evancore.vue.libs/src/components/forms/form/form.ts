@@ -129,6 +129,28 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
   formDataBackup: any = null;
 
   /**
+   * Checks if a custom attribute value was applied to a control object.
+   *
+   * @param      {EvanFormControl}  control  control that should be checked
+   * @param      {string}           attr     attr that is overwritten (placeholder, hint, ...)
+   * @return     {boolean} has custom attribute or not
+   */
+  static hasControlAttr(control: EvanFormControl, attr: string): boolean {
+    let hasControl = false;
+
+    if (control.uiSpecs) {
+      if (Object.prototype.hasOwnProperty.call(control.uiSpecs, attr)) {
+        hasControl = true;
+      } else if (control.uiSpecs.attr
+        && Object.prototype.hasOwnProperty.call(control.uiSpecs.attr, attr)) {
+        hasControl = true;
+      }
+    }
+
+    return hasControl;
+  }
+
+  /**
    * Bind event handlers
    */
   created(): void {
@@ -224,7 +246,7 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
 
     // return directly specified translation
     let returnTranslation = attr !== 'hint';
-    if (this.hasControlAttr(control, attr)) {
+    if (EvanFormComponent.hasControlAttr(control, attr)) {
       // allow property definition within uiSpecis and within attr (specifing label within attr would be confusing)
       const specOverwrite = control.uiSpecs.attr && control.uiSpecs.attr[attr]
         ? control.uiSpecs.attr[attr]
@@ -272,27 +294,5 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
     }
 
     return `evan-form-control-${type}`;
-  }
-
-  /**
-   * Checks if a custom attribute value was applied to a control object.
-   *
-   * @param      {EvanFormControl}  control  control that should be checked
-   * @param      {string}           attr     attr that is overwritten (placeholder, hint, ...)
-   * @return     {boolean} has custom attribute or not
-   */
-  hasControlAttr(control: EvanFormControl, attr: string) {
-    let hasControl = false;
-
-    if (control.uiSpecs) {
-      if (Object.prototype.hasOwnProperty.call(control.uiSpecs, attr)) {
-        hasControl = true;
-      } else if (control.uiSpecs.attr
-        && Object.prototype.hasOwnProperty.call(control.uiSpecs.attr, attr)) {
-        hasControl = true;
-      }
-    }
-
-    return hasControl;
   }
 }
