@@ -58,8 +58,8 @@
     },
     "dbcp-form": {
       "description": {
-        "error": "Please enter a maximum of 300 characters.",
-        "hint": "max. 300 characters",
+        "error": "Please enter a maximum of {maxDescriptionChars} characters.",
+        "hint": "max. {maxDescriptionChars} characters",
         "label": "Description",
         "placeholder": "Briefly describe your Digital Twin and what it represents."
       },

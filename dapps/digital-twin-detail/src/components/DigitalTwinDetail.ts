@@ -121,7 +121,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    *
    * @param      {string}  desc    description that should be shortend
    */
-  getShortDescription(desc: string): string {
-    return desc.length > 300 ? `${desc.slice(0, 300)}...` : desc;
+  getShortDescription(desc: string, maxChars = 300): string {
+    return desc.length > maxChars ? `${desc.slice(0, maxChars)}...` : desc;
   }
 }

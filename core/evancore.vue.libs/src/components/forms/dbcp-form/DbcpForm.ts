@@ -45,6 +45,13 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
   }) description: any;
 
   /**
+   * Contracts dbcp description
+   */
+  @Prop({
+    default: 300,
+  }) maxDescriptionChars: number;
+
+  /**
    * Dbcp formular instance
    */
   dbcpForm: DbcpFormInterface = null;
@@ -71,12 +78,21 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
         },
       },
       description: {
-        validate: (dbcpForm: DbcpFormComponent, form: DbcpFormInterface):
-          boolean => form.description.value.length < 300,
+        validate: (dbcpForm: DbcpFormComponent, form: DbcpFormInterface): boolean => {
+          if (form.description.value.length < this.maxDescriptionChars) {
+            return true;
+          }
+
+          return this.$t('_evan.dbcp-form.description.error', {
+            maxDescriptionChars: this.maxDescriptionChars,
+          });
+        },
         value: this.description.description,
         uiSpecs: {
           attr: {
-            hint: true,
+            hint: this.$t('_evan.dbcp-form.description.hint', {
+              maxDescriptionChars: this.maxDescriptionChars,
+            }),
             rows: 5,
           },
           type: 'textarea',
