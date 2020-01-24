@@ -8,7 +8,6 @@
         "export-template": "Als Vorlage exportieren",
         "exporting-twin": "Vorlage wird erstellt ..."
       },
-      "data-title": "Daten",
       "general": {
         "desc": "Beschreibung",
         "general-title": "Allgemein",
@@ -43,6 +42,13 @@
     },
     "verifications": {
       "verifications-title": "Verifikationen"
+    },
+    "nav-items": {
+      "data": "Daten",
+      "did": "Decentralized ID",
+      "overview": "Übersicht",
+      "sharings": "Freigaben",
+      "verifications": "Verifikationen"
     }
   }
 }

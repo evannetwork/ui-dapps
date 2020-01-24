@@ -17,8 +17,9 @@
   the following URL: https://evan.network/license/
 */
 // map the original vue path to vuex.libs
-import { getDomainName, System } from '@evan.network/ui-dapp-browser';
-System.map['vuex'] = `vuex.libs.${ getDomainName() }!dapp-content`;
-
 import Vuex from 'vuex';
+import { getDomainName, System } from '@evan.network/ui-dapp-browser';
+
+System.map.vuex = `vuex.libs.${getDomainName()}!dapp-content`;
+
 export default Vuex;

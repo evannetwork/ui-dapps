@@ -35,29 +35,26 @@ interface DbcpFormInterface extends EvanForm {
 @Component
 export default class DbcpFormComponent extends mixins(EvanFormComponent) {
   /**
-   * Contract address for the contract that should be saved
+   * Contracts dbcp description
    */
-  @Prop() contractAddress: string;
+  @Prop({
+    default: {
+      name: '',
+      description: '',
+    },
+  }) description: any;
 
   /**
    * Contracts dbcp description
    */
-  @Prop() description: any;
-
-  /**
-   * Shows the owner input box.
-   */
-  @Prop() owner: string;
-
-  /**
-   * Shows the type input box.
-   */
-  @Prop() type: string;
+  @Prop({
+    default: 300,
+  }) maxDescriptionChars: number;
 
   /**
    * Dbcp formular instance
    */
-  formInstance: DbcpFormInterface;
+  dbcpForm: DbcpFormInterface = null;
 
   /**
    * New uploaded image
@@ -68,27 +65,38 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
    * setup form
    */
   created(): void {
-    this.formInstance = new EvanForm(this, {
+    this.dbcpForm = new EvanForm(this, {
       name: {
-        validate: (dbcpForm: DbcpFormComponent, formInstance: DbcpFormInterface): boolean => {
-          return formInstance.name.value.length !== 0;
-        },
-        value: this.description.name,
+        validate: (dbcpForm: DbcpFormComponent, form: DbcpFormInterface):
+          boolean => form.name.value.length !== 0,
+        value: this.description.name || '',
         uiSpecs: {
           attr: {
             required: true,
           },
           type: 'input',
-        }
+        },
       },
       description: {
+        validate: (dbcpForm: DbcpFormComponent, form: DbcpFormInterface): boolean => {
+          if (form.description.value.length < this.maxDescriptionChars) {
+            return true;
+          }
+
+          return this.$t('_evan.dbcp-form.description.error', {
+            maxDescriptionChars: this.maxDescriptionChars,
+          });
+        },
         value: this.description.description,
         uiSpecs: {
           attr: {
+            hint: this.$t('_evan.dbcp-form.description.hint', {
+              maxDescriptionChars: this.maxDescriptionChars,
+            }),
             rows: 5,
           },
           type: 'textarea',
-        }
+        },
       },
     }) as DbcpFormInterface;
   }
@@ -98,8 +106,8 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
    */
   getDescription(): any {
     return {
-      ...this.formInstance.getFormData(),
-      imgSquare: this.image || this.description.imgSquare
-    }
+      ...this.dbcpForm.getFormData(),
+      imgSquare: this.image || this.description.imgSquare,
+    };
   }
 }

@@ -8,7 +8,6 @@
         "export-template": "Export as template",
         "exporting-twin": "Creating template ..."
       },
-      "data-title": "Data",
       "general": {
         "desc": "Description",
         "general-title": "General",
@@ -45,6 +44,13 @@
     },
     "verifications": {
       "verifications-title": "Verifications"
+    },
+    "nav-items": {
+      "data": "Data",
+      "did": "Decentralized ID",
+      "overview": "Overview",
+      "sharings": "Sharings",
+      "verifications": "Verifications"
     }
   }
 }

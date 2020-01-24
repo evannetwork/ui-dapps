@@ -19,26 +19,40 @@
 .button-wrapper {
   position: relative;
 
-  .hidden {
-    opacity: 0;
-  }
-
-  .spinner {
-    position: absolute;
-  }
-
   span {
     color: inherit;
+  }
+
+  &.is-loading {
+    * {
+      opacity: 0;
+    }
+
+    .spinner-border {
+      position: absolute;
+
+      opacity: 1;
+    }
   }
 }
 
 .btn-text-filter.btn {
-  color: cssVar('gray-600');
-  font-weight: normal;
+  &, span {
+    font-size: 12px;
+    font-weight: normal;
+
+    color: cssVar('gray-600');
+  }
   & > i.left.mdi {
+    font-size: 18px;
+
     margin-right: 6px;
   }
+
   &.active {
     border-bottom: 2px solid cssVar('primary');
+  }
+  &:hover span {
+    color: cssVar('gray-900');
   }
 }

@@ -18,8 +18,8 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DAppTwin, } from '@evan.network/digital-twin-lib';
-import { EvanComponent, } from '@evan.network/ui-vue-core';
+import { DAppTwin } from '@evan.network/digital-twin-lib';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 
 @Component
@@ -36,40 +36,44 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
   navItems = [
     {
-      key: 'overview',
-      icon: 'mdi mdi-view-dashboard-outline'
+      key: '_twin-detail.nav-items.overview',
+      icon: 'mdi mdi-view-dashboard-outline',
+      to: { name: 'overview' },
     },
     {
-      key: 'data',
-      icon: 'mdi mdi-file-document-box-outline'
+      key: '_twin-detail.nav-items.data',
+      icon: 'mdi mdi-file-document-box-outline',
+      to: { name: 'data' },
     },
     {
-      key: 'verifications',
-      icon: 'mdi mdi-checkbox-marked-circle-outline'
+      key: '_twin-detail.nav-items.verifications',
+      icon: 'mdi mdi-checkbox-marked-circle-outline',
+      to: { name: 'verifications' },
     },
     {
-      key: 'sharings',
-      icon: 'mdi mdi-share-variant'
+      key: '_twin-detail.nav-items.sharings',
+      icon: 'mdi mdi-share-variant',
+      to: { name: 'sharings' },
     },
     {
-      key: 'did',
-      icon: 'mdi mdi-identifier'
-    }
-  ].map(entry => {
-    return {
-      label: `_twin-detail.${entry.key}.${entry.key}-title`,
-      icon: entry.icon,
-      to: { name: entry.key }
-    };
-  });
+      key: '_twin-detail.nav-items.did',
+      icon: 'mdi mdi-identifier',
+      to: { name: 'did' },
+    },
+  ];
 
   /**
    * Clear the hash change watcher
    */
   beforeDestroy(): void {
     // clear listeners
-    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
-    this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
+    if (this.hashChangeWatcher) {
+      window.removeEventListener('hashchange', this.hashChangeWatcher);
+    }
+
+    if (this.$store.state.twin) {
+      this.$store.state.twin.stopWatchDispatchers();
+    }
   }
 
   /**
@@ -93,7 +97,9 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         // show loading and remove old watchers
         this.loading = true;
-        this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
+        if (this.$store.state.twin) {
+          this.$store.state.twin.stopWatchDispatchers();
+        }
 
         // initialize a new twin, but keep old reference until twin is loaded
         const newTwin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
@@ -109,5 +115,14 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  /**
+   * Cuts the description to a maximum of 300 characters.
+   *
+   * @param      {string}  desc    description that should be shortend
+   */
+  getShortDescription(desc = this.$store.state.twin.description.description, maxChars = 300): string {
+    return desc.length > maxChars ? `${desc.slice(0, maxChars)}...` : desc;
   }
 }

@@ -17,17 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin');
-const fs = require('fs');
-const getExternals = require('./webpack.externals');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const getExternals = require('./webpack.externals');
 
 /**
  * Returns the webpack configuration for the dapp to build
@@ -41,20 +38,18 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
  *                                                          will be increased drastically
  * @return     {any}            webpack config
  */
-module.exports = function(
+module.exports = function getWebpackConfig(
   name,
   dist,
   transpileOnly = false,
-  prodMode = false,
-  externals = getExternals()
+  prodMode = process.env.NODE_ENV === 'production',
+  externals = getExternals(),
 ) {
   // enable prodMode, when node_env was set
-  prodMode = prodMode || process.env.NODE_ENV === 'production';
 
-  const packageJson = require(path.resolve(`${dist}/../package.json`));
   const webpackConfig = {
     entry: './src/index.ts',
-    externals: externals,
+    externals,
     devtool: '#eval-source-map',
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     output: {
@@ -63,7 +58,7 @@ module.exports = function(
       filename: `${name}.js`,
       library: `${name}.js`,
       libraryTarget: 'umd',
-      umdNamedDefine: true
+      umdNamedDefine: true,
     },
     module: {
       rules: [
@@ -73,21 +68,21 @@ module.exports = function(
           exclude: /node_modules/,
           options: {
             transpileOnly,
-            appendTsSuffixTo: [/\.vue$/]
-          }
+            appendTsSuffixTo: [/\.vue$/],
+          },
         },
         {
           test: /\.vue$/,
           loader: 'vue-loader',
           options: {
             loaders: {
-              // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-              // the "scss" and "sass" values for the lang attribute to the right configs here.
-              // other preprocessors should work out of the box, no loader config like this necessary.
-              scss: ['vue-style-loader', 'css-loader', 'sass-loader']
-            }
+              /* Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+                 the "scss" and "sass" values for the lang attribute to the right configs here.
+                 other preprocessors should work out of the box, no loader config like this necessary. */
+              scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
+            },
             // other vue-loader options go here
-          }
+          },
         },
         {
           test: /\.(scss|css)$/,
@@ -99,10 +94,10 @@ module.exports = function(
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                sourceMapContents: false
-              }
-            }
-          ]
+                sourceMapContents: false,
+              },
+            },
+          ],
         },
         {
           test: /\.(woff(2)?|ttf|eot|svg|png|jpg|gif)(\?v=\d+\.\d+\.\d+)?$/,
@@ -111,40 +106,40 @@ module.exports = function(
               loader: 'file-loader',
               options: {
                 name: 'assets/[name].[ext]?[hash]',
-                publicPath: (url, resourcePath, context) => url
-              }
-            }
-          ]
+                publicPath: (url) => url,
+              },
+            },
+          ],
         },
         {
           test: /\.js$/,
-          exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
-          loader: 'babel-loader'
-        }
-      ]
+          exclude: (file) => /node_modules/.test(file) && !/\.vue\.js/.test(file),
+          loader: 'babel-loader',
+        },
+      ],
     },
     plugins: [
       new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
+        /* Options similar to the same options in webpackOptions.output
+           both options are optional */
         filename: `${name}.css`,
-        chunkFilename: `${name}.css`
-      })
+        chunkFilename: `${name}.css`,
+      }),
     ],
     resolve: {
       extensions: ['.ts', '.js', '.vue', '.json'],
       alias: {
-        vue$: 'vue/dist/vue.esm.js'
+        vue$: 'vue/dist/vue.esm.js',
       },
       plugins: [
         // Add tsconfig paths to webpack module resolver
-        new TsconfigPathsPlugin({ extensions: ['.ts', '.js', '.vue', '.json'] })
-      ]
+        new TsconfigPathsPlugin({ extensions: ['.ts', '.js', '.vue', '.json'] }),
+      ],
     },
     performance: {
-      hints: false
-    }
+      hints: false,
+    },
   };
 
   if (prodMode) {
@@ -153,20 +148,25 @@ module.exports = function(
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: '"production"'
-        }
+          NODE_ENV: '"production"',
+        },
       }),
       new UglifyJsPlugin({
-        test: /\.js($|\?)/i,
         exclude: /(node_modules)/,
         parallel: true,
-        sourceMap: false
+        sourceMap: false,
+        test: /\.js($|\?)/i,
+        uglifyOptions: {
+          output: {
+            comments: false,
+          },
+        },
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({}),
     ]);
   } else if (!transpileOnly) {
     webpackConfig.plugins.push(
-      new HardSourceWebpackPlugin({ cacheDirectory: 'build-cache' })
+      new HardSourceWebpackPlugin({ cacheDirectory: 'build-cache' }),
     );
   }
   return webpackConfig;

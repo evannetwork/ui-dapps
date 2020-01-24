@@ -19,8 +19,9 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import EvanComponent from '../../component';
 import { Prop } from 'vue-property-decorator';
+
+import EvanComponent from '../../component';
 
 /**
  * Shows a full screen loading symbol.
@@ -31,6 +32,6 @@ import { Prop } from 'vue-property-decorator';
 @Component({ })
 export default class DAppLoadingComponent extends mixins(EvanComponent) {
   @Prop({
-    default: 'w-100 h-100 text-center pt-5 pb-5'
+    default: 'w-100 h-100 text-center pt-5 pb-5',
   }) classes: string;
 }

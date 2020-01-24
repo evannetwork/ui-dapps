@@ -29,8 +29,6 @@ export default class DigitalTwinInteractionsComponent extends mixins(EvanCompone
   /**
    * Show loading symbol
    */
-  duplicating = false;
-
   exporting = false;
 
   /**
@@ -51,13 +49,11 @@ export default class DigitalTwinInteractionsComponent extends mixins(EvanCompone
    * Creates a duplicated twin from the current definition.
    */
   async createTwinDuplicate(): Promise<void> {
-    this.duplicating = true;
-
     const description = this.dbcpForm.getDescription();
     const imqSquare = description.imgSquare;
     delete description.imqSquare;
     // start twin duplicate dispatcher
-    await dispatchers.twinCreateDispatcher.start(
+    dispatchers.twinCreateDispatcher.start(
       this.getRuntime(),
       {
         description,
@@ -66,7 +62,8 @@ export default class DigitalTwinInteractionsComponent extends mixins(EvanCompone
       },
     );
 
-    this.duplicating = false;
+    this.duplicatePanel.hide();
+    window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
   }
 
   /**

@@ -19,23 +19,21 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import EvanComponent from '../../component';
 import { Prop, Watch } from 'vue-property-decorator';
 import QRCode from 'qrcodejs';
+import EvanComponent from '../../component';
 
 /**
  * Rerender qr code for a qr-code component instance
  */
-const renderQRCode = (vueInstance: QRCodeComponent) => {
-  return new QRCode(vueInstance.$el, {
-    colorDark: vueInstance.colorDark,
-    colorLight: vueInstance.colorLight,
-    correctLevel : QRCode.CorrectLevel.H,
-    height: vueInstance.height,
-    text: vueInstance.text,
-    width: vueInstance.width,
-  });
-};
+const renderQRCode = (vueInstance: QRCodeComponent): QRCode => new QRCode(vueInstance.$el, {
+  colorDark: vueInstance.colorDark,
+  colorLight: vueInstance.colorLight,
+  correctLevel: QRCode.CorrectLevel.H,
+  height: vueInstance.height,
+  text: vueInstance.text,
+  width: vueInstance.width,
+});
 
 /**
  * Shows a animated "check" icon.
@@ -64,18 +62,23 @@ export default class QRCodeComponent extends mixins(EvanComponent) {
    * color definitions
    */
   @Prop({ default: '#000000' }) colorDark: string;
+
   @Prop({ default: '#ffffff' }) colorLight: string;
 
   /**
    * Watch all properties
    */
-  @Watch('text') changedText() { renderQRCode(this); }
-  @Watch('width') changedWidth() { renderQRCode(this); }
-  @Watch('height') changedHeight() { renderQRCode(this); }
-  @Watch('colorDark') changedColorDark() { renderQRCode(this); }
-  @Watch('colorLight') changedColorLight() { renderQRCode(this); }
+  @Watch('text') changedText(): void { renderQRCode(this); }
 
-  mounted() {
+  @Watch('width') changedWidth(): void { renderQRCode(this); }
+
+  @Watch('height') changedHeight(): void { renderQRCode(this); }
+
+  @Watch('colorDark') changedColorDark(): void { renderQRCode(this); }
+
+  @Watch('colorLight') changedColorLight(): void { renderQRCode(this); }
+
+  mounted(): void {
     renderQRCode(this);
   }
 }

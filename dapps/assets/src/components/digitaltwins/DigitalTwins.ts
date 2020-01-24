@@ -55,28 +55,33 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   selectedFilter = 'all';
 
   columns = [
-    { key: 'icon', label: '' },
+    { key: 'icon', label: '', thClass: 'th-icon' },
     {
       key: 'name',
       label: this.$t('_assets.digitaltwins.name'),
       sortable: true,
+      tdClass: 'truncate',
     },
     {
       key: 'owner',
       label: this.$t('_assets.digitaltwins.owner'),
       sortable: true,
+      thClass: 'th-important',
+      tdClass: 'truncate',
     },
     {
       key: 'updated',
       label: this.$t('_assets.digitaltwins.updated'),
       sortable: true,
+      thClass: 'th-date',
     },
     {
       key: 'created',
       label: this.$t('_assets.digitaltwins.created'),
       sortable: true,
+      thClass: 'th-date',
     },
-    { key: 'isFavorite', label: '' },
+    { key: 'isFavorite', label: '', thClass: 'th-icon' },
   ];
 
   isActiveSearch = false;
@@ -108,6 +113,11 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   // contains list of favorites and their state
   favoriteList: Favorite[] = [];
+
+  /**
+   * Used to cancel delayed search, when user already navigated to different page
+   */
+  delayedLoadingTimeout: any;
 
   /**
    * Flag to disable other favorite buttons.
@@ -142,6 +152,13 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     }
   }
 
+  beforeDestroy(): void {
+    // cancel delayed search, when user is already leaving the page
+    if (this.delayedLoadingTimeout) {
+      window.clearTimeout(this.delayedLoadingTimeout);
+    }
+  }
+
   async mounted() {
     this.isActiveSearch = this.searchTerm.length > 0;
 
@@ -159,7 +176,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   delayedSearch() {
-    window.setTimeout(() => {
+    this.delayedLoadingTimeout = window.setTimeout(() => {
       this.performSearch();
     }, 5000);
   }

@@ -21,13 +21,10 @@
   <div>
     <div class="content-card">
       <evan-form-dbcp
-        :contract-address="$store.state.twin.contractAddress"
         :description="$store.state.twin.description"
         :is-loading="$store.state.twin.dispatcherStates.description"
-        :owner="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
         :shareable="false"
         :title="'_twin-detail.data.general.information-title' | translate"
-        :type="'_twin-detail.data.general.type-value' | translate"
         @init="dbcpForm = $event"
         @save="setDescription();"
       >

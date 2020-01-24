@@ -16,9 +16,7 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-const isArray = Array.isArray;
-const keyList = Object.keys;
-const hasProp = Object.prototype.hasOwnProperty;
+import fastDeepEqual from 'fast-deep-equal/es6';
 
 // class names for file types that does not be checked for deep equal check
 const fileTypes = [
@@ -26,7 +24,7 @@ const fileTypes = [
   Uint16Array,
   Uint32Array,
   Uint8Array,
-  ArrayBuffer
+  ArrayBuffer,
 ];
 
 /**
@@ -35,85 +33,13 @@ const fileTypes = [
  * @param      {any}     a          object a
  * @param      {any}     b          object b
  */
-export function deepEqual(a, b) {
-  if (a === b) {
+export function deepEqual(a, b): boolean {
+  // do not check equality for files, it will cause performance issues
+  if (fileTypes.indexOf(a.constructor) !== -1) {
     return true;
   }
 
-  if (a && b && typeof a === 'object' && typeof b === 'object') {
-    // do not check equality for files, it will cause performance issues
-    if (fileTypes.indexOf(a.constructor) !== -1) {
-      return true;
-    }
-
-    let arrA = isArray(a)
-      , arrB = isArray(b)
-      , i
-      , length
-      , key;
-
-    if (arrA && arrB) {
-      length = a.length;
-      if (length !== b.length) {
-        return false;
-      }
-
-      for (i = length; i-- !== 0;) {
-        if (!deepEqual(a[i], b[i])) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    if (arrA !== arrB) {
-      return false;
-    }
-
-    let dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA !== dateB) {
-      return false;
-    }
-
-    if (dateA && dateB) {
-      return a.getTime() === b.getTime();
-    }
-
-    let regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA !== regexpB) {
-      return false;
-    }
-    if (regexpA && regexpB) {
-      return a.toString() === b.toString();
-    }
-
-    let keys = keyList(a);
-    length = keys.length;
-
-    if (length !== keyList(b).length) {
-      return false;
-    }
-
-    for (i = length; i-- !== 0;) {
-      if (!hasProp.call(b, keys[i])) {
-        return false;
-      }
-    }
-
-    for (i = length; i-- !== 0;) {
-      key = keys[i];
-      if (!deepEqual(a[key], b[key])) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  return a !== a && b !== b;
+  return fastDeepEqual(a, b);
 }
 
 /**
@@ -123,17 +49,19 @@ export function deepEqual(a, b) {
  * @param      {any}  obj          object that should be cloned
  * @param      {any}  ignoreFiles  should file entries be ignored?
  */
-export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
+export function cloneDeep(lodash: any, obj: any, ignoreFiles = false): any {
   if (ignoreFiles) {
     return lodash.cloneDeepWith(obj, (value: any) => {
-      // value.__proto__.constructor.toString().indexOf('Buffer') !== -1
+      // eslint-disable-next-line no-underscore-dangle
       if (value && (value._isBuffer || fileTypes.indexOf(value.constructor) !== -1)) {
         return value;
       }
+
+      return undefined;
     });
-  } else {
-    return lodash.cloneDeep(obj);
   }
+
+  return lodash.cloneDeep(obj);
 }
 
 /**
@@ -143,10 +71,11 @@ export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
  * @param      {string}  contnt   content that should be placed within the file.
  */
 export function downloadObject(fileName: string, content: any): void {
-  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(content));
+  const stringified = JSON.stringify(content, null, 2);
+  const dataStr = `data:application/json;charset=utf-8,${encodeURIComponent(stringified)}`;
   const downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute('href', dataStr);
-  downloadAnchorNode.setAttribute('download', fileName + '.json');
+  downloadAnchorNode.setAttribute('download', `${fileName}.json`);
   document.body.appendChild(downloadAnchorNode); // required for firefox
   downloadAnchorNode.click();
   downloadAnchorNode.remove();

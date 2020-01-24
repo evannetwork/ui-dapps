@@ -2,7 +2,9 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "vue.libs": "^2.5.0"
+      },
       "entrypoint": "leaflet.vue.libs.js",
       "files": [
         "leaflet.vue.libs.js",

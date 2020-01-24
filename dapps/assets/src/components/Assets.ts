@@ -34,7 +34,6 @@ export default class AssetsComponent extends mixins(EvanComponent) {
       key: 'contacts',
       icon: 'mdi mdi-account-multiple-outline',
     },
-    // { key: `others`, icon: 'mdi mdi-check-decagram' }
   ].map((entry) => ({
     label: `_assets.${entry.key}.${entry.key}-title`,
     icon: entry.icon,

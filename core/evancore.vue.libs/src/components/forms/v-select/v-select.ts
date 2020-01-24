@@ -34,7 +34,7 @@ import EvanControlComponent from '../control/control';
 export default class VSelectComponent extends mixins(EvanControlComponent) {
   @Prop({
     type: String,
-    default: 'label'
+    default: 'label',
   }) optionLabel: string;
 
   /**
@@ -43,11 +43,10 @@ export default class VSelectComponent extends mixins(EvanControlComponent) {
   @Prop({
     type: Function,
     default: (option) => {
-      if (option && typeof option === 'object' && option.hasOwnProperty('value')) {
+      if (option && typeof option === 'object' && Object.prototype.hasOwnProperty.call(option, 'value')) {
         return option.value;
-      } else {
-        return option;
       }
-    }
+      return option;
+    },
   }) reduce: Function;
 }

@@ -27,8 +27,12 @@
             <div class="sidenav">
               <div class="sidenav-header">
                 <div class="icon-row">
-                  <evan-button @click="close" type="icon-secondary" icon="mdi mdi-close" />
-                  <div class="flex-grow-1"></div>
+                  <evan-button
+                    type="icon-secondary"
+                    icon="mdi mdi-close"
+                    @click="close"
+                  />
+                  <div class="flex-grow-1" />
                   <!-- Favorite Handling -->
                   <evan-loading
                     v-if="$store.state.twin.dispatcherStates.favorite"
@@ -36,15 +40,15 @@
                   />
                   <evan-button
                     v-else-if="!$store.state.twin.favorite"
-                    @click="$store.state.twin.addAsFavorite()"
                     type="icon-secondary"
                     icon="mdi mdi-star-outline"
+                    @click="$store.state.twin.addAsFavorite()"
                   />
                   <evan-button
                     v-else
-                    @click="$store.state.twin.removeFromFavorites()"
                     type="icon-secondary"
                     icon="mdi mdi-star"
+                    @click="$store.state.twin.removeFromFavorites()"
                   />
 
                   <b-dropdown
@@ -59,12 +63,15 @@
                       />
                     </template>
                     <b-dropdown-item
-                      @click="$refs.twinInteractions.duplicateTwin();">
+                      @click="$refs.twinInteractions.duplicateTwin();"
+                    >
                       {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
                       @click="$refs.twinInteractions.exportTemplate();"
-                    >{{ '_twin-detail.data.context-menu.export-template' | translate }}</b-dropdown-item>
+                    >
+                      {{ '_twin-detail.data.context-menu.export-template' | translate }}
+                    </b-dropdown-item>
                   </b-dropdown>
 
                   <digital-twin-interactions ref="twinInteractions" />
@@ -75,11 +82,15 @@
                   type="device"
                   :src="$store.state.twin.description.imgSquare"
                 />
-                <h4 class="twin-name text-center mt-2">{{ $store.state.twin.description.name }}</h4>
-                <h5 class="twin-owner text-center">{{ $store.state.twin.ownerName }}</h5>
+                <h4 class="twin-name text-center mt-2">
+                  {{ $store.state.twin.description.name }}
+                </h4>
+                <h5 class="twin-owner text-center">
+                  {{ $store.state.twin.ownerName }}
+                </h5>
                 <small
-                  class="twin-desc text-center mt-3"
-                >{{ $store.state.twin.description.description }}</small>
+                  class="twin-desc mt-3"
+                >{{ getShortDescription($store.state.twin.description.description) }}</small>
               </div>
 
               <!-- Not using nav-list because it doesnt support router-link properly
@@ -93,7 +104,10 @@
                       :to="navItem.to"
                       :active-class="'active'"
                     >
-                      <i class="mr-3" :class="navItem.icon"></i>
+                      <i
+                        class="mr-3"
+                        :class="navItem.icon"
+                      />
                       {{ navItem.label | translate }}
                     </router-link>
                   </template>
@@ -101,8 +115,11 @@
               </div>
             </div>
           </evan-dapp-wrapper-level-2>
-          <transition name="fade" mode="out-in">
-            <router-view></router-view>
+          <transition
+            name="fade"
+            mode="out-in"
+          >
+            <router-view />
           </transition>
         </template>
       </template>
@@ -112,6 +129,7 @@
 
 <script lang="ts">
 import DigitalTwinDetailComponent from './DigitalTwinDetail';
+
 export default DigitalTwinDetailComponent;
 </script>
 
@@ -120,11 +138,14 @@ export default DigitalTwinDetailComponent;
 
 .sidenav {
   width: 240px;
+
   .evan-nav-list {
     height: auto;
   }
+
   .sidenav-header {
     padding: 24px;
+
     .icon-row {
       display: flex;
       margin: -16px; // counter too big padding for icons
@@ -135,6 +156,11 @@ export default DigitalTwinDetailComponent;
         }
       }
     }
+
+    .twin-name, .twin-owner, .twin-desc {
+      word-break: break-word;
+    }
+
     .twin-name {
       font-size: 12px;
       text-transform: uppercase;
@@ -145,6 +171,7 @@ export default DigitalTwinDetailComponent;
       color: cssVar('gray-600');
     }
     .twin-desc {
+      text-align: justify;
       font-size: 10px;
       color: cssVar('gray-900');
     }

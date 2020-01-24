@@ -20,14 +20,20 @@
 <template>
   <div>
     <div class="content pt-5">
-      <div class="d-flex flex-row justify-content-between align-items-center">
+      <div
+        class="d-flex flex-row justify-content-between align-items-center"
+        style="max-height: 33px"
+      >
         <div class="search">
           <label
             id="twin-enable-search"
             for="searchInput"
             @click="isActiveSearch = true"
           >
-            <i class="mdi mdi-magnify mr-2" />
+            <i
+              class="mdi mdi-magnify mr-1"
+              style="font-size: 22px"
+            />
             <span v-if="!isActiveSearch">{{
               '_assets.digitaltwins.digitaltwins-title' | translate
             }}</span>
@@ -44,7 +50,7 @@
         </div>
         <div>
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-account-outline"
             icon-position="left"
@@ -53,7 +59,7 @@
             @click="selectedFilter = 'my'"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-star-outline"
             icon-position="left"
@@ -62,7 +68,7 @@
             @click="selectedFilter = 'favorites'"
           />
           <evan-button
-            class="filter-btn ml-3"
+            class="ml-3"
             type="text-filter"
             icon="mdi mdi-cube-outline"
             icon-position="left"
@@ -75,11 +81,13 @@
 
       <div class="d-flex flex-row mt-3">
         <evan-table
+          :borderless="true"
           :hover="true"
           :items="data"
           :fields="columns"
+          :fixed="true"
           :show-scrollbar="true"
-          :sticky-header="'80vh'"
+          :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
           no-local-sorting="true"
@@ -116,6 +124,9 @@
               :disabled="isAnyLoading"
               @click="addFavorite(twin)"
             />
+          </template>
+          <template v-slot:table-caption>
+            <div class="table-spacer" />
           </template>
         </evan-table>
       </div>

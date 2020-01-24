@@ -23,4 +23,7 @@ module.exports = require('../../scripts/dapp/webpack.config')(
   require('path').resolve(__dirname, './dist'),
   true,
   true,
+  {
+    '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
+  },
 );
