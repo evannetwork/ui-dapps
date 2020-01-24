@@ -48,7 +48,6 @@ module.exports = {
      * ESLint and Airbnb related rules
      * https://eslint.org/docs/rules/
      */
-    'class-methods-use-this': 'off', // be able to define functions, that no using this, that can be used by vue templates
     'import/extensions': 'off', // disabled to avoid collision with TS
     'import/no-extraneous-dependencies': 'off', // disabled to avoid collision with TS
     'import/no-unresolved': 'off', // disabled to avoid collision with TS
