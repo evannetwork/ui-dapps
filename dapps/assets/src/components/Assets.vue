@@ -72,6 +72,12 @@ export default AssetsComponent;
 
 <style lang="scss" scoped>
 @import '~@evan.network/ui/src/style/utils';
+/deep/ {
+  .dapp-wrapper-body .dapp-wrapper-content {
+    overflow-y: hidden !important;
+  }
+}
+
 .evan-nav-list {
   height: auto;
 }

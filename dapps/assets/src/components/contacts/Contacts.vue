@@ -20,7 +20,10 @@
 <template>
   <div>
     <div class="content pt-5">
-      <div class="d-flex flex-row justify-content-between align-items-center">
+      <div
+        class="d-flex flex-row justify-content-between align-items-center"
+        style="max-height: 33px"
+      >
         <div>
           <h1 class="heading">
             {{ '_assets.contacts.contacts-title' | translate }}
@@ -90,10 +93,14 @@
             />
           </template>
           <template v-slot:cell(createdAt)="contacts">
-            {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
+            <template v-if="contacts.item.createdAt">
+              {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
+            </template>
           </template>
           <template v-slot:cell(updatedAt)="contacts">
-            {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
+            <template v-if="contacts.item.updatedAt">
+              {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
+            </template>
           </template>
           <template v-slot:cell(isFavorite)="contacts">
             <evan-loading
