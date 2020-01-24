@@ -20,14 +20,15 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
+import { Prop } from 'vue-property-decorator';
 import EvanComponent from '../../component';
 import { PermissionsInterface } from '../../interfaces';
 
-import { Prop } from 'vue-property-decorator';
 
 @Component({ })
 class Permissions extends mixins(EvanComponent) {
   readAll = false;
+
   readWriteAll = false;
 
   /**
@@ -35,7 +36,7 @@ class Permissions extends mixins(EvanComponent) {
    */
   @Prop({
     default: '',
-    required: true
+    required: true,
   }) label: string;
 
   /**
@@ -43,7 +44,7 @@ class Permissions extends mixins(EvanComponent) {
    */
   @Prop({
     default: '',
-    required: true
+    required: true,
   }) contractId: string;
 
   /**
@@ -51,21 +52,21 @@ class Permissions extends mixins(EvanComponent) {
    */
   @Prop({
     default: null,
-    required: true
+    required: true,
   }) permissions: PermissionsInterface;
 
   /**
    * The i18n scope used for translations.
    */
   @Prop({
-    default: '_evan'
+    default: '_evan',
   }) i18nScope: string;
 
   /**
    * An array of strings which is used to sort and filter the dataSet keys.
    */
   @Prop({
-    default: null
+    default: null,
   }) sortFilter: string[];
 
   @Prop({}) updatePermissions: Function;
@@ -97,7 +98,7 @@ class Permissions extends mixins(EvanComponent) {
    * @param flag: boolean
    */
   updateAll(mode: 'read'|'readWrite', flag: boolean) {
-    this.sortFilter.forEach( property =>  {
+    this.sortFilter.forEach((property) => {
       this.permissions[property][mode] = flag;
 
       if (mode === 'read' && !flag) {
@@ -143,7 +144,7 @@ class Permissions extends mixins(EvanComponent) {
    * @param access: PermissionsInterface - The permissions object to check, default `this.permissions`
    */
   allPermissions(mode: 'read'|'readWrite', access = this.permissions): boolean {
-    return this.sortFilter.every(key => access[key][mode] === true);
+    return this.sortFilter.every((key) => access[key][mode] === true);
   }
 
   /**

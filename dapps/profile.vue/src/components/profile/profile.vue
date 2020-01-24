@@ -19,23 +19,23 @@
 
 <template>
   <div class="profile-detail p-xxl-11 p-xl-6 p-3">
-    <evan-loading v-if="loading"></evan-loading>
+    <evan-loading v-if="loading" />
     <template v-else>
       <div class="row profile-row">
         <div class="col left-col mb-3">
-          <profile-permission-wrapper entryName="accountDetails">
+          <profile-permission-wrapper entry-name="accountDetails">
             <div class="d-flex align-items-center">
               <evan-profile-preview
-                class="w-100"
                 ref="profilePreview"
+                class="w-100"
                 size="lg"
-                :accountDetails="userInfo"
+                :account-details="userInfo"
                 :address="address"
                 :editable="true"
                 @update="userInfo = $event"
                 @save="saveUserInfo"
               />
-              <div class="mx-auto"></div>
+              <div class="mx-auto" />
               <evan-button
                 v-if="$store.state.runtime && $route.params.address === $store.state.runtime.activeAccount"
                 type="secondary"
@@ -49,49 +49,60 @@
         </div>
         <div class="col right-col d-flex justify-content-end">
           <evan-wallet-card
-            :accountDetails="userInfo"
+            :account-details="userInfo"
             :address="$route.params.address"
             :href="$store.state.profileDApp.isMyProfile ? undefined : null"
           />
         </div>
       </div>
 
-      <div class="row profile-row" v-if="userInfo">
+      <div
+        v-if="userInfo"
+        class="row profile-row"
+      >
         <div class="col left-col mt-3">
-          <div class="text-center" v-if="userInfo.profileType === 'user'">
+          <div
+            v-if="userInfo.profileType === 'user'"
+            class="text-center"
+          >
             <template v-if="this.isLoading()">
-              <evan-loading></evan-loading>
+              <evan-loading />
               <h5>{{ '_profile.dispatchers.profile-update' | translate }}</h5>
             </template>
             <template v-else-if="$store.state.profileDApp.isMyProfile">
               <h5>{{ '_profile.type.missing-type' | translate }}</h5>
 
               <div class="d-flex justify-content-center my-5">
-                <evan-card class="clickable fixed-size"
+                <evan-card
                   v-for="(type, index) in profileTypes"
                   :key="index"
+                  class="clickable fixed-size"
                   :class="{
                     'ml-3': index !== 0,
                     'evan-highlight active': newType === type,
                   }"
-                  @click="newType = type">
+                  @click="newType = type"
+                >
                   <evan-profile-picture
                     class="mb-3"
                     :src="`${ $store.state.profileBaseUrl }/assets/${ type }.svg`"
                     :type="type"
                     size="lg"
                   />
-                  <h5 class="mb-3">{{ `_evan.profile.types.${ type }` | translate }}</h5>
+                  <h5 class="mb-3">
+                    {{ `_evan.profile.types.${ type }` | translate }}
+                  </h5>
                   <small class="text-muted">{{ `_evan.profile.types.${ type }-desc` | translate }}</small>
                 </evan-card>
               </div>
 
               <div class="text-center mt-3">
-                <evan-button type="primary"
+                <evan-button
+                  type="primary"
                   :disabled="!newType"
                   :label="'_profile.type.choose' | translate"
-                  @click="changeType()">
-                </evan-button>
+                  @click="changeType()"
+                />
               </div>
             </template>
             <template v-else>
@@ -99,31 +110,38 @@
             </template>
           </div>
           <template v-if="userInfo.profileType === 'company'">
-            <profile-permission-wrapper entryName="contact">
-              <profile-company-contact :address="address"></profile-company-contact>
+            <profile-permission-wrapper entry-name="contact">
+              <profile-company-contact :address="address" />
             </profile-permission-wrapper>
             <profile-permission-wrapper
+              v-if="$store.state.profileDApp.data.contact.country === 'DE'"
               class="mt-5"
-              entryName="registration"
-              v-if="$store.state.profileDApp.data.contact.country === 'DE'">
-              <profile-company-registration :address="address"></profile-company-registration>
+              entry-name="registration"
+            >
+              <profile-company-registration :address="address" />
             </profile-permission-wrapper>
           </template>
-          <profile-permission-wrapper entryName="deviceDetails"
-            v-else-if="userInfo.profileType === 'device'">
-            <profile-device-detail :address="address"></profile-device-detail>
+          <profile-permission-wrapper
+            v-else-if="userInfo.profileType === 'device'"
+            entry-name="deviceDetails"
+          >
+            <profile-device-detail :address="address" />
           </profile-permission-wrapper>
         </div>
         <div class="col right-col">
           <template v-if="verificationCount === 0">
-            <evan-card class="mt-3"
+            <evan-card
+              v-if="$store.state.profileDApp.isMyProfile"
+              class="mt-3"
               icon="mdi mdi-plus"
               highlight="true"
-              v-if="$store.state.profileDApp.isMyProfile"
               :href="`${ dapp.fullUrl }/${ address }/verifications`"
               :title="'_profile.verifications.add' | translate"
             />
-            <div class="mt-5 text-center" v-else>
+            <div
+              v-else
+              class="mt-5 text-center"
+            >
               <h5 class="font-weight-semibold">
                 {{ '_profile.verifications.empty' | translate }}
               </h5>
@@ -140,41 +158,46 @@
         </div>
       </div>
       <evan-swipe-panel
-        :isOpen="$store.state.uiState.swipePanel === 'sharing'"
+        ref="shareSidebar"
+        :is-open="$store.state.uiState.swipePanel === 'sharing'"
         :title="'_profile.sharing.permissionsTitle' | translate"
-        @hide="$store.state.uiState.swipePanel = ''"
+        v-if="userInfo"
         alignment="right"
         class="light"
-        ref="shareSidebar"
-        showBackdrop="true"
+        show-backdrop="true"
         type="default"
-        v-if="userInfo">
+        @hide="$store.state.uiState.swipePanel = ''"
+      >
         <evan-permissions-editor
-          @init="permissionsEditor = $event"
           :contacts="contacts"
-          :selectedContact="selectedSharedContacts"
-          :onSelect="handleOnSelect"
-          :loadPermissions="loadPermissions"
-          :updatePermissions="updatePermissions"
-          :sortFilters="$store.state.profileDApp.sharingFilter"
-          i18nScope="_profile.sharing"
+          :selected-contact="selectedSharedContacts"
+          :on-select="handleOnSelect"
+          :load-permissions="loadPermissions"
+          :update-permissions="updatePermissions"
+          :sort-filters="$store.state.profileDApp.sharingFilter"
+          i18n-scope="_profile.sharing"
+          @init="permissionsEditor = $event"
         />
-        <template slot="footer" v-if="!!permissionsEditor">
+        <template
+          v-if="!!permissionsEditor"
+          slot="footer"
+        >
           <div class="d-flex">
             <evan-button
               type="secondary"
               :label="$t('_evan.cancel')"
-              @click="permissionsEditor.cancel()"
               :disabled="!selectedSharedContacts"
               class="mr-3"
+              @click="permissionsEditor.cancel()"
             />
             <evan-button
               type="primary"
               :label="$t('_evan.sharing.update')"
-              :disabled="!permissionsEditor.permissionsChanged ||
-                $store.state.dispatcher.curr.running.shareProfileDispatcher"
-              @click="permissionsEditor.writePermissions()"
+              :disabled="!permissionsEditor.permissionsChanged
+                || $store.state.dispatcher.curr.running.shareProfileDispatcher
+                || !selectedSharedContacts"
               class="btn-block"
+              @click="permissionsEditor.writePermissions()"
             />
           </div>
         </template>
@@ -184,8 +207,9 @@
 </template>
 
 <script lang="ts">
-  import Component from './profile';
-  export default Component;
+import Component from './profile';
+
+export default Component;
 </script>
 
 <style lang="scss">
