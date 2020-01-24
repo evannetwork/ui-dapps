@@ -245,21 +245,25 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       });
     }
 
-    if (template.plugins) {
-      Object.keys(template.plugins).forEach((pluginKey: string) => {
-        const { description } = template.plugins[pluginKey];
-        const errors = this.runtime.description.validateDescription({
-          public: description,
-        });
-
-        if (Array.isArray(errors) && errors.length > 0) {
-          TemplateErrorInterfaces.push({
-            name: pluginKey,
-            errors,
-          });
-        }
-      });
+    if (!template.plugins) {
+      return TemplateErrorInterfaces;
     }
+
+    Object.keys(template.plugins).forEach((pluginKey: string) => {
+      const { description } = template.plugins[pluginKey];
+      const errors = this.runtime.description.validateDescription({
+        public: description,
+      });
+
+      if (!Array.isArray(errors) || errors.length === 0) {
+        return;
+      }
+
+      TemplateErrorInterfaces.push({
+        name: pluginKey,
+        errors,
+      });
+    });
 
     return TemplateErrorInterfaces;
   }
