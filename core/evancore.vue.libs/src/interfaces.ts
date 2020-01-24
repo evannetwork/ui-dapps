@@ -73,7 +73,7 @@ export interface EvanVueOptionsInterface {
 export interface EvanFormControlUISpecs {
   attr?: {
     error?: string;
-    hint?: boolean|Function|string;
+    hint?: boolean | Function | string;
     label?: string;
     options?: Array<{ label: string; value: any }>;
     placeholder?: string;
