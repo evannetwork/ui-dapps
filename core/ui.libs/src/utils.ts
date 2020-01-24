@@ -16,9 +16,7 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-const { isArray } = Array;
-const keyList = Object.keys;
-const hasProp = Object.prototype.hasOwnProperty;
+import fastDeepEqual from 'fast-deep-equal/es6';
 
 // class names for file types that does not be checked for deep equal check
 const fileTypes = [
@@ -29,94 +27,20 @@ const fileTypes = [
   ArrayBuffer,
 ];
 
-/* eslint-disable */
 /**
  * Deep equal for objects (https://github.com/epoberezkin/fast-deep-equal/blob/master/index.js)
  *
  * @param      {any}     a          object a
  * @param      {any}     b          object b
  */
-export function deepEqual(a, b) {
-  if (a === b) {
+export function deepEqual(a, b): boolean {
+  // do not check equality for files, it will cause performance issues
+  if (fileTypes.indexOf(a.constructor) !== -1) {
     return true;
   }
 
-  if (a && b && typeof a === 'object' && typeof b === 'object') {
-    // do not check equality for files, it will cause performance issues
-    if (fileTypes.indexOf(a.constructor) !== -1) {
-      return true;
-    }
-
-    const arrA = isArray(a);
-    const arrB = isArray(b);
-    let i;
-    let length;
-    let key;
-
-    if (arrA && arrB) {
-      length = a.length;
-      if (length !== b.length) {
-        return false;
-      }
-
-      for (i = length; i-- !== 0;) {
-        if (!deepEqual(a[i], b[i])) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    if (arrA !== arrB) {
-      return false;
-    }
-
-    let dateA = a instanceof Date
-      , dateB = b instanceof Date;
-    if (dateA !== dateB) {
-      return false;
-    }
-
-    if (dateA && dateB) {
-      return a.getTime() === b.getTime();
-    }
-
-    let regexpA = a instanceof RegExp
-      , regexpB = b instanceof RegExp;
-    if (regexpA !== regexpB) {
-      return false;
-    }
-    if (regexpA && regexpB) {
-      return a.toString() === b.toString();
-    }
-
-    let keys = keyList(a);
-    length = keys.length;
-
-    if (length !== keyList(b).length) {
-      return false;
-    }
-
-    for (i = length; i-- !== 0;) {
-      if (!hasProp.call(b, keys[i])) {
-        return false;
-      }
-    }
-
-    for (i = length; i-- !== 0;) {
-      key = keys[i];
-      if (!deepEqual(a[key], b[key])) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  return a !== a && b !== b;
+  return fastDeepEqual(a, b);
 }
-/* eslint-enable */
 
 /**
  * Lodash cloneDeep wrapper including ignoreFiles flag.
@@ -125,7 +49,7 @@ export function deepEqual(a, b) {
  * @param      {any}  obj          object that should be cloned
  * @param      {any}  ignoreFiles  should file entries be ignored?
  */
-export function cloneDeep(lodash: any, obj: any, ignoreFiles = false) {
+export function cloneDeep(lodash: any, obj: any, ignoreFiles = false): any {
   if (ignoreFiles) {
     return lodash.cloneDeepWith(obj, (value: any) => {
       // eslint-disable-next-line no-underscore-dangle
