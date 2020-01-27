@@ -25,7 +25,7 @@
         :did="`did:evan:${twin.description.identity}`"
         :owner-name="twin.ownerName"
         :owner-address="twin.ownerAddress"
-        :created-at="'TODO'"
+        :created-at="twin.createdAt"
       />
 
       <detail-overview-transactions

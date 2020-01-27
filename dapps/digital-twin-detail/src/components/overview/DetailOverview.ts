@@ -17,15 +17,15 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import axios from 'axios';
+import { utils } from '@evan.network/api-blockchain-core';
+import { DAppTwin } from 'core/digital-twin-lib/src';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
-  twin = null;
+  twin: DAppTwin = null;
 
   transactions = [
     {
@@ -38,6 +38,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
   async created(): Promise<void> {
     this.twin = this.$store.state.twin;
+    await this.attachCreatedAt();
     console.log(this.twin);
 
     // const { identity } = this.$store.state.twin.description;
@@ -45,5 +46,29 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     /* this.did = await this.getRuntime().did.convertIdentityToDid(identity);
        console.log(this.twin);
        console.log(identity); */
+  }
+
+  /**
+   * Enhance the current twin with createdAt timestamp
+   */
+  async attachCreatedAt(): Promise<void> {
+    const runtime = this.getRuntime();
+    const authHeaders = await utils.getSmartAgentAuthHeaders(runtime);
+    const core = runtime.environment === 'testcore' ? '.test' : '';
+    const url = `https://search${core}.evan.network/api/smart-agents/search`;
+
+    const { data } = await axios.get(
+      `${url}/twins`,
+      {
+        headers: {
+          Authorization: authHeaders,
+        },
+        params: { searchTerm: this.twin.contractAddress },
+      },
+    );
+    console.log(data);
+
+    this.$store.state.twin.createdAt = data.result[0].created;
+    this.twin = this.$store.state.twin;
   }
 }
