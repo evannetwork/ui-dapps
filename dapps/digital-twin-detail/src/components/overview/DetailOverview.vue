@@ -23,7 +23,8 @@
       <detail-overview-general
         class="mb-3"
         :did="`did:evan:${twin.description.identity}`"
-        :owner="twin.ownerName"
+        :owner-name="twin.ownerName"
+        :owner-address="twin.ownerAddress"
         :created-at="'TODO'"
       />
 

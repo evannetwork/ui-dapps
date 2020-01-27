@@ -21,17 +21,19 @@
               size="sm"
               type="icon-secondary"
               icon="mdi mdi-content-copy"
+              @click="copyToClickboard"
             />
           </td>
         </tr>
         <tr>
           <td>{{ '_twin-detail.overview.owner' | translate }}</td>
-          <td>{{ owner }}</td>
+          <td>{{ ownerName }}</td>
           <td class="action">
             <evan-button
               size="sm"
               type="icon-secondary"
               icon="mdi mdi-chevron-right"
+              @click="routeToOwner"
             />
           </td>
         </tr>

@@ -38,6 +38,8 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
   async created(): Promise<void> {
     this.twin = this.$store.state.twin;
+    console.log(this.twin);
+
     // const { identity } = this.$store.state.twin.description;
 
     /* this.did = await this.getRuntime().did.convertIdentityToDid(identity);

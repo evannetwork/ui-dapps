@@ -25,7 +25,13 @@ import { Prop } from 'vue-property-decorator';
 export default class DetailOverviewGeneralComponent extends mixins(EvanComponent) {
   @Prop() did: string;
 
-  @Prop() owner: string;
+  @Prop() ownerName: string;
+
+  @Prop() ownerAddress: string;
 
   @Prop() createdAt: string;
+
+  routeToOwner(): void {
+    window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${this.ownerAddress}/detail`;
+  }
 }
