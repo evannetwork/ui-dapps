@@ -82,6 +82,7 @@
         "title": "Delete file"
       }
     },
+    "invalid-json": "Invalid JSON format.",
     "invalid-password": "The provided password is invalid.",
     "log-in": "Log in",
     "login": "Unlock Identity",

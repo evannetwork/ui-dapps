@@ -34,7 +34,7 @@ export default class ControlComponent extends mixins(EvanComponent) {
   /**
    * The value for the input field.
    */
-  @Prop() value: Array<any> | string;
+  @Prop() value: any;
 
   /**
    *  The label for the input field.
@@ -96,7 +96,7 @@ export default class ControlComponent extends mixins(EvanComponent) {
    */
   @Prop() required: boolean | (() => boolean);
 
-  isFunc(val: Function | boolean): val is Function {
+  static isFunc(val: Function | boolean): val is Function {
     if (val) {
       return typeof val === 'function';
     }
@@ -107,7 +107,7 @@ export default class ControlComponent extends mixins(EvanComponent) {
    * Determines if the current field is required. If not, show a optional hint.
    */
   isRequired(): boolean {
-    if (this.isFunc(this.required)) {
+    if (ControlComponent.isFunc(this.required)) {
       return this.required();
     }
 

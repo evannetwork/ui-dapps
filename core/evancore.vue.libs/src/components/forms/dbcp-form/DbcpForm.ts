@@ -21,7 +21,8 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 import EvanFormComponent from '../form/form';
-import { EvanForm, EvanFormControl } from '../../../forms';
+import EvanFormControl from '../../../formControl';
+import EvanForm from '../../../form';
 
 interface DbcpFormInterface extends EvanForm {
   description: EvanFormControl;

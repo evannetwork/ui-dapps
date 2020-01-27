@@ -82,6 +82,7 @@
         "title": "Dateien löschen"
       }
     },
+    "invalid-json": "Ungültiges JSON Format.",
     "invalid-password": "Das eingegebene Passwort ist ungültig.",
     "log-in": "Einloggen",
     "login": "Identität entsperren",

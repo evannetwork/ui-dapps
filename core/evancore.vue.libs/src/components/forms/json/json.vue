@@ -18,22 +18,18 @@
 */
 
 <template>
-  <evan-form-control v-bind="$props">
-    <textarea
-      :id="id"
-      class="form-control"
-      v-bind="$props"
-      :class="{ 'is-invalid' : error }"
-      :value="value"
-      @blur="$emit('blur')"
-      @focus="$parent.$emit('setFocus')"
-      @input="$emit('input', $event.target.value)"
-    />
-  </evan-form-control>
+  <evan-form-control-textarea
+    v-bind="$props"
+    :error="invalid ? $t('_evan.invalid-json') : error"
+    :value="stringValue"
+    @blur="$emit('blur')"
+    @focus="$parent.$emit('setFocus')"
+    @input="onValueChanged();"
+  />
 </template>
 
 <script lang="ts">
-import Component from './textarea';
+import Component from './json';
 
 export default Component;
 </script>

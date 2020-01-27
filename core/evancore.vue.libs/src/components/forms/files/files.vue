@@ -18,87 +18,109 @@
 */
 
 <template>
-  <evan-form-control class="evan-file-input"
-    v-bind="$props">
+  <evan-form-control
+    class="evan-file-input"
+    v-bind="$props"
+  >
     <evan-modal
       id="file-input-remove-modal"
       ref="removeFileModal"
-      @canceled="fileRemove = -1;">
+      @canceled="fileRemove = -1;"
+    >
       <template v-slot:header>
         <h5 class="modal-title">
           {{ `_evan.file-input.remove-modal.title` | translate }}
         </h5>
       </template>
       <template v-slot:body>
-        <p class="text-left m-0"
-          v-html="$t(`_evan.file-input.remove-modal.desc`, modalParams)">
-        </p>
+        <p
+          class="text-left m-0"
+          v-html="$t(`_evan.file-input.remove-modal.desc`, modalParams)"
+        />
       </template>
       <template v-slot:footer>
         <button
           id="file-input-remove-accept"
-          type="button" class="btn btn-primary btn-rounded font-weight-normal"
-          @click="removeFile($event, value[fileRemove], fileRemove)">
+          type="button"
+          class="btn btn-primary btn-rounded font-weight-normal"
+          @click="removeFile($event, files[fileRemove], fileRemove)"
+        >
           {{ `_evan.file-input.remove-modal.action` | translate }}
-          <i class="mdi mdi-arrow-right label ml-3"></i>
+          <i class="mdi mdi-arrow-right label ml-3" />
         </button>
       </template>
     </evan-modal>
 
-    <div class="batch-label ml-0 mr-2 my-2"
-      v-for="(file, index) in value">
+    <div
+      v-for="(file, index) in files"
+      :key="index"
+      class="batch-label ml-0 mr-2 my-2"
+    >
       <span>{{ file.name }}</span>
 
-      <a class="btn p-0 ml-3"
+      <a
         :id="`file-input-download-${ index }`"
+        class="btn p-0 ml-3"
         :href="file.blobUri"
-        :download="file.name">
-        <i class="mdi mdi-download-outline"></i>
+        :download="file.name"
+      >
+        <i class="mdi mdi-download-outline" />
       </a>
       <button
+        v-if="!disabled"
         id="file-input-remove"
         class="btn p-0 ml-1 delete"
-        v-if="!disabled"
-        @click="removeFile($event, file, index)">
-        <i class="mdi mdi-delete-outline"></i>
+        @click="removeFile($event, file, index)"
+      >
+        <i class="mdi mdi-delete-outline" />
       </button>
     </div>
 
-    <div class="dropzone"
-      :class="{ 'border-secondary': hovered }"
+    <div
       v-if="!disabled"
+      class="dropzone"
+      :class="{ 'border-secondary': hovered }"
       @drag-end="hovered = false"
       @drag-enter="hovered = true"
       @drag-leave="hovered = false"
       @drag-over="hovered = true"
       @drag-start="hovered = true"
       @drag="hovered = true"
-      @drop="hovered = false">
+      @drop="hovered = false"
+    >
       <input
         id="file-input-upload"
-        type="file" multiple
+        type="file"
+        multiple
         :accept="accept"
         :name="name"
         @focus="$parent.$emit('setFocus', true)"
-        @change="filesChanged($event.target.files)">
-      <div class="centered"
+        @change="filesChanged($event.target.files)"
+      >
+      <div
+        class="centered"
         :class="{ 'text-secondary': hovered }"
-        v-html="$t(placeholder)">
-      </div>
+        v-html="$t(placeholder)"
+      />
     </div>
-    <div class="centered"
-      v-else-if="value.length === 0"
-      v-html="$t(emptyText)">
-    </div>
-    <div class="invalid-feedback" v-if="error">
+    <div
+      v-else-if="files.length === 0"
+      class="centered"
+      v-html="$t(emptyText)"
+    />
+    <div
+      v-if="error"
+      class="invalid-feedback"
+    >
       {{ error | translate }}
     </div>
   </evan-form-control>
 </template>
 
 <script lang="ts">
-  import Component from './files';
-  export default Component;
+import Component from './files';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>
