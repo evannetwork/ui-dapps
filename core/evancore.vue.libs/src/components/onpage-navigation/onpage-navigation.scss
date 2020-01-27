@@ -1,0 +1,22 @@
+@import '~@evan.network/ui/src/style/utils';
+
+.onpage-nav {
+  position: fixed;
+  top: 80px;
+  right: 80px;
+
+  ul {
+    list-style: none;
+
+    li {
+      text-transform: uppercase;
+      color: cssVar(grey-600);
+      border-left: 1px solid transparent;
+      cursor: pointer;
+    }
+    li.active {
+      border-color: cssVar(primary);
+      color: cssVar(primary);
+    }
+  }
+}

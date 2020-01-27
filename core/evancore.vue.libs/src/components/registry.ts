@@ -18,6 +18,7 @@
 */
 
 // import evan libs
+import vSelect from 'vue-select';
 import { ComponentRegistrationInterface } from '../interfaces';
 
 // import all components
@@ -53,6 +54,7 @@ import MnemonicExport from './dapp-wrapper/mnemonic-export/mnemonic-export.vue';
 import ModalComponent from './modal/modal.vue';
 import NavListComponent from './nav-list/nav-list.vue';
 import NavTabsComponent from './nav-tabs/nav-tabs.vue';
+import OnPageNavigationComponent from './onpage-navigation/onpage-navigation.vue';
 import PermissionsComponent from './permissions/permissions.vue';
 import PermissionsEditorComponent from './permissions-editor/permissions-editor.vue';
 import ProfilePicture from './profile/profile-picture/profile-picture.vue';
@@ -66,7 +68,6 @@ import SwipePanelComponentClass from './swipe-panel/swipe-panel';
 import TableComponent from './table/table.vue';
 import TooltipComponent from './tooltip/tooltip.vue';
 import UnderDevelopmentComponent from './under-development/under-development.vue';
-import vSelect from 'vue-select';
 import WalletCardComponent from './profile/wallet-card/wallet-card.vue';
 
 // export them all, so other applications can access them
@@ -151,6 +152,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-modal', component: ModalComponent },
   { name: 'evan-nav-list', component: NavListComponent },
   { name: 'evan-nav-tabs', component: NavTabsComponent },
+  { name: 'evan-onpage-navigation', component: OnPageNavigationComponent },
   { name: 'evan-permissions', component: PermissionsComponent },
   { name: 'evan-permissions-editor', component: PermissionsEditorComponent },
   { name: 'evan-profile-picture', component: ProfilePicture },
