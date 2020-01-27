@@ -20,13 +20,14 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import axios from 'axios';
-import { utils } from '@evan.network/api-blockchain-core';
-import { DAppTwin } from 'core/digital-twin-lib';
-import { DigitalTwinResponse } from './DigitaltwinResponse.interface';
+import { utils, Runtime } from '@evan.network/api-blockchain-core';
+import { DAppTwin, TransactionsResponse, DigitalTwinResponse } from 'core/digital-twin-lib';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
   twin: DAppTwin = null;
+
+  runtime: Runtime = null;
 
   transactions = [
     {
@@ -38,24 +39,44 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
   ]
 
   async created(): Promise<void> {
+    this.runtime = this.getRuntime();
     this.twin = this.$store.state.twin;
     await this.attachCreatedAt();
+    // await this.getLastTransactions();
     console.log(this.twin);
+  }
 
-    // const { identity } = this.$store.state.twin.description;
+  async getLastTransactions() {
+    const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
+    const core = this.runtime.environment === 'testcore' ? '.test' : '';
+    const url = `https://search${core}.evan.network/api/smart-agents/search`;
 
-    /* this.did = await this.getRuntime().did.convertIdentityToDid(identity);
-       console.log(this.twin);
-       console.log(identity); */
+    const params = {
+      count: 5,
+      offset: 0,
+      reverse: true,
+      sortBy: 'timestamp',
+      address: this.twin.contractAddress,
+    };
+
+    const { data } = await axios.get<TransactionsResponse>(
+      `${url}/transactions/twin`,
+      {
+        headers: {
+          Authorization: authHeaders,
+        },
+        params,
+      },
+    );
+    console.log(data);
   }
 
   /**
    * Enhance the current twin with createdAt timestamp
    */
   async attachCreatedAt(): Promise<void> {
-    const runtime = this.getRuntime();
-    const authHeaders = await utils.getSmartAgentAuthHeaders(runtime);
-    const core = runtime.environment === 'testcore' ? '.test' : '';
+    const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
+    const core = this.runtime.environment === 'testcore' ? '.test' : '';
     const url = `https://search${core}.evan.network/api/smart-agents/search`;
 
     const { data } = await axios.get<DigitalTwinResponse>(

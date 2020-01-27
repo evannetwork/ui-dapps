@@ -26,6 +26,8 @@ import DAppTwin from './DAppTwin';
 import translations from './i18n';
 import { DBCPDescriptionInterface } from './DAppContract';
 import { DigitalTwinSearchInterface } from './interfaces/DigitalTwinInterface';
+import { DigitalTwinResponse } from './interfaces/DigitaltwinResponse';
+import { TransactionsResponse } from './interfaces/DigitalTwinTransaction';
 import {
   ValidationErrorInterface,
   TemplateErrorInterface,
@@ -41,6 +43,8 @@ export {
   DigitalTwinSearchInterface,
   ValidationErrorInterface,
   TemplateErrorInterface,
+  DigitalTwinResponse,
+  TransactionsResponse,
 };
 
 System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${getDomainName()}!dapp-content`;
