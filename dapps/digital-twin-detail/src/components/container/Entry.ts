@@ -29,9 +29,16 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   /**
    * Current entry definition from container dbcp schema
    */
-  entry: any;
+  entrySchema: any;
 
-  created() {
-    this.entry = this.$store.state.container.plugin.template.properties[this.name];
+  /**
+   * Current value of the entry
+   */
+  value: any;
+
+  created(): void {
+    const { dispatcherData, plugin, entries } = this.$store.state.container;
+    this.entrySchema = plugin.template.properties[this.name].dataSchema;
+    this.value = entries[this.name];
   }
 }

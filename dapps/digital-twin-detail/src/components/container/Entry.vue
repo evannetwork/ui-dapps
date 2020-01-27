@@ -18,12 +18,14 @@
 */
 
 <template>
-  <div>
-    <data-set :name="name">
-      <data-set-form
-        :data-schema="entry.dataSchema"
-      />
-    </data-set>
+  <div class="content-card">
+    <data-set-form
+      :data-schema="entrySchema"
+      :is-loading="$store.state.container.dispatcherStates.entries[name]"
+      :name="name"
+      :value="value"
+      @save="$store.state.container.setEntry(name, value)"
+    />
   </div>
 </template>
 

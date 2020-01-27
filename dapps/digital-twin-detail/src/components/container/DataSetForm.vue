@@ -22,7 +22,9 @@
     <evan-form
       ref="form"
       :form="form"
-      :i18n-scope="`${$route.params.container}.properties`"
+      :i18n-scope="`${i18nScope}.properties`"
+      :is-loading="isLoading"
+      :title="$t(`${i18nScope}.name`, name)"
       @save="$emit('save')"
     />
   </div>

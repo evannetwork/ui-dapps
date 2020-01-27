@@ -48,10 +48,11 @@ export default class ContainerComponent extends mixins(EvanComponent) {
    */
   async setupContainer(): Promise<void> {
     this.loading = true;
-    this.$store.state.container = this.$store.state.twin
-      .containerContracts[this.$route.params.container];
+    this.$set(this.$store.state, 'container', this.$store.state.twin
+      .containerContracts[this.$route.params.container]);
 
     // ensure loaded entries and start dispatcher watching
+    await this.$store.state.container.initialize();
     await this.$store.state.container.ensureEntries();
     this.$store.state.container.watchDispatchers();
 

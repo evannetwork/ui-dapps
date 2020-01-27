@@ -24,19 +24,12 @@
       <div>
         <h3>{{ `${ $route.params.container }.name` | translate }}</h3>
         <span>{{ `${ $route.params.container }.description` | translate }}</span>
-        <div
-          v-if="$store.state.container.dispatcherStates.description"
-          class="spinner-border spinner-border-sm"
-        />
-        <div
-          v-if="$store.state.container.dispatcherStates.container"
-          class="spinner-border spinner-border-sm"
-        />
       </div>
 
       <div
         v-for="entryKey in $store.state.container.entryKeys"
         :key="entryKey"
+        class="mt-3"
       >
         <component
           :is="`container-${getEntryType(entryKey)}`"

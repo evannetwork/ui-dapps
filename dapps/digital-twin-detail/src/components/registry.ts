@@ -30,7 +30,6 @@ import DigitalTwinInteractionsComponent from './TwinInteractions.vue';
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { component: ContainerEntryComponent, name: 'container-entry' },
   { component: ContainerListComponent, name: 'container-list' },
-  { component: DataSetComponent, name: 'data-set' },
   { component: DataSetFormComponent, name: 'data-set-form' },
   { component: DigitalTwinInteractionsComponent, name: 'digital-twin-interactions' },
 ];

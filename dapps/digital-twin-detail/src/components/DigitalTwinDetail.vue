@@ -183,4 +183,17 @@ export default DigitalTwinDetailComponent;
   margin-left: auto;
   margin-right: auto;
 }
+
+/deep/ .content-card {
+  background: white;
+  border-radius: 4px;
+  width: 564px;
+  padding: 32px 24px;
+
+  .card-heading {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
 </style>
