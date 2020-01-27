@@ -21,7 +21,8 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import axios from 'axios';
 import { utils } from '@evan.network/api-blockchain-core';
-import { DAppTwin } from 'core/digital-twin-lib/src';
+import { DAppTwin } from 'core/digital-twin-lib';
+import { DigitalTwinResponse } from './DigitaltwinResponse.interface';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
@@ -57,7 +58,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     const core = runtime.environment === 'testcore' ? '.test' : '';
     const url = `https://search${core}.evan.network/api/smart-agents/search`;
 
-    const { data } = await axios.get<TransactionsResponse>(
+    const { data } = await axios.get<DigitalTwinResponse>(
       `${url}/twins`,
       {
         headers: {
@@ -71,19 +72,4 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     this.$store.state.twin.createdAt = data.results[0].created;
     this.twin = this.$store.state.twin;
   }
-}
-
-export interface TransactionsResponse {
-  total: number;
-  results: Result[];
-}
-
-export interface Result {
-  address: string;
-  containers: any[];
-  created: number;
-  description: string;
-  name: string;
-  owner: string;
-  updated: number;
 }
