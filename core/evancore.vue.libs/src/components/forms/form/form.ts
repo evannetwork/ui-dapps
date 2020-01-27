@@ -26,7 +26,8 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { cloneDeep } from '@evan.network/ui';
 
 import EvanComponent from '../../../component';
-import { EvanForm, EvanFormControl } from '../../../forms';
+import EvanForm from '../../../form';
+import EvanFormControl from '../../../formControl';
 
 /**
  * Formular wrapper for handling evan.network specific formulars including an visible scope icon,
@@ -284,9 +285,11 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
   /**
    * Get the form-data type component string for a control.
    *
-   * @param      {EvanFormControl}  control  control that should be translated
+   * @param      {string}  name    name of the control to be checked
+   * @return     {string}  name of the control
    */
-  getControlComponentName(control: EvanFormControl): string {
+  getControlComponentName(name: string): string {
+    const control = this.form[name];
     let type = 'input';
 
     if (control.uiSpecs) {

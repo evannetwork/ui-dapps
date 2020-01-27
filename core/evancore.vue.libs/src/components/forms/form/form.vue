@@ -65,7 +65,7 @@
           <template v-for="(controlName) in form.controls">
             <slot :name="`form-control-${ controlName }`">
               <component
-                :is="getControlComponentName(form[controlName])"
+                :is="getControlComponentName(controlName)"
                 v-model="form[controlName].value"
                 :disabled="!editable || isLoading"
                 :error="(onlyForm || editMode && !onlyForm) ? getTranslation(form[controlName], 'error') : false"
