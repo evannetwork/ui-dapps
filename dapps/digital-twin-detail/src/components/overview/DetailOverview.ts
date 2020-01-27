@@ -57,7 +57,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     const core = runtime.environment === 'testcore' ? '.test' : '';
     const url = `https://search${core}.evan.network/api/smart-agents/search`;
 
-    const { data } = await axios.get(
+    const { data } = await axios.get<TransactionsResponse>(
       `${url}/twins`,
       {
         headers: {
@@ -68,7 +68,22 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     );
     console.log(data);
 
-    this.$store.state.twin.createdAt = data.result[0].created;
+    this.$store.state.twin.createdAt = data.results[0].created;
     this.twin = this.$store.state.twin;
   }
+}
+
+export interface TransactionsResponse {
+  total: number;
+  results: Result[];
+}
+
+export interface Result {
+  address: string;
+  containers: any[];
+  created: number;
+  description: string;
+  name: string;
+  owner: string;
+  updated: number;
 }
