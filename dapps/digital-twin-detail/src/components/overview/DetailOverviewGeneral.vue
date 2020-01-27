@@ -21,7 +21,7 @@
               size="sm"
               type="icon-secondary"
               icon="mdi mdi-content-copy"
-              @click="copyToClickboard"
+              @click="copyToClipboard(did)"
             />
           </td>
         </tr>
