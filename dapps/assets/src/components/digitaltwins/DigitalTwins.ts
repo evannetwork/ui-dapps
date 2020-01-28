@@ -25,7 +25,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { debounce } from 'lodash';
 import {
   dispatchers,
-  DigitalTwinSearchInterface as DigitalTwin,
+  DigitalTwin,
 } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
