@@ -19,9 +19,10 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class ContainerListComponent extends mixins(EvanComponent) {
-
+  @Prop() name: string;
 }

@@ -93,8 +93,8 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       uiSpecs: {
         attr: {
           // translate it before, so the formular will use correct fallback translations
-          label: this.$t(`${this.i18nScope}.${name}.label`, name),
-          placeholder: this.$t(`${this.i18nScope}.${name}.placeholder`, ''),
+          label: this.$t(`${this.i18nScope}.properties.${name}.label`, name),
+          placeholder: this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
         },
         type: 'input',
       },
