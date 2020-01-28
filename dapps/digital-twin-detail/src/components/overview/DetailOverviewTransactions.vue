@@ -32,7 +32,7 @@
             {{ row.feeInEve }}
           </td>
           <td>{{ row.initiator }}</td>
-          <td>{{ row.timestamp }}</td>
+          <td>{{ row.timestamp || 'TODO' }}</td>
           <td>
             <evan-button
               size="sm"

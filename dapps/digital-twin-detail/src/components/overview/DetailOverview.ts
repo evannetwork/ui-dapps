@@ -41,7 +41,6 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     this.twin = this.$store.state.twin;
     await this.attachCreatedAt();
     await this.getLastTransactions();
-    console.log(this.twin);
   }
 
   async getLastTransactions(): Promise<void> {
@@ -66,7 +65,6 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
         params,
       },
     );
-    console.log(data);
     this.transactions = await this.enhanceTransactions(data.result);
   }
 
@@ -114,7 +112,6 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
         params: { searchTerm: this.twin.contractAddress },
       },
     );
-    console.log(data);
 
     this.$store.state.twin.createdAt = data.result[0]?.created;
     this.twin = this.$store.state.twin;
