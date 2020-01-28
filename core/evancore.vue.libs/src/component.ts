@@ -20,40 +20,13 @@
 // vue imports
 import Component from 'vue-class-component';
 import Vue from 'vue';
-import VueRouter, { Route, RawLocation } from 'vue-router';
+import VueRouter, { Route } from 'vue-router';
 
 // evan.network imports
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { Runtime } from '@evan.network/api-blockchain-core';
 import { getDomainName } from './utils';
 import { StartedDAppInfo } from './interfaces';
-
-declare module 'vue/types/vue' {
-  // Augment component instance type
-  interface Vue {
-    beforeRouteEnter?(
-      to: Route,
-      from: Route,
-      next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void
-    ): void;
-
-    beforeRouteLeave?(
-      to: Route,
-      from: Route,
-      next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void
-    ): void;
-
-    beforeRouteUpdate?(
-      to: Route,
-      from: Route,
-      next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void
-    ): void;
-
-    mounted?(): void;
-
-    created?(): void;
-  }
-}
 
 /**
  * Evan.network component wrapper for easily accessing blockchain runtime data and active DApp information.
