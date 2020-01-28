@@ -32,7 +32,7 @@ interface Entry {
 
 /**
  * Component to provide simple scroll to element functionality.
- * Requires a list if ids and labels. Where the ids should be available somewhere in rendered HTML.
+ * Requires a list if ids and labels, where the ids should be available somewhere in rendered HTML.
  *
  * @usage <evan-onpage-navigation :entries="navEntries" scrollContainerSelector=".dapp-wrapper-content" />
  * @class OnpageNavigationComponent
