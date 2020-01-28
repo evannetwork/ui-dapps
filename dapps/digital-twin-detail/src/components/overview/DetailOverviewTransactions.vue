@@ -13,10 +13,10 @@
     >
       <thead>
         <th>
-          {{ '_twin-detail.overview.amount' | translate }}
+          {{ '_twin-detail.overview.fee' | translate }}
         </th>
         <th>
-          {{ '_twin-detail.overview.name' | translate }}
+          {{ '_twin-detail.overview.initiator' | translate }}
         </th>
         <th>
           {{ '_twin-detail.overview.date' | translate }}

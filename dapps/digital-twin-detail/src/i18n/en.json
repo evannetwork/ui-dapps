@@ -29,12 +29,12 @@
       "did-title": "Decentralized ID"
     },
     "overview": {
-      "amount": "Amount",
       "created-at": "Created at",
       "date": "Date",
       "did": "Decentralized ID",
+      "fee": "Fee",
       "general-title": "General",
-      "name": "Name",
+      "initiator": "Initiator",
       "overview-title": "Overview",
       "owner": "Owner",
       "transactions-title": "Last Transactions"

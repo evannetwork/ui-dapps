@@ -27,12 +27,12 @@
       "did-title": "Decentralized ID"
     },
     "overview": {
-      "amount": "Betrag",
       "created-at": "Erstellt am",
       "date": "Datum",
       "did": "Decentralized ID",
+      "fee": "Gebühr",
       "general-title": "Allgemein",
-      "name": "Name",
+      "initiator": "Initiator",
       "overview-title": "Übersicht",
       "owner": "Besitzer",
       "transaction-title": "Letzte Transaktionen"
