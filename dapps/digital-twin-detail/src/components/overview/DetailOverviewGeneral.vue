@@ -58,7 +58,7 @@ export default DetailOverviewGeneralComponent;
   background: white;
   border-radius: 4px;
   width: 604px;
-  padding: 24px 32px;
+  padding: 24px 24px;
 
   .card-heading {
     font-size: 18px;
