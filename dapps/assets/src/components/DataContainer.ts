@@ -24,7 +24,7 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-import SearchService from './SearchService';
+import { SearchService } from '@evan.network/digital-twin-lib';
 
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {

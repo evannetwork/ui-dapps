@@ -24,9 +24,8 @@ import {
   Profile,
   ProfileOptions,
 } from '@evan.network/api-blockchain-core';
-import { DAppTwin, TwinTransaction } from '@evan.network/digital-twin-lib';
+import { DAppTwin, TwinTransaction, SearchService } from '@evan.network/digital-twin-lib';
 import { bccUtils } from '@evan.network/ui';
-import { CommunicationService } from './CommunicationService';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
@@ -36,18 +35,18 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
   transactions: TwinTransaction[] = null;
 
-  communicationService: CommunicationService = null;
+  search: SearchService = null;
 
   async created(): Promise<void> {
     this.runtime = this.getRuntime();
-    this.communicationService = new CommunicationService(this.runtime);
+    this.search = new SearchService(this.runtime);
     this.twin = this.$store.state.twin;
     await this.attachCreatedAt();
     await this.getLastTransactions();
   }
 
   async getLastTransactions(): Promise<void> {
-    this.transactions = await this.communicationService.getLastTransactions(
+    this.transactions = await this.search.getLastTransactions(
       this.twin.contractAddress,
     );
     this.transactions = await this.enhanceTransactions(this.transactions);
@@ -57,7 +56,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
    * Enhance the current twin with createdAt timestamp
    */
   async attachCreatedAt(): Promise<void> {
-    const timestamp = this.communicationService.getCreatedTimestamp(
+    const timestamp = await this.search.getCreatedTimestamp(
       this.twin.contractAddress,
     );
 

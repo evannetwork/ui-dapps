@@ -34,6 +34,7 @@ import {
   ValidationErrorInterface,
   TemplateErrorInterface,
 } from './interfaces/TemplateValidationErrors';
+import { SearchService } from './SearchService';
 
 export * from './dispatchers';
 export {
@@ -48,6 +49,7 @@ export {
   TransactionsResponse,
   TwinTransaction,
   DigitalTwin,
+  SearchService,
 };
 
 System.map[

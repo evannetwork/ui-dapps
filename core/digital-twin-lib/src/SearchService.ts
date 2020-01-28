@@ -19,59 +19,25 @@
 
 import axios from 'axios';
 import { utils, Runtime } from '@evan.network/api-blockchain-core';
+import { DigitalTwinResponse } from './interfaces/DigitalTwinResponse';
+import { QueryOptions } from './interfaces/SearchInterface';
+import { TwinTransaction, TransactionsResponse } from './interfaces/DigitalTwinTransaction';
 
-interface QueryOptions {
-  count?: number;
-  offset?: number;
-  page?: number;
-  reverse?: boolean;
-  searchTerm?: string;
-  sortBy?: string;
-}
-
-interface SearchResult {
-  address: string;
-  containers: string[];
-  created: number;
-  description: string;
-  name: string;
-  owner: string;
-  updated: number;
-}
-
-interface SearchResponseData {
-  requesterInformation?: any;
-  result: SearchResult[];
-  serverInformation?: any;
-  status: string;
-  total: number;
-}
-
-interface SearchResponse {
-  data: SearchResponseData;
-}
-
-class SearchService {
+export class SearchService {
   runtime: Runtime = null;
 
-  searchUrl: string;
+  requestUrl: string = null;
 
   constructor(runtime: Runtime) {
-    if (!runtime) {
-      throw new Error('Initialized search Service without runtime.');
-    }
     this.runtime = runtime;
-
     const core = runtime.environment === 'testcore' ? '.test' : '';
-    const agentUrl = `https://search${core}.evan.network/api/smart-agents`;
-
-    this.searchUrl = `${agentUrl}/search`;
+    this.requestUrl = `https://search${core}.evan.network/api/smart-agents/search`;
   }
 
   async query(
     type = 'twins',
-    options: QueryOptions,
-  ): Promise<SearchResponseData> {
+    options: QueryOptions = {},
+  ): Promise<DigitalTwinResponse> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
 
     const defaultOptions = {
@@ -95,8 +61,8 @@ class SearchService {
       ? '*'
       : `*${params.searchTerm}*`;
 
-    const { data } = await axios.get<SearchResponse>(
-      `${this.searchUrl}/${type}`,
+    const { data } = await axios.get<DigitalTwinResponse>(
+      `${this.requestUrl}/${type}`,
       {
         headers: {
           Authorization: authHeaders,
@@ -107,8 +73,49 @@ class SearchService {
 
     // TODO: error handling in request etc...
 
-    return ({ ...data } as unknown) as SearchResponseData;
+    return data;
+  }
+
+  /**
+   * Fetch the latest transactions of a twin
+   * @param twinId hash id of twin
+   * @param options optional options to extend/override default
+   */
+  async getLastTransactions(twinId: string, options = {}): Promise<TwinTransaction[]> {
+    const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
+    const defaultOptions = {
+      count: 5,
+      offset: 0,
+      reverse: true,
+      sortBy: 'timestamp',
+      address: twinId,
+    };
+
+    const { data } = await axios.get<TransactionsResponse>(
+      `${this.requestUrl}/transactions/twin`,
+      {
+        headers: {
+          Authorization: authHeaders,
+        },
+        params: { ...defaultOptions, ...options },
+      },
+    );
+    return data.result;
+  }
+
+  /**
+   * Enhance the current twin with createdAt timestamp
+   * TODO: Use getTwinById API (WIP)
+   */
+  async getCreatedTimestamp(twinId: string): Promise<number> {
+    const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
+    const { data } = await axios.get<DigitalTwinResponse>(`${this.requestUrl}/twins`, {
+      headers: {
+        Authorization: authHeaders,
+      },
+      params: { searchTerm: twinId },
+    });
+
+    return data.result[0]?.created;
   }
 }
-
-export default SearchService;
