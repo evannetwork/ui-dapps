@@ -292,11 +292,7 @@ class DAppContainer extends Container {
 }
 
 // enable multi inheritance for general DAppContract
-interface DAppContainer extends DAppContract {
-  /* workaround for handling multi inheritance interfaces with the linter (linter will also reformat
-     interface to type) */
-  allowInterface: boolean;
-}
+interface DAppContainer extends DAppContract, Container { }
 applyMixins(DAppContainer, [DAppContract]);
 
 export default DAppContainer;

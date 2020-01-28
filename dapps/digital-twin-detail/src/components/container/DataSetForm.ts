@@ -104,17 +104,18 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     switch (type) {
       case 'files': {
         control.uiSpecs.type = 'files';
-
         break;
       }
       case 'object': {
         control.uiSpecs.type = 'json';
-
+        break;
+      }
+      case 'array': {
+        control.uiSpecs.type = 'json';
         break;
       }
       default: {
         control.uiSpecs.attr.type = type;
-
         break;
       }
     }

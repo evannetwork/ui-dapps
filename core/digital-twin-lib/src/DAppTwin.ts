@@ -231,11 +231,7 @@ class DAppTwin extends DigitalTwin {
 }
 
 // enable multi inheritance for general DAppContract
-interface DAppTwin extends DAppContract {
-  /* workaround for handling multi inheritance interfaces with the linter (linter will also reformat
-     interface to type) */
-  allowInterface: boolean;
-}
+interface DAppTwin extends DAppContract, DigitalTwin { }
 applyMixins(DAppTwin, [DAppContract]);
 
 export default DAppTwin;
