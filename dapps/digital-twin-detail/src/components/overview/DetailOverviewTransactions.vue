@@ -38,6 +38,7 @@
               size="sm"
               type="icon-secondary"
               icon="mdi mdi-chevron-right"
+              @click="routeToTransactionExplorer(row.blockHash)"
             />
           </td>
         </tr>

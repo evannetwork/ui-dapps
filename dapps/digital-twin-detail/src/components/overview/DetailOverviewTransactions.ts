@@ -26,4 +26,13 @@ import { TwinTransaction } from 'core/digital-twin-lib';
 @Component
 export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
   @Prop() transactions: TwinTransaction[];
+
+  routeToTransactionExplorer(transactionId: string): void {
+    const baseUrl = this.getRuntime().environment === 'core'
+      ? 'https://explorer.evan.network'
+      : 'https://testexplorer.evan.network';
+
+    // Open block explorer in new tab
+    window.open(`${baseUrl}/tx/${transactionId}`, '_blank');
+  }
 }
