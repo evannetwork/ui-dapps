@@ -8,7 +8,7 @@
   "extends": "../../tsconfig.json",
   "include": [
     "./src/**/*",
-    "./src/**/*.json", "../../core/digital-twin-lib/src/interfaces/TransactionsResponse.interface.ts", "../../core/digital-twin-lib/src/interfaces/DigitaltwinResponse.interface.ts"
+    "./src/**/*.json"
   ],
   "references": [
     {
