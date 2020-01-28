@@ -9,15 +9,16 @@ import {
 export class CommunicationService {
   runtime: Runtime;
 
+  requestUrl: string = null;
+
   constructor(runtime: Runtime) {
     this.runtime = runtime;
+    const core = this.runtime.environment === 'testcore' ? '.test' : '';
+    this.requestUrl = `https://search${core}.evan.network/api/smart-agents/search`;
   }
 
   async getLastTransactions(twinId: string, options = {}): Promise<TwinTransaction[]> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
-    const core = this.runtime.environment === 'testcore' ? '.test' : '';
-    const url = `https://search${core}.evan.network/api/smart-agents/search`;
-
     const defaultOptions = {
       count: 5,
       offset: 0,
@@ -27,7 +28,7 @@ export class CommunicationService {
     };
 
     const { data } = await axios.get<TransactionsResponse>(
-      `${url}/transactions/twin`,
+      `${this.requestUrl}/transactions/twin`,
       {
         headers: {
           Authorization: authHeaders,
@@ -44,10 +45,7 @@ export class CommunicationService {
    */
   async getCreatedTimestamp(twinId: string): Promise<number> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
-    const core = this.runtime.environment === 'testcore' ? '.test' : '';
-    const url = `https://search${core}.evan.network/api/smart-agents/search`;
-
-    const { data } = await axios.get<DigitalTwinResponse>(`${url}/twins`, {
+    const { data } = await axios.get<DigitalTwinResponse>(`${this.requestUrl}/twins`, {
       headers: {
         Authorization: authHeaders,
       },
