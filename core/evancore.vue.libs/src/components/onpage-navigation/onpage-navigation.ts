@@ -150,7 +150,7 @@ class OnpageNavigationComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Iterate over target elements and add there y-positions.
+   * Iterate over target elements and add their y-positions.
    */
   async updateElementPositions(): Promise<void> {
     this.entries.forEach(({ id }, idx) => {
