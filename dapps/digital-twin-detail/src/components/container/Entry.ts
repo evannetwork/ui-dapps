@@ -39,6 +39,14 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   created(): void {
     const { dispatcherData, plugin, entries } = this.$store.state.container;
     this.entrySchema = plugin.template.properties[this.name].dataSchema;
-    this.value = entries[this.name];
+    this.value = dispatcherData[this.name] || entries[this.name];
+  }
+
+  /**
+   * Handle on save event from formular.
+   */
+  onSave(formData: any): void {
+    this.value = formData;
+    this.$store.state.container.setEntry(this.name, this.value);
   }
 }

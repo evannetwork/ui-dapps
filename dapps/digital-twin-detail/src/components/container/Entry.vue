@@ -24,7 +24,7 @@
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
       :value="value"
-      @save="$store.state.container.setEntry(name, value)"
+      @save="onSave($event)"
     />
   </div>
 </template>

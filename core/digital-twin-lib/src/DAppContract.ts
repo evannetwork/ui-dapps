@@ -94,16 +94,22 @@ export class DAppContract {
   /**
    * Initialize the contract (DigitalTwin / Container)
    */
-  baseConstructor(vue: EvanComponent, runtime: Runtime, address: string) {
+  baseConstructor(vue: EvanComponent, runtime: Runtime, address: string): void {
     this.listeners = [];
     this.runtime = runtime;
     this.vue = vue;
+
+    // used to handle focused component rerendering, when dispatcher states are final (finished / deleted)
+    if (!this.vue.$store.state.reloadFlags) {
+      this.vue.$set(this.vue.$store.state, 'reloadFlags', { });
+    }
+    this.vue.$set(this.vue.$store.state.reloadFlags, address, { });
   }
 
   /**
    * Load the base information of the contract type.
    */
-  async loadBaseInfo() {
+  async loadBaseInfo(): Promise<void> {
     await (this as any).ensureContract();
 
     this.contractAddress = await (this as any).getContractAddress();
@@ -154,5 +160,20 @@ export class DAppContract {
     });
 
     this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
+  }
+
+  /**
+   * Sets a reload flag for a specific component to force rerender.
+   *
+   * @param      {string}  key     The new value
+   */
+  triggerReload(key: string): void {
+    const { reloadFlags } = this.vue.$store.state;
+
+    // reset loading state when ui had the possiblity for rerendering
+    this.vue.$set(reloadFlags[this.contractAddress], key, true);
+    this.vue.$nextTick(() => {
+      this.vue.$set(reloadFlags[this.contractAddress], key, false);
+    });
   }
 }

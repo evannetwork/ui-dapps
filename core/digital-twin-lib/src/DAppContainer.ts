@@ -87,7 +87,7 @@ class DAppContainer extends Container {
   public async addListEntries(listName: string, values: any[]): Promise<void> {
     await dispatchers.containerSaveDispatcher.start(this.runtime, {
       address: this.contractAddress,
-      data: {
+      value: {
         [listName]: values,
       },
     });
@@ -105,6 +105,8 @@ class DAppContainer extends Container {
     ]);
 
     // reset previous saving states
+    const beforeStates = this.dispatcherStates ? JSON.parse(JSON.stringify(this.dispatcherStates))
+      : null;
     const dispatcherData = { };
     const dispatcherStates = {
       container: false,
@@ -131,12 +133,6 @@ class DAppContainer extends Container {
           dispatcherStates.container = true;
           dispatcherStates.entries[entryKey] = true;
           dispatcherData[entryKey] = instance.data.value[entryKey];
-
-          // do not overwrite list values, ui must render it using dispatcherData
-          const entryDef = this.plugin.template.properties[entryKey];
-          if (entryDef.type === 'entry') {
-            this.entries[entryKey] = instance.data.value[entryKey];
-          }
         });
       }
     });
@@ -160,16 +156,17 @@ class DAppContainer extends Container {
    * @param      {string}  entriesToLoad  load only specific entriess
    */
   public async ensureEntries(entriesToLoad?: string[]): Promise<void> {
-    this.entries = { };
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
       const entryDef = this.plugin.template.properties[entryKey];
 
-      if (entryDef.type === 'list') {
-        this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
-      } else {
-        this.entries[entryKey] = await this.getEntry(entryKey);
+      if (entryDef) {
+        if (entryDef.type === 'list') {
+          this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
+        } else {
+          this.entries[entryKey] = await this.getEntry(entryKey);
+        }
       }
     }));
   }
@@ -180,10 +177,6 @@ class DAppContainer extends Container {
    * @param      {string}  entryName  entry name
    */
   public async getEntry(entryName: string): Promise<any> {
-    if (this.dispatcherData[entryName]) {
-      return this.dispatcherData[entryName];
-    }
-
     return Container.prototype.getEntry.call(this, entryName);
   }
 
@@ -218,6 +211,7 @@ class DAppContainer extends Container {
   public async initialize(): Promise<void> {
     await this.loadBaseInfo();
     this.plugin = await this.toPlugin();
+    this.entries = { };
     await this.ensureDispatcherStates();
     this.ensureI18N();
   }
@@ -267,15 +261,22 @@ class DAppContainer extends Container {
     this.stopWatchDispatchers();
     // trigger all new watchers and save the listeners
     this.listeners = [
-      dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.descriptionDispatcher.watch(() => async (): Promise<void> => {
+        this.ensureDispatcherStates();
+        this.description = await (this as any).getDescription();
+        this.triggerReload('description');
+      }),
       dispatchers.containerSaveDispatcher.watch(async ($event: any) => {
         const beforeSave = this.dispatcherStates.container;
+        const entriesToReload = Object.keys(this.dispatcherStates.entries)
+          .filter((key: string) => this.dispatcherStates.entries[key]);
         await this.ensureDispatcherStates();
 
         // force entry reloading, when data was already loaded and container update was finished
         if (beforeSave && !this.dispatcherStates.container
           && ($event.detail.status === 'finished' || $event.detail.status === 'deleted')) {
-          await this.ensureEntries(Object.keys($event.data.data));
+          await this.ensureEntries(entriesToReload);
+          entriesToReload.forEach((entry: string) => this.triggerReload(entry));
         }
       }),
       dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
@@ -291,7 +292,11 @@ class DAppContainer extends Container {
 }
 
 // enable multi inheritance for general DAppContract
-type DAppContainer = DAppContract
+interface DAppContainer extends DAppContract {
+  /* workaround for handling multi inheritance interfaces with the linter (linter will also reformat
+     interface to type) */
+  allowInterface: boolean;
+}
 applyMixins(DAppContainer, [DAppContract]);
 
 export default DAppContainer;
