@@ -38,7 +38,9 @@
               size="sm"
               type="icon-secondary"
               icon="mdi mdi-chevron-right"
-              @click="routeToTransactionExplorer(row.blockHash)"
+              target="_blank"
+              class="show-on-hover"
+              :href="getRouteToTransactionExplorer(row.blockHash)"
             />
           </td>
         </tr>
@@ -90,10 +92,17 @@ table.simple {
     font-weight: 600;
   }
 
+  .show-on-hover {
+    opacity: 0;
+  }
+
   // 'hover' would be nicer, but collides with ui.libs
   &.hasHover {
     tr:hover {
       background-color: cssVar('gray-100');
+      & .show-on-hover {
+        opacity: 1;
+      }
     }
   }
 }
