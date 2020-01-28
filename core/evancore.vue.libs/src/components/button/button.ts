@@ -93,7 +93,7 @@ export default class Button extends mixins(EvanComponent) {
   @Prop({ type: Boolean, default: false }) isLoading: boolean;
 
   /**
-   * Button Label.
+   * Native HTML Button type
    */
   @Prop({ type: String, default: 'button' }) nativeType: string;
 
