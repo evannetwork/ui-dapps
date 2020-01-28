@@ -9,7 +9,7 @@
     />
     <table
       v-else
-      class="mt-4 simple"
+      class="mt-4 simple hasHover"
     >
       <thead>
         <th>
@@ -88,6 +88,13 @@ table.simple {
 
   td.amount {
     font-weight: 600;
+  }
+
+  // 'hover' would be nicer, but collides with ui.libs
+  &.hasHover {
+    tr:hover {
+      background-color: cssVar('gray-100');
+    }
   }
 }
 </style>
