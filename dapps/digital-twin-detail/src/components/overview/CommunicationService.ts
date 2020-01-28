@@ -13,12 +13,12 @@ export class CommunicationService {
     this.runtime = runtime;
   }
 
-  async getLastTransactions(twinId: string): Promise<TwinTransaction[]> {
+  async getLastTransactions(twinId: string, options = {}): Promise<TwinTransaction[]> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
     const core = this.runtime.environment === 'testcore' ? '.test' : '';
     const url = `https://search${core}.evan.network/api/smart-agents/search`;
 
-    const params = {
+    const defaultOptions = {
       count: 5,
       offset: 0,
       reverse: true,
@@ -32,7 +32,7 @@ export class CommunicationService {
         headers: {
           Authorization: authHeaders,
         },
-        params,
+        params: { ...defaultOptions, ...options },
       },
     );
     return data.result;
