@@ -141,7 +141,7 @@ class OnpageNavigationComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * get the reference to the scroll container.
+   * Find and set the reference to the scroll container.
    */
   setScrollContainer(): void {
     const element = document.getElementById(this.entries[0].id);

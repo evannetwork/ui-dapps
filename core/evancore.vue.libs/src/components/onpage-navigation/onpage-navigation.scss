@@ -35,15 +35,17 @@
 
       color: cssVar(gray-600);
       border-left: 1px solid transparent;
-    }
-    li.active {
-      color: cssVar(primary);
-      border-color: cssVar(primary);
-    }
-    li.disabled {
-      cursor: default;
 
-      color: cssVar(gray-300);
+      &.active {
+        color: cssVar(primary);
+        border-color: cssVar(primary);
+      }
+
+      &.disabled {
+        cursor: default;
+
+        color: cssVar(gray-300);
+      }
     }
   }
 }
