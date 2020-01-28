@@ -72,10 +72,30 @@
                     >
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.deleteModal.show()"
+                    >
+                      {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
+                    </b-dropdown-item>
+                    <digital-twin-interactions ref="twinInteractions" />
                   </b-dropdown>
-
-                  <digital-twin-interactions ref="twinInteractions" />
                 </div>
+
+                <evan-modal ref="deleteModal">
+                  <template v-slot:header>
+                    <h5 class="modal-title">
+                      {{ '_twin-detail.delete-modal-title' | translate }}
+                    </h5>
+                  </template>
+                  <template v-slot:body>
+                    <p>{{ '_twin-detail.delete-confirm-description' | translate }}</p>
+                  </template>
+                  <template v-slot:footer>
+                    <evan-button @click="deleteTwin">
+                      {{ '_twin-detail.confirm-delete' | translate }}
+                    </evan-button>
+                  </template>
+                </evan-modal>
 
                 <evan-profile-picture
                   class="twin-avatar"

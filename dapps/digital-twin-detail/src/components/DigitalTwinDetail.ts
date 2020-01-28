@@ -117,6 +117,11 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     window.addEventListener('hashchange', this.hashChangeWatcher);
   }
 
+  async deleteTwin() {
+    return this;
+  }
+
+
   /**
    * Cuts the description to a maximum of 300 characters.
    *
