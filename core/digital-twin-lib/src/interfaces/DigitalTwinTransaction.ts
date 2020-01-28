@@ -1,3 +1,7 @@
+/**
+ * Response from edge server /api/smart-agents/search/transactions/twin
+ * https://github.com/evannetwork/edge-server-search/tree/feature/CORE-849-twin-transactions#apismart-agentssearchtransactionstwin
+ */
 export interface TransactionsResponse {
   total: number;
   result: TwinTransaction[];
