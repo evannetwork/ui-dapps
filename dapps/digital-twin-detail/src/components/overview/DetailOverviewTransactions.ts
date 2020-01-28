@@ -20,7 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
-import { TwinTransaction } from 'core/digital-twin-lib';
+import { TwinTransaction } from '@evan.network/digital-twin-lib';
 
 
 @Component

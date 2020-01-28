@@ -24,7 +24,7 @@ import {
   Profile,
   ProfileOptions,
 } from '@evan.network/api-blockchain-core';
-import { DAppTwin, TwinTransaction } from 'core/digital-twin-lib';
+import { DAppTwin, TwinTransaction } from '@evan.network/digital-twin-lib';
 import { bccUtils } from '@evan.network/ui';
 import { CommunicationService } from './CommunicationService';
 
