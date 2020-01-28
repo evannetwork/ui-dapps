@@ -118,7 +118,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Limits the description to a certain maximum amount of characters.
+   * Truncates the description to a certain amount of characters.
    *
    * @param      {string}  desc    description that should be shortend
    * @param      {number}  maxChars  maximum length of string
