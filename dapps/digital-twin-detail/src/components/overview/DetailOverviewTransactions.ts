@@ -20,8 +20,10 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
+import { TwinTransaction } from 'core/digital-twin-lib';
+
 
 @Component
 export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
-  @Prop() transactions: [];
+  @Prop() transactions: TwinTransaction[];
 }

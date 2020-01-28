@@ -1,9 +1,9 @@
 export interface DigitalTwinResponse {
   total: number;
-  results: Result[];
+  result: Twin[];
 }
 
-export interface Result {
+export interface Twin {
   address: string;
   containers: any[];
   created: number;

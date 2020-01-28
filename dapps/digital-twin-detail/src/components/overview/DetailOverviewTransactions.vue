@@ -4,7 +4,13 @@
       {{ '_twin-detail.overview.transactions-title' | translate }}
     </h2>
 
-    <table class="mt-4 simple">
+    <evan-loading
+      v-if="!transactions"
+    />
+    <table
+      v-else
+      class="mt-4 simple"
+    >
       <thead>
         <th>
           {{ '_twin-detail.overview.amount' | translate }}
@@ -20,13 +26,13 @@
       <tbody>
         <tr
           v-for="row in transactions"
-          :key="row.id"
+          :key="row.blockHash"
         >
           <td class="amount">
-            {{ row.amount }}
+            {{ row.feeInEve }}
           </td>
-          <td>{{ row.name }}</td>
-          <td>{{ row.date }}</td>
+          <td>{{ row.initiator }}</td>
+          <td>{{ row.timestamp }}</td>
           <td>
             <evan-button
               size="sm"

@@ -20,8 +20,13 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import axios from 'axios';
-import { utils, Runtime } from '@evan.network/api-blockchain-core';
-import { DAppTwin, TransactionsResponse, DigitalTwinResponse } from 'core/digital-twin-lib';
+import {
+  utils, Runtime, Profile, ProfileOptions,
+} from '@evan.network/api-blockchain-core';
+import {
+  DAppTwin, TransactionsResponse, DigitalTwinResponse, TwinTransaction,
+} from 'core/digital-twin-lib';
+import { bccUtils } from '@evan.network/ui';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
@@ -29,24 +34,17 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
 
   runtime: Runtime = null;
 
-  transactions = [
-    {
-      id: 0, amount: 0.01, name: 'Hans', date: '08.01.2020 13:01',
-    },
-    {
-      id: 1, amount: 0.21, name: '0xfab7fc548d24dc0eae9aaf69ba4f8ced7bf18353', date: '03.01.2020 13:01',
-    },
-  ]
+  transactions: TwinTransaction[] = null;
 
   async created(): Promise<void> {
     this.runtime = this.getRuntime();
     this.twin = this.$store.state.twin;
     await this.attachCreatedAt();
-    // await this.getLastTransactions();
+    await this.getLastTransactions();
     console.log(this.twin);
   }
 
-  async getLastTransactions() {
+  async getLastTransactions(): Promise<void> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
     const core = this.runtime.environment === 'testcore' ? '.test' : '';
     const url = `https://search${core}.evan.network/api/smart-agents/search`;
@@ -69,6 +67,34 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
       },
     );
     console.log(data);
+    this.transactions = await this.enhanceTransactions(data.result);
+  }
+
+  /**
+   * Adds and formats properties for displaying Transactions
+   * @param transactions list of transactions to be transformed
+   */
+  async enhanceTransactions(transactions: TwinTransaction[]): Promise<TwinTransaction[]> {
+    return Promise.all(transactions.map(async (transaction) => {
+      const enhancedTransaction = transaction;
+
+      // Add alias of the initiator if known
+      enhancedTransaction.initiator = await bccUtils.getUserAlias(new Profile({
+        accountId: this.runtime.activeAccount,
+        profileOwner: transaction.from,
+        ...(this.runtime as ProfileOptions),
+      }));
+
+      // Add fee in EVE
+      enhancedTransaction.feeInEve = parseFloat(
+        this.runtime.web3.utils.fromWei(
+          (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
+          'ether',
+        ),
+      ).toFixed(5);
+
+      return enhancedTransaction;
+    }));
   }
 
   /**
@@ -90,7 +116,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     );
     console.log(data);
 
-    this.$store.state.twin.createdAt = data.results[0].created;
+    this.$store.state.twin.createdAt = data.result[0]?.created;
     this.twin = this.$store.state.twin;
   }
 }

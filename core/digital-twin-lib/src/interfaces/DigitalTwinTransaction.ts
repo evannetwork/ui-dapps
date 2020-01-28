@@ -1,12 +1,14 @@
 export interface TransactionsResponse {
   total: number;
-  results: Result[];
+  result: TwinTransaction[];
 }
 
-export interface Result {
+export interface TwinTransaction {
   blockHash: string;
   blockNumber: number;
+  feeInEve?: string;
   from: string;
+  initiator?: string;
   method: Method;
   gas: number;
   gasPrice: string;
