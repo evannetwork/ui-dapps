@@ -84,15 +84,18 @@
                 <evan-modal ref="deleteModal">
                   <template v-slot:header>
                     <h5 class="modal-title">
-                      {{ '_twin-detail.delete-modal-title' | translate }}
+                      {{ '_twin-detail.delete.delete-modal-title' | translate }}
                     </h5>
                   </template>
                   <template v-slot:body>
-                    <p>{{ '_twin-detail.delete-confirm-description' | translate }}</p>
+                    <p>{{ '_twin-detail.delete.confirm-delete-description' | translate }}</p>
                   </template>
                   <template v-slot:footer>
-                    <evan-button @click="deleteTwin">
-                      {{ '_twin-detail.confirm-delete' | translate }}
+                    <evan-button
+                      type="danger"
+                      @click="deleteTwin"
+                    >
+                      {{ '_twin-detail.delete.confirm-delete' | translate }}
                     </evan-button>
                   </template>
                 </evan-modal>
