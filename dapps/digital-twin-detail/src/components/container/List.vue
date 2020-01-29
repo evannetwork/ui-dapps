@@ -56,6 +56,9 @@
 
       <add-list-item
         ref="addListItem"
+        :name="name"
+        :schema="schema"
+        :value="value"
       />
     </div>
 

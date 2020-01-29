@@ -32,7 +32,13 @@
       :hide-close-button="true"
       :title="$t('_twin-detail.data.list.add-list-item-title')"
     >
-      TODO
+      <data-set-form
+        :data-schema="schema"
+        :is-loading="$store.state.container.dispatcherStates.entries[name]"
+        :name="name"
+        :value="value"
+        @save="onSave($event)"
+      />
       <template v-slot:footer>
         <div class="d-flex">
           <evan-button

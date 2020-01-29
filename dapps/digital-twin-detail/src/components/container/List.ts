@@ -21,8 +21,30 @@
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { DAppContainer } from '@evan.network/digital-twin-lib';
+import { ListSchema } from './DataSchemaInterface';
+
 
 @Component
 export default class ContainerListComponent extends mixins(EvanComponent) {
   @Prop() name: string;
+
+  schema: ListSchema;
+
+  value: any;
+
+  container: DAppContainer;
+
+  created(): void {
+    this.container = this.$store.state.container;
+    const { dispatcherData, plugin, entries } = this.container;
+    this.schema = plugin.template.properties[this.name].dataSchema;
+    this.value = dispatcherData[this.name] || entries[this.name];
+
+    console.log(this.schema, this.value);
+  }
+
+  addDataToContainer() {
+    this.$store.state.container.addListEntries();
+  }
 }

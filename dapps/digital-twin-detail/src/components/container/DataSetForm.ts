@@ -63,6 +63,31 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   i18nScope: string = null;
 
   /**
+   * Setup i18n scope and form structure.
+   */
+  created(): void {
+    this.i18nScope = `${this.$route.params.container}.${this.name}`;
+    this.form = new EvanForm(this, { });
+
+    const type = DataSetFormComponent.getSchemaType(this.dataSchema);
+    switch (type) {
+      case 'object': {
+        Object.keys(this.dataSchema.properties).forEach((property) => this.addPropertyToForm(
+          property,
+          DataSetFormComponent.getSchemaType(this.dataSchema.properties[property]),
+        ));
+
+        break;
+      }
+      default: {
+        this.addPropertyToForm('__root__', type);
+
+        break;
+      }
+    }
+  }
+
+  /**
    * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
    *
    * @param      {any}      subSchema   ajv sub schema
@@ -128,31 +153,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
 
     this.form.addControl(name, control);
     this.$set(this.form, name, control);
-  }
-
-  /**
-   * Setup i18n scope and form structure.
-   */
-  created(): void {
-    this.i18nScope = `${this.$route.params.container}.${this.name}`;
-    this.form = new EvanForm(this, { });
-
-    const type = DataSetFormComponent.getSchemaType(this.dataSchema);
-    switch (type) {
-      case 'object': {
-        Object.keys(this.dataSchema.properties).forEach((property) => this.addPropertyToForm(
-          property,
-          DataSetFormComponent.getSchemaType(this.dataSchema.properties[property]),
-        ));
-
-        break;
-      }
-      default: {
-        this.addPropertyToForm('__root__', type);
-
-        break;
-      }
-    }
   }
 
   /**

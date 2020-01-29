@@ -28,7 +28,7 @@ import { applyMixins, DAppContract } from './DAppContract';
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
- * provides for stateful data holding.
+ * provides stateful data holding.
  *
  * TODO: Sharing handling.
  */
