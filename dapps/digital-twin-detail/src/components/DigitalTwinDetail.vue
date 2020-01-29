@@ -188,7 +188,7 @@ export default DigitalTwinDetailComponent;
   background: white;
   border-radius: 4px;
   width: 564px;
-  padding: 32px 24px;
+  padding: 24px 24px;
 
   .card-heading {
     font-size: 16px;
