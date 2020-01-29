@@ -25,7 +25,7 @@ import {
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { getDomainName, ipfs } from '@evan.network/ui-dapp-browser';
 
-export const twinDeleteDispatcher = new Dispatcher(
+const twinDeleteDispatcher = new Dispatcher(
   `lib.digital-twin.${getDomainName()}`,
   'twinDeleteDispatcher',
   1000000, // depends probably on plugins etc.
@@ -44,3 +44,5 @@ twinDeleteDispatcher
       setTimeout(() => resolve(), 1000);
     });
   });
+
+export default twinDeleteDispatcher;

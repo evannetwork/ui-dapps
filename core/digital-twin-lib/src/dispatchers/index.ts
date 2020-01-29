@@ -23,7 +23,7 @@ import descriptionDispatcher from './description';
 import twinCreateDispatcher from './twin/create';
 import twinFavoriteAddDispatcher from './twin/favorite.add';
 import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import { twinDeleteDispatcher } from './twin/delete';
+import twinDeleteDispatcher from './twin/delete';
 
 export {
   containerSaveDispatcher,
