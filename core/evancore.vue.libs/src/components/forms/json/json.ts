@@ -46,7 +46,7 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
   /**
    * Is the current input wrong formatted?
    */
-  invalidJSON = false;
+  isInvalidJSON = false;
 
   created(): void {
     this.stringValue = JSON.stringify(this.value);
@@ -58,10 +58,10 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
   onValueChanged(): void {
     try {
       this.value = JSON.stringify(this.stringValue);
-      this.invalidJSON = false;
+      this.isInvalidJSON = false;
       this.$emit('input', this.value);
     } catch (ex) {
-      this.invalidJSON = true;
+      this.isInvalidJSON = true;
     }
   }
 }

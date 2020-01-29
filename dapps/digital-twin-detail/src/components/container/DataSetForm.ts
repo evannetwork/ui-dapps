@@ -20,7 +20,12 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-import { EvanComponent, EvanForm, EvanFormControlOptions } from '@evan.network/ui-vue-core';
+import {
+  EvanComponent,
+  EvanForm,
+  EvanFormControl,
+  EvanFormControlOptions,
+} from '@evan.network/ui-vue-core';
 
 @Component
 export default class DataSetFormComponent extends mixins(EvanComponent) {
@@ -65,7 +70,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
    */
   static getSchemaType(subSchema: any): string {
     // check if it's a file
-    if (subSchema && subSchema.$comment) {
+    if (subSchema?.$comment) {
       let $comment;
 
       try {
@@ -74,7 +79,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         // could not parse comment
       }
 
-      if ($comment && $comment.isEncryptedFile) {
+      if ($comment?.isEncryptedFile) {
         return 'files';
       }
     }
@@ -104,6 +109,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     switch (type) {
       case 'files': {
         control.uiSpecs.type = 'files';
+        control.value = this.value[name]?.files || [];
         break;
       }
       case 'object': {
@@ -121,6 +127,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     }
 
     this.form.addControl(name, control);
+    this.$set(this.form, name, control);
   }
 
   /**
@@ -146,5 +153,21 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         break;
       }
     }
+  }
+
+  /**
+   * Returns the current data from the dynamic data set formular
+   */
+  getTwinFormData(): any {
+    const formData = this.form.getFormData();
+
+    // format file to a container API understandable format
+    this.form.controls.forEach((key: string) => {
+      if (this.form[key].type === 'files') {
+        formData[key] = { files: formData[key] };
+      }
+    });
+
+    return formData;
   }
 }

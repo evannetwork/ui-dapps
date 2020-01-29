@@ -119,8 +119,6 @@ class DAppTwin extends DigitalTwin {
     ]);
 
     // reset previous saving states
-    const beforeStates = this.dispatcherStates ? JSON.parse(JSON.stringify(this.dispatcherStates))
-      : null;
     this.dispatcherStates = {
       addFavorite: false,
       description: false,
@@ -180,6 +178,28 @@ class DAppTwin extends DigitalTwin {
     this.ensureI18N();
   }
 
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   */
+  async onDescriptionSave($event): Promise<void> {
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.ensureDispatcherStates();
+      this.description = await this.getDescription();
+      this.triggerReload('description');
+    }
+  }
+
+  /**
+   * Handles a twin favorite add / remove dispatcher event and triggers a ui reload, if nessecary.
+   */
+  onFavoriteSave($event): void {
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.ensureDispatcherStates();
+      this.triggerReload('favorite');
+    }
+  }
+
   /* Removes the current twin from the favorites in profile with digital twin dispatcher. */
   public async removeFromFavorites(): Promise<void> {
     await dispatchers.twinFavoriteRemoveDispatcher
@@ -194,19 +214,9 @@ class DAppTwin extends DigitalTwin {
     this.stopWatchDispatchers();
     // trigger all new watchers and save the listeners
     this.listeners = [
-      dispatchers.descriptionDispatcher.watch(() => async (): Promise<void> => {
-        this.ensureDispatcherStates();
-        this.description = await (this as any).getDescription();
-        this.triggerReload('description');
-      }),
-      dispatchers.twinFavoriteAddDispatcher.watch(() => {
-        this.ensureDispatcherStates();
-        this.triggerReload('favorite');
-      }),
-      dispatchers.twinFavoriteRemoveDispatcher.watch(() => {
-        this.ensureDispatcherStates();
-        this.triggerReload('favorite');
-      }),
+      dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
+      dispatchers.twinFavoriteAddDispatcher.watch(($event) => this.onFavoriteSave($event)),
+      dispatchers.twinFavoriteRemoveDispatcher.watch(($event) => this.onFavoriteSave($event)),
     ];
   }
 

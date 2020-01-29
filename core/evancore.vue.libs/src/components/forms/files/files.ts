@@ -72,7 +72,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    */
   @Prop({
     default: [],
-  }) value: UIContainerFile[] | { files: UIContainerFile[] };
+  }) value: UIContainerFile[];
 
   /**
    * is set to an index of a file that should be removed
@@ -85,23 +85,11 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
   hovered = false;
 
   /**
-   * List of files, that are associated with this file control. Value could be also nested into an
-   * object including the files array ({ files }).
-   */
-  files: any[] = null;
-
-  /**
    * Transform the input files to the correct format.
    */
   async created(): Promise<void> {
-    if (Array.isArray(this.value)) {
-      this.files = this.value;
-    } else {
-      this.files = this.value.files;
-    }
-
-    await Promise.all(this.files.map(async (file, index) => this.$set(
-      this.files,
+    await Promise.all(this.value.map(async (file, index) => this.$set(
+      this.value,
       index,
       await FileHandler.fileToContainerFile(file),
     )));
@@ -118,7 +106,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
 
     // iterate through all files and check if they already exists, if not, add them
     await Promise.all(newFiles.map(async (newFile: File) => {
-      const isNew = this.files.filter((existing: UIContainerFile) => existing.name === newFile.name
+      const isNew = this.value.filter((existing: UIContainerFile) => existing.name === newFile.name
         && existing.size === newFile.size).length === 0;
 
       // if it's a new file, upload the file and transform it into the correct format
@@ -126,7 +114,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
         const containerFile: any = await FileHandler.fileToContainerFile(newFile); // TODO remove any
         containerFile.isNew = true;
 
-        this.files.push(containerFile);
+        this.value.push(containerFile);
       }
     }));
 
@@ -147,7 +135,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
 
     // if the file is new or the user has accepted the removal, remove it
     if ((file as any).isNew || this.fileRemove === index) {
-      this.files.splice(index, 1);
+      this.value.splice(index, 1);
       (this.$refs.removeFileModal as any).hide();
       this.fileRemove = -1;
 

@@ -43,7 +43,7 @@
           id="file-input-remove-accept"
           type="button"
           class="btn btn-primary btn-rounded font-weight-normal"
-          @click="removeFile($event, files[fileRemove], fileRemove)"
+          @click="removeFile($event, value[fileRemove], fileRemove)"
         >
           {{ `_evan.file-input.remove-modal.action` | translate }}
           <i class="mdi mdi-arrow-right label ml-3" />
@@ -52,7 +52,7 @@
     </evan-modal>
 
     <div
-      v-for="(file, index) in files"
+      v-for="(file, index) in value"
       :key="index"
       class="batch-label ml-0 mr-2 my-2"
     >
@@ -98,16 +98,18 @@
         @change="filesChanged($event.target.files)"
       >
       <div
-        class="centered"
+        class="centered p-3"
         :class="{ 'text-secondary': hovered }"
-        v-html="$t(placeholder)"
-      />
+      >
+        {{ placeholder | translate }}
+      </div>
     </div>
     <div
-      v-else-if="files.length === 0"
-      class="centered"
-      v-html="$t(emptyText)"
-    />
+      v-else-if="value.length === 0"
+      class="centered p-3"
+    >
+      {{ emptyText | translate }}
+    </div>
     <div
       v-if="error"
       class="invalid-feedback"
