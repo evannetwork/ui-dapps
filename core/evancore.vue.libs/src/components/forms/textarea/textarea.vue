@@ -26,7 +26,7 @@
       :class="{ 'is-invalid' : error }"
       :value="value"
       @blur="$emit('blur')"
-      @focus="$parent.$emit('setFocus')"
+      @focus="$parent.$emit('setFocus'); $emit('focus')"
       @input="$emit('input', $event.target.value)"
     />
   </evan-form-control>

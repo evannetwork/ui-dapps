@@ -121,9 +121,15 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
     }
 
     const rollBackTemplate = JSON.stringify(this.template);
-    this.template = await AddDigitalTwinComponent.blobToObj(uploaded.blob) as DigitalTwinTemplateInterface;
-
-    this.templateErrors = this.getTemplateErrorInterfaces(this.template);
+    try {
+      this.template = await AddDigitalTwinComponent.blobToObj(uploaded.blob) as DigitalTwinTemplateInterface;
+      this.templateErrors = this.getTemplateErrorInterfaces(this.template);
+    } catch (ex) {
+      this.templateErrors = [{
+        name: 'description',
+        errors: [],
+      }];
+    }
 
     if (this.templateErrors.length > 0) {
       this.template = JSON.parse(rollBackTemplate);

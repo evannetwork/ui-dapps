@@ -28,4 +28,13 @@ import EvanControlComponent from '../control/control';
  * @selector      evan-form-control-checkbox
  */
 @Component({})
-export default class CheckboxComponent extends mixins(EvanControlComponent) {}
+export default class CheckboxComponent extends mixins(EvanControlComponent) {
+  /**
+   * Handle overlapping checkbox label click and send corret formular events.
+   */
+  onLabelClick(): void {
+    this.value = !this.value;
+    this.$emit('input', this.value);
+    this.$parent.$emit('setFocus');
+  }
+}

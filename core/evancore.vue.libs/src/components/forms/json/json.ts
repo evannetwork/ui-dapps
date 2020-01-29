@@ -55,11 +55,11 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
   /**
    * Check for correct defined JSON and update parent value, if the json format is correct.
    */
-  onValueChanged(): void {
+  onValueChanged(value: string): void {
     try {
-      this.value = JSON.stringify(this.stringValue);
+      this.stringValue = value;
+      this.$emit('input', JSON.parse(value));
       this.isInvalidJSON = false;
-      this.$emit('input', this.value);
     } catch (ex) {
       this.isInvalidJSON = true;
     }
