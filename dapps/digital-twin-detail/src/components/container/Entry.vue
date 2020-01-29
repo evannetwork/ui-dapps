@@ -17,20 +17,24 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+<template>
+  <div class="content-card">
+    <data-set-form
+      :data-schema="entrySchema"
+      :is-loading="$store.state.container.dispatcherStates.entries[name]"
+      :name="name"
+      :value="value"
+      @save="onSave($event)"
+    />
+  </div>
+</template>
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+<script lang="ts">
+import ContainerEntryComponent from './Entry';
+
+export default ContainerEntryComponent;
+</script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -72,10 +72,33 @@
                     >
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.deleteModal.show()"
+                    >
+                      {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
+                    </b-dropdown-item>
+                    <digital-twin-interactions ref="twinInteractions" />
                   </b-dropdown>
-
-                  <digital-twin-interactions ref="twinInteractions" />
                 </div>
+
+                <evan-modal ref="deleteModal">
+                  <template v-slot:header>
+                    <h5 class="modal-title">
+                      {{ '_twin-detail.delete.delete-modal-title' | translate }}
+                    </h5>
+                  </template>
+                  <template v-slot:body>
+                    <p>{{ '_twin-detail.delete.confirm-delete-description' | translate }}</p>
+                  </template>
+                  <template v-slot:footer>
+                    <evan-button
+                      type="danger"
+                      @click="deleteTwin"
+                    >
+                      {{ '_twin-detail.delete.confirm-delete' | translate }}
+                    </evan-button>
+                  </template>
+                </evan-modal>
 
                 <evan-profile-picture
                   class="twin-avatar"
@@ -182,5 +205,18 @@ export default DigitalTwinDetailComponent;
   --size: 96px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/deep/ .content-card {
+  background: white;
+  border-radius: 4px;
+  width: 564px;
+  padding: 24px 24px;
+
+  .card-heading {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
 }
 </style>

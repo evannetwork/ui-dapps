@@ -2,6 +2,7 @@
   "_twin-detail": {
     "data": {
       "context-menu": {
+        "delete-twin": "Löschen",
         "download-template": "Herunterladen",
         "duplicate-twin": "Duplizieren",
         "duplicating-twin": "Duplikat wird erstellt ...",
@@ -23,8 +24,20 @@
         "specifications-title": "Spezifikationen"
       }
     },
+    "delete": {
+      "confirm-delete": "Löschen",
+      "confirm-delete-description": "Sind Sie sich sicher, dass sie diesen Digitalen Zwilling löschen möchten?",
+      "delete-modal-title": "Digitalen Zwilling löschen"
+    },
     "did": {
       "did-title": "Decentralized ID"
+    },
+    "nav-items": {
+      "data": "Daten",
+      "did": "Decentralized ID",
+      "overview": "Übersicht",
+      "sharings": "Freigaben",
+      "verifications": "Verifikationen"
     },
     "overview": {
       "created-at": "Erstellt am",
@@ -42,13 +55,6 @@
     },
     "verifications": {
       "verifications-title": "Verifikationen"
-    },
-    "nav-items": {
-      "data": "Daten",
-      "did": "Decentralized ID",
-      "overview": "Übersicht",
-      "sharings": "Freigaben",
-      "verifications": "Verifikationen"
     }
   }
 }

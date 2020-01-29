@@ -74,7 +74,7 @@
     },
     "dispatcher-not-found": "Synchronisations Job nicht gefunden",
     "file-input": {
-      "description": "Ziehen Sie Ihre Datei(en) hierher, um zu beginnen<br>oder klicken Sie zum Durchsuchen",
+      "description": "Ziehen Sie Ihre Datei(en) hierher oder klicken Sie zum Durchsuchen",
       "empty": "Es wurden noch keine Dateien hochgeladen",
       "remove-modal": {
         "action": "Löschen",
@@ -82,6 +82,7 @@
         "title": "Dateien löschen"
       }
     },
+    "invalid-json": "Ungültiges JSON Format.",
     "invalid-password": "Das eingegebene Passwort ist ungültig.",
     "log-in": "Einloggen",
     "login": "Identität entsperren",

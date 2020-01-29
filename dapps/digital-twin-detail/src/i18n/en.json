@@ -2,6 +2,7 @@
   "_twin-detail": {
     "data": {
       "context-menu": {
+        "delete-twin": "Delete",
         "download-template": "Download",
         "duplicate-twin": "Duplicate",
         "duplicating-twin": "Creating duplicate ...",
@@ -25,8 +26,20 @@
         "specifications-title": "Specifications"
       }
     },
+    "delete": {
+      "confirm-delete": "Delete",
+      "confirm-delete-description": "Are you sure you want to delete this Digital Twin?",
+      "delete-modal-title": "Delete Digital Twin"
+    },
     "did": {
       "did-title": "Decentralized ID"
+    },
+    "nav-items": {
+      "data": "Data",
+      "did": "Decentralized ID",
+      "overview": "Overview",
+      "sharings": "Sharings",
+      "verifications": "Verifications"
     },
     "overview": {
       "created-at": "Created at",
@@ -44,13 +57,6 @@
     },
     "verifications": {
       "verifications-title": "Verifications"
-    },
-    "nav-items": {
-      "data": "Data",
-      "did": "Decentralized ID",
-      "overview": "Overview",
-      "sharings": "Sharings",
-      "verifications": "Verifications"
     }
   }
 }

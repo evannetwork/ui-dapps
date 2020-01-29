@@ -17,20 +17,38 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+<template>
+  <div class="content-card">
+    <div
+      class="d-flex justify-content-between align-items-center pb-1"
+    >
+      <h5 class="my-0 py-0 text-uppercase font-weight-bold">
+        <i
+          class="mdi mr-2 mdi-lock"
+        />
+        {{ $t(`${$route.params.container}.${name}`, name) }}
+      </h5>
+      <evan-button
+        type="secondary"
+        size="sm"
+        @click="share()"
+      >
+        {{ '_evan.share' | translate }}
+      </evan-button>
+    </div>
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+    <div class="mt-3">
+      todo...
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import ContainerListComponent from './List';
+
+export default ContainerListComponent;
+</script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -17,20 +17,31 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+<template>
+  <div>
+    <evan-loading v-if="loading" />
+    <div v-else>
+      <div
+        v-for="entryKey in $store.state.container.entryKeys"
+        :key="entryKey"
+        class="mb-5"
+      >
+        <component
+          :is="`container-${getEntryType(entryKey)}`"
+          v-if="!$store.state.reloadFlags[$route.params.container][entryKey]"
+          :name="entryKey"
+        />
+      </div>
+    </div>
+  </div>
+</template>
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+<script lang="ts">
+import TestContainerComponent from './Container';
+
+export default TestContainerComponent;
+</script>
+
+<style lang="scss" scoped>
+
+</style>

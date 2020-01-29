@@ -17,20 +17,19 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+<template>
+  <evan-form-control-textarea
+    v-bind="$props"
+    :error="isInvalidJSON ? $t('_evan.invalid-json') : error"
+    :value="stringValue"
+    @blur="$emit('blur')"
+    @focus="$parent.$emit('setFocus')"
+    @input="onValueChanged();"
+  />
+</template>
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+<script lang="ts">
+import Component from './json';
+
+export default Component;
+</script>

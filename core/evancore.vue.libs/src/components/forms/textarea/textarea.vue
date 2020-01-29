@@ -19,10 +19,11 @@
 
 <template>
   <evan-form-control v-bind="$props">
-    <textarea class="form-control"
+    <textarea
+      :id="id"
+      class="form-control"
       v-bind="$props"
       :class="{ 'is-invalid' : error }"
-      :id="id"
       :value="value"
       @blur="$emit('blur')"
       @focus="$parent.$emit('setFocus')"
@@ -32,6 +33,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './textarea'
-  export default Component
+import Component from './textarea';
+
+export default Component;
 </script>

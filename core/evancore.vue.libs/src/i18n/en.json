@@ -74,7 +74,7 @@
     },
     "dispatcher-not-found": "Synchronization job not found",
     "file-input": {
-      "description": "Drag your file(s) here to begin<br> or click to browse",
+      "description": "Drag your file(s) here to begin or click to browse",
       "empty": "No files are available",
       "remove-modal": {
         "action": "Delete",
@@ -82,6 +82,7 @@
         "title": "Delete file"
       }
     },
+    "invalid-json": "Invalid JSON format.",
     "invalid-password": "The provided password is invalid.",
     "log-in": "Log in",
     "login": "Unlock Identity",

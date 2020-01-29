@@ -16,8 +16,10 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+import vSelect from 'vue-select';
 
 // import evan libs
+import vSelect from 'vue-select';
 import { ComponentRegistrationInterface } from '../interfaces';
 
 // import all components
@@ -43,6 +45,7 @@ import FormControlComponent from './forms/control/control.vue';
 import FormControlCountriesComponent from './forms/countries/countries.vue';
 import FormControlFilesComponent from './forms/files/files.vue';
 import FormControlInputComponent from './forms/input/input.vue';
+import FormControlJSONComponent from './forms/json/json.vue';
 import FormControlSelectComponent from './forms/select/select.vue';
 import FormControlTextareaComponent from './forms/textarea/textarea.vue';
 import FormControlVSelectComponent from './forms/v-select/v-select.vue';
@@ -53,6 +56,7 @@ import MnemonicExport from './dapp-wrapper/mnemonic-export/mnemonic-export.vue';
 import ModalComponent from './modal/modal.vue';
 import NavListComponent from './nav-list/nav-list.vue';
 import NavTabsComponent from './nav-tabs/nav-tabs.vue';
+import OnPageNavigationComponent from './onpage-navigation/onpage-navigation.vue';
 import PermissionsComponent from './permissions/permissions.vue';
 import PermissionsEditorComponent from './permissions-editor/permissions-editor.vue';
 import ProfilePicture from './profile/profile-picture/profile-picture.vue';
@@ -66,7 +70,6 @@ import SwipePanelComponentClass from './swipe-panel/swipe-panel';
 import TableComponent from './table/table.vue';
 import TooltipComponent from './tooltip/tooltip.vue';
 import UnderDevelopmentComponent from './under-development/under-development.vue';
-import vSelect from 'vue-select';
 import WalletCardComponent from './profile/wallet-card/wallet-card.vue';
 
 // export them all, so other applications can access them
@@ -93,6 +96,7 @@ export {
   FormControlCountriesComponent,
   FormControlFilesComponent,
   FormControlInputComponent,
+  FormControlJSONComponent,
   FormControlSelectComponent,
   FormControlTextareaComponent,
   FormControlVSelectComponent,
@@ -139,6 +143,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-form-control-countries', component: FormControlCountriesComponent },
   { name: 'evan-form-control-files', component: FormControlFilesComponent },
   { name: 'evan-form-control-input', component: FormControlInputComponent },
+  { name: 'evan-form-control-json', component: FormControlJSONComponent },
   { name: 'evan-form-control-select', component: FormControlSelectComponent },
   { name: 'evan-form-control-textarea', component: FormControlTextareaComponent },
   { name: 'evan-form-control-v-select', component: FormControlVSelectComponent },
@@ -151,6 +156,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-modal', component: ModalComponent },
   { name: 'evan-nav-list', component: NavListComponent },
   { name: 'evan-nav-tabs', component: NavTabsComponent },
+  { name: 'evan-onpage-navigation', component: OnPageNavigationComponent },
   { name: 'evan-permissions', component: PermissionsComponent },
   { name: 'evan-permissions-editor', component: PermissionsEditorComponent },
   { name: 'evan-profile-picture', component: ProfilePicture },

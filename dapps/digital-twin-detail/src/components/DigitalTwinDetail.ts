@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DAppTwin } from '@evan.network/digital-twin-lib';
+import { DAppTwin, twinDeleteDispatcher } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 
@@ -36,27 +36,27 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
   navItems = [
     {
-      key: '_twin-detail.nav-items.overview',
+      label: '_twin-detail.nav-items.overview',
       icon: 'mdi mdi-view-dashboard-outline',
       to: { name: 'overview' },
     },
     {
-      key: '_twin-detail.nav-items.data',
+      label: '_twin-detail.nav-items.data',
       icon: 'mdi mdi-file-document-box-outline',
       to: { name: 'data' },
     },
     {
-      key: '_twin-detail.nav-items.verifications',
+      label: '_twin-detail.nav-items.verifications',
       icon: 'mdi mdi-checkbox-marked-circle-outline',
       to: { name: 'verifications' },
     },
     {
-      key: '_twin-detail.nav-items.sharings',
+      label: '_twin-detail.nav-items.sharings',
       icon: 'mdi mdi-share-variant',
       to: { name: 'sharings' },
     },
     {
-      key: '_twin-detail.nav-items.did',
+      label: '_twin-detail.nav-items.did',
       icon: 'mdi mdi-identifier',
       to: { name: 'did' },
     },
@@ -115,6 +115,14 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  async deleteTwin(): Promise<void> {
+    (this.$refs.deleteModal as any).hide();
+    await twinDeleteDispatcher.start(this.getRuntime(), {
+      address: this.$store.state.twin.address,
+    });
+    this.close();
   }
 
   /**

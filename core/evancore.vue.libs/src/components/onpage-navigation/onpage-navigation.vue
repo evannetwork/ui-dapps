@@ -17,20 +17,28 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+<template>
+  <div class="onpage-nav d-none d-md-block">
+    <ul>
+      <li
+        v-for="entry of entries"
+        :key="entry.id"
+        class="pl-2 mt-2"
+        :class="{active: activeItem === entry.id, 'text-muted disabled': entry.disabled}"
+        @click="!entry.disabled && scrollToElement(entry.id)"
+      >
+        {{ entry.label }}
+      </li>
+    </ul>
+  </div>
+</template>
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+<script lang="ts">
+import Component from './onpage-navigation';
+
+export default Component;
+</script>
+
+<style lang="scss" scoped>
+  @import './onpage-navigation.scss'
+</style>

@@ -53,19 +53,6 @@ export default DigitalTwinDetailDataGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-.content-card {
-  background: white;
-  border-radius: 4px;
-  width: 564px;
-  padding: 24px 32px;
-
-  .card-heading {
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-}
-
 .form-group.inline {
    align-items: center;
 

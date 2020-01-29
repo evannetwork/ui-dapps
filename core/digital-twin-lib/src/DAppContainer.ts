@@ -17,17 +17,19 @@
   the following URL: https://evan.network/license/
 */
 
-import { Container, ContainerPlugin, Runtime, DigitalTwinOptions } from '@evan.network/api-blockchain-core';
+import {
+  Container, ContainerPlugin, Runtime, DigitalTwinOptions,
+} from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
-import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
+import { applyMixins, DAppContract } from './DAppContract';
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
  * provides for stateful data holding.
- * 
+ *
  * TODO: Sharing handling.
  */
 class DAppContainer extends Container {
@@ -47,19 +49,20 @@ class DAppContainer extends Container {
     // true when description is saved
     description: boolean;
     // all loading flags for entries
-    entries: { [dataSet: string]: boolean; };
+    entries: { [dataSet: string]: boolean };
     // combined sharing / unshare state
-    shareUnshare: { [dataSet: string]: boolean; };
+    shareUnshare: { [dataSet: string]: boolean };
     // all entries, that are in sharing process
-    sharing: { [dataSet: string]: boolean; };
+    sharing: { [dataSet: string]: boolean };
     // all entries, that are in unshare process
-    unsharing: { [dataSet: string]: boolean; };
+    unsharing: { [dataSet: string]: boolean };
   };
 
   /**
    * All container entries mapped to it's loaded data
    */
   entryKeys: string[];
+
   entries: { [entryName: string]: any };
 
   /**
@@ -84,7 +87,7 @@ class DAppContainer extends Container {
   public async addListEntries(listName: string, values: any[]): Promise<void> {
     await dispatchers.containerSaveDispatcher.start(this.runtime, {
       address: this.contractAddress,
-      data: {
+      value: {
         [listName]: values,
       },
     });
@@ -93,9 +96,9 @@ class DAppContainer extends Container {
   /**
    * Checkup current dispatcher loading states and set corresponding states.
    */
-  private async ensureDispatcherStates() {
+  private async ensureDispatcherStates(): Promise<void> {
     // load all running dispatcher instances for containers
-    const [ descInstances, saveInstances, shareInstances ] = await Promise.all([
+    const [descInstances, saveInstances, shareInstances] = await Promise.all([
       dispatchers.descriptionDispatcher.getInstances(this.runtime),
       dispatchers.containerSaveDispatcher.getInstances(this.runtime),
       dispatchers.containerShareDispatcher.getInstances(this.runtime),
@@ -124,30 +127,24 @@ class DAppContainer extends Container {
     // check for saving entries
     (saveInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        (instance.data.entriesToSave || Object.keys(instance.data.value)).forEach(entryKey => {
+        (instance.data.entriesToSave || Object.keys(instance.data.value)).forEach((entryKey: string) => {
           dispatcherStates.container = true;
           dispatcherStates.entries[entryKey] = true;
           dispatcherData[entryKey] = instance.data.value[entryKey];
-
-          // do not overwrite list values, ui must render it using dispatcherData
-          const entryDef = this.plugin.template.properties[entryKey];
-          if (entryDef.type === 'entry') {
-            this.entries[entryKey] = instance.data.value[entryKey];
-          }
         });
       }
     });
 
     // check for sharing
     (shareInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
-      // TODO: setup sharing states
-      // if (instance.data.address === this.contractAddress) {
-      // }
+      /* TODO: setup sharing states
+         if (instance.data.value.address === this.contractAddress) {
+         } */
     });
 
     // set it afterwards to reduce vue update triggers
-    this.vue.$set(this, 'dispatcherData', dispatcherData);
-    this.vue.$set(this, 'dispatcherStates', dispatcherStates);
+    this.dispatcherData = dispatcherData;
+    this.dispatcherStates = dispatcherStates;
   }
 
   /**
@@ -156,15 +153,13 @@ class DAppContainer extends Container {
    *
    * @param      {string}  entriesToLoad  load only specific entriess
    */
-  public async ensureEntries(entriesToLoad?: string[]) {
-    this.plugin = await this.toPlugin();
-    this.entries = { };
+  public async loadEntryValues(entriesToLoad?: string[]): Promise<void> {
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
       const entryDef = this.plugin.template.properties[entryKey];
 
-      if (entryDef.type === 'list') {
+      if (entryDef?.type === 'list') {
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
       } else {
         this.entries[entryKey] = await this.getEntry(entryKey);
@@ -178,11 +173,7 @@ class DAppContainer extends Container {
    * @param      {string}  entryName  entry name
    */
   public async getEntry(entryName: string): Promise<any> {
-    if (this.dispatcherData[entryName]) {
-      return this.dispatcherData[entryName];
-    } else {
-      return await Container.prototype.getEntry.call(this, entryName);
-    }
+    return Container.prototype.getEntry.call(this, entryName);
   }
 
   /**
@@ -199,7 +190,7 @@ class DAppContainer extends Container {
     offset = 0,
     reverse = false,
   ): Promise<any[]> {
-    let listEntries = await Container.prototype.getListEntries.call(this, listName, count,
+    const listEntries = await Container.prototype.getListEntries.call(this, listName, count,
       offset, reverse);
 
     // if offset === 0 and the dispatcher is saving some values, add this values to the top
@@ -213,8 +204,10 @@ class DAppContainer extends Container {
   /**
    * Load basic container information and ensure dispatcher states
    */
-  public async initialize() {
+  public async initialize(): Promise<void> {
     await this.loadBaseInfo();
+    this.plugin = await this.toPlugin();
+    this.entries = {};
     await this.ensureDispatcherStates();
     this.ensureI18N();
   }
@@ -224,8 +217,8 @@ class DAppContainer extends Container {
    *
    * @param      {DBCPDescriptionInterface}  description  description to save
    */
-  public async setDescription(description?) {
-    this.baseSetDescription(description);
+  public async setDescription(description?): Promise<void> {
+    return this.baseSetDescription(description);
   }
 
   /**
@@ -247,49 +240,71 @@ class DAppContainer extends Container {
    * @param      {string}  entryName  name of an entry in the container
    * @param      {any}     value      value to set
    */
-  public async setEntry(entryName: string, value: any, updateDescription = true): Promise<void> {
+  public async setEntry(entryName: string, value: any): Promise<void> {
     await dispatchers.containerSaveDispatcher.start(this.runtime, {
       address: this.contractAddress,
-      data: {
+      value: {
         [entryName]: value,
       },
-      updateDescription,
     });
   }
 
   /**
    * Start all dispatcher watchers.
    */
-  public watchDispatchers() {
+  public watchDispatchers(): void {
     // clear previously running watchers
     this.stopWatchDispatchers();
     // trigger all new watchers and save the listeners
     this.listeners = [
-      dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
-      dispatchers.containerSaveDispatcher.watch(async ($event: any) => {
-        const beforeSave = this.dispatcherStates.container;
-        await this.ensureDispatcherStates();
-
-        // force entry reloading, when data was already loaded and container update was finished
-        if (beforeSave && !this.dispatcherStates.container &&
-            ($event.detail.status === 'finished' || $event.detail.status === 'deleted')) {
-          await this.ensureEntries(Object.keys($event.data.data));
-        }
-      }),
+      dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
+      dispatchers.containerSaveDispatcher.watch(($event) => this.onContainerSave($event)),
       dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
     ];
   }
 
   /**
+   * Handles a container entry save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   *
+   * @param      {any}  $event  dispatcher event
+   */
+  async onContainerSave($event: any): Promise<void> {
+    const beforeSave = this.dispatcherStates.container;
+    const entriesToReload = Object.keys(this.dispatcherStates.entries)
+      .filter((key: string) => this.dispatcherStates.entries[key]);
+    await this.ensureDispatcherStates();
+
+    // force entry reloading, when data was already loaded and container update was finished
+    if (beforeSave && !this.dispatcherStates.container
+      && ($event.detail.status === 'finished' || $event.detail.status === 'deleted')) {
+      await this.loadEntryValues(entriesToReload);
+      entriesToReload.forEach((entry: string) => this.triggerReload(entry));
+    }
+  }
+
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   */
+  async onDescriptionSave($event: any): Promise<void> {
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.ensureDispatcherStates();
+      this.description = await this.getDescription();
+      this.triggerReload('description');
+    }
+  }
+
+  /**
    * Stop all dispatcher listeners.
    */
-  async stopWatchDispatchers() {
-    this.listeners.forEach(listener => listener());
+  public stopWatchDispatchers(): void {
+    this.listeners.forEach((listener: Function) => listener());
   }
 }
 
 // enable multi inheritance for general DAppContract
-interface DAppContainer extends DAppContract { }
-applyMixins(DAppContainer, [ DAppContract ]);
+interface DAppContainer extends DAppContract, Container { }
+applyMixins(DAppContainer, [DAppContract]);
 
 export default DAppContainer;
