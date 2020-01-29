@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DAppTwin } from '@evan.network/digital-twin-lib';
+import { DAppTwin, twinDeleteDispatcher } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 
@@ -115,6 +115,14 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+  }
+
+  async deleteTwin(): Promise<void> {
+    (this.$refs.deleteModal as any).hide();
+    await twinDeleteDispatcher.start(this.getRuntime(), {
+      address: this.$store.state.twin.address,
+    });
+    this.close();
   }
 
   /**

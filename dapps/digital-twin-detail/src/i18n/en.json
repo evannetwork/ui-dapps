@@ -1,7 +1,8 @@
 {
-  "_twin-detail": {
+  "_twin-detail": {    
     "data": {
       "context-menu": {
+        "delete-twin": "Delete",
         "download-template": "Download",
         "duplicate-twin": "Duplicate",
         "duplicating-twin": "Creating duplicate ...",
@@ -24,6 +25,11 @@
       "specifications": {
         "specifications-title": "Specifications"
       }
+    },
+    "delete": {
+      "confirm-delete": "Delete",
+      "confirm-delete-description": "Are you sure you want to delete this Digital Twin?",
+      "delete-modal-title": "Delete Digital Twin"
     },
     "nav-items": {
       "data": "Data",

@@ -8,11 +8,11 @@
       "description": "Beschreibung speichern ...",
       "twin": {
         "create": "Digitaler Zwilling wird erstellt ...",
+        "delete": "Digitaler Zwilling wird gelöscht ...",
         "favorite": {
           "add": "Favorit hinzufügen ...",
           "remove": "Favorit entfernen ..."
-        },
-        "create": "Zwilling erstellen"
+        }
       }
     }
   }
