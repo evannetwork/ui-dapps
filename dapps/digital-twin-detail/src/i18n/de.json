@@ -29,12 +29,32 @@
       "confirm-delete-description": "Sind Sie sich sicher, dass sie diesen Digitalen Zwilling löschen möchten?",
       "delete-modal-title": "Digitalen Zwilling löschen"
     },
+    "did": {
+      "did-title": "Decentralized ID"
+    },
     "nav-items": {
       "data": "Daten",
       "did": "Decentralized ID",
       "overview": "Übersicht",
       "sharings": "Freigaben",
       "verifications": "Verifikationen"
+    },
+    "overview": {
+      "created-at": "Erstellt am",
+      "date": "Datum",
+      "did": "Decentralized ID",
+      "fee": "Gebühr",
+      "general-title": "Allgemein",
+      "initiator": "Initiator",
+      "overview-title": "Übersicht",
+      "owner": "Besitzer",
+      "transaction-title": "Letzte Transaktionen"
+    },
+    "sharings": {
+      "sharings-title": "Freigaben"
+    },
+    "verifications": {
+      "verifications-title": "Verifikationen"
     }
   }
 }

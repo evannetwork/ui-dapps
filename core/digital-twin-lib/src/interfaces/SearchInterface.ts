@@ -17,35 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="d-flex">
-    <div class="content">
-      <!-- TODO: Use proper DID -->
-      <detail-overview-general
-        class="mb-3"
-        :did="`did:evan:${twin.description.identity}`"
-        :owner-name="twin.ownerName"
-        :owner-address="twin.ownerAddress"
-        :created-at="twin.createdAt"
-      />
-
-      <detail-overview-transactions
-        :transactions="transactions"
-      />
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
-
-export default DetailOverviewComponent;
-</script>
-
-<style lang="scss" scoped>
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
+export interface QueryOptions {
+  count?: number;
+  offset?: number;
+  page?: number;
+  reverse?: boolean;
+  searchTerm?: string;
+  sortBy?: string;
 }
-</style>

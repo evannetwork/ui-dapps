@@ -25,12 +25,16 @@ import ContainerListComponent from './container/List.vue';
 import DataSetComponent from './container/DataSet.vue';
 import DataSetFormComponent from './container/DataSetForm.vue';
 import DigitalTwinInteractionsComponent from './TwinInteractions.vue';
+import DetailOverviewGeneralComponent from './overview/DetailOverviewGeneral.vue';
+import DetailOverviewTransactionsComponent from './overview/DetailOverviewTransactions.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
   { component: ContainerEntryComponent, name: 'container-entry' },
   { component: ContainerListComponent, name: 'container-list' },
   { component: DataSetFormComponent, name: 'data-set-form' },
+  { component: DetailOverviewGeneralComponent, name: 'detail-overview-general' },
+  { component: DetailOverviewTransactionsComponent, name: 'detail-overview-transactions' },
   { component: DigitalTwinInteractionsComponent, name: 'digital-twin-interactions' },
 ];
 

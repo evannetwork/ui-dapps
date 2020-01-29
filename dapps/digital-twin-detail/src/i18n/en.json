@@ -1,5 +1,5 @@
 {
-  "_twin-detail": {    
+  "_twin-detail": {
     "data": {
       "context-menu": {
         "delete-twin": "Delete",
@@ -31,12 +31,32 @@
       "confirm-delete-description": "Are you sure you want to delete this Digital Twin?",
       "delete-modal-title": "Delete Digital Twin"
     },
+    "did": {
+      "did-title": "Decentralized ID"
+    },
     "nav-items": {
       "data": "Data",
       "did": "Decentralized ID",
       "overview": "Overview",
       "sharings": "Sharings",
       "verifications": "Verifications"
+    },
+    "overview": {
+      "created-at": "Created at",
+      "date": "Date",
+      "did": "Decentralized ID",
+      "fee": "Fee",
+      "general-title": "General",
+      "initiator": "Initiator",
+      "overview-title": "Overview",
+      "owner": "Owner",
+      "transactions-title": "Last Transactions"
+    },
+    "sharings": {
+      "sharings-title": "Sharings"
+    },
+    "verifications": {
+      "verifications-title": "Verifications"
     }
   }
 }

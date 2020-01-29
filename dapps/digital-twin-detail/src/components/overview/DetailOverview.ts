@@ -17,13 +17,83 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import {
+  Runtime,
+  Profile,
+  ProfileOptions,
+} from '@evan.network/api-blockchain-core';
+import { DAppTwin, TwinTransaction, SearchService } from '@evan.network/digital-twin-lib';
+import { bccUtils } from '@evan.network/ui';
 
 @Component
-export default class EvanTwinDetailOverviewComponent extends mixins(EvanComponent) {
+export default class DetailOverviewComponent extends mixins(EvanComponent) {
+  twin: DAppTwin = null;
 
+  runtime: Runtime = null;
+
+  transactions: TwinTransaction[] = null;
+
+  search: SearchService = null;
+
+  async created(): Promise<void> {
+    this.runtime = this.getRuntime();
+    this.search = new SearchService(this.runtime);
+    this.twin = this.$store.state.twin;
+    await this.attachCreatedAt();
+    await this.getLastTransactions();
+  }
+
+  async getLastTransactions(): Promise<void> {
+    this.transactions = await this.search.getLastTransactions(
+      this.twin.contractAddress,
+    );
+    this.transactions = await this.enhanceTransactions(this.transactions);
+  }
+
+  /**
+   * Enhance the current twin with createdAt timestamp
+   */
+  async attachCreatedAt(): Promise<void> {
+    const timestamp = await this.search.getCreatedTimestamp(
+      this.twin.contractAddress,
+    );
+
+    this.$store.state.twin.createdAt = timestamp;
+    this.twin = this.$store.state.twin;
+  }
+
+  /**
+   * Adds and formats properties for displaying Transactions
+   * @param transactions list of transactions to be transformed
+   */
+  async enhanceTransactions(
+    transactions: TwinTransaction[],
+  ): Promise<TwinTransaction[]> {
+    return Promise.all(
+      transactions.map(async (transaction) => {
+        const enhancedTransaction = transaction;
+
+        // Add alias of the initiator if known
+        enhancedTransaction.initiator = await bccUtils.getUserAlias(
+          new Profile({
+            accountId: this.runtime.activeAccount,
+            profileOwner: transaction.from,
+            ...(this.runtime as ProfileOptions),
+          }),
+        );
+
+        // Add fee in EVE
+        enhancedTransaction.feeInEve = parseFloat(
+          this.runtime.web3.utils.fromWei(
+            (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
+            'ether',
+          ),
+        ).toFixed(5);
+
+        return enhancedTransaction;
+      }),
+    );
+  }
 }

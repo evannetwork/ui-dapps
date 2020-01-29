@@ -25,11 +25,16 @@ import DAppContainer from './DAppContainer';
 import DAppTwin from './DAppTwin';
 import translations from './i18n';
 import { DBCPDescriptionInterface } from './DAppContract';
-import { DigitalTwinSearchInterface } from './interfaces/DigitalTwinInterface';
+import { DigitalTwinResponse, DigitalTwin } from './interfaces/DigitaltwinResponse';
+import {
+  TransactionsResponse,
+  TwinTransaction,
+} from './interfaces/DigitalTwinTransaction';
 import {
   ValidationErrorInterface,
   TemplateErrorInterface,
 } from './interfaces/TemplateValidationErrors';
+import { SearchService } from './SearchService';
 
 export * from './dispatchers';
 export {
@@ -38,9 +43,15 @@ export {
   DBCPDescriptionInterface,
   dispatchers,
   translations,
-  DigitalTwinSearchInterface,
   ValidationErrorInterface,
   TemplateErrorInterface,
+  DigitalTwinResponse,
+  TransactionsResponse,
+  TwinTransaction,
+  DigitalTwin,
+  SearchService,
 };
 
-System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${getDomainName()}!dapp-content`;
+System.map[
+  '@evan.network/digital-twin-lib'
+] = `lib.digital-twin.${getDomainName()}!dapp-content`;

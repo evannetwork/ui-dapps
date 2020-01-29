@@ -27,6 +27,7 @@ import translations from './i18n/translations';
 import routes from './routes';
 import components from './components/registry';
 import DigitalTwinDetailComponent from './components/DigitalTwinDetail.vue';
+
 export * from './components/registry';
 export { translations };
 
@@ -43,10 +44,10 @@ System.map['@evan.network/digital-twin-detail'] = `detail.digital-twin.${getDoma
  */
 export async function startDApp(
   container: any,
-  dbcpName: any,
+  dbcpName: string,
   dappEnsOrContract: any,
-  dappBaseUrl: any
-) {
+  dappBaseUrl: string,
+): Promise<void> {
   Vue.use(DropdownPlugin);
 
   await initializeVue({
@@ -58,7 +59,7 @@ export async function startDApp(
     RootComponent: DigitalTwinDetailComponent,
     routes,
     state: { },
-    translations: translations,
-    Vue: Vue
+    translations,
+    Vue,
   });
 }

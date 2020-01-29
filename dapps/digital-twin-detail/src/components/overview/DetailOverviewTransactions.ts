@@ -17,35 +17,21 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="d-flex">
-    <div class="content">
-      <!-- TODO: Use proper DID -->
-      <detail-overview-general
-        class="mb-3"
-        :did="`did:evan:${twin.description.identity}`"
-        :owner-name="twin.ownerName"
-        :owner-address="twin.ownerAddress"
-        :created-at="twin.createdAt"
-      />
+import Component, { mixins } from 'vue-class-component';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Prop } from 'vue-property-decorator';
+import { TwinTransaction } from '@evan.network/digital-twin-lib';
 
-      <detail-overview-transactions
-        :transactions="transactions"
-      />
-    </div>
-  </div>
-</template>
 
-<script lang="ts">
-import DetailOverviewComponent from './DetailOverview';
+@Component
+export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
+  @Prop() transactions: TwinTransaction[];
 
-export default DetailOverviewComponent;
-</script>
+  getRouteToTransactionExplorer(transactionId: string): string {
+    const baseUrl = this.getRuntime().environment === 'core'
+      ? 'https://explorer.evan.network'
+      : 'https://testexplorer.evan.network';
 
-<style lang="scss" scoped>
-.content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 56px;
+    return `${baseUrl}/tx/${transactionId}`;
+  }
 }
-</style>

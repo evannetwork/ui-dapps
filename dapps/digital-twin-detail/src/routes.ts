@@ -24,6 +24,7 @@ import ContainerComponent from './components/container/Container.vue';
 import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
 import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
+import DetailOverviewComponent from './components/overview/DetailOverview.vue';
 
 const routeRegistration: Array<RouteConfig> = [
   {
@@ -37,7 +38,7 @@ const routeRegistration: Array<RouteConfig> = [
       {
         name: 'overview',
         path: 'overview',
-        component: UnderDevelopmentComponent,
+        component: DetailOverviewComponent,
       },
       {
         name: 'data',
