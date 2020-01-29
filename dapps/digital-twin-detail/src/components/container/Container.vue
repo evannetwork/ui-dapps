@@ -18,22 +18,30 @@
 */
 
 <template>
-  <evan-form-control v-bind="$props">
-    <textarea
-      :id="id"
-      class="form-control"
-      v-bind="$props"
-      :class="{ 'is-invalid' : error }"
-      :value="value"
-      @blur="$emit('blur')"
-      @focus="$parent.$emit('setFocus')"
-      @input="$emit('input', $event.target.value)"
-    />
-  </evan-form-control>
+  <div>
+    <evan-loading v-if="loading" />
+    <div v-else>
+      <div
+        v-for="entryKey in $store.state.container.entryKeys"
+        :key="entryKey"
+        class="mb-5"
+      >
+        <component
+          :is="`container-${getEntryType(entryKey)}`"
+          v-if="!$store.state.reloadFlags[$route.params.container][entryKey]"
+          :name="entryKey"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Component from './textarea';
+import TestContainerComponent from './Container';
 
-export default Component;
+export default TestContainerComponent;
 </script>
+
+<style lang="scss" scoped>
+
+</style>

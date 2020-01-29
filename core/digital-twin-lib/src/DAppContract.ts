@@ -17,14 +17,16 @@
   the following URL: https://evan.network/license/
 */
 
-import { Runtime, lodash, Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
+import {
+  Runtime, lodash, Profile, ProfileOptions,
+} from '@evan.network/api-blockchain-core';
 import { DispatcherInstance, bccUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
 
-// TODO: remove type description when ticket is implemented
-// (https://evannetwork.atlassian.net/browse/CORE-864)
+/* TODO: remove type description when ticket is implemented
+   (https://evannetwork.atlassian.net/browse/CORE-864) */
 export interface DBCPDescriptionInterface {
   author: string;
   description?: string;
@@ -45,8 +47,8 @@ export interface DBCPDescriptionInterface {
  * @param      {any}  baseCtors    The base ctors
  */
 export function applyMixins(derivedCtor: any, baseCtors: any[]) {
-  baseCtors.forEach(baseCtor => {
-    Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+  baseCtors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
       Object.defineProperty(derivedCtor.prototype, name, Object.getOwnPropertyDescriptor(baseCtor.prototype, name));
     });
   });
@@ -76,6 +78,7 @@ export class DAppContract {
    * Container owner address and name
    */
   ownerAddress: string;
+
   ownerName: string;
 
   /**
@@ -91,16 +94,22 @@ export class DAppContract {
   /**
    * Initialize the contract (DigitalTwin / Container)
    */
-  baseConstructor(vue: EvanComponent,runtime: Runtime, address: string) {
-    this.listeners = [ ];
+  baseConstructor(vue: EvanComponent, runtime: Runtime, address: string): void {
+    this.listeners = [];
     this.runtime = runtime;
     this.vue = vue;
+
+    // used to handle focused component rerendering, when dispatcher states are final (finished / deleted)
+    if (!this.vue.$store.state.reloadFlags) {
+      this.vue.$set(this.vue.$store.state, 'reloadFlags', { });
+    }
+    this.vue.$set(this.vue.$store.state.reloadFlags, address, { });
   }
 
   /**
    * Load the base information of the contract type.
    */
-  async loadBaseInfo() {
+  async loadBaseInfo(): Promise<void> {
     await (this as any).ensureContract();
 
     this.contractAddress = await (this as any).getContractAddress();
@@ -112,7 +121,7 @@ export class DAppContract {
     this.ownerName = await bccUtils.getUserAlias(new Profile({
       accountId: this.runtime.activeAccount,
       profileOwner: this.ownerAddress,
-      ...(this.runtime as ProfileOptions)
+      ...(this.runtime as ProfileOptions),
     }));
   }
 
@@ -122,7 +131,7 @@ export class DAppContract {
    * @param      {DBCPDescriptionInterface}  description  description to use, default to current
    *                                                      description
    */
-  async baseSetDescription(description: DBCPDescriptionInterface = this.description) {
+  async baseSetDescription(description: DBCPDescriptionInterface = this.description): Promise<void> {
     await dispatchers.descriptionDispatcher.start(this.runtime, {
       address: this.contractAddress,
       description,
@@ -132,29 +141,39 @@ export class DAppContract {
   /**
    * Check descriptions i18n and extend vue translation pipeline.
    */
-  protected ensureI18N() {
-    const locales = [ 'en', this.vue.$i18n.locale(), ];
+  protected ensureI18N(): void {
+    const locales = ['en', this.vue.$i18n.locale()];
     const i18n = this.description?.i18n || { };
-    const newTranslations = {
+    let newTranslations = {
       description: this.description.description,
       name: this.description.name,
-      properties: { },
     };
 
     // also support default language
-    for (let locale in locales) {
+    locales.forEach((locale: string) => {
       if (i18n[locale]) {
-        newTranslations.name = i18n[locale].name || newTranslations.name;
-        newTranslations.description = i18n[locale].name || newTranslations.description;
-
-        // check if properties are sent and merge them
-        if (i18n[locale].properties) {
-          newTranslations.properties = lodash.merge(newTranslations.properties,
-            i18n[locale].properties);
-        }
+        newTranslations = {
+          ...newTranslations,
+          ...i18n[locale],
+        };
       }
-    }
+    });
 
     this.vue.$i18n.add(locales[0], { [this.contractAddress]: newTranslations });
+  }
+
+  /**
+   * Sets a reload flag for a specific component to force rerender.
+   *
+   * @param      {string}  key     The new value
+   */
+  triggerReload(key: string): void {
+    const { reloadFlags } = this.vue.$store.state;
+
+    // reset loading state when ui had the possiblity for rerendering
+    this.vue.$set(reloadFlags[this.contractAddress], key, true);
+    this.vue.$nextTick(() => {
+      this.vue.$set(reloadFlags[this.contractAddress], key, false);
+    });
   }
 }

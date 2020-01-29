@@ -39,7 +39,9 @@ class DAppTwin extends DigitalTwin {
    * All loaded containers, enhanced with ui flags and data.
    */
   containers: { [id: string]: DAppContainer };
+
   containerContracts: { [id: string]: DAppContainer };
+
   containerKeys: string[];
 
   /**
@@ -83,11 +85,11 @@ class DAppTwin extends DigitalTwin {
   /**
    * Reset containers object and reload all container definitions.
    */
-  private async ensureContainers() {
+  private async ensureContainers(): Promise<void> {
     this.containers = { };
     this.containerContracts = { };
 
-    // transform twinEntries to containers object, so all 
+    // transform twinEntries to containers object, so all
     const twinEntries = await this.getEntries();
     this.containerKeys = Object.keys(twinEntries);
     await Promise.all(this.containerKeys.map(async (key: string) => {
@@ -99,7 +101,7 @@ class DAppTwin extends DigitalTwin {
 
       // load description, contractAddress, dispatcherStates
       await this.containers[key].initialize();
-      
+
       // make contracts also directly accessible
       this.containerContracts[this.containers[key].contractAddress] = this.containers[key];
     }));
@@ -108,9 +110,9 @@ class DAppTwin extends DigitalTwin {
   /**
    * Checkup current dispatcher loading states and set corresponding states.
    */
-  private async ensureDispatcherStates() {
+  private async ensureDispatcherStates(): Promise<void> {
     // load all running dispatcher instances for containers
-    const [ descInstances, addFavInstances, removeFavInstances ] = await Promise.all([
+    const [descInstances, addFavInstances, removeFavInstances] = await Promise.all([
       dispatchers.descriptionDispatcher.getInstances(this.runtime),
       dispatchers.twinFavoriteAddDispatcher.getInstances(this.runtime),
       dispatchers.twinFavoriteRemoveDispatcher.getInstances(this.runtime),
@@ -153,7 +155,7 @@ class DAppTwin extends DigitalTwin {
     });
 
     // check if any container gets saved
-    Object.keys(this.containers).forEach(containerKey => {
+    Object.keys(this.containers).forEach((containerKey: string) => {
       if (this.containers[containerKey].dispatcherStates.container) {
         this.dispatcherStates.twin = true;
       }
@@ -163,19 +165,42 @@ class DAppTwin extends DigitalTwin {
   /**
    * Load basic twin information and setup dispatcher watchers for loading states.
    */
-  public async initialize() {
-    // load base info and check for favorites status
-    await this.loadBaseInfo();
-    this.favorite = await this.isFavorite();
+  public async initialize(): Promise<void> {
+    await Promise.all([
+      this.loadBaseInfo(),
+      async (): Promise<void> => {
+        this.favorite = await this.isFavorite();
+      },
+      this.ensureContainers(),
+    ]);
 
-    await this.ensureContainers();
     await this.ensureDispatcherStates();
     this.ensureI18N();
   }
 
-  /*
-   * Removes the current twin from the favorites in profile with digital twin dispatcher.
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
    */
+  async onDescriptionSave($event): Promise<void> {
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.ensureDispatcherStates();
+      this.description = await this.getDescription();
+      this.triggerReload('description');
+    }
+  }
+
+  /**
+   * Handles a twin favorite add / remove dispatcher event and triggers a ui reload, if nessecary.
+   */
+  onFavoriteSave($event): void {
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.ensureDispatcherStates();
+      this.triggerReload('favorite');
+    }
+  }
+
+  /* Removes the current twin from the favorites in profile with digital twin dispatcher. */
   public async removeFromFavorites(): Promise<void> {
     await dispatchers.twinFavoriteRemoveDispatcher
       .start(this.runtime, { address: this.contractAddress });
@@ -184,25 +209,25 @@ class DAppTwin extends DigitalTwin {
   /**
    * Start all dispatcher watchers.
    */
-  public watchDispatchers() {
+  public watchDispatchers(): void {
     // clear previously running watchers
     this.stopWatchDispatchers();
     // trigger all new watchers and save the listeners
     this.listeners = [
-      dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
-      dispatchers.twinFavoriteAddDispatcher.watch(() => this.ensureDispatcherStates()),
-      dispatchers.twinFavoriteRemoveDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
+      dispatchers.twinFavoriteAddDispatcher.watch(($event) => this.onFavoriteSave($event)),
+      dispatchers.twinFavoriteRemoveDispatcher.watch(($event) => this.onFavoriteSave($event)),
     ];
   }
 
   /**
    * Stop all dispatcher listeners.
    */
-  async stopWatchDispatchers() {
+  stopWatchDispatchers(): void {
     // clear own watchers
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach((listener: Function) => listener());
     // clear container watchers
-    this.containerKeys.forEach(key => this.containers[key].stopWatchDispatchers());
+    this.containerKeys.forEach((key: string) => this.containers[key].stopWatchDispatchers());
   }
 
   /**
@@ -210,13 +235,13 @@ class DAppTwin extends DigitalTwin {
    *
    * @param      {DBCPDescriptionInterface}  description  description to save
    */
-  public async setDescription(description?: DBCPDescriptionInterface) {
-    this.baseSetDescription(description);
+  public async setDescription(description?: DBCPDescriptionInterface): Promise<void> {
+    return this.baseSetDescription(description);
   }
 }
 
 // enable multi inheritance for general DAppContract
-interface DAppTwin extends DAppContract { }
-applyMixins(DAppTwin, [ DAppContract ]);
+interface DAppTwin extends DAppContract, DigitalTwin { }
+applyMixins(DAppTwin, [DAppContract]);
 
 export default DAppTwin;

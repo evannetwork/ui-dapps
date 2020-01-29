@@ -18,22 +18,37 @@
 */
 
 <template>
-  <evan-form-control v-bind="$props">
-    <textarea
-      :id="id"
-      class="form-control"
-      v-bind="$props"
-      :class="{ 'is-invalid' : error }"
-      :value="value"
-      @blur="$emit('blur')"
-      @focus="$parent.$emit('setFocus')"
-      @input="$emit('input', $event.target.value)"
-    />
-  </evan-form-control>
+  <div class="content-card">
+    <div
+      class="d-flex justify-content-between align-items-center pb-1"
+    >
+      <h5 class="my-0 py-0 text-uppercase font-weight-bold">
+        <i
+          class="mdi mr-2 mdi-lock"
+        />
+        {{ $t(`${$route.params.container}.${name}`, name) }}
+      </h5>
+      <evan-button
+        type="secondary"
+        size="sm"
+        @click="share()"
+      >
+        {{ '_evan.share' | translate }}
+      </evan-button>
+    </div>
+
+    <div class="mt-3">
+      todo...
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Component from './textarea';
+import ContainerListComponent from './List';
 
-export default Component;
+export default ContainerListComponent;
 </script>
+
+<style lang="scss" scoped>
+
+</style>

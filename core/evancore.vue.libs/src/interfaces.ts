@@ -80,6 +80,7 @@ export interface EvanFormControlUISpecs {
     required?: boolean | (() => boolean);
     rows?: number;
     size?: number;
+    type?: string;
   };
   type: string;
 }

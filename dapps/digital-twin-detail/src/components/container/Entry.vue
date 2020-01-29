@@ -18,22 +18,23 @@
 */
 
 <template>
-  <evan-form-control v-bind="$props">
-    <textarea
-      :id="id"
-      class="form-control"
-      v-bind="$props"
-      :class="{ 'is-invalid' : error }"
+  <div class="content-card">
+    <data-set-form
+      :data-schema="entrySchema"
+      :is-loading="$store.state.container.dispatcherStates.entries[name]"
+      :name="name"
       :value="value"
-      @blur="$emit('blur')"
-      @focus="$parent.$emit('setFocus')"
-      @input="$emit('input', $event.target.value)"
+      @save="onSave($event)"
     />
-  </evan-form-control>
+  </div>
 </template>
 
 <script lang="ts">
-import Component from './textarea';
+import ContainerEntryComponent from './Entry';
 
-export default Component;
+export default ContainerEntryComponent;
 </script>
+
+<style lang="scss" scoped>
+
+</style>

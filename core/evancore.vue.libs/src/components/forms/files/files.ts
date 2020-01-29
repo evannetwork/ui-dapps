@@ -40,7 +40,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    * input accept options
    */
   @Prop({
-    default: '*'
+    default: '*',
   }) accept: string;
 
   /**
@@ -52,14 +52,14 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
   * Empty text that shown, when no files are uploaded and the component is not disabled.
   */
   @Prop({
-    default: '_evan.file-input.description'
+    default: '_evan.file-input.description',
   }) placeholder: string;
 
   /**
     * Empty text that is shown when no files are uploaded and the component is disabled.
     */
   @Prop({
-    default: '_evan.file-input.empty'
+    default: '_evan.file-input.empty',
   }) emptyText: string;
 
   /**
@@ -71,8 +71,8 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    * Empty text that shown, when no files are uploaded and the component is disabled.
    */
   @Prop({
-    default: [ ]
-  }) value: Array<any>;
+    default: [],
+  }) value: UIContainerFile[];
 
   /**
    * is set to an index of a file that should be removed
@@ -87,10 +87,12 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
   /**
    * Transform the input files to the correct format.
    */
-  async created() {
-    await Promise.all(this.value.map(async (file, index) =>
-      this.$set(this.value, index, await FileHandler.fileToContainerFile(file))
-    ));
+  async created(): Promise<void> {
+    await Promise.all(this.value.map(async (file, index) => this.$set(
+      this.value,
+      index,
+      await FileHandler.fileToContainerFile(file),
+    )));
   }
 
   /**
@@ -98,16 +100,14 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    *
    * @param      {Arrayany}  files   The files
    */
-  async filesChanged(fileList: FileList) {
+  async filesChanged(fileList: FileList): Promise<void> {
     // make the list iterable
     const newFiles: Array<File> = Array.from(fileList);
 
     // iterate through all files and check if they already exists, if not, add them
     await Promise.all(newFiles.map(async (newFile: File) => {
-      const isNew = this.value.filter((existing: UIContainerFile) =>
-        existing.name === newFile.name &&
-        existing.size === newFile.size
-      ).length === 0;
+      const isNew = this.value.filter((existing: UIContainerFile) => existing.name === newFile.name
+        && existing.size === newFile.size).length === 0;
 
       // if it's a new file, upload the file and transform it into the correct format
       if (isNew) {
@@ -129,14 +129,14 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    * @param      {FileHandlerUIContainerFile}  file    ui container file
    * @param      {number}                      index   index of the file in the value list
    */
-  removeFile($event: any, file: FileHandler.UIContainerFile, index: number) {
+  removeFile($event: any, file: FileHandler.UIContainerFile, index: number): boolean {
     this.$parent.$emit('setFocus', true);
     $event.preventDefault();
 
     // if the file is new or the user has accepted the removal, remove it
-    if ((<any>file).isNew || this.fileRemove === index) {
+    if ((file as any).isNew || this.fileRemove === index) {
       this.value.splice(index, 1);
-      (<any>this.$refs.removeFileModal).hide();
+      (this.$refs.removeFileModal as any).hide();
       this.fileRemove = -1;
 
       // trigger update event
@@ -144,7 +144,7 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
     } else {
       // if the file is not new, ask before removal
       this.fileRemove = index;
-      (<any>this.$refs.removeFileModal).show();
+      (this.$refs.removeFileModal as any).show();
     }
 
     return false;

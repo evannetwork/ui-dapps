@@ -22,34 +22,41 @@ import { Container, ContainerOptions, lodash } from '@evan.network/api-blockchai
 import { Dispatcher, DispatcherInstance, cloneDeep } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
-  `lib.digital-twin.${ dappBrowser.getDomainName() }`,
+  `lib.digital-twin.${dappBrowser.getDomainName()}`,
   'containerSaveDispatcher',
   40 * 1000,
-  '_digital-twin-lib.dispatchers.container.save'
+  '_digital-twin-lib.dispatchers.container.save',
 );
 
 dispatcher
-  .startup(async (instance: DispatcherInstance, data: any) => {
+  .startup(async (instance: DispatcherInstance, dispatcherData: any) => {
     // be able to save already saved entries to indexedDB, so we will not save duplicated on errors
-    data.entriesToSave = data.entriesToSave || Object.keys(data.value);
+    dispatcherData.entriesToSave = dispatcherData.entriesToSave || Object.keys(dispatcherData.value);
   })
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const container = new Container(instance.runtime as ContainerOptions, data.address);
+  .step(async (instance: DispatcherInstance, { address, entriesToSave, value }) => {
+    const container = new Container(
+      instance.runtime as ContainerOptions,
+      {
+        accountId: instance.runtime.activeAccount,
+        address,
+      },
+    );
     const { template } = await container.toPlugin();
 
-    // copy the entries to save, so the iteration will not be affected by removing entries to save
-    // from the data object => entries will be removed and the data will be persisted, after the
-    // synchronization of this entry was saved successful, so the user won't do this twice
-    const entriesToSave = cloneDeep(lodash, data.entriesToSave, true);
-    await Promise.all(entriesToSave.map(async (entryKey: string, index: number) => {
+    /* copy the entries to save, so the iteration will not be affected by removing entries to save
+       from the dispatcherData object => entries will be removed and the dispatcherData will be
+       persisted, after the synchronization of this entry was saved successful, so the user won't do
+       this twice */
+    const reducedEntries = cloneDeep(lodash, entriesToSave, true);
+    await Promise.all(reducedEntries.map(async (entryKey: string, index: number) => {
       if (template.properties[entryKey].type === 'list') {
-        await container.addListEntries(entryKey, data.value);
+        await container.addListEntries(entryKey, value[entryKey]);
       } else {
-        await container.setEntry(entryKey, data.value);
+        await container.setEntry(entryKey, value[entryKey]);
       }
 
       // remove the list entry and persist the state into the indexeddb
-      data.entriesToSave.splice(index, 1);
+      reducedEntries.splice(index, 1);
       await instance.save();
     }));
   });

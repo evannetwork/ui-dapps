@@ -19,42 +19,10 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
-export default class TestContainerComponent extends mixins(EvanComponent) {
-  /**
-   * Show loading symbol while loading container
-   */
-  loading = true;
-
-  /**
-   * Clear dispatcher watchers
-   */
-  beforeDestroy() {
-    this.$store.state.container.stopWatchDispatchers();
-  }
-
-  created() {
-    this.setupContainer();
-  }
-
-  beforeRouteUpdate() {
-    this.setupContainer();
-  }
-
-  /**
-   * Setup vuex container and ensure entry data
-   */
-  async setupContainer() {
-    this.loading = true;
-    this.$store.state.container = this.$store.state.twin
-      .containerContracts[this.$route.params.container];
-
-    // ensure loaded entries and start dispatcher watching
-    await this.$store.state.container.ensureEntries();
-    this.$store.state.container.watchDispatchers();
-
-    this.loading = false;
-  }
+export default class ContainerListComponent extends mixins(EvanComponent) {
+  @Prop() name: string;
 }
