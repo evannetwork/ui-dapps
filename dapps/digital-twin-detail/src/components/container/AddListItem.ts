@@ -17,31 +17,16 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Prop } from 'vue-property-decorator';
+
+// @evan imports
+import { EvanComponent, DbcpFormComponentClass } from '@evan.network/ui-vue-core';
+import { UIContainerFile } from '@evan.network/ui';
 
 @Component
-export default class DetailDataComponent extends mixins(EvanComponent) {
-  navItems = [
-    {
-      label: '_twin-detail.data.general.general-title',
-      to: 'general',
-    },
-  ];
-
-  /**
-   * Setup dynamic navigation structure.
-   */
-  async created(): Promise<void> {
-    const { twin } = this.$store.state;
-    this.navItems = this.navItems.concat(twin.containerKeys.map((key) => {
-      const containerAddress = twin.containers[key].contractAddress;
-
-      return {
-        label: this.$t(`${containerAddress}.name`, key),
-        to: containerAddress,
-      };
-    }));
+export default class AddListItemComponent extends mixins(EvanComponent) {
+  showPanel(): void {
+    (this.$refs.addListItemPanel as any).show();
   }
 }

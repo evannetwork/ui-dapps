@@ -25,7 +25,7 @@ import { EvanComponent, EvanForm, EvanFormControlOptions } from '@evan.network/u
 @Component
 export default class DataSetFormComponent extends mixins(EvanComponent) {
   /**
-   * Data set name (entry / listentry)
+   * Data set name (entry / list entry)
    */
   @Prop() name: string;
 
@@ -48,7 +48,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }) isLoading: boolean;
 
   /**
-   * Dynamic formular definition for the corresponding dataSchema.
+   * Dynamic form definition for the corresponding dataSchema.
    */
   form: EvanForm = null;
 
@@ -83,7 +83,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Takes a data schema property and add's it to the formular.
+   * Takes a data schema property and adds it to the form.
    *
    * @param      {string}  name    property name
    * @param      {string}  type    property type
@@ -92,7 +92,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     const control: EvanFormControlOptions = {
       uiSpecs: {
         attr: {
-          // translate it before, so the formular will use correct fallback translations
+          // translate it before, so the form will use correct fallback translations
           label: this.$t(`${this.i18nScope}.properties.${name}.label`, name),
           placeholder: this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
         },

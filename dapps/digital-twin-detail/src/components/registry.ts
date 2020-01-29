@@ -25,6 +25,7 @@ import ContainerListComponent from './container/List.vue';
 import DataSetComponent from './container/DataSet.vue';
 import DataSetFormComponent from './container/DataSetForm.vue';
 import DigitalTwinInteractionsComponent from './TwinInteractions.vue';
+import AddListItemComponent from './container/AddListItem.vue';
 
 // map them to element names, so they can be used within templates
 const componentRegistration: Array<ComponentRegistrationInterface> = [
@@ -32,6 +33,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { component: ContainerListComponent, name: 'container-list' },
   { component: DataSetFormComponent, name: 'data-set-form' },
   { component: DigitalTwinInteractionsComponent, name: 'digital-twin-interactions' },
+  { component: AddListItemComponent, name: 'add-list-item' },
 ];
 
 export default componentRegistration;
