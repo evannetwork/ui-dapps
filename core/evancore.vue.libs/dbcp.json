@@ -14,7 +14,8 @@
         "toasted.vue.libs": "^1.1.27",
         "ui.libs": "^1.8.0",
         "vue.libs": "^2.5.0",
-        "vuex.libs": "3.1.0"
+        "vuex.libs": "3.1.0",
+        "lodash.libs": "4.17.15"
       },
       "entrypoint": "evancore.vue.libs.js",
       "files": [

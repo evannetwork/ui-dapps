@@ -20,7 +20,7 @@
 <template>
   <evan-form-control-textarea
     v-bind="$props"
-    :error="invalid ? $t('_evan.invalid-json') : error"
+    :error="isInvalidJSON ? $t('_evan.invalid-json') : error"
     :value="stringValue"
     @blur="$emit('blur')"
     @focus="$parent.$emit('setFocus')"

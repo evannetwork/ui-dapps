@@ -25,7 +25,7 @@
       :i18n-scope="`${i18nScope}.properties`"
       :is-loading="isLoading"
       :title="$t(`${i18nScope}.name`, name)"
-      @save="$emit('save', form.getFormData())"
+      @save="$emit('save', getTwinFormData())"
     />
   </div>
 </template>

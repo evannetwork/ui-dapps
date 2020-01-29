@@ -54,7 +54,7 @@ export default class ContainerComponent extends mixins(EvanComponent) {
 
     // ensure loaded entries and start dispatcher watching
     await this.$store.state.container.initialize();
-    await this.$store.state.container.ensureEntries();
+    await this.$store.state.container.loadEntryValues();
     this.$store.state.container.watchDispatchers();
 
     this.loading = false;

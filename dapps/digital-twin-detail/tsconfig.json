@@ -8,8 +8,7 @@
   "extends": "../../tsconfig.json",
   "include": [
     "./src/**/*",
-    "./src/**/*.json",
-    "./src/vue-shim.d.ts"
+    "./src/**/*.json"
   ],
   "references": [
     {

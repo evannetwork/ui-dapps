@@ -17,51 +17,45 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
 
-import EvanControlComponent from '../control/control';
+@Component
+export default class DetailOverviewGeneralComponent extends mixins(EvanComponent) {
+  @Prop() did: string;
 
-/**
- * Base component for editing json in a textarea element.
- *
- * @class         FormControlJSONComponent
- * @selector      evan-form-control-json
- */
-@Component({})
-export default class FormControlJSONComponent extends mixins(EvanControlComponent) {
-  /**
-   * Input type attribute
-   */
-  @Prop({
-    default: 5,
-  }) rows: number;
+  @Prop() ownerName: string;
 
-  /**
-   * Current string formatted value of this control.
-   */
-  stringValue = '';
+  @Prop() ownerAddress: string;
 
-  /**
-   * Is the current input wrong formatted?
-   */
-  isInvalidJSON = false;
+  @Prop() createdAt: string;
 
-  created(): void {
-    this.stringValue = JSON.stringify(this.value);
+  routeToOwner(): void {
+    window.location.hash = `/${this.dapp.rootEns}/profile.vue.${this.dapp.domainName}/${this.ownerAddress}/detail`;
   }
 
   /**
-   * Check for correct defined JSON and update parent value, if the json format is correct.
+   * Adds text to clipboard.
+   *
+   * @param text Text to copy
    */
-  onValueChanged(): void {
-    try {
-      this.value = JSON.stringify(this.stringValue);
-      this.isInvalidJSON = false;
-      this.$emit('input', this.value);
-    } catch (ex) {
-      this.isInvalidJSON = true;
-    }
+  copyToClipboard(text: string): void {
+    const textArea = document.createElement('textarea');
+
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+
+    this.$toasted.show(
+      this.$t('_twin-detail.overview.copied'),
+      {
+        duration: 3000,
+        type: 'success',
+      },
+    );
   }
 }

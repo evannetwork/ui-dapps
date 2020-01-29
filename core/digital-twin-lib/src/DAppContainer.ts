@@ -24,7 +24,7 @@ import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
-import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
+import { applyMixins, DAppContract } from './DAppContract';
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
@@ -105,8 +105,6 @@ class DAppContainer extends Container {
     ]);
 
     // reset previous saving states
-    const beforeStates = this.dispatcherStates ? JSON.parse(JSON.stringify(this.dispatcherStates))
-      : null;
     const dispatcherData = { };
     const dispatcherStates = {
       container: false,
@@ -155,18 +153,16 @@ class DAppContainer extends Container {
    *
    * @param      {string}  entriesToLoad  load only specific entriess
    */
-  public async ensureEntries(entriesToLoad?: string[]): Promise<void> {
+  public async loadEntryValues(entriesToLoad?: string[]): Promise<void> {
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
       const entryDef = this.plugin.template.properties[entryKey];
 
-      if (entryDef) {
-        if (entryDef.type === 'list') {
-          this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
-        } else {
-          this.entries[entryKey] = await this.getEntry(entryKey);
-        }
+      if (entryDef?.type === 'list') {
+        this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
+      } else {
+        this.entries[entryKey] = await this.getEntry(entryKey);
       }
     }));
   }
@@ -211,7 +207,7 @@ class DAppContainer extends Container {
   public async initialize(): Promise<void> {
     await this.loadBaseInfo();
     this.plugin = await this.toPlugin();
-    this.entries = { };
+    this.entries = {};
     await this.ensureDispatcherStates();
     this.ensureI18N();
   }
@@ -261,32 +257,48 @@ class DAppContainer extends Container {
     this.stopWatchDispatchers();
     // trigger all new watchers and save the listeners
     this.listeners = [
-      dispatchers.descriptionDispatcher.watch(() => async (): Promise<void> => {
-        this.ensureDispatcherStates();
-        this.description = await (this as any).getDescription();
-        this.triggerReload('description');
-      }),
-      dispatchers.containerSaveDispatcher.watch(async ($event: any) => {
-        const beforeSave = this.dispatcherStates.container;
-        const entriesToReload = Object.keys(this.dispatcherStates.entries)
-          .filter((key: string) => this.dispatcherStates.entries[key]);
-        await this.ensureDispatcherStates();
-
-        // force entry reloading, when data was already loaded and container update was finished
-        if (beforeSave && !this.dispatcherStates.container
-          && ($event.detail.status === 'finished' || $event.detail.status === 'deleted')) {
-          await this.ensureEntries(entriesToReload);
-          entriesToReload.forEach((entry: string) => this.triggerReload(entry));
-        }
-      }),
+      dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
+      dispatchers.containerSaveDispatcher.watch(($event) => this.onContainerSave($event)),
       dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
     ];
   }
 
   /**
+   * Handles a container entry save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   *
+   * @param      {any}  $event  dispatcher event
+   */
+  async onContainerSave($event: any): Promise<void> {
+    const beforeSave = this.dispatcherStates.container;
+    const entriesToReload = Object.keys(this.dispatcherStates.entries)
+      .filter((key: string) => this.dispatcherStates.entries[key]);
+    await this.ensureDispatcherStates();
+
+    // force entry reloading, when data was already loaded and container update was finished
+    if (beforeSave && !this.dispatcherStates.container
+      && ($event.detail.status === 'finished' || $event.detail.status === 'deleted')) {
+      await this.loadEntryValues(entriesToReload);
+      entriesToReload.forEach((entry: string) => this.triggerReload(entry));
+    }
+  }
+
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   */
+  async onDescriptionSave($event: any): Promise<void> {
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.ensureDispatcherStates();
+      this.description = await this.getDescription();
+      this.triggerReload('description');
+    }
+  }
+
+  /**
    * Stop all dispatcher listeners.
    */
-  stopWatchDispatchers(): void {
+  public stopWatchDispatchers(): void {
     this.listeners.forEach((listener: Function) => listener());
   }
 }

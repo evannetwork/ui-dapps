@@ -24,6 +24,7 @@ import VueRouter, { Route } from 'vue-router';
 
 // evan.network imports
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { Runtime } from '@evan.network/api-blockchain-core';
 import { getDomainName } from './utils';
 import { StartedDAppInfo } from './interfaces';
 
@@ -32,7 +33,7 @@ import { StartedDAppInfo } from './interfaces';
  *
  * @class      EvanComponent
  */
-@Component({ })
+@Component
 export default class EvanComponent extends Vue {
   /**
    * active dapp that was detected by the routing lib (getNextDApp)
@@ -50,10 +51,15 @@ export default class EvanComponent extends Vue {
    * Declare vue stuff
    */
   $i18n: any;
+
   $router: VueRouter;
+
   $route: Route;
+
   $store: any;
+
   $t: any;
+
   $toasted: any;
 
   /**
@@ -70,7 +76,7 @@ export default class EvanComponent extends Vue {
     this.testMode = window.localStorage['evan-test-mode'] === 'true';
   }
 
-  created() {
+  created(): void {
     this.$emit('init', this);
   }
 
@@ -81,8 +87,8 @@ export default class EvanComponent extends Vue {
    * @param      {string}  path      path that should be navigated to
    * @param      {string}  baseHash  navigation base hash (e.g. dashboard.vue.evan, default = this.dapp.baseHash)
    */
-  evanNavigate(path: string, baseHash: string = this.activeDApp().baseHash) {
-    window.location.hash = `${ baseHash }/${ path }`;
+  evanNavigate(path: string, baseHash: string = this.activeDApp().baseHash): void {
+    window.location.hash = `${baseHash}/${path}`;
   }
 
   /**
@@ -91,7 +97,7 @@ export default class EvanComponent extends Vue {
    *
    * @return     {any}  routing.getNextDApp result
    */
-  activeDApp() {
+  activeDApp(): any {
     return this.$store.state.dapp;
   }
 
@@ -100,7 +106,7 @@ export default class EvanComponent extends Vue {
    *
    * @return     {any}  bcc runtime
    */
-  getRuntime() {
+  getRuntime(): Runtime {
     return this.$store.state.runtime || dappBrowser.bccHelper.getCoreRuntime();
   }
 }

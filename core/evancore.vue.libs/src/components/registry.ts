@@ -16,9 +16,9 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-import vSelect from 'vue-select';
 
 // import evan libs
+import vSelect from 'vue-select';
 import { ComponentRegistrationInterface } from '../interfaces';
 
 // import all components
@@ -55,6 +55,7 @@ import MnemonicExport from './dapp-wrapper/mnemonic-export/mnemonic-export.vue';
 import ModalComponent from './modal/modal.vue';
 import NavListComponent from './nav-list/nav-list.vue';
 import NavTabsComponent from './nav-tabs/nav-tabs.vue';
+import OnPageNavigationComponent from './onpage-navigation/onpage-navigation.vue';
 import PermissionsComponent from './permissions/permissions.vue';
 import PermissionsEditorComponent from './permissions-editor/permissions-editor.vue';
 import ProfilePicture from './profile/profile-picture/profile-picture.vue';
@@ -154,6 +155,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { name: 'evan-modal', component: ModalComponent },
   { name: 'evan-nav-list', component: NavListComponent },
   { name: 'evan-nav-tabs', component: NavTabsComponent },
+  { name: 'evan-onpage-navigation', component: OnPageNavigationComponent },
   { name: 'evan-permissions', component: PermissionsComponent },
   { name: 'evan-permissions-editor', component: PermissionsEditorComponent },
   { name: 'evan-profile-picture', component: ProfilePicture },

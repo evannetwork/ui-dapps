@@ -72,10 +72,33 @@
                     >
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.deleteModal.show()"
+                    >
+                      {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
+                    </b-dropdown-item>
+                    <digital-twin-interactions ref="twinInteractions" />
                   </b-dropdown>
-
-                  <digital-twin-interactions ref="twinInteractions" />
                 </div>
+
+                <evan-modal ref="deleteModal">
+                  <template v-slot:header>
+                    <h5 class="modal-title">
+                      {{ '_twin-detail.delete.delete-modal-title' | translate }}
+                    </h5>
+                  </template>
+                  <template v-slot:body>
+                    <p>{{ '_twin-detail.delete.confirm-delete-description' | translate }}</p>
+                  </template>
+                  <template v-slot:footer>
+                    <evan-button
+                      type="danger"
+                      @click="deleteTwin"
+                    >
+                      {{ '_twin-detail.delete.confirm-delete' | translate }}
+                    </evan-button>
+                  </template>
+                </evan-modal>
 
                 <evan-profile-picture
                   class="twin-avatar"
@@ -108,7 +131,7 @@
                         class="mr-3"
                         :class="navItem.icon"
                       />
-                      {{ navItem.label | translate }}
+                      {{ navItem.key | translate }}
                     </router-link>
                   </template>
                 </div>
@@ -188,7 +211,7 @@ export default DigitalTwinDetailComponent;
   background: white;
   border-radius: 4px;
   width: 564px;
-  padding: 32px 24px;
+  padding: 24px 24px;
 
   .card-heading {
     font-size: 16px;

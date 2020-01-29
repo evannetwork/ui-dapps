@@ -17,20 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
-
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+export interface QueryOptions {
+  count?: number;
+  offset?: number;
+  page?: number;
+  reverse?: boolean;
+  searchTerm?: string;
+  sortBy?: string;
+}

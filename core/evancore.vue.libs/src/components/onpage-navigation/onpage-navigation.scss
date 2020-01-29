@@ -17,20 +17,35 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+@import '~@evan.network/ui/src/style/utils';
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+.onpage-nav {
+  position: fixed;
+  top: 80px;
+  right: 80px;
+
+  max-width: 200px;
+
+  ul {
+    list-style: none;
+
+    li {
+      cursor: pointer;
+      text-transform: uppercase;
+
+      color: cssVar(gray-600);
+      border-left: 1px solid transparent;
+
+      &.active {
+        color: cssVar(primary);
+        border-color: cssVar(primary);
+      }
+
+      &.disabled {
+        cursor: default;
+
+        color: cssVar(gray-300);
+      }
+    }
+  }
+}

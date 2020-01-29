@@ -17,20 +17,21 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+import Component, { mixins } from 'vue-class-component';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Prop } from 'vue-property-decorator';
+import { TwinTransaction } from '@evan.network/digital-twin-lib';
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+
+@Component
+export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
+  @Prop() transactions: TwinTransaction[];
+
+  getRouteToTransactionExplorer(transactionId: string): string {
+    const baseUrl = this.getRuntime().environment === 'core'
+      ? 'https://explorer.evan.network'
+      : 'https://testexplorer.evan.network';
+
+    return `${baseUrl}/tx/${transactionId}`;
+  }
+}

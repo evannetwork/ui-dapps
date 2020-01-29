@@ -17,20 +17,32 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+import {
+  DigitalTwin,
+  DigitalTwinOptions,
+  Ipfs,
+} from '@evan.network/api-blockchain-core';
+import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
+import { getDomainName, ipfs } from '@evan.network/ui-dapp-browser';
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+const twinDeleteDispatcher = new Dispatcher(
+  `lib.digital-twin.${getDomainName()}`,
+  'twinDeleteDispatcher',
+  1000000, // depends probably on plugins etc.
+  '_digital-twin-lib.dispatchers.twin.delete',
+);
+
+twinDeleteDispatcher
+  .step(async (instance: DispatcherInstance, data: any) => {
+    // mock
+    await new Promise((resolve) => {
+      setTimeout(() => resolve(), 1000);
+    });
+  })
+  .step(async (instance: DispatcherInstance, data: any) => {
+    await new Promise((resolve) => {
+      setTimeout(() => resolve(), 1000);
+    });
+  });
+
+export default twinDeleteDispatcher;

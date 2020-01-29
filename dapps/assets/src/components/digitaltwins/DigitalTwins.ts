@@ -25,7 +25,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { debounce } from 'lodash';
 import {
   dispatchers,
-  DigitalTwinSearchInterface as DigitalTwin,
+  DigitalTwin,
 } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
@@ -165,7 +165,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     window.addEventListener('keydown', this.handleSearchShortcut);
 
     // initial loading of favorites
-    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime());
+    const favorites = await bcc.DigitalTwin.getFavorites(this.getRuntime() as any);
     favorites.forEach((fav) => {
       this.favoriteList.push({
         id: fav,
@@ -259,10 +259,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   handleRowClicked(twin: DigitalTwin) {
     window.location.hash = `/${this.dapp.rootEns}/detail.digital-twin.${this.dapp.domainName}/${twin.address}`;
-
-    /* this.$router.push({
-       path: `evan-twin-detail.${ getDomainName() }/${twin.address}`
-       }); */
   }
 
   sortHandler(ctx: SortFilter) {
@@ -273,7 +269,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     this.searchHandlerDebounced();
   }
 
-  async addFavorite(twin: EvanTableItem<DigitalTwin>) {
+  async addFavorite(twin: EvanTableItem<DigitalTwin>): Promise<void> {
     const newFav = {
       id: twin.item.address,
       isFavorite: false,
@@ -289,7 +285,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     newFav.isLoading = false;
   }
 
-  async removeFavorite(twin: EvanTableItem<DigitalTwin>) {
+  async removeFavorite(twin: EvanTableItem<DigitalTwin>): Promise<void> {
     this.favoriteList.find(
       (fav) => twin.item.address === fav.id,
     ).isLoading = true;
@@ -303,7 +299,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     );
   }
 
-  private isFavorite(twin: EvanTableItem<DigitalTwin>) {
+  private isFavorite(twin: EvanTableItem<DigitalTwin>): boolean {
     return this.favoriteList.some((fav) => twin.item.address === fav.id);
   }
 
@@ -311,7 +307,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * Check if specific twin is loading favorite
    * @param twin Digital Twin
    */
-  private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>) {
+  private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>): boolean {
     const fav = this.favoriteList.find((item) => twin.item.address === item.id);
     return fav ? fav.isLoading : false;
   }

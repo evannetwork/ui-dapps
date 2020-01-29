@@ -17,20 +17,21 @@
   the following URL: https://evan.network/license/
 */
 
-import containerSaveDispatcher from './container/save';
-import containerShareDispatcher from './container/share';
-import descriptionDispatcher from './description';
-import twinCreateDispatcher from './twin/create';
-import twinFavoriteAddDispatcher from './twin/favorite.add';
-import twinFavoriteRemoveDispatcher from './twin/favorite.remove';
-import twinDeleteDispatcher from './twin/delete';
+/**
+ * Response from edge server /api/smart-agents/search/twins
+ * https://github.com/evannetwork/edge-server-search/tree/feature/CORE-849-twin-transactions#apismart-agentssearchtwins
+ */
+export interface DigitalTwinResponse {
+  total: number;
+  result: DigitalTwin[];
+}
 
-export {
-  containerSaveDispatcher,
-  containerShareDispatcher,
-  descriptionDispatcher,
-  twinCreateDispatcher,
-  twinFavoriteAddDispatcher,
-  twinFavoriteRemoveDispatcher,
-  twinDeleteDispatcher,
-};
+export interface DigitalTwin {
+  address: string;
+  containers: any[];
+  created: number;
+  description: string;
+  name: string;
+  owner: string;
+  updated: number;
+}

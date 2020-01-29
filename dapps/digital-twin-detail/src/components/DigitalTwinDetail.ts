@@ -18,7 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
-import { DAppTwin } from '@evan.network/digital-twin-lib';
+import { DAppTwin, twinDeleteDispatcher } from '@evan.network/digital-twin-lib';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 
@@ -117,10 +117,19 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     window.addEventListener('hashchange', this.hashChangeWatcher);
   }
 
+  async deleteTwin(): Promise<void> {
+    (this.$refs.deleteModal as any).hide();
+    await twinDeleteDispatcher.start(this.getRuntime(), {
+      address: this.$store.state.twin.address,
+    });
+    this.close();
+  }
+
   /**
-   * Cuts the description to a maximum of 300 characters.
+   * Truncates the description to a certain amount of characters.
    *
    * @param      {string}  desc    description that should be shortend
+   * @param      {number}  maxChars  maximum length of string
    */
   getShortDescription(desc = this.$store.state.twin.description.description, maxChars = 300): string {
     return desc.length > maxChars ? `${desc.slice(0, maxChars)}...` : desc;

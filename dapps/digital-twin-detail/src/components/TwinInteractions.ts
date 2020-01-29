@@ -49,7 +49,7 @@ export default class DigitalTwinInteractionsComponent extends mixins(EvanCompone
    * Creates a duplicated twin from the current definition.
    */
   async createTwinDuplicate(): Promise<void> {
-    const description: any = this.dbcpForm.getDescription();
+    const description = this.dbcpForm.getDescription();
     const imqSquare = description.imgSquare;
     delete description.imqSquare;
     // start twin duplicate dispatcher
