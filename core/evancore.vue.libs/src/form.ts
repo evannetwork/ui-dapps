@@ -124,14 +124,14 @@ export default class EvanForm {
     this.controls.push(controlKey);
 
     // create the form control
-    this[controlKey] = new EvanFormControl(
+    this.vueInstance.$set(this, controlKey, new EvanFormControl(
       controlKey,
       undefined,
       this.vueInstance,
       control.validate,
       this,
       control.uiSpecs,
-    );
+    ));
 
     // set the value
     this[controlKey].value = control.value;

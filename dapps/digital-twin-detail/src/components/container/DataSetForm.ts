@@ -63,6 +63,11 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   i18nScope: string = null;
 
   /**
+   * is the subschema type is only primitive and no object (string, number, files)
+   */
+  isPrimitive = false;
+
+  /**
    * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
    *
    * @param      {any}      subSchema   ajv sub schema
@@ -98,26 +103,45 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       uiSpecs: {
         attr: {
           // translate it before, so the formular will use correct fallback translations
-          label: this.$t(`${this.i18nScope}.properties.${name}.label`, name),
-          placeholder: this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
+          label: this.isPrimitive ? false : this.$t(`${this.i18nScope}.properties.${name}.label`, name),
+          placeholder: this.isPrimitive
+            ? this.$t(`${this.i18nScope}.placeholder`, '')
+            : this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
         },
         type: 'input',
       },
-      value: this.value[name],
+      value: (this.isPrimitive ? this.value : this.value[name]) || '',
     };
 
     switch (type) {
+      case 'array': {
+        control.uiSpecs.type = 'json';
+        // test for valid json
+        try {
+          JSON.stringify(JSON.parse(control.value));
+        } catch (ex) {
+          control.value = [];
+        }
+        break;
+      }
+      case 'boolean': {
+        control.uiSpecs.type = 'checkbox';
+        control.value = !!control.value;
+        break;
+      }
       case 'files': {
         control.uiSpecs.type = 'files';
-        control.value = this.value[name]?.files || [];
+        control.value = control.value?.files || [];
         break;
       }
       case 'object': {
         control.uiSpecs.type = 'json';
-        break;
-      }
-      case 'array': {
-        control.uiSpecs.type = 'json';
+        // test for valid json
+        try {
+          JSON.stringify(JSON.parse(control.value));
+        } catch (ex) {
+          control.value = { };
+        }
         break;
       }
       default: {
@@ -127,7 +151,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     }
 
     this.form.addControl(name, control);
-    this.$set(this.form, name, control);
+    this.$set(control, 'value', control.value);
   }
 
   /**
@@ -148,7 +172,8 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         break;
       }
       default: {
-        this.addPropertyToForm('__root__', type);
+        this.isPrimitive = true;
+        this.addPropertyToForm('primitive', type);
 
         break;
       }
@@ -163,11 +188,17 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
 
     // format file to a container API understandable format
     this.form.controls.forEach((key: string) => {
-      if (this.form[key].type === 'files') {
+      const uiSpecs = this.form[key]?.uiSpecs;
+
+      if (uiSpecs?.type === 'files') {
         formData[key] = { files: formData[key] };
+      } else if (uiSpecs.attr.type === 'number') {
+        formData[key] = parseFloat(formData[key]);
       }
     });
 
-    return formData;
+    return this.isPrimitive
+      ? formData.primitive
+      : formData;
   }
 }
