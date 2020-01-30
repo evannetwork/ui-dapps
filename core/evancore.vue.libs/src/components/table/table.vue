@@ -22,12 +22,11 @@
     <b-table
       v-bind="$attrs"
       :class="{ 'show-scrollbar': showScrollbar }"
-      :tbody-tr-class="'evan-table-body-row ' + $attrs['tbody-tr-class']"
+      :tbody-tr-class="'evan-table-body-row'"
       :thead-tr-class="'evan-table-head-row'"
       :thead-class="'evan-table-head'"
       v-on="$listeners"
     >
-      {{ $attrs }}
       <!-- Pass on all named slots -->
       <slot
         v-for="slot in Object.keys($slots)"

@@ -9,6 +9,13 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
   width: 100%;
   margin-bottom: 0;
 
+  &.clickable-rows {
+    /deep/ tr.evan-table-body-row {
+      cursor: pointer;
+    }
+  }
+
+
   &.show-scrollbar {
     overflow-y: scroll;
     // This is needed for webkit browsers
