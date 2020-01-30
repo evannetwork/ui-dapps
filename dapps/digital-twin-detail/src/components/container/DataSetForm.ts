@@ -62,29 +62,9 @@ export default class DataSetFormComponent extends mixins(EvanFormComponent) {
   i18nScope: string = null;
 
   /**
-   * Setup i18n scope and form structure.
+   * is the subschema type is only primitive and no object (string, number, files)
    */
-  created(): void {
-    this.i18nScope = `${this.$route.params.container}.${this.name}`;
-    this.form = new EvanForm(this, { });
-
-    const type = DataSetFormComponent.getSchemaType(this.dataSchema);
-    switch (type) {
-      case 'object': {
-        Object.keys(this.dataSchema.properties).forEach((property) => this.addPropertyToForm(
-          property,
-          DataSetFormComponent.getSchemaType(this.dataSchema.properties[property]),
-        ));
-
-        break;
-      }
-      default: {
-        this.addPropertyToForm('__root__', type);
-
-        break;
-      }
-    }
-  }
+  isPrimitive = false;
 
   /**
    * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
@@ -121,27 +101,46 @@ export default class DataSetFormComponent extends mixins(EvanFormComponent) {
     const control: EvanFormControlOptions = {
       uiSpecs: {
         attr: {
-          // translate it before, so the form will use correct fallback translations
-          label: this.$t(`${this.i18nScope}.properties.${name}.label`, name),
-          placeholder: this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
+          // translate it before, so the formular will use correct fallback translations
+          label: this.isPrimitive ? false : this.$t(`${this.i18nScope}.properties.${name}.label`, name),
+          placeholder: this.isPrimitive
+            ? this.$t(`${this.i18nScope}.placeholder`, '')
+            : this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
         },
         type: 'input',
       },
-      value: this.value[name],
+      value: (this.isPrimitive ? this.value : this.value[name]) || '',
     };
 
     switch (type) {
+      case 'array': {
+        control.uiSpecs.type = 'json';
+        // test for valid json
+        try {
+          JSON.stringify(JSON.parse(control.value));
+        } catch (ex) {
+          control.value = [];
+        }
+        break;
+      }
+      case 'boolean': {
+        control.uiSpecs.type = 'checkbox';
+        control.value = !!control.value;
+        break;
+      }
       case 'files': {
         control.uiSpecs.type = 'files';
-        control.value = this.value[name]?.files || [];
+        control.value = control.value?.files || [];
         break;
       }
       case 'object': {
         control.uiSpecs.type = 'json';
-        break;
-      }
-      case 'array': {
-        control.uiSpecs.type = 'json';
+        // test for valid json
+        try {
+          JSON.stringify(JSON.parse(control.value));
+        } catch (ex) {
+          control.value = { };
+        }
         break;
       }
       default: {
@@ -151,22 +150,54 @@ export default class DataSetFormComponent extends mixins(EvanFormComponent) {
     }
 
     this.form.addControl(name, control);
-    this.$set(this.form, name, control);
+    this.$set(control, 'value', control.value);
   }
 
   /**
-   * Returns the current data from the dynamic data set form
+   * Setup i18n scope and form structure.
+   */
+  created(): void {
+    this.i18nScope = `${this.$route.params.container}.${this.name}`;
+    this.form = new EvanForm(this, { });
+
+    const type = DataSetFormComponent.getSchemaType(this.dataSchema);
+    switch (type) {
+      case 'object': {
+        Object.keys(this.dataSchema.properties).forEach((property) => this.addPropertyToForm(
+          property,
+          DataSetFormComponent.getSchemaType(this.dataSchema.properties[property]),
+        ));
+
+        break;
+      }
+      default: {
+        this.isPrimitive = true;
+        this.addPropertyToForm('primitive', type);
+
+        break;
+      }
+    }
+  }
+
+  /**
+   * Returns the current data from the dynamic data set formular
    */
   getFormData(): any {
     const formData = this.form.getFormData();
 
     // format file to a container API understandable format
     this.form.controls.forEach((key: string) => {
-      if (this.form[key].type === 'files') {
+      const uiSpecs = this.form[key]?.uiSpecs;
+
+      if (uiSpecs?.type === 'files') {
         formData[key] = { files: formData[key] };
+      } else if (uiSpecs.attr.type === 'number') {
+        formData[key] = parseFloat(formData[key]);
       }
     });
 
-    return formData;
+    return this.isPrimitive
+      ? formData.primitive
+      : formData;
   }
 }
