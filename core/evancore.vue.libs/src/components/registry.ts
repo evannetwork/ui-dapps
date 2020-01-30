@@ -19,7 +19,6 @@
 import vSelect from 'vue-select';
 
 // import evan libs
-import vSelect from 'vue-select';
 import { ComponentRegistrationInterface } from '../interfaces';
 
 // import all components
