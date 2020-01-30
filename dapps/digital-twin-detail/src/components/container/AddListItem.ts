@@ -20,7 +20,6 @@
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DAppContainer } from '@evan.network/digital-twin-lib';
 import { ListSchema } from './DataSchemaInterface';
 
 @Component
@@ -29,7 +28,7 @@ export default class AddListItemComponent extends mixins(EvanComponent) {
 
   @Prop() schema: ListSchema;
 
-  @Prop() value;
+  @Prop() value: any;
 
   mounted(): void {
     const fields = Object.keys(this.schema.items.properties);

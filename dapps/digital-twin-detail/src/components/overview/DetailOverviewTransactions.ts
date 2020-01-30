@@ -22,10 +22,29 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
 import { TwinTransaction } from '@evan.network/digital-twin-lib';
 
-
 @Component
 export default class DetailOverviewTransactionsComponent extends mixins(EvanComponent) {
   @Prop() transactions: TwinTransaction[];
+
+  columns = [
+    {
+      key: 'feeInEve',
+      label: this.$t('_twin-detail.overview.fee'),
+    },
+    {
+      key: 'initiator',
+      label: this.$t('_twin-detail.overview.initiator'),
+    },
+    {
+      key: 'timestamp',
+      label: this.$t('_twin-detail.overview.date'),
+    },
+    {
+      key: 'action',
+      label: '',
+      thClass: 'th-icon',
+    },
+  ];
 
   getRouteToTransactionExplorer(transactionId: string): string {
     const baseUrl = this.getRuntime().environment === 'core'

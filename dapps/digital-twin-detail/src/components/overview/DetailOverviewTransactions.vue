@@ -7,10 +7,31 @@
     <evan-loading
       v-if="!transactions"
     />
-    <table
+    <div class="d-flex flex-row mt-3">
+      <evan-table
+        class="simple"
+        :items="transactions"
+        :fields="columns"
+        :show-empty="true"
+      >
+        <template v-slot:cell(action)="data">
+          <evan-button
+            size="sm"
+            type="icon-secondary"
+            icon="mdi mdi-chevron-right"
+            target="_blank"
+            class="visible-on-row-hover"
+            :href="getRouteToTransactionExplorer(data.item.blockHash)"
+          />
+        </template>
+      </evan-table>
+    </div>
+    <!-- <table
       v-else
       class="mt-4 simple hasHover"
     >
+
+
       <thead>
         <th>
           {{ '_twin-detail.overview.fee' | translate }}
@@ -45,7 +66,7 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 </template>
 

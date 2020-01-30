@@ -39,7 +39,7 @@
         </tr>
         <tr>
           <td>{{ '_twin-detail.overview.created-at' | translate }}</td>
-          <td>{{ createdAt || 'TODO' }}</td>
+          <td>{{ createdAt | moment('DD.MM.YYYY') }}</td>
           <td />
         </tr>
       </tbody>

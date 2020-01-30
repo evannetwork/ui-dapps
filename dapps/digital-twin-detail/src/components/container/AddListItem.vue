@@ -33,10 +33,11 @@
       :title="$t('_twin-detail.data.list.add-list-item-title')"
     >
       <data-set-form
-        :data-schema="schema"
+        :data-schema="schema.items"
         :is-loading="$store.state.container.dispatcherStates.entries[name]"
         :name="name"
         :value="value"
+        :only-form="true"
         @save="onSave($event)"
       />
       <template v-slot:footer>
@@ -44,6 +45,7 @@
           <evan-button
             type="secondary"
             :label="'_twin-detail.data.list.add-list-item-cancel' | translate"
+            @click="closePanel"
           />
           <evan-button
             type="primary"

@@ -42,9 +42,7 @@
             icon="mdi mdi-dots-vertical"
           />
         </template>
-        <b-dropdown-item
-          @click="window.alert('TODO')"
-        >
+        <b-dropdown-item>
           {{ '_twin-detail.data.list.show-all' | translate }}
         </b-dropdown-item>
         <b-dropdown-item

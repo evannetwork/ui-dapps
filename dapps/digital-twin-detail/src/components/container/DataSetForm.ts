@@ -21,14 +21,13 @@
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import {
-  EvanComponent,
   EvanForm,
-  EvanFormControl,
   EvanFormControlOptions,
+  EvanFormComponent,
 } from '@evan.network/ui-vue-core';
 
 @Component
-export default class DataSetFormComponent extends mixins(EvanComponent) {
+export default class DataSetFormComponent extends mixins(EvanFormComponent) {
   /**
    * Data set name (entry / list entry)
    */
@@ -156,9 +155,9 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Returns the current data from the dynamic data set formular
+   * Returns the current data from the dynamic data set form
    */
-  getTwinFormData(): any {
+  getFormData(): any {
     const formData = this.form.getFormData();
 
     // format file to a container API understandable format

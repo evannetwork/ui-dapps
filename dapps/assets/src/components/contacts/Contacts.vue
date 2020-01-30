@@ -71,6 +71,7 @@
 
       <div class="d-flex flex-row mt-3">
         <evan-table
+          class="clickable-rows"
           :hover="true"
           :items="contacts"
           :fields="columns"

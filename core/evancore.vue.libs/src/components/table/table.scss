@@ -83,7 +83,10 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       height: 56px;
       background-color: white;
       color: cssVar('gray-600');
-      cursor: pointer;
+
+      &.clickable {
+        cursor: pointer;
+      }
 
       // create spacing between rows without using border-collapse
       // because it causes janky behavior with sticky header
@@ -128,6 +131,50 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
 
     .table-spacer {
       height: 16px;
+    }
+  }
+
+  // Simple Evan Table
+  &.simple /deep/ table {
+    width: 100%;
+  
+    thead.evan-table-head {
+      background-color: cssVar('gray-200');
+      th {
+        font-weight: 600;
+        padding: 8px;
+        box-shadow: none;
+      }
+    }
+  
+    td {
+      padding: 8px;
+    }
+  
+    th.action {
+      width: 48px;
+    }
+  
+    td.amount {
+      font-weight: 600;
+    }
+
+    tr {
+      cursor: auto;
+    }
+  
+    .show-on-hover {
+      opacity: 0;
+    }
+  
+    // 'hover' would be nicer, but collides with ui.libs
+    &.hasHover {
+      tr:hover {
+        background-color: cssVar('gray-100');
+        & .show-on-hover {
+          opacity: 1;
+        }
+      }
     }
   }
 }

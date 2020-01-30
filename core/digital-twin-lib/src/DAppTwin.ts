@@ -67,6 +67,12 @@ class DAppTwin extends DigitalTwin {
   favorite: boolean;
 
   /**
+   * Created at timestamp
+   */
+  createdAt: number = null;
+
+
+  /**
    * Call super and initialize new twin class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {

@@ -21,11 +21,12 @@
   <div>
     <evan-form
       ref="form"
+      v-bind="$props"
       :form="form"
       :i18n-scope="`${i18nScope}.properties`"
       :is-loading="isLoading"
       :title="$t(`${i18nScope}.name`, name)"
-      @save="$emit('save', getTwinFormData())"
+      @save="$emit('save', getFormData())"
     />
   </div>
 </template>

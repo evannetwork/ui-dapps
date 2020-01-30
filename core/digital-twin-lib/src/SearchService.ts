@@ -81,14 +81,14 @@ export class SearchService {
    * @param twinId hash id of twin
    * @param options optional options to extend/override default
    */
-  async getLastTransactions(twinId: string, options = {}): Promise<TwinTransaction[]> {
+  async getLastTransactions(twinAddress: string, options = {}): Promise<TwinTransaction[]> {
     const authHeaders = await utils.getSmartAgentAuthHeaders(this.runtime);
     const defaultOptions = {
       count: 5,
       offset: 0,
       reverse: true,
       sortBy: 'timestamp',
-      address: twinId,
+      address: twinAddress,
     };
 
     const { data } = await axios.get<TransactionsResponse>(
