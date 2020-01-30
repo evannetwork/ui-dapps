@@ -12,7 +12,9 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{ '_twin-detail.overview.did' | translate }}</td>
+          <td class="property">
+            {{ '_twin-detail.overview.did' | translate }}
+          </td>
           <td class="value">
             {{ did }}
           </td>
@@ -26,7 +28,9 @@
           </td>
         </tr>
         <tr>
-          <td>{{ '_twin-detail.overview.owner' | translate }}</td>
+          <td class="property">
+            {{ '_twin-detail.overview.owner' | translate }}
+          </td>
           <td>{{ ownerName }}</td>
           <td class="action">
             <evan-button
@@ -38,7 +42,9 @@
           </td>
         </tr>
         <tr>
-          <td>{{ '_twin-detail.overview.created-at' | translate }}</td>
+          <td class="property">
+            {{ '_twin-detail.overview.created-at' | translate }}
+          </td>
           <td>{{ createdAt | moment('DD.MM.YYYY') }}</td>
           <td />
         </tr>
@@ -64,6 +70,9 @@ export default DetailOverviewGeneralComponent;
     font-size: 18px;
     font-weight: bold;
   }
+}
+.property {
+  font-weight: 600;
 }
 table {
   width: 100%;

@@ -38,6 +38,7 @@ export default class DetailOverviewTransactionsComponent extends mixins(EvanComp
     {
       key: 'timestamp',
       label: this.$t('_twin-detail.overview.date'),
+      thClass: 'th-date',
     },
     {
       key: 'action',
