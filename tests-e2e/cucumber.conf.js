@@ -10,6 +10,7 @@ import * as testUtils from './test-utils/test-utils.js';
 // some test take longer than 1m, so increased to 10m just to be sure
 setDefaultTimeout(600000);
 
+global.tags = [];
 
 BeforeAll(async () => {
   const options = { env: process.env.NIGHTWATCH_ENV || 'chrome' };
@@ -18,9 +19,11 @@ BeforeAll(async () => {
   await client.resizeWindow(1920, 1080);
 });
 
-Before(() => {
+Before((scenario) => {
   // ensure we use css selector by default
   client.useCss();
+
+  global.tags = scenario.pickle.tags.map((tag) => tag.name); // add tags to global for later usage
 });
 
 After(async (scenario) => {

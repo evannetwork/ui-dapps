@@ -26,7 +26,7 @@ Feature: Digital Twin Detail
       And I set Input field with label "Description" to "Nice Description"
       And I click on button "Save"
     Then I want to see a text including "Starting Saving description ..."
-      And I want to see a text including "Saving description... completed"
+      And I want to see a text including "Saving description ... completed"
       And I want to see a text including "Test Car Twin 2"
       And I want to see a text including "Nice Description"
     # ensure, that the write process was successfull
@@ -72,7 +72,7 @@ Feature: Digital Twin Detail
     When I click on an element with text including "Duplicate"
       And I wait for 3 seconds
     Then the button "Duplicate" should be "enabled"
-    When I click on button with id "create-duplicate"
+    When I click on button "Duplicate"
     Then I want to see a text including "Starting Create Twin"
     When I wait 60 seconds until loading was finished
     Then I want to see a text including "Create Twin completed"
