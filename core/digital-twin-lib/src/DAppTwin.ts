@@ -168,9 +168,9 @@ class DAppTwin extends DigitalTwin {
   public async initialize(): Promise<void> {
     await Promise.all([
       this.loadBaseInfo(),
-      async (): Promise<void> => {
+      (async (): Promise<void> => {
         this.favorite = await this.isFavorite();
-      },
+      })(),
       this.ensureContainers(),
     ]);
 
