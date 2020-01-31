@@ -135,28 +135,36 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
   }
 
   // Simple Evan Table
-  &.simple /deep/ table.table {
-    width: 100%;
-  
-    thead.evan-table-head {
-      background-color: cssVar('gray-200');
-      th {
-        font-weight: 600;
-        font-size: 12px !important;
-        box-shadow: none !important;
-      }
+  &.simple {
+    .table-responsive {
+      margin-bottom: 0 !important;
     }
-  
-    td, th {
-      padding: 8px;
-    }
-
-    tbody {
-      tr {
-        height: 40px !important;
+    
+    /deep/ table.table {
+      width: 100%;
+    
+      thead.evan-table-head {
+        background-color: cssVar('gray-200');
+        th {
+          font-weight: 600;
+          font-size: 12px !important;
+          box-shadow: none !important;
+        }
       }
+    
+      td, th {
+        padding: 8px;
+      }
+  
+      tbody {
+        tr {
+          height: 40px !important;
+        }
+      }    
     }
   }
+  
+  
 }
 // TODO: Find a better solution at some point
 // http://www.outlinenone.com/
