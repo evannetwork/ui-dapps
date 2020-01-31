@@ -150,6 +150,12 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
     td, th {
       padding: 8px;
     }
+
+    tbody {
+      tr {
+        height: 40px !important;
+      }
+    }
   }
 }
 // TODO: Find a better solution at some point
