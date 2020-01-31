@@ -288,8 +288,9 @@ class DAppContainer extends Container {
    * dispatcher was stopped / finished.
    */
   async onDescriptionSave($event: any): Promise<void> {
+    this.ensureDispatcherStates();
+
     if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-      this.ensureDispatcherStates();
       this.description = await this.getDescription();
       this.triggerReload('description');
     }
