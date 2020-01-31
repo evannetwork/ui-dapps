@@ -52,16 +52,24 @@
         </b-dropdown-item>
       </b-dropdown>
 
-      <add-list-item
+      <!-- <add-list-item
         ref="addListItem"
         :name="name"
         :schema="schema"
         :value="value"
-      />
+      /> -->
     </div>
 
     <div class="mt-3">
-      todo...
+      <evan-table
+        class="simple"
+        :fields="columns"
+        :items="value"
+      >
+        <template v-slot:cell()="value">
+          {{ transformValuesForDisplay(value.item, value.field.key) }}
+        </template>
+      </evan-table>
     </div>
   </div>
 </template>

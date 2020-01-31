@@ -24,27 +24,69 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { DAppContainer } from '@evan.network/digital-twin-lib';
 import { ListSchema } from './DataSchemaInterface';
 
-
+interface FileList {
+  files: File[];
+}
+interface File {
+  file: Uint8Array;
+  name: string;
+  size: number;
+}
 @Component
 export default class ContainerListComponent extends mixins(EvanComponent) {
   @Prop() name: string;
 
   schema: ListSchema;
 
-  value: any;
+  value: any[];
 
   container: DAppContainer;
+
+  columns: string[];
 
   created(): void {
     this.container = this.$store.state.container;
     const { dispatcherData, plugin, entries } = this.container;
     this.schema = plugin.template.properties[this.name].dataSchema;
     this.value = dispatcherData[this.name] || entries[this.name];
-
-    console.log(this.schema, this.value);
+    this.columns = ContainerListComponent.getColumns(this.value);
   }
 
-  addDataToContainer() {
-    this.$store.state.container.addListEntries();
+  /**
+   * Transforms table cell into desired a readable output
+   * @param value input from table
+   * @param key object key
+   */
+  transformValuesForDisplay(value, key?: string): string {
+    if (typeof value === 'object') {
+      if (ContainerListComponent.isFileList(value)) {
+        return this.getFilesDisplay(value);
+      }
+      // "recursive" call on 1st level of the object
+      if (key) {
+        return this.transformValuesForDisplay(value[key]);
+      }
+    }
+    // display primitives and unknown objects
+    return JSON.stringify(value);
+  }
+
+  getFilesDisplay(fileList: FileList): string {
+    return fileList.files.length === 1
+      ? fileList.files[0].name
+      : `${fileList.files.length} ${this.$t('_twin-detail.data.files')}`;
+  }
+
+  static isFileList(input: string | number | FileList): input is FileList {
+    return Object.keys(input).includes('files');
+  }
+
+  static getColumns(input: any[]): string[] {
+    // Columns from object keys
+    if (typeof input[0] === 'object') {
+      return Object.keys(input[0]);
+    }
+    // Fallback for array with primitives
+    return ['TODO generic list'];
   }
 }

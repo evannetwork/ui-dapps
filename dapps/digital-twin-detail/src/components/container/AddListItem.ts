@@ -32,7 +32,7 @@ export default class AddListItemComponent extends mixins(EvanComponent) {
 
   mounted(): void {
     const fields = Object.keys(this.schema.items.properties);
-    console.log(fields);
+    // console.log('fields', fields);
   }
 
   showPanel(): void {
