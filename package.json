@@ -10,6 +10,7 @@
     "@evan.network/ui-dapp-browser": "^2.7.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^4.5.0",
+    "ajv-i18n": "^3.5.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.0.0",

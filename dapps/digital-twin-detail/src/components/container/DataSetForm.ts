@@ -21,6 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { Validator } from '@evan.network/api-blockchain-core';
+import ajvI18n from 'ajv-i18n';
 import {
   EvanComponent,
   EvanForm,
@@ -30,23 +31,10 @@ import {
 
 
 // check min / max value configuration for array types
-const ajvMinMaxProperties = {
-  array: {
-    min: 'minItems',
-    max: 'maxItems',
-  },
-  files: {
-    min: 'maxItems',
-    max: 'maxItems',
-  },
-  string: {
-    min: 'minLength',
-    max: 'maxLength',
-  },
-  number: {
-    min: 'minimum',
-    max: 'maximum',
-  },
+const ajvMinProperties = {
+  files: 'minItems',
+  number: 'minimum',
+  string: 'minLength',
 };
 
 @Component
@@ -264,78 +252,28 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
    * @param      {any}              subSchema  The sub schema
    */
   setControlValidation(controlOpts: EvanFormControlOptions, type: string, subSchema: any): void {
-    const i18nScope = '_twin-detail.container.validation';
-    // array of functions that should be executed to validate the specific controlOpts
-    const validationChecks: ((value, number) => boolean|string)[] = [];
-
-    // only check validation for supported types
-    if (ajvMinMaxProperties[type]) {
-      const min = subSchema[ajvMinMaxProperties[type].min];
-      const max = subSchema[ajvMinMaxProperties[type].max];
-
-      if (!Number.isNaN(min)) {
-        controlOpts.uiSpecs.attr.required = true; // eslint-disable-line no-param-reassign
-        validationChecks.push((value, valueLength) => {
-          if (valueLength < min) {
-            return this.$t(`${i18nScope}.${type}.min`, { number: min });
-          }
-          return true;
-        });
-      }
-
-      if (!Number.isNaN(max)) {
-        validationChecks.push((value, valueLength) => {
-          if (valueLength > max) {
-            return this.$t(`${i18nScope}.${type}.max`, { number: max });
-          }
-          return true;
-        });
-      }
-    }
-
-    // check for custom nested validation
-    if (type === 'array' || type === 'object') {
+    // check if min value is set required flag
+    if (type === 'array' || type === 'object'
+      || (ajvMinProperties[type] && !Number.isNaN(subSchema[ajvMinProperties[type]]))) {
       controlOpts.uiSpecs.attr.required = true; // eslint-disable-line no-param-reassign
-      validationChecks.push((value) => {
-        // transform values into an array, so we can support correct array validation
-        let validationValues = value;
-        if (!Array.isArray(validationValues)) {
-          validationValues = [validationValues];
-        }
-
-        // nested validation
-        const validator = new Validator({ schema: type === 'array' ? subSchema.items : subSchema });
-        const checkFails = [].concat(
-          ...validationValues.map((subValue) => validator.validate(subValue)),
-        ).filter((result) => result !== true);
-        if (checkFails.length !== 0) {
-          return checkFails
-            .map((error) => `${error.dataPath} - ${error.message}`)
-            .join(', ');
-        }
-        return true;
-      });
     }
 
-    // ignore boolean values, validation for nested objects is also not supported
-    if (validationChecks.length > 0) {
-      // eslint-disable-next-line no-param-reassign
-      controlOpts.validate = (
-        dbcpForm: DataSetFormComponent,
-        form: EvanForm,
-        control: EvanFormControl,
-      ): boolean|string => {
-        const valueLength = (type === 'number' ? control?.value : control?.value?.length) || 0;
+    // eslint-disable-next-line no-param-reassign
+    controlOpts.validate = (
+      dbcpForm: DataSetFormComponent,
+      form: EvanForm,
+      control: EvanFormControl,
+    ): boolean|string => {
+      // nested validation
+      const validator = new Validator({ schema: subSchema });
+      const validation = validator.validate(control.value);
+      if (validation !== true) {
+        const locale = this.$i18n.locale();
+        (ajvI18n[locale] || ajvI18n.en)(validation);
 
-        for (let i = 0; i < validationChecks.length; i += 1) {
-          const validation = validationChecks[i](control.value, valueLength);
-          if (validation !== true) {
-            return validation;
-          }
-        }
-
-        return true;
-      };
-    }
+        return validation.map((error) => error.message).join(', ');
+      }
+      return true;
+    };
   }
 }
