@@ -71,6 +71,10 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     return JSON.stringify(value);
   }
 
+  /**
+   * Formats a file list for display
+   * @param fileList file list to be displayed
+   */
   getFilesDisplay(fileList: FileList): string {
     return fileList.files.length === 1
       ? fileList.files[0].name
@@ -81,6 +85,10 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     return Object.keys(input).includes('files');
   }
 
+  /**
+   * Generates dynamic columns from array input
+   * @param input data input
+   */
   static getColumns(input: any[]): string[] {
     // Columns from object keys
     if (typeof input[0] === 'object') {
