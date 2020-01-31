@@ -1,5 +1,25 @@
 {
   "_twin-detail": {
+    "container": {
+      "validation": {
+        "array": {
+          "max": "Es sind maximal {number} Werte erlaubt.",
+          "min": "Bitte geben Sie mindestens {number} Werte an."
+        },
+        "files": {
+          "max": "Es sind maximal {number} Dateien erlaubt.",
+          "min": "Bitte geben Sie mindestens {number} Dateien an."
+        },
+        "number": {
+          "max": "Bitte geben Sie eine Zahl kleiner als {number} an.",
+          "min": "Bitte geben Sie eine Zahl größer als {number} an."
+        },
+        "string": {
+          "max": "Es sind maximal {number} Zeichen erlaubt.",
+          "min": "Bitte geben Sie mindestens {number} Zeichen an."
+        }
+      }
+    },
     "data": {
       "context-menu": {
         "delete-twin": "Löschen",

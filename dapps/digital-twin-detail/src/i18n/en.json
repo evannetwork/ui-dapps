@@ -1,5 +1,25 @@
 {
   "_twin-detail": {
+    "container": {
+      "validation": {
+        "array": {
+          "max": "Only {number} values are allowed.",
+          "min": "Please specify at least {number} values."
+        },
+        "files": {
+          "max": "Only {number} files are allowed.",
+          "min": "Please upload at least {number} files."
+        },
+        "number": {
+          "max": "Please enter a number less than {number}",
+          "min": "Please enter a number greater than {number}."
+        },
+        "string": {
+          "max": "Only {number} characters allowed.",
+          "min": "Please enter at least {number} characters."
+        }
+      }
+    },
     "data": {
       "context-menu": {
         "delete-twin": "Delete",

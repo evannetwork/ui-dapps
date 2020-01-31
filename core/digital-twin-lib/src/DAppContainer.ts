@@ -18,7 +18,7 @@
 */
 
 import {
-  Container, ContainerPlugin, Runtime, DigitalTwinOptions,
+  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils,
 } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -163,6 +163,9 @@ class DAppContainer extends Container {
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
       } else {
         this.entries[entryKey] = await this.getEntry(entryKey);
+        if (this.entries[entryKey] === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+          this.entries[entryKey] = undefined;
+        }
       }
     }));
   }

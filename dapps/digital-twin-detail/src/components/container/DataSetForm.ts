@@ -20,12 +20,34 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { Validator } from '@evan.network/api-blockchain-core';
 import {
   EvanComponent,
   EvanForm,
   EvanFormControl,
   EvanFormControlOptions,
 } from '@evan.network/ui-vue-core';
+
+
+// check min / max value configuration for array types
+const ajvMinMaxProperties = {
+  array: {
+    min: 'minItems',
+    max: 'maxItems',
+  },
+  files: {
+    min: 'maxItems',
+    max: 'maxItems',
+  },
+  string: {
+    min: 'minLength',
+    max: 'maxLength',
+  },
+  number: {
+    min: 'minimum',
+    max: 'maximum',
+  },
+};
 
 @Component
 export default class DataSetFormComponent extends mixins(EvanComponent) {
@@ -98,7 +120,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
    * @param      {string}  name    property name
    * @param      {string}  type    property type
    */
-  addPropertyToForm(name: string, type: string): void {
+  addPropertyToForm(name: string, type: string, subSchema: any): void {
     const control: EvanFormControlOptions = {
       uiSpecs: {
         attr: {
@@ -110,9 +132,19 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         },
         type: 'input',
       },
-      value: (this.isPrimitive ? this.value : this.value[name]) || '',
+      value: '',
     };
 
+    if (this.value) {
+      if (this.isPrimitive) {
+        control.value = this.value;
+      } else {
+        control.value = this.value[name];
+      }
+    }
+
+    // check all avaialable types and configure special form control requirements
+    const { logger } = this.getRuntime();
     switch (type) {
       case 'array': {
         control.uiSpecs.type = 'json';
@@ -121,7 +153,10 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
           JSON.stringify(JSON.parse(control.value));
         } catch (ex) {
           control.value = [];
+          logger.log(`[${this.$route.params.twin}][${this.$route.params.container}][${this.name}] `
+            + `Could not parse value of property ${name}`, 'error');
         }
+
         break;
       }
       case 'boolean': {
@@ -141,7 +176,17 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
           JSON.stringify(JSON.parse(control.value));
         } catch (ex) {
           control.value = { };
+          logger.log(`[${this.$route.params.twin}][${this.$route.params.container}][${this.name}] `
+            + `Could not parse value of property ${name}`, 'error');
         }
+        break;
+      }
+      case 'number': {
+        control.uiSpecs.attr.type = 'number';
+        break;
+      }
+      case 'string': {
+        control.uiSpecs.attr.type = 'text';
         break;
       }
       default: {
@@ -150,8 +195,16 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       }
     }
 
+    // add form validation
+    this.setControlValidation(control, type, subSchema);
+
+    // add the control to the current formular definition
     this.form.addControl(name, control);
     this.$set(control, 'value', control.value);
+    /* set the control directly dirty, so empty initial values will be directly validated and the
+       form will be blocked */
+    this.form[name].dirty = true;
+    this.form[name].validate();
   }
 
   /**
@@ -167,13 +220,14 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         Object.keys(this.dataSchema.properties).forEach((property) => this.addPropertyToForm(
           property,
           DataSetFormComponent.getSchemaType(this.dataSchema.properties[property]),
+          this.dataSchema.properties[property],
         ));
 
         break;
       }
       default: {
         this.isPrimitive = true;
-        this.addPropertyToForm('primitive', type);
+        this.addPropertyToForm('primitive', type, this.dataSchema);
 
         break;
       }
@@ -200,5 +254,88 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     return this.isPrimitive
       ? formData.primitive
       : formData;
+  }
+
+  /**
+   * Sets the control validation.
+   *
+   * @param      {EvanFormControl}  control    The control
+   * @param      {string}           type       The type
+   * @param      {any}              subSchema  The sub schema
+   */
+  setControlValidation(controlOpts: EvanFormControlOptions, type: string, subSchema: any): void {
+    const i18nScope = '_twin-detail.container.validation';
+    // array of functions that should be executed to validate the specific controlOpts
+    const validationChecks: ((value, number) => boolean|string)[] = [];
+
+    // only check validation for supported types
+    if (ajvMinMaxProperties[type]) {
+      const min = subSchema[ajvMinMaxProperties[type].min];
+      const max = subSchema[ajvMinMaxProperties[type].max];
+
+      if (!Number.isNaN(min)) {
+        controlOpts.uiSpecs.attr.required = true; // eslint-disable-line no-param-reassign
+        validationChecks.push((value, valueLength) => {
+          if (valueLength < min) {
+            return this.$t(`${i18nScope}.${type}.min`, { number: min });
+          }
+          return true;
+        });
+      }
+
+      if (!Number.isNaN(max)) {
+        validationChecks.push((value, valueLength) => {
+          if (valueLength > max) {
+            return this.$t(`${i18nScope}.${type}.max`, { number: max });
+          }
+          return true;
+        });
+      }
+    }
+
+    // check for custom nested validation
+    if (type === 'array' || type === 'object') {
+      controlOpts.uiSpecs.attr.required = true; // eslint-disable-line no-param-reassign
+      validationChecks.push((value) => {
+        // transform values into an array, so we can support correct array validation
+        let validationValues = value;
+        if (!Array.isArray(validationValues)) {
+          validationValues = [validationValues];
+        }
+
+        // nested validation
+        const validator = new Validator({ schema: type === 'array' ? subSchema.items : subSchema });
+        const checkFails = [].concat(
+          ...validationValues.map((subValue) => validator.validate(subValue)),
+        ).filter((result) => result !== true);
+        if (checkFails.length !== 0) {
+          return checkFails
+            .map((error) => `${error.dataPath} - ${error.message}`)
+            .join(', ');
+        }
+        return true;
+      });
+    }
+
+    // ignore boolean values, validation for nested objects is also not supported
+    if (validationChecks.length > 0) {
+      // eslint-disable-next-line no-param-reassign
+      controlOpts.validate = (
+        dbcpForm: DataSetFormComponent,
+        form: EvanForm,
+        control: EvanFormControl,
+      ): boolean|string => {
+        const valueLength = (type === 'number' ? control?.value : control?.value?.length) || 0;
+
+        for (let i = 0; i < validationChecks.length; i += 1) {
+          const validation = validationChecks[i](control.value, valueLength);
+          if (validation !== true) {
+            return validation;
+          }
+        }
+
+        return true;
+      };
+    }
   }
 }
