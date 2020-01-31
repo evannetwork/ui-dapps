@@ -253,7 +253,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
    */
   setControlValidation(controlOpts: EvanFormControlOptions, type: string, subSchema: any): void {
     // check if min value is set required flag
-    if (type === 'array' || type === 'object'
+    if (type === 'array' || type === 'object' || type === 'boolean'
       || (ajvMinProperties[type] && !Number.isNaN(subSchema[ajvMinProperties[type]]))) {
       controlOpts.uiSpecs.attr.required = true; // eslint-disable-line no-param-reassign
     }
@@ -264,9 +264,29 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       form: EvanForm,
       control: EvanFormControl,
     ): boolean|string => {
-      // nested validation
-      const validator = new Validator({ schema: subSchema });
-      const validation = validator.validate(control.value);
+      let controlValue = control.value;
+      let validationSchema = subSchema;
+
+      // parse input value to numbers to check for correct number format with ajv
+      if (type === 'number') {
+        controlValue = parseFloat(controlValue);
+      } else if (type === 'files') {
+        // define custom validation schema for files to match runtime file values
+        validationSchema = {
+          items: {
+            additionalProperties: true,
+            properties: {},
+            type: 'object',
+          },
+          maxItems: subSchema.maxItems,
+          minItems: subSchema.minItems,
+          type: 'array',
+        };
+      }
+
+      // run ajv validator and apply ajv-i18n translations
+      const validator = new Validator({ schema: validationSchema });
+      const validation = validator.validate(controlValue);
       if (validation !== true) {
         const locale = this.$i18n.locale();
         (ajvI18n[locale] || ajvI18n.en)(validation);
