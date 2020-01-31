@@ -65,6 +65,7 @@
         class="simple"
         :fields="columns"
         :items="value"
+        :show-empty="true"
       >
         <template v-slot:cell()="value">
           {{ transformValuesForDisplay(value.item, value.field.key) }}
