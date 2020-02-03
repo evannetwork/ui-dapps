@@ -23,7 +23,8 @@
       },
       "specifications": {
         "specifications-title": "Spezifikationen"
-      }
+      },
+      "table-empty": "Noch keine Daten vorhanden"
     },
     "delete": {
       "confirm-delete": "Löschen",
