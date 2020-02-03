@@ -11,8 +11,7 @@ Then('I want to see a text including {string}',
     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.be.present;
     client.useCss(); // switches back to css selector
-  }
-);
+  });
 
 Then('I want to see a {string} headline including {string}',
   async (element, content) => {
@@ -26,8 +25,7 @@ Then('I want to see a {string} headline including {string}',
     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.be.present;
     client.useCss(); // switches back to css selector
-  }
-);
+  });
 
 Then('I do not want to see a text including {string}',
   async (content) => {
@@ -38,8 +36,7 @@ Then('I do not want to see a text including {string}',
     await client.waitForElementNotPresent(xPathSelector, WAIT_TIME);
     await client.expect.element(xPathSelector).to.not.be.present;
     client.useCss(); // switches back to css selector
-  }
-);
+  });
 
 When('I click on an element with text including {string}',
   async (content) => {
@@ -50,5 +47,4 @@ When('I click on an element with text including {string}',
     await client.waitForElementPresent(xPathSelector, WAIT_TIME);
     await client.click(xPathSelector);
     client.useCss(); // switches back to css selector
-  }
-);
+  });

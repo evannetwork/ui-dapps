@@ -7,54 +7,25 @@ import {
   parseEnvVar,
 } from '../../test-utils/test-utils';
 
-
-const btoa = (str) => {
-  return new Buffer(str, 'binary').toString('base64');
-};
-
-
-const atob = (b64Encoded) => {
-  return new Buffer(b64Encoded, 'base64').toString('binary');
-};
-
-
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
-When(/^I set( angular)? Input field with label "([^"]*)" to "([^"]*)"$/, async (angular, label, content) => {
-  client.useXpath();
+When(/^I set( angular)? Input field with label "([^"]*)" to ("([^"]*)"|`([^`]*)`)$/,
+  async (angular, label, content) => {
+    client.useXpath();
 
-  // select following or preceding input with label having text or having text in any tag inside label tag
-  const selector = getSelector(label, !!angular);
+    // select following or preceding input with label having text or having text in any tag inside label tag
+    const selector = getSelector(label, !!angular);
 
-  await client.expect.element(selector).to.be.visible;
-  await betterClearValue(selector);
+    await client.expect.element(selector).to.be.visible;
+    await betterClearValue(selector);
 
-  if (content && typeof content === 'string' && content.length > 0) {
-    await client.setValue(selector, parseEnvVar(content));
-  }
+    if (content && typeof content === 'string' && content.length > 0) {
+      await client.setValue(selector, parseEnvVar(content));
+    }
 
-  client.useCss();
-});
-
-/**
- * generate test values like this: btoa('{"new": "value"}')
- */
-When('I set Input field with label {string} to json object {string}', async (label, base64) => {
-  client.useXpath();
-
-  // select following or preceding input with label having text or having text in any tag inside label tag
-  const selector = getSelector(label, false);
-
-  await client.expect.element(selector).to.be.visible;
-  await betterClearValue(selector);
-
-  if (base64 && typeof base64 === 'string' && base64.length > 0) {
-    await client.setValue(selector, parseEnvVar(JSON.parse(atob(base64, null, 2))));
-  }
-
-  client.useCss();
-});
+    client.useCss();
+  });
 
 /**
  * Same semantic like "When I set( angular)? Input field with label ".
@@ -253,25 +224,14 @@ Then('I click on vue checkbox control with id {string}',
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
-Then('The value of the Input field with label {string} should be {string}',
+Then(/^The value of the Input field with label "([^"]*)" should be ("([^"]*)"|`([^`]*)`)$/,
   async (label, content) => {
     client.useXpath();
-    const expected = parseEnvVar(content);
+    const toTest = content || '';
+    const expected = parseEnvVar(toTest);
     // select following or preceding input with label having text or having text in any tag inside label tag
     const selector = getSelector(label);
     await client.assert.value(selector, expected);
-    client.useCss();
-  });
-
-Then('The json value of the Input field with label {string} should be {string}',
-  async (label, content) => {
-    client.useXpath();
-    const expected = parseEnvVar(content);
-    // select following or preceding input with label having text or having text in any tag inside label tag
-    const selector = getSelector(label);
-    const expectedObj = JSON.stringify(JSON.parse(atob(expected, null, 2)));
-
-    await client.assert.value(selector, expectedObj);
     client.useCss();
   });
 

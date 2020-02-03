@@ -56,10 +56,10 @@ Feature: Display Digital Twin Details
       And I want to see a button "Cancel"
       And I want to see a text including "Invalid JSON format."
     # And the button "Save" should be "disabled"
-    When I set Input field with label "objectField" to json object "eyJuZXciOiAidmFsdWUifQ=="
+    When I set Input field with label "objectField" to `{"new": "entry"}`
       And I wait for enter
     Then I do not want to see a text including "Invalid JSON format."
-      And The json value of the Input field with label "objectField" should be "eyJuZXciOiAidmFsdWUifQ=="
+      And The value of the Input field with label "objectField" should be `{"new": "entry"}`
       Given I wait for 20 seconds
 
     When I click on button "Save"
@@ -67,7 +67,7 @@ Feature: Display Digital Twin Details
     Then I want to see a text including "Saving data ... completed"
       And The value of the Input field with label "numberField" should be "42"
       And The value of the Input field with label "textField" should be "gibberish"
-      And The json value of the Input field with label "objectField" should be "eyJuZXciOiAidmFsdWUifQ=="
+      And The value of the Input field with label "objectField" should be `{"new": "entry"}`
       Given I wait for 20 seconds
 
   # @tag:noLogout
