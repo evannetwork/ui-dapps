@@ -64,9 +64,11 @@ async function initialize() {
       { name: 'playground', value: 'playground', checked: false },
     ],
   }])).dappCategories;
-  dappDirs = [
-    ...categories.map((key) => getDirectories(path.resolve(`../${key}`))),
-  ].sort();
+  dappDirs = []
+    .concat(
+      ...categories.map((key) => getDirectories(path.resolve(`../${key}`))),
+    )
+    .sort();
 
   // check for longest dapp name to have a correct display
   dappDirs.forEach((dappDir) => {
