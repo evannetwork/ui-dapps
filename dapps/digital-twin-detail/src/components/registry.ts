@@ -25,6 +25,7 @@ import ContainerListComponent from './container/List.vue';
 import DataSetComponent from './container/DataSet.vue';
 import DataSetFormComponent from './container/DataSetForm.vue';
 import DigitalTwinInteractionsComponent from './TwinInteractions.vue';
+import AddListItemComponent from './container/AddListItem.vue';
 import DetailOverviewGeneralComponent from './overview/DetailOverviewGeneral.vue';
 import DetailOverviewTransactionsComponent from './overview/DetailOverviewTransactions.vue';
 
@@ -36,6 +37,7 @@ const componentRegistration: Array<ComponentRegistrationInterface> = [
   { component: DetailOverviewGeneralComponent, name: 'detail-overview-general' },
   { component: DetailOverviewTransactionsComponent, name: 'detail-overview-transactions' },
   { component: DigitalTwinInteractionsComponent, name: 'digital-twin-interactions' },
+  { component: AddListItemComponent, name: 'add-list-item' },
 ];
 
 export default componentRegistration;

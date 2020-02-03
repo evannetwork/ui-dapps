@@ -16,9 +16,9 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-import vSelect from 'vue-select';
 
 // import evan libs
+import vSelect from 'vue-select';
 import { ComponentRegistrationInterface } from '../interfaces';
 
 // import all components
@@ -70,7 +70,6 @@ import TableComponent from './table/table.vue';
 import TooltipComponent from './tooltip/tooltip.vue';
 import UnderDevelopmentComponent from './under-development/under-development.vue';
 import WalletCardComponent from './profile/wallet-card/wallet-card.vue';
-
 // export them all, so other applications can access them
 export {
   AddressComponent,

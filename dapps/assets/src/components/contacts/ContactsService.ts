@@ -92,7 +92,7 @@ export class ContactsService {
       case ContactType.USER:
         return 'mdi mdi-account-outline';
       case ContactType.COMPANY:
-        return 'mdi mdi-domain';
+        return 'mdi mdi-office-building';
       case ContactType.IOT_DEVICE:
         return 'mdi mdi-radio-tower';
       case ContactType.UNSHARED:

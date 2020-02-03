@@ -9,6 +9,7 @@
         "export-template": "Als Vorlage exportieren",
         "exporting-twin": "Vorlage wird erstellt ..."
       },
+      "files": "Dateien",
       "general": {
         "desc": "Beschreibung",
         "general-title": "Allgemein",

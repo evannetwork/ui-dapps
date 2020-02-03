@@ -31,37 +31,44 @@ import { bccUtils } from '@evan.network/ui';
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
   twin: DAppTwin = null;
 
-  runtime: Runtime = null;
+  runtime: Runtime = this.getRuntime();
 
   transactions: TwinTransaction[] = null;
 
   search: SearchService = null;
 
   async created(): Promise<void> {
-    this.runtime = this.getRuntime();
     this.search = new SearchService(this.runtime);
+    if (!this.$store.state.twin.createdAt) {
+      this.$store.state.twin = await this.attachCreatedAt(this.$store.state.twin);
+    }
     this.twin = this.$store.state.twin;
-    await this.attachCreatedAt();
-    await this.getLastTransactions();
-  }
-
-  async getLastTransactions(): Promise<void> {
-    this.transactions = await this.search.getLastTransactions(
-      this.twin.contractAddress,
-    );
-    this.transactions = await this.enhanceTransactions(this.transactions);
+    this.transactions = await this.getLastTransactions(this.twin);
+    console.log('twin', this.twin);
+    console.log('transactions', this.transactions);
   }
 
   /**
-   * Enhance the current twin with createdAt timestamp
+   * Fetch last transactions for given twin and enhance them with useful info
    */
-  async attachCreatedAt(): Promise<void> {
-    const timestamp = await this.search.getCreatedTimestamp(
-      this.twin.contractAddress,
+  async getLastTransactions(twin: DAppTwin): Promise<TwinTransaction[]> {
+    const transactions = await this.search.getLastTransactions(
+      twin.contractAddress,
     );
 
-    this.$store.state.twin.createdAt = timestamp;
-    this.twin = this.$store.state.twin;
+    return this.enhanceTransactions(transactions);
+  }
+
+  /**
+   * Enhance the twin with createdAt timestamp
+   */
+  async attachCreatedAt(twin: DAppTwin): Promise<DAppTwin> {
+    const enhancedTwin = twin;
+    enhancedTwin.createdAt = await this.search.getCreatedTimestamp(
+      twin.contractAddress,
+    );
+
+    return enhancedTwin;
   }
 
   /**
@@ -85,12 +92,16 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
         );
 
         // Add fee in EVE
-        enhancedTransaction.feeInEve = parseFloat(
-          this.runtime.web3.utils.fromWei(
-            (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
-            'ether',
-          ),
-        ).toFixed(5);
+        try {
+          enhancedTransaction.feeInEve = parseFloat(
+            this.runtime.web3.utils.fromWei(
+              (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
+              'ether',
+            ),
+          ).toFixed(5);
+        } catch (err) {
+          console.error('Error while calculating EVE fee', err);
+        }
 
         return enhancedTransaction;
       }),

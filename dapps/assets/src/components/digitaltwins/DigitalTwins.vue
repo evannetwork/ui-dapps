@@ -81,11 +81,9 @@
 
       <div class="d-flex flex-row mt-3">
         <evan-table
-          :borderless="true"
-          :hover="true"
+          class="clickable-rows"
           :items="data"
           :fields="columns"
-          :fixed="true"
           :show-scrollbar="true"
           :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
