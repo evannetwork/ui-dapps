@@ -24,7 +24,7 @@ import { Validator } from '@evan.network/api-blockchain-core';
 import ajvI18n from 'ajv-i18n';
 import {
   EvanForm,
-  EvanFormComponent,
+  EvanComponent,
   EvanFormControl,
   EvanFormControlOptions,
 } from '@evan.network/ui-vue-core';
@@ -39,7 +39,7 @@ const ajvMinProperties = {
 };
 
 @Component
-export default class DataSetFormComponent extends mixins(EvanFormComponent) {
+export default class DataSetFormComponent extends mixins(EvanComponent) {
   /**
    * Data set name (entry / list entry)
    */
