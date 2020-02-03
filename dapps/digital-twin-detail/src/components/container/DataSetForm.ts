@@ -102,6 +102,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     const control: EvanFormControlOptions = {
       uiSpecs: {
         attr: {
+          id: `dataset-input-${this.name}-${name}`,
           // translate it before, so the formular will use correct fallback translations
           label: this.isPrimitive ? false : this.$t(`${this.i18nScope}.properties.${name}.label`, name),
           placeholder: this.isPrimitive

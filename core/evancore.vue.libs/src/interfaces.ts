@@ -74,6 +74,7 @@ export interface EvanFormControlUISpecs {
   attr?: {
     error?: string;
     hint?: boolean | string | (() => boolean | string);
+    id?: string;
     label?: string;
     options?: Array<{ label: string; value: any }>;
     placeholder?: string;
