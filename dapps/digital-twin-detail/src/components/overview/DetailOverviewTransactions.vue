@@ -7,45 +7,31 @@
     <evan-loading
       v-if="!transactions"
     />
-    <table
+    <div
       v-else
-      class="mt-4 simple hasHover"
+      class="d-flex flex-row mt-3"
     >
-      <thead>
-        <th>
-          {{ '_twin-detail.overview.fee' | translate }}
-        </th>
-        <th>
-          {{ '_twin-detail.overview.initiator' | translate }}
-        </th>
-        <th>
-          {{ '_twin-detail.overview.date' | translate }}
-        </th>
-        <th class="action" />
-      </thead>
-      <tbody>
-        <tr
-          v-for="row in transactions"
-          :key="row.blockHash"
-        >
-          <td class="amount">
-            {{ row.feeInEve }}
-          </td>
-          <td>{{ row.initiator }}</td>
-          <td>{{ row.timestamp || 'TODO' }}</td>
-          <td>
-            <evan-button
-              size="sm"
-              type="icon-secondary"
-              icon="mdi mdi-chevron-right"
-              target="_blank"
-              class="show-on-hover"
-              :href="getRouteToTransactionExplorer(row.blockHash)"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <evan-table
+        class="simple"
+        :items="transactions"
+        :fields="columns"
+        :show-empty="true"
+      >
+        <template v-slot:cell(timestamp)="data">
+          {{ data.item.timestamp | moment('DD.MM.YYYY') }}
+        </template>
+        <template v-slot:cell(action)="data">
+          <evan-button
+            size="sm"
+            type="icon-secondary"
+            icon="mdi mdi-chevron-right"
+            target="_blank"
+            class="visible-on-row-hover"
+            :href="getRouteToTransactionExplorer(data.item.blockHash)"
+          />
+        </template>
+      </evan-table>
+    </div>
   </div>
 </template>
 

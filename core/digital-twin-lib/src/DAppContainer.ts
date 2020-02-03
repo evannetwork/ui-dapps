@@ -28,7 +28,7 @@ import { applyMixins, DAppContract } from './DAppContract';
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
- * provides for stateful data holding.
+ * provides stateful data holding.
  *
  * TODO: Sharing handling.
  */
@@ -288,8 +288,9 @@ class DAppContainer extends Container {
    * dispatcher was stopped / finished.
    */
   async onDescriptionSave($event: any): Promise<void> {
+    this.ensureDispatcherStates();
+
     if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-      this.ensureDispatcherStates();
       this.description = await this.getDescription();
       this.triggerReload('description');
     }

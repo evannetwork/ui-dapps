@@ -33,5 +33,8 @@ import EvanComponent from '../../component';
  */
 @Component
 export default class EvanTable extends mixins(EvanComponent) {
+  /**
+   * Flag to always display scrollbar
+   */
   @Prop({ default: false }) showScrollbar: boolean;
 }

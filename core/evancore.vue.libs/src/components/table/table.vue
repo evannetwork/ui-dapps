@@ -18,34 +18,35 @@
 */
 
 <template>
-  <b-table
-    v-bind="$attrs"
-    class="evan-table-wrapper"
-    :class="{ 'show-scrollbar': showScrollbar }"
-    :tbody-tr-class="'evan-table-body-row'"
-    :thead-tr-class="'evan-table-head-row'"
-    :thead-class="'evan-table-head'"
-    v-on="$listeners"
-  >
-    <!-- Pass on all named slots -->
-    <slot
-      v-for="slot in Object.keys($slots)"
-      :slot="slot"
-      :name="slot"
-    />
-
-    <!-- Pass on all scoped slots -->
-    <template
-      v-for="slot in Object.keys($scopedSlots)"
-      :slot="slot"
-      slot-scope="scope"
+  <div class="evan-table-wrapper">
+    <b-table
+      v-bind="$attrs"
+      :class="{ 'show-scrollbar': showScrollbar }"
+      :tbody-tr-class="'evan-table-body-row'"
+      :thead-tr-class="'evan-table-head-row'"
+      :thead-class="'evan-table-head'"
+      v-on="$listeners"
     >
+      <!-- Pass on all named slots -->
       <slot
+        v-for="slot in Object.keys($slots)"
+        :slot="slot"
         :name="slot"
-        v-bind="scope"
       />
-    </template>
-  </b-table>
+
+      <!-- Pass on all scoped slots -->
+      <template
+        v-for="slot in Object.keys($scopedSlots)"
+        :slot="slot"
+        slot-scope="scope"
+      >
+        <slot
+          :name="slot"
+          v-bind="scope"
+        />
+      </template>
+    </b-table>
+  </div>
 </template>
 
 <script lang="ts">

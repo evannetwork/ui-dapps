@@ -40,13 +40,14 @@
     </div>
 
     <div class="content">
-      <router-view :key="$route.params.container"></router-view>
+      <router-view :key="$route.params.container" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import DetailDataComponent from './DetailData';
+
 export default DetailDataComponent;
 </script>
 

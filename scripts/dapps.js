@@ -17,15 +17,25 @@
   the following URL: https://evan.network/license/
 */
 
+/* eslint-disable no-console */
+
 const express = require('express');
 const gulp = require('gulp');
 const inquirer = require('inquirer');
 const path = require('path');
 const serveStatic = require('serve-static');
 const Throttle = require('promise-parallel-throttle');
-const { runExec, getDirectories, nodeEnv, getArgs } = require('./lib');
+const {
+  runExec, getDirectories, nodeEnv, getArgs,
+} = require('./lib');
 
-let arg, dappDirs, categories, longestDAppName, serves, watching, expressApp;
+let arg;
+let dappDirs;
+let categories;
+let longestDAppName;
+let serves;
+let watching;
+let expressApp;
 
 /**
  * Initialize dapp folders and symlink core projects
@@ -51,26 +61,27 @@ async function initialize() {
       { name: 'dapps', value: 'dapps', checked: true },
       { name: 'evan-libs', value: 'evan-libs', checked: false },
       { name: 'libs', value: 'libs', checked: false },
-    ]
+      { name: 'playground', value: 'playground', checked: false },
+    ],
   }])).dappCategories;
-  dappDirs = [ ]
+  dappDirs = []
     .concat(
-      ...categories.map(key => getDirectories(path.resolve(`../${ key }`)))
+      ...categories.map((key) => getDirectories(path.resolve(`../${key}`))),
     )
     .sort();
 
   // check for longest dapp name to have a correct display
-  for (let dappDir of dappDirs) {
+  dappDirs.forEach((dappDir) => {
     const dappNameLength = dappDir.split('/').pop().length;
     if (longestDAppName < dappNameLength) {
       longestDAppName = dappNameLength;
     }
-  }
+  });
 
   // save latest serve and build status
-  dappDirs.forEach(dappDir =>
-    serves[dappDir.split('/').pop()] = { duration: 0, lastDuration: 0 }
-  );
+  dappDirs.forEach((dappDir) => {
+    serves[dappDir.split('/').pop()] = { duration: 0, lastDuration: 0 };
+  });
 }
 
 /**
@@ -79,13 +90,14 @@ async function initialize() {
  * @param      {string}  dappName  dapp name
  * @return     {string}  filled dapp name
  */
-const getFilledDAppName = (dappName) => {
+const getFilledDAppName = (initialDAppName) => {
+  let dappName = initialDAppName;
   while (dappName.length < longestDAppName + 3) {
     dappName += ' ';
   }
 
   return dappName;
-}
+};
 
 /**
  * Return the dapp dirs for a specific category.
@@ -93,9 +105,9 @@ const getFilledDAppName = (dappName) => {
  * @param      {string}  category  category name (core, libs, dapps)
  */
 const getCategoryDAppDirs = (category) => {
-  const categoryPath = path.resolve(`${ __dirname }/../${ category }`);
-  return dappDirs.filter(dappDir => dappDir.indexOf(categoryPath) !== -1);
-}
+  const categoryPath = path.resolve(`${__dirname}/../${category}`);
+  return dappDirs.filter((dappDir) => dappDir.indexOf(categoryPath) !== -1);
+};
 
 /**
  * Show the current wachting status
@@ -103,23 +115,25 @@ const getCategoryDAppDirs = (category) => {
 const logServing = async () => {
   console.clear();
 
-  console.log(`----------------------`);
-  console.log(`│ evan.network dapps │`);
+  console.log('----------------------');
+  console.log('│ evan.network dapps │');
   console.log('----------------------');
 
-  console.log(`\nbuild type           : ${ watching ? 'serving' : 'building' }`);
-  console.log(`environment          : ${ nodeEnv }`);
-  expressApp && console.log(`started local server : http://localhost:3000`)
+  console.log(`\nbuild type           : ${watching ? 'serving' : 'building'}`);
+  console.log(`environment          : ${nodeEnv}`);
+  if (expressApp) {
+    console.log('started local server : http://localhost:3000');
+  }
 
-  for (const category of categories) {
+  categories.forEach((category) => {
     // calculate good looking categoryTitle
-    let categoryTitle = ` ${ category } `;
+    let categoryTitle = ` ${category} `;
     while (categoryTitle.length < longestDAppName + 16) {
-      categoryTitle = !!(categoryTitle.length%2) ? `${ categoryTitle }-` : `-${ categoryTitle }`;
+      categoryTitle = categoryTitle.length % 2 ? `${categoryTitle}-` : `-${categoryTitle}`;
     }
-    console.log(`\n${ categoryTitle }`);
+    console.log(`\n${categoryTitle}`);
 
-    for (const dappDir of getCategoryDAppDirs(category)) {
+    getCategoryDAppDirs(category).forEach((dappDir) => {
       const dappName = dappDir.split('/').pop();
       const logDAppName = getFilledDAppName(dappName);
 
@@ -127,19 +141,17 @@ const logServing = async () => {
       const status = serves[dappName];
       const wasBuild = serves[dappName].lastDuration;
       const timeLog = wasBuild && serves[dappName].loading
-        ? `(${ status.duration }s / ${ status.lastDuration }s)`
-        : `(${ status.duration }s)`;
+        ? `(${status.duration}s / ${status.lastDuration}s)`
+        : `(${status.duration}s)`;
       let statusMsg;
       if (serves[dappName].rebuild) {
-        statusMsg = ` ${ logDAppName } »»»»»» ${ timeLog }`;
+        statusMsg = ` ${logDAppName} »»»»»» ${timeLog}`;
       } else if (serves[dappName].loading) {
-        statusMsg =` ${ logDAppName } »»»   ${ timeLog }`;
+        statusMsg = ` ${logDAppName} »»»   ${timeLog}`;
+      } else if (watching) {
+        statusMsg = ` ${logDAppName} ∞     ${timeLog}`;
       } else {
-        if (watching) {
-          statusMsg =` ${ logDAppName } ∞     ${ timeLog }`;
-        } else {
-          statusMsg =` ${ logDAppName } ${ wasBuild ? '√' : '»' }     ${ timeLog }`;
-        }
+        statusMsg = ` ${logDAppName} ${wasBuild ? '√' : '»'}     ${timeLog}`;
       }
 
       console.log(statusMsg);
@@ -148,11 +160,11 @@ const logServing = async () => {
         console.log();
         console.error(serves[dappName].error.replace(/^/gm, '      '));
       }
-    }
-  }
+    });
+  });
 
   console.log('\n');
-}
+};
 /**
  * Build a specific DApp and log the status.
  *
@@ -179,27 +191,36 @@ const buildDApp = async (dappDir) => {
       // navigate to the dapp dir and run the build command
       process.chdir(dappDir);
 
-      await runExec(require(`${ dappDir }/package.json`).scripts.build, dappDir);
+      // eslint-disable-next-line
+      await runExec(require(`${dappDir}/package.json`).scripts.build, dappDir);
 
       // clear timer and calculate time
       serves[dappName].lastDuration = Math.round((Date.now() - startTime) / 1000);
 
       try {
         // show mac notification
-        await runExec(`osascript -e 'display notification "${dappName} was successfully build in ${serves[dappName].lastDuration} seconds." with title "${dappName} build"'`)
+        await runExec(`osascript -e 'display notification "${dappName} was successfully build in `
+          + `${serves[dappName].lastDuration} seconds." with title "${dappName} build"'`);
         if (process.env.LIVE_RELOAD === 'chrome') {
-          await runExec(`osascript -e 'tell application "Google Chrome" to reload (tabs of window 1 whose URL contains "localhost:3000")'`)
-        } else if(process.env.LIVE_RELOAD === 'brave') {
-          await runExec(`osascript -e 'tell application "Brave Browser" to reload (tabs of window 1 whose URL contains "localhost:3000")'`)
+          await runExec('osascript -e \'tell application "Google Chrome" to reload (tabs of window'
+            + '1 whose URL contains "localhost:3000")\'');
+        } else if (process.env.LIVE_RELOAD === 'brave') {
+          await runExec('osascript -e \'tell application "Brave Browser" to reload (tabs of window'
+            + '1 whose URL contains "localhost:3000")\'');
         }
-      } catch (ex) { }
+      } catch (ex) {
+        // not ios?
+      }
 
       delete serves[dappName].error;
     } catch (ex) {
       try {
         // show mac notification
-        await runExec(`osascript -e 'display notification "Error building ${dappName}" with title "${dappName} build"'`)
-      } catch (ex) { }
+        await runExec(`osascript -e 'display notification "Error building ${dappName}" with`
+          + `title "${dappName} build"'`);
+      } catch (innerEx) {
+        // not ios?
+      }
       serves[dappName].error = ex;
     }
 
@@ -219,13 +240,13 @@ const buildDApp = async (dappDir) => {
     // if multiple files were changed, set the rebuild flag
     serves[dappName].rebuild = true;
   }
-}
+};
 
 const startStaticServer = async () => {
   expressApp = express();
   const dappBrowserPath = path.resolve('../node_modules/@evan.network/ui-dapp-browser');
 
-  expressApp.use(serveStatic(`${ dappBrowserPath }/runtime`));
+  expressApp.use(serveStatic(`${dappBrowserPath}/runtime`));
   expressApp.use(serveStatic('.'));
   expressApp.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -236,14 +257,16 @@ const startStaticServer = async () => {
   expressApp.use('/dev-dapps', (req, res) => {
     const data = { externals: [] };
     try {
-      data.externals = getDirectories(path.resolve(`${ dappBrowserPath }/runtime/external`))
-        .map(external => external.split(path.sep).pop());
-    } catch (ex) { }
+      data.externals = getDirectories(path.resolve(`${dappBrowserPath}/runtime/external`))
+        .map((external) => external.split(path.sep).pop());
+    } catch (ex) {
+      console.error('external folder does not exist');
+    }
     res.send(data);
   });
 
-  return new Promise(resolve => expressApp.listen(3000, resolve));
-}
+  return new Promise((resolve) => expressApp.listen(3000, resolve));
+};
 
 // Run Express, auto rebuild and restart on src changes
 gulp.task('dapps-serve', async () => {
@@ -252,15 +275,13 @@ gulp.task('dapps-serve', async () => {
   watching = true;
 
   // start watching
-  dappDirs.forEach(dappDir =>
-    gulp.watch(`${dappDir}/src/**/*`, (event) => buildDApp(dappDir))
-  );
+  dappDirs.forEach((dappDir) => gulp.watch(`${dappDir}/src/**/*`, () => buildDApp(dappDir)));
 
   setTimeout(() => logServing());
 });
 
 // Run Express, auto rebuild and restart on src changes
-gulp.task('dapps-build', async function () {
+gulp.task('dapps-build', async () => {
   // check which dapp categories should be build
   await initialize();
 
@@ -276,8 +297,9 @@ gulp.task('dapps-build', async function () {
     }
   } else {
     // build all categories
-    for (const category of categories) {
-      await Throttle.all(getCategoryDAppDirs(category).map(dappDir => async () => {
+    for (let i = 0; i < categories.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await Throttle.all(getCategoryDAppDirs(categories[i]).map((dappDir) => async () => {
         try {
           // navigate to the dapp dir and run the build command
           await buildDApp(dappDir);
@@ -292,4 +314,4 @@ gulp.task('dapps-build', async function () {
 // start local file server and start dapp watching
 gulp.task('serve', gulp.series(startStaticServer, 'dapps-serve'));
 
-gulp.task('default', gulp.series([ 'dapps-build' ]));
+gulp.task('default', gulp.series(['dapps-build']));

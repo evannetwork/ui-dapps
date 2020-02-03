@@ -9,6 +9,13 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
   width: 100%;
   margin-bottom: 0;
 
+  &.clickable-rows {
+    /deep/ tr.evan-table-body-row {
+      cursor: pointer;
+    }
+  }
+
+
   &.show-scrollbar {
     overflow-y: scroll;
     // This is needed for webkit browsers
@@ -43,6 +50,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       // Using values from figma creates weird shadow bleeding
       box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.15);
 
+      /* Sorting icon */
       &[aria-sort] {
         // remove standard arrows
         background-image: none;
@@ -83,11 +91,6 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       height: 56px;
       background-color: white;
       color: cssVar('gray-600');
-      cursor: pointer;
-
-      // create spacing between rows without using border-collapse
-      // because it causes janky behavior with sticky header
-      // border-bottom: 4px solid cssVar('bg-level-3');
 
       &:hover {
         background-color: cssVar('gray-100');
@@ -130,6 +133,38 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       height: 16px;
     }
   }
+
+  // Simple Evan Table
+  &.simple {
+    .table-responsive {
+      margin-bottom: 0 !important;
+    }
+    
+    /deep/ table.table {
+      width: 100%;
+    
+      thead.evan-table-head {
+        background-color: cssVar('gray-200');
+        th {
+          font-weight: 600;
+          font-size: 12px !important;
+          box-shadow: none !important;
+        }
+      }
+    
+      td, th {
+        padding: 8px;
+      }
+  
+      tbody {
+        tr {
+          height: 40px !important;
+        }
+      }    
+    }
+  }
+  
+  
 }
 // TODO: Find a better solution at some point
 // http://www.outlinenone.com/

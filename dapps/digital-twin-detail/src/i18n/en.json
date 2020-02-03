@@ -9,6 +9,7 @@
         "export-template": "Export as template",
         "exporting-twin": "Creating template ..."
       },
+      "files": "files",
       "general": {
         "desc": "Description",
         "general-title": "General",
