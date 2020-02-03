@@ -19,9 +19,10 @@
 
 <template>
   <div class="content-card">
+    <!--  TODO: breaks formular behavior after loading
+      :is-loading="$store.state.container.dispatcherStates.entries[name]"-->
     <data-set-form
       :data-schema="entrySchema"
-      :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
       :value="value"
       @save="onSave($event)"

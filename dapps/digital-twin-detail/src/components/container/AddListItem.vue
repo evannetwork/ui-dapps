@@ -21,7 +21,7 @@
   <form
     id="addListItem"
     ref="addListItem"
-    @submit.prevent="addDigitalTwin"
+    @submit.prevent="preventModal()"
   >
     <evan-swipe-panel
       ref="addListItemPanel"

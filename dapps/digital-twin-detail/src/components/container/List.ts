@@ -43,7 +43,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   columns: any[];
 
   static isFileList(input: string | number | FileList): input is FileList {
-    return Object.keys(input).includes('files');
+    return input && Object.keys(input).includes('files');
   }
 
   created(): void {
@@ -67,8 +67,13 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
         return this.transformValuesForDisplay(value[key]);
       }
     }
+
     // display primitives and unknown objects
-    return JSON.stringify(value);
+    if (typeof value === 'object') {
+      return JSON.stringify(value);
+    }
+
+    return value;
   }
 
   /**
