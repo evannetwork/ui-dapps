@@ -66,6 +66,7 @@
             <slot :name="`form-control-${ controlName }`">
               <component
                 :is="getControlComponentName(controlName)"
+                :id="form[controlName].uiSpecs && form[controlName].uiSpecs.attr ? form[controlName].uiSpecs.attr.id : null"
                 v-model="form[controlName].value"
                 :disabled="!editable || isLoading"
                 :error="(onlyForm || editMode && !onlyForm) ? getTranslation(form[controlName], 'error') : false"

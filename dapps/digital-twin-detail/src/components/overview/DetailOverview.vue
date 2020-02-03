@@ -22,6 +22,7 @@
     <div class="content">
       <!-- TODO: Use proper DID -->
       <detail-overview-general
+        v-if="twin"
         class="mb-3"
         :did="`did:evan:${twin.description.identity}`"
         :owner-name="twin.ownerName"

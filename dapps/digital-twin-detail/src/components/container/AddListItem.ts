@@ -17,26 +17,33 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div>
-    <evan-form
-      ref="form"
-      v-bind="$props"
-      :form="form"
-      :i18n-scope="`${i18nScope}.properties`"
-      :is-loading="isLoading"
-      :title="$t(`${i18nScope}.name`, name)"
-      @save="$emit('save', getFormData())"
-    />
-  </div>
-</template>
+import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { ListSchema } from './DataSchemaInterface';
 
-<script lang="ts">
-import ContainerEntryComponent from './DataSetForm';
+@Component
+export default class AddListItemComponent extends mixins(EvanComponent) {
+  @Prop() name: string;
 
-export default ContainerEntryComponent;
-</script>
+  @Prop() schema: ListSchema;
 
-<style lang="scss" scoped>
+  @Prop() value: any;
 
-</style>
+  mounted(): void {
+    const fields = Object.keys(this.schema.items.properties);
+    // console.log('fields', fields);
+  }
+
+  showPanel(): void {
+    (this.$refs.addListItemPanel as any).show();
+  }
+
+  closePanel(): void {
+    (this.$refs.addListItemPanel as any).hide();
+  }
+
+  addDataToContainer() {
+    this.$store.state.container.addListEntries();
+  }
+}

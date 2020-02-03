@@ -23,10 +23,9 @@ import { Prop } from 'vue-property-decorator';
 import { Validator } from '@evan.network/api-blockchain-core';
 import ajvI18n from 'ajv-i18n';
 import {
-  EvanComponent,
   EvanForm,
-  EvanFormControl,
   EvanFormControlOptions,
+  EvanFormComponent,
 } from '@evan.network/ui-vue-core';
 
 
@@ -38,9 +37,9 @@ const ajvMinProperties = {
 };
 
 @Component
-export default class DataSetFormComponent extends mixins(EvanComponent) {
+export default class DataSetFormComponent extends mixins(EvanFormComponent) {
   /**
-   * Data set name (entry / listentry)
+   * Data set name (entry / list entry)
    */
   @Prop() name: string;
 
@@ -63,7 +62,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }) isLoading: boolean;
 
   /**
-   * Dynamic formular definition for the corresponding dataSchema.
+   * Dynamic form definition for the corresponding dataSchema.
    */
   form: EvanForm = null;
 
@@ -103,7 +102,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Takes a data schema property and add's it to the formular.
+   * Takes a data schema property and adds it to the form.
    *
    * @param      {string}  name    property name
    * @param      {string}  type    property type
@@ -112,6 +111,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     const control: EvanFormControlOptions = {
       uiSpecs: {
         attr: {
+          id: `dataset-input-${this.name}-${name}`,
           // translate it before, so the formular will use correct fallback translations
           label: this.isPrimitive ? false : this.$t(`${this.i18nScope}.properties.${name}.label`, name),
           placeholder: this.isPrimitive
@@ -225,7 +225,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   /**
    * Returns the current data from the dynamic data set formular
    */
-  getTwinFormData(): any {
+  getFormData(): any {
     const formData = this.form.getFormData();
 
     // format file to a container API understandable format

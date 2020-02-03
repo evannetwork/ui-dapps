@@ -21,6 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { ObjectSchema } from './DataSchemaInterface';
 
 @Component
 export default class ContainerEntryComponent extends mixins(EvanComponent) {
@@ -29,7 +30,7 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   /**
    * Current entry definition from container dbcp schema
    */
-  entrySchema: any;
+  entrySchema: ObjectSchema;
 
   /**
    * Current value of the entry
@@ -43,7 +44,7 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Handle on save event from formular.
+   * Handle on save event from form.
    */
   onSave(formData: any): void {
     this.value = formData;

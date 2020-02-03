@@ -29,8 +29,13 @@ const {
   runExec, getDirectories, nodeEnv, getArgs,
 } = require('./lib');
 
-let arg; let dappDirs; let categories; let longestDAppName; let serves; let watching; let
-  expressApp;
+let arg;
+let dappDirs;
+let categories;
+let longestDAppName;
+let serves;
+let watching;
+let expressApp;
 
 /**
  * Initialize dapp folders and symlink core projects
@@ -59,11 +64,9 @@ async function initialize() {
       { name: 'playground', value: 'playground', checked: false },
     ],
   }])).dappCategories;
-  dappDirs = []
-    .concat(
-      ...categories.map((key) => getDirectories(path.resolve(`../${key}`))),
-    )
-    .sort();
+  dappDirs = [
+    ...categories.map((key) => getDirectories(path.resolve(`../${key}`))),
+  ].sort();
 
   // check for longest dapp name to have a correct display
   dappDirs.forEach((dappDir) => {

@@ -67,6 +67,12 @@ class DAppTwin extends DigitalTwin {
   favorite: boolean;
 
   /**
+   * Created at timestamp
+   */
+  createdAt: number = null;
+
+
+  /**
    * Call super and initialize new twin class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {
@@ -168,9 +174,9 @@ class DAppTwin extends DigitalTwin {
   public async initialize(): Promise<void> {
     await Promise.all([
       this.loadBaseInfo(),
-      async (): Promise<void> => {
+      (async (): Promise<void> => {
         this.favorite = await this.isFavorite();
-      },
+      })(),
       this.ensureContainers(),
     ]);
 
