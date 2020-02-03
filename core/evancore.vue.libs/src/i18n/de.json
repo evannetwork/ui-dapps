@@ -142,7 +142,7 @@
       }
     },
     "profile-picture": {
-      "upload": "Laden Sie hier ihr Bild hoch",
+      "upload": "Laden Sie hier ein Bild hoch",
       "upload-dnd": "Hier klicken oder eine Bilddatei hereinziehen.",
       "use-picture": "Fertig"
     },
