@@ -21,7 +21,7 @@
   <form
     id="addListItem"
     ref="addListItem"
-    @submit.prevent="addDigitalTwin"
+    @submit.prevent="addDataToContainer"
   >
     <evan-swipe-panel
       ref="addListItemPanel"
@@ -29,16 +29,14 @@
       type="default"
       class="light"
       :show-backdrop="true"
-      :hide-close-button="true"
       :title="$t('_twin-detail.data.list.add-list-item-title')"
     >
       <data-set-form
+        ref="addForm"
         :data-schema="schema.items"
-        :is-loading="$store.state.container.dispatcherStates.entries[name]"
         :name="name"
         :value="value"
         :only-form="true"
-        @save="onSave($event)"
       />
       <template v-slot:footer>
         <div class="d-flex">

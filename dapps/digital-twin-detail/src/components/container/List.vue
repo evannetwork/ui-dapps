@@ -24,6 +24,7 @@
         <i class="mdi mr-2 mdi-lock" />
         {{ $t(`${$route.params.container}.${name}`, name) }}
       </h5>
+      <div class="flex-fill" />
       <evan-button
         type="secondary"
         size="sm"
@@ -32,6 +33,7 @@
         {{ '_evan.share' | translate }}
       </evan-button>
       <b-dropdown
+        class="ml-1"
         variant="link"
         toggle-class="text-decoration-none"
         no-caret
@@ -51,13 +53,6 @@
           {{ '_twin-detail.data.list.add-list-item' | translate }}
         </b-dropdown-item>
       </b-dropdown>
-
-      <!-- <add-list-item
-        ref="addListItem"
-        :name="name"
-        :schema="schema"
-        :value="value"
-      /> -->
     </div>
 
     <div class="mt-3">
@@ -73,6 +68,13 @@
         </template>
       </evan-table>
     </div>
+
+    <add-list-item
+      ref="addListItem"
+      :name="name"
+      :schema="schema"
+      :value="value"
+    />
   </div>
 </template>
 
@@ -83,4 +85,9 @@ export default ContainerListComponent;
 </script>
 
 <style lang="scss" scoped>
+/deep/ .dropdown.b-dropdown {
+  & > button.btn {
+    padding: 0;
+  }
+}
 </style>

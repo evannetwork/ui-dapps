@@ -21,6 +21,7 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { ListSchema } from './DataSchemaInterface';
+import DataSetFormComponent from './DataSetForm';
 
 @Component
 export default class AddListItemComponent extends mixins(EvanComponent) {
@@ -30,11 +31,6 @@ export default class AddListItemComponent extends mixins(EvanComponent) {
 
   @Prop() value: any;
 
-  mounted(): void {
-    const fields = Object.keys(this.schema.items.properties);
-    // console.log('fields', fields);
-  }
-
   showPanel(): void {
     (this.$refs.addListItemPanel as any).show();
   }
@@ -43,7 +39,9 @@ export default class AddListItemComponent extends mixins(EvanComponent) {
     (this.$refs.addListItemPanel as any).hide();
   }
 
-  addDataToContainer() {
-    this.$store.state.container.addListEntries();
+  async addDataToContainer(): Promise<void> {
+    const formData = (this.$refs.addForm as DataSetFormComponent).getFormData();
+
+    await this.$store.state.container.addListEntries(this.name, [formData]);
   }
 }
