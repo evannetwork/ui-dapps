@@ -72,7 +72,7 @@ Feature: Display Digital Twin Details
       And The value of the Input field with label "objectField" should be `{"new": "entry"}`
       And The value of the Input field with id "dataset-input-checkboxEntry-primitive" should be "true"
 
-@german
+  @german
   Scenario: with german
     Given I log in to evan.network using vue
     When I click on "My Assets" in main menu
