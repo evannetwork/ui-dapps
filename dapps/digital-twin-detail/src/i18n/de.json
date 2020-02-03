@@ -18,6 +18,13 @@
         "type": "Typ",
         "type-value": "Digitaler Zwilling"
       },
+      "list": {
+        "add-list-item": "Daten hinzufügen",
+        "add-list-item-cancel": "Abbrechen",
+        "add-list-item-submit": "Daten hinzufügen",
+        "add-list-item-title": "Daten hinzufügen",
+        "show-all": "Alle anzeigen"
+      },
       "logs": {
         "logs-title": "Logs"
       },

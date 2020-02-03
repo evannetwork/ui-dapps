@@ -20,6 +20,13 @@
         "type": "Type",
         "type-value": "Digital Twin"
       },
+      "list": {
+        "add-list-item": "Add Data",
+        "add-list-item-cancel": "Cancel",
+        "add-list-item-submit": "Add new Data",
+        "add-list-item-title": "Add Data",
+        "show-all": "Show All"
+      },
       "logs": {
         "logs-title": "Logs"
       },
