@@ -1,5 +1,3 @@
-@only
-
 Feature: Display Digital Twin Details
 
   @tag:noLogout
@@ -27,17 +25,23 @@ Feature: Display Digital Twin Details
       And I want to see a text including "objectEntry"
       And I want to see a text including "textEntry"
 
-  # @tag:noLogout
-  # Scenario: change checkbox entry
+  @tag:noLogout
+  Scenario: change number entry
+    When I set Input field with id "dataset-input-numberEntry-primitive" to "ABC"
+    Then The value of the Input field with id "dataset-input-numberEntry-primitive" should be ""
+    When I set Input field with id "dataset-input-numberEntry-primitive" to "42"
+    Then The value of the Input field with id "dataset-input-numberEntry-primitive" should be "42"
 
-  # @tag:noLogout
-  # Scenario: change files entry
+  @tag:noLogout
+  Scenario: change checkbox entry
+    When I click on vue checkbox control with id "dataset-input-checkboxEntry-primitive"
+    # TODO: value depends on previous state, need to check for changed.
+    Then The value of the Input field with id "dataset-input-checkboxEntry-primitive" should be "true"
 
-  # @tag:noLogout
-  # Scenario: change list checkbox  entry
-
-  # @tag:noLogout
-  # Scenario: change number entry
+  @tag:noLogout
+  Scenario: change text entry
+    When I set Input field with id "dataset-input-textEntry-primitive" to "lorem ipsum dolor sit amet consecutor"
+    Then The value of the Input field with id "dataset-input-textEntry-primitive" should be "lorem ipsum dolor sit amet consecutor"
 
   @tag:noLogout
   Scenario: change object entries
@@ -57,10 +61,8 @@ Feature: Display Digital Twin Details
       And I want to see a text including "Invalid JSON format."
     # And the button "Save" should be "disabled"
     When I set Input field with label "objectField" to `{"new": "entry"}`
-      And I wait for enter
     Then I do not want to see a text including "Invalid JSON format."
       And The value of the Input field with label "objectField" should be `{"new": "entry"}`
-      Given I wait for 20 seconds
 
     When I click on button "Save"
       And I wait 30 seconds until loading was finished
@@ -68,10 +70,7 @@ Feature: Display Digital Twin Details
       And The value of the Input field with label "numberField" should be "42"
       And The value of the Input field with label "textField" should be "gibberish"
       And The value of the Input field with label "objectField" should be `{"new": "entry"}`
-      Given I wait for 20 seconds
-
-  # @tag:noLogout
-  # Scenario: change text entry
+      And The value of the Input field with id "dataset-input-checkboxEntry-primitive" should be "true"
 
 @german
   Scenario: with german
@@ -86,33 +85,11 @@ Feature: Display Digital Twin Details
       And I want to see a text including "pluginLists"
       And I want to see a text including "pluginEntries"
 
-
-
-
-  Scenario:
-
-# all containers (without entries) are listed
-
-# no edit/delete/add functionalities here
-
-# the general container, contains functionalities about editing the twin name, description, (image (maybe in sidebar already))
-
-# when clicked on a container
-
-# the data of the container will be shown on the main page
-
-# the same component like on the profile (with edit functionality)
-
-# Lists are shown as table (with potential horizontal scrolling)
-
-# New entries to the table can be “clicked” at the top of the table
-
-# Paging is solved via infinite scrolling
-
-# no delete of the listentries in the ui
-
-# grouped by the entries of the container
-
-# share functionality for every entry (will open the share data sidebar)
-
-# quick navigation to entries on the right side (not on mobile or smaller screens)
+# TODO:
+# Scenario: Lists are shown as table (with potential horizontal scrolling)
+# Scenario: New entries to the table can be “clicked” at the top of the table
+# Scenario: Paging is solved via infinite scrolling
+# Scenario: share functionality for every entry (will open the share data sidebar)
+# Scenario: quick navigation to entries on the right side (not on mobile or smaller screens)
+# Scenario: change files entry
+# Scenario: change list checkbox  entry

@@ -137,6 +137,20 @@ When('I clear input field with label {string}',
   });
 
 /**
+ * Click on label next to the evan checkbox control
+ */
+When('I click on vue checkbox control with id {string}',
+  async (id) => {
+    client.useXpath();
+
+    const selector = `//*[@id="${id}"]/following-sibling::label[@for="${id}"]`;
+    await client.expect.element(selector).to.be.visible;
+    await client.click(selector);
+
+    client.useCss();
+  });
+
+/**
  * Assures that a certain amount of input fields is visible.
  */
 Then('{int} input fields should be visible', async (count) => {
@@ -208,20 +222,6 @@ Then('Input fields with labels {string} should be visible',
   });
 
 /**
- * Click on label next to the evan checkbox control
- */
-Then('I click on vue checkbox control with id {string}',
-  async (id) => {
-    client.useXpath();
-
-    const selector = `//*[@id="${id}"]/following-sibling::label[@for="${id}"]`;
-    await client.expect.element(selector).to.be.visible;
-    await client.click(selector);
-
-    client.useCss();
-  });
-
-/**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
 Then(/^The value of the Input field with label "([^"]*)" should be ("([^"]*)"|`([^`]*)`)$/,
@@ -244,5 +244,18 @@ Then('The value of the Input field with placeholder {string} should be {string}'
     const expected = parseEnvVar(content);
 
     await client.assert.value(`//input[@placeholder='${placeholder}']`, expected);
+    client.useCss();
+  });
+
+
+/**
+ * Looks for an input field with certain placeholder and checks if it has the desired value.
+ */
+Then('The value of the Input field with id {string} should be {string}',
+  async (id, content) => {
+    client.useXpath();
+    const expected = parseEnvVar(content);
+
+    await client.assert.value(`//input[@id='${id}']`, expected);
     client.useCss();
   });
