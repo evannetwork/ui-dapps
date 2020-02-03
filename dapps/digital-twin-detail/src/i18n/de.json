@@ -48,6 +48,7 @@
       "verifications": "Verifikationen"
     },
     "overview": {
+      "copied": "DID in die Zwischenlage kopiert",
       "created-at": "Erstellt am",
       "date": "Datum",
       "did": "Decentralized ID",

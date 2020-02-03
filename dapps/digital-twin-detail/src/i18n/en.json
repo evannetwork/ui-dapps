@@ -50,6 +50,7 @@
       "verifications": "Verifications"
     },
     "overview": {
+      "copied": "DID copied to clipboard",
       "created-at": "Created at",
       "date": "Date",
       "did": "Decentralized ID",
