@@ -168,9 +168,9 @@ class DAppTwin extends DigitalTwin {
   public async initialize(): Promise<void> {
     await Promise.all([
       this.loadBaseInfo(),
-      async (): Promise<void> => {
+      (async (): Promise<void> => {
         this.favorite = await this.isFavorite();
-      },
+      })(),
       this.ensureContainers(),
     ]);
 
@@ -183,8 +183,9 @@ class DAppTwin extends DigitalTwin {
    * dispatcher was stopped / finished.
    */
   async onDescriptionSave($event): Promise<void> {
+    this.ensureDispatcherStates();
+
     if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-      this.ensureDispatcherStates();
       this.description = await this.getDescription();
       this.triggerReload('description');
     }
@@ -194,8 +195,9 @@ class DAppTwin extends DigitalTwin {
    * Handles a twin favorite add / remove dispatcher event and triggers a ui reload, if nessecary.
    */
   onFavoriteSave($event): void {
+    this.ensureDispatcherStates();
+
     if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
-      this.ensureDispatcherStates();
       this.triggerReload('favorite');
     }
   }
