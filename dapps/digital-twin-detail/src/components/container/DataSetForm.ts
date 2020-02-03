@@ -24,9 +24,11 @@ import { Validator } from '@evan.network/api-blockchain-core';
 import ajvI18n from 'ajv-i18n';
 import {
   EvanForm,
-  EvanFormControlOptions,
   EvanFormComponent,
+  EvanFormControl,
+  EvanFormControlOptions,
 } from '@evan.network/ui-vue-core';
+import { DAppContainer } from '@evan.network/digital-twin-lib';
 
 
 // check min / max value configuration for array types
@@ -75,31 +77,6 @@ export default class DataSetFormComponent extends mixins(EvanFormComponent) {
    * is the subschema type is only primitive and no object (string, number, files)
    */
   isPrimitive = false;
-
-  /**
-   * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
-   *
-   * @param      {any}      subSchema   ajv sub schema
-   * @return     {string}   The type.
-   */
-  static getSchemaType(subSchema: any): string {
-    // check if it's a file
-    if (subSchema?.$comment) {
-      let $comment;
-
-      try {
-        $comment = JSON.parse(subSchema.$comment);
-      } catch (ex) {
-        // could not parse comment
-      }
-
-      if ($comment?.isEncryptedFile) {
-        return 'files';
-      }
-    }
-
-    return subSchema?.type;
-  }
 
   /**
    * Takes a data schema property and adds it to the form.
@@ -202,12 +179,12 @@ export default class DataSetFormComponent extends mixins(EvanFormComponent) {
     this.i18nScope = `${this.$route.params.container}.${this.name}`;
     this.form = new EvanForm(this, { });
 
-    const type = DataSetFormComponent.getSchemaType(this.dataSchema);
+    const type = DAppContainer.getSchemaType(this.dataSchema);
     switch (type) {
       case 'object': {
         Object.keys(this.dataSchema.properties).forEach((property) => this.addPropertyToForm(
           property,
-          DataSetFormComponent.getSchemaType(this.dataSchema.properties[property]),
+          DAppContainer.getSchemaType(this.dataSchema.properties[property]),
           this.dataSchema.properties[property],
         ));
 

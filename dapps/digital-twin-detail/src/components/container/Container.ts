@@ -37,7 +37,6 @@ export default class ContainerComponent extends mixins(EvanComponent) {
 
   created(): void {
     this.setupContainer();
-    console.log(this.$store.state.container);
   }
 
   beforeRouteUpdate(): void {

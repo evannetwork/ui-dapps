@@ -20,7 +20,10 @@
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+
 import { ListSchema } from './DataSchemaInterface';
+import DataSetForm from './DataSetForm';
+
 
 @Component
 export default class AddListItemComponent extends mixins(EvanComponent) {
@@ -30,10 +33,7 @@ export default class AddListItemComponent extends mixins(EvanComponent) {
 
   @Prop() value: any;
 
-  mounted(): void {
-    const fields = Object.keys(this.schema.items.properties);
-    // console.log('fields', fields);
-  }
+  dataSetForm: DataSetForm = null;
 
   showPanel(): void {
     (this.$refs.addListItemPanel as any).show();
@@ -43,7 +43,12 @@ export default class AddListItemComponent extends mixins(EvanComponent) {
     (this.$refs.addListItemPanel as any).hide();
   }
 
-  addDataToContainer() {
-    this.$store.state.container.addListEntries();
+  onSave(): void {
+    this.$store.state.container.addListEntries(this.name, [this.dataSetForm.getFormData()]);
+    this.closePanel();
+  }
+
+  isValid(): boolean {
+    return this.dataSetForm?.form?.isValid;
   }
 }

@@ -30,7 +30,7 @@
       class="light"
       :show-backdrop="true"
       :hide-close-button="true"
-      :title="$t('_twin-detail.data.list.add-list-item-title')"
+      :title="$t('_twin-detail.data.list.add-list-item.title')"
     >
       <data-set-form
         :data-schema="schema.items"
@@ -38,13 +38,13 @@
         :name="name"
         :value="value"
         :only-form="true"
-        @save="onSave($event)"
+        @init="dataSetForm = $event"
       />
       <template v-slot:footer>
         <div class="d-flex">
           <evan-button
             type="secondary"
-            :label="'_twin-detail.data.list.add-list-item-cancel' | translate"
+            :label="'_twin-detail.data.list.add-list-item.cancel' | translate"
             @click="closePanel"
           />
           <evan-button
@@ -52,7 +52,9 @@
             native-type="submit"
             class="ml-3 flex-grow-1"
             :is-loading="loading"
-            :label="'_twin-detail.data.list.add-list-item-submit' | translate"
+            :disabled="!isValid()"
+            :label="'_twin-detail.data.list.add-list-item.submit' | translate"
+            @click="onSave()"
           />
         </div>
       </template>

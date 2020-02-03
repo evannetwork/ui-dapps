@@ -71,6 +71,31 @@ class DAppContainer extends Container {
   plugin: ContainerPlugin;
 
   /**
+   * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
+   *
+   * @param      {any}      subSchema   ajv sub schema
+   * @return     {string}   The type.
+   */
+  static getSchemaType(subSchema: any): string {
+    // check if it's a file
+    if (subSchema?.$comment) {
+      let $comment;
+
+      try {
+        $comment = JSON.parse(subSchema.$comment);
+      } catch (ex) {
+        // could not parse comment
+      }
+
+      if ($comment?.isEncryptedFile) {
+        return 'files';
+      }
+    }
+
+    return subSchema?.type;
+  }
+
+  /**
    * Call super and initialize new container class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {

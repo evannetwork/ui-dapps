@@ -24,52 +24,63 @@
         <i class="mdi mr-2 mdi-lock" />
         {{ $t(`${$route.params.container}.${name}`, name) }}
       </h5>
-      <evan-button
-        type="secondary"
-        size="sm"
-        @click="share"
-      >
-        {{ '_evan.share' | translate }}
-      </evan-button>
-      <b-dropdown
-        variant="link"
-        toggle-class="text-decoration-none"
-        no-caret
-      >
-        <template v-slot:button-content>
-          <evan-button
-            :type="'icon-secondary'"
-            icon="mdi mdi-dots-vertical"
-          />
-        </template>
-        <b-dropdown-item>
-          {{ '_twin-detail.data.list.show-all' | translate }}
-        </b-dropdown-item>
-        <b-dropdown-item
-          @click="$refs.addListItem.showPanel()"
+      <div>
+        <evan-button
+          type="secondary"
+          size="sm"
+          @click="share"
         >
-          {{ '_twin-detail.data.list.add-list-item' | translate }}
-        </b-dropdown-item>
-      </b-dropdown>
-
-      <!-- <add-list-item
-        ref="addListItem"
-        :name="name"
-        :schema="schema"
-        :value="value"
-      /> -->
+          {{ '_evan.share' | translate }}
+        </evan-button>
+        <b-dropdown
+          class="p-0"
+          variant="link"
+          toggle-class="text-decoration-none"
+          no-caret
+        >
+          <template v-slot:button-content>
+            <evan-button
+              :type="'icon-secondary'"
+              icon="mdi mdi-dots-vertical"
+            />
+          </template>
+          <b-dropdown-item>
+            {{ '_twin-detail.data.list.show-all' | translate }}
+          </b-dropdown-item>
+          <b-dropdown-item
+            @click="$refs.addListItem.showPanel()"
+          >
+            {{ '_twin-detail.data.list.add-list-item.title' | translate }}
+          </b-dropdown-item>
+        </b-dropdown>
+      </div>
     </div>
+
+    <add-list-item
+      ref="addListItem"
+      :name="name"
+      :schema="schema"
+      :value="value"
+    />
 
     <div class="mt-3">
       <evan-table
         class="simple"
         :fields="columns"
-        :items="value"
+        :items="getValues()"
         :show-empty="true"
         :responsive="true"
       >
         <template v-slot:cell()="value">
-          {{ transformValuesForDisplay(value.item, value.field.key) }}
+          <template v-if="value.field.key === '__loading'">
+            <div
+              v-if="isValueLoading(value.item)"
+              class="spinner-border spinner-border-sm"
+            />
+          </template>
+          <template v-else>
+            {{ transformValuesForDisplay(value.item, value.field.key) }}
+          </template>
         </template>
       </evan-table>
     </div>
@@ -83,4 +94,14 @@ export default ContainerListComponent;
 </script>
 
 <style lang="scss" scoped>
+/deep/ .dropdown.b-dropdown {
+  & > button.btn {
+    padding: 0;
+  }
+}
+
+/deep/ .loading-cell {
+  width: 30px;
+  min-width: 30px;
+}
 </style>
