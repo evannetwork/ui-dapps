@@ -18,6 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { cloneDeep } from 'lodash';
 import { Prop } from 'vue-property-decorator';
 
 // @evan imports
@@ -156,7 +157,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   addDigitalTwin(): void {
     // merge custom fields into template.
     this.loading = true;
-    const template = ({ ...this.template }) as DigitalTwinTemplateInterface;
+    const template = cloneDeep(this.template) as DigitalTwinTemplateInterface;
     const dbcpFormValue = this.dbcpComp.getDescription();
 
     if (dbcpFormValue.description) {
