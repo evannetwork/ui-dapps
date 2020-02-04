@@ -70,6 +70,11 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       }
     }
 
+    // show null values as empty strings
+    if ((value === null) || (value === undefined)) {
+      return '';
+    }
+
     // display unknown objects
     if (typeof value === 'object') {
       return JSON.stringify(value);
@@ -119,7 +124,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
           columns.push({
             key,
             label: this.$t(`${i18nScope}.properties.${key}.label`, key),
-            tdClass: 'truncate',
           });
         });
         break;
@@ -128,7 +132,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
         columns.push({
           key: 'value',
           label: this.$t('_twin-detail.data.list.value'),
-          tdClass: 'truncate',
         });
         break;
       }
