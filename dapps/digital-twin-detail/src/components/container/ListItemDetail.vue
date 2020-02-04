@@ -1,6 +1,36 @@
 <template>
   <div>
-    Test
+    <evan-swipe-panel
+      ref="listItemDetailPanel"
+      alignment="right"
+      type="default"
+      class="light"
+      :show-backdrop="true"
+      :hide-close-button="false"
+      :title="$t('_twin-detail.data.list.list-item-detail.title')"
+    >
+      <data-set-form
+        :data-schema="schema.items"
+        :editable="false"
+        :shareable="false"
+        :is-loading="$store.state.container.dispatcherStates.entries[name]"
+        :name="name"
+        :value="value"
+        :only-form="true"
+        @init="dataSetForm = $event"
+      />
+
+      <template v-slot:footer>
+        <div class="d-flex">
+          <evan-button
+            type="primary"
+            class="ml-3 flex-grow-1"
+            :label="'_twin-detail.data.list.list-item-detail.cancel' | translate"
+            @click="listItemDetailPanel.hide()"
+          />
+        </div>
+      </template>
+    </evan-swipe-panel>
   </div>
 </template>
 

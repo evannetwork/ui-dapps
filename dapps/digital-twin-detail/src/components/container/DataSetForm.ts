@@ -68,6 +68,10 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
    */
   form: EvanForm = null;
 
+  @Prop({ default: true }) editable: boolean;
+
+  @Prop({ default: true }) shareable: boolean;
+
   /**
    * I18N scope for translating data set properties
    */

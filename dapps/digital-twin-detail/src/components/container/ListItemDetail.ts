@@ -20,8 +20,32 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Prop } from 'vue-property-decorator';
+import { ListSchema } from './DataSchemaInterface';
+import DataSetForm from './DataSetForm';
 
 
 @Component
 export default class ListItemDetailComponent extends mixins(EvanComponent) {
+  @Prop() name: string;
+
+  @Prop() schema: ListSchema;
+
+  @Prop() value: any;
+
+  dataSetForm: DataSetForm = null;
+
+  mounted() {
+    console.log('name', this.name);
+    console.log('schema', this.schema);
+    console.log('value', this.value);
+  }
+
+  showPanel(): void {
+    (this.$refs.listItemDetailPanel as any).show();
+  }
+
+  closePanel(): void {
+    (this.$refs.listItemDetailPanel as any).hide();
+  }
 }

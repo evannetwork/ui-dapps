@@ -44,8 +44,11 @@
               icon="mdi mdi-dots-vertical"
             />
           </template>
-          <b-dropdown-item>
-            {{ '_twin-detail.data.list.show-all' | translate }}
+          <b-dropdown-item disabled>
+            <span
+              class="text-muted"
+              style="margin-left: 0"
+            >{{ '_twin-detail.data.list.show-all' | translate }}</span>
           </b-dropdown-item>
           <b-dropdown-item
             @click="$refs.addListItem.showPanel()"
@@ -60,7 +63,13 @@
       ref="addListItem"
       :name="name"
       :schema="schema"
-      :value="value"
+    />
+
+    <list-item-detail
+      ref="listItemDetail"
+      :name="name"
+      :schema="schema"
+      :value="getValues()"
     />
 
     <div class="mt-3">
@@ -70,6 +79,7 @@
         :items="getValues()"
         :show-empty="true"
         :responsive="true"
+        @row-clicked="openDetail"
       >
         <template v-slot:cell(__loading)="value">
           <div

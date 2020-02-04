@@ -68,11 +68,12 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       }
     }
 
-    // display primitives and unknown objects
+    // display unknown objects
     if (typeof value === 'object') {
       return JSON.stringify(value);
     }
 
+    // display primitives
     return value;
   }
 
@@ -103,8 +104,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Generates dynamic columns from array input
-   * @param input data input
+   * Generates dynamic columns
    */
   setColumns(): void {
     const type = DAppContainer.getSchemaType(this.schema.items);
@@ -120,7 +120,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
             tdClass: 'truncate',
           });
         });
-
         break;
       }
       default: {
@@ -140,5 +139,11 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     });
 
     this.columns = columns;
+  }
+
+  openDetail(item) {
+    console.log(item);
+
+    (this.$refs.listItemDetail as any).showPanel();
   }
 }

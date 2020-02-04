@@ -23,11 +23,9 @@ import { bccHelper } from '@evan.network/ui-dapp-browser';
 import EvanFormControl from './formControl';
 import { EvanFormControlOptions } from './interfaces';
 
-/* eslint no-underscore-dangle: 0 */
-
 /**
- * Generalized data representation for a evan.network formular. Handles full validation and error
- * handling logic. Uses the EvanFormControls to handle all controls seperated and calculates them
+ * Generalized data representation for a evan.network form. Handles full validation and error
+ * handling logic. Uses the EvanFormControls to handle all controls separated and calculates them
  * into one status detail into this class.
  *
  * @class      EvanForm
@@ -165,4 +163,3 @@ export default class EvanForm {
     return ret;
   }
 }
-/* eslint no-underscore-dangle: 2 */
