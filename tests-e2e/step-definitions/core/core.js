@@ -53,7 +53,10 @@ Then('I press the {string} key', async (key) => {
   await client.keys(client.Keys[key]);
 });
 
+/**
+ * Waits til loading was finished or max n-seconds.
+ */
 Then('I wait {int} seconds until loading was finished', async (waitTime) => {
   client.useCss();
-  await client.waitForElementNotPresent('.evan-loading', parseInt(waitTime, 10) * 1000);
+  await client.waitForElementNotPresent('.evan-loading', waitTime * 1000);
 });

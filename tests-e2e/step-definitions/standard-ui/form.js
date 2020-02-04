@@ -10,21 +10,22 @@ import {
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
-When(/^I set( angular)? Input field with label "([^"]*)" to "([^"]*)"$/, async (angular, label, content) => {
-  client.useXpath();
+When(/^I set( angular)? Input field with label "([^"]*)" to ("([^"]*)"|`([^`]*)`)$/,
+  async (angular, label, content) => {
+    client.useXpath();
 
-  // select following or preceding input with label having text or having text in any tag inside label tag
-  const selector = getSelector(label, !!angular);
+    // select following or preceding input with label having text or having text in any tag inside label tag
+    const selector = getSelector(label, !!angular);
 
-  await client.expect.element(selector).to.be.visible;
-  await betterClearValue(selector);
+    await client.expect.element(selector).to.be.visible;
+    await betterClearValue(selector);
 
-  if (content && typeof content === 'string' && content.length > 0) {
-    await client.setValue(selector, parseEnvVar(content));
-  }
+    if (content && typeof content === 'string' && content.length > 0) {
+      await client.setValue(selector, parseEnvVar(content));
+    }
 
-  client.useCss();
-});
+    client.useCss();
+  });
 
 /**
  * Same semantic like "When I set( angular)? Input field with label ".
@@ -103,6 +104,8 @@ When('I clear Input field with id {string}',
 
 /**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
+ *
+ * TODO: doesn't work with input of type checkbox currently!
  */
 When('I click on input field with label {string}',
   async (label) => {
@@ -110,6 +113,7 @@ When('I click on input field with label {string}',
 
     // select following or preceding input with label having text or having text in any tag inside label tag
     const selector = getSelector(label);
+    await client.waitForElementPresent(selector, 1000);
     await client.expect.element(selector).to.be.visible;
     await client.click(selector);
 
@@ -128,6 +132,20 @@ When('I clear input field with label {string}',
     const selector = getSelector(label);
     await client.expect.element(selector).to.be.visible;
     await betterClearValue(selector);
+
+    client.useCss();
+  });
+
+/**
+ * Click on label next to the evan checkbox control
+ */
+When('I click on vue checkbox control with id {string}',
+  async (id) => {
+    client.useXpath();
+
+    const selector = `//*[@id="${id}"]/following-sibling::label[@for="${id}"]`;
+    await client.expect.element(selector).to.be.visible;
+    await client.click(selector);
 
     client.useCss();
   });
@@ -204,26 +222,13 @@ Then('Input fields with labels {string} should be visible',
   });
 
 /**
- * Click on label next to the evan checkbox control
- */
-Then('I click on vue checkbox control with id {string}',
-  async (id) => {
-    client.useXpath();
-
-    const selector = `//*[@id="${id}"]/following-sibling::label[@for="${id}"]`;
-    await client.expect.element(selector).to.be.visible;
-    await client.click(selector);
-
-    client.useCss();
-  });
-
-/**
  * Looks for an input field with sibling label having certain content and fills the values into the input field.
  */
-Then('The value of the Input field with label {string} should be {string}',
+Then(/^The value of the Input field with label "([^"]*)" should be ("([^"]*)"|`([^`]*)`)$/,
   async (label, content) => {
     client.useXpath();
-    const expected = parseEnvVar(content);
+    const toTest = content || '';
+    const expected = parseEnvVar(toTest);
     // select following or preceding input with label having text or having text in any tag inside label tag
     const selector = getSelector(label);
     await client.assert.value(selector, expected);
@@ -239,5 +244,18 @@ Then('The value of the Input field with placeholder {string} should be {string}'
     const expected = parseEnvVar(content);
 
     await client.assert.value(`//input[@placeholder='${placeholder}']`, expected);
+    client.useCss();
+  });
+
+
+/**
+ * Looks for an input field with certain placeholder and checks if it has the desired value.
+ */
+Then('The value of the Input field with id {string} should be {string}',
+  async (id, content) => {
+    client.useXpath();
+    const expected = parseEnvVar(content);
+
+    await client.assert.value(`//input[@id='${id}']`, expected);
     client.useCss();
   });
