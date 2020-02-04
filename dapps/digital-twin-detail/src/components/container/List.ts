@@ -56,7 +56,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   /**
    * Transforms table cell into desired a readable output
-   * @param value input from table
+   * @param value input from table cell. Can be of type string, number, object or file list
    * @param key object key
    */
   transformValuesForDisplay(value, key?: string): string {
@@ -143,9 +143,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     this.columns = columns;
   }
 
-  openDetail(item) {
-    console.log(item);
-
+  openDetail(item): void {
     this.selectedValue = item;
 
     (this.$refs.listItemDetail as any).showPanel();

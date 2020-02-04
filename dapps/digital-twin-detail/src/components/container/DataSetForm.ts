@@ -64,15 +64,19 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }) isLoading: boolean;
 
   /**
-   * Dynamic form definition for the corresponding dataSchema.
+   * Mirror EvanForm props
+   * TODO: update to not repeat ourselves
    */
-  form: EvanForm = null;
-
   @Prop({ default: true }) editable: boolean;
 
   @Prop({ default: true }) shareable: boolean;
 
   @Prop() onlyForm: boolean;
+
+  /**
+   * Dynamic form definition for the corresponding dataSchema.
+   */
+  form: EvanForm = null;
 
   /**
    * I18N scope for translating data set properties
