@@ -74,14 +74,13 @@
       <div class="d-flex flex-row mt-3">
         <evan-table
           class="clickable-rows"
-          :hover="true"
           :items="contacts"
           :fields="columns"
           :filter="filter"
           :filter-included-fields="filterBy"
-          :sticky-header="'calc(100vh - 85px)'"
           :show-empty="true"
           :show-scrollbar="true"
+          :sticky-header="'calc(100vh - 85px)'"
           @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(alias)="contacts">

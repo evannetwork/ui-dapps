@@ -23,7 +23,8 @@
       },
       "specifications": {
         "specifications-title": "Spezifikationen"
-      }
+      },
+      "table-empty": "Noch keine Daten vorhanden"
     },
     "delete": {
       "confirm-delete": "Löschen",
@@ -49,7 +50,7 @@
       "initiator": "Initiator",
       "overview-title": "Übersicht",
       "owner": "Besitzer",
-      "transaction-title": "Letzte Transaktionen"
+      "transactions-title": "Letzte Transaktionen"
     },
     "sharings": {
       "sharings-title": "Freigaben"

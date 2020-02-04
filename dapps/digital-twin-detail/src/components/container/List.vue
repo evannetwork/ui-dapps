@@ -71,6 +71,10 @@
         <template v-slot:cell()="value">
           {{ transformValuesForDisplay(value.item, value.field.key) }}
         </template>
+
+        <template v-slot:empty>
+          <span>{{ '_twin-detail.data.table-empty' | translate }}</span>
+        </template>
       </evan-table>
     </div>
   </div>
