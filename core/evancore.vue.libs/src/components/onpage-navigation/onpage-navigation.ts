@@ -34,7 +34,7 @@ interface Entry {
  * Component to provide simple scroll to element functionality.
  * Requires a list if ids and labels, where the ids should be available somewhere in rendered HTML.
  *
- * @usage <evan-onpage-navigation :entries="navEntries" scrollContainerSelector=".dapp-wrapper-content" />
+ * @usage <evan-onpage-navigation :entries="navEntries" scroll-container-selector=".dapp-wrapper-content" offset="0" />
  * @class OnpageNavigationComponent
  * @selector evan-onpage-navigation
  */
@@ -55,6 +55,13 @@ class OnpageNavigationComponent extends mixins(EvanComponent) {
   @Prop({
     default: [],
   }) entries: Entry[];
+
+  /**
+   * Offset of items to adopt for margin and padding of containers.
+   */
+  @Prop({
+    default: 0,
+  }) offset: number;
 
   /**
    * The id of the currently active item.
@@ -136,7 +143,7 @@ class OnpageNavigationComponent extends mixins(EvanComponent) {
     this.scrollContainer.scrollTo({
       behavior: 'smooth',
       left: element.offsetLeft,
-      top: element.offsetTop,
+      top: element.offsetTop - this.offset,
     });
   }
 
@@ -144,7 +151,13 @@ class OnpageNavigationComponent extends mixins(EvanComponent) {
    * Find and set the reference to the scroll container.
    */
   setScrollContainer(): void {
-    const element = document.getElementById(this.entries[0].id);
+    let element = document.getElementById(this.entries[0].id);
+
+    if (!element) {
+      this.runtime.logger.log('Can\'t find first element. Please check the given id\'s', 'warning');
+
+      element = document.body;
+    }
 
     this.scrollContainer = element.closest(this.scrollContainerSelector);
   }

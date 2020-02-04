@@ -44,6 +44,16 @@ export default class ContainerComponent extends mixins(EvanComponent) {
   }
 
   /**
+   * Returns mapped entries.
+   */
+  get entries() {
+    return this.$store.state.container.entryKeys.map((key: string) => ({
+      id: key,
+      label: key,
+    }));
+  }
+
+  /**
    * Setup vuex container and ensure entry data
    */
   async setupContainer(): Promise<void> {

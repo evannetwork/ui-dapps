@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div class="onpage-nav d-none d-md-block">
+  <div class="onpage-nav">
     <ul>
       <li
         v-for="entry of entries"
