@@ -3,10 +3,11 @@
 ## Next Version
 ### Features
 - combine vue, core, dapps and e2e tests within this project
+- add`i18n-ajv` library
 - core
   - add `bootstrap.vue.libs` (v2.1.0)
     - add bootstrap-vue import and expose it as dapp (currently only TableLitePlugin, TablePlugin, TableSimplePlugin exported)
- - `evancore.vue.libs` (v1.10.0)
+  - `evancore.vue.libs` (v1.10.0)
     - add `callbackUrl` support for `Dispatcher`, so user will get sticky toast to open this url when dispatcher finished
 
 ### Fixes

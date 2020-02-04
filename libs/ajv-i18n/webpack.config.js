@@ -17,38 +17,13 @@
   the following URL: https://evan.network/license/
 */
 
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import { EvanComponent } from '@evan.network/ui-vue-core';
-
-import { ListSchema } from './DataSchemaInterface';
-import DataSetForm from './DataSetForm';
-
-
-@Component
-export default class AddListItemComponent extends mixins(EvanComponent) {
-  @Prop() name: string;
-
-  @Prop() schema: ListSchema;
-
-  @Prop() value: any;
-
-  dataSetForm: DataSetForm = null;
-
-  showPanel(): void {
-    (this.$refs.addListItemPanel as any).show();
-  }
-
-  closePanel(): void {
-    (this.$refs.addListItemPanel as any).hide();
-  }
-
-  onSave(): void {
-    this.$store.state.container.addListEntries(this.name, [this.dataSetForm.getFormData()]);
-    this.closePanel();
-  }
-
-  isValid(): boolean {
-    return this.dataSetForm?.form?.isValid;
-  }
-}
+// load not the name from package.json, it useds @evan.network/ui-vue-core and not the dbcp origin
+module.exports = require('../../scripts/dapp/webpack.config')(
+  require('./dbcp.json').public.name,
+  require('path').resolve(__dirname, './dist'),
+  true,
+  true,
+  {
+    '@evan.network/ui-dapp-browser': '@evan.network/ui-dapp-browser',
+  },
+);

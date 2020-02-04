@@ -18,7 +18,7 @@
 */
 
 import {
-  Container, ContainerPlugin, Runtime, DigitalTwinOptions,
+  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils,
 } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -69,6 +69,31 @@ class DAppContainer extends Container {
    * Containers plugin definition for accessing entry data schemas.
    */
   plugin: ContainerPlugin;
+
+  /**
+   * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
+   *
+   * @param      {any}      subSchema   ajv sub schema
+   * @return     {string}   The type.
+   */
+  static getSchemaType(subSchema: any): string {
+    // check if it's a file
+    if (subSchema?.$comment) {
+      let $comment;
+
+      try {
+        $comment = JSON.parse(subSchema.$comment);
+      } catch (ex) {
+        // could not parse comment
+      }
+
+      if ($comment?.isEncryptedFile) {
+        return 'files';
+      }
+    }
+
+    return subSchema?.type;
+  }
 
   /**
    * Call super and initialize new container class.
@@ -163,6 +188,9 @@ class DAppContainer extends Container {
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
       } else {
         this.entries[entryKey] = await this.getEntry(entryKey);
+        if (this.entries[entryKey] === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+          this.entries[entryKey] = undefined;
+        }
       }
     }));
   }

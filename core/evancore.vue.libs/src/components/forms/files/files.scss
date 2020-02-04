@@ -24,6 +24,10 @@
 
   min-height: 50px;
 
+  /deep/ .invalid-feedback {
+    display: block;
+  }
+
   .batch-label {
     height: 50px;
     padding: 15px;

@@ -126,15 +126,15 @@ export default class EvanForm {
     // create the form control
     this.vueInstance.$set(this, controlKey, new EvanFormControl(
       controlKey,
-      undefined,
+      control.value,
       this.vueInstance,
-      control.validate,
+      undefined,
       this,
       control.uiSpecs,
     ));
 
-    // set the value
-    this[controlKey].value = control.value;
+    // set the validation afterwards
+    this[controlKey].controlValidate = control.validate;
 
     // trigger control validation
     this.validateControls();
