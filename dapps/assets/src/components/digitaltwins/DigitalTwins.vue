@@ -84,7 +84,7 @@
           class="clickable-rows"
           :items="data"
           :fields="columns"
-          :show-scrollbar="true"
+          :show-empty="true"
           :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
@@ -123,8 +123,14 @@
               @click="addFavorite(twin)"
             />
           </template>
+
           <template v-slot:table-caption>
             <div class="table-spacer" />
+          </template>
+
+          <!-- Empty slots -->
+          <template v-slot:empty>
+            <span>{{ '_assets.digitaltwins.digitaltwins-empty' | translate }}</span>
           </template>
         </evan-table>
       </div>

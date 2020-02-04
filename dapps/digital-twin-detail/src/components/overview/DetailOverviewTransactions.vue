@@ -18,7 +18,7 @@
         :show-empty="true"
       >
         <template v-slot:cell(timestamp)="data">
-          {{ data.item.timestamp | moment('DD.MM.YYYY') }}
+          {{ data.item.timestamp | moment('DD.MM.YYYY hh:mm') }}
         </template>
         <template v-slot:cell(action)="data">
           <evan-button
