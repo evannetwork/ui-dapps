@@ -16,39 +16,11 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+// map the original vue path to vue.libs
+import { getDomainName, System } from '@evan.network/ui-dapp-browser';
+import en from 'ajv-i18n/localize/en';
+import de from 'ajv-i18n/localize/de';
 
-import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+System.map['ajv-i18n'] = `i18n.ajv.${getDomainName()}!dapp-content`;
 
-import { ListSchema } from './DataSchemaInterface';
-import DataSetForm from './DataSetForm';
-
-
-@Component
-export default class AddListItemComponent extends mixins(EvanComponent) {
-  @Prop() name: string;
-
-  @Prop() schema: ListSchema;
-
-  @Prop() value: any;
-
-  dataSetForm: DataSetForm = null;
-
-  showPanel(): void {
-    (this.$refs.addListItemPanel as any).show();
-  }
-
-  closePanel(): void {
-    (this.$refs.addListItemPanel as any).hide();
-  }
-
-  onSave(): void {
-    this.$store.state.container.addListEntries(this.name, [this.dataSetForm.getFormData()]);
-    this.closePanel();
-  }
-
-  isValid(): boolean {
-    return this.dataSetForm?.form?.isValid;
-  }
-}
+export default { en, de };

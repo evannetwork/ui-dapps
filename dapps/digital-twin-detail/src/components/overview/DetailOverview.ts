@@ -44,8 +44,6 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
     }
     this.twin = this.$store.state.twin;
     this.transactions = await this.getLastTransactions(this.twin);
-    console.log('twin', this.twin);
-    console.log('transactions', this.transactions);
   }
 
   /**

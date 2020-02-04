@@ -31,11 +31,10 @@
       :checked="value"
       @blur="$emit('blur')"
       @focus="$parent.$emit('setFocus')"
-      @input="$emit('input', $event.target.checked)"
+      @click="onClick()"
     >
     <label
       :for="id"
-      @click="onLabelClick()"
     />
   </evan-form-control>
 </template>

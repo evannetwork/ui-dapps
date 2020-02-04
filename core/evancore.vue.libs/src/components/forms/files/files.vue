@@ -110,12 +110,6 @@
     >
       {{ emptyText | translate }}
     </div>
-    <div
-      v-if="error"
-      class="invalid-feedback"
-    >
-      {{ error | translate }}
-    </div>
   </evan-form-control>
 </template>
 

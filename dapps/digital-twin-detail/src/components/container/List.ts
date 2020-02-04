@@ -38,18 +38,18 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   schema: ListSchema;
 
-  value: any[];
-
   container: DAppContainer;
 
-  columns: string[];
+  columns: any[];
+
+  static isFileList(input: string | number | FileList): input is FileList {
+    return input && Object.keys(input).includes('files');
+  }
 
   created(): void {
     this.container = this.$store.state.container;
-    const { dispatcherData, plugin, entries } = this.container;
-    this.schema = plugin.template.properties[this.name].dataSchema;
-    this.value = dispatcherData[this.name] || entries[this.name];
-    this.columns = ContainerListComponent.getColumns(this.value);
+    this.schema = this.container.plugin.template.properties[this.name].dataSchema;
+    this.setColumns();
   }
 
   /**
@@ -67,8 +67,22 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
         return this.transformValuesForDisplay(value[key]);
       }
     }
+
     // display primitives and unknown objects
-    return JSON.stringify(value);
+    if (typeof value === 'object') {
+      return JSON.stringify(value);
+    }
+
+    return value;
+  }
+
+  /**
+   * Is the current entry in loading state and currently in dispatcher calculation?
+   *
+   * @param      {<type>}  value   The value
+   */
+  isValueLoading(value): boolean {
+    return (this.container.dispatcherData[this.name] || []).indexOf(value) !== -1;
   }
 
   /**
@@ -81,20 +95,50 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       : `${fileList.files.length} ${this.$t('_twin-detail.data.files')}`;
   }
 
-  static isFileList(input: string | number | FileList): input is FileList {
-    return Object.keys(input).includes('files');
+  getValues(): any[] {
+    return [
+      ...(this.container.dispatcherData[this.name] || []),
+      ...(this.container.entries[this.name] || []),
+    ];
   }
 
   /**
    * Generates dynamic columns from array input
    * @param input data input
    */
-  static getColumns(input: any[]): string[] {
-    // Columns from object keys
-    if (typeof input[0] === 'object') {
-      return Object.keys(input[0]);
+  setColumns(): void {
+    const type = DAppContainer.getSchemaType(this.schema.items);
+    const i18nScope = `${this.$route.params.container}.${this.name}`;
+    const columns = [];
+
+    switch (type) {
+      case 'object': {
+        Object.keys(this.schema.items.properties).forEach((key) => {
+          columns.push({
+            key,
+            label: this.$t(`${i18nScope}.properties.${key}.label`, key),
+            tdClass: 'truncate',
+          });
+        });
+
+        break;
+      }
+      default: {
+        columns.push({
+          key: 'value',
+          label: this.$t('_twin-detail.data.list.value'),
+          tdClass: 'truncate',
+        });
+        break;
+      }
     }
-    // Fallback for array with primitives
-    return ['TODO generic list'];
+
+    columns.push({
+      key: '__loading',
+      label: '',
+      tdClass: 'loading-cell',
+    });
+
+    this.columns = columns;
   }
 }

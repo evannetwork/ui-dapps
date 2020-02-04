@@ -1,0 +1,19 @@
+{
+  "author": "evan GmbH",
+  "description": "",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "API",
+    "VueJS",
+    "DApp",
+    "CSS"
+  ],
+  "main": "dist/i18n.ajv.js",
+  "name": "@evan.network/ajv-i18n",
+  "scripts": {
+    "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
+  },
+  "typings": "dist/i18n.ajv.d.ts",
+  "version": "2.5.2"
+}
