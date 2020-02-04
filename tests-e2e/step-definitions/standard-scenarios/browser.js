@@ -11,8 +11,8 @@ const evan = testUtils.setupEvan(client);
  * Navigate to path in browser...
  */
 Given('I am on the path {string}', async (path) => {
-  client.useCss();
   await client.url(`${evan.baseUrl}${path}`);
+
   await client.pause(1000);
 });
 

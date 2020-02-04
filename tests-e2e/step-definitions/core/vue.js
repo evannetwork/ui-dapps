@@ -44,6 +44,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   await client.click('.btn.btn-primary:not([disabled])');
 
   await client.waitForElementNotPresent('.evan-loading', 3 * 1000);
+  await client.waitForElementPresent('h1', 2000); // ensure the initial routing has finished.
 
   loggedIn = true;
 });
