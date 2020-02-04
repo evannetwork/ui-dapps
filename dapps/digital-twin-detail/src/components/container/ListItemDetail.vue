@@ -24,9 +24,9 @@
         <div class="d-flex">
           <evan-button
             type="primary"
-            class="ml-3 flex-grow-1"
-            :label="'_twin-detail.data.list.list-item-detail.cancel' | translate"
-            @click="listItemDetailPanel.hide()"
+            class="flex-grow-1"
+            :label="'_twin-detail.data.list.list-item-detail.close' | translate"
+            @click="closePanel"
           />
         </div>
       </template>

@@ -69,7 +69,7 @@
       ref="listItemDetail"
       :name="name"
       :schema="schema"
-      :value="getValues()"
+      :value="selectedValue"
     />
 
     <div class="mt-3">

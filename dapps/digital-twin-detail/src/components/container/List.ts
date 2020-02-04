@@ -42,6 +42,8 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   columns: any[];
 
+  selectedValue = null;
+
   static isFileList(input: string | number | FileList): input is FileList {
     return input && Object.keys(input).includes('files');
   }
@@ -143,6 +145,8 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   openDetail(item) {
     console.log(item);
+
+    this.selectedValue = item;
 
     (this.$refs.listItemDetail as any).showPanel();
   }
