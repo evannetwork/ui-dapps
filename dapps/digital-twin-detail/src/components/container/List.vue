@@ -20,7 +20,7 @@
 <template>
   <div class="content-card">
     <div class="d-flex justify-content-between align-items-center pb-1">
-      <h5 class="my-0 py-0 text-uppercase font-weight-bold">
+      <h5 class="my-0 py-0 font-weight-bold">
         <i class="mdi mr-2 mdi-lock" />
         {{ $t(`${$route.params.container}.${name}`, name) }}
       </h5>
