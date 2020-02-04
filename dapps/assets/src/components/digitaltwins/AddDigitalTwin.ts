@@ -58,7 +58,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   @Prop() createdCallBack: Function;
 
-  beforeDestroy() {
+  beforeDestroy(): void {
     this.clearTwinCreateWatcher();
   }
 
@@ -167,7 +167,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
     dispatchers.twinCreateDispatcher.start(this.getRuntime(), {
       twinTemplate: template,
-      twinImage: dbcpFormValue.description.imgSquare,
+      twinImage: dbcpFormValue.imgSquare,
     });
   }
 
@@ -181,7 +181,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       const reader = new FileReader();
 
       try {
-        reader.onload = (ev) => {
+        reader.onload = (ev): void => {
           resolve(JSON.parse(ev.target.result as string));
         };
 

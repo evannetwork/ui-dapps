@@ -19,14 +19,23 @@
 
 <template>
   <div>
-    <div class="profile-picture" :class="size">
-      <div class="mask" :class="type">
+    <div
+      class="profile-picture"
+      :class="size"
+    >
+      <div
+        class="mask"
+        :class="type"
+      >
         <img
           v-if="srcString && srcString.length > 0"
           v-bind="$attrs"
           :src="srcString"
-        />
-        <div v-else class="image-placeholder">
+        >
+        <div
+          v-else
+          class="image-placeholder"
+        >
           {{ getInitials(accountName) }}
         </div>
       </div>
@@ -35,42 +44,54 @@
         class="verification-icon"
         :src="`${ $store.state.uiLibBaseUrl }/assets/verification.svg`"
         alt="verification icon"
-      />
+      >
       <evan-button
         v-if="isEditable"
-        @click="$refs.pictureUploadModal.show()"
         class="m-auto"
         type="icon"
         icon="mdi mdi-camera"
+        @click="$refs.pictureUploadModal.show()"
       />
     </div>
     <!-- File upload modal -->
-    <evan-modal ref="pictureUploadModal" :maxWidth="'600px'">
+    <evan-modal
+      ref="pictureUploadModal"
+      :max-width="'600px'"
+      @close="cancelPictureModal()"
+    >
       <template v-slot:header>
-        <h5 class="modal-title">{{ '_evan.profile-picture.upload' | translate }}</h5>
+        <h5 class="modal-title">
+          {{ '_evan.profile-picture.upload' | translate }}
+        </h5>
       </template>
       <template v-slot:body>
         <evan-file-input
-          stacked="true"
           v-model="fileForm.value"
+          stacked="true"
           :class="{ 'is-invalid' : fileForm.error }"
           :accept="'image/x-png,image/png,image/gif,image/jpeg'"
-          @input="pictureChanged"
           :placeholder="$t('_evan.profile-picture.upload-dnd')"
+          @input="pictureChanged"
         />
-        <div class="profile-picture m-auto lg" >
-          <div class="mask" :class="type">
+        <div class="profile-picture m-auto lg">
+          <div
+            class="mask"
+            :class="type"
+          >
             <img
               v-if="changedPicture && changedPicture.blobUri && changedPicture.blobUri.length > 0"
               :src="changedPicture.blobUri"
-            />
+            >
             <img
               v-else-if="srcString && srcString.length > 0"
               v-bind="$attrs"
               :src="srcString"
-            />
-            <div v-else class="image-placeholder">
-              {{ getInitials(accountName) }}
+            >
+            <div
+              v-else
+              class="image-placeholder"
+            >
+              {{ getInitials() }}
             </div>
           </div>
         </div>
@@ -78,8 +99,8 @@
       <template v-slot:footer>
         <evan-button
           :disabled="!changedPicture"
-          @click="usePicture"
           :label="$t('_evan.profile-picture.use-picture')"
+          @click="usePicture"
         />
       </template>
     </evan-modal>
@@ -87,8 +108,9 @@
 </template>
 
 <script lang="ts">
-  import Component from "./profile-picture";
-  export default Component;
+import Component from './profile-picture';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>
