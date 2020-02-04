@@ -1,7 +1,5 @@
 import { client } from 'nightwatch-api';
-import {
-  Given, When, Then, setDefinitionFunctionWrapper, Tag,
-} from 'cucumber';
+import { Given, When } from 'cucumber';
 
 import * as testUtils from '../../test-utils/test-utils.js';
 
