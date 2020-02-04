@@ -276,7 +276,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         const locale = this.$i18n.locale();
         (ajvI18n[locale] || ajvI18n.en)(validation);
 
-        return validation.map((error) => error.message).join(', ');
+        return (validation as any[]).map((error) => error.message).join(', ');
       }
       return true;
     };

@@ -113,8 +113,8 @@ export async function fileToContainerFile(
  * Takes an dataUri and resizes the img to an maximum px ratio of 1000px:1000px.
  *
  * @param      {string}  dataUri     Data Uri
- * @param      {any}     dimensions  dimensions to transform the picture to (default max_width:
- *                                   1000, max_height: 1000)
+ * @param      {any}     dimensions  dimensions to transform the picture to (default maxWidth:
+ *                                   1000, maxHeight: 1000)
  * @return     {blob}    Returns the resized img as a blob.
  */
 export async function resizeImage(dataUri: string, dimensions = { maxWidth: 1000, maxHeight: 1000 }): Promise<any> {
@@ -129,10 +129,10 @@ export async function resizeImage(dataUri: string, dimensions = { maxWidth: 1000
       const copyContext = canvasCopy.getContext('2d');
       let ratio = 1;
 
-      if (img.width > dimensions.max_width) {
-        ratio = dimensions.max_width / img.width;
-      } else if (img.height > dimensions.max_height) {
-        ratio = dimensions.max_height / img.height;
+      if (img.width > dimensions.maxWidth) {
+        ratio = dimensions.maxWidth / img.width;
+      } else if (img.height > dimensions.maxHeight) {
+        ratio = dimensions.maxHeight / img.height;
       }
 
       canvasCopy.width = img.width;

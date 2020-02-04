@@ -104,7 +104,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    * Load user specific information
    */
   async created(): Promise<void> {
-    const runtime = this.getRuntime();
+    const runtime = this.getRuntime() as any;
     this.profile = new bcc.Profile({
       accountId: runtime.activeAccount,
       profileOwner: this.address,
@@ -158,7 +158,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   /**
    * Can the edit modee be used?
    */
-  canEdit(): void {
+  canEdit(): boolean {
     return this.editable && this.size === 'lg' && this.address === this.$store.state.runtime.activeAccount;
   }
 
@@ -183,7 +183,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
         await FileHandler.resizeImage(
           this.userInfo.picture.files[0].blobUri,
           // definitely match the height
-          { maxWidth: 1000, maxHight: 160 },
+          { maxWidth: 1000, maxHeight: 160 },
         ),
       );
     }

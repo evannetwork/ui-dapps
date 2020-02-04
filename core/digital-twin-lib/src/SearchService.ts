@@ -32,6 +32,7 @@ export class SearchService {
     this.runtime = runtime;
     const core = runtime.environment === 'testcore' ? '.test' : '';
     this.requestUrl = `https://search${core}.evan.network/api/smart-agents/search`;
+    this.requestUrl = 'http://localhost:8080/api/smart-agents/search';
   }
 
   async query(
