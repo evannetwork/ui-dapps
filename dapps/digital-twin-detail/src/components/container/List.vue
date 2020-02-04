@@ -62,7 +62,7 @@
 
     <div class="mt-3">
       <evan-table
-        class="simple"
+        class="simple clickable-rows"
         :fields="columns"
         :items="value"
         :show-empty="true"
