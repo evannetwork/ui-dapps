@@ -21,9 +21,11 @@
   <div class="container py-3">
     <label>
       Only Form ?
-      <input type="checkbox"
+      <input
         v-model="onlyForm"
-        @change="showForms = false; $nextTick(() => showForms = true);"/>
+        type="checkbox"
+        @change="showForms = false; $nextTick(() => showForms = true);"
+      >
     </label>
 
     <template v-if="showForms">
@@ -41,8 +43,8 @@
             label="files"
             v-model="sampleForm.files.value"
             :stacked="stacked"
-            @input="$refs.sampleForm.setEditMode(true);">
-          </evan-file-input>
+            @input="$refs.sampleForm.setEditMode(true);"
+          />
         </template>
       </evan-form>
       <evan-form
@@ -132,8 +134,9 @@
       <evan-permissions-editor
         :loadPermissions="loadPermissions"
         :updatePermissions="updatePermissions"
-        :relative="true"
         :sortFilters="isJsonString(sortFilters) ? JSON.parse(sortFilters) : null"
+        :contacts="contacts"
+        :selected-contact="selectedSharedContacts"
       />
 
       <h4>sortFilters JSON</h4>

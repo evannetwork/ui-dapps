@@ -46,7 +46,7 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     RootComponent: Main,
     routes,
     state: { },
-    translations: translations,
-    Vue: Vue,
+    translations,
+    Vue,
   });
 }
