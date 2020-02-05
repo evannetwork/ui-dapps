@@ -11,12 +11,7 @@
       >
         <evan-permissions-editor
           :contacts="contacts"
-          :selected-contact="selectedSharedContacts"
-          :load-permissions="loadPermissions"
-          :update-permissions="updatePermissions"
-          :on-select="handleOnSelect"
-          :sort-filters="$store.state.profileDApp.sharingFilter"
-          i18n-scope="_profile.sharing"
+          i18n-scope="_twin-detail"
           @init="permissionsEditor = $event"
         />
 

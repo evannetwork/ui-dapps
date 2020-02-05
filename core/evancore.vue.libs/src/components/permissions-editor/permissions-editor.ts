@@ -21,7 +21,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { deepEqual, bccUtils } from '@evan.network/ui';
-import { Runtime } from '@evan.network/api-blockchain-core';
+import { Runtime, Profile } from '@evan.network/api-blockchain-core';
 import { Prop, Watch } from 'vue-property-decorator';
 import {
   ContactInterface,
@@ -263,7 +263,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
    * writes specific string in selectedUsername variable used in permission text
    */
   async setUserNameWithAddress(): Promise<void> {
-    const profile = new bcc.Profile({
+    const profile = new Profile({
       accountId: this.runtime.activeAccount,
       profileOwner: this.selectedContact,
       ...this.runtime,

@@ -20,15 +20,17 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { bccUtils } from '@evan.network/ui';
 
 
 @Component
 export default class ShareContainerComponent extends mixins(EvanComponent) {
   contacts = null;
 
-  /* created() {
-       this.contacts =
-     } */
+
+  async created(): Promise<void> {
+    this.contacts = await bccUtils.getContacts(this.getRuntime());
+  }
 
   showPanel(): void {
     (this.$refs.shareContainerPanel as any).show();

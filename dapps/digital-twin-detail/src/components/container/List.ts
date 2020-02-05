@@ -151,4 +151,10 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
     (this.$refs.listItemDetail as any).showPanel();
   }
+
+  share(item): void {
+    console.log(item);
+
+    (this.$refs.shareContainer as any).showPanel();
+  }
 }

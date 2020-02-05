@@ -72,6 +72,10 @@
       :value="selectedValue"
     />
 
+    <share-container
+      ref="shareContainer"
+    />
+
     <div class="mt-3">
       <evan-table
         class="simple clickable-rows"
