@@ -64,8 +64,13 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }) isLoading: boolean;
 
   /**
-   * Render only the formular without adding the formular wrapper.
+   * Mirror EvanForm props
+   * TODO: update to not repeat ourselves
    */
+  @Prop({ default: true }) editable: boolean;
+
+  @Prop({ default: true }) shareable: boolean;
+
   @Prop() onlyForm: boolean;
 
   /**
@@ -127,14 +132,14 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       }
     }
 
-    // check all avaialable types and configure special form control requirements
+    // check all available types and configure special form control requirements
     const { logger } = this.getRuntime();
     switch (type) {
       case 'array': {
         control.uiSpecs.type = 'json';
         // test for valid json
         try {
-          JSON.stringify(JSON.parse(control.value));
+          JSON.parse(JSON.stringify(control.value));
         } catch (ex) {
           control.value = [];
           logger.log(`[${this.$route.params.twin}][${this.$route.params.container}][${this.name}] `
@@ -157,7 +162,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         control.uiSpecs.type = 'json';
         // test for valid json
         try {
-          JSON.stringify(JSON.parse(control.value));
+          JSON.parse(JSON.stringify(control.value));
         } catch (ex) {
           control.value = { };
           logger.log(`[${this.$route.params.twin}][${this.$route.params.container}][${this.name}] `

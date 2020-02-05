@@ -42,6 +42,8 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   columns: any[];
 
+  selectedValue = null;
+
   static isFileList(input: string | number | FileList): input is FileList {
     return input && Object.keys(input).includes('files');
   }
@@ -54,7 +56,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   /**
    * Transforms table cell into desired a readable output
-   * @param value input from table
+   * @param value input from table cell. Can be of type string, number, object or file list
    * @param key object key
    */
   transformValuesForDisplay(value, key?: string): string {
@@ -68,11 +70,17 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       }
     }
 
-    // display primitives and unknown objects
+    // show null values as empty strings
+    if ((value === null) || (value === undefined)) {
+      return '';
+    }
+
+    // display unknown objects
     if (typeof value === 'object') {
       return JSON.stringify(value);
     }
 
+    // display primitives
     return value;
   }
 
@@ -103,8 +111,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   }
 
   /**
-   * Generates dynamic columns from array input
-   * @param input data input
+   * Generates dynamic columns
    */
   setColumns(): void {
     const type = DAppContainer.getSchemaType(this.schema.items);
@@ -117,17 +124,14 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
           columns.push({
             key,
             label: this.$t(`${i18nScope}.properties.${key}.label`, key),
-            tdClass: 'truncate',
           });
         });
-
         break;
       }
       default: {
         columns.push({
           key: 'value',
           label: this.$t('_twin-detail.data.list.value'),
-          tdClass: 'truncate',
         });
         break;
       }
@@ -140,5 +144,11 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     });
 
     this.columns = columns;
+  }
+
+  openDetail(item): void {
+    this.selectedValue = item;
+
+    (this.$refs.listItemDetail as any).showPanel();
   }
 }

@@ -14,15 +14,21 @@
         "desc": "Beschreibung",
         "general-title": "Allgemein",
         "information-title": "Informationen",
+        "name": "Name",
         "owner": "Eigentümer",
+        "twin-image": "Bild",
         "type": "Typ",
         "type-value": "Digitaler Zwilling"
       },
       "list": {
         "add-list-item": {
+          "title": "Eintrag hinzufügen",
           "cancel": "Abbrechen",
-          "submit": "Hinzüfugen",
-          "title": "Eintrag hinzüfugen"
+          "submit": "Eintrag hinzufügen"
+        },
+        "list-item-detail": {
+          "close": "Schließen",
+          "title": "Detail"
         },
         "show-all": "Alle Anzeigen",
         "value": "Wert"

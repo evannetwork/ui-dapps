@@ -21,7 +21,7 @@
   <form
     id="addListItem"
     ref="addListItem"
-    @submit.prevent="preventModal()"
+    @submit.prevent="onSave"
   >
     <evan-swipe-panel
       ref="addListItemPanel"
@@ -37,6 +37,7 @@
         :is-loading="$store.state.container.dispatcherStates.entries[name]"
         :name="name"
         :value="value"
+        :shareable="false"
         :only-form="true"
         @init="dataSetForm = $event"
       />
@@ -54,7 +55,6 @@
             :is-loading="loading"
             :disabled="!isValid()"
             :label="'_twin-detail.data.list.add-list-item.submit' | translate"
-            @click="onSave()"
           />
         </div>
       </template>
