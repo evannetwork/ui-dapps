@@ -7,7 +7,6 @@
       }
     },
     "breadcrumbs": {
-      "addressbook.vue.evan": "Contacts",
       "detail": "Identity",
       "logout": "Logout",
       "settings": "Settings",
