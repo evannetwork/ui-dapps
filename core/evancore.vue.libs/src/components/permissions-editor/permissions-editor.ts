@@ -21,11 +21,13 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { deepEqual, bccUtils } from '@evan.network/ui';
-import * as bcc from '@evan.network/api-blockchain-core';
-import { ContactInterface, ContainerPermissionsInterface } from '../../interfaces';
-import EvanComponent from '../../component';
-
+import { Runtime } from '@evan.network/api-blockchain-core';
 import { Prop, Watch } from 'vue-property-decorator';
+import {
+  ContactInterface,
+  ContainerPermissionsInterface,
+} from '../../interfaces';
+import EvanComponent from '../../component';
 
 const clone = (obj: any) => JSON.parse(JSON.stringify(obj)); // TODO: import from common utils
 
@@ -33,22 +35,26 @@ interface SortFiltersInterface {
   [key: string]: string[];
 }
 
-@Component({ })
+@Component
 class PermissionsEditor extends mixins(EvanComponent) {
   permissionsChanged = false;
+
   initialPermissions: ContainerPermissionsInterface[] = null;
+
   isLoading = false;
 
   /**
    * initial contacts from current user
    */
   @Prop({
-    default: null
-  }) contacts: ContactInterface[];
+    default: null,
+  })
+  contacts: ContactInterface[];
 
   @Prop({
-    default: null
-  }) containersPermissions: ContainerPermissionsInterface[];
+    default: null,
+  })
+  containersPermissions: ContainerPermissionsInterface[];
 
   /**
    * Function to write the updated permissions object.
@@ -57,8 +63,9 @@ class PermissionsEditor extends mixins(EvanComponent) {
    * - updatePermissions(permissions: ContainerPermissionsInterface): Promise<boolean>
    */
   @Prop({
-    required: true
-  }) updatePermissions: Function;
+    required: true,
+  })
+  updatePermissions: Function;
 
   /**
    * Function to load the desired permissions object.
@@ -67,36 +74,41 @@ class PermissionsEditor extends mixins(EvanComponent) {
    * - loadPermissions(userId: string): Promise<ContainerPermissionsInterface>
    */
   @Prop({
-    required: true
-  }) loadPermissions: Function;
+    required: true,
+  })
+  loadPermissions: Function;
 
   /**
    * Initially pre-selected contact id.
    */
   @Prop({
-    default: null
-  }) selectedContact: string;
+    default: null,
+  })
+  selectedContact: string;
 
   /**
    * General translation scope.
    */
   @Prop({
-    default: '_evan.sharing'
-  }) i18nScope: string;
+    default: '_evan.sharing',
+  })
+  i18nScope: string;
 
   /**
    * Callback function when contact was selected.
    */
   @Prop({
-    type: Function
-  }) onSelect: Function;
+    type: Function,
+  })
+  onSelect: Function;
 
   /**
    * Use component in relative context.
    */
   @Prop({
-    default: false
-  }) relative: boolean;
+    default: false,
+  })
+  relative: boolean;
 
   /**
    * An object with arrays of sorted keys for each contract id,
@@ -108,13 +120,14 @@ class PermissionsEditor extends mixins(EvanComponent) {
    *  `['accountDetails', 'registration', 'contact']`
    */
   @Prop({
-    default: null
-  }) sortFilters: SortFiltersInterface | string[];
+    default: null,
+  })
+  sortFilters: SortFiltersInterface | string[];
 
   /**
    * Current users runtime.
    */
-  runtime: bcc.Runtime;
+  runtime: Runtime;
 
   /**
    * Name of the selected account adress
@@ -128,7 +141,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
    * @param oldVal
    */
   @Watch('selectedContact')
-  onSelectedContactChanged(val: string, oldVal: string) {
+  onSelectedContactChanged(val: string, oldVal: string): void {
     if (val !== oldVal) {
       this.getPermissionsForContact();
 
@@ -138,8 +151,8 @@ class PermissionsEditor extends mixins(EvanComponent) {
     }
   }
 
-  async created() {
-    this.runtime = (this as any).getRuntime();
+  created(): void {
+    this.runtime = this.getRuntime();
     this.getPermissionsForContact();
   }
 
@@ -151,15 +164,18 @@ class PermissionsEditor extends mixins(EvanComponent) {
    *  - contractId: the id of the contract which was changed
    *  - permissions: the updated permissions object
    */
-  updateContractPermissions({contractId, permissions}) {
+  updateContractPermissions({ contractId, permissions }): void {
     this.containersPermissions[contractId].permissions = permissions;
-    this.permissionsChanged = !deepEqual(this.containersPermissions, this.initialPermissions);
+    this.permissionsChanged = !deepEqual(
+      this.containersPermissions,
+      this.initialPermissions,
+    );
   }
 
   /**
    * set editor to null and close the panel if neccessary
    */
-  cancel() {
+  cancel(): void {
     this.selectedContact = null;
     this.containersPermissions = null;
     this.initialPermissions = null;
@@ -172,7 +188,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
   /**
    * Calls the `loadPermissions` function from properties with current contact id.
    */
-  async getPermissionsForContact() {
+  async getPermissionsForContact(): Promise<void> {
     if (!this.selectedContact || typeof this.selectedContact !== 'string') {
       this.containersPermissions = null;
 
@@ -182,13 +198,16 @@ class PermissionsEditor extends mixins(EvanComponent) {
     this.isLoading = true;
     this.setUserNameWithAddress();
     this.containersPermissions = null;
-    this.containersPermissions = await this.loadPermissions(this.selectedContact)
-      .catch((e: Error) => {
-        console.log('Error loading permissions', e.message);
-        this.isLoading = false;
-      });
+    this.containersPermissions = await this.loadPermissions(
+      this.selectedContact,
+    ).catch((e: Error) => {
+      console.error('Error loading permissions', e.message);
+      this.isLoading = false;
+    });
 
-    this.initialPermissions = this.containersPermissions ? clone(this.containersPermissions) : this.initialPermissions;
+    this.initialPermissions = this.containersPermissions
+      ? clone(this.containersPermissions)
+      : this.initialPermissions;
 
     this.isLoading = false;
   }
@@ -196,14 +215,19 @@ class PermissionsEditor extends mixins(EvanComponent) {
   /**
    * Calls the `updatePermissions` function from properties with the updated containersPermissions object.
    */
-  async writePermissions() {
+  async writePermissions(): Promise<void> {
     this.isLoading = true;
 
     try {
-      await this.updatePermissions(this.runtime, this.selectedContact, this.containersPermissions, this.initialPermissions);
+      await this.updatePermissions(
+        this.runtime,
+        this.selectedContact,
+        this.containersPermissions,
+        this.initialPermissions,
+      );
       this.initialPermissions = clone(this.containersPermissions);
     } catch (ex) {
-      return console.error('Error writing permissions', ex.message);
+      console.error('Error writing permissions', ex.message);
     }
 
     this.cancel();
@@ -215,7 +239,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
    *
    * @param contractId
    */
-  getSortFilter(contractId: string) {
+  getSortFilter(contractId: string): string[] {
     if (!this.sortFilters) {
       return null;
     }
@@ -228,7 +252,9 @@ class PermissionsEditor extends mixins(EvanComponent) {
       return this.sortFilters[contractId];
     }
 
-    console.warn(`getSortFilter function can not determine the desired filter array for ${contractId}`);
+    console.warn(
+      `getSortFilter function can not determine the desired filter array for ${contractId}`,
+    );
 
     return null;
   }
@@ -236,7 +262,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
   /**
    * writes specific string in selectedUsername variable used in permission text
    */
-  async setUserNameWithAddress() {
+  async setUserNameWithAddress(): Promise<void> {
     const profile = new bcc.Profile({
       accountId: this.runtime.activeAccount,
       profileOwner: this.selectedContact,

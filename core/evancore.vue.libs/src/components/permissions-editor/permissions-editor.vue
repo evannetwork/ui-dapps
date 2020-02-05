@@ -59,7 +59,3 @@ import Component from './permissions-editor';
 
 export default Component;
 </script>
-
-<style lang="scss" scoped>
-@import './permissions-editor.scss';
-</style>
