@@ -84,13 +84,13 @@
           class="clickable-rows"
           :items="data"
           :fields="columns"
-          :show-empty="true"
+          :show-empty="!isLoading"
           :sticky-header="'calc(100vh - 85px)'"
           :sort-by="sortBy"
           :sort-direction="reverse ? 'desc' : 'asc'"
           no-local-sorting="true"
           @sort-changed="sortHandler"
-          @scroll.native="scrollHandler"
+          @scroll="scrollHandler"
           @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(icon)>

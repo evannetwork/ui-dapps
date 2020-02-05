@@ -78,7 +78,7 @@
           :fields="columns"
           :filter="filter"
           :filter-included-fields="filterBy"
-          :show-empty="true"
+          :show-empty="!isLoading"
           :show-scrollbar="true"
           :sticky-header="'calc(100vh - 85px)'"
           @row-clicked="handleRowClicked"

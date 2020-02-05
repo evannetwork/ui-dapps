@@ -37,4 +37,27 @@ export default class EvanTable extends mixins(EvanComponent) {
    * Flag to always display scrollbar
    */
   @Prop({ default: false }) showScrollbar: boolean;
+
+  /**
+   * Clear listeners.
+   */
+  beforeDestroy(): void {
+    this.$el.querySelector('.b-table-sticky-header').removeEventListener('scroll', this.onScroll);
+  }
+
+  /**
+   * Bind custom scroll listeners, because inner bootstrap table element is scrolling.
+   */
+  mounted(): void {
+    this.$el.querySelector('.b-table-sticky-header').addEventListener('scroll', this.onScroll);
+  }
+
+  /**
+   * Just send custom scroll event to parent components.
+   *
+   * @param      {any}  $event  scroll event
+   */
+  onScroll($event: any): void {
+    this.$emit('scroll', $event);
+  }
 }
