@@ -27,7 +27,7 @@
             icon="mdi mdi-chevron-right"
             target="_blank"
             class="visible-on-row-hover"
-            :href="getRouteToTransactionExplorer(data.item.blockHash)"
+            :href="getRouteToTransactionExplorer(data.item.hash)"
           />
         </template>
       </evan-table>
