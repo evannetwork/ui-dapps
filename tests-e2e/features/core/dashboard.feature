@@ -24,11 +24,10 @@ Feature: evan.network dashboard
     Then I want to see a text including "Verifications"
     Then I want to see a text including "Contacts"
 
-
   Scenario: See working synchronization status
     Given I log in to evan.network using vue
-    When I am on the path "#/dashboard.vue.evan/components.vue.evan/dispatcher-test"
-      And I click on button "Success Dispatcher"
+      And I am on the path "#/dashboard.vue.evan/components.vue.evan/dispatcher-test"
+    When I click on button "Success Dispatcher"
     Then I want to see the "spinner" icon
     When I click on "Synchronization" in main menu
     Then I want to see a text including "0%"
@@ -39,11 +38,10 @@ Feature: evan.network dashboard
     When I click on button before the text "Data-Synchronization"
       And I want to see the "sync" icon
 
-
   Scenario: Handle errors in synchronization
     Given I log in to evan.network using vue
-    When I am on the path "#/dashboard.vue.evan/components.vue.evan/dispatcher-test"
-      And I click on button "Error Dispatcher"
+      And I am on the path "#/dashboard.vue.evan/components.vue.evan/dispatcher-test"
+    When I click on button "Error Dispatcher"
     Then I want to see the "alert" icon
     When I click on "Synchronization" in main menu
       And I click on the "close-circle-outline" icon
