@@ -22,9 +22,9 @@
       },
       "list": {
         "add-list-item": {
-          "title": "Add Entry",
-          "cancel": "Cancel",
-          "submit": "Add Entry"
+          "title": "Eintrag hinzufügen",
+          "cancel": "Abbrechen",
+          "submit": "Eintrag hinzufügen"
         },
         "list-item-detail": {
           "close": "Schließen",

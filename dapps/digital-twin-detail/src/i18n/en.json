@@ -22,7 +22,7 @@
       },
       "list": {
         "add-list-item": {
-          "title": "Add Entry",
+          "title": "Add an Entry",
           "cancel": "Cancel",
           "submit": "Add Entry"
         },

@@ -17,13 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-import {
-  DigitalTwin,
-  DigitalTwinOptions,
-  Ipfs,
-} from '@evan.network/api-blockchain-core';
-import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
-import { getDomainName, ipfs } from '@evan.network/ui-dapp-browser';
+
+import { Dispatcher } from '@evan.network/ui';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
 
 const twinDeleteDispatcher = new Dispatcher(
   `lib.digital-twin.${getDomainName()}`,
@@ -33,13 +29,13 @@ const twinDeleteDispatcher = new Dispatcher(
 );
 
 twinDeleteDispatcher
-  .step(async (instance: DispatcherInstance, data: any) => {
+  .step(async () => {
     // mock
     await new Promise((resolve) => {
       setTimeout(() => resolve(), 1000);
     });
   })
-  .step(async (instance: DispatcherInstance, data: any) => {
+  .step(async () => {
     await new Promise((resolve) => {
       setTimeout(() => resolve(), 1000);
     });

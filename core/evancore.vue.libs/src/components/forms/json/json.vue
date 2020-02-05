@@ -18,7 +18,7 @@
 */
 
 <template>
-  <div>
+  <div class="w-100">
     <evan-form-control-textarea
       v-bind="$props"
       :error="isInvalidJSON ? $t('_evan.invalid-json') : error"

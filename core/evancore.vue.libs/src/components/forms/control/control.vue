@@ -28,13 +28,14 @@
       class="col-form-label"
       :for="id"
     >
-      {{ label }}
-      <small
-        v-if="!isRequired()"
-        class="text-muted"
-      >
-        ({{ '_evan.optional' | translate }})
-      </small>
+      <div>
+        <p class="m-0">{{ label }}</p>
+        <small
+          v-if="!isRequired()"
+        >
+          ({{ '_evan.optional' | translate }})
+        </small>
+      </div>
     </label>
     <div
       class="input-wrapper"

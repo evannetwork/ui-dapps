@@ -36,33 +36,31 @@ import ProfileWalletComponent from './components/wallet/wallet.vue';
  *
  * @return     {string}  redirect path to that the user should be navigated to.
  */
-const redirectToDefault = (to, childPath = 'detail') => {
-  return [
-    to.path.split(`/profile.vue.${ dappBrowser.getDomainName() }`)[0],
-    `profile.vue.${ dappBrowser.getDomainName() }`,
-    dappBrowser.core.getAccountId(),
-    childPath,
-  ].join('/');
-};
+const redirectToDefault = (to, childPath = 'detail'): string => [
+  to.path.split(`/profile.vue.${dappBrowser.getDomainName()}`)[0],
+  `profile.vue.${dappBrowser.getDomainName()}`,
+  dappBrowser.core.getAccountId(),
+  childPath,
+].join('/');
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', redirect: to => redirectToDefault(to), },
-  { path: 'verify', redirect: to => redirectToDefault(to, 'verifications'), },
+  { path: '', redirect: (to): string => redirectToDefault(to) },
+  { path: 'verify', redirect: (to): string => redirectToDefault(to, 'verifications') },
   {
     // just used for nested routing
     component: AccountRootComponent,
     name: 'address',
     path: ':address(0x\\w{40})',
     children: [
-      { path: '', redirect: { path: './detail', } },
+      { path: '', redirect: { path: './detail' } },
       { name: 'detail', path: 'detail', component: ProfileDetailComponent },
       { name: 'settings', path: 'settings', component: ProfileSettingsComponent },
       { name: 'sharings', path: 'sharings', component: ProfileSharingsComponent },
       { name: 'wallet', path: 'wallet', component: ProfileWalletComponent },
-      { name: 'verifications', path: 'verifications', component: VerificationsComponent, },
-      { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${ dappBrowser.getDomainName() }`, },
-    ]
+      { name: 'verifications', path: 'verifications', component: VerificationsComponent },
+      { name: 'addressbook.vue', component: DAppLoaderComponent, path: `addressbook.vue.${dappBrowser.getDomainName()}` },
+    ],
   },
   // { path: '*', redirect: to => redirectToDefault(to), },
 ];

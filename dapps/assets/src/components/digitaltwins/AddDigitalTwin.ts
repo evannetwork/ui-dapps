@@ -18,6 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { cloneDeep } from 'lodash';
 import { Prop } from 'vue-property-decorator';
 
 // @evan imports
@@ -58,7 +59,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
   @Prop() createdCallBack: Function;
 
-  beforeDestroy() {
+  beforeDestroy(): void {
     this.clearTwinCreateWatcher();
   }
 
@@ -156,7 +157,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
   addDigitalTwin(): void {
     // merge custom fields into template.
     this.loading = true;
-    const template = ({ ...this.template }) as DigitalTwinTemplateInterface;
+    const template = cloneDeep(this.template) as DigitalTwinTemplateInterface;
     const dbcpFormValue = this.dbcpComp.getDescription();
 
     if (dbcpFormValue.description) {
@@ -167,7 +168,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
 
     dispatchers.twinCreateDispatcher.start(this.getRuntime(), {
       twinTemplate: template,
-      twinImage: dbcpFormValue.description.imgSquare,
+      twinImage: dbcpFormValue.imgSquare,
     });
   }
 
@@ -181,7 +182,7 @@ class AddDigitalTwinComponent extends mixins(EvanComponent) {
       const reader = new FileReader();
 
       try {
-        reader.onload = (ev) => {
+        reader.onload = (ev): void => {
           resolve(JSON.parse(ev.target.result as string));
         };
 

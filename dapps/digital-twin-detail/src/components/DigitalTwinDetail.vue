@@ -23,6 +23,7 @@
       <template v-slot:content>
         <evan-loading v-if="loading" />
         <template v-else>
+          <digital-twin-interactions ref="twinInteractions" />
           <evan-dapp-wrapper-level-2 ref="level2Wrapper">
             <div class="sidenav">
               <div class="sidenav-header">
@@ -77,7 +78,6 @@
                     >
                       {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
                     </b-dropdown-item>
-                    <digital-twin-interactions ref="twinInteractions" />
                   </b-dropdown>
                 </div>
 
