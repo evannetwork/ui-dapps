@@ -21,8 +21,15 @@
   <div>
     <evan-loading v-if="loading" />
     <div v-else>
+      <evan-onpage-navigation
+        :entries="entries"
+        scroll-container-selector=".dapp-wrapper-content"
+        class="onpage-nav"
+        offset="56"
+      />
       <div
         v-for="entryKey in $store.state.container.entryKeys"
+        :id="entryKey"
         :key="entryKey"
         class="mb-5"
       >
@@ -43,5 +50,13 @@ export default TestContainerComponent;
 </script>
 
 <style lang="scss" scoped>
+.onpage-nav {
+  display: none;
+}
 
+@media screen and (min-width: 1500px) {
+  .onpage-nav {
+    display: block;
+  }
+}
 </style>
