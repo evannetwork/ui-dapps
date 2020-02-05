@@ -36,7 +36,6 @@ export default class ListItemDetailComponent extends mixins(EvanComponent) {
   dataSetForm: DataSetForm = null;
 
   showPanel(): void {
-    console.log(this.value);
 
     (this.$refs.listItemDetailPanel as any).show();
   }
