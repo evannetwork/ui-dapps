@@ -5,3 +5,10 @@ export interface Permissions {
     fields?: string[];
   };
 }
+
+export interface PermissionsContainer {
+  [contractAddress: string]: {
+    permissions: Permissions;
+    label?: string;
+  };
+}

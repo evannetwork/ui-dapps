@@ -31,7 +31,8 @@ import {
 import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import SharingUtils from './SharingUtils';
-import { Permissions } from '../interfaces/Permissions';
+import { Permissions, PermissionsContainer } from '../interfaces/Permissions';
+import { containerShareDispatcher } from '../dispatchers';
 
 /*
   Helper functions for permission handling.
@@ -141,7 +142,7 @@ export default class PermissionUtils {
   /**
    * Clones whole permissions Object and removes all access rights.
    *
-   * @param containerPermissionsEntry - Object
+   * @param userPermissions
    * - permissions
    */
   static convertToPristine(userPermissions: Permissions): Permissions {
@@ -170,6 +171,7 @@ export default class PermissionUtils {
   /**
    * Creates permissions mapping based on container properties, sharing configs for each user and the container itself.
    *
+   * TODO: How does the return value look like? Seems incompatible with PermissionsContainer interface
    * @param runtime
    * @param param1
    * @param accountId
@@ -328,17 +330,18 @@ export default class PermissionUtils {
   /**
    * Update all permissions of containers for user with accountId.
    *
+   * @param vueInstance
    * @param runtime: bcc.runtime
    * @param accountId: string - the account to be shared with.
-   * @param containerPermissions: any - the new permissions object
-   * @param oldContainerPermissions: any - the old permissions object
+   * @param containerPermissions: the new permissions object
+   * @param oldContainerPermissions: the old permissions object
    */
   static async updatePermissions(
     vueInstance: EvanComponent,
     runtime: Runtime,
     accountId: string,
-    containerPermissions,
-    oldContainerPermissions,
+    containerPermissions: PermissionsContainer,
+    oldContainerPermissions: PermissionsContainer,
   ): Promise<void> {
     const containerConfigs = [];
     const bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
@@ -375,6 +378,6 @@ export default class PermissionUtils {
       containerConfigs.push(dataSharing);
     });
 
-    await dispatchers.shareProfileDispatcher.start(runtime, containerConfigs);
+    await containerShareDispatcher.start(runtime, containerConfigs);
   }
 }
