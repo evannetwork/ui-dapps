@@ -25,16 +25,18 @@ import {
   Runtime,
   lodash,
   ProfileOptions,
+  ContainerOptions,
+  ContainerTemplateProperty,
 } from '@evan.network/api-blockchain-core';
 import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import SharingUtils from './SharingUtils';
+import { Permissions } from '../interfaces/Permissions';
 
 /*
   Helper functions for permission handling.
 
   TODO:
-    - merge with other permissions helper functions to one module
     - Currently it's only possible to extend permissions, implement the remove permissions API.
     - implement some caching
     - resolve `any` types
@@ -46,6 +48,10 @@ interface ShareConfigEntry {
   read: string[];
 }
 
+interface Properties {
+  [id: string]: ContainerTemplateProperty;
+}
+
 export default class PermissionUtils {
   /**
    * Get a container from container address.
@@ -54,8 +60,12 @@ export default class PermissionUtils {
    * @param containerAddress
    * @param accountId
    */
-  static getContainer(runtime, containerAddress, accountId): Container {
-    return new Container(runtime, {
+  static getContainer(
+    runtime: Runtime,
+    containerAddress: string,
+    accountId: string,
+  ): Container {
+    return new Container(runtime as ContainerOptions, {
       accountId,
       address: containerAddress,
     });
@@ -80,8 +90,8 @@ export default class PermissionUtils {
    */
   static createPermissionsObject(
     { read = [], readWrite = [] },
-    properties: any,
-  ): any {
+    properties: Properties,
+  ): Permissions {
     const permissions = {};
 
     Object.keys(properties).forEach((property) => {
@@ -104,7 +114,9 @@ export default class PermissionUtils {
    *
    * @param Container container
    */
-  static async getContainerProperties(container: Container): Promise<any> {
+  static async getContainerProperties(
+    container: Container,
+  ): Promise<Properties> {
     const plugin = await container.toPlugin();
 
     return plugin.template.properties;
@@ -115,19 +127,15 @@ export default class PermissionUtils {
    * Keeps the fields values.
    *
    * @param permissions
-   * - [property]
-   * -- read: boolean
-   * -- readWrite: boolean
-   * -- fields: string[]
    */
-  static convertToPristinePermissions(values): any {
-    const permissions = values;
-    Object.keys(permissions).forEach((property) => {
-      permissions[property].read = false;
-      permissions[property].readWrite = false;
+  static convertToPristinePermissions(permissions: Permissions): Permissions {
+    const perms = permissions;
+    Object.keys(perms).forEach((property) => {
+      perms[property].read = false;
+      perms[property].readWrite = false;
     });
 
-    return permissions;
+    return perms;
   }
 
   /**
@@ -136,7 +144,7 @@ export default class PermissionUtils {
    * @param containerPermissionsEntry - Object
    * - permissions
    */
-  static convertToPristine(userPermissions): any {
+  static convertToPristine(userPermissions: Permissions): Permissions {
     const pristinePermissions = cloneDeep(lodash, userPermissions);
 
     pristinePermissions.keys().foreach((key) => {
@@ -147,7 +155,9 @@ export default class PermissionUtils {
             'permissions',
           )
         ) {
-          pristinePermissions[key].permissions = PermissionUtils.convertToPristinePermissions(
+          pristinePermissions[
+            key
+          ].permissions = PermissionUtils.convertToPristinePermissions(
             pristinePermissions[key].permissions,
           );
         }
@@ -169,16 +179,23 @@ export default class PermissionUtils {
     { containerAddress, label },
     accountId = runtime.activeAccount,
   ): Promise<any> {
-    const container = PermissionUtils.getContainer(runtime, containerAddress, accountId);
+    const container = PermissionUtils.getContainer(
+      runtime,
+      containerAddress,
+      accountId,
+    );
     const properties = await PermissionUtils.getContainerProperties(container);
     const shareConfigs = await container.getContainerShareConfigs();
-    const containerPermissions: any = {};
+    const containerPermissions = {} as any;
 
     shareConfigs.forEach((entry: ShareConfigEntry) => {
       containerPermissions[entry.accountId] = {
         [containerAddress]: {
           label,
-          permissions: PermissionUtils.createPermissionsObject(entry, properties),
+          permissions: PermissionUtils.createPermissionsObject(
+            entry,
+            properties,
+          ),
         },
       };
     });
@@ -206,7 +223,7 @@ export default class PermissionUtils {
       const profile = new Profile({
         accountId: runtime.activeAccount,
         profileOwner: accountId,
-        ...runtime as ProfileOptions,
+        ...(runtime as ProfileOptions),
       });
 
       await profile.loadForAccount();
@@ -228,11 +245,11 @@ export default class PermissionUtils {
    * @param accountId
    */
   static async createShareConfig(
-    permissions,
-    oldPermissions,
+    permissions: Permissions,
+    oldPermissions: Permissions,
     accountId: string,
-  ): Promise<any> {
-    const shareConfigs = [];
+  ): Promise<ContainerUnshareConfig[]> {
+    const shareConfigs: ContainerShareConfig[] = [];
     const shareConfig: ContainerShareConfig = {
       accountId,
       read: [],
@@ -241,7 +258,7 @@ export default class PermissionUtils {
     };
 
     // iterate through properties and get new read / readWrite permissions
-    Object.keys(permissions).forEach((property) => {
+    Object.keys(permissions).forEach((property: string) => {
       if (permissions[property].read && !oldPermissions[property].read) {
         shareConfig.read.push(property);
       }
@@ -272,11 +289,11 @@ export default class PermissionUtils {
    * @param accountId
    */
   static createUnshareConfig(
-    permissions,
-    oldPermissions,
+    permissions: Permissions,
+    oldPermissions: Permissions,
     accountId: string,
-  ): any {
-    const unshareConfigs = [];
+  ): ContainerUnshareConfig[] {
+    const unshareConfigs: ContainerUnshareConfig[] = [];
     const unshareConfig: ContainerUnshareConfig = {
       accountId,
       write: [],
@@ -322,7 +339,7 @@ export default class PermissionUtils {
     accountId: string,
     containerPermissions,
     oldContainerPermissions,
-  ): Promise<any> {
+  ): Promise<void> {
     const containerConfigs = [];
     const bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
 
@@ -357,7 +374,6 @@ export default class PermissionUtils {
 
       containerConfigs.push(dataSharing);
     });
-
 
     await dispatchers.shareProfileDispatcher.start(runtime, containerConfigs);
   }
