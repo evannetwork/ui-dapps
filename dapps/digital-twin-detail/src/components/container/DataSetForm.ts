@@ -137,15 +137,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     switch (type) {
       case 'array': {
         control.uiSpecs.type = 'json';
-        // test for valid json
-        try {
-          JSON.parse(JSON.stringify(control.value));
-        } catch (ex) {
-          control.value = [];
-          logger.log(`[${this.$route.params.twin}][${this.$route.params.container}][${this.name}] `
-            + `Could not parse value of property ${name}`, 'error');
-        }
-
         break;
       }
       case 'boolean': {
@@ -160,14 +151,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       }
       case 'object': {
         control.uiSpecs.type = 'json';
-        // test for valid json
-        try {
-          JSON.parse(JSON.stringify(control.value));
-        } catch (ex) {
-          control.value = { };
-          logger.log(`[${this.$route.params.twin}][${this.$route.params.container}][${this.name}] `
-            + `Could not parse value of property ${name}`, 'error');
-        }
         break;
       }
       case 'number': {
@@ -286,7 +269,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         const locale = this.$i18n.locale();
         (ajvI18n[locale] || ajvI18n.en)(validation);
 
-        return validation.map((error) => error.message).join(', ');
+        return (validation as any[]).map((error) => error.message).join(', ');
       }
       return true;
     };

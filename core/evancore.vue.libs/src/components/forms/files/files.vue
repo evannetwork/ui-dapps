@@ -89,7 +89,7 @@
       @drop="hovered = false"
     >
       <input
-        id="file-input-upload"
+        :id="id ? id : 'file-input-upload'"
         type="file"
         multiple
         :accept="accept"

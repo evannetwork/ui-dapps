@@ -101,7 +101,7 @@ export async function getElementIdByLabel(value) {
 }
 
 export async function getElementsCount(selector, mode = 'xpath') {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     client.elements(mode, selector, (result) => {
       console.log('Length', result.value.length); // (if there are 3 li, here should be a count of 3)
       resolve(result.value.length);
@@ -134,17 +134,14 @@ export function getSelector(label, angular) {
   if (!angular) {
     // support also the .input-wrapper element around the input
     const inputSelectors = [
-      'input', 'div/input',
-      'select', 'div/select',
-      'textarea', 'div/textarea',
+      'input',
+      'select',
+      'textarea',
     ];
 
-    return inputSelectors.map((inputSelector) => [
-      `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
-      `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
-      `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
-    ].join('|')).join('|');
+    return inputSelectors
+      .map((inputSelector) => `//label[contains(., "${label}")]/parent::*//${inputSelector}`)
+      .join('|');
   }
 
   return [
