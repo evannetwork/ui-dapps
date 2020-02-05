@@ -45,7 +45,7 @@
       <div class="text-center my-5">
         <evan-button
           type="primary"
-          :href="`#/${ dapp.rootEns }/profile.vue.${ dapp.domainName }/${ $store.state.runtime.activeAccount }/addressbook.vue.${ dapp.domainName }`"
+          :href="`#/${dapp.rootEns}/assets.evan/contacts`"
         >
           {{ '_evan.sharing.add-contact' | translate }}
         </evan-button>

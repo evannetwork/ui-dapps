@@ -207,10 +207,6 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       }, {
         key: 'verifications',
         icon: 'mdi mdi-check-decagram',
-      }, {
-        key: `addressbook.vue.${this.dapp.domainName}`, // TODO: why so complicated?
-        icon: 'mdi mdi-account-group-outline',
-        href: `#/${this.dapp.rootEns}/assets.evan/contacts`,
       },
       {
         key: 'sharings',
@@ -223,14 +219,14 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       },
     ].map((entry) => (entry ? {
       id: `nav-entry-${entry.key}`,
-      href: entry.href || `${this.dapp.fullUrl}/${this.$route.params.address}/${entry.key}`,
+      href: `${this.dapp.fullUrl}/${this.$route.params.address}/${entry.key}`,
       text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
       icon: entry.icon,
     } : null));
 
     // remove sharings from old profiles
     if (!this.$store.state.profileDApp.profile.profileContainer || !this.$store.state.profileDApp.description) {
-      this.navEntries.splice(4, 1);
+      this.navEntries.splice(3, 1);
     }
   }
 }
