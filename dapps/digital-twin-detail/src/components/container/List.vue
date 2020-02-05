@@ -71,16 +71,18 @@
         :show-empty="true"
         :responsive="true"
       >
+        <template v-slot:cell(__loading)="value">
+          <div
+            v-if="isValueLoading(value.item)"
+            class="spinner-border spinner-border-sm"
+          />
+        </template>
         <template v-slot:cell()="value">
-          <template v-if="value.field.key === '__loading'">
-            <div
-              v-if="isValueLoading(value.item)"
-              class="spinner-border spinner-border-sm"
-            />
-          </template>
-          <template v-else>
-            {{ transformValuesForDisplay(value.item, value.field.key) }}
-          </template>
+          {{ transformValuesForDisplay(value.item, value.field.key) }}
+        </template>
+
+        <template v-slot:empty>
+          <span>{{ '_twin-detail.data.table-empty' | translate }}</span>
         </template>
       </evan-table>
     </div>

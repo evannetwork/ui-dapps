@@ -34,7 +34,8 @@
       },
       "specifications": {
         "specifications-title": "Specifications"
-      }
+      },
+      "table-empty": "No entries added yet"
     },
     "delete": {
       "confirm-delete": "Delete",

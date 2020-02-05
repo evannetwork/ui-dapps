@@ -84,6 +84,20 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   isPrimitive = false;
 
   /**
+   * Checks if a control definition can be marked as "required".
+   *
+   * @param      {EvanFormControlOptions}  controlOpts  control options, including uiSpec
+   * @param      {string}                  type         type of the control (string, boolean,
+   *                                                    object, ...)
+   * @param      {any}                     subSchema    ajv data schema
+   */
+  static isControlRequired(controlOpts: EvanFormControlOptions, type: string, subSchema: any): boolean {
+    // check if min value is set required flag
+    return type === 'array' || type === 'object' || type === 'boolean'
+      || (ajvMinProperties[type] && !Number.isNaN(subSchema[ajvMinProperties[type]]));
+  }
+
+  /**
    * Takes a data schema property and adds it to the form.
    *
    * @param      {string}  name    property name
@@ -166,7 +180,8 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     }
 
     // add form validation
-    this.setControlValidation(control, type, subSchema);
+    control.uiSpecs.attr.required = DataSetFormComponent.isControlRequired(control, type, subSchema);
+    control.validate = this.getControlValidate(control, type, subSchema);
 
     // add the control to the current formular definition
     this.form.addControl(name, control);
@@ -233,15 +248,8 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
    * @param      {string}           type       The type
    * @param      {any}              subSchema  The sub schema
    */
-  setControlValidation(controlOpts: EvanFormControlOptions, type: string, subSchema: any): void {
-    // check if min value is set required flag
-    if (type === 'array' || type === 'object' || type === 'boolean'
-      || (ajvMinProperties[type] && !Number.isNaN(subSchema[ajvMinProperties[type]]))) {
-      controlOpts.uiSpecs.attr.required = true; // eslint-disable-line no-param-reassign
-    }
-
-    // eslint-disable-next-line no-param-reassign
-    controlOpts.validate = (
+  getControlValidate(controlOpts: EvanFormControlOptions, type: string, subSchema: any): Function {
+    return (
       dbcpForm: DataSetFormComponent,
       form: EvanForm,
       control: EvanFormControl,

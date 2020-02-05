@@ -96,7 +96,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
               (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
               'ether',
             ),
-          ).toFixed(5);
+          ).toFixed(4);
         } catch (err) {
           console.error('Error while calculating EVE fee', err);
         }
