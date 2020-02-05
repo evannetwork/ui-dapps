@@ -27,7 +27,7 @@ import {
   ProfileOptions,
 } from '@evan.network/api-blockchain-core';
 import { cloneDeep } from '@evan.network/ui';
-import EvanComponent from '../component';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 import SharingUtils from './SharingUtils';
 
 /*
@@ -357,5 +357,8 @@ export default class PermissionUtils {
 
       containerConfigs.push(dataSharing);
     });
+
+
+    await dispatchers.shareProfileDispatcher.start(runtime, containerConfigs);
   }
 }
