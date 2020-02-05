@@ -21,15 +21,30 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
+import { PermissionUtils } from '@evan.network/digital-twin-lib';
 
 
 @Component
 export default class ShareContainerComponent extends mixins(EvanComponent) {
   contacts = null;
 
-
   async created(): Promise<void> {
     this.contacts = await bccUtils.getContacts(this.getRuntime());
+  }
+
+  async loadPermissions(): Promise<any> {
+    const { container } = this.$store.state;
+    const runtime = this.getRuntime();
+    const permissions = await PermissionUtils.createContainerPermissions(
+      runtime,
+      { containerAddress: container.contractAddress, label: container.description.name },
+    );
+
+    if (!permissions[container.contractAddress]) {
+      return permissions.new;
+    }
+
+    return permissions[container.contractAddress];
   }
 
   showPanel(): void {
@@ -41,8 +56,6 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
   }
 
   onSave(ev): void {
-    console.log(ev);
-
     this.closePanel();
   }
 }

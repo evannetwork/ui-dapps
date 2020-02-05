@@ -11,7 +11,8 @@
       >
         <evan-permissions-editor
           :contacts="contacts"
-          i18n-scope="_twin-detail"
+          :load-permissions="loadPermissions"
+          i18n-scope="_twin-detail.data.sharing"
           @init="permissionsEditor = $event"
         />
 

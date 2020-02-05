@@ -37,6 +37,7 @@ import {
 import { SearchService } from './SearchService';
 import PermissionUtils from './utils/PermissionUtils';
 import SharingUtils from './utils/SharingUtils';
+import { Permissions, PermissionsContainer } from './interfaces/Permissions';
 
 export * from './dispatchers';
 export {
@@ -54,6 +55,8 @@ export {
   SearchService,
   PermissionUtils,
   SharingUtils,
+  Permissions,
+  PermissionsContainer,
 };
 
 System.map[

@@ -145,10 +145,10 @@ export default class PermissionUtils {
    * @param userPermissions
    * - permissions
    */
-  static convertToPristine(userPermissions: Permissions): Permissions {
-    const pristinePermissions = cloneDeep(lodash, userPermissions);
+  static convertToPristine(userPermissions: PermissionsContainer): PermissionsContainer {
+    const pristinePermissions: PermissionsContainer = cloneDeep(lodash, userPermissions);
 
-    pristinePermissions.keys().foreach((key) => {
+    Object.keys(pristinePermissions).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(pristinePermissions, key)) {
         if (
           Object.prototype.hasOwnProperty.call(
@@ -156,9 +156,7 @@ export default class PermissionUtils {
             'permissions',
           )
         ) {
-          pristinePermissions[
-            key
-          ].permissions = PermissionUtils.convertToPristinePermissions(
+          pristinePermissions[key].permissions = PermissionUtils.convertToPristinePermissions(
             pristinePermissions[key].permissions,
           );
         }
@@ -186,9 +184,14 @@ export default class PermissionUtils {
       containerAddress,
       accountId,
     );
+    console.log('container', container);
     const properties = await PermissionUtils.getContainerProperties(container);
+    console.log('properties', properties);
     const shareConfigs = await container.getContainerShareConfigs();
+    console.log('shareConfigs', shareConfigs);
+
     const containerPermissions = {} as any;
+
 
     shareConfigs.forEach((entry: ShareConfigEntry) => {
       containerPermissions[entry.accountId] = {
@@ -206,6 +209,8 @@ export default class PermissionUtils {
     containerPermissions.new = PermissionUtils.convertToPristine(
       containerPermissions[accountId],
     );
+
+    console.log('containerPermissions', containerPermissions);
 
     return containerPermissions;
   }
