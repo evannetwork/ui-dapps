@@ -33,5 +33,4 @@ export * from './interfaces';
 export * from './routing';
 export * from './utils';
 export * from './vue-core';
-export * from './utils';
 export { EvanComponent, EvanForm, EvanFormControl };
