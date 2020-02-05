@@ -21,7 +21,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { deepEqual, bccUtils } from '@evan.network/ui';
-import { Runtime, Profile } from '@evan.network/api-blockchain-core';
+import { Runtime, Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
 import { Prop, Watch } from 'vue-property-decorator';
 import {
   ContactInterface,
@@ -266,8 +266,8 @@ class PermissionsEditor extends mixins(EvanComponent) {
     const profile = new Profile({
       accountId: this.runtime.activeAccount,
       profileOwner: this.selectedContact,
-      ...this.runtime,
-    } as any);
+      ...this.runtime as ProfileOptions,
+    });
 
     this.selectedUsername = await bccUtils.getUserAlias(profile);
   }

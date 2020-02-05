@@ -38,9 +38,9 @@
 </template>
 
 <script lang="ts">
-import ListItemDetail from './ListItemDetail';
+import ShareContainerComponent from './ShareContainer';
 
-export default ListItemDetail;
+export default ShareContainerComponent;
 </script>
 
 <style lang="scss" scoped>
