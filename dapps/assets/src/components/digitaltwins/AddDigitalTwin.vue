@@ -38,7 +38,7 @@
         only-form="true"
         @init="dbcpComp = $event"
       >
-        <p>
+        <p class="form-group text-justify">
           {{ '_assets.digitaltwins.template-desc' | translate }}
           <a
             href="https://api-blockchain-core.readthedocs.io/en/latest/contracts/digital-twin-usage-examples.html#handling-templates-and-plugins"

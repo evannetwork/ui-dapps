@@ -64,6 +64,11 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
   }) isLoading: boolean;
 
   /**
+   * Render only the formular without adding the formular wrapper.
+   */
+  @Prop() onlyForm: boolean;
+
+  /**
    * Dynamic form definition for the corresponding dataSchema.
    */
   form: EvanForm = null;

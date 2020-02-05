@@ -19,13 +19,13 @@
         "type-value": "Digitaler Zwilling"
       },
       "list": {
-        "show-all": "Alle Anzeigen",
-        "value": "Wert",
         "add-list-item": {
-          "title": "Eintrag hinzüfugen",
           "cancel": "Abbrechen",
-          "submit": "Hinzüfugen"
-        }
+          "submit": "Hinzüfugen",
+          "title": "Eintrag hinzüfugen"
+        },
+        "show-all": "Alle Anzeigen",
+        "value": "Wert"
       },
       "logs": {
         "logs-title": "Logs"

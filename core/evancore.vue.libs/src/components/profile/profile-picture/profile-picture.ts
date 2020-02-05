@@ -35,28 +35,28 @@ class ProfilePicture extends mixins(EvanComponent) {
    * Profile type that should be used (user, company, device)
    */
   @Prop({
-    default: 'user'
+    default: 'user',
   }) type: string;
 
   /**
    * Display size that should be used (small, medium, large)
    */
   @Prop({
-    default: 'default'
+    default: 'default',
   }) size: string;
 
   /**
    * The image src. Can be an http resource or a blob object from browser files API.
    */
   @Prop({
-    default: null
+    default: null,
   }) src: UIContainerFile | string;
 
   /**
    * The name of the user, company or IOT device. Initials will be used if no picture is uploaded.
    */
   @Prop({
-    default: ''
+    default: '',
   }) accountName: string;
 
   /**
@@ -79,8 +79,8 @@ class ProfilePicture extends mixins(EvanComponent) {
   @Prop({
     required: true,
     default: {
-      value: []
-    }
+      value: [],
+    },
   }) fileForm: any;
 
   /**
@@ -94,7 +94,7 @@ class ProfilePicture extends mixins(EvanComponent) {
   srcString = '';
 
   @Watch('src', { immediate: true, deep: true })
-  async onChildChanged(src: UIContainerFile | string) {
+  async onChildChanged(src: UIContainerFile | string): Promise<void> {
     this.srcString = null;
 
     // fore rerendering, when src is set
@@ -104,12 +104,21 @@ class ProfilePicture extends mixins(EvanComponent) {
           this.srcString = src;
         } else {
           // ensure, that blobUri is set
-          this.srcString = src.blobUri ?
-            src.blobUri :
-            (await FileHandler.fileToContainerFile(src)).blobUri;
+          this.srcString = src.blobUri
+            ? src.blobUri
+            : (await FileHandler.fileToContainerFile(src)).blobUri;
         }
       });
     }
+  }
+
+  /**
+   * Reset the current fileForm and the changedPicture, so the formular and the picture preview will
+   * be empty / resettedt the previous image.
+   */
+  cancelPictureModal(): void {
+    this.fileForm.value = [];
+    this.changedPicture = null;
   }
 
   /**
@@ -118,11 +127,12 @@ class ProfilePicture extends mixins(EvanComponent) {
    *  - store picture temporary from form
    *  - set form to empty again
    */
-  pictureChanged() {
+  pictureChanged(): void {
     this.changedPicture = null;
     // force rerender
     this.$nextTick(() => {
-      this.changedPicture = this.fileForm.value[0];
+      const [changedPicture] = this.fileForm.value;
+      this.changedPicture = changedPicture;
       this.fileForm.value = [];
     });
   }
@@ -130,18 +140,18 @@ class ProfilePicture extends mixins(EvanComponent) {
   /**
    * Propagate picture change using file temporary stored before.
    */
-  usePicture() {
+  usePicture(): void {
     this.$emit('changed', this.changedPicture);
     this.$parent.$emit('setFocus');
-    (<any>this).$refs.pictureUploadModal.hide();
+    (this as any).$refs.pictureUploadModal.hide();
   }
 
-  getInitials(accountName: string): string {
-    if (!accountName) {
+  getInitials(): string {
+    if (!this.accountName) {
       return '#';
     }
 
-    return accountName.split(/\s/).splice(0, 2).map(word => word.charAt(0)).join('');
+    return this.accountName.split(/\s/).splice(0, 2).map((word) => word.charAt(0)).join('');
   }
 }
 

@@ -25,7 +25,7 @@
     <evan-modal
       id="file-input-remove-modal"
       ref="removeFileModal"
-      @canceled="fileRemove = -1;"
+      @close="fileRemove = -1;"
     >
       <template v-slot:header>
         <h5 class="modal-title">
