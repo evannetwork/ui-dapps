@@ -219,9 +219,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   /**
    * Helper method to keep class this-context for debounced search.
    */
-  async performSearch(): Promise<void> {
+  performSearch(): void {
     if (typeof this.search === 'function') {
-      await this.search(this.searchTerm, {
+      this.search(this.searchTerm, {
         sortBy: this.sortBy,
         reverse: this.reverse,
         type: this.selectedFilter,
@@ -232,9 +232,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   /**
    * Helper method to keep class this-context for debounced fetch.
    */
-  async performFetchMore(): Promise<void> {
+  performFetchMore(): void {
     if (typeof this.fetchMore === 'function') {
-      await this.fetchMore({
+      this.fetchMore({
         sortBy: this.sortBy,
         reverse: this.reverse,
         type: this.selectedFilter,
