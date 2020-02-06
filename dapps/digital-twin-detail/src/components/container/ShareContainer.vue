@@ -1,17 +1,18 @@
 <template>
   <div>
-    <form @submit.prevent="onSave">
+    <form>
       <evan-swipe-panel
         ref="shareContainerPanel"
         alignment="right"
         type="default"
         class="light"
         :show-backdrop="true"
-        :title="$t('_twin-detail.data.list.share.share-title')"
+        :title="$t('_twin-detail.data.sharing.sharing-title')"
       >
         <evan-permissions-editor
           :contacts="contacts"
           :load-permissions="loadPermissions"
+          :update-permissions="updatePermissions"
           i18n-scope="_twin-detail.data.sharing"
           @init="permissionsEditor = $event"
         />
@@ -21,7 +22,7 @@
             <evan-button
               type="secondary"
               class="flex-grow-1"
-              :label="'_twin-detail.data.list.share.cancel' | translate"
+              :label="'_twin-detail.data.sharing.cancel' | translate"
               @click="closePanel"
             />
 
@@ -29,7 +30,8 @@
               type="primary"
               native-type="submit"
               class="flex-grow-1"
-              :label="'_twin-detail.data.list.share.update-sharing' | translate"
+              :label="'_twin-detail.data.sharing.update-sharing' | translate"
+              @click="permissionsEditor.writePermissions()"
             />
           </div>
         </template>
