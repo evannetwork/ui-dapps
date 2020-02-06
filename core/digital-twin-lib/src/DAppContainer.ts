@@ -65,6 +65,8 @@ class DAppContainer extends Container {
 
   entries: { [entryName: string]: any };
 
+  listEntryCounts: { [entryName: string]: number }
+
   /**
    * Containers plugin definition for accessing entry data schemas.
    */
@@ -185,6 +187,7 @@ class DAppContainer extends Container {
       const entryDef = this.plugin.template.properties[entryKey];
 
       if (entryDef?.type === 'list') {
+        this.listEntryCounts[entryKey] = await this.getListEntryCount(entryKey);
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
       } else {
         this.entries[entryKey] = await this.getEntry(entryKey);
@@ -236,6 +239,7 @@ class DAppContainer extends Container {
     await this.loadBaseInfo();
     this.plugin = await this.toPlugin();
     this.entries = {};
+    this.listEntryCounts = {};
     await this.ensureDispatcherStates();
     this.ensureI18N();
   }

@@ -20,10 +20,11 @@
 <template>
   <div class="content-card">
     <data-set-form
+      v-if="!$store.state.reloadFlags[$route.params.container][name]"
       :data-schema="entrySchema"
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
-      :value="value"
+      :value="getValue()"
       @save="onSave($event)"
     />
   </div>
