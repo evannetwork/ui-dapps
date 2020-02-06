@@ -170,6 +170,11 @@ class PermissionsEditor extends mixins(EvanComponent) {
       this.containersPermissions,
       this.initialPermissions,
     );
+    /**
+     * Inform parent about dirty status of form
+     * TODO apply event listener to other listeners too
+     */
+    this.$emit('permissionsChanged', this.permissionsChanged);
   }
 
   /**

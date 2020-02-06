@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form>
+    <form @submit.prevent="onSave">
       <evan-swipe-panel
         ref="shareContainerPanel"
         alignment="right"
@@ -12,9 +12,11 @@
         <evan-permissions-editor
           :contacts="contacts"
           :load-permissions="loadPermissions"
-          :update-permissions="updatePermissions"
+          :update-permissions="onUpdatePermissions"
+          :on-select="onSelectContact"
           i18n-scope="_twin-detail.data.sharing"
           @init="permissionsEditor = $event"
+          @permissionsChanged="hasChange = $event"
         />
 
         <template v-slot:footer>
@@ -30,8 +32,8 @@
               type="primary"
               native-type="submit"
               class="ml-3 flex-grow-1"
+              :disabled="isUpdateDisabled"
               :label="'_twin-detail.data.sharing.update-sharing' | translate"
-              @click="permissionsEditor.writePermissions()"
             />
           </div>
         </template>

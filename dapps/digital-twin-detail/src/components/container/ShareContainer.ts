@@ -28,13 +28,17 @@ import { PermissionUtils } from '@evan.network/digital-twin-lib';
 export default class ShareContainerComponent extends mixins(EvanComponent) {
   contacts = null;
 
-  updatePermissions = null;
+  onUpdatePermissions = null;
 
   permissionsEditor = null;
 
+  selectedContact = null;
+
+  hasChange = false;
+
   async created(): Promise<void> {
     this.contacts = await bccUtils.getContacts(this.getRuntime());
-    this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
+    this.onUpdatePermissions = PermissionUtils.updatePermissions.bind(null, this);
   }
 
   async loadPermissions(userId: string): Promise<any> {
@@ -56,6 +60,22 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
   }
 
   closePanel(): void {
+    this.permissionsEditor.cancel();
     (this.$refs.shareContainerPanel as any).hide();
+  }
+
+  async onSave(): Promise<void> {
+    await this.permissionsEditor.writePermissions();
+  }
+
+  onSelectContact(contact: string): void {
+    this.selectedContact = contact;
+  }
+
+  get isUpdateDisabled(): boolean {
+    return !this.hasChange
+      || this.$store.state.dispatcher.curr.running.shareProfileDispatcher
+      || !this.selectedContact
+      || this.permissionsEditor.isLoading;
   }
 }
