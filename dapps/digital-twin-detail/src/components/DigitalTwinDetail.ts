@@ -86,7 +86,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Setup digital twin functionalities.
    */
-  async initialize(): Promise<void> {
+  async created(): Promise<void> {
     let beforeTwin;
 
     // watch for url changes and load different twin data
@@ -103,6 +103,16 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         // initialize a new twin, but keep old reference until twin is loaded
         const newTwin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
+
+        // if container view should be loaded initially, just load it directly
+        if (this.$route.params.container) {
+          this.$store.state.containerPreloading = Promise.resolve().then(async () => {
+            const container = await newTwin.setupDAppContainer(this.$route.params.container);
+            await container.initialize();
+          });
+        }
+
+        // initialize twin structure
         await newTwin.initialize();
         newTwin.watchDispatchers();
 

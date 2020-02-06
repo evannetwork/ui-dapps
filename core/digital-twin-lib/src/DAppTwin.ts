@@ -38,11 +38,9 @@ class DAppTwin extends DigitalTwin {
   /**
    * All loaded containers, enhanced with ui flags and data.
    */
-  containers: { [id: string]: DAppContainer };
-
   containerContracts: { [id: string]: DAppContainer };
 
-  containerKeys: string[];
+  containerAddresses: string[];
 
   /**
    * Current states for running dispatchers. Includes description saving, entry saving, sharing /
@@ -71,12 +69,17 @@ class DAppTwin extends DigitalTwin {
    */
   createdAt: number = null;
 
+  /**
+   * True, when the twin is initialization process
+   */
+  loading = false;
 
   /**
    * Call super and initialize new twin class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {
     super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    this.containerContracts = { };
     this.baseConstructor(vue, runtime, address);
   }
 
@@ -92,25 +95,19 @@ class DAppTwin extends DigitalTwin {
    * Reset containers object and reload all container definitions.
    */
   private async ensureContainers(): Promise<void> {
-    this.containers = { };
-    this.containerContracts = { };
-
     // transform twinEntries to containers object, so all
     const twinEntries = await this.getEntries();
-    this.containerKeys = Object.keys(twinEntries);
-    await Promise.all(this.containerKeys.map(async (key: string) => {
-      this.containers[key] = new DAppContainer(
-        this.vue,
-        this.runtime,
-        await twinEntries[key].value.getContractAddress(),
-      );
+    await Promise.all(Object.keys(twinEntries).map(async (key: string) => {
+      const address = await twinEntries[key].value.getContractAddress();
 
-      // load description, contractAddress, dispatcherStates
-      await this.containers[key].initialize();
-
-      // make contracts also directly accessible
-      this.containerContracts[this.containers[key].contractAddress] = this.containers[key];
+      // only load container, if it wasn't initialized before (e.g. when it was initially loaded)
+      if (!this.containerContracts[address]) {
+        await this.setupDAppContainer(address);
+      } else {
+        this.containerContracts[address].name = key;
+      }
     }));
+    this.containerAddresses = Object.keys(this.containerContracts);
   }
 
   /**
@@ -159,13 +156,6 @@ class DAppTwin extends DigitalTwin {
         this.favorite = false;
       }
     });
-
-    // check if any container gets saved
-    Object.keys(this.containers).forEach((containerKey: string) => {
-      if (this.containers[containerKey].dispatcherStates.container) {
-        this.dispatcherStates.twin = true;
-      }
-    });
   }
 
   /**
@@ -181,7 +171,6 @@ class DAppTwin extends DigitalTwin {
     ]);
 
     await this.ensureDispatcherStates();
-    this.ensureI18N();
   }
 
   /**
@@ -218,8 +207,6 @@ class DAppTwin extends DigitalTwin {
    * Start all dispatcher watchers.
    */
   public watchDispatchers(): void {
-    // clear previously running watchers
-    this.stopWatchDispatchers();
     // trigger all new watchers and save the listeners
     this.listeners = [
       dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
@@ -235,7 +222,10 @@ class DAppTwin extends DigitalTwin {
     // clear own watchers
     this.listeners.forEach((listener: Function) => listener());
     // clear container watchers
-    this.containerKeys.forEach((key: string) => this.containers[key].stopWatchDispatchers());
+    if (this.containerContracts && this.containerAddresses) {
+      this.containerAddresses
+        .forEach((address: string) => this.containerContracts[address].stopWatchDispatchers());
+    }
   }
 
   /**
@@ -245,6 +235,21 @@ class DAppTwin extends DigitalTwin {
    */
   public async setDescription(description?: DBCPDescriptionInterface): Promise<void> {
     return this.baseSetDescription(description);
+  }
+
+  /**
+   * Creates a new dapp container instances, initialize it and applies it to the container
+   * contracts.
+   *
+   * @param      {string}  contractAddress  container contract address
+   */
+  public async setupDAppContainer(contractAddress: string): Promise<DAppContainer> {
+    const container = new DAppContainer(this.vue, this.runtime, contractAddress);
+    // make contracts also directly accessible
+    this.containerContracts[contractAddress] = container;
+    // load description, contractAddress, dispatcherStates
+    await container.loadBaseInfo();
+    return container;
   }
 }
 

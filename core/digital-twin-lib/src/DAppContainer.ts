@@ -34,6 +34,11 @@ import { applyMixins, DAppContract } from './DAppContract';
  */
 class DAppContainer extends Container {
   /**
+   * name within the twin
+   */
+  name = '';
+
+  /**
    * Contains all data, that is currently processed by the container save dispatchers. So get entry
    * can merge original values with these ones.
    */
@@ -65,7 +70,7 @@ class DAppContainer extends Container {
 
   entries: { [entryName: string]: any };
 
-  listEntryCounts: { [entryName: string]: number }
+  listEntryCounts: { [entryName: string]: number };
 
   /**
    * Containers plugin definition for accessing entry data schemas.
@@ -100,8 +105,9 @@ class DAppContainer extends Container {
   /**
    * Call super and initialize new container class.
    */
-  constructor(vue: EvanComponent, runtime: Runtime, address: string) {
+  constructor(vue: EvanComponent, runtime: Runtime, address: string, name?: string) {
     super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    this.name = name;
     this.baseConstructor(vue, runtime, address);
   }
 
@@ -233,15 +239,14 @@ class DAppContainer extends Container {
   }
 
   /**
-   * Load basic container information and ensure dispatcher states
+   * Load container plugin and ensure values.
    */
   public async initialize(): Promise<void> {
-    await this.loadBaseInfo();
     this.plugin = await this.toPlugin();
     this.entries = {};
     this.listEntryCounts = {};
     await this.ensureDispatcherStates();
-    this.ensureI18N();
+    await this.loadEntryValues();
   }
 
   /**
