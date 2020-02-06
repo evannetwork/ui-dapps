@@ -57,23 +57,24 @@
       class="batch-label ml-0 mr-2 my-2"
     >
       <span>{{ file.name }}</span>
-
-      <a
-        :id="`file-input-download-${ index }`"
-        class="btn p-0 ml-3"
-        :href="file.blobUri"
-        :download="file.name"
-      >
-        <i class="mdi mdi-download-outline" />
-      </a>
-      <button
-        v-if="!disabled"
-        id="file-input-remove"
-        class="btn p-0 ml-1 delete"
-        @click="removeFile($event, file, index)"
-      >
-        <i class="mdi mdi-delete-outline" />
-      </button>
+      <div class="ml-auto">
+        <a
+          :id="`file-input-download-${ index }`"
+          class="btn p-0 ml-3"
+          :href="file.blobUri"
+          :download="file.name"
+        >
+          <i class="mdi mdi-download-outline" />
+        </a>
+        <button
+          v-if="!disabled"
+          id="file-input-remove"
+          class="btn p-0 ml-1 delete"
+          @click="removeFile($event, file, index)"
+        >
+          <i class="mdi mdi-delete-outline" />
+        </button>
+      </div>
     </div>
 
     <div
@@ -106,7 +107,7 @@
     </div>
     <div
       v-else-if="value.length === 0"
-      class="centered p-3"
+      class="dropzone disabled centered p-3"
     >
       {{ emptyText | translate }}
     </div>
