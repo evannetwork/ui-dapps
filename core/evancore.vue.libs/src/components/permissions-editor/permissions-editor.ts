@@ -21,15 +21,15 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { deepEqual, bccUtils } from '@evan.network/ui';
-import { Runtime, Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
+import {
+  Runtime, Profile, ProfileOptions, lodash,
+} from '@evan.network/api-blockchain-core';
 import { Prop, Watch } from 'vue-property-decorator';
 import {
   ContactInterface,
   ContainerPermissionsInterface,
 } from '../../interfaces';
 import EvanComponent from '../../component';
-
-const clone = (obj: any) => JSON.parse(JSON.stringify(obj)); // TODO: import from common utils
 
 interface SortFiltersInterface {
   [key: string]: string[];
@@ -211,7 +211,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
     });
 
     this.initialPermissions = this.containersPermissions
-      ? clone(this.containersPermissions)
+      ? lodash.cloneDeep(this.containersPermissions)
       : this.initialPermissions;
 
     this.isLoading = false;
@@ -230,7 +230,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
         this.containersPermissions,
         this.initialPermissions,
       );
-      this.initialPermissions = clone(this.containersPermissions);
+      this.initialPermissions = lodash.cloneDeep(this.containersPermissions);
     } catch (ex) {
       console.error('Error writing permissions', ex.message);
     }
