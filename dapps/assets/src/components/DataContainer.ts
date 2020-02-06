@@ -22,9 +22,11 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import * as bcc from '@evan.network/api-blockchain-core';
+import { bccUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-import { SearchService } from '@evan.network/digital-twin-lib';
+import { SearchService, DigitalTwin } from '@evan.network/digital-twin-lib';
 
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
@@ -47,10 +49,39 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
   })
   type: string;
 
+  /**
+   * Mapping of account addresses to name / alias resolving promises
+   */
+  aliasMapping: { [ address: string ]: Promise<string> } = { };
+
   mounted(): void {
     this.searchTerm = this.$route.params.query || '';
 
     this.initialQuery(this.searchTerm);
+  }
+
+  /**
+   * Check the search results, if the name / alias of an owner can be loaded
+   */
+  async ensureOwnerNames(searchResults: DigitalTwin[]): Promise<void> {
+    const runtime = this.getRuntime();
+
+    await Promise.all(searchResults.map(async (result): Promise<void> => {
+      if (result.owner && runtime.web3.utils.isAddress(result.owner)) {
+        if (!this.aliasMapping[result.owner]) {
+          this.aliasMapping[result.owner] = bccUtils.getUserAlias(
+            new bcc.Profile({
+              accountId: runtime.activeAccount,
+              profileOwner: result.owner,
+              ...(runtime as bcc.ProfileOptions),
+            }),
+          );
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        result.owner = await this.aliasMapping[result.owner];
+      }
+    }));
   }
 
   async initialQuery(searchTerm = '', sorting = {}): Promise<void> {
@@ -70,6 +101,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       searchTerm,
       ...sorting,
     });
+    await this.ensureOwnerNames(result);
 
     this.total = total;
     this.data = result;
@@ -92,6 +124,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     };
 
     const { result } = await this.search.query(this.type, options);
+    await this.ensureOwnerNames(result);
 
     this.data = [...this.data, ...result];
     this.isLoading = false;
