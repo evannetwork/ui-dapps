@@ -29,7 +29,7 @@
             <evan-button
               type="primary"
               native-type="submit"
-              class="flex-grow-1"
+              class="ml-3 flex-grow-1"
               :label="'_twin-detail.data.sharing.update-sharing' | translate"
               @click="permissionsEditor.writePermissions()"
             />

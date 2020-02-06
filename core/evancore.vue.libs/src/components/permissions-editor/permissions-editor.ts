@@ -76,7 +76,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
   @Prop({
     required: true,
   })
-  loadPermissions: Function;
+  loadPermissions: (userId: string) => Promise<any>;
 
   /**
    * Initially pre-selected contact id.

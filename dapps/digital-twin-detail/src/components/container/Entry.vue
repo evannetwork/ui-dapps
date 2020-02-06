@@ -26,6 +26,10 @@
       :value="value"
       @save="onSave($event)"
     />
+
+    <share-container
+      ref="shareContainer"
+    />
   </div>
 </template>
 

@@ -184,12 +184,8 @@ export default class PermissionUtils {
       containerAddress,
       accountId,
     );
-    console.log('container', container);
     const properties = await PermissionUtils.getContainerProperties(container);
-    console.log('properties', properties);
     const shareConfigs = await container.getContainerShareConfigs();
-    console.log('shareConfigs', shareConfigs);
-
     const containerPermissions = {} as any;
 
 
@@ -351,8 +347,8 @@ export default class PermissionUtils {
     const containerConfigs = [];
     const bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
 
-    Object.keys(containerPermissions).forEach((containerAddress: string) => {
-      const shareConfigs = PermissionUtils.createShareConfig(
+    Object.keys(containerPermissions).forEach(async (containerAddress: string) => {
+      const shareConfigs = await PermissionUtils.createShareConfig(
         containerPermissions[containerAddress].permissions,
         oldContainerPermissions[containerAddress].permissions,
         accountId,
@@ -382,7 +378,6 @@ export default class PermissionUtils {
 
       containerConfigs.push(dataSharing);
     });
-
     await containerShareDispatcher.start(runtime, containerConfigs);
   }
 }

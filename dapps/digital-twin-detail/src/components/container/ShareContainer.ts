@@ -37,29 +37,19 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
     this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
   }
 
-  async loadPermissions(): Promise<any> {
+  async loadPermissions(userId: string): Promise<any> {
     const { container } = this.$store.state;
     const runtime = this.getRuntime();
     const permissions = await PermissionUtils.createContainerPermissions(
       runtime,
       { containerAddress: container.contractAddress, label: container.description.name },
     );
-
-    if (!permissions[container.contractAddress]) {
+    if (!permissions[userId]) {
       return permissions.new;
     }
 
-    return permissions[container.contractAddress];
+    return permissions[userId];
   }
-
-  /* async updatePermissions(): Promise<void> {
-       return PermissionUtils.updatePermissions(
-         this,
-         this.getRuntime(),
-         this.getRuntime().activeAccount, */
-
-  /*   )
-     } */
 
   showPanel(): void {
     (this.$refs.shareContainerPanel as any).show();
