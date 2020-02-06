@@ -161,9 +161,6 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     const runtime = (<any> this).getRuntime();
     const allPermissions = await getProfilePermissionDetails(runtime, (<any> this).$route.params.address);
 
-    console.log('permissions', allPermissions);
-    console.log(user);
-
     if (!allPermissions[user]) {
       return allPermissions.new;
     }

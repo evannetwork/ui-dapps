@@ -206,8 +206,6 @@ export default class PermissionUtils {
       containerPermissions[accountId],
     );
 
-    console.log('containerPermissions', containerPermissions);
-
     return containerPermissions;
   }
 
