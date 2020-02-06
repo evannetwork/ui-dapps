@@ -22,9 +22,9 @@
       },
       "list": {
         "add-list-item": {
-          "title": "Eintrag hinzufügen",
           "cancel": "Abbrechen",
-          "submit": "Eintrag hinzufügen"
+          "submit": "Eintrag hinzufügen",
+          "title": "Eintrag hinzufügen"
         },
         "list-item-detail": {
           "close": "Schließen",
@@ -68,6 +68,11 @@
       "transactions-title": "Letzte Transaktionen"
     },
     "sharings": {
+      "filters": {
+        "all": "Alle",
+        "company": "Unternehmen",
+        "user": "Nutzer"
+      },
       "sharings-title": "Freigaben"
     },
     "verifications": {

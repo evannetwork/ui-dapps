@@ -21,10 +21,11 @@ import { RouteConfig } from 'vue-router';
 import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
 
 import ContainerComponent from './components/container/Container.vue';
+import DetailOverviewComponent from './components/overview/DetailOverview.vue';
 import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
 import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
-import DetailOverviewComponent from './components/overview/DetailOverview.vue';
+import SharingOverview from './components/sharing/SharingOverview.vue';
 
 const routeRegistration: Array<RouteConfig> = [
   {
@@ -65,7 +66,7 @@ const routeRegistration: Array<RouteConfig> = [
       {
         name: 'sharings',
         path: 'sharings',
-        component: UnderDevelopmentComponent,
+        component: SharingOverview,
       },
       {
         name: 'did',
