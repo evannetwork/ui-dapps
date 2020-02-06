@@ -23,6 +23,7 @@
       :data-schema="entrySchema"
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
+      :handle-share="onShare"
       :value="value"
       @save="onSave($event)"
     />
@@ -38,7 +39,3 @@ import ContainerEntryComponent from './Entry';
 
 export default ContainerEntryComponent;
 </script>
-
-<style lang="scss" scoped>
-
-</style>

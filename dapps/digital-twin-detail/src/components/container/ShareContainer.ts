@@ -58,10 +58,4 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
   closePanel(): void {
     (this.$refs.shareContainerPanel as any).hide();
   }
-
-  onSave(ev): void {
-    console.log(ev);
-
-    (this.$refs.permissionsEditor as any).writePermissions();
-  }
 }

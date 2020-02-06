@@ -28,7 +28,7 @@
         <evan-button
           type="secondary"
           size="sm"
-          @click="share"
+          @click="onShare"
         >
           {{ '_evan.share' | translate }}
         </evan-button>
