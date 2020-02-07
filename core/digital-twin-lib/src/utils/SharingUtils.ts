@@ -55,8 +55,12 @@ export default class SharingUtils {
       content: {
         from: runtime.activeAccount,
         fromAlias: alias,
-        title: vueInstance.$t('_digital-twin-lib.bmail.share.title'),
-        body: `${vueInstance.$t('_digital-twin-lib.bmail.share.body', { alias }).replace(/\n/g, '<br>')} <br /> <a href="${pathToContainer}">Link</a>`,
+        // TODO: Hard coded content for now. This must be translated in the bmail-dapp instead of here.
+        title: 'New access to Digital Twin',
+        body: `You have been granted access to a Digital Twin by ${alias}. Click on the following Link to view it.
+          <br /><br />
+          <a href="${pathToContainer}" target="_blank">${twin.description.name}</a>
+          `,
         attachments: [
           {
             containerAddress: container.contractAddress,
