@@ -84,6 +84,11 @@ class DAppContainer extends Container {
   plugin: ContainerPlugin;
 
   /**
+   * Current permissions of the user
+   */
+  permissions: ContainerShareConfig;
+
+  /**
    * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
    *
    * @param      {any}      subSchema   ajv sub schema
@@ -196,8 +201,11 @@ class DAppContainer extends Container {
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
-      const entryDef = this.plugin.template.properties[entryKey];
+      if (this.permissions.read.indexOf(entryKey) === -1) {
+        return;
+      }
 
+      const entryDef = this.plugin.template.properties[entryKey];
       if (entryDef?.type === 'list') {
         this.listEntryCounts[entryKey] = await this.getListEntryCount(entryKey);
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
@@ -248,17 +256,40 @@ class DAppContainer extends Container {
    * Load container plugin and ensure values.
    */
   public async initialize(): Promise<void> {
-    this.plugin = await this.toPlugin();
+    this.plugin = this.loadPluginSchema();
     this.entries = {};
     this.listEntryCounts = {};
+    this.permissions = await this.getPermissions();
     await this.ensureDispatcherStates();
+    await this.loadEntryValues();
+  }
 
+  /**
+   * Load plugin template schema without checking for permissions and values, just to load correct
+   * plugin data schema.
+   *
+   * @return     {ContainerPlugin}  container plugin with only dataschema
+   */
+  loadPluginSchema(): ContainerPlugin {
+    const plugin: ContainerPlugin = {
+      template: {
+        type: '',
+        properties: { },
+      },
+    };
 
-    const permissions = await this.getPermissions();
-    const entriesToLoad: string[] = [...permissions.read, ...permissions.readWrite];
-    console.log(entriesToLoad);
+    const { dataSchema } = this.description as any;
+    if (dataSchema) {
+      Object.keys(dataSchema).forEach((property: string) => {
+        plugin.template.properties[property] = {
+          dataSchema: dataSchema[property],
+          permissions: {},
+          type: dataSchema[property].type === 'array' ? 'list' : 'entry',
+        };
+      });
+    }
 
-    await this.loadEntryValues(entriesToLoad);
+    return plugin;
   }
 
   async getPermissions(): Promise<ContainerShareConfig> {
