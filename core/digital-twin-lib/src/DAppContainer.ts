@@ -18,13 +18,19 @@
 */
 
 import {
-  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils,
+  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils, ContainerShareConfig,
 } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
 import { applyMixins, DAppContract } from './DAppContract';
+
+interface Permissions {
+  accountId: string;
+  read: string[];
+  readWrite: string[];
+}
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
@@ -246,7 +252,21 @@ class DAppContainer extends Container {
     this.entries = {};
     this.listEntryCounts = {};
     await this.ensureDispatcherStates();
-    await this.loadEntryValues();
+
+
+    const permissions = await this.getPermissions();
+    const entriesToLoad: string[] = [...permissions.read, ...permissions.readWrite];
+    console.log(entriesToLoad);
+
+    await this.loadEntryValues(entriesToLoad);
+  }
+
+  async getPermissions(): Promise<ContainerShareConfig> {
+    return {
+      read: [],
+      readWrite: [],
+      ...await this.getContainerShareConfigForAccount(this.runtime.activeAccount),
+    };
   }
 
   /**

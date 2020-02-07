@@ -25,7 +25,7 @@ import {
   Runtime, Profile, ProfileOptions, lodash,
 } from '@evan.network/api-blockchain-core';
 import { Prop, Watch } from 'vue-property-decorator';
-import { BmailContent } from '@evan.network/digital-twin-lib';
+// import { BmailContent } from '@evan.network/digital-twin-lib';
 import {
   ContactInterface,
   ContainerPermissionsInterface,
@@ -111,7 +111,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
   })
   relative: boolean;
 
-  @Prop() bMailContent: BmailContent;
+  @Prop() bMailContent: any;
 
   /**
    * An object with arrays of sorted keys for each contract id,
