@@ -100,7 +100,7 @@ class DAppTwin extends DigitalTwin {
     await Promise.all(Object.keys(twinEntries).map(async (key: string) => {
       const address = await twinEntries[key].value.getContractAddress();
 
-      // only load container, if it wasn't initialized before (e.g. when it was initially loaded)
+      // only load container, if its base info wasn't before (e.g. when it was initially loaded)
       if (!this.containerContracts[address]) {
         await this.setupDAppContainer(address);
       } else {

@@ -32,14 +32,14 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
    */
   entrySchema: ObjectSchema;
 
+  get value(): any {
+    const { dispatcherData, entries } = this.$store.state.container;
+    return dispatcherData[this.name] || entries[this.name];
+  }
+
   created(): void {
     const { plugin } = this.$store.state.container;
     this.entrySchema = plugin.template.properties[this.name].dataSchema;
-  }
-
-  getValue(): any {
-    const { dispatcherData, entries } = this.$store.state.container;
-    return dispatcherData[this.name] || entries[this.name];
   }
 
   /**

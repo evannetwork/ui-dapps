@@ -60,30 +60,6 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.initialQuery(this.searchTerm);
   }
 
-  /**
-   * Check the search results, if the name / alias of an owner can be loaded
-   */
-  async ensureOwnerNames(searchResults: DigitalTwin[]): Promise<void> {
-    const runtime = this.getRuntime();
-
-    await Promise.all(searchResults.map(async (result): Promise<void> => {
-      if (result.owner && runtime.web3.utils.isAddress(result.owner)) {
-        if (!this.aliasMapping[result.owner]) {
-          this.aliasMapping[result.owner] = bccUtils.getUserAlias(
-            new bcc.Profile({
-              accountId: runtime.activeAccount,
-              profileOwner: result.owner,
-              ...(runtime as bcc.ProfileOptions),
-            }),
-          );
-        }
-
-        // eslint-disable-next-line no-param-reassign
-        result.owner = await this.aliasMapping[result.owner];
-      }
-    }));
-  }
-
   async initialQuery(searchTerm = '', sorting = {}): Promise<void> {
     this.isLoading = true;
     this.page = 0;
@@ -101,7 +77,25 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       searchTerm,
       ...sorting,
     });
-    await this.ensureOwnerNames(result);
+
+    // resolve the owner names for the search results
+    const runtime = this.getRuntime();
+    await Promise.all(result.map(async (entry): Promise<void> => {
+      if (entry.owner && runtime.web3.utils.isAddress(entry.owner)) {
+        if (!this.aliasMapping[entry.owner]) {
+          this.aliasMapping[entry.owner] = bccUtils.getUserAlias(
+            new bcc.Profile({
+              accountId: runtime.activeAccount,
+              profileOwner: entry.owner,
+              ...(runtime as bcc.ProfileOptions),
+            }),
+          );
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        entry.owner = await this.aliasMapping[entry.owner];
+      }
+    }));
 
     this.total = total;
     this.data = result;
