@@ -50,6 +50,7 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
       runtime,
       { containerAddress: container.contractAddress, label: container.description.name },
     );
+
     if (!permissions[userId]) {
       return permissions.new;
     }

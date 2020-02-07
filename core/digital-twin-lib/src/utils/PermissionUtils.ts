@@ -188,7 +188,6 @@ export default class PermissionUtils {
     const shareConfigs = await container.getContainerShareConfigs();
     const containerPermissions = {} as any;
 
-
     shareConfigs.forEach((entry: ShareConfigEntry) => {
       containerPermissions[entry.accountId] = {
         [containerAddress]: {
