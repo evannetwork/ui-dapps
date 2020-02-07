@@ -236,7 +236,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
       );
       this.initialPermissions = lodash.cloneDeep(this.containersPermissions);
     } catch (ex) {
-      console.error('Error writing permissions', ex.message);
+      this.runtime.logger.log(`Error writing permissions for ${this.selectedContact}: ${ex.message}`);
     }
 
     this.cancel();

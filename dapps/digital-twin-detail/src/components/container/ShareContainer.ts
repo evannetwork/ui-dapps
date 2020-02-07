@@ -23,7 +23,6 @@ import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-co
 import { bccUtils } from '@evan.network/ui';
 import { PermissionUtils, BmailContent, SharingUtils } from '@evan.network/digital-twin-lib';
 
-
 @Component
 export default class ShareContainerComponent extends mixins(EvanComponent) {
   contacts = null;
