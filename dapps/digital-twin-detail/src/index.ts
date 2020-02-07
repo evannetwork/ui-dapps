@@ -23,10 +23,10 @@ import { System, getDomainName } from '@evan.network/ui-dapp-browser';
 import { DropdownPlugin, TablePlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-import translations from './i18n/translations';
-import routes from './routes';
 import components from './components/registry';
-import DigitalTwinDetailComponent from './components/DigitalTwinDetail.vue';
+import RootComponent from './components/root/root.vue';
+import routes from './routes';
+import translations from './i18n/translations';
 
 export * from './components/registry';
 export { translations };
@@ -57,7 +57,7 @@ export async function startDApp(
     dappBaseUrl,
     dappEnsOrContract,
     dbcpName,
-    RootComponent: DigitalTwinDetailComponent,
+    RootComponent,
     routes,
     state: { },
     translations,

@@ -13,7 +13,6 @@
         :data-schema="schema.items"
         :editable="false"
         :shareable="false"
-        :is-loading="$store.state.container.dispatcherStates.entries[name]"
         :name="name"
         :value="value"
         :only-form="true"

@@ -125,6 +125,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
           columns.push({
             key,
             label: this.$t(`${i18nScope}.properties.${key}.label`, key),
+            tdClass: 'truncate',
           });
         });
         break;
@@ -133,6 +134,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
         columns.push({
           key: 'value',
           label: this.$t('_twin-detail.data.list.value'),
+          tdClass: 'truncate',
         });
         break;
       }

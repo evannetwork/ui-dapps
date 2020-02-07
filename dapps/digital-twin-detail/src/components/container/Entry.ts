@@ -32,23 +32,21 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
    */
   entrySchema: ObjectSchema;
 
-  /**
-   * Current value of the entry
-   */
-  value: any;
+  get value(): any {
+    const { dispatcherData, entries } = this.$store.state.container;
+    return dispatcherData[this.name] || entries[this.name];
+  }
 
   created(): void {
-    const { dispatcherData, plugin, entries } = this.$store.state.container;
+    const { plugin } = this.$store.state.container;
     this.entrySchema = plugin.template.properties[this.name].dataSchema;
-    this.value = dispatcherData[this.name] || entries[this.name];
   }
 
   /**
    * Handle on save event from form.
    */
   onSave(formData: any): void {
-    this.value = formData;
-    this.$store.state.container.setEntry(this.name, this.value);
+    this.$store.state.container.setEntry(this.name, formData);
   }
 
   onShare(): void {

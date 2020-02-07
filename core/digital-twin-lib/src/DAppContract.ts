@@ -123,6 +123,7 @@ export class DAppContract {
       profileOwner: this.ownerAddress,
       ...(this.runtime as ProfileOptions),
     }));
+    this.ensureI18N();
   }
 
   /**

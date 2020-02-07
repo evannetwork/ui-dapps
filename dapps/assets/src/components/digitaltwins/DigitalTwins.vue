@@ -97,10 +97,10 @@
             <i class="table-icon mdi mdi-cube-outline" />
           </template>
           <template v-slot:cell(updated)="data">
-            {{ data.item.updated | moment('DD.MM.YYYY hh:mm') }}
+            {{ data.item.updated | moment('DD.MM.YYYY HH:mm') }}
           </template>
           <template v-slot:cell(created)="data">
-            {{ data.item.created | moment('DD.MM.YYYY hh:mm') }}
+            {{ data.item.created | moment('DD.MM.YYYY HH:mm') }}
           </template>
           <template v-slot:cell(isFavorite)="twin">
             <evan-loading

@@ -35,7 +35,6 @@
       >
         <component
           :is="`container-${getEntryType(entryKey)}`"
-          v-if="!$store.state.reloadFlags[$route.params.container][entryKey]"
           :name="entryKey"
         />
       </div>
