@@ -18,71 +18,91 @@
 */
 
 <template>
-  <div>
-    <div class="content pt-5">
-      <div
-        class="d-flex flex-row justify-content-between align-items-center"
-        style="max-height: 33px"
-      >
-        <div class="search">
-          <label
-            id="twin-enable-search"
-            for="searchInput"
-            @click="isActiveSearch = true"
-          >
-            <i
-              class="mdi mdi-magnify mr-1"
-              style="font-size: 22px"
-            />
-            <span v-if="!isActiveSearch">{{
-              '_twin-detail.sharings.sharings-title' | translate
-            }}</span>
-          </label>
-          <input
-            v-show="isActiveSearch"
-            id="searchInput"
-            ref="searchInput"
-            v-model="searchTerm"
-            autocomplete="off"
-            @blur="handleSearchBlur"
-            @keydown.enter="$event.target.blur()"
-          >
-        </div>
-        <div>
-          <evan-button
-            class="ml-3"
-            type="text-filter"
-            icon="mdi mdi-account-outline"
-            icon-position="left"
-            :class="{ active: selectedFilter === 'user' }"
-            :label="$t('_twin-detail.sharings.filters.user')"
-            @click="selectedFilter = 'user'"
+  <div class="content pt-5">
+    <div
+      class="d-flex flex-row justify-content-between align-items-center"
+      style="max-height: 33px"
+    >
+      <div class="search">
+        <label
+          id="twin-enable-search"
+          for="searchInput"
+          @click="isActiveSearch = true"
+        >
+          <i
+            class="mdi mdi-magnify mr-1"
+            style="font-size: 22px"
           />
-          <evan-button
-            class="ml-3"
-            type="text-filter"
-            icon="mdi mdi-domain"
-            icon-position="left"
-            :class="{ active: selectedFilter === 'company' }"
-            :label="$t('_twin-detail.sharings.filters.company')"
-            @click="selectedFilter = 'company'"
-          />
-          <evan-button
-            class="ml-3"
-            type="text-filter"
-            icon="mdi mdi-share-variant"
-            icon-position="left"
-            :class="{ active: selectedFilter === 'all' }"
-            :label="$t('_twin-detail.sharings.filters.all')"
-            @click="selectedFilter = 'all'"
-          />
-        </div>
+          <span v-if="!isActiveSearch">{{
+            '_twin-detail.sharings.sharings-title' | translate
+          }}</span>
+        </label>
+        <input
+          v-show="isActiveSearch"
+          id="searchInput"
+          ref="searchInput"
+          v-model="searchTerm"
+          autocomplete="off"
+          @blur="handleSearchBlur"
+          @keydown.enter="$event.target.blur()"
+        >
       </div>
-
-      <div class="d-flex flex-row mt-3">
-        permission table!
+      <div>
+        <evan-button
+          v-for="filter in filters"
+          :key="filter.type"
+          class="ml-3"
+          type="text-filter"
+          :icon="`mdi mdi-${filter.icon}`"
+          icon-position="left"
+          :class="{ active: selectedFilter === filter.type }"
+          :label="$t(`_twin-detail.sharings.filters.${filter.type}`)"
+          @click="selectedFilter = filter.type"
+        />
       </div>
     </div>
+
+    <div class="d-flex flex-row mt-3">
+      <evan-table
+        class="clickable-rows"
+        :items="getTableData()"
+        :fields="columns"
+        :show-empty="!loading"
+        :sticky-header="'calc(100vh - 85px)'"
+        :sort-by="sortBy"
+        :sort-direction="reverse ? 'desc' : 'asc'"
+        no-local-sorting="true"
+        @sort-changed="sortHandler"
+        @row-clicked="handleRowClicked"
+      >
+        <template v-slot:cell(icon)="data">
+          <i :class="`table-icon mdi mdi-${data.item.icon}`" />
+        </template>
+
+        <template v-slot:cell(name)="data">
+          {{ data.item.name }}
+        </template>
+
+        <template v-slot:cell(containers)="data">
+          {{ data.item.containerNames.join(', ') }}
+        </template>
+        <template v-slot:empty>
+          <span v-if="selectedFilter === 'all' && !searchTerm">
+            {{ '_twin-detail.sharings.no-sharings' | translate }}
+          </span>
+          <span v-else>
+            {{
+              $t('_twin-detail.sharings.no-sharings-filter', {
+                searchTerm: searchterm || '*',
+                filter: $t(`_twin-detail.sharings.filters.${selectedFilter}`)
+              })
+            }}
+          </span>
+        </template>
+      </evan-table>
+    </div>
+
+    <evan-loading v-if="loading" />
   </div>
 </template>
 
@@ -91,3 +111,7 @@ import Component from './SharingOverview.ts';
 
 export default Component;
 </script>
+
+<style lang="scss" scoped>
+@import './SharingOverview.scss';
+</style>

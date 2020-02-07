@@ -71,9 +71,16 @@
       "filters": {
         "all": "Alle",
         "company": "Unternehmen",
+        "unshared": "Unbekannt",
         "user": "Nutzer"
       },
-      "sharings-title": "Freigaben"
+      "no-sharings": "Dieser Digitale Zwilling wurde mit keinem Nutzer geteilt.",
+      "no-sharings-filter": "Dieser Digitale Zwilling wurde mit keinem Nutzer mit diesem Filter gefunden. (Suche: \"{searchTerm}\" und Filter: \"{filter}\")",
+      "sharings-title": "Freigaben",
+      "table": {
+        "containers": "Geteilte Datenbereiche",
+        "name": "Name"
+      }
     },
     "verifications": {
       "verifications-title": "Verifikationen"

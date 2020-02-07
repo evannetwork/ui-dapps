@@ -82,7 +82,7 @@
       <div class="d-flex flex-row mt-3">
         <evan-table
           class="clickable-rows"
-          :items="data"
+          :items="getTableData"
           :fields="columns"
           :show-empty="!isLoading"
           :sticky-header="'calc(100vh - 85px)'"
