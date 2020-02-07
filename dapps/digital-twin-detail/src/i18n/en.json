@@ -36,6 +36,12 @@
       "logs": {
         "logs-title": "Logs"
       },
+      "sharing": {
+        "cancel": "Cancel",
+        "description": "To share your digital twin data with another contact, fill out the form below and click on “update sharing options”",
+        "sharing-title": "Share your Digital Twin",
+        "update-sharing": "Update Sharing Options"
+      },
       "specifications": {
         "specifications-title": "Specifications"
       },

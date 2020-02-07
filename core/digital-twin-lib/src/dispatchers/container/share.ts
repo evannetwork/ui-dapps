@@ -18,14 +18,14 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Container, ContainerShareConfig } from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig, ContainerOptions } from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
   `lib.digital-twin.${dappBrowser.getDomainName()}`,
   'containerShareDispatcher',
   40 * 1000,
-  '_digital-twin-lib.dispatchers.container.share'
+  '_digital-twin-lib.dispatchers.container.share',
 );
 
 /**
@@ -33,12 +33,10 @@ const dispatcher = new Dispatcher(
  *
  * @return     {Container}  The container.
  */
-const getContainer = (runtime, address) => {
-  return new Container(<any>runtime, {
-    accountId: runtime.activeAccount,
-    address: address,
-  });
-};
+const getContainer = (runtime, address) => new Container(runtime as ContainerOptions, {
+  accountId: runtime.activeAccount,
+  address,
+});
 
 /**
  * share the properties for single container
@@ -71,8 +69,6 @@ const updateUnsharings = (runtime, data) => {
 dispatcher
   // set new shared fields
   .step(async (instance: DispatcherInstance, data: any) => {
-    const sharingArr = Array.isArray(data) ? data : [ data ];
-
     if (Array.isArray(data)) {
       await Promise.all(data.map(async (shareData: any) => {
         await updateSharings(instance.runtime, shareData);
@@ -83,8 +79,6 @@ dispatcher
   })
   // remove "un-shared" fields
   .step(async (instance: DispatcherInstance, data: any) => {
-    const sharingArr = Array.isArray(data) ? data : [ data ];
-
     if (Array.isArray(data)) {
       await Promise.all(data.map(async (shareData: any) => {
         await updateUnsharings(instance.runtime, shareData);
@@ -95,7 +89,7 @@ dispatcher
   })
   // send b-mails
   .step(async (instance: DispatcherInstance, data: any) => {
-    const sharingArr = Array.isArray(data) ? data : [ data ];
+    const sharingArr = Array.isArray(data) ? data : [data];
 
     await Promise.all(sharingArr.map(async (sharingData: any) => {
       if (sharingData.bMailContent || data.bMailContent) {
@@ -103,7 +97,7 @@ dispatcher
           await instance.runtime.mailbox.sendMail(
             sharingData.bMailContent || data.bMailContent,
             instance.runtime.activeAccount,
-            shareConfig.accountId
+            shareConfig.accountId,
           );
         }));
       }

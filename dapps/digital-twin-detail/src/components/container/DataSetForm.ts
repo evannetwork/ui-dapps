@@ -71,6 +71,8 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
 
   @Prop({ default: true }) shareable: boolean;
 
+  @Prop() handleShare: () => any;
+
   @Prop() onlyForm: boolean;
 
   /**

@@ -30,7 +30,7 @@ import {
 } from '@evan.network/api-blockchain-core';
 import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import SharingUtils from './SharingUtils';
+import { BmailContent } from './SharingUtils';
 import { Permissions, PermissionsContainer } from '../interfaces/Permissions';
 import { containerShareDispatcher } from '../dispatchers';
 
@@ -145,10 +145,10 @@ export default class PermissionUtils {
    * @param userPermissions
    * - permissions
    */
-  static convertToPristine(userPermissions: Permissions): Permissions {
-    const pristinePermissions = cloneDeep(lodash, userPermissions);
+  static convertToPristine(userPermissions: PermissionsContainer): PermissionsContainer {
+    const pristinePermissions: PermissionsContainer = cloneDeep(lodash, userPermissions);
 
-    pristinePermissions.keys().foreach((key) => {
+    Object.keys(pristinePermissions).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(pristinePermissions, key)) {
         if (
           Object.prototype.hasOwnProperty.call(
@@ -156,9 +156,7 @@ export default class PermissionUtils {
             'permissions',
           )
         ) {
-          pristinePermissions[
-            key
-          ].permissions = PermissionUtils.convertToPristinePermissions(
+          pristinePermissions[key].permissions = PermissionUtils.convertToPristinePermissions(
             pristinePermissions[key].permissions,
           );
         }
@@ -246,11 +244,11 @@ export default class PermissionUtils {
    * @param oldPermissions
    * @param accountId
    */
-  static async createShareConfig(
+  static createShareConfig(
     permissions: Permissions,
     oldPermissions: Permissions,
     accountId: string,
-  ): Promise<ContainerUnshareConfig[]> {
+  ): ContainerUnshareConfig[] {
     const shareConfigs: ContainerShareConfig[] = [];
     const shareConfig: ContainerShareConfig = {
       accountId,
@@ -342,9 +340,9 @@ export default class PermissionUtils {
     accountId: string,
     containerPermissions: PermissionsContainer,
     oldContainerPermissions: PermissionsContainer,
+    bMailContent: BmailContent,
   ): Promise<void> {
     const containerConfigs = [];
-    const bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
 
     Object.keys(containerPermissions).forEach((containerAddress: string) => {
       const shareConfigs = PermissionUtils.createShareConfig(
@@ -377,7 +375,6 @@ export default class PermissionUtils {
 
       containerConfigs.push(dataSharing);
     });
-
     await containerShareDispatcher.start(runtime, containerConfigs);
   }
 }

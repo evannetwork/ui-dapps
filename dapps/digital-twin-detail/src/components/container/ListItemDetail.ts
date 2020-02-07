@@ -19,7 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import { Prop } from 'vue-property-decorator';
 import { ListSchema } from './DataSchemaInterface';
 import DataSetForm from './DataSetForm';
@@ -36,10 +36,10 @@ export default class ListItemDetailComponent extends mixins(EvanComponent) {
   dataSetForm: DataSetForm = null;
 
   showPanel(): void {
-    (this.$refs.listItemDetailPanel as any).show();
+    (this.$refs.listItemDetailPanel as SwipePanelComponentClass).show();
   }
 
   closePanel(): void {
-    (this.$refs.listItemDetailPanel as any).hide();
+    (this.$refs.listItemDetailPanel as SwipePanelComponentClass).hide();
   }
 }
