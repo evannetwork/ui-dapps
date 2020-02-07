@@ -17,9 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-import { Runtime, Profile } from '@evan.network/api-blockchain-core';
+import { profileUtils } from '@evan.network/ui';
+import { Runtime } from '@evan.network/api-blockchain-core';
+
 import InviteDispatcher from './InviteDispatcher';
-import { Contact, ContactType, ContactFormData } from './ContactInterfaces';
+import { Contact, ContactFormData } from './ContactInterfaces';
 
 export class ContactsService {
   private contacts;
@@ -40,13 +42,13 @@ export class ContactsService {
     Object.keys(this.contacts.profile).forEach(async (contact) => {
       // filter out own account
       if (contact !== this.runtime.activeAccount) {
-        const type = await this.getProfileType(contact);
+        const type = await profileUtils.getProfileType(this.runtime, contact);
         data.push({
           address: contact,
           alias: this.contacts.profile[contact].alias,
           createdAt: this.contacts.profile[contact].createdAt,
+          icon: profileUtils.getProfileTypeIcon(type),
           isFavorite: this.contacts.profile[contact].isFavorite,
-          icon: ContactsService.getIcon(type),
           type,
           updatedAt: this.contacts.profile[contact].updatedAt,
         });
@@ -81,45 +83,5 @@ export class ContactsService {
     await this.runtime.profile.storeForAccount(
       this.runtime.profile.treeLabels.addressBook,
     );
-  }
-
-  /**
-   * Return corresponding icon for account type.
-   * @param type Account type
-   */
-  private static getIcon(type: ContactType): string {
-    switch (type) {
-      case ContactType.USER:
-        return 'mdi mdi-account-outline';
-      case ContactType.COMPANY:
-        return 'mdi mdi-office-building';
-      case ContactType.IOT_DEVICE:
-        return 'mdi mdi-radio-tower';
-      case ContactType.UNSHARED:
-        return 'mdi mdi-help-circle-outline';
-      default:
-        return 'mdi mdi-help-circle-outline';
-    }
-  }
-
-  /**
-   * Try to get profile type if it's shared
-   * @param accountId Account address
-   */
-  private async getProfileType(accountId: string): Promise<ContactType> {
-    try {
-      const otherProfile = new Profile({
-        ...(this.runtime as any),
-        profileOwner: accountId,
-        accountId: this.runtime.activeAccount,
-      });
-
-      const { profileType } = await otherProfile.getProfileProperty(
-        'accountDetails',
-      );
-      return profileType;
-    } catch (err) {
-      return ContactType.UNSHARED;
-    }
   }
 }

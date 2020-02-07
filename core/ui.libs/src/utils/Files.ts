@@ -17,30 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-import * as bcc from '@evan.network/api-blockchain-core';
+import { UIContainerFile } from '../interfaces/UIContainerFile';
 
-export interface UIContainerFile extends bcc.ContainerFile {
-  /**
-   * The file size in bytes
-   */
-  size?: number;
-
-  /**
-   * Size parsed to kb, md, ...
-   */
-  readableSize?: string;
-
-  /**
-   * downloadable url
-   */
-  blobUri: string;
-
-  /**
-   * blob instance
-   */
-  blob: Blob;
-}
-
+/* Export UI Container from this file too, else other libraries that are using this file will resuklt in errors. */
+export { UIContainerFile } from '../interfaces/UIContainerFile';
 
 /**
  * Upload a file that were selected with an HTML 5 <input type="file"> selector or using the

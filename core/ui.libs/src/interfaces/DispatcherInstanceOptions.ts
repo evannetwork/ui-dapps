@@ -17,43 +17,21 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
-
-.content {
-  max-width: 850px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.add-twin-btn {
-  position: fixed;
-  bottom: 40px;
-  right: 60px;
-}
-
-.search {
-  span, i {
-    font-size: cssVar('h4-font-size');
-    color: cssVar('gray-600');
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  & input {
-    padding: 2px 8px;
-    outline: none;
-    background: transparent;
-    border: none;
-    color: cssVar('gray-600');
-    font-size: cssVar('h4-font-size');
-    font-weight: bold;
-
-    &:focus {
-      border-bottom: 1px solid cssVar('gray-600');
-    }
-  }
-
-  label {
-    line-height: 32px;
-  }
+interface DispatcherInstanceOptions {
+  // Queue for the current runtime and dispatcher
+  queue: EvanQueue;
+  // Dispatcher that should be runned.
+  dispatcher: Dispatcher;
+  // A initialized bcc runtime.
+  runtime: bcc.Runtime;
+  // Data that should be passed to the steps
+  data: any;
+  // Active step.
+  stepIndex?: number;
+  // If the instance must be accepted, the eve price will be estimated and saved to this instance.
+  customPrice?: number;
+  // dispatcher runtime id
+  id?: any;
+  // Error message.
+  error?: any;
 }
