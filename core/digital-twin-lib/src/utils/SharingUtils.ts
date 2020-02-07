@@ -38,17 +38,16 @@ export interface BmailContent {
 export default class SharingUtils {
   static async getTwinShareBMail(vueInstance): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
-    const { container, twin } = vueInstance.$store.state;
+    const { twin } = vueInstance.$store.state;
     const { profile } = runtime;
     const alias = await bccUtils.getUserAlias(profile);
     // ensure profile container is setup
     await profile.loadForAccount();
 
-    const pathToContainer = [`#/${vueInstance.dapp.rootEns}`,
+    const pathToContainer = [
+      `#/${vueInstance.dapp.rootEns}`,
       `detail.digital-twin.${getDomainName()}`,
       twin.contractAddress,
-      'data',
-      container.contractAddress,
     ].join('/');
 
     return {
@@ -63,8 +62,8 @@ export default class SharingUtils {
           `,
         attachments: [
           {
-            containerAddress: container.contractAddress,
-            type: 'container',
+            fullPath: pathToContainer,
+            type: 'url',
           },
         ],
       },

@@ -22,6 +22,7 @@ import * as bcc from '@evan.network/api-blockchain-core';
 
 import Dispatcher from './Dispatcher';
 import EvanQueue from './Queue';
+import { DispatcherInstanceOptions } from '../interfaces/DispatcherInstanceOptions';
 
 /**
  * A DispatcherInstance is generated, when a Dispatcher was started. This instance runs the startup

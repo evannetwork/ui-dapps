@@ -17,13 +17,18 @@
   the following URL: https://evan.network/license/
 */
 
-interface DispatcherInstanceOptions {
+import { Runtime } from '@evan.network/api-blockchain-core';
+
+import EvanQueue from '../utils/Queue';
+import Dispatcher from '../utils/Dispatcher';
+
+export interface DispatcherInstanceOptions {
   // Queue for the current runtime and dispatcher
   queue: EvanQueue;
   // Dispatcher that should be runned.
   dispatcher: Dispatcher;
   // A initialized bcc runtime.
-  runtime: bcc.Runtime;
+  runtime: Runtime;
   // Data that should be passed to the steps
   data: any;
   // Active step.

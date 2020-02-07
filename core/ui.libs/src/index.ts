@@ -25,7 +25,8 @@ import * as bccUtils from './utils/bccUtils';
 import * as FileHandler from './utils/Files';
 import * as profileUtils from './utils/profileUtils';
 import EvanQueue from './utils/Queue';
-import { Dispatcher, DispatcherInstance } from './utils/Dispatcher';
+import Dispatcher from './utils/Dispatcher';
+import DispatcherInstance from './utils/DispatcherInstance';
 import { UIContainerFile } from './interfaces/UIContainerFile';
 
 dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${dappBrowser.getDomainName()}!dapp-content`;

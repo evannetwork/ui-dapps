@@ -19,9 +19,14 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
-import { PermissionUtils, BmailContent, SharingUtils } from '@evan.network/digital-twin-lib';
+import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
+import {
+  BmailContent,
+  DAppTwin,
+  PermissionUtils,
+  SharingUtils,
+} from '@evan.network/digital-twin-lib';
 
 @Component
 export default class ShareContainerComponent extends mixins(EvanComponent) {
@@ -44,18 +49,21 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
   }
 
   async loadPermissions(userId: string): Promise<any> {
-    const { container } = this.$store.state;
+    const { twin }: { twin: DAppTwin } = this.$store.state;
     const runtime = this.getRuntime();
-    const permissions = await PermissionUtils.createContainerPermissions(
-      runtime,
-      { containerAddress: container.contractAddress, label: container.description.name },
-    );
 
-    if (!permissions[userId]) {
-      return permissions.new;
-    }
+    const permissions = {};
+    await Promise.all(twin
+      .containerAddresses
+      .map(async (containerAddress: string): Promise<void> => {
+        permissions[containerAddress] = await PermissionUtils.getContainerPermissionsForUser(
+          runtime,
+          { containerAddress, label: twin.containerContracts[containerAddress].description.name },
+          userId,
+        );
+      }));
 
-    return permissions[userId];
+    return permissions;
   }
 
   showPanel(): void {

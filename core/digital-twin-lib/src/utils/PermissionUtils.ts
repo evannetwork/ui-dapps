@@ -140,33 +140,6 @@ export default class PermissionUtils {
   }
 
   /**
-   * Clones whole permissions Object and removes all access rights.
-   *
-   * @param userPermissions
-   * - permissions
-   */
-  static convertToPristine(userPermissions: PermissionsContainer): PermissionsContainer {
-    const pristinePermissions: PermissionsContainer = cloneDeep(lodash, userPermissions);
-
-    Object.keys(pristinePermissions).forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(pristinePermissions, key)) {
-        if (
-          Object.prototype.hasOwnProperty.call(
-            pristinePermissions[key],
-            'permissions',
-          )
-        ) {
-          pristinePermissions[key].permissions = PermissionUtils.convertToPristinePermissions(
-            pristinePermissions[key].permissions,
-          );
-        }
-      }
-    });
-
-    return pristinePermissions;
-  }
-
-  /**
    * Creates permissions mapping based on container properties, sharing configs for each user and the container itself.
    *
    * TODO: How does the return value look like? Seems incompatible with PermissionsContainer interface
@@ -174,7 +147,7 @@ export default class PermissionUtils {
    * @param param1
    * @param accountId
    */
-  static async createContainerPermissions(
+  static async getContainerPermissionsForUser(
     runtime: Runtime,
     { containerAddress, label },
     accountId = runtime.activeAccount,
@@ -182,59 +155,31 @@ export default class PermissionUtils {
     const container = PermissionUtils.getContainer(
       runtime,
       containerAddress,
-      accountId,
+      runtime.activeAccount,
     );
     const properties = await PermissionUtils.getContainerProperties(container);
-    const shareConfigs = await container.getContainerShareConfigs();
-    const containerPermissions = {} as any;
+    const containerPermObj = {
+      label,
+      address: containerAddress,
+      permissions: null,
+    };
 
-    shareConfigs.forEach((entry: ShareConfigEntry) => {
-      containerPermissions[entry.accountId] = {
-        [containerAddress]: {
-          label,
-          permissions: PermissionUtils.createPermissionsObject(
-            entry,
-            properties,
-          ),
-        },
-      };
-    });
-
-    // Add pristine permissions map for new users:
-    containerPermissions.new = PermissionUtils.convertToPristine(
-      containerPermissions[accountId],
-    );
-
-    return containerPermissions;
-  }
-
-  /**
-   * get permissions for own profile
-   * @param runtime
-   */
-  static async getProfilePermissionDetails(
-    runtime: Runtime,
-    accountId: string,
-    label = 'Profile Data',
-  ): Promise<any> {
-    let profileAddress = runtime.profile.profileContract.options.address;
-
-    if (runtime.activeAccount !== accountId) {
-      const profile = new Profile({
-        accountId: runtime.activeAccount,
-        profileOwner: accountId,
-        ...(runtime as ProfileOptions),
-      });
-
-      await profile.loadForAccount();
-      profileAddress = profile.profileContract.options.address;
+    try {
+      const userPermissions = await container.getContainerShareConfigForAccount(accountId);
+      containerPermObj.permissions = PermissionUtils.createPermissionsObject(
+        userPermissions,
+        properties,
+      );
+    } catch (ex) {
+      // could not load permissions, return pristine
     }
 
-    return PermissionUtils.createContainerPermissions(
-      runtime,
-      { containerAddress: profileAddress, label },
-      accountId,
-    );
+    if (!containerPermObj.permissions) {
+      containerPermObj.permissions = PermissionUtils
+        .createPermissionsObject({ read: [], readWrite: [] }, properties);
+    }
+
+    return containerPermObj;
   }
 
   /**
