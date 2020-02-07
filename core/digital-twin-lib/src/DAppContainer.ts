@@ -201,7 +201,8 @@ class DAppContainer extends Container {
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
-      if (this.permissions.read.indexOf(entryKey) === -1) {
+      if (this.permissions.read.indexOf(entryKey) === -1
+          && this.permissions.readWrite.indexOf(entryKey) === -1) {
         return;
       }
 
