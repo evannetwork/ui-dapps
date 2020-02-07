@@ -201,7 +201,8 @@ export default class SharingOverview extends mixins(EvanComponent) {
    */
   getTableData(): Array<SharedUserInterface> {
     return this.data.filter((item: SharedUserInterface) => {
-      if (this.searchTerm && JSON.stringify(item).indexOf(this.searchTerm) === -1) {
+      if (this.searchTerm
+        && JSON.stringify(item).toLowerCase().indexOf(this.searchTerm.toLowerCase()) === -1) {
         return false;
       }
 
