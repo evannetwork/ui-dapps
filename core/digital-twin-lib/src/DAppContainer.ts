@@ -201,12 +201,17 @@ class DAppContainer extends Container {
     this.entryKeys = Object.keys(this.plugin.template.properties);
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
+      const entryDef = this.plugin.template.properties[entryKey];
+
       if (this.permissions.read.indexOf(entryKey) === -1
           && this.permissions.readWrite.indexOf(entryKey) === -1) {
+        // use empty list, so listentry component table will not break
+        if (entryDef?.type === 'list') {
+          this.entries[entryKey] = [];
+        }
         return;
       }
 
-      const entryDef = this.plugin.template.properties[entryKey];
       if (entryDef?.type === 'list') {
         this.listEntryCounts[entryKey] = await this.getListEntryCount(entryKey);
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
