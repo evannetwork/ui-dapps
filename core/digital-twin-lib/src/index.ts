@@ -35,6 +35,9 @@ import {
   TemplateErrorInterface,
 } from './interfaces/TemplateValidationErrors';
 import { SearchService } from './SearchService';
+import PermissionUtils from './utils/PermissionUtils';
+import SharingUtils, { BmailContent } from './utils/SharingUtils';
+import { Permissions, PermissionsContainer } from './interfaces/Permissions';
 
 export * from './dispatchers';
 export {
@@ -50,6 +53,11 @@ export {
   TwinTransaction,
   DigitalTwin,
   SearchService,
+  PermissionUtils,
+  SharingUtils,
+  Permissions,
+  PermissionsContainer,
+  BmailContent,
 };
 
 System.map[

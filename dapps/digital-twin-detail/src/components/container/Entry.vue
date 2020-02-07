@@ -25,7 +25,12 @@
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
       :value="getValue()"
+      :handle-share="onShare"
       @save="onSave($event)"
+    />
+
+    <share-container
+      ref="shareContainer"
     />
   </div>
 </template>
@@ -35,7 +40,3 @@ import ContainerEntryComponent from './Entry';
 
 export default ContainerEntryComponent;
 </script>
-
-<style lang="scss" scoped>
-
-</style>

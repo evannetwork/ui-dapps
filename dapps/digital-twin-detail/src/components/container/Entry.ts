@@ -48,4 +48,8 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   onSave(formData: any): void {
     this.$store.state.container.setEntry(this.name, formData);
   }
+
+  onShare(): void {
+    (this.$refs.shareContainer as any).showPanel();
+  }
 }

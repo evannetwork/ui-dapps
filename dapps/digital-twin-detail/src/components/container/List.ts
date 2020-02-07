@@ -23,6 +23,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { DAppContainer } from '@evan.network/digital-twin-lib';
 import { ListSchema } from './DataSchemaInterface';
+import ShareContainerComponent from './ShareContainer';
 
 interface FileList {
   files: File[];
@@ -151,6 +152,10 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   openDetail(item): void {
     this.selectedValue = item;
 
-    (this.$refs.listItemDetail as any).showPanel();
+    (this.$refs.listItemDetail as ShareContainerComponent).showPanel();
+  }
+
+  onShare(): void {
+    (this.$refs.shareContainer as ShareContainerComponent).showPanel();
   }
 }
