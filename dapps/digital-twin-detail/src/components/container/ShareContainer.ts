@@ -66,7 +66,13 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
     return permissions;
   }
 
-  showPanel(): void {
+  /**
+   * Open the share side panel and overwrite the selected contact, if wanted.
+   *
+   * @param      {string}  contact  contact address
+   */
+  showPanel(contact?: string): void {
+    this.selectedContact = contact;
     (this.$refs.shareContainerPanel as SwipePanelComponentClass).show();
   }
 

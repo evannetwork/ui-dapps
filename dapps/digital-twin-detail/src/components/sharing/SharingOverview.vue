@@ -73,7 +73,7 @@
         :sort-direction="reverse ? 'desc' : 'asc'"
         no-local-sorting="true"
         @sort-changed="sortHandler"
-        @row-clicked="handleRowClicked"
+        @row-clicked="openShareSidePanel($event.address)"
       >
         <template v-slot:cell(icon)="data">
           <i :class="`table-icon mdi mdi-${data.item.icon}`" />
@@ -103,6 +103,17 @@
     </div>
 
     <evan-loading v-if="loading" />
+
+    <evan-button
+      :type="'icon-primary'"
+      size="lg"
+      class="share-twin-btn"
+      icon="mdi mdi-plus"
+      @click="openShareSidePanel()"
+    />
+    <share-container
+      ref="shareContainer"
+    />
   </div>
 </template>
 

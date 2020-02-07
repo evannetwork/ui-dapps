@@ -25,6 +25,8 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { DAppTwin, DAppContainer } from '@evan.network/digital-twin-lib';
 import { profileUtils } from '@evan.network/ui';
 
+import ShareContainerComponent from '../container/ShareContainer';
+
 /**
  * Used to start user name / type loading directly while container resolve.
  */
@@ -124,15 +126,17 @@ export default class SharingOverview extends mixins(EvanComponent) {
 
       // iterate through all permitted users and apply them to the permitted users mapping
       unique.forEach((address: string): void => {
-        if (!permittedUsers[address]) {
-          permittedUsers[address] = {
-            type: profileUtils.getProfileType(runtime, address),
-            name: profileUtils.getUserAliasFromAddress(runtime, address),
-            containers: [],
-          };
-        }
+        if (address !== runtime.activeAccount) {
+          if (!permittedUsers[address]) {
+            permittedUsers[address] = {
+              type: profileUtils.getProfileType(runtime, address),
+              name: profileUtils.getUserAliasFromAddress(runtime, address),
+              containers: [],
+            };
+          }
 
-        permittedUsers[address].containers.push(containerAddress);
+          permittedUsers[address].containers.push(containerAddress);
+        }
       });
     }));
 
@@ -209,9 +213,13 @@ export default class SharingOverview extends mixins(EvanComponent) {
     });
   }
 
-  handleRowClicked(): void {
-    console.log(this);
-    console.log('todo');
+  /**
+   * Opens the share sidepanel. If wanted, preselect a contact.
+   *
+   * @param      {string}  contact  contact address
+   */
+  openShareSidePanel(contact?: string): void {
+    (this.$refs.shareContainer as ShareContainerComponent).showPanel(contact);
   }
 
   /**
