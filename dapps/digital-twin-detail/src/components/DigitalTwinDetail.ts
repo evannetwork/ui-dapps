@@ -106,10 +106,10 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         // if container view should be loaded initially, just load it directly
         if (this.$route.params.container) {
-          this.$store.state.containerPreloading = Promise.resolve().then(async () => {
+          this.$store.state.containerPreloading = (async (): Promise<void> => {
             const container = await newTwin.setupDAppContainer(this.$route.params.container);
             await container.initialize();
-          });
+          })();
         }
 
         // initialize twin structure
