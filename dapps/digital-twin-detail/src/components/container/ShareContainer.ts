@@ -19,7 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
 import { PermissionUtils, BmailContent, SharingUtils } from '@evan.network/digital-twin-lib';
 
@@ -59,12 +59,12 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
   }
 
   showPanel(): void {
-    (this.$refs.shareContainerPanel as any).show();
+    (this.$refs.shareContainerPanel as SwipePanelComponentClass).show();
   }
 
   closePanel(): void {
     this.permissionsEditor.cancel();
-    (this.$refs.shareContainerPanel as any).hide();
+    (this.$refs.shareContainerPanel as SwipePanelComponentClass).hide();
   }
 
   async onSave(): Promise<void> {
