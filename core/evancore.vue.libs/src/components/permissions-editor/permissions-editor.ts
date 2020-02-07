@@ -25,6 +25,7 @@ import {
   Runtime, Profile, ProfileOptions, lodash,
 } from '@evan.network/api-blockchain-core';
 import { Prop, Watch } from 'vue-property-decorator';
+import { BmailContent } from '@evan.network/digital-twin-lib';
 import {
   ContactInterface,
   ContainerPermissionsInterface,
@@ -109,6 +110,8 @@ class PermissionsEditor extends mixins(EvanComponent) {
     default: false,
   })
   relative: boolean;
+
+  @Prop() bMailContent: BmailContent;
 
   /**
    * An object with arrays of sorted keys for each contract id,
@@ -229,6 +232,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
         this.selectedContact,
         this.containersPermissions,
         this.initialPermissions,
+        this.bMailContent,
       );
       this.initialPermissions = lodash.cloneDeep(this.containersPermissions);
     } catch (ex) {

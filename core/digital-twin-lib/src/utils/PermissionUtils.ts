@@ -30,7 +30,7 @@ import {
 } from '@evan.network/api-blockchain-core';
 import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import SharingUtils from './SharingUtils';
+import { BmailContent } from './SharingUtils';
 import { Permissions, PermissionsContainer } from '../interfaces/Permissions';
 import { containerShareDispatcher } from '../dispatchers';
 
@@ -341,9 +341,26 @@ export default class PermissionUtils {
     accountId: string,
     containerPermissions: PermissionsContainer,
     oldContainerPermissions: PermissionsContainer,
+    bMailContent: BmailContent,
   ): Promise<void> {
     const containerConfigs = [];
-    const bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
+    /* let bMailContent;
+       switch (type) {
+         case 'profile': {
+           bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
+           break;
+         }
+         case 'twin': {
+           bMailContent = await SharingUtils.getTwinShareBMail(vueInstance);
+           break;
+         }
+         default: {
+           bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
+         }
+       } */
+
+    console.log(bMailContent);
+
 
     Object.keys(containerPermissions).forEach(async (containerAddress: string) => {
       const shareConfigs = await PermissionUtils.createShareConfig(

@@ -14,6 +14,7 @@
           :load-permissions="loadPermissions"
           :update-permissions="onUpdatePermissions"
           :on-select="onSelectContact"
+          :b-mail-content="bMailContent"
           i18n-scope="_twin-detail.data.sharing"
           @init="permissionsEditor = $event"
           @permissionsChanged="hasChange = $event"

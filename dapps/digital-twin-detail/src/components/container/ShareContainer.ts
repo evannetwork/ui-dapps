@@ -21,7 +21,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { bccUtils } from '@evan.network/ui';
-import { PermissionUtils } from '@evan.network/digital-twin-lib';
+import { PermissionUtils, BmailContent, SharingUtils } from '@evan.network/digital-twin-lib';
 
 
 @Component
@@ -36,8 +36,11 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
 
   hasChange = false;
 
+  bMailContent: BmailContent;
+
   async created(): Promise<void> {
     this.contacts = await bccUtils.getContacts(this.getRuntime());
+    this.bMailContent = await SharingUtils.getTwinShareBMail(this);
     this.onUpdatePermissions = PermissionUtils.updatePermissions.bind(null, this);
   }
 

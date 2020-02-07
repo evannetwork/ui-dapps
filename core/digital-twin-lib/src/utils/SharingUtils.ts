@@ -20,8 +20,54 @@
 import { bccUtils } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
 
+export interface BmailContent {
+  content: {
+    from: string;
+    fromAlias: string;
+    title: string;
+    body: string;
+    attachments:
+      {
+        fullPath?: string;
+        containerAddress?: string;
+        type: string;
+      }[];
+  };
+}
+
 export default class SharingUtils {
-  static async getProfileShareBMail(vueInstance): Promise<any> {
+  static async getTwinShareBMail(vueInstance): Promise<BmailContent> {
+    const runtime = vueInstance.getRuntime();
+    const { container, twin } = vueInstance.$store.state;
+    const { profile } = runtime;
+    const alias = await bccUtils.getUserAlias(profile);
+    // ensure profile container is setup
+    await profile.loadForAccount();
+
+    const pathToContainer = [`#/${vueInstance.dapp.rootEns}`,
+      `detail.digital-twin.${getDomainName()}`,
+      twin.contractAddress,
+      'data',
+      container.contractAddress,
+    ].join('/');
+
+    return {
+      content: {
+        from: runtime.activeAccount,
+        fromAlias: alias,
+        title: vueInstance.$t('_digital-twin-lib.bmail.share.title'),
+        body: `${vueInstance.$t('_digital-twin-lib.bmail.share.body', { alias }).replace(/\n/g, '<br>')} <br /> <a href="${pathToContainer}">Link</a>`,
+        attachments: [
+          {
+            containerAddress: container.contractAddress,
+            type: 'container',
+          },
+        ],
+      },
+    };
+  }
+
+  static async getProfileShareBMail(vueInstance): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
     const { profile } = runtime;
     const alias = await bccUtils.getUserAlias(profile);
