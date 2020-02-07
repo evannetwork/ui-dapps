@@ -244,11 +244,11 @@ export default class PermissionUtils {
    * @param oldPermissions
    * @param accountId
    */
-  static async createShareConfig(
+  static createShareConfig(
     permissions: Permissions,
     oldPermissions: Permissions,
     accountId: string,
-  ): Promise<ContainerUnshareConfig[]> {
+  ): ContainerUnshareConfig[] {
     const shareConfigs: ContainerShareConfig[] = [];
     const shareConfig: ContainerShareConfig = {
       accountId,
@@ -343,26 +343,9 @@ export default class PermissionUtils {
     bMailContent: BmailContent,
   ): Promise<void> {
     const containerConfigs = [];
-    /* let bMailContent;
-       switch (type) {
-         case 'profile': {
-           bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
-           break;
-         }
-         case 'twin': {
-           bMailContent = await SharingUtils.getTwinShareBMail(vueInstance);
-           break;
-         }
-         default: {
-           bMailContent = await SharingUtils.getProfileShareBMail(vueInstance);
-         }
-       } */
 
-    console.log(bMailContent);
-
-
-    Object.keys(containerPermissions).forEach(async (containerAddress: string) => {
-      const shareConfigs = await PermissionUtils.createShareConfig(
+    Object.keys(containerPermissions).forEach((containerAddress: string) => {
+      const shareConfigs = PermissionUtils.createShareConfig(
         containerPermissions[containerAddress].permissions,
         oldContainerPermissions[containerAddress].permissions,
         accountId,
