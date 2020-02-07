@@ -238,7 +238,7 @@ class DAppTwin extends DigitalTwin {
   }
 
   /**
-   * Creates a new dapp container instances, initialize it and applies it to the container
+   * Creates a new dapp container instance, initializes it and applies it to the container
    * contracts.
    *
    * @param      {string}  contractAddress  container contract address
