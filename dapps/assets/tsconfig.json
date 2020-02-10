@@ -2,13 +2,12 @@
   "compilerOptions": {
     "outDir": "dist"
   },
+  "exclude": [
+    "../../../node_modules/@evan.network"
+  ],
   "extends": "../../tsconfig.json",
   "include": [
-    "./src/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../core/digital-twin-lib"
-    }
+    "./src/**/*",
+    "../../scripts/dapp/vue-shim.d.ts"
   ]
 }

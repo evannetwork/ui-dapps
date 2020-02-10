@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-    "rootDir": "./src",
-    "tsBuildInfoFile": "./dist/tsbuildinfo"
+    "outDir": "dist"
   },
+  "exclude": [
+    "../../../node_modules/@evan.network"
+  ],
   "extends": "../../tsconfig.json",
   "include": [
     "./src/**/*",
-    "./src/**/*.json"
+    "../../scripts/dapp/vue-shim.d.ts"
   ]
 }
