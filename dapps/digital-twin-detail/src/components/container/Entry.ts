@@ -37,6 +37,29 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
     return dispatcherData[this.name] || entries[this.name];
   }
 
+  /**
+   * Returns the access level of the current user to this container.
+   */
+  get access(): string {
+    if (this.$store.state.container.permissions.read.includes(this.name)) {
+      return 'read';
+    }
+
+    if (this.$store.state.container.permissions.readWrite.includes(this.name)) {
+      return 'readWrite';
+    }
+
+    return 'none';
+  }
+
+  /**
+   * Returns true if the current account is the owner of the container.
+   */
+  get isOwner(): boolean {
+    const runtime = this.getRuntime();
+    return this.$store.state.container.ownerAddress === runtime.activeAccount;
+  }
+
   created(): void {
     const { plugin } = this.$store.state.container;
     this.entrySchema = plugin.template.properties[this.name].dataSchema;

@@ -33,6 +33,7 @@
       </div>
       <div>
         <evan-button
+          v-if="isOwner"
           type="secondary"
           size="sm"
           @click="onShare"
@@ -58,6 +59,7 @@
             >{{ '_twin-detail.data.list.show-all' | translate }}</span>
           </b-dropdown-item>
           <b-dropdown-item
+            v-if="access === 'readWrite'"
             @click="$refs.addListItem.showPanel()"
           >
             {{ '_twin-detail.data.list.add-list-item.title' | translate }}
@@ -80,6 +82,7 @@
     />
 
     <share-container
+      v-if="isOwner"
       ref="shareContainer"
     />
 

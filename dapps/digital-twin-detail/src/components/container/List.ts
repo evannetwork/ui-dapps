@@ -49,6 +49,29 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     return input && Object.keys(input).includes('files');
   }
 
+  /**
+   * Returns the access level of the current user to this container.
+   */
+  get access(): string {
+    if (this.$store.state.container.permissions.read.includes(this.name)) {
+      return 'read';
+    }
+
+    if (this.$store.state.container.permissions.readWrite.includes(this.name)) {
+      return 'readWrite';
+    }
+
+    return 'none';
+  }
+
+  /**
+   * Returns true if the current account is the owner of the container.
+   */
+  get isOwner(): boolean {
+    const runtime = this.getRuntime();
+    return this.$store.state.container.ownerAddress === runtime.activeAccount;
+  }
+
   created(): void {
     this.container = this.$store.state.container;
     this.schema = this.container.plugin.template.properties[this.name].dataSchema;

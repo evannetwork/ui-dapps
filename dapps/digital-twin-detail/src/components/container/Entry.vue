@@ -26,10 +26,13 @@
       :name="name"
       :handle-share="onShare"
       :value="value"
+      :shareable="isOwner"
+      :editable="access === 'readWrite'"
       @save="onSave($event)"
     />
 
     <share-container
+      v-if="isOwner"
       ref="shareContainer"
     />
   </div>

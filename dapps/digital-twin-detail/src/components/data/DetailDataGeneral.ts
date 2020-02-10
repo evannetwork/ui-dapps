@@ -30,6 +30,12 @@ export default class DigitalTwinDetailDataGeneralComponent extends mixins(EvanCo
    */
   dbcpForm: DbcpFormComponentClass;
 
+  get isOwner(): boolean {
+    const runtime = this.getRuntime();
+
+    return this.$store.state.container.ownerAddress === runtime.activeAccount;
+  }
+
   /**
    * Save the current description definition.
    */
