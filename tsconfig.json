@@ -6,16 +6,32 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "experimentalDecorators": true,
-    "lib": ["es2015", "dom"],
+    "lib": [
+      "es2015",
+      "dom"
+    ],
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "paths": {
-      "@evan.network/ui": ["./core/ui.libs"],
-      "@evan.network/ui/*": ["./core/ui.libs/*"],
-      "@evan.network/ui-vue-core": ["./core/evancore.vue.libs"],
-      "@evan.network/digital-twin-lib": ["./core/digital-twin-lib"],
-      "@evan.network/digital-twin-detail": ["./dapps/digital-twin-detail"]
+      "@evan.network/digital-twin-detail": [
+        "./dapps/digital-twin-detail"
+      ],
+      "@evan.network/digital-twin-lib": [
+        "./core/digital-twin-lib"
+      ],
+      "@evan.network/ui": [
+        "./core/ui.libs"
+      ],
+      "@evan.network/ui-countries": [
+        "./libs/countries.libs"
+      ],
+      "@evan.network/ui-vue-core": [
+        "./core/evancore.vue.libs"
+      ],
+      "@evan.network/ui/*": [
+        "./core/ui.libs/*"
+      ]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -25,6 +41,11 @@
     "strictPropertyInitialization": false,
     "target": "es5"
   },
-  "exclude": ["node_modules"],
-  "files": ["./scripts/dapp/vue-shim.d.ts"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "files": [
+    "./scripts/dapp/vue-shim.d.ts"
+  ]
 }

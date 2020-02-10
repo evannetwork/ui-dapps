@@ -24,10 +24,10 @@ import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 import { notarySmartAgentAccountId, verificationCost } from '../../components/verifications/notary/notary.lib';
 
 const dispatcher = new Dispatcher(
-  `profile.vue.${ dappBrowser.getDomainName() }`,
+  `profile.vue.${dappBrowser.getDomainName()}`,
   'requestIdentificationDispatcher',
   40 * 1000,
-  '_profile.dispatchers.request-verification'
+  '_profile.dispatchers.request-verification',
 );
 
 /**
@@ -48,7 +48,7 @@ async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
     log: runtime.logger.log,
     nameResolver: runtime.nameResolver,
     rightsAndRoles: runtime.rightsAndRoles,
-  });
+  } as bcc.ProfileOptions);
 
   const targetPubKey = await profile.getPublicKey();
   const commKey = await runtime.keyExchange.generateCommKey();
@@ -58,10 +58,10 @@ async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
   await runtime.profile.addContactKey(
     targetAcc,
     'commKey',
-    commKey
+    commKey,
   );
   await runtime.profile.addProfileKey(
-    targetAcc, 'alias', alias
+    targetAcc, 'alias', alias,
   );
 
   await runtime.profile.storeForAccount('addressBook');
@@ -69,7 +69,7 @@ async function doKeyExchange(runtime: any, targetAcc: string, alias: string) {
 
 dispatcher
   .step(async (instance: DispatcherInstance, data: any) => {
-    const runtime = instance.runtime;
+    const { runtime } = instance;
 
     // check if key exchange with the smart agents exist
     const hasKeyExchange = await runtime.profile.getContactKey(notarySmartAgentAccountId, 'commKey');
@@ -86,9 +86,9 @@ dispatcher
         body: data.mail.body,
         attachments: [{
           type: 'notaryVerificationRequest',
-          ...data.requestData
-        }]
-      }
+          ...data.requestData,
+        }],
+      },
     }, runtime.activeAccount, notarySmartAgentAccountId, verificationCost);
   });
 

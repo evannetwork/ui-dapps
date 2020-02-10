@@ -155,7 +155,9 @@ class PermissionsEditor extends mixins(EvanComponent) {
 
   created(): void {
     this.runtime = this.getRuntime();
-    this.getPermissionsForContact();
+    if (this.selectedContact) {
+      this.getPermissionsForContact();
+    }
   }
 
   /**

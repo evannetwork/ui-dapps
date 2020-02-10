@@ -5,7 +5,7 @@
       "dependencies": {
         "countries.libs": "^1.1.0",
         "evancore.vue.libs": "^1.9.0",
-        "datacontainer.digitaltwin": "^1.8.2"
+        "lib.digital-twin": "^2.0.0"
       },
       "entrypoint": "profile.vue.js",
       "files": [

@@ -114,7 +114,7 @@
               <profile-company-contact :address="address" />
             </profile-permission-wrapper>
             <profile-permission-wrapper
-              v-if="$store.state.profileDApp.data.contact.country === 'DE'"
+              v-if="$store.state.profileDApp.data.contact && $store.state.profileDApp.data.contact.country === 'DE'"
               class="mt-5"
               entry-name="registration"
             >

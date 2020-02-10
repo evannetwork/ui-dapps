@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "declaration": true,
     "experimentalDecorators": true,
@@ -14,19 +13,10 @@
     "outDir": "./built/",
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": false,
+    "strict": true,
     "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
-    "resolveJsonModule": true,
-    "target": "es5",
-    "paths": {
-      "@evan.network/addressbook": [
-        "../../addressbook.vue/dist/addressbook.vue.js"
-      ],
-      "@evan.network/datacontainer.digitaltwin": [
-        "../../digital-twin.data-container/dist/datacontainer.digitaltwin.js"
-      ]
-    }
+    "target": "es5"
   },
   "exclude": [
     "../../../node_modules/@evan.network"

@@ -18,7 +18,7 @@
 */
 
 import Vue from 'vue';
-import { initializeVue, getDomainName, } from '@evan.network/ui-vue-core';
+import { initializeVue, getDomainName } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 import Main from './components/root/root.vue';
@@ -34,9 +34,8 @@ export * from './dispatchers/registry';
 export { translations, CompanyContactForm, CompanyRegistrationForm };
 
 
-dappBrowser.System.map['@evan.network/profile.vue'] =
-  `profile.vue.${ getDomainName() }!dapp-content`;
- 
+dappBrowser.System.map['@evan.network/profile.vue'] = `profile.vue.${getDomainName()}!dapp-content`;
+
 /**
  * StartDapp function that is called by the ui-dapp-browser, including an container and the current
  * dbcp. So startup, it's evan time!
@@ -49,9 +48,11 @@ dappBrowser.System.map['@evan.network/profile.vue'] =
 export async function startDApp(container: any, dbcpName: any, dappEnsOrContract: any, dappBaseUrl: any) {
   // load the vue evan core to get its origin and access the images
   const profileDbcp = await dappBrowser.System
-    .import(`profile.vue.${ getDomainName() }!ens`);
-  const profileBaseUrl = dappBrowser.dapp.getDAppBaseUrl(profileDbcp,
-    `${ profileDbcp.name }.${ getDomainName() }`);
+    .import(`profile.vue.${getDomainName()}!ens`);
+  const profileBaseUrl = dappBrowser.dapp.getDAppBaseUrl(
+    profileDbcp,
+    `${profileDbcp.name}.${getDomainName()}`,
+  );
 
   await initializeVue({
     components,
@@ -61,8 +62,8 @@ export async function startDApp(container: any, dbcpName: any, dappEnsOrContract
     dbcpName,
     RootComponent: Main,
     routes,
-    state: { profileBaseUrl, },
-    translations: translations,
-    Vue: Vue,
+    state: { profileBaseUrl },
+    translations,
+    Vue,
   });
 }
