@@ -20,15 +20,11 @@
 import {
   Container,
   ContainerShareConfig,
-  Profile,
   ContainerUnshareConfig,
   Runtime,
-  lodash,
-  ProfileOptions,
   ContainerOptions,
   ContainerTemplateProperty,
 } from '@evan.network/api-blockchain-core';
-import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { BmailContent } from './SharingUtils';
 import { Permissions, PermissionsContainer } from '../interfaces/Permissions';
