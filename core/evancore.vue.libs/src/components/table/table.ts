@@ -38,18 +38,21 @@ export default class EvanTable extends mixins(EvanComponent) {
    */
   @Prop({ default: false }) showScrollbar: boolean;
 
+  scrollContainer: Element;
+
   /**
    * Clear listeners.
    */
   beforeDestroy(): void {
-    this.$el.querySelector('.b-table-sticky-header').removeEventListener('scroll', this.onScroll);
+    this.scrollContainer.removeEventListener('scroll', this.onScroll);
   }
 
   /**
    * Bind custom scroll listeners, because inner bootstrap table element is scrolling.
    */
   mounted(): void {
-    this.$el.querySelector('.b-table-sticky-header').addEventListener('scroll', this.onScroll);
+    this.scrollContainer = this.$el.querySelector('.b-table-sticky-header') || this.$el;
+    this.scrollContainer.addEventListener('scroll', this.onScroll);
   }
 
   /**

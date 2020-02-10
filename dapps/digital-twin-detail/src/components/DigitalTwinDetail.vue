@@ -19,7 +19,7 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dapp-wrapper @loggedin="initialize()">
+    <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-loading v-if="loading" />
         <template v-else>

@@ -17,26 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-<template>
-  <div class="content-card">
-    <data-set-form
-      v-if="!$store.state.reloadFlags[$route.params.container][name]"
-      :data-schema="entrySchema"
-      :is-loading="$store.state.container.dispatcherStates.entries[name]"
-      :name="name"
-      :handle-share="onShare"
-      :value="value"
-      @save="onSave($event)"
-    />
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-    <share-container
-      ref="shareContainer"
-    />
-  </div>
-</template>
+// evan.network imports
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
-<script lang="ts">
-import ContainerEntryComponent from './Entry';
-
-export default ContainerEntryComponent;
-</script>
+@Component({ })
+export default class RootComponent extends mixins(EvanComponent) { }

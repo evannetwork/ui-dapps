@@ -58,14 +58,21 @@ export default class ContainerComponent extends mixins(EvanComponent) {
    */
   async setupContainer(): Promise<void> {
     this.loading = true;
+
     this.$set(this.$store.state, 'container', this.$store.state.twin
       .containerContracts[this.$route.params.container]);
 
-    // ensure loaded entries and start dispatcher watching
-    await this.$store.state.container.initialize();
-    await this.$store.state.container.loadEntryValues();
-    this.$store.state.container.watchDispatchers();
+    /* if container was opened directly on dapp load, the twin detail directly started container
+     * loading so skip the initial loading and wait for previous one to be finished */
+    if (this.$store.state.containerPreloading) {
+      const preloading = this.$store.state.containerPreloading;
+      delete this.$store.state.containerPreloading;
+      await preloading;
+    } else {
+      await this.$store.state.container.initialize();
+    }
 
+    this.$store.state.container.watchDispatchers();
     this.loading = false;
   }
 

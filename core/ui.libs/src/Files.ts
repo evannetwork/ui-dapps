@@ -104,8 +104,8 @@ export async function fileToContainerFile(
     file: buffer,
     fileType: type,
     name: file.name,
-    readableSize: getReadableFileSize(file.size),
-    size: file.size,
+    readableSize: getReadableFileSize(blob.size),
+    size: blob.size,
   };
 }
 

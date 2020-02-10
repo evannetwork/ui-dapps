@@ -23,25 +23,32 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 
 @Component
 export default class DetailDataComponent extends mixins(EvanComponent) {
-  navItems = [
-    {
-      label: '_twin-detail.data.general.general-title',
-      to: 'general',
-    },
-  ];
+  navItems = [];
 
   /**
    * Setup dynamic navigation structure.
    */
   async created(): Promise<void> {
     const { twin } = this.$store.state;
-    this.navItems = this.navItems.concat(twin.containerKeys.map((key) => {
-      const containerAddress = twin.containers[key].contractAddress;
+    this.navItems = this.navItems
+      .concat(twin.containerAddresses.map((address) => ({
+        label: this.$t(`${address}.name`, twin.containerContracts[address].name),
+        to: address,
+      })))
+      .sort((a, b) => {
+        if (a.label > b.label) {
+          return 1;
+        }
+        if (a.label < b.label) {
+          return -1;
+        }
+        return 0;
+      });
 
-      return {
-        label: this.$t(`${containerAddress}.name`, key),
-        to: containerAddress,
-      };
-    }));
+    // add general always to the top
+    this.navItems.unshift({
+      label: '_twin-detail.data.general.general-title',
+      to: 'general',
+    });
   }
 }

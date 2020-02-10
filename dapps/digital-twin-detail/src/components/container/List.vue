@@ -20,10 +20,17 @@
 <template>
   <div class="content-card">
     <div class="d-flex justify-content-between align-items-center pb-1">
-      <h5 class="my-0 py-0 font-weight-bold">
-        <i class="mdi mr-2 mdi-lock" />
-        {{ $t(`${$route.params.container}.${name}`, name) }}
-      </h5>
+      <div>
+        <h5 class="my-0 py-0 font-weight-bold d-flex">
+          <i class="mdi mr-2 mdi-lock" />
+          <div>
+            {{ $t(`${$route.params.container}.${name}`, name) }}
+            <small class="d-block">
+              {{ getValues().length }} / {{ container.entries[name].length }}
+            </small>
+          </div>
+        </h5>
+      </div>
       <div>
         <evan-button
           type="secondary"
@@ -78,11 +85,13 @@
 
     <div class="mt-3">
       <evan-table
+        v-if="!$store.state.reloadFlags[$route.params.container][name]"
         class="simple clickable-rows"
         :fields="columns"
         :items="getValues()"
-        :show-empty="true"
         :responsive="true"
+        :show-empty="true"
+        :sticky-header="'500px'"
         @row-clicked="openDetail"
       >
         <template v-slot:cell(__loading)="value">

@@ -18,25 +18,25 @@
 */
 
 <template>
-  <div class="content-card">
-    <data-set-form
-      v-if="!$store.state.reloadFlags[$route.params.container][name]"
-      :data-schema="entrySchema"
-      :is-loading="$store.state.container.dispatcherStates.entries[name]"
-      :name="name"
-      :handle-share="onShare"
-      :value="value"
-      @save="onSave($event)"
-    />
-
-    <share-container
-      ref="shareContainer"
-    />
+  <div class="evan theme-evan">
+    <evan-dapp-wrapper
+      :routes="[ ]"
+      :bottom-routes="[ ]"
+    >
+      <template v-slot:content>
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <router-view />
+        </transition>
+      </template>
+    </evan-dapp-wrapper>
   </div>
 </template>
 
 <script lang="ts">
-import ContainerEntryComponent from './Entry';
+import Component from './root.ts';
 
-export default ContainerEntryComponent;
+export default Component;
 </script>

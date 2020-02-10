@@ -10,7 +10,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
   margin-bottom: 0;
 
   &.clickable-rows {
-    /deep/ tr.evan-table-body-row {
+     /deep/ tr.evan-table-body-row {
       cursor: pointer;
     }
   }
@@ -21,32 +21,36 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
     // This is needed for webkit browsers
     // https://stackoverflow.com/a/31278448
     &::-webkit-scrollbar {
-      -webkit-appearance: none;
       width: 7px;
+
+      -webkit-appearance: none;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 4px;
       background-color: rgba(0, 0, 0, 0.5);
-      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
       -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+              box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
     }
   }
 
-  /deep/ table.table.b-table {
+   /deep/ table.table.b-table {
     margin: 0;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
 
+    border-spacing: 0 5px;
     // This can create janky behavior with sticky table header
     // Without this we have trouble with borders on rows
     border-collapse: separate;
-    border-spacing: 0 5px;
 
     & > thead.evan-table-head > tr.evan-table-head-row > th {
-      background-color: cssVar('bg-level-3');
-      border: none;
-      color: cssVar('gray-600');
       font-size: 10px;
+
+      white-space: nowrap;
+
+      color: cssVar('gray-600');
+      border: none;
+      background-color: cssVar('bg-level-3');
       // Using values from figma creates weird shadow bleeding
       box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.15);
 
@@ -56,17 +60,18 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
         background-image: none;
       }
 
-      &[aria-sort='ascending'],
-      &[aria-sort='descending'] {
+      &[aria-sort='ascending'], &[aria-sort='descending'] {
         color: cssVar('primary');
 
         &::after {
+          display: inline-block;
+
+          width: 14px;
           // 14px to avoid janky height changes on sort
           height: 14px;
-          width: 14px;
-          vertical-align: sub;
-          display: inline-block;
           margin-left: 6px;
+
+          vertical-align: sub;
         }
       }
       &[aria-sort='ascending']::after {
@@ -89,26 +94,33 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
 
     & > tbody > tr.evan-table-body-row {
       height: 56px;
-      background-color: white;
+
       color: cssVar('gray-600');
+      background-color: white;
 
       &:hover {
         background-color: cssVar('gray-100');
         // border creates janky jumping. Using inset shadow as an alternative
-        box-shadow: inset 0px 0px 0px 1px cssVar('gray-200');
+        box-shadow: inset 0 0 0 1px cssVar('gray-200');
       }
 
       & > td {
-        vertical-align: middle;
-        border: none;
         font-size: 12px;
+
         padding-top: 0;
         padding-bottom: 0;
 
+        vertical-align: middle;
+
+        border: none;
+
         &.truncate {
-          text-overflow: ellipsis;
-          white-space: nowrap;
           overflow: hidden;
+
+          max-width: 200px;
+
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
 
@@ -126,6 +138,7 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
 
     i.table-icon {
       font-size: 2.5em;
+
       margin-left: 0.25em;
     }
 
@@ -139,36 +152,44 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
     .table-responsive {
       margin-bottom: 0 !important;
     }
-    
-    /deep/ table.table {
+
+     /deep/ table.table {
       width: 100%;
-    
+
       thead.evan-table-head {
         background-color: cssVar('gray-200');
         th {
-          font-weight: 600;
           font-size: 12px !important;
+          font-weight: 600;
+
           box-shadow: none !important;
         }
       }
-    
+
       td, th {
         padding: 8px;
+
+        &.truncate {
+          overflow: hidden;
+
+          max-width: 200px;
+
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
       }
-  
+
       tbody {
         tr {
           height: 40px !important;
         }
-      }    
+      }
     }
   }
-  
-  
 }
 // TODO: Find a better solution at some point
 // http://www.outlinenone.com/
-/deep/ * {
+ /deep/ * {
   &:focus {
     outline: 0;
   }
