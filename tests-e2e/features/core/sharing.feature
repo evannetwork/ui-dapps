@@ -1,4 +1,3 @@
-@only
 Feature: evan.network sharing
 
   Scenario: Share via sharings section on profile page
@@ -21,7 +20,6 @@ Feature: evan.network sharing
     Then the button "Share data" should be "enabled"
     When I click on button "Share data"
 
-  @skip
   Scenario: Share via share button on profile page
     Given I log in to evan.network using vue
     Then I want to see a text including "What would you like to start with?"
@@ -31,7 +29,8 @@ Feature: evan.network sharing
       And I want to see a text including "Wallet"
       And I want to see a text including "Verifications"
     When I click on button "Share"
-    Then I want to see a text including "Select contact to share with"
+      And I wait for 1 seconds
+      Then I want to see a text including "Update Identity Permissions"
     # TODO: next line fails, but why?
     When I click on the Vue Select with label "Select contact to share with"
       And I press the "DOWN_ARROW" key
