@@ -1,3 +1,4 @@
+@only
 Feature: evan.network sharing
 
   Scenario: Share via sharings section on profile page
@@ -8,7 +9,6 @@ Feature: evan.network sharing
     Then I want to see a text including "Identity"
       And I want to see a text including "Wallet"
       And I want to see a text including "Verifications"
-      And I want to see a text including "Contacts"
     When I click on "Sharings" in sub menu
     Then I want to see a text including "Select contact to share with"
       And I want to see a text including "Your Identity Data Sharings"
@@ -30,7 +30,6 @@ Feature: evan.network sharing
     Then I want to see a text including "Identity"
       And I want to see a text including "Wallet"
       And I want to see a text including "Verifications"
-      And I want to see a text including "Contacts"
     When I click on button "Share"
     Then I want to see a text including "Select contact to share with"
     # TODO: next line fails, but why?
