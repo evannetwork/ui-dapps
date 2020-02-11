@@ -20,15 +20,11 @@
 import {
   Container,
   ContainerShareConfig,
-  Profile,
   ContainerUnshareConfig,
   Runtime,
-  lodash,
-  ProfileOptions,
   ContainerOptions,
   ContainerTemplateProperty,
 } from '@evan.network/api-blockchain-core';
-import { cloneDeep } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import { BmailContent } from './SharingUtils';
 import { Permissions, PermissionsContainer } from '../interfaces/Permissions';
@@ -121,22 +117,6 @@ export default class PermissionUtils {
     const plugin = await container.toPlugin();
 
     return plugin.template.properties;
-  }
-
-  /**
-   * Converts { permissions } to deny read and readWrite.
-   * Keeps the fields values.
-   *
-   * @param permissions
-   */
-  static convertToPristinePermissions(permissions: Permissions): Permissions {
-    const perms = permissions;
-    Object.keys(perms).forEach((property) => {
-      perms[property].read = false;
-      perms[property].readWrite = false;
-    });
-
-    return perms;
   }
 
   /**

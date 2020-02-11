@@ -51,7 +51,7 @@ export async function getUserAlias(
       accountDetails || await profile.getProfileProperty('accountDetails') || { },
     );
   } catch (ex) {
-    // no permssions
+    // no permissions
   }
 
   // load alias from addressbook, when it's not available
@@ -93,7 +93,9 @@ export async function getUserAliasFromAddress(
 
 /**
  * Try to get profile type if it's shared
- * @param accountId Account address
+ *
+ * @param      {Runtime}  runtime    bcc runtime
+ * @param      {string}   accountId  Account address
  */
 export async function getProfileType(runtime: Runtime, accountId: string): Promise<ProfileType> {
   try {
@@ -115,7 +117,7 @@ export async function getProfileType(runtime: Runtime, accountId: string): Promi
 /**
  * Return corresponding icon for account type.
  *
- * @param      {ProfileType}  type    Account type
+ * @param      {string}  type    Account type
  * @return     {string}       profile  type material icon
  */
 export function getProfileTypeIcon(type: string): string {

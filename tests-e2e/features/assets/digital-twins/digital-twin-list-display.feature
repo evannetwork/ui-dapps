@@ -1,4 +1,3 @@
-@only
 Feature: Digital Twin Detail
 
   @tag:noLogout

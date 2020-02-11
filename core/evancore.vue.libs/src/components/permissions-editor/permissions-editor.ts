@@ -54,7 +54,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
   @Prop({
     default: null,
   })
-  containersPermissions: {[address: string]: ContainerPermissionsInterface};
+  containersPermissions: { [address: string]: ContainerPermissionsInterface };
 
   /**
    * Function to write the updated permissions object.
