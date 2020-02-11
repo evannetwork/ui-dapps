@@ -41,6 +41,7 @@
           {{ '_evan.share' | translate }}
         </evan-button>
         <b-dropdown
+          :id="`dataset-list-${name}-dropdown`"
           class="p-0"
           variant="link"
           toggle-class="text-decoration-none"
@@ -60,6 +61,7 @@
           </b-dropdown-item>
           <b-dropdown-item
             v-if="access === 'readWrite'"
+            :id="`dataset-list-${name}-add`"
             @click="$refs.addListItem.showPanel()"
           >
             {{ '_twin-detail.data.list.add-list-item.title' | translate }}
