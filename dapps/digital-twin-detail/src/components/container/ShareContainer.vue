@@ -10,11 +10,12 @@
         :title="$t('_twin-detail.data.sharing.sharing-title')"
       >
         <evan-permissions-editor
+          :b-mail-content="bMailContent"
           :contacts="contacts"
           :load-permissions="loadPermissions"
-          :update-permissions="onUpdatePermissions"
           :on-select="onSelectContact"
-          :b-mail-content="bMailContent"
+          :selected-contact="selectedContact"
+          :update-permissions="onUpdatePermissions"
           i18n-scope="_twin-detail.data.sharing"
           @init="permissionsEditor = $event"
           @permissionsChanged="hasChange = $event"

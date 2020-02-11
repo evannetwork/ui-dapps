@@ -17,43 +17,26 @@
   the following URL: https://evan.network/license/
 */
 
-@import '~@evan.network/ui/src/style/utils';
+import { ContainerFile } from '@evan.network/api-blockchain-core';
 
-.content {
-  max-width: 850px;
-  margin-left: auto;
-  margin-right: auto;
-}
+export interface UIContainerFile extends ContainerFile {
+  /**
+   * The file size in bytes
+   */
+  size?: number;
 
-.add-twin-btn {
-  position: fixed;
-  bottom: 40px;
-  right: 60px;
-}
+  /**
+   * Size parsed to kb, md, ...
+   */
+  readableSize?: string;
 
-.search {
-  span, i {
-    font-size: cssVar('h4-font-size');
-    color: cssVar('gray-600');
-    font-weight: bold;
-    cursor: pointer;
-  }
+  /**
+   * downloadable url
+   */
+  blobUri: string;
 
-  & input {
-    padding: 2px 8px;
-    outline: none;
-    background: transparent;
-    border: none;
-    color: cssVar('gray-600');
-    font-size: cssVar('h4-font-size');
-    font-weight: bold;
-
-    &:focus {
-      border-bottom: 1px solid cssVar('gray-600');
-    }
-  }
-
-  label {
-    line-height: 32px;
-  }
+  /**
+   * blob instance
+   */
+  blob: Blob;
 }

@@ -18,13 +18,19 @@
 */
 
 import {
-  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils,
+  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils, ContainerShareConfig,
 } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
 import { applyMixins, DAppContract } from './DAppContract';
+
+interface Permissions {
+  accountId: string;
+  read: string[];
+  readWrite: string[];
+}
 
 /**
  * Extended Container class to merge backend logic with dispatcher watching functionalities. Also
@@ -76,6 +82,11 @@ class DAppContainer extends Container {
    * Containers plugin definition for accessing entry data schemas.
    */
   plugin: ContainerPlugin;
+
+  /**
+   * Current permissions of the user
+   */
+  permissions: ContainerShareConfig;
 
   /**
    * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
@@ -192,6 +203,15 @@ class DAppContainer extends Container {
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
       const entryDef = this.plugin.template.properties[entryKey];
 
+      if (this.permissions.read.indexOf(entryKey) === -1
+          && this.permissions.readWrite.indexOf(entryKey) === -1) {
+        // use empty list, so listentry component table will not break
+        if (entryDef?.type === 'list') {
+          this.entries[entryKey] = [];
+        }
+        return;
+      }
+
       if (entryDef?.type === 'list') {
         this.listEntryCounts[entryKey] = await this.getListEntryCount(entryKey);
         this.entries[entryKey] = await this.getListEntries(entryKey, 30, 0, true);
@@ -242,11 +262,48 @@ class DAppContainer extends Container {
    * Load container plugin and ensure values.
    */
   public async initialize(): Promise<void> {
-    this.plugin = await this.toPlugin();
+    this.plugin = this.loadPluginSchema();
     this.entries = {};
     this.listEntryCounts = {};
+    this.permissions = await this.getPermissions();
     await this.ensureDispatcherStates();
     await this.loadEntryValues();
+  }
+
+  /**
+   * Load plugin template schema without checking for permissions and values, just to load correct
+   * plugin data schema.
+   *
+   * @return     {ContainerPlugin}  container plugin with only dataschema
+   */
+  loadPluginSchema(): ContainerPlugin {
+    const plugin: ContainerPlugin = {
+      template: {
+        type: '',
+        properties: { },
+      },
+    };
+
+    const { dataSchema } = this.description as any;
+    if (dataSchema) {
+      Object.keys(dataSchema).forEach((property: string) => {
+        plugin.template.properties[property] = {
+          dataSchema: dataSchema[property],
+          permissions: {},
+          type: dataSchema[property].type === 'array' ? 'list' : 'entry',
+        };
+      });
+    }
+
+    return plugin;
+  }
+
+  async getPermissions(): Promise<ContainerShareConfig> {
+    return {
+      read: [],
+      readWrite: [],
+      ...await this.getContainerShareConfigForAccount(this.runtime.activeAccount),
+    };
   }
 
   /**

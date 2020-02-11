@@ -62,20 +62,20 @@ export default class EvanQueue {
    */
   async openDB(version?: number) {
     return new Promise((resolve, reject) => {
-      const availableDB = window['indexedDB'] ||
-        window['mozIndexedDB'] ||
-        window['webkitIndexedDB'] ||
-        window['msIndexedDB'] ||
-        window['shimIndexedDB'];
+      const availableDB = window.indexedDB
+        || (window as any).mozIndexedDB
+        || (window as any).webkitIndexedDB
+        || (window as any).msIndexedDB
+        || (window as any).shimIndexedDB;
 
-      const openParams: any = [ 'EvanNetworkQueueV2' ];
+      const openParams: any = ['EvanNetworkQueueV2'];
       // directly pass previous version
       if (version) {
         openParams.push(version);
       }
 
-      const openRequest = availableDB.open.apply(availableDB, openParams);
-      const storageName = this.storageName;
+      const openRequest = availableDB.open(...openParams);
+      const { storageName } = this;
 
       openRequest.onerror = () => {
         // if the browser could not detect initial so start with one
@@ -88,7 +88,7 @@ export default class EvanQueue {
       openRequest.onsuccess = async (event) => {
         const storeExists = Object
           .keys(openRequest.result.objectStoreNames)
-          .map(index => openRequest.result.objectStoreNames[index])
+          .map((index) => openRequest.result.objectStoreNames[index])
           .indexOf(storageName) !== -1;
 
         if (!storeExists) {
@@ -99,12 +99,12 @@ export default class EvanQueue {
         }
       };
 
-      openRequest.onblocked = (event) => reject('indexDB blocked');
+      openRequest.onblocked = (event) => reject(new Error('indexDB blocked'));
 
-      openRequest.onupgradeneeded = function(event) {
-        (<any>event.target).result
+      openRequest.onupgradeneeded = function (event) {
+        (event.target as any).result
           .createObjectStore(storageName, {
-            keyPath: 'dispatcherId'
+            keyPath: 'dispatcherId',
           });
       };
     });
@@ -134,7 +134,7 @@ export default class EvanQueue {
    * @return     {string}  The storage name.
    */
   getStorageName(): string {
-    return 'evan-queue-' + this.accountId;
+    return `evan-queue-${this.accountId}`;
   }
 
   /**
@@ -158,7 +158,7 @@ export default class EvanQueue {
   async load(dispatcherId: string): Promise<any> {
     await this.initialize();
 
-    const entries = <any>await new Promise((resolve, reject) => {
+    const entries = await new Promise((resolve, reject) => {
       const objectStore = this.getObjectStore('readonly');
       let request;
 
@@ -168,9 +168,9 @@ export default class EvanQueue {
           request.onsuccess = (event) => resolve(request.result);
         } else {
           // polyfill getAll for edge / ie
-          const results = [ ];
+          const results = [];
           request = objectStore.openCursor();
-          request.onsuccess = function(event) {
+          request.onsuccess = function (event) {
             const cursor = event.target.result;
             if (cursor) {
               results.push(cursor.value);
@@ -182,8 +182,7 @@ export default class EvanQueue {
         }
       } else {
         request = objectStore.get(dispatcherId);
-        request.onsuccess = (event) =>
-          resolve(request.result && request.result.entries ? request.result.entries : { });
+        request.onsuccess = (event) => resolve(request.result && request.result.entries ? request.result.entries : { });
       }
 
       request.onerror = (event) => reject(request.error);
@@ -206,10 +205,9 @@ export default class EvanQueue {
   async save(dispatcherId: string, entryId: string, data?: any): Promise<any> {
     await this.initialize();
 
-    return await new Promise(async (resolve, reject) => {
-      // load previous entries
-      const entries = await this.load(dispatcherId);
-
+    // load previous entries
+    const entries = await this.load(dispatcherId);
+    return new Promise((resolve, reject): any => {
       // create objectStore to delete or put data
       const objectStore = this.getObjectStore('readwrite');
       let request;
@@ -225,8 +223,8 @@ export default class EvanQueue {
         request = objectStore.delete(dispatcherId);
       } else {
         request = objectStore.put({
-          dispatcherId: dispatcherId,
-          entries: entries || { }
+          dispatcherId,
+          entries: entries || { },
         });
       }
 

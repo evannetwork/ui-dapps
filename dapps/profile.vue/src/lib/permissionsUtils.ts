@@ -160,23 +160,23 @@ const convertToPristine = (userPermissions) => {
  * @param param1
  * @param accountId
  */
-const createContainerPermissions = async (runtime, {containerAddress, label}, accountId = runtime.activeAccount) => {
+const createContainerPermissions = async (runtime, { containerAddress, label }, accountId = runtime.activeAccount) => {
   const container = getContainer(runtime, containerAddress, accountId);
   const properties = await getContainerProperties(container);
-  const shareConfigs = await container.getContainerShareConfigs();
-  const containerPermissions = {};
+  const shareConfigs = [await container.getContainerShareConfigForAccount(accountId)];
+  const containerPermissions: any = {};
 
-  shareConfigs.forEach( (entry: ShareConfigEntry) => {
+  shareConfigs.forEach((entry: ShareConfigEntry) => {
     containerPermissions[entry.accountId] = {
       [containerAddress]: {
         label,
-        permissions: createPermissionsObject(entry, properties)
-      }
+        permissions: createPermissionsObject(entry, properties),
+      },
     };
   });
 
   // Add pristine permissions map for new users:
-  containerPermissions['new'] = convertToPristine(containerPermissions[accountId]);
+  containerPermissions.new = convertToPristine(containerPermissions[accountId]);
 
   return containerPermissions;
 };
@@ -210,16 +210,16 @@ export const getProfilePermissionDetails = async (runtime, accountId, label = 'P
  * @param accountId
  */
 const createShareConfig = (permissions, oldPermissions, accountId: string) => {
-  const shareConfigs = [ ];
+  const shareConfigs = [];
   const shareConfig: ContainerShareConfig = {
     accountId,
-    read: [ ],
-    readWrite: [ ],
-    removeListEntries: [ ],
+    read: [],
+    readWrite: [],
+    removeListEntries: [],
   };
 
   // iterate through properties and get new read / readWrite permissions
-  Object.keys(permissions).forEach(property => {
+  Object.keys(permissions).forEach((property: string) => {
     if (permissions[property].read && !oldPermissions[property].read) {
       shareConfig.read.push(property);
     }
@@ -247,16 +247,16 @@ const createShareConfig = (permissions, oldPermissions, accountId: string) => {
  * @param accountId
  */
 const createUnshareConfig = (permissions, oldPermissions, accountId: string) => {
-  const unshareConfigs = [ ];
+  const unshareConfigs = [];
   const unshareConfig: ContainerUnshareConfig = {
     accountId,
-    write: [ ],
-    readWrite: [ ],
-    removeListEntries: [ ],
+    write: [],
+    readWrite: [],
+    removeListEntries: [],
   };
 
   // iterate through properties and get removing read / readWrite permissions
-  Object.keys(oldPermissions).forEach(property => {
+  Object.keys(oldPermissions).forEach((property: string) => {
     if (oldPermissions[property].read && !permissions[property].read) {
       unshareConfig.readWrite.push(property);
     }
@@ -293,11 +293,11 @@ export const updatePermissions = async (
   const containerConfigs = [];
   const bMailContent = await getProfileShareBMail(vueInstance);
 
-  Object.keys(containerPermissions).forEach( (containerAddress: string) => {
+  Object.keys(containerPermissions).forEach((containerAddress: string) => {
     const shareConfigs = createShareConfig(
       containerPermissions[containerAddress].permissions,
       oldContainerPermissions[containerAddress].permissions,
-      accountId
+      accountId,
     );
 
     const dataSharing = {
@@ -309,17 +309,17 @@ export const updatePermissions = async (
     containerConfigs.push(dataSharing);
   });
 
-  Object.keys(oldContainerPermissions).forEach( (containerAddress: string) => {
+  Object.keys(oldContainerPermissions).forEach((containerAddress: string) => {
     const unshareConfigs = createUnshareConfig(
       containerPermissions[containerAddress].permissions,
       oldContainerPermissions[containerAddress].permissions,
-      accountId
+      accountId,
     );
 
     const dataSharing = {
       address: containerAddress,
       unshareConfigs,
-      bMailContent: false
+      bMailContent: false,
     };
 
     containerConfigs.push(dataSharing);

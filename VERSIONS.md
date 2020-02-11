@@ -9,6 +9,8 @@
     - add bootstrap-vue import and expose it as dapp (currently only TableLitePlugin, TablePlugin, TableSimplePlugin exported)
   - `evancore.vue.libs` (v1.10.0)
     - add `callbackUrl` support for `Dispatcher`, so user will get sticky toast to open this url when dispatcher finished
+  - `ui.libs`
+    - add `profileUtils` with new functions `getUserAlias`, `getUserAliasFromAddress`, `getProfileType`, `getProfileTypeIcon`
 
 ### Fixes
 - fix browserify map files

@@ -41,25 +41,23 @@ import { Permissions, PermissionsContainer } from './interfaces/Permissions';
 
 export * from './dispatchers';
 export {
+  BmailContent,
   DAppContainer,
   DAppTwin,
   DBCPDescriptionInterface,
-  dispatchers,
-  translations,
-  ValidationErrorInterface,
-  TemplateErrorInterface,
-  DigitalTwinResponse,
-  TransactionsResponse,
-  TwinTransaction,
   DigitalTwin,
-  SearchService,
-  PermissionUtils,
-  SharingUtils,
+  DigitalTwinResponse,
+  dispatchers,
   Permissions,
   PermissionsContainer,
-  BmailContent,
+  PermissionUtils,
+  SearchService,
+  SharingUtils,
+  TemplateErrorInterface,
+  TransactionsResponse,
+  translations,
+  TwinTransaction,
+  ValidationErrorInterface,
 };
 
-System.map[
-  '@evan.network/digital-twin-lib'
-] = `lib.digital-twin.${getDomainName()}!dapp-content`;
+System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${getDomainName()}!dapp-content`;

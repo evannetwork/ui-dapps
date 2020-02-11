@@ -13,6 +13,9 @@
   "references": [
     {
       "path": "../../core/digital-twin-lib"
+    },
+    {
+      "path": "../../core/evancore.vue.libs"
     }
   ]
 }
