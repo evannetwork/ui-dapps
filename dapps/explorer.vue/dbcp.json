@@ -9,11 +9,11 @@
       "files": [
         "explorer.vue.js"
       ],
-      "origin": "QmRaoPjeSSFTWhWmpY5pkYAdjJjVF9cUCKjEmtVBqisPhY",
+      "origin": "QmPQZz2PaXp6waa2HXWXwSpWusMA3c2JyaJ2pcXXZxcfSx",
       "primaryColor": "#4b9175",
       "secondaryColor": "#fff",
       "standalone": true,
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "Deep view into Contracts, DBCP and Profiles.",
@@ -36,7 +36,7 @@
     ],
     "version": "0.0.1",
     "versions": {
-      "0.0.1": "QmWLpk7umkcy7Buxw4BMrGnbNpBuMDetn2mHsYsrwSRPE9"
+      "0.0.1": "QmWmCAcsMN9dHkfVZCq4q63NWDdiG4PgnXASeRP2uP2mFZ"
     }
   }
 }

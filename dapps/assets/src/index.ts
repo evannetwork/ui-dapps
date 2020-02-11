@@ -32,6 +32,8 @@ export * from './components/registry';
 export { dispatcher } from './components/contacts/InviteDispatcher';
 export { translations };
 
+import { EvanComponent, EvanForm, DbcpFormComponentClass, ComponentRegistrationInterface ,DAppLoaderComponent  } from '@evan.network/ui-vue-core';
+
 System.map['@evan.network/assets'] = `assets.${getDomainName()}!dapp-content`;
 
 /**

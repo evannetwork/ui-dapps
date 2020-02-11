@@ -1,13 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "dist"
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
-  "exclude": [
-    "../../../node_modules/@evan.network"
-  ],
   "extends": "../../tsconfig.json",
   "include": [
-    "./src/**/*",
-    "../../scripts/dapp/vue-shim.d.ts"
+    "./src/**/*.ts",
+    "./src/**/*.json"
+  ],
+  "references": [
+    {
+      "path": "../../core/digital-twin-lib"
+    },
+    {
+      "path": "../../core/evancore.vue.libs"
+    },
+    {
+      "path": "../../core/ui.libs"
+    }
   ]
 }

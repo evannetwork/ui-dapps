@@ -7,7 +7,7 @@
   },
   "extends": "../../tsconfig.json",
   "include": [
-    "./src/**/*",
+    "./src/**/*.ts",
     "./src/**/*.json"
   ],
   "references": [
@@ -16,6 +16,9 @@
     },
     {
       "path": "../../core/evancore.vue.libs"
+    },
+    {
+      "path": "../../core/ui.libs"
     }
   ]
 }

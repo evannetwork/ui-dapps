@@ -1,12 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["./src/**/*.ts", "./src/**/*.json"],
-  "exclude": ["dist"],
   "compilerOptions": {
+    "composite": true,
     "outDir": "dist",
     "rootDir": "./src",
-    "composite": true,
     "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
-  "references": [{ "path": "../ui.libs" }]
+  "extends": "../../tsconfig.json",
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.json"
+  ],
+  "references": [
+    { "path": "../../core/ui.libs" }
+  ]
 }
