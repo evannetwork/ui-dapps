@@ -1,7 +1,6 @@
 Feature: Digital Twin - Container + Datat Sets
 
   @tag:noLogout
-  @only
   Scenario: Load full example twin
     Given I log in to evan.network using vue
     When I click on "My Assets" in main menu
