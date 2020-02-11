@@ -1,4 +1,4 @@
-Feature: Digital Twin Detail
+Feature: Digital Twin - Detail
 
   Background:
     Given I log in to evan.network using vue
