@@ -1,19 +1,20 @@
 import { client } from 'nightwatch-api';
 import { When } from 'cucumber';
+import { flatMap } from 'lodash';
 
-const getSelector = (label, angular) => {
+const getSelector = (label) => {
   // support also the .input-wrapper element around the input
   const inputSelectors = [
-    'div/*[contains(@class, "v-select")]'
+    'div/*[contains(@class, "v-select")]',
   ];
 
-  return [ ].concat.apply([ ], inputSelectors.map((inputSelector) => [
-    `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${ inputSelector }`,
-    `//label[normalize-space(text()) = "${label}"]/following-sibling::${ inputSelector }`,
-    `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${ inputSelector }`,
-    `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${ inputSelector }`,
-  ])).join('|');
-}
+  return flatMap(inputSelectors, (inputSelector) => [
+    `//label[normalize-space(text()) = "${label}"]/preceding-sibling::${inputSelector}`,
+    `//label[normalize-space(text()) = "${label}"]/following-sibling::${inputSelector}`,
+    `//label/*[normalize-space(text()) = "${label}"]/parent::*/preceding-sibling::${inputSelector}`,
+    `//label/*[normalize-space(text()) = "${label}"]/parent::*/following-sibling::${inputSelector}`,
+  ]).join('|');
+};
 
 const activateSelect = async (label) => {
   client.useXpath();
@@ -21,7 +22,7 @@ const activateSelect = async (label) => {
 
   await client.expect.element(xPathSelector).to.be.present;
   await client.click(xPathSelector);
-}
+};
 
 const selectNthEntry = async (entry, label) => {
   await activateSelect(label);
@@ -31,7 +32,7 @@ const selectNthEntry = async (entry, label) => {
 
   await client.expect.element(liSelector).to.be.present;
   await client.click(liSelector);
-}
+};
 
 const selectEntryByValue = async (content, label) => {
   await activateSelect(label);
@@ -43,7 +44,7 @@ const selectEntryByValue = async (content, label) => {
   await client.expect.element(xPathSelectorLi).to.be.present;
   await client.click(xPathSelectorLi);
   client.useCss(); // switches back to css selector
-}
+};
 
 const selectByContentOrEntryIndex = async (content, entryIndex, label) => {
   client.useXpath();
@@ -56,7 +57,7 @@ const selectByContentOrEntryIndex = async (content, entryIndex, label) => {
   await client.expect.element(xPathSelectorLi).to.be.present;
   await client.click(xPathSelectorLi);
   client.useCss(); // switches back to css selector
-}
+};
 
 /**
  * Select certain entry from vue-select dropdown.
@@ -79,13 +80,13 @@ When('I select the entry {string} or entry {int} from dropdown with the label {s
 When('I click on the Vue Select with label {string}',
   async (label) => {
     let elementId;
-    const xPathSelector = `//*/text()[normalize-space(.) = '${label}']/parent::*`;
+    // Search for the label element two parents up from the found text
+    const xPathSelector = `//*/text()[normalize-space(.) = '${label}']/../../parent::label`;
 
     // Get id of select box from "for" attribute of the label
-    await client.getAttribute('xpath', xPathSelector, "for", attr => {
+    await client.getAttribute('xpath', xPathSelector, 'for', (attr) => {
       elementId = attr.value;
     });
 
     await client.click(`#${elementId}`);
-  }
-);
+  });

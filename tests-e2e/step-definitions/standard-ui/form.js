@@ -259,3 +259,12 @@ Then('The value of the Input field with id {string} should be {string}',
     await client.assert.value(`//input[@id='${id}']`, expected);
     client.useCss();
   });
+
+/**
+ * TODO: Checking only the first form input since looping and asserting
+ * in nightwatch is a real pain.
+ */
+Then('Each form field should be disabled',
+  () => {
+    client.assert.attributeEquals('form input', 'disabled', 'true');
+  });
