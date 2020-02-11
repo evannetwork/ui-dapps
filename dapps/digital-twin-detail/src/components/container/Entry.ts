@@ -32,32 +32,13 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
    */
   entrySchema: ObjectSchema;
 
+  get isEditable(): boolean {
+    return this.$store.state.container.permissions[this.name]?.readWrite;
+  }
+
   get value(): any {
     const { dispatcherData, entries } = this.$store.state.container;
     return dispatcherData[this.name] || entries[this.name];
-  }
-
-  /**
-   * Returns the access level of the current user to this container.
-   */
-  get access(): string {
-    if (this.$store.state.container.permissions.read.includes(this.name)) {
-      return 'read';
-    }
-
-    if (this.$store.state.container.permissions.readWrite.includes(this.name)) {
-      return 'readWrite';
-    }
-
-    return 'none';
-  }
-
-  /**
-   * Returns true if the current account is the owner of the container.
-   */
-  get isOwner(): boolean {
-    const runtime = this.getRuntime();
-    return this.$store.state.container.ownerAddress === runtime.activeAccount;
   }
 
   created(): void {

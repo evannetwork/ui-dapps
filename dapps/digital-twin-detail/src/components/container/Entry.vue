@@ -25,14 +25,13 @@
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
       :value="value"
-      :shareable="isOwner"
-      :editable="access === 'readWrite'"
+      :shareable="$store.state.container.isOwner"
+      :editable="isEditable"
       :handle-share="onShare"
       @save="onSave($event)"
     />
-
     <share-container
-      v-if="isOwner"
+      v-if="$store.state.container.isOwner"
       ref="shareContainer"
     />
   </div>

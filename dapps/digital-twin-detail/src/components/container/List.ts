@@ -45,31 +45,23 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   selectedValue = null;
 
+  /**
+   * Get the total number of list entries or `?` if we don't have access to the list.
+   */
+  get totalEntries(): number|string {
+    if (this.$store.state.container.listEntryCounts[this.name] >= 0) {
+      return this.$store.state.container.listEntryCounts[this.name];
+    }
+
+    return '?';
+  }
+
+  get isEditable(): boolean {
+    return this.$store.state.container.permissions[this.name]?.readWrite;
+  }
+
   static isFileList(input: string | number | FileList): input is FileList {
     return input && Object.keys(input).includes('files');
-  }
-
-  /**
-   * Returns the access level of the current user to this container.
-   */
-  get access(): string {
-    if (this.$store.state.container.permissions.read.includes(this.name)) {
-      return 'read';
-    }
-
-    if (this.$store.state.container.permissions.readWrite.includes(this.name)) {
-      return 'readWrite';
-    }
-
-    return 'none';
-  }
-
-  /**
-   * Returns true if the current account is the owner of the container.
-   */
-  get isOwner(): boolean {
-    const runtime = this.getRuntime();
-    return this.$store.state.container.ownerAddress === runtime.activeAccount;
   }
 
   created(): void {
@@ -127,7 +119,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       : `${fileList.files.length} ${this.$t('_twin-detail.data.files')}`;
   }
 
-  getValues(): any[] {
+  get values(): any[] {
     return [
       ...(this.container.dispatcherData[this.name] || []),
       ...(this.container.entries[this.name] || []),
