@@ -81,7 +81,7 @@
         "user": "Nutzer"
       },
       "no-sharings": "Dieser Digitale Zwilling wurde mit keinem Nutzer geteilt.",
-      "no-sharings-filter": "Dieser Digitale Zwilling wurde mit keinem Nutzer mit diesem Filter gefunden. (Suche: \"{searchTerm}\" und Filter: \"{filter}\")",
+      "no-sharings-filter": "Dieser Digitale Zwilling wurde mit keinem Nutzer mit diesem Filter gefunden. (Suche: {searchTerm} und Filter: {filter})",
       "sharings-title": "Freigaben",
       "table": {
         "containers": "Geteilte Datenbereiche",

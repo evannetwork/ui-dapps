@@ -120,22 +120,6 @@ export default class PermissionUtils {
   }
 
   /**
-   * Converts { permissions } to deny read and readWrite.
-   * Keeps the fields values.
-   *
-   * @param permissions
-   */
-  static convertToPristinePermissions(permissions: Permissions): Permissions {
-    const perms = permissions;
-    Object.keys(perms).forEach((property) => {
-      perms[property].read = false;
-      perms[property].readWrite = false;
-    });
-
-    return perms;
-  }
-
-  /**
    * Creates permissions mapping based on container properties, sharing configs for each user and the container itself.
    *
    * TODO: How does the return value look like? Seems incompatible with PermissionsContainer interface

@@ -17,9 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-
 import { System } from '@evan.network/ui-dapp-browser';
-import * as bcc from '@evan.network/api-blockchain-core';
+import { Runtime } from '@evan.network/api-blockchain-core';
 
 import DispatcherInstance from './DispatcherInstance';
 import EvanQueue from './Queue';
@@ -141,7 +140,7 @@ export default class Dispatcher {
    * @param      {boolean}     asArray  should be the result an array?
    */
   async getInstances(
-    runtime: bcc.Runtime,
+    runtime: Runtime,
     asArray = true,
   ): Promise<DispatcherInstance[]|{[name: string]: DispatcherInstance}> {
     // create a new queue and initialize it
@@ -183,7 +182,7 @@ export default class Dispatcher {
    * @param      {number}  stepIndex  step index to start at
    * @param      {number}  price      The custom calculated price
    */
-  async start(runtime: bcc.Runtime, data: any, stepIndex = 0, price?: number): Promise<DispatcherInstance> {
+  async start(runtime: Runtime, data: any, stepIndex = 0, price?: number): Promise<DispatcherInstance> {
     const uiCoreQueue = await new EvanQueue(runtime.activeAccount);
 
     /* map the original dispatcher instance to the current one => other dapps can create a

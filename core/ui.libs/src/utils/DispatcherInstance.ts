@@ -17,7 +17,6 @@
   the following URL: https://evan.network/license/
 */
 
-
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import Dispatcher from './Dispatcher';

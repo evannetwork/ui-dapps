@@ -41,7 +41,7 @@ interface LoadingSharedUserInterface {
  */
 interface SharedUserInterface {
   address: string; // account address
-  containerNames: Array<string>; // list of containers, mapped to it's names
+  containerNames: Array<string>; // list of containers, mapped to its names
   containers: Array<string>; // list of containers, for that the user is permitted;
   icon: string; // account type material icon
   name: string; // users name, alias or account address
@@ -58,9 +58,9 @@ interface ColumnInterface {
 
 @Component({ })
 export default class SharingOverview extends mixins(EvanComponent) {
-  columns: ColumnInterface[ ] = [];
+  columns: ColumnInterface[] = [];
 
-  data: SharedUserInterface[ ] = [];
+  data: SharedUserInterface[] = [];
 
   isActiveSearch = false;
 
@@ -112,7 +112,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
    */
   async resolvePermissions(): Promise<void> {
     const runtime = this.getRuntime();
-    const { twin: { containerAddresses } }: { twin: DAppTwin } = this.$store.state;
+    const { containerAddresses } = this.$store.state.twin;
     const permittedUsers: { [address: string]: LoadingSharedUserInterface } = { };
 
     // iterate through all containers and resolve the permissions
@@ -122,7 +122,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
        * users anything was shared. */
       const contract = runtime.contractLoader.loadContract('DataContract', containerAddress);
       const roleMap = await runtime.rightsAndRoles.getMembers(contract);
-      const unique = Array.from(new Set([].concat(...Object.values(roleMap))));
+      const unique = new Set(Object.values(roleMap));
 
       // iterate through all permitted users and apply them to the permitted users mapping
       unique.forEach((address: string): void => {
@@ -140,7 +140,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
       });
     }));
 
-    // iterate through all resolved profiles and push them into the datsa object
+    // iterate through all resolved profiles and push them into the data object
     await Promise.all(Object.keys(permittedUsers).map(async (address: string): Promise<void> => {
       this.data.push({
         address,
@@ -158,7 +158,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
   }
 
   /**
-   * Maps a list of container addresses to it's names.
+   * Maps a list of container addresses to their names.
    */
   getContainerNames(containers: string[]): string[] {
     return containers.map((address: string) => {
@@ -201,12 +201,12 @@ export default class SharingOverview extends mixins(EvanComponent) {
    */
   getTableData(): Array<SharedUserInterface> {
     return this.data.filter((item: SharedUserInterface) => {
-      if (this.searchTerm
-        && JSON.stringify(item).toLowerCase().indexOf(this.searchTerm.toLowerCase()) === -1) {
+      if (this.selectedFilter !== 'all' && item.type !== this.selectedFilter) {
         return false;
       }
 
-      if (this.selectedFilter !== 'all' && item.type !== this.selectedFilter) {
+      if (this.searchTerm
+        && JSON.stringify(item).toLowerCase().indexOf(this.searchTerm.toLowerCase()) === -1) {
         return false;
       }
 
