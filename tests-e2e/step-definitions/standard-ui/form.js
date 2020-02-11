@@ -266,5 +266,5 @@ Then('The value of the Input field with id {string} should be {string}',
  */
 Then('Each form field should be disabled',
   () => {
-    client.assert.attributeEquals('form input', 'disabled', 'true');
+    client.assert.attributeEquals('form input', 'disabled', true);
   });
