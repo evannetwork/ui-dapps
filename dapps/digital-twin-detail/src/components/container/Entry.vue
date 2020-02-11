@@ -24,10 +24,10 @@
       :data-schema="entrySchema"
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
-      :handle-share="onShare"
       :value="value"
       :shareable="isOwner"
       :editable="access === 'readWrite'"
+      :handle-share="onShare"
       @save="onSave($event)"
     />
 

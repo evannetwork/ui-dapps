@@ -19,15 +19,26 @@
 
 // map the original ui path to ui.libs
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${ dappBrowser.getDomainName() }!dapp-content`;
 
-import EvanQueue from './Queue';
-import { Dispatcher, DispatcherInstance } from './Dispatcher';
 import './index.scss';
-import * as FileHandler from './Files';
-import * as bccUtils from './bccUtils';
-import { UIContainerFile } from './Files';
+import * as bccUtils from './utils/bccUtils';
+import * as FileHandler from './utils/Files';
+import * as profileUtils from './utils/profileUtils';
+import EvanQueue from './utils/Queue';
+import Dispatcher from './utils/Dispatcher';
+import DispatcherInstance from './utils/DispatcherInstance';
+import { UIContainerFile } from './interfaces/UIContainerFile';
+
+dappBrowser.System.map['@evan.network/ui'] = `ui.libs.${dappBrowser.getDomainName()}!dapp-content`;
 
 export * from './config';
-export * from './utils';
-export { EvanQueue, Dispatcher, DispatcherInstance, FileHandler, bccUtils, UIContainerFile};
+export * from './utils/utils';
+export {
+  bccUtils,
+  Dispatcher,
+  DispatcherInstance,
+  EvanQueue,
+  FileHandler,
+  profileUtils,
+  UIContainerFile,
+};

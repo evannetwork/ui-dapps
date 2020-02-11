@@ -25,16 +25,16 @@
           </p>
 
           <div
-            v-for="(val, contractId) in containersPermissions"
-            :key="contractId"
+            v-for="address in Object.keys(containersPermissions)"
+            :key="address"
           >
             <evan-permissions
-              :label="val.label"
-              :permissions="val.permissions"
-              :contract-id="contractId"
+              :label="containersPermissions[address].label"
+              :permissions="containersPermissions[address].permissions"
+              :contract-id="address"
               :update-permissions="updateContractPermissions"
               :i18n-scope="i18nScope"
-              :sort-filter="getSortFilter(contractId)"
+              :sort-filter="getSortFilter(address)"
             />
           </div>
         </template>

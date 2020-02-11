@@ -87,12 +87,12 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   async created() {
     // fill empty address with current logged in user
-    this.address = (<any> this).$store.state.profileDApp.address;
-    this.userInfo = (<any> this).$store.state.profileDApp.data.accountDetails;
+    this.address = (this as any).$store.state.profileDApp.address;
+    this.userInfo = (this as any).$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
     const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
     this.balance = {
-      amount: amount.toLocaleString((<any> this).$i18n.locale()),
+      amount: amount.toLocaleString((this as any).$i18n.locale()),
       timestamp: Date.now(),
     };
     /* set the update permission and always pass the current vue context into it, so it can use the
@@ -112,8 +112,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.verificationCount = 0;
 
     if (this.$refs.notaryVerifications) {
-      this.verificationCount += (<any> this.$refs.notaryVerifications).verifications.length;
-      this.verificationCount += (<any> this.$refs.notaryVerifications).requests.length;
+      this.verificationCount += (this.$refs.notaryVerifications as any).verifications.length;
+      this.verificationCount += (this.$refs.notaryVerifications as any).requests.length;
     }
   }
 
@@ -144,8 +144,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   saveUserInfo(userInfo: any) {
     this.userInfo = userInfo;
 
-    dispatchers.updateProfileDispatcher.start((<any> this).getRuntime(), {
-      address: (<any> this).$store.state.profileDApp.address,
+    dispatchers.updateProfileDispatcher.start((this as any).getRuntime(), {
+      address: (this as any).$store.state.profileDApp.address,
       formData: userInfo,
       type: 'accountDetails',
     });
@@ -158,8 +158,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    * @param user: string - the user id.
    */
   async loadPermissions(user: string) {
-    const runtime = (<any> this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, (<any> this).$route.params.address);
+    const runtime = (this as any).getRuntime();
+    const allPermissions = await getProfilePermissionDetails(runtime, (this as any).$route.params.address);
 
     if (!allPermissions[user]) {
       return allPermissions.new;
@@ -183,7 +183,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   changeType(type: string) {
     if (this.newType !== 'user') {
-      dispatchers.updateProfileDispatcher.start((<any> this).getRuntime(), {
+      dispatchers.updateProfileDispatcher.start((this as any).getRuntime(), {
         formData: {
           profileType: this.newType,
         },

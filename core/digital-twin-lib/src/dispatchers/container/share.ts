@@ -44,12 +44,12 @@ const getContainer = (runtime, address) => new Container(runtime as ContainerOpt
  * @param runtime
  * @param data
  */
-const updateSharings = (runtime, data) => {
+const updateSharings = async (runtime, data) => {
   if (!data.shareConfigs) {
     return;
   }
 
-  return getContainer(runtime, data.address).shareProperties(data.shareConfigs);
+  await getContainer(runtime, data.address).shareProperties(data.shareConfigs);
 };
 
 /**
@@ -58,12 +58,12 @@ const updateSharings = (runtime, data) => {
  * @param runtime
  * @param data
  */
-const updateUnsharings = (runtime, data) => {
+const updateUnsharings = async (runtime, data) => {
   if (!data.unshareConfigs) {
     return;
   }
 
-  return getContainer(runtime, data.address).unshareProperties(data.unshareConfigs);
+  await getContainer(runtime, data.address).unshareProperties(data.unshareConfigs);
 };
 
 dispatcher

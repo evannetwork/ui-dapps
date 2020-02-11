@@ -22,9 +22,9 @@
       },
       "list": {
         "add-list-item": {
-          "title": "Eintrag hinzufügen",
           "cancel": "Abbrechen",
-          "submit": "Eintrag hinzufügen"
+          "submit": "Eintrag hinzufügen",
+          "title": "Eintrag hinzufügen"
         },
         "list-item-detail": {
           "close": "Schließen",
@@ -74,7 +74,19 @@
       "transactions-title": "Letzte Transaktionen"
     },
     "sharings": {
-      "sharings-title": "Freigaben"
+      "filters": {
+        "all": "Alle",
+        "company": "Unternehmen",
+        "unshared": "Unbekannt",
+        "user": "Nutzer"
+      },
+      "no-sharings": "Dieser Digitale Zwilling wurde mit keinem Nutzer geteilt.",
+      "no-sharings-filter": "Dieser Digitale Zwilling wurde mit keinem Nutzer mit diesem Filter gefunden. (Suche: {searchTerm} und Filter: {filter})",
+      "sharings-title": "Freigaben",
+      "table": {
+        "containers": "Geteilte Datenbereiche",
+        "name": "Name"
+      }
     },
     "verifications": {
       "verifications-title": "Verifikationen"
