@@ -1,7 +1,6 @@
 Feature: Digital Twin - Container + Datat Sets
 
   @tag:noLogout
-  @only
   Scenario: Load full example twin
     Given I log in to evan.network using vue
     When I click on "My Assets" in main menu
@@ -20,7 +19,6 @@ Feature: Digital Twin - Container + Datat Sets
       And I want to see a text including "pluginListsValidation"
 
   @tag:noLogout
-  @only
   Scenario: list all pluginentries
     When I click on "pluginEntries" in side navigation
     Then I want to see a text including "checkboxEntry"
@@ -81,22 +79,22 @@ Feature: Digital Twin - Container + Datat Sets
   Scenario: check formular validation
     When I click on "pluginEntriesValidation" in side navigation
       And I wait 30 seconds until loading was finished
-    When I click on input field with label "numberField"
+      And I click on input field with label "numberField"
     Then the button "Save" should be "disabled"
     # number
     When I set Input field with label "numberField" to "12345"
     Then I want to see a text including "should be <= 123"
     When I set Input field with label "numberField" to "0"
     Then I want to see a text including "should be >= 1"
-    And I set Input field with label "numberField" to "123"
+    When I set Input field with label "numberField" to "123"
     # text
-    When I set Input field with label "textField" to "gibberish gibberish gibberish"
+      And I set Input field with label "textField" to "gibberish gibberish gibberish"
     Then I want to see a text including "should not be longer than 20 characters"
     When I set Input field with label "textField" to ""
     Then I want to see a text including "should not be shorter than 1 character"
-      And I set Input field with label "textField" to "gibberish"
+    When I set Input field with label "textField" to "gibberish"
     # object
-    When I set Input field with label "objectField" to "gluposti"
+      And I set Input field with label "objectField" to "gluposti"
     Then I want to see a text including "Invalid JSON format."
     When I set Input field with label "objectField" to `{}`
     Then I want to see a text including "should have required property bar"
@@ -116,19 +114,18 @@ Feature: Digital Twin - Container + Datat Sets
     Then I want to see a text including "should be object"
     When I set Input field with label "arrayField" to `[{},{},{},{},{},{},{}]`
     Then I want to see a text including "should not have more than 5 items"
-    And I set Input field with label "arrayField" to `[{}]`
+    When I set Input field with label "arrayField" to `[{}]`
     # files
     Then I want to see a text including "should not have less than 1 item"
     When I upload file "bicycle.json" to the dropzone with the id "dataset-input-objectEntry-filesField"
       And I wait for 1 seconds
-    When I click on button "Save"
-      And I wait 30 seconds until loading was finished
+      And I click on button "Save"
+      Then I wait 30 seconds until loading was finished
 
   @tag:noLogout
-  @only
   Scenario: list all list plugin entries
     When I click on "pluginListsValidation" in side navigation
-      And I want to see a text including "listObject"
+    Then I want to see a text including "listObject"
     When I click the element with id "dataset-list-listObject-dropdown"
     Then I want to see a text including "Show all"
       And I want to see a text including "Add an Entry"
