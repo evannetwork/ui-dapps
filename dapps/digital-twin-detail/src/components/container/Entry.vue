@@ -24,7 +24,7 @@
       :data-schema="entrySchema"
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
-      :value="value"
+      :value="getValue()"
       :handle-share="onShare"
       @save="onSave($event)"
     />

@@ -19,19 +19,14 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { bccUtils } from '@evan.network/ui';
 import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import {
-  BmailContent,
   DAppTwin,
   PermissionUtils,
-  SharingUtils,
 } from '@evan.network/digital-twin-lib';
 
 @Component
 export default class ShareContainerComponent extends mixins(EvanComponent) {
-  contacts = null;
-
   onUpdatePermissions = null;
 
   permissionsEditor = null;
@@ -40,12 +35,18 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
 
   hasChange = false;
 
-  bMailContent: BmailContent;
+  loaded = false;
 
   async created(): Promise<void> {
-    this.contacts = await bccUtils.getContacts(this.getRuntime());
-    this.bMailContent = await SharingUtils.getTwinShareBMail(this);
     this.onUpdatePermissions = PermissionUtils.updatePermissions.bind(null, this);
+  }
+
+  async ensureSharingInfo(): Promise<void> {
+    if (!this.$store.state.twin.sharingContext) {
+      await this.$store.state.twin.ensureSharingContext();
+    }
+
+    this.loaded = true;
   }
 
   async loadPermissions(userId: string): Promise<any> {
@@ -71,9 +72,11 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
    *
    * @param      {string}  contact  contact address
    */
-  showPanel(contact?: string): void {
+  async showPanel(contact?: string): Promise<void> {
     this.selectedContact = contact;
     (this.$refs.shareContainerPanel as SwipePanelComponentClass).show();
+    // ensure sharing info, after sidepanel was opened (use next tick to show smooth transition)
+    this.$nextTick(() => this.ensureSharingInfo());
   }
 
   closePanel(): void {
