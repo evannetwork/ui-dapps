@@ -95,16 +95,18 @@ gulp.task('browserify', async function(callback) {
           // underscore gets broken when we try to parse it
           /underscore/,
 
+
           // remove core-js and babel runtime,
           // https://github.com/babel/babel/issues/8731#issuecomment-426522500
-          /[\/\\]core-js/,
-          /@babel[\/\\]runtime/,
+         // /[\/\\]core-js/,
+         // /@babel[\/\\]runtime/,
         ],
         presets: [
-          '@babel/env'
+          //'@babel/env',
+          ["@babel/preset-env", { targets: { browsers: "ios >= 11" } }]
         ],
         plugins: [
-          '@babel/plugin-transform-runtime',
+          //'@babel/plugin-transform-runtime',
           // include lodash plugin to pull all lodash functions and imports together and down size the
           // bundle
           'lodash'

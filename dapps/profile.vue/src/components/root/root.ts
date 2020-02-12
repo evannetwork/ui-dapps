@@ -22,8 +22,9 @@ import Component, { mixins } from 'vue-class-component';
 import { Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
+import { DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from '../../dispatchers/registry';
 import { getPermissionSortFilter } from '../utils/shareSortFilters';
@@ -98,8 +99,8 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       accountId: runtime.activeAccount,
       profileOwner: address,
       ...runtime,
-    });
-    const profileDApp: any = this.$store.state.profileDApp = {
+    } as bcc.ProfileOptions);
+    const profileDApp: any = {
       activeAccount,
       address,
       data: { },
@@ -107,6 +108,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       permissions: { read: [], readWrite: [] },
       profile,
     };
+    this.$store.state.profileDApp = profileDApp;
 
     try {
       // load general profile information
@@ -152,7 +154,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       if (profileDApp.permissions.read.indexOf(key) !== -1) {
         try {
           // load account details
-          data[key] = await this.loadProfileEntry(runtime, profileDApp.profile, key);
+          data[key] = await this.loadProfileEntry(profileDApp.profile, key);
         } catch (ex) {
           profileDApp.profile.log(`Could nor load accountDetails for ${profileDApp.address}: ${ex.message}`, 'error');
         }
@@ -173,19 +175,21 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * @param      {bccProfile}  profile  bcc profile for current opened profile
    * @param      {string}      type     entry name
    */
-  async loadProfileEntry(runtime: bcc.Runtime, profile: bcc.Profile, type: string) {
+  async loadProfileEntry(profile: bcc.Profile, type: string): Promise<any> {
+    const runtime = this.getRuntime();
     const instances = await dispatchers.updateProfileDispatcher.getInstances(runtime, true);
     let scopeData;
 
     // if dispatcher is running, use this data
     if (instances && instances.length !== 0) {
-      const filtered = instances.filter((instance) => instance.data.type === type);
+      const filtered = (instances as DispatcherInstance[])
+        .filter((instance) => instance.data.type === type);
       if (filtered.length !== 0) {
         scopeData = filtered[filtered.length - 1].data.formData;
       }
     }
 
-    // if not dispatcher entry was found for this scope, load it!
+    // if no dispatcher entry was found for this scope, load it!
     if (!scopeData) {
       scopeData = (await profile.getProfileProperty(type));
     }

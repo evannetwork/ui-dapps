@@ -87,15 +87,12 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
 
   isActiveSearch = false;
 
+  searchTerm = '';
+
   @Prop({
     default: [],
   })
   data: any[];
-
-  @Prop({
-    default: '',
-  })
-  searchTerm: string;
 
   @Prop({
     default: true,
@@ -118,7 +115,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   /**
    * Used to cancel delayed search, when user already navigated to different page
    */
-  delayedLoadingTimeout: any;
+  delayedLoadingTimeout: number;
 
   /**
    * Flag to disable other favorite buttons.
@@ -159,6 +156,8 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   }
 
   async mounted(): Promise<void> {
+    this.searchTerm = this.$route.params.query || '';
+    this.search(this.searchTerm);
     this.isActiveSearch = this.searchTerm.length > 0;
 
     window.addEventListener('keydown', this.handleSearchShortcut);

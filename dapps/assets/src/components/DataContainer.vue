@@ -24,7 +24,6 @@
       :is-loading="isLoading"
       :fetch-more="fetchMore"
       :search="initialQuery"
-      :search-term="searchTerm"
     />
   </div>
 </template>

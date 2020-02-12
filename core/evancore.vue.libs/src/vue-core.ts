@@ -24,8 +24,7 @@ import Vuex from 'vuex';
 import vuexI18n from 'vuex-i18n';
 
 // setup moment locales
-// const moment = require('moment').default;
-import * as moment from 'moment';
+import moment from 'moment';
 
 // import evan libs
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
@@ -37,7 +36,7 @@ import { ComponentRegistrationInterface, EvanVueOptionsInterface } from './inter
 import { getDomainName } from './utils';
 import { initializeRouting } from './routing';
 
-/******************************************** functions *******************************************/
+/** ****************************************** functions ****************************************** */
 /**
  * Starts an evan vue dapp and wraps all start functionalities.
  *
@@ -53,8 +52,8 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
     Vue.config.silent = true;
   }
 
-  // never replace the full container, other elements can be placed within this container directly
-  //  => create new child element
+  /* never replace the full container, other elements can be placed within this container directly
+      => create new child element */
   if (options.container === document.body) {
     options.container = document.createElement('div');
     document.body.appendChild(options.container);
@@ -70,9 +69,9 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
 
   // load the vue evan core to get its origin and access the images
   const vueCoreDbcp = await dappBrowser.System
-    .import(`ui.libs.${ getDomainName() }!ens`);
+    .import(`ui.libs.${getDomainName()}!ens`);
   const uiLibBaseUrl = dappBrowser.dapp.getDAppBaseUrl(vueCoreDbcp,
-    `${ vueCoreDbcp.name }.${ getDomainName() }`);
+    `${vueCoreDbcp.name}.${getDomainName()}`);
 
   // initialize VueX
   Vue.use(Vuex);
@@ -85,31 +84,31 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
         profile: {
           selectedSharedContacts: null,
         },
-        swipePanel: ''
+        swipePanel: '',
       },
       isLoggedin: false,
       ...options.state,
     },
     mutations: {
-      setSelectedSharedContacts (state, contacts = null) {
+      setSelectedSharedContacts(state, contacts = null) {
         state.uiState.profile.selectedSharedContacts = contacts;
       },
-      toggleSidePanel (state, type = 'left') {
+      toggleSidePanel(state, type = 'left') {
         // open the desired one
-        state.uiState.swipePanel = state.uiState.swipePanel && state.uiState.swipePanel === type ?
-          '' : type;
+        state.uiState.swipePanel = state.uiState.swipePanel && state.uiState.swipePanel === type
+          ? '' : type;
       },
       setLoginState(state, isLoggedin: boolean) {
         state.isLoggedin = isLoggedin;
-      }
-    }
+      },
+    },
   });
 
   // use defined or browser language
   const language = window.localStorage['evan-language'] || navigator.language.split('-')[0];
 
   // set correct moment language
-  const momentLanguages = [ 'en', 'de' ];
+  const momentLanguages = ['en', 'de'];
   moment.locale(momentLanguages.indexOf(language) === -1 ? 'en' : language);
 
   // set the i18n values and moment js
@@ -137,8 +136,8 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
     el: options.container,
     router,
     store,
-    render: render => render(options.RootComponent),
-    mounted: function () {
+    render: (render) => render(options.RootComponent),
+    mounted() {
       // disable dev tools on prod
       if (!dappBrowser.utils.devMode) {
         delete this.$el.__vue__;
@@ -147,22 +146,22 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
       // add an element id, so the dapp-loader can detect already loaded nested dapps
       this.$el.id = options.dappEnsOrContract;
       this.$el.className += ' evan-vue-dapp';
-      // apply the contract address as the id, so the dapp will not be loaded duplicated, when the
-      // contract address is opened under a dapp ens
+      /* apply the contract address as the id, so the dapp will not be loaded duplicated, when the
+         contract address is opened under a dapp ens */
       if (dappToLoad.contractAddress) {
         const contractAddressEl = document.createElement('div');
-        contractAddressEl.id = `${ dappToLoad.contractAddress }`;
+        contractAddressEl.id = `${dappToLoad.contractAddress}`;
         contractAddressEl.style.display = 'none';
         this.$el.appendChild(contractAddressEl);
       }
 
       // move toast container
       this.$el.appendChild(this.$toasted.container);
-    }
+    },
   });
 
-  // register event handlers, so multiple vue instance and removed dom elements will be destroyed
-  // correctly
+  /* register event handlers, so multiple vue instance and removed dom elements will be destroyed
+     correctly */
   registerEventHandlers(vue);
 
   return vue;
@@ -178,8 +177,8 @@ export async function initializeVue(options: EvanVueOptionsInterface) {
 export function registerComponents(Vue: any, components: Array<ComponentRegistrationInterface>) {
   // include all components
   components.forEach((def: ComponentRegistrationInterface) => {
-    // Vue.options.components[def.name] !== def.component
-    // do not overwrite the existing componet, only register the new component if it has changed
+    /* Vue.options.components[def.name] !== def.component
+       do not overwrite the existing componet, only register the new component if it has changed */
     if (!Vue.options.components[def.name]) {
       // register the component
       Vue.component(def.name, def.component);
@@ -195,7 +194,7 @@ export function registerComponents(Vue: any, components: Array<ComponentRegistra
  */
 export function registerEvanI18N(Vue: any, translations: any) {
   // add all i18n definitions
-  Object.keys(translations).forEach(key => Vue.i18n.add(key, translations[key]));
+  Object.keys(translations).forEach((key) => Vue.i18n.add(key, translations[key]));
 }
 
 /**
@@ -223,8 +222,8 @@ export function registerEventHandlers(vueInstance: any) {
       parent = parent.parentElement;
 
       if (!parent) {
-        // clear window.localStorage['evan-recovery-url'] when a new dapp was opened, so recovery
-        // will expire
+        /* clear window.localStorage['evan-recovery-url'] when a new dapp was opened, so recovery
+           will expire */
         delete window.localStorage['evan-recovery-url'];
 
         // clear listeners
@@ -241,4 +240,3 @@ export function registerEventHandlers(vueInstance: any) {
   // Start observing the target node for configured mutations
   elementObserver.observe(vueInstance.$el.parentElement, { childList: true, subtree: true });
 }
-
