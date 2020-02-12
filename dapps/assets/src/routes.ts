@@ -33,17 +33,18 @@ const routeRegistration: Array<RouteConfig> = [
     children: [
       { path: '', redirect: 'digitaltwins' },
       {
-        name: 'digitaltwins',
         path: 'digitaltwins',
         component: DataContainer,
         children: [
           {
             path: '',
+            name: 'digitaltwins',
             component: DigitalTwinsComponent,
             meta: { type: 'twins' },
           },
           {
             path: 'search/:query',
+            name: 'digitaltwins-search',
             props: true,
             component: DigitalTwinsComponent,
             meta: { type: 'twins' },
