@@ -129,9 +129,11 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
   async deleteTwin(): Promise<void> {
     (this.$refs.deleteModal as any).hide();
+
     await twinDeleteDispatcher.start(this.getRuntime(), {
-      address: this.$store.state.twin.address,
+      address: this.$store.state.twin.contractAddress,
     });
+
     this.close();
   }
 

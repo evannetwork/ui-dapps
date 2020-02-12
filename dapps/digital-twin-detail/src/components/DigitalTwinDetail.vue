@@ -64,12 +64,12 @@
                       />
                     </template>
                     <b-dropdown-item
-                      @click="$refs.twinInteractions.duplicateTwin();"
+                      @click="$refs.twinInteractions.duplicateTwin()"
                     >
                       {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
-                      @click="$refs.twinInteractions.exportTemplate();"
+                      @click="$refs.twinInteractions.exportTemplate()"
                     >
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
