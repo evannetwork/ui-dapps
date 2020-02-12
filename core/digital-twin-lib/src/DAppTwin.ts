@@ -18,7 +18,7 @@
 */
 
 import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
-import { DispatcherInstance, bccUtils } from '@evan.network/ui';
+import { DispatcherInstance, bccUtils, profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
@@ -77,6 +77,8 @@ class DAppTwin extends DigitalTwin {
    * All data that is nessecary for twin sharing. Will be loaded within the ShareContainer component.
    */
   sharingContext: { contacts: any; bMailContent: BmailContent } = null;
+
+  ownerName: string;
 
   /**
    * Call super and initialize new twin class.
@@ -179,6 +181,9 @@ class DAppTwin extends DigitalTwin {
       this.loadBaseInfo(),
       (async (): Promise<void> => {
         this.favorite = await this.isFavorite();
+      })(),
+      (async (): Promise<void> => {
+        this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
       })(),
       this.ensureContainers(),
     ]);
