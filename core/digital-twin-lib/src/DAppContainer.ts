@@ -214,19 +214,13 @@ class DAppContainer extends Container {
   }
 
   /**
-   * Setup the whole data object for the current container. Is not loaded by default, must be runned
-   * using
+   * Setup the whole data object for the current container and load entry values explicitly where possible.
    *
    * @param      {string}  entriesToLoad  load only specific entriess
    */
   public async loadEntryValues(entriesToLoad?: string[]): Promise<void> {
-    // TODO: why is key for type returned here? For what is it used?
-    this.entryKeys = Object.keys(this.plugin.template.properties);
+    this.entryKeys = Object.keys(this.plugin.template.properties).filter((key) => key !== 'type');
 
-    if (!this.isOwner) {
-      // type is currently buggy to access from foreign account.
-      this.entryKeys = this.entryKeys.filter((key) => key !== 'type');
-    }
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
       const entryDef = this.plugin.template.properties[entryKey];

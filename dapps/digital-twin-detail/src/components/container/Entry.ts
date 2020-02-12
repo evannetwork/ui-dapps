@@ -33,10 +33,10 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   entrySchema: ObjectSchema;
 
   get isEditable(): boolean {
-    return this.$store.state.container.permissions[this.name]?.readWrite;
+    return this.$store.state.container.permissions[this.name]?.readWrite || false;
   }
 
-  get value(): any {
+  getValue(): any {
     const { dispatcherData, entries } = this.$store.state.container;
     return dispatcherData[this.name] || entries[this.name];
   }

@@ -48,7 +48,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   /**
    * Get the total number of list entries or `?` if we don't have access to the list.
    */
-  get totalEntries(): number|string {
+  get totalEntries(): number | string {
     if (this.$store.state.container.listEntryCounts[this.name] >= 0) {
       return this.$store.state.container.listEntryCounts[this.name];
     }
@@ -119,7 +119,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       : `${fileList.files.length} ${this.$t('_twin-detail.data.files')}`;
   }
 
-  get values(): any[] {
+  getValues(): any[] {
     return [
       ...(this.container.dispatcherData[this.name] || []),
       ...(this.container.entries[this.name] || []),

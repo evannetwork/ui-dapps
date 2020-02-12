@@ -26,7 +26,7 @@
           <div>
             {{ $t(`${$route.params.container}.${name}`, name) }}
             <small class="d-block">
-              {{ values.length }} / {{ totalEntries }}
+              {{ getValues().length }} / {{ totalEntries }}
             </small>
           </div>
         </h5>
@@ -54,17 +54,18 @@
             />
           </template>
           <b-dropdown-item disabled>
-            <span
-              class="text-muted"
-              style="margin-left: 0"
-            >{{ '_twin-detail.data.list.show-all' | translate }}</span>
+            {{ '_twin-detail.data.list.show-all' | translate }}
           </b-dropdown-item>
           <b-dropdown-item
-            v-if="isEditable"
             :id="`dataset-list-${name}-add`"
+            :disabled="!isEditable"
             @click="$refs.addListItem.showPanel()"
           >
             {{ '_twin-detail.data.list.add-list-item.title' | translate }}
+            <i
+              v-if="!isEditable"
+              class="mdi mdi-eye-off-outline text-right w-100"
+            />
           </b-dropdown-item>
         </b-dropdown>
       </div>
@@ -93,7 +94,7 @@
         v-if="!$store.state.reloadFlags[$route.params.container][name]"
         class="simple clickable-rows"
         :fields="columns"
-        :items="values"
+        :items="getValues()"
         :responsive="true"
         :show-empty="true"
         :sticky-header="'500px'"
