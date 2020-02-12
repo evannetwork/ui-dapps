@@ -26,7 +26,7 @@
           <div>
             {{ $t(`${$route.params.container}.${name}`, name) }}
             <small class="d-block">
-              {{ getValues().length }} / {{ totalEntries }}
+              {{ getValues().length }} / {{ getTotalEntries() }}
             </small>
           </div>
         </h5>

@@ -45,17 +45,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   selectedValue = null;
 
-  /**
-   * Get the total number of list entries or `?` if we don't have access to the list.
-   */
-  get totalEntries(): number | string {
-    if (this.$store.state.container.listEntryCounts[this.name] >= 0) {
-      return this.$store.state.container.listEntryCounts[this.name];
-    }
-
-    return '?';
-  }
-
   get isEditable(): boolean {
     return this.$store.state.container.permissions[this.name]?.readWrite;
   }
@@ -124,6 +113,17 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       ...(this.container.dispatcherData[this.name] || []),
       ...(this.container.entries[this.name] || []),
     ];
+  }
+
+  /**
+   * Get the total number of list entries or `?` if we don't have access to the list.
+   */
+  getTotalEntries(): number | string {
+    if (this.container.listEntryCounts[this.name] >= 0) {
+      return this.container.listEntryCounts[this.name];
+    }
+
+    return '?';
   }
 
   /**
