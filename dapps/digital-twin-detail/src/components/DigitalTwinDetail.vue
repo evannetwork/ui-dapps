@@ -23,7 +23,12 @@
       <template v-slot:content>
         <evan-loading v-if="loading" />
         <template v-else-if="hasError">
-          Error!
+          <div class="p-5 text-center">
+            <h3 class="mb-5">
+              {{ '_twin-detail.generic-error' | translate }}
+            </h3>
+            <evan-failed />
+          </div>
         </template>
         <template v-else>
           <digital-twin-interactions ref="twinInteractions" />
