@@ -22,6 +22,9 @@
     <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-loading v-if="loading" />
+        <template v-else-if="hasError">
+          Error!
+        </template>
         <template v-else>
           <digital-twin-interactions ref="twinInteractions" />
           <evan-dapp-wrapper-level-2 ref="level2Wrapper">
@@ -157,5 +160,5 @@ export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './DigitalTwinDetail.scss'
+  @import './DigitalTwinDetail.scss';
 </style>

@@ -30,6 +30,11 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   loading = true;
 
   /**
+   * Flag for generic errors. Usually for wrong non-DT contracts and deleted DTs
+   */
+  hasError = false;
+
+  /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
    */
   hashChangeWatcher: any;
@@ -113,7 +118,11 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         }
 
         // initialize twin structure
-        await newTwin.initialize();
+        await newTwin.initialize()
+          .catch(() => {
+            this.hasError = true;
+            return null;
+          });
         newTwin.watchDispatchers();
 
         // set new reference and hide loading

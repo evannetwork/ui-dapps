@@ -17,11 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-import Vue from 'vue';
 import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { mixins } from 'vue-class-component';
 
 import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
 import DAppContainer from './DAppContainer';
@@ -168,7 +166,7 @@ class DAppTwin extends DigitalTwin {
         this.favorite = await this.isFavorite();
       })(),
       this.ensureContainers(),
-    ]);
+    ]).catch(() => Promise.reject(new Error('Error while loading the contract')));
 
     await this.ensureDispatcherStates();
   }
