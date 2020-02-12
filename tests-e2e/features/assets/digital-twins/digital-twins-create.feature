@@ -1,4 +1,4 @@
-Feature: Digital Twins
+Feature: Digital Twin - Creation
   Test different scenarios using predefined templates, upload of correct template and a template with missing properties.
   Checks also if empty description field is filled with the translated value from template.
 

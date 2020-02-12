@@ -12,11 +12,11 @@
         "ui.libs.js",
         "ui.libs.css"
       ],
-      "origin": "QmdonjX44kDSwrVBP5FQvZkyFPQ5hZkjVSAMc2Hd4qY2tF",
+      "origin": "QmfVgUaEFUGsLs5cPLKaSN4gnNYRW81AS4WBGCs5QThSR3",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "",
@@ -50,7 +50,7 @@
       "1.7.1": "Qma2wvhCZeHbjdfw6R4CvECeuECoRW9SfuPG7Mn7Rm6b38",
       "1.7.2": "QmYLrqjVhPUKY2RvE8qSu5HeNTvm5A5u7GXHamQhuFNSAL",
       "1.7.3": "QmU7Zy3VodQDJ2XzLiY44aJurcZvAu6VjfXDe3z3CKfmhw",
-      "1.8.0": "QmUdDyQxzi8pkVboYNy2GGmu5BBExR72ZJWe849iK5Ef7V"
+      "1.8.0": "QmNktHbW8naQWrwsEVshUFLmfxvrANHnYTrFHymsw9XhbK"
     }
   }
 }

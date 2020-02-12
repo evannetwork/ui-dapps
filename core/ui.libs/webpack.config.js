@@ -22,5 +22,5 @@ module.exports = require('../../scripts/dapp/webpack.config')(
   require('./dbcp.json').public.name,
   require('path').resolve(__dirname, './dist'),
   true,
-  false
+  false,
 );

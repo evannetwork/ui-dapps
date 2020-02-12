@@ -41,6 +41,7 @@ module.exports = function getCustomExcludes(customExcludes) {
     axios: 'axios',
     dexie: 'dexie',
     lodash: 'lodash',
+    moment: 'moment',
     qrcodejs: 'qrcodejs',
     vue: 'vue',
     vuex: 'vuex',

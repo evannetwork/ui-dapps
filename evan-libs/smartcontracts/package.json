@@ -15,5 +15,5 @@
     "build": "node gulp/buildContracts.js && gulp --gulpfile ../../scripts/dapp/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
-  "version": "2.8.0"
+  "version": "2.9.0"
 }
