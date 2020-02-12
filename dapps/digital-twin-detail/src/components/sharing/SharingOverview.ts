@@ -148,7 +148,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
           if (!permittedUsers[address]) {
             permittedUsers[address] = {
               type: profileUtils.getProfileType(runtime, address),
-              name: profileUtils.getUserAliasFromAddress(runtime, address),
+              name: profileUtils.getUserAlias(runtime, address),
               containers: [],
             };
           }

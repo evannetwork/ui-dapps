@@ -23,7 +23,7 @@ import { Prop, Watch } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
-import { bccUtils, } from '@evan.network/ui';
+import { profileUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 // internal
@@ -215,7 +215,11 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
     this.approveData = [
       {
         label: (<any>this).$i18n.translate('_profile.company.registration.company.label'),
-        value: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
+        value: await profileUtils.getUserAlias(
+          this.getRuntime(),
+          profileDApp.address,
+          profileDApp.accountDetails
+        ),
       },
       {
         label: (<any>this).$i18n.translate('_profile.company.contact.country.label'),
@@ -343,7 +347,11 @@ export default class IdentNotaryRequestComponent extends mixins(EvanComponent) {
       accountId: runtime.activeAccount,
       court: this.companyData.registration.court,
       organizationRegistration: `${this.companyData.registration.register} ${this.companyData.registration.registerNumber}`,
-      organizationName: await bccUtils.getUserAlias(profileDApp.profile, profileDApp.accountDetails),
+      organizationName: await profileUtils.getUserAlias(
+        runtime,
+        profileDApp.address,
+        profileDApp.accountDetails,
+      ),
       organizationStreetAddress: this.companyData.contact.streetAndNumber,
       organizationZipCode: this.companyData.contact.postalCode,
     };

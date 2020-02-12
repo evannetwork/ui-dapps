@@ -287,11 +287,13 @@ class DAppContainer extends Container {
     const { dataSchema } = this.description as any;
     if (dataSchema) {
       Object.keys(dataSchema).forEach((property: string) => {
-        plugin.template.properties[property] = {
-          dataSchema: dataSchema[property],
-          permissions: {},
-          type: dataSchema[property].type === 'array' ? 'list' : 'entry',
-        };
+        if (property !== 'type') {
+          plugin.template.properties[property] = {
+            dataSchema: dataSchema[property],
+            permissions: {},
+            type: dataSchema[property].type === 'array' ? 'list' : 'entry',
+          };
+        }
       });
     }
 

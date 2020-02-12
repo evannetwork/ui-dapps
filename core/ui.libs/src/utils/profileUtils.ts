@@ -32,24 +32,25 @@ export enum ProfileType {
  * Returns the users alias, depending on it's profile type. If it's an old profile, resolve alias
  * from address book.
  *
- * @param      {bccProfile}  profile         profile to load the data for
- * @param      {any}         accountDetails  already laoded accountDetails, to prevent duplicated
- *                                           loading
- * @param      {any}         registration    company registration data, to prevent duplicated data
- *                                           loading
+ * @param      {Runtime}  runtime         runtime of the user that wants to load the alias
+ * @param      {string}   accountId       address of the user that should be loaded
+ * @param      {any}      accountDetails  already laoded accountDetails, to prevent duplicated
+ *                                        loading
  */
 export async function getUserAlias(
-  profile: Profile,
+  runtime: Runtime,
+  accountId: string = runtime.activeAccount,
   accountDetails?: any,
-  registration?: any,
 ): Promise<string> {
+  const otherProfile = new Profile({
+    ...(runtime as any),
+    profileOwner: accountId,
+    accountId: runtime.activeAccount,
+  });
   let details = { ...accountDetails };
 
   try {
-    details = cloneDeep(
-      lodash,
-      accountDetails || await profile.getProfileProperty('accountDetails') || { },
-    );
+    details = cloneDeep(lodash, await otherProfile.getProfileProperty('accountDetails') || { });
   } catch (ex) {
     // no permissions
   }
@@ -58,37 +59,12 @@ export async function getUserAlias(
   if (details && details.accountName) {
     return details.accountName;
   }
-  const { profileOwner } = profile;
+
   // load addressbook info
-  const myProfile = new Profile({
-    ...profile.options,
-    profileOwner: profile.activeAccount,
-    accountId: profile.activeAccount,
-  });
-  const addressBook = await myProfile.getAddressBook();
-  const contact = addressBook.profile[profileOwner];
+  const addressBook = await runtime.profile.getAddressBook();
+  const contact = addressBook.profile[accountId];
 
-  return contact ? contact.alias : profileOwner;
-}
-
-/**
- * Creates a new blockchain-core profile instance with the given account id and resolves the alias
- * with the given runtime. (uses getUserAlias function)
- *
- * @param      {Runtime}  runtime    The runtime
- * @param      {string}   accountId  The account identifier
- */
-export async function getUserAliasFromAddress(
-  runtime: Runtime,
-  accountId: string,
-): Promise<string> {
-  const otherProfile = new Profile({
-    ...(runtime as any),
-    profileOwner: accountId,
-    accountId: runtime.activeAccount,
-  });
-
-  return getUserAlias(otherProfile);
+  return contact ? contact.alias : accountId;
 }
 
 /**

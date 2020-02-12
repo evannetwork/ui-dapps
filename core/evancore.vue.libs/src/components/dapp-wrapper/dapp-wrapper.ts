@@ -24,7 +24,7 @@ import { Prop } from 'vue-property-decorator';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import {
-  bccUtils, EvanQueue, Dispatcher, DispatcherInstance,
+  profileUtils, EvanQueue, Dispatcher, DispatcherInstance,
 } from '@evan.network/ui';
 
 import EvanComponent from '../../component';
@@ -493,7 +493,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       );
 
       // Save alias to localstorage
-      this.userInfo.alias = await bccUtils.getUserAlias(this.$store.state.runtime.profile);
+      this.userInfo.alias = await profileUtils.getUserAlias(this.$store.state.runtime);
       window.localStorage.setItem('evan-alias', this.userInfo.alias);
 
       /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
@@ -591,12 +591,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         if (previousRead < this.userInfo.totalMails && !window.localStorage['evan-test-mode']) {
           // show a toast message for the last unread mails
           await Promise.all(this.userInfo.mails.slice(0, this.userInfo.newMailCount).map(async (mail) => {
-            const fromProfile = new bcc.Profile({
-              accountId: runtime.activeAccount,
-              profileOwner: mail.from,
-              ...runtime,
-            });
-            const alias = mail.fromAlias || await bccUtils.getUserAlias(fromProfile);
+            const alias = mail.fromAlias || await profileUtils.getUserAlias(runtime, mail.from);
             const mailClass = mail.address.replace('0x', 'mail-');
             const mailLink = [
               this.dapp.baseUrl,

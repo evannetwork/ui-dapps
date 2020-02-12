@@ -23,7 +23,7 @@ import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import { SearchService, DigitalTwin } from '@evan.network/digital-twin-lib';
@@ -69,13 +69,7 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     await Promise.all(searchResults.map(async (result): Promise<void> => {
       if (result.owner && runtime.web3.utils.isAddress(result.owner)) {
         if (!this.aliasMapping[result.owner]) {
-          this.aliasMapping[result.owner] = bccUtils.getUserAlias(
-            new bcc.Profile({
-              accountId: runtime.activeAccount,
-              profileOwner: result.owner,
-              ...(runtime as bcc.ProfileOptions),
-            }),
-          );
+          this.aliasMapping[result.owner] = profileUtils.getUserAlias(runtime, result.owner);
         }
 
         // eslint-disable-next-line no-param-reassign

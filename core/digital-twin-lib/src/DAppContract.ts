@@ -17,10 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import {
-  Runtime, lodash, Profile, ProfileOptions,
-} from '@evan.network/api-blockchain-core';
-import { DispatcherInstance, bccUtils } from '@evan.network/ui';
+import { Runtime, } from '@evan.network/api-blockchain-core';
+import { profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
@@ -118,11 +116,7 @@ export class DAppContract {
     // load owner address and owner name
     this.ownerAddress = await this.runtime.executor
       .executeContractCall((this as any).contract, 'owner');
-    this.ownerName = await bccUtils.getUserAlias(new Profile({
-      accountId: this.runtime.activeAccount,
-      profileOwner: this.ownerAddress,
-      ...(this.runtime as ProfileOptions),
-    }));
+    this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
     this.ensureI18N();
   }
 

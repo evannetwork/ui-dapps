@@ -188,13 +188,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    * writes specific string in userNameWithAddress variable used in the modal text
    */
   async setUserNameWithAddress() {
-    const profile = new bcc.Profile({
-      accountId: this.runtime.activeAccount,
-      profileOwner: this.form.accountId.value,
-      ...this.runtime,
-    } as any);
-
-    const userAlias = await bccUtils.getUserAlias(profile);
+    const userAlias = await profileUtils.getUserAlias(this.runtime, this.form.accountId.value);
     const isNotContact = userAlias === this.form.accountId.value;
     this.userNameWithAddress = isNotContact ? userAlias : `${ userAlias } (${ this.form.accountId.value })`;
   }
