@@ -55,7 +55,7 @@
     "did": {
       "did-title": "Decentralized ID"
     },
-    "generic-error": "Der angeforderte Digitale Zwilling ist entweder gelöscht worden oder fehlerhaft.",
+    "generic-error": "Der angeforderte Digitale Zwilling ist entweder gelöscht oder fehlerhaft.",
     "nav-items": {
       "data": "Daten",
       "did": "Decentralized ID",
