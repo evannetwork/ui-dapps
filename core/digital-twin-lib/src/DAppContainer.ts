@@ -353,7 +353,7 @@ class DAppContainer extends Container {
     this.listeners = [
       dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
       dispatchers.containerSaveDispatcher.watch(($event) => this.onContainerSave($event)),
-      dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.containerShareDispatcher.watch(($event) => this.onShareSave($event)),
     ];
   }
 
@@ -387,6 +387,18 @@ class DAppContainer extends Container {
     if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
       this.description = await this.getDescription();
       this.triggerReload('description');
+    }
+  }
+
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   */
+  async onShareSave($event: any): Promise<void> {
+    this.ensureDispatcherStates();
+
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.triggerReload('sharings');
     }
   }
 

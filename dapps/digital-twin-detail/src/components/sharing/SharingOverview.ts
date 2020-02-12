@@ -22,7 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { DAppTwin, DAppContainer } from '@evan.network/digital-twin-lib';
+import { DAppContainer, dispatchers } from '@evan.network/digital-twin-lib';
 import { profileUtils } from '@evan.network/ui';
 
 import ShareContainerComponent from '../container/ShareContainer';
@@ -82,6 +82,15 @@ export default class SharingOverview extends mixins(EvanComponent) {
   ];
 
   /**
+   * Result of container share dispatcher, so watcher can be removed, when component gets destroyed
+   */
+  clearSharingWatcher: Function;
+
+  beforeDestroy(): void {
+    this.clearSharingWatcher();
+  }
+
+  /**
    * Resolve permissions for the twin and containers.
    */
   async created(): Promise<void> {
@@ -105,6 +114,14 @@ export default class SharingOverview extends mixins(EvanComponent) {
     ];
 
     await this.resolvePermissions();
+    // bind sharing dispatcher watcher to reload the actual permissions list, when sharing is done
+    this.clearSharingWatcher = dispatchers.containerShareDispatcher.watch(async ($event) => {
+      if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+        this.loading = true;
+        await this.resolvePermissions();
+        this.loading = false;
+      }
+    });
   }
 
   /**
@@ -114,7 +131,8 @@ export default class SharingOverview extends mixins(EvanComponent) {
     const runtime = this.getRuntime();
     const { containerAddresses } = this.$store.state.twin;
     const permittedUsers: { [address: string]: LoadingSharedUserInterface } = { };
-
+    // reset previous data
+    this.data = [];
     // iterate through all containers and resolve the permissions
     await Promise.all(containerAddresses.map(async (containerAddress: string): Promise<void> => {
       /* Hint: Container API invites every shared user generally into the member role. As a result
@@ -122,7 +140,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
        * users anything was shared. */
       const contract = runtime.contractLoader.loadContract('DataContract', containerAddress);
       const roleMap = await runtime.rightsAndRoles.getMembers(contract);
-      const unique = new Set(Object.values(roleMap));
+      const unique = new Set([].concat(...Object.values(roleMap)));
 
       // iterate through all permitted users and apply them to the permitted users mapping
       unique.forEach((address: string): void => {

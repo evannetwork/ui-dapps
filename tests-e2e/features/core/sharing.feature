@@ -68,4 +68,3 @@ Feature: evan.network sharing
       Then the button "Update Sharing Options" should be "enabled"
     When I click on button "Update Sharing Options"
 
-
