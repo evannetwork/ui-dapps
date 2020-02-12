@@ -41,22 +41,22 @@ export default class LabeledList extends mixins(EvanComponent) {
    */
   @Prop({
     type: Array,
-    default: []
+    default: [],
   }) entries: Entry[]
 
   @Prop({
     type: String,
-    default: '--'
+    default: '--',
   }) emptyValue: string
 
   @Prop({
     type: Boolean,
-    default: false
+    default: false,
   }) hideEmpty: boolean
 
   @Prop({
     type: Boolean,
-    default: false
+    default: false,
   }) hideLabel: boolean
 
 

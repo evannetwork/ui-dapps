@@ -180,7 +180,7 @@
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
     "sharing": {
-      "Profile Data": "Identity Data",
+      "profileData": "Identity Data",
       "accountDetails": "Identity Details",
       "accountName": "Account Name",
       "city": "City",

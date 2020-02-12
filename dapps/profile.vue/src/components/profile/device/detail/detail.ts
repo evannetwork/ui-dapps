@@ -26,7 +26,7 @@ import { Prop } from 'vue-property-decorator';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { FileHandler, } from '@evan.network/ui';
+import { FileHandler } from '@evan.network/ui';
 
 // internal
 import * as dispatchers from '../../../../dispatchers/registry';
@@ -68,7 +68,7 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
     const deviceData = this.$store.state.profileDApp.data.deviceDetails || {};
 
     // setup registration form
-    this.deviceDetailForm = (<DeviceDetailFormInterface>new EvanForm(this, {
+    this.deviceDetailForm = (new EvanForm(this, {
       type: {
         value: deviceData.type || '',
       },
@@ -85,14 +85,15 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
         value: deviceData.serialNumber || '',
       },
       settings: {
-        value: deviceData.settings ? deviceData.settings.files || deviceData.settings : [ ],
-        uiSpecs: { type: 'files' }
+        value: deviceData.settings ? deviceData.settings.files || deviceData.settings : [],
+        uiSpecs: { type: 'files' },
       },
       dataStreamSettings: {
-        value: deviceData.dataStreamSettings ? deviceData.dataStreamSettings.files || deviceData.dataStreamSettings : [ ],
-        uiSpecs: { type: 'files' }
+        value: deviceData.dataStreamSettings ? deviceData.dataStreamSettings.files
+          || deviceData.dataStreamSettings : [],
+        uiSpecs: { type: 'files' },
       },
-    }));
+    }) as DeviceDetailFormInterface);
   }
 
   async changeProfileData() {
@@ -101,10 +102,10 @@ export default class DeviceDetailForm extends mixins(EvanComponent) {
     formData.settings = { files: formData.settings };
     formData.dataStreamSettings = { files: formData.dataStreamSettings };
 
-    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+    dispatchers.updateProfileDispatcher.start(this.getRuntime(), {
       address: this.$store.state.profileDApp.address,
-      formData: formData,
-      type: 'deviceDetails'
+      formData,
+      type: 'deviceDetails',
     });
   }
 }

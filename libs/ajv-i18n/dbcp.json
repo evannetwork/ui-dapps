@@ -7,7 +7,7 @@
       "files": [
         "i18n.ajv.js"
       ],
-      "origin": "QmUPv5dpsTi9auLVtweb3BB95FjiPzfPhre7my7Z39H23a",
+      "origin": "QmdLmScDuwuYWyVtqdJAz2NQXZSRcDHgmnFRes1rTXKk16",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +32,7 @@
     ],
     "version": "3.5.0",
     "versions": {
-      "3.5.0": "QmUMZPqRoXFJQGapkbEymgjHwgMbdB6YMDfLUcz65awd42"
+      "3.5.0": "QmYMkwBhwGQqYQAEFoTtyvmxBBajEoRNEWNMFZXmjtzHeS"
     }
   }
 }

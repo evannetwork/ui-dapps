@@ -25,6 +25,7 @@ module.exports = require('../../scripts/dapp/webpack.config')(
   true,
   false,
   getExternals({
-    '@evan.network/datacontainer.digitaltwin': '@evan.network/datacontainer.digitaltwin'
-  })
+    '@evan.network/digital-twin-lib': '@evan.network/digital-twin-lib',
+    '@evan.network/ui-countries': '@evan.network/ui-countries',
+  }),
 );

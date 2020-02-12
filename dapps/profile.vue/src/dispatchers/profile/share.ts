@@ -18,16 +18,16 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Dispatcher, } from '@evan.network/ui';
-import { shareDispatcher } from '@evan.network/datacontainer.digitaltwin';
+import { Dispatcher } from '@evan.network/ui';
+import { containerShareDispatcher } from '@evan.network/digital-twin-lib';
 
 const dispatcher = new Dispatcher(
-  `profile.vue.${ dappBrowser.getDomainName() }`,
+  `profile.vue.${dappBrowser.getDomainName()}`,
   'shareProfileDispatcher',
   60000,
-  '_profile.dispatchers.profile-share'
+  '_profile.dispatchers.profile-share',
 );
 
-dispatcher.steps = shareDispatcher.steps;
+dispatcher.steps = containerShareDispatcher.steps;
 
 export default dispatcher;
