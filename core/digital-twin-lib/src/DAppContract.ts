@@ -81,6 +81,9 @@ export class DAppContract {
 
   ownerName: string;
 
+  // is the current user the owner of this twin
+  isOwner: boolean;
+
   /**
    * Initial provided runtime for creating DAppContainer instances.
    */
@@ -123,6 +126,7 @@ export class DAppContract {
       profileOwner: this.ownerAddress,
       ...(this.runtime as ProfileOptions),
     }));
+    this.isOwner = this.ownerAddress === this.runtime.activeAccount;
     this.ensureI18N();
   }
 
