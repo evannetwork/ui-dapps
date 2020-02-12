@@ -62,7 +62,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
 
   data: SharedUserInterface[] = [];
 
-  isActiveSearch = false;
+  isActiveSearch = !!window.localStorage['evan-test-mode'];
 
   loading = true;
 
@@ -246,7 +246,7 @@ export default class SharingOverview extends mixins(EvanComponent) {
    */
   handleSearchBlur(): void {
     if (this.searchTerm.length === 0) {
-      this.isActiveSearch = false;
+      this.isActiveSearch = !!window.localStorage['evan-test-mode'];
     }
   }
 }
