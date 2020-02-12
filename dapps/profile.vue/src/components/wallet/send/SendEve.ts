@@ -46,6 +46,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    * loading states
    */
   loading = true;
+
   sending = false;
 
   /**
@@ -83,7 +84,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    */
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach((listener) => listener());
     // ensure side-panel to be closed
     (this as any).$store.state.uiState.swipePanel = '';
   }
@@ -92,7 +93,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
    * Bind listeners and setup data / form.
    */
   async created() {
-    this.runtime = (<any>this).getRuntime();
+    this.runtime = (<any> this).getRuntime();
 
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
@@ -103,7 +104,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
       this.$nextTick(async () => {
         const instances = await sendEveDispatcher.getInstances(this.runtime);
         this.sending = instances.length !== 0;
-      })
+      });
 
       // if dispatcher was finished, reload data and reset formular
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
@@ -132,11 +133,11 @@ export default class SendEveComponent extends mixins(EvanComponent) {
     this.currBalance = await dappBrowser.core.getBalance(this.runtime.activeAccount);
 
     // setup formular
-    const web3 = this.runtime.web3;
-    this.form = (<SendEveFormInterface>new EvanForm(this, {
+    const { web3 } = this.runtime;
+    this.form = (<SendEveFormInterface> new EvanForm(this, {
       accountId: {
         value: '',
-        validate: function(vueInstance: SendEveComponent, form: SendEveFormInterface) {
+        validate(vueInstance: SendEveComponent, form: SendEveFormInterface) {
           return web3.utils.isAddress(this.value);
         },
         uiSpecs: {
@@ -146,38 +147,36 @@ export default class SendEveComponent extends mixins(EvanComponent) {
             required: true,
             taggable: true,
             id: 'evan-eve-send-identity',
-            'create-option': address => {
+            'create-option': (address) => {
               this.form.accountId.value = address;
-              this.accountOptions.push({ label: address, value: address, });
+              this.accountOptions.push({ label: address, value: address });
               return address;
             },
-          }
-        }
+          },
+        },
       },
       amount: {
         value: 1,
-        validate: function(vueInstance: SendEveComponent) {
+        validate(vueInstance: SendEveComponent) {
           const parsed = parseFloat(this.value);
 
           if (isNaN(parsed) || parsed <= 0) {
             return '_profile.wallet.send-eve.form.amount.error';
-          } else {
-            if ((parsed + gasFee) < vueInstance.currBalance) {
-              return true;
-            } else {
-              return (vueInstance as any).$t('_profile.wallet.send-eve.form.amount.error-less', {
-                balance: vueInstance.getReadableBalance(vueInstance.currBalance),
-              });
-            }
           }
+          if ((parsed + gasFee) < vueInstance.currBalance) {
+            return true;
+          }
+          return (vueInstance as any).$t('_profile.wallet.send-eve.form.amount.error-less', {
+            balance: vueInstance.getReadableBalance(vueInstance.currBalance),
+          });
         },
         uiSpecs: {
           attr: {
             required: true,
             type: 'number',
             id: 'evan-eve-send-amount',
-          }
-        }
+          },
+        },
       },
     }));
 
@@ -190,7 +189,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
   async setUserNameWithAddress() {
     const userAlias = await profileUtils.getUserAlias(this.runtime, this.form.accountId.value);
     const isNotContact = userAlias === this.form.accountId.value;
-    this.userNameWithAddress = isNotContact ? userAlias : `${ userAlias } (${ this.form.accountId.value })`;
+    this.userNameWithAddress = isNotContact ? userAlias : `${userAlias} (${this.form.accountId.value})`;
   }
 
   /**
@@ -225,7 +224,7 @@ export default class SendEveComponent extends mixins(EvanComponent) {
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
     if (this.windowWidth >= 1200) {
-      (<any>this).$store.state.uiState.swipePanel = 'sharing';
+      (<any> this).$store.state.uiState.swipePanel = 'sharing';
     }
   }
 }

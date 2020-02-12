@@ -491,11 +491,6 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         null,
         { executor },
       );
-
-      // Save alias to localstorage
-      this.userInfo.alias = await profileUtils.getUserAlias(this.$store.state.runtime);
-      window.localStorage.setItem('evan-alias', this.userInfo.alias);
-
       /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
          from vuex store */
       this.dispatcherHandler = new EvanVueDispatcherHandler(this);
@@ -509,7 +504,8 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
       // load the user infos like alias, mails, dispatchers ...
       if (this.topLevel) {
-        this.loadUserSpecific();
+        await this.loadUserSpecific();
+        window.localStorage.setItem('evan-alias', this.userInfo.alias);
       }
     }
   }
@@ -523,7 +519,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();
-    this.userInfo.alias = this.userInfo.addressBook.profile[dappBrowser.core.activeAccount()].alias;
+    this.userInfo.alias = await profileUtils.getUserAlias(this.$store.state.runtime);
 
     // setup dispatcher data saving logic
     this.setupQueue();
