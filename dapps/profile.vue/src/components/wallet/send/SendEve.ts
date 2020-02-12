@@ -23,7 +23,7 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { bccUtils } from '@evan.network/ui';
+import { bccUtils, profileUtils } from '@evan.network/ui';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 
