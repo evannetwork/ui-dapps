@@ -54,12 +54,6 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
    */
   aliasMapping: { [ address: string ]: Promise<string> } = { };
 
-  mounted(): void {
-    this.searchTerm = this.$route.params.query || '';
-
-    this.initialQuery(this.searchTerm);
-  }
-
   /**
    * Check the search results, if the name / alias of an owner can be loaded
    */
@@ -84,13 +78,6 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.data = [];
     this.searchTerm = searchTerm;
 
-    // Necessary for proper routing. Otherwise collision with detail dapp
-    if (searchTerm) {
-      this.$router.push({ path: `digitaltwins/search/${searchTerm}` });
-    } else {
-      this.$router.push({ path: 'digitaltwins/' });
-    }
-
     const { result, total } = await this.search.query(this.type, {
       searchTerm,
       ...sorting,
@@ -101,6 +88,13 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.data = result;
 
     this.isLoading = false;
+
+    // Necessary for proper routing. Otherwise collision with detail dapp
+    if (searchTerm && this.$route.params.query !== searchTerm) {
+      this.$router.replace({ name: 'digitaltwins-search', params: { query: searchTerm } });
+    } else {
+      this.$router.push({ path: 'digitaltwins' });
+    }
   }
 
   async fetchMore(sorting = {}): Promise<void> {
