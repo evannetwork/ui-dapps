@@ -25,6 +25,7 @@
         :is-loading="$store.state.twin.dispatcherStates.description"
         :shareable="false"
         :title="'_twin-detail.data.general.information-title' | translate"
+        :editable="$store.state.twin.isOwner"
         @init="dbcpForm = $event"
         @save="setDescription();"
       >

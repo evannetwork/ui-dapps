@@ -26,13 +26,14 @@
           <div>
             {{ $t(`${$route.params.container}.${name}`, name) }}
             <small class="d-block">
-              {{ getValues().length }} / {{ container.entries[name].length }}
+              {{ getValues().length }} / {{ getTotalEntries() }}
             </small>
           </div>
         </h5>
       </div>
       <div>
         <evan-button
+          v-if="$store.state.container.isOwner"
           type="secondary"
           size="sm"
           @click="onShare"
@@ -53,16 +54,18 @@
             />
           </template>
           <b-dropdown-item disabled>
-            <span
-              class="text-muted"
-              style="margin-left: 0"
-            >{{ '_twin-detail.data.list.show-all' | translate }}</span>
+            {{ '_twin-detail.data.list.show-all' | translate }}
           </b-dropdown-item>
           <b-dropdown-item
             :id="`dataset-list-${name}-add`"
+            :disabled="!isEditable"
             @click="$refs.addListItem.showPanel()"
           >
             {{ '_twin-detail.data.list.add-list-item.title' | translate }}
+            <i
+              v-if="!isEditable"
+              class="mdi mdi-eye-off-outline text-right w-100"
+            />
           </b-dropdown-item>
         </b-dropdown>
       </div>
@@ -82,6 +85,7 @@
     />
 
     <share-container
+      v-if="$store.state.container.isOwner"
       ref="shareContainer"
     />
 
