@@ -20,7 +20,7 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { deepEqual, bccUtils } from '@evan.network/ui';
+import { deepEqual, profileUtils } from '@evan.network/ui';
 import {
   Runtime, Profile, ProfileOptions, lodash,
 } from '@evan.network/api-blockchain-core';
@@ -155,7 +155,9 @@ class PermissionsEditor extends mixins(EvanComponent) {
 
   created(): void {
     this.runtime = this.getRuntime();
-    this.getPermissionsForContact();
+    if (this.selectedContact) {
+      this.getPermissionsForContact();
+    }
   }
 
   /**
@@ -271,13 +273,7 @@ class PermissionsEditor extends mixins(EvanComponent) {
    * writes specific string in selectedUsername variable used in permission text
    */
   async setUserNameWithAddress(): Promise<void> {
-    const profile = new Profile({
-      accountId: this.runtime.activeAccount,
-      profileOwner: this.selectedContact,
-      ...this.runtime as ProfileOptions,
-    });
-
-    this.selectedUsername = await bccUtils.getUserAlias(profile);
+    this.selectedUsername = await profileUtils.getUserAlias(this.runtime, this.selectedContact);
   }
 }
 

@@ -17,10 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-import {
-  Runtime, lodash, Profile, ProfileOptions,
-} from '@evan.network/api-blockchain-core';
-import { DispatcherInstance, bccUtils } from '@evan.network/ui';
+import { Runtime } from '@evan.network/api-blockchain-core';
+import { profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from './dispatchers';
@@ -79,7 +77,10 @@ export class DAppContract {
    */
   ownerAddress: string;
 
-  ownerName: string;
+  /**
+   * is the current user the owner of this twin
+   */
+  isOwner: boolean;
 
   /**
    * Initial provided runtime for creating DAppContainer instances.
@@ -109,8 +110,12 @@ export class DAppContract {
   /**
    * Load the base information of the contract type.
    */
-  async loadBaseInfo(): Promise<void> {
-    await (this as any).ensureContract();
+  async loadBaseInfo(): Promise<boolean> {
+    try {
+      await (this as any).ensureContract();
+    } catch (error) {
+      return Promise.reject(new Error('Failed to load contract'));
+    }
 
     this.contractAddress = await (this as any).getContractAddress();
     this.description = await (this as any).getDescription();
@@ -118,12 +123,9 @@ export class DAppContract {
     // load owner address and owner name
     this.ownerAddress = await this.runtime.executor
       .executeContractCall((this as any).contract, 'owner');
-    this.ownerName = await bccUtils.getUserAlias(new Profile({
-      accountId: this.runtime.activeAccount,
-      profileOwner: this.ownerAddress,
-      ...(this.runtime as ProfileOptions),
-    }));
+    this.isOwner = this.ownerAddress === this.runtime.activeAccount;
     this.ensureI18N();
+    return Promise.resolve(true);
   }
 
   /**

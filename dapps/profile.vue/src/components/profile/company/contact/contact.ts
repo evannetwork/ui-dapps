@@ -54,12 +54,12 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
   /**
    * Apply required fiels from outside.
    */
-  @Prop({ default: [ ] }) required;
+  @Prop({ default: [] }) required;
 
   /**
    * Only allow the following countries
    */
-  @Prop({ default: countries, }) restrictCountries: Array<string>;
+  @Prop({ default: countries }) restrictCountries: Array<string>;
 
   /**
    * hides the cancel button and directly jumps into formular edit mode
@@ -97,7 +97,6 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
    * Load the mail details
    */
   async created() {
-
     // load country options
     this.countryOptions = this.getCountriesOption();
 
@@ -109,99 +108,112 @@ export default class CompanyContactForm extends mixins(EvanComponent) {
    * Directly open the formular edit mode.
    */
   mounted() {
-    this.onlyEdit && (this.$refs.form as any).setEditMode(true);
+    if (this.onlyEdit) {
+      (this.$refs.form as any).setEditMode(true);
+    }
   }
 
   /**
    * Load the mail details
    */
   async loadProfileData() {
-    let contactData = this.data || this.$store.state.profileDApp.data.contact || { };
+    const contactData = this.data || this.$store.state.profileDApp.data.contact || { };
 
     // setup registration form
-    this.form = (<ContactFormInterface>new EvanForm(this, {
+    this.form = (new EvanForm(this, {
       country: {
         value: contactData.country,
-        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => {
           // resubmit postalCode validation
-          form.postalCode.value = form.postalCode.value;
-          vueInstance.$emit('countryChanged', this.value);
-          return vueInstance.required.indexOf('country') === -1 ||
-            this.value && this.value.length !== 0 && vueInstance.restrictCountries.indexOf(this.value) !== -1;
+          form.postalCode.value = form.postalCode.value; // eslint-disable-line
+          vueInstance.$emit('countryChanged', control.value);
+          return vueInstance.required.indexOf('country') === -1
+            || (control.value && control.value.length !== 0
+              && vueInstance.restrictCountries.indexOf(control.value) !== -1);
         },
         uiSpecs: {
           type: 'v-select',
           attr: {
             options: this.countryOptions,
             required: !this.stacked || this.required.indexOf('country') !== -1,
-          }
-        }
+          },
+        },
       },
       streetAndNumber: {
         value: contactData.streetAndNumber || '',
-        validate: function(vueInstance: CompanyContactForm) {
-          return vueInstance.required.indexOf('streetAndNumber') === -1 || this.value.length !== 0;
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          vueInstance.required.indexOf('streetAndNumber') === -1 || control.value.length !== 0),
         uiSpecs: {
           attr: {
             required: !this.stacked || this.required.indexOf('streetAndNumber') !== -1,
-          }
-        }
+          },
+          type: 'input',
+        },
       },
       postalCode: {
         value: contactData.postalCode || '',
-        validate: function(vueInstance: CompanyContactForm, form: ContactFormInterface) {
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
           // check postcode validity only in germany
-          return vueInstance.required.indexOf('postalCode') === -1 ||
-            (form.country.value === 'DE' ? /^\d{5}$/.test(this.value) : true);
-        },
+          vueInstance.required.indexOf('postalCode') === -1
+            || (form.country.value === 'DE' ? /^\d{5}$/.test(control.value) : true)),
         uiSpecs: {
+          type: 'input',
           attr: {
-            required: () => !this.stacked || this.form.country.value === 'DE' && this.required.indexOf('postalCode') !== -1,
-          }
-        }
+            required: () => !this.stacked || (
+              this.form.country.value === 'DE' && this.required.indexOf('postalCode') !== -1),
+          },
+        },
       },
       city: {
         value: contactData.city || '',
-        validate: function(vueInstance: CompanyContactForm) {
-          return vueInstance.required.indexOf('city') === -1 || this.value.length !== 0;
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          vueInstance.required.indexOf('city') === -1 || control.value.length !== 0
+        ),
         uiSpecs: {
+          type: 'input',
           attr: {
             required: !this.stacked || this.required.indexOf('city') !== -1,
-          }
-        }
+          },
+        },
       },
       website: {
         value: contactData.website || '',
-        validate: function(vueInstance: CompanyContactForm) {
-          return !this.value ||
-            /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(this.value);
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          !control.value
+            || /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm.test(control.value)
+        ),
         uiSpecs: {
           attr: {
             required: !this.stacked || this.required.indexOf('website') !== -1,
-          }
-        }
+          },
+          type: 'input',
+        },
       },
-    }));
+    }) as ContactFormInterface);
   }
 
   async changeProfileData() {
     const formData = this.form.getFormData();
 
-    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+    dispatchers.updateProfileDispatcher.start(this.getRuntime(), {
       address: this.$store.state.profileDApp.address,
       formData,
-      type: 'contact'
+      type: 'contact',
     });
   }
 
   getCountriesOption(): OptionInterface[] {
     return countries
-      .map(isoCode => {
-        return { value: isoCode, label: (this as any).$t(`_countries.${isoCode}`), };
-      })
-      .sort((a, b) => (a.label > b.label ? 1 : (b.label > a.label ? -1 : 0)));
+      .map((isoCode: string) => ({ value: isoCode, label: this.$t(`_countries.${isoCode}`) }))
+      .sort((a, b) => {
+        if (a.label > b.label) {
+          return 1;
+        }
+        if (b.label > a.label) {
+          return -1;
+        }
+
+        return 0;
+      });
   }
 }

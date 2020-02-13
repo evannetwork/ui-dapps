@@ -135,7 +135,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     }
 
     // check all available types and configure special form control requirements
-    const { logger } = this.getRuntime();
     switch (type) {
       case 'array': {
         control.uiSpecs.type = 'json';

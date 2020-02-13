@@ -1,14 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "dist"
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
   "extends": "../../tsconfig.json",
   "include": [
-    "./src/**/*"
+    "./src/**/*.ts",
+    "./src/**/*.json"
   ],
   "references": [
     {
       "path": "../../core/digital-twin-lib"
+    },
+    {
+      "path": "../../core/evancore.vue.libs"
+    },
+    {
+      "path": "../../core/ui.libs"
     }
   ]
 }

@@ -22,6 +22,14 @@
     <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-loading v-if="loading" />
+        <template v-else-if="hasError">
+          <div class="p-5 text-center">
+            <h3 class="mb-5">
+              {{ '_twin-detail.generic-error' | translate }}
+            </h3>
+            <evan-failed />
+          </div>
+        </template>
         <template v-else>
           <digital-twin-interactions ref="twinInteractions" />
           <evan-dapp-wrapper-level-2 ref="level2Wrapper">
@@ -64,12 +72,12 @@
                       />
                     </template>
                     <b-dropdown-item
-                      @click="$refs.twinInteractions.duplicateTwin();"
+                      @click="$refs.twinInteractions.duplicateTwin()"
                     >
                       {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
-                      @click="$refs.twinInteractions.exportTemplate();"
+                      @click="$refs.twinInteractions.exportTemplate()"
                     >
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
@@ -157,5 +165,5 @@ export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './DigitalTwinDetail.scss'
+  @import './DigitalTwinDetail.scss';
 </style>

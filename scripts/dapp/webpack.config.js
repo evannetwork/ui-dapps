@@ -42,16 +42,15 @@ module.exports = function getWebpackConfig(
   name,
   dist,
   transpileOnly = false,
-  prodMode = process.env.NODE_ENV === 'production',
+  forceProdMode = false,
   externals = getExternals(),
 ) {
-  // enable prodMode, when node_env was set
-
+  const prodMode = forceProdMode || process.env.NODE_ENV === 'production';
   const webpackConfig = {
     entry: './src/index.ts',
     externals,
     devtool: '#eval-source-map',
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    mode: prodMode ? 'production' : 'development',
     output: {
       path: dist,
       publicPath: '/dist/',
@@ -154,7 +153,7 @@ module.exports = function getWebpackConfig(
       new UglifyJsPlugin({
         exclude: /(node_modules)/,
         parallel: true,
-        sourceMap: false,
+        sourceMap: true,
         test: /\.js($|\?)/i,
         uglifyOptions: {
           output: {

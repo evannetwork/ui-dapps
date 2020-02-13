@@ -20,22 +20,21 @@ the following URL: https://evan.network/license/
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 
-// evan.network imports
-// internal
-import { ContainerShareConfig } from '@evan.network/api-blockchain-core';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+/* evan.network imports
+   internal */
 import { bccUtils } from '@evan.network/ui';
-
-import * as dispatchers from '../../dispatchers/registry';
-import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
-import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
+import { ContainerShareConfig, Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
+import { EvanComponent } from '@evan.network/ui-vue-core';
+import { PermissionUtils, dispatchers } from '@evan.network/digital-twin-lib';
+
+import { getProfilePermissions, removeAllPermissions, findAllByKey } from './utils';
 
 
 interface SharedContactInterface {
   accountId: string;
   sharedConfig: ContainerShareConfig[];
-  permissionType: String;
+  permissionType: string;
 }
 
 @Component({})
@@ -89,9 +88,9 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     const sharedContact = this.selectedSharedContacts;
     // hide or show sidepanel
     if (!sharedContact || sharedContact === null) {
-      (<any>this).$store.state.uiState.swipePanel = '';
+      this.$store.state.uiState.swipePanel = '';
     } else {
-      (<any>this).$store.state.uiState.swipePanel = 'sharing';
+      this.$store.state.uiState.swipePanel = 'sharing';
     }
   }
 
@@ -106,23 +105,23 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
 
   beforeDestroy() {
     window.removeEventListener('resize', this.handleWindowResize);
-    (<any>this).$store.state.uiState.swipePanel = '';
+    this.$store.state.uiState.swipePanel = '';
 
     // clear dispatcher listeners
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach((listener) => listener());
   }
 
   async created() {
-    // set the update permission and always pass the current vue context into it, so it can use the
-    // vuex translate service
-    this.updatePermissions = updatePermissions.bind(null, this);
+    /* set the update permission and always pass the current vue context into it, so it can use the
+       vuex translate service */
+    this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
 
     // watch for permission updates
-    this.listeners.push(dispatchers.shareProfileDispatcher.watch(async ($event: any) => {
+    this.listeners.push(dispatchers.containerShareDispatcher.watch(async ($event: any) => {
       // set isLoading state to corresponding list elements
       if ($event.detail.status === 'starting') {
         const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
-        accountIds.forEach(item => this.isLoadingContacts.add(item));
+        accountIds.forEach((item) => this.isLoadingContacts.add(item));
 
         // deselect list elements
         this.selectedSharedContacts = null;
@@ -131,24 +130,24 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
       // canceling isLoading state from corresponding list elements
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         const accountIds = findAllByKey($event.detail.instance.data, 'accountId');
-        accountIds.forEach(item => this.isLoadingContacts.delete(item));
+        accountIds.forEach((item) => this.isLoadingContacts.delete(item));
         this.loading = true;
         // Gets the profile permissions.
-        this.sharedContacts = await getProfilePermissions((<any>this));
+        this.sharedContacts = await getProfilePermissions(this);
         this.loading = false;
       }
     }));
 
-    // bind window resize listeners, so the side panel can be pinned to the right side on large
-    // devices and toggled on small devices
+    /* bind window resize listeners, so the side panel can be pinned to the right side on large
+       devices and toggled on small devices */
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
 
     // load contacts from addressbook
-    this.contacts = await bccUtils.getContacts((<any>this).getRuntime());
+    this.contacts = await bccUtils.getContacts(this.getRuntime());
 
     // load shared contacts
-    this.sharedContacts = await getProfilePermissions((<any>this));
+    this.sharedContacts = await getProfilePermissions(this);
 
     this.loading = false;
   }
@@ -156,7 +155,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
   handleWindowResize() {
     this.windowWidth = window.innerWidth;
     if (this.windowWidth >= 1200) {
-      (<any>this).$store.state.uiState.swipePanel = 'sharing';
+      this.$store.state.uiState.swipePanel = 'sharing';
     }
   }
 
@@ -180,7 +179,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
     await removeAllPermissions(this, contact.sharedConfig)
       .then(() => {
         // remove item from list
-        this.sharedContacts = this.sharedContacts.filter(item => item.accountId !== contact.accountId);
+        this.sharedContacts = this.sharedContacts.filter((item) => item.accountId !== contact.accountId);
         // remove from selected shared contacts
         this.selectedSharedContacts = null;
       })
@@ -201,7 +200,7 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    * Callback, if overview entry is selected
    * @param {any} item selected contact or contact id
    */
-  isSelectedCallback(item): Boolean {
+  isSelectedCallback(item): boolean {
     if (!this.selectedSharedContacts) {
       return false;
     }
@@ -217,17 +216,33 @@ class ProfileSharingsComponent extends mixins(EvanComponent) {
    * Returns the permissions mapping for certain user. If nothing is shared with the user, copy from own and set all to
    * denied.
    *
-   * @param user: ContactInterface
+   * @param user: string - the user id.
    */
-  async loadPermissions(address: string) {
-    const runtime = (this as any).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, (this as any).$route.params.address);
+  async loadPermissions(accountId: string) {
+    const runtime = this.getRuntime();
+    let profileAddress = runtime.profile.profileContract.options.address;
 
-    if (!allPermissions[address]) {
-      return allPermissions['new'];
+    if (runtime.activeAccount !== this.$route.params.address) {
+      const profile = new Profile({
+        accountId: runtime.activeAccount,
+        profileOwner: this.$route.params.address,
+        ...(runtime as ProfileOptions),
+      });
+
+      await profile.loadForAccount();
+      profileAddress = profile.profileContract.options.address;
     }
 
-    return allPermissions[address];
+    return {
+      [profileAddress]: await PermissionUtils.getContainerPermissionsForUser(
+        runtime,
+        {
+          containerAddress: profileAddress,
+          label: 'profileData',
+        },
+        accountId,
+      ),
+    };
   }
 }
 

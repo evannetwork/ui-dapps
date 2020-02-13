@@ -7,7 +7,7 @@
       "files": [
         "lodash.libs.js"
       ],
-      "origin": "QmV23JwLoYGPbkdhQH6rYRBe3CZ6jpyosmCrcd7Fmzi3zs",
+      "origin": "QmamXMjGqsvrqUvJo2mFTKkm6Z44PWMe2as2zwufNMxnRQ",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -33,7 +33,7 @@
     "version": "4.17.15",
     "versions": {
       "4.17.11": "QmV9PhHPfKaUxbnnkoBhsK1m7TKFes7M1U3GymAH6omwY2",
-      "4.17.15": "Qmc5ja4RH8Wv8gEMRyicDZ5b7SZ1jc3HFr5jDPVXFwY5nS"
+      "4.17.15": "QmS5f4GCQuiGPpkkqAN9DNiMYmNLPgdSiTgVRvmkSs5iss"
     }
   }
 }

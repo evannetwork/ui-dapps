@@ -18,7 +18,7 @@
 */
 // import evan libs
 import { RouteConfig } from 'vue-router';
-import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
+import { UnderDevelopmentComponent } from '@evan.network/ui-vue-core';
 
 import ContainerComponent from './components/container/Container.vue';
 import DetailOverviewComponent from './components/overview/DetailOverview.vue';

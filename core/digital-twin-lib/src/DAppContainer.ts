@@ -18,7 +18,7 @@
 */
 
 import {
-  Container, ContainerPlugin, Runtime, DigitalTwinOptions, utils, ContainerShareConfig,
+  Container, ContainerPlugin, Runtime, DigitalTwinOptions,
 } from '@evan.network/api-blockchain-core';
 import { DispatcherInstance } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
@@ -27,9 +27,13 @@ import * as dispatchers from './dispatchers';
 import { applyMixins, DAppContract } from './DAppContract';
 
 interface Permissions {
-  accountId: string;
-  read: string[];
-  readWrite: string[];
+  [key: string]: EntryPermissions;
+}
+
+interface EntryPermissions {
+  read: boolean;
+  readWrite: boolean;
+  removeListEntries?: boolean;
 }
 
 /**
@@ -43,6 +47,11 @@ class DAppContainer extends Container {
    * name within the twin
    */
   name = '';
+
+  /**
+   * Defines whether the currently active account is also the owner of this container.
+   */
+  isOwner = false;
 
   /**
    * Contains all data, that is currently processed by the container save dispatchers. So get entry
@@ -86,7 +95,7 @@ class DAppContainer extends Container {
   /**
    * Current permissions of the user
    */
-  permissions: ContainerShareConfig;
+  permissions: Permissions;
 
   /**
    * Return the easy type definition from a ajv schema (e.g. used to detect file fields).
@@ -120,6 +129,19 @@ class DAppContainer extends Container {
     super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
     this.name = name;
     this.baseConstructor(vue, runtime, address);
+  }
+
+  /**
+   * Load container plugin and ensure values.
+   */
+  public async initialize(): Promise<void> {
+    this.permissions = await this.getPermissions();
+    this.plugin = this.loadPluginSchema();
+    this.entries = {};
+    this.listEntryCounts = {};
+    await this.ensureDispatcherStates();
+    await this.loadEntryValues();
+    this.isOwner = this.runtime.activeAccount === this.ownerAddress;
   }
 
   /**
@@ -182,8 +204,8 @@ class DAppContainer extends Container {
     // check for sharing
     (shareInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       /* TODO: setup sharing states
-         if (instance.data.value.address === this.contractAddress) {
-         } */
+        if (instance.data.value.address === this.contractAddress) {
+      } */
     });
 
     // set it afterwards to reduce vue update triggers
@@ -192,23 +214,20 @@ class DAppContainer extends Container {
   }
 
   /**
-   * Setup the whole data object for the current container. Is not loaded by default, must be runned
-   * using
+   * Setup the whole data object for the current container and load entry values explicitly where possible.
    *
    * @param      {string}  entriesToLoad  load only specific entriess
    */
   public async loadEntryValues(entriesToLoad?: string[]): Promise<void> {
-    this.entryKeys = Object.keys(this.plugin.template.properties);
+    this.entryKeys = Object.keys(this.plugin.template.properties).filter((key) => key !== 'type');
+
     // load entry data
     await Promise.all((entriesToLoad || this.entryKeys).map(async (entryKey: string) => {
       const entryDef = this.plugin.template.properties[entryKey];
 
-      if (this.permissions.read.indexOf(entryKey) === -1
-          && this.permissions.readWrite.indexOf(entryKey) === -1) {
-        // use empty list, so listentry component table will not break
-        if (entryDef?.type === 'list') {
-          this.entries[entryKey] = [];
-        }
+      if (this.permissions[entryKey] === undefined
+        || (!this.permissions[entryKey].read && !this.permissions[entryKey].readWrite)
+      ) {
         return;
       }
 
@@ -259,18 +278,6 @@ class DAppContainer extends Container {
   }
 
   /**
-   * Load container plugin and ensure values.
-   */
-  public async initialize(): Promise<void> {
-    this.plugin = this.loadPluginSchema();
-    this.entries = {};
-    this.listEntryCounts = {};
-    this.permissions = await this.getPermissions();
-    await this.ensureDispatcherStates();
-    await this.loadEntryValues();
-  }
-
-  /**
    * Load plugin template schema without checking for permissions and values, just to load correct
    * plugin data schema.
    *
@@ -287,23 +294,47 @@ class DAppContainer extends Container {
     const { dataSchema } = this.description as any;
     if (dataSchema) {
       Object.keys(dataSchema).forEach((property: string) => {
-        plugin.template.properties[property] = {
-          dataSchema: dataSchema[property],
-          permissions: {},
-          type: dataSchema[property].type === 'array' ? 'list' : 'entry',
-        };
+        if (property !== 'type') {
+          plugin.template.properties[property] = {
+            dataSchema: dataSchema[property],
+            permissions: {},
+            type: dataSchema[property].type === 'array' ? 'list' : 'entry',
+          };
+        }
       });
     }
 
     return plugin;
   }
 
-  async getPermissions(): Promise<ContainerShareConfig> {
-    return {
-      read: [],
-      readWrite: [],
-      ...await this.getContainerShareConfigForAccount(this.runtime.activeAccount),
+  /**
+   * Returns permissions object with the same structure as the plugin.
+   * Adds `type {read: true}` to permissions, because it's omitted in getContainerShareConfigForAccount() function.
+   */
+  async getPermissions(): Promise<Permissions> {
+    const {
+      read = [],
+      readWrite = [],
+      removeListEntries = [],
+    } = await this.getContainerShareConfigForAccount(this.runtime.activeAccount);
+
+    const permissions = {
+      type: {
+        read: true,
+        readWrite: false,
+        removeListEntries: false,
+      },
     };
+
+    read.concat(readWrite).forEach((item) => {
+      permissions[item] = {
+        read: read.includes(item),
+        readWrite: readWrite.includes(item),
+        removeListEntries: removeListEntries.includes(item),
+      };
+    });
+
+    return permissions;
   }
 
   /**
@@ -353,7 +384,7 @@ class DAppContainer extends Container {
     this.listeners = [
       dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
       dispatchers.containerSaveDispatcher.watch(($event) => this.onContainerSave($event)),
-      dispatchers.containerShareDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.containerShareDispatcher.watch(($event) => this.onShareSave($event)),
     ];
   }
 
@@ -387,6 +418,18 @@ class DAppContainer extends Container {
     if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
       this.description = await this.getDescription();
       this.triggerReload('description');
+    }
+  }
+
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   */
+  async onShareSave($event: any): Promise<void> {
+    this.ensureDispatcherStates();
+
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.triggerReload('sharings');
     }
   }
 

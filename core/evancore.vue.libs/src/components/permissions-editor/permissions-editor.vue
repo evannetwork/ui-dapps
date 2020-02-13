@@ -29,6 +29,7 @@
             :key="address"
           >
             <evan-permissions
+              v-if="containersPermissions"
               :label="containersPermissions[address].label"
               :permissions="containersPermissions[address].permissions"
               :contract-id="address"

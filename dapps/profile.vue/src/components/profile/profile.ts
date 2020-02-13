@@ -21,14 +21,14 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
 import { bccUtils } from '@evan.network/ui';
-import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
+import { EvanComponent, ContactInterface } from '@evan.network/ui-vue-core';
+import { PermissionUtils } from '@evan.network/digital-twin-lib';
+import { Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
+
 import * as dispatchers from '../../dispatchers/registry';
 
-import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
 
 @Component({ })
 export default class ProfileDetailComponent extends mixins(EvanComponent) {
@@ -97,7 +97,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     };
     /* set the update permission and always pass the current vue context into it, so it can use the
        vuex translate service */
-    this.updatePermissions = updatePermissions.bind(null, this);
+    this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
 
     // load contacts from addressbook
     this.contacts = await bccUtils.getContacts((this as any).getRuntime());
@@ -157,15 +157,31 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    *
    * @param user: string - the user id.
    */
-  async loadPermissions(user: string) {
-    const runtime = (this as any).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, (this as any).$route.params.address);
+  async loadPermissions(accountId: string) {
+    const runtime = this.getRuntime();
+    let profileAddress = runtime.profile.profileContract.options.address;
 
-    if (!allPermissions[user]) {
-      return allPermissions.new;
+    if (runtime.activeAccount !== this.$route.params.address) {
+      const profile = new Profile({
+        accountId: runtime.activeAccount,
+        profileOwner: this.$route.params.address,
+        ...(runtime as ProfileOptions),
+      });
+
+      await profile.loadForAccount();
+      profileAddress = profile.profileContract.options.address;
     }
 
-    return allPermissions[user];
+    return {
+      [profileAddress]: await PermissionUtils.getContainerPermissionsForUser(
+        runtime,
+        {
+          containerAddress: profileAddress,
+          label: 'profileData',
+        },
+        accountId,
+      ),
+    };
   }
 
   /**

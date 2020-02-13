@@ -19,7 +19,7 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
@@ -89,16 +89,8 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
 
     await Promise.all([
       (async (): Promise<void> => {
-        const profile = new bcc.Profile({
-          profileOwner: this.address,
-          accountId: this.$store.state.runtime.activeAccount,
-          ...this.$store.state.runtime,
-        });
-        this.alias = await bccUtils.getUserAlias(
-          profile,
-          this.accountDetails,
-          this.registration,
-        );
+        this.alias = await profileUtils.getUserAlias(this.getRuntime(), this.address,
+          this.accountDetails);
       })(),
       (async (): Promise<void> => {
         // load balance and parse it to 2 decimal places

@@ -42,5 +42,3 @@ export async function getContacts(
 
   return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
 }
-
-export { getUserAlias } from './profileUtils';

@@ -1,27 +1,13 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
-    "experimentalDecorators": true,
-    "lib": [
-      "es2015",
-      "dom"
-    ],
-    "module": "es2015",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "outDir": "./built/",
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": false,
-    "target": "es5"
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
-  "exclude": [
-    "../../../node_modules/@evan.network"
-  ],
+  "extends": "../../tsconfig.json",
   "include": [
-    "./src/**/*",
-    "../../scripts/dapp/vue-shim.d.ts"
+    "./src/**/*.ts",
+    "./src/**/*.json"
   ]
 }

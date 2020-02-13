@@ -13,10 +13,10 @@
         "detail.digital-twin.js",
         "detail.digital-twin.css"
       ],
-      "origin": "QmfLRSd29bbfanBJzS3hmztEzGeTSvgYCdwSQ5R1gTk8vU",
+      "origin": "QmcXMPQutejRZUDdrNTy9FE293ntGsDgxgYSokKo3h6bHN",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "TODO",
@@ -38,7 +38,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmUJpyqeyLRSQy8zRu2MgBy8BAoxpHjQFRwdpA78HzumCM"
+      "1.0.0": "QmWpCBHkrveJiYVUUBdka634Nt3XMDuJ2egRUPVPXMy9T9"
     }
   }
 }

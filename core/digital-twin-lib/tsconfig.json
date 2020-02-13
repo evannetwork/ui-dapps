@@ -6,6 +6,12 @@
     "tsBuildInfoFile": "./dist/tsbuildinfo"
   },
   "extends": "../../tsconfig.json",
-  "include": ["./src/**/*", "./src/**/*.json"],
-  "references": [{ "path": "../ui.libs" }, { "path": "../evancore.vue.libs" }]
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.json"
+  ],
+  "references": [
+    { "path": "../../core/evancore.vue.libs" },
+    { "path": "../../core/ui.libs" }
+  ]
 }

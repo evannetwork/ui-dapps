@@ -15,5 +15,5 @@
     "build": "node ./gulp/buildBcc.js && gulp --gulpfile ../../scripts/dapp/browserify.js browserify --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
-  "version": "2.15.0"
+  "version": "2.17.0"
 }

@@ -20,7 +20,7 @@
 <template>
   <evan-form-control v-bind="$props">
     <evan-v-select
-      :id="id"
+      :input-id="id"
       :disabled="disabled"
       :label="optionLabel"
       :reduce="reduce"

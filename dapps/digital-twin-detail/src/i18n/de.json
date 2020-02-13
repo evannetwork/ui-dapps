@@ -55,6 +55,7 @@
     "did": {
       "did-title": "Decentralized ID"
     },
+    "generic-error": "Der angeforderte Digitale Zwilling ist entweder gelöscht oder fehlerhaft.",
     "nav-items": {
       "data": "Daten",
       "did": "Decentralized ID",
@@ -70,6 +71,7 @@
       "general-title": "Allgemein",
       "initiator": "Initiator",
       "overview-title": "Übersicht",
+      "copied": "Text kopiert",
       "owner": "Besitzer",
       "transactions-title": "Letzte Transaktionen"
     },

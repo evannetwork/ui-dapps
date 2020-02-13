@@ -23,6 +23,7 @@
       ref="form"
       :form="dbcpForm"
       i18n-scope="_evan.dbcp-form"
+      is-public
       v-bind="$props"
       @save="$emit('save')"
     >
