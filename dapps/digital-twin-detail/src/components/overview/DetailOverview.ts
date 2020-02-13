@@ -25,7 +25,7 @@ import {
   ProfileOptions,
 } from '@evan.network/api-blockchain-core';
 import { DAppTwin, TwinTransaction, SearchService } from '@evan.network/digital-twin-lib';
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 
 @Component
 export default class DetailOverviewComponent extends mixins(EvanComponent) {
@@ -76,18 +76,21 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
   async enhanceTransactions(
     transactions: TwinTransaction[],
   ): Promise<TwinTransaction[]> {
+    const initiators: { [address: string]: Promise<string> } = { };
+
     return Promise.all(
       transactions.map(async (transaction) => {
         const enhancedTransaction = transaction;
 
+        // load initiator only once
+        if (!initiators[transaction.from]) {
+          initiators[transaction.from] = profileUtils.getUserAlias(
+            this.runtime, transaction.from,
+          );
+        }
+
         // Add alias of the initiator if known
-        enhancedTransaction.initiator = await bccUtils.getUserAlias(
-          new Profile({
-            accountId: this.runtime.activeAccount,
-            profileOwner: transaction.from,
-            ...(this.runtime as ProfileOptions),
-          }),
-        );
+        enhancedTransaction.initiator = await initiators[transaction.from];
 
         // Add fee in EVE
         try {
@@ -98,7 +101,7 @@ export default class DetailOverviewComponent extends mixins(EvanComponent) {
             ),
           ).toFixed(4);
         } catch (err) {
-          console.error('Error while calculating EVE fee', err);
+          this.runtime.logger.log(`Error while calculating EVE fee ${err.message}.`, 'error');
         }
 
         return enhancedTransaction;

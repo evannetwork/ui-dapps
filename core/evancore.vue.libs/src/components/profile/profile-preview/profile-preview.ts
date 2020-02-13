@@ -18,7 +18,7 @@
 */
 
 import {
-  Dispatcher, cloneDeep, FileHandler, bccUtils,
+  Dispatcher, cloneDeep, FileHandler, profileUtils,
 } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
@@ -210,7 +210,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
 
     // use old alias logic
     this.userInfo.accountName = this.userInfo.accountName
-      || await bccUtils.getUserAlias(this.profile, this.userInfo);
+      || await profileUtils.getUserAlias(this.getRuntime(), this.address, this.userInfo);
 
     // fill empty picture
     if (!this.userInfo.picture) {

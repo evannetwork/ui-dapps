@@ -19,7 +19,7 @@ the following URL: https://evan.network/license/
 
 import * as dispatchers from '../../dispatchers/registry';
 import * as PermissionTypes from './permission-types';
-import { bccUtils, } from '@evan.network/ui';
+import { profileUtils, } from '@evan.network/ui';
 import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 import { Container } from '@evan.network/api-blockchain-core';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
@@ -146,8 +146,7 @@ export const getProfilePermissions = async (vueInstance) => {
  */
 export const getProfileShareBMail = async (vueInstance) => {
   const runtime = vueInstance.getRuntime();
-  const profile = runtime.profile;
-  const alias = await bccUtils.getUserAlias(profile);
+  const alias = await profileUtils.getUserAlias(runtime);
   // ensure profile container is setup
   await profile.loadForAccount();
 

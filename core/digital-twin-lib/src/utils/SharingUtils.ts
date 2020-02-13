@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
 
 export interface BmailContent {
@@ -39,10 +39,9 @@ export default class SharingUtils {
   static async getTwinShareBMail(vueInstance): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
     const { twin } = vueInstance.$store.state;
-    const { profile } = runtime;
-    const alias = await bccUtils.getUserAlias(profile);
+    const alias = await profileUtils.getUserAlias(runtime, runtime.activeAccount);
     // ensure profile container is setup
-    await profile.loadForAccount();
+    await runtime.profile.loadForAccount();
 
     const pathToContainer = [
       `#/${vueInstance.dapp.rootEns}`,
@@ -72,10 +71,9 @@ export default class SharingUtils {
 
   static async getProfileShareBMail(vueInstance): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
-    const { profile } = runtime;
-    const alias = await bccUtils.getUserAlias(profile);
+    const alias = await profileUtils.getUserAlias(runtime, runtime.activeAccount);
     // ensure profile container is setup
-    await profile.loadForAccount();
+    await runtime.profile.loadForAccount();
 
     return {
       content: {
@@ -93,7 +91,7 @@ export default class SharingUtils {
             type: 'url',
           },
           {
-            containerAddress: profile.profileContainer.config.address,
+            containerAddress: runtime.profile.profileContainer.config.address,
             type: 'container',
           },
         ],

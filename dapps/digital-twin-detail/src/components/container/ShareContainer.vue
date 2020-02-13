@@ -9,9 +9,11 @@
         :show-backdrop="true"
         :title="$t('_twin-detail.data.sharing.sharing-title')"
       >
+        <evan-loading v-if="!loaded" />
         <evan-permissions-editor
-          :b-mail-content="bMailContent"
-          :contacts="contacts"
+          v-if="loaded"
+          :b-mail-content="$store.state.twin.sharingContext.bMailContent"
+          :contacts="$store.state.twin.sharingContext.contacts"
           :load-permissions="loadPermissions"
           :on-select="onSelectContact"
           :selected-contact="selectedContact"

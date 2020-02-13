@@ -17,15 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-import Vue from 'vue';
 import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
-import { DispatcherInstance } from '@evan.network/ui';
+import { DispatcherInstance, bccUtils, profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { mixins } from 'vue-class-component';
 
-import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
-import DAppContainer from './DAppContainer';
 import * as dispatchers from './dispatchers';
+import DAppContainer from './DAppContainer';
+import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
+import SharingUtils, { BmailContent } from './utils/SharingUtils';
 
 /**
  * Extended DigitalTwin class to merge backend logic with dispatcher watching functionalities. Also
@@ -73,6 +72,13 @@ class DAppTwin extends DigitalTwin {
    * True, when the twin is initialization process
    */
   loading = false;
+
+  /**
+   * All data that is nessecary for twin sharing. Will be loaded within the ShareContainer component.
+   */
+  sharingContext: { contacts: any; bMailContent: BmailContent } = null;
+
+  ownerName: string;
 
   /**
    * Call super and initialize new twin class.
@@ -158,6 +164,15 @@ class DAppTwin extends DigitalTwin {
     });
   }
 
+  async setSharingContext(): Promise<void> {
+    const [contacts, bMailContent] = await Promise.all([
+      bccUtils.getContacts(this.runtime),
+      SharingUtils.getTwinShareBMail(this.vue),
+    ]);
+
+    this.sharingContext = { contacts, bMailContent };
+  }
+
   /**
    * Load basic twin information and setup dispatcher watchers for loading states.
    */
@@ -166,6 +181,9 @@ class DAppTwin extends DigitalTwin {
       this.loadBaseInfo(),
       (async (): Promise<void> => {
         this.favorite = await this.isFavorite();
+      })(),
+      (async (): Promise<void> => {
+        this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
       })(),
       this.ensureContainers(),
     ]);

@@ -71,6 +71,7 @@
       "initiator": "Initiator",
       "overview-title": "Overview",
       "owner": "Owner",
+      "copied": "Text copied",
       "transactions-title": "Last Transactions"
     },
     "sharings": {
