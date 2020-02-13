@@ -43,10 +43,12 @@ dispatcher
     );
     const { template } = await container.toPlugin();
 
-    /* copy the entries to save, so the iteration will not be affected by removing entries to save
-       from the dispatcherData object => entries will be removed and the dispatcherData will be
-       persisted, after the synchronization of this entry was saved successful, so the user won't do
-       this twice */
+    /**
+     * copy the entries to save, so the iteration will not be affected by removing entries to save
+     * from the dispatcherData object => entries will be removed and the dispatcherData will be
+     * persisted, after the synchronization of this entry was saved successful, so the user won't do
+     * this twice
+     */
     const reducedEntries = cloneDeep(lodash, entriesToSave, true);
     await Promise.all(reducedEntries.map(async (entryKey: string, index: number) => {
       if (template.properties[entryKey].type === 'list') {

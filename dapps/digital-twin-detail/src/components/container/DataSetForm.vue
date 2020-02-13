@@ -23,6 +23,7 @@
       ref="form"
       v-bind="$props"
       :form="form"
+      :shareable="shareable"
       :i18n-scope="`${i18nScope}.properties`"
       :is-loading="isLoading"
       :title="$t(`${i18nScope}.name`, name)"
