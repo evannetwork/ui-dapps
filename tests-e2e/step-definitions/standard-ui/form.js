@@ -265,6 +265,7 @@ Then('The value of the Input field with id {string} should be {string}',
  * in nightwatch is a real pain.
  */
 Then('Each form field should be disabled',
-  () => {
-    client.assert.attributeEquals('form input', 'disabled', true);
+  async () => {
+    client.useCss();
+    await client.assert.attributeEquals('form input', 'disabled', 'true');
   });

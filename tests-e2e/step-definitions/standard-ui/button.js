@@ -80,8 +80,7 @@ Then('I do not want to see a button {string}', async (content) => {
   client.useXpath();
   const xPathSelector = buttonSelector(content);
 
-  await client.waitForElementPresent(xPathSelector, WAIT_TIME);
-  await client.expect.element(xPathSelector).not.to.be.visible;
+  await client.expect.element(xPathSelector).to.not.be.present.after(1000);
 
   client.useCss(); // switches back to css selector
 });
