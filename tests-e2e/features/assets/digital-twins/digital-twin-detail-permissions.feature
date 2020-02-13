@@ -1,4 +1,3 @@
-@only
 Feature: Digital Twin - Detail View for missing permissions
 
   Background:

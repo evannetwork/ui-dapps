@@ -73,14 +73,14 @@ Then('I want to see a button {string}', async (content) => {
 });
 
 /**
- * Asserts that a button with a certain content is not visible within 10 seconds.
+ * Asserts that a button with a certain content is not visible.
  */
 Then('I do not want to see a button {string}', async (content) => {
   // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
   client.useXpath();
   const xPathSelector = buttonSelector(content);
 
-  await client.expect.element(xPathSelector).to.not.be.present.after(1000);
+  await client.expect.element(xPathSelector).to.not.be.present.after(5000);
 
   client.useCss(); // switches back to css selector
 });
