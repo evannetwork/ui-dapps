@@ -105,6 +105,7 @@
     <evan-loading v-if="loading" />
 
     <evan-button
+      id="share-twin-btn"
       :type="'icon-primary'"
       size="lg"
       class="share-twin-btn"
