@@ -18,19 +18,15 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // allowed mail categories
 const mailCategories = {
-  received: { icon: 'mdi mdi-email mr-3', offset: 0, mails: [ ] },
-  sent: { icon: 'mdi mdi-send mr-3', offset: 0, mails: [ ] },
+  received: { icon: 'mdi mdi-email mr-3', offset: 0, mails: [] },
+  sent: { icon: 'mdi mdi-send mr-3', offset: 0, mails: [] },
 };
 
 @Component({ })
@@ -63,7 +59,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
   /**
    * Tabs for top navigation
    */
-  navEntries: Array<any> = [ ];
+  navEntries: Array<any> = [];
 
   /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
@@ -78,12 +74,12 @@ export default class MailboxComponent extends mixins(EvanComponent) {
       { key: 'received', icon: 'mdi mdi-email-outline' },
       { key: 'sent', icon: 'mdi mdi-send' },
     ]
-    .map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ entry.key }`,
-      text: `_mailbox.breadcrumbs.${ entry.key }`,
-      icon: entry.icon,
-    } : null));
+      .map((entry) => (entry ? {
+        id: `nav-entry-${entry.key}`,
+        to: entry.key,
+        text: `_mailbox.breadcrumbs.${entry.key}`,
+        icon: entry.icon,
+      } : null));
 
     // watch for saving updates
     this.hashChangeWatcher = (async () => {
@@ -91,7 +87,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
         this.activeCategory = this.$route.params.category;
         await this.loadMails();
       }
-    }).bind(this);
+    });
 
     // add the hash change listener
     window.addEventListener('hashchange', this.hashChangeWatcher);
@@ -112,7 +108,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    */
   async loadMails(reload?: boolean, mailsToReach = 10) {
     // quick usage
-    const runtime = (<any>this).getRuntime();
+    const runtime = (<any> this).getRuntime();
 
     // set initial mail object or force mailbox reload on clicking reloading button
     if (!this.mailCategories || reload || !this.addressBook) {
@@ -122,8 +118,8 @@ export default class MailboxComponent extends mixins(EvanComponent) {
       await this.loadAddressBook();
     }
 
-    // make the first letter of the category upper case, so the correct contract function will be
-    // called
+    /* make the first letter of the category upper case, so the correct contract function will be
+       called */
     const categoryName = this.activeCategory === 'received' ? 'Received' : 'Sent';
     // load mail inbox informations
     const category = this.mailCategories[this.activeCategory];
@@ -151,7 +147,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
           return mail;
         }
       })
-      .filter(mail => !!mail);
+      .filter((mail) => !!mail);
 
     // apply them to the original array
     category.mails = category.mails.concat(mailArray);
@@ -159,10 +155,10 @@ export default class MailboxComponent extends mixins(EvanComponent) {
     // raise the offset to load the next mails
     category.offset += 10;
 
-    // if not the full amount of mails could be loaded (could not decrypt), load more, but only if
-    // more mails are available
-    if (mailArray.length < mailsToReach &&
-       ((category.offset - 10) < category.totalResultCount)) {
+    /* if not the full amount of mails could be loaded (could not decrypt), load more, but only if
+       more mails are available */
+    if (mailArray.length < mailsToReach
+       && ((category.offset - 10) < category.totalResultCount)) {
       await this.loadMails(false, mailsToReach - mailArray.length);
     }
 
@@ -176,13 +172,13 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    * @param      {any}  mail    mail object
    */
   openMailDetail(mail: any) {
-    (<any>this).evanNavigate(`${ this.activeCategory }/detail/${ mail.address }`);
+    (<any> this).evanNavigate(`${this.activeCategory}/detail/${mail.address}`);
 
     // set the mail read and save it into the local store
     if (this.readMails.indexOf(mail.address) === -1) {
       this.readMails.push(mail.address);
 
-      window.localStorage['evan-mail-read'] = JSON.stringify(this.readMails)
+      window.localStorage['evan-mail-read'] = JSON.stringify(this.readMails);
     }
   }
 
@@ -190,7 +186,7 @@ export default class MailboxComponent extends mixins(EvanComponent) {
    * load the addressbook for the current user
    */
   async loadAddressBook() {
-    const runtime = (<any>this).getRuntime();
+    const runtime = (<any> this).getRuntime();
 
     // load the contacts for the current user, so we can display correct contact alias
     delete runtime.profile.trees[runtime.profile.treeLabels.addressBook];
