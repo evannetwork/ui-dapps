@@ -2,7 +2,7 @@ Feature: evan.network sharing
 
   Scenario: Share via sharings section on profile page
     Given I log in to evan.network using vue
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
 
     When I click on "Identity" in main menu
     Then I want to see a text including "Identity"
@@ -22,7 +22,7 @@ Feature: evan.network sharing
 
   Scenario: Share via share button on profile page
     Given I log in to evan.network using vue
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
 
     When I click on "Identity" in main menu
       Then I want to see a text including "Identity"

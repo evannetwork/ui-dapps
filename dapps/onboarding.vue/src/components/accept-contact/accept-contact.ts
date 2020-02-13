@@ -29,8 +29,6 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { agentUrl } from '@evan.network/ui';
 
-import { getDefaultDAppEns } from '../../utils';
-
 @Component({ })
 export default class AcceptContact extends mixins(EvanComponent) {
   /**
@@ -38,7 +36,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
    */
   @Prop({ default: false }) loadAlias;
 
-   // show loading symbol
+  // show loading symbol
   loading = true;
 
   // acount id
@@ -55,6 +53,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
 
   // current password input
   password = window.localStorage['evan-test-password'] || '';
+
   // check if the inserted password is wrong
   invalidPassword = false;
 
@@ -89,7 +88,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
         bcc,
         activeAccount,
         vault.encryptionKey,
-        dappBrowser.lightwallet.getPrivateKey(vault, activeAccount)
+        dappBrowser.lightwallet.getPrivateKey(vault, activeAccount),
       );
 
       this.loading = false;
@@ -101,7 +100,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
 
     if (this.inviteeAddress || this.$props.loadAlias) {
       // load the currents user alias
-      const addressBook = (await this.runtime.profile.getAddressBook()) || {profile: { }};
+      const addressBook = (await this.runtime.profile.getAddressBook()) || { profile: { } };
       this.alias = addressBook.profile[this.accountId].alias;
     } else {
       this.notLoadedButSignedIn = true;
@@ -115,7 +114,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
    */
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
-    window.location.hash = `/${ this.$route.query.origin || getDefaultDAppEns() }`;
+    window.location.hash = `/${this.$route.query.origin || `dashboard.vue.${getDomainName()}`}`;
   }
 
   /**
@@ -128,9 +127,8 @@ export default class AcceptContact extends mixins(EvanComponent) {
     this.accepting = true;
 
     try {
-
       // trigger smart agent to pay out credit eves
-      await axios.post(`${ agentUrl }/api/smart-agents/onboarding/accept`, {
+      await axios.post(`${agentUrl}/api/smart-agents/onboarding/accept`, {
         invitationId: this.$route.query.onboardingID,
         accountId: this.runtime.activeAccount,
       });
@@ -140,7 +138,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       await this.runtime.profile.loadForAccount(this.accountId,
         this.runtime.profile.treeLabels.addressBook);
       // search for the target public key
-      let targetProfile = await dappBrowser.bccHelper.getProfileForAccount(bcc,
+      const targetProfile = await dappBrowser.bccHelper.getProfileForAccount(bcc,
         queryParams.inviteeAddress);
       const targetPubKey = await targetProfile.getPublicKey();
       if (!targetPubKey) {
@@ -152,12 +150,12 @@ export default class AcceptContact extends mixins(EvanComponent) {
       await this.runtime.profile.addContactKey(
         queryParams.inviteeAddress,
         'commKey',
-        commKey
+        commKey,
       );
 
       // add the new contact to my address book
       await this.runtime.profile.addProfileKey(
-        queryParams.inviteeAddress, 'alias', queryParams.inviteeAlias
+        queryParams.inviteeAddress, 'alias', queryParams.inviteeAlias,
       );
 
       // save my address book
@@ -168,10 +166,10 @@ export default class AcceptContact extends mixins(EvanComponent) {
         title: (this as any).$t('_onboarding.mail-invitation-accepted.title'),
         body: (this as any).$t('_onboarding.mail-invitation-accepted.body', {
           userEmail: queryParams.email,
-          userAlias: this.alias
+          userAlias: this.alias,
         }),
         fromAlias: this.alias,
-        fromMail: queryParams.email
+        fromMail: queryParams.email,
       };
       await this.runtime.keyExchange.sendInvite(this.inviteeAddress, targetPubKey,
         commKey, mail);
@@ -182,18 +180,17 @@ export default class AcceptContact extends mixins(EvanComponent) {
       setTimeout(() => {
         window.location.hash = [
           '',
-          `dashboard.vue.${ getDomainName() }`,
-          `addressbook.vue.${ getDomainName() }`,
-          this.inviteeAddress,
+          `dashboard.vue.${getDomainName()}`,
+          `assets.${getDomainName()}`,
+          'contacts',
         ].join('/');
       }, 2000);
     } catch (ex) {
       dappBrowser.utils.log(ex.message, 'error');
-      (<any>this.$refs.acceptingError).show();
+      (<any> this.$refs.acceptingError).show();
     }
 
     // show loading
     this.accepting = false;
   }
 }
-

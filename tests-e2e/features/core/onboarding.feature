@@ -21,7 +21,7 @@ Feature: evan.network onboarding
   #  And I want to see an element with class "checkmark"
   #  And I want to see a text including "Recovery Key"
   # When I click on button "View Profile"
-  #  Then I want to see a text including "What would you like to start with?"
+  #  Then I want to see a text including "My Assets"
 
   Scenario: Registering a new account not set account name
 

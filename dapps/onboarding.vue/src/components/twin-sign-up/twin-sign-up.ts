@@ -25,10 +25,9 @@ import axios from 'axios';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import { agentUrl } from '@evan.network/ui';
-import { EvanForm, EvanFormControl, getDomainName, } from '@evan.network/ui-vue-core';
+import { EvanForm, EvanFormControl, getDomainName } from '@evan.network/ui-vue-core';
 
 import SignUp from '../sign-up/sign-up';
-import { getDefaultDAppEns } from '../../utils';
 
 // load twin templates
 import bicycleTwin from './twins/bicycle.json';
@@ -65,7 +64,7 @@ export default class TwinSignUp extends mixins(SignUp) {
    */
   twins = {
     bicycle: bicycleTwin,
-    car: carTwin
+    car: carTwin,
   };
 
   /**
@@ -81,12 +80,12 @@ export default class TwinSignUp extends mixins(SignUp) {
   /**
    * Images that should be used for side panel and twin creation.
    */
-  images = [ '1.svg', '2.svg', '3.svg', '13.svg' ];
+  images = ['1.svg', '2.svg', '3.svg', '13.svg'];
 
   /**
    * All steps that should be displayed for creating the current twin.
    */
-  twinSteps: Array<any> = [ ];
+  twinSteps: Array<any> = [];
 
   /**
    * Setup twin forms.
@@ -123,19 +122,17 @@ export default class TwinSignUp extends mixins(SignUp) {
             this.rerenderSteps = true;
             this.$nextTick(() => this.rerenderSteps = false);
           },
-          type: 'select'
-        }
+          type: 'select',
+        },
       },
       name: {
         value: '',
-        validate: (_: TwinSignUp, __: EvanForm, c: EvanFormControl) => {
-          return c.value && c.value.length !== 0;
-        },
+        validate: (_: TwinSignUp, __: EvanForm, c: EvanFormControl) => c.value && c.value.length !== 0,
         uiSpecs: {
           attr: {
             required: true,
-          }
-        }
+          },
+        },
       },
       description: {
         value: '',
@@ -145,7 +142,7 @@ export default class TwinSignUp extends mixins(SignUp) {
           },
           type: 'textarea',
         },
-      }
+      },
     }));
   }
 
@@ -170,25 +167,21 @@ export default class TwinSignUp extends mixins(SignUp) {
 
     // iterate over the twin plugins and it's data sets, that should be filled
     const twinDefinition = this.twins[this.twinDbcpForm.type.value];
-    const order = [ 'maintenance.maintenance', 'metadata.characteristics', ];
-    const dataSets = [ ];
+    const order = ['maintenance.maintenance', 'metadata.characteristics'];
+    const dataSets = [];
     // collect all the data sets within the plugins
-    Object.keys(twinDefinition.plugins).forEach((pluginName: string) =>
-      Object
-        .keys(twinDefinition.plugins[pluginName].template.properties)
-        .forEach(key => dataSets.push(`${ pluginName }.${ key }`))
-    );
+    Object.keys(twinDefinition.plugins).forEach((pluginName: string) => Object
+      .keys(twinDefinition.plugins[pluginName].template.properties)
+      .forEach((key) => dataSets.push(`${pluginName}.${key}`)));
 
     // sort all the data sets and apply them as steps
     dataSets
-      .filter(key => order.indexOf(key) !== -1)
-      .sort((a, b) =>
-        order.indexOf(a) < order.indexOf(b) ? 1 :
-          order.indexOf(a) > order.indexOf(b) ? -1 :
-            0
-      )
+      .filter((key) => order.indexOf(key) !== -1)
+      .sort((a, b) => (order.indexOf(a) < order.indexOf(b) ? 1
+        : order.indexOf(a) > order.indexOf(b) ? -1
+          : 0))
       .forEach((key, stepIndex) => {
-        const [ pluginName, dataSetName ] = key.split('.');
+        const [pluginName, dataSetName] = key.split('.');
         const plugin = twinDefinition.plugins[pluginName];
 
         if (dataSetName !== 'type') {
@@ -196,7 +189,7 @@ export default class TwinSignUp extends mixins(SignUp) {
           if (plugin.template.properties[dataSetName].type === 'entry') {
             this.twinData[key] = this.twinData[key] || { };
           } else {
-            this.twinData[key] = this.twinData[key] || [ { }, { }, { } ];
+            this.twinData[key] = this.twinData[key] || [{ }, { }, { }];
           }
 
           this.twinSteps.push({
@@ -206,14 +199,13 @@ export default class TwinSignUp extends mixins(SignUp) {
               description: plugin.description,
               dataSetName,
             },
-            description: getTranslationFromDBCP(this, plugin.description, `${ dataSetName }.description`),
-            title: getTranslationFromDBCP(this, plugin.description, `${ dataSetName }.name`),
+            description: getTranslationFromDBCP(this, plugin.description, `${dataSetName}.description`),
+            title: getTranslationFromDBCP(this, plugin.description, `${dataSetName}.name`),
             disabled: () => {
               if (stepIndex === 0 || !this.$refs.stepForm) {
                 return creatingOrOnboarded() || !this.twinDbcpForm.isValid;
-              } else {
-                return creatingOrOnboarded() || !this.$refs.stepForm[stepIndex - 1].isValid();
               }
+              return creatingOrOnboarded() || !this.$refs.stepForm[stepIndex - 1].isValid();
             },
           });
         }
@@ -250,11 +242,11 @@ export default class TwinSignUp extends mixins(SignUp) {
     };
 
     // setup container data
-    let containerDescription = { author: 'evan', version: '1.0.0', dbcpVersion: 2, };
+    let containerDescription = { author: 'evan', version: '1.0.0', dbcpVersion: 2 };
     let containerTemplate = { };
 
     // build container description and template definition out of seperated plugins
-    Object.keys(twinTemplate.plugins).forEach(pluginName => {
+    Object.keys(twinTemplate.plugins).forEach((pluginName) => {
       containerDescription = bcc.lodash.merge(containerDescription,
         twinTemplate.plugins[pluginName].description);
       containerTemplate = bcc.lodash.merge(containerTemplate,
@@ -267,11 +259,13 @@ export default class TwinSignUp extends mixins(SignUp) {
 
     // merge all the collected data, to build container data
     const containerData = { type: 'Signup Twin' };
-    Object.keys(this.twinData).forEach(key => {
+    Object.keys(this.twinData).forEach((key) => {
       containerData[key.split('.')[1]] = this.twinData[key];
     });
 
-    return { twinDescription, containerTemplate, containerDescription, containerData, };
+    return {
+      twinDescription, containerTemplate, containerDescription, containerData,
+    };
   }
 
   /**
@@ -279,11 +273,13 @@ export default class TwinSignUp extends mixins(SignUp) {
    */
   async createOfflineTwin() {
     try {
-      const { password, accountId, privateKey, runtime, vault, } =
-        await this.getProfileCreationData();
-      const { twinDescription, containerTemplate, containerDescription, containerData, } =
-        this.buildContainerData();
-      const profile = runtime.profile;
+      const {
+        password, accountId, privateKey, runtime, vault,
+      } = await this.getProfileCreationData();
+      const {
+        twinDescription, containerTemplate, containerDescription, containerData,
+      } = this.buildContainerData();
+      const { profile } = runtime;
 
       // start creation animation
       this.nextCreationStatus();
@@ -293,10 +289,10 @@ export default class TwinSignUp extends mixins(SignUp) {
       // clear hash log
       profile.ipld.hashLog = [];
 
-      const pk = '0x' + privateKey;
-      const signature = runtime.web3.eth.accounts.sign('Gimme Gimme Gimme!', pk).signature;
+      const pk = `0x${privateKey}`;
+      const { signature } = runtime.web3.eth.accounts.sign('Gimme Gimme Gimme!', pk);
       // trigger smart agent to create a new twin
-      const requestedTwinP = axios.post(`${ agentUrl }/api/smart-agents/twin/create`, {
+      const requestedTwinP = axios.post(`${agentUrl}/api/smart-agents/twin/create`, {
         accountId,
         captchaToken: this.recaptchaToken,
         containerDescription,
@@ -311,7 +307,7 @@ export default class TwinSignUp extends mixins(SignUp) {
         accountId,
         privateKey,
         this.recaptchaToken,
-        runtime.environment
+        runtime.environment,
       );
 
       const [requestedTwin] = await Promise.all([requestedTwinP, createdProfileP]);
@@ -320,9 +316,11 @@ export default class TwinSignUp extends mixins(SignUp) {
       const fileHashes: any = {};
 
       const cryptorAes = runtime.cryptoProvider.getCryptorByCryptoAlgo(
-        runtime.dataContract.options.defaultCryptoAlgo);
+        runtime.dataContract.options.defaultCryptoAlgo,
+      );
       const hashCryptor = runtime.cryptoProvider.getCryptorByCryptoAlgo(
-        runtime.dataContract.cryptoAlgorithHashes);
+        runtime.dataContract.cryptoAlgorithHashes,
+      );
       const [hashKey, blockNr] = await Promise.all([
         hashCryptor.generateKey(),
         runtime.web3.eth.getBlockNumber(),
@@ -333,68 +331,72 @@ export default class TwinSignUp extends mixins(SignUp) {
       const profileKeys = Object.keys(containerData);
       // add hashKey
       await runtime.sharing.extendSharings(
-        sharings, accountId, accountId, '*', 'hashKey', hashKey);
+        sharings, accountId, accountId, '*', 'hashKey', hashKey,
+      );
       // extend sharings for profile data
       const dataContentKeys = await Promise.all(profileKeys.map(() => cryptorAes.generateKey()));
       for (let i = 0; i < profileKeys.length; i++) {
         await runtime.sharing.extendSharings(
-          sharings, accountId, accountId, profileKeys[i], blockNr, dataContentKeys[i]);
+          sharings, accountId, accountId, profileKeys[i], blockNr, dataContentKeys[i],
+        );
       }
       // upload sharings
-      let sharingsHash = await runtime.dfs.add(
-        'sharing', Buffer.from(JSON.stringify(sharings), runtime.dataContract.encodingUnencrypted));
+      const sharingsHash = await runtime.dfs.add(
+        'sharing', Buffer.from(JSON.stringify(sharings), runtime.dataContract.encodingUnencrypted),
+      );
 
       // used to exclude encrypted hashes from fileHashes.ipfsHashes
-      const ipfsExcludeHashes = [ ];
+      const ipfsExcludeHashes = [];
       // encrypt containerData
       fileHashes.properties = { entries: { type: '' }, lists: {} };
       await Promise.all(Object.keys(containerData).map(async (key: string, index: number) => {
         if (Array.isArray(containerData[key])) {
           fileHashes.properties.lists[key] = [];
 
-          await Promise.all(containerData[key].map(async(element, elemIdx) => {
+          await Promise.all(containerData[key].map(async (element, elemIdx) => {
             const encrypted = await cryptorAes.encrypt(
               element,
-              { key: dataContentKeys[index] }
+              { key: dataContentKeys[index] },
             );
             const envelope = {
               private: encrypted.toString('hex'),
               cryptoInfo: cryptorAes.getCryptoInfo(
-                runtime.nameResolver.soliditySha3((requestedTwin as any).data.containerAddress)),
+                runtime.nameResolver.soliditySha3((requestedTwin as any).data.containerAddress),
+              ),
             };
-            let ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
-            profile.ipld.hashLog.push(`${ ipfsHash.toString('hex') }`);
+            const ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
+            profile.ipld.hashLog.push(`${ipfsHash.toString('hex')}`);
 
             fileHashes.properties.lists[key][elemIdx] = await cryptor.encrypt(
               Buffer.from(ipfsHash.substr(2), 'hex'),
-              { key: hashKey, }
+              { key: hashKey },
             );
 
-            fileHashes.properties.lists[key][elemIdx] = `0x${ fileHashes.properties.lists[key][elemIdx]
-              .toString('hex') }`;
+            fileHashes.properties.lists[key][elemIdx] = `0x${fileHashes.properties.lists[key][elemIdx]
+              .toString('hex')}`;
             ipfsExcludeHashes.push(fileHashes.properties.lists[key][elemIdx]);
           }));
-
         } else {
           const encrypted = await cryptorAes.encrypt(
             containerData[key],
-            { key: dataContentKeys[index] }
+            { key: dataContentKeys[index] },
           );
           const envelope = {
             private: encrypted.toString('hex'),
             cryptoInfo: cryptorAes.getCryptoInfo(
-              runtime.nameResolver.soliditySha3((requestedTwin as any).data.containerAddress)),
+              runtime.nameResolver.soliditySha3((requestedTwin as any).data.containerAddress),
+            ),
           };
-          let ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
-          profile.ipld.hashLog.push(`${ ipfsHash.toString('hex') }`);
+          const ipfsHash = await runtime.dfs.add(key, Buffer.from(JSON.stringify(envelope)));
+          profile.ipld.hashLog.push(`${ipfsHash.toString('hex')}`);
 
           fileHashes.properties.entries[key] = await cryptor.encrypt(
             Buffer.from(ipfsHash.substr(2), 'hex'),
-            { key: hashKey, }
+            { key: hashKey },
           );
 
-          fileHashes.properties.entries[key] = `0x${ fileHashes.properties.entries[key]
-            .toString('hex') }`;
+          fileHashes.properties.entries[key] = `0x${fileHashes.properties.entries[key]
+            .toString('hex')}`;
           ipfsExcludeHashes.push(fileHashes.properties.entries[key]);
         }
       }));
@@ -404,20 +406,20 @@ export default class TwinSignUp extends mixins(SignUp) {
       fileHashes.ipfsHashes = [
         ...profile.ipld.hashLog,
         ...Object.keys(fileHashes.properties.entries)
-          .map(key => fileHashes.properties.entries[key]),
+          .map((key) => fileHashes.properties.entries[key]),
       ];
       fileHashes.ipfsHashes = (
         (arrArg) => arrArg.filter(
-          (elem, pos, arr) => arr.indexOf(elem) === pos && ipfsExcludeHashes.indexOf(elem) === -1
+          (elem, pos, arr) => arr.indexOf(elem) === pos && ipfsExcludeHashes.indexOf(elem) === -1,
         )
       )(fileHashes.ipfsHashes);
 
       // re-enable pinning
       profile.ipld.ipfs.disablePin = false;
 
-      const twinFillP = await axios.post(`${ agentUrl }/api/smart-agents/twin/fill`, {
-        accountId: accountId,
-        signature: signature,
+      const twinFillP = await axios.post(`${agentUrl}/api/smart-agents/twin/fill`, {
+        accountId,
+        signature,
         twinInfo: fileHashes,
         accessToken: (requestedTwin as any).data.accessToken,
         containerId: (requestedTwin as any).data.containerAddress,
@@ -431,13 +433,12 @@ export default class TwinSignUp extends mixins(SignUp) {
         this.creatingProfile = 6;
         setTimeout(() => {
           window.location.hash = [
-            `/${ getDefaultDAppEns() }`,
-            `digitaltwins.${ getDomainName() }`,
-            `digitaltwin.${ getDomainName() }`,
+            `/dashboard.vue.${getDomainName()}`,
+            `detail.digital-twin.${getDomainName()}`,
             requestedTwin.data.twinAddress,
           ].join('/');
         }, 2000);
-      }, 2000)
+      }, 2000);
     } catch (ex) {
       // reset all steps of proile creation
       dappBrowser.utils.log(ex.message, 'error');
