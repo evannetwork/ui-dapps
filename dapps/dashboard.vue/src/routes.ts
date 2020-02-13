@@ -17,15 +17,13 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface, DAppLoaderComponent, IframeComponent } from '@evan.network/ui-vue-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
 
-import OverviewComponent from './components/overview/overview.vue';
-
+const domainName = getDomainName();
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
-  { path: '', component: OverviewComponent },
+  { path: '', redirect: `dashboard.vue.${domainName}/assets.${domainName}` },
 ];
 
 export default routeRegistration;
-

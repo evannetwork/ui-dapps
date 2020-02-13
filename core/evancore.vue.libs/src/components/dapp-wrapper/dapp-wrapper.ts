@@ -315,6 +315,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       this.enableSidebar = false;
     }
 
+    // create fullPath for current routes to get correct active state
+    [...(this.routes || []), ...(this.bottomRoutes || [])].forEach((route) => {
+      route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
+    });
+
     // check if the current browser is allowed
     if (dappBrowser.utils.browserName === 'Firefox' && dappBrowser.utils.isPrivateMode) {
       this.supportedBrowser = false;

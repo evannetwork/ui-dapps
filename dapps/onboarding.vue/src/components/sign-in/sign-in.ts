@@ -25,7 +25,6 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { getDefaultDAppEns } from '../../utils';
 
 
 interface ProfileFormPasswordInterface extends EvanForm {
@@ -67,7 +66,7 @@ export default class SignIn extends mixins(EvanComponent) {
   /**
    * all steps that were already solved, so the stepper can jump back again
    */
-  activeSteps: Array<number> = [ 0 ];
+  activeSteps: Array<number> = [0];
 
   /**
    * profile for mnemonic exists
@@ -76,17 +75,17 @@ export default class SignIn extends mixins(EvanComponent) {
 
   // TODO: until proper type definitions are in place
   $route: any;
+
   $router: any;
 
   /**
    * Checks if the user was invited, so enable the 3 tab
    */
   created() {
-
-    this.form = (<ProfileFormPasswordInterface>new EvanForm(this, {
+    this.form = (<ProfileFormPasswordInterface> new EvanForm(this, {
       password: {
-        value: window.localStorage['evan-test-password'] || ''
-      }
+        value: window.localStorage['evan-test-password'] || '',
+      },
     }));
 
 
@@ -116,12 +115,11 @@ export default class SignIn extends mixins(EvanComponent) {
       this.accountId = accountId;
 
       // set autofocus on password input
-      this.$nextTick(() => (this.$refs['password'] as any).focus());
+      this.$nextTick(() => (this.$refs.password as any).focus());
 
       if (this.form.password.value) {
         await this.checkPassword();
       }
-
     }
 
     this.checking = false;
@@ -131,7 +129,7 @@ export default class SignIn extends mixins(EvanComponent) {
    * Check the current password input.
    */
   async checkPassword() {
-    const password = this.form.password;
+    const { password } = this.form;
     password.dirty = true;
     if (password.value.length > 7) {
       this.checking = true;
@@ -144,8 +142,8 @@ export default class SignIn extends mixins(EvanComponent) {
         password._error = true;
       }
 
-      // if the password is correct, create the correct active vault in dapp-browser, so other
-      // applications can access it
+      /* if the password is correct, create the correct active vault in dapp-browser, so other
+         applications can access it */
       if (!password._error) {
         await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
         dappBrowser.core.setCurrentProvider('internal');
@@ -175,7 +173,9 @@ export default class SignIn extends mixins(EvanComponent) {
    */
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
-    window.location.hash = `/${ this.$route.query.origin || getDefaultDAppEns() }`;
-  };
+    const domainName = dappBrowser.getDomainName();
+    // do not use $router.push to force navigation triggering!
+    window.location.hash = `/${this.$route.query.origin
+      || `dashboard.vue.${domainName}/assets.${domainName}`}`;
+  }
 }
-
