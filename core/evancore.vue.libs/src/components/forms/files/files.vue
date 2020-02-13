@@ -77,6 +77,14 @@
       </div>
     </div>
 
+    <div v-if="value.length === 0 && !prohibited">
+      {{ emptyText | translate }}
+    </div>
+
+    <div v-if="prohibited">
+      {{ '_evan.no-permissions' | translate }}
+    </div>
+
     <div
       v-if="!disabled"
       class="dropzone"
@@ -104,12 +112,6 @@
       >
         {{ placeholder | translate }}
       </div>
-    </div>
-    <div
-      v-else-if="value.length === 0"
-      class="dropzone disabled centered p-3"
-    >
-      {{ emptyText | translate }}
     </div>
   </evan-form-control>
 </template>

@@ -38,6 +38,8 @@ export default class FormControlJSONComponent extends mixins(EvanControlComponen
     default: 5,
   }) rows: number;
 
+  @Prop({ default: false }) prohibited: boolean;
+
   /**
    * Current string formatted value of this control.
    */

@@ -19,24 +19,32 @@
 
 <template>
   <div class="checkbox">
-    <input
-      class="form-control"
-      type="checkbox"
-      v-bind="$attrs"
-      :id="id"
-      :checked="value"
-      @input="$emit('input', $event.target.checked)"
+    <div
+      v-if="prohibited"
+      class="prohibited"
     >
-    <label :for="id" />
+      <i class="mdi mdi-eye-off-outline" />
+    </div>
+    <template v-else>
+      <input
+        :id="id"
+        class="form-control"
+        type="checkbox"
+        v-bind="$attrs"
+        :checked="value"
+        @input="$emit('input', $event.target.checked)"
+      >
+      <label :for="id" />
+    </template>
   </div>
 </template>
 
 <script lang="ts">
-  import Checkbox from './checkbox';
-  export default Checkbox;
+import Checkbox from './checkbox';
+
+export default Checkbox;
 </script>
 
 <style lang="scss" scoped>
   @import './checkbox.scss'
 </style>
-

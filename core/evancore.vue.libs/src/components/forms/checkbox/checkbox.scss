@@ -36,6 +36,25 @@
     }
   }
 
+  .prohibited {
+    color: cssVar("text-color");
+    background: cssVar("gray-100");
+    border: 1px solid cssVar("gray-300");
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+
+    i.mdi {
+      font-size: 14px;
+      line-height: 22px;
+      vertical-align: middle;
+      width: 23px;
+      text-align: center;
+      position: absolute;
+    }
+  }
+
   input[type=checkbox] {
     visibility: hidden;
     width: 24px;

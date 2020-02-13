@@ -19,7 +19,15 @@
 
 <template>
   <evan-form-control v-bind="$props">
+    <div
+      v-if="prohibited"
+      class="prohibited"
+    >
+      <span>{{ '_evan.no-permissions' | translate }}</span>
+      <i class="mdi mdi-eye-off-outline" />
+    </div>
     <input
+      v-else
       :id="id"
       class="form-control"
       v-bind="$props"

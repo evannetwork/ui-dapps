@@ -171,6 +171,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     // add form validation
     control.uiSpecs.attr.required = DataSetFormComponent.isControlRequired(control, type, subSchema);
     control.validate = this.getControlValidate(control, type, subSchema);
+    control.uiSpecs.prohibited = this.getAccess() === 'none';
 
     // add the control to the current formular definition
     this.form.addControl(name, control);
@@ -206,6 +207,18 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         break;
       }
     }
+  }
+
+  getAccess(): string {
+    if (this.$store.state.container.permissions[this.name]?.read === true) {
+      return 'read';
+    }
+
+    if (this.$store.state.container.permissions[this.name]?.readWrite === true) {
+      return 'write';
+    }
+
+    return 'none';
   }
 
   /**
