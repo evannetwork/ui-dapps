@@ -110,12 +110,8 @@ export class DAppContract {
   /**
    * Load the base information of the contract type.
    */
-  async loadBaseInfo(): Promise<boolean> {
-    try {
-      await (this as any).ensureContract();
-    } catch (error) {
-      return Promise.reject(new Error('Failed to load contract'));
-    }
+  async loadBaseInfo(): Promise<void> {
+    await (this as any).ensureContract();
 
     this.contractAddress = await (this as any).getContractAddress();
     this.description = await (this as any).getDescription();
@@ -125,7 +121,6 @@ export class DAppContract {
       .executeContractCall((this as any).contract, 'owner');
     this.isOwner = this.ownerAddress === this.runtime.activeAccount;
     this.ensureI18N();
-    return Promise.resolve(true);
   }
 
   /**
