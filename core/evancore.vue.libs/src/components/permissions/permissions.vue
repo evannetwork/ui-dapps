@@ -6,7 +6,7 @@
     >
       <thead>
         <th>
-          <h4> {{ getTranslation(label) }} </h4>
+          <h4> {{ getTranslation(`name`) }} </h4>
         </th>
         <th>
           <small>{{ '_evan.read' | translate }}</small>
@@ -32,11 +32,11 @@
         >
           <template v-if="permissions[property]">
             <td class="caption">
-              <span>{{ getTranslation(property) }}</span>
+              <span>{{ getTranslation(`${property}.name`, property) }}</span>
               <span>
                 {{ permissions[property].fields
                   ? permissions[property].fields.map(field =>
-                    getTranslation(field)).join(', ') : property
+                    getTranslation(`${property}.properties.${field}.label`, `${property}.properties.${field}`, field)).join(', ') : property
                 }}
               </span>
             </td>

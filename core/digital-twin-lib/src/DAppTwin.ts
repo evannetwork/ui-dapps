@@ -186,9 +186,8 @@ class DAppTwin extends DigitalTwin {
         this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
       })(),
       this.ensureContainers(),
+      this.ensureDispatcherStates(),
     ]);
-
-    await this.ensureDispatcherStates();
   }
 
   /**

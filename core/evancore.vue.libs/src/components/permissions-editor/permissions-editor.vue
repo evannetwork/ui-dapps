@@ -34,7 +34,7 @@
               :permissions="containersPermissions[address].permissions"
               :contract-id="address"
               :update-permissions="updateContractPermissions"
-              :i18n-scope="i18nScope"
+              :i18n-scope="containersPermissions[address].i18nScope || address"
               :sort-filter="getSortFilter(address)"
             />
           </div>

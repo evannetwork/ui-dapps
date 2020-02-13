@@ -59,7 +59,7 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
       .map(async (containerAddress: string): Promise<void> => {
         permissions[containerAddress] = await PermissionUtils.getContainerPermissionsForUser(
           runtime,
-          { containerAddress, label: twin.containerContracts[containerAddress].description.name },
+          { containerAddress },
           userId,
         );
       }));

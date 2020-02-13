@@ -71,12 +71,17 @@ export default class PermissionUtils {
   /**
    * Extract field names from container properties.
    */
-  static getFields({ dataSchema: { properties } }): any {
-    if (!properties) {
-      return [];
+  static getFields({ dataSchema }): any {
+    let properties = [];
+
+    if (dataSchema.type === 'object' && dataSchema.properties) {
+      properties = Object.keys(dataSchema.properties);
+    } else if (dataSchema.type === 'array' && dataSchema.items?.type === 'object'
+      && dataSchema.items?.properties) {
+      properties = Object.keys(dataSchema.items?.properties);
     }
 
-    return Object.keys(properties);
+    return properties;
   }
 
   /**
@@ -129,7 +134,7 @@ export default class PermissionUtils {
    */
   static async getContainerPermissionsForUser(
     runtime: Runtime,
-    { containerAddress, label },
+    { containerAddress, i18nScope }: { containerAddress: string; i18nScope?: string },
     accountId = runtime.activeAccount,
   ): Promise<any> {
     const container = PermissionUtils.getContainer(
@@ -139,8 +144,8 @@ export default class PermissionUtils {
     );
     const properties = await PermissionUtils.getContainerProperties(container);
     const containerPermObj = {
-      label,
       address: containerAddress,
+      i18nScope: i18nScope || containerAddress,
       permissions: null,
     };
 
