@@ -55,6 +55,7 @@
     "did": {
       "did-title": "Decentralized ID"
     },
+    "generic-error": "The requested Digital Twin has either been deleted or is malformed.",
     "nav-items": {
       "data": "Data",
       "did": "Decentralized ID",
