@@ -19,33 +19,61 @@
 
 <template>
   <div class="evan-nav-list">
-    <evan-logout ref="logoutComp" disableButton="true" v-if="showLogout"></evan-logout>
+    <evan-logout
+      v-if="showLogout"
+      ref="logoutComp"
+      disable-button="true"
+    />
     <slot name="header">
-      <evan-profile-preview class="p-4" size="sm" :address="$store.state.runtime.activeAccount"></evan-profile-preview>
+      <evan-profile-preview
+        class="p-4"
+        size="sm"
+        :address="$store.state.runtime.activeAccount"
+      />
     </slot>
     <div class="nav-entries">
       <template v-for="(entry, index) in entries">
-        <span v-if="!entry" class="my-auto" :key="index"></span>
-        <a
-          v-else
-          :id="entry.id"
+        <!-- Render spacer -->
+        <span
+          v-if="!entry"
           :key="index"
-          :class="[
-            { 'active': activeEntry === index },
-            `entry-${ index + 1 }`
-          ]"
-          :href="entry.href"
-          @click="hideSidebar2() && (entry.action && entry.action());"
+          class="my-auto"
+        />
+        <!-- Render nav item -->
+        <router-link
+          v-else
+          :key="index"
+          v-slot="{ route, isActive }"
+          :to="entry.to"
         >
-          <i class="mr-3" :class="entry.icon"></i>
-          {{ entry.text | translate }}
-        </a>
+          <button
+            :id="entry.id"
+            :class="[
+              { 'active': isActive },
+              `entry-${ index + 1 }`
+            ]"
+            @click="onClick(entry, route)"
+          >
+            <i
+              class="mr-3"
+              :class="entry.icon"
+            />
+            {{ entry.text | translate }}
+          </button>
+        </router-link>
       </template>
     </div>
 
-    <div v-if="showLogout" class="nav-entries" style="flex: 0">
-      <a id="evan-logout" @click="$refs.logoutComp.logout();">
-        <i class="mr-3 mdi mdi-logout"></i>
+    <div
+      v-if="showLogout"
+      class="nav-entries"
+      style="flex: 0"
+    >
+      <a
+        id="evan-logout"
+        @click="$refs.logoutComp.logout();"
+      >
+        <i class="mr-3 mdi mdi-logout" />
         {{ '_evan.logout' | translate }}
       </a>
     </div>
@@ -53,6 +81,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './nav-list';
-  export default Component;
+import Component from './nav-list';
+
+export default Component;
 </script>

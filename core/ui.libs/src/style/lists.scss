@@ -29,12 +29,15 @@
       flex-direction: column;
     }
 
-    // use seperated nav-entries, so we can apply custom entries at the bottom and at the top,
+    // use separated nav-entries, so we can apply custom entries at the bottom and at the top,
     // without using my-auto
     .nav-entries {
       flex: 1;
 
-      a {
+      a, button {
+        background-color: white !important;
+        border: none;
+        outline: none;
         font-size: 15px;
         font-weight: 600;
 

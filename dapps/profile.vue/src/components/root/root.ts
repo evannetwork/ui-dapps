@@ -143,9 +143,8 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Load the profile container entry data and return them.
    */
-  async loadProfileEntries() {
-    const runtime = this.getRuntime();
-    const data = { };
+  async loadProfileEntries(): Promise<any> {
+    const data = {};
     const { profileDApp } = this.$store.state;
     const entryKeys = Object.keys(profileDApp.description.dataSchema);
 
@@ -162,7 +161,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
 
       // fill empty values
       if (!data[key]) {
-        data[key] = { };
+        data[key] = {};
       }
     }));
 
@@ -223,8 +222,8 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       },
     ].map((entry) => (entry ? {
       id: `nav-entry-${entry.key}`,
-      href: `${this.dapp.fullUrl}/${this.$route.params.address}/${entry.key}`,
       text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
+      to: entry.key,
       icon: entry.icon,
     } : null));
 
