@@ -22,7 +22,7 @@ Feature: evan.network profile
       And I want to see an element with class "checkmark"
       And I want to see a text including "Recovery Key"
     When I click on button "View Profile"
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
     # test profile type switch
     When I click on "Profile" in main menu
     Then I want to see a text including "Identity"

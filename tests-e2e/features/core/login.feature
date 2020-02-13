@@ -4,7 +4,7 @@ Feature: evan.network login
   Scenario: Logging in to evan.network using angular
 
     Given I log in to evan.network using angular
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
 
   @tag:noLogout @angular
   Scenario: Logout from of evan.network using angular
@@ -16,7 +16,7 @@ Feature: evan.network login
   Scenario: Logging in to evan.network using vue
 
     Given I log in to evan.network using vue
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
 
   Scenario: Logging in to evan.network using vue with a wrong password
 
@@ -47,7 +47,7 @@ Feature: evan.network login
     When I type "Test1234" into the input field with label "Password"
       And I click on button "Log in"
       And I wait for 3 seconds
-    Then I want to see a text including "Welcome to the evan.network"
+    Then I want to see a text including "My Assets"
 
   Scenario: Logging in to evan.network using vue with a not registered mnemnonic
 
@@ -64,7 +64,7 @@ Feature: evan.network login
   Scenario: Refreshing the page and re-entering password
 
     Given I log in to evan.network using vue
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
 
     When I wait for 10 seconds
       And I refresh the page
@@ -78,7 +78,7 @@ Feature: evan.network login
     When I type "process.env.USER_DEFAULT_PASSWORD" into the input field with label "Password"
       And I click on button "Log in"
       And I wait for 3 seconds
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
 
   @tag:noLogout
   Scenario: Logout from of evan.network using vue

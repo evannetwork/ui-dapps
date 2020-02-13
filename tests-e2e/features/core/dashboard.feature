@@ -2,7 +2,7 @@ Feature: evan.network dashboard
 
   Scenario: Navigating through core DApps using the dashboard
     Given I log in to evan.network using vue
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
     When I click on "DApps" in main menu
     Then I want to see a text including "Overview about your favorites"
     When I click on "My Assets" in main menu
