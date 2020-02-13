@@ -43,7 +43,7 @@ export default class ShareContainerComponent extends mixins(EvanComponent) {
 
   async ensureSharingInfo(): Promise<void> {
     if (!this.$store.state.twin.sharingContext) {
-      await this.$store.state.twin.ensureSharingContext();
+      await this.$store.state.twin.setSharingContext();
     }
 
     this.loaded = true;

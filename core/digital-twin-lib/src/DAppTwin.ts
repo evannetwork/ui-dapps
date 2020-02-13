@@ -164,7 +164,7 @@ class DAppTwin extends DigitalTwin {
     });
   }
 
-  async ensureSharingContext(): Promise<void> {
+  async setSharingContext(): Promise<void> {
     const [contacts, bMailContent] = await Promise.all([
       bccUtils.getContacts(this.runtime),
       SharingUtils.getTwinShareBMail(this.vue),
