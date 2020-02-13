@@ -24,7 +24,7 @@
       :data-schema="entrySchema"
       :is-loading="$store.state.container.dispatcherStates.entries[name]"
       :name="name"
-      :value="getValue"
+      :value="getValue()"
       :shareable="$store.state.container.isOwner"
       :editable="isEditable"
       :handle-share="onShare"
