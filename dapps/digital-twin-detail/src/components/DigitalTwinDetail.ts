@@ -119,10 +119,12 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
 
         // initialize twin structure
         await newTwin.initialize()
+          // handle deleted and non-DT contracts
           .catch(() => {
             this.hasError = true;
             return null;
           });
+
         newTwin.watchDispatchers();
 
         // set new reference and hide loading

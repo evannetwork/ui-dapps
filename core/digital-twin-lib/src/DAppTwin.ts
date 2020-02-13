@@ -186,7 +186,7 @@ class DAppTwin extends DigitalTwin {
         this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
       })(),
       this.ensureContainers(),
-    ]).catch(() => Promise.reject(new Error('Error while loading the contract')));
+    ]);
 
     await this.ensureDispatcherStates();
   }
