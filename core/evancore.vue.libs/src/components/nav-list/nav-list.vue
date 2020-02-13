@@ -52,6 +52,7 @@
               { 'active': isActive },
               `entry-${ index + 1 }`
             ]"
+            :disabled="entry.disabled"
             @click="onClick(entry, route)"
           >
             <i

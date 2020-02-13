@@ -26,4 +26,6 @@ export interface NavEntryInterface {
    * specify a custom action
    */
   action?: Function;
+
+  disabled?: boolean;
 }

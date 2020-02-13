@@ -19,7 +19,7 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
+import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import { Route } from 'vue-router';
@@ -49,10 +49,6 @@ export default class NavListComponent extends mixins(EvanComponent) {
    * Shows the logout button at the bottom of the nav list
    */
   @Prop({ default: true }) showLogout: boolean;
-
-  /* created(): void {
-       this.$emit('init', this);
-     } */
 
   // eslint-disable-next-line class-methods-use-this
   onClick(entry: NavEntryInterface, route: Route): void {
