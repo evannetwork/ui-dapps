@@ -70,7 +70,7 @@ export default class SharingUtils {
     };
   }
 
-  static async getProfileShareBMail(vueInstance): Promise<BmailContent> {
+  static async getProfileShareBMail(vueInstance: EvanComponent): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
     const alias = await profileUtils.getUserAlias(runtime, runtime.activeAccount);
     // ensure profile container is setup
@@ -92,7 +92,7 @@ export default class SharingUtils {
             type: 'url',
           },
           {
-            containerAddress: runtime.profile.profileContainer.config.address,
+            containerAddress: await runtime.profile.profileContainer.getContractAddress(),
             type: 'container',
           },
         ],
