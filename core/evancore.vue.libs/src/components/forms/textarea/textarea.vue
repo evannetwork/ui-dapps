@@ -47,5 +47,5 @@ export default Component;
 </script>
 
 <style lang="scss" scoped>
-  @import './textarea.scss'
+  @import './textarea.scss';
 </style>
