@@ -28,7 +28,7 @@ import { Dispatcher } from '@evan.network/ui';
 import Component from 'vue-class-component';
 import { getDomainName } from './utils';
 import { StartedDAppInfo } from './interfaces';
-import { EvanState } from './EvanState';
+import { EvanState, TranslateFunc } from './EvanComponentInterface';
 
 /**
  * Evan.network component wrapper for easily accessing blockchain runtime data and active DApp information.
@@ -56,6 +56,8 @@ export default class EvanComponent extends Vue {
   $i18n: any;
 
   $store: Store<EvanState>;
+
+  $t: TranslateFunc;
 
   $toasted: any;
 

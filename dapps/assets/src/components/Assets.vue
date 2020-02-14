@@ -29,26 +29,11 @@
                 {{ '_assets.my-assets' | translate }}
               </h4>
             </div>
-            <!-- Not using nav-list because it doesnt support router-link properly
-            TODO: Refactor evan-nav-list to use router-links too -->
-            <div class="evan-nav-list">
-              <div class="nav-entries">
-                <template v-for="navItem in navItems">
-                  <router-link
-                    :id="navItem.id"
-                    :key="navItem.id"
-                    :to="navItem.to"
-                    :active-class="'active'"
-                  >
-                    <i
-                      class="mr-3"
-                      :class="navItem.icon"
-                    />
-                    {{ navItem.label | translate }}
-                  </router-link>
-                </template>
-              </div>
-            </div>
+            <evan-nav-list
+              :entries="navItems"
+              :show-logout="false"
+              :show-profile="false"
+            />
           </div>
         </evan-dapp-wrapper-level-2>
         <transition

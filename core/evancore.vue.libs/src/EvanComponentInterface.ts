@@ -6,4 +6,10 @@ export interface EvanState {
   dispatcher: Dispatcher;
   dapp: StartedDAppInfo;
   runtime: Runtime;
+  reloadFlags: any[];
+}
+
+export interface TranslateFunc {
+  (key: string, options?: any, pluralization?: number): string | undefined;
+  (key: string, defaultValue: string, options?: any, pluralization?: number): string | undefined;
 }
