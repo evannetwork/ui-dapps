@@ -134,5 +134,5 @@ export default ContainerListComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './List.scss'
+  @import './List.scss';
 </style>
