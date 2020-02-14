@@ -85,7 +85,7 @@
       v-if="prohibited"
       class="prohibited"
     >
-      <span>{{ '_evan.no-permissions' | translate }}</span>
+      <span>{{ '_evan.no-permission' | translate }}</span>
       <i class="mdi mdi-eye-off-outline" />
     </div>
 
