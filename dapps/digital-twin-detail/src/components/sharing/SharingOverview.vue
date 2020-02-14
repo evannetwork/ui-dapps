@@ -21,12 +21,12 @@
   <div class="content pt-5">
     <div
       v-if="!$store.state.twin.isOwner"
-      class="text-center"
+      class="text-center d-flex flex-column justify-content-center align-items-center vh-100"
     >
       <h1>
         <i class="mdi mdi-eye-off-outline" />
       </h1>
-      {{ '_evan.no-permission.' | translate }}
+      <span>{{ '_evan.no-permission' | translate }}</span>
     </div>
     <template v-else>
       <div
