@@ -67,6 +67,8 @@ export default class FilesInputComponent extends mixins(ControlComponent) {
    */
   @Prop() disabled: boolean;
 
+  @Prop({ default: false }) prohibited: boolean;
+
   /**
    * Empty text that shown, when no files are uploaded and the component is disabled.
    */

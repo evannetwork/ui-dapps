@@ -30,10 +30,12 @@ import EvanComponent from '../../../component';
 @Component({})
 export default class CheckboxComponent extends mixins(EvanComponent) {
   @Prop({
-    type: Boolean
+    type: Boolean,
   }) value: boolean;
 
   @Prop({
-    type: String
+    type: String,
   }) id: string;
+
+  @Prop({ default: false }) prohibited: boolean;
 }

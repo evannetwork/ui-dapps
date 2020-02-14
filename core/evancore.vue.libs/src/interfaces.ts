@@ -84,6 +84,7 @@ export interface EvanFormControlUISpecs {
     type?: string;
   };
   type: string;
+  prohibited?: boolean;
 }
 
 /**

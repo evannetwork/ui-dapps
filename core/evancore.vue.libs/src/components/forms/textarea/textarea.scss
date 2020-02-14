@@ -16,43 +16,26 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
+@import '~@evan.network/ui/src/style/utils';
 
-<template>
-  <evan-form-control
-    v-bind="$props"
-    class="checkbox"
-  >
-    <div
-      v-if="prohibited"
-      class="prohibited"
-    >
-      <i class="mdi mdi-eye-off-outline" />
-    </div>
-    <template v-else>
-      <input
-        :id="id"
-        class="form-control"
-        v-bind="$props"
-        type="checkbox"
-        :class="{ 'is-invalid' : error}"
-        :checked="value"
-        @blur="$emit('blur')"
-        @focus="$parent.$emit('setFocus')"
-        @click="onClick()"
-      >
-      <label
-        :for="id"
-      />
-    </template>
-  </evan-form-control>
-</template>
+.prohibited {
+  padding: 0 16px;
 
-<script lang="ts">
-import CheckboxControl from './checkbox-control';
+  border: 1px solid cssVar('border-color');
+  border-radius: 2px;
+  background: cssVar('gray-100');
 
-export default CheckboxControl;
-</script>
+  span {
+    color: cssVar('gray-500');
+    vertical-align: middle;
+    line-height: 80px;
+  }
 
-<style lang="scss" scoped>
-  @import './checkbox.scss'
-</style>
+  i.mdi {
+    float: right;
+
+    color: cssVar('text-color');
+    vertical-align: middle;
+    line-height: 80px;
+  }
+}

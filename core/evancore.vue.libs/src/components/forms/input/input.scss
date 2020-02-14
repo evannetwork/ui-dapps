@@ -16,7 +16,7 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-
+@import '~@evan.network/ui/src/style/utils';
 
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
@@ -27,4 +27,26 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
+}
+
+.prohibited {
+  padding: 0 16px;
+
+  border: 1px solid cssVar('border-color');
+  border-radius: 2px;
+  background: cssVar('gray-100');
+
+  span {
+    color: cssVar('gray-500');
+    vertical-align: middle;
+    line-height: 40px;
+  }
+
+  i.mdi {
+    float: right;
+
+    color: cssVar('text-color');
+    vertical-align: middle;
+    line-height: 40px;
+  }
 }

@@ -37,6 +37,8 @@ interface File {
 export default class ContainerListComponent extends mixins(EvanComponent) {
   @Prop() name: string;
 
+  @Prop({ default: false }) prohibited: boolean;
+
   schema: ListSchema;
 
   container: DAppContainer;
@@ -172,5 +174,17 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   onShare(): void {
     (this.$refs.shareContainer as ShareContainerComponent).showPanel();
+  }
+
+  isProhibited(): boolean {
+    if (this.$store.state.container.permissions[this.name]?.read === true) {
+      return false;
+    }
+
+    if (this.$store.state.container.permissions[this.name]?.readWrite === true) {
+      return false;
+    }
+
+    return true;
   }
 }

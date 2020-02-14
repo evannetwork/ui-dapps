@@ -117,3 +117,25 @@
     }
   }
 }
+
+.prohibited {
+  padding: 0 16px;
+
+  border: 1px solid cssVar('border-color');
+  border-radius: 2px;
+  background: cssVar('gray-100');
+
+  span {
+    color: cssVar('gray-500');
+    vertical-align: middle;
+    line-height: 40px;
+  }
+
+  i.mdi {
+    float: right;
+
+    color: cssVar('text-color');
+    vertical-align: middle;
+    line-height: 40px;
+  }
+}

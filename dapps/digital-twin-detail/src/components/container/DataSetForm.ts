@@ -75,6 +75,8 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
 
   @Prop() onlyForm: boolean;
 
+  @Prop({ default: false }) prohibited: boolean;
+
   /**
    * Dynamic form definition for the corresponding dataSchema.
    */
@@ -171,6 +173,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     // add form validation
     control.uiSpecs.attr.required = DataSetFormComponent.isControlRequired(control, type, subSchema);
     control.validate = this.getControlValidate(control, type, subSchema);
+    control.uiSpecs.prohibited = this.prohibited;
 
     // add the control to the current formular definition
     this.form.addControl(name, control);
