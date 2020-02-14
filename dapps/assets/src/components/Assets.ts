@@ -21,11 +21,11 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
-  navItems = [
+  navItems: NavEntryInterface[] = [
     {
       key: 'digitaltwins',
       icon: 'mdi mdi-cube-outline',

@@ -12,7 +12,7 @@ export interface NavEntryInterface {
   /**
    * icon that should be displayed before the text
    */
-  icon: string;
+  icon?: string;
 
   /**
    * i18n translation key

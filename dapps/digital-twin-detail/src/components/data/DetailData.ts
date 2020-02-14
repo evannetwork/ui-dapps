@@ -19,12 +19,12 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 import { DAppTwin } from 'core/digital-twin-lib/src';
 
 @Component
 export default class DetailDataComponent extends mixins(EvanComponent) {
-  navItems = [];
+  navItems: NavEntryInterface[] = [];
 
   /**
    * Setup dynamic navigation structure.

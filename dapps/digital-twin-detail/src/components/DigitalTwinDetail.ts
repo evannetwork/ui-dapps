@@ -19,7 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { DAppTwin, twinDeleteDispatcher } from '@evan.network/digital-twin-lib';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
 
 @Component
@@ -39,7 +39,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   hashChangeWatcher: any;
 
-  navItems = [];
+  navItems: NavEntryInterface[] = [];
 
   /**
    * Clear the hash change watcher
@@ -124,7 +124,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     this.close();
   }
 
-  getNavItems(): any[] {
+  getNavItems(): NavEntryInterface[] {
     return [
       {
         text: '_twin-detail.nav-items.overview',
