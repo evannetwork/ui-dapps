@@ -10,7 +10,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public License
+  You should have received button copy of the GNU Affero General Public License
   along with this program. If not, see http://www.gnu.org/licenses/ or
   write to the Free Software Foundation, Inc., 51 Franklin Street,
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
@@ -19,11 +19,6 @@
 
 <template>
   <div class="evan-nav-list">
-    <evan-logout
-      v-if="showLogout"
-      ref="logoutComp"
-      disable-button="true"
-    />
     <slot name="header">
       <evan-profile-preview
         v-if="showProfile"
@@ -35,10 +30,10 @@
     <div class="nav-entries">
       <template v-for="(entry, index) in entries">
         <!-- Render spacer -->
-        <span
+        <div
           v-if="!entry"
           :key="index"
-          class="my-auto"
+          class="flex-grow-1"
         />
         <!-- Render nav item -->
         <router-link
@@ -49,10 +44,7 @@
         >
           <button
             :id="entry.id"
-            :class="[
-              { 'active': isActive },
-              `entry-${ index + 1 }`
-            ]"
+            :class="[{ 'active': isActive }]"
             :disabled="entry.disabled"
             @click="onClick(entry, route)"
           >
@@ -65,21 +57,22 @@
           </button>
         </router-link>
       </template>
-    </div>
 
-    <div
-      v-if="showLogout"
-      class="nav-entries"
-      style="flex: 0"
-    >
-      <a
+      <button
+        v-if="showLogout"
         id="evan-logout"
+        class="mt-auto"
         @click="$refs.logoutComp.logout();"
       >
         <i class="mr-3 mdi mdi-logout" />
         {{ '_evan.logout' | translate }}
-      </a>
+      </button>
     </div>
+    <evan-logout
+      v-if="showLogout"
+      ref="logoutComp"
+      disable-button="true"
+    />
   </div>
 </template>
 
