@@ -21,7 +21,7 @@
 import Vue from 'vue';
 
 // evan.network imports
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { bccHelper } from '@evan.network/ui-dapp-browser';
 import { Runtime } from '@evan.network/api-blockchain-core';
 import { Store } from 'vuex';
 import { Dispatcher } from '@evan.network/ui';
@@ -106,6 +106,6 @@ export default class EvanComponent extends Vue {
    * @return     {any}  bcc runtime
    */
   getRuntime(): Runtime {
-    return this.$store.state.runtime || dappBrowser.bccHelper.getCoreRuntime();
+    return this.$store.state.runtime || bccHelper.getCoreRuntime();
   }
 }
