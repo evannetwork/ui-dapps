@@ -9,7 +9,7 @@ Feature: Digital Twin - Detail View for missing permissions
       And I want to see a text including "Information"
     When I click on an element with text including "Maintenance"
       Then I want to see a text including "maintenance"
-      And I do not want to see a button "Share"
+      But I do not want to see a button "Share"
     When I click on an element with text including "Specifications"
       Then I want to see a text including "Characteristics"
       And I want to see a text including "Name"
