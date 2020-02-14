@@ -7,6 +7,15 @@ export interface EvanState {
   dapp: StartedDAppInfo;
   runtime: Runtime;
   reloadFlags: any[];
+  twin: any;
+  uiState: {
+    profile: {
+      selectedSharedContacts: any;
+    };
+    swipePanel: string;
+  };
+  isLoggedin: boolean;
+  uiLibBaseUrl: string;
 }
 
 export interface TranslateFunc {

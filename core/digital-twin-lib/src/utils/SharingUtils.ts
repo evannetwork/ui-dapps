@@ -19,6 +19,7 @@
 
 import { profileUtils } from '@evan.network/ui';
 import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 export interface BmailContent {
   content: {
@@ -36,7 +37,7 @@ export interface BmailContent {
 }
 
 export default class SharingUtils {
-  static async getTwinShareBMail(vueInstance): Promise<BmailContent> {
+  static async getTwinShareBMail(vueInstance: EvanComponent): Promise<BmailContent> {
     const runtime = vueInstance.getRuntime();
     const { twin } = vueInstance.$store.state;
     const alias = await profileUtils.getUserAlias(runtime, runtime.activeAccount);
