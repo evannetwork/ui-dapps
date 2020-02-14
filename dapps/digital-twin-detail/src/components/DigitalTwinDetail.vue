@@ -109,7 +109,7 @@
                 </evan-modal>
 
                 <evan-profile-picture
-                  class="twin-avatar"
+                  class="mt-3 twin-avatar"
                   type="device"
                   :src="$store.state.twin.description.imgSquare"
                 />
