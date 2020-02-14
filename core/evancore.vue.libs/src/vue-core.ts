@@ -48,7 +48,7 @@ export function registerComponents(Vue: any, components: Array<ComponentRegistra
   // include all components
   components.forEach((def: ComponentRegistrationInterface) => {
     /* Vue.options.components[def.name] !== def.component
-       do not overwrite the existing componet, only register the new component if it has changed */
+       do not overwrite the existing component, only register the new component if it has changed */
     if (!Vue.options.components[def.name]) {
       // register the component
       Vue.component(def.name, def.component);
@@ -150,7 +150,7 @@ export async function initializeVue(initOptions: EvanVueOptionsInterface): Promi
 
   // initialize VueX
   Vue.use(Vuex);
-  const store: Store<EvanState> = new Store<EvanState>({
+  const store: Store<EvanState> = new Vuex.Store<EvanState>({
     state: {
       options,
       uiLibBaseUrl,

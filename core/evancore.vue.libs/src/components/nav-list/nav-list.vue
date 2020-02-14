@@ -57,6 +57,7 @@
             @click="onClick(entry, route)"
           >
             <i
+              v-if="entry.icon"
               class="mr-3"
               :class="entry.icon"
             />

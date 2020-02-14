@@ -54,11 +54,13 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
       text: '_twin-detail.nav-items.verifications',
       icon: 'mdi mdi-checkbox-marked-circle-outline',
       to: { name: 'verifications' },
+      disabled: !this.$store.state.twin?.isOwner,
     },
     {
       text: '_twin-detail.nav-items.sharings',
       icon: 'mdi mdi-share-variant',
       to: { name: 'sharings' },
+      disabled: !this.$store.state.twin?.isOwner,
     },
     {
       text: '_twin-detail.nav-items.did',
