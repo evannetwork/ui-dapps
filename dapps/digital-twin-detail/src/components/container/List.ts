@@ -24,6 +24,7 @@ import { EvanComponent } from '@evan.network/ui-vue-core';
 import { DAppContainer } from '@evan.network/digital-twin-lib';
 import { ListSchema } from './DataSchemaInterface';
 import ShareContainerComponent from './ShareContainer';
+import ListItemDetailComponent from './ListItemDetail';
 
 interface FileList {
   files: File[];
@@ -57,6 +58,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     this.container = this.$store.state.container;
     this.schema = this.container.plugin.template.properties[this.name].dataSchema;
     this.setColumns();
+    console.log(this.container);
   }
 
   /**
@@ -65,6 +67,11 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
    * @param key object key
    */
   transformValuesForDisplay(value, key?: string): string {
+    // show null values as empty strings
+    if (value === null || value === undefined) {
+      return '';
+    }
+
     if (typeof value === 'object') {
       if (ContainerListComponent.isFileList(value)) {
         return this.getFilesDisplay(value);
@@ -73,11 +80,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
       if (key) {
         return this.transformValuesForDisplay(value[key]);
       }
-    }
-
-    // show null values as empty strings
-    if ((value === null) || (value === undefined)) {
-      return '';
     }
 
     // display unknown objects
@@ -167,7 +169,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   openDetail(item): void {
     this.selectedValue = item;
 
-    (this.$refs.listItemDetail as ShareContainerComponent).showPanel();
+    (this.$refs.listItemDetail as ListItemDetailComponent).showPanel();
   }
 
   onShare(): void {

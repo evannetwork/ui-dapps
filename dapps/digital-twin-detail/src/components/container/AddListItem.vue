@@ -18,10 +18,9 @@
 */
 
 <template>
-  <form
+  <div
     id="addListItem"
     ref="addListItem"
-    @submit.prevent="onSave"
   >
     <evan-swipe-panel
       ref="addListItemPanel"
@@ -55,11 +54,12 @@
             :is-loading="loading"
             :disabled="!isValid()"
             :label="'_twin-detail.data.list.add-list-item.submit' | translate"
+            @click="onSave"
           />
         </div>
       </template>
     </evan-swipe-panel>
-  </form>
+  </div>
 </template>
 
 <script lang="ts">

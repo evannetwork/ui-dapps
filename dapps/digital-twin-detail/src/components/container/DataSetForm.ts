@@ -242,13 +242,18 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       dbcpForm: DataSetFormComponent,
       form: EvanForm,
       control: EvanFormControl,
-    ): boolean|string => {
+    ): boolean | string => {
       let controlValue = control.value;
       let validationSchema = subSchema;
 
       // parse input value to numbers to check for correct number format with ajv
       if (type === 'number') {
-        controlValue = parseFloat(controlValue);
+        if (Number.isNaN(parseFloat(controlValue))) {
+          controlValue = false;
+        } else {
+          controlValue = parseFloat(controlValue);
+        }
+        // controlValue = Number.isNaN(parseFloat(controlValue));
       } else if (type === 'files') {
         // define custom validation schema for files to match runtime file values
         validationSchema = {
