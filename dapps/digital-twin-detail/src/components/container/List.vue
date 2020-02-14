@@ -96,7 +96,7 @@
         :fields="columns"
         :items="getValues()"
         :responsive="true"
-        :show-empty="true"
+        :show-empty="!isProhibited()"
         :sticky-header="'500px'"
         @row-clicked="openDetail"
       >
@@ -106,14 +106,23 @@
             class="spinner-border spinner-border-sm"
           />
         </template>
-        <template v-slot:cell()="value">
+        <template
+          v-slot:cell()="value"
+        >
           {{ transformValuesForDisplay(value.item, value.field.key) }}
         </template>
-
         <template v-slot:empty>
           <span>{{ '_twin-detail.data.table-empty' | translate }}</span>
         </template>
       </evan-table>
+
+      <div
+        v-if="isProhibited()"
+        class="prohibited"
+      >
+        <span>{{ '_evan.no-permissions' | translate }}</span>
+        <i class="mdi mdi-eye-off-outline" />
+      </div>
     </div>
   </div>
 </template>
@@ -125,14 +134,5 @@ export default ContainerListComponent;
 </script>
 
 <style lang="scss" scoped>
-/deep/ .dropdown.b-dropdown {
-  & > button.btn {
-    padding: 0;
-  }
-}
-
-/deep/ .loading-cell {
-  width: 30px;
-  min-width: 30px;
-}
+  @import './List.scss'
 </style>

@@ -56,4 +56,16 @@ export default class ContainerEntryComponent extends mixins(EvanComponent) {
   onShare(): void {
     (this.$refs.shareContainer as any).showPanel();
   }
+
+  isProhibited(): boolean {
+    if (this.$store.state.container.permissions[this.name]?.read === true) {
+      return false;
+    }
+
+    if (this.$store.state.container.permissions[this.name]?.readWrite === true) {
+      return false;
+    }
+
+    return true;
+  }
 }

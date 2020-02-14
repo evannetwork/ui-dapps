@@ -28,6 +28,7 @@
       :shareable="$store.state.container.isOwner"
       :editable="isEditable"
       :handle-share="onShare"
+      :prohibited="isProhibited()"
       @save="onSave($event)"
     />
     <share-container
