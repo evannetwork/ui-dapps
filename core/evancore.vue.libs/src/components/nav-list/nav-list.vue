@@ -26,6 +26,7 @@
     />
     <slot name="header">
       <evan-profile-preview
+        v-if="showProfile"
         class="p-4"
         size="sm"
         :address="$store.state.runtime.activeAccount"

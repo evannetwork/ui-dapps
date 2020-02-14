@@ -1,3 +1,5 @@
+import { Location } from 'vue-router';
+
 /**
  * Describes each tab that can be provided to the NaveComponent
  */
@@ -18,9 +20,10 @@ export interface NavEntryInterface {
   text: string;
 
   /**
-   * Vue Router Path
+   * Denotes the target route of the link
+   * https://router.vuejs.org/api/#to
    */
-  to: string;
+  to: string | Location;
 
   /**
    * specify a custom action

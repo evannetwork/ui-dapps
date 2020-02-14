@@ -20,23 +20,11 @@
 <template>
   <div class="d-flex">
     <div class="sidenav">
-      <!-- Not using nav-list because it doesnt support router-link properly
-      TODO: Refactor evan-nav-list to use router-links too-->
-      <div class="evan-nav-list">
-        <div class="nav-entries">
-          <template v-for="navItem in navItems">
-            <router-link
-              :id="navItem.id"
-              :key="navItem.id"
-              :to="navItem.to"
-              active-class="active"
-              class="text-uppercase"
-            >
-              {{ navItem.label | translate }}
-            </router-link>
-          </template>
-        </div>
-      </div>
+      <evan-nav-list
+        :entries="navItems"
+        :show-logout="false"
+        :show-profile="false"
+      />
     </div>
 
     <div class="content">
