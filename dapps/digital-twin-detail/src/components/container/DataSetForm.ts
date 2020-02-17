@@ -138,6 +138,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     switch (type) {
       case 'array': {
         control.uiSpecs.type = 'json';
+        control.value = control.value || [];
         break;
       }
       case 'boolean': {
@@ -152,6 +153,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       }
       case 'object': {
         control.uiSpecs.type = 'json';
+        control.value = control.value || {};
         break;
       }
       case 'number': {
