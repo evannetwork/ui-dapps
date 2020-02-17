@@ -261,11 +261,9 @@ Then('The value of the Input field with id {string} should be {string}',
   });
 
 /**
- * TODO: Checking only the first form input since looping and asserting
- * in nightwatch is a real pain.
+ * Check each input field for its disabled flag
  */
 Then('Each form field should be disabled',
   async () => {
-    client.useCss();
-    await client.assert.attributeEquals('form input', 'disabled', 'true');
+    await client.expect.elements('input:not([disabled])').count.to.equal(0);
   });
