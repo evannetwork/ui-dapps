@@ -214,14 +214,14 @@
             "type": "Type"
           }
         },
-        "name": "Identitätsdaten",
+        "name": "Identity Data",
         "registration": {
-          "name": "Registrierungsdaten",
+          "name": "Registration Data",
           "properties": {
-            "court": "Registergericht",
+            "court": "Register Court",
             "register": "Register",
-            "registerNumber": "Registernummer",
-            "salesTaxID": "Umsatzsteuer-ID"
+            "registerNumber": "Registration Number",
+            "salesTaxID": "Sales Tax ID"
           }
         }
       }
