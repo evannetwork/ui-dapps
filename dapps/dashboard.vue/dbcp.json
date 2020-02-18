@@ -3,7 +3,7 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.9.0"
+        "evancore.vue.libs": "^1.10.0"
       },
       "entrypoint": "dashboard.vue.js",
       "files": [
@@ -35,7 +35,7 @@
       "evan",
       "library"
     ],
-    "version": "3.2.0",
+    "version": "3.3.0",
     "versions": {
       "0.1.0": "QmRb9kLp9h2iuwuCRrJSndMAsXBnTi1ZtffBdNG9Ue8aiU",
       "0.9.0": "Qmbghjv6wRMMybvTcEcsPKKsRvQxWQjJEcLcB6oeBc1Rwo",
