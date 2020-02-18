@@ -18,6 +18,10 @@
         :show-empty="true"
         @row-clicked="onRowClicked"
       >
+        <template v-slot:head(feeInEve)="data">
+          {{ data.label | translate }} <br>
+          <span>(EVE)</span>
+        </template>
         <template v-slot:cell(timestamp)="data">
           {{ data.item.timestamp | moment('L') }}
           {{ data.item.timestamp | moment('LT') }}
