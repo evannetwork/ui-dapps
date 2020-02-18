@@ -29,21 +29,15 @@ import { Contact } from './ContactInterfaces';
 export default class EditContactComponent extends mixins(EvanComponent) {
   @Prop() contact: Contact;
 
-  @Prop() originalNote: string;
-
   canSubmit = false;
-
-  onNoteChange(input: string): void {
-    if (input !== this.originalNote) {
-      this.canSubmit = true;
-    } else {
-      this.canSubmit = false;
-    }
-  }
 
   /* onSubmit(ev): void {
        console.log('ev', ev);
      } */
+
+  onNoteChange(): void {
+    this.canSubmit = true;
+  }
 
   showPanel(): void {
     (this.$refs.editContactPanel as SwipePanelComponentClass).show();
@@ -51,5 +45,6 @@ export default class EditContactComponent extends mixins(EvanComponent) {
 
   closePanel(): void {
     (this.$refs.editContactPanel as SwipePanelComponentClass).hide();
+    this.canSubmit = false;
   }
 }

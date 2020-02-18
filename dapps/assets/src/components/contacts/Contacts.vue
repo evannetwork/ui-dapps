@@ -166,7 +166,6 @@
     <edit-contact
       ref="editContact"
       :contact="selectedContact"
-      :original-note="originalNote"
     />
   </div>
 </template>
