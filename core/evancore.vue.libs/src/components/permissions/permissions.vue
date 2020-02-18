@@ -6,7 +6,7 @@
     >
       <thead>
         <th>
-          <h4> {{ getTranslation(`name`) }} </h4>
+          <h4> {{ getTranslation('name') }} </h4>
         </th>
         <th>
           <small>{{ '_evan.read' | translate }}</small>
