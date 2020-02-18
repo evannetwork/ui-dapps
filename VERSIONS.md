@@ -4,6 +4,7 @@
 ### Features
 - combine vue, core, dapps and e2e tests within this project
 - add`i18n-ajv` library
+- general performance increase of dapp loading
 - core
   - add `bootstrap.vue.libs` (v2.1.0)
     - add bootstrap-vue import and expose it as dapp (currently only TableLitePlugin, TablePlugin, TableSimplePlugin exported)
@@ -19,9 +20,6 @@
     - fix sharing sidebar removes contact selection on permission checkbox select
   - `onboarding.vue` (3.3.1)
     - onboarding formulars exceeded screen width on small devices
-  - `datacontainer.digitaltwin` (1.8.3)
-    - fix empty number values
-    - use default values for 0x0... entries
 - core
   - `evancore.vue.libs` (v1.10.0)
     - fix unchecking all read properties are not unchecking all readWrite fields in `evan-permission-editor`
