@@ -72,10 +72,11 @@ export default class ContactsComponent extends mixins(EvanComponent) {
       thClass: 'th-date',
     },
     {
-      key: 'isFavorite',
+      key: 'actions',
       label: '',
       sortable: false,
       thClass: 'th-icon',
+      tdClass: 'td-multi-icon',
     },
   ];
 

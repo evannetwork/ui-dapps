@@ -96,28 +96,28 @@
           </template>
           <template v-slot:cell(createdAt)="contacts">
             <template v-if="contacts.item.createdAt">
-              {{ contacts.item.createdAt | moment('DD.MM.YYYY') }}
+              {{ contacts.item.createdAt | moment('L') }}
             </template>
           </template>
           <template v-slot:cell(updatedAt)="contacts">
             <template v-if="contacts.item.updatedAt">
-              {{ contacts.item.updatedAt | moment('DD.MM.YYYY') }}
+              {{ contacts.item.updatedAt | moment('L') }}
             </template>
           </template>
-          <template v-slot:cell(isFavorite)="contacts">
+          <template v-slot:cell(actions)="contact">
             <evan-loading
               v-if="
                 isFavoriteLoading.loading &&
-                  isFavoriteLoading.id === contacts.item.address
+                  isFavoriteLoading.id === contact.item.address
               "
               classes=""
             />
             <evan-button
-              v-else-if="contacts.item.isFavorite === 'true'"
+              v-else-if="contact.item.isFavorite === 'true'"
               type="icon-secondary"
               icon="mdi mdi-star"
               :disabled="isFavoriteLoading.loading"
-              @click="removeFavorite(contacts)"
+              @click="removeFavorite(contact)"
             />
             <evan-button
               v-else
@@ -125,7 +125,14 @@
               type="icon-secondary"
               icon="mdi mdi-star-outline"
               :disabled="isFavoriteLoading.loading"
-              @click="addFavorite(contacts)"
+              @click="addFavorite(contact)"
+            />
+            <evan-button
+              type="icon-secondary"
+              class="visible-on-row-hover ml-1"
+              icon="mdi mdi-pencil-outline"
+              :disabled="isFavoriteLoading.loading"
+              @click="editContact(contact)"
             />
           </template>
           <template v-slot:table-caption>
