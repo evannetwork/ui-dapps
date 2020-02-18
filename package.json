@@ -7,7 +7,7 @@
     "@babel/runtime": "^7.3.1",
     "@evan.network/api-blockchain-core": "^2.3.0",
     "@evan.network/smart-contracts-core": "^2.1.1",
-    "@evan.network/ui-dapp-browser": "^2.7.0",
+    "@evan.network/ui-dapp-browser": "^2.8.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@mdi/font": "^4.5.0",
     "ajv-i18n": "^3.5.0",
