@@ -25,7 +25,6 @@ import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-co
 import { Prop } from 'vue-property-decorator';
 import { Contact } from './ContactInterfaces';
 import { ContactsService } from './ContactsService';
-import removeContactDispatcher from './RemoveContactDispatcher';
 
 @Component
 export default class EditContactComponent extends mixins(EvanComponent) {
@@ -50,8 +49,7 @@ export default class EditContactComponent extends mixins(EvanComponent) {
 
   async removeContact(contact: Contact): Promise<void> {
     this.closePanel();
-    this.$emit('deleteContact', this.contact);
-    await this.contactService.removeContact(contact);
+    this.$emit('delete-contact', contact, this.contactService.removeContact(contact));
   }
 
   showPanel(): void {

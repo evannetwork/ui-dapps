@@ -22,6 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
+import { DispatcherInstance } from '@evan.network/ui/src';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
@@ -107,6 +108,11 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.isLoading = true;
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
+  }
+
+  async onDeleteContact(contact: Contact, promise: Promise<DispatcherInstance>): Promise<void> {
+    await promise;
+    this.contacts = this.contacts.filter((item) => item.address !== contact.address);
   }
 
   async fetchContacts(): Promise<Contact[]> {
