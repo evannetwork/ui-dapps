@@ -259,3 +259,11 @@ Then('The value of the Input field with id {string} should be {string}',
     await client.assert.value(`//input[@id='${id}']`, expected);
     client.useCss();
   });
+
+/**
+ * Check each input field for its disabled flag
+ */
+Then('Each form field should be disabled',
+  async () => {
+    await client.expect.elements('input:not([disabled])').count.to.equal(0);
+  });

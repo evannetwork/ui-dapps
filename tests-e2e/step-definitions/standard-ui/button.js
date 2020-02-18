@@ -73,6 +73,19 @@ Then('I want to see a button {string}', async (content) => {
 });
 
 /**
+ * Asserts that a button with a certain content is not visible.
+ */
+Then('I do not want to see a button {string}', async (content) => {
+  // xpath will be used as the locating strategy so all the selectors you pass should be xpath selectors
+  client.useXpath();
+  const xPathSelector = buttonSelector(content);
+
+  await client.expect.element(xPathSelector).to.not.be.present.after(5000);
+
+  client.useCss(); // switches back to css selector
+});
+
+/**
  * Assures that an element with .btn class has a certain state.
  */
 Then('the button {string} should be {string}', async (content, statusType) => {
