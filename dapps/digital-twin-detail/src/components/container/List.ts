@@ -58,7 +58,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     this.container = this.$store.state.container;
     this.schema = this.container.plugin.template.properties[this.name].dataSchema;
     this.setColumns();
-    console.log(this.container);
   }
 
   /**

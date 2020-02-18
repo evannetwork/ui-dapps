@@ -253,7 +253,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         } else {
           controlValue = parseFloat(controlValue);
         }
-        // controlValue = Number.isNaN(parseFloat(controlValue));
       } else if (type === 'files') {
         // define custom validation schema for files to match runtime file values
         validationSchema = {
