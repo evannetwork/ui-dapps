@@ -23,7 +23,7 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { getDomainName, utils } from '@evan.network/ui-dapp-browser';
 import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 interface ProfileFormInterface extends EvanForm {
@@ -341,8 +341,8 @@ export default class SignUp extends mixins(EvanComponent) {
     const accountId = lightwallet.getAccounts(vault, 1)[0];
     const privateKey = lightwallet.getPrivateKey(vault, accountId);
 
-    const runtime = await bccHelper.createDefaultRuntime(
-      bcc, accountId, vault.encryptionKey, privateKey,
+    const runtime = await bccHelper.createRuntime(
+      accountId, vault.encryptionKey, privateKey,
     );
 
     return {
@@ -391,7 +391,7 @@ export default class SignUp extends mixins(EvanComponent) {
         }, 2000);
       } catch (ex) {
         // reset all steps of proile creation
-        utils.log(ex.message, 'error');
+        utils.devLog(ex.message, 'error');
         this.creatingProfile = 0;
         this.creationTime = -1;
         this.recaptchaToken = null;

@@ -17,15 +17,14 @@
   the following URL: https://evan.network/license/
 */
 
-// map the original ui path to ui.libs
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { getDomainName, System } from '@evan.network/ui-dapp-browser';
 
 import * as bccHelper from './bccHelper';
 import EvanLightwallet from './lightwallet';
 import EvanSession from './session';
 import * as web3Helper from './web3Helper';
 
-dappBrowser.System.map['@evan.network/ui-session'] = `uisession.libs.${dappBrowser.getDomainName()}!dapp-content`;
+System.map['@evan.network/ui-session'] = `uisession.libs.${getDomainName()}!dapp-content`;
 
 const lightwallet = EvanLightwallet;
 const session = EvanSession;

@@ -29,11 +29,10 @@ import {
   KeyStoreInterface,
   Mnemonic,
 } from '@evan.network/api-blockchain-core';
+import { routing } from '@evan.network/ui-dapp-browser';
 
-/**
- * is inserted when the application was bundled, used to prevent window usage
- */
-declare let evanGlobals: any;
+import { getWeb3Instance } from './web3Helper';
+import session from './session';
 
 // !IMPORTANT: dont export it to avoid security leaks!
 /**
@@ -133,9 +132,10 @@ export default class EvanLightWallet {
    */
   static getAccounts(vault: any, amount?: number): Array<string> {
     let accounts = vault.getAddresses();
+    const web3 = getWeb3Instance();
 
-    // only generate so much accounts, that are realy needed, do not generate new ones, if the amount
-    // of addresses are already loaded
+    /* only generate so much accounts, that are realy needed, do not generate new ones, if the amount
+       of addresses are already loaded */
     if (amount && (!accounts || accounts.length < amount)) {
       if (!vault.pwDerivedKey) {
         throw new Error('could not generate new addresses on locked vault!');
@@ -146,7 +146,7 @@ export default class EvanLightWallet {
       accounts = vault.getAddresses();
     }
 
-    return accounts.map((account: string) => evanGlobals.CoreRuntime.web3.utils.toChecksumAddress(account));
+    return accounts.map((account: string) => web3.utils.toChecksumAddress(account));
   }
 
   /**
@@ -165,13 +165,14 @@ export default class EvanLightWallet {
    * @return     {string}  encryption key
    */
   static async getEncryptionKey(): Promise<string> {
+    const agentExecutor = await session.getAgentExecutor();
     // if an executor agent should be used, return the key instantly
-    if (evanGlobals.agentExecutor) {
-      return evanGlobals.agentExecutor.key;
+    if (agentExecutor) {
+      return agentExecutor.key;
     // if the url was opened using an specific mnemonic and password, use this one!
     }
 
-    const currentProvider = evanGlobals.core.getCurrentProvider();
+    const currentProvider = session.getCurrentProvider();
     if (currentProvider === 'internal') {
       const vault = await EvanLightWallet.loadUnlockedVault();
 
@@ -182,7 +183,7 @@ export default class EvanLightWallet {
       const password = await EvanLightWallet.getPassword();
 
       return EvanLightWallet.getEncryptionKeyFromPassword(
-        evanGlobals.CoreRuntime.web3.eth.defaultAccount,
+        getWeb3Instance().eth.defaultAccount,
         password,
       );
     }
@@ -197,7 +198,7 @@ export default class EvanLightWallet {
    * @return     {string}  The encryption key from password.
    */
   static getEncryptionKeyFromPassword(accountId: string, password: string): string {
-    return evanGlobals.CoreRuntime.nameResolver
+    return getWeb3Instance().utils
       .sha3(accountId + password)
       .replace(/0x/g, '');
   }
@@ -219,8 +220,8 @@ export default class EvanLightWallet {
       password,
     );
 
-    // if the accountId was specified externally, we should load the first account to be able to run
-    // calls for this account
+    /* if the accountId was specified externally, we should load the first account to be able to run
+       calls for this account */
     EvanLightWallet.getAccounts(vault, 1);
 
     return vault;
@@ -294,9 +295,10 @@ export default class EvanLightWallet {
    * @return     {Promise<string>}  password input
    */
   static async getPassword(accountId?: string): Promise<string> {
+    const queryParams = routing.getQueryParameters();
     // if a password was specified over the url, use this one
-    if (evanGlobals.queryParams.password) {
-      return evanGlobals.queryParams.password;
+    if (queryParams.password) {
+      return queryParams.password;
     }
     if (passwordFunction) {
       return passwordFunction(accountId);
@@ -311,12 +313,13 @@ export default class EvanLightWallet {
    * @return     {Promise<any>}  unlocked vault
    */
   static async loadUnlockedVault(): Promise<any> {
+    const queryParams = routing.getQueryParameters();
     let vault;
     let primaryAccount;
 
     // if a mnemonic and a password were specified over the url, load the vault with this values
-    if (evanGlobals.queryParams.mnemonic && evanGlobals.queryParams.password) {
-      vault = await EvanLightWallet.getNewVault(evanGlobals.queryParams.mnemonic, evanGlobals.queryParams.password);
+    if (queryParams.mnemonic && queryParams.password) {
+      vault = await EvanLightWallet.getNewVault(queryParams.mnemonic, queryParams.password);
     } else {
       vault = EvanLightWallet.loadVault();
     }
@@ -325,8 +328,8 @@ export default class EvanLightWallet {
       const password = await EvanLightWallet.getPassword();
       vault.pwDerivedKey = await EvanLightWallet.keyFromPassword(vault, password);
 
-      // only load the encryption key, when it wasn't set before (could be overwritten by using
-      // overwriteVaultEncryptionKey for old or custom logic accounts)
+      /* only load the encryption key, when it wasn't set before (could be overwritten by using
+         overwriteVaultEncryptionKey for old or custom logic accounts) */
       primaryAccount = EvanLightWallet.getPrimaryAccount(vault);
       if (!customEncryptionKeys[primaryAccount]) {
         vault.encryptionKey = EvanLightWallet.getEncryptionKeyFromPassword(
@@ -336,8 +339,8 @@ export default class EvanLightWallet {
       }
     }
 
-    // if the accountId was specified externally, we should load the first account to be able to run
-    // calls for this account
+    /* if the accountId was specified externally, we should load the first account to be able to run
+       calls for this account */
     primaryAccount = primaryAccount || EvanLightWallet.getPrimaryAccount(vault);
     if (customEncryptionKeys[primaryAccount]) {
       vault.encryptionKey = customEncryptionKeys[primaryAccount];

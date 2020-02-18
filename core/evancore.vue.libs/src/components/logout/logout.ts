@@ -22,8 +22,8 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import EvanComponent from '../../component';
 import { session } from '@evan.network/ui-session';
+import EvanComponent from '../../component';
 
 /**
  * Handles user logout. Directly provides a button, that triggers a logout accept modal. Logs out
@@ -44,7 +44,7 @@ export default class EvanLogout extends mixins(EvanComponent) {
    * Show the logout modal
    */
   logout() {
-    (<any>this.$refs.logoutModal).show();
+    (<any> this.$refs.logoutModal).show();
   }
 
   /**

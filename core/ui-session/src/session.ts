@@ -17,15 +17,6 @@
   the following URL: https://evan.network/license/
 */
 
-/**
- * dappBrowser.core.activeAccount
-dappBrowser.core.getAgentExecutor
-dappBrowser.core.getBalance
-dappBrowser.core.getCurrentProvider
-dappBrowser.core.logout
-dappBrowser.core.setCurrentProvider
- */
-
 import { utils, routing } from '@evan.network/ui-dapp-browser';
 
 import lightwallet from './lightwallet';
@@ -180,11 +171,11 @@ export default class EvanSession {
       const agentUrl = routing.getQueryParameterValue('agent-executor-url')
         || 'https://agents.test.evan.network';
 
-      // if an token is specified, load the data from the edge-server
-      // TODO: currently the parameters are specified via query parameters => load it via edge-server
+      /* if an token is specified, load the data from the edge-server
+         TODO: currently the parameters are specified via query parameters => load it via edge-server */
       if (token) {
-        // use a promise await to implement an timeout (this function will be called at the beginning
-        // of the page load, so everything will stop working, when agent not responds)
+        /* use a promise await to implement an timeout (this function will be called at the beginning
+           of the page load, so everything will stop working, when agent not responds) */
         await (new Promise((resolve) => {
           // dont resolve twice
           let timedOut = false;
@@ -203,7 +194,9 @@ export default class EvanSession {
 
           // if all parameters are valid, set the executor agent
           if (accountId && key) {
-            agentExecutor = { accountId, agentUrl, key, token };
+            agentExecutor = {
+              accountId, agentUrl, key, token,
+            };
           } else {
             agentExecutor = false;
           }
@@ -235,7 +228,7 @@ export default class EvanSession {
     }
 
     if (window.localStorage['evan-account']) {
-      const checkSumAddress = evanGlobals.CoreRuntime.web3.utils.toChecksumAddress(
+      const checkSumAddress = getWeb3Instance().utils.toChecksumAddress(
         window.localStorage['evan-account'],
       );
       return checkSumAddress;

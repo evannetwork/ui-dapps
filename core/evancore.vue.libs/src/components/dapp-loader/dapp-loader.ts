@@ -64,9 +64,9 @@ export default class DAppLoaderComponent extends mixins(EvanComponent) {
 
     // set the hash change watcher, so we can remove it on component destroy
     const dappLoader = this;
-    this.hashChangeWatcher = function() {
+    this.hashChangeWatcher = function () {
       // if the startedDapp for this hash level has been changed, load the new dapp
-      if (!window.location.hash.startsWith(`#${ dappLoader.startedDApp.baseHash }`)) {
+      if (!window.location.hash.startsWith(`#${dappLoader.startedDApp.baseHash}`)) {
         dappLoader.startDApp();
       }
     };
@@ -86,8 +86,8 @@ export default class DAppLoaderComponent extends mixins(EvanComponent) {
   beforeDestroy() {
     this.wasDestroyed = true;
 
-    // only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
-    // longer and the dapp was switched before)
+    /* only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
+       longer and the dapp was switched before) */
     if (this.hashChangeWatcher) {
       // remove the hash change listener
       window.removeEventListener('hashchange', this.hashChangeWatcher);
@@ -98,10 +98,10 @@ export default class DAppLoaderComponent extends mixins(EvanComponent) {
    * Searches for the next dapp in the url that should be started and run it
    */
   async startDApp() {
-    // clear everything, that was loaded before
-    // !IMPORTANT: clear the inner html before running getNextDApp
-    //   => it will check for elements dapp names as id's, to check which dapp was already loaded
-    //   => by forcing dapp loading under an other domain, will cause false domain loading
+    /* clear everything, that was loaded before
+       !IMPORTANT: clear the inner html before running getNextDApp
+         => it will check for elements dapp names as id's, to check which dapp was already loaded
+         => by forcing dapp loading under an other domain, will cause false domain loading */
     this.$el.innerHTML = `
       <div class="evan-loading w-100 h-100 pt-5 pb-5 text-center">
         <div class="spinner-border text-primary"></div>

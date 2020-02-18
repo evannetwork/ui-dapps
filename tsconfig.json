@@ -26,9 +26,6 @@
       ],
       "@evan.network/ui-vue-core": [
         "./core/evancore.vue.libs"
-      ],
-      "@evan.network/ui/*": [
-        "./core/ui.libs/*"
       ]
     },
     "resolveJsonModule": true,

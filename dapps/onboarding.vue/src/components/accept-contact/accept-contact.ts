@@ -84,8 +84,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
       const activeAccount = lightwallet.getPrimaryAccount(vault);
 
       // setup runtime and save it to the axios store
-      this.$store.state.runtime = await bccHelper.shortHandCreateDefaultRuntime(
-        bcc,
+      this.$store.state.runtime = await bccHelper.createRuntime(
         activeAccount,
         vault.encryptionKey,
         lightwallet.getPrivateKey(vault, activeAccount),
@@ -186,7 +185,7 @@ export default class AcceptContact extends mixins(EvanComponent) {
         ].join('/');
       }, 2000);
     } catch (ex) {
-      utils.log(ex.message, 'error');
+      utils.devLog(ex.message, 'error');
       (<any> this.$refs.acceptingError).show();
     }
 

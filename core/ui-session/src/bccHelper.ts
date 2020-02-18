@@ -19,10 +19,14 @@
 
 import {
   createDefaultRuntime,
+  Ipfs,
+  logLog,
+  logLogLevel,
   Profile,
   Runtime,
 } from '@evan.network/api-blockchain-core';
-import { config } from '@evan.network/ui-dapp-browser';
+import { config, ipfs } from '@evan.network/ui-dapp-browser';
+import * as SmartContracts from '@evan.network/smart-contracts-core';
 
 import { getWeb3Instance } from './web3Helper';
 import EvanSession from './session';
@@ -41,17 +45,18 @@ import EvanlightWallet from './lightwallet';
  * @param      {any}     dfs            overwrite the CoreRuntime dfs with a new one
  * @return     {any}     the new bcc defaultruntime
  */
-async function shortHandCreateDefaultRuntime(
+async function createRuntime(
   accountId = '0x0000000000000000000000000000000000000000',
   encryptionKey?: string,
   privateKey?: string,
   inputConfig?: any,
   dfs?: any,
-  options?: any,
+  inputOptions: any = {},
 ): Promise<Runtime> {
   // fill web3 per default with the core runtime web3
   const web3 = getWeb3Instance();
   const { soliditySha3 } = web3.utils;
+  const options = inputOptions;
 
   // get accounthash for easy acces within keyConfig
   const accountHash = soliditySha3(accountId);
@@ -63,16 +68,22 @@ async function shortHandCreateDefaultRuntime(
   runtimeConfig.keyConfig[accountHash] = encryptionKey;
   runtimeConfig.keyConfig[soliditySha3(accountHash, accountHash)] = encryptionKey;
   // set mailbox edge key
-  runtimeConfig.keyConfig[soliditySha3('mailboxKeyExchange')] =
-    '346c22768f84f3050f5c94cec98349b3c5cbfa0b7315304e13647a4918ffff22';
+  runtimeConfig.keyConfig[soliditySha3('mailboxKeyExchange')] = '346c22768f84f3050f5c94cec98349b3c5cbfa0b7315304e13647a4918ffff22';
 
   // set private key
   runtimeConfig.accountMap[accountId] = privateKey;
 
   // create the new runtime
+  options.contracts = options.contracts || SmartContracts;
   const runtime = await createDefaultRuntime(
     web3,
-    dfs,
+    dfs || new Ipfs({
+      web3,
+      dfsConfig: ipfs.ipfsConfig,
+      cache: ipfs.getIpfsCache(),
+      logLog,
+      logLogLevel,
+    }),
     runtimeConfig,
     options,
   );
@@ -120,7 +131,7 @@ async function shortHandCreateDefaultRuntime(
 async function isAccountPasswordValid(accountId: string, password: string,
   encryptionSalt = accountId): Promise<boolean> {
   const encryptionkey = EvanlightWallet.getEncryptionKeyFromPassword(encryptionSalt, password);
-  const runtime = await shortHandCreateDefaultRuntime(accountId, encryptionkey);
+  const runtime = await createRuntime(accountId, encryptionkey);
 
   let targetPrivateKey;
   try {
@@ -159,7 +170,7 @@ async function isAccountPasswordValid(accountId: string, password: string,
  */
 async function isAccountOnboarded(account: string): Promise<boolean> {
   try {
-    const runtime = await shortHandCreateDefaultRuntime(account);
+    const runtime = await createRuntime(account);
     const ensName = runtime.nameResolver.getDomainName(runtime.nameResolver.config.domains.profile);
     const address = await runtime.nameResolver.getAddress(ensName);
     const contract = runtime.nameResolver.contractLoader.loadContract('ProfileIndexInterface', address);
@@ -182,8 +193,7 @@ async function isAccountOnboarded(account: string): Promise<boolean> {
 }
 
 export {
-  createDefaultRuntime,
   isAccountOnboarded,
   isAccountPasswordValid,
-  shortHandCreateDefaultRuntime,
+  createRuntime,
 };

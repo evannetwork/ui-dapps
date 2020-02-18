@@ -471,7 +471,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         privateKey = lightwallet.getPrivateKey(vault, activeAccount);
       } else {
         const agentExecutor = await session.getAgentExecutor();
-        const coreRuntime = await bccHelper.shortHandCreateDefaultRuntime('0x000');
+        const coreRuntime = await bccHelper.createRuntime('0x000');
 
         encryptionKey = agentExecutor.key;
         executor = new bcc.ExecutorAgent({
@@ -487,7 +487,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       }
 
       // setup runtime and save it to the axios store
-      this.$store.state.runtime = await bccHelper.shortHandCreateDefaultRuntime(
+      this.$store.state.runtime = await bccHelper.createRuntime(
         activeAccount,
         encryptionKey,
         privateKey,

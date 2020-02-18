@@ -41,7 +41,7 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
    * _evan.digitaltwins
    */
   @Prop({
-    default: '_evan'
+    default: '_evan',
   }) i18nScope;
 
   /**
@@ -63,13 +63,13 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
    * Ignore specific breadcrumbs by applying the url parts that should be ignored
    */
   @Prop({
-    default: [ ]
+    default: [],
   }) ignored;
 
   /**
    * active route, splitted by hash and prepared using the following params: name, fallbackName, path
    */
-  breadcrumbs: Array<{ name: string, fallbackName: string, path: string }> = [ ];
+  breadcrumbs: Array<{ name: string; fallbackName: string; path: string }> = [];
 
   /**
    * Watch for hash updates
@@ -101,7 +101,7 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
    * Bind the hash change watcher to track hash changes and to update the routes
    */
   async created() {
-    const domainName = (<any>this).domainName;
+    const { domainName } = <any> this;
 
     // fill empty base hash
     this._baseHash = this.baseHash || this.dapp.baseHash;
@@ -110,10 +110,10 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
     this.hashChangeWatcher = (() => {
       const breadcrumbHashes = window.location.hash
         // remove the base hash
-        .replace(`#${ this._baseHash }`, '')
+        .replace(`#${this._baseHash}`, '')
         .split('/')
         // filter empty breadcrumbs
-        .filter(breadcrumb => !!breadcrumb);
+        .filter((breadcrumb) => !!breadcrumb);
 
       // add root domain as first entry
       breadcrumbHashes.unshift(this.dapp.ens);
@@ -121,23 +121,24 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
       // iterate through all paths and create the correct translation name and path
       this.breadcrumbs = breadcrumbHashes.map((breadcrumb: string, index: number) => {
         // remove the domain name, so we can manage simple i18n files
-        let fallbackName = decodeURIComponent(
-          breadcrumb.replace(new RegExp(`.${ domainName }`, 'g'), ''));
-        let name = `${ this.i18nScope }.${ fallbackName }`;
+        const fallbackName = decodeURIComponent(
+          breadcrumb.replace(new RegExp(`.${domainName}`, 'g'), ''),
+        );
+        const name = `${this.i18nScope}.${fallbackName}`;
 
         return {
-          name: name,
-          fallbackName: fallbackName,
+          name,
+          fallbackName,
           // build the path relative to the base hash
-          path: index === 0 ? this._baseHash :
-            `${ this._baseHash }/${ breadcrumbHashes.slice(1, index + 1).join('/') }`,
+          path: index === 0 ? this._baseHash
+            : `${this._baseHash}/${breadcrumbHashes.slice(1, index + 1).join('/')}`,
           id: breadcrumb,
         };
       });
 
       // show the go back button, when the navigation is deeper than 0
       this.goBack = this.breadcrumbs.length > 0;
-    }).bind(this);
+    });
 
     // set them initially
     this.hashChangeWatcher();
@@ -157,7 +158,7 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
    */
   mounted() {
     if (this.attachToDAppWrapper) {
-      let highestWrapper: any = DAppWrapperUtils.getActiveDAppWrapper(this.$el);
+      const highestWrapper: any = DAppWrapperUtils.getActiveDAppWrapper(this.$el);
 
       // if it's not the body, clear the latest wrapper-sidebar-2 element and
       if (highestWrapper) {
@@ -179,8 +180,8 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
    * Clear the hash change watcher
    */
   beforeDestroy() {
-    // only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
-    // longer and the dapp was switched before)
+    /* only remove the hashChangeWatcher, when it was already bind (asynchronious call can take
+       longer and the dapp was switched before) */
     if (this.hashChangeWatcher) {
       // remove the hash change listener
       window.removeEventListener('hashchange', this.hashChangeWatcher);

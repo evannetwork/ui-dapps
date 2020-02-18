@@ -65,7 +65,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     (this.$refs.modal as any).show();
   }
 
-  private goSecure () {
+  private goSecure() {
     this.mnemonic = null;
     window.localStorage.removeItem('evan-mnemonic');
     (this.$refs.modal as any).hide();
@@ -81,11 +81,11 @@ export default class MnemonicExport extends mixins(EvanComponent) {
       const encrypted = localStorage['evan-mnemonic'];
       const vault = await lightwallet.loadUnlockedVault();
       const cryptor = runtime.sharing.options.cryptoProvider.getCryptorByCryptoAlgo(
-        runtime.sharing.options.defaultCryptoAlgo
+        runtime.sharing.options.defaultCryptoAlgo,
       );
 
       return (await cryptor.decrypt(bcc.buffer.from(encrypted, 'hex'), {
-        key: vault.encryptionKey
+        key: vault.encryptionKey,
       })).split(' ');
     }
   }
@@ -114,7 +114,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
 
     element.setAttribute(
       'href',
-      'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+      `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`,
     );
     element.setAttribute('download', filename);
     element.style.display = 'none';
@@ -139,11 +139,11 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     document.body.removeChild(textArea);
 
     this.$toasted.show(
-      this.$t(`_evan.mnemonic-export.copied`),
+      this.$t('_evan.mnemonic-export.copied'),
       {
         duration: 3000,
-        type: 'success'
-      }
+        type: 'success',
+      },
     );
   }
 

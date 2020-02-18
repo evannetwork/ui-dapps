@@ -33,7 +33,7 @@ export default class CardComponent extends mixins(EvanComponent) {
    * Card type that should be used (transparent, outline, filled)
    */
   @Prop({
-    default: 'filled'
+    default: 'filled',
   }) type: string;
 
   /**

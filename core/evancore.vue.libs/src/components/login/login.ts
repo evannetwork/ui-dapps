@@ -61,8 +61,8 @@ export default class LoginComponent extends mixins(EvanComponent) {
       value: window.localStorage['evan-test-password'] || '',
       valid: false,
       dirty: false,
-      ref: null
-    }
+      ref: null,
+    },
   };
 
   created() {
@@ -71,7 +71,7 @@ export default class LoginComponent extends mixins(EvanComponent) {
 
   mounted() {
     // Focus the password input.
-    this.form.password.ref = this.$refs['password'];
+    this.form.password.ref = this.$refs.password;
     this.form.password.ref.focus();
 
     // automatically login when user has specified a dev password
@@ -97,22 +97,22 @@ export default class LoginComponent extends mixins(EvanComponent) {
         this.form.password.value = false;
       }
 
-      // if the password is correct, create the correct active vault in dapp-browser, so other
-      // applications can access it
+      /* if the password is correct, create the correct active vault in dapp-browser, so other
+         applications can access it */
       if (this.form.password.valid) {
         this.$emit('logged-in', this.form.password.value);
         // mnemonic available during onboarding
         if (this.mnemonic) {
           await lightwallet.createVaultAndSetActive(
             this.mnemonic,
-            this.form.password.value
+            this.form.password.value,
           );
         }
 
-        if (this.dapp.baseHash.endsWith(`onboarding.vue.${ getDomainName() }`)) {
+        if (this.dapp.baseHash.endsWith(`onboarding.vue.${getDomainName()}`)) {
           session.setCurrentProvider('internal');
-          window.location.hash = `/${this.$route.query.origin ||
-            `dashboard.vue.${ getDomainName() }`}`;
+          window.location.hash = `/${this.$route.query.origin
+            || `dashboard.vue.${getDomainName()}`}`;
         }
       } else {
         // only enable button when password is invalid
