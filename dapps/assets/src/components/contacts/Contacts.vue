@@ -166,6 +166,7 @@
     <edit-contact
       ref="editContact"
       :contact="selectedContact"
+      @delete-contact="onDeleteContact"
     />
   </div>
 </template>

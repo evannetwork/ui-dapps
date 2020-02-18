@@ -17,11 +17,11 @@
   the following URL: https://evan.network/license/
 */
 
-import { profileUtils } from '@evan.network/ui';
+import { profileUtils, DispatcherInstance } from '@evan.network/ui';
 import { Runtime } from '@evan.network/api-blockchain-core';
-
 import InviteDispatcher from './InviteDispatcher';
 import { Contact, ContactFormData } from './ContactInterfaces';
+import removeContactDispatcher from './RemoveContactDispatcher';
 
 export class ContactsService {
   private contacts;
@@ -83,5 +83,9 @@ export class ContactsService {
     await this.runtime.profile.storeForAccount(
       this.runtime.profile.treeLabels.addressBook,
     );
+  }
+
+  removeContact(contact: Contact): Promise<DispatcherInstance> {
+    return removeContactDispatcher.start(this.runtime, contact);
   }
 }

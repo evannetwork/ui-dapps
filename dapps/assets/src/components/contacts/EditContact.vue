@@ -48,7 +48,7 @@
 
         <evan-button
           type="warn"
-          @click="removeContact"
+          @click="removeContact(contact)"
         >
           Remove Contact
         </evan-button>
