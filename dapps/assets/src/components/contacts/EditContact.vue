@@ -18,26 +18,41 @@
 */
 
 <template>
-  <form>
+  <form @submit.prevent="onSubmit">
     <evan-swipe-panel
       ref="editContactPanel"
       alignment="right"
       type="default"
       class="light"
       :show-backdrop="true"
-      :hide-close-button="true"
       :title="$t('_assets.contacts.edit-contact-title')"
-      @hide="initState"
     >
-      <p>{{ '_assets.contacts.edit-contact-desc' | translate }}</p>
-      <!-- <evan-form-control-input
-        v-model="idOrEmail"
-        :label="'_assets.contacts.id-or-email' | translate"
-        :placeholder="$t('_assets.contacts.id-or-email-placeholder')"
-        :required="true"
-        :error="idOrEmailErrorMessage"
-        @input="handleIdOrEmailChange"
-      /> -->
+      <evan-loading v-if="!contact" />
+
+      <template v-else>
+        <p>{{ '_assets.contacts.edit-contact-desc' | translate }}</p>
+        <evan-form-control-input
+          :value="contact.address"
+          :disabled="true"
+          :required="true"
+          :label="'_assets.contacts.name' | translate"
+        />
+
+        <evan-form-control-input
+          class="btn-block"
+          :value="contact.alias"
+          :label="'_assets.contacts.note' | translate"
+          :placeholder="$t('_assets.contacts.note-placeholder')"
+          @input="onNoteChange"
+        />
+
+        <evan-button
+          type="warn"
+          @click="removeContact"
+        >
+          Remove Contact
+        </evan-button>
+      </template>
 
       <template v-slot:footer>
         <div class="d-flex">
@@ -50,6 +65,7 @@
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
+            :disabled="!canSubmit"
             :label="'_assets.contacts.edit-contact-btn' | translate"
           />
         </div>

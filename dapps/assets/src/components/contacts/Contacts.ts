@@ -46,6 +46,10 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   contacts: Contact[] = [];
 
+  selectedContact: Contact = null;
+
+  originalNote: string = null;
+
   columns = [
     {
       key: 'icon',
@@ -112,6 +116,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   editContact(contact: EvanTableItem<Contact>): void {
+    this.selectedContact = contact.item;
+    this.originalNote = contact.item.alias;
     (this.$refs.editContact as EditContactComponent).showPanel();
   }
 

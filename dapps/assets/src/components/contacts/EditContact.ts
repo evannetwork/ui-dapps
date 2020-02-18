@@ -22,11 +22,28 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
-import { ContactsService } from './ContactsService';
+import { Prop } from 'vue-property-decorator';
+import { Contact } from './ContactInterfaces';
 
 @Component
 export default class EditContactComponent extends mixins(EvanComponent) {
-  contactService: ContactsService;
+  @Prop() contact: Contact;
+
+  @Prop() originalNote: string;
+
+  canSubmit = false;
+
+  onNoteChange(input: string): void {
+    if (input !== this.originalNote) {
+      this.canSubmit = true;
+    } else {
+      this.canSubmit = false;
+    }
+  }
+
+  /* onSubmit(ev): void {
+       console.log('ev', ev);
+     } */
 
   showPanel(): void {
     (this.$refs.editContactPanel as SwipePanelComponentClass).show();
