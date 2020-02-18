@@ -23,6 +23,7 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { session, lightwallet, bccHelper } from '@evan.network/ui-session';
 import {
   profileUtils, EvanQueue, Dispatcher, DispatcherInstance,
 } from '@evan.network/ui';
@@ -210,7 +211,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * current user information
    */
   userInfo = {
-    address: dappBrowser.core.activeAccount(), // TODO: wording "address" vs "accountId" in different components
+    address: session.activeAccount(), // TODO: wording "address" vs "accountId" in different components
     addressBook: {} as any, // TODO: resolve any
     alias: '',
     loading: false,
@@ -403,7 +404,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   async handleLoginOnboarding(): Promise<void> {
     // check for logged in account and if its onboarded
-    const activeAccount = dappBrowser.core.activeAccount();
+    const activeAccount = session.activeAccount();
     let loggedIn = false;
     let isOnboarded = false;
 
@@ -412,7 +413,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       loggedIn = true;
 
       try {
-        isOnboarded = await dappBrowser.bccHelper.isAccountOnboarded(activeAccount);
+        isOnboarded = await bccHelper.isAccountOnboarded(activeAccount);
       } catch (ex) {
         // user isn't onboarded
       }
@@ -456,21 +457,21 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         executor;
 
       // if agent-executor is passed to the dapp-browser, do not try to unlock the current vault
-      const provider = dappBrowser.core.getCurrentProvider();
+      const provider = session.getCurrentProvider();
       if (provider !== 'agent-executor') {
         // set the password function
-        dappBrowser.lightwallet.setPasswordFunction(() => new Promise((resolve) => {
+        lightwallet.setPasswordFunction(() => new Promise((resolve) => {
           this.loading = false;
           this.login = (password: string): void => resolve(password);
         }));
 
         // unlock the profile directly
-        const vault = await dappBrowser.lightwallet.loadUnlockedVault();
+        const vault = await lightwallet.loadUnlockedVault();
         encryptionKey = vault.encryptionKey;
-        privateKey = dappBrowser.lightwallet.getPrivateKey(vault, activeAccount);
+        privateKey = lightwallet.getPrivateKey(vault, activeAccount);
       } else {
-        const agentExecutor = await dappBrowser.core.getAgentExecutor();
-        const coreRuntime = dappBrowser.bccHelper.getCoreRuntime();
+        const agentExecutor = await session.getAgentExecutor();
+        const coreRuntime = await bccHelper.shortHandCreateDefaultRuntime('0x000');
 
         encryptionKey = agentExecutor.key;
         executor = new bcc.ExecutorAgent({
@@ -486,13 +487,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       }
 
       // setup runtime and save it to the axios store
-      this.$store.state.runtime = await dappBrowser.bccHelper.createDefaultRuntime(
-        bcc,
+      this.$store.state.runtime = await bccHelper.shortHandCreateDefaultRuntime(
         activeAccount,
         encryptionKey,
         privateKey,
         JSON.parse(JSON.stringify(dappBrowser.config)),
-        null,
         null,
         { executor },
       );
@@ -520,7 +519,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   async loadUserSpecific(): Promise<void> {
     this.userInfo.loading = true;
-    this.userInfo.address = dappBrowser.core.activeAccount();
+    this.userInfo.address = session.activeAccount();
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();

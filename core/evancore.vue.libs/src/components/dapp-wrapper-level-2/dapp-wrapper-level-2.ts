@@ -18,15 +18,12 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // evan.network imports
 import EvanComponent from '../../component';
 import DAppWrapperUtils from '../dapp-wrapper/utils';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 
 /**
@@ -78,7 +75,7 @@ export default class DAppWrapperLevel2Component extends mixins(EvanComponent) {
       // enable sidebar level 2 handler on small devices for displaying menu button
       window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-2-enable'));
     } else {
-      dappBrowser.utils.log(`dapp-wrapper-sidebar-2 element not included within an evan
+      dappBrowser.utils.devLog(`dapp-wrapper-sidebar-2 element not included within an evan
         dapp wrapper...`, 'warning');
     }
 

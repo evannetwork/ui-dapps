@@ -21,6 +21,7 @@ import {
   DAppLoaderComponent,
   RouteRegistrationInterface,
 } from '@evan.network/ui-vue-core';
+import { session } from '@evan.network/ui-session';
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
@@ -39,7 +40,7 @@ import ProfileWalletComponent from './components/wallet/wallet.vue';
 const redirectToDefault = (to, childPath = 'detail'): string => [
   to.path.split(`/profile.vue.${dappBrowser.getDomainName()}`)[0],
   `profile.vue.${dappBrowser.getDomainName()}`,
-  dappBrowser.core.getAccountId(),
+  session.getAccountId(),
   childPath,
 ].join('/');
 

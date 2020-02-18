@@ -17,16 +17,16 @@
   the following URL: https://evan.network/license/
 */
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { utils } from '@evan.network/ui-dapp-browser';
 
 import axios from 'axios';
 import { agentUrl } from '@evan.network/ui';
+import { bccHelper } from '@evan.network/ui-session';
 
-const coreRuntime = dappBrowser.bccHelper.coreRuntimes[bcc.instanceId];
 let notarySmartAgentAccountId = '0xD2Ce53253e56C0F7AF7A4AED096AEC11e59A2024';
 let verificationCost = '200000000000000000000'; // 200 EVE
 
-if (coreRuntime.environment === 'testcore') {
+if (utils.environment === 'testcore') {
   notarySmartAgentAccountId = '0x74479766e4997F397942cc607dc59f7cE5AC70b2';
   verificationCost = '2000000000000000000'; // 2 EVE
 }

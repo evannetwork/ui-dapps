@@ -24,6 +24,7 @@ import axios from 'axios';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 import { agentUrl } from '@evan.network/ui';
 import { EvanForm, EvanFormControl, getDomainName } from '@evan.network/ui-vue-core';
 
@@ -441,7 +442,7 @@ export default class TwinSignUp extends mixins(SignUp) {
       }, 2000);
     } catch (ex) {
       // reset all steps of proile creation
-      dappBrowser.utils.log(ex.message, 'error');
+      utils.log(ex.message, 'error');
       this.creatingProfile = 0;
       this.creationTime = -1;
       this.recaptchaToken = null;

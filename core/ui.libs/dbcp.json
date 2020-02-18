@@ -5,7 +5,8 @@
       "dependencies": {
         "dexie.libs": "2.0.4",
         "evan.bootstrap.libs": "^4.3.1",
-        "materialicons.libs": "^4.5.0"
+        "materialicons.libs": "^4.5.0",
+        "uisession.libs": "^1.0.0"
       },
       "entrypoint": "ui.libs.js",
       "files": [
@@ -39,6 +40,7 @@
     "versions": {
       "1.0.0": "QmcMekTfYhhWLvnHo3YwSkw5fWo77FNHLrqgLfmcBYCerN",
       "1.1.0": "QmWGG5kwUJfgoHRRbJYNNAnE32mWLvRYH3Fc288v2CJaNb",
+      "1.10.0": "QmcK9yFh5YnciVXFavsFRVTWaYTHN4fd6rxGDtztfmG7hA",
       "1.2.0": "QmabmMJyEWGjhokFaciotknsN2MQ78yNmm4SAZgB6xisVs",
       "1.3.0": "QmexEFmyDkxVPwC7Nv4mbo3cSRyHowzhh1FkMFx65c5YUA",
       "1.3.1": "QmW68VgS93xTLmoFaxZ7GzK98sp9WrPXFqiWtcTRsZSJdY",
@@ -50,8 +52,7 @@
       "1.7.1": "Qma2wvhCZeHbjdfw6R4CvECeuECoRW9SfuPG7Mn7Rm6b38",
       "1.7.2": "QmYLrqjVhPUKY2RvE8qSu5HeNTvm5A5u7GXHamQhuFNSAL",
       "1.7.3": "QmU7Zy3VodQDJ2XzLiY44aJurcZvAu6VjfXDe3z3CKfmhw",
-      "1.8.0": "QmNktHbW8naQWrwsEVshUFLmfxvrANHnYTrFHymsw9XhbK",
-      "1.10.0": "QmcK9yFh5YnciVXFavsFRVTWaYTHN4fd6rxGDtztfmG7hA"
+      "1.8.0": "QmNktHbW8naQWrwsEVshUFLmfxvrANHnYTrFHymsw9XhbK"
     }
   }
 }

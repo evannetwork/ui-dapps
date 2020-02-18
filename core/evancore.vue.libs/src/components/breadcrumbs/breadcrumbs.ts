@@ -18,15 +18,13 @@
 */
 
 // vue imports
-import Vue from 'vue';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
 import EvanComponent from '../../component';
 import DAppWrapperUtils from '../dapp-wrapper/utils';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 /**
  * Breadcrumb component that parses the currents browser url hash and displays a breadcrumb
@@ -171,7 +169,7 @@ export default class BreadcrumbsComponent extends mixins(EvanComponent) {
         // append the current element
         this.dappWrapperBreadcrumb.appendChild(this.$el);
       } else {
-        dappBrowser.utils.log(`dapp-wrapper-sidebar-2 element not included within an evan
+        dappBrowser.utils.devLog(`dapp-wrapper-sidebar-2 element not included within an evan
           dapp wrapper...`, 'warning');
       }
     }

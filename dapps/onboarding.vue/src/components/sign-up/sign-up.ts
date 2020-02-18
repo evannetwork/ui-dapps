@@ -23,7 +23,8 @@ import Component, { mixins } from 'vue-class-component';
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 interface ProfileFormInterface extends EvanForm {
   accountType: EvanFormControl;
@@ -233,7 +234,7 @@ export default class SignUp extends mixins(EvanComponent) {
 
     // set initial mnemonic from query params or use an generated one
     this.mnemonic = this.mnemonic || this.$route.query.mnemonic
-      || dappBrowser.lightwallet.generateMnemonic();
+      || lightwallet.generateMnemonic();
     this.originalMnemonic = this.mnemonic;
 
     // include the google recaptcha
@@ -335,12 +336,12 @@ export default class SignUp extends mixins(EvanComponent) {
   async getProfileCreationData() {
     const password = this.profileForm.password0.value;
     // load the vault using the current inputs and create a bcc profile runtime
-    const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, password);
+    const vault = await lightwallet.getNewVault(this.mnemonic, password);
     const provider = 'internal';
-    const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
-    const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
+    const accountId = lightwallet.getAccounts(vault, 1)[0];
+    const privateKey = lightwallet.getPrivateKey(vault, accountId);
 
-    const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
+    const runtime = await bccHelper.createDefaultRuntime(
       bcc, accountId, vault.encryptionKey, privateKey,
     );
 
@@ -390,7 +391,7 @@ export default class SignUp extends mixins(EvanComponent) {
         }, 2000);
       } catch (ex) {
         // reset all steps of proile creation
-        dappBrowser.utils.log(ex.message, 'error');
+        utils.log(ex.message, 'error');
         this.creatingProfile = 0;
         this.creationTime = -1;
         this.recaptchaToken = null;
@@ -418,8 +419,8 @@ export default class SignUp extends mixins(EvanComponent) {
     }
 
     // profile is setup!
-    await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password);
-    dappBrowser.core.setCurrentProvider('internal');
+    await lightwallet.createVaultAndSetActive(this.mnemonic, password);
+    session.setCurrentProvider('internal');
 
     // set encrypted mnemonic for temporary usage
     this.persistMnemonic(runtime, vault);
@@ -443,7 +444,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * Navigates to the previous opened application or use the default dapp ens.
    */
   navigateToEvan() {
-    const domainName = dappBrowser.getDomainName();
+    const domainName = getDomainName();
     // do not use $router.push to force navigation triggering!
     window.location.hash = `/${this.$route.query.origin
       || `dashboard.vue.${domainName}/profile.vue.${domainName}`}`;

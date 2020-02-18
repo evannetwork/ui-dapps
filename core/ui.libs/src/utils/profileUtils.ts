@@ -125,3 +125,29 @@ export function getProfileTypeIcon(type: string): string {
       return 'mdi mdi-help-circle-outline';
   }
 }
+
+/**
+ * Returns all contacts from current user addressbook
+ *
+ * @param      {any}      runtime     The runtime
+ * @param      {boolean}  unfiltered  default "false", if true response containing own contact and
+ *                                    test entries, as well.
+ */
+export async function getContacts(
+  runtime: any,
+  unfiltered = false,
+): Promise<{label: string; value: string}[]> {
+  // load the contacts for the current user, so we can display correct contact alias
+  const addressBook = (await runtime.profile.getAddressBook()).profile;
+
+  const contacts = Object.keys(addressBook).map((key) => ({
+    label: addressBook[key].alias,
+    value: key,
+  }));
+
+  if (unfiltered) {
+    return contacts;
+  }
+
+  return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
+}

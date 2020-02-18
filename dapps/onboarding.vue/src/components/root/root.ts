@@ -24,24 +24,25 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { loading } from '@evan.network/ui-dapp-browser';
+import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 @Component({ })
 export default class Root extends mixins(EvanComponent) {
   async created() {
     // if we are directly on the onboarding, the signup is disabled
     //  => redirect user to the dashboard, so this dapp will handle the correct vue logic
-    const activeAccount = dappBrowser.core.activeAccount();
+    const activeAccount = session.activeAccount();
 
     // check if a user is already logged in, if yes, navigate to the signed in route
     if (activeAccount && window.localStorage['evan-vault']) {
       let isOnboarded = false;
       try {
-        isOnboarded = await dappBrowser.bccHelper.isAccountOnboarded(activeAccount);
+        isOnboarded = await bccHelper.isAccountOnboarded(activeAccount);
       } catch (ex) { }
 
       if (isOnboarded) {
-        dappBrowser.loading.finishDAppLoading();
+        loading.finishDAppLoading();
         return this.$router.push({ name: 'signed-in', query: this.$route.query });
       }
     }
@@ -51,8 +52,6 @@ export default class Root extends mixins(EvanComponent) {
       return this.$router.push({ name: 'welcome', query: this.$route.query });
     }
 
-    dappBrowser.loading.finishDAppLoading();
+    loading.finishDAppLoading();
   }
 }
-
-

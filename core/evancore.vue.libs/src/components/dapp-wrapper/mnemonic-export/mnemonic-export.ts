@@ -18,8 +18,9 @@
 */
 
 // vue imports
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { lightwallet } from '@evan.network/ui-session';
 import * as bcc from '@evan.network/api-blockchain-core';
+
 import Component, { mixins } from 'vue-class-component';
 import EvanComponent from '../../../component';
 
@@ -33,9 +34,13 @@ import EvanComponent from '../../../component';
 @Component({})
 export default class MnemonicExport extends mixins(EvanComponent) {
   mnemonic = null;
+
   address = '';
+
   alias = '';
+
   understood = false;
+
   now = null;
 
   /**
@@ -74,7 +79,7 @@ export default class MnemonicExport extends mixins(EvanComponent) {
     if (window.localStorage['evan-mnemonic']) {
       const runtime = this.getRuntime();
       const encrypted = localStorage['evan-mnemonic'];
-      const vault = await dappBrowser.lightwallet.loadUnlockedVault();
+      const vault = await lightwallet.loadUnlockedVault();
       const cryptor = runtime.sharing.options.cryptoProvider.getCryptorByCryptoAlgo(
         runtime.sharing.options.defaultCryptoAlgo
       );

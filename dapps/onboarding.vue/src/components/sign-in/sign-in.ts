@@ -18,13 +18,13 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { getDomainName } from '@evan.network/ui-dapp-browser';
+import { bccHelper, session, lightwallet } from '@evan.network/ui-session';
 
 
 interface ProfileFormPasswordInterface extends EvanForm {
@@ -102,11 +102,11 @@ export default class SignIn extends mixins(EvanComponent) {
     this.checking = true;
 
     // check if the current mnemonic is valid using an "dummt vault" with wrong password
-    const vault = await dappBrowser.lightwallet.getNewVault(this.mnemonic, 'evan');
-    const accountId = dappBrowser.lightwallet.getAccounts(vault, 1)[0];
+    const vault = await lightwallet.getNewVault(this.mnemonic, 'evan');
+    const accountId = lightwallet.getAccounts(vault, 1)[0];
 
     // check if the current account is onboarded
-    this.profileExists = await dappBrowser.bccHelper.isAccountOnboarded(accountId);
+    this.profileExists = await bccHelper.isAccountOnboarded(accountId);
 
     // when it's onboarded, navigte to password dialog
     if (this.profileExists) {
@@ -136,7 +136,7 @@ export default class SignIn extends mixins(EvanComponent) {
 
       // get the current account id
       try {
-        password._error = !(await dappBrowser.bccHelper.isAccountPasswordValid(bcc,
+        password._error = !(await bccHelper.isAccountPasswordValid(bcc,
           this.accountId, password.value));
       } catch (ex) {
         password._error = true;
@@ -145,8 +145,8 @@ export default class SignIn extends mixins(EvanComponent) {
       /* if the password is correct, create the correct active vault in dapp-browser, so other
          applications can access it */
       if (!password._error) {
-        await dappBrowser.lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
-        dappBrowser.core.setCurrentProvider('internal');
+        await lightwallet.createVaultAndSetActive(this.mnemonic, password.value);
+        session.setCurrentProvider('internal');
 
         if (!this.$route.query.inviteeAlias) {
           this.navigateToEvan();
@@ -173,7 +173,7 @@ export default class SignIn extends mixins(EvanComponent) {
    */
   navigateToEvan() {
     // do not use $router.push to force navigation triggering!
-    const domainName = dappBrowser.getDomainName();
+    const domainName = getDomainName();
     // do not use $router.push to force navigation triggering!
     window.location.hash = `/${this.$route.query.origin
       || `dashboard.vue.${domainName}/assets.${domainName}`}`;

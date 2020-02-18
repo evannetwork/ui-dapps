@@ -4,8 +4,8 @@
     "dapp": {
       "dependencies": {
         "axios.vue.libs": "^0.18.0",
-        "bcc": "^2.17.0",
         "i18n.vuex.libs": "1.11.0",
+        "lodash.libs": "4.17.15",
         "moment.libs": "^2.0.0",
         "moment.vue.libs": "4.0.0",
         "qrcodejs.libs": "^1.0.0",
@@ -13,9 +13,9 @@
         "select.vue.libs": "^3.2.0",
         "toasted.vue.libs": "^1.1.27",
         "ui.libs": "^1.10.0",
+        "uisession.libs": "^1.0.0",
         "vue.libs": "^2.5.0",
-        "vuex.libs": "3.1.0",
-        "lodash.libs": "4.17.15"
+        "vuex.libs": "3.1.0"
       },
       "entrypoint": "evancore.vue.libs.js",
       "files": [

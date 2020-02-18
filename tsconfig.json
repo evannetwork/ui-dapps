@@ -21,6 +21,9 @@
       "@evan.network/ui-countries": [
         "./libs/countries.libs"
       ],
+      "@evan.network/ui-session": [
+        "./core/ui-session"
+      ],
       "@evan.network/ui-vue-core": [
         "./core/evancore.vue.libs"
       ],

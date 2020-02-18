@@ -18,13 +18,12 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 // evan.network imports
 import { getNextDApp } from '../../routing';
 import EvanComponent from '../../component';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
 /**
  * Dynamic component that loads the next not loaded dapp within the window location hash.

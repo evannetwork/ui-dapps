@@ -17,28 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-/**
- * Returns all contacts from current user addressbook
- *
- * @param      {any}      runtime     The runtime
- * @param      {boolean}  unfiltered  default "false", if true response containing own contact and
- *                                    test entries, as well.
- */
-export async function getContacts(
-  runtime: any,
-  unfiltered = false,
-): Promise<{label: string; value: string}[]> {
-  // load the contacts for the current user, so we can display correct contact alias
-  const addressBook = (await runtime.profile.getAddressBook()).profile;
+// map the original ui path to ui.libs
+import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-  const contacts = Object.keys(addressBook).map((key) => ({
-    label: addressBook[key].alias,
-    value: key,
-  }));
+import * as bccHelper from './bccHelper';
+import EvanLightwallet from './lightwallet';
+import EvanSession from './session';
+import * as web3Helper from './web3Helper';
 
-  if (unfiltered) {
-    return contacts;
-  }
+dappBrowser.System.map['@evan.network/ui-session'] = `uisession.libs.${dappBrowser.getDomainName()}!dapp-content`;
 
-  return contacts.filter((entry) => entry.value !== runtime.activeAccount && !/@/.test(entry.value));
-}
+const lightwallet = EvanLightwallet;
+const session = EvanSession;
+
+export {
+  bccHelper,
+  lightwallet,
+  session,
+  web3Helper,
+};

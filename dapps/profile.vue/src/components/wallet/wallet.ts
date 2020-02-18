@@ -17,7 +17,7 @@
   the following URL: https://evan.network/license/
 */
 
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { session } from '@evan.network/ui-session';
 import Component, { mixins } from 'vue-class-component';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
@@ -70,6 +70,6 @@ export default class WalletComponent extends mixins(EvanComponent) {
   }
 
   async loadBalance() {
-    this.balance = parseFloat(await dappBrowser.core.getBalance((this as any).getRuntime().activeAccount));
+    this.balance = parseFloat(await session.getBalance((this as any).getRuntime().activeAccount));
   }
 }
