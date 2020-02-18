@@ -17,17 +17,29 @@
   the following URL: https://evan.network/license/
 */
 
+@import './utils';
+
 /**
  * https://loading.io/css/
  */
 .evan {
-  .spinner-border {
-    min-width: 2rem;
-    min-height: 2rem;
+  .evan-loading {
+    color: cssVar('primary');
   }
 
-  .spinner-border-sm {
-    min-width: 1rem;
-    min-height: 1rem;
+  // Helper class to seamlessly replace an icon-button with an evan-loading 
+  .evan-loading.icon-replacer {
+    display: flex;
+
+    width: 40px;
+    height: 40px; // mimic icon dimensions
+
+    .spinner-border {
+      width: 25px;
+      height: 25px;
+      margin: auto;
+
+      color: cssVar('text-color');
+    }
   }
 }

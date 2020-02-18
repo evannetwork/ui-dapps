@@ -10,10 +10,10 @@
     "CSS"
   ],
   "main": "dist/index.js",
-  "name": "@evan.network/profile.vue",
+  "name": "@evan.network/dashboard.vue",
   "scripts": {
     "build": "gulp --gulpfile ../../scripts/dapp/gulpfile.js --dapp $(pwd)"
   },
   "typings": "dist/index.d.ts",
-  "version": "3.5.1"
+  "version": "3.6.0"
 }

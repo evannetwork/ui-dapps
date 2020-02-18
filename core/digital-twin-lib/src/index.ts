@@ -18,18 +18,46 @@
 */
 
 import { getDomainName } from '@evan.network/ui-vue-core';
-import { System, } from '@evan.network/ui-dapp-browser';
+import { System } from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from './dispatchers';
 import DAppContainer from './DAppContainer';
 import DAppTwin from './DAppTwin';
 import translations from './i18n';
+import { DBCPDescriptionInterface } from './DAppContract';
+import { DigitalTwinResponse, DigitalTwin } from './interfaces/DigitaltwinResponse';
+import {
+  TransactionsResponse,
+  TwinTransaction,
+} from './interfaces/DigitalTwinTransaction';
+import {
+  ValidationErrorInterface,
+  TemplateErrorInterface,
+} from './interfaces/TemplateValidationErrors';
+import { SearchService } from './SearchService';
+import PermissionUtils from './utils/PermissionUtils';
+import SharingUtils, { BmailContent } from './utils/SharingUtils';
+import { Permissions, PermissionsContainer } from './interfaces/Permissions';
 
+export * from './dispatchers';
 export {
-  dispatchers,
-  translations,
+  BmailContent,
   DAppContainer,
   DAppTwin,
+  DBCPDescriptionInterface,
+  DigitalTwin,
+  DigitalTwinResponse,
+  dispatchers,
+  Permissions,
+  PermissionsContainer,
+  PermissionUtils,
+  SearchService,
+  SharingUtils,
+  TemplateErrorInterface,
+  TransactionsResponse,
+  translations,
+  TwinTransaction,
+  ValidationErrorInterface,
 };
 
-System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${ getDomainName() }!dapp-content`;
+System.map['@evan.network/digital-twin-lib'] = `lib.digital-twin.${getDomainName()}!dapp-content`;

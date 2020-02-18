@@ -18,14 +18,14 @@
 */
 
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { Container, ContainerShareConfig } from '@evan.network/api-blockchain-core';
+import { Container, ContainerShareConfig, ContainerOptions } from '@evan.network/api-blockchain-core';
 import { Dispatcher, DispatcherInstance } from '@evan.network/ui';
 
 const dispatcher = new Dispatcher(
   `lib.digital-twin.${dappBrowser.getDomainName()}`,
   'containerShareDispatcher',
   40 * 1000,
-  '_digital-twin-lib.dispatchers.container.share'
+  '_digital-twin-lib.dispatchers.container.share',
 );
 
 /**
@@ -33,12 +33,10 @@ const dispatcher = new Dispatcher(
  *
  * @return     {Container}  The container.
  */
-const getContainer = (runtime, address) => {
-  return new Container(<any>runtime, {
-    accountId: runtime.activeAccount,
-    address: address,
-  });
-};
+const getContainer = (runtime, address): Container => new Container(runtime as ContainerOptions, {
+  accountId: runtime.activeAccount,
+  address,
+});
 
 /**
  * share the properties for single container
@@ -46,12 +44,12 @@ const getContainer = (runtime, address) => {
  * @param runtime
  * @param data
  */
-const updateSharings = (runtime, data) => {
+const updateSharings = async (runtime, data): Promise<void> => {
   if (!data.shareConfigs) {
     return;
   }
 
-  return getContainer(runtime, data.address).shareProperties(data.shareConfigs);
+  await getContainer(runtime, data.address).shareProperties(data.shareConfigs);
 };
 
 /**
@@ -60,50 +58,36 @@ const updateSharings = (runtime, data) => {
  * @param runtime
  * @param data
  */
-const updateUnsharings = (runtime, data) => {
+const updateUnsharings = async (runtime, data): Promise<void> => {
   if (!data.unshareConfigs) {
     return;
   }
 
-  return getContainer(runtime, data.address).unshareProperties(data.unshareConfigs);
+  await getContainer(runtime, data.address).unshareProperties(data.unshareConfigs);
 };
 
 dispatcher
   // set new shared fields
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const sharingArr = Array.isArray(data) ? data : [ data ];
-
-    if (Array.isArray(data)) {
-      await Promise.all(data.map(async (shareData: any) => {
-        await updateSharings(instance.runtime, shareData);
-      }));
-    } else {
-      await updateSharings(instance.runtime, data);
-    }
+  .step(async (instance: DispatcherInstance, data) => {
+    const sharings = Array.isArray(data) ? data : [data];
+    await Promise.all(sharings.map(async (toShare) => updateSharings(instance.runtime, toShare)));
   })
   // remove "un-shared" fields
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const sharingArr = Array.isArray(data) ? data : [ data ];
-
-    if (Array.isArray(data)) {
-      await Promise.all(data.map(async (shareData: any) => {
-        await updateUnsharings(instance.runtime, shareData);
-      }));
-    } else {
-      await updateUnsharings(instance.runtime, data);
-    }
+  .step(async (instance: DispatcherInstance, data) => {
+    const sharings = Array.isArray(data) ? data : [data];
+    await Promise.all(sharings.map(async (toShare) => updateUnsharings(instance.runtime, toShare)));
   })
   // send b-mails
-  .step(async (instance: DispatcherInstance, data: any) => {
-    const sharingArr = Array.isArray(data) ? data : [ data ];
+  .step(async (instance: DispatcherInstance, data) => {
+    const sharingArr = Array.isArray(data) ? data : [data];
 
-    await Promise.all(sharingArr.map(async (sharingData: any) => {
+    await Promise.all(sharingArr.map(async (sharingData) => {
       if (sharingData.bMailContent || data.bMailContent) {
         await Promise.all(sharingData.shareConfigs.map(async (shareConfig: ContainerShareConfig) => {
           await instance.runtime.mailbox.sendMail(
             sharingData.bMailContent || data.bMailContent,
             instance.runtime.activeAccount,
-            shareConfig.accountId
+            shareConfig.accountId,
           );
         }));
       }

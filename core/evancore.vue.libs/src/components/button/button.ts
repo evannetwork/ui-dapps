@@ -19,8 +19,8 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import EvanComponent from '../../component';
 import { Prop } from 'vue-property-decorator';
+import EvanComponent from '../../component';
 
 /**
  * Wrapper component for button elements.
@@ -73,7 +73,7 @@ export default class Button extends mixins(EvanComponent) {
    */
   @Prop({
     type: String,
-    validator: value => value.slice(0, 3) === 'mdi' // TODO: validator seems not to be called
+    validator: (value) => value.slice(0, 3) === 'mdi', // TODO: validator seems not to be called
   }) icon: string;
 
   /**
@@ -82,9 +82,9 @@ export default class Button extends mixins(EvanComponent) {
   @Prop({
     type: String,
     default: 'right',
-    validator: (value: string) => {
-      return ['left', 'right'].indexOf(value) !== -1; // TODO: validator seems not to be called
-    }
+    // TODO: validator seems not to be called
+    validator: (value: string) => ['left', 'right'].indexOf(value) !== -1
+    ,
   }) iconPosition;
 
   /**
@@ -93,7 +93,7 @@ export default class Button extends mixins(EvanComponent) {
   @Prop({ type: Boolean, default: false }) isLoading: boolean;
 
   /**
-   * Button Label.
+   * Native HTML Button type
    */
   @Prop({ type: String, default: 'button' }) nativeType: string;
 
@@ -102,13 +102,13 @@ export default class Button extends mixins(EvanComponent) {
    * added as usual bootstrap buttons.
    */
   knownTypes = {
-    'icon': 'btn-icon-secondary',
+    icon: 'btn-icon-secondary',
     'icon-primary': 'btn-icon-primary',
     'icon-secondary': 'btn-icon-secondary',
-    'link': 'btn-link',
-    'primary': 'btn-primary',
-    'secondary': 'btn-outline-primary',
-    'text': 'btn-text-primary',
+    link: 'btn-link',
+    primary: 'btn-primary',
+    secondary: 'btn-outline-primary',
+    text: 'btn-text-primary',
     'text-primary': 'btn-text-primary',
     'text-secondary': 'btn-text-secondary',
     'text-filter': 'btn-text-filter',

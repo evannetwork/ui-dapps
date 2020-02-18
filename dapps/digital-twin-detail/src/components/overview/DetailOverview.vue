@@ -18,16 +18,35 @@
 */
 
 <template>
-  <div>
-    <h1>{{ '_twin-details.overview.overview-title' || translate }}</h1>
+  <div class="d-flex">
+    <div class="content">
+      <!-- TODO: Use proper DID -->
+      <detail-overview-general
+        v-if="twin"
+        class="mb-3"
+        :did="`did:evan:${twin.description.identity}`"
+        :owner-name="twin.ownerName"
+        :owner-address="twin.ownerAddress"
+        :created-at="twin.createdAt"
+      />
+
+      <detail-overview-transactions
+        :transactions="transactions"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import EvanTwinDetailOverviewComponent from './DetailOverview';
-export default EvanTwinDetailOverviewComponent;
+import DetailOverviewComponent from './DetailOverview';
+
+export default DetailOverviewComponent;
 </script>
 
 <style lang="scss" scoped>
-// @import "EvanTwinDetailOverview.scss";
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 56px;
+}
 </style>

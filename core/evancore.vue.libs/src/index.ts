@@ -17,18 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-// map the original vue path to vue.libs
 import { System } from '@evan.network/ui-dapp-browser';
-import { getDomainName } from './utils';
-import EvanComponent from './component';
 
-System.map['@evan.network/ui-vue-core'] = `evancore.vue.libs.${ getDomainName() }!dapp-content`;
+// map the original vue path to vue.libs
+import EvanComponent from './component';
+import EvanForm from './form';
+import EvanFormControl from './formControl';
+import { getDomainName } from './utils';
+import { NavEntryInterface } from './components/nav-list/NavEntryInterface';
+
+System.map['@evan.network/ui-vue-core'] = `evancore.vue.libs.${getDomainName()}!dapp-content`;
 
 // export evan vue components, interfaces and functions
 export * from './components/registry';
-export * from './forms';
 export * from './interfaces';
 export * from './routing';
 export * from './utils';
 export * from './vue-core';
-export { EvanComponent };
+export { NavEntryInterface };
+export { EvanComponent, EvanForm, EvanFormControl };

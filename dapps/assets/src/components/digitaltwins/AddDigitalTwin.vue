@@ -18,78 +18,72 @@
 */
 
 <template>
-  <form id="digitalTwinForm" ref="digitalTwinForm" @submit.prevent="addDigitalTwin">
+  <form
+    id="digitalTwinForm"
+    ref="digitalTwinForm"
+    @submit.prevent="addDigitalTwin"
+  >
     <evan-swipe-panel
       ref="addDigitalTwinPanel"
       alignment="right"
       type="default"
       class="light"
-      :showBackdrop="true"
-      :hideCloseButton="true"
+      :show-backdrop="true"
+      :hide-close-button="true"
       :title="$t('_assets.digitaltwins.add-digitaltwin-title')"
     >
-      <label class="col-form-label" for="new-twin-picture">
-        {{ '_assets.digitaltwins.add-image' | translate }}
-        <small class="text-muted">({{ '_assets.optional' | translate }})</small>
-      </label>
-      <div class="my-3 d-flex justify-content-center">
-        <evan-profile-picture
-          id="new-twin-picture"
-          type="device"
-          :accountName="name"
-          :isEditable="true"
-          :src="image ? image : null"
-          @changed="handleImageChange"
+      <evan-form-dbcp
+        :title="'_twin-detail.data.general.information-title' | translate"
+        :type="'_twin-detail.data.general.type-value' | translate"
+        only-form="true"
+        @init="dbcpComp = $event"
+      >
+        <p class="form-group text-justify">
+          {{ '_assets.digitaltwins.template-desc' | translate }}
+          <a
+            href="https://api-blockchain-core.readthedocs.io/en/latest/contracts/digital-twin-usage-examples.html#handling-templates-and-plugins"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Twin API documentation"
+          >{{ '_assets.digitaltwins.template-desc-link' | translate }}</a>
+        </p>
+
+        <evan-form-control-select
+          id="templateSelect"
+          ref="templateSelector"
+          v-model="selectedTemplate"
+          :label="'_assets.digitaltwins.template-select-label' | translate"
+          :options="presetTemplates"
+          :placeholder="
+            '_assets.digitaltwins.template-select-placeholder' | translate
+          "
+          :required="true"
+          @change="handleTemplateSelectChange"
         />
-      </div>
-      <evan-form-control-input
-        v-model="name"
-        :label="$t('_assets.digitaltwins.name')"
-        :placeholder="$t('_assets.digitaltwins.name-placeholder')"
-        :required="true"
-      />
 
-      <evan-form-control-textarea
-        v-model="description"
-        :label="$t('_assets.digitaltwins.desc')"
-        :placeholder="$t('_assets.digitaltwins.desc-placeholder')"
-      />
+        <evan-file-input
+          accept=".json"
+          :placeholder="'_assets.digitaltwins.drag-desc' | translate"
+          @input="handleFileUpload"
+        />
+      </evan-form-dbcp>
 
-      <p>
-        {{ '_assets.digitaltwins.template-desc' | translate }}
-        <a
-          href="https://api-blockchain-core.readthedocs.io/en/latest/contracts/digital-twin-usage-examples.html#handling-templates-and-plugins"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Twin API documentation"
+      <div v-if="templateErrors && templateErrors.length > 0">
+        <h4 class="text-warning">
+          Errors occured in template
+        </h4>
+        <div
+          v-for="pluginErrors in templateErrors"
+          :key="pluginErrors.name"
         >
-          {{ '_assets.more' | translate }}
-        </a>
-      </p>
-
-      <evan-form-control-select
-        id="templateSelect"
-        :label="'_assets.digitaltwins.template-select-label' | translate"
-        :options="presetTemplates"
-        :placeholder="'_assets.digitaltwins.template-select-placeholder' | translate"
-        :required="true"
-        :value="selectedTemplate"
-        @change="handleTemplateSelectChange"
-        ref="templateSelector"
-      />
-
-      <evan-file-input
-        accept=".json"
-        @input="handleFileUpload"
-        :placeholder="'_assets.digitaltwins.drag-desc' | translate"
-      ></evan-file-input>
-
-      <div v-if="templateErrors.length > 0">
-        <h4 class="text-warning">Errors occured in template</h4>
-        <div v-for="pluginErrors in templateErrors" :key="pluginErrors.name">
-          <h5 v-if="pluginErrors.errors">{{ pluginErrors.name }}</h5>
+          <h5 v-if="pluginErrors.errors">
+            {{ pluginErrors.name }}
+          </h5>
           <ul v-if="pluginErrors.errors">
-            <li v-for="error in pluginErrors.errors" :key="error.property">
+            <li
+              v-for="error in pluginErrors.errors"
+              :key="error.property"
+            >
               <span>{{ error.message }}</span>
             </li>
           </ul>
@@ -100,14 +94,15 @@
         <div class="d-flex">
           <evan-button
             type="secondary"
-            @click="closePanel"
             :label="'_assets.digitaltwins.cancel' | translate"
+            @click="closePanel"
           />
           <evan-button
             type="primary"
             native-type="submit"
             class="ml-3 flex-grow-1"
-            :disabled="!(name && template)"
+            :disabled="!(dbcpComp && dbcpComp.dbcpForm.isValid && template)"
+            :is-loading="loading"
             :label="'_assets.digitaltwins.create-digitaltwin-btn' | translate"
           />
         </div>
@@ -118,9 +113,10 @@
 
 <script lang="ts">
 import AddDigitalTwinComponent from './AddDigitalTwin';
+
 export default AddDigitalTwinComponent;
 </script>
 
 <style lang="scss" scoped>
-  @import './AddDigitalTwins.scss';
+@import './AddDigitalTwin.scss';
 </style>

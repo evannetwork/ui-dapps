@@ -38,7 +38,9 @@ export default class ProfileSettingsComponent extends mixins(EvanComponent) {
    * dev mode settings
    */
   devMode = false;
+
   devDomainEnabled = false;
+
   devDomain = '';
 
   /**
@@ -50,24 +52,13 @@ export default class ProfileSettingsComponent extends mixins(EvanComponent) {
    * Load the mail details
    */
   async created() {
-    const runtime = (<any>this).getRuntime();
-
     this.devMode = window.localStorage['evan-developer-mode'] === 'true';
     this.devDomainEnabled = !!window.localStorage['evan-dev-dapps-domain'];
-    this.devDomain = window.localStorage['evan-dev-dapps-domain'] ||
-      `test.${ dappBrowser.getDomainName() }`;
+    this.devDomain = window.localStorage['evan-dev-dapps-domain']
+      || `test.${dappBrowser.getDomainName()}`;
     this.language = window.localStorage['evan-language'] || '';
 
     this.loading = false;
-  }
-
-    /**
-   * Checks if currently the evan-dapps-domain is enabled.
-   *
-   * @return     {string}  the defined domain.
-   */
-  getDevDomain() {
-    return window.localStorage['evan-dev-dapps-domain'];
   }
 
   /**

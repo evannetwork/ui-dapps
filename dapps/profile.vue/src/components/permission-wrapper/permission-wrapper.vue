@@ -19,10 +19,15 @@
 
 <template>
   <div>
-    <div class="mt-2 mb-8"
-      v-if="!entryName || $store.state.profileDApp.permissions.read.indexOf(entryName) === -1">
-      <div class="d-flex justify-content-between align-items-center pb-1" v-if="!onlyForm">
-        <h5 class="my-0 py-0 text-uppercase font-weight-bold">
+    <div
+      v-if="!entryName || $store.state.profileDApp.permissions.read.indexOf(entryName) === -1"
+      class="mt-2 mb-8"
+    >
+      <div
+        v-if="!onlyForm"
+        class="d-flex justify-content-between align-items-center pb-1"
+      >
+        <h5 class="my-0 py-0 font-weight-bold">
           <i class="mdi mdi-lock mr-2" />
           {{ `_profile.not-permitted.${ entryName }` | translate }}
         </h5>
@@ -31,11 +36,12 @@
         {{ '_profile.not-permitted.desc' | translate }}
       </p>
     </div>
-    <slot v-else></slot>
+    <slot v-else />
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './permission-wrapper';
-  export default Component;
+import Component from './permission-wrapper';
+
+export default Component;
 </script>

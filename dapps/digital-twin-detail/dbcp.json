@@ -4,18 +4,19 @@
     "dapp": {
       "dependencies": {
         "bootstrap.vue.libs": "^2.1.0",
-        "lib.digital-twin": "^2.0.0",
-        "evancore.vue.libs": "^1.9.0"
+        "evancore.vue.libs": "^1.10.0",
+        "i18n.ajv": "^3.5.0",
+        "lib.digital-twin": "^2.0.0"
       },
       "entrypoint": "detail.digital-twin.js",
       "files": [
         "detail.digital-twin.js",
         "detail.digital-twin.css"
       ],
-      "origin": "QmUt3AybpEsg37F4DwWkAfJPjuvHtHrCNQu2n74gEA4riZ",
+      "origin": "QmP7YuubmjSjtDurDASBxoDfivQFy7S7UHPiXvnn94Nwjc",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "TODO",
@@ -36,6 +37,8 @@
       "evan"
     ],
     "version": "1.0.0",
-    "versions": {}
+    "versions": {
+      "1.0.0": "QmPjCNfvUGHkdNQwiwEqtMRARNdRDEoQeHRrwyYewLsoeQ"
+    }
   }
 }

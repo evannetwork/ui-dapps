@@ -19,19 +19,33 @@
 
 <template>
   <evan-form-control v-bind="$props">
-    <textarea class="form-control"
+    <div
+      v-if="prohibited"
+      class="prohibited"
+    >
+      <span>{{ '_evan.no-permission' | translate }}</span>
+      <i class="mdi mdi-eye-off-outline" />
+    </div>
+    <textarea
+      v-else
+      :id="id"
+      class="form-control"
       v-bind="$props"
       :class="{ 'is-invalid' : error }"
-      :id="id"
       :value="value"
       @blur="$emit('blur')"
-      @focus="$parent.$emit('setFocus')"
+      @focus="$parent.$emit('setFocus'); $emit('focus')"
       @input="$emit('input', $event.target.value)"
     />
   </evan-form-control>
 </template>
 
 <script lang="ts">
-  import Component from './textarea'
-  export default Component
+import Component from './textarea';
+
+export default Component;
 </script>
+
+<style lang="scss" scoped>
+  @import './textarea.scss';
+</style>

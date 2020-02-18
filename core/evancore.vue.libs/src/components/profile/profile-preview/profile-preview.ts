@@ -17,13 +17,15 @@
   the following URL: https://evan.network/license/
 */
 
-import { Dispatcher, cloneDeep, FileHandler, bccUtils, } from '@evan.network/ui';
+import {
+  Dispatcher, cloneDeep, FileHandler, profileUtils,
+} from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import EvanComponent from '../../../component';
 import { Prop, Watch } from 'vue-property-decorator';
+import EvanComponent from '../../../component';
 
 interface UserInfoInterface {
   accountName: string;
@@ -49,7 +51,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    * Size of the profile preview (default, sm, lg)
    */
   @Prop({
-    default: 'default'
+    default: 'default',
   }) size: string;
 
   /**
@@ -71,12 +73,13 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    * user information (alias, type, verification, ...)
    */
   userInfo: UserInfoInterface = null;
+
   originUserInfo: UserInfoInterface = null;
 
   /**
    * Watch for dispatcher updates
    */
-  listeners: Array<any> = [ ];
+  listeners: Array<any> = [];
 
   /**
    * Show a save button when everything has changed
@@ -93,15 +96,15 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
    */
   profile: bcc.Profile = null;
 
-  @Watch('$attrs')
-    onChildChanged(val: UserInfoInterface, oldVal: UserInfoInterface) {
-      Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
-    }
+  @Watch('$attrs') onChildChanged(val: UserInfoInterface, oldVal: UserInfoInterface): void {
+    Object.assign(this.userInfo, this.$attrs, { pictureSrc: this.$attrs.src });
+  }
+
   /**
    * Load user specific information
    */
-  async created() {
-    const runtime = (<any>this).getRuntime();
+  async created(): Promise<void> {
+    const runtime = this.getRuntime() as any;
     this.profile = new bcc.Profile({
       accountId: runtime.activeAccount,
       profileOwner: this.address,
@@ -124,7 +127,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
         this.loadUserInfo();
       }
-    }, `profile.vue.${ this.domainName }`, 'updateProfileDispatcher'));
+    }, `profile.vue.${this.domainName}`, 'updateProfileDispatcher'));
 
     this.loading = false;
   }
@@ -132,12 +135,12 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   /**
    * Load the latest user information.
    */
-  async loadUserInfo() {
+  async loadUserInfo(): Promise<void> {
     let accountDetails: any = { profileType: 'user' };
     try {
       accountDetails = (await this.profile.getProfileProperty('accountDetails')) || accountDetails;
     } catch (ex) {
-      this.profile.log(`Could not load profile data for ${ this.address }: ${ ex.message }`, 'error');
+      this.profile.log(`Could not load profile data for ${this.address}: ${ex.message}`, 'error');
     }
 
     this.userInfo = accountDetails;
@@ -155,14 +158,14 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   /**
    * Can the edit modee be used?
    */
-  canEdit() {
+  canEdit(): boolean {
     return this.editable && this.size === 'lg' && this.address === this.$store.state.runtime.activeAccount;
   }
 
   /**
    * Restore lastest user information.
    */
-  cancelEditMode() {
+  cancelEditMode(): void {
     this.userInfo = cloneDeep(bcc.lodash, this.originUserInfo);
     this.isEditMode = false;
   }
@@ -170,7 +173,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   /**
    * Send save event for the current userInfo
    */
-  async saveEditMode() {
+  async saveEditMode(): Promise<void> {
     this.originUserInfo = cloneDeep(bcc.lodash, this.userInfo);
     this.isEditMode = false;
 
@@ -180,8 +183,8 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
         await FileHandler.resizeImage(
           this.userInfo.picture.files[0].blobUri,
           // definitely match the height
-          { max_width: 1000, max_height: 160 }
-        )
+          { maxWidth: 1000, maxHeight: 160 },
+        ),
       );
     }
 
@@ -191,7 +194,7 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   /**
    * Start the edit mode for the account name.
    */
-  startEditing() {
+  startEditing(): void {
     if (this.canEdit()) {
       this.isEditMode = true;
     }
@@ -200,30 +203,30 @@ export default class ProfilePreviewComponent extends mixins(EvanComponent) {
   /**
    * Ensure picture is set on profile
    */
-  async fillEmptyProfileData() {
+  async fillEmptyProfileData(): Promise<void> {
     if (!this.userInfo.profileType) {
       this.userInfo.profileType = 'user';
     }
 
     // use old alias logic
-    this.userInfo.accountName = this.userInfo.accountName ||
-      await bccUtils.getUserAlias(this.profile, this.userInfo);
+    this.userInfo.accountName = this.userInfo.accountName
+      || await profileUtils.getUserAlias(this.getRuntime(), this.address, this.userInfo);
 
     // fill empty picture
     if (!this.userInfo.picture) {
-      this.userInfo.picture = { files: [ ] };
+      this.userInfo.picture = { files: [] };
     }
 
     // transform to correct format
-    this.userInfo.picture.files = await Promise.all(this.userInfo.picture.files.map(async file =>
-      FileHandler.fileToContainerFile(file)
+    this.userInfo.picture.files = await Promise.all(this.userInfo.picture.files.map(
+      async (file) => FileHandler.fileToContainerFile(file),
     ));
   }
 
   /**
    * Backups the current user info, so we can revert last changes.
    */
-  backupUserInfo() {
+  backupUserInfo(): void {
     this.originUserInfo = cloneDeep(bcc.lodash, this.userInfo);
   }
 }

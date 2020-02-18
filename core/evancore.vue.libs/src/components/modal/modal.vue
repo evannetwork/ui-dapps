@@ -20,52 +20,69 @@
 <template>
   <div>
     <template v-if="isRendered">
-      <div class="modal fade" tabindex="-1"
+      <div
+        class="modal fade"
+        tabindex="-1"
         :class="{ 'show': isShown }"
-        @click="!disableBackdrop && (closeAction ? closeAction() : hide())">
+        @click="!disableBackdrop && (closeAction ? closeAction() : hide())"
+      >
         <div
           class="modal-dialog"
           :class="{'full-page' : fullPage}"
           role="document"
-          :style="{ 'max-width': maxWidth && !fullPage }"
+          :style="{ 'max-width': maxWidth && !fullPage ? maxWidth : null }"
           @mousedown="preventHide=true;"
           @mouseup="preventHide=false;"
         >
-          <div class="modal-content" v-on:click.stop>
+          <div
+            class="modal-content"
+            @click.stop
+          >
             <template v-if="!customModal">
               <div :class="{ 'modal-header d-flex align-items-center': modalClasses.indexOf('modal-header') !== -1 }">
-                <slot name="header"></slot>
-                <evan-button v-if="!hideCloseButton" type="icon" @click="closeAction ? closeAction() : hide()">
-                  <i class="mdi mdi-close"></i>
+                <slot name="header" />
+                <evan-button
+                  v-if="!hideCloseButton"
+                  type="icon"
+                  @click="closeAction ? closeAction() : hide()"
+                >
+                  <i class="mdi mdi-close" />
                 </evan-button>
               </div>
               <div :class="{ 'modal-body': modalClasses.indexOf('modal-body') !== -1 }">
-                <slot name="body"></slot>
+                <slot name="body" />
               </div>
               <div :class="{ 'modal-footer': modalClasses.indexOf('modal-footer') !== -1 }">
-                <evan-button type="secondary"
-                  id="modal-cancel"
+                <evan-button
                   v-if="!hideFooterButton"
-                  @click="closeAction ? closeAction() : hide()">
+                  id="modal-cancel"
+                  type="secondary"
+                  @click="closeAction ? closeAction() : hide()"
+                >
                   {{ '_evan.cancel' | translate }}
                 </evan-button>
-                <slot name="footer"></slot>
+                <slot name="footer" />
               </div>
             </template>
-            <slot name="content" v-if="customModal"></slot>
+            <slot
+              v-if="customModal"
+              name="content"
+            />
           </div>
         </div>
       </div>
-      <div class="modal-backdrop fade"
-        :class="{ 'show': isShown }">
-      </div>
+      <div
+        class="modal-backdrop fade"
+        :class="{ 'show': isShown }"
+      />
     </template>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './modal';
-  export default Component;
+import Component from './modal';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

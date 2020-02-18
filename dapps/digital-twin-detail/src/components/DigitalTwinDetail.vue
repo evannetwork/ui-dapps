@@ -19,63 +19,123 @@
 
 <template>
   <div class="evan theme-evan">
-    <evan-dapp-wrapper @loggedin="initialize()">
+    <evan-dapp-wrapper>
       <template v-slot:content>
         <evan-loading v-if="loading" />
+        <template v-else-if="hasError">
+          <div class="p-5 text-center">
+            <h3 class="mb-5">
+              {{ '_twin-detail.generic-error' | translate }}
+            </h3>
+            <evan-failed />
+          </div>
+        </template>
         <template v-else>
+          <digital-twin-interactions ref="twinInteractions" />
           <evan-dapp-wrapper-level-2 ref="level2Wrapper">
             <div class="sidenav">
               <div class="sidenav-header">
                 <div class="icon-row">
-                  <evan-button @click="close" type="icon-secondary" icon="mdi mdi-close" />
-                  <div class="flex-grow-1"></div>
-                  <evan-button :type="'icon-secondary'" icon="mdi mdi-star-outline" />
-                  <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret>
+                  <evan-button
+                    type="icon-secondary"
+                    icon="mdi mdi-close"
+                    @click="close"
+                  />
+                  <div class="flex-grow-1" />
+                  <!-- Favorite Handling -->
+                  <evan-loading
+                    v-if="$store.state.twin.dispatcherStates.favorite"
+                    classes="icon-replacer"
+                  />
+                  <evan-button
+                    v-else-if="!$store.state.twin.favorite"
+                    type="icon-secondary"
+                    icon="mdi mdi-star-outline"
+                    @click="$store.state.twin.addAsFavorite()"
+                  />
+                  <evan-button
+                    v-else
+                    type="icon-secondary"
+                    icon="mdi mdi-star"
+                    @click="$store.state.twin.removeFromFavorites()"
+                  />
+
+                  <b-dropdown
+                    variant="link"
+                    toggle-class="text-decoration-none"
+                    no-caret
+                  >
                     <template v-slot:button-content>
                       <evan-button
                         :type="'icon-secondary'"
                         icon="mdi mdi-dots-vertical"
                       />
                     </template>
-                    <b-dropdown-item href="#">TODO Clone</b-dropdown-item>
-                    <b-dropdown-item href="#">TODO Export</b-dropdown-item>
-                    <b-dropdown-item href="#">TODO Remove</b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.twinInteractions.duplicateTwin()"
+                    >
+                      {{ '_twin-detail.data.context-menu.duplicate-twin' | translate }}
+                    </b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.twinInteractions.exportTemplate()"
+                    >
+                      {{ '_twin-detail.data.context-menu.export-template' | translate }}
+                    </b-dropdown-item>
+                    <b-dropdown-item
+                      @click="$refs.deleteModal.show()"
+                    >
+                      {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
+                    </b-dropdown-item>
                   </b-dropdown>
                 </div>
+
+                <evan-modal ref="deleteModal">
+                  <template v-slot:header>
+                    <h5 class="modal-title">
+                      {{ '_twin-detail.delete.delete-modal-title' | translate }}
+                    </h5>
+                  </template>
+                  <template v-slot:body>
+                    <p>{{ '_twin-detail.delete.confirm-delete-description' | translate }}</p>
+                  </template>
+                  <template v-slot:footer>
+                    <evan-button
+                      type="danger"
+                      @click="deleteTwin"
+                    >
+                      {{ '_twin-detail.delete.confirm-delete' | translate }}
+                    </evan-button>
+                  </template>
+                </evan-modal>
 
                 <evan-profile-picture
                   class="twin-avatar"
                   type="device"
-                  :src="'https://via.placeholder.com/96'"
+                  :src="$store.state.twin.description.imgSquare"
                 />
-                <h4 class="twin-name text-center mt-2">TODO NAME</h4>
-                <h5 class="twin-owner text-center">TODO OWNER</h5>
+                <h4 class="twin-name text-center mt-2">
+                  {{ $store.state.twin.description.name }}
+                </h4>
+                <h5 class="twin-owner text-center">
+                  {{ $store.state.twin.ownerName }}
+                </h5>
                 <small
-                  class="twin-desc text-center mt-3"
-                >TODO This is a brief description of the specific Digital Twin. It may also include application tips and recommendations for action..</small>
+                  class="twin-desc mt-3"
+                >{{ getShortDescription($store.state.twin.description.description) }}</small>
               </div>
 
-              <!-- Not using nav-list because it doesnt support router-link properly
-              TODO: Refactor evan-nav-list to use router-links too-->
-              <div class="evan-nav-list">
-                <div class="nav-entries">
-                  <template v-for="navItem in navItems">
-                    <router-link
-                      :id="navItem.id"
-                      :key="navItem.id"
-                      :to="navItem.to"
-                      :active-class="'active'"
-                    >
-                      <i class="mr-3" :class="navItem.icon"></i>
-                      {{ navItem.label | translate }}
-                    </router-link>
-                  </template>
-                </div>
-              </div>
+              <evan-nav-list
+                :entries="navItems"
+                :show-logout="false"
+                :show-profile="false"
+              />
             </div>
           </evan-dapp-wrapper-level-2>
-          <transition name="fade" mode="out-in">
-            <router-view></router-view>
+          <transition
+            name="fade"
+            mode="out-in"
+          >
+            <router-view />
           </transition>
         </template>
       </template>
@@ -85,51 +145,10 @@
 
 <script lang="ts">
 import DigitalTwinDetailComponent from './DigitalTwinDetail';
+
 export default DigitalTwinDetailComponent;
 </script>
 
 <style lang="scss" scoped>
-@import '~@evan.network/ui/src/style/utils';
-
-.sidenav {
-  width: 240px;
-
-  .evan-nav-list {
-    height: auto;
-  }
-
-  .sidenav-header {
-    padding: 24px;
-
-    .icon-row {
-      display: flex;
-      margin: -16px; // counter too big padding for icons
-
-      /deep/ .dropdown.b-dropdown {
-        & > button.btn {
-          padding: 0;
-        }
-      }
-    }
-    .twin-name {
-      font-size: 12px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .twin-owner {
-      font-size: 10px;
-      color: cssVar('gray-600');
-    }
-    .twin-desc {
-      font-size: 10px;
-      color: cssVar('gray-900');
-    }
-  }
-}
-
-/deep/ .twin-avatar .profile-picture {
-  --size: 96px;
-  margin-left: auto;
-  margin-right: auto;
-}
+  @import './DigitalTwinDetail.scss';
 </style>

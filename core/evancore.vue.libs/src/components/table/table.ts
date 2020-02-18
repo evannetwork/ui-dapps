@@ -21,8 +21,8 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import EvanComponent from '../../component';
 import { Prop } from 'vue-property-decorator';
+import EvanComponent from '../../component';
 
 /**
  * Data Table based on bootstrap table
@@ -33,5 +33,34 @@ import { Prop } from 'vue-property-decorator';
  */
 @Component
 export default class EvanTable extends mixins(EvanComponent) {
+  /**
+   * Flag to always display scrollbar
+   */
   @Prop({ default: false }) showScrollbar: boolean;
+
+  scrollContainer: Element;
+
+  /**
+   * Clear listeners.
+   */
+  beforeDestroy(): void {
+    this.scrollContainer.removeEventListener('scroll', this.onScroll);
+  }
+
+  /**
+   * Bind custom scroll listeners, because inner bootstrap table element is scrolling.
+   */
+  mounted(): void {
+    this.scrollContainer = this.$el.querySelector('.b-table-sticky-header') || this.$el;
+    this.scrollContainer.addEventListener('scroll', this.onScroll);
+  }
+
+  /**
+   * Just send custom scroll event to parent components.
+   *
+   * @param      {any}  $event  scroll event
+   */
+  onScroll($event: any): void {
+    this.$emit('scroll', $event);
+  }
 }

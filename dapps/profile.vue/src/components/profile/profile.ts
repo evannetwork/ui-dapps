@@ -21,14 +21,14 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { bccUtils } from '@evan.network/ui';
+import { EvanComponent, ContactInterface } from '@evan.network/ui-vue-core';
+import { PermissionUtils } from '@evan.network/digital-twin-lib';
+import { Profile, ProfileOptions } from '@evan.network/api-blockchain-core';
 
 import * as dispatchers from '../../dispatchers/registry';
 
-import { getProfilePermissionDetails, updatePermissions } from '../../lib/permissionsUtils';
-import { bccUtils } from '@evan.network/ui';
-import { ContactInterface } from '@evan.network/ui-vue-core/src/interfaces';
 
 @Component({ })
 export default class ProfileDetailComponent extends mixins(EvanComponent) {
@@ -50,7 +50,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Currents users eve balances and the timestamp, when the balance was loaded
    */
-  balance: { amount: string, timestamp: number } = null;
+  balance: { amount: string; timestamp: number } = null;
 
   /**
    * Amount of calculated verifications and requests
@@ -60,7 +60,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   /**
    * Available profile types, that are selectable by the user
    */
-  profileTypes = [ 'company', 'device' ];
+  profileTypes = ['company', 'device'];
 
   /**
    * New type, that was selected by the user
@@ -87,17 +87,17 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   async created() {
     // fill empty address with current logged in user
-    this.address = (<any>this).$store.state.profileDApp.address;
-    this.userInfo = (<any>this).$store.state.profileDApp.data.accountDetails;
+    this.address = (this as any).$store.state.profileDApp.address;
+    this.userInfo = (this as any).$store.state.profileDApp.data.accountDetails;
     // load balance and parse it to 3 decimal places
     const amount = parseFloat((await dappBrowser.core.getBalance(this.address)).toFixed(3));
     this.balance = {
-      amount: amount.toLocaleString((<any>this).$i18n.locale()),
+      amount: amount.toLocaleString((this as any).$i18n.locale()),
       timestamp: Date.now(),
     };
-    // set the update permission and always pass the current vue context into it, so it can use the
-    // vuex translate service
-    this.updatePermissions = updatePermissions.bind(null, this);
+    /* set the update permission and always pass the current vue context into it, so it can use the
+       vuex translate service */
+    this.updatePermissions = PermissionUtils.updatePermissions.bind(null, this);
 
     // load contacts from addressbook
     this.contacts = await bccUtils.getContacts((this as any).getRuntime());
@@ -112,8 +112,8 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
     this.verificationCount = 0;
 
     if (this.$refs.notaryVerifications) {
-      this.verificationCount += (<any>this.$refs.notaryVerifications).verifications.length;
-      this.verificationCount += (<any>this.$refs.notaryVerifications).requests.length;
+      this.verificationCount += (this.$refs.notaryVerifications as any).verifications.length;
+      this.verificationCount += (this.$refs.notaryVerifications as any).requests.length;
     }
   }
 
@@ -144,10 +144,10 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
   saveUserInfo(userInfo: any) {
     this.userInfo = userInfo;
 
-    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
-      address: (<any>this).$store.state.profileDApp.address,
+    dispatchers.updateProfileDispatcher.start((this as any).getRuntime(), {
+      address: (this as any).$store.state.profileDApp.address,
       formData: userInfo,
-      type: 'accountDetails'
+      type: 'accountDetails',
     });
   }
 
@@ -157,15 +157,31 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    *
    * @param user: string - the user id.
    */
-  async loadPermissions(user: string) {
-    const runtime = (<any>this).getRuntime();
-    const allPermissions = await getProfilePermissionDetails(runtime, (<any>this).$route.params.address);
+  async loadPermissions(accountId: string) {
+    const runtime = this.getRuntime();
+    let profileAddress = runtime.profile.profileContract.options.address;
 
-    if (!allPermissions[user]) {
-      return allPermissions['new'];
+    if (runtime.activeAccount !== this.$route.params.address) {
+      const profile = new Profile({
+        accountId: runtime.activeAccount,
+        profileOwner: this.$route.params.address,
+        ...(runtime as ProfileOptions),
+      });
+
+      await profile.loadForAccount();
+      profileAddress = profile.profileContract.options.address;
     }
 
-    return allPermissions[user];
+    return {
+      [profileAddress]: await PermissionUtils.getContainerPermissionsForUser(
+        runtime,
+        {
+          containerAddress: profileAddress,
+          i18nScope: '_profile.sharing.profileContract',
+        },
+        accountId,
+      ),
+    };
   }
 
   /**
@@ -183,11 +199,11 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
    */
   changeType(type: string) {
     if (this.newType !== 'user') {
-      dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+      dispatchers.updateProfileDispatcher.start((this as any).getRuntime(), {
         formData: {
-          profileType: this.newType
+          profileType: this.newType,
         },
-        type: 'accountDetails'
+        type: 'accountDetails',
       });
     }
   }

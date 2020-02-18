@@ -7,7 +7,6 @@
       }
     },
     "breadcrumbs": {
-      "addressbook.vue.evan": "Kontakte",
       "detail": "Identität",
       "logout": "Ausloggen",
       "settings": "Einstellungen",
@@ -181,34 +180,51 @@
       "reload-hint": "Bitte laden Sie die Anwendung neu, wenn Sie die Spracheinstellungen geändert haben."
     },
     "sharing": {
-      "Profile Data": "Identitätsdaten",
-      "accountDetails": "Details",
-      "accountName": "Name",
-      "city": "Ort",
-      "company": "Unternehmen",
-      "contact": "Kontaktdaten",
-      "country": "Firmensitz",
-      "court": "Registergericht",
-      "dataStreamSettings": "IoT-Einstellungen",
       "description": "Um Ihre Identitätsdaten mit anderen Partnern zu teilen, wählen Sie zunächst den entsprechenden Kontakt sowie danach die zu teilenden Daten aus. Klicken Sie auf \"Daten freigeben\".",
       "description-no-contacts": "Identitätsinformationen können mit anderen Partnern geteilt werden, nachdem Sie eine sichere Verbindung zu deren evan.network Identität aufgebaut haben. Gehen Sie dazu in die Kontaktübersicht und laden Sie Ihre Partner per E-Mail oder auch per Identitäts-ID ein, um Ihre Daten vertrauensvoll zu teilen.",
-      "deviceDetails": "Geräteinformationen",
-      "location": "Standort",
-      "manufacturer": "Hersteller",
-      "owner": "Eigentümer",
       "permissionsTitle": "Identitätszugriffsrechte",
-      "picture": "Bild",
-      "postalCode": "Postleitzahl",
-      "profileType": "Identitätstyp",
-      "register": "Register",
-      "registerNumber": "Registernummer",
-      "registration": "Registrierungsdaten",
-      "salesTaxID": "Umsatzsteuer-ID",
-      "serialNumber": "Seriennummer",
-      "settings": "Einstellungen",
-      "streetAndNumber": "Straße",
-      "type": "Typ",
-      "website": "Website"
+      "profileContract": {
+        "accountDetails": {
+          "name": "Details",
+          "properties": {
+            "accountName": "Name",
+            "picture": "Bild",
+            "profileType": "Identitätstyp"
+          }
+        },
+        "contact": {
+          "name": "Kontaktdaten",
+          "properties": {
+            "city": "Ort",
+            "country": "Firmensitz",
+            "postalCode": "Postleitzahl",
+            "streetAndNumber": "Straße",
+            "website": "Website"
+          }
+        },
+        "deviceDetails": {
+          "name": "Geräteinformationen",
+          "properties": {
+            "dataStreamSettings": "IoT-Einstellungen",
+            "location": "Standort",
+            "manufacturer": "Hersteller",
+            "owner": "Eigentümer",
+            "serialNumber": "Seriennummer",
+            "settings": "Einstellungen",
+            "type": "Typ"
+          }
+        },
+        "name": "Identitätsdaten",
+        "registration": {
+          "name": "Registrierungsdaten",
+          "properties": {
+            "court": "Registergericht",
+            "register": "Register",
+            "registerNumber": "Registernummer",
+            "salesTaxID": "Umsatzsteuer-ID"
+          }
+        }
+      }
     },
     "sharings": {
       "desc": "Nachfolgend finden Sie alle Kontakte, mit denen Sie derzeit Identitätsinformationen teilen. Klicken Sie auf eine Identität, um die Berechtigungen anzupassen.",
@@ -451,17 +467,20 @@
           }
         },
         "processing-hint": "Vorgang wird bearbeitet, dies kann 3 bis 5 Minuten dauern",
-        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.<br>Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
+        "reverse-charge": "Steuerschuldnerschaft des Leistungsempfängers.",
+        "reverse-charge-please-check": "Bitte überprüfen Sie, ob aus diesem Kauf Steuerverpflichtungen in Ihrem Land entstehen.",
         "stripe-element": {
           "incomplete_number": "Unvollständige Eingabe!",
-          "invalid_number": "Ungültige Kartennummer!",
-          "invalid_iban_start": "Bitte überprüfen Sie Ihre IBAN"
+          "invalid_iban_start": "Bitte überprüfen Sie Ihre IBAN",
+          "invalid_number": "Ungültige Kartennummer!"
         },
         "success": "Ihre Bestellung wurde erfolgreich ausgelöst. Sie erhalten eine Rechnung an die angegebene E-Mail-Adresse.<br><br>Der Vorgang ist abgeschlossen, sobald Sie die Rechnung erhalten. Die Gutschrift in Ihrer Wallet erfolgt in den nächsten 5 - 10 Minuten.",
         "tax": "USt.",
         "titles": {
+          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen",
           "buy-eve": "EVE kaufen",
-          "billing-info": "Bitte ergänzen Sie Ihre Rechnungsinformationen"
+          "finished": "Fertig",
+          "processing": "In Arbeit"
         },
         "total-amount": "Gesamtsumme",
         "try-again": "Erneut versuchen",
@@ -492,8 +511,8 @@
       "transactions": {
         "charged-at": "aufgeladen am",
         "credit-charged": "Guthaben aufgeladen",
-        "credit-running-recharge": "Aufbuchung noch nicht abgeschlossen",
-        "credit-failed-recharge": "Die Aufbuchung ist leider fehlgeschlagen",
+        "credit-failed-charge": "Die Aufbuchung ist leider fehlgeschlagen",
+        "credit-running-charge": "Aufbuchung noch nicht abgeschlossen",
         "description": "Nachfolgend sind nur Ihre EVE-Käufe aufgeführt. Eine komplette Übersicht Ihrer Transaktionen finden Sie <a href='{explorerUrl}' target='_blank'>hier</a>.",
         "empty": "Sie haben bisher noch keine EVEs gekauft",
         "load-more": "Ältere laden",

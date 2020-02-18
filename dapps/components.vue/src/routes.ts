@@ -17,15 +17,14 @@
   the following URL: https://evan.network/license/
 */
 // import evan libs
-import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
+import { RouteRegistrationInterface } from '@evan.network/ui-vue-core';
 
 import components from './components';
 
 // map them to element names, so they can be used within templates
 const routeRegistration: Array<RouteRegistrationInterface> = [
   { path: '', redirect: { path: 'buttons' } },
-  ...components
+  ...components,
 ];
 
 export default routeRegistration;
-

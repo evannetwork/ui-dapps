@@ -17,13 +17,95 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
-
-// evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import {
+  Runtime,
+  Profile,
+  ProfileOptions,
+} from '@evan.network/api-blockchain-core';
+import { DAppTwin, TwinTransaction, SearchService } from '@evan.network/digital-twin-lib';
+import { profileUtils } from '@evan.network/ui';
 
 @Component
-export default class EvanTwinDetailOverviewComponent extends mixins(EvanComponent) {
+export default class DetailOverviewComponent extends mixins(EvanComponent) {
+  twin: DAppTwin = null;
 
+  runtime: Runtime = this.getRuntime();
+
+  transactions: TwinTransaction[] = null;
+
+  search: SearchService = null;
+
+  async created(): Promise<void> {
+    this.search = new SearchService(this.runtime);
+    if (!this.$store.state.twin.createdAt) {
+      this.$store.state.twin = await this.attachCreatedAt(this.$store.state.twin);
+    }
+    this.twin = this.$store.state.twin;
+    this.transactions = await this.getLastTransactions(this.twin);
+  }
+
+  /**
+   * Fetch last transactions for given twin and enhance them with useful info
+   */
+  async getLastTransactions(twin: DAppTwin): Promise<TwinTransaction[]> {
+    const transactions = await this.search.getLastTransactions(
+      twin.contractAddress,
+    );
+
+    return this.enhanceTransactions(transactions);
+  }
+
+  /**
+   * Enhance the twin with createdAt timestamp
+   */
+  async attachCreatedAt(twin: DAppTwin): Promise<DAppTwin> {
+    const enhancedTwin = twin;
+    enhancedTwin.createdAt = await this.search.getCreatedTimestamp(
+      twin.contractAddress,
+    );
+
+    return enhancedTwin;
+  }
+
+  /**
+   * Adds and formats properties for displaying Transactions
+   * @param transactions list of transactions to be transformed
+   */
+  async enhanceTransactions(
+    transactions: TwinTransaction[],
+  ): Promise<TwinTransaction[]> {
+    const initiators: { [address: string]: Promise<string> } = { };
+
+    return Promise.all(
+      transactions.map(async (transaction) => {
+        const enhancedTransaction = transaction;
+
+        // load initiator only once
+        if (!initiators[transaction.from]) {
+          initiators[transaction.from] = profileUtils.getUserAlias(
+            this.runtime, transaction.from,
+          );
+        }
+
+        // Add alias of the initiator if known
+        enhancedTransaction.initiator = await initiators[transaction.from];
+
+        // Add fee in EVE
+        try {
+          enhancedTransaction.feeInEve = parseFloat(
+            this.runtime.web3.utils.fromWei(
+              (transaction.gas * parseFloat(transaction.gasPrice)).toString(),
+              'ether',
+            ),
+          ).toFixed(4);
+        } catch (err) {
+          this.runtime.logger.log(`Error while calculating EVE fee ${err.message}.`, 'error');
+        }
+
+        return enhancedTransaction;
+      }),
+    );
+  }
 }

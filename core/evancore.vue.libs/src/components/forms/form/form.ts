@@ -26,7 +26,8 @@ import * as bcc from '@evan.network/api-blockchain-core';
 import { cloneDeep } from '@evan.network/ui';
 
 import EvanComponent from '../../../component';
-import { EvanForm, EvanFormControl } from '../../../forms';
+import EvanForm from '../../../form';
+import EvanFormControl from '../../../formControl';
 
 /**
  * Formular wrapper for handling evan.network specific formulars including an visible scope icon,
@@ -104,7 +105,7 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
    * Function called, when share button is clicked.
    */
   @Prop({
-    required: true
+    required: true,
   }) handleShare: Function;
 
   /**
@@ -129,19 +130,43 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
   formDataBackup: any = null;
 
   /**
+   * Checks if a custom attribute value was applied to a control object.
+   *
+   * @param      {EvanFormControl}  control  control that should be checked
+   * @param      {string}           attr     attr that is overwritten (placeholder, hint, ...)
+   * @return     {boolean} has custom attribute or not
+   */
+  static hasControlAttr(control: EvanFormControl, attr: string): boolean {
+    let hasControl = false;
+
+    if (control.uiSpecs) {
+      if (Object.prototype.hasOwnProperty.call(control.uiSpecs, attr)) {
+        hasControl = true;
+      } else if (control.uiSpecs.attr
+        && Object.prototype.hasOwnProperty.call(control.uiSpecs.attr, attr)) {
+        hasControl = true;
+      }
+    }
+
+    return hasControl;
+  }
+
+  /**
    * Bind event handlers
    */
-  created() {
+  created(): void {
     this.$on('setFocus', () => this.setEditMode(true));
 
     // activate edit mode directly if only form is specified
-    this.onlyForm && this.setEditMode(true);
+    if (this.onlyForm) {
+      this.setEditMode(true);
+    }
   }
 
   /**
    * Remove event handlers
    */
-  beforeDestroy() {
+  beforeDestroy(): void {
     this.$off('setFocus');
   }
 
@@ -166,7 +191,7 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
   /**
    * Set global UI property to open/close the right swipe panel or execute share handler.
    */
-  share() {
+  share(): void {
     if (typeof this.handleShare === 'function') {
       this.handleShare();
     } else {
@@ -179,7 +204,7 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
    *
    * @param      {Event}  ev      save event args
    */
-  async save(ev: Event) {
+  async save(ev: Event): Promise<void> {
     await this.$emit('save', ev);
     this.editMode = false;
   }
@@ -189,10 +214,10 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
    *
    * @param      {Event}  ev      event args to send
    */
-  cancel(ev: Event) {
+  cancel(ev: Event): void {
     // restore old data, when the edit mode is cancled
     if (this.form && this.formDataBackup) {
-      Object.keys(this.formDataBackup).forEach(controlKey => {
+      Object.keys(this.formDataBackup).forEach((controlKey: string) => {
         this.form[controlKey].value = this.formDataBackup[controlKey];
       });
     }
@@ -208,22 +233,25 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
    * @param      {string}           attr     attribute that should be translated (label,
    *                                         placeholder, error)
    */
-  getTranslation(control: EvanFormControl, attr: string) {
+  getTranslation(control: EvanFormControl, attr: string): string|boolean {
     // if manual error text was specified, translate it and return it directly
     if (attr === 'error') {
       if (typeof control.error !== 'boolean') {
         return this.$t(control.error);
-      } else if (!control.error) {
+      }
+
+      if (!control.error) {
         return control.error;
       }
     }
 
     // return directly specified translation
     let returnTranslation = attr !== 'hint';
-    if (this.hasControlAttr(control, attr)) {
+    if (EvanFormComponent.hasControlAttr(control, attr)) {
       // allow property definition within uiSpecis and within attr (specifing label within attr would be confusing)
-      const specOverwrite = control.uiSpecs.attr && control.uiSpecs.attr[attr] ?
-        control.uiSpecs.attr[attr] : control.uiSpecs[attr];
+      const specOverwrite = control.uiSpecs.attr && control.uiSpecs.attr[attr]
+        ? control.uiSpecs.attr[attr]
+        : control.uiSpecs[attr];
       // if the attribute is a dynamic function, execute and return the value
       if (typeof specOverwrite === 'function') {
         return specOverwrite();
@@ -248,45 +276,26 @@ export default class EvanFormComponent extends mixins(EvanComponent) {
 
     if (returnTranslation) {
       // return default translation
-      return this.$t(`${ this.i18nScope }.${ control.name }.${ attr }`);
-    } else {
-      return '';
+      return this.$t(`${this.i18nScope}.${control.name}.${attr}`);
     }
+
+    return '';
   }
 
   /**
    * Get the form-data type component string for a control.
    *
-   * @param      {EvanFormControl}  control  control that should be translated
+   * @param      {string}  name    name of the control to be checked
+   * @return     {string}  name of the control
    */
-  getControlComponentName(control: EvanFormControl) {
+  getControlComponentName(name: string): string {
+    const control = this.form[name];
     let type = 'input';
 
     if (control.uiSpecs) {
       type = control.uiSpecs.type || 'input';
     }
 
-    return `evan-form-control-${ type }`;
-  }
-
-  /**
-   * Checks if a custom attribute value was applied to a control object.
-   *
-   * @param      {EvanFormControl}  control  control that should be checked
-   * @param      {string}           attr     attr that is overwritten (placeholder, hint, ...)
-   * @return     {boolean} has custom attribute or not
-   */
-  hasControlAttr(control: EvanFormControl, attr: string) {
-    let hasControl = false;
-
-    if (control.uiSpecs) {
-      if (control.uiSpecs.hasOwnProperty(attr)) {
-        hasControl = true;
-      } else if (control.uiSpecs.attr && control.uiSpecs.attr.hasOwnProperty(attr)) {
-        hasControl = true;
-      }
-    }
-
-    return hasControl;
+    return `evan-form-control-${type}`;
   }
 }

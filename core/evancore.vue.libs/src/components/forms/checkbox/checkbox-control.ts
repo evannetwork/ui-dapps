@@ -18,6 +18,7 @@
 */
 
 import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
 import EvanControlComponent from '../control/control';
 
@@ -28,4 +29,15 @@ import EvanControlComponent from '../control/control';
  * @selector      evan-form-control-checkbox
  */
 @Component({})
-export default class CheckboxComponent extends mixins(EvanControlComponent) {}
+export default class CheckboxComponent extends mixins(EvanControlComponent) {
+  @Prop({ default: false }) prohibited: boolean;
+
+  /**
+   * Handle overlapping checkbox label click and send corret formular events.
+   */
+  onClick(): void {
+    this.value = !this.value;
+    this.$emit('input', this.value);
+    this.$parent.$emit('setFocus');
+  }
+}

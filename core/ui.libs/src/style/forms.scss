@@ -70,6 +70,10 @@ $controlSelectors: (
           display: none;
         }
       }
+
+      .control-hint {
+        display:  none;
+      }
     }
 
     &.edit-mode {

@@ -3,16 +3,16 @@
     "author": "evan GmbH",
     "dapp": {
       "dependencies": {
-        "evancore.vue.libs": "^1.9.0"
+        "evancore.vue.libs": "^1.10.0"
       },
       "entrypoint": "mailbox.vue.js",
       "files": [
         "mailbox.vue.js"
       ],
-      "origin": "QmRJC7Kk5VVtdaobLJu53NTEGLBM962ppU8FDZfGsrZquE",
+      "origin": "QmPMVzVcUbbam8tjcXygZdCNLDMhwkqhCEHHvXSo62TXkN",
       "primaryColor": "#1862ac",
       "secondaryColor": "#f9f9ff",
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "Show new information Mails, Contact requests and latest notifications.",
@@ -48,7 +48,7 @@
       "3.1.0": "QmUMtmrXLVH29h5XaDsk6MGqaC5NGkUM8AdK2EcDCmyR46",
       "3.2.0": "QmchF3UYHdDsYX6wRhFu7cJLKVnRrWcaHwwnAo1kZhq8xW",
       "3.3.0": "QmY5nVCnCR49WQWHsr2Z8SQci6EkKKHJV18124qTKrdUpP",
-      "3.3.1": "QmSS2aNfEWHj2GunzLMZjzpbwKFxdkXFWjXjE7wL5YPppr"
+      "3.3.1": "QmSVygE5Kb9GmfMCmX3J8AtZ6i1PjHGJ6tHxxS3jtQySZU"
     }
   }
 }

@@ -23,12 +23,14 @@ import { Prop } from 'vue-property-decorator';
 // evan.network imports
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils } from '@evan.network/ui';
+import {
+  profileUtils, EvanQueue, Dispatcher, DispatcherInstance,
+} from '@evan.network/ui';
 
 import EvanComponent from '../../component';
 import EvanVueDispatcherHandler from '../../dispatcher';
 import { DAppWrapperRouteInterface } from '../../interfaces';
-import { EvanQueue, Dispatcher, DispatcherInstance } from '@evan.network/ui';
+
 import { getDomainName } from '../../utils';
 
 // load domain name for quick usage
@@ -57,18 +59,18 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * url to img for large sidebar (default is set in the create function using $store)
    */
   @Prop({
-    default: function() {
-      return (<any>this).$store.state.uiLibBaseUrl + '/assets/evan-logo-dark-half.svg';
-    }
+    default() {
+      return `${this.$store.state.uiLibBaseUrl}/assets/evan-logo-dark-half.svg`;
+    },
   }) brandLarge: string;
 
   /**
    * url to img for large sidebar (default is set in the create function using $store)
    */
   @Prop({
-    default: function() {
-      return (<any>this).$store.state.uiLibBaseUrl + '/assets/evan-logo-small.svg';
-    }
+    default() {
+      return `${this.$store.state.uiLibBaseUrl}/assets/evan-logo-small.svg`;
+    },
   }) brandSmall: string;
 
   /**
@@ -76,14 +78,30 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   @Prop({
     type: Array,
-    default: function(options): DAppWrapperRouteInterface[] {
+    default(): DAppWrapperRouteInterface[] {
       return [
-        { title: `${ i18nPref }.favorites`, path: `favorites.vue.${ domainName }`, icon: 'mdi mdi-apps' },
-        { title: `${ i18nPref }.digitaltwins`, path: `digitaltwins.${ domainName }`, icon: 'mdi mdi-cube-outline' },
-        { title: `${ i18nPref }.assets`, path: `assets.${ domainName }`, icon: 'mdi mdi-home' },
-        { title: `${ i18nPref }.verifications`, path: `verifications.vue.${ domainName }`, icon: 'mdi mdi-checkbox-marked-circle-outline' },
+        {
+          icon: 'mdi mdi-apps',
+          path: `favorites.vue.${domainName}`,
+          title: `${i18nPref}.favorites`,
+        },
+        {
+          icon: 'mdi mdi-cube-outline',
+          path: `digitaltwins.${domainName}`,
+          title: `${i18nPref}.digitaltwins`,
+        },
+        {
+          icon: 'mdi mdi-cube-outline',
+          path: `assets.${domainName}`,
+          title: `${i18nPref}.assets`,
+        },
+        {
+          icon: 'mdi mdi-checkbox-marked-circle-outline',
+          path: `verifications.vue.${domainName}`,
+          title: `${i18nPref}.verifications`,
+        },
       ];
-    }
+    },
   }) routes: Array<DAppWrapperRouteInterface>;
 
   /**
@@ -91,22 +109,34 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   @Prop({
     type: Array,
-    default: function(options): DAppWrapperRouteInterface[] {
+    default(): DAppWrapperRouteInterface[] {
       return [
-        { title: `${ i18nPref }.actions`, path: `mailbox.vue.${ domainName }`, icon: 'mdi mdi-format-list-checks' },
-        { title: `${ i18nPref }.help`, path: `help.vue.${ domainName }`, icon: 'mdi mdi-help-circle-outline' },
-        { title: `${ i18nPref }.profile`, path: `profile.vue.${ domainName }`, icon: 'mdi mdi-account-outline' },
+        {
+          icon: 'mdi mdi-format-list-checks',
+          path: `mailbox.vue.${domainName}`,
+          title: `${i18nPref}.actions`,
+        },
+        {
+          icon: 'mdi mdi-help-circle-outline',
+          path: `help.vue.${domainName}`,
+          title: `${i18nPref}.help`,
+        },
+        {
+          icon: 'mdi mdi-account-outline',
+          path: `profile.vue.${domainName}`,
+          title: `${i18nPref}.profile`,
+        },
       ];
-    }
+    },
   }) bottomRoutes: Array<DAppWrapperRouteInterface>;
 
   /**
    * base url of the vue component that uses the dapp-wrapper (e.g.: dashboard.evan)
    */
   @Prop({
-    default: function() {
-      return (<any>this).$store.state.dapp.baseHash;
-    }
+    default() {
+      return this.$store.state.dapp.baseHash;
+    },
   }) routeBaseHash: string;
 
   /**
@@ -114,9 +144,10 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   @Prop({ default: true }) createRuntime: boolean;
 
-  get isLoggedin() {
+  get isLoggedin(): boolean {
     return this.$store.state.isLoggedin;
   }
+
   set isLoggedin(state) {
     this.$store.commit('setLoginState', state);
   }
@@ -124,12 +155,12 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * id of this element, so child elements can be queried easier
    */
-  id = `dappwrapper_${ Date.now() + Math.round(Math.random() * 1000000) }`;
+  id = `dappwrapper_${Date.now() + Math.round(Math.random() * 1000000)}`;
 
   /**
    * selector for the side bar 2
    */
-  sideBar2Selector = `#${ this.id } .dapp-wrapper-content-wrapper > .dapp-wrapper-sidebar-2 > *`;
+  sideBar2Selector = `#${this.id} .dapp-wrapper-content-wrapper > .dapp-wrapper-sidebar-2 > *`;
 
   /**
    * is the current dapp-wrapper gets initialized? => use loading to don't render dapp-loader or
@@ -186,7 +217,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     mails: [],
     mailsLoading: false,
     newMailCount: 0,
-    readMails: [ ],
+    readMails: [],
     totalMails: 0,
   };
 
@@ -194,9 +225,13 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * Queue loading information
    */
   queueInstances = { };
+
   queueCount = 0;
+
   queueErrorCount = 0;
+
   queueLoading = false;
+
   queueWatcher = null;
 
   /**
@@ -218,6 +253,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * Watch for sidebar enable events, so we can enable and disable menu button on small devices
    */
   sidebar2EnableWatcher: any;
+
   sidebar2DisableWatcher: any;
 
   /**
@@ -234,7 +270,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * List of loaded dispatchers, so dispatcher updates, that were not registered before within this
    * dispatcher, will be loaded.
    */
-  loadedDispatchers: Array<string> = [ ];
+  loadedDispatchers: Array<string> = [];
 
   /**
    * dispatcher handler, so applications can easily access dispatcher data from vuex store
@@ -248,10 +284,10 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    */
   get activeRouteTitle(): string {
     if (this.routes) {
-      const allRoutes = (<any>[ ]).concat(this.routes, this.bottomRoutes || [ ]);
+      const allRoutes = [].concat(this.routes, this.bottomRoutes || []);
 
-      for (let i = 0; i < allRoutes.length; i++) {
-        if (this.$route.path.startsWith(<string>allRoutes[i].fullPath)) {
+      for (let i = 0; i < allRoutes.length; i += 1) {
+        if (this.$route.path.startsWith(allRoutes[i].fullPath)) {
           return allRoutes[i].title;
         }
       }
@@ -266,7 +302,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    *
    * @param      {DAppWrapperRouteInterface}  route   route that was activated
    */
-  routeActivated(route: DAppWrapperRouteInterface) {
+  routeActivated(route: DAppWrapperRouteInterface): void {
     this.showSideBar = false;
   }
 
@@ -277,18 +313,19 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     // disable sidebar, when no routes are defined
     if (!this.routes || this.routes.length === 0) {
       this.enableSidebar = false;
-    } else {
-      // else map full path to check active route states and translations
-      (<any>[ ]).concat(this.routes, this.bottomRoutes || [ ])
-        .forEach((route) => route.fullPath = `${ (<any>this).dapp.baseHash }/${ route.path }`);
     }
+
+    // create fullPath for current routes to get correct active state
+    [...(this.routes || []), ...(this.bottomRoutes || [])].forEach((route) => {
+      route.fullPath = `${this.dapp.baseHash}/${route.path}`; // eslint-disable-line no-param-reassign
+    });
 
     // check if the current browser is allowed
     if (dappBrowser.utils.browserName === 'Firefox' && dappBrowser.utils.isPrivateMode) {
       this.supportedBrowser = false;
     } else {
       this.supportedBrowser = !dappBrowser.utils.browserName || [
-        'Opera',  'Firefox', 'Safari', 'Chrome', 'Edge', 'Blink', 'Cordova',
+        'Opera', 'Firefox', 'Safari', 'Chrome', 'Edge', 'Blink', 'Cordova',
       ].indexOf(dappBrowser.utils.browserName) !== -1;
     }
 
@@ -300,33 +337,42 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
       await this.handleLoginOnboarding();
     }
 
-    this.sideBarCloseWatcher = ($event: CustomEvent) => this.showSideBar = false;
-    this.sidebar2EnableWatcher = ($event: CustomEvent) => this.enabledSideBar2 = true;
-    this.sidebar2DisableWatcher = ($event: CustomEvent) => this.enabledSideBar2 = false;
+    this.sideBarCloseWatcher = (): void => { this.showSideBar = false; };
+    this.sidebar2EnableWatcher = (): void => { this.enabledSideBar2 = true; };
+    this.sidebar2DisableWatcher = (): void => { this.enabledSideBar2 = false; };
     window.addEventListener('dapp-wrapper-sidebar-close', this.sideBarCloseWatcher);
     window.addEventListener('dapp-wrapper-sidebar-2-enable', this.sidebar2EnableWatcher);
     window.addEventListener('dapp-wrapper-sidebar-2-disable', this.sidebar2DisableWatcher);
 
     // Set correct language on body (for correct auto hyphens)
-    document.body.setAttribute('lang', (<any>this).$i18n.locale());
+    document.body.setAttribute('lang', this.$i18n.locale());
   }
 
 
   /**
    * Clear the hash change watcher
    */
-  async beforeDestroy() {
+  beforeDestroy(): void {
     // only remove the hashChangeWatcher, when it was already bind (user was on the onboarding)
-    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
+    if (this.hashChangeWatcher) {
+      window.removeEventListener('hashchange', this.hashChangeWatcher);
+    }
     // clear mails watcher
-    this.mailsWatcher && window.clearInterval(this.mailsWatcher);
+    if (this.mailsWatcher) {
+      window.clearInterval(this.mailsWatcher);
+    }
     // clear queue watcher
-    this.userInfo && this.queueWatcher && this.queueWatcher();
+    if (this.userInfo && this.queueWatcher) {
+      this.queueWatcher();
+    }
     // remove the watch function
-    this.sideBarCloseWatcher && window.removeEventListener(`evan-queue-${ this.id }`,
-      this.sideBarCloseWatcher);
+    if (this.sideBarCloseWatcher) {
+      window.removeEventListener(`evan-queue-${this.id}`, this.sideBarCloseWatcher);
+    }
     // delete dispatcher handler
-    this.dispatcherHandler && this.dispatcherHandler.destroy();
+    if (this.dispatcherHandler) {
+      this.dispatcherHandler.destroy();
+    }
     // unbind dapp-wrapper-sidebar level handlers
     window.removeEventListener('dapp-wrapper-sidebar-2-enable', this.sidebar2EnableWatcher);
     window.removeEventListener('dapp-wrapper-sidebar-2-disable', this.sidebar2DisableWatcher);
@@ -335,11 +381,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * Check for parent dapp-wrapper elements and disable nav / sidebar if needed
    */
-  async mounted() {
-    let parent: any = this.$el;
+  mounted(): void {
+    let parent: Element = this.$el;
 
-    // search until body or an wrapper body is reached, if an parent dapp-wrapper is found, hide nav
-    // and sidebar for this dapp-wrapper
+    /* search until body or an wrapper body is reached, if an parent dapp-wrapper is found, hide nav
+       and sidebar for this dapp-wrapper */
     do {
       parent = parent.parentElement;
       if (parent && parent !== this.$el && parent.className.indexOf('dapp-wrapper-body') !== -1) {
@@ -355,7 +401,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    * If a runtime should be created, ensure that the user is logged in / onboarded and create
    * runtimes
    */
-  async handleLoginOnboarding() {
+  async handleLoginOnboarding(): Promise<void> {
     // check for logged in account and if its onboarded
     const activeAccount = dappBrowser.core.activeAccount();
     let loggedIn = false;
@@ -367,7 +413,9 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
       try {
         isOnboarded = await dappBrowser.bccHelper.isAccountOnboarded(activeAccount);
-      } catch (ex) { }
+      } catch (ex) {
+        // user isn't onboarded
+      }
     }
 
     if (!isOnboarded || !loggedIn) {
@@ -376,50 +424,45 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
       // if the watcher was already bound, remove it!
       if (this.hashChangeWatcher) {
-         window.removeEventListener('hashchange', this.hashChangeWatcher);
+        window.removeEventListener('hashchange', this.hashChangeWatcher);
       }
 
       // set the hash change watcher, so we can check that the user finished the onboarding process
-      const dappLoader = this;
-      this.hashChangeWatcher = function() {
-        if (window.location.hash.indexOf(`onboarding.vue.${ (<any>this).domainName }`) === -1) {
+      this.hashChangeWatcher = (): void => {
+        if (window.location.hash.indexOf(`onboarding.vue.${this.domainName}`) === -1) {
           // recheck login and onboarding
-          dappLoader.handleLoginOnboarding();
+          this.handleLoginOnboarding();
         }
       };
 
       // add the hash change listener
       window.addEventListener('hashchange', this.hashChangeWatcher);
 
-      if (this.$route.path.indexOf(`/onboarding.vue.${ (<any>this).domainName }`) === -1) {
-        // navigate to the onboarding and apply the current hash as origin, so the onboarding can
-        // navigate back their
+      if (this.$route.path.indexOf(`/onboarding.vue.${this.domainName}`) === -1) {
+        /* navigate to the onboarding and apply the current hash as origin, so the onboarding can
+           navigate back their */
         this.$router.push({
-          path: `${ (<any>this).dapp.baseHash }/onboarding.vue.${ (<any>this).domainName }`,
+          path: `${this.dapp.baseHash}/onboarding.vue.${this.domainName}`,
           query: {
             origin: this.$route.path,
             ...this.$route.query,
-          }
+          },
         });
       }
-
-      return;
     } else {
       this.onboarding = false;
 
-      let encryptionKey, privateKey, executor;
+      let encryptionKey; let privateKey; let
+        executor;
 
       // if agent-executor is passed to the dapp-browser, do not try to unlock the current vault
       const provider = dappBrowser.core.getCurrentProvider();
       if (provider !== 'agent-executor') {
         // set the password function
-        dappBrowser.lightwallet.setPasswordFunction(async () =>
-          // set resolve password
-          await new Promise((resolve) => {
-            this.loading = false;
-            this.login = (password: string) => resolve(password);
-          })
-        );
+        dappBrowser.lightwallet.setPasswordFunction(() => new Promise((resolve) => {
+          this.loading = false;
+          this.login = (password: string): void => resolve(password);
+        }));
 
         // unlock the profile directly
         const vault = await dappBrowser.lightwallet.loadUnlockedVault();
@@ -453,13 +496,8 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         null,
         { executor },
       );
-
-      // Save alias to localstorage
-      this.userInfo.alias = await bccUtils.getUserAlias(this.$store.state.runtime.profile);
-      window.localStorage.setItem('evan-alias', this.userInfo.alias);
-
-      // create and register a vue dispatcher handler, so applications can easily access dispatcher data
-      // from vuex store
+      /* create and register a vue dispatcher handler, so applications can easily access dispatcher data
+         from vuex store */
       this.dispatcherHandler = new EvanVueDispatcherHandler(this);
       await this.dispatcherHandler.initialize();
 
@@ -471,7 +509,8 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
 
       // load the user infos like alias, mails, dispatchers ...
       if (this.topLevel) {
-        this.loadUserSpecific();
+        await this.loadUserSpecific();
+        window.localStorage.setItem('evan-alias', this.userInfo.alias);
       }
     }
   }
@@ -479,13 +518,13 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * Load the users specific data.
    */
-  async loadUserSpecific() {
+  async loadUserSpecific(): Promise<void> {
     this.userInfo.loading = true;
     this.userInfo.address = dappBrowser.core.activeAccount();
 
     // load alias from addressbook
     this.userInfo.addressBook = await this.$store.state.runtime.profile.getAddressBook();
-    this.userInfo.alias = this.userInfo.addressBook.profile[dappBrowser.core.activeAccount()].alias;
+    this.userInfo.alias = await profileUtils.getUserAlias(this.$store.state.runtime);
 
     // setup dispatcher data saving logic
     this.setupQueue();
@@ -502,43 +541,45 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * Load the mail information for the current user
    */
-  async loadMails(mailsToReach = 5) {
+  async loadMails(): Promise<void> {
     if (!this.userInfo.mailsLoading) {
       this.userInfo.mailsLoading = true;
 
-      const runtime = this.$store.state.runtime;
+      const { runtime } = this.$store.state;
       try {
         // load mail inbox informations, load 10 for checking for +9 new mails
         this.userInfo.readMails = JSON.parse(window.localStorage['evan-mail-read'] || '[ ]');
 
-        let mails = [ ];
+        let mails = [];
         let offset = 0;
         let initial = true;
         this.userInfo.totalMails = 0;
 
         // load until 5 mails could be decrypted or the maximum amount of mails is reached
         while (mails.length < 5 && (initial || offset < this.userInfo.totalMails)) {
+          // eslint-disable-next-line no-await-in-loop
           const mailResult = await runtime.mailbox.getReceivedMails(5, offset);
 
           // increase offset with amount of loaded mails
           initial = false;
-          offset = offset + Object.keys(mailResult.mails).length;
+          offset += Object.keys(mailResult.mails).length;
 
           // update the total mail count
           this.userInfo.totalMails = mailResult.totalResultCount;
 
           // map all the mails in to an mail array and show only 5
           mails = mails.concat(Object.keys(mailResult.mails)
-            .map((mailAddress: string) => {
+            .map((mailAddress: string): any => {
               if (mailResult.mails[mailAddress] && mailResult.mails[mailAddress].content) {
                 const mail = mailResult.mails[mailAddress].content;
                 mail.address = mailAddress;
 
                 return mail;
               }
+
+              return undefined;
             })
-            .filter(mail => !!mail)
-          );
+            .filter((mail) => !!mail));
         }
 
         // show a maximum of 5 mails
@@ -551,29 +592,24 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
         if (previousRead < this.userInfo.totalMails && !window.localStorage['evan-test-mode']) {
           // show a toast message for the last unread mails
           await Promise.all(this.userInfo.mails.slice(0, this.userInfo.newMailCount).map(async (mail) => {
-            const fromProfile = new bcc.Profile({
-              accountId: runtime.activeAccount,
-              profileOwner: mail.from,
-              ...runtime
-            });
-            const alias = mail.fromAlias || await bccUtils.getUserAlias(fromProfile);
+            const alias = mail.fromAlias || await profileUtils.getUserAlias(runtime, mail.from);
             const mailClass = mail.address.replace('0x', 'mail-');
             const mailLink = [
               this.dapp.baseUrl,
               this.dapp.rootEns,
-              `mailbox.vue.${ this.dapp.domainName }/received/detail`,
-              `${ mail.address }`,
+              `mailbox.vue.${this.dapp.domainName}/received/detail`,
+              `${mail.address}`,
             ].join('/');
-            const modalClick = (e, toastObject) => {
+            const modalClick = (e, toastObject): void => {
               this.markMailAsRead(mail);
               toastObject.goAway(0);
               this.loadMails();
             };
 
-            if (!document.querySelector(`.${ mailClass }`) &&
-                this.userInfo.readMails.indexOf(mail.address) === -1) {
+            if (!document.querySelector(`.${mailClass}`)
+                && this.userInfo.readMails.indexOf(mail.address) === -1) {
               this.$toasted.show(
-                `${ mail.title }` + (alias ? ` ${ this.$t('_evan.dapp-wrapper.from') } ${ alias }` : ''),
+                `${mail.title}${alias ? ` ${this.$t('_evan.dapp-wrapper.from')} ${alias}` : ''}`,
                 {
                   className: mailClass,
                   duration: null,
@@ -584,20 +620,20 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
                       class: 'mdi mdi-email-open-outline',
                       href: mailLink,
                       icon: '',
-                      onClick: (e, toastObject) => {
+                      onClick: (e, toastObject): void => {
                         modalClick(e, toastObject);
                         // then redirect to original location
                         window.location.assign(mailLink);
-                      }
+                      },
                     },
                     {
                       text: '',
-                      icon : '',
+                      icon: '',
                       class: 'mdi mdi-close',
                       onClick: modalClick,
-                    }
-                  ]
-                }
+                    },
+                  ],
+                },
               );
             }
           }));
@@ -615,7 +651,7 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    *
    * @param      {any}  mail    mail object
    */
-  markMailAsRead(mail: any) {
+  markMailAsRead(mail: any): void {
     // set the mail read and save it into the local store
     if (this.userInfo.readMails.indexOf(mail.address) === -1) {
       this.userInfo.readMails.push(mail.address);
@@ -635,17 +671,17 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * Load dispatcher from an ens address or return thee cached one.
    */
-  async loadDispatcher(dispatcherId: string) {
-    const [ dappEns, dispatcherName ] = dispatcherId.split('|||');
+  async loadDispatcher(dispatcherId: string): Promise<Dispatcher> {
+    const [dappEns, dispatcherName] = dispatcherId.split('|||');
     // load dependencies and dapp content
     await dappBrowser.dapp.loadDAppDependencies(dappEns, false);
-    const dapp = await dappBrowser.System.import(`${ dappEns }!dapp-content`);
+    const dapp = await dappBrowser.System.import(`${dappEns}!dapp-content`);
     const dispatcher = dapp[dispatcherName];
 
     // add translation to correctly display instance dispatcher titles
     if (dapp.translations) {
-       Object.keys(dapp.translations)
-         .forEach(key => this.$i18n.add(key, dapp.translations[key]));
+      Object.keys(dapp.translations)
+        .forEach((key) => this.$i18n.add(key, dapp.translations[key]));
     }
 
     // push dispatcher id into the list of already loaded, so we only need to load translations once
@@ -659,11 +695,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
   /**
    * Load the queue data
    */
-  async setupQueue() {
+  async setupQueue(): Promise<void> {
     this.queueLoading = true;
 
     // load queue for the current account and load the queue entries
-    const runtime = this.$store.state.runtime;
+    const { runtime } = this.$store.state;
     const queue = await new EvanQueue(this.$store.state.runtime.activeAccount);
     const dispatchers = await queue.load('*');
 
@@ -693,10 +729,10 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     }));
 
     // set queue count
-    const setQueueCount = () => {
-      const instances = Object.keys(this.queueInstances).map(key => this.queueInstances[key]);
-      this.queueCount = instances.filter(subInstance => !subInstance.error).length;
-      this.queueErrorCount = instances.filter(subInstance => !!subInstance.error).length;
+    const setQueueCount = (): void => {
+      const instances = Object.keys(this.queueInstances).map((key) => this.queueInstances[key]);
+      this.queueCount = instances.filter((subInstance) => !subInstance.error).length;
+      this.queueErrorCount = instances.filter((subInstance) => !!subInstance.error).length;
     };
     setQueueCount();
     this.queueLoading = false;
@@ -704,43 +740,68 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
     // watch for queue updates
     if (!this.queueWatcher && this.topLevel) {
       this.queueWatcher = Dispatcher.watch(async (event: CustomEvent) => {
-        const instance = event.detail.instance;
+        const { instance } = event.detail;
 
         // load missing translations
         if (this.loadedDispatchers.indexOf(instance.dispatcher.id)) {
           await this.loadDispatcher(instance.dispatcher.id);
         }
 
-        // show user synchronisation status
-        this.$toasted.show(this.$t(
-          `_evan.dapp-wrapper.dispatcher-status.${ instance.status }`,
+        // trigger special queue interactions and set toast type
+        const toastOpts = {
+          action: null,
+          duration: 3000,
+          type: 'info',
+        };
+        const toastMessage = this.$t(
+          `_evan.dapp-wrapper.dispatcher-status.${instance.status}`,
           {
             title: this.$t(instance.dispatcher.title),
             percentage: Math.round((100 / instance.dispatcher.steps.length) * instance.stepIndex),
-          }
-        ), {
-          duration: instance.status === 'finished' ? 7000 : 3000,
-          type: instance.status === 'finished' ? 'success' :
-                instance.status === 'error' ? 'error' :
-                'info'
-        });
-
-        // trigger special queue interactions
+          },
+        );
         switch (instance.status) {
-          case 'finished':
-          case 'deleted': {
-            delete this.queueInstances[instance.id];
-            break;
-          }
           case 'accept': {
             this.startDispatcherInstance(instance);
             break;
           }
+          case 'deleted': {
+            delete this.queueInstances[instance.id];
+            break;
+          }
+          case 'error': {
+            toastOpts.type = 'error';
+            break;
+          }
+          case 'finished': {
+            if (instance.data.callbackUrl) {
+              toastOpts.duration = null;
+              toastOpts.action = {
+                text: this.$t('_evan.dapp-wrapper.dispatcher-url-callback'),
+                onClick: (e, toastObject): void => {
+                  window.location.hash = instance.data.callbackUrl;
+                  toastObject.goAway(0);
+                },
+              };
+            } else {
+              toastOpts.duration = 7000;
+            }
+
+            delete this.queueInstances[instance.id];
+            toastOpts.type = 'success';
+            break;
+          }
+          default: {
+            toastOpts.type = 'info';
+          }
         }
 
+        // show user synchronisation status
+        this.$toasted.show(toastMessage, toastOpts);
+
         if (instance.status !== 'finished' && instance.status !== 'deleted') {
-          // if the watch was already defined and it's not the incoming instance, copy only the
-          // values
+          /* if the watch was already defined and it's not the incoming instance, copy only the
+             values */
           this.$set(this.queueInstances, instance.id, instance);
         }
 
@@ -754,11 +815,11 @@ export default class DAppWrapperComponent extends mixins(EvanComponent) {
    *
    * @param      {any}  instance  an dispatcher instance
    */
-  startDispatcherInstance(instance: any) {
+  startDispatcherInstance(instance: DispatcherInstance): void {
     if (instance.status === 'accept') {
       this.instanceInteraction = { type: 'accept', instance };
 
-      (<any>this.$refs).instanceInteraction.show();
+      (this.$refs as any).instanceInteraction.show();
     } else {
       instance.start();
     }

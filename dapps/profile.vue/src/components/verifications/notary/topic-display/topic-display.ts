@@ -20,11 +20,10 @@
 // vue imports
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-import moment from 'moment';
 
 // evan.network imports
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { FileHandler, bccUtils, } from '@evan.network/ui';
+import { FileHandler, profileUtils, } from '@evan.network/ui';
 import * as bcc from '@evan.network/api-blockchain-core';
 
 import * as dispatchers from '../../../../dispatchers/registry';
@@ -274,8 +273,8 @@ export default class TopicDisplayComponent extends mixins(EvanComponent) {
     if (!this.companyName) {
       const runtime: bcc.Runtime = (<any>this).getRuntime();
       const profileDApp = (this as any).$store.state.profileDApp;
-      this.companyName = await bccUtils.getUserAlias(profileDApp.profile,
-        profileDApp.accountDetails) || runtime.activeAccount;
+      this.companyName = (await profileUtils.getUserAlias(runtime, profileDApp.address,
+        profileDApp.accountDetails)) || runtime.activeAccount;
     }
 
     (this as any).$store.commit('toggleSidePanel', this.topic);

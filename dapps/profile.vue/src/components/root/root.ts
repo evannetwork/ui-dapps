@@ -18,18 +18,16 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Watch } from 'vue-property-decorator';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
 import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { DispatcherInstance } from '@evan.network/ui';
+import { EvanComponent } from '@evan.network/ui-vue-core';
 
 import * as dispatchers from '../../dispatchers/registry';
-
-import { getPermissionSortFilter, } from '../utils/shareSortFilters';
+import { getPermissionSortFilter } from '../utils/shareSortFilters';
 
 @Component({ })
 export default class ProfileRootComponent extends mixins(EvanComponent) {
@@ -41,7 +39,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * navEntries for top navigation
    */
-  navEntries: Array<any> = [ ];
+  navEntries: Array<any> = [];
 
   /**
    * Watch for dispatcher updates
@@ -49,7 +47,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   listeners: Array<any> = [];
 
   @Watch('$route')
-  onRouteChange(to, from) {
+  onRouteChange(to) {
     if (to.params.address !== this.$store.state.profileDApp.address) {
       this.initialize(true);
     }
@@ -58,7 +56,7 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Watch for dispatcher updates§
    */
-  created() {
+  created(): void {
     // watch for save updates
     this.listeners.push(dispatchers.updateProfileDispatcher.watch(async ($event: any) => {
       if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
@@ -70,14 +68,14 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Clear dispatcher listeners
    */
-  beforeDestroy() {
-    this.listeners.forEach(listener => listener());
+  beforeDestroy(): void {
+    this.listeners.forEach((listener) => listener());
   }
 
   /**
    * Setup navigation structure
    */
-  async initialize(forceReload?: boolean) {
+  async initialize(forceReload?: boolean): Promise<void> {
     // only show loading on detail page
     if (forceReload || this.$route.name === 'detail') {
       this.loading = true;
@@ -87,33 +85,30 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
     await this.$store.state.loadingProfile;
     this.setNavEntries();
 
-    if (this.$store.state.profileDApp.isMyProfile) {
-      this.allowedRoutes = [ ];
-    }
-
     this.loading = false;
   }
 
   /**
    * Load currents profiles data.
    */
-  async setupProfile() {
-    const address = this.$route.params.address;
-    const runtime = (<any>this).getRuntime();
-    const activeAccount = runtime.activeAccount;
+  async setupProfile(): Promise<void> {
+    const { address } = this.$route.params;
+    const runtime = this.getRuntime();
+    const { activeAccount } = runtime;
     const profile = new bcc.Profile({
       accountId: runtime.activeAccount,
       profileOwner: address,
       ...runtime,
-    });
-    const profileDApp: any = this.$store.state.profileDApp = {
+    } as bcc.ProfileOptions);
+    const profileDApp: any = {
       activeAccount,
       address,
       data: { },
       isMyProfile: address === activeAccount,
-      permissions: { read: [ ], readWrite: [ ] },
+      permissions: { read: [], readWrite: [] },
       profile,
     };
+    this.$store.state.profileDApp = profileDApp;
 
     try {
       // load general profile information
@@ -121,23 +116,24 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       // load profile container data
       profileDApp.description = await profile.profileContainer.getDescription();
     } catch (ex) {
-      runtime.logger.log(`Could not description for ${ address }: ${ ex.message }`, 'error');
+      runtime.logger.log(`Could not description for ${address}: ${ex.message}`, 'error');
     }
 
     // load container data
     if (profile.profileContainer && profileDApp.description && profileDApp.description.dataSchema) {
       // load permissions
       const { readWrite, read } = await profile.profileContainer.getContainerShareConfigForAccount(
-        activeAccount);
+        activeAccount,
+      );
       profileDApp.permissions = {
-        read: (read || [ ]).concat(readWrite || [ ]),
-        readWrite: readWrite || [ ],
+        read: (read || []).concat(readWrite || []),
+        readWrite: readWrite || [],
       };
       profileDApp.data = await this.loadProfileEntries();
       profileDApp.sharingFilter = getPermissionSortFilter(profileDApp.data);
     } else {
       if (profileDApp.isMyProfile) {
-        profileDApp.permissions.read = [ 'accountDetails' ];
+        profileDApp.permissions.read = ['accountDetails'];
       }
 
       profileDApp.old = true;
@@ -147,10 +143,9 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Load the profile container entry data and return them.
    */
-  async loadProfileEntries() {
-    const runtime = (<any>this).getRuntime();
-    const data = { };
-    const profileDApp = this.$store.state.profileDApp;
+  async loadProfileEntries(): Promise<any> {
+    const data = {};
+    const { profileDApp } = this.$store.state;
     const entryKeys = Object.keys(profileDApp.description.dataSchema);
 
     // load entry data from profile container
@@ -158,15 +153,15 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
       if (profileDApp.permissions.read.indexOf(key) !== -1) {
         try {
           // load account details
-          data[key] = await this.loadProfileEntry(runtime, profileDApp.profile, key);
+          data[key] = await this.loadProfileEntry(profileDApp.profile, key);
         } catch (ex) {
-          profileDApp.profile.log(`Could nor load accountDetails for ${ profileDApp.address }: ${ ex.message }`, 'error');
+          profileDApp.profile.log(`Could nor load accountDetails for ${profileDApp.address}: ${ex.message}`, 'error');
         }
       }
 
       // fill empty values
       if (!data[key]) {
-        data[key] = { };
+        data[key] = {};
       }
     }));
 
@@ -179,19 +174,21 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
    * @param      {bccProfile}  profile  bcc profile for current opened profile
    * @param      {string}      type     entry name
    */
-  async loadProfileEntry(runtime: bcc.Runtime, profile: bcc.Profile, type: string) {
-    let scopeData;
+  async loadProfileEntry(profile: bcc.Profile, type: string): Promise<any> {
+    const runtime = this.getRuntime();
     const instances = await dispatchers.updateProfileDispatcher.getInstances(runtime, true);
+    let scopeData;
 
     // if dispatcher is running, use this data
     if (instances && instances.length !== 0) {
-      const filtered = instances.filter(instance => instance.data.type === type);
+      const filtered = (instances as DispatcherInstance[])
+        .filter((instance) => instance.data.type === type);
       if (filtered.length !== 0) {
         scopeData = filtered[filtered.length - 1].data.formData;
       }
     }
 
-    // if not dispatcher entry was found for this scope, load it!
+    // if no dispatcher entry was found for this scope, load it!
     if (!scopeData) {
       scopeData = (await profile.getProfileProperty(type));
     }
@@ -202,27 +199,37 @@ export default class ProfileRootComponent extends mixins(EvanComponent) {
   /**
    * Applies the navigation entries for the current opened profile.
    */
-  setNavEntries() {
+  setNavEntries(): void {
     this.navEntries = [
-      { key: 'detail', icon: 'mdi mdi-account-outline' },
-      { key: 'wallet', icon: 'mdi mdi-wallet-outline' },
-      { key: `verifications`, icon: 'mdi mdi-check-decagram' },
-      { key: `addressbook.vue.${ (<any>this).dapp.domainName }`, icon: 'mdi mdi-account-group-outline' },
-      { key: `sharings`, icon: 'mdi mdi-share-variant'},
+      {
+        key: 'detail',
+        icon: 'mdi mdi-account-outline',
+      }, {
+        key: 'wallet',
+        icon: 'mdi mdi-wallet-outline',
+      }, {
+        key: 'verifications',
+        icon: 'mdi mdi-check-decagram',
+      },
+      {
+        key: 'sharings',
+        icon: 'mdi mdi-share-variant',
+      },
       null,
-      { key: 'settings', icon: 'mdi mdi-settings' },
-    ]
-    .map(entry => (entry ? {
-      id: `nav-entry-${ entry.key }`,
-      href: `${ (<any>this).dapp.fullUrl }/${ this.$route.params.address }/${ entry.key }`,
-      text: `_profile.breadcrumbs.${ entry.key.split('/')[0] }`,
+      {
+        key: 'settings',
+        icon: 'mdi mdi-settings',
+      },
+    ].map((entry) => (entry ? {
+      id: `nav-entry-${entry.key}`,
+      text: `_profile.breadcrumbs.${entry.key.split('/')[0]}`,
+      to: entry.key,
       icon: entry.icon,
     } : null));
 
     // remove sharings from old profiles
-    if (!this.$store.state.profileDApp.profile.profileContainer ||
-        !this.$store.state.profileDApp.description) {
-      this.navEntries.splice(4, 1);
+    if (!this.$store.state.profileDApp.profile.profileContainer || !this.$store.state.profileDApp.description) {
+      this.navEntries.splice(3, 1);
     }
   }
 }

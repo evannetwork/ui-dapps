@@ -1,0 +1,36 @@
+@import '~@evan.network/ui/src/style/utils';
+
+/deep/ .dropdown.b-dropdown {
+  & > button.btn {
+    padding: 0;
+  }
+}
+
+/deep/ .loading-cell {
+  width: 30px;
+  min-width: 30px;
+}
+
+.prohibited {
+  padding: 0 16px;
+
+  border: 1px solid cssVar('border-color');
+  border-radius: 2px;
+  background: cssVar('gray-100');
+
+  pointer-events: none;
+
+  span {
+    color: cssVar('gray-500');
+    vertical-align: middle;
+    line-height: 40px;
+  }
+
+  i.mdi {
+    float: right;
+
+    color: cssVar('text-color');
+    vertical-align: middle;
+    line-height: 40px;
+  }
+}

@@ -7,11 +7,11 @@
       "files": [
         "countries.libs.js"
       ],
-      "origin": "QmYfHcZihBXPQuPtEWJaE5p39XmyHqGss3n5bCmhrnyQ6T",
+      "origin": "QmVFRTwmbuERpNEEjBmfCrUnopynpV5ii5Z47w6aMdDG1s",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
-      "type": "dapp"
+      "type": "cached-dapp"
     },
     "dbcpVersion": 2,
     "description": "",
@@ -33,7 +33,7 @@
     "version": "1.1.0",
     "versions": {
       "1.0.0": "QmXmzcmMC536XBtKcLYYHib7aY6GCsXgqdc6NTt84MVmjn",
-      "1.1.0": "QmRnKGznQSXjh3X9YdvZYVX8q9twKjaCyCmiV34DWgYhzw"
+      "1.1.0": "Qmd42pR1bzp2JFu6Zk9aPfgJDaZTR6mPtSv2Qm5Wz3D4PL"
     }
   }
 }

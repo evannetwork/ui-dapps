@@ -2,14 +2,16 @@
   "_digital-twin-lib": {
     "dispatchers": {
       "container": {
-        "save": "Saving data...",
-        "share": "Sharing data..."
+        "save": "Saving data ...",
+        "share": "Sharing data ..."
       },
-      "description": "Saving description...",
+      "description": "Saving description ...",
       "twin": {
+        "create": "Creating Digital Twin ...",
+        "delete": "Deleting Digital Twin ...",
         "favorite": {
-          "add": "Adding favorite...",
-          "remove": "Removing favorite..."
+          "add": "Adding favorite ...",
+          "remove": "Removing favorite ..."
         }
       }
     }

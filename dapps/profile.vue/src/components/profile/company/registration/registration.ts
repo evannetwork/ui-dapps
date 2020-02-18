@@ -18,14 +18,10 @@
 */
 
 // vue imports
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { countries } from '@evan.network/ui-countries';
 import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-core';
 
 // internal
@@ -49,7 +45,7 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
   /**
    * Apply required fiels from outside.
    */
-  @Prop({ default: [ 'company' ] }) required;
+  @Prop({ default: ['company'] }) required;
 
   /**
    * hides the cancel button and directly jumps into formular edit mode
@@ -90,7 +86,9 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
    * Directly open the formular edit mode.
    */
   mounted() {
-    this.onlyEdit && (this.$refs.form as any).setEditMode(true);
+    if (this.onlyEdit) {
+      (this.$refs.form as any).setEditMode(true);
+    }
   }
 
   /**
@@ -100,16 +98,17 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
     const registrationData = this.data || this.$store.state.profileDApp.data.registration || {};
 
     // setup registration form
-    this.form = (<RegistrationFormInterface>new EvanForm(this, {
+    this.form = (new EvanForm(this, {
       court: {
         value: registrationData.court || '',
-        validate: function(vueInstance: CompanyRegistrationForm) {
-          return vueInstance.required.indexOf('court') === -1 || this.value.length !== 0;
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          vueInstance.required.indexOf('court') === -1 || control.value.length !== 0
+        ),
         uiSpecs: {
           attr: {
             required: !this.stacked || this.required.indexOf('court') !== -1,
-          }
+          },
+          type: 'input',
         },
       },
       register: {
@@ -118,43 +117,45 @@ export default class CompanyRegistrationForm extends mixins(EvanComponent) {
           type: 'select',
           attr: {
             options: [
-              { value: 'hra', label: '_profile.company.registration.register.types.hra', },
-              { value: 'hrb', label: '_profile.company.registration.register.types.hrb', },
+              { value: 'hra', label: '_profile.company.registration.register.types.hra' },
+              { value: 'hrb', label: '_profile.company.registration.register.types.hrb' },
             ],
             required: !this.stacked || this.required.indexOf('register') !== -1,
-          }
+          },
         },
-        validate: function(vueInstance: CompanyRegistrationForm) {
-          return vueInstance.required.indexOf('register') === -1 || this.value.length !== 0;
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          vueInstance.required.indexOf('register') === -1 || control.value.length !== 0
+        ),
       },
       registerNumber: {
         value: registrationData.registerNumber || '',
-        validate: function(vueInstance: CompanyRegistrationForm) {
-          return vueInstance.required.indexOf('registerNumber') === -1 || this.value.length !== 0;
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          vueInstance.required.indexOf('registerNumber') === -1 || control.value.length !== 0
+        ),
         uiSpecs: {
           attr: {
             required: !this.stacked || this.required.indexOf('registerNumber') !== -1,
-          }
-        }
+          },
+          type: 'input',
+        },
       },
       salesTaxID: {
         value: registrationData.salesTaxID || '',
-        validate: function(vueInstance: CompanyRegistrationForm) {
-          return vueInstance.required.indexOf('salesTaxID') === -1 || this.value.length !== 0;
-        },
+        validate: (vueInstance, form, control: EvanFormControl): boolean|string => (
+          vueInstance.required.indexOf('salesTaxID') === -1 || control.value.length !== 0
+        ),
         uiSpecs: {
           attr: {
             required: !this.stacked || this.required.indexOf('salesTaxID') !== -1,
-          }
-        }
+          },
+          type: 'input',
+        },
       },
-    }));
+    }) as RegistrationFormInterface);
   }
 
   async changeProfileData() {
-    dispatchers.updateProfileDispatcher.start((<any>this).getRuntime(), {
+    dispatchers.updateProfileDispatcher.start(this.getRuntime(), {
       address: this.$store.state.profileDApp.address,
       formData: this.form.getFormData(),
       type: 'registration',

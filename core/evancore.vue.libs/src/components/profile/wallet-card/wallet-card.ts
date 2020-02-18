@@ -19,12 +19,12 @@
 
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
-import { bccUtils } from '@evan.network/ui';
+import { profileUtils } from '@evan.network/ui';
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import EvanComponent from '../../../component';
 import { Prop } from 'vue-property-decorator';
+import EvanComponent from '../../../component';
 
 @Component
 export default class WalletCardComponent extends mixins(EvanComponent) {
@@ -76,52 +76,43 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
   /**
    * Load user specific information
    */
-  async created() {
-    const dapp = this.$store.state.dapp;
-    this.walletLink =
-      this.href !== undefined
-        ? this.href
-        : [
-            dapp.baseUrl,
-            dapp.rootEns,
-            `profile.vue.${dapp.domainName}`,
-            `${this.address}/wallet`
-          ].join('/');
+  async created(): Promise<void> {
+    const { dapp } = this.$store.state;
+    this.walletLink = this.href !== undefined
+      ? this.href
+      : [
+        dapp.baseUrl,
+        dapp.rootEns,
+        `profile.vue.${dapp.domainName}`,
+        `${this.address}/wallet`,
+      ].join('/');
 
     await Promise.all([
-      (async () => {
-        const profile = new bcc.Profile({
-          profileOwner: this.address,
-          accountId: this.$store.state.runtime.activeAccount,
-          ...this.$store.state.runtime
-        });
-        this.alias = await bccUtils.getUserAlias(
-          profile,
-          this.accountDetails,
-          this.registration
-        );
+      (async (): Promise<void> => {
+        this.alias = await profileUtils.getUserAlias(this.getRuntime(), this.address,
+          this.accountDetails);
       })(),
-      (async () => {
+      (async (): Promise<void> => {
         // load balance and parse it to 2 decimal places
         const amount = await dappBrowser.core.getBalance(this.address);
         this.balance = {
           amount: amount.toLocaleString(this.$i18n.locale(), {
             minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+            maximumFractionDigits: 2,
           }),
           timestamp: Date.now(),
         };
       })(),
-      (async () => {
+      (async (): Promise<void> => {
         // load the vue evan core to get its origin and access the images
         const vueCoreDbcp = await dappBrowser.System.import(
-          `evancore.vue.libs.${dappBrowser.getDomainName()}!ens`
+          `evancore.vue.libs.${dappBrowser.getDomainName()}!ens`,
         );
         this.vueCoreBaseUrl = dappBrowser.dapp.getDAppBaseUrl(
           vueCoreDbcp,
-          `${vueCoreDbcp.name}.${dappBrowser.getDomainName()}`
+          `${vueCoreDbcp.name}.${dappBrowser.getDomainName()}`,
         );
-      })()
+      })(),
     ]);
 
     this.loading = false;
@@ -132,7 +123,7 @@ export default class WalletCardComponent extends mixins(EvanComponent) {
    *
    * @param      {Event}  $event  click event
    */
-  showQRCode($event) {
+  showQRCode($event): boolean {
     (this.$refs.qrCodeModal as any).show();
     $event.stopPropagation();
 

@@ -18,13 +18,13 @@
 */
 
 import { DigitalTwin, DigitalTwinOptions, Runtime } from '@evan.network/api-blockchain-core';
-import { DispatcherInstance } from '@evan.network/ui';
+import { DispatcherInstance, bccUtils, profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
-import { mixins } from 'vue-class-component';
 
-import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
-import DAppContainer from './DAppContainer';
 import * as dispatchers from './dispatchers';
+import DAppContainer from './DAppContainer';
+import { applyMixins, DAppContract, DBCPDescriptionInterface } from './DAppContract';
+import SharingUtils, { BmailContent } from './utils/SharingUtils';
 
 /**
  * Extended DigitalTwin class to merge backend logic with dispatcher watching functionalities. Also
@@ -37,9 +37,9 @@ class DAppTwin extends DigitalTwin {
   /**
    * All loaded containers, enhanced with ui flags and data.
    */
-  containers: { [id: string]: DAppContainer };
   containerContracts: { [id: string]: DAppContainer };
-  containerKeys: string[];
+
+  containerAddresses: string[];
 
   /**
    * Current states for running dispatchers. Includes description saving, entry saving, sharing /
@@ -64,51 +64,71 @@ class DAppTwin extends DigitalTwin {
   favorite: boolean;
 
   /**
+   * Created at timestamp
+   */
+  createdAt: number = null;
+
+  /**
+   * True, when the twin is initialization process
+   */
+  loading = false;
+
+  /**
+   * All data that is nessecary for twin sharing. Will be loaded within the ShareContainer component.
+   */
+  sharingContext: { contacts: any; bMailContent: BmailContent } = null;
+
+  ownerName: string;
+
+  /**
    * Call super and initialize new twin class.
    */
   constructor(vue: EvanComponent, runtime: Runtime, address: string) {
     super(runtime as DigitalTwinOptions, { accountId: runtime.activeAccount, address });
+    this.containerContracts = { };
     this.baseConstructor(vue, runtime, address);
+  }
+
+  /**
+   * Add the digital twin with given address to profile using the digital twin dispatcher.
+   */
+  public async addAsFavorite(): Promise<void> {
+    await dispatchers.twinFavoriteAddDispatcher
+      .start(this.runtime, { address: this.contractAddress });
   }
 
   /**
    * Reset containers object and reload all container definitions.
    */
-  private async ensureContainers() {
-    this.containers = { };
-    this.containerContracts = { };
-
-    // transform twinEntries to containers object, so all 
+  private async ensureContainers(): Promise<void> {
+    // transform twinEntries to containers object, so all
     const twinEntries = await this.getEntries();
-    this.containerKeys = Object.keys(twinEntries);
-    await Promise.all(this.containerKeys.map(async (key: string) => {
-      this.containers[key] = new DAppContainer(
-        this.vue,
-        this.runtime,
-        await twinEntries[key].value.getContractAddress(),
-      );
+    await Promise.all(Object.keys(twinEntries).map(async (key: string) => {
+      const address = await twinEntries[key].value.getContractAddress();
 
-      // load description, contractAddress, dispatcherStates
-      await this.containers[key].initialize();
-      
-      // make contracts also directly accessible
-      this.containerContracts[this.containers[key].contractAddress] = this.containers[key];
+      // only load container, if its base info wasn't before (e.g. when it was initially loaded)
+      if (!this.containerContracts[address]) {
+        await this.setupDAppContainer(address);
+      } else {
+        this.containerContracts[address].name = key;
+      }
     }));
+    this.containerAddresses = Object.keys(this.containerContracts);
   }
 
   /**
    * Checkup current dispatcher loading states and set corresponding states.
    */
-  private async ensureDispatcherStates() {
+  private async ensureDispatcherStates(): Promise<void> {
     // load all running dispatcher instances for containers
-    const [ descInstances, addFavInstances, removeFavInstances ] = await Promise.all([
+    const [descInstances, addFavInstances, removeFavInstances] = await Promise.all([
       dispatchers.descriptionDispatcher.getInstances(this.runtime),
       dispatchers.twinFavoriteAddDispatcher.getInstances(this.runtime),
       dispatchers.twinFavoriteRemoveDispatcher.getInstances(this.runtime),
     ]);
 
     // reset previous saving states
-    const dispatcherStates = {
+    this.dispatcherStates = {
       addFavorite: false,
       description: false,
       favorite: false,
@@ -119,76 +139,110 @@ class DAppTwin extends DigitalTwin {
     // check description save states
     (descInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        dispatcherStates.description = true;
-        dispatcherStates.twin = true;
-        this.vue.$set(this, 'description', instance.data.description);
+        this.dispatcherStates.description = true;
+        this.dispatcherStates.twin = true;
+        this.description = instance.data.description;
       }
     });
 
     // check if twin is added as favorite
     (addFavInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        dispatcherStates.addFavorite = true;
-        dispatcherStates.favorite = true;
-        this.vue.$set(this, 'favorite', true);
+        this.dispatcherStates.addFavorite = true;
+        this.dispatcherStates.favorite = true;
+        this.favorite = true;
       }
     });
 
     // check if twin is removed from favorite
     (removeFavInstances as DispatcherInstance[]).forEach((instance: DispatcherInstance) => {
       if (instance.data.address === this.contractAddress) {
-        dispatcherStates.removeFavorite = true;
-        dispatcherStates.favorite = true;
-        this.vue.$set(this, 'favorite', false);
+        this.dispatcherStates.removeFavorite = true;
+        this.dispatcherStates.favorite = true;
+        this.favorite = false;
       }
     });
+  }
 
-    // check if any container gets saved
-    Object.keys(this.containers).forEach(containerKey => {
-      if (this.containers[containerKey].dispatcherStates.container) {
-        dispatcherStates.twin = true;
-      }
-    });
+  async setSharingContext(): Promise<void> {
+    const [contacts, bMailContent] = await Promise.all([
+      bccUtils.getContacts(this.runtime),
+      SharingUtils.getTwinShareBMail(this.vue),
+    ]);
 
-    // set it afterwards to reduce vue update triggers
-    this.vue.$set(this, 'dispatcherStates', dispatcherStates);
+    this.sharingContext = { contacts, bMailContent };
   }
 
   /**
    * Load basic twin information and setup dispatcher watchers for loading states.
    */
-  public async initialize() {
-    // load base info and check for favorites status
-    await this.loadBaseInfo();
-    this.favorite = await this.isFavorite();
+  public async initialize(): Promise<void> {
+    await Promise.all([
+      this.loadBaseInfo(),
+      (async (): Promise<void> => {
+        this.favorite = await this.isFavorite();
+      })(),
+      (async (): Promise<void> => {
+        this.ownerName = await profileUtils.getUserAlias(this.runtime, this.ownerAddress);
+      })(),
+      this.ensureContainers(),
+      this.ensureDispatcherStates(),
+    ]);
+  }
 
-    await this.ensureContainers();
-    await this.ensureDispatcherStates();
-    this.ensureI18N();
+  /**
+   * Handles a description save dispatcher loading event and triggers a description reload, if
+   * dispatcher was stopped / finished.
+   */
+  async onDescriptionSave($event): Promise<void> {
+    this.ensureDispatcherStates();
+
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.description = await this.getDescription();
+      this.triggerReload('description');
+    }
+  }
+
+  /**
+   * Handles a twin favorite add / remove dispatcher event and triggers a ui reload, if nessecary.
+   */
+  onFavoriteSave($event): void {
+    this.ensureDispatcherStates();
+
+    if ($event.detail.status === 'finished' || $event.detail.status === 'deleted') {
+      this.triggerReload('favorite');
+    }
+  }
+
+  /* Removes the current twin from the favorites in profile with digital twin dispatcher. */
+  public async removeFromFavorites(): Promise<void> {
+    await dispatchers.twinFavoriteRemoveDispatcher
+      .start(this.runtime, { address: this.contractAddress });
   }
 
   /**
    * Start all dispatcher watchers.
    */
-  public watchDispatchers() {
-    // clear previously running watchers
-    this.stopWatchDispatchers();
+  public watchDispatchers(): void {
     // trigger all new watchers and save the listeners
     this.listeners = [
-      dispatchers.descriptionDispatcher.watch(() => this.ensureDispatcherStates()),
-      dispatchers.twinFavoriteAddDispatcher.watch(() => this.ensureDispatcherStates()),
-      dispatchers.twinFavoriteRemoveDispatcher.watch(() => this.ensureDispatcherStates()),
+      dispatchers.descriptionDispatcher.watch(($event) => this.onDescriptionSave($event)),
+      dispatchers.twinFavoriteAddDispatcher.watch(($event) => this.onFavoriteSave($event)),
+      dispatchers.twinFavoriteRemoveDispatcher.watch(($event) => this.onFavoriteSave($event)),
     ];
   }
 
   /**
    * Stop all dispatcher listeners.
    */
-  async stopWatchDispatchers() {
+  stopWatchDispatchers(): void {
     // clear own watchers
-    this.listeners.forEach(listener => listener());
+    this.listeners.forEach((listener: Function) => listener());
     // clear container watchers
-    this.containerKeys.forEach(key => this.containers[key].stopWatchDispatchers());
+    if (this.containerContracts && this.containerAddresses) {
+      this.containerAddresses
+        .forEach((address: string) => this.containerContracts[address].stopWatchDispatchers());
+    }
   }
 
   /**
@@ -196,13 +250,28 @@ class DAppTwin extends DigitalTwin {
    *
    * @param      {DBCPDescriptionInterface}  description  description to save
    */
-  public async setDescription(description?: DBCPDescriptionInterface) {
-    this.baseSetDescription(description);
+  public async setDescription(description?: DBCPDescriptionInterface): Promise<void> {
+    return this.baseSetDescription(description);
+  }
+
+  /**
+   * Creates a new dapp container instance, initializes it and applies it to the container
+   * contracts.
+   *
+   * @param      {string}  contractAddress  container contract address
+   */
+  public async setupDAppContainer(contractAddress: string): Promise<DAppContainer> {
+    const container = new DAppContainer(this.vue, this.runtime, contractAddress);
+    // make contracts also directly accessible
+    this.containerContracts[contractAddress] = container;
+    // load description, contractAddress, dispatcherStates
+    await container.loadBaseInfo();
+    return container;
   }
 }
 
 // enable multi inheritance for general DAppContract
-interface DAppTwin extends DAppContract { }
-applyMixins(DAppTwin, [ DAppContract ]);
+interface DAppTwin extends DAppContract, DigitalTwin { }
+applyMixins(DAppTwin, [DAppContract]);
 
 export default DAppTwin;

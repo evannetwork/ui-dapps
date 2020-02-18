@@ -23,28 +23,25 @@
       <template v-slot:content>
         <evan-dapp-wrapper-level-2 ref="level2Wrapper">
           <div class="sidenav">
-            <!-- Not using nav-list because it doesnt support router-link properly
-            TODO: Refactor evan-nav-list to use router-links too -->
-            <div class="evan-nav-list">
-              <div class="nav-entries">
-                <template v-for="navItem in navItems">
-                  <router-link
-                    :id="navItem.id"
-                    :key="navItem.id"
-                    :to="navItem.to"
-                    :active-class="'active'"
-                  >
-                    <i class="mr-3" :class="navItem.icon"></i>
-                    {{ navItem.label | translate }}
-                  </router-link>
-                </template>
-              </div>
+            <div class="sidenav-header pt-3 pb-3">
+              <i class="sidenav-header-icon mdi mdi-cube-outline" />
+              <h4 class="sidenav-header-heading">
+                {{ '_assets.my-assets' | translate }}
+              </h4>
             </div>
+            <evan-nav-list
+              :entries="navItems"
+              :show-logout="false"
+              :show-profile="false"
+            />
           </div>
         </evan-dapp-wrapper-level-2>
-        <transition name="fade" mode="out-in">
+        <transition
+          name="fade"
+          mode="out-in"
+        >
           <div class="container content">
-            <router-view></router-view>
+            <router-view />
           </div>
         </transition>
       </template>
@@ -54,5 +51,30 @@
 
 <script lang="ts">
 import AssetsComponent from './Assets';
+
 export default AssetsComponent;
 </script>
+
+<style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+/deep/ {
+  .dapp-wrapper-body .dapp-wrapper-content {
+    overflow-y: hidden !important;
+  }
+}
+
+.evan-nav-list {
+  height: auto;
+}
+.sidenav-header {
+  text-align: center;
+  .sidenav-header-heading {
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .sidenav-header-icon {
+    font-size: 4rem;
+    color: cssVar('gray-900');
+  }
+}
+</style>

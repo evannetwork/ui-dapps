@@ -23,6 +23,7 @@
   "main": "test-utils/evan.js",
   "name": "@evan.network/ui-dapps-test-e2e",
   "scripts": {
+    "list-steps": "env-cmd cucumber-js --tags 'not (@angular or @skip)' --require-module @babel/register --require step-definitions --format usage-json  | grep 'pattern\"' | sed -e 's/    \"pattern\": \"//' | sed -e 's/\",//' | sort",
     "test-local": "env-cmd -f .env.local cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
     "test-local-only": "env-cmd -f .env.local cucumber-js --tags '@only' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",
     "test-testnet": "env-cmd cucumber-js  --tags 'not (@angular or @skip)' --require-module @babel/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty",

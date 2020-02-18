@@ -16,8 +16,6 @@
   Fifth Floor, Boston, MA, 02110-1301 USA, or download the license from
   the following URL: https://evan.network/license/
 */
-// import evan libs
-import { RouteRegistrationInterface, IframeComponent, } from '@evan.network/ui-vue-core';
 
 import ButtonsComponent from './components/buttons/buttons.vue';
 import CardsComponent from './components/cards/cards.vue';
@@ -41,10 +39,9 @@ const components: Array<any> = [
 
 // add dispatcher test entry
 if (window.localStorage['evan-test-mode']) {
-  components.push({ path: 'dispatcher-test', icon: 'mdi mdi-sync', component: DispatcherTestComponent, });
+  components.push({ path: 'dispatcher-test', icon: 'mdi mdi-sync', component: DispatcherTestComponent });
 }
 
 components.forEach((comp) => comp.name = comp.path);
 
 export default components;
-

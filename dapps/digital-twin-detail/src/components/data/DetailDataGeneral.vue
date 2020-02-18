@@ -20,88 +20,45 @@
 <template>
   <div>
     <div class="content-card">
-      <!-- TODO: sample loading states
-        <div class="spinner-border spinner-border-sm" v-if="$store.state.twin.dispatcherStates.description"></div>
-      -->
-      <evan-form :title="'_twin-detail.data.general.information-title' | translate">
-        <div class="form-group inline">
-          <label
-            for="twin-avatar"
-            class="col-form-label"
-          >{{ '_twin-detail.data.general.twin-image' | translate }}</label>
-            <div class="input-wrapper">
-              <evan-profile-picture
-                id="twin-avatar"
-                class="twin-avatar"
-                type="device"
-                :isEditable="true"
-                :src="'https://via.placeholder.com/96'"
-                @changed="handleImageChange"
-              />
-            </div>
-        </div>
-
+      <evan-form-dbcp
+        :description="$store.state.twin.description"
+        :is-loading="$store.state.twin.dispatcherStates.description"
+        :shareable="false"
+        :title="'_twin-detail.data.general.information-title' | translate"
+        :editable="$store.state.twin.isOwner"
+        @init="dbcpForm = $event"
+        @save="setDescription();"
+      >
         <evan-form-control-input
-          v-model="$store.state.twin.description.name"
-          :label="$t('_twin-detail.data.general.name')"
-          :placeholder="$t('_twin-detail.data.general.name-placeholder')"
-          :required="true"
-        />
-
-        <evan-form-control-textarea
-          v-model="$store.state.twin.description.description"
-          :label="$t('_twin-detail.data.general.desc')"
-          :placeholder="$t('_twin-detail.data.general.desc-placeholder')"
-        />
-
-        <evan-form-control-input
-          v-model="type"
-          :label="$t('_twin-detail.data.general.type')"
           :disabled="true"
+          :label="'_twin-detail.data.general.type' | translate"
           :required="true"
+          :value="'_twin-detail.data.general.type-value' | translate"
         />
 
         <evan-form-control-input
+          :disabled="true"
+          :label="'_twin-detail.data.general.owner' | translate"
+          :required="true"
           :value="`${ $store.state.twin.ownerName } (${ $store.state.twin.ownerAddress })`"
-          :label="$t('_twin-detail.data.general.owner')"
-          :disabled="true"
-          :required="true"
         />
-      </evan-form>
+      </evan-form-dbcp>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import DigitalTwinDetailDataGeneralComponent from './DetailDataGeneral';
+
 export default DigitalTwinDetailDataGeneralComponent;
 </script>
 
 <style lang="scss" scoped>
-.content-card {
-  background: white;
-  border-radius: 4px;
-  width: 564px;
-  padding: 32px 24px;
-
-  .card-heading {
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-}
-
 .form-group.inline {
    align-items: center;
 
    & > label.col-form-label {
     font-size: 12px;
   }
-}
-
-/deep/ .twin-avatar .profile-picture {
-  --size: 96px;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>

@@ -17,84 +17,92 @@
   the following URL: https://evan.network/license/
 */
 
-// vue imports
 import Component, { mixins } from 'vue-class-component';
+import { DAppTwin, twinDeleteDispatcher } from '@evan.network/digital-twin-lib';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
-// internal imports
-import { DAppTwin } from '@evan.network/digital-twin-lib';
-import TwinDAppComponent from '../TwinDAppComponent';
 
 @Component
-export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent) {
+export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
   /**
    * Show loading symbol
    */
   loading = true;
 
   /**
+   * Flag for generic errors. Usually for wrong non-DT contracts and deleted DTs
+   */
+  hasError = false;
+
+  /**
    * Watch for hash updates and load digitaltwin detail, if a digitaltwin was load
    */
   hashChangeWatcher: any;
 
-  navItems = [
-    {
-      key: 'overview',
-      icon: 'mdi mdi-view-dashboard-outline'
-    },
-    {
-      key: 'data',
-      icon: 'mdi mdi-file-document-box-outline'
-    },
-    {
-      key: 'verifications',
-      icon: 'mdi mdi-checkbox-marked-circle-outline'
-    },
-    {
-      key: 'sharings',
-      icon: 'mdi mdi-share-variant'
-    },
-    {
-      key: 'did',
-      icon: 'mdi mdi-identifier'
-    }
-  ].map(entry => {
-    return {
-      label: `_twin-detail.${entry.key}.${entry.key}-title`,
-      icon: entry.icon,
-      to: { name: entry.key }
-    };
-  });
+  navItems: NavEntryInterface[] = [];
 
   /**
    * Clear the hash change watcher
    */
-  beforeDestroy() {
+  beforeDestroy(): void {
     // clear listeners
-    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
-    this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
+    if (this.hashChangeWatcher) {
+      window.removeEventListener('hashchange', this.hashChangeWatcher);
+    }
+
+    if (this.$store.state.twin) {
+      this.$store.state.twin.stopWatchDispatchers();
+    }
   }
 
-  close() {
+  /**
+   * Go back to assets dapp.
+   */
+  close(): void {
     window.location.hash = `/${this.dapp.rootEns}/assets.${this.dapp.domainName}/digitaltwins`;
   }
 
   /**
    * Setup digital twin functionalities.
    */
-  async initialize(): Promise<void> {
+  async created(): Promise<void> {
     let beforeTwin;
 
     // watch for url changes and load different twin data
-    this.hashChangeWatcher = async () => {
+    this.hashChangeWatcher = async (): Promise<void> => {
       // only load another twin, when address has changed
-      if (beforeTwin !== this.$route.params.twin) {
-        this.loading = true;
-        this.$store.state.twin && this.$store.state.twin.stopWatchDispatchers();
-        this.$store.state.twin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
-        
-        await this.$store.state.twin.initialize();
+      if (this.$route.params.twin && beforeTwin !== this.$route.params.twin) {
+        beforeTwin = this.$route.params.twin;
 
-        beforeTwin = this.$store.state.twin.contractAddress;
+        // show loading and remove old watchers
+        this.loading = true;
+        if (this.$store.state.twin) {
+          this.$store.state.twin.stopWatchDispatchers();
+        }
+
+        // initialize a new twin, but keep old reference until twin is loaded
+        const newTwin = new DAppTwin(this, this.getRuntime(), this.$route.params.twin);
+
+        // if container view should be loaded initially, just load it directly
+        if (this.$route.params.container) {
+          this.$store.state.containerPreloading = (async (): Promise<void> => {
+            const container = await newTwin.setupDAppContainer(this.$route.params.container);
+            await container.initialize();
+          })();
+        }
+
+        // initialize twin structure
+        await newTwin.initialize()
+          // handle deleted and non-DT contracts
+          .catch(() => {
+            this.hasError = true;
+            return null;
+          });
+
+        newTwin.watchDispatchers();
+
+        // set new reference and hide loading
+        this.$set(this.$store.state, 'twin', newTwin);
         this.loading = false;
       }
     };
@@ -102,5 +110,59 @@ export default class DigitalTwinDetailComponent extends mixins(TwinDAppComponent
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+
+    this.navItems = this.getNavItems();
+  }
+
+  async deleteTwin(): Promise<void> {
+    (this.$refs.deleteModal as any).hide();
+
+    await twinDeleteDispatcher.start(this.getRuntime(), {
+      address: this.$store.state.twin.contractAddress,
+    });
+
+    this.close();
+  }
+
+  getNavItems(): NavEntryInterface[] {
+    return [
+      {
+        text: '_twin-detail.nav-items.overview',
+        icon: 'mdi mdi-view-dashboard-outline',
+        to: { name: 'overview' },
+      },
+      {
+        text: '_twin-detail.nav-items.data',
+        icon: 'mdi mdi-file-document-box-outline',
+        to: { name: 'data' },
+      },
+      {
+        text: '_twin-detail.nav-items.verifications',
+        icon: 'mdi mdi-checkbox-marked-circle-outline',
+        to: { name: 'verifications' },
+        disabled: !this.$store.state.twin?.isOwner,
+      },
+      {
+        text: '_twin-detail.nav-items.sharings',
+        icon: 'mdi mdi-share-variant',
+        to: { name: 'sharings' },
+        disabled: !this.$store.state.twin?.isOwner,
+      },
+      {
+        text: '_twin-detail.nav-items.did',
+        icon: 'mdi mdi-identifier',
+        to: { name: 'did' },
+      },
+    ];
+  }
+
+  /**
+   * Truncates the description to a certain amount of characters.
+   *
+   * @param      {string}  desc    description that should be shortend
+   * @param      {number}  maxChars  maximum length of string
+   */
+  getShortDescription(desc = this.$store.state.twin.description.description, maxChars = 300): string {
+    return desc.length > maxChars ? `${desc.slice(0, maxChars)}...` : desc;
   }
 }

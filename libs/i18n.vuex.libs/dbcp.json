@@ -2,12 +2,15 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "vue.libs": "^2.5.0",
+        "vuex.libs": "^3.0.0"
+      },
       "entrypoint": "i18n.vuex.libs.js",
       "files": [
         "i18n.vuex.libs.js"
       ],
-      "origin": "QmcsAuC9k7ouZPj4EHYGYxkXVdAPumxyyLjN3Zjo8wcnyz",
+      "origin": "QmcVXfhqwCNjp7ZmEZdmkGsR3ZLn628Gsg4E7y5mmU7FnR",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -32,7 +35,7 @@
     ],
     "version": "1.11.0",
     "versions": {
-      "1.11.0": "Qmd8LMBfg88S2sq48aZr9bimbMcPzt5MK45ExJfBoYYjyc"
+      "1.11.0": "QmSA7E6gQYCjzkPiiKqiVx8KjW9wykYKQdg1dgvZ1CteD7"
     }
   }
 }

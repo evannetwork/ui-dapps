@@ -2,13 +2,15 @@
   "public": {
     "author": "evan GmbH",
     "dapp": {
-      "dependencies": {},
+      "dependencies": {
+        "moment.libs": "^2.24.0"
+      },
       "entrypoint": "select.vue.libs.js",
       "files": [
         "select.vue.libs.js",
         "select.vue.libs.css"
       ],
-      "origin": "Qma7CsGQzd5dFqkqaSqeBieD5QRYuvEtqSGgyjeAF7jWTt",
+      "origin": "QmVF2JPADL17dCce4Dc5YKJ4n9wLNhMqvEsQBHffnSqGkJ",
       "primaryColor": "",
       "secondaryColor": "#f9f9ff",
       "standalone": false,
@@ -33,7 +35,7 @@
     ],
     "version": "3.2.0",
     "versions": {
-      "3.2.0": "QmTJP7Koxio1D4SbG8q4CsuK14t2XX6KrvwFNv8DcyJzaG"
+      "3.2.0": "QmXfUwUjtW1adfpXu31jM64sBiFNaL1BUniQw7mL34jc2E"
     }
   }
 }

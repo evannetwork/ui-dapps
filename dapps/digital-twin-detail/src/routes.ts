@@ -18,12 +18,14 @@
 */
 // import evan libs
 import { RouteConfig } from 'vue-router';
-import { UnderDevelopmentComponent } from 'core/evancore.vue.libs';
+import { UnderDevelopmentComponent } from '@evan.network/ui-vue-core';
 
+import ContainerComponent from './components/container/Container.vue';
+import DetailOverviewComponent from './components/overview/DetailOverview.vue';
 import EvanTwinDetailComponent from './components/DigitalTwinDetail.vue';
 import EvanTwinDetailDataComponent from './components/data/DetailData.vue';
 import EvanTwinDetailDataGeneralComponent from './components/data/DetailDataGeneral.vue';
-import TestContainerComponent from './components/data/TestContainer.vue';
+import SharingOverview from './components/sharing/SharingOverview.vue';
 
 const routeRegistration: Array<RouteConfig> = [
   {
@@ -32,12 +34,12 @@ const routeRegistration: Array<RouteConfig> = [
     children: [
       {
         path: '',
-        redirect: 'data'
+        redirect: 'data',
       },
       {
         name: 'overview',
         path: 'overview',
-        component: UnderDevelopmentComponent
+        component: DetailOverviewComponent,
       },
       {
         name: 'data',
@@ -48,31 +50,31 @@ const routeRegistration: Array<RouteConfig> = [
           {
             name: 'general',
             path: 'general',
-            component: EvanTwinDetailDataGeneralComponent
+            component: EvanTwinDetailDataGeneralComponent,
           },
           {
             path: ':container',
-            component: TestContainerComponent
-          }
-        ]
+            component: ContainerComponent,
+          },
+        ],
       },
       {
         name: 'verifications',
         path: 'verifications',
-        component: UnderDevelopmentComponent
+        component: UnderDevelopmentComponent,
       },
       {
         name: 'sharings',
         path: 'sharings',
-        component: UnderDevelopmentComponent
+        component: SharingOverview,
       },
       {
         name: 'did',
         path: 'did',
-        component: UnderDevelopmentComponent
-      }
-    ]
-  }
+        component: UnderDevelopmentComponent,
+      },
+    ],
+  },
 ];
 
 export default routeRegistration;

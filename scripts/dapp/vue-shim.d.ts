@@ -17,9 +17,10 @@
   the following URL: https://evan.network/license/
 */
 
-// !IMPORTANT!: Import this d.ts file within your vue tsconfig to fix "cannot find module" errors
-// while importing vue files
+/* !IMPORTANT!: Import this d.ts file within your vue tsconfig to fix "cannot find module" errors
+   while importing vue files */
 declare module '*.vue' {
-  import { EvanComponent, } from '@evan.network/ui-vue-core';
+  import { EvanComponent } from '@evan.network/ui-vue-core';
+
   export default EvanComponent;
 }

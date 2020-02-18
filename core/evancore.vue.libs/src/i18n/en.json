@@ -34,6 +34,7 @@
         "stopped": "Stopped {title} ({percentage}%)",
         "stopping": "Stopping {title} ({percentage}%)"
       },
+      "dispatcher-url-callback": "Open",
       "empty-queue": "Everything is synchronized",
       "from": "from",
       "instance-accept": {
@@ -55,9 +56,25 @@
       "queue-error": "An error occurred during synchronization.",
       "sync-complete": "Complete"
     },
+    "dbcp-form": {
+      "description": {
+        "error": "Please enter a maximum of {maxDescriptionChars} characters.",
+        "hint": "max. {maxDescriptionChars} characters",
+        "label": "Description",
+        "placeholder": "Briefly describe your Digital Twin and what it represents."
+      },
+      "image": {
+        "label": "Image"
+      },
+      "name": {
+        "error": "Please provide a name!",
+        "label": "Name",
+        "placeholder": "Give a meaningful name"
+      }
+    },
     "dispatcher-not-found": "Synchronization job not found",
     "file-input": {
-      "description": "Drag your file(s) here to begin<br> or click to browse",
+      "description": "Drag your file(s) here to begin or click to browse",
       "empty": "No files are available",
       "remove-modal": {
         "action": "Delete",
@@ -65,6 +82,7 @@
         "title": "Delete file"
       }
     },
+    "invalid-json": "Invalid JSON format.",
     "invalid-password": "The provided password is invalid.",
     "log-in": "Log in",
     "login": "Unlock Identity",
@@ -92,6 +110,7 @@
     },
     "need-an-account": "Need an account? <a href=\"#/dashboard.vue.evan/onboarding.vue.evan/sign-up\">Sign Up</a>",
     "no": "No",
+    "no-permission": "No permission to view this content",
     "not-your-account": "Not your account?",
     "optional": "optional",
     "password": "Password",
@@ -136,6 +155,7 @@
       "defineFor": "Define the permissions for {contactName}.",
       "description": "To share your information with another contact, fill out the form below and click on “Update Sharing Options”",
       "noPermissions": "No permissions available to edit.",
+      "description-no-contacts": "Information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",
       "permissionsTitle": "Update Permissions",
       "selectContact": "Select contact to share with",
       "update": "Share data"

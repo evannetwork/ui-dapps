@@ -22,28 +22,53 @@ import Component, { mixins } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
 
-import SearchService from './SearchService';
+import { SearchService, DigitalTwin } from '@evan.network/digital-twin-lib';
 
 @Component
 export default class DataContainerComponent extends mixins(EvanComponent) {
   searchTerm = '';
+
   search = new SearchService(this.getRuntime());
+
   data = [];
+
   isLoading = false;
+
   page = 0;
+
   count = 20;
+
   total = null;
 
   @Prop({
-    default: 'twins'
-  }) type: string;
+    default: 'twins',
+  })
+  type: string;
 
-  mounted(): void {
-    this.searchTerm = this.$route.params.query || '';
+  /**
+   * Mapping of account addresses to name / alias resolving promises
+   */
+  aliasMapping: { [ address: string ]: Promise<string> } = { };
 
-    this.initialQuery(this.searchTerm);
+  /**
+   * Check the search results, if the name / alias of an owner can be loaded
+   */
+  async ensureOwnerNames(searchResults: DigitalTwin[]): Promise<void> {
+    const runtime = this.getRuntime();
+
+    await Promise.all(searchResults.map(async (result): Promise<void> => {
+      if (result.owner && runtime.web3.utils.isAddress(result.owner)) {
+        if (!this.aliasMapping[result.owner]) {
+          this.aliasMapping[result.owner] = profileUtils.getUserAlias(runtime, result.owner);
+        }
+
+        // eslint-disable-next-line no-param-reassign
+        result.owner = await this.aliasMapping[result.owner];
+      }
+    }));
   }
 
   async initialQuery(searchTerm = '', sorting = {}): Promise<void> {
@@ -52,19 +77,23 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
     this.data = [];
     this.searchTerm = searchTerm;
 
-    // Necessary for proper routing. Otherwise collision with detail dapp
-    if (searchTerm) {
-      this.$router.push({ path: `digitaltwins/search/${searchTerm}` });
-    } else {
-      this.$router.push({ path: `digitaltwins/` });
-    }
-
-    const { result, total } = await this.search.query(this.type, { searchTerm, ...sorting });
+    const { result, total } = await this.search.query(this.type, {
+      searchTerm,
+      ...sorting,
+    });
+    await this.ensureOwnerNames(result);
 
     this.total = total;
     this.data = result;
 
     this.isLoading = false;
+
+    // Necessary for proper routing. Otherwise collision with detail dapp
+    if (searchTerm && this.$route.params.query !== searchTerm) {
+      this.$router.replace({ name: 'digitaltwins-search', params: { query: searchTerm } });
+    } else {
+      this.$router.push({ path: 'digitaltwins' });
+    }
   }
 
   async fetchMore(sorting = {}): Promise<void> {
@@ -78,10 +107,11 @@ export default class DataContainerComponent extends mixins(EvanComponent) {
       page: this.page,
       count: this.count,
       searchTerm: this.searchTerm,
-      ...sorting
+      ...sorting,
     };
 
     const { result } = await this.search.query(this.type, options);
+    await this.ensureOwnerNames(result);
 
     this.data = [...this.data, ...result];
     this.isLoading = false;

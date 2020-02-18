@@ -25,8 +25,6 @@ import { EvanComponent, EvanForm, EvanFormControl } from '@evan.network/ui-vue-c
 import * as bcc from '@evan.network/api-blockchain-core';
 import * as dappBrowser from '@evan.network/ui-dapp-browser';
 
-import { getDefaultDAppEns } from '../../utils';
-
 interface ProfileFormInterface extends EvanForm {
   accountType: EvanFormControl;
   alias: EvanFormControl;
@@ -42,7 +40,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * current mnemonic value as text
    */
   mnemonic = '';
-  
+
   /**
    * use to cancel riddle
    */
@@ -114,11 +112,11 @@ export default class SignUp extends mixins(EvanComponent) {
    */
   userData: any = {
     accountDetails: {
-      accountType: 'company'
+      accountType: 'company',
     },
     contact: {
       country: 'DE',
-    }
+    },
   };
 
   /**
@@ -150,8 +148,8 @@ export default class SignUp extends mixins(EvanComponent) {
       if (this.userData.contact.country === 'DE') {
         steps.push({
           title: '_onboarding.sign-up.steps.company.registration.title',
-          disabled: () => creatingOrOnboarded() ||
-            this.$refs.companyContact && !this.$refs.companyContact.form.isValid,
+          disabled: () => creatingOrOnboarded()
+            || this.$refs.companyContact && !this.$refs.companyContact.form.isValid,
         });
       }
     }
@@ -179,44 +177,44 @@ export default class SignUp extends mixins(EvanComponent) {
   }
 
   created() {
-    const uiSpecs = { attr: { required: true, } };
-    this.profileForm = (<ProfileFormInterface>new EvanForm(this, {
+    const uiSpecs = { attr: { required: true } };
+    this.profileForm = (<ProfileFormInterface> new EvanForm(this, {
       accountType: {
         value: 'company',
         uiSpecs: {
           attr: {
             required: true,
             options: [
-              { label: '_onboarding.sign-up.account-types.user', value: 'user', },
-              { label: '_onboarding.sign-up.account-types.company', value: 'company', },
+              { label: '_onboarding.sign-up.account-types.user', value: 'user' },
+              { label: '_onboarding.sign-up.account-types.company', value: 'company' },
             ],
           },
-          type: 'select'
+          type: 'select',
         },
       },
       alias: {
         value: '',
-        validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
           return this.value.length !== 0;
         },
         uiSpecs: {
           attr: {
-            hint: () => (this as any).$t(`_onboarding.sign-up.alias.hint-${ this.profileForm.accountType.value }`),
+            hint: () => (this as any).$t(`_onboarding.sign-up.alias.hint-${this.profileForm.accountType.value}`),
             required: true,
           },
-          label: () => (this as any).$t(`_onboarding.sign-up.alias.${ this.profileForm.accountType.value }`),
+          label: () => (this as any).$t(`_onboarding.sign-up.alias.${this.profileForm.accountType.value}`),
         },
       },
       password0: {
         value: '',
-        validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
           return vueInstance.getPasswordError(0, this.form) || true;
         },
-        uiSpecs: { attr: { hint: true, required: true, type: 'password'  } },
+        uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
       },
       password1: {
         value: '',
-        validate: function(vueInstance: SignUp, form: ProfileFormInterface) {
+        validate(vueInstance: SignUp, form: ProfileFormInterface) {
           return vueInstance.getPasswordError(1, this.form) || true;
         },
         uiSpecs: { attr: { hint: true, required: true, type: 'password' } },
@@ -234,14 +232,14 @@ export default class SignUp extends mixins(EvanComponent) {
     }
 
     // set initial mnemonic from query params or use an generated one
-    this.mnemonic = this.mnemonic || this.$route.query.mnemonic ||
-      dappBrowser.lightwallet.generateMnemonic();
+    this.mnemonic = this.mnemonic || this.$route.query.mnemonic
+      || dappBrowser.lightwallet.generateMnemonic();
     this.originalMnemonic = this.mnemonic;
 
     // include the google recaptcha
     const scriptElement = document.createElement('script');
     scriptElement.src = `https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&
-      render=explicit&hl=${ (this as any).$i18n.locale() }`;
+      render=explicit&hl=${(this as any).$i18n.locale()}`;
     document.head.appendChild(scriptElement);
 
     // wait for recaptcha to be loaded
@@ -278,7 +276,7 @@ export default class SignUp extends mixins(EvanComponent) {
    * @return     {string}  the password error
    */
   getPasswordError(index, form) {
-    const passwordControl = form[`password${ index }`];
+    const passwordControl = form[`password${index}`];
 
     // min 8 characters
     if (passwordControl.value.length < 8) {
@@ -343,9 +341,12 @@ export default class SignUp extends mixins(EvanComponent) {
     const privateKey = dappBrowser.lightwallet.getPrivateKey(vault, accountId);
 
     const runtime = await dappBrowser.bccHelper.createDefaultRuntime(
-      bcc, accountId, vault.encryptionKey, privateKey);
+      bcc, accountId, vault.encryptionKey, privateKey,
+    );
 
-    return { password, vault, provider, accountId, privateKey, runtime, };
+    return {
+      password, vault, provider, accountId, privateKey, runtime,
+    };
   }
 
   /**
@@ -360,7 +361,9 @@ export default class SignUp extends mixins(EvanComponent) {
       this.nextCreationStatus();
 
       try {
-        const { password, accountId, privateKey, runtime, vault, } = await this.getProfileCreationData();
+        const {
+          password, accountId, privateKey, runtime, vault,
+        } = await this.getProfileCreationData();
 
         await bcc.Onboarding.createOfflineProfile(
           runtime,
@@ -368,7 +371,7 @@ export default class SignUp extends mixins(EvanComponent) {
           accountId,
           privateKey,
           this.recaptchaToken,
-          runtime.environment
+          runtime.environment,
         );
 
         await this.finishOnboarding(runtime, vault, accountId, password);
@@ -376,8 +379,8 @@ export default class SignUp extends mixins(EvanComponent) {
         // show done animation and navigate to signed in page
         this.creatingProfile = 5;
         setTimeout(() => {
-          // if the user were invited, show the sign in step, else navigate directly to the root
-          // page.
+          /* if the user were invited, show the sign in step, else navigate directly to the root
+             page. */
           if (!this.$route.query.inviteeAlias) {
             this.navigateToEvan();
           } else {
@@ -410,7 +413,7 @@ export default class SignUp extends mixins(EvanComponent) {
    */
   async finishOnboarding(runtime: bcc.Runtime, vault: any, accountId: string, password: string) {
     // check if onboarded, else throw it!
-    if (!(await dappBrowser.bccHelper.isAccountOnboarded(accountId))) {
+    if (!runtime.profile) {
       throw new Error('Onboarding has finished, but user isnt onboarded?');
     }
 
@@ -428,10 +431,10 @@ export default class SignUp extends mixins(EvanComponent) {
    * @param runtime
    * @param { encryptionKey }
    */
-  async persistMnemonic(runtime, {encryptionKey}): Promise<void> {
+  async persistMnemonic(runtime, { encryptionKey }): Promise<void> {
     const cryptor = runtime.sharing.options.cryptoProvider
       .getCryptorByCryptoAlgo(runtime.sharing.options.defaultCryptoAlgo);
-    const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey, });
+    const encryptedMnemonic = await cryptor.encrypt(this.mnemonic, { key: encryptionKey });
 
     window.localStorage['evan-mnemonic'] = encryptedMnemonic.toString('hex');
   }
@@ -440,8 +443,10 @@ export default class SignUp extends mixins(EvanComponent) {
    * Navigates to the previous opened application or use the default dapp ens.
    */
   navigateToEvan() {
+    const domainName = dappBrowser.getDomainName();
     // do not use $router.push to force navigation triggering!
-    window.location.hash = `/${ (this as any).$route.query.origin || getDefaultDAppEns() }`;
+    window.location.hash = `/${this.$route.query.origin
+      || `dashboard.vue.${domainName}/profile.vue.${domainName}`}`;
   }
 
   /**
@@ -451,8 +456,8 @@ export default class SignUp extends mixins(EvanComponent) {
     const userData: any = {
       accountDetails: {
         accountName: this.profileForm.alias.value,
-        profileType: this.profileForm.accountType.value
-      }
+        profileType: this.profileForm.accountType.value,
+      },
     };
 
     switch (userData.accountDetails.profileType) {
@@ -473,12 +478,11 @@ export default class SignUp extends mixins(EvanComponent) {
   getLeftPanelImages() {
     switch (this.profileForm.accountType.value) {
       case 'company': {
-        return [ '7.svg', '8.svg', '9.svg', '13.svg' ];
+        return ['7.svg', '8.svg', '9.svg', '13.svg'];
       }
       case 'user': {
-        return [ '7.svg', '4.svg' ];
+        return ['7.svg', '4.svg'];
       }
     }
   }
 }
-

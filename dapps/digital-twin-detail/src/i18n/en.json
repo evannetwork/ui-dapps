@@ -1,7 +1,15 @@
 {
   "_twin-detail": {
     "data": {
-      "data-title": "Data",
+      "context-menu": {
+        "delete-twin": "Delete",
+        "download-template": "Download",
+        "duplicate-twin": "Duplicate",
+        "duplicating-twin": "Creating duplicate ...",
+        "export-template": "Export as template",
+        "exporting-twin": "Creating template ..."
+      },
+      "files": "files",
       "general": {
         "desc": "Description",
         "general-title": "General",
@@ -9,23 +17,78 @@
         "name": "Name",
         "owner": "Owner",
         "twin-image": "Twin Image",
-        "type": "Type"
+        "type": "Type",
+        "type-value": "Digital Twin"
+      },
+      "list": {
+        "add-list-item": {
+          "cancel": "Cancel",
+          "submit": "Add Entry",
+          "title": "Add an Entry"
+        },
+        "list-item-detail": {
+          "close": "Close",
+          "title": "Detail"
+        },
+        "show-all": "Show all",
+        "value": "Value"
       },
       "logs": {
         "logs-title": "Logs"
       },
+      "sharing": {
+        "cancel": "Cancel",
+        "description": "To share your digital twin data with another contact, fill out the form below and click on “update sharing options”",
+        "sharing-title": "Share your Digital Twin",
+        "update-sharing": "Update Sharing Options"
+      },
       "specifications": {
         "specifications-title": "Specifications"
-      }
+      },
+      "table-empty": "No entries added yet"
+    },
+    "delete": {
+      "confirm-delete": "Delete",
+      "confirm-delete-description": "Are you sure you want to delete this Digital Twin?",
+      "delete-modal-title": "Delete Digital Twin"
     },
     "did": {
       "did-title": "Decentralized ID"
     },
+    "generic-error": "The requested Digital Twin has either been deleted or is malformed.",
+    "nav-items": {
+      "data": "Data",
+      "did": "Decentralized ID",
+      "overview": "Overview",
+      "sharings": "Sharings",
+      "verifications": "Verifications"
+    },
     "overview": {
-      "overview-title": "Overview"
+      "created-at": "Created at",
+      "date": "Date",
+      "did": "Decentralized ID",
+      "fee": "Fee",
+      "general-title": "General",
+      "initiator": "Initiator",
+      "overview-title": "Overview",
+      "owner": "Owner",
+      "copied": "Text copied",
+      "transactions-title": "Last Transactions"
     },
     "sharings": {
-      "sharings-title": "Sharings"
+      "filters": {
+        "all": "All",
+        "company": "Companies",
+        "unshared": "Unknown",
+        "user": "Users"
+      },
+      "no-sharings": "This Digital Twin is not shared with any user.",
+      "no-sharings-filter": "This digital twin was not shared with any user with this filter. (Search: {searchTerm} and filter: {filter})",
+      "sharings-title": "Sharings",
+      "table": {
+        "containers": "Shared Containers",
+        "name": "Name"
+      }
     },
     "verifications": {
       "verifications-title": "Verifications"

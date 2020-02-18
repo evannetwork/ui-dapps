@@ -19,21 +19,31 @@
 
 <template>
   <evan-form-control v-bind="$props">
-    <input class="form-control"
+    <div
+      v-if="prohibited"
+      class="prohibited"
+    >
+      <span>{{ '_evan.no-permission' | translate }}</span>
+      <i class="mdi mdi-eye-off-outline" />
+    </div>
+    <input
+      v-else
+      :id="id"
+      class="form-control"
       v-bind="$props"
       :class="{ 'is-invalid' : error }"
-      :id="id"
       :value="value"
       @blur="$emit('blur')"
       @focus="$parent.$emit('setFocus')"
       @input="$emit('input', $event.target.value)"
-    />
+    >
   </evan-form-control>
 </template>
 
 <script lang="ts">
-  import FormDataInput from './input';
-  export default FormDataInput;
+import FormDataInput from './input';
+
+export default FormDataInput;
 </script>
 
 <style lang="scss" scoped>

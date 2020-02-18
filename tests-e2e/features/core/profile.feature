@@ -19,10 +19,10 @@ Feature: evan.network profile
     Then I want to see a text including "Creating identity contract..."
       And I want to see a text including "Encrypting user information..."
       And I want to see a text including "Creating mailbox, address book, ..."
-      And I want to see a element with class "checkmark"
+      And I want to see an element with class "checkmark"
       And I want to see a text including "Recovery Key"
     When I click on button "View Profile"
-    Then I want to see a text including "What would you like to start with?"
+    Then I want to see a text including "My Assets"
     # test profile type switch
     When I click on "Profile" in main menu
     Then I want to see a text including "Identity"
@@ -65,7 +65,7 @@ Feature: evan.network profile
     Then the button "Save" should be "enabled"
     When I click on button "Save"
     Then the button "Save" should be "disabled"
-      And I want to see a element with class "spinner-border"
+      And I want to see an element with class "spinner-border"
       And I wait for 5 seconds
     When I click the element with id "nav-entry-wallet"
       And I click the element with id "nav-entry-detail"
@@ -86,7 +86,7 @@ Feature: evan.network profile
     Then the button "Save" should be "enabled"
     When I click on button "Save"
     Then the button "Save" should be "disabled"
-      And I want to see a element with class "spinner-border"
+      And I want to see an element with class "spinner-border"
       And I wait for 5 seconds
     When I click the element with id "nav-entry-wallet"
       And I click the element with id "nav-entry-detail"
@@ -124,7 +124,7 @@ Feature: evan.network profile
     Then the button "Save" should be "enabled"
     When I click on button "Save"
     Then the button "Save" should be "disabled"
-      And I want to see a element with class "spinner-border"
+      And I want to see an element with class "spinner-border"
       And I wait for 5 seconds
     When I click the element with id "nav-entry-wallet"
       And I click the element with id "nav-entry-detail"

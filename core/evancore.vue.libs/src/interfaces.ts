@@ -17,7 +17,6 @@
   the following URL: https://evan.network/license/
 */
 
-/******************************************** interfaces ******************************************/
 /**
  * Used to map routes to a route name and a specific component.
  */
@@ -73,19 +72,26 @@ export interface EvanVueOptionsInterface {
  */
 export interface EvanFormControlUISpecs {
   attr?: {
-    placeholder?: string;
     error?: string;
+    hint?: boolean | string | (() => boolean | string);
+    id?: string;
     label?: string;
-    options?: Array<{ label: string, value: any }>;
+    options?: Array<{ label: string; value: any }>;
+    placeholder?: string;
+    required?: boolean | (() => boolean);
+    rows?: number;
     size?: number;
+    type?: string;
   };
   type: string;
+  prohibited?: boolean;
 }
 
 /**
  * Represents one generalized form control within an vue form.
  */
 export interface EvanFormControlOptions {
+  disabled?: boolean|Function;
   name?: string;
   uiSpecs?: EvanFormControlUISpecs;
   validate?: Function;
@@ -105,9 +111,9 @@ export interface ContactInterface {
  */
 export interface PermissionsInterface {
   [property: string]: {
-    read: boolean,
-    readWrite: boolean,
-    fields?: string[]
+    read: boolean;
+    readWrite: boolean;
+    fields?: string[];
   };
 }
 

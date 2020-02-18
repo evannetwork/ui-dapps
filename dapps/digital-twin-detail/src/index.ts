@@ -20,13 +20,14 @@
 import Vue from 'vue';
 import { initializeVue } from '@evan.network/ui-vue-core';
 import { System, getDomainName } from '@evan.network/ui-dapp-browser';
-import { DropdownPlugin } from 'bootstrap-vue';
+import { DropdownPlugin, TablePlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-import translations from './i18n/translations';
-import routes from './routes';
 import components from './components/registry';
-import DigitalTwinDetailComponent from './components/DigitalTwinDetail.vue';
+import RootComponent from './components/root/root.vue';
+import routes from './routes';
+import translations from './i18n/translations';
+
 export * from './components/registry';
 export { translations };
 
@@ -43,11 +44,12 @@ System.map['@evan.network/digital-twin-detail'] = `detail.digital-twin.${getDoma
  */
 export async function startDApp(
   container: any,
-  dbcpName: any,
+  dbcpName: string,
   dappEnsOrContract: any,
-  dappBaseUrl: any
-) {
+  dappBaseUrl: string,
+): Promise<void> {
   Vue.use(DropdownPlugin);
+  Vue.use(TablePlugin);
 
   await initializeVue({
     components,
@@ -55,10 +57,10 @@ export async function startDApp(
     dappBaseUrl,
     dappEnsOrContract,
     dbcpName,
-    RootComponent: DigitalTwinDetailComponent,
+    RootComponent,
     routes,
-    state: {},
-    translations: translations,
-    Vue: Vue
+    state: { },
+    translations,
+    Vue,
   });
 }

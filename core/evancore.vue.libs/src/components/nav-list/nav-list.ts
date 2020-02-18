@@ -19,43 +19,12 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
 
 // evan.network imports
+import { Route } from 'vue-router';
 import EvanComponent from '../../component';
-import * as bcc from '@evan.network/api-blockchain-core';
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
-
-/**
- * Describes each tab that can be provided to the NaveComponent
- */
-interface NavEntryInterface {
-  /**
-   * Optional id that is added as tab id selector
-   */
-  id?: string;
-
-  /**
-   * icon that should be displayed before the text
-   */
-  icon: string;
-
-  /**
-   * i18n translation key
-   */
-  text: string;
-
-  /**
-   * Url that should be opened
-   */
-  href?: string;
-
-  /**
-   * specify a custom action
-   */
-  action?: Function;
-}
+import { NavEntryInterface } from './NavEntryInterface';
 
 /**
  * Displays navigation list in evan.network design using vue router integration for checking active
@@ -63,13 +32,13 @@ interface NavEntryInterface {
  *
  * @class      NavListComponent @selector      evan-nav-list
  */
-@Component({ })
+@Component
 export default class NavListComponent extends mixins(EvanComponent) {
   /**
    * Navigation entries that should be displayed (NavEntry can also be null to display a my-auto
-   * seperator)
+   * separator)
    */
-  @Prop() entries: Array<NavEntryInterface|null>;
+  @Prop() entries: Array<NavEntryInterface>;
 
   /**
    * Shows the profile display in the top of the nav-list
@@ -81,52 +50,15 @@ export default class NavListComponent extends mixins(EvanComponent) {
    */
   @Prop({ default: true }) showLogout: boolean;
 
-  /**
-   * Current as active marked tab
-   */
-  activeEntry = 0;
-
-  /**
-   * Watch for hash updates and load digitaltwin detail, if a digitaltwin was laod
-   */
-  hashChangeWatcher: any;
-
-  /**
-   * Check for opened tab
-   */
-  created() {
-    this.hashChangeWatcher = (async () => this.setTabStatus()).bind(this);
-    this.hashChangeWatcher();
-
-    // add the hash change listener
-    window.addEventListener('hashchange', this.hashChangeWatcher);
-    this.$emit('init', this);
-  }
-
-  /**
-   * Clear the hash change watcher
-   */
-  beforeDestroy() {
-    // clear listeners
-    this.hashChangeWatcher && window.removeEventListener('hashchange', this.hashChangeWatcher);
-  }
-
-    /**
-   * Check the active route and set the active tab status.
-   */
-  setTabStatus() {
-    for (let i = 0; i < this.entries.length; i++) {
-      if (this.entries[i] && window.location.href.indexOf(this.entries[i].href) !== -1) {
-        this.activeEntry = i;
-        break;
-      }
-    }
-  }
-
-  /**
-   * Sends the hide sidebar event.
-   */
-  hideSidebar2() {
+  // eslint-disable-next-line class-methods-use-this
+  onClick(entry: NavEntryInterface, route: Route): void {
+    // Close the sidenav for mobile view
     window.dispatchEvent(new CustomEvent('dapp-wrapper-sidebar-close'));
+
+    if (entry?.action) {
+      entry.action();
+    }
+
+    this.$router.push(route.path);
   }
 }

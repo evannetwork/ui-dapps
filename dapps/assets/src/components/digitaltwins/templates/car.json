@@ -145,7 +145,7 @@
             "name": "Spezifikationen",
             "owner": {
               "description": "Details zum Eigentümer",
-              "name": "Name",
+              "name": "Eigentümer",
               "properties": {
                 "city": {
                   "label": "Stadt",

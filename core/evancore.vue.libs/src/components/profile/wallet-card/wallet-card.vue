@@ -20,16 +20,19 @@
 <template>
   <div>
     <div class="wallet-container evan-highlight">
-      <a class="evan-wallet"
+      <a
+        class="evan-wallet"
         :href="walletLink"
         :style="{
           'background-image': `url(${ $store.state.uiLibBaseUrl }/assets/wallet-background.png)`
-        }">
-        <evan-loading v-if="loading"></evan-loading>
+        }"
+      >
+        <evan-loading v-if="loading" />
         <template v-else>
           <h1
+            id="evan-account-balance"
             class="text-primary"
-            id="evan-account-balance">
+          >
             {{ balance.amount }} EVE
           </h1>
           <small class="text-light font-weight-semibold">
@@ -42,17 +45,20 @@
           </div>
         </template>
       </a>
-      <div class="qr-code-open"
-        @click="showQRCode($event)">
-        <i class="mdi mdi-qrcode-scan"></i>
+      <div
+        class="qr-code-open"
+        @click="showQRCode($event)"
+      >
+        <i class="mdi mdi-qrcode-scan" />
       </div>
     </div>
     <evan-modal
-      class="qrcode-modal"
       ref="qrCodeModal"
-      :maxWidth="'600px'">
+      class="qrcode-modal"
+      :max-width="'600px'"
+    >
       <template v-slot:header>
-        <div></div>
+        <div />
       </template>
       <template v-slot:body>
         <evan-qr-code
@@ -66,8 +72,9 @@
 </template>
 
 <script lang="ts">
-  import Component from './wallet-card';
-  export default Component;
+import Component from './wallet-card';
+
+export default Component;
 </script>
 
 <style lang="scss" scoped>

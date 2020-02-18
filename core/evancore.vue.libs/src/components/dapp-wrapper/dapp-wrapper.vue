@@ -18,73 +18,107 @@
 */
 
 <template>
-  <div class="evan-dapp-wrapper"
+  <div
     :id="id"
+    class="evan-dapp-wrapper"
     :class="{
       'show-sidebar': showSideBar && enabledSideBar2,
-    }">
-    <evan-logout ref="evanLogout" :disableButton="true"></evan-logout>
+    }"
+  >
+    <evan-logout
+      ref="evanLogout"
+      :disable-button="true"
+    />
 
-    <div class="dapp-wrapper-body"
+    <div
+      v-if="!loading"
+      class="dapp-wrapper-body"
       :class="{
         'pt-0': onboarding || login,
       }"
-      v-if="!loading">
-      <div class="container w-100"
-        v-if="!supportedBrowser">
-        <div class="white-box border-smooth rounded"
-          style="margin-top: 25%; width: 500px; margin-left: auto; margin-right: auto;">
+    >
+      <div
+        v-if="!supportedBrowser"
+        class="container w-100"
+      >
+        <div
+          class="white-box border-smooth rounded"
+          style="margin-top: 25%; width: 500px; margin-left: auto; margin-right: auto;"
+        >
           <div class="header">
             <h3 class="m-0 font-weight-semibold">
               {{ '_evan.browser-not-supported.title' | translate }}
             </h3>
           </div>
-          <p class="content mb-0"
-            v-html="$t('_evan.browser-not-supported.desc')">
-          </p>
+          <p
+            class="content mb-0"
+            v-html="$t('_evan.browser-not-supported.desc')"
+          />
         </div>
       </div>
       <template v-else-if="!login">
-        <div class="dapp-wrapper-sidebar" v-if="!onboarding && enableSidebar">
+        <div
+          v-if="!onboarding && enableSidebar"
+          class="dapp-wrapper-sidebar"
+        >
           <slot name="sidebar">
             <ul class="nav top-nav">
-              <li v-for="route in routes" :key="route.path">
+              <li
+                v-for="route in routes"
+                :key="route.path"
+              >
                 <a
                   :id="`evan-dapp-${ (route.path || route.id).split('.')[0] }`"
                   :class="{ active: route.path && $route.path.startsWith(route.fullPath) }"
                   :href="route.path ? `${ dapp.fullUrl }/${ route.path }` : null"
-                  @click="routeActivated(route)">
-                  <i :class="route.icon"></i>
+                  @click="routeActivated(route)"
+                >
+                  <i :class="route.icon" />
                   <evan-tooltip :placement="'right'">
                     {{ route.title | translate }}
                   </evan-tooltip>
                 </a>
               </li>
             </ul>
-            <ul class="nav bottom-nav"
-              v-if="bottomRoutes">
+            <ul
+              v-if="bottomRoutes"
+              class="nav bottom-nav"
+            >
               <li id="evan-dapp-sidepanel-toggle">
                 <a
+                  v-if="enabledSideBar2"
                   :class="{ active: showSideBar }"
                   @click="showSideBar = !showSideBar"
-                  v-if="enabledSideBar2">
-                  <i class="mdi mdi-menu" v-if="!showSideBar"></i>
-                  <i class="mdi mdi-close" v-if="showSideBar"></i>
+                >
+                  <i
+                    v-if="!showSideBar"
+                    class="mdi mdi-menu"
+                  />
+                  <i
+                    v-if="showSideBar"
+                    class="mdi mdi-close"
+                  />
                 </a>
               </li>
               <li
                 v-for="(route, index) in bottomRoutes"
                 :key="route.path"
-                :style="{ order: (index + 1) * 10 }">
+                :style="{ order: (index + 1) * 10 }"
+              >
                 <a
                   :id="`evan-dapp-${ (route.path || route.id).split('.')[0] }`"
                   :class="{ active: route.path && $route.path.startsWith(route.fullPath) }"
                   :href="route.path ? `${ dapp.fullUrl }/${ route.path }` : null"
-                  @click="routeActivated(route)">
-                  <i class="position-relative" :class="route.icon">
-                    <span class="notification-dot"
-                      v-if="route.path.startsWith('mailbox.vue') && userInfo.newMailCount > 0">
-                    </span>
+                  @click="routeActivated(route)"
+                >
+                  <i
+                    class="position-relative"
+                    :class="route.icon"
+                  >
+                    <span
+                      v-if="route.path.startsWith('mailbox.vue') && userInfo.newMailCount > 0"
+                      class="notification-dot"
+                    />
                   </i>
                   <evan-tooltip :placement="'right'">
                     {{ route.title | translate }}
@@ -96,88 +130,116 @@
                 <a
                   id="evan-dapp-synchronization"
                   :class="{ active: $refs.queuePanel && $refs.queuePanel.isShown }"
-                  @click="$refs.queuePanel.show();">
-                  <div class="spinner-border spinner-border-sm"
-                    v-if="queueLoading || queueCount">
-                  </div>
+                  @click="$refs.queuePanel.show();"
+                >
+                  <div
+                    v-if="queueLoading || queueCount"
+                    class="spinner-border spinner-border-sm"
+                  />
                   <template v-else>
-                    <i class="mdi mdi-alert text-danger"
-                      v-if="queueErrorCount">
-                    </i>
-                    <i class="mdi mdi-sync"
-                      v-else>
-                    </i>
+                    <i
+                      v-if="queueErrorCount"
+                      class="mdi mdi-alert text-danger"
+                    />
+                    <i
+                      v-else
+                      class="mdi mdi-sync"
+                    />
                   </template>
                   <evan-tooltip :placement="'right'">
                     {{ '_evan._routes.synchronization' | translate }}
                   </evan-tooltip>
                 </a>
                 <evan-swipe-panel
-                  alignment="left"
                   ref="queuePanel"
-                  showBackdrop="true">
+                  alignment="left"
+                  show-backdrop="true"
+                >
                   <template v-slot:header>
                     <div class="d-flex align-items-center">
-                      <evan-button type="text" @click="$refs.queuePanel.hide()" icon="mdi mdi-arrow-left" />
+                      <evan-button
+                        type="text"
+                        icon="mdi mdi-arrow-left"
+                        @click="$refs.queuePanel.hide()"
+                      />
                       <h5 class="m-0 font-weight-bold text-truncate">
                         {{ '_evan.dapp-wrapper.queue' | translate }}
                       </h5>
                     </div>
                   </template>
-                  <span class="p-3 d-block"
-                    v-if="queueCount === 0 && queueErrorCount === 0">
+                  <span
+                    v-if="queueCount === 0 && queueErrorCount === 0"
+                    class="p-3 d-block"
+                  >
                     {{ '_evan.dapp-wrapper.empty-queue' | translate }}
                   </span>
-                  <div class="p-3"
+                  <div
                     v-for="(instance, index) in queueInstances"
+                    :id="`evan-panel-queue-${ index }`"
                     :key="instance.stepIndex"
-                    :id="`evan-panel-queue-${ index }`">
+                    class="p-3"
+                  >
                     <template v-if="instance.dispatcher">
                       <div class="d-flex">
                         <strong class="d-flex align-items-center mb-2">
-                          <i class="mdi mdi-alert text-danger mr-2"
-                            v-if="queueErrorCount">
-                          </i>
+                          <i
+                            v-if="queueErrorCount"
+                            class="mdi mdi-alert text-danger mr-2"
+                          />
                           {{ instance.dispatcher.title | translate }}
                         </strong>
-                        <span class="mx-auto"></span>
+                        <span class="mx-auto" />
                         <span>
                           {{ `${ (instance.stepIndex / instance.dispatcher.steps.length) * 100 }%` }}
                         </span>
                       </div>
 
                       <div class="d-flex align-items-end">
-                        <div class="w-100 d-flex align-items-center" v-if="instance.dispatcher">
-                          <div class="progress w-100" style="height: 1.3em">
-                            <div class="progress-bar bg-primary"
+                        <div
+                          v-if="instance.dispatcher"
+                          class="w-100 d-flex align-items-center"
+                        >
+                          <div
+                            class="progress w-100"
+                            style="height: 1.3em"
+                          >
+                            <div
+                              class="progress-bar bg-primary"
                               :class="{ 'progress-bar-animated progress-bar-striped': instance.running }"
-                              :style="{ 'width': `${ (instance.stepIndex / instance.dispatcher.steps.length) * 100 }%` }">
-                            </div>
+                              :style="{ 'width': `${ (instance.stepIndex / instance.dispatcher.steps.length) * 100 }%` }"
+                            />
                           </div>
-                          <i class="mdi mdi-pause ml-3 text-muted clickable"
-                            style="font-size: 1.5em"
+                          <i
                             v-if="instance.status === 'running' && instance.stepIndex < instance.dispatcher.steps.length - 1"
-                            @click="instance.stop()">
-                          </i>
-                          <div class="spinner-grow spinner-grow-sm ml-3"
-                            v-if="instance.status === 'running' || instance.status === 'stopping'">
-                          </div>
+                            class="mdi mdi-pause ml-3 text-muted clickable"
+                            style="font-size: 1.5em"
+                            @click="instance.stop()"
+                          />
+                          <div
+                            v-if="instance.status === 'running' || instance.status === 'stopping'"
+                            class="spinner-grow spinner-grow-sm ml-3"
+                          />
                           <template v-if="instance.status !== 'running' && instance.status !== 'stopping'">
-                            <i class="mdi mdi-play-circle-outline ml-3 clickable"
+                            <i
+                              class="mdi mdi-play-circle-outline ml-3 clickable"
                               style="font-size: 1.5em"
-                              @click="startDispatcherInstance(instance);">
-                            </i>
-                            <i class="mdi mdi-close-circle-outline ml-3 text-light clickable"
+                              @click="startDispatcherInstance(instance);"
+                            />
+                            <i
+                              class="mdi mdi-close-circle-outline ml-3 text-light clickable"
                               style="font-size: 1.5em"
                               @click="
                                 instanceInteraction = { type: 'delete', instance: instance };
                                 $refs.instanceInteraction.show();
-                              ">
-                            </i>
+                              "
+                            />
                           </template>
                         </div>
                       </div>
-                      <span class="mt-3 text-wrap" v-if="instance.error">
+                      <span
+                        v-if="instance.error"
+                        class="mt-3 text-wrap"
+                      >
                         {{ '_evan.dapp-wrapper.queue-error' | translate }}
                       </span>
                     </template>
@@ -200,7 +262,7 @@
               <!-- will be filled by using the breadcrumbs component and the attachToDAppWrapper
                 param -->
             </div>
-            <slot name="header"></slot>
+            <slot name="header" />
           </div>
           <div class="dapp-wrapper-content-wrapper flex-row">
             <template v-if="!onboarding">
@@ -209,7 +271,10 @@
               </div>
             </template>
 
-            <div v-if="topLevel" id="dapp-wrapper-sidebar-left" />
+            <div
+              v-if="topLevel"
+              id="dapp-wrapper-sidebar-left"
+            />
             <div class="dapp-wrapper-content">
               <evan-modal ref="instanceInteraction">
                 <template v-slot:header>
@@ -218,13 +283,16 @@
                   </h5>
                 </template>
                 <template v-slot:body>
-                  <p class="text-left"
+                  <p
+                    class="text-left"
                     v-html="$t(`_evan.dapp-wrapper.instance-${ instanceInteraction.type }.desc`,
-                      instanceInteraction.instance)">
-                  </p>
+                               instanceInteraction.instance)"
+                  />
                 </template>
                 <template v-slot:footer>
-                  <button type="button" class="btn btn-rounded"
+                  <button
+                    type="button"
+                    class="btn btn-rounded"
                     :class="{
                       'btn-danger': instanceInteraction.type === 'delete',
                       'btn-primary': instanceInteraction.type === 'accept',
@@ -232,35 +300,46 @@
                     @click="
                       instanceInteraction.instance[instanceInteraction.type]();
                       $refs.instanceInteraction.hide();
-                    ">
+                    "
+                  >
                     {{ `_evan.dapp-wrapper.instance-${ instanceInteraction.type }.ok` | translate }}
                   </button>
                 </template>
               </evan-modal>
-              <slot name="content"></slot>
+              <slot name="content" />
               <!-- if the user gone through the sign-up, but never exported his mnemonic -->
-              <evan-mnemonic-export v-if="createRuntime && topLevel && isLoggedin"></evan-mnemonic-export>
+              <evan-mnemonic-export v-if="createRuntime && topLevel && isLoggedin" />
             </div>
-            <div v-if="topLevel" id="dapp-wrapper-sidebar-right" />
+            <div
+              v-if="topLevel"
+              id="dapp-wrapper-sidebar-right"
+            />
           </div>
         </div>
       </template>
 
-      <evan-login v-else
-        v-on:logged-in="login"
-        :accountId="userInfo.address"
-      >
-      </evan-login>
+      <evan-login
+        v-else
+        :account-id="userInfo.address"
+        @logged-in="login"
+      />
     </div>
-    <div class="dapp-wrapper-body" v-else>
+    <div
+      v-else
+      class="dapp-wrapper-body"
+    >
       <div class="w-100 h-100 mt-5 text-center">
-        <div class="spinner-border text-primary" role="status"></div>
+        <div
+          class="spinner-border text-primary"
+          role="status"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import Component from './dapp-wrapper';
-  export default Component;
+import Component from './dapp-wrapper';
+
+export default Component;
 </script>

@@ -21,6 +21,6 @@
 import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
 
 // map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [ ];
+const componentRegistration: Array<ComponentRegistrationInterface> = [];
 
 export default componentRegistration;

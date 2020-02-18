@@ -7,13 +7,18 @@
   },
   "extends": "../../tsconfig.json",
   "include": [
-    "./src/**/*",
-    "./src/**/*.json",
-    "./src/vue-shim.d.ts"
+    "./src/**/*.ts",
+    "./src/**/*.json"
   ],
   "references": [
     {
       "path": "../../core/digital-twin-lib"
+    },
+    {
+      "path": "../../core/evancore.vue.libs"
+    },
+    {
+      "path": "../../core/ui.libs"
     }
   ]
 }
