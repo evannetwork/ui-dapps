@@ -12,23 +12,15 @@
       class="d-flex flex-row mt-3"
     >
       <evan-table
-        class="simple"
+        class="simple clickable-rows"
         :items="transactions"
         :fields="columns"
         :show-empty="true"
+        @row-clicked="onRowClicked"
       >
         <template v-slot:cell(timestamp)="data">
-          {{ data.item.timestamp | moment('DD.MM.YYYY hh:mm') }}
-        </template>
-        <template v-slot:cell(action)="data">
-          <evan-button
-            size="sm"
-            type="icon-secondary"
-            icon="mdi mdi-chevron-right"
-            target="_blank"
-            class="visible-on-row-hover"
-            :href="getRouteToTransactionExplorer(data.item.hash)"
-          />
+          {{ data.item.timestamp | moment('L') }}
+          {{ data.item.timestamp | moment('LT') }}
         </template>
       </evan-table>
     </div>
@@ -70,26 +62,8 @@ table.simple {
     padding: 8px;
   }
 
-  th.action {
-    width: 48px;
-  }
-
   td.amount {
     font-weight: 600;
-  }
-
-  .show-on-hover {
-    opacity: 0;
-  }
-
-  // 'hover' would be nicer, but collides with ui.libs
-  &.hasHover {
-    tr:hover {
-      background-color: cssVar('gray-100');
-      & .show-on-hover {
-        opacity: 1;
-      }
-    }
   }
 }
 </style>
