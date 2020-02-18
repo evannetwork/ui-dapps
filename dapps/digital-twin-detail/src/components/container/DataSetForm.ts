@@ -153,7 +153,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       }
       case 'object': {
         control.uiSpecs.type = 'json';
-        control.value = control.value || {};
+        control.value = control.value ?? {};
         break;
       }
       case 'number': {
