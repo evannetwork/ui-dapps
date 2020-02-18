@@ -19,7 +19,7 @@
 
 import Component, { mixins } from 'vue-class-component';
 import { DAppTwin, twinDeleteDispatcher } from '@evan.network/digital-twin-lib';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
 
 @Component
@@ -39,33 +39,7 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
    */
   hashChangeWatcher: any;
 
-  navItems = [
-    {
-      label: '_twin-detail.nav-items.overview',
-      icon: 'mdi mdi-view-dashboard-outline',
-      to: { name: 'overview' },
-    },
-    {
-      label: '_twin-detail.nav-items.data',
-      icon: 'mdi mdi-file-document-box-outline',
-      to: { name: 'data' },
-    },
-    {
-      label: '_twin-detail.nav-items.verifications',
-      icon: 'mdi mdi-checkbox-marked-circle-outline',
-      to: { name: 'verifications' },
-    },
-    {
-      label: '_twin-detail.nav-items.sharings',
-      icon: 'mdi mdi-share-variant',
-      to: { name: 'sharings' },
-    },
-    {
-      label: '_twin-detail.nav-items.did',
-      icon: 'mdi mdi-identifier',
-      to: { name: 'did' },
-    },
-  ];
+  navItems: NavEntryInterface[] = [];
 
   /**
    * Clear the hash change watcher
@@ -136,6 +110,8 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     await this.hashChangeWatcher();
     // watch for hash changes, so the contract address can be simply replaced within the url
     window.addEventListener('hashchange', this.hashChangeWatcher);
+
+    this.navItems = this.getNavItems();
   }
 
   async deleteTwin(): Promise<void> {
@@ -146,6 +122,38 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
     });
 
     this.close();
+  }
+
+  getNavItems(): NavEntryInterface[] {
+    return [
+      {
+        text: '_twin-detail.nav-items.overview',
+        icon: 'mdi mdi-view-dashboard-outline',
+        to: { name: 'overview' },
+      },
+      {
+        text: '_twin-detail.nav-items.data',
+        icon: 'mdi mdi-file-document-box-outline',
+        to: { name: 'data' },
+      },
+      {
+        text: '_twin-detail.nav-items.verifications',
+        icon: 'mdi mdi-checkbox-marked-circle-outline',
+        to: { name: 'verifications' },
+        disabled: !this.$store.state.twin?.isOwner,
+      },
+      {
+        text: '_twin-detail.nav-items.sharings',
+        icon: 'mdi mdi-share-variant',
+        to: { name: 'sharings' },
+        disabled: !this.$store.state.twin?.isOwner,
+      },
+      {
+        text: '_twin-detail.nav-items.did',
+        icon: 'mdi mdi-identifier',
+        to: { name: 'did' },
+      },
+    ];
   }
 
   /**

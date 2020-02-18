@@ -56,7 +56,7 @@ interface ColumnInterface {
   thClass?: string;
 }
 
-@Component({ })
+@Component
 export default class SharingOverview extends mixins(EvanComponent) {
   columns: ColumnInterface[] = [];
 

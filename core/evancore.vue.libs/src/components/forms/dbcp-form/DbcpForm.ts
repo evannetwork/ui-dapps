@@ -53,7 +53,7 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
   }) maxDescriptionChars: number;
 
   /**
-   * Dbcp formular instance
+   * Dbcp form instance
    */
   dbcpForm: DbcpFormInterface = null;
 
@@ -79,7 +79,7 @@ export default class DbcpFormComponent extends mixins(EvanFormComponent) {
         },
       },
       description: {
-        validate: (dbcpForm: DbcpFormComponent, form: DbcpFormInterface): boolean => {
+        validate: (dbcpForm: DbcpFormComponent, form: DbcpFormInterface): boolean | string => {
           if (form.description.value.length < this.maxDescriptionChars) {
             return true;
           }

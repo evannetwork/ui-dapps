@@ -118,7 +118,7 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
         attr: {
           id: `dataset-input-${this.name}-${name}`,
           // translate it before, so the formular will use correct fallback translations
-          label: this.isPrimitive ? false : this.$t(`${this.i18nScope}.properties.${name}.label`, name),
+          label: this.isPrimitive ? '' : this.$t(`${this.i18nScope}.properties.${name}.label`, name),
           placeholder: this.isPrimitive
             ? this.$t(`${this.i18nScope}.placeholder`, '')
             : this.$t(`${this.i18nScope}.properties.${name}.placeholder`, ''),
@@ -247,13 +247,17 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
       dbcpForm: DataSetFormComponent,
       form: EvanForm,
       control: EvanFormControl,
-    ): boolean|string => {
+    ): boolean | string => {
       let controlValue = control.value;
       let validationSchema = subSchema;
 
       // parse input value to numbers to check for correct number format with ajv
       if (type === 'number') {
-        controlValue = parseFloat(controlValue);
+        if (Number.isNaN(parseFloat(controlValue))) {
+          controlValue = false;
+        } else {
+          controlValue = parseFloat(controlValue);
+        }
       } else if (type === 'files') {
         // define custom validation schema for files to match runtime file values
         validationSchema = {

@@ -18,21 +18,24 @@
 */
 
 // vue imports
-import Component from 'vue-class-component';
 import Vue from 'vue';
-import VueRouter, { Route } from 'vue-router';
 
 // evan.network imports
-import * as dappBrowser from '@evan.network/ui-dapp-browser';
+import { bccHelper } from '@evan.network/ui-dapp-browser';
 import { Runtime } from '@evan.network/api-blockchain-core';
+import { Store } from 'vuex';
+import { Dispatcher } from '@evan.network/ui';
+import Component from 'vue-class-component';
 import { getDomainName } from './utils';
 import { StartedDAppInfo } from './interfaces';
+import { EvanState, TranslateFunc } from './EvanComponentInterface';
 
 /**
  * Evan.network component wrapper for easily accessing blockchain runtime data and active DApp information.
  *
  * @class      EvanComponent
  */
+
 @Component
 export default class EvanComponent extends Vue {
   /**
@@ -40,7 +43,7 @@ export default class EvanComponent extends Vue {
    */
   dapp: StartedDAppInfo;
 
-  dispatcher;
+  dispatcher: Dispatcher;
 
   /**
    * Active dapp browser domain name
@@ -52,13 +55,9 @@ export default class EvanComponent extends Vue {
    */
   $i18n: any;
 
-  $router: VueRouter;
+  $store: Store<EvanState>;
 
-  $route: Route;
-
-  $store: any;
-
-  $t: any;
+  $t: TranslateFunc;
 
   $toasted: any;
 
@@ -97,7 +96,7 @@ export default class EvanComponent extends Vue {
    *
    * @return     {any}  routing.getNextDApp result
    */
-  activeDApp(): any {
+  activeDApp(): StartedDAppInfo {
     return this.$store.state.dapp;
   }
 
@@ -107,6 +106,6 @@ export default class EvanComponent extends Vue {
    * @return     {any}  bcc runtime
    */
   getRuntime(): Runtime {
-    return this.$store.state.runtime || dappBrowser.bccHelper.getCoreRuntime();
+    return this.$store.state.runtime || bccHelper.getCoreRuntime();
   }
 }

@@ -21,30 +21,42 @@
   <div class="evan theme-evan">
     <evan-dapp-wrapper
       :routes="[ ]"
-      @loggedin="initialize()">
+      @loggedin="initialize()"
+    >
       <template v-slot:content>
         <div class="h-100 d-flex flex-column">
-          <evan-loading v-if="loading"></evan-loading>
+          <evan-loading v-if="loading" />
           <template v-else>
             <evan-dapp-wrapper-level-2
-              v-if="$store.state.profileDApp.isMyProfile">
+              v-if="$store.state.profileDApp.isMyProfile"
+            >
               <evan-nav-list :entries="navEntries">
                 <template slot="header">
-                  <evan-profile-preview class="p-4"
+                  <evan-profile-preview
+                    class="p-4"
                     size="sm"
-                    :accountDetails="$store.state.profileDApp.data.accountDetails"
-                    :address="$store.state.runtime.activeAccount">
-                  </evan-profile-preview>
+                    :account-details="$store.state.profileDApp.data.accountDetails"
+                    :address="$store.state.runtime.activeAccount"
+                  />
                 </template>
               </evan-nav-list>
             </evan-dapp-wrapper-level-2>
-            <div class="h-100 overflow-auto" style="flex: 1">
-              <div class="h-100 text-center mt-10"
-                v-if="!$store.state.profileDApp.isMyProfile && $route.name !== 'detail'">
+            <div
+              class="h-100 overflow-auto"
+              style="flex: 1"
+            >
+              <div
+                v-if="!$store.state.profileDApp.isMyProfile && $route.name !== 'detail'"
+                class="h-100 text-center mt-10"
+              >
                 <h3>{{ '_profile.not-permitted-view' | translate }}</h3>
               </div>
-              <transition name="fade" mode="out-in" v-else>
-                <router-view></router-view>
+              <transition
+                v-else
+                name="fade"
+                mode="out-in"
+              >
+                <router-view />
               </transition>
             </div>
           </template>
@@ -55,6 +67,7 @@
 </template>
 
 <script lang="ts">
-  import Component from './root';
-  export default Component;
+import Component from './root';
+
+export default Component;
 </script>

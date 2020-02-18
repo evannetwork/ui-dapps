@@ -19,35 +19,28 @@
 
 // vue imports
 import Component, { mixins } from 'vue-class-component';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
+import { DAppTwin } from 'core/digital-twin-lib/src';
 
 @Component
 export default class DetailDataComponent extends mixins(EvanComponent) {
-  navItems = [];
+  navItems: NavEntryInterface[] = [];
 
   /**
    * Setup dynamic navigation structure.
    */
   async created(): Promise<void> {
-    const { twin } = this.$store.state;
-    this.navItems = this.navItems
-      .concat(twin.containerAddresses.map((address) => ({
-        label: this.$t(`${address}.name`, twin.containerContracts[address].name),
+    const { twin }: { twin: DAppTwin } = this.$store.state;
+    this.navItems = [
+      ...twin.containerAddresses.map((address) => ({
+        text: this.$t(`${address}.name`, twin.containerContracts[address].name),
         to: address,
-      })))
-      .sort((a, b) => {
-        if (a.label > b.label) {
-          return 1;
-        }
-        if (a.label < b.label) {
-          return -1;
-        }
-        return 0;
-      });
+      })).sort((a, b) => a.text.localeCompare(b.text)),
+    ];
 
     // add general always to the top
     this.navItems.unshift({
-      label: '_twin-detail.data.general.general-title',
+      text: '_twin-detail.data.general.general-title',
       to: 'general',
     });
   }

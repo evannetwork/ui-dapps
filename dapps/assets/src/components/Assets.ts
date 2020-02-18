@@ -21,11 +21,11 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, NavEntryInterface } from '@evan.network/ui-vue-core';
 
 @Component
 export default class AssetsComponent extends mixins(EvanComponent) {
-  navItems = [
+  navItems: NavEntryInterface[] = [
     {
       key: 'digitaltwins',
       icon: 'mdi mdi-cube-outline',
@@ -35,7 +35,7 @@ export default class AssetsComponent extends mixins(EvanComponent) {
       icon: 'mdi mdi-account-multiple-outline',
     },
   ].map((entry) => ({
-    label: `_assets.${entry.key}.${entry.key}-title`,
+    text: `_assets.${entry.key}.${entry.key}-title`,
     icon: entry.icon,
     to: { name: entry.key },
   }));
