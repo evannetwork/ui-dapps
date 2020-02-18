@@ -17,9 +17,8 @@
   the following URL: https://evan.network/license/
 */
 
-@import './utils';
+@import '~@evan.network/ui/src/style/utils';
 
-.evan {
   .evan-nav-list {
     height: 100%;
     padding-bottom: 1px;
@@ -35,9 +34,6 @@
       flex: 1;
 
       a, button {
-        background-color: white !important;
-        border: none;
-        outline: none;
         font-size: 15px;
         font-weight: 600;
 
@@ -49,43 +45,47 @@
 
         cursor: pointer;
         transition: background-color 0.5s ease-out, color 0.5s ease-out;
-        text-decoration: none !important;
+        text-decoration: none;
+
+        border: none;
+        outline: none;
+        background-color: white;
+
+
+        &, * {
+          color: cssVar('gray-900');
+        }
 
         &.active {
-          background-color: cssVar('bg-level-2') !important;
+          background-color: cssVar('bg-level-2');
 
           &, * {
-            color: cssVar('dark') !important;
+            color: cssVar('dark');
           }
         };
 
         &:hover {
           &, * {
-            color: cssVar('primary') !important;
+            color: cssVar('primary');
           }
         }
 
         &:disabled {
-          opacity: 0.65;
-          border-color: cssVar('disabled');
-          background-color: cssVar('disabled');
+          cursor: default;
+          border-color: cssVar('gray-500');
+          background-color: white;
           box-shadow: none;
           &[class*='-outline-'] {
             background-color: transparent;
 
             &, * {
-              color: cssVar('disabled') !important;
+              color: cssVar('gray-500');
             }
           }
-          &:hover, &:hover * {
-            color: cssVar('disabled') !important;
+          &, * , &:hover, &:hover * {
+            color: cssVar('gray-500');
           }
-        }
-
-        &, * {
-          color: cssVar('gray-600') !important;
         }
       }
     }
   }
-}

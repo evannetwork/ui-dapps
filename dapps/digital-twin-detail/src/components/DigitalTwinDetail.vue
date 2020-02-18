@@ -82,6 +82,7 @@
                       {{ '_twin-detail.data.context-menu.export-template' | translate }}
                     </b-dropdown-item>
                     <b-dropdown-item
+                      v-if="$store.state.twin.isOwner"
                       @click="$refs.deleteModal.show()"
                     >
                       {{ '_twin-detail.data.context-menu.delete-twin' | translate }}
