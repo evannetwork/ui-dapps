@@ -32,14 +32,6 @@ class Permissions extends mixins(EvanComponent) {
   readWriteAll = false;
 
   /**
-   * The contract name to be displayed.
-   */
-  @Prop({
-    default: '',
-    required: true,
-  }) label: string;
-
-  /**
    * The contract id.
    */
   @Prop({
@@ -150,12 +142,20 @@ class Permissions extends mixins(EvanComponent) {
   /**
    * Return translation for a certain key and scope if set, otherwise only the key.
    *
-   * @param key
+   * @param      {string}  keys    takes multiple keys and try to translation them against to the
+   *                               i18nScope. Last passed string will be used as default.
+   * @return     {string}  translation
    */
-  getTranslation(key: string): string {
-    const translated = this.$t(`${this.i18nScope}.${key}`);
+  getTranslation(...keys: string[]): string {
+    for (let i = 0; i < keys.length; i += 1) {
+      const mergedKey = `${this.i18nScope}.${keys[i]}`;
+      const translation = this.$t(mergedKey);
+      if (translation !== mergedKey) {
+        return translation;
+      }
+    }
 
-    return translated !== `${this.i18nScope}.${key}` ? translated : key;
+    return keys[keys.length - 1];
   }
 }
 

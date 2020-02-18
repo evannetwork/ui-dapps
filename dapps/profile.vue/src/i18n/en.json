@@ -180,34 +180,51 @@
       "reload-hint": "Please reload the application if you have changed the language settings."
     },
     "sharing": {
-      "profileData": "Identity Data",
-      "accountDetails": "Identity Details",
-      "accountName": "Account Name",
-      "city": "City",
-      "company": "Company",
-      "contact": "Contact",
-      "country": "Country",
-      "court": "Register Court",
-      "dataStreamSettings": "Data Stream Settings",
       "description": "To share your identity information with other partners, first select the appropriate contact and then the information to share. Click on \"Share data\".",
       "description-no-contacts": "Identity information can be shared with other partners after you have established a secure connection to their evan.network identity. Go to the contact overview and invite your partners via email or identity ID to share your data trustfully.",
-      "deviceDetails": "Device Details",
-      "location": "Location",
-      "manufacturer": "Manufacturer",
-      "owner": "Owner",
       "permissionsTitle": "Update Identity Permissions",
-      "picture": "Picture",
-      "postalCode": "Postal Code",
-      "profileType": "Identity Type",
-      "register": "Register",
-      "registerNumber": "Registration Number",
-      "registration": "Registration Data",
-      "salesTaxID": "Sales Tax ID",
-      "serialNumber": "Serial Number",
-      "settings": "Settings",
-      "streetAndNumber": "Street",
-      "type": "Type",
-      "website": "Website"
+      "profileContract": {
+        "accountDetails": {
+          "name": "Identity Details",
+          "properties": {
+            "accountName": "Account Name",
+            "picture": "Picture",
+            "profileType": "Identity Type"
+          }
+        },
+        "contact": {
+          "name": "Contact",
+          "properties": {
+            "city": "City",
+            "country": "Country",
+            "postalCode": "Postal Code",
+            "streetAndNumber": "Street",
+            "website": "Website"
+          }
+        },
+        "deviceDetails": {
+          "name": "Device Details",
+          "properties": {
+            "dataStreamSettings": "Data Stream Settings",
+            "location": "Location",
+            "manufacturer": "Manufacturer",
+            "owner": "Owner",
+            "serialNumber": "Serial Number",
+            "settings": "Settings",
+            "type": "Type"
+          }
+        },
+        "name": "Identity Data",
+        "registration": {
+          "name": "Registration Data",
+          "properties": {
+            "court": "Register Court",
+            "register": "Register",
+            "registerNumber": "Registration Number",
+            "salesTaxID": "Sales Tax ID"
+          }
+        }
+      }
     },
     "sharings": {
       "desc": "Below are all the contacts with which you currently share your Identity information. Click on a profile to adjust the permissions.",
@@ -454,14 +471,14 @@
         "reverse-charge-please-check": "Please check for possibly arising tax liabilities in your country from this purchase.",
         "stripe-element": {
           "incomplete_number": "Incomplete input!",
-          "invalid_number": "Invalid card number!",
-          "invalid_iban_start": "Please check your IBAN"
+          "invalid_iban_start": "Please check your IBAN",
+          "invalid_number": "Invalid card number!"
         },
         "success": "Your order was successfully placed. You will receive an invoice by email. The process is completed as soon as you receive the invoice.<br><br>The amount will be credited to your wallet in the next 5 to 10 minutes.",
         "tax": "Tax",
         "titles": {
-          "buy-eve": "Buy EVE",
           "billing-info": "Please complete your billing information",
+          "buy-eve": "Buy EVE",
           "finished": "Finished",
           "processing": "In progress"
         },
@@ -494,8 +511,8 @@
       "transactions": {
         "charged-at": "charged at",
         "credit-charged": "Credit recharged",
-        "credit-running-charge": "Charging credit card not completed yet",
         "credit-failed-charge": "The charging has failed unfortunately",
+        "credit-running-charge": "Charging credit card not completed yet",
         "description": "Only credit recharges are listed below. A complete overview of the transactions can be found <a href='{explorerUrl}' target='_blank'>here</a>.",
         "empty": "No credit recharges have yet been carried out.",
         "load-more": "Load more",

@@ -177,7 +177,7 @@ export default class ProfileDetailComponent extends mixins(EvanComponent) {
         runtime,
         {
           containerAddress: profileAddress,
-          label: 'profileData',
+          i18nScope: '_profile.sharing.profileContract',
         },
         accountId,
       ),

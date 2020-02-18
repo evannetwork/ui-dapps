@@ -49,7 +49,7 @@ export default class ContainerComponent extends mixins(EvanComponent) {
   get entries() {
     return this.$store.state.container.entryKeys.map((key: string) => ({
       id: key,
-      label: key,
+      label: this.$t(`${this.$route.params.container}.${key}.name`, key),
     }));
   }
 

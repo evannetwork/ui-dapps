@@ -28,6 +28,9 @@ export enum ProfileType {
   UNSHARED = 'unshared',
 }
 
+// reduces amount of alias requests directly one after another
+export const aliasCache = { };
+
 /**
  * Returns the users alias, depending on it's profile type. If it's an old profile, resolve alias
  * from address book.
@@ -42,29 +45,41 @@ export async function getUserAlias(
   accountId: string = runtime.activeAccount,
   accountDetails?: any,
 ): Promise<string> {
-  const otherProfile = new Profile({
-    ...(runtime as any),
-    profileOwner: accountId,
-    accountId: runtime.activeAccount,
-  });
-  let details = { ...accountDetails };
+  const cacheID = `${runtime.activeAccount}.${accountId}`;
 
-  try {
-    details = cloneDeep(lodash, await otherProfile.getProfileProperty('accountDetails') || { });
-  } catch (ex) {
-    // no permissions
+  if (!aliasCache[cacheID]) {
+    aliasCache[cacheID] = (async () => {
+      const otherProfile = new Profile({
+        ...(runtime as any),
+        profileOwner: accountId,
+        accountId: runtime.activeAccount,
+      });
+      let details = { ...accountDetails };
+
+      try {
+        details = cloneDeep(lodash, await otherProfile.getProfileProperty('accountDetails') || { });
+      } catch (ex) {
+        // no permissions
+      }
+
+      // load alias from addressbook, when it's not available
+      if (details?.accountName) {
+        return details.accountName;
+      }
+
+      const addressBook = await runtime.profile.getAddressBook();
+      const contact = addressBook.profile[accountId];
+
+      return contact ? contact.alias : accountId;
+    })();
+
+    // reset alias cache after 10 seconds
+    setTimeout(() => {
+      delete aliasCache[cacheID];
+    }, 10 * 1000);
   }
 
-  // load alias from addressbook, when it's not available
-  if (details && details.accountName) {
-    return details.accountName;
-  }
-
-  // load addressbook info
-  const addressBook = await runtime.profile.getAddressBook();
-  const contact = addressBook.profile[accountId];
-
-  return contact ? contact.alias : accountId;
+  return aliasCache[cacheID];
 }
 
 /**

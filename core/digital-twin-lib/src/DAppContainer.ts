@@ -135,13 +135,16 @@ class DAppContainer extends Container {
    * Load container plugin and ensure values.
    */
   public async initialize(): Promise<void> {
-    this.permissions = await this.getPermissions();
     this.plugin = this.loadPluginSchema();
     this.entries = {};
     this.listEntryCounts = {};
-    await this.ensureDispatcherStates();
-    await this.loadEntryValues();
+
+    this.permissions = await this.getPermissions();
     this.isOwner = this.runtime.activeAccount === this.ownerAddress;
+    await Promise.all([
+      this.ensureDispatcherStates(),
+      this.loadEntryValues(),
+    ]);
   }
 
   /**

@@ -17,9 +17,9 @@
   the following URL: https://evan.network/license/
 */
 
-import { Runtime } from '@evan.network/api-blockchain-core';
-import { profileUtils } from '@evan.network/ui';
 import { EvanComponent } from '@evan.network/ui-vue-core';
+import { Runtime } from '@evan.network/api-blockchain-core';
+import { System } from '@evan.network/ui-dapp-browser';
 
 import * as dispatchers from './dispatchers';
 
@@ -112,13 +112,17 @@ export class DAppContract {
    */
   async loadBaseInfo(): Promise<void> {
     await (this as any).ensureContract();
+    const [contractAddress, description, ownerAddress] = await Promise.all([
+      (this as any).getContractAddress(),
+      (this as any).getDescription(),
+      this.runtime.executor.executeContractCall((this as any).contract, 'owner'),
+    ]);
 
-    this.contractAddress = await (this as any).getContractAddress();
-    this.description = await (this as any).getDescription();
+    this.contractAddress = contractAddress;
+    this.description = description;
+    this.ownerAddress = ownerAddress;
 
     // load owner address and owner name
-    this.ownerAddress = await this.runtime.executor
-      .executeContractCall((this as any).contract, 'owner');
     this.isOwner = this.ownerAddress === this.runtime.activeAccount;
     this.ensureI18N();
   }

@@ -34,7 +34,6 @@
     >
       <data-set-form
         :data-schema="schema.items"
-        :is-loading="$store.state.container.dispatcherStates.entries[name]"
         :name="name"
         :value="value"
         :shareable="false"
