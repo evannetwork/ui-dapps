@@ -63,7 +63,7 @@ export async function getUserAlias(
       }
 
       // load alias from addressbook, when it's not available
-      if (details && details.accountName) {
+      if (details?.accountName) {
         return details.accountName;
       }
 
