@@ -182,6 +182,9 @@ $arrow-up: '<svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24p
       tbody {
         tr {
           height: 40px !important;
+          &:hover {
+            box-shadow: none !important;
+          }
         }
       }
     }

@@ -47,23 +47,4 @@ export default DetailOverviewTransactionsComponent;
     font-weight: bold;
   }
 }
-table.simple {
-  width: 100%;
-
-  thead {
-    background-color: cssVar('gray-200');
-    th {
-      font-weight: 600;
-      padding: 8px;
-    }
-  }
-
-  td {
-    padding: 8px;
-  }
-
-  td.amount {
-    font-weight: 600;
-  }
-}
 </style>
