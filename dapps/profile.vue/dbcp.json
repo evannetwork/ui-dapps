@@ -12,7 +12,7 @@
         "profile.vue.js",
         "profile.vue.css"
       ],
-      "origin": "QmSeBDvt3atFPKqDBns5LbaCTTBy1MoxmxJJV3sSGrzces",
+      "origin": "QmaRLmY7CoZNo6dU2xfvAQnwHJsPn2LVzvBTQwX4K3P9bv",
       "primaryColor": "#ac7517",
       "secondaryColor": "#fff2dc",
       "type": "cached-dapp"
@@ -51,7 +51,8 @@
       "3.2.0": "QmSepNoYT6sd4NPk2qooQRGuDhHrxoM1C4bbsBjxRv8vUx",
       "3.3.0": "QmVwEhWqeomKL8nyHXfALAhcUrTmGeuhJpTgFMDJbBMtPw",
       "3.4.0": "QmP71KfTRWk8yoJVWgY7EYLTux7fsYE2XDCUS94tG12UTH",
-      "3.5.1": "QmXRam3oXQeTJswpwVjyxBpWKWiYTTojrDd5NxTqsBaiYB"
+      "3.5.1": "QmXRam3oXQeTJswpwVjyxBpWKWiYTTojrDd5NxTqsBaiYB",
+      "3.6.0": "QmYsGH2NP5iGfH7izWG3DqqHKt6bdPXtN9boZeKhKhiT68"
     }
   }
 }

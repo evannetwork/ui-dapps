@@ -9,7 +9,7 @@
       "files": [
         "dashboard.vue.js"
       ],
-      "origin": "QmNtLYdD9FpeZUjJJKEs84o2bwcqHV9PwvBH9cooRnR3fA",
+      "origin": "QmYBgY4ERsNKZ54ifM2Z49pyw2MpNA23XofoTzUq8ktnam",
       "primaryColor": "#64c6c1",
       "secondaryColor": "#f9f9ff",
       "standalone": true,
@@ -48,7 +48,8 @@
       "1.5.0": "QmXwbevvyD1fcPbWwVFUQi7sX2qUzC7CXRqUtZEzYpCw9X",
       "3.0.0": "QmXq76xeaLfXwkWTyo1KdvwzGAt5hEF2BPHVrcksXoRHpe",
       "3.1.0": "QmXCsXgkY4kNta3QgsLb3oC3gX4QeQwoxz1awM7w1U4kF3",
-      "3.2.0": "QmRcA8E5juAgm2AGbtLS6vkRkNE82YWPsgRa5wAsyVdZuk"
+      "3.2.0": "QmRcA8E5juAgm2AGbtLS6vkRkNE82YWPsgRa5wAsyVdZuk",
+      "3.3.0": "QmYTav6wZQRZZfbFfLyXTtnQwVrBnhZvbUEF1gjaB8v9ov"
     }
   }
 }

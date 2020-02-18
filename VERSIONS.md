@@ -1,6 +1,15 @@
 # evan.network ui-dapps
 
+
 ## Next Version
+### Features
+
+### Fixes
+
+### Deprecations
+
+
+## Version 4.0.0
 ### Features
 - combine vue, core, dapps and e2e tests within this project
 - add`i18n-ajv` library
@@ -36,7 +45,11 @@
     - refactor old digital twin lib for new twin functions
 
 # Archived repository history
-DApps were previously organized in several github projects. Please have a look at the following projects for previous dapp versions
+DApps were previously organized in several github projects. Please have a look at the following projects for previous dapp versions:
+
+- [ui-core](https://github.com/evannetwork/ui-core)
+- [ui-core-dapps](https://github.com/evannetwork/ui-core-dapps)
+- [ui-vue](https://github.com/evannetwork/ui-vue)
 
 ## [ui-core](https://github.com/evannetwork/ui-core)
 

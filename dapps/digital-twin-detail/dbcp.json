@@ -13,7 +13,7 @@
         "detail.digital-twin.js",
         "detail.digital-twin.css"
       ],
-      "origin": "QmcXMPQutejRZUDdrNTy9FE293ntGsDgxgYSokKo3h6bHN",
+      "origin": "QmP7YuubmjSjtDurDASBxoDfivQFy7S7UHPiXvnn94Nwjc",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "cached-dapp"
@@ -38,7 +38,7 @@
     ],
     "version": "1.0.0",
     "versions": {
-      "1.0.0": "QmWpCBHkrveJiYVUUBdka634Nt3XMDuJ2egRUPVPXMy9T9"
+      "1.0.0": "QmPjCNfvUGHkdNQwiwEqtMRARNdRDEoQeHRrwyYewLsoeQ"
     }
   }
 }

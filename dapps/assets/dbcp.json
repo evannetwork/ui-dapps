@@ -13,7 +13,7 @@
         "assets.js",
         "assets.css"
       ],
-      "origin": "QmPsjR32kUX2TC1iAu48DpssS6nPzmKxp1CWNR2yBXwVPr",
+      "origin": "QmToGV2ehr7uxzQPPajQjgTDbpgnD7eWi68yYhpftwpLiV",
       "primaryColor": "#52964b",
       "secondaryColor": "#e9f9e7",
       "type": "cached-dapp"
@@ -38,7 +38,8 @@
     ],
     "version": "1.1.0",
     "versions": {
-      "1.0.0": "QmUvPvZX2sSJUDCDUc16sL2SbaHvLpC8vvr8h2FowP7VQd"
+      "1.0.0": "QmUvPvZX2sSJUDCDUc16sL2SbaHvLpC8vvr8h2FowP7VQd",
+      "1.1.0": "QmczsiL9CKpb3jXGBW6SZv6dvKg2uMq93NbwErSFhtsqem"
     }
   }
 }
