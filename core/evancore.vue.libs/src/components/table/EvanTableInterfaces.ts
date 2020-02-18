@@ -1,5 +1,3 @@
-// TODO: This should be part of the evan-table component but definition files don't ship properly
-
 export interface EvanTableItem<T> {
   item: T;
   index: number;

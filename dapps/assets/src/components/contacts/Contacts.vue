@@ -162,6 +162,10 @@
       ref="addContact"
       @contact-added="handleContactAdded"
     />
+
+    <edit-contact
+      ref="editContact"
+    />
   </div>
 </template>
 

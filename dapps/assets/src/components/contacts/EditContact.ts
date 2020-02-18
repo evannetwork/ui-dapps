@@ -17,17 +17,22 @@
   the following URL: https://evan.network/license/
 */
 
-// import evan libs
-import { ComponentRegistrationInterface } from '@evan.network/ui-vue-core';
-import AddContactComponent from './contacts/AddContact.vue';
-import EditContactComponent from './contacts/EditContact.vue';
-import AddDigitalTwinComponent from './digitaltwins/AddDigitalTwin.vue';
+// vue imports
+import Component, { mixins } from 'vue-class-component';
 
-// map them to element names, so they can be used within templates
-const componentRegistration: Array<ComponentRegistrationInterface> = [
-  { name: 'add-contact', component: AddContactComponent },
-  { name: 'add-digital-twin', component: AddDigitalTwinComponent },
-  { name: 'edit-contact', component: EditContactComponent },
-];
+// evan.network imports
+import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
+import { ContactsService } from './ContactsService';
 
-export default componentRegistration;
+@Component
+export default class EditContactComponent extends mixins(EvanComponent) {
+  contactService: ContactsService;
+
+  showPanel(): void {
+    (this.$refs.editContactPanel as SwipePanelComponentClass).show();
+  }
+
+  closePanel(): void {
+    (this.$refs.editContactPanel as SwipePanelComponentClass).hide();
+  }
+}

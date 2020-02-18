@@ -21,10 +21,10 @@
 import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
-import { EvanTableItem } from '../../shared/EvanTable';
+import EditContactComponent from './EditContact';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
@@ -109,6 +109,10 @@ export default class ContactsComponent extends mixins(EvanComponent) {
 
   async fetchContacts(): Promise<Contact[]> {
     return this.contactService.getContacts();
+  }
+
+  editContact(contact: EvanTableItem<Contact>): void {
+    (this.$refs.editContact as EditContactComponent).showPanel();
   }
 
   async addFavorite(contact: EvanTableItem<Contact>): Promise<void> {

@@ -27,10 +27,8 @@ import {
   dispatchers,
   DigitalTwin,
 } from '@evan.network/digital-twin-lib';
-import { EvanComponent } from '@evan.network/ui-vue-core';
+import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
-
-import { EvanTableItem } from '../../shared/EvanTable';
 
 interface SortFilter {
   filter?: any;
