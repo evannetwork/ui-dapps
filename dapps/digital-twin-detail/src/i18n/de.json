@@ -26,10 +26,13 @@
           "submit": "Eintrag hinzufügen",
           "title": "Eintrag hinzufügen"
         },
+        "count-out-of-total": "{count} von {total}",
+        "count-entries": "{count} Einträge",
         "list-item-detail": {
           "close": "Schließen",
           "title": "Detail"
         },
+        "no-entries": "keine Einträge",
         "show-all": "Alle Anzeigen",
         "value": "Wert"
       },

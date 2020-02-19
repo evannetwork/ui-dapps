@@ -26,10 +26,13 @@
           "submit": "Add Entry",
           "title": "Add an Entry"
         },
+        "count-out-of-total": "{count} out of {total}",
+        "count-entries": "{count} Entries",
         "list-item-detail": {
           "close": "Close",
           "title": "Detail"
         },
+        "no-entries": "no entries",
         "show-all": "Show all",
         "value": "Value"
       },

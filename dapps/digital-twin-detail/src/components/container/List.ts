@@ -34,6 +34,15 @@ interface File {
   name: string;
   size: number;
 }
+
+interface ColumnInterface {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  tdClass?: string;
+  thClass?: string;
+}
+
 @Component
 export default class ContainerListComponent extends mixins(EvanComponent) {
   @Prop() name: string;
@@ -44,7 +53,7 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   container: DAppContainer;
 
-  columns: any[];
+  columns: ColumnInterface[];
 
   selectedValue = null;
 
@@ -94,10 +103,8 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
 
   /**
    * Is the current entry in loading state and currently in dispatcher calculation?
-   *
-   * @param      {<type>}  value   The value
    */
-  isValueLoading(value): boolean {
+  isValueLoading(value: string): boolean {
     return (this.container.dispatcherData[this.name] || []).indexOf(value) !== -1;
   }
 
@@ -121,12 +128,26 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
   /**
    * Get the total number of list entries or `?` if we don't have access to the list.
    */
-  getTotalEntries(): number | string {
-    if (this.container.listEntryCounts[this.name] >= 0) {
-      return this.container.listEntryCounts[this.name];
+  getEntriesCount(): string {
+    const total = this.container.listEntryCounts[this.name];
+    const count = this.getValues().length;
+    const maxPerPage = 30;
+
+    console.log(count, total);
+
+    if (total === undefined) {
+      return null;
     }
 
-    return '?';
+    if (count === 0) {
+      return this.$t('_twin-detail.data.list.no-entries');
+    }
+
+    if (total > maxPerPage) {
+      return this.$t('_twin-detail.data.list.count-out-of-total', { count, total });
+    }
+
+    return this.$t('_twin-detail.data.list.count-entries', { count });
   }
 
   /**

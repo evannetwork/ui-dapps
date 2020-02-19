@@ -180,9 +180,6 @@ export default class DataSetFormComponent extends mixins(EvanComponent) {
     // add the control to the current formular definition
     this.form.addControl(name, control);
     this.$set(control, 'value', control.value);
-    /* set the control directly dirty, so empty initial values will be directly validated and the
-       form will be blocked */
-    this.form[name].dirty = true;
     this.form[name].validate();
   }
 
