@@ -37,6 +37,5 @@ export default class SearchBoxComponent extends mixins(EvanComponent) {
     if (this.searchTerm.length === 0) {
       this.isActiveSearch = false;
     }
-    console.log('this.isActiveSearch', this.isActiveSearch);
   }
 }
