@@ -24,30 +24,14 @@
         class="d-flex flex-row justify-content-between align-items-center"
         style="max-height: 33px"
       >
-        <div class="search">
-          <label
-            id="twin-enable-search"
-            for="searchInput"
-            @click="isActiveSearch = true"
-          >
-            <i
-              class="mdi mdi-magnify mr-1"
-              style="font-size: 22px"
-            />
-            <span v-if="!isActiveSearch">{{
-              '_assets.digitaltwins.digitaltwins-title' | translate
-            }}</span>
-          </label>
-          <input
-            v-show="isActiveSearch"
-            id="searchInput"
-            ref="searchInput"
-            v-model="searchTerm"
-            autocomplete="off"
-            @blur="handleSearchBlur"
-            @keydown.enter="$event.target.blur()"
-          >
-        </div>
+        <evan-searchbox
+          id="searchInput"
+          @keyup="onSearchChange($event.target.value)"
+        >
+          <span v-if="searchTerm">{{ searchTerm }}</span>
+          <span v-else>{{ '_assets.digitaltwins.digitaltwins-title' | translate }}</span>
+        </evan-searchbox>
+
         <div>
           <evan-button
             class="ml-3"

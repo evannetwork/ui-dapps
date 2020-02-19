@@ -20,7 +20,6 @@
 <template>
   <div>
     <label
-      :class="labelClass"
       :for="id"
       @click="isActiveSearch = true"
     >
@@ -28,9 +27,10 @@
         class="mdi mdi-magnify mr-1"
         style="font-size: 22px"
       />
-      <span v-if="!isActiveSearch">
-        {{ label }}
-      </span>
+      <slot
+        v-if="!isActiveSearch"
+        :class="labelClass"
+      />
     </label>
     <input
       v-show="isActiveSearch"
@@ -38,7 +38,7 @@
       v-model="searchTerm"
       autocomplete="off"
       v-on="$listeners"
-      @blur="isActiveSearch = false"
+      @blur="onBlur"
       @keydown.enter="$event.target.blur()"
     >
   </div>
@@ -49,3 +49,28 @@ import Component from './Searchbox';
 
 export default Component;
 </script>
+
+<style lang="scss" scoped>
+@import '~@evan.network/ui/src/style/utils';
+
+span, i {
+  font-size: cssVar('h4-font-size');
+  color: cssVar('gray-600');
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input {
+  padding: 2px 8px;
+  outline: none;
+  background: transparent;
+  border: none;
+  color: cssVar('gray-600');
+  font-size: cssVar('h4-font-size');
+  font-weight: bold;
+
+  &:focus {
+    border-bottom: 1px solid cssVar('gray-600');
+  }
+}
+</style>

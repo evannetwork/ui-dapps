@@ -83,8 +83,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     { key: 'isFavorite', label: '', thClass: 'th-icon' },
   ];
 
-  isActiveSearch = false;
-
   searchTerm = '';
 
   @Prop({
@@ -124,11 +122,9 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     return this.favoriteList.some((fav) => fav.isLoading === true);
   }
 
-  @Watch('searchTerm') onSearchTermChanged(searchTerm: string, oldSearchTerm: string): void {
-    if (searchTerm !== oldSearchTerm) {
-      this.isActiveSearch = this.isActiveSearch || searchTerm.length > 0;
-      this.searchHandlerDebounced();
-    }
+  onSearchChange(searchTerm: string): void {
+    this.searchTerm = searchTerm;
+    this.searchHandlerDebounced();
   }
 
   @Watch('selectedFilter') onFilterChanged(newFilter: string, oldFilter: string): void{
@@ -156,7 +152,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   async mounted(): Promise<void> {
     this.searchTerm = this.$route.params.query || '';
     this.search(this.searchTerm);
-    this.isActiveSearch = this.searchTerm.length > 0;
 
     window.addEventListener('keydown', this.handleSearchShortcut);
 
@@ -187,7 +182,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
   handleSearchShortcut(e: KeyboardEvent): void {
     if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
       e.preventDefault();
-      this.isActiveSearch = true;
       this.searchTerm = '';
       this.$nextTick(() => (this.$refs.searchInput as HTMLInputElement).focus());
     }
@@ -247,12 +241,6 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     leading: false,
   });
 
-  handleSearchBlur(): void {
-    if (this.searchTerm.length === 0) {
-      this.isActiveSearch = false;
-    }
-  }
-
   handleRowClicked(twin: DigitalTwin): void {
     window.location.hash = `/${this.dapp.rootEns}/detail.digital-twin.${this.dapp.domainName}/${twin.address}`;
   }
@@ -295,7 +283,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
     );
   }
 
-  private isFavorite(twin: EvanTableItem<DigitalTwin>): boolean {
+  isFavorite(twin: EvanTableItem<DigitalTwin>): boolean {
     return this.favoriteList.some((fav) => twin.item.address === fav.id);
   }
 
@@ -303,7 +291,7 @@ export default class DigitalTwinsComponent extends mixins(EvanComponent) {
    * Check if specific twin is loading favorite
    * @param twin Digital Twin
    */
-  private isFavoriteLoading(twin: EvanTableItem<DigitalTwin>): boolean {
+  isFavoriteLoading(twin: EvanTableItem<DigitalTwin>): boolean {
     const fav = this.favoriteList.find((item) => twin.item.address === item.id);
     return fav ? fav.isLoading : false;
   }

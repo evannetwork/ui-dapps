@@ -27,13 +27,16 @@ import EvanComponent from '../../component';
  */
 @Component
 export default class SearchBoxComponent extends mixins(EvanComponent) {
-  @Prop() label: string;
-
-  @Prop() labelClass: string;
-
   @Prop() id: string;
 
   isActiveSearch = false;
 
-  searchTerm: string;
+  searchTerm = '';
+
+  onBlur(): void {
+    if (this.searchTerm.length === 0) {
+      this.isActiveSearch = false;
+    }
+    console.log('this.isActiveSearch', this.isActiveSearch);
+  }
 }

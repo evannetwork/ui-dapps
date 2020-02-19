@@ -26,10 +26,10 @@
       >
         <evan-searchbox
           id="contactSearchbox"
-          label="Contacts"
-          label-class="h4"
           @keyup="onSearchChange($event.target.value)"
-        />
+        >
+          <span>{{ '_assets.contacts.contacts-title' | translate }}</span>
+        </evan-searchbox>
 
         <div>
           <evan-button
