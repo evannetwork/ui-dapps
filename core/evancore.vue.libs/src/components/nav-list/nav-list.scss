@@ -19,73 +19,73 @@
 
 @import '~@evan.network/ui/src/style/utils';
 
-  .evan-nav-list {
-    height: 100%;
-    padding-bottom: 1px;
+.evan-nav-list {
+  height: 100%;
+  padding-bottom: 1px;
 
-    &, .nav-entries {
+  &, .nav-entries {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // use separated nav-entries, so we can apply custom entries at the bottom and at the top,
+  // without using my-auto
+  .nav-entries {
+    flex: 1;
+
+    a, button {
+      font-size: 15px;
+      font-weight: 600;
+
       display: flex;
-      flex-direction: column;
-    }
+      align-items: center;
 
-    // use separated nav-entries, so we can apply custom entries at the bottom and at the top,
-    // without using my-auto
-    .nav-entries {
-      flex: 1;
+      height: 70px;
+      padding-left: 22px;
 
-      a, button {
-        font-size: 15px;
-        font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.5s ease-out, color 0.5s ease-out;
+      text-decoration: none;
 
-        display: flex;
-        align-items: center;
+      border: none;
+      outline: none;
+      background-color: white;
 
-        height: 70px;
-        padding-left: 22px;
+      &, * {
+        color: cssVar('gray-900');
+      }
 
-        cursor: pointer;
-        transition: background-color 0.5s ease-out, color 0.5s ease-out;
-        text-decoration: none;
-
-        border: none;
-        outline: none;
-        background-color: white;
-
+      &.active {
+        background-color: cssVar('bg-level-2');
 
         &, * {
-          color: cssVar('gray-900');
+          color: cssVar('dark');
         }
+      };
 
-        &.active {
-          background-color: cssVar('bg-level-2');
+      &:hover {
+        &, * {
+          color: cssVar('primary');
+        }
+      }
+
+      &:disabled {
+        cursor: default;
+
+        border-color: cssVar('gray-500');
+        background-color: white;
+        box-shadow: none;
+        &[class*='-outline-'] {
+          background-color: transparent;
 
           &, * {
-            color: cssVar('dark');
-          }
-        };
-
-        &:hover {
-          &, * {
-            color: cssVar('primary');
-          }
-        }
-
-        &:disabled {
-          cursor: default;
-          border-color: cssVar('gray-500');
-          background-color: white;
-          box-shadow: none;
-          &[class*='-outline-'] {
-            background-color: transparent;
-
-            &, * {
-              color: cssVar('gray-500');
-            }
-          }
-          &, * , &:hover, &:hover * {
             color: cssVar('gray-500');
           }
+        }
+        &, *, &:hover, &:hover * {
+          color: cssVar('gray-500');
         }
       }
     }
   }
+}
