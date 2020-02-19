@@ -22,6 +22,7 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, EvanTableItem } from '@evan.network/ui-vue-core';
+import { debounce } from 'lodash';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
@@ -172,5 +173,12 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   resetFilter(): void {
     this.filterBy = [];
     this.filter = null;
+  }
+
+  onSearchChange = debounce(this.filterBySearchTerm, 250);
+
+  filterBySearchTerm(searchTerm: string): void {
+    this.filterBy = [];
+    this.filter = searchTerm;
   }
 }

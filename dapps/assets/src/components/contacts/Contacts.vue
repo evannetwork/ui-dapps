@@ -24,11 +24,13 @@
         class="d-flex flex-row justify-content-between align-items-center"
         style="max-height: 33px"
       >
-        <div>
-          <h1 class="heading">
-            {{ '_assets.contacts.contacts-title' | translate }}
-          </h1>
-        </div>
+        <evan-searchbox
+          id="contactSearchbox"
+          label="Contacts"
+          label-class="h4"
+          @keyup="onSearchChange($event.target.value)"
+        />
+
         <div>
           <evan-button
             class="ml-3"
