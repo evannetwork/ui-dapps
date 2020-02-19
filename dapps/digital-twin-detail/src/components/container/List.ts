@@ -133,8 +133,6 @@ export default class ContainerListComponent extends mixins(EvanComponent) {
     const count = this.getValues().length;
     const maxPerPage = 30;
 
-    console.log(count, total);
-
     if (total === undefined) {
       return null;
     }
