@@ -73,7 +73,8 @@
 
       <div class="d-flex flex-row mt-3">
         <evan-table
-          class="clickable-rows"
+          class="animate clickable-rows"
+          primary-key="address"
           :items="contacts"
           :fields="columns"
           :filter="filter"
@@ -81,11 +82,12 @@
           :show-empty="!isLoading"
           :show-scrollbar="true"
           :sticky-header="'calc(100vh - 85px)'"
+          :tbody-transition-props="{ name: 'list' }"
           @row-clicked="handleRowClicked"
         >
           <template v-slot:cell(alias)="contacts">
             {{
-              contacts.item.alias ? contacts.item.alias : contacts.item.address
+              contacts.item.alias || contacts.item.address
             }}
           </template>
           <template v-slot:cell(icon)="contacts">

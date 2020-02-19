@@ -152,6 +152,13 @@ $table-row-height: 56px;
     .table-spacer {
       height: 16px;
     }
+
+    .list-enter-active, .list-leave-active {
+      transition: all 0.5s;
+    }
+    .list-enter, .list-leave-to {
+      opacity: 0;
+    }
   }
 
   // Simple Evan Table
