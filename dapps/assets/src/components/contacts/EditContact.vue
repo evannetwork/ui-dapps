@@ -30,7 +30,6 @@
       <evan-loading v-if="!contact" />
 
       <template v-else>
-        <p>{{ '_assets.contacts.edit-contact-desc' | translate }}</p>
         <evan-form-control-input
           :value="contact.address"
           :disabled="true"
@@ -46,11 +45,14 @@
           @input="onNoteChange"
         />
 
+        <p>{{ '_assets.contacts.remove-contact-desc' | translate }}</p>
+
         <evan-button
-          type="warn"
-          @click="removeContact(contact)"
+          type="danger"
+          class="btn-block"
+          @click="$refs.deleteModal.show"
         >
-          Remove Contact
+          {{ '_assets.contacts.remove-contact-button' | translate }}
         </evan-button>
       </template>
 
@@ -71,6 +73,25 @@
         </div>
       </template>
     </evan-swipe-panel>
+
+    <evan-modal ref="deleteModal">
+      <template v-slot:header>
+        <h5 class="modal-title">
+          {{ '_assets.contacts.delete-modal-title' | translate }}
+        </h5>
+      </template>
+      <template v-slot:body>
+        <p>{{ '_assets.contacts.confirm-delete-description' | translate }}</p>
+      </template>
+      <template v-slot:footer>
+        <evan-button
+          type="danger"
+          @click="removeContact(contact)"
+        >
+          {{ '_assets.contacts.confirm-delete' | translate }}
+        </evan-button>
+      </template>
+    </evan-modal>
   </form>
 </template>
 
