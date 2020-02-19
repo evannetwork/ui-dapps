@@ -112,6 +112,7 @@
                 <evan-profile-picture
                   class="twin-avatar"
                   type="device"
+                  is-editable="$store.state.twin.isOwner"
                   :src="$store.state.twin.description.imgSquare"
                 />
                 <h4 class="twin-name text-center mt-2">

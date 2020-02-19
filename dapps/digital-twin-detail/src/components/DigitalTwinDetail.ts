@@ -142,12 +142,12 @@ export default class DigitalTwinDetailComponent extends mixins(EvanComponent) {
         to: { name: 'verifications' },
         disabled: !this.$store.state.twin?.isOwner,
       },
-      {
+      ...(this.$store.state.twin.isOwner ? [{
         text: '_twin-detail.nav-items.sharings',
         icon: 'mdi mdi-share-variant',
         to: { name: 'sharings' },
         disabled: !this.$store.state.twin?.isOwner,
-      },
+      }] : []),
       {
         text: '_twin-detail.nav-items.did',
         icon: 'mdi mdi-identifier',
