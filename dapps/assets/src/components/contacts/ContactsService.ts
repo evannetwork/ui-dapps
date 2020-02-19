@@ -39,7 +39,7 @@ export class ContactsService {
     this.contacts = await this.runtime.profile.getAddressBook();
 
     const data: Contact[] = [];
-    Object.keys(this.contacts.profile).forEach(async (contact) => {
+    await Promise.all(Object.keys(this.contacts.profile).map(async (contact) => {
       // filter out own account
       if (contact !== this.runtime.activeAccount) {
         const type = await profileUtils.getProfileType(this.runtime, contact);
@@ -53,7 +53,7 @@ export class ContactsService {
           updatedAt: this.contacts.profile[contact].updatedAt,
         });
       }
-    });
+    }));
     return data;
   }
 

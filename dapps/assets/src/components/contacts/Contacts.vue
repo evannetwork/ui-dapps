@@ -20,9 +20,7 @@
 <template>
   <div>
     <div class="content pt-5">
-      <evan-loading v-if="isLoading" />
       <div
-        v-else
         class="d-flex flex-row justify-content-between align-items-center"
         style="max-height: 33px"
       >
@@ -151,6 +149,8 @@
         </evan-table>
       </div>
     </div>
+
+    <evan-loading v-if="isLoading" />
 
     <evan-button
       :type="'icon-primary'"
