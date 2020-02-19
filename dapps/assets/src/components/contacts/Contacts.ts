@@ -130,7 +130,7 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   }
 
   editContact(contact: EvanTableItem<Contact>): void {
-    this.selectedContact = contact.item;
+    this.selectedContact = { ...contact.item };
     (this.$refs.editContact as EditContactComponent).showPanel();
   }
 
