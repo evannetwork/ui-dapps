@@ -83,12 +83,10 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     },
   ];
 
-  created(): void {
+  async created(): Promise<void> {
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
-  }
 
-  async mounted(): Promise<void> {
     this.contacts = await this.fetchContacts();
     this.isLoading = false;
   }
@@ -113,6 +111,18 @@ export default class ContactsComponent extends mixins(EvanComponent) {
   async onDeleteContact(contact: Contact, promise: Promise<DispatcherInstance>): Promise<void> {
     await promise;
     this.contacts = this.contacts.filter((item) => item.address !== contact.address);
+  }
+
+  async onUpdateContact(updatedContact: Contact, promise: Promise<DispatcherInstance>): Promise<void> {
+    await promise;
+    // Optimistic updating of the contact
+    this.contacts = this.contacts.map((item: Contact) => {
+      const contact = item;
+      if (item.address === updatedContact.address) {
+        contact.alias = updatedContact.alias;
+      }
+      return contact;
+    });
   }
 
   async fetchContacts(): Promise<Contact[]> {

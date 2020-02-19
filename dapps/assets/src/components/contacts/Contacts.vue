@@ -73,7 +73,7 @@
 
       <div class="d-flex flex-row mt-3">
         <evan-table
-          class="animate clickable-rows"
+          class="clickable-rows"
           primary-key="address"
           :items="contacts"
           :fields="columns"
@@ -169,6 +169,7 @@
       ref="editContact"
       :contact="selectedContact"
       @delete-contact="onDeleteContact"
+      @update-contact="onUpdateContact"
     />
   </div>
 </template>

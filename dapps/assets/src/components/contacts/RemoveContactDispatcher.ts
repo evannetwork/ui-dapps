@@ -6,7 +6,7 @@ const removeContactDispatcher = new Dispatcher(
   `assets.${getDomainName()}`,
   'removeContactDispatcher',
   40 * 1000,
-  '_assets.dispatcher.remove',
+  '_assets.dispatcher.remove-contact',
 );
 
 removeContactDispatcher

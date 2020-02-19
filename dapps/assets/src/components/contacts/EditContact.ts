@@ -22,9 +22,11 @@ import Component, { mixins } from 'vue-class-component';
 
 // evan.network imports
 import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
+import { DispatcherInstance } from '@evan.network/ui';
 import { Contact } from './ContactInterfaces';
 import { ContactsService } from './ContactsService';
+import updateContactDispatcher from './UpdateContactDispatcher';
 
 @Component
 export default class EditContactComponent extends mixins(EvanComponent) {
@@ -34,14 +36,23 @@ export default class EditContactComponent extends mixins(EvanComponent) {
 
   canSubmit = false;
 
+  note: string;
+
+  @Watch('contact')
+  onContactChange(): void {
+    this.note = this.contact.alias;
+  }
+
   created(): void {
     const runtime = this.getRuntime();
     this.contactService = new ContactsService(runtime);
   }
 
-  /* onSubmit(ev): void {
-       console.log('ev', ev);
-     } */
+  async onSubmit(): Promise<void> {
+    this.closePanel();
+    const updatedContact = { ...this.contact, alias: this.note };
+    this.$emit('update-contact', updatedContact, updateContactDispatcher.start(this.getRuntime(), updatedContact));
+  }
 
   onNoteChange(): void {
     this.canSubmit = true;

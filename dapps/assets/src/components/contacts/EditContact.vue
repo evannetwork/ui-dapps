@@ -39,8 +39,8 @@
         />
 
         <evan-form-control-input
+          v-model="note"
           class="btn-block"
-          :value="contact.alias"
           :label="'_assets.contacts.note' | translate"
           :placeholder="$t('_assets.contacts.note-placeholder')"
           @input="onNoteChange"
