@@ -109,8 +109,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.isLoading = false;
   }
 
-  async onDeleteContact(contact: Contact, promise: Promise<DispatcherInstance>): Promise<void> {
-    await promise;
+  async onDeleteContact(contact: Contact): Promise<void> {
+    await this.contactService.removeContact(contact);
     this.contacts = this.contacts.filter((item) => item.address !== contact.address);
   }
 

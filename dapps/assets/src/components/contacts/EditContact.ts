@@ -24,13 +24,10 @@ import Component, { mixins } from 'vue-class-component';
 import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-core';
 import { Prop, Watch } from 'vue-property-decorator';
 import { Contact } from './ContactInterfaces';
-import { ContactsService } from './ContactsService';
 
 @Component
 export default class EditContactComponent extends mixins(EvanComponent) {
   @Prop() contact: Contact;
-
-  contactService: ContactsService;
 
   canSubmit = false;
 
@@ -41,12 +38,7 @@ export default class EditContactComponent extends mixins(EvanComponent) {
     this.note = this.contact.alias;
   }
 
-  created(): void {
-    const runtime = this.getRuntime();
-    this.contactService = new ContactsService(runtime);
-  }
-
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
     this.closePanel();
     const updatedContact = { ...this.contact, alias: this.note };
     this.$emit('update-contact', updatedContact);
@@ -56,10 +48,10 @@ export default class EditContactComponent extends mixins(EvanComponent) {
     this.canSubmit = true;
   }
 
-  async removeContact(contact: Contact): Promise<void> {
+  removeContact(contact: Contact): void {
     (this.$refs.deleteModal as any).hide();
     this.closePanel();
-    this.$emit('delete-contact', contact, this.contactService.removeContact(contact));
+    this.$emit('delete-contact', contact);
   }
 
   showPanel(): void {
