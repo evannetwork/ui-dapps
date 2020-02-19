@@ -25,7 +25,6 @@ import { EvanComponent, SwipePanelComponentClass } from '@evan.network/ui-vue-co
 import { Prop, Watch } from 'vue-property-decorator';
 import { Contact } from './ContactInterfaces';
 import { ContactsService } from './ContactsService';
-import updateContactDispatcher from './UpdateContactDispatcher';
 
 @Component
 export default class EditContactComponent extends mixins(EvanComponent) {
@@ -50,7 +49,7 @@ export default class EditContactComponent extends mixins(EvanComponent) {
   async onSubmit(): Promise<void> {
     this.closePanel();
     const updatedContact = { ...this.contact, alias: this.note };
-    this.$emit('update-contact', updatedContact, updateContactDispatcher.start(this.getRuntime(), updatedContact));
+    this.$emit('update-contact', updatedContact);
   }
 
   onNoteChange(): void {

@@ -26,6 +26,7 @@ import { DispatcherInstance } from '@evan.network/ui/src';
 import { ContactsService } from './ContactsService';
 import { Contact } from './ContactInterfaces';
 import EditContactComponent from './EditContact';
+import updateContactDispatcher from './UpdateContactDispatcher';
 
 @Component
 export default class ContactsComponent extends mixins(EvanComponent) {
@@ -113,8 +114,8 @@ export default class ContactsComponent extends mixins(EvanComponent) {
     this.contacts = this.contacts.filter((item) => item.address !== contact.address);
   }
 
-  async onUpdateContact(updatedContact: Contact, promise: Promise<DispatcherInstance>): Promise<void> {
-    await promise;
+  async onUpdateContact(updatedContact: Contact): Promise<void> {
+    await updateContactDispatcher.start(this.getRuntime(), updatedContact);
     // Optimistic updating of the contact
     this.contacts = this.contacts.map((item: Contact) => {
       const contact = item;
